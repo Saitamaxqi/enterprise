@@ -68,11 +68,17 @@ class TestSubscriptionPlan(TestSubscriptionCommon):
         """
         order_1 = self.env['sale.order'].create({
             'partner_id': self.partner.id,
-            'order_line': [Command.create({'product_id': self.product.id})],
-        })
-        self.env['sale.order.option'].create({
-            'order_id': order_1.id,
-            'product_id': self.product.id,
+            'order_line': [
+                Command.create({'product_id': self.product.id}),
+                Command.create({
+                    'name': "Optional products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'product_id': self.product.id,
+                }),
+            ],
         })
 
         with Form(order_1) as order_form:

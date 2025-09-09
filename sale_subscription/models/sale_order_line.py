@@ -679,10 +679,6 @@ class SaleOrderLine(models.Model):
             res['plan_id'] = self.order_id.plan_id.id
         return res
 
-    def _lines_without_price_recomputation(self):
-        res = super()._lines_without_price_recomputation()
-        return res.filtered(lambda line: not line.recurring_invoice)
-
     # === UTILS === #
 
     def _is_postpaid_line(self):

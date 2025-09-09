@@ -16,12 +16,21 @@ from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSub
 class TestSubscriptionUpsell(TestSubscriptionCommon):
     def test_upsell_no_start_date(self):
         self.sub_product_tmpl.subscription_rule_ids = [(5, 0, 0)]
-        self.subscription_tmpl.sale_order_template_option_ids = [Command.create({
-            'name': "Option 1",
-            'product_id': self.product5.id,
-            'quantity': 1,
-            'uom_id': self.product5.uom_id.id,
-        })]
+        self.subscription_tmpl.write({
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "Optional Products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'name': "Option 1",
+                    'product_id': self.product5.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.product5.uom_id.id,
+                })
+            ]
+        })
         self.subscription.write({
                 'partner_id': self.partner.id,
                 'plan_id': self.plan_month.id,
@@ -51,12 +60,21 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
     def test_upsell_via_so(self):
         # Test the upsell flow using an intermediary upsell quote.
         self.sub_product_tmpl.subscription_rule_ids = [(5, 0, 0)]
-        self.subscription_tmpl.sale_order_template_option_ids = [Command.create({
-            'name': "Option 1",
-            'product_id': self.product5.id,
-            'quantity': 1,
-            'uom_id': self.product5.uom_id.id,
-        })]
+        self.subscription_tmpl.write({
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "Optional Products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'name': "Option 1",
+                    'product_id': self.product5.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.product5.uom_id.id,
+                })
+            ]
+        })
         self.product_tmpl_2.subscription_rule_ids = [(5, 0, 0)]
         self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.sub_product_tmpl.id, 'fixed_price': 42})
         self.env['product.pricelist.item'].create({'plan_id': self.plan_month.id, 'product_tmpl_id': self.product_tmpl_2.id, 'fixed_price': 420})

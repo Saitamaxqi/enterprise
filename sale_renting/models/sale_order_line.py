@@ -343,10 +343,3 @@ class SaleOrderLine(models.Model):
                 end_date=self.return_date,
             )
         return super()._get_pricelist_price()
-
-    # === PRICE COMPUTING HOOKS === #
-
-    def _lines_without_price_recomputation(self):
-        """ Override to filter out rental lines and allow the recomputation for these SOL. """
-        res = super()._lines_without_price_recomputation()
-        return res.filtered(lambda l: not l.is_rental)

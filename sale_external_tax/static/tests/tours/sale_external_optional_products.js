@@ -18,8 +18,8 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             trigger: ":shadow button:contains(send)",
         },
         {
-            content: "add the optional product",
-            trigger: ".js_add_optional_products:contains(add to order)",
+            content: "increase quantity of optional product",
+            trigger: "tr:contains(optional product) .js_quantity_container .js_update_line_json[title='Add one']",
             run: "click",
             expectUnloadPage: true,
         },
@@ -35,39 +35,13 @@ registry.category("web_tour.tours").add("sale_external_optional_products", {
             trigger: "tr:contains(optional product) input.js_quantity:value(1.0)",
         },
         {
-            content: "increase the quantity of the optional product by 1",
-            trigger:
-                "tr:contains(optional product) .js_quantity_container .js_update_line_json[title='Add one']",
-            run: "click",
-            expectUnloadPage: true,
-        },
-        {
-            trigger: ".o_portal_sidebar_content h2:contains($):contains(12.)",
-        },
-        {
-            content: "Await communication shadow root to avoid rerenderer just before clicking",
-            trigger: ":shadow button:contains(send)",
-        },
-        {
-            content: "wait for the quantity to be updated",
-            trigger: "tr:contains(optional product) input.js_quantity:value(2.0)",
-        },
-        {
-            content: "delete the optional line",
-            trigger: "table#sales_order_table tbody tr:eq(1) a[title=Remove]",
+            content: "decrease quantity of the optional line",
+            trigger: "tr:contains(optional product) .js_quantity_container .js_update_line_json[title='Remove one']",
             run: "click",
             expectUnloadPage: true,
         },
         {
             trigger: ".o_portal_sidebar_content h2:contains($):contains(10.)",
-        },
-        {
-            content: "Await communication shadow root to avoid rerenderer just before clicking",
-            trigger: ":shadow button:contains(send)",
-        },
-        {
-            content: "wait for line to be deleted and show up again in optional products",
-            trigger: ".js_add_optional_products",
         },
     ],
 });

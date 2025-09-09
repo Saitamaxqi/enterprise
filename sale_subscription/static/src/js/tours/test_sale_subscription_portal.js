@@ -25,16 +25,3 @@ registry.category("web_tour.tours").add("test_sale_subscription_portal_payment",
         },
     ],
 });
-
-registry.category("web_tour.tours").add("test_optional_products_portal", {
-    steps: () => [
-        {
-            content: "Wait for the whole page to load",
-            trigger: "#chatterRoot:shadow .o-mail-Chatter",
-        },
-        {
-            content: "Check optional product are shown",
-            trigger: 'div[id="content"] h3[id="quote_2"]',
-        },
-    ],
-});

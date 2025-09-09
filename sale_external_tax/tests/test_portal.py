@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from unittest.mock import patch
 
+from odoo.fields import Command
 from odoo.tests import tagged
 from odoo.addons.base.tests.common import HttpCaseWithUserPortal
 
@@ -27,17 +28,20 @@ class TestSaleExternalTaxesSalePortal(HttpCaseWithUserPortal):
             'fiscal_position_id': self.fp_external.id,
             'date_order': '2023-01-01',
             'order_line': [
-                (0, 0, {
+                Command.create({
                     'product_id': self.product_test.id,
                     'tax_ids': None,
                     'price_unit': self.product_test.list_price,
                 }),
-            ],
-            'sale_order_option_ids': [
-                (0, 0, {
+                Command.create({
+                    'name': 'Optional Products',
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
                     'name': 'optional product',
                     'price_unit': 1,
-                    'uom_id': self.env.ref('uom.product_uom_unit').id,
+                    'product_uom_qty': 0,
                     'product_id': self.env['product.product'].create({'name': 'optional product'}).id,
                 }),
             ],
@@ -75,9 +79,8 @@ class TestSaleExternalTaxesSalePortal(HttpCaseWithUserPortal):
             self.start_tour('/', 'sale_external_optional_products', login='portal')
             mocked_get_and_set.assert_called()
 
-            # There should be 4 calls:
+            # There should be 3 calls:
             # 1/ when the quote is displayed via portal_order_page()
-            # 2/ when the tour adds the optional product
-            # 3/ when the tour increments the quantity on the optional product
-            # 4/ when the tour deletes the optional product
-            self.assertEqual(mocked_get_and_set.call_count, 4, 'External taxes were not calculated enough times during this tour.')
+            # 2/ when the tour increments the quantity on the optional product
+            # 3/ when the tour decrements the quantity on the optional product
+            self.assertEqual(mocked_get_and_set.call_count, 3, 'External taxes were not calculated enough times during this tour.')

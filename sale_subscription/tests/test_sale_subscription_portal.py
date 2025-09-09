@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.fields import Command, Date
+from odoo.fields import Command
 from odoo.tests import HttpCase, tagged
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 
@@ -46,20 +46,6 @@ class TestSubscription(TestSubscriptionCommon, HttpCase):
         inv._post()
         sub.set_close()
         self.start_tour(self.subscription.get_portal_url(), 'test_sale_subscription_portal_payment')
-
-    def test_optional_products_appearance_in_portal(self):
-        self.subscription.write({
-            'start_date': Date.to_date('2024-06-18'),
-            'sale_order_option_ids': [
-                (0, 0, {
-                    'name': 'optional product',
-                    'price_unit': 1,
-                    'uom_id': self.env.ref('uom.product_uom_unit').id,
-                    'product_id': self.env['product.product'].create({'name': 'optional product'}).id,
-                }),
-            ],
-        })
-        self.start_tour(self.subscription.get_portal_url(), 'test_optional_products_portal')
 
     def test_subscription_so_preview_without_user_id(self):
         """Ensure the sale order preview works for a subscription created by a portal user without a user_id."""

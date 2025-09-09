@@ -420,6 +420,14 @@
                            t-if="(sale_order.plan_id.pausable_by_user and (sale_order.user_pause_start and sale_order.next_invoice_date != datetime.date.today())) and not is_subscription_postpaid">
                             Resume subscription
                         </a>
+                        <t
+                            t-set="has_optional_lines"
+                            t-value="bool(
+                                sale_order.order_line.filtered(
+                                    lambda l: not l.display_type and l._is_line_optional()
+                                )
+                            )"
+                        />
                         <a role="button" class="btn btn-primary" t-att-href="renewal_url"
                            t-if="sale_order.user_extend and renewal_url">
                             Renew
@@ -446,8 +454,15 @@
                             t-if="sale_order.user_quantity and upsell_url and sale_order.subscription_state in ['3_progress', '4_paused']">
                                 Add Quantity
                             </a>
-                            <a role="button" class="btn btn-primary" t-attf-href="/my/subscriptions/{{sale_order.id}}/upsell"
-                            t-elif="sale_order.user_quantity and sale_order.sale_order_option_ids and not sale_order._can_be_edited_on_portal() and sale_order.subscription_state in ['3_progress', '4_paused']">
+                            <a
+                                role="button"
+                                class="btn btn-primary"
+                                t-attf-href="/my/subscriptions/{{sale_order.id}}/upsell"
+                                t-elif="sale_order.user_quantity
+                                    and has_optional_lines
+                                    and not sale_order._can_be_edited_on_portal()
+                                    and sale_order.subscription_state in ['3_progress', '4_paused']"
+                            >
                                 Add Quantity
                             </a>
                         </t>

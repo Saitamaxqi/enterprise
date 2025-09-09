@@ -429,13 +429,16 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'product_id': self.product.id,
                     'product_uom_id': self.product.uom_id.id,
                 }),
-            ],
-            'sale_order_template_option_ids': [
+                Command.create({
+                    'name': "Optional Products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
                 Command.create({
                     'name': "option",
                     'product_id': self.product.id,
-                    'quantity': 1,
-                    'uom_id': self.product2.uom_id.id
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.product2.uom_id.id,
                 }),
             ],
         })
@@ -444,7 +447,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         sub_form.partner_id = self.user_portal.partner_id
         sub_form.sale_order_template_id = recurring_bound_tmpl
         sub = sub_form.save()
-        self.assertEqual(len(sub.order_line.ids), 2)
+        self.assertEqual(len(sub.order_line.ids), 4)
 
     def test_mixed_delivered_ordered_products(self):
         self.product.name = "ordered Product"
@@ -529,14 +532,21 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'is_unlimited': True,
             'note': "This is the template description",
             'plan_id': self.plan_year.id,
-            'sale_order_template_line_ids': [Command.create({
-                'name': "monthly",
-                'product_id': self.product.id,
-            })],
-            'sale_order_template_option_ids': [Command.create({
-                'name': "line 1",
-                'product_id': self.product.id,
-            })],
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "monthly",
+                    'product_id': self.product.id,
+                }),
+                Command.create({
+                    'name': "Optional Products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'name': "line 1",
+                    'product_id': self.product.id,
+                }),
+            ],
         })
         subscription = self.env['sale.order'].create({
             'name': 'TestSubscription',
@@ -545,13 +555,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'sale_order_template_id': template.id,
         })
         subscription._onchange_sale_order_template_id()
-        self.assertEqual(subscription.order_line.price_unit, 10, "The second pricing should be applied")
-        self.assertEqual(subscription.sale_order_option_ids.price_unit, 10, "The second pricing should be applied")
+        optional_lines = self._get_optional_product_lines(subscription)
+        self.assertEqual(subscription.order_line[0].price_unit, 10, "The second pricing should be applied")
+        self.assertEqual(optional_lines.price_unit, 10, "The second pricing should be applied")
+
         subscription.pricelist_id = other_pricelist.id
+
         subscription._onchange_sale_order_template_id()
+        optional_lines = self._get_optional_product_lines(subscription)
         self.assertEqual(subscription.pricelist_id.id, other_pricelist.id, "The second pricelist should be applied")
-        self.assertEqual(subscription.order_line.price_unit, 15, "The second pricing should be applied")
-        self.assertEqual(subscription.sale_order_option_ids.price_unit, 15, "The second pricing should be applied")
+        self.assertEqual(subscription.order_line[0].price_unit, 15, "The second pricing should be applied")
+        self.assertEqual(optional_lines.price_unit, 15, "The second pricing should be applied")
         # Note: the pricing_id on the line is not saved on the line, but it is used to calculate the price.
 
     def test_update_subscription_company(self):
@@ -1373,7 +1387,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_new_plan_id_optional_products_price_update(self):
         """
         Assert that after changing the 'Recurrence' field of a subscription, prices will be recomputed
-        for Optional Products with time-based pricing linked to the subscription template.
+        for Optional Products with time-based pricing in the subscription template.
         """
         # Define a subscription template with a optional product having time-based pricing.
         self.product.product_tmpl_id.subscription_rule_ids = [
@@ -1391,18 +1405,25 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'Subscription template with time-based pricing on optional product',
             'note': "This is the template description",
             'plan_id': self.plan_year.id,
-            'sale_order_template_line_ids': [Command.create({
-                'name': "monthly",
-                'product_id': self.product.id,
-                'product_uom_qty': 1,
-                'product_uom_id': self.product.uom_id.id
-            })],
-            'sale_order_template_option_ids': [Command.create({
-                'name': "line 1",
-                'product_id': self.product.id,
-                'quantity': 1,
-                'uom_id': self.product.uom_id.id,
-            })],
+            'sale_order_template_line_ids': [
+                Command.create({
+                    'name': "monthly",
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.product.uom_id.id
+                }),
+                Command.create({
+                    'name': "Optional Products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'name': "line 1",
+                    'product_id': self.product.id,
+                    'product_uom_qty': 1,
+                    'product_uom_id': self.product.uom_id.id,
+                })
+            ],
         })
         # Create the subscription based on the subscription template.
         subscription = self.env['sale.order'].create({
@@ -1414,10 +1435,11 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         })
         subscription._onchange_sale_order_template_id()
 
+        optional_lines = self._get_optional_product_lines(subscription)
         # Assert that optional product has its price updated after changing the 'recurrence' field.
-        self.assertEqual(subscription.sale_order_option_ids.price_unit, 150, "The price unit for the optional product must be 150.0 due to 'Monthly' value in the 'Recurrence' field.")
+        self.assertEqual(optional_lines.price_unit, 150, "The price unit for the optional product must be 150.0 due to 'Monthly' value in the 'Recurrence' field.")
         subscription.plan_id = self.plan_year.id
-        self.assertEqual(subscription.sale_order_option_ids.price_unit, 1000, "The price unit for the optional product must update to 1000.0 after changing the 'Recurrence' field to 'Yearly'.")
+        self.assertEqual(optional_lines.price_unit, 1000, "The price unit for the optional product must update to 1000.0 after changing the 'Recurrence' field to 'Yearly'.")
 
     def test_negative_subscription(self):
         nr_product = self.env['product.template'].create({
@@ -1550,15 +1572,20 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'company_id': self.company_data['company'].id,
             'order_line': [
                 Command.create({'product_id': product_a.id}),
-                Command.create({'product_id': product_b.id})
+                Command.create({
+                    'name': 'Optional products',
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
+                Command.create({
+                    'product_id': product_b.id,
+                }),
             ],
-            'sale_order_option_ids': [Command.create({'product_id': product_b.id})],
         })
 
-        sale_order.sale_order_option_ids.line_id = sale_order.order_line[1].id
         sale_order.write({'plan_id': self.plan_year})
 
-        self.assertEqual(sale_order.order_line[1].price_unit, 200.0)
+        self.assertEqual(sale_order.order_line[2].price_unit, 200.0)
 
     def test_subscription_lock_settings(self):
         """ The settings to automatically lock SO upon confirmation
@@ -2724,17 +2751,19 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'product_id': self.product.id,
                     'product_uom_qty': 1,
                 }),
-            ],
-            'sale_order_option_ids': [
+                Command.create({
+                    'name': "Optional products",
+                    'display_type': 'line_section',
+                    'is_optional': True,
+                }),
                 Command.create({
                     'product_id': self.product2.id,
                     'discount': 20,  # 20% discount
                 })
             ],
         })
-        subscription.sale_order_option_ids[0].button_add_to_order()
 
-        self.assertEqual(subscription.order_line.mapped("discount"), [0, 20])
+        self.assertEqual(subscription.order_line.mapped("discount"), [0, 0, 20])
 
     def test_correct_functioning_of_proration(self):
         """

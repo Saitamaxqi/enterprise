@@ -42,9 +42,3 @@ class SaleOrderTemplateLine(models.Model):
     _inherit = 'sale.order.template.line'
 
     recurring_invoice = fields.Boolean(related='product_id.recurring_invoice')
-
-
-class SaleOrderTemplateOption(models.Model):
-    _inherit = 'sale.order.template.option'
-
-    recurring_invoice = fields.Boolean(related='product_id.recurring_invoice')

@@ -63,9 +63,6 @@
             <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='name']" position="after">
                 <field name="recurring_invoice" column_invisible="True"/>
             </xpath>
-            <xpath expr="//notebook/page[@name='optional_products']/field/list/field[@name='name']" position="after">
-                <field name="recurring_invoice" column_invisible="True"/>
-            </xpath>
             <group name="sale_info" position="after">
                 <group name="sale_info2">
                     <field name="plan_id" placeholder="None"

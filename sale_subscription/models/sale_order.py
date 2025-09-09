@@ -1189,7 +1189,6 @@ class SaleOrder(models.Model):
         subscription = self.with_company(self.company_id)
         order_lines = self.with_context(lang=lang_code).order_line._get_renew_upsell_values(subscription_state)
         is_subscription = subscription_state == '2_renewal'
-        option_lines_data = [Command.link(option.copy().id) for option in subscription.with_context(lang=lang_code).sale_order_option_ids]
         if subscription_state == '7_upsell':
             start_date = fields.Date.today()
             next_invoice_date = self.next_invoice_date
@@ -1215,7 +1214,6 @@ class SaleOrder(models.Model):
             'company_id': subscription.company_id.id,
             'journal_id': subscription.journal_id.id if subscription.journal_id else None,
             'sale_order_template_id': self.sale_order_template_id.id,
-            'sale_order_option_ids': option_lines_data,
             'payment_token_id': False,
             'start_date': start_date,
             'next_invoice_date': next_invoice_date,

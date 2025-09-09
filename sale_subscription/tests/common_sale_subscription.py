@@ -337,6 +337,20 @@ class TestSubscriptionCommon(TestSaleCommon):
             'type': 'delivery',
         })
 
+    @staticmethod
+    def _get_optional_product_lines(order):
+        """Returns the order lines that are optional products. """
+        return order.order_line.filtered(
+            lambda line: not line.display_type
+            and (
+                line.parent_id.is_optional
+                or (
+                    line.parent_id.display_type == 'line_subsection'
+                    and line.parent_id.parent_id.is_optional
+                )
+            ),
+        )
+
     @classmethod
     def get_default_groups(cls):
         # Needed for tests without demo data
