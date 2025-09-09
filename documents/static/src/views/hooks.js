@@ -188,7 +188,7 @@ export function useDocumentView(helpers) {
             action.doAction("documents.action_folder_form", {
                 additionalContext: {
                     default_type: "folder",
-                    default_user_folder_id: currentFolder.toString(),
+                    default_user_folder_id: currentFolder ? currentFolder.toString() : "MY", // false for "All"
                     ...(currentFolder === "COMPANY" ? { default_access_internal: "edit" } : {}),
                 },
                 fullscreen: env.isSmall,
