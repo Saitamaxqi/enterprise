@@ -714,8 +714,6 @@ test.tags("desktop");
 test("Share URL item is present in the user menu when running as PWA", async () => {
     mockMatchMedia({ ["display-mode"]: "standalone" });
     clearRegistry(registry.category("user_menuitems"));
-    // This service adds a "Dark Mode" item to the user menu items on start
-    registry.category("services").remove("color_scheme");
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
 
     await mountWithCleanup(UserMenu);
@@ -729,8 +727,6 @@ test.tags("desktop");
 test("Share URL item is not present in the user menu when not running as PWA", async () => {
     mockMatchMedia({ ["display-mode"]: "browser" });
     clearRegistry(registry.category("user_menuitems"));
-    // This service adds a "Dark Mode" item to the user menu items on start
-    registry.category("services").remove("color_scheme");
     registry.category("user_menuitems").add("share_url", shareUrlMenuItem);
 
     await mountWithCleanup(UserMenu);

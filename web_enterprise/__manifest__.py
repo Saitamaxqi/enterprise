@@ -15,6 +15,7 @@ This module modifies the web addon to provide Enterprise design and responsivene
     'auto_install': ['web'],
     'data': [
         'views/webclient_templates.xml',
+        'views/res_users_views.xml',
     ],
     'assets': {
         'web._assets_primary_variables': [
