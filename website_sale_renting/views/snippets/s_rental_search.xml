@@ -21,7 +21,7 @@
                             </div>
                             <button class="s_rental_search_btn btn btn-light ms-auto">
                                 <span class="d-md-none me-2">Search period</span>
-                                <i class="fa fa-search" role="img"/>
+                                <i class="oi oi-search" role="img"/>
                             </button>
                         </div>
                     </div>
