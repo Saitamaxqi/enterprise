@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from functools import partial
+from lxml import etree
 from typing import Callable
 
 from odoo import _, api, fields, models, Command
@@ -985,10 +986,30 @@ class AccountMove(models.Model):
         """ Identify EC Factura Electrónica files. """
         # EXTENDS 'account'
         xml_tree = file_data['xml_tree']
-        if xml_tree is not None and (
-            xml_tree.tag == 'factura' and xml_tree.attrib.get('id') == 'comprobante'
-            or (factura_node := xml_tree.find('.//factura')) is not None and factura_node.attrib.get('id') == 'comprobante'
-        ):
+        if xml_tree is None:
+            return super()._get_import_file_type(file_data)
+
+        def is_factura(tree):
+            """Check if a given XML tree represents an invoice."""
+            return (
+                (tree.tag == 'factura' and tree.attrib.get('id') == 'comprobante')
+                or (
+                    (factura_node := tree.find('.//factura'))
+                    and factura_node.attrib.get('id') == 'comprobante'
+                )
+            )
+
+        # Handle files with the tag "<[CDATA[" containing the actual invoice XML
+        if comprobante_text := xml_tree.findtext('.//comprobante'):
+            try:
+                inner_tree = etree.fromstring(comprobante_text.encode("utf-8"))
+                if is_factura(inner_tree):
+                    file_data['xml_tree'] = inner_tree
+                    return 'l10n_ec.factura'
+            except etree.ParseError:
+                pass  # not valid XML
+
+        if is_factura(xml_tree):
             return 'l10n_ec.factura'
         return super()._get_import_file_type(file_data)
 
