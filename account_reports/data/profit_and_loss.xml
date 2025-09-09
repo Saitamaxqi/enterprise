@@ -118,7 +118,7 @@
                     <record id="account_financial_report_depreciation0_balance" model="account.report.expression">
                         <field name="label">balance</field>
                         <field name="engine">domain</field>
-                        <field name="formula" eval="[('account_id.account_type', '=', 'expense_depreciation')]"/>
+                        <field name="formula" eval="[('account_id.account_type', 'in', ('expense_other', 'expense_depreciation'))]"/>
                         <field name="subformula">sum</field>
                         <field name="green_on_positive" eval="False"/>
                     </record>
