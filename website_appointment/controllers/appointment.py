@@ -125,7 +125,7 @@ class WebsiteAppointment(AppointmentController):
         values['skip_resource_selection'] = skip_resource_selection
         if skip_resource_selection:
             values['user_selected'] = values['user_default'] = request.env['res.users']
-            values['resource_selected'] = request.env['appointment.resource']
+            values['resource_selected'] = values['resource_default'] = request.env['appointment.resource']
         else:
             resource_or_user_selected = values['user_selected'] if appointment_type.schedule_based_on == 'users' else values['resource_selected']
             values['hide_select_dropdown'] = values['hide_select_dropdown'] or (
