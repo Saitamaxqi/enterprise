@@ -127,7 +127,9 @@ export class UserAgent extends Reactive {
     async shouldPlayIncomingCallRingtone() {
         const dndUntil = this.voip.store.settings.do_not_disturb_until_dt;
         const doNotDisturb = Boolean(dndUntil) && dndUntil > luxon.DateTime.now();
-        return this.hasCallInvitation && !doNotDisturb && (await this.multiTabService.isOnMainTab());
+        return (
+            this.hasCallInvitation && !doNotDisturb && (await this.multiTabService.isOnMainTab())
+        );
     }
 
     async acceptIncomingCall() {
@@ -289,20 +291,22 @@ export class UserAgent extends Reactive {
         try {
             const inviter = new SIP.Inviter(this.__sipJsUserAgent, calleeUri);
             this.activeSession.sipSession = inviter;
-            this.activeSession.sipSession.invite({
-                requestDelegate: {
-                    onAccept: (response) => this._onOutgoingInvitationAccepted(response),
-                    onProgress: (response) => this._onOutgoingInvitationProgress(response),
-                    onReject: (response) => this._onOutgoingInvitationRejected(response),
-                },
-                sessionDescriptionHandlerOptions: {
-                    constraints: this.mediaConstraints,
-                },
-            }).catch((error) => {
-                if (error.name !== "NotAllowedError") {
-                    throw error;
-                }
-            });
+            this.activeSession.sipSession
+                .invite({
+                    requestDelegate: {
+                        onAccept: (response) => this._onOutgoingInvitationAccepted(response),
+                        onProgress: (response) => this._onOutgoingInvitationProgress(response),
+                        onReject: (response) => this._onOutgoingInvitationRejected(response),
+                    },
+                    sessionDescriptionHandlerOptions: {
+                        constraints: this.mediaConstraints,
+                    },
+                })
+                .catch((error) => {
+                    if (error.name !== "NotAllowedError") {
+                        throw error;
+                    }
+                });
         } catch (error) {
             console.error(error);
             this.voip.triggerError(
@@ -592,7 +596,7 @@ export class UserAgent extends Reactive {
      */
     _onOutgoingInvitationRejected(response) {
         this.ringtoneService.stopPlaying();
-        if (response.message.statusCode === 487) { // Request Terminated
+        if (response.message.statusCode === 487 /* Request Terminated */) {
             // invitation has been cancelled by the user, the session has
             // already been terminated
             return;
