@@ -203,7 +203,7 @@
                 <cbc:ExtendedID>562438192</cbc:ExtendedID>
             </cac:SellersItemIdentification>
             <cac:StandardItemIdentification>
-                <cbc:ID schemeID="010" schemeName="GTIN">562438192</cbc:ID>
+                <cbc:ID schemeID="999" schemeName="Estándar de adopción del contribuyente">562438192</cbc:ID>
             </cac:StandardItemIdentification>
         </cac:Item>
         <cac:Price>

@@ -162,7 +162,13 @@ class AccountMoveLine(models.Model):
                 if not self.product_id.l10n_co_edi_customs_code:
                     raise UserError(_('Exportation invoices require custom code in all the products, please fill in this information before validating the invoice'))
                 return (self.product_id.l10n_co_edi_customs_code, '020', 'Partida Alanceraria')
-            if self.product_id.barcode:
+            if (
+                    self.move_type == "in_refund" and
+                    self.move_id.l10n_co_edi_is_support_document and
+                    (code := self.product_id.default_code or self.product_id.barcode or self.product_id.unspsc_code_id.code)
+            ):
+                return (code, '999', 'Estándar de adopción del contribuyente')
+            elif self.product_id.barcode:
                 return (self.product_id.barcode, '010', 'GTIN')
             elif self.product_id.unspsc_code_id:
                 return (self.product_id.unspsc_code_id.code, '001', 'UNSPSC')
