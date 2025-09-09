@@ -169,7 +169,8 @@ class ProviderUSPS(models.Model):
         length_in_inches = length_uom_id._compute_quantity(length, self.env.ref('uom.product_uom_inch'))
         return length_in_inches
 
-    def _get_order_packages(self, order):
+    def _usps_rest_get_order_packages(self, order):
+        self.ensure_one()
         total_weight = order._get_estimated_weight()
         if float_is_zero(total_weight, precision_rounding=0.01):
             weight_uom_name = self.env['product.template']._get_weight_uom_name_from_ir_config_parameter()
@@ -197,7 +198,7 @@ class ProviderUSPS(models.Model):
         if check_result:
             return {'success': False, 'price': 0.0, 'error_message': check_result, 'warning_message': False}
 
-        packages = self._get_order_packages(order)
+        packages = self._usps_rest_get_order_packages(order)
         quotes_list = []
         for package in packages:
             request_body = {

@@ -119,7 +119,8 @@ class ProviderDHL(models.Model):
         res = self._rate_shipment_vals(order=order)
         return res
 
-    def _get_order_packages(self, order):
+    def _dhl_rest_get_order_packages(self, order):
+        self.ensure_one()
         total_weight = order._get_estimated_weight()
         total_weight = self._dhl_rest_convert_weight(total_weight)
         if total_weight == 0.0:
@@ -249,7 +250,7 @@ class ProviderDHL(models.Model):
         if picking:
             packages = self._dhl_rest_get_picking_packages(picking)
         else:
-            packages = self._get_order_packages(order)
+            packages = self._dhl_rest_get_order_packages(order)
         rating_request['packages'] = srm._get_package_vals(self, packages)
         rating_request['isCustomsDeclarable'] = self.dhl_dutiable
         if self.dhl_dutiable:
