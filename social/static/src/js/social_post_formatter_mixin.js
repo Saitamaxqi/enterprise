@@ -7,7 +7,7 @@ import { htmlReplace } from "@web/core/utils/html";
 export const SocialPostFormatterRegex = {
     REGEX_AT: /\B@([\w\dÀ-ÿ-.]+)/g,
     REGEX_HASHTAG: /(^|\s|<br>)#([a-zA-Z\d\-_]+)/g,
-    REGEX_URL: /http(s)?:\/\/(www\.)?[a-zA-Z0-9@:%_+~#=~#?&/=\-;!.]{3,2000}/g,
+    REGEX_URL: /http(s)?:\/\/(www\.)?[a-zA-Z0-9@:%_+~#=?&/\-;!.,()'*$]{3,2000}/g,
 };
 
 export const SocialPostFormatterMixinBase = {
