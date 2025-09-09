@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import UserError
 
 
@@ -44,7 +44,7 @@ class RepairOrder(models.Model):
             self.quality_check_ids.filtered(lambda c: c.measure_on == "product").unlink()
             self._create_quality_checks_for_repair(["product"])
         elif "lot_id" in vals:
-            self.quality_check_ids.write({'lot_id': vals['lot_id']})
+            self.quality_check_ids.write({'lot_ids': [Command.set([vals['lot_id']])] if vals["lot_id"] else False})
         return res
 
     def _create_quality_checks_for_repair(self, measures):
@@ -68,7 +68,7 @@ class RepairOrder(models.Model):
                             "team_id": point.team_id.id,
                             "measure_on": measure,
                             "product_id": repair.product_id.id if measure == "product" else False,
-                            "lot_id": repair.lot_id.id if measure == "product" else False,
+                            "lot_ids": [Command.link(repair.lot_id.id)] if measure == "product" and repair.lot_id else False,
                             "repair_id": repair.id,
                         })
         self.env["quality.check"].sudo().create(check_vals_list)
