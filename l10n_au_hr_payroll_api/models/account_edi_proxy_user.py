@@ -41,7 +41,7 @@ class AccountEdiProxyClientUser(models.Model):
     # Business methods
     # ----------------
 
-    def _l10n_au_payroll_request(self, endpoint, params=None, handle_errors=True, timeout=30):
+    def _l10n_au_payroll_request(self, endpoint, params=None, handle_errors=True):
         if tools.config['test_enable'] or modules.module.current_test:
             raise UserError(_("Superchoice API Connection disabled in testing environment."))
         self.ensure_one()
@@ -62,7 +62,6 @@ class AccountEdiProxyClientUser(models.Model):
             response = self._make_request(
                 url=url_join(self._get_server_url(), "/api/l10n_au_payroll/1" + endpoint),
                 params=params,
-                request_timeout=timeout
             )
         except AccountEdiProxyError as _error:
             # Request error while contacting the IAP server. We assume it is a temporary error.
