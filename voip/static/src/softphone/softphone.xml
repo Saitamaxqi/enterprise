@@ -9,6 +9,12 @@
                 <!-- <i class="oi oi-voice-record me-1 p-2 text-info" aria-hidden="true"/> -->
                 <p class="mb-0 fw-bolder" t-esc="topBarText"/>
             </div>
+            <t t-elif="voip.mode === 'demo'">
+                <p class="d-flex align-items-center p-2 m-0">
+                    <i class="fa fa-circle o-yellow" aria-hidden="true"/>
+                    <span class="ms-2 fw-bold">Demo Mode</span>
+                </p>
+            </t>
             <t t-else="">
                 <DndSelector/>
             </t>

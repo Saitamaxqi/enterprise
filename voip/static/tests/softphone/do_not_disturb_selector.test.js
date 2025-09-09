@@ -7,13 +7,19 @@ import { advanceTime, mockDate } from "@odoo/hoot-mock";
 
 import { setupVoipTests } from "@voip/../tests/voip_test_helpers";
 
+import { serverState } from "@web/../tests/web_test_helpers";
+
 describe.current.tags("desktop");
 setupVoipTests();
 
 test("Do not disturb selector show all options", async () => {
-    await startServer();
+    const pyEnv = await startServer();
+    // DND Selector only shows up in production mode 💡
+    const providerId = pyEnv["voip.provider"].create({ mode: "prod" });
+    pyEnv["res.users"].write([serverState.userId], { voip_provider_id: providerId });
     await start();
     await click(".o_menu_systray button[title='Show Softphone']");
+
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
@@ -28,9 +34,13 @@ test("Do not disturb selector show all options", async () => {
 
 test("Do not disturb selector changes state correctly with limited time", async () => {
     mockDate("2025-01-01 01:00:00", +0);
-    await startServer();
+    const pyEnv = await startServer();
+    // DND Selector only shows up in production mode 💡
+    const providerId = pyEnv["voip.provider"].create({ mode: "prod" });
+    pyEnv["res.users"].write([serverState.userId], { voip_provider_id: providerId });
     await start();
     await click(".o_menu_systray button[title='Show Softphone']");
+
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");
@@ -48,9 +58,13 @@ test("Do not disturb selector changes state correctly with limited time", async 
 });
 
 test("Do not disturb selector change state correctly with infinite time", async () => {
-    await startServer();
+    const pyEnv = await startServer();
+    // DND Selector only shows up in production mode 💡
+    const providerId = pyEnv["voip.provider"].create({ mode: "prod" });
+    pyEnv["res.users"].write([serverState.userId], { voip_provider_id: providerId });
     await start();
     await click(".o_menu_systray button[title='Show Softphone']");
+
     // don't click on the dropdown too early: handler may not be registered yet
     await contains(".o-voip-DndSelector-badge[title='Available']");
     await click(".o-voip-DndSelector-badge[title='Available']");

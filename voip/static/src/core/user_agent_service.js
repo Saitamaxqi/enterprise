@@ -65,6 +65,9 @@ export class UserAgent extends Reactive {
         if (this.activeSession.isOnHold) {
             return _t("On hold");
         }
+        if (this.voip.mode === "demo") {
+            return _t("Demo call");
+        }
         return _t("In call");
     }
 

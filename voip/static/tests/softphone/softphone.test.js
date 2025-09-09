@@ -87,3 +87,9 @@ test("When a call is created, a partner with a corresponding phone number is dis
     await advanceTime(5000);
     await contains(".o-voip-InCallView", { text: "Maxime Randonnées" });
 });
+
+test("The softphone top bar indicates 'Demo Mode' in demo mode.", async () => {
+    await start();
+    await click(".o_menu_systray button[title='Show Softphone']");
+    await contains(".o-voip-Softphone header:contains(Demo Mode)");
+});
