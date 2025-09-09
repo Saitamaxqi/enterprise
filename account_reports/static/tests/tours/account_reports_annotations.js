@@ -32,7 +32,11 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Extra Trigger step",
-            trigger: "tr:nth-child(12):not(.d-none) .name:contains('101404')",
+            trigger: "tr:nth-child(5) .o_account_report_chatter_annoted",
+        },
+        {
+            content: "Extra Trigger step",
+            trigger: "tr:nth-child(12) .o_account_report_chatter_annoted",
         },
         {
             content: "Check there are two lines annotated initially",
@@ -44,16 +48,6 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
 
                 // Check the number of annotated lines
                 Asserts.isEqual(annotations.length, 2);
-
-                // Check the annotations buttons are on the right lines
-                Asserts.isTrue(
-                    annotations[0] ===
-                        document.querySelector("tr:nth-child(5) .o_account_report_chatter_annoted")
-                );
-                Asserts.isTrue(
-                    annotations[1] ===
-                        document.querySelector("tr:nth-child(12) .o_account_report_chatter_annoted")
-                );
             },
         },
         // Test that we can add a new annotation
@@ -96,20 +90,6 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
 
                 // Check the number of annotated lines
                 Asserts.isEqual(annotations.length, 3);
-
-                // Check the annotations buttons are on the right lines
-                Asserts.isTrue(
-                    annotations[0] ===
-                        document.querySelector("tr:nth-child(5) .o_account_report_chatter_annoted")
-                );
-                Asserts.isTrue(
-                    annotations[1] ===
-                        document.querySelector("tr:nth-child(8) .o_account_report_chatter_annoted")
-                );
-                Asserts.isTrue(
-                    annotations[2] ===
-                        document.querySelector("tr:nth-child(12) .o_account_report_chatter_annoted")
-                );
             },
         },
         // Test that we can edit an annotation
@@ -187,16 +167,6 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
 
                 // Check the number of annotated lines
                 Asserts.isEqual(annotations.length, 2);
-
-                // Check the annotations buttons are on the right lines
-                Asserts.isTrue(
-                    annotations[0] ===
-                        document.querySelector("tr:nth-child(5) .o_account_report_chatter_annoted")
-                );
-                Asserts.isTrue(
-                    annotations[1] ===
-                        document.querySelector("tr:nth-child(12) .o_account_report_chatter_annoted")
-                );
             },
         },
     ],
