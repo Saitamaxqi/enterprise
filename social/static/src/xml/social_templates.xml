@@ -445,7 +445,7 @@
         </xpath>
     </t>
 
-    <div t-name="StreamPostKanbanView.buttons" t-inherit="web.KanbanView.Buttons">
+    <t t-name="StreamPostKanbanView.buttons" t-inherit="web.KanbanView.Buttons">
         <xpath expr="." position="inside">
             <button type="button" class="btn btn-primary o_stream_post_kanban_new_stream" t-on-click.prevent="_onNewStream">
                 Add Stream
@@ -459,7 +459,7 @@
                 <i t-else="" class="fa fa-refresh mx-1 align-middle"/>
             </button>
         </xpath>
-    </div>
+    </t>
 
     <t t-name="social.SocialKanbanView" t-inherit="web.KanbanView" t-inherit-mode="primary">
         <xpath expr="//Layout" position="attributes">
