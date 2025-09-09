@@ -176,6 +176,10 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         options do not corresond to the first and last day of their respective
         month, or belong to two different years.
         """
+        date_options = (options or {}).get('date', {})
+        if not date_options.get('date_from') or not date_options.get('date_to'):
+            raise UserError(_("Cannot generate a BOE file for an open-ended date range."))
+
         date_from = datetime.strptime(options['date']['date_from'], "%Y-%m-%d")
         date_to = datetime.strptime(options['date']['date_to'], "%Y-%m-%d")
 

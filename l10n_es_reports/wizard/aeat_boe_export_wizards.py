@@ -135,7 +135,11 @@ class L10n_Es_ReportsAeatBoeMod303ExportWizard(models.TransientModel):
     def _compute_show_exempted_from_mod_390(self):
         report = self.env.ref('l10n_es.mod_303')
         options = self.env.context.get('l10n_es_reports_report_options', {})
-        period = self.env[report.custom_handler_model_name]._get_mod_period_and_year(options)[0]
+        try:
+            period = self.env[report.custom_handler_model_name]._get_mod_period_and_year(options)[0]
+        except UserError:
+            period = None
+
         for record in self:
             record.exempted_from_mod_390_available = period in ('12', '4T')
 

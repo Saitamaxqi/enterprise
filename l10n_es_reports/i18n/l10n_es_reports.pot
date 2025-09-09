@@ -178,6 +178,12 @@ msgstr ""
 #. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
+msgid "Cannot generate a BOE file for an open-ended date range."
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid "Cannot generate a BOE file for two different years"
 msgstr ""
 
