@@ -4,18 +4,24 @@ import { _t } from "@web/core/l10n/translation";
 
 
 export class AILivechatEdit extends Interaction {
-    static selector = ".s_ai_livechat .ai_livechat_component";
+    static selector = ".s_ai_livechat";
 
     setup() {
         this.renderAt("ai_website_livechat.s_ai_livechat_edit", {
-            livechatAvailable: this.dataEl.attr('livechatChannelId'),
-            fallbackButtonURL: this.dataEl.attr('fallbackButtonURL'),
-            fallbackButtonText: this.dataEl.attr('fallbackButtonText') || _t('Contact Us')
-        }, this.el);
-        $('.ai_livechat_prompt_textarea').attr('placeholder', this.dataEl.attr('promptPlaceholder'))
+            livechatAvailable: this.livechatAvailable,
+            fallbackButtonActive: this.fallbackButtonActive,
+            fallbackButtonURL: this.el.dataset.fallbackButtonURL,
+            fallbackButtonText: this.el.dataset.fallbackButtonText || _t('Contact Us'),
+        }, this.el.querySelector(".ai_livechat_component"))
+        this.el.querySelector('.ai_livechat_prompt_textarea').setAttribute('placeholder', this.el.dataset.promptPlaceholder || _t('Ask AI'));
     }
-    get dataEl(){
-        return $('.s_ai_livechat_data')
+    get livechatAvailable() {
+        return this.el.dataset.livechatChannelId;
+    }
+    get fallbackButtonActive() {
+        return !this.livechatAvailable &&
+        this.el.dataset.hasFallbackButton === "true" &&
+        Boolean(this.el.dataset.fallbackButtonURL);
     }
 }
 

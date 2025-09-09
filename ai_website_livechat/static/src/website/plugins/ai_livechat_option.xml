@@ -17,11 +17,14 @@
     <BuilderRow label.translate="Prompt Placeholder">
         <BuilderTextInput action="'setPromptPlaceholder'" placeholder.translate="e.g. Ask AI"/>
     </BuilderRow>
-    <BuilderRow label.translate="Fallback Button Text">
+    <BuilderRow label.translate="Fallback Button">
+        <BuilderCheckbox action="'toggleHasFallbackButton'" id="'aiLivechatFallbackButton'" preview="false"/>
+    </BuilderRow>
+    <BuilderRow label.translate="Text" level="1" t-if="isActiveItem('aiLivechatFallbackButton')">
         <BuilderTextInput action="'setFallbackButtonText'" placeholder.translate="e.g. Contact Us" default="''"/>
     </BuilderRow>
-    <BuilderRow label.translate="Fallback Button URL">
-        <BuilderTextInput action="'setFallbackButtonURL'" placeholder.translate="e.g. /contactus" default="''"/>
+    <BuilderRow label.translate="URL" level="1" t-if="isActiveItem('aiLivechatFallbackButton')">
+        <WebsiteUrlPicker action="'setFallbackButtonURL'" placeholder.translate="e.g. /contactus" default="''"/>
     </BuilderRow>
 </t>
 

@@ -1,6 +1,11 @@
 import { Plugin } from "@html_editor/plugin";
 import { registry } from "@web/core/registry";
 import { BuilderAction } from "@html_builder/core/builder_action";
+import { withSequence } from "@html_editor/utils/resource";
+import { after } from "@html_builder/utils/option_sequence";
+import { WEBSITE_BACKGROUND_OPTIONS } from "@website/builder/option_sequence";
+import { AILivechatOption } from "./ai_livechat_option";
+
 
 
 async function update_website_snippet_agent ({ ormService, newAgentId=null, oldAgentId=null }) {
@@ -26,16 +31,18 @@ class AILivechatOptionPlugin extends Plugin {
     resources = {
         so_content_addition_selector: [".s_ai_livechat"],
         builder_options: [
-            {
+            withSequence(after(WEBSITE_BACKGROUND_OPTIONS), {
+                OptionComponent: AILivechatOption,
                 template: "ai_website_livechat.AILivechatOption",
                 selector: ".s_ai_livechat",
-            },
+            }),
         ],
         builder_actions: {
             SetChatStyleAction,
             SetAIAgentAction,
             SetLivechatChannelAction,
             SetPromptPlaceholderAction,
+            ToggleHasFallbackButtonAction,
             SetFallbackButtonTextAction,
             SetFallbackButtonURLAction,
         },
@@ -94,16 +101,12 @@ export class SetLivechatChannelAction extends BuilderAction {
     }
 
     apply ({ editingElement, value }) {
-        const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
         const id = value ? JSON.parse(value).id : "";
         editingElement.dataset.livechatChannelId = id;
-        livechatDataEl.setAttribute('livechatChannelId', id);
     }
 
     clean({ editingElement }) {
         editingElement.dataset.livechatChannelId = "";
-        const livechatDataEl = editingElement.querySelector(".s_ai_livechat_data");
-        livechatDataEl.removeAttribute('livechatChannelId');
     }
 }
 
@@ -119,7 +122,6 @@ export class SetChatStyleAction extends BuilderAction {
 
     apply ({ editingElement, params: { mainParam: chatStyle } }) {
         editingElement.dataset.chatStyle = chatStyle;
-        editingElement.querySelector(".s_ai_livechat_data").setAttribute('chatStyle', chatStyle);
     }
 }
 
@@ -136,7 +138,19 @@ export class SetPromptPlaceholderAction extends BuilderAction {
 
     apply ({ editingElement, value }) {
         editingElement.dataset.promptPlaceholder = value;
-        editingElement.querySelector(".s_ai_livechat_data").setAttribute('promptPlaceholder', value);
+    }
+}
+
+export class ToggleHasFallbackButtonAction extends BuilderAction {
+    static id = "toggleHasFallbackButton";
+
+    isApplied ({ editingElement }) {
+        return editingElement.dataset.hasFallbackButton === "true";
+    }
+
+    apply ({ editingElement }) {
+        const value = editingElement.dataset.hasFallbackButton === "true" ? false : true;
+        editingElement.dataset.hasFallbackButton = value;
     }
 }
 
@@ -153,7 +167,6 @@ export class SetFallbackButtonTextAction extends BuilderAction {
 
     apply ({ editingElement, value }) {
         editingElement.dataset.fallbackButtonText = value;
-        editingElement.querySelector(".s_ai_livechat_data").setAttribute('fallbackButtonText', value);
     }
 }
 
@@ -170,7 +183,6 @@ export class SetFallbackButtonURLAction extends BuilderAction {
 
     apply ({ editingElement, value }) {
         editingElement.dataset.fallbackButtonURL = value;
-        editingElement.querySelector(".s_ai_livechat_data").setAttribute('fallbackButtonURL', value);
     }
 }
 

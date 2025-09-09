@@ -4,7 +4,6 @@
             <div class="col d-flex align-items-center border rounded">
                 <textarea type="text"
                     class="ai_livechat_prompt_textarea form-control overflow-hidden border-0 rounded shadow-none flex-grow"
-                    placeholder="Ask AI"
                     autocomplete="off"
                     style="resize:none; height: 38px"/>
                 <div class="p-2">
@@ -13,10 +12,10 @@
                     </button>
                 </div>
             </div>
-            <div t-if="livechatAvailable || fallbackButtonURL" class="col-lg-4 col-xxl-3 d-flex align-items-center pt-4 pt-lg-0">
+            <div t-if="livechatAvailable || fallbackButtonActive" class="col-lg-4 col-xxl-3 d-flex align-items-center pt-4 pt-lg-0">
                 <span class="pe-4 me-2 text-600">or</span>
                 <button t-if="livechatAvailable" class="btn btn-primary w-lg-100 ask-human">Ask a Human</button>
-                <a t-elif="fallbackButtonURL" class="btn btn-primary w-lg-100 fallback-btn" t-att-href="fallbackButtonURL">
+                <a t-elif="fallbackButtonActive" class="btn btn-primary w-lg-100 fallback-btn" t-att-href="fallbackButtonURL">
                     <t t-out="fallbackButtonText"/>
                 </a>
             </div>

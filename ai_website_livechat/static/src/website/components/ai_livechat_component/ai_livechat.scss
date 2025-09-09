@@ -13,10 +13,19 @@
         visibility: visible;
     }
 }
+.o_ai_livechat_container {
+    margin: auto;
+    width: 80% !important;
+    max-width: 100% !important;
+    min-height: 100vh;
+}
 
-.o_ai_livechat_input_sticky {
-    position: sticky;
-    background-color: white;
+.o_ai_livechat_input_fixed {
+    position: fixed;
     padding-bottom: 20px;
     bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    // Matches the width of .o_ai_livechat_container
+    width: 80%;
 }

@@ -9,16 +9,16 @@ export class AILivechat extends Interaction {
     dynamicContent = {
         ".ai_livechat_component": {
             "t-component": () => {
-                const el = this.el.querySelector(".s_ai_livechat_data");
                 return [
                     AILivechatComponent, 
                     {
-                        'chatStyle': el.getAttribute('chatStyle') ? el.getAttribute('chatStyle') : 'fullscreen',
-                        'agentId': parseInt(el.getAttribute('agentId')),
-                        'livechatChannelId': parseInt(el.getAttribute('livechatChannelId')),
-                        'promptPlaceholder': el.getAttribute('promptPlaceholder') ? el.getAttribute('promptPlaceholder') : _t('Ask AI'),
-                        'fallbackButtonText': el.getAttribute('fallbackButtonText') ? el.getAttribute('fallbackButtonText') : _t('Contact Us'),
-                        'fallbackButtonURL': el.getAttribute('fallbackButtonURL'),
+                        'chatStyle': this.el.dataset.chatStyle ? this.el.dataset.chatStyle : 'fullscreen',
+                        'agentId': parseInt(this.el.dataset.agentId),
+                        'livechatChannelId': parseInt(this.el.dataset.livechatChannelId),
+                        'promptPlaceholder':  this.el.dataset.promptPlaceholder ? this.el.dataset.promptPlaceholder : _t('Ask AI'),
+                        'hasFallbackButton':  this.el.dataset.hasFallbackButton === 'true' ? true : false,
+                        'fallbackButtonText':  this.el.dataset.fallbackButtonText ? this.el.dataset.fallbackButtonText : _t('Contact Us'),
+                        'fallbackButtonURL':  this.el.dataset.fallbackButtonURL,
                     }
                 ]
             }
