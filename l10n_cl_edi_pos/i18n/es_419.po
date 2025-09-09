@@ -209,3 +209,9 @@ msgstr "Debe configurar un país en los ajustes de su empresa."
 #, python-format
 msgid "de Fecha:"
 msgstr "de Fecha:"
+
+#. module: l10n_cl_edi_pos
+#. odoo-javascript
+#: code:addons/l10n_cl_edi_pos/static/src/app/components/receipt/receipt.xml:0
+msgid "Suggested Tip:"
+msgstr "Propina sugerida:"

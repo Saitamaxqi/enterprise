@@ -182,6 +182,12 @@ msgid "Verifique documento en www.sii.cl"
 msgstr ""
 
 #. module: l10n_cl_edi_pos
+#. odoo-javascript
+#: code:addons/l10n_cl_edi_pos/static/src/app/components/receipt/receipt.xml:0
+msgid "Suggested Tip:"
+msgstr ""
+
+#. module: l10n_cl_edi_pos
 #: model:ir.model.fields,field_description:l10n_cl_edi_pos.field_pos_order__voucher_number
 msgid "Voucher Number"
 msgstr ""
