@@ -6,7 +6,7 @@
             <i t-if="pill.record.state === 'validated'" class="fa fa-lock position-absolute top-0 end-0" style="font-size: x-small"/>
         </span>
         <xpath expr="//div[hasclass('o_gantt_pill_wrapper')]" position="attributes">
-            <attribute name="t-attf-class" add="#{(pill.record.state === 'validated' ? 'opacity-50' : '') + ' pe-none' }" />
+            <attribute name="t-attf-class" add="#{pill.record.state === 'validated' ? 'opacity-50' : '' }" />
         </xpath>
         <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="after">
             <span class="o-xsmaller text-muted text-truncate"><t t-esc="pill.subName"/></span>
