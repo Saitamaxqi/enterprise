@@ -1379,3 +1379,17 @@ class TestQualityCheck(TestQualityCommon):
             {'state': 'done'},
             {'state': 'done'}
         ])
+
+    def test_product_quality_point_smart_button_count(self):
+        """
+        Archived QCP should not be included in the product smart button count
+        """
+        quality_point = self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+        })
+
+        self.assertEqual(self.product.quality_control_point_qty, 1)
+
+        quality_point.active = False
+        self.product.invalidate_recordset(fnames=['quality_control_point_qty'])
+        self.assertEqual(self.product.quality_control_point_qty, 0)

@@ -721,7 +721,7 @@ class ProductProduct(models.Model):
 
         parent_category_ids = [int(parent_id) for parent_id in self.categ_id.parent_path.split('/')[:-1]] if self.categ_id else []
         query.add_where(SQL(
-            """
+            """(
                     (
                         -- QP has at least one linked product and one is right
                         EXISTS (SELECT 1 FROM product_product_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id AND rel.product_product_id = ANY(%s))
@@ -734,6 +734,7 @@ class ProductProduct(models.Model):
                         -- And QP has no linked product categories
                         AND NOT EXISTS (SELECT 1 FROM product_category_quality_point_rel rel WHERE rel.quality_point_id = quality_point.id)
                     )
+                )
             """,
             self.ids, parent_category_ids,
         ))
