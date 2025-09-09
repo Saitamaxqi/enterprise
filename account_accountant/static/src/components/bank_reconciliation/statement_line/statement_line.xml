@@ -12,12 +12,10 @@
                     t-on-touchcancel="onTouchMoveOrCancel"
                     t-on-touchend="onTouchEnd"
                     t-ref="root">
-                <div class="statement_separator d-none d-md-block w-100 text-end" t-if="!recordData.statement_id">
-                    <button type="button" class="btn btn-secondary btn-sm" t-on-click.stop="openStatementCreate">
+                <div name="bank_statement_line" class="o_statement_line w-100 p-2" t-on-click="toggleUnfold" t-att-class="{'o_selected_statement_line': isSelected}">
+                    <button t-if="!recordData.statement_id" type="button" class="o_statement_btn d-none d-md-block position-absolute top-0 end-0 btn btn-sm btn-secondary" t-on-click.stop="openStatementCreate">
                         Statement
                     </button>
-                </div>
-                <div name="bank_statement_line" class="o_statement_line w-100 p-2" t-on-click="toggleUnfold" t-att-class="{'o_selected_statement_line': isSelected}">
                     <div class="o_grid_container">
                         <div class="o_row">
                             <div class="d-flex gap-3">

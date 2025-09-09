@@ -76,6 +76,11 @@
 
 
 .o_bank_reconciliation_container {
+    .o_kanban_record:not(.o_kanban_ghost) {
+        --KanbanRecord-padding-v: 0;
+        --KanbanRecord-padding-h: 0;
+    }
+
     @include media-breakpoint-up(md) {
         .o_bank_reconciliation_kanban_renderer {
             .o_statement_line .o_grid_container {
@@ -103,7 +108,7 @@
 
                     .o_top_button_line {
                         display: flex !important;
-                        gap: 5px;
+                        gap: map-get($spacers, 1);
                         align-items: center;
                     }
                 }
@@ -123,30 +128,20 @@
                 }
             }
 
-            .statement_separator {
-                position: absolute;
-                height: 4px;
-                padding-top: 2px;
-                padding-right: 25px;
-                z-index: 2;
-
-                .btn-sm {
-                    position: relative;
-                    padding: 0 2px;
-                    transform: translateY(-15px) translateX(10px);
-                    opacity: 0;
-                }
+            .o_statement_btn {
+                transform: translate(map-get($spacers, 3) * -1, -50%);
+                padding: map-get($spacers, 1) * 0.5 map-get($spacers, 2);
+                opacity: 0;
             }
 
             .o_kanban_record:not(.o_kanban_ghost) {
                 border: 0;
-                border-bottom: 1px solid lightgrey;
-                padding: 0;
+                border-bottom: $border-width solid $border-color;
                 margin:0;
                 width: 100%;
 
                 &:hover {
-                    .statement_separator .btn-sm {
+                    .o_statement_btn {
                         opacity: 1;
                     }
                 }
@@ -157,7 +152,7 @@
     &:where(:has(.o_bank_rec_widget_chatter_container)) {
         .o_kanban_record:focus, .o_kanban_record:has(.o_selected_statement_line) {
             outline: none;
-            box-shadow: inset 0 0 0 1px $primary;
+            box-shadow: inset 0 0 0 $border-width $primary;
         }
     }
 }
