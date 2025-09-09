@@ -1,5 +1,5 @@
 <templates id="template" xml:space="preserve">
-    <t t-name="ai_website_livechat.s_ai_livechat_support_ai_edit">
+    <t t-name="ai_website_livechat.s_ai_livechat_edit">
         <div class="row">
             <div class="col d-flex align-items-center border rounded">
                 <textarea type="text"

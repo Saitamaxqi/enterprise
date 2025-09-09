@@ -1,17 +1,17 @@
 import { Interaction } from "@web/public/interaction";
 import { registry } from "@web/core/registry";
-import { SupportAIComponent } from "@ai_website_livechat/website/components/support_ai_component/support_ai";
+import { AILivechatComponent } from "@ai_website_livechat/website/components/ai_livechat_component/ai_livechat";
 import { _t } from "@web/core/l10n/translation";
 
 
 export class AILivechat extends Interaction {
     static selector = ".s_ai_livechat";
     dynamicContent = {
-        ".support_ai": {
+        ".ai_livechat_component": {
             "t-component": () => {
                 const el = this.el.querySelector(".s_ai_livechat_data");
                 return [
-                    SupportAIComponent, 
+                    AILivechatComponent, 
                     {
                         'chatStyle': el.getAttribute('chatStyle') ? el.getAttribute('chatStyle') : 'fullscreen',
                         'agentId': parseInt(el.getAttribute('agentId')),

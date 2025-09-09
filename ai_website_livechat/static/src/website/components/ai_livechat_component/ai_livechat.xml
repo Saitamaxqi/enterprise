@@ -1,5 +1,5 @@
 <templates id="template" xml:space="preserve">
-    <t t-name="ai_website_livechat.SupportAIComponent">
+    <t t-name="ai_website_livechat.AILivechatComponent">
         <div id="ai-messages" class="col pb-9" t-ref="messagesDiv" t-if="state.messages.length">
             <div t-foreach="state.messages" t-as="message" t-key="message_index"
                 class="position-relative py-1 o_support_page_message"
@@ -17,7 +17,7 @@
                                         }">
                             <div class="o-min-width-0">
                                 <div class="position-relative d-flex">
-                                    <div class="position-relative overflow-x-auto d-inline-block o_support_ai_message_with_copy_button">
+                                    <div class="position-relative overflow-x-auto d-inline-block o_ai_livechat_message_with_copy_button">
                                         <div class="rounded position-relative text-break py-2 align-self-start"
                                             t-att-class="{
                                                 'px-3': message.author !== 'assistant' or message.isError,
@@ -26,7 +26,7 @@
                                                 'bg-danger opacity-25': message.isError,
                                             }
                                             ">
-                                            <div class="d-inline o_support_ai_message_content" t-att-class="{'o_user_ai_message': message.author === 'user' or message.isError}">
+                                            <div class="d-inline o_ai_livechat_message_content" t-att-class="{'o_user_ai_message': message.author === 'user' or message.isError}">
                                                     <!-- assistant IS THINKING -->
                                                 <div t-if="message.author === 'assistant' and !('text' in message)" class="d-flex align">
                                                     <img src="/web/static/img/spin.svg" alt="Loading..." class="me-2"
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col" t-att-class="{'o_support_ai_input_sticky': state.messages.length,}">
+            <div class="col" t-att-class="{'o_ai_livechat_input_sticky': state.messages.length,}">
                 <div class="mb-1" t-att-class="{'d-none': !state.messages.length,}">
                     <button t-if="livechatAvailable" class="btn btn-primary small rounded-2 py-1 px-3 me-3 o-disable-thinking" disabled="" t-on-click="askHuman">Ask a Human</button>
                     <a t-elif="props.fallbackButtonURL" class="btn btn-primary small rounded-2 py-1 px-3 me-3 o-disable-thinking" disabled="" t-att-href="props.fallbackButtonURL">

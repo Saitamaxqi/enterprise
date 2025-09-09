@@ -7,8 +7,8 @@ import { registry } from "@web/core/registry";
 import { convertBrToLineBreak, prettifyMessageContent } from "@mail/utils/common/format";
 
 
-export class SupportAIComponent extends Component {
-    static template = "ai_website_livechat.SupportAIComponent";
+export class AILivechatComponent extends Component {
+    static template = "ai_website_livechat.AILivechatComponent";
     static props = {
         agentId: { type: Number },
         livechatChannelId: { type: Number, optional: true },
@@ -336,4 +336,4 @@ export class SupportAIComponent extends Component {
         )
     }
 }
-registry.category("public_components").add("ai_website_livechat.support_ai_component", SupportAIComponent);
+registry.category("public_components").add("ai_website_livechat.ai_livechat_component", AILivechatComponent);
