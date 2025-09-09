@@ -10,7 +10,7 @@ from lxml import html
 from markupsafe import Markup
 
 from odoo import api, Command, fields, models, _
-from odoo.addons.web_editor.tools import handle_history_divergence
+from odoo.addons.html_editor.tools import handle_history_divergence
 from odoo.exceptions import AccessError, ValidationError, UserError
 from odoo.fields import Domain
 from odoo.tools import get_lang, OrderedSet

@@ -59,7 +59,7 @@ export class SignNameAndSignature extends NameAndSignature {
                     user.hasGroup("base.group_user").then((isSystemUser) => {
                         this.showFrameCheck = isSystemUser;
                     }),
-                    loadJS("/web_editor/static/lib/html2canvas.js"),
+                    loadJS("/sign/static/lib/html2canvas.js"),
                 ]);
             }
         });
