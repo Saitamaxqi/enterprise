@@ -369,19 +369,20 @@ class HrExpenseStripeCard(models.Model):
             exp_month = stripe_object['exp_month']
             exp_year = stripe_object['exp_year'] % 100
             new_vals['expiration'] = f'{exp_month:02}/{exp_year:02}'
-        if stripe_object['shipping']['status'] != self.shipping_status:
-            new_vals['shipping_status'] = stripe_object['shipping']['status']
-            if new_vals['shipping_status'] in ('canceled', 'failure', 'returned'):
-                emails_to_send.append('canceled')
-            elif new_vals['shipping_status'] == 'shipped':
-                emails_to_send.append('shipped')
-        if not self.tracking_url:
-            new_vals['tracking_url'] = stripe_object['shipping']['tracking_url']
-        if not self.tracking_number:
-            new_vals['tracking_number'] = stripe_object['shipping']['tracking_number']
-        shipping_eta = datetime.datetime.fromtimestamp(stripe_object['shipping']['eta'])
-        if stripe_object['shipping']['eta'] and shipping_eta != self.shipping_estimated_delivery:
-            new_vals['shipping_estimated_delivery'] = shipping_eta
+        if self.card_type == 'physical':
+            if stripe_object['shipping']['status'] != self.shipping_status:
+                new_vals['shipping_status'] = stripe_object['shipping']['status']
+                if new_vals['shipping_status'] in ('canceled', 'failure', 'returned'):
+                    emails_to_send.append('canceled')
+                elif new_vals['shipping_status'] == 'shipped':
+                    emails_to_send.append('shipped')
+            if not self.tracking_url:
+                new_vals['tracking_url'] = stripe_object['shipping']['tracking_url']
+            if not self.tracking_number:
+                new_vals['tracking_number'] = stripe_object['shipping']['tracking_number']
+            shipping_eta = datetime.datetime.fromtimestamp(stripe_object['shipping']['eta'])
+            if stripe_object['shipping']['eta'] and shipping_eta != self.shipping_estimated_delivery:
+                new_vals['shipping_estimated_delivery'] = shipping_eta
 
         self.write(new_vals)
         for email_type in emails_to_send:
