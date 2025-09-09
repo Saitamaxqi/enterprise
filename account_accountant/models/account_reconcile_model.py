@@ -6,7 +6,7 @@ class AccountReconcileModel(models.Model):
     _inherit = 'account.reconcile.model'
 
     # Technical field to know if the rule was created automatically or by a user.
-    created_automatically = fields.Boolean(default=False)
+    created_automatically = fields.Boolean(default=False, copy=False)
 
     def _apply_lines_for_bank_widget(self, residual_amount_currency, residual_balance, partner, st_line):
         """ Apply the reconciliation model lines to the statement line passed as parameter.
@@ -302,3 +302,17 @@ class AccountReconcileModel(models.Model):
             reco_models._apply_reconcile_models(unreconciled_statement_lines)
 
         return reco_models
+
+    def action_archive(self):
+        res = super().action_archive()
+        unreconciled_statement_lines = self.env['account.bank.statement.line'].search([
+            *self._check_company_domain(self.env.company),
+            ('is_reconciled', '=', False),
+            ('line_ids.reconcile_model_id', 'in', self.ids),
+        ])
+        if unreconciled_statement_lines:
+            unreconciled_statement_lines.line_ids.filtered(
+                lambda line:
+                line.account_id == line.move_id.journal_id.suspense_account_id
+            ).reconcile_model_id = False
+        return res

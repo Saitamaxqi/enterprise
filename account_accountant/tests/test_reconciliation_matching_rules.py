@@ -1097,6 +1097,51 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': new_rule.id},
         ], reconciled_amls=False)
 
+    def test_archive_reco_model(self):
+        bank_line = self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create([{
+                'journal_id': self.bank_journal.id,
+                'date': '2020-01-01',
+                'payment_ref': 'blblbl',
+                'amount': 100,
+            }]
+        )
+
+        self._check_st_line_matching(bank_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': False},
+        ], reconciled_amls=False)
+
+        new_rule = self.env['account.reconcile.model'].create({
+            'name': 'new rule',
+            'match_journal_ids': [Command.set(self.bank_journal.ids)],
+            'match_label': 'contains',
+            'match_label_param': 'blblbl',
+            'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+        })
+
+        self._check_st_line_matching(bank_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': new_rule.id},
+        ], reconciled_amls=False)
+
+        new_rule.action_archive()
+        self._check_st_line_matching(bank_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': False},
+        ], reconciled_amls=False)
+
+    def test_copy_reco_model_created_automatically(self):
+        rule = self.env['account.reconcile.model'].create({
+            'name': 'new rule',
+            'match_journal_ids': [Command.set(self.bank_journal.ids)],
+            'match_label': 'contains',
+            'match_label_param': 'blblbl',
+            'line_ids': [Command.create({'account_id': self.current_assets_account.id})],
+            'created_automatically': True,
+        })
+        copied_rule = rule.copy()
+        self.assertFalse(copied_rule.created_automatically)
+
     def test_get_common_substring_of_labels(self):
         """
         Test the _get_common_substring helper method.
