@@ -48,6 +48,7 @@
             'mrp_workorder/static/src/mrp_workorder_gantt_*',
         ],
         'web.assets_tests': [
+            'web_tour/static/src/js/tour_automatic/tour_helpers.js',
             'mrp_workorder/static/tests/tours/**/*',
         ],
         'web.assets_unit_tests': [
