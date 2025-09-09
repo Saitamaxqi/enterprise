@@ -1,9 +1,10 @@
 import { user } from "@web/core/user";
 import { GanttModel } from "@web_gantt/gantt_model";
+import { ProjectModelMixin } from "@project/views/project_model_mixin";
 
 const COLOR_FIELD = "stage_id";
 
-export class ProjectGanttModel extends GanttModel {
+export class ProjectGanttModel extends ProjectModelMixin(GanttModel) {
     /**
      * @override
      */
@@ -14,6 +15,7 @@ export class ProjectGanttModel extends GanttModel {
             // the field (i.e. the user has the 'project.group_project_stages' group).
             this.metaData.colorField = COLOR_FIELD;
         }
+        searchParams.domain = this._processSearchDomain(searchParams?.domain || []);
         await super.load(searchParams);
     }
 
