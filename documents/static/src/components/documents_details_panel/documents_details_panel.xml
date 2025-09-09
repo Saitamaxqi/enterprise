@@ -111,6 +111,7 @@
                                 value="state.resModel ? state.resModelName : ''"
                                 onModelSelected.bind="onModelSelected"
                                 models="this.state.models"
+                                nbVisibleModels="this.state.models.length"
                                 placeholder.translate="No linked model"
                             />
                         </div>

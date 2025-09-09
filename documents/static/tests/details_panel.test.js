@@ -279,3 +279,19 @@ test("Details panel changes to folders are immediately saved and visible in the 
     await renameTwice("kanban record");
     expect(counter).toBe(4);
 });
+
+test("All models should be displayed in the details panel", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Test Request", { folder_id: 1 }),
+    ]);
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+    await contains(".o_kanban_record:contains('Test Request')").click();
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    await animationFrame();
+
+    await contains(dp("input[placeholder='No linked model']")).click();
+    await animationFrame();
+    expect(dp("div ul li")).toHaveCount(9);
+    expect(dp("div ul li:contains('Start typing...')")).toHaveCount(0);
+});

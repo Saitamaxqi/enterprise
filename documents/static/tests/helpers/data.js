@@ -123,7 +123,18 @@ export class DocumentsDocument extends models.Model {
     }
 
     get_details_panel_res_models() {
-        return ["res.partner"];
+        // Nine elements to match the number actually sent by the server when all apps are present.
+        return [
+            "res.partner",
+            "res.users",
+            "mail.activity",
+            "mail.activity.type",
+            "mail.channel",
+            "mail.channel.member",
+            "mail.channel.message",
+            "mail.message",
+            "documents.document",
+        ];
     }
 
     action_create_shortcut() {
