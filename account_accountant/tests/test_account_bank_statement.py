@@ -504,6 +504,44 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'amount_total_signed': 50,
         }])
 
+    def test_exchange_diff_multiple_lines(self):
+        self.other_currency.rate_ids = [Command.create({
+            'rate': 1,
+            'name': '2017-01-03',
+        })]
+        st_line = self._create_st_line(
+            200.0,
+            date='2017-01-05',
+            update_create_date=False,
+        )
+
+        inv_line_1 = self._create_invoice_line(
+            'out_invoice',
+            invoice_date='2017-01-01',
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+        # 100.0 curr2 == 50.0 comp_curr
+        inv_line_2 = self._create_invoice_line(
+            'out_invoice',
+            currency_id=self.other_currency.id,
+            invoice_date='2017-01-01',
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+
+        st_line.set_line_bank_statement_line((inv_line_1 + inv_line_2).ids)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 200.0, 'currency_id': self.company_data['currency'].id, 'balance': 200.0, 'reconciled': False},
+            {'account_id': inv_line_1.account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': True},
+            {'account_id': inv_line_2.account_id.id, 'amount_currency': -100.0, 'currency_id': self.other_currency.id, 'balance': -100.0, 'reconciled': True},
+        ])
+
+        self.assertFalse(st_line.line_ids[1].matched_debit_ids.exchange_move_id)
+        exchange_move = st_line.line_ids[2].matched_debit_ids.exchange_move_id
+        self.assertRecordValues(exchange_move, [{
+            'date': fields.Date.from_string('2017-01-31'),
+            'amount_total_signed': 50,
+        }])
+
     def test_validation_caba_tax_account(self):
         """ Cash basis taxes usually put their tax lines on a transition account, and the cash basis entries then move those amounts
         to the regular tax accounts. When using a cash basis tax in the bank reconciliation widget, their won't be any cash basis
