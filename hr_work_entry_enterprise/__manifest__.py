@@ -17,7 +17,10 @@
     'auto_install': True,
     'assets': {
         'web.assets_backend_lazy': [
-            'hr_work_entry_enterprise/static/**/*',
+            'hr_work_entry_enterprise/static/src/**/*',
+        ],
+        'web.assets_unit_tests': [
+            'hr_work_entry_enterprise/static/tests/**/*',
         ],
     },
     'author': 'Odoo S.A.',

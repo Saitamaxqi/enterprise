@@ -123,7 +123,7 @@ export class WorkEntriesGanttModel extends GanttModel {
         if (userFavoritesWorkEntriesIds.length) {
             this.userFavoritesWorkEntries = await this.orm.read(
                 "hr.work.entry.type",
-                userFavoritesWorkEntriesIds.map((r) => r.work_entry_type_id[0]),
+                userFavoritesWorkEntriesIds.map((r) => r.work_entry_type_id?.[0]).filter(Boolean),
                 ["display_name", "display_code", "color"]
             );
             this.userFavoritesWorkEntries = this.userFavoritesWorkEntries.sort((a, b) =>
