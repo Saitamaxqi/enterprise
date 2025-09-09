@@ -57,6 +57,10 @@ class TestIsoReconciliation(TestSEPACreditTransferCommon):
         self.assertEqual(payment.state, 'paid')
 
     def test_matching_end_to_end_uuid_no_payment_entry(self):
+        # Check if accounting is installed as this test doesn't make sense without accounting installed
+        if self.env.ref('base.module_accountant').state != 'installed':
+            self.skipTest("`accountant` module not installed")
+
         bill = self.env['account.move'].create({
             'partner_id': self.partner_a.id,
             'move_type': 'in_invoice',
@@ -100,6 +104,9 @@ class TestIsoReconciliation(TestSEPACreditTransferCommon):
         self.assertEqual(payment.state, 'paid')
 
     def test_matching_end_to_end_uuid_single_payment(self):
+        # Check if accounting is installed as this test doesn't make sense without accounting installed
+        if self.env.ref('base.module_accountant').state != 'installed':
+            self.skipTest("`accountant` module not installed")
         payment = self.env['account.payment'].create({
             'amount': 100,
             'journal_id': self.bank_journal.id,
