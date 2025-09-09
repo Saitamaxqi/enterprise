@@ -1928,21 +1928,20 @@ class AccountReturn(models.Model):
                 ]
                 entries = model.sudo().search(domain, limit=LIMIT_CHECK_ENTRIES)
                 if entries:
-                    if vals_dict['action']:
-                        if action := template._get_default_check_action_from_model():
-                            action['domain'] = [
-                                *action.get('domain', []),
-                                *domain
-                            ]
-                        else:
-                            action = {
-                                'type': 'ir.actions.act_window',
-                                'name': template.name,
-                                'view_mode': 'list',
-                                'res_model': model._name,
-                                'domain': domain,
-                                'views': [[False, 'list'], [False, 'form']],
-                            }
+                    if action := template._get_default_check_action_from_model():
+                        action['domain'] = [
+                            *action.get('domain', []),
+                            *domain
+                        ]
+                    else:
+                        action = {
+                            'type': 'ir.actions.act_window',
+                            'name': template.name,
+                            'view_mode': 'list',
+                            'res_model': model._name,
+                            'domain': domain,
+                            'views': [[False, 'list'], [False, 'form']],
+                        }
                     vals_dict.update({
                         'action': action,
                         'records_count': len(entries),
