@@ -2141,6 +2141,7 @@ class AccountReport(models.Model):
             self._init_options_currency_table: 1055,
             self._init_options_section_buttons: 1060,
             self._init_options_readonly_query: 1070,
+            self._init_options_filters: 1500,
         }
 
     def _get_options_domain(self, options, date_scope) -> Domain:
