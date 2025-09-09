@@ -7,12 +7,6 @@ class AccountFollowupCustomHandler(models.AbstractModel):
     _inherit = 'account.partner.ledger.report.handler'
     _description = 'Follow-Up Report Custom Handler'
 
-    def _get_custom_display_config(self):
-        config = super()._get_custom_display_config()
-        config['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
-        config['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
-        return config
-
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
 
@@ -22,6 +16,9 @@ class AccountFollowupCustomHandler(models.AbstractModel):
             'sequence': 100,
             'always_show': True,
         })
+
+        options['custom_display_config']['components']['AccountReportLine'] = 'PartnerLedgerFollowupLine'
+        options['custom_display_config']['templates']['AccountReportHeader'] = 'account_reports.PartnerLedgerFollowupHeader'
 
         options['hide_initial_balance'] = True
         if len(options['partner_ids']) == 1:

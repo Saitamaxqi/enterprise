@@ -49,11 +49,6 @@ class L10n_EsVATBooksReportHandler(models.AbstractModel):
     _inherit = ['account.generic.tax.report.handler']
     _description = 'Spanish Libros Registro de IVA'
 
-    def _get_custom_display_config(self):
-        config = super()._get_custom_display_config()
-        config['templates']['AccountReportLineName'] = 'l10n_es_reports.VatBooksLineName'
-        return config
-
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         """Generate dynamic lines for VAT books report."""
         invoice_results = self._query_invoices(report, options)
@@ -235,6 +230,7 @@ class L10n_EsVATBooksReportHandler(models.AbstractModel):
                     'action_param': 'export_libros_de_iva',
                 })
                 break
+        options['custom_display_config']['templates']['AccountReportLineName'] = 'l10n_es_reports.VatBooksLineName'
 
     def _l10n_es_libros_fill_header(self, sheet_income, sheet_expense):
         def fill_header(sheet_val, header_title, subheaders=None):
