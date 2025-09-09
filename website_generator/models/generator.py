@@ -60,7 +60,7 @@ class Website_GeneratorRequest(models.Model):
     uuid = fields.Char(string="Output UUID generated from Website Scraper Server")
     status = fields.Char(string="Status", default='waiting')
     status_message = fields.Char(string="Status Message", compute='_compute_status_message')
-    version = fields.Char(string="Version", default='2.1.0')
+    version = fields.Char(string="Version", default='2.2.0')
     website_id = fields.Many2one('website', string="Website", ondelete='cascade')
     notified = fields.Boolean(string="Notified", default=False)
 
