@@ -930,7 +930,7 @@ test("Autofill pivot keeps format but neither style nor border", async function 
     // Check that the format of E3 has been correctly applied to E4 but not the style nor the border
     const filledCell = getCell(model, "E4");
     expect(filledCell.style).toBe(undefined);
-    expect(model.getters.getCellBorder({ sheetId, col, row: row + 1 })).toBe(null);
+    expect(model.getters.getCellBorder({ sheetId, col, row: row + 1 })).toEqual({});
     expect(filledCell.format).toBe("#,##0.0");
 });
 
