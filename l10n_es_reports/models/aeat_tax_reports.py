@@ -67,28 +67,37 @@ SPANISH_PROVINCES_REPORT_CODES = {
     'ME': '52',
 }
 
+# including retention tax lines as we need to get the amounts before retention
 MOD_347_CUSTOM_ENGINES_DOMAINS = {
     '_report_custom_engine_threshold_insurance_bought': [
         ('move_id.l10n_es_reports_mod347_invoice_type', '=', 'insurance'),
         ('move_id.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')),
+        '|',
         ('account_type', '=', 'liability_payable'),
+        ('tax_line_id.l10n_es_type', '=', 'retencion'),
     ],
 
     '_report_custom_engine_threshold_regular_bought': [
         ('move_id.l10n_es_reports_mod347_invoice_type', '=', 'regular'),
         ('move_id.move_type', 'in', ('in_invoice', 'in_refund', 'in_receipt')),
+        '|',
         ('account_type', '=', 'liability_payable'),
+        ('tax_line_id.l10n_es_type', '=', 'retencion'),
     ],
 
     '_report_custom_engine_threshold_regular_sold': [
         ('move_id.l10n_es_reports_mod347_invoice_type', '=', 'regular'),
         ('move_id.move_type', 'in', ('out_invoice', 'out_refund', 'out_receipt')),
+        '|',
         ('account_type', '=', 'asset_receivable'),
+        ('tax_line_id.l10n_es_type', '=', 'retencion'),
     ],
 
     '_report_custom_engine_threshold_all_operations': [
         ('move_id.l10n_es_reports_mod347_invoice_type', '!=', None),
-        ('account_type', 'in', ('asset_receivable', 'liability_payable'))
+        '|',
+        ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+        ('tax_line_id.l10n_es_type', '=', 'retencion'),
     ],
 }
 
@@ -940,6 +949,7 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
 
     def _report_custom_engine_threshold_all_operations(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         domain = MOD_347_CUSTOM_ENGINES_DOMAINS['_report_custom_engine_threshold_all_operations']
+        next_groupby = 'move_id' if current_groupby == 'partner_id' else next_groupby
         return self._custom_threshold_common(domain, expressions, options, date_scope, current_groupby, next_groupby, offset=offset, limit=limit)
 
     def _custom_threshold_common(self, domain, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None):

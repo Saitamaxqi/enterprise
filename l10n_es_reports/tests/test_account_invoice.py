@@ -1,6 +1,6 @@
 from freezegun import freeze_time
 
-from odoo import Command
+from odoo import fields, Command
 from odoo.tests import tagged, Form
 
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
@@ -26,6 +26,9 @@ class TestAccountInvoice(TestAccountReportsCommon):
             'name': 'France',
             'country_id': self.env.ref('base.fr').id,
         })
+        ChartTemplate = self.env["account.chart.template"].with_company(self.company)
+        self.tax_withhold_purchase = ChartTemplate.ref('account_tax_template_p_irpf15')
+        self.tax_withhold_sale = ChartTemplate.ref('account_tax_template_s_irpf15')
 
     def create_invoice(self, partner_id):
         f = Form(self.env['account.move'].with_context(default_move_type="out_invoice"))
@@ -276,3 +279,42 @@ class TestAccountInvoice(TestAccountReportsCommon):
 
         self.assertFalse(expense_bill.l10n_es_reports_mod347_invoice_type)
         self.assertEqual(normal_bill.l10n_es_reports_mod347_invoice_type, 'regular')
+
+    @freeze_time('2025-09-01')
+    def test_mod347_withhold_tax(self):
+        """ Test that withholding tax are properly taken into account in mod347 tax report """
+        self.init_invoice('out_invoice', invoice_date=fields.Date.today(), partner=self.partner_es, amounts=[40000], taxes=[self.company_data['default_tax_sale'], self.tax_withhold_sale], post=True)
+        self.init_invoice('out_invoice', invoice_date=fields.Date.today(), partner=self.partner_es.copy(), amounts=[2800], taxes=[self.company_data['default_tax_sale'], self.tax_withhold_sale], post=True)
+        self.init_invoice('in_invoice', invoice_date=fields.Date.today(), partner=self.partner_es, amounts=[40000], taxes=[self.company_data['default_tax_purchase'], self.tax_withhold_purchase], post=True)
+        insurance_bill = self.init_invoice('in_invoice', invoice_date=fields.Date.today(), partner=self.partner_es, amounts=[40000], taxes=[self.company_data['default_tax_purchase'], self.tax_withhold_purchase])
+        insurance_bill.l10n_es_reports_mod347_invoice_type = 'insurance'
+        insurance_bill.action_post()
+
+        report = self.env.ref('l10n_es_reports.mod_347')
+        options = self._generate_options(
+            report, "2025-01-31", "2025-12-31", default_options={"unfold_all": True}
+        )
+
+        expected_values = [
+            ('Summary',                                                          ''),
+            ('Total number of persons and entities',                              2),
+            ('España',                                                            3),
+            ('España (copy)',                                                     1),
+            ('Insurance operations',                                             ''),
+            ('B - Sales of goods and services greater than 3.005,06 €',     48400.0),
+            ('España',                                                      48400.0),
+            ('Other operations',                                                 ''),
+            ('A - Purchases of goods and services greater than 3.005,06 €', 48400.0),
+            ('España',                                                      48400.0),
+            ('B - Sales of goods and services greater than 3.005,06 €',     51788.0),
+            ('España',                                                      48400.0),
+            ('España (copy)',                                                3388.0),
+        ]
+        lines = report._get_lines(options)
+
+        self.assertLinesValues(
+            lines[0:4] + lines[-9:],
+            [0, 1],
+            expected_values,
+            options,
+        )
