@@ -16,7 +16,7 @@ export class AskAIButton extends Component {
         });
     }
     async onAskAIClick() {
-        const action = await this.orm.call("ai.agent", "action_ask_ai", [""]);
+        const action = await this.env.services.orm.call("ai.agent", "action_ask_ai", [""]);
         if (action) {
             // Don't await so that the command palette can close immediately
             this.action.doAction(action);

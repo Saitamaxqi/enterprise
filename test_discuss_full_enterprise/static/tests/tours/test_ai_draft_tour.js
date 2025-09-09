@@ -218,3 +218,24 @@ registry.category("web_tour.tours").add("test_ai_draft_html_field", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_ai_ask_ai_button", {
+    steps: () => [
+        stepUtils.showAppsMenuItem(),
+        {
+            trigger: ".o_app[data-menu-xmlid='project.menu_main_pm']",
+            run: "click",
+        },
+        {
+            trigger: ".o_searchview_input",
+            run: "click",
+        },
+        {
+            trigger: ".o-dropdown-item.o_ask_ai:contains('Ask AI')",
+            run: "click",
+        },
+        {
+            trigger: ".o-mail-ChatWindow:contains('Ask AI')",
+        },
+    ],
+});
