@@ -6,21 +6,22 @@
         <field name="inherit_id" ref="base.view_users_form"/>
         <field name="arch" type="xml">
             <xpath expr="//page[@name='calendar']" position="after">
-                <!-- This page is not displayed in the forms of portal users (share = True) in order to avoid confusing
-                     administrators with irrelevant settings. -->
+                <!-- This page is not displayed in the forms of portal users (share = True) in order to avoid confusing administrators with irrelevant settings. -->
                 <page string="VoIP" name="voip" invisible="share">
                     <group>
                         <group string="Credentials" name="voip_credentials">
-                            <field colspan="2" name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
-                            <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
-                            <field name="voip_username" readonly="not voip_provider_id"/>
-                            <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
-                            <button name="%(voip_call_action_history)d" string="View call history" type="action" class="btn btn-secondary btn-sm" icon="fa-phone"/>
+                            <field name="voip_provider_id" string="Provider" colspan="2" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <button name="%(voip.action_voip_provider_view)d" string="Manage Providers" type="action" icon="oi-arrow-right" class="btn-link ps-0" colspan="2"/>
+                            <field name="voip_username" string="Username" invisible="not voip_provider_id"/>
+                            <field name="voip_secret" string="Secret" password="True" invisible="not voip_provider_id"/>
                         </group>
                         <group string="Preferences" name="voip_preferences">
-                            <field name="should_call_from_another_device" readonly="not voip_provider_id"/>
-                            <field name="external_device_number" readonly="not voip_provider_id"/>
-                            <field name="how_to_call_on_mobile" widget="radio" readonly="not voip_provider_id"/>
+                            <label for="should_call_from_another_device"/>
+                            <div class="o_row">
+                                <field name="should_call_from_another_device" string="Call Via Desk Phone"/>
+                                <field name="external_device_number" placeholder="No redirect" invisible="not should_call_from_another_device"/>
+                            </div>
+                            <field name="how_to_call_on_mobile" string="On Mobile" widget="radio"/>
                         </group>
                     </group>
                 </page>
@@ -37,16 +38,18 @@
                 <page string="VoIP" name="voip">
                     <group>
                         <group string="Credentials" name="voip_credentials">
-                            <field colspan="2" name="voip_provider_id" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
-                            <button colspan="2" name="%(voip.action_voip_provider_view)d" icon="oi-arrow-right" type="action" string="Manage Providers" class="btn-link"/>
-                            <field name="voip_username" readonly="not voip_provider_id"/>
-                            <field name="voip_secret" password="True" readonly="not voip_provider_id"/>
-                            <button name="%(voip_call_action_history)d" string="View call history" type="action" class="btn btn-secondary btn-sm" icon="fa-phone"/>
+                            <field name="voip_provider_id" string="Provider" colspan="2" options="{'no_open': 1, 'no_create': 1, 'no_edit':1}"/>
+                            <button name="%(voip.action_voip_provider_view)d" string="Manage Providers" type="action" icon="oi-arrow-right" class="btn-link ps-0" colspan="2"/>
+                            <field name="voip_username" string="Username" invisible="not voip_provider_id"/>
+                            <field name="voip_secret" string="Secret" password="True" invisible="not voip_provider_id"/>
                         </group>
                         <group string="Preferences" name="voip_preferences">
-                            <field name="should_call_from_another_device" readonly="not voip_provider_id"/>
-                            <field name="external_device_number" readonly="not voip_provider_id"/>
-                            <field name="how_to_call_on_mobile" widget="radio" readonly="not voip_provider_id"/>
+                            <label for="should_call_from_another_device"/>
+                            <div class="o_row">
+                                <field name="should_call_from_another_device" string="Call Via Desk Phone"/>
+                                <field name="external_device_number" placeholder="No redirect" invisible="not should_call_from_another_device"/>
+                            </div>
+                            <field name="how_to_call_on_mobile" string="On Mobile" widget="radio"/>
                         </group>
                     </group>
                 </page>

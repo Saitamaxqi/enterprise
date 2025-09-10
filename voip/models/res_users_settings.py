@@ -21,11 +21,11 @@ class ResUsersSettings(models.Model):
 
     should_call_from_another_device = fields.Boolean(
         "Call from another device",
-        help="""If enabled, placing a call in Odoo will transfer the call to the "External device number". Use this option to place the call in Odoo but handle it from another device - e.g. your desk phone.""",
+        help="""Specify a phone number so that placing a call in Odoo Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
     )
     external_device_number = fields.Char(
         "External device number",
-        help="""If the "Call from another device" option is enabled, calls placed in Odoo will be transfered to this phone number.""",
+        help="""Specify a phone number so that placing a call in Odoo Phone will ring your preferred device (your desk phone or cell phone) and then connect you to the recipient.""",
     )
 
     # Mobile stuff
