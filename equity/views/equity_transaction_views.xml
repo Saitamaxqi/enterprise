@@ -35,8 +35,8 @@
                 <field name="transaction_type" string="Type"/>
                 <field name="securities"/>
                 <field name="security_class_id"/>
-                <field name="security_price" widget="monetary_equity" options="{'currency_field': 'equity_currency_id'}" width="150px"/>
-                <field name="transfer_amount" widget="monetary_equity" width="150px"/>
+                <field name="security_price" widget="monetary" options="{'currency_field': 'equity_currency_id'}" width="150px"/>
+                <field name="transfer_amount" widget="monetary" width="150px"/>
                 <field name="attachment_number" widget="attachment_number" nolabel="1" readonly="True"/>
             </list>
         </field>
@@ -58,7 +58,7 @@
                                     <field name="subscriber_name"/>
                                 </div>
                                 <div class="ms-auto text-end col">
-                                    <field name="transfer_amount" widget="monetary_equity"/>
+                                    <field name="transfer_amount" widget="monetary"/>
                                 </div>
                             </span>
                             <div class="d-flex d-flex-row">
@@ -147,10 +147,10 @@
                                 <label for="security_price" string="Strike Price" invisible="transaction_type != 'issuance' or securities_type != 'options'"/>
                             </div>
                             <div class="d-flex">
-                                <field name="security_price" class="w-50" widget="monetary_equity" options="{'currency_field': 'equity_currency_id'}"/>
+                                <field name="security_price" class="w-50" widget="monetary" options="{'currency_field': 'equity_currency_id'}"/>
                                 <div>/ Security</div>
                             </div>
-                            <field name="transfer_amount" widget="monetary_equity"/>
+                            <field name="transfer_amount" widget="monetary"/>
                         </group>
                         <group id="right_group">
                             <field name="partner_id"/>

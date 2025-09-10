@@ -16,8 +16,10 @@
 
                 <owl-component
                     name="equity.UboForm"
-                    t-att-props="json.dumps({'accessToken': access_token, 'ubos': ubos, 'equityUboSettings': equity_ubo_settings, 'allCountries': all_countries})"
+                    t-att-props="json.dumps({'accessToken': access_token, 'ubos': ubos, 'equityUboSettings': equity_ubo_settings, 'allCountries': all_countries, 'defaultCountryId': partner['country_id']})"
                 />
+
+                <t t-call="equity.portal_ubo_help"/>
 
                 <h5>Who should complete and sign the declaration?</h5>
                 <div>
@@ -113,7 +115,27 @@
                 <li>If your form has been successfully submitted, our team will review it and keep you informed of any updates.</li>
                 <li>If you are returning to an already submitted form, please note that your information has been securely stored.</li>
             </ul>
-            <div>For any corrections or additional details, please contact us.</div>
+
+            <t t-call="equity.portal_ubo_help"/>
         </t>
+    </template>
+
+    <template id="portal_ubo_help" name="UBO help">
+        <div t-if="contact.get('name')">
+            <h4>Need help?</h4>
+            <div class="d-flex gap-1"> 
+                Contact 
+                <t t-out="contact['name']"/>
+                <t t-if="contact.get('phone')">
+                    <i class="fa fa-phone ms-2 mt-1" aria-label="Phone Number" title="Phone Number"/>
+                    <span t-out="contact['phone']"/>
+                </t>
+                <t t-if="contact.get('email')">
+                    <i class="fa fa-envelope ms-2 mt-1" aria-label="Email Address" title="Email Address"/>
+                    <span t-out="contact['email']"/>
+                </t>
+            </div>
+            <hr/>
+        </div>
     </template>
 </odoo>

@@ -50,6 +50,9 @@
         'web._assets_core': [
             'equity/static/src/scss/security_class_ids_dropdown_menu.scss',
         ],
+        'web.assets_tests': [
+            'equity/static/tests/tours/**/*',
+        ],
     },
     'license': 'LGPL-3',
 }

@@ -5,12 +5,14 @@ from freezegun import freeze_time
 
 from odoo.fields import Command
 from odoo.http import Request
+from odoo.tests import tagged
 from odoo.tests.common import HttpCase
 
 from odoo.addons.equity.controllers.portal import PortalEquity
 from odoo.addons.equity.tests.common import TestEquityCommon
 
 
+@tagged('post_install', '-at_install')
 class TestEquityPortal(TestEquityCommon, HttpCase):
     @classmethod
     def setUpClass(cls):
@@ -237,3 +239,77 @@ class TestEquityPortal(TestEquityCommon, HttpCase):
             'votingRights': 130 / 230,
             'currencyId': self.env.company.currency_id.id,
         })
+
+    def test_ubo_form(self):
+        ubo1, ubo2 = self.env['equity.ubo'].create([
+            {
+                'partner_id': self.company.id,
+                'holder_id': self.contact_1.id,
+                'start_date': '2025-01-01',
+                'control_method': 'co_1',
+                'ownership': 0.3,
+                'voting_rights': 0.33,
+            },
+            {
+                'partner_id': self.company.id,
+                'holder_id': self.contact_2.id,
+                'start_date': '2025-03-02',
+                'control_method': 'co_3',
+                'auth_rep_role': 'chairman',
+            },
+        ])
+        self.start_tour(f'/odoo/action-base.action_partner_form/{self.company.id}', 'request_ubo_portal_form_tour', login='admin')
+
+        ubo_activity = self.company.activity_search(['equity.equity_ubo_form_mail_activity'])
+        self.assertEqual(len(ubo_activity), 1)
+        self.start_tour(f'/my/ubo?{self.company._get_equity_url_params()}', 'fill_ubo_portal_form_tour')
+        self.assertEqual(ubo_activity.state, 'done')
+
+        self.assertRecordValues(ubo1.holder_id, [{
+            "name": "Company Holder 1",
+            "country_id": False,
+            "ubo_birth_date": False,
+            "ubo_national_identifier": False,
+            "ubo_pep": False,
+        }])
+        self.assertEqual(len(ubo1.attachment_ids), 0)
+        self.assertRecordValues(ubo1, [{
+            'attachment_expiration_date': False,
+            'start_date': date(2025, 1, 1),
+            'end_date': date(2025, 5, 13),
+            'control_method': 'co_1',
+            'ownership': 0.3,
+            'voting_rights': 0.33,
+        }])
+
+        self.assertRecordValues(ubo2.holder_id, [{
+            "name": "Hesham Saleh",
+            "country_id": self.env.ref("base.eg").id,
+            "ubo_birth_date": date(2001, 11, 24),
+            "ubo_national_identifier": "1234552",
+            "ubo_pep": True,
+        }])
+        self.assertEqual(len(ubo2.attachment_ids), 1)
+        self.assertRecordValues(ubo2, [{
+            'attachment_expiration_date': date(2026, 12, 31),
+            'start_date': date(2025, 3, 30),
+            'control_method': 'co_1',
+            'ownership': 0.43,
+            'voting_rights': 0.45,
+        }])
+
+        ubo3 = self.env['equity.ubo'].search([('partner_id', '=', self.company.id), ('id', 'not in', (ubo1.id, ubo2.id))])
+        self.assertRecordValues(ubo3.holder_id, [{
+            "name": "Brandon Freeman",
+            "country_id": self.env.ref("base.be").id,
+            "ubo_birth_date": date(1980, 2, 21),
+            "ubo_national_identifier": "3324",
+            "ubo_pep": False,
+        }])
+        self.assertEqual(len(ubo3.attachment_ids), 0)
+        self.assertRecordValues(ubo3, [{
+            'attachment_expiration_date': date(2027, 12, 31),
+            'start_date': date(2024, 12, 1),
+            'control_method': 'co_3',
+            'auth_rep_role': 'chairman',
+        }])

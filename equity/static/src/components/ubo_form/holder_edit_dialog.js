@@ -1,6 +1,7 @@
 import { Component, toRaw, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
 import { FileUploader } from "@web/views/fields/file_handler";
 import { formatPercentage } from "@web/views/fields/formatters";
 
@@ -17,6 +18,7 @@ export class HolderEditDialog extends Component {
     };
 
     setup() {
+        this.notification = useService("notification");
         this.controlMethods = this.props.equityUboSettings.control_methods;
         this.activatePercentages = this.props.equityUboSettings.activate_percentages;
         this.activateRole = this.props.equityUboSettings.activate_role;
@@ -30,6 +32,10 @@ export class HolderEditDialog extends Component {
 
     formatPercentage(value) {
         return formatPercentage(value, { noSymbol: 1 });
+    }
+
+    onchangeCountryId(ev) {
+        this.state.newUbo.holder_id.country_id = parseInt(ev.target.value) || false;
     }
 
     onchangeControlMethod(ev) {
@@ -66,6 +72,13 @@ export class HolderEditDialog extends Component {
     }
 
     confirm() {
+        if (this.submitErrors.length) {
+            for (const submitError of this.submitErrors) {
+                this.notification.add(submitError, { type: "danger", autocloseDelay: 10000, });
+            }
+            return;
+        }
+
         if (this.props.isNew) {
             this.props.addUbo(this.state.newUbo);
         } else {
@@ -85,16 +98,16 @@ export class HolderEditDialog extends Component {
     get submitErrors() {
         const errors = [];
         if (!this.state.newUbo.holder_id.name) {
-            errors.push(_t("*Name is mandatory"));
+            errors.push(_t("Name is mandatory"));
         }
         if (!this.state.newUbo.start_date) {
-            errors.push(_t("*Control Start Date is mandatory"));
+            errors.push(_t("Control Start Date is mandatory"));
         }
         if (!this.state.newUbo.holder_id.ubo_birth_date && !this.state.newUbo.holder_id.ubo_national_identifier) {
-            errors.push(_t("*You must provide either the date of birth, or the ID number"));
+            errors.push(_t("You must provide either the date of birth, or the ID number"));
         }
         if (this.invalidPercentages) {
-            errors.push(_t("*please keep percentages between 0 and 100"));
+            errors.push(_t("please keep percentages between 0 and 100"));
         }
         return errors;
     }

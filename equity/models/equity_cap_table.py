@@ -146,6 +146,7 @@ class EquityCapTable(models.Model):
             self._append_cap_table_entry(partner_holder_data[partner.id][holder.id], cap_table_entry)
 
         for partner_id, security_class_ids in partner_classes_ids.items():
+            # to have a deterministic order of share classes on the cap table
             partner_classes_ids[partner_id] = self.env['equity.security.class'].browse(security_class_ids).sorted().ids
 
         return {

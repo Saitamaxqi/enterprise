@@ -5,7 +5,7 @@ import uuid
 from werkzeug.urls import url_encode
 
 from odoo import api, fields, models
-from odoo.tools.misc import format_date
+from odoo.tools.misc import format_date, format_decimalized_amount
 
 
 class ResPartner(models.Model):
@@ -21,7 +21,8 @@ class ResPartner(models.Model):
 
     equity_shareholders_count = fields.Integer(compute='_compute_shareholders_count')
 
-    equity_last_valuation = fields.Monetary(compute='_compute_equity_last_valuation', currency_field='equity_currency_id')
+    equity_valuation_ids = fields.One2many('equity.valuation', 'partner_id')
+    equity_last_valuation = fields.Char(compute='_compute_equity_last_valuation')
     equity_kanban_dashboard_graph = fields.Text(compute='_compute_equity_kanban_dashboard_graph')
 
     equity_legal_form = fields.Char(string="Legal Form")
@@ -58,7 +59,7 @@ class ResPartner(models.Model):
     def _compute_equity_last_valuation(self):
         for partner in self:
             last_valuation_id = self.env['equity.valuation'].search([('partner_id', '=', partner.id), ('date', '<=', fields.Date.today())], order='date DESC', limit=1)
-            partner.equity_last_valuation = 0 if not last_valuation_id else last_valuation_id.valuation
+            partner.equity_last_valuation = format_decimalized_amount(0 if not last_valuation_id else last_valuation_id.valuation, partner.equity_currency_id)
 
     def _compute_equity_kanban_dashboard_graph(self):
         for partner in self:
@@ -102,9 +103,7 @@ class ResPartner(models.Model):
             'type': 'ir.actions.act_window',
             'name': self.env._("Equity"),
             'res_model': 'res.partner',
-            'view_mode': 'kanban',
-            'views': [(False, 'kanban')],
-            'view_id': self.env.ref('equity.equity_dashboard_res_partner').id,
+            'views': [(self.env.ref('equity.equity_dashboard_res_partner').id, 'kanban')],
             'domain': [('equity_transaction_ids', '!=', False)],
         }
 
@@ -117,12 +116,23 @@ class ResPartner(models.Model):
             },
         }
 
+    def action_open_valuation_list(self):
+        self.ensure_one()
+        return self.equity_valuation_ids._get_records_action(
+            display_name=self.env._("%(partner_name)s's Valuations", partner_name=self.display_name),
+            context={
+                'default_partner_id': self.id,
+            },
+        )
+
     def action_open_transaction_list(self):
         self.ensure_one()
-        return {
-            **self.equity_transaction_ids._get_records_action(),
-            'display_name': self.env._("%(partner_name)s's Transactions", partner_name=self.name),
-        }
+        return self.equity_transaction_ids._get_records_action(
+            display_name=self.env._("%(partner_name)s's Transactions", partner_name=self.display_name),
+            context={
+                'default_partner_id': self.id,
+            },
+        )
 
     # misc methods
     def _equity_ensure_token(self):
@@ -132,25 +142,27 @@ class ResPartner(models.Model):
             self.sudo().write({'equity_access_token': str(uuid.uuid4())})
         return f"{self.id}${self.equity_access_token}"
 
-    def _get_request_ubo_form_params(self):
+    def _get_equity_url_params(self):
         self.ensure_one()
         return url_encode({
             'access_token': self.sudo()._equity_ensure_token(),
+            'user_id': self.env.user.id,
         })
 
     def _ubo_portal_form_filled(self, rep_name, rep_position):
         self.ensure_one()
-        if ubo_activities := self.activity_search(['equity.equity_ubo_form_mail_activity']):
+        sudo_self = self.sudo()
+        if ubo_activities := sudo_self.activity_search(['equity.equity_ubo_form_mail_activity']):
             last_ubo_activity = ubo_activities[-1]
         else:
             return
 
-        pdf_content, _ = self.env['ir.actions.report']._render_qweb_pdf(
+        pdf_content, _ = sudo_self.env['ir.actions.report']._render_qweb_pdf(
             'equity.equity_ubo_report',
             res_ids=[self.id],
             data={'rep_name': rep_name, 'rep_position': rep_position, 'rep_sig_date': fields.Date.today()},
         )
-        attachment = self.env['ir.attachment'].create({
+        attachment = sudo_self.env['ir.attachment'].create({
             'name': 'UBO_report.pdf',
             'type': 'binary',
             'datas': base64.b64encode(pdf_content),
@@ -158,11 +170,11 @@ class ResPartner(models.Model):
             'res_id': self.id,
             'mimetype': 'application/pdf',
         })
-        last_ubo_activity.action_feedback(feedback=self.env._("(Completed through portal Form)"), attachment_ids=[attachment.id])
+        last_ubo_activity.with_user(self.env.ref('base.user_root')).action_feedback(feedback=self.env._("(Completed through portal Form)"), attachment_ids=[attachment.id])
 
     def _can_fill_ubo_portal_form(self):
         self.ensure_one()
-        ubo_activities = self.activity_search(['equity.equity_ubo_form_mail_activity'])
+        ubo_activities = self.sudo().activity_search(['equity.equity_ubo_form_mail_activity'])
         return bool(ubo_activities)
 
     def _message_mail_after_hook(self, mails):
@@ -185,7 +197,7 @@ class ResPartner(models.Model):
         self.ensure_one()
         return "%s_ubo.pdf" % self.display_name.replace(' ', '_')
 
-    def action_partner_send(self, linked_transaction=None):
+    def action_partner_equity_send(self, linked_transaction=None):
         self.ensure_one()
         linked_transaction = linked_transaction or self.env['equity.transaction'].search([
             ('date', '<=', fields.Date.context_today(self)),

@@ -18,6 +18,7 @@ class EquityValuation(models.Model):
         default=lambda self: self.env.company.partner_id,
         domain=[('is_company', '=', True)],
         required=True,
+        index='btree',
     )
     equity_currency_id = fields.Many2one('res.currency', related='partner_id.equity_currency_id')
 

@@ -11,7 +11,7 @@
                     <div class="fs-4 fw-bold" t-out="this.yourValuation"/>
                     <div class="text-nowrap">
                         <t t-out="this.ownership"/> Ownership
-                        <sup class="fw-bold text-info" data-tooltip="= Your shares / Total number of shares (i.e., options not taken into account)">?</sup>
+                        <sup class="fw-bold" data-tooltip="= Your shares / Total number of shares (i.e., options not taken into account)">?</sup>
                     </div>
                 </div>
                 <div class="p-3 rounded text-white bg-primary bg-opacity-75">

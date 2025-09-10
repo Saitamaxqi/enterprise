@@ -16,6 +16,7 @@ export class UboForm extends Component {
         ubos: { type: Array },
         equityUboSettings: { type: Object },
         allCountries: { type: Array },
+        defaultCountryId: { type: Number },
     };
 
     setup() {
@@ -46,9 +47,8 @@ export class UboForm extends Component {
             attachment_expiration_date: false,
             holder_id: {
                 name: "",
-                country_id: false,
+                country_id: this.props.defaultCountryId,
                 ubo_birth_date: false,
-                ubo_birth_place: "",
                 ubo_national_identifier: "",
                 ubo_pep: false,
             },
@@ -98,7 +98,7 @@ export class UboForm extends Component {
         if (!res) {
             form.submit();
         } else {
-            this.notification.add(res["error"], { type: 'danger' });
+            this.notification.add(res["error"], { type: "danger" });
         }
     }
 

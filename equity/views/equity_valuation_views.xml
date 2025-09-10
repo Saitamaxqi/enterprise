@@ -22,11 +22,11 @@
                 <field name="date"/>
                 <field name="event"/>
                 <field name="partner_id"/>
-                <field name="share_price" widget="monetary_equity" options="{'currency_field': 'equity_currency_id'}" string="Price ND"/>
+                <field name="share_price" widget="monetary" options="{'currency_field': 'equity_currency_id'}" string="Price ND"/>
                 <field name="shares"/>
-                <field name="security_price" widget="monetary_equity" string="Price FD" optional="hide"/>
+                <field name="security_price" widget="monetary" string="Price FD" optional="hide"/>
                 <field name="securities" optional="hide"/>
-                <field name="valuation" widget="monetary_equity"/>
+                <field name="valuation" widget="monetary"/>
                 <field name="attachment_number" widget="attachment_number" nolabel="1" readonly="True"/>
             </list>
         </field>
@@ -46,9 +46,9 @@
                         </group>
                         <group id="right_group">
                             <field name="equity_currency_id" invisible="1"/> <!-- Needed for monetary widget -->
-                            <field name="share_price" options="{'currency_field': 'equity_currency_id'}" widget="monetary_equity"/>
+                            <field name="share_price" options="{'currency_field': 'equity_currency_id'}" widget="monetary"/>
                             <field name="shares"/>
-                            <field name="valuation" widget="monetary_equity"/>
+                            <field name="valuation" widget="monetary"/>
                         </group>
                     </group>
                 </sheet>

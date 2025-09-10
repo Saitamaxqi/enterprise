@@ -281,7 +281,7 @@ class EquityTransaction(models.Model):
     def action_transaction_send(self, for_seller=False):
         self.ensure_one()
         holder = self.seller_id if for_seller else self.subscriber_id
-        holder_type = self.env._("seller") if for_seller else self.env._("subscriber")
         if not holder:
+            holder_type = self.env._("seller") if for_seller else self.env._("subscriber")
             raise ValidationError(self.env._("No %s was set!", holder_type))
-        return holder.action_partner_send(linked_transaction=self)
+        return holder.action_partner_equity_send(linked_transaction=self)

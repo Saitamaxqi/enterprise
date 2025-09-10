@@ -13,10 +13,29 @@
     .w-25 {
         width: 25% !important;
     }
+
+    input[type="date"]:not(:focus):not(:valid) {
+        color: lightgray;
+    }
 }
 
 .o_holder_edit_dialog {
-    .w-15 {
-        width: 15% !important;
+    .container {
+        .attachment-name {
+            max-width: 30ch;
+            max-height: 1rem;
+            p {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+
+    .oe_inline {
+        max-width: 10ch;
+    }
+
+    input[type="date"]:not(:focus):not(:valid) {
+        color: lightgray;
     }
 }

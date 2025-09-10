@@ -48,6 +48,6 @@
             I hereby declare on honor that the information provided is truthful and accurate.
         </div>
 
-        <input class="btn btn-primary mb-3" type="submit" t-on-click.prevent="submit" value="Submit"/>
+        <button type="submit" class="btn btn-primary mb-3" t-on-click.prevent="submit">Submit</button>
     </t>
 </odoo>

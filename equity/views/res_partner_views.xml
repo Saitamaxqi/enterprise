@@ -85,12 +85,12 @@
                     <t t-name="card">
                         <field name="equity_currency_id" invisible="1"/> <!-- Needed for monetary widget -->
                         <span class="d-flex d-flex-row align-items-baseline fs-4">
-                            <div class="fw-bold col">
+                            <div class="fw-bold col text-nowrap text-truncate">
                                 <field name="name"/>
                             </div>
-                            <div class="ms-auto text-end col">
-                                <field name="equity_last_valuation" widget="monetary_equity" options="{'human_readable': True}"/>
-                            </div>
+                            <a name="action_open_valuation_list" type="object" class="ms-auto text-end col">
+                                <field name="equity_last_valuation"/>
+                            </a>
                         </span>
                         <div class="p-0 container-fluid">
                             <div class="row">

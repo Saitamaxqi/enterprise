@@ -3,6 +3,7 @@ from functools import partial
 from odoo import fields
 from odoo.http import request, route
 from odoo.tools import format_amount, format_date, consteq
+from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.equity.utils import safe_division
 from odoo.addons.equity.models.equity_ubo import CONTROL_METHODS, ACTIVATE_PERCENTAGES, ACTIVATE_ROLE, AUTH_REP_ROLES
 from odoo.addons.portal.controllers.portal import CustomerPortal
@@ -120,7 +121,7 @@ class PortalEquity(CustomerPortal):
             'transactions': transactions_events,
             'chart_props': {
                 'labels': [
-                    request.env._("Your Value"),
+                    request.env._("Your Value ND"),
                     request.env._("Total Value"),
                 ],
                 'data': request.env['equity.valuation'].get_valuation_chart_data(data_function=chart_data_function),
@@ -161,6 +162,11 @@ class PortalEquity(CustomerPortal):
         })
         return values
 
+    def _prepare_contact_values(self, user_id=None):
+        if not user_id:
+            return {}
+        return request.env['res.users'].sudo().browse(int(user_id)).read(['name', 'email', 'phone'])[0]
+
     @route('/my/equity/<int:partner_id>', type='http', auth='public', website=True, sitemap=False)
     def portal_my_company_equity(self, partner_id, access_token=None, **kw):
         values = self._prepare_my_transactions_values(partner_id, access_token=access_token)
@@ -172,19 +178,20 @@ class PortalEquity(CustomerPortal):
         return request.render('equity.portal_my_equity', values)
 
     @route('/my/ubo', type='http', auth='public', website=True, sitemap=False)
-    def portal_my_ubo(self, access_token=None, **kw):
+    def portal_my_ubo(self, access_token=None, user_id=None, **kw):
         values = self._prepare_portal_layout_values()
         partner_id = self._get_user_partner_id(access_token, default_to_request_partner=False)
         if not partner_id:
             raise request.not_found()
 
-        partner = request.env['res.partner'].sudo().browse(partner_id)
-        if not partner._can_fill_ubo_portal_form():
-            return request.redirect('/my/ubo/submit')
+        partner_sudo = request.env['res.partner'].sudo().browse(partner_id)
+        if not partner_sudo._can_fill_ubo_portal_form():
+            return request.redirect(f'/my/ubo/submit?{keep_query()}')
 
         ubos = request.env['equity.ubo'].sudo().search([('partner_id', '=', partner_id)])
         values.update({
             'access_token': access_token,
+            'contact': self._prepare_contact_values(user_id),
             'equity_ubo_settings': {
                 'control_methods': dict(CONTROL_METHODS),
                 'activate_percentages': ACTIVATE_PERCENTAGES,
@@ -192,7 +199,7 @@ class PortalEquity(CustomerPortal):
                 'auth_rep_roles': dict(AUTH_REP_ROLES),
             },
             'all_countries': request.env['res.country'].sudo().search_fetch([], ['id', 'name']).read(['name']),
-            'partner': partner.read(['name', 'vat'])[0],
+            'partner': partner_sudo.read(['name', 'vat', 'country_id'], load=None)[0],
             'ubos': [
                 {
                     'id': ubo.id,
@@ -208,7 +215,6 @@ class PortalEquity(CustomerPortal):
                         'name': ubo.holder_id.name,
                         'country_id': ubo.holder_id.country_id.id,
                         'ubo_birth_date': fields.Date.to_string(ubo.holder_id.ubo_birth_date),
-                        'ubo_birth_place': ubo.holder_id.ubo_birth_place,
                         'ubo_national_identifier': ubo.holder_id.ubo_national_identifier,
                         'ubo_pep': ubo.holder_id.ubo_pep,
                     },
@@ -220,7 +226,7 @@ class PortalEquity(CustomerPortal):
     @route('/my/ubo/submit/data', type='jsonrpc', auth='public')
     def submit_ubo_form_data(self, access_token, data):
         """
-            :param data: list of new or existing (if has an id) equity.ubo dicts with a holder_id sub-record.
+            :param data: list of new or existing (if has an id) equity.ubo dicts with a holder_id sub-record dict.
                 Each record may have `attachment` which holds a file that should be uploaded to the record chatter.
         """
         partner_id = self._get_user_partner_id(access_token, default_to_request_partner=False)
@@ -230,10 +236,15 @@ class PortalEquity(CustomerPortal):
         return request.env['equity.ubo'].sudo().submit_ubo_form_data(partner_id, data)
 
     @route('/my/ubo/submit', type='http', methods=['GET', 'POST'], auth='public', website=True, sitemap=False)
-    def portal_my_ubo_submit(self, access_token=None, **form_data):
+    def portal_my_ubo_submit(self, access_token=None, user_id=None, rep_name=None, rep_position=None, **kw):
         partner_id = self._get_user_partner_id(access_token, default_to_request_partner=False)
-        if partner_id:
-            request.env['res.partner'].browse(partner_id)._ubo_portal_form_filled(**form_data)
+        if not partner_id:
+            raise request.not_found()
+        elif rep_name and rep_position:
+            request.env['res.partner'].browse(partner_id)._ubo_portal_form_filled(rep_name=rep_name, rep_position=rep_position)
 
-        values = self._prepare_portal_layout_values()
+        values = {
+            **self._prepare_portal_layout_values(),
+            'contact': self._prepare_contact_values(user_id),
+        }
         return request.render('equity.portal_ubo_submit', values)

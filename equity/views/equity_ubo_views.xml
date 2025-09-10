@@ -20,7 +20,7 @@
         <field name="name">equity.ubo.form</field>
         <field name="model">equity.ubo</field>
         <field name="arch" type="xml">
-            <list string="Beneficial Owners" create="0" sample="1">
+            <list string="Beneficial Owners" sample="1">
                 <field name="holder_id" string="Name"/>
                 <field name="control_method"/>
                 <field name="auth_rep_role" optional="hide"/>
@@ -36,13 +36,13 @@
         <field name="name">equity.ubo.form</field>
         <field name="model">equity.ubo</field>
         <field name="arch" type="xml">
-            <form string="Transaction" create="0">
+            <form>
                 <sheet>
                     <h1>
-                        <field name="partner_id" readonly="1"/>
+                        <field name="partner_id"/>
                     </h1>
                     <h2>
-                        <field name="holder_id" readonly="1" context="{'partner_display_name_hide_company': True}"/>
+                        <field name="holder_id" context="{'partner_display_name_hide_company': True}"/>
                     </h2>
                     <group>
                         <group id="left_group">

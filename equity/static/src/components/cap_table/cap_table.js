@@ -5,7 +5,7 @@ import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { ActionHelper } from "@web/views/action_helper";
-import { formatPercentage, formatMonetary } from "@web/views/fields/formatters";
+import { formatFloat, formatPercentage, formatMonetary } from "@web/views/fields/formatters";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 
 export class CapTable extends Component {
@@ -48,7 +48,7 @@ export class CapTable extends Component {
     }
 
     async sendToPartner(partnerId) {
-        const action = await this.orm.call("res.partner", "action_partner_send", [parseInt(partnerId)]);
+        const action = await this.orm.call("res.partner", "action_partner_equity_send", [parseInt(partnerId)]);
         this.action.doAction(action);
     }
 
@@ -118,7 +118,7 @@ export class CapTable extends Component {
                 }
             }
         }
-        return res;
+        return formatFloat(res, { trailingZeros: false });
     }
 
     getStat(partnerId, holderId, statName) {
