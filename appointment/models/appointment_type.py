@@ -1299,6 +1299,7 @@ class AppointmentType(models.Model):
         if users_to_bookings is None:
             booking_lines = self.env['appointment.booking.line'].sudo().search([
                 ('appointment_user_id', 'in', all_users.ids),
+                ('appointment_type_id.schedule_based_on', '=', 'users'),
                 ('event_start', '<', slot_stop_utc),
                 ('event_stop', '>', slot_start_utc),
             ])
@@ -1344,6 +1345,7 @@ class AppointmentType(models.Model):
         if users:
             booking_lines = self.env['appointment.booking.line'].sudo().search([
                 ('appointment_user_id', 'in', users.ids),
+                ('appointment_type_id.schedule_based_on', '=', 'users'),
                 ('event_stop', '>', datetime.combine(start_dt_utc, time.min)),
                 ('event_start', '<', datetime.combine(end_dt_utc, time.max)),
             ])

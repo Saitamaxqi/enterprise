@@ -185,6 +185,58 @@ class AppointmentResource(AppointmentCommon):
         self.assertEqual(resource_2.destination_resource_ids, new_resource_2)
 
     @users('apt_manager')
+    def test_appointment_resource_not_taking_responsible_capacity(self):
+        """ Test that resource booking lines do not reserve any capacity of the responsible user """
+        resource_appointment = self.appointment_manage_capacity
+        user_appointment = self.env["appointment.type"].create([{
+            'appointment_tz': 'UTC',
+            'manage_capacity': False,
+            'max_bookings': 2,
+            'max_schedule_days': 5,
+            'min_schedule_hours': 1.0,
+            'name': 'User Appointment',
+            'schedule_based_on': 'users',
+            'slot_ids': [(0, 0, {
+                'weekday': str(self.reference_monday.isoweekday()),
+                'start_hour': 14,
+                'end_hour': 15,
+            })],
+            'staff_user_ids': self.staff_user_bxls.ids,
+        }])
+        staff_user = self.staff_user_bxls
+        self.assertEqual(len(user_appointment.staff_user_ids), 1)
+
+        start = datetime(2022, 2, 14, 14, 0, 0)
+        end = start + timedelta(hours=1)
+
+        # Create conflicting events. Remaining capacity should be 1, as resource booking should not count.
+        self.env['calendar.event'].with_context(self._test_context).create([{
+            'appointment_type_id': user_appointment.id,
+            'attendee_ids': [(0, 0, {'partner_id': staff_user.partner_id.id, 'state': 'accepted'})],
+            'booking_line_ids': [(0, 0, {'appointment_user_id': staff_user.id, 'capacity_reserved': 1, 'capacity_used': 1})],
+            'name': 'Booking User',
+            'partner_ids': [(4, staff_user.partner_id.id)],
+            'start': start,
+            'stop': end,
+            'user_id': staff_user.id,
+        }, {
+            'appointment_type_id': resource_appointment.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': self.resource_1.id, 'capacity_reserved': 1, 'capacity_used': self.resource_1.capacity})],
+            'name': 'Booking Resource',
+            'start': start,
+            'stop': end,
+            'user_id': staff_user.id,
+        }])
+
+        with freeze_time(self.reference_now):
+            slots = user_appointment._get_appointment_slots('UTC', asked_capacity=1)
+            user_slots = self._filter_appointment_slots(slots)
+
+        self.assertEqual(len(user_slots), 1)
+        self.assertTrue(user_slots[0]['staff_user_id'], staff_user.id)
+        self.assertEqual(user_appointment._get_users_remaining_capacity(staff_user, start, end)['total_remaining_capacity'], 1)
+
+    @users('apt_manager')
     def test_appointment_resources_remaining_capacity(self):
         """ Test that the remaining capacity of resources are correctly computed """
         appointment = self.appointment_manage_capacity
