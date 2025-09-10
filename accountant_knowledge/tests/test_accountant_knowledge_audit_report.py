@@ -26,7 +26,9 @@ class TestAccountantKnowledgeAuditReport(TransactionCaseWithUserDemo):
         self.assertEqual(article.article_member_ids[1].permission, 'write')
 
     def test_is_html_element_empty(self):
-        """Check that the method to """
+        """ Check that the `is_html_element_empty` method correctly identifies
+            empty HTML elements, ignoring all empty tags and whitespace
+            characters."""
         self.assertTrue(is_html_element_empty(etree.fromstring('''
             <div></div>
         ''')))

@@ -72,7 +72,7 @@
             </head>
             <body>
                 <div style="height: 350px"/>
-                <h1 t-out="article.name"/>
+                <h1 t-out="title"/>
                 <hr/>
             </body>
         </html>

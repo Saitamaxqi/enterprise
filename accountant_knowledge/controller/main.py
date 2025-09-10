@@ -302,14 +302,20 @@ class KnowledgeAuditReportController(http.Controller):
                 if parent is not None:
                     parent.remove(element)
 
-            is_article_empty = is_html_element_empty(root)
+            article_headings = root.xpath(
+                "//*[self::h1 or self::h2 or self::h3][translate(normalize-space(.), ' ', '') != '']")
+            article_has_only_one_nonempty_heading = (
+                len(article_headings) == 1 and
+                not bool(root.xpath(
+                    "//text()[translate(normalize-space(.), ' ', '') != '' and not(ancestor::h1 or ancestor::h2 or ancestor::h3)]")))
 
-            # Append a title page for empty articles:
-            if is_article_empty:
+            # Append a title page if the article only contains an h1, h2 or h3
+            if article_has_only_one_nonempty_heading:
                 title_page_html = request.env['ir.qweb']._render(
                     'accountant_knowledge.audit_report_title_page', {
-                        'article': article,
-                        'base_url': base_url})
+                        'base_url': base_url,
+                        'title': article_headings[0].text})
+
                 title_page_pdf = convert_html_to_pdf(title_page_html)
                 if generate_headings:
                     try:
@@ -335,7 +341,7 @@ class KnowledgeAuditReportController(http.Controller):
                 account_report_pdf.getNumPages() for account_report_pdf in account_report_pdfs)
 
             # Append the article body if not empty:
-            if not is_article_empty:
+            if not article_has_only_one_nonempty_heading and not is_html_element_empty(root):
                 article_body = render_article_body(root, template_variables)
                 article_html = request.env['ir.qweb']._render(
                     'accountant_knowledge.audit_report_page_layout', {

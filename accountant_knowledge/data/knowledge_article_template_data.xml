@@ -1299,6 +1299,7 @@
         <field name="template_name">Supporting Documents</field>
         <field name="template_sequence">400</field>
         <field name="template_body" type="html">
+            <h1>Supporting Documents</h1>
             <p class="d-print-none alert alert-info pt16 pb16">
                 <strong class="o-upload-link">Upload files</strong> to include in the PDF report.
             </p>
@@ -1313,6 +1314,7 @@
         <field name="template_name">Tax Package</field>
         <field name="template_sequence">500</field>
         <field name="template_body" type="html">
+            <h1>Tax Package</h1>
             <p class="d-print-none alert alert-info pt16 pb16">
                 <strong class="o-upload-link">Upload files</strong> to include in the PDF report.
             </p>
