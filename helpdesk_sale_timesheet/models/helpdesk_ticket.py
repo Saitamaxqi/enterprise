@@ -146,7 +146,8 @@ class HelpdeskTicket(models.Model):
         if 'timesheet_ids' in vals and isinstance(vals.get('timesheet_ids'), (tuple, list)):
             # Then, we check if the list contains tuples/lists like "(code=1, timesheet_id, vals)" and we extract timesheet_id if it is an update and 'so_line' in vals
             timesheet_ids = [command[1] for command in vals.get('timesheet_ids') if isinstance(command, (list, tuple)) and command[0] == 1 and 'so_line' in command[2]]
-            recompute_so_lines = self.timesheet_ids.filtered(lambda t: t.id in timesheet_ids).mapped('so_line')
+            if timesheet_ids:
+                recompute_so_lines = self.timesheet_ids.filtered(lambda t: t.id in timesheet_ids).mapped('so_line')
             if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_approver') and vals.get('sale_line_id', None):
                 # We need to search the timesheets of other employee to update the so_line
                 other_timesheets = self.env['account.analytic.line'].sudo().search([('id', 'not in', timesheet_ids), ('helpdesk_ticket_id', '=', self.id)])
