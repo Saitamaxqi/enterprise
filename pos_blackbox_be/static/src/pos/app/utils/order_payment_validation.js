@@ -21,11 +21,8 @@ patch(OrderPaymentValidation.prototype, {
         await super.validateOrder(isForceValidate);
     },
     async afterOrderValidation() {
-        if (
-            !this.currentOrder.blackbox_signature ||
-            this.currentOrder.blackbox_signature == EMPTY_SIGNATURE
-        ) {
-            await this.pos.syncAllOrders({ orders: [this.currentOrder], throw: true });
+        if (!this.order.blackbox_signature || this.order.blackbox_signature == EMPTY_SIGNATURE) {
+            await this.pos.syncAllOrders({ orders: [this.order], throw: true });
         }
         return super.afterOrderValidation();
     },
@@ -34,7 +31,7 @@ patch(OrderPaymentValidation.prototype, {
             return super.handleValidationError(error);
         } catch (e) {
             if (e instanceof BlackboxError) {
-                this.currentOrder.state = "draft";
+                this.order.state = "draft";
                 e.retry = this.finalizeValidation.bind(this);
             }
             throw error;
