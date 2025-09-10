@@ -5,6 +5,7 @@ from odoo import api, models, fields, Command, _
 
 class PlanningSend(models.TransientModel):
     _name = 'planning.send'
+    _inherit = ['hr.mixin']
     _description = "Send Planning"
 
     @api.model
@@ -19,10 +20,10 @@ class PlanningSend(models.TransientModel):
     end_datetime = fields.Datetime("Stop Date", required=True)
     include_unassigned = fields.Boolean("Include Open Shifts", default=True)
     note = fields.Text("Extra Message", help="Additional message displayed in the email sent to employees")
-    employee_ids = fields.Many2many('hr.employee', string="Employees",
+    employee_ids = fields.Many2many('hr.employee', string="Employees", compute_sudo=True,
                                     compute='_compute_slots_data', inverse='_inverse_employee_ids', store=True)
     slot_ids = fields.Many2many('planning.slot', compute='_compute_slots_data', store=True, export_string_translation=False)
-    employees_no_email = fields.Many2many('hr.employee', string="Employees without email",
+    employees_no_email = fields.Many2many('hr.employee', string="Employees without email", compute_sudo=True,
                                     compute="_compute_employees_no_email", inverse="_inverse_employees_no_email", export_string_translation=False)
 
     def _get_slot_domain(self):

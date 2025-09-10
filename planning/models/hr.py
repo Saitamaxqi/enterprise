@@ -39,7 +39,7 @@ class HrEmployee(models.Model):
         if not self.env.context.get('show_job_title'):
             return super()._compute_display_name()
         for employee in self:
-            employee.display_name = f"{employee.name} ({employee.job_title})" if employee.job_title else employee.name
+            employee.display_name = f"{employee.name} ({employee.sudo().job_id.name})" if employee.sudo().job_id else employee.name
 
     def _init_column(self, column_name):
         # to avoid generating a single default employee_token when installing the module,

@@ -413,6 +413,46 @@ class TestUserAccess(HttpCase):
 
         self.assertNotIn(slot, send.slot_ids, "User should not be able to send planning to users from other companies")
 
+    def test_create_planning_send_without_hr_right(self):
+        self.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [(6, 0, [
+                self.env.ref('base.group_user').id,
+                self.env.ref('planning.group_planning_manager').id,
+            ])],
+            'notification_type': 'email',
+        })
+        employee_1, employee_2 = self.env['hr.employee'].create([
+            {
+                'name': 'Emp1',
+                'work_email': "email.test.emp1@example.com",
+            }, {
+                'name': 'Emp2',
+                'work_email': "email.test.emp2@example.com",
+            }
+        ])
+        with self.with_user('test_without_hr_right'):
+            self.env['planning.slot'].create([
+                {
+                    'start_datetime': datetime(2019, 7, 28, 8, 0, 0),
+                    'end_datetime': datetime(2019, 7, 28, 17, 0, 0),
+                    'employee_id': employee_1.id,
+                    'repeat': False,
+                }, {
+                    'start_datetime': datetime(2019, 7, 28, 8, 0, 0),
+                    'end_datetime': datetime(2019, 7, 28, 17, 0, 0),
+                    'employee_id': employee_2.id,
+                    'repeat': False,
+                },
+            ])
+            planning_send = self.env['planning.send'].create({
+                'start_datetime': datetime(2019, 7, 28, 8, 0, 0),
+                'end_datetime': datetime(2019, 7, 28, 17, 0, 0),
+                'employee_ids': (employee_1 + employee_2).ids
+            })
+            planning_send.action_send()
+
     def test_user_can_archive_another_employee(self):
         """
         Test user may archive another employee with no access right to planning.
