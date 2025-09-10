@@ -11,6 +11,7 @@ OBTPACK
 OBTSCRA
 OBTRECO
 OBTRETU
+OBTWREV
 BARCODES
 
 cat > barcodes_actions_header.ps << HEADER
@@ -26,6 +27,7 @@ cat > barcodes_actions_header.ps << HEADER
 (SCRAP) 348 444 showTitle
 (RECORD COMPONENTS) 89 337 showTitle
 (RETURN) 348 337 showTitle
+(WAIT A REVIEW) 89 230 showTitle
 HEADER
 
 cat barcodes_actions_header.ps barcodes_actions_barcode.ps | ps2pdf - - > barcodes_actions.pdf
