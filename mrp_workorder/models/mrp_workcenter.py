@@ -8,7 +8,8 @@ from odoo.http import request
 
 
 class MrpWorkcenter(models.Model):
-    _inherit = 'mrp.workcenter'
+    _name = 'mrp.workcenter'
+    _inherit = ['hr.mixin', 'mrp.workcenter']
 
     employee_ids = fields.Many2many(
         'hr.employee', string="employees with access",

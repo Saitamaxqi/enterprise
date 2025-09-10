@@ -20,7 +20,7 @@ from odoo.http import request
 
 class MrpWorkorder(models.Model):
     _name = 'mrp.workorder'
-    _inherit = ['mrp.workorder', 'barcodes.barcode_events_mixin']
+    _inherit = ['hr.mixin', 'mrp.workorder', 'barcodes.barcode_events_mixin']
 
     quality_point_ids = fields.Many2many('quality.point', compute='_compute_quality_point_ids', store=True)
     quality_point_count = fields.Integer('Steps', compute='_compute_quality_point_count')
@@ -642,6 +642,10 @@ class MrpWorkorder(models.Model):
         for workcenter in workcenters:
             result[workcenter.id] = [{'start': interval[0], 'stop': interval[1]} for interval in unavailability_mapping[workcenter.id]]
         return result
+
+    @api.model
+    def get_shopfloor_limit(self):
+        return self.env['ir.config_parameter'].sudo().get_param("mrp_workorder.wo_shop_floor_maximum_card_count")
 
     def _should_be_pending(self):
         return self.is_user_working and self.working_state != 'blocked' and len(self.employee_ids.ids) == 0

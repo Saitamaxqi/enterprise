@@ -19,7 +19,7 @@ class MrpProduction(models.Model):
 
     check_ids = fields.One2many('quality.check', 'production_id', string="Checks")
 
-    employee_ids = fields.Many2many('hr.employee', string="working employees", compute='_compute_employee_ids')
+    employee_ids = fields.Many2many('hr.employee', string="working employees", compute='_compute_employee_ids', compute_sudo=True)
 
     log_note = fields.Text(string="Log note")
 

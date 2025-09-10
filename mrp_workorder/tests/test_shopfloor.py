@@ -2,7 +2,7 @@
 import unittest
 
 from odoo import Command
-from odoo.tests import Form
+from odoo.tests import Form, users
 from odoo.tests.common import HttpCase, tagged
 
 @tagged('post_install', '-at_install')
@@ -52,12 +52,24 @@ class TestShopFloor(HttpCase):
         stock_lot_seq = self.env['ir.sequence'].search([('code', '=', 'stock.lot.serial')])
         stock_lot_seq.number_next_actual = 1
 
-    def test_shop_floor(self):
-        # Creates somme employees for test purpose.
+        self.user_without_hr_right = self.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [
+                (6, 0, self.env.user.group_ids.ids),
+                Command.unlink(self.env.ref('hr.group_hr_user').id),
+                Command.unlink(self.env.ref('hr.group_hr_manager').id),
+                Command.unlink(self.env.ref('base.group_system').id),
+            ],
+        })
+        self.user_without_hr_right.action_create_employee()
         employees = self.env['hr.employee'].create([{
             'name': name,
         } for name in ['Abbie Seedy', 'Billy Demo', 'Cory Corrinson']])
         employees[0].barcode = "659898105101"
+
+    def test_shop_floor(self):
+        # Creates somme employees for test purpose.
 
         giraffe = self.env['product.product'].create({
             'name': 'Giraffe',
@@ -164,8 +176,7 @@ class TestShopFloor(HttpCase):
         mo.action_confirm()
         mo.action_assign()
         mo.button_plan()
-
-        self.start_tour('/odoo/shop-floor', "test_shop_floor", login='admin')
+        self.start_tour('/odoo/shop-floor', "test_shop_floor", login='test_without_hr_right')
 
         self.assertEqual(mo.move_finished_ids.quantity, 2)
         self.assertRecordValues(mo.move_raw_ids, [
@@ -183,6 +194,7 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo.workorder_ids[0].check_ids[3].move_id.quantity, 2)
         self.assertRecordValues(mo.workorder_ids[0].check_ids[3].move_id.lot_ids, [{'id': neck_sn_1}, {'id': neck_sn_2}])
 
+    @users('test_without_hr_right')
     def test_shop_floor_auto_select_workcenter(self):
         """ This test ensures the right work center is selected when Shop Floor is opened."""
         # Create some products.
@@ -240,8 +252,9 @@ class TestShopFloor(HttpCase):
         # Mark as done the 2th MO 1st WO.
         all_mo[1].workorder_ids[0].button_start()
         all_mo[1].workorder_ids[0].action_mark_as_done()
-        self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='admin')
+        self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='test_without_hr_right')
 
+    @users('test_without_hr_right')
     def test_shop_floor_catalog_add_component_in_two_steps(self):
         """ Ensures when a component is added through the Shop Floor catalog,
         the Pick Component operation is correctly created/updated."""
@@ -323,12 +336,13 @@ class TestShopFloor(HttpCase):
             {'product_id': product_comp2.id, 'product_uom_qty': 3, 'quantity': 3, 'picked': False},
         ])
 
+    @users('test_without_hr_right')
     def test_shop_floor_my_wo_filter_with_pin_user(self):
         """Checks the shown Work Orders (in "My WO" section) are correctly
         refreshed when selected user uses a PIN code."""
         stock_location = self.warehouse.lot_stock_id
         # Create two employees (one with no PIN code and one with a PIN code.)
-        self.env['hr.employee'].create([
+        self.env['hr.employee'].sudo().create([
             {'name': 'John Snow'},
             {'name': 'Queen Elsa', 'pin': '41213'},
         ])
@@ -374,7 +388,7 @@ class TestShopFloor(HttpCase):
         all_mo.action_confirm()
         all_mo.action_assign()
         all_mo.button_plan()
-        self.start_tour('/odoo/shop-floor', 'test_shop_floor_my_wo_filter_with_pin_user', login='admin')
+        self.start_tour('/odoo/shop-floor', 'test_shop_floor_my_wo_filter_with_pin_user', login='test_without_hr_right')
 
     @unittest.skip  # TODO: tour needs to be updated.
     def test_generate_serials_in_shopfloor(self):
@@ -431,6 +445,7 @@ class TestShopFloor(HttpCase):
         self.start_tour(url, "test_generate_serials_in_shopfloor", login='admin')
         self.assertEqual(mo.move_byproduct_ids.lot_ids.name, "00001")
 
+    @users('test_without_hr_right')
     def test_canceled_wo(self):
         finished = self.env['product.product'].create({
             'name': 'finish',
@@ -483,8 +498,9 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo_backorder.workorder_ids[0].state, 'cancel')
         self.assertEqual(mo_backorder.workorder_ids[1].state, 'ready')
 
-        self.start_tour("odoo/shop-floor", "test_canceled_wo", login='admin')
+        self.start_tour("odoo/shop-floor", "test_canceled_wo", login='test_without_hr_right')
 
+    @users('test_without_hr_right')
     def test_change_qty_produced(self):
         """
             Check that component quantity matches the quantity produced set in the shop
@@ -550,7 +566,7 @@ class TestShopFloor(HttpCase):
         wo = mo.workorder_ids.sorted()[0]
         wo.button_start()
         wo.button_finish()
-        self.start_tour("/odoo/shop-floor", "test_change_qty_produced", login='admin')
+        self.start_tour("/odoo/shop-floor", "test_change_qty_produced", login='test_without_hr_right')
         self.assertEqual(mo.qty_producing, 3)
         for move in mo.move_raw_ids:
             if move.product_id.id == comp1.id:
@@ -560,12 +576,13 @@ class TestShopFloor(HttpCase):
                 self.assertEqual(move.quantity, 10)
                 self.assertTrue(move.picked)
 
+    @users('test_without_hr_right')
     def test_operator_assigned_to_all_work_orders(self):
         """
         Check that, if a custom operator is selected in the side panel, all work orders
         completed via Shop Floor are assigned to that operator.
         """
-        employee = self.env['hr.employee'].create([{'name': 'Anita Olivier'}])
+        employee = self.env['hr.employee'].sudo().create([{'name': 'Anita Olivier'}])
         product = self.env['product.product'].create({'name': 'P', 'is_storable': True})
         workcenter = self.env['mrp.workcenter'].create({'name': 'Workcenter1'})
         bom = self.env['mrp.bom'].create({
@@ -585,7 +602,7 @@ class TestShopFloor(HttpCase):
         mo.action_assign()
         mo.button_plan()
 
-        self.start_tour('/odoo/shop-floor', 'test_operator_assigned_to_all_work_orders', login='admin')
+        self.start_tour('/odoo/shop-floor', 'test_operator_assigned_to_all_work_orders', login='test_without_hr_right')
 
         logs = mo.workorder_ids.time_ids
         self.assertEqual(len(logs), 2, 'Both operations should be logged.')
@@ -600,6 +617,7 @@ class TestShopFloor(HttpCase):
             'The description of OP2 should mention "Anita Olivier"'
         )
 
+    @users('test_without_hr_right')
     def test_automatic_backorder_no_redirect(self):
         """
         Test that the backorder is created without redirecting to the
@@ -652,18 +670,19 @@ class TestShopFloor(HttpCase):
         mo.action_confirm()
         mo.action_assign()
         mo.button_plan()
-        self.start_tour("/odoo/shop-floor", "test_automatic_backorder_no_redirect", login='admin')
+        self.start_tour("/odoo/shop-floor", "test_automatic_backorder_no_redirect", login='test_without_hr_right')
         self.assertRecordValues(mo.production_group_id.production_ids.sorted('name'), [
             {'name': 'MOBACK-001', 'state': 'done'},
             {'name': 'MOBACK-002', 'state': 'done'},
         ])
 
+    @users('test_without_hr_right')
     def test_shop_floor_access(self):
         mrp_partner = self.env['res.partner'].create({'name': 'mrp_user'})
-        self.env['res.users'].create({
+        self.env['res.users'].sudo().create({
             'login': 'mrp_user',
             'partner_id': mrp_partner.id,
             'group_ids': [Command.set(self.env.ref('mrp.group_mrp_routings').ids)],
         })
         self.env['mrp.workcenter'].create({'name': 'Workcenter1'})
-        self.start_tour('/odoo', 'test_shop_floor_access', login='admin')
+        self.start_tour('/odoo', 'test_shop_floor_access', login='test_without_hr_right')

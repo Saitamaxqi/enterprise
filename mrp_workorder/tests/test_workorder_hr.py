@@ -4,7 +4,7 @@ from datetime import datetime
 from freezegun import freeze_time
 
 from odoo import Command
-from odoo.tests import Form, common
+from odoo.tests import Form, common, users
 from odoo.exceptions import UserError
 
 class TestWorkorderDurationHr(common.TransactionCase):
@@ -50,6 +50,16 @@ class TestWorkorderDurationHr(common.TransactionCase):
         mo_form.bom_id = cls.bom
         mo_form.product_qty = 1
         cls.mo = mo_form.save()
+
+        cls.user_without_hr_right = cls.env['res.users'].create({
+            'name': 'Test without hr right',
+            'login': 'test_without_hr_right',
+            'group_ids': [(6, 0, [
+                cls.env.ref('base.group_user').id,
+                cls.env.ref('mrp.group_mrp_manager').id,
+                cls.env.ref('mrp.group_mrp_routings').id
+            ])],
+        })
 
     def test_workorder_duration(self):
         """Test the duration of workorder is computed based on employee time interval
@@ -131,3 +141,37 @@ class TestWorkorderDurationHr(common.TransactionCase):
         self.bom.operation_ids.cost_mode = 'actual'
         self.workcenter.employee_costs_hour = 99
         self.assertEqual(self.mo.workorder_ids._cal_cost(), 93.0)
+
+    @users('test_without_hr_right')
+    def test_create_workorder_without_hr_right(self):
+        self.env['mrp.workorder'].create({
+            'name': 'Test work order',
+            'workcenter_id': self.workcenter.id,
+            'production_id': self.mo.id,
+            'employee_assigned_ids': self.employee_1.ids,
+        })
+
+    @users('test_without_hr_right')
+    def test_create_manufacturing_order_without_hr_right(self):
+        production = self.env['mrp.production'].create({
+            'bom_id': self.bom.id,
+            'product_qty': 1,
+            'workorder_ids': [Command.create({
+                'name': 'Test work order',
+                'workcenter_id': self.workcenter.id,
+                'production_id': self.mo.id,
+                'employee_assigned_ids': self.employee_1.ids,
+                'employee_ids': self.employee_1.ids,
+            })],
+        })
+        self.assertEqual(production.employee_ids, self.employee_1)
+
+    @users('test_without_hr_right')
+    def test_create_workcenter_without_hr_right(self):
+        self.env['mrp.workcenter'].create({
+            'name': 'Test Workcenter',
+            'time_start': 10,
+            'time_stop': 5,
+            'employee_ids': self.employee_1.ids,
+            'time_efficiency': 80,
+        })
