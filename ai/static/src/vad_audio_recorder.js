@@ -1,6 +1,14 @@
 import { rpc } from "@web/core/network/rpc";
 import { url } from "@web/core/utils/urls";
 
+/**
+ * @typedef {object} RealTimeSessionInfo
+ * @property {object} client_secret
+ * @property {string} client_secret.value The client secret value for WebSocket authentication.
+ * @property {string} [expires_at] The expiration timestamp of the session.
+ * @property {string} [session_id] The ID of the real-time session.
+ */
+
 export default class VADAudioRecorder {
     static instance = null;
 
@@ -40,7 +48,17 @@ export default class VADAudioRecorder {
         this.silenceDurationMs = silenceDurationMs;
     }
 
+    /**
+     * This method will start the recording of the audio and the realtime transcription session.
+     * @param {string} language the language to use for the transcription session
+     * @param {string} prompt the prompt to give to the transcription tool
+     */
     async startRecording(language, prompt) {
+        /** @type{RealTimeSessionInfo} */
+        const sessionInfo = await rpc("/ai/transcription/session", {
+            language,
+            prompt,
+        });
         if (VADAudioRecorder.audioStream === null) {
             VADAudioRecorder.audioStream = await navigator.mediaDevices.getUserMedia({
                 audio: {
@@ -50,23 +68,25 @@ export default class VADAudioRecorder {
             });
         }
 
-        await this.setupAudioNodes(language, prompt);
+        await this.setupTranscriptionSession(sessionInfo);
         VADAudioRecorder.listenerCount++;
         this.state = "recording";
     }
 
-    async setupAudioNodes(language, prompt) {
+    /**
+     * This method sets up the transcription session. This includes setting up the audio pipeline
+     * to filter the audio and formatting it with the help of the PCM16AudioProcessor. The method
+     * also starts the {@link WebSocket} session with OpenAI.
+     * @param {RealTimeSessionInfo} sessionInfo the information about the session containing the ephemeral token
+     */
+    async setupTranscriptionSession(sessionInfo) {
         if (!VADAudioRecorder.socket) {
-            const response = await rpc("/ai/transcription/session", {
-                language,
-                prompt,
-            });
             VADAudioRecorder.socket = new WebSocket(
                 "wss://api.openai.com/v1/realtime?intent=transcription",
                 [
                     "realtime",
                     // Auth
-                    "openai-insecure-api-key." + response.client_secret.value,
+                    "openai-insecure-api-key." + sessionInfo.client_secret.value,
                     "openai-beta.realtime-v1",
                 ]
             );
@@ -155,6 +175,10 @@ export default class VADAudioRecorder {
         }
     }
 
+    /**
+     * This method stops the recording of the audio. Specifically, closing the socket, and
+     * disposing all the media resources currently in use.
+     */
     stopRecording() {
         VADAudioRecorder.listenerCount = Math.max(VADAudioRecorder.listenerCount - 1, 0);
         VADAudioRecorder.socket?.removeEventListener("message", this.socketMessageListener);

@@ -5,6 +5,7 @@ import {
     useEditableDescendants,
     useEmbeddedState,
 } from "@html_editor/others/embedded_component_utils";
+import { RPCError } from "@web/core/network/rpc";
 import { Component, onMounted, onWillStart, useState } from "@odoo/owl";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
@@ -169,6 +170,14 @@ export class VoiceTranscription extends Component {
                             type: "danger",
                         }
                     );
+                } else if (
+                    error instanceof RPCError &&
+                    error.data.name === "odoo.exceptions.UserError"
+                ) {
+                    this.notificationService.add(error.data.message, {
+                        title: _t("User error"),
+                        type: "danger",
+                    });
                 } else {
                     this.notificationService.add(_t("Unable to start the recording."), {
                         title: _t("An error occured"),
