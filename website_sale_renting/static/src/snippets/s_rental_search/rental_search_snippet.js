@@ -9,7 +9,6 @@ export class RentalSearchSnippet extends Interaction {
     dynamicContent = {
         '.s_rental_search_btn': { 't-on-click': this.onClickRentalSearchButton },
         '.o_website_sale_daterange_picker': { 't-on-toggle_search_btn': this.onToggleSearchBtn },
-        _root: { 't-on-daterangepicker_apply': this.searchRentals },
     };
 
     onToggleSearchBtn(ev) {
@@ -27,8 +26,7 @@ export class RentalSearchSnippet extends Interaction {
     }
 
     /**
-     * This function is triggered when the user clicks on the rental search button or applies a date
-     * range in the picker.
+     * This function is triggered when the user clicks on the rental search button.
      *
      * @param {CustomEvent} event
      */
