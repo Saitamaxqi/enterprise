@@ -1,5 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
-import { Component, useState } from "@odoo/owl";
+import { status, Component, useState } from "@odoo/owl";
 
 import { useService } from "@web/core/utils/hooks";
 import { WarningDialog } from "@web/core/errors/error_dialogs";
@@ -728,7 +728,8 @@ export class AccountReportFilters extends Component {
         this.controller.incrementCallNumber();
 
         this.timeout = setTimeout(async () => {
-            await this.controller.reload(optionKey, this.controller.cachedFilterOptions);
+            if (status(this) !== "destroyed")
+                await this.controller.reload(optionKey, this.controller.cachedFilterOptions);
         }, delay);
     }
 
