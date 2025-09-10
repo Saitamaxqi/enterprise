@@ -71,6 +71,15 @@
                 border-color: $primary;
             }
         }
+
+        .o_bank_reconciliation_quick_create .o_quick_create {
+            --columns: 1;
+            --gap: #{map-get($spacers, 3)};
+
+            @include media-breakpoint-up(md) {
+                grid-template-columns: 7rem 2fr 1fr 1fr;
+            }
+        }
     }
 }
 
