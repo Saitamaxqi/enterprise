@@ -301,10 +301,6 @@ msgstr ""
 "Es ist notwendig zu überprüfen, dass nur zulässige Vermögenswerte in diese "
 "Berechnung einbezogen werden."
 
-#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_periodic_vat_xml_export__ask_restitution
-msgid "Ask Restitution"
-msgstr "Rückerstattung verlangen"
-
 #. module: l10n_be_reports
 #: model:account.return.check.template,description:l10n_be_reports.account_return_check_template_be_fixed_assets_depreciation_rate
 msgid ""
@@ -402,6 +398,7 @@ msgstr ""
 
 #. module: l10n_be_reports
 #: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_vat_return_lock_wizard__ask_restitution
+#: model:ir.model.fields,field_description:l10n_be_reports.field_l10n_be_reports_periodic_vat_xml_export__ask_restitution
 msgid "Ask Restitution"
 msgstr "Rückerstattung verlangen"
 
