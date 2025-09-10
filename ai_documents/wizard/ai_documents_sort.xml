@@ -39,6 +39,8 @@
                             <strong class="mt-3">What actions can the AI take?</strong>
                             <field name="ai_tool_ids"
                                 widget="many2many_tags"
+                                options="{'no_quick_create': True}"
+                                context="{'default_model_id': context.get('default_model_id')}"
                                 nolabel="1"/>
                         </div>
                     </sheet>
@@ -63,6 +65,9 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="ai_documents_sort_view_form"/>
         <field name="target">new</field>
-        <field name="context">{'header': False}</field>
+        <field name="context" eval="{
+            'header': False,
+            'default_model_id': ref('documents.model_documents_document'),
+        }"/>
     </record>
 </odoo>
