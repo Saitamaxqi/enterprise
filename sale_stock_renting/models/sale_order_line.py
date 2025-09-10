@@ -618,3 +618,9 @@ class SaleOrderLine(models.Model):
     @api.model
     def _are_rental_pickings_enabled(self):
         return self.env['res.groups']._is_feature_enabled('sale_stock_renting.group_rental_stock_picking')
+
+    def _prepare_procurement_values(self):
+        values = super()._prepare_procurement_values()
+        if self._are_rental_pickings_enabled() and self.is_rental:
+            values['to_refund'] = False
+        return values

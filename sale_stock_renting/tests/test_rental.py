@@ -1307,6 +1307,20 @@ class TestRentalPicking(TestRentalCommon):
             self.env.company.rental_loc_id
         )
 
+        return_wizard = Form(self.env['stock.return.picking'].with_context(
+            active_id=outgoing_picking.id,
+            active_ids=outgoing_picking.ids,
+            active_model='stock.picking'
+        ))
+
+        wizard = return_wizard.save()
+        wizard.product_return_moves.quantity = 1
+        res = wizard.action_create_returns()
+        picking = self.env['stock.picking'].browse(res["res_id"])
+
+        picking.button_validate()
+        self.assertEqual(sales_line.qty_delivered, 4)
+
     def test_rental_order_containing_mixed_lines_1(self):
         """
             Test delivery behavior for rental order where the first line contains a rental product

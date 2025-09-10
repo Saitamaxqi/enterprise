@@ -111,3 +111,12 @@ class StockMove(models.Model):
     def _set_rental_sm_qty(self):
         self.ensure_one()
         return self
+
+    def _is_incoming(self):
+        if (
+            self.company_id.rental_loc_id == self.location_id
+            and self.location_dest_id.usage == 'internal'
+        ):
+            return True
+
+        return super()._is_incoming()
