@@ -3,10 +3,9 @@ import { url } from "@web/core/utils/urls";
 
 /**
  * @typedef {object} RealTimeSessionInfo
- * @property {object} client_secret
- * @property {string} client_secret.value The client secret value for WebSocket authentication.
- * @property {string} [expires_at] The expiration timestamp of the session.
- * @property {string} [session_id] The ID of the real-time session.
+ * @property {string} value The client secret value for WebSocket authentication.
+ * @property {number} expires_at the exiration timestamp of the session
+ * @property {object} session The expiration information about the created session.
  */
 
 export default class VADAudioRecorder {
@@ -34,18 +33,11 @@ export default class VADAudioRecorder {
             type: "bandpass",
             frequency: 1850,
             Q: 4.0,
-        },
-        checkIntervalMs = 100,
-        silenceThreshold = 0.01,
-        silenceDurationMs = 500
+        }
     ) {
         this.onMessage = onMessage;
         this.filterOptions = filterOptions;
         this.state = "inactive";
-
-        this.checkIntervalMs = checkIntervalMs;
-        this.silenceThreshold = silenceThreshold;
-        this.silenceDurationMs = silenceDurationMs;
     }
 
     /**
@@ -81,15 +73,11 @@ export default class VADAudioRecorder {
      */
     async setupTranscriptionSession(sessionInfo) {
         if (!VADAudioRecorder.socket) {
-            VADAudioRecorder.socket = new WebSocket(
-                "wss://api.openai.com/v1/realtime?intent=transcription",
-                [
-                    "realtime",
-                    // Auth
-                    "openai-insecure-api-key." + sessionInfo.client_secret.value,
-                    "openai-beta.realtime-v1",
-                ]
-            );
+            VADAudioRecorder.socket = new WebSocket("wss://api.openai.com/v1/realtime", [
+                "realtime",
+                // Auth
+                "openai-insecure-api-key." + sessionInfo.value,
+            ]);
         }
         this.socketMessageListener = (event) => {
             const jsonData = JSON.parse(event.data);
@@ -115,8 +103,6 @@ export default class VADAudioRecorder {
             );
             filterNode.Q.setValueAtTime(this.filterOptions.Q, audioContext.currentTime);
 
-            const analyzerNode = audioContext.createAnalyser();
-
             const workletUrl = url("/ai/static/src/worklets/pcm16_audio_processor.js");
             await audioContext.audioWorklet.addModule(workletUrl);
             const pcm16AudioProcessorNode = new AudioWorkletNode(audioContext, "pcm16-processor");
@@ -125,41 +111,8 @@ export default class VADAudioRecorder {
                 await audioContext.resume();
             }
             sourceNode.connect(filterNode);
-            filterNode.connect(analyzerNode);
-            analyzerNode.connect(pcm16AudioProcessorNode);
+            filterNode.connect(pcm16AudioProcessorNode);
             pcm16AudioProcessorNode.connect(audioContext.destination);
-
-            const detectVoiceActivity = () => {
-                const dataArray = new Uint8Array(analyzerNode.frequencyBinCount);
-                analyzerNode.getByteFrequencyData(dataArray);
-
-                const normalizedTotalDb = dataArray.reduce(
-                    (sum, dbValue) => sum + dbValue / 255,
-                    0
-                );
-
-                const avgDb = normalizedTotalDb / analyzerNode.frequencyBinCount;
-
-                if (avgDb > this.silenceThreshold) {
-                    if (this.silenceTimer !== null) {
-                        clearTimeout(this.silenceTimer);
-                        this.silenceTimer = null;
-                    }
-                } else {
-                    const socket = VADAudioRecorder.socket;
-                    if (this.silenceTimer === null && socket !== null && socket.readyState === 1) {
-                        this.silenceTimer = setTimeout(() => {
-                            socket.send(
-                                JSON.stringify({
-                                    type: "input_audio_buffer.commit",
-                                })
-                            );
-                        }, this.silenceDurationMs);
-                    }
-                }
-            };
-
-            this.detectionInterval = setInterval(detectVoiceActivity, this.checkIntervalMs);
 
             pcm16AudioProcessorNode.port.onmessage = (event) => {
                 const socket = VADAudioRecorder.socket;
@@ -184,8 +137,6 @@ export default class VADAudioRecorder {
         VADAudioRecorder.socket?.removeEventListener("message", this.socketMessageListener);
 
         if (VADAudioRecorder.listenerCount === 0) {
-            clearTimeout(this.silenceTimer);
-            clearInterval(this.detectionInterval);
             VADAudioRecorder.audioContext?.close();
             VADAudioRecorder.socket?.close();
             VADAudioRecorder.audioStream?.getTracks().forEach((track) => track.stop());

@@ -30,6 +30,59 @@ class EmbeddingResponse(typing.TypedDict):
     usage: dict
 
 
+class RealtimeSessionAudioInputFormatParameter(typing.TypedDict, total=False):
+    type: str | None
+    rate: int | None
+
+
+class RealtimeSessionAudioInputTranscriptionParameter(typing.TypedDict, total=False):
+    language: str | None
+    model: str | None
+    prompt: str | None
+
+
+class RealtimeSessionAudioInputTurnDetectionParameter(typing.TypedDict, total=False):
+    create_response: bool | None
+    eagerness: str | None
+    idle_timeout_ms: int | None
+    interrupt_response: bool | None
+    prefix_padding_ms: int | None
+    silence_duration_ms: int | None
+    threshold: float | None
+    type: str | None
+
+
+class RealtimeSessionAudioInputNoiseReductionParameter(typing.TypedDict, total=False):
+    type: str | None
+
+
+class RealtimeSessionAudioInputParameter(typing.TypedDict, total=False):
+    format: RealtimeSessionAudioInputFormatParameter | None
+    noise_reduction: RealtimeSessionAudioInputNoiseReductionParameter | None
+    transcription: RealtimeSessionAudioInputTranscriptionParameter | None
+    turn_detection: RealtimeSessionAudioInputTurnDetectionParameter | None
+
+
+class RealtimeSessionAudioParameter(typing.TypedDict, total=False):
+    input: RealtimeSessionAudioInputParameter | None
+
+
+class RealtimeSessionParameter(typing.TypedDict, total=False):
+    type: str
+    audio: RealtimeSessionAudioParameter | None
+    include: list[str] | None
+
+
+class RealtimeExpiresAfterParameter(typing.TypedDict, total=False):
+    anchor: str | None
+    seconds: int | None
+
+
+class RealtimeParameters(typing.TypedDict, total=False):
+    expires_after: RealtimeExpiresAfterParameter | None
+    session: RealtimeSessionParameter | None
+
+
 class LLMApiService:
     def __init__(self, env: Environment, provider: str = 'openai') -> None:
         self.provider = provider
@@ -38,6 +91,8 @@ class LLMApiService:
             base_url = "https://api.openai.com/v1"
         elif self.provider == 'google':
             base_url = "https://generativelanguage.googleapis.com/v1beta/openai"
+        else:
+            raise NotImplementedError(f"Unsupported provider: {self.provider}")
 
         self.base_url = base_url
         self.env = env
@@ -134,26 +189,11 @@ class LLMApiService:
         _logger.info("Transcription job done in %.1fs %s", elapsed, o_rft_text)
         return response.get('text')
 
-    def get_transcription_session(
-        self,
-        client_secret: dict | None = None,
-        input_audio_format: str | None = None,
-        input_audio_noise_reduction: dict | None = None,
-        input_audio_transcription: dict | None = None,
-        modalities: list[str] | None = None,
-        turn_detection: dict | None = None
-    ):
-        body = {}
-        self._add_if_set(body, "client_secret", client_secret)
-        self._add_if_set(body, "input_audio_format", input_audio_format)
-        self._add_if_set(body, "input_audio_noise_reduction", input_audio_noise_reduction)
-        self._add_if_set(body, "input_audio_transcription", input_audio_transcription)
-        self._add_if_set(body, "modalities", modalities)
-        body["turn_detection"] = turn_detection
-
+    def get_transcription_session(self, config: RealtimeParameters | None):
         headers = self._get_base_headers()
 
-        return self._request("post", "/realtime/transcription_sessions", headers, body)
+        body = dict(**config) if config is not None else {}
+        return self._request("post", "/realtime/client_secrets", headers, body)
 
     def _add_if_set(self, d: dict, key: str, value):
         if value is not None:
@@ -633,4 +673,4 @@ class LLMApiService:
                 }],
             }
 
-        raise NotImplementedError()
+        raise NotImplementedError(f"Unsupported provider: {self.provider}")

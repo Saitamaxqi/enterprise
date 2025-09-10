@@ -2,7 +2,10 @@
 from odoo import http
 from odoo.http import request
 
-from ..utils.llm_api_service import LLMApiService
+from ..utils.llm_api_service import LLMApiService, RealtimeParameters
+
+DEFAULT_TOKEN_LIFESPAN = 7200  # Token lifespan in seconds
+DEFAULT_SILENCE_DURATION = 500  # Silence duration in ms
 
 
 class AgentController(http.Controller):
@@ -11,23 +14,26 @@ class AgentController(http.Controller):
     def get_session_token(self, language: str, prompt: str):
         service = LLMApiService(request.env)
 
-        session_params = {
-            "input_audio_transcription": {
-                "model": "gpt-4o-transcribe",
-                "language": language,
-                "prompt": prompt
-            },
-            "turn_detection": None,
-            "input_audio_noise_reduction": {
-                "type": "near_field"
-            },
-            "client_secret": {
-                "expires_after": {
-                    "anchor": "created_at",
-                    "seconds": 7200
+        session_params: RealtimeParameters = {
+            "expires_after": {"anchor": "created_at", "seconds": DEFAULT_TOKEN_LIFESPAN},
+            "session": {
+                "type": "transcription",
+                "audio": {
+                    "input": {
+                        "transcription": {
+                            "language": language,
+                            "model": "gpt-4o-transcribe",
+                            "prompt": prompt,
+                        },
+                        "turn_detection": {
+                            "type": "server_vad",
+                            "silence_duration_ms": DEFAULT_SILENCE_DURATION,
+                        },
+                        "noise_reduction": {"type": "far_field"},
+                    }
                 },
-            }
+            },
         }
 
-        session = service.get_transcription_session(**session_params)
+        session = service.get_transcription_session(session_params)
         return session
