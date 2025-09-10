@@ -137,7 +137,6 @@
                     <button string="Discard" class="btn-secondary me-3" special="cancel" data-hotkey="x"/>
                     <div invisible="(not has_default_template and not template_id) or (context.get('sign_directly_without_mail',False))" class="d-flex gap-3">
                         <field name="attachment_ids" widget="many2many_binary_sign_request"/>
-                        <field name="body" widget="mail_composer_chatgpt"/>
                         <field name="scheduled_date" widget="text_scheduled_date"/>
                     </div>
                 </footer>
