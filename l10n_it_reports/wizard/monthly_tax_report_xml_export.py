@@ -1,12 +1,10 @@
 import json
 
-from dateutil.relativedelta import relativedelta
-
 from odoo import models, fields
 
 
 class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
-    _name = "l10n_it_xml_export.monthly.tax.report.xml.export.wizard"
+    _name = "l10n_it_reports.monthly.tax.report.xml.export.wizard"
     _description = "Italian Monthly Tax Report XML Export Wizard"
 
     declarant_fiscal_code = fields.Char(
@@ -75,9 +73,6 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
         string="Date of Commitment",
         default=fields.Date.context_today,
     )
-    subcontracting = fields.Boolean(string="Subcontracting", help="Check this if the company operates in sub-contracting.")
-    exceptional_events = fields.Boolean(string="Exceptional Events", help="Check this if the declaration is affected by exceptional events.")
-    extraordinary_operations = fields.Boolean(string="Extraordinary Operations", help="Check this if the company has undergone extraordinary operations.")
     show_method = fields.Boolean(
         string="Show Method",
         help="Check this if you want to show the method field.",
@@ -103,10 +98,10 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
     def _compute_show_method(self):
         self.show_method = False
 
-        if 'l10n_it_xml_export_monthly_tax_report_options' not in self.env.context:
+        if 'l10n_it_reports_monthly_tax_report_options' not in self.env.context:
             return
         submissions_periodicity = hasattr(self.env.company, "account_return_periodicity") and self.env.company.account_return_periodicity
-        date_to = fields.Date.from_string(self.env.context['l10n_it_xml_export_monthly_tax_report_options']['date']['date_to'])
+        date_to = fields.Date.from_string(self.env.context['l10n_it_reports_monthly_tax_report_options']['date']['date_to'])
         for wizard in self:
             if submissions_periodicity == "trimester" and (date_to.month - 1) // 3 == 3:
                 wizard.show_method = True
@@ -143,8 +138,5 @@ class L10nItMonthlyTaxReportXmlExportWizard(models.TransientModel):
             "intermediary_code": self.intermediary_code,
             "submission_commitment": self.submission_commitment,
             "commitment_date": fields.Date.to_string(self.commitment_date),  # Date fields are not json serializable.
-            "subcontracting": self.subcontracting,
-            "exceptional_events": self.exceptional_events,
-            "extraordinary_operations": self.extraordinary_operations,
             "method": self.method,
         }

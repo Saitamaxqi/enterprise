@@ -36,9 +36,9 @@
                     <t t-else="">
                         <iv:Mese><t t-out="month[0]"/></iv:Mese>
                     </t>
-                    <iv:Subfornitura t-if="subcontracting"><t t-out="subcontracting"/></iv:Subfornitura>
-                    <iv:EventiEccezionali t-if="exceptional_events"><t t-out="exceptional_events"/></iv:EventiEccezionali>
-                    <iv:OperazioniStraordinarie t-if="extraordinary_operations"><t t-out="extraordinary_operations"/></iv:OperazioniStraordinarie>
+                    <iv:Subfornitura t-if="month[1]['subcontracting']"><t t-out="month[1]['subcontracting']"/></iv:Subfornitura>
+                    <iv:EventiEccezionali t-if="month[1]['exceptional_events']"><t t-out="month[1]['exceptional_events']"/></iv:EventiEccezionali>
+                    <iv:OperazioniStraordinarie t-if="month[1]['extraordinary_operations']"><t t-out="month[1]['extraordinary_operations']"/></iv:OperazioniStraordinarie>
                     <iv:TotaleOperazioniAttive t-if="month[1]['total_active_operations']"><t t-out="month[1]['total_active_operations']"/></iv:TotaleOperazioniAttive>
                     <iv:TotaleOperazioniPassive t-if="month[1]['total_passive_operations']"><t t-out="month[1]['total_passive_operations']"/></iv:TotaleOperazioniPassive>
                     <iv:IvaEsigibile t-if="month[1]['vat_payable']"><t t-out="month[1]['vat_payable']"/></iv:IvaEsigibile>

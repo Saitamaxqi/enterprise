@@ -5,30 +5,31 @@ from markupsafe import Markup
 from odoo import _, fields, models
 from odoo.tools import date_utils, file_open
 
+
 class ItalianReportCustomHandler(models.AbstractModel):
     _name = 'l10n_it.monthly.tax.report.handler'
     _inherit = 'account.tax.report.handler'
     _description = 'Italian Monthly Tax Report Custom Handler'
 
     def print_tax_report_to_xml(self, options):
-        view_id = self.env.ref('l10n_it_xml_export.monthly_tax_report_xml_export_wizard_view').id
+        view_id = self.env.ref('l10n_it_reports.monthly_tax_report_xml_export_wizard_view').id
         return {
             'name': _('XML Export Options'),
             'view_mode': 'form',
             'views': [[view_id, 'form']],
-            'res_model': 'l10n_it_xml_export.monthly.tax.report.xml.export.wizard',
+            'res_model': 'l10n_it_reports.monthly.tax.report.xml.export.wizard',
             'type': 'ir.actions.act_window',
             'target': 'new',
-            'context': dict(self.env.context, l10n_it_xml_export_monthly_tax_report_options=options),
+            'context': dict(self.env.context, l10n_it_reports_monthly_tax_report_options=options),
         }
 
     def export_tax_report_to_xml(self, options):
         xml_export_data = self._get_xml_export_data(options)
-        xml_content = self.env["ir.qweb"]._render("l10n_it_xml_export.tax_report_export_template", xml_export_data)
+        xml_content = self.env["ir.qweb"]._render("l10n_it_reports.tax_report_export_template", xml_export_data)
         xml_content = Markup("""<?xml version="1.0" encoding="UTF-8" standalone="yes"?>""") + xml_content
         xml_content = xml_content.encode()
 
-        with file_open("l10n_it_xml_export/data/validation/fornituraIvp_2018_v1.xsd", 'rb') as xsd:
+        with file_open("l10n_it_reports/data/xml_export/validation/fornituraIvp_2018_v1.xsd", 'rb') as xsd:
             xsd_schema = etree.XMLSchema(etree.parse(xsd))
             try:
                 xsd_schema.assertValid(etree.fromstring(xml_content))
@@ -59,7 +60,7 @@ class ItalianReportCustomHandler(models.AbstractModel):
         company = report._get_sender_company_for_export(options)
         quarter_months = list(date_utils.date_range(*date_utils.get_quarter(options_date_to)))
         quarterly = self.env.company.account_return_periodicity == 'trimester'
-        balance_col_idx = next((idx for idx, col in enumerate(options.get('columns', [])) if col.get('expression_label') == 'balance'), None)
+        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
         report_lines_data_per_month = {date.month: {} for date in quarter_months}
         for date in quarter_months:
             date_from = date
@@ -74,21 +75,22 @@ class ItalianReportCustomHandler(models.AbstractModel):
                 },
             })
             at_date_report_lines = report._get_lines(at_date_options)
-            at_date_report_line2amount = {
-                line['columns'][balance_col_idx]['report_line_id']: (
-                    f"{float(line['columns'][balance_col_idx]['no_format']):.2f}".replace(".", ",")
-                    if line['columns'][balance_col_idx]['no_format'] else False
-                )
-                for line in at_date_report_lines
-            }
-            month_lines = self.env['account.report.line'].browse(at_date_report_line2amount.keys())
-            month_lines.fetch(['id', 'code'])
-            for report_line in month_lines:
-                # VP6a and VP6b values must be absolute values.
-                if report_line.code in ['VP6a', 'VP6b'] and at_date_report_line2amount.get(report_line.id) and at_date_report_line2amount[report_line.id].startswith('-'):
-                    report_lines_data_per_month[date.month][report_line.code] = at_date_report_line2amount[report_line.id][1:]
-                else:
-                    report_lines_data_per_month[date.month][report_line.code] = at_date_report_line2amount[report_line.id]
+            at_date_report_expressions = self.env['account.report.expression'].search([('report_line_id', 'in', [line['columns'][0]['report_line_id'] for line in at_date_report_lines])])
+
+            at_date_report_expressions_by_line = at_date_report_expressions.grouped('report_line_id')
+            for line, expressions in at_date_report_expressions_by_line.items():
+                line_dict = next(report_line for report_line in at_date_report_lines if report_line['name'] == line.name)
+                expressions_by_label = expressions.grouped('label')
+                debit_expression = expressions_by_label.get('debit')
+                credit_expression = expressions_by_label.get('credit')
+                if debit_expression and credit_expression:
+                    debit_value = line_dict['columns'][colname_to_idx['debit']]['no_format']
+                    report_lines_data_per_month[date.month][f'{debit_expression.report_line_id.code}a'] = f"{debit_value:.2f}".replace(".", ",") if debit_value else False
+                    credit_value = line_dict['columns'][colname_to_idx['credit']]['no_format']
+                    report_lines_data_per_month[date.month][f'{credit_expression.report_line_id.code}b'] = f"{credit_value:.2f}".replace(".", ",") if credit_value else False
+                elif (bool(debit_expression) ^ bool(credit_expression)):
+                    value = line_dict['columns'][colname_to_idx[(debit_expression or credit_expression).label]]['no_format']
+                    report_lines_data_per_month[date.month][line.code] = f"{value:.2f}".replace(".", ",") if value else False
 
         if quarterly:
             def to_float(val):
@@ -111,14 +113,14 @@ class ItalianReportCustomHandler(models.AbstractModel):
                 }
             }
 
-        identificativo = self.env['ir.sequence'].next_by_code('l10n_it_xml_export.identificativo')
+        identificativo = self.env['ir.sequence'].next_by_code('l10n_it_reports.identificativo')
         if not identificativo:
             self.env['ir.sequence'].create({
                 'name': "IT Periodic VAT XML Export Identificativo",
-                'code': "l10n_it_xml_export.identificativo",
+                'code': "l10n_it_reports.identificativo",
                 'padding': 5,
             })
-            identificativo = self.env['ir.sequence'].next_by_code('l10n_it_xml_export.identificativo')
+            identificativo = self.env['ir.sequence'].next_by_code('l10n_it_reports.identificativo')
 
         return {
             "supply_code": "IVP18",
@@ -136,9 +138,6 @@ class ItalianReportCustomHandler(models.AbstractModel):
             "submission_commitment": options["intermediary_code"] and int(options["submission_commitment"]),
             "commitment_date": options["intermediary_code"] and fields.Date.from_string(options["commitment_date"]).strftime("%d%m%Y"),
             "intermediary_signature": options["intermediary_code"] and 1,
-            "subcontracting": options["subcontracting"] and 1,
-            "exceptional_events": options["exceptional_events"] and 1,
-            "extraordinary_operations": options["extraordinary_operations"] and 1,
             "quarter": date_utils.get_quarter_number(options_date_to) if quarterly else 0,
             "monthly_data": {
                 month: {
@@ -158,6 +157,9 @@ class ItalianReportCustomHandler(models.AbstractModel):
                     "advance_payment": month_vals["VP13"],
                     "amount_to_be_paid": month_vals["VP14a"],
                     "amount_in_credit": month_vals["VP14b"],
+                    "subcontracting": month_vals["xml_subcontracting"] and 1,
+                    "exceptional_events": month_vals["xml_exceptional_events"] and 1,
+                    "extraordinary_operations": month_vals["xml_extraordinary_operations"] and 1,
                 } for month, month_vals in report_lines_data_per_month.items()
             }
         }

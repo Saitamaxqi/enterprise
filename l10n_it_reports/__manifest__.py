@@ -18,7 +18,12 @@ Accounting reports for Italy
         'data/account_report_ec_sales_list_report.xml',
         'data/account_return_data.xml',
         'data/account_libro_giornale_list_report.xml',
-        'views/journal_report_templates.xml'
+        'data/xml_export/tax_monthly_report_vat.xml',
+        'data/xml_export/tax_report_export_template.xml',
+        'views/account_return_views.xml',
+        'security/ir.model.access.csv',
+        'views/journal_report_templates.xml',
+        'wizard/monthly_tax_report_xml_export_view.xml',
     ],
     'auto_install': ['l10n_it', 'account_reports'],
     'installable': True,

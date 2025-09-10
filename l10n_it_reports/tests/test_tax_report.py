@@ -57,6 +57,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2015-04-01'),
                 fields.Date.from_string('2015-04-30')),
             'VP8',
+            'credit',
             40.0)
 
     def test_tax_report_carryover_vp14_credit_year(self):
@@ -77,6 +78,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2016-01-01'),
                 fields.Date.from_string('2016-01-30')),
             'VP9',
+            'credit',
             40.0)
 
     def test_tax_report_carryover_vp14_debit_valid(self):
@@ -97,6 +99,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2015-06-01'),
                 fields.Date.from_string('2015-06-30')),
             'VP7',
+            'debit',
             20.0)
 
     def test_tax_report_carryover_vp14_debit_invalid(self):
@@ -117,6 +120,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2015-06-01'),
                 fields.Date.from_string('2015-06-30')),
             'VP7',
+            'debit',
             0.0)
 
     def test_tax_report_carryover_vp14_debit_valid_reset(self):
@@ -138,6 +142,7 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2015-06-01'),
                 fields.Date.from_string('2015-06-30')),
             'VP7',
+            'debit',
             20.0)
         self._test_line_report_carryover(
             '2015-06-10',
@@ -152,11 +157,12 @@ class TestItalianTaxReport(TestAccountReportsCommon):
                 fields.Date.from_string('2015-07-01'),
                 fields.Date.from_string('2015-07-30')),
             'VP7',
+            'debit',
             0.0)
 
     def _test_line_report_carryover(self, invoice_date, invoice_amount, tax_line,
                                     first_month_options, second_month_options,
-                                    target_line_code, target_line_value):
+                                    target_line_code, col_name, target_line_value):
         def _get_attachment(*args, **kwargs):
             return []
 
@@ -193,4 +199,5 @@ class TestItalianTaxReport(TestAccountReportsCommon):
         report_lines = self.report._get_lines(second_month_options)
         line = next(line for line in report_lines if target_line_code in line['name'])
 
-        self.assertEqual(line['columns'][0]['no_format'], target_line_value)
+        col_idx = next((idx for idx, col in enumerate(first_month_options.get('columns', [])) if col.get('expression_label') == col_name))
+        self.assertEqual(line['columns'][col_idx]['no_format'], target_line_value)

@@ -4418,9 +4418,11 @@ class AccountReport(models.Model):
             expression_totals = expression_totals_per_col_group[next(iter(options['column_groups'].keys()))]
 
             for expression, target_expression in expressions_to_compute.items():
+                value = expression_totals[expression]['value']
+                field_name = 'value' if isinstance(value, (int, float)) else 'text_value'
                 external_values_create_vals.append({
                     'name': _("Manual value"),
-                    'value': expression_totals[expression]['value'],
+                    field_name: expression_totals[expression]['value'],
                     'date': date_to,
                     'target_report_expression_id': target_expression,
                     'company_id': company.id,
