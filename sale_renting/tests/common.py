@@ -16,6 +16,9 @@ class SaleRentingCommon(SaleCommon):
         Recurrence = cls.env['sale.temporal.recurrence']
         cls.recurrence_hour = Recurrence.create({'duration': 1, 'unit': 'hour'})
         cls.recurrence_day = Recurrence.create({'duration': 1, 'unit': 'day'})
+        cls.recurrence_night_15_10 = Recurrence.create(
+            {'duration': 24, 'unit': 'hour', 'overnight': True, 'pickup_time': 15, 'return_time': 10}
+        )
 
         cls.projector = cls._create_product(
             name='Projector',

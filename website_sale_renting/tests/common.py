@@ -41,6 +41,9 @@ class TestWebsiteSaleRentingCommon(SaleRentingCommon):
                 'product_template_id': cls.computer.product_tmpl_id.id,
             },
         ])
+        cls.recurrence_night_18_9 = cls.env['sale.temporal.recurrence'].create(
+            {'duration': 24, 'unit': 'hour', 'overnight': True, 'pickup_time': 18, 'return_time': 9}
+        )
         cls.partner = cls.env['res.partner'].create({
             'name': 'partner_a',
         })
