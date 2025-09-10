@@ -473,19 +473,23 @@ registry.category("web_tour.tours").add("test_gs1_package_receipt", {
         },
         { trigger: '.o_selected[data-barcode="584687955629"]', run: "scan 91WOODC" },
         {
-            trigger: '.o_barcode_line[data-barcode="584687955629"]:contains("(Wooden Chest)")',
+            trigger:
+                ".o_notification .o_notification_content:contains('Package type Wooden Chest applied to the package 546879213579461324')",
+        },
+        {
+            trigger: ".o_barcode_line",
             run: function () {
                 helper.assertLinesCount(2);
                 const line1 = helper.getLine({ barcode: "82655853" });
                 helper.assertLineIsHighlighted(line1, false);
                 helper.assertLineQty(line1, "4");
                 const product1_package = line1.querySelector('[name="package"]').innerText;
-                helper.assert(product1_package, "546879213579461324 (Wooden Chest)");
+                helper.assert(product1_package, "546879213579461324");
                 const line2 = helper.getLine({ barcode: "584687955629" });
                 helper.assertLineIsHighlighted(line2, true);
                 helper.assertLineQty(line2, "8");
                 const product2_package = line2.querySelector('[name="package"]').innerText;
-                helper.assert(product2_package, "546879213579461324 (Wooden Chest)");
+                helper.assert(product2_package, "546879213579461324");
             },
         },
 
@@ -508,7 +512,7 @@ registry.category("web_tour.tours").add("test_gs1_package_receipt", {
                 const line = helper.getLine({ selected: true });
                 helper.assertLineQty(line, "6");
                 const linePackage = line.querySelector('[name="package"]').innerText;
-                helper.assert(linePackage, "130406658041178543 (Iron Chest)");
+                helper.assert(linePackage, "130406658041178543");
             },
         },
         // Scans PRO_GTIN_12 x12, then scans a package type to put in pack in a new package.
@@ -529,7 +533,7 @@ registry.category("web_tour.tours").add("test_gs1_package_receipt", {
                 const line = helper.getLine({ selected: true });
                 helper.assertLineQty(line, "12");
                 const linePackage = line.querySelector('[name="package"]').innerText;
-                helper.assert(linePackage, "PACK0000123 (Iron Chest)");
+                helper.assert(linePackage, "PACK0000123");
             },
         },
         ...stepUtils.validateBarcodeOperation(),
