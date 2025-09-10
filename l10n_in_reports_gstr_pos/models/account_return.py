@@ -64,16 +64,18 @@ class AccountReturn(models.Model):
                 details_pos_lines.setdefault(move_id, {})
                 if products.browse(pos_order_line.product_id.id).type == 'service':
                     uom_code = "NA"
+                    product_qty = 0
                 else:
                     uom_code = (
                         uoms.browse(pos_order_line.product_uom_id.id).l10n_in_code and
                         uoms.browse(pos_order_line.product_uom_id.id).l10n_in_code.split("-")[0] or "OTH"
                     )
+                    product_qty = pos_order_line.qty
                 details_pos_lines[move_id][pos_order_line.id] = {
                     "account_id": income_account.id,
                     "price_subtotal": pos_order_line.price_subtotal,
                     "tax_ids": pos_order_line.tax_ids_after_fiscal_position.flatten_taxes_hierarchy().ids,
-                    "qty": pos_order_line.qty,
+                    "qty": product_qty,
                     "product_hsn_code": self.env["account.move"]._l10n_in_extract_digits(pos_order_line.l10n_in_hsn_code),
                     "currency_rate": pos_order_line.order_id.currency_rate,
                     "product_uom_code": uom_code
