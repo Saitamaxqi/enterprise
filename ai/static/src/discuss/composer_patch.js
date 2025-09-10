@@ -14,5 +14,17 @@ patch(Composer.prototype, {
         if (this.thread?.channel_type === "ai_chat") {
             ev.target.select();
         }
+    },
+    get wysiwygConfig() {
+        const config = super.wysiwygConfig;
+        return {
+            ...config,
+            getRecordInfo: () => {
+                return {
+                    resModel: this.thread.model,
+                    resId: this.thread.id,
+                };
+            },
+        };
     }
 });
