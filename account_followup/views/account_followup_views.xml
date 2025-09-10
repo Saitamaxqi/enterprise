@@ -41,9 +41,11 @@
                 <xpath expr="//filter[@name='inactive']" position="before">
                     <filter string="Overdue Invoices"
                             name="filter_with_overdue_invoices"
+                            groups="account.group_account_readonly,account.group_account_invoice"
                             domain="[('followup_status', 'in', ('in_need_of_action', 'with_overdue_invoices'))]"/>
                     <filter string="Requires Follow-up"
                             name="filter_in_need_of_action"
+                            groups="account.group_account_readonly,account.group_account_invoice"
                             domain="[('followup_status', '=', 'in_need_of_action')]"/>
                     <separator/>
                 </xpath>
