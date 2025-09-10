@@ -45,3 +45,61 @@ class TestRecordTime(TestCommonTimesheet, HttpCase):
 
         self.env['res.config.settings'].create({'timesheet_encode_method': 'days'}).execute()
         self.start_tour('/odoo', 'timesheet_overtime_day_encoding', login=self.user_employee.login, timeout=100)
+
+    def test_timesheet_availabilty_days(self):
+        # Create company
+        company = self.env['res.company'].create({'name': 'New Test Company'})
+
+        # Create user
+        test_user = self.env['res.users'].create({
+            'name': 'Test User',
+            'login': 'test_user',
+            'email': 'test@example.com',
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
+            'company_ids': [(6, 0, [company.id])],
+            'company_id': company.id,
+        })
+
+        # Create flexible calendar
+        calendar = self.env['resource.calendar'].create({
+            'name': 'Calendar 8h',
+            'tz': 'UTC',
+            'full_time_required_hours': 8.0,
+            'hours_per_day': 8.0,
+            'flexible_hours': True,
+        })
+
+        # Create employee linked to user
+        employee = self.env['hr.employee'].create({
+            'name': 'Test Employee',
+            'user_id': test_user.id,
+            'company_id': company.id,
+            'resource_calendar_id': calendar.id,
+        })
+
+        # Ensure company calendar is NOT flexible (to avoid global override)
+        company.resource_calendar_id = self.env['resource.calendar'].create({
+            'name': 'Company Calendar (Rigid)',
+            'flexible_hours': False,
+        })
+
+        # Call grid_unavailability() with the employee
+        unavailable_days = self.env['account.analytic.line'].with_user(test_user).with_company(company).grid_unavailability(
+            date.today(),
+            date.today() + timedelta(days=7)
+        )
+
+        # No unavailable days for flexible schedule in my Timesheet
+        self.assertFalse(len(unavailable_days[False]))
+
+        # Call again, this time with groupby='employee_id'
+        unavailable_days = self.env['account.analytic.line'].with_company(company).grid_unavailability(
+            date.today(),
+            date.today() + timedelta(days=7),
+            groupby='employee_id',
+            res_ids=[employee.id]
+        )
+
+        # Company availability
+        self.assertTrue(len(unavailable_days[False]))
+        self.assertFalse(unavailable_days[employee.id])

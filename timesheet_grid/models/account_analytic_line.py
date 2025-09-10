@@ -92,14 +92,19 @@ class AccountAnalyticLine(models.Model):
                 company_unavailable_days = get_company_unavailable_dates()
             unavailability_intervals_per_employee_id = {
                 employee_id:
-                    get_unavailable_dates(availability_intervals_per_resource_id[resource_id])
+                    []
+                    if self.env['resource.resource'].browse(resource_id)._is_flexible()
+                    else get_unavailable_dates(availability_intervals_per_resource_id[resource_id])
                     if resource_id in availability_intervals_per_resource_id
                     else company_unavailable_days
                 for resource_id, employee_id in employee_id_per_resource_id.items()
             }
             unavailability_intervals_per_employee_id[False] = company_unavailable_days
         else:
-            unavailability_intervals_per_employee_id[False] = get_company_unavailable_dates()
+            if self.env.user.resource_calendar_id.flexible_hours:
+                unavailability_intervals_per_employee_id[False] = []
+            else:
+                unavailability_intervals_per_employee_id[False] = get_company_unavailable_dates()
         return unavailability_intervals_per_employee_id
 
     def _compute_project_id(self):
