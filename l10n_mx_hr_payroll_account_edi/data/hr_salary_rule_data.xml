@@ -13,7 +13,7 @@
         <field name="l10n_mx_concept" ref="l10n_mx_concept_d2_2"/>
     </record>
 
-    <record id="l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_ceav" model="hr.salary.rule">
+    <record id="l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_ceav_employee" model="hr.salary.rule">
         <field name="l10n_mx_concept" ref="l10n_mx_concept_d3"/>
     </record>
 

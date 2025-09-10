@@ -2,9 +2,12 @@
 
 from collections import defaultdict
 from markupsafe import Markup
+import logging
 
 from odoo import api, fields, models
 from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import CFDI_DATE_FORMAT
+
+_logger = logging.getLogger(__name__)
 
 
 class HrPayslip(models.Model):
@@ -143,8 +146,9 @@ class HrPayslip(models.Model):
             'rfc_patron_origen': self.company_id.vat,
         }
 
-        bank_account = self.employee_id.bank_account_id.l10n_mx_edi_clabe or self.employee_id.bank_account_id.acc_number
-        is_clabe = len(bank_account) == 18
+        bank_account = self.employee_id.bank_account_ids[0]
+        bank_account_number = bank_account.l10n_mx_edi_clabe or bank_account.acc_number
+        is_clabe = len(bank_account_number) == 18
         integrated_daily_wage_rule = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_integrated_daily_wage', raise_if_not_found=False)
         integrated_daily_wage = rules_amount[integrated_daily_wage_rule] if integrated_daily_wage_rule and integrated_daily_wage_rule in rules_amount else 0
         cfdi_values['nomina_receptor'] = {
@@ -158,11 +162,13 @@ class HrPayslip(models.Model):
             'num_empleado': self.employee_id.registration_number,
             'riesgo_puesto': self.company_id.l10n_mx_risk_type,
             'periodicidad_pago': self.employee_id.l10n_mx_payment_periodicity,
-            'salario_base_cot_apor': self.l10n_mx_daily_salary,
-            'salario_diario_integrado': integrated_daily_wage,
+            'puesto': self.employee_id.job_title,
+            'departamento': self.employee_id.department_id.name if self.employee_id.department_id else False,
+            'salario_base_cot_apor': integrated_daily_wage,
+            'salario_diario_integrado': self.l10n_mx_daily_salary,
             'clave_ent_fed': self.employee_id.work_contact_id.state_id.code,
-            'cuenta_bancaria': bank_account,
-            'banco': self.employee_id.bank_account_id.bank_id.l10n_mx_edi_code if not is_clabe else 0,
+            'cuenta_bancaria': bank_account_number,
+            'banco': bank_account.bank_id.l10n_mx_edi_code if not is_clabe else 0,
         }
 
         cfdi_values['percepcion_list'] = perceptions = []
@@ -172,7 +178,10 @@ class HrPayslip(models.Model):
         cfdi_values['otro_pago_list'] = other_payments = []
         total_other_payments = 0
 
-        for rule in self.line_ids.salary_rule_id + self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_subsidy', raise_if_not_found=False):
+        rules = self.line_ids.salary_rule_id
+        if 'SUBSIDY' not in rules.mapped('code'):
+            rules |= self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_subsidy', raise_if_not_found=False)
+        for rule in rules:
             concept = rule.l10n_mx_concept
             if not concept:
                 continue
@@ -308,6 +317,7 @@ class HrPayslip(models.Model):
 
         def on_failure(error, cfdi_filename=None, cfdi_str=None):
             document = self._l10n_mx_edi_cfdi_sent_failed(error, cfdi_filename=cfdi_filename, cfdi_str=cfdi_str)
+            _logger.error('An error occurred while signing the CFDI document with the government.\n%s\n', error)
             self.message_post(
                 body=self.env._(
                     "An error occurred while signing the CFDI document with the government:%(error)s",

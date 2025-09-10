@@ -44,7 +44,7 @@
         <field name="street">C. Angel "el Zapopan" Romero 339</field>
         <field name="city">Tlaquepaque</field>
         <field name="zip">45638</field>
-        <field name="vat">MISC491214B86</field>
+        <field name="vat">CUSC850516316</field>
         <field name="country_id" ref="base.mx"/>
         <field name="state_id" ref="base.state_mx_df"/>
         <field name="phone">99 1234 5678</field>
@@ -74,7 +74,7 @@
         <field name="street">C. Ignatio Tellez Campos 687</field>
         <field name="city">Tlaquepaque</field>
         <field name="zip">45638</field>
-        <field name="vat">MISC491214B86</field>
+        <field name="vat">CACX7605011P8</field>
         <field name="country_id" ref="base.mx"/>
         <field name="state_id" ref="base.state_mx_jal"/>
         <field name="phone">99 4567 9876</field>
@@ -89,7 +89,7 @@
         <field name="street">C. Benjamin Cerda 715</field>
         <field name="city">Tlaquepaque</field>
         <field name="zip">45620</field>
-        <field name="vat">MISC491214B86</field>
+        <field name="vat">FUNK671228PH6</field>
         <field name="country_id" ref="base.mx"/>
         <field name="state_id" ref="base.state_mx_jal"/>
         <field name="phone">99 2345 7654</field>

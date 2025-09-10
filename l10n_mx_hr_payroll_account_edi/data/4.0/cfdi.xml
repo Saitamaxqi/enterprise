@@ -71,6 +71,8 @@
                 t-att-PeriodicidadPago="nomina_receptor['periodicidad_pago']"
                 t-att-CuentaBancaria="nomina_receptor['cuenta_bancaria']"
                 t-att-Banco="nomina_receptor['banco']"
+                t-att-Puesto="nomina_receptor['puesto']"
+                t-att-Departamento="nomina_receptor['departamento']"
                 t-att-SalarioBaseCotApor="format_float(nomina_receptor['salario_base_cot_apor'], precision=2)"
                 t-att-SalarioDiarioIntegrado="format_float(nomina_receptor['salario_diario_integrado'], precision=2)"
                 t-att-ClaveEntFed="nomina_receptor['clave_ent_fed']"/>
