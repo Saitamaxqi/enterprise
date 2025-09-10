@@ -342,6 +342,8 @@ class IrActionsServer(models.Model):
         eval_context["env"] = self.env(su=False)
         if self.state == "code":
             self._run_action_code_multi(eval_context=eval_context)
+            if eval_context.get('action'):
+                raise UserError(_('This action is interactive and cannot be executed by the agent.'))
             return eval_context["ai"].get("result")
 
         if self.state == "multi":
