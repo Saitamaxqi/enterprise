@@ -59,7 +59,7 @@
                     Old unit price:
                     <span>
                         <s>
-                            <t t-esc="line.price_without_discount" /> / Units
+                            <t t-esc="line.getUnitDisplayPriceBeforeDiscount()" /> / Units
                         </s>
                     </span>
                 </div>
