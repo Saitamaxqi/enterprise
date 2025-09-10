@@ -138,7 +138,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             expectUnloadPage: true,
         },
         {
-            trigger: 'input[name="Gross"][value="2896.84"]',
+            trigger: 'span[name="Gross"][value="2896.84"]',
         },
         {
             content: "Choose a car",
@@ -146,7 +146,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="2567.98"]',
+            trigger: 'span[name="Gross"][value="2567.98"]',
         },
         {
             content: "Unchoose a car",
@@ -154,7 +154,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose Public Transportation",
@@ -167,7 +167,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 100 && click label:contains(Transportation)",
         },
         {
-            trigger: 'input[name="Gross"][value="2976.62"]',
+            trigger: 'span[name="Gross"][value="2976.62"]',
         },
         {
             content: "Unchoose Public Transportation",
@@ -175,7 +175,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose Train Transportation",
@@ -188,7 +188,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 150 && click label:contains(Transportation)",
         },
         {
-            trigger: 'input[name="Gross"][value="2917.47"]',
+            trigger: 'span[name="Gross"][value="2917.47"]',
         },
         {
             content: "Unchoose Public Transportation",
@@ -196,7 +196,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose Private Car Transportation",
@@ -209,7 +209,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 150 && click label:contains(Transportation)",
         },
         {
-            trigger: 'input[name="Gross"][value="2886.87"]',
+            trigger: 'span[name="Gross"][value="2886.87"]',
         },
         {
             content: "Change km_home_work on personal info",
@@ -217,7 +217,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 75 && click label:contains(Transportation)",
         },
         {
-            trigger: 'input[name="Gross"][value="2930.88"]',
+            trigger: 'span[name="Gross"][value="2930.88"]',
         },
         {
             content: "Reset 150 km",
@@ -225,7 +225,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 150 && click label:contains(Transportation)",
         },
         {
-            trigger: 'input[name="Gross"][value="2886.87"]',
+            trigger: 'span[name="Gross"][value="2886.87"]',
         },
         {
             content: "Unchoose Private Car Transportation",
@@ -233,7 +233,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose a Bike",
@@ -241,7 +241,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="2982.81"]',
+            trigger: 'span[name="Gross"][value="2982.81"]',
         },
         {
             content: "Choose Bike 2",
@@ -249,7 +249,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel Bike 2",
         },
         {
-            trigger: 'input[name="Gross"][value="2965.61"]',
+            trigger: 'span[name="Gross"][value="2965.61"]',
         },
         {
             content: "Choose Bike 1",
@@ -257,7 +257,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel Bike 1",
         },
         {
-            trigger: 'input[name="Gross"][value="2982.81"]',
+            trigger: 'span[name="Gross"][value="2982.81"]',
         },
         {
             content: "Unchoose Bike",
@@ -265,7 +265,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Unset Internet",
@@ -273,7 +273,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click label:contains(Internet)",
         },
         {
-            trigger: 'input[name="Gross"][value="3026.13"]',
+            trigger: 'span[name="Gross"][value="3026.13"]',
         },
         {
             content: "Reset Internet",
@@ -281,7 +281,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 38 && click label:contains(Internet)",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Unset Mobile",
@@ -289,7 +289,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3020.63"]',
+            trigger: 'span[name="Gross"][value="3020.63"]',
         },
         {
             content: "Reset Mobile",
@@ -297,7 +297,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Take Extra-Legal Leaves",
@@ -305,7 +305,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "range 10",
         },
         {
-            trigger: 'input[name="Gross"][value="2860.17"]',
+            trigger: 'span[name="Gross"][value="2860.17"]',
         },
         {
             content: "Untake Extra-Legal Leaves",
@@ -313,7 +313,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "range 0",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Take IP",
@@ -321,7 +321,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Untake IP",
@@ -329,7 +329,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Untake Rep Fees",
@@ -337,7 +337,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3103.16"]',
+            trigger: 'span[name="Gross"][value="3103.16"]',
         },
         {
             content: "Retake Rep Fees",
@@ -346,7 +346,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
         },
         // In order to choose Fuel card, the mandatory advantage, company car, should be selected first
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose a car",
@@ -354,7 +354,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="2671.14"]',
+            trigger: 'span[name="Gross"][value="2671.14"]',
         },
         {
             content: "Take Fuel Card",
@@ -362,7 +362,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "range 250",
         },
         {
-            trigger: 'input[name="Gross"][value="2499.2"]',
+            trigger: 'span[name="Gross"][value="2499.2"]',
         },
         {
             content: "Untake Fuel Card",
@@ -370,7 +370,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "range 0",
         },
         {
-            trigger: 'input[name="Gross"][value="2671.14"]',
+            trigger: 'span[name="Gross"][value="2671.14"]',
         },
         {
             content: "Unchoose a car",
@@ -500,7 +500,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Uncheck Disabled",
@@ -508,7 +508,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Set Married",
@@ -521,7 +521,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel Without Income",
         },
         {
-            trigger: 'input[name="Net"][value="2431.1"]',
+            trigger: 'span[name="Net"][value="2431.1"]',
         },
         {
             content: "Check Disabled Spouse Bool",
@@ -529,7 +529,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2431.1"]',
+            trigger: 'span[name="Net"][value="2431.1"]',
         },
         {
             content: "Uncheck Disabled Spouse Bool",
@@ -537,7 +537,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2431.1"]',
+            trigger: 'span[name="Net"][value="2431.1"]',
         },
         {
             content: "Set High Spouse Income",
@@ -545,7 +545,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel With High Income",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Unset Married",
@@ -553,7 +553,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "selectByLabel Single",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Set Children",
@@ -561,7 +561,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 3 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Check Disabled Children",
@@ -569,7 +569,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Set 1 Disabled Children",
@@ -577,7 +577,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 1 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Set 0 Disabled Children",
@@ -585,7 +585,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Uncheck Disabled Children",
@@ -593,7 +593,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Unset Children",
@@ -601,7 +601,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Check Other Dependent People",
@@ -609,7 +609,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Set 2 Senior",
@@ -617,7 +617,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 2 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2282.69"]',
+            trigger: 'span[name="Net"][value="2282.69"]',
         },
         {
             content: "Set 1 disabled Senior",
@@ -625,7 +625,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 1 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2366.69"]',
+            trigger: 'span[name="Net"][value="2366.69"]',
         },
         {
             content: "Set 2 Juniors",
@@ -633,7 +633,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 2 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Set 1 disabled Junior",
@@ -641,7 +641,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 1 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2483.69"]',
+            trigger: 'span[name="Net"][value="2483.69"]',
         },
         {
             content: "Unset 1 disabled Senior over 2",
@@ -649,7 +649,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2444.69"]',
+            trigger: 'span[name="Net"][value="2444.69"]',
         },
         {
             content: "Unset 2 Juniors",
@@ -657,7 +657,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2366.69"]',
+            trigger: 'span[name="Net"][value="2366.69"]',
         },
         {
             content: "Unset 1 disabled Senior",
@@ -665,7 +665,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2282.69"]',
+            trigger: 'span[name="Net"][value="2282.69"]',
         },
         {
             content: "Unset 2 Seniors",
@@ -673,7 +673,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit 0 && click h2:contains(Situation)",
         },
         {
-            trigger: 'input[name="Net"][value="2114.69"]',
+            trigger: 'span[name="Net"][value="2114.69"]',
         },
         {
             content: "Uncheck Other Dependent People",
@@ -681,7 +681,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "click",
         },
         {
-            trigger: 'input[name="Gross"][value="3000"]',
+            trigger: 'span[name="Gross"][value="3000"]',
         },
         {
             content: "Choose a car",
@@ -745,7 +745,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             },
         },
         {
-            trigger: 'input[name="Gross"][value="2671.14"]',
+            trigger: 'span[name="Gross"][value="2671.14"]',
         },
         {
             content: "submit",

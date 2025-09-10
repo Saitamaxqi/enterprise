@@ -431,7 +431,7 @@ class HrContractSalary(main.HrContractSalary):
             ordered_fields = [wage_to_apply, 'SALARY', 'NET']
             if new_version.env.context.get('simulation_working_schedule', '100') != '100':
                 salary_tuple = result['resume_lines_mapped']['Monthly Salary']['SALARY']
-                salary_tuple = (_('Gross (Part Time)'), salary_tuple[1], salary_tuple[2])
+                salary_tuple = (_('Gross (Part Time)'), *salary_tuple[1:])
                 result['resume_lines_mapped']['Monthly Salary']['SALARY'] = salary_tuple
         else:
             ordered_fields = [wage_to_apply, 'NET']
