@@ -13,10 +13,10 @@ export function currentColorScheme() {
     return cookie.get("color_scheme");
 }
 
-export const colorSchemeService = {
-    dependencies: ["ui"],
+export const blockingWebClient = Promise.withResolvers();
 
-    start(env, { ui }) {
+export const colorSchemeService = {
+    async start() {
         let newColorScheme = systemColorScheme();
         if (["light", "dark"].includes(user.settings.color_scheme)) {
             newColorScheme = user.settings.color_scheme;
@@ -25,8 +25,8 @@ export const colorSchemeService = {
         if (newColorScheme !== current) {
             cookie.set("color_scheme", newColorScheme);
             if (current || (!current && newColorScheme === "dark")) {
-                ui.block();
                 this.reload();
+                await blockingWebClient.promise; // block WebClient rendering to avoid flickering
             }
         }
         return {
