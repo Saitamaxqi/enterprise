@@ -97,21 +97,31 @@ class HelpdeskTeam(models.Model):
         with_website = self.filtered_domain([('use_website_helpdesk_form', '=', True)])
         without_website = self - with_website
         without_website.website_menu_id.unlink()
-        team_count = self.env['helpdesk.team'].search_count([
-            ('use_website_helpdesk_form', '=', True),
-            ('website_id', '=', with_website.website_id.id)
-        ])
-        if not team_count > 1 and not with_website.website_menu_id:
-            parent_menu = with_website.website_id.menu_id
-            if parent_menu:
-                menu = self.env['website.menu'].sudo().create({
-                    'name': _('Help'),
-                    'url': '/helpdesk',
-                    'parent_id': parent_menu.id,
-                    'sequence': 50,
-                    'website_id': with_website.website_id.id,
-                })
-                with_website.website_menu_id = menu.id
+
+        team_count_by_website = dict(
+            self.env['helpdesk.team']._read_group(
+                [('use_website_helpdesk_form', '=', True)],
+                ['website_id'],
+                ['__count'],
+            )
+        )
+        teams_per_website = with_website.grouped('website_id')
+        # process each website separately
+        for website, teams in teams_per_website.items():
+            if any(team.website_menu_id for team in teams):
+                continue
+            team_count = team_count_by_website.get(website.id, 0)
+            if team_count <= 1:
+                parent_menu = website.menu_id
+                if parent_menu:
+                    menu = self.env['website.menu'].sudo().create({
+                        'name': _('Help'),
+                        'url': '/helpdesk',
+                        'parent_id': parent_menu.id,
+                        'sequence': 50,
+                        'website_id': website.id,
+                    })
+                    teams.website_menu_id = menu.id
 
     @api.depends('name', 'use_website_helpdesk_form', 'company_id')
     def _compute_form_url(self):

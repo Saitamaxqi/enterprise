@@ -72,3 +72,23 @@ class TestHelpdeskMenu(TransactionCase):
         self.assertTrue(team.website_menu_id.is_visible)
         team.use_website_helpdesk_form = False
         self.assertFalse(team.website_menu_id.is_visible)
+
+    def test_archive_multiple_teams_different_websites(self):
+        """ Test archiving multiple helpdesk teams linked to different websites. """
+        websites = self.env['website'].create([{'name': 'W1'}, {'name': 'W2'}])
+
+        teams = self.env['helpdesk.team'].create([{
+            'name': f'Team of {website.name}',
+            'use_website_helpdesk_form': True,
+            'website_id': website.id,
+        } for website in websites
+        ])
+
+        teams.write({'active': False})
+        self.assertFalse(any(t.active for t in teams), "Both teams should be archived without errors.")
+
+        # Verify that a website menu was created for each team and is linked to the correct website
+        for i, team in enumerate(teams):
+            self.assertTrue(team.website_menu_id and team.website_menu_id.exists(), f"Expected a website menu to be created for {team.name}")
+            self.assertEqual(team.website_menu_id.website_id, websites[i])
+        self.assertNotEqual(teams[0].website_menu_id.id, teams[1].website_menu_id.id, "Each team should have its own distinct menu")
