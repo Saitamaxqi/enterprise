@@ -105,12 +105,22 @@ class SignSendRequest(models.TransientModel):
             roles = template.sign_item_ids.responsible_id.sorted()
             signer_ids = []
             if (self.signer_ids and len(self.signer_ids) == len(roles)):
-                # update when we set the order
-                signer_ids = [(0, 0, {
-                    'role_id': signer.role_id.id,
-                    'partner_id': signer.partner_id.id,
-                    'mail_sent_order': default_signing_order + 1 if wiz.set_sign_order else 1
-                }) for default_signing_order, signer in enumerate(self.signer_ids)]
+                # Check if all signers currently have the default mail_sent_order = 1
+                all_default = all(signer.mail_sent_order == 1 for signer in self.signer_ids)
+                for default_signing_order, signer in enumerate(self.signer_ids):
+                    if wiz.set_sign_order:
+                        # If signing order is enabled, assign based on order only if all signers are default.
+                        # Otherwise, keep their existing mail_sent_order.
+                        mail_sent_order = default_signing_order + 1 if all_default else signer.mail_sent_order
+                    else:
+                        mail_sent_order = 1
+                    signer_ids.append((
+                        0, 0, {
+                            'role_id': signer.role_id.id,
+                            'partner_id': signer.partner_id.id,
+                            'mail_sent_order': mail_sent_order,
+                        }
+                    ))
             else:
                 for default_signing_order, role in enumerate(roles):
                     # First signer logic

@@ -622,3 +622,26 @@ class TestSignRequest(SignRequestCommon, MockEmail):
 
         with self.mock_datetime_and_now("2025-07-07"):
             self.env['sign.request']._cron_reminder()
+
+    def test_signing_order(self):
+        wizard = Form(
+            self.env['sign.send.request'].with_context(
+                default_template_id=self.template_3_roles.id,
+                sign_directly_without_mail=False,
+            )
+        )
+        wizard.set_sign_order = True
+        self.assertEqual(
+            [record['mail_sent_order'] for record in wizard.signer_ids._records],
+            [1, 2, 3],
+        )
+        request = wizard.save()
+        request.signer_ids[0].mail_sent_order = 3
+        request.signer_ids[1].mail_sent_order = 2
+        request.signer_ids[2].mail_sent_order = 1
+        wizard = Form(request)
+        wizard.save()
+        self.assertEqual(
+            [s.mail_sent_order for s in request.signer_ids],
+            [3, 2, 1],
+        )
