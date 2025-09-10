@@ -2228,6 +2228,8 @@ class HrPayslip(models.Model):
                     total_percentage_account_amounts += amount
                 if amount > 0:
                     res[str(ba.id)] = amount
+            else:
+                res[str(ba.id)] = 0
         return res
 
     def safe_compute_salary_allocations(self, total_amount=None):

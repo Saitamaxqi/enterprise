@@ -48,16 +48,21 @@ class TestPayslipAllocations(TestPayslipContractBase):
     def _compute_alloc(self, total=None):
         return self.richard_payslip.compute_salary_allocations(total_amount=total)
 
-    def test_single_primary_account(self):
-        """ If only one distribution, it should get the full net wage """
+    def test_split_hundred_zero_percentages(self):
+        """ If percentages split are 100% and 0%, both should appear in allocations """
         self.richard_payslip.net_wage = 1000
         allocations = self._compute_alloc()
-        self.assertEqual(len(allocations), 1)
+        self.assertEqual(len(allocations), 2)
         self.assertIn(str(self.bank1.id), allocations)
+        self.assertIn(str(self.bank2.id), allocations)
         self.assertAlmostEqual(
             allocations[str(self.bank1.id)],
             round(self.richard_payslip.net_wage, 2),
             places=2,
+        )
+        self.assertAlmostEqual(
+            allocations[str(self.bank2.id)],
+            0
         )
 
     def test_split_fixed_and_percentage(self):
