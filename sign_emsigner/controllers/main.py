@@ -133,7 +133,7 @@ class SignEmsigner(SignController):
         signature_position = self._get_signature_fields_position(document_id, request_item_sudo)
         page_numbers = ",".join(str(item['page']) for item in signature_position)
         page_coordinates_with_page = ";".join([
-            f"{item['page']},{item['left'] + 8},{item['top'] - (item['top'] - item['height'])},{item['width']},{item['height'] - 10}"
+            f"{item['page']},{item['left'] + 8},{item['top'] - (item['top'] - item['height'])},{item['width']},{item['height'] - 20}"
             for item in signature_position
         ])
 
@@ -143,12 +143,18 @@ class SignEmsigner(SignController):
             to_sign_data = compress_pdf_base64(to_sign_data)
 
         # Prepare the dynamic content for the emsigner
-        dyamic_content = [{
-            "Key": "Aadhaar eSign by",
-            "Value": request_item_sudo.partner_id.email
-        }]
-        dyamic_content_byes = json.dumps(dyamic_content).encode('utf-8')
-        dyamic_content_data = base64.b64encode(dyamic_content_byes)
+        dyamic_content = [
+            {
+                "Key": "eSigned using Aadhaar by",
+                "Value": request_item_sudo.partner_id.email
+            },
+            {
+                "Key": "Date",
+                "Value": "DateTime"
+            }
+        ]
+        dyamic_content_bytes = json.dumps(dyamic_content).encode('utf-8')
+        dyamic_content_data = base64.b64encode(dyamic_content_bytes)
 
         return {
             "Name": request_item_sudo.partner_id.name,
