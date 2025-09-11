@@ -78,6 +78,7 @@ export class DocumentsDocument extends models.Model {
         ],
         default: "binary",
     });
+    shortcut_document_id = fields.Many2one({ relation: "documents.document" });
     url = fields.Char();
     url_preview_image = fields.Char({ string: "URL preview image" });
     file_size = fields.Integer();

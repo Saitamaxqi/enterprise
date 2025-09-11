@@ -93,10 +93,12 @@ export class SelectAddDocumentCreateDialog extends SelectCreateDialog {
     async addDocumentsAttachment(resIds) {
         let processedAttachments;
         try {
+            // Temporary linked to the composer with id 0 to be garbage collected if not re-linked to the thread
+            // (similar to what is done when uploading a file)
             const attachmentRecords = await this.orm.call(
                 "documents.document",
                 "add_documents_attachment",
-                [resIds, this.model, this.resId]
+                [resIds, "mail.compose.message", 0]
             );
             processedAttachments = await this._processAttachments(attachmentRecords);
         } catch (error) {
@@ -109,19 +111,12 @@ export class SelectAddDocumentCreateDialog extends SelectCreateDialog {
         }
         const thread = this.props.chatterParams?.thread || this.addToThread(this.model, this.resId);
         const composer = this.props.chatterParams?.composer || thread.composer;
-        const attachmentStore = this.store["ir.attachment"];
 
         const attachmentIds = [];
         for (const { name, ...attachmentRecord } of processedAttachments) {
             const extension = name.slice(Math.max(0, name.lastIndexOf(".") + 1));
-            const insertedAttachment = attachmentStore.insert({
-                name,
-                thread,
-                extension,
-                ...attachmentRecord,
-            });
-            composer.attachments.push(insertedAttachment);
-            attachmentIds.push(insertedAttachment.id);
+            composer.attachments.push({ name, extension, ...attachmentRecord });
+            attachmentIds.push(attachmentRecord.id);
         }
         this.props.chatterParams.saveRecordHandler?.(attachmentIds);
         this.props.close();

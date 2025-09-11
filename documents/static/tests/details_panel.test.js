@@ -295,3 +295,66 @@ test("All models should be displayed in the details panel", async function () {
     expect(dp("div ul li")).toHaveCount(9);
     expect(dp("div ul li:contains('Start typing...')")).toHaveCount(0);
 });
+
+test("Add from document from log a note", async () => {
+    onRpc("ir.model", "display_name_for", ({ args }) =>
+        args[0].map((model) => ({ model, display_name: model }))
+    );
+    onRpc("documents.document", "add_documents_attachment", ({ args }) => {
+        expect(args).toEqual([[12], "mail.compose.message", 0]);
+        expect.step("add_documents_attachment");
+        return [
+            {
+                id: 1002,
+                name: "File 2",
+                type: "binary",
+                res_id: 0,
+                res_model: "mail.compose.message",
+                mimetype: "text/plain",
+                public: false,
+                original_id: [12, "File 2"],
+            },
+        ];
+    });
+    const serverData = getDocumentsTestServerModelsData([
+        makeDocumentRecordData(2, "Folder 2", { type: "folder" }),
+        makeDocumentRecordData(11, "File 1", {
+            attachment_id: 101,
+            user_folder_id: "1",
+            type: "binary",
+        }),
+        makeDocumentRecordData(12, "File 2", {
+            attachment_id: 102,
+            user_folder_id: "2",
+            type: "binary",
+        }),
+    ]);
+    serverData["ir.attachment"] = [
+        { id: 101, name: "File 1", mimetype: "text/plain" },
+        { id: 102, name: "File 2", mimetype: "text/plain" },
+    ];
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView({ arch: archWithTags });
+
+    await contains(".o_kanban_record:contains('File 1')").click();
+    await contains(".o_control_panel_navigation .fa-info-circle").click();
+    await waitFor(".o_document_chatter_container button.o-mail-Chatter-logNote:not(:disabled)");
+
+    await contains(".o_document_chatter_container button.o-mail-Chatter-logNote").click();
+    await contains(".o_document_chatter_container button[title='Add from Documents']").click();
+    await contains(
+        ".o_select_create_dialog_content .o_search_panel_label_title:contains('Company')"
+    ).click();
+    await contains(
+        ".o_select_create_dialog_content .o_search_panel_label_title:contains('Folder 2')"
+    ).click();
+    // As defining a list view interferes with the view behind the modal, we select "File 2" as only child of Folder 2.
+    await contains(".o_select_create_dialog_content .o_data_row .o-checkbox input").click();
+    await contains(".o_select_create_dialog_content button:contains('Add from Documents')").click();
+
+    // The attachment has been added in the composer.
+    expect(".o-mail-Composer .o-mail-Attachment-hoverImageText:contains('File 2')").toHaveCount(1);
+    // But the attachment is not linked to the thread.
+    expect(".o-mail-Chatter-topbar .o-mail-Chatter-attachFiles:contains('1')").toHaveCount(0);
+    await expect.waitForSteps(["add_documents_attachment"]);
+});
