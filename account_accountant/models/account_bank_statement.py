@@ -4,11 +4,9 @@ import string
 
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
-from itertools import takewhile
 
 from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
-from odoo.exceptions import ValidationError
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL, float_is_zero, format_date
 from odoo.addons.account.tools.structured_reference import is_valid_structured_reference
@@ -913,21 +911,29 @@ class AccountBankStatementLine(models.Model):
         """
         self.ensure_one()
         self._create_account_model_fee(account_id)
-        account_move_line = self.line_ids.filtered(lambda line: line.id == aml_id)
-        account_move_line.account_id = account_id
-        account_move_line.move_id._compute_checked()  # to add to compute dependencies
+        account = self.env['account.account'].browse(account_id)
+        # Get the original base lines and tax lines before the modification of the line
+        if account.tax_ids:
+            original_base_lines, original_tax_lines = self._prepare_for_tax_lines_recomputation()
+
+        base_line = self.env['account.move.line'].browse(aml_id)
+        base_line.account_id = account
+
+        # Now that the line has been modified, we can recompute the taxes
+        if account.tax_ids:
+            self._create_tax_lines(original_base_lines, original_tax_lines, base_line)
+            # The function above will add a tax line below, so we get the last set account line
+            base_line = self.line_ids.filtered(lambda line: line.tax_ids)[-1:]
 
         suspense_account_id = self.journal_id.suspense_account_id.id
         liquidity_account_id = self.journal_id.default_account_id.id
-        if account_move_line.account_id.account_type in {'asset_receivable', 'liability_payable'} or account_move_line.account_id in {suspense_account_id, liquidity_account_id}:
+
+        if account.account_type in {'asset_receivable', 'liability_payable'} or account in {suspense_account_id, liquidity_account_id}:
             self._post_matching_done_confirmation()
             return self.env['account.bank.statement.line']
 
-        self._handle_reconciliation_rule(account_move_line, account_id)
-        new_rule = self._check_and_create_reconciliation_rule(account_id, self.company_id.id)
-
-        if self.env.context.get('account_default_taxes') and self.env['account.account'].browse(account_id).tax_ids:
-            self._recompute_tax_lines()
+        self._handle_reconciliation_rule(base_line, account.id)
+        new_rule = self._check_and_create_reconciliation_rule(account.id, self.company_id.id)
 
         if new_rule:
             return self.env['account.bank.statement.line'].search([
@@ -1461,8 +1467,15 @@ class AccountBankStatementLine(models.Model):
             raise ValidationError(_("Validated entries can only be changed by your accountant."))
 
         move_lines_to_remove = self.env['account.move.line'].browse(move_line_ids)
+        # We cannot delete a tax line
+        if move_lines_to_remove.tax_line_id:
+            return
+
         liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
         reco_model_id = move_lines_to_remove.reconcile_model_id[:1]
+        # Get the original base lines and tax lines before the deletion of the line
+        if move_lines_to_remove_has_tax := move_lines_to_remove.tax_ids:
+            original_base_lines, original_tax_lines = self._prepare_for_tax_lines_recomputation()
 
         move_lines_to_remove.remove_move_reconcile()
         self._set_move_line_to_statement_line_move(
@@ -1472,6 +1485,10 @@ class AccountBankStatementLine(models.Model):
         self._post_matching_unreconciled()
         if reco_model_id:
             self._action_manual_reco_model(reco_model_id)
+
+        # Now that the line has been removed, we can recompute the taxes
+        if move_lines_to_remove_has_tax:
+            self._delete_tax_lines(original_base_lines, original_tax_lines, move_lines_to_remove)
 
     def edit_reconcile_line(self, move_line_id, record_data):
         """ Edits the specified move line from the bank statement line with the given data.
@@ -1486,14 +1503,23 @@ class AccountBankStatementLine(models.Model):
 
         move_line_to_edit = self.env['account.move.line'].browse(move_line_id)
 
+        # Since we are doing the change in stable, some field are editable for tax line. Which shouldn't be possible.
+        # This solution is not perfect since depending on the record in record_data the edit will do stuff or not.
+        if move_line_to_edit.tax_line_id and any(record_data.get(key) for key in ['tax_ids', 'partner_id', 'account_id']):
+            return
+
         # When the currency rate decrease between the account.move and the statement line date, we have a reconciled exchange_move line
         # linked to the move_line_to_edit, but this will raise an error during the _check_amls_exigibility_for_reconciliation.
         # We need to filter this line out as it has been reverted and reconciled, so it shouldn't interfere with the line we're trying to reconcile.
         exchange_line = self.env['account.move.line']
-        if any(record_data.get(key) for key in ['balance', 'amount_currency']) and (exchange_move := move_line_to_edit._get_matched_move_ids().exchange_move_id):
+        if (exchange_move := move_line_to_edit._get_matched_move_ids().exchange_move_id) and any(record_data.get(key) for key in ['balance', 'amount_currency']):
             exchange_line |= exchange_move.line_ids.filtered(lambda line: line in move_line_to_edit.reconciled_lines_ids)
 
         liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
+
+        # Get the original base lines and tax lines before the edit of the line
+        if any(record_data.get(key) for key in ['tax_ids', 'balance', 'amount_currency']) and not move_line_to_edit.tax_line_id and not exchange_move:
+            original_base_lines, original_tax_lines = self._prepare_for_tax_lines_recomputation()
 
         edited_move_reconciled_line_ids = (move_line_to_edit.reconciled_lines_ids - exchange_line).ids
         move_line_to_edit.remove_move_reconcile()
@@ -1505,29 +1531,104 @@ class AccountBankStatementLine(models.Model):
             (liquidity_lines + other_lines) - move_line_to_edit,
             [move_line_to_edit_vals],
         )
+        _new_liquidity_lines, new_suspense_lines, _new_other_lines = self._seek_for_lines()
+        edited_line = self.line_ids - (liquidity_lines + other_lines + new_suspense_lines)
 
-        if record_data.get('tax_ids'):
-            self._recompute_tax_lines()
+        # Now that the new line has been added, we can recompute the taxes
+        if any(record_data.get(key) for key in ['tax_ids', 'balance', 'amount_currency']) and not edited_line.tax_line_id and not exchange_move:
+            self._edit_tax_lines(original_base_lines, original_tax_lines, edited_line, move_line_to_edit)
 
-        edited_line = self.line_ids - (liquidity_lines + other_lines)
         # Means that we tried to remove the partner
         if 'partner_id' in record_data and not record_data['partner_id']:
             edited_line.partner_id = False
 
-    def _recompute_tax_lines(self):
-        self.ensure_one()
+    def _prepare_for_tax_lines_recomputation(self):
         liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
         other_lines.filtered(lambda line: not line.reconciled_lines_ids)  # We do not recompute tax on lines that come from invoice
 
-        AccountTax = self.env['account.tax']
         base_amls = other_lines.filtered(lambda line: not line.tax_repartition_line_id)
         base_lines = [self._prepare_base_line_for_taxes_computation(line) for line in base_amls]
         tax_amls = other_lines - base_amls
         tax_lines = [self._prepare_tax_line_for_taxes_computation(line) for line in tax_amls]
+        return base_lines, tax_lines
+
+    def _create_tax_lines(self, original_base_lines, original_tax_lines, new_lines):
+        self.ensure_one()
+        liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
+        other_lines = other_lines.filtered(lambda line: not line.reconciled_lines_ids)  # We do not recompute tax on lines that come from invoice
+
+        original_base_lines, original_tax_lines = self._recompute_tax_lines(original_base_lines, original_tax_lines)
+        original_base_lines += [self._prepare_base_line_for_taxes_computation(move_line) for move_line in new_lines]
+
+        self._post_recompute_tax_lines(original_base_lines, liquidity_lines, original_tax_lines, other_lines)
+
+    def _edit_tax_lines(self, original_base_lines, original_tax_lines, edited_line, old_move_line):
+        self.ensure_one()
+        liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
+        other_lines = other_lines.filtered(lambda line: not line.reconciled_lines_ids)  # We do not recompute tax on lines that come from invoice
+
+        original_base_lines, original_tax_lines = self._recompute_tax_lines(original_base_lines, original_tax_lines)
+
+        # In the context of an edit the move_lines parameter contains only one line
+        edit_base_line = self._prepare_base_line_for_taxes_computation(edited_line)
+        base_lines = []
+        for base_line in original_base_lines:
+            original_price_unit = base_line['price_unit']
+            base_line['price_unit'] += sum(
+                tax_data['tax_amount_currency']
+                for tax_data in base_line['tax_details']['taxes_data']
+            )
+            if base_line['record'] != old_move_line:
+                base_lines.append(base_line)
+                continue
+
+            price_unit_modified = self.currency_id.compare_amounts(edit_base_line['price_unit'], original_price_unit) != 0
+            if base_line['tax_ids'] and not price_unit_modified:
+                edit_base_line['price_unit'] = base_line['price_unit']
+
+            base_lines.append(edit_base_line)
+
+        self._post_recompute_tax_lines(base_lines, liquidity_lines, original_tax_lines, other_lines)
+
+    def _delete_tax_lines(self, original_base_lines, original_tax_lines, move_line_to_remove):
+        self.ensure_one()
+        liquidity_lines, _suspense_lines, other_lines = self._seek_for_lines()
+        other_lines = other_lines.filtered(lambda line: not line.reconciled_lines_ids)  # We do not recompute tax on lines that come from invoice
+
+        original_base_lines, original_tax_lines = self._recompute_tax_lines(original_base_lines, original_tax_lines)
+        base_lines = []
+        for base_line in original_base_lines:
+            if base_line['record'] == move_line_to_remove:
+                continue
+
+            base_line['price_unit'] += sum(
+                tax_data['tax_amount_currency']
+                for tax_data in base_line['tax_details']['taxes_data']
+            )
+            base_lines.append(base_line)
+
+        self._post_recompute_tax_lines(base_lines, liquidity_lines, original_tax_lines, other_lines)
+
+    def _recompute_tax_lines(self, original_base_lines=None, original_tax_lines=None):
+        self.ensure_one()
+        # To be stable friendly we had a fallback
+        if original_base_lines is None and original_tax_lines is None:
+            original_base_lines, original_tax_lines = self._prepare_for_tax_lines_recomputation()
+
+        AccountTax = self.env['account.tax']
+        # Restore original price unit.
+        AccountTax._add_tax_details_in_base_lines(original_base_lines, self.company_id)
+        AccountTax._round_base_lines_tax_details(original_base_lines, self.company_id, tax_lines=original_tax_lines)
+
+        return original_base_lines, original_tax_lines
+
+    def _post_recompute_tax_lines(self, base_lines, liquidity_lines, original_tax_lines, other_lines):
+        self.ensure_one()
+        AccountTax = self.env['account.tax']
         AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
         AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
         AccountTax._add_accounting_data_in_base_lines_tax_details(base_lines, self.company_id, include_caba_tags=True)
-        tax_results = AccountTax._prepare_tax_lines(base_lines, self.company_id, tax_lines=tax_lines)
+        tax_results = AccountTax._prepare_tax_lines(base_lines, self.company_id, tax_lines=original_tax_lines)
 
         lines_to_delete = self.env['account.move.line']
         lines_to_add_or_update = []
@@ -1596,8 +1697,12 @@ class AccountBankStatementLine(models.Model):
         self.ensure_one()
         if not line_vals:
             return {}
-
-        tax_type = line_vals.tax_ids[0].type_tax_use if line_vals.tax_ids else None
+        tax_type = line_vals.tax_ids.mapped('type_tax_use')
+        if 'sale' in tax_type and 'purchase' in tax_type:
+            # When we have sale and purchase tax on the same line, we take the sale type as default
+            tax_type = 'sale'
+        else:
+            tax_type = line_vals.tax_ids[0].type_tax_use if line_vals.tax_ids else None
         is_refund = (tax_type == 'sale' and line_vals.balance > 0.0) or (tax_type == 'purchase' and line_vals.balance < 0.0)
 
         return self.env['account.tax']._prepare_base_line_for_taxes_computation(

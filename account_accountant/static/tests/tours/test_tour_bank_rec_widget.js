@@ -77,7 +77,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget", {
         },
         {
             content: "Statement line is reconciled because move with same partner and amount",
-            trigger: "span[name='reconciled_line_name']",
+            trigger: "div[name='reconciled_line_name']",
         },
         {
             content: "Create New statement",
@@ -123,7 +123,7 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget", {
         },
         {
             content: "Statement line is reconciled",
-            trigger: "span[name='reconciled_line_name']",
+            trigger: "div[name='reconciled_line_name']",
         },
     ],
 });

@@ -259,10 +259,18 @@ class AccountReconcileModel(models.Model):
                 st_line=statement_line,
             )
         )
+        # Get the original base lines and tax lines before the creation of new lines
+        if any(aml.get('tax_ids') for aml in amls_to_create):
+            original_base_lines, original_tax_lines = statement_line._prepare_for_tax_lines_recomputation()
 
         statement_line._set_move_line_to_statement_line_move(liquidity_line + other_lines, amls_to_create)
+
+        # Now that the new lines have been added, we can recompute the taxes
         if any(aml.get('tax_ids') for aml in amls_to_create):
-            statement_line._recompute_tax_lines()
+            _new_liquidity_line, new_suspense_line, _new_other_lines = statement_line._seek_for_lines()
+            new_lines = statement_line.line_ids - (liquidity_line + other_lines + new_suspense_line)
+            statement_line._create_tax_lines(original_base_lines, original_tax_lines, new_lines)
+
         if self.next_activity_type_id:
             statement_line.move_id.activity_schedule(
                 activity_type_id=self.next_activity_type_id.id,
