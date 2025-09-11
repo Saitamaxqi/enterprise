@@ -39,7 +39,7 @@ class IrActionsReport(models.Model):
 
             # Fill writer with the followup report followed by the invoices
             followup_stream = res[partner_id]['stream']
-            input_streams = [followup_stream] + [to_pdf_stream(attachment) for attachment in attachments
+            input_streams = [followup_stream] + [to_pdf_stream(attachment) for attachment in self._prepare_local_attachments(attachments)
                                                  if attachment.mimetype == 'application/pdf']
             for stream in input_streams:
                 reader = OdooPdfFileReader(stream, strict=False)
