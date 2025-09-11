@@ -1,5 +1,5 @@
 import { describe, expect, test } from "@odoo/hoot";
-import { click, drag, keyDown, pointerDown, queryFirst } from "@odoo/hoot-dom";
+import { click, drag, keyDown, pointerDown, press, queryFirst } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame, mockDate, mockTouch } from "@odoo/hoot-mock";
 import {
     defineMenus,
@@ -231,7 +231,6 @@ test("Navigation and open an app in the home menu", async () => {
 });
 
 test("Reorder apps in home menu using drag and drop", async () => {
-
     const apps = [];
     for (let i = 0; i < 8; i++) {
         apps.push({
@@ -349,4 +348,35 @@ test("home search input shouldn't be focused on touch devices", async () => {
     expect(".o_search_hidden").not.toBeFocused({
         message: "home menu search input shouldn't have the focus",
     });
+});
+
+test("home keynav not triggering when navigating a dropdown", async () => {
+    const apps = [];
+    for (let i = 0; i < 8; i++) {
+        apps.push({
+            actionID: 121,
+            href: "/odoo/action-121",
+            appID: i + 1,
+            id: i + 1,
+            label: `0${i}`,
+            parents: "",
+            webIcon: false,
+            xmlid: `app.${i}`,
+        });
+    }
+    defineMenus(apps);
+
+    await mountWebClient({ WebClient: WebClientEnterprise });
+
+    await click(".o_user_menu .o-dropdown");
+    await animationFrame();
+
+    await press("arrowdown");
+    await animationFrame();
+    expect(".o-dropdown-item.focus").toHaveCount(1);
+
+    await press("arrowleft");
+    await animationFrame();
+    expect(".o-dropdown-item.focus").toHaveCount(1);
+    expect(".o_app.o_focused").toHaveCount(0);
 });
