@@ -55,6 +55,14 @@
         <Amt>
           <InstdAmt Ccy="CHF">500.00</InstdAmt>
         </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BIC>BQBHCHGG</BIC>
+            <ClrSysMmbId>
+              <MmbId>123456</MmbId>
+            </ClrSysMmbId>
+          </FinInstnId>
+        </CdtrAgt>
         <Cdtr>
           <Nm>Easy Clean Lausanne</Nm>
           <PstlAdr>
@@ -77,6 +85,14 @@
         <Amt>
           <InstdAmt Ccy="CHF">600.00</InstdAmt>
         </Amt>
+        <CdtrAgt>
+          <FinInstnId>
+            <BIC>BQBHCHGG</BIC>
+            <ClrSysMmbId>
+              <MmbId>123456</MmbId>
+            </ClrSysMmbId>
+          </FinInstnId>
+        </CdtrAgt>
         <Cdtr>
           <Nm>Easy Clean Lausanne</Nm>
           <PstlAdr>

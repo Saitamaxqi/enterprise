@@ -234,7 +234,9 @@ class TestSwissIsoCreditTransfer(TestISO20022CommonCreditTransfer):
             'allow_out_payment': True,
             'partner_id': cls.swiss_partner.id,
             'acc_type': 'bank',
-            'bank_name': 'swiss_bank'
+            'bank_name': 'swiss_bank',
+            'bank_id': cls.swiss_bank.id,
+            'clearing_number': '123456',
         })
 
     @freeze_time('2024-03-04')

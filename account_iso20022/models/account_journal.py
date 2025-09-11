@@ -329,7 +329,8 @@ class AccountJournal(models.Model):
             Id.text = "NOTPROVIDED"
         if bank_account.clearing_number:
             ClrSysMmbId = etree.SubElement(FinInstnId, "ClrSysMmbId")
-            ClrSysMmbId.text = bank_account.clearing_number
+            MmbId = etree.SubElement(ClrSysMmbId, "MmbId")
+            MmbId.text = bank_account.clearing_number
         return FinInstnId
 
     def _get_CdtrAcct(self, bank_account, payment_method_code=None):
