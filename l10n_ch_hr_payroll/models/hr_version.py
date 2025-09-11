@@ -559,3 +559,33 @@ class HrVersion(models.Model):
         if self.marital not in mapped_marital:
             raise UserError(_('Invalid marital status for employee %s', self.name))
         return mapped_marital[self.marital]
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelist_fields = super()._get_whitelist_fields_from_template()
+        if self.env.company.country_id.code == "CH":
+            whitelist_fields += [
+                "l10n_ch_accident_insurance_line_id",
+                "l10n_ch_additional_accident_insurance_line_ids",
+                "l10n_ch_avs_status",
+                "l10n_ch_compensation_fund_id",
+                "l10n_ch_contractual_13th_month_rate",
+                "l10n_ch_is_model",
+                "l10n_ch_is_predefined_category",
+                "l10n_ch_job_type",
+                "l10n_ch_lesson_wage",
+                "l10n_ch_location_unit_id",
+                "l10n_ch_lpp_insurance_id",
+                "l10n_ch_lpp_not_insured",
+                "l10n_ch_monthly_effective_days",
+                "l10n_ch_other_employers",
+                "l10n_ch_other_employers_occupation_rate",
+                "l10n_ch_sickness_insurance_line_ids",
+                "l10n_ch_social_insurance_id",
+                "l10n_ch_thirteen_month",
+                "l10n_ch_total_occupation_rate",
+                "l10n_ch_yearly_holidays",
+                "l10n_ch_yearly_paid_public_holidays",
+                "overtime_from_attendance",
+            ]
+        return whitelist_fields

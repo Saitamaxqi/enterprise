@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrVersion(models.Model):
@@ -22,3 +22,13 @@ class HrVersion(models.Model):
         required=True,
         groups="hr.group_hr_user",
         help="Employee's tax category that depends on their marital status and number of children")
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "ID":
+            whitelisted_fields += [
+                'l10n_id_bpjs_jkk',
+                'overtime_from_attendance'
+            ]
+        return whitelisted_fields

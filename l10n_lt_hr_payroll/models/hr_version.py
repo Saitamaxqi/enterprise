@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrVersion(models.Model):
@@ -26,3 +26,15 @@ Benefit in kind is taxed as employment income.""")
         ('30_55', 'Between 30-55%'),
         ('60_100', 'Between 60-100%'),
     ], default='60_100', string="Working Capacity", groups="hr_payroll.group_hr_payroll_user")
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "LT":
+            whitelisted_fields += [
+                "l10n_lt_benefits_in_kind",
+                "l10n_lt_pension",
+                "l10n_lt_time_limited",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

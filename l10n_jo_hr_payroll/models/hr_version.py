@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class HrVersion(models.Model):
@@ -17,3 +17,16 @@ class HrVersion(models.Model):
     l10n_jo_has_dependants = fields.Boolean(string="Has Dependants", groups="hr_payroll.group_hr_payroll_user",
         help="Used to determine if the employee qualifies for dependent-related tax exemptions (e.g., spouse, children).")
     l10n_jo_is_eligible_for_eos = fields.Boolean(default=True, groups="hr_payroll.group_hr_payroll_user", string="Eligible for EOS")
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "JO":
+            whitelisted_fields += [
+                "l10n_jo_housing_allowance",
+                "l10n_jo_other_allowances",
+                "l10n_jo_tax_exemption",
+                "l10n_jo_transportation_allowance",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

@@ -34,3 +34,19 @@ class HrVersion(models.Model):
         'CHECK(l10n_eg_total_number_of_days >= 0)',
         "Benefit Number of Days must be equal to or greater than 0",
     )
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "EG":
+            whitelisted_fields += [
+                "l10n_eg_housing_allowance",
+                "l10n_eg_number_of_days",
+                "l10n_eg_other_allowances",
+                "l10n_eg_social_insurance_reference",
+                "l10n_eg_total_leave_days",
+                "l10n_eg_total_number_of_days",
+                "l10n_eg_transportation_allowance",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

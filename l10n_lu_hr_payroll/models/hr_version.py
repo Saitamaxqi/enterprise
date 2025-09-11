@@ -227,3 +227,22 @@ class HrVersion(models.Model):
         for version in self:
             version.l10n_lu_package_fds_monthly = version.l10n_lu_package_fds_daily * days_per_month
             version.l10n_lu_package_fds_yearly = version.l10n_lu_package_fds_monthly * 12
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "LU":
+            whitelisted_fields += [
+                "l10n_lu_alw_vehicle",
+                "l10n_lu_bik_other_benefits",
+                "l10n_lu_bik_vehicle",
+                "l10n_lu_bik_vehicle_vat_included",
+                "l10n_lu_current_index",
+                "l10n_lu_index_on_contract_signature",
+                "l10n_lu_indexed_wage",
+                "l10n_lu_meal_voucher_amount",
+                "l10n_lu_meal_voucher_employee_computation",
+                "l10n_lu_meal_voucher_employer_cost",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

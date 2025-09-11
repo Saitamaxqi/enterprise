@@ -213,11 +213,23 @@ class HrVersion(models.Model):
     @api.model
     def _get_whitelist_fields_from_template(self):
         whitelisted_fields = super()._get_whitelist_fields_from_template()
-        return whitelisted_fields + [
-            'l10n_us_pre_retirement_amount', 'l10n_us_pre_retirement_type', 'l10n_us_pre_retirement_matching_amount',
-            'l10n_us_pre_retirement_matching_type', 'l10n_us_pre_retirement_matching_yearly_cap',
-            'l10n_us_post_roth_401k_amount', 'l10n_us_post_roth_401k_type', 'l10n_us_worker_compensation_id',
-            'l10n_us_commuter_benefits', 'l10n_us_health_benefits_medical', 'l10n_us_health_benefits_dental',
-            'l10n_us_health_benefits_vision', 'l10n_us_health_benefits_fsa', 'l10n_us_health_benefits_fsadc',
-            'l10n_us_health_benefits_hsa'
-        ]
+        if self.env.company.country_id.code == "US":
+            whitelisted_fields += [
+                "l10n_us_commuter_benefits",
+                "l10n_us_health_benefits_dental",
+                "l10n_us_health_benefits_fsa",
+                "l10n_us_health_benefits_fsadc",
+                "l10n_us_health_benefits_hsa",
+                "l10n_us_health_benefits_medical",
+                "l10n_us_health_benefits_vision",
+                "l10n_us_post_roth_401k_amount",
+                "l10n_us_post_roth_401k_type",
+                "l10n_us_pre_retirement_amount",
+                "l10n_us_pre_retirement_matching_amount",
+                "l10n_us_pre_retirement_matching_type",
+                "l10n_us_pre_retirement_matching_yearly_cap",
+                "l10n_us_pre_retirement_type",
+                "l10n_us_worker_compensation_id",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

@@ -44,3 +44,21 @@ class HrVersion(models.Model):
         for version in self:
             if not 0 <= version.l10n_ke_housing_allowance_percentage <= 1:
                 raise UserError(_('The housing allowance percentage should be between 0% and 100%.'))
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "KE":
+            whitelisted_fields += [
+                "l10n_ke_airtime_allowance",
+                "l10n_ke_education",
+                "l10n_ke_food_allowance",
+                "l10n_ke_is_li_managed_by_employee",
+                "l10n_ke_is_secondary",
+                "l10n_ke_life_insurance",
+                "l10n_ke_pension_allowance",
+                "l10n_ke_pension_contribution",
+                "l10n_ke_voluntary_medical_insurance",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

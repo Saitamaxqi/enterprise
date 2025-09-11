@@ -28,3 +28,19 @@ class HrVersion(models.Model):
     def _compute_total_salary(self):
         for contract in self:
             contract.l10n_ae_total_salary = contract.wage + contract.l10n_ae_housing_allowance + contract.l10n_ae_transportation_allowance + contract.l10n_ae_other_allowances
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template()
+        if self.env.company.country_id.code == "AE":
+            whitelisted_fields += [
+                "l10n_ae_eos_daily_salary",
+                "l10n_ae_housing_allowance",
+                "l10n_ae_is_computed_based_on_daily_salary",
+                "l10n_ae_is_dews_applied",
+                "l10n_ae_number_of_leave_days",
+                "l10n_ae_other_allowances",
+                "l10n_ae_transportation_allowance",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

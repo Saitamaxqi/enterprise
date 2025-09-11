@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models
+from odoo import api, fields, models
 
 
 class HrVersion(models.Model):
@@ -26,3 +26,20 @@ class HrVersion(models.Model):
          'CHECK (0 <= l10n_mx_holiday_bonus_rate AND l10n_mx_holiday_bonus_rate <= 100)',
          'The Christmas Bonus rate must be between 0 and 100',
     )
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "MX":
+            whitelisted_fields += [
+                "l10n_mx_fonacot",
+                "l10n_mx_gasoline_amount",
+                "l10n_mx_holiday_bonus_rate",
+                "l10n_mx_infonavit",
+                "l10n_mx_meal_voucher_amount",
+                "l10n_mx_payment_period_vouchers",
+                "l10n_mx_savings_fund",
+                "l10n_mx_transport_amount",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

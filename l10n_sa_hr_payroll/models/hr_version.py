@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class HrVersion(models.Model):
@@ -18,3 +18,17 @@ class HrVersion(models.Model):
         'CHECK(l10n_sa_number_of_days >= 0)',
         "Number of Days must be equal to or greater than 0",
     )
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "SA":
+            whitelisted_fields += [
+                "l10n_sa_housing_allowance",
+                "l10n_sa_number_of_days",
+                "l10n_sa_other_allowances",
+                "l10n_sa_transportation_allowance",
+                "l10n_sa_wps_description",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

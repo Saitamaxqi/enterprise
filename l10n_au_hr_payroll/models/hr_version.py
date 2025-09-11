@@ -565,3 +565,27 @@ class HrVersion(models.Model):
         start_day = self._l10n_au_get_financial_year_start(target_day)
         end_day = self._l10n_au_get_financial_year_end(target_day) + relativedelta(day=30)
         return ceil((end_day - start_day).days / 7)
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template()
+        if self.env.company.country_id.code == 'AU':
+            whitelisted_fields += [
+                "l10n_au_casual_loading",
+                "l10n_au_cessation_type_code",
+                "l10n_au_eligible_for_leave_loading",
+                "l10n_au_extra_compulsory_super",
+                "l10n_au_extra_negotiated_super",
+                "l10n_au_leave_loading",
+                "l10n_au_leave_loading_leave_types",
+                "l10n_au_leave_loading_rate",
+                "l10n_au_pay_day",
+                "l10n_au_performances_per_week",
+                "l10n_au_salary_sacrifice_other",
+                "l10n_au_salary_sacrifice_superannuation",
+                "l10n_au_workplace_giving",
+                "l10n_au_workplace_giving_employer",
+                "l10n_au_yearly_wage",
+                "overtime_from_attendance",
+            ]
+        return whitelisted_fields

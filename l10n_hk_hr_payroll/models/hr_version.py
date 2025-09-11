@@ -87,3 +87,13 @@ class HrVersion(models.Model):
         for version in self:
             if version.l10n_hk_mpf_vc_percentage > 0.05 or version.l10n_hk_mpf_vc_percentage < 0:
                 raise ValidationError(version.env._('Enter VC Percentage between 0% and 5%.'))
+
+    @api.model
+    def _get_whitelist_fields_from_template(self):
+        whitelisted_fields = super()._get_whitelist_fields_from_template() or []
+        if self.env.company.country_id.code == "HK":
+            whitelisted_fields += [
+                'l10n_hk_internet',
+                'overtime_from_attendance'
+            ]
+        return whitelisted_fields
