@@ -12,7 +12,7 @@
                    eval="obj().search([
                        ('company_id', '=', obj().env.ref('base.demo_company_it').id),
                        ('type', '=', 'bank')
-                   ])"/>
+                   ], limit=1)"/>
          </record>
 
         <record id="demo_l10n_it_edi_bank_partner_a" model="res.partner.bank">
