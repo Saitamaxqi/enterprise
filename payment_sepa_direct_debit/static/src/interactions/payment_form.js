@@ -22,9 +22,9 @@ patch(PaymentForm.prototype, {
      * @param {string} flow - The online payment flow of the selected payment option
      * @return {void}
      */
-    _prepareInlineForm(providerId, providerCode, paymentOptionId, paymentMethodCode, flow) {
+    async _prepareInlineForm(providerId, providerCode, paymentOptionId, paymentMethodCode, flow) {
         if (providerCode !== 'sepa_direct_debit') {
-            super._prepareInlineForm(...arguments);
+            await super._prepareInlineForm(...arguments);
             return;
         } else if (flow === 'token') {
             return; // Don't show the form for tokens.
