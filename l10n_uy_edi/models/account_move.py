@@ -188,15 +188,41 @@ class AccountMove(models.Model):
     def l10n_uy_edi_action_update_dgi_state(self):
         res = self.l10n_uy_edi_document_id.action_update_dgi_state()
         to_cancel = self.filtered(lambda x: x.l10n_uy_edi_cfe_state == 'rejected')
+        to_post = self.filtered(lambda x: x.l10n_uy_edi_cfe_state == 'accepted' and x.state == 'cancel')
         if to_cancel:
             try:
                 to_cancel._check_fiscal_lock_dates()
                 to_cancel.line_ids._check_tax_lock_date()
-            except UserError:
-                pass
+            except UserError as e:
+                _logger.warning(
+                    "Cannot cancel rejected invoice(s): %s, error: %s", [(rec.id, rec.name) for rec in to_cancel], str(e)
+                )
             else:
                 to_cancel.button_draft()
                 to_cancel.button_cancel()
+                _logger.info(
+                    "Cancelled rejected invoice(s): %s", [(rec.id, rec.name) for rec in to_cancel]
+                )
+                # Send a message to the internal followers or to the Accounting Managers instead
+                # prompting manual review and resubmission
+                accounting_manager_partners = self.env.ref('account.group_account_manager').user_ids.mapped('partner_id')
+                for move in to_cancel:
+                    internal_followers = move.message_partner_ids.filtered(
+                        lambda x: x.user_ids and not x.user_ids.share)
+                    partner_ids = (internal_followers or accounting_manager_partners).ids
+                    move.message_post(
+                        body=self.env._(
+                            'The CFE has been rejected by DGI so we automatically cancel this record. Please, '
+                            'you will need to manually check the reject reason and generate/send a new CFE with the fixes'),
+                        message_type='comment',
+                        subtype_xmlid='mail.mt_note',
+                        partner_ids=partner_ids)
+        if to_post:
+            to_post.button_draft()
+            to_post.action_post()
+            _logger.info(
+                "Posted previously rejected invoice(s): %s", [(rec.id, rec.name) for rec in to_post]
+            )
         return res
 
     def l10n_uy_edi_action_download_preview_xml(self):
@@ -676,7 +702,7 @@ class AccountMove(models.Model):
         """Deletes non-ASCII characters from strings."""
         if isinstance(text, str):
             return ''.join(char for char in text if (ord(char) <= 127) or unicodedata.category(char) == 'Ll' or unicodedata.category(char) == 'Lu')
-        return text 
+        return text
 
     def _l10n_uy_edi_get_line_nom_and_desc(self, aml):
         """

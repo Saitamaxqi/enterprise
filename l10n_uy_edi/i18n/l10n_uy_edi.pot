@@ -825,6 +825,15 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"The CFE has been rejected by DGI so we automatically cancel this record. "
+"Please, you will need to manually check the reject reason and generate/send "
+"a new CFE with the fixes"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "The account creating request has been successfully sent. The credentials "
