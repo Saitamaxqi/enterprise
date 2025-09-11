@@ -830,6 +830,7 @@ test("when middle clicked on cell open records in new window ", async () => {
 
     await contains("td.o_cohort_value").click({ ctrlKey: true });
     expect.verifySteps([
+        "get menu_id-null",
         "get current_state-null",
         "get current_action-null",
         'set current_state-{"actionStack":[{"displayName":"Subscriptions","action":22,"view_type":"cohort"}],"action":22}',
