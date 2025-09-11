@@ -48,7 +48,7 @@ class L10n_InGstOtpValidation(models.TransientModel):
     def gst_send_otp(self):
         self.check_gst_number()
         self._l10n_in_reports_gstr_check_gst_token()
-        response = self.env["account.return"]._otp_request(self.company_id)
+        response = self.env["account.return"]._l10n_in_gstr_otp_request(self.company_id)
 
         if response.get('error'):
             error_message = "\n".join(["[%s] %s" % (error.get('code'), error.get('message')) for error in response.get("error", {})])
@@ -67,7 +67,7 @@ class L10n_InGstOtpValidation(models.TransientModel):
         }
 
     def validate_otp(self):
-        response = self.env["account.return"]._otp_auth_request(
+        response = self.env["account.return"]._l10n_in_gstr_otp_auth_request(
             company=self.company_id, transaction=self.gst_token, otp=self.gst_otp)
         if response.get('error'):
             error_codes = [e.get('code') for e in response["error"]]

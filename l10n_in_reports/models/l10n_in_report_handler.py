@@ -47,7 +47,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('tax_tag_ids', 'in', self.env.ref('l10n_in.tax_tag_base_igst').id),
                 ('move_id.l10n_in_gst_treatment', '!=', 'special_economic_zone')
             ]
-        ).ids
+        )
         return 'l10n_in_reports.invalid_intra_state_warning', intra_state_sgst_cgst
 
     @api.model
@@ -58,7 +58,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
                 ('tax_tag_ids', 'in', (self.env.ref('l10n_in.tax_tag_base_cgst').id, self.env.ref('l10n_in.tax_tag_base_sgst').id)),
             ]
-        ).ids
+        )
         return 'l10n_in_reports.invalid_inter_state_warning', inter_state_igst
 
     def _get_invalid_no_hsn_line_domain(self):
@@ -72,7 +72,7 @@ class L10n_InReportHandler(models.AbstractModel):
         missing_hsn = self.env['account.move.line'].search(
             aml_domain + self._get_invalid_no_hsn_line_domain()
         )
-        return 'l10n_in_reports.missing_hsn_warning', missing_hsn.ids
+        return 'l10n_in_reports.missing_hsn_warning', missing_hsn
 
     @api.model
     def _get_invalid_service_hsn_products(self, aml_domain):
@@ -83,7 +83,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('l10n_in_hsn_code', '=like', '99%'),
                 ('product_id.type', '!=', 'service'),
             ]
-        ).ids
+        )
         return 'l10n_in_reports.invalid_type_service_for_hsn_warning', invalid_type_service_for_hsn
 
     @api.model
@@ -95,7 +95,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('product_id.type', '=', 'service'),
                 '!', ('l10n_in_hsn_code', '=like', '99%'),
             ]
-        ).ids
+        )
         return 'l10n_in_reports.invalid_hsn_for_service_warning', invalid_hsn_for_service
 
     @api.model
@@ -153,7 +153,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('product_id.type', '!=', 'service'),
                 ('product_id.uom_id.l10n_in_code', 'not in', uqc_codes),
             ]
-        ).product_id.uom_id.ids
+        ).product_id.uom_id
         return 'l10n_in_reports.invalid_uqc_code_warning', invalid_uqc_codes
 
     def _get_reversed_moves_domain(self, options):
@@ -176,7 +176,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('reversed_entry_id', '!=', False),
                 ('reversed_entry_id.invoice_date', '<', AccountMove._l10n_in_get_fiscal_year_start_date(self.env.company, datetime.strptime(options['date']['date_to'], '%Y-%m-%d')))
             ]
-        ).ids
+        )
         return 'l10n_in_reports.out_of_fiscal_year_reversed_moves_warning', out_of_fiscal_year_reversed_moves
 
     @api.model
@@ -188,7 +188,7 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('l10n_in_gst_treatment', 'in', ['unregistered', 'consumer']),
                 ('l10n_in_transaction_type', '=', 'inter_state'),
             ]
-        ).ids
+        )
         return 'l10n_in_reports.unlinked_reversed_moves_warning', unlinked_reversed_moves
 
     @api.model
@@ -234,6 +234,10 @@ class L10n_InReportHandler(models.AbstractModel):
                     self._get_invalid_uqc_codes(aml_domain),
                     self._get_out_of_fiscal_year_reversed_moves(options),
                     self._get_unlinked_unregistered_inter_state_reversed_moves(options),
+                ]
+                all_checks = [
+                    (xml_id, obj.ids)
+                    for xml_id, obj in all_checks
                 ]
             elif report.id in (self.env.ref("l10n_in.tds_report").id, self.env.ref("l10n_in.tcs_report").id):
                 all_checks = [

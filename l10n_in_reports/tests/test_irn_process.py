@@ -46,7 +46,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
         ])
 
         # Process IRN match data
-        self.report.irn_match_data()
+        self.report.l10n_in_irn_match_data()
         move = self.env['account.move'].search([('state', '=', 'draft'), ('l10n_in_irn_number', '!=', False)])
         self.assertEqual(len(move), 1)
 
@@ -85,7 +85,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
         ])
 
         # Process IRN match data
-        self.report.irn_match_data()
+        self.report.l10n_in_irn_match_data()
         move = self.env['account.move'].search([('state', '=', 'draft'), ('l10n_in_irn_number', '!=', False)])
         self.assertEqual(len(move), 1)
 
@@ -125,7 +125,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
         ])
 
         # Process IRN match data
-        self.report.irn_match_data()
+        self.report.l10n_in_irn_match_data()
         move = self.env['account.move'].search([('state', '=', 'draft'), ('l10n_in_irn_number', '!=', False)])
         self.assertEqual(len(move), 1)
 

@@ -58,8 +58,8 @@ class AccountJournal(models.Model):
         if prev_return:
             prev_return.refresh_checks()
             if prev_return.check_ids.filtered(lambda c: c.code == 'missing_fetch_einvoice' and c.result == 'failure'):
-                prev_return.action_get_irn_data()
+                prev_return.action_l10n_in_get_irn_data()
 
         curr_return = _find_return(today + relativedelta(day=1), today + relativedelta(day=31))
         if curr_return:
-            return curr_return.action_get_irn_data()
+            return curr_return.action_l10n_in_get_irn_data()

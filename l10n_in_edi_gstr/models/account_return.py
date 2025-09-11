@@ -17,29 +17,12 @@ class AccountReturn(models.Model):
         for record in self:
             record.l10n_in_hide_include_einvoice = record.type_id._get_periodicity(record.company_id) == 'trimester'
 
-    def is_einvoice_skippable(self, move_id):
+    def _is_l10n_in_einvoice_skippable(self, move_id):
         # Check if the skip e-invoice condition is met for a given move_id.
         return (
             not self.l10n_in_gstr1_include_einvoice
             and move_id.l10n_in_edi_status in ['sent', 'cancelled']
         )
-
-    def _build_open_invoice_records_action(self, name, move_ids):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': name,
-            'res_model': 'account.move',
-            'views': [
-                (self.env.ref('account.view_out_invoice_tree').id, 'list'),
-                (self.env.ref('account.view_move_form').id, 'form'),
-            ],
-            'domain': [('id', 'in', move_ids)],
-            'context': {
-                'create': False,
-                'delete': False,
-                'expand': True,
-            },
-        }
 
     def _check_suite_in_gstr1_report(self, check_codes_to_ignore):
         _ = self.env._
@@ -68,20 +51,26 @@ class AccountReturn(models.Model):
                 "sale_eco_9_5", "sale_out_of_scope",
             }
             eligible_move = self.env['account.move'].search(domain)
-            move_ids = eligible_move.filtered(lambda move: any(
+            moves = eligible_move.filtered(lambda move: any(
                 line.display_type == 'product'
                 and line.l10n_in_gstr_section
                 and line.l10n_in_gstr_section.startswith('sale_')
                 and line.l10n_in_gstr_section not in sale_section_exceptions
                 for line in move.line_ids
-            )).ids
+            ))
             checks.append({
                 'code': 'missing_einvoice',
                 'name': _("Missing E-Invoice"),
                 'message': _("Some invoices are missing e-invoice."),
                 'records_model': self.env['ir.model']._get('account.move').id,
-                'records_count': len(move_ids),
-                'result': 'anomaly' if move_ids else 'reviewed',
-                'action': self._build_open_invoice_records_action(_('Missing E-Invoice'), move_ids),
-                })
+                'records_count': len(moves),
+                'result': 'anomaly' if moves else 'reviewed',
+                'action': moves.with_context(create=False, delete=False, expand=True)._get_records_action(
+                     name=_('Missing E-Invoice'),
+                     views=[
+                        (self.env.ref('account.view_out_invoice_tree').id, 'list'),
+                        (self.env.ref('account.view_move_form').id, 'form'),
+                    ],
+                ),
+            })
         return checks

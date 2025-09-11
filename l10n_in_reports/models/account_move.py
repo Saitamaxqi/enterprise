@@ -139,7 +139,7 @@ class AccountMove(models.Model):
 
         :returns: action to refresh the form view.
         """
-        self.env['account.return']._check_config(
+        self.env['account.return']._l10n_in_check_config(
             company=self.env.company
         )
 
@@ -423,7 +423,7 @@ class AccountMove(models.Model):
 
         :returns: dict containing signed IRN details.
         """
-        response = self.env['account.return']._request(
+        response = self.env['account.return']._l10n_in_reports_request(
             url="/iap/l10n_in_reports/1/einvoice/irndtl",
             params={
                 "irn_number": irn_number,

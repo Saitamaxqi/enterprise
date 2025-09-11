@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 18.3a1+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-17 12:45+0000\n"
-"PO-Revision-Date: 2025-04-17 12:45+0000\n"
+"POT-Creation-Date: 2025-09-11 09:59+0000\n"
+"PO-Revision-Date: 2025-09-11 09:59+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,help:l10n_in_reports.field_account_bank_statement_line__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,help:l10n_in_reports.field_account_move__l10n_in_gstr_activate_einvoice_fetch
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__l10n_in_gstr_activate_einvoice_fetch
+#: model:ir.model.fields,help:l10n_in_reports.field_account_return__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,help:l10n_in_reports.field_res_company__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,help:l10n_in_reports.field_res_config_settings__l10n_in_gstr_activate_einvoice_fetch
 msgid ""
@@ -28,186 +28,309 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b_1
+msgid "(1) As per rules 38,42 & 43 of CGST Rules and section 17(5)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_d_1
+msgid ""
+"(1) ITC reclaimed which was reversed under Table 4(B)(2) in earlier tax "
+"period (Manual)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_1
+msgid "(1) Import of goods"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_2
+msgid "(2) Import of services"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_d_2
+msgid ""
+"(2) Ineligible ITC under section 16(4) & ITC restricted due to Pos rules "
+"(Manual)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b_2
+msgid "(2) Others"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_3
+msgid "(3) Inward supplies liable to reverse charge (other than 1 & 2 above)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_4
+msgid "(4) Inward supplies from ISD (Manual)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_5
+msgid "(5) All other ITC"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a
+msgid "(A) ITC Available (Whether in full or part)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b
+msgid "(B) ITC Reversed"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_c
+msgid "(C) Net ITC available (A-B)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_d
+msgid "(D) Other Details"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_a
+msgid ""
+"(a) Outward Taxable supplies (other than zero rated, nil rated and exempted)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_b
+msgid "(b) Outward Taxable supplies (zero rated)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_c
+msgid "(c) Other Outward Taxable supplies (Nil rated, exempted)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_d
+msgid "(d) Inward supplies (liable to reverse charge)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_e
+msgid "(e) Non-GST Outward supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_1_a
+msgid ""
+"(i) Taxable supplies on which electronic commerce operator pays tax u/s 9(5)"
+" [to be furnished by electronic commerce operator] (Manual)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_1_b
+msgid ""
+"(ii) Taxable supplies made by registered person through electronic commerce "
+"operator, on which electronic commerce operator is required to pay tax u/s "
+"9(5) [to be furnished by registered person making supplies through "
+"electronic commerce operator]"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__1
+msgid "1 - Invoice for Outward Supply"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__10
+msgid "10 - Delivery Challan for Supply on Approval"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__11
+msgid "11 - Delivery Challan in case of Supply of Liquid Gas"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__12
+msgid ""
+"12 - Delivery Challan in cases other than by way of supply (excluding at S "
+"no. 9 to 11) "
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_hsn
+msgid "12. HSN-wise summary of outward supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_eco_operator
+msgid "14. Supplies made through E-commerce Operators"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_eco_52
+msgid "14A. ECO liable to deduct TCS u/s 52"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_eco_9_5
+msgid "14B. ECO liable to pay GST u/s 9(5)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__2
+msgid "2 - Invoice for Inward Supply from Unregistered Person"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__3
+msgid "3 - Revised Invoice"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1
+msgid ""
+"3.1 Details of Outward Supplies and inward supplies liable to reverse charge"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_1_1
+msgid ""
+"3.1.1 Details of Supplies notified under section 9(5) of the CGST Act, 2017 "
+"and corresponding provisions in IGST/UTGST/SGST Acts"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2
+msgid ""
+"3.2 Out of the supplies shown in 3.1 (a), details of inter-state supplies "
+"made to unregistered persons, composition taxable person and UIN holders"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__4
+msgid "4 - Debit Note"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4
+msgid "4. Eligible ITC"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_4
+msgid "4. Taxable outward supplies made to Registered persons"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2b_regular
+msgid ""
+"4A. Including supplies made through e-commerce operator attracting TCS - B2B"
+" Regular"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2b_reverse_charge
+msgid "4B. Attracting tax on reverse charge - B2B Reverse charge"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__5
+msgid "5 - Credit Note"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_5
+msgid ""
+"5. Taxable outward inter-state supplies made to Unregistered persons "
+"including supplies made through e-commerce operator"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5
+msgid "5. Values of exempt, Nil-rated and non-GST inward supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_1
+msgid "5.1 Interest and Late fee for previous tax period"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__6
+msgid "6 - Receipt Voucher"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_6
+msgid "6. Exports / Special economic zone / Deemed exports"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_exp
+msgid "6A. Exports (with/without payment)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_sez
+msgid "6B. Supplies made to SEZ unit or SEZ developer - SEZWP/SEZWOP"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_de
+msgid "6C. Deemed Exports - DE"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__7
+msgid "7 - Payment Voucher"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_7
+msgid ""
+"7. Taxable supplies to unregistered persons including supplies made through "
+"e-commerce operator attracting TCS"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__8
+msgid "8 - Refund Voucher"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_8
+msgid "8. Nil rated, exempted and non GST outward supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gstr_document_summary_line__nature_of_document__9
+msgid "9 - Delivery Challan for Job work"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_9
+msgid "9. Credit/Debit Notes"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr
+msgid "9B. Registered - CDNR"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnur
+msgid "9B. Unregistered - CDNUR"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_account_move_form_inherit_account
 msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
 "                            Fetch"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Being "
-"Processed</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Error in "
-"Invoice</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-danger fs-xs\">Matched</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Not Received</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Partially "
-"Matched</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-danger fs-xs\">Sending</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-danger fs-xs\">Sent</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-danger fs-xs\">To Send</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Waiting "
-"Reception</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-danger fs-xs\">Waiting for "
-"Status</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-muted fs-xs\">Not Received</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-muted fs-xs\">To Send</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-success fs-xs\">Being "
-"Processed</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-success fs-xs\">Filed</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-success fs-xs\">Matched</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-success fs-xs\">Sending</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-success fs-xs\">Sent</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Being "
-"Processed</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Error in "
-"Invoice</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-warning fs-xs\">Matched</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Not Received</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Partially "
-"Matched</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-warning fs-xs\">Sending</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-warning fs-xs\">Sent</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid "<span class=\"badge rounded-pill text-bg-warning fs-xs\">To Send</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Waiting "
-"Reception</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
-msgid ""
-"<span class=\"badge rounded-pill text-bg-warning fs-xs\">Waiting for "
-"Status</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"<span class=\"o_stat_text\">\n"
-"                                    <i class=\"fa fa-circle-o-notch fa-spin p-1\"/>\n"
-"                                    Fetching\n"
-"                                </span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"<span class=\"o_stat_text\">\n"
-"                                    Fetch E-Invoice\n"
-"                                </span>"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -220,29 +343,10 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "<span>GSTR-3 </span>"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_validate_otp_gstr
 msgid ""
-"<span>OTP Sent on mobile on registered mobile number with company GST "
-"number</span>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"<span>Receive GSTR-2B </span>\n"
-"                                <small class=\"text-muted\">Details submited by vendors</small>"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"<span>Send GSTR-1 </span>\n"
-"                                <small class=\"text-muted\">Details of customers invoices</small>"
+"<span>An OTP has been sent to the mobile number registered with the "
+"company's GST Portal.</span>"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -252,33 +356,29 @@ msgid "API credentials validated successfully"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model,name:l10n_in_reports.model_account_chart_template
-msgid "Account Chart Template"
+#: model:ir.model,name:l10n_in_reports.model_account_report
+msgid "Accounting Report"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_needaction
-msgid "Action Needed"
+#: model:ir.model,name:l10n_in_reports.model_account_return
+msgid "Accounting Return"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_ids
-msgid "Activities"
+#: model:ir.model,name:l10n_in_reports.model_account_return_check
+msgid "Accounting Return Check"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_exception_decoration
-msgid "Activity Exception Decoration"
+#: model:ir.model,name:l10n_in_reports.model_account_return_type
+msgid "Accounting Return Type"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_state
-msgid "Activity State"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_type_icon
-msgid "Activity Type Icon"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Action triggered — now waiting in queue to prepare and send data."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -288,31 +388,67 @@ msgid "Already Logged Out"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"An error occurred while fetching the e-invoice. Please check the logger "
-"section for details."
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Amount"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__04
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__04
-msgid "April"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_35
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_35
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_35
+msgid "Andaman and Nicobar"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_37
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_37
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_37
+msgid "Andhra Pradesh"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
+msgid ""
+"Another company is already using this GST number with a valid GST token. To "
+"proceed, make sure this company is part of a Tax Unit."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Apply Appropriate Tax"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.gtr1_submission_wizard_form
+msgid "Are you sure you want to push the data to GSTN?"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_12
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_12
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_12
+msgid "Arunachal Pradesh"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_18
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_18
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_18
+msgid "Assam"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Attached JSON file contains the submitted GSTR-1 data."
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_ir_attachment
 msgid "Attachment"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_attachment_count
-msgid "Attachment Count"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__08
-msgid "August"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -341,6 +477,45 @@ msgid "Avatar 512"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2b_regular
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnr_regular
+msgid "B2B Regular"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2b_rcm
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnr_rcm
+msgid "B2B Reverse Charge"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2c_regular
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnur_regular
+msgid "B2C Regular"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2c_rcm
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnur_rcm
+msgid "B2C Reverse Charge"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnur_b2cl
+msgid "B2CL"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2cs
+msgid "B2CS (others)"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.profit_and_loss_column
+msgid "Balance"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__bank_configuration
 msgid "Bank Configuration"
 msgstr ""
@@ -361,19 +536,40 @@ msgid "Bank Template"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_base_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr2b_base_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_base_column
+msgid "Base"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_account_batch_payment
 msgid "Batch Payment"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Before set as Filed, Status of GSTR-1 must be send"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__being_processed
-msgid "Being Processed"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_10
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_10
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_10
+msgid "Bihar"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Bill"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Bill Ref. (Supplier Inv. No.)"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -382,8 +578,8 @@ msgid "Bills Not in GSTR-2"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_blocking_level
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_blocking_level
+#: model:ir.model.fields,help:l10n_in_reports.field_account_return__l10n_in_gstr1_blocking_level
+#: model:ir.model.fields,help:l10n_in_reports.field_account_return__l10n_in_gstr2b_blocking_level
 msgid ""
 "Blocks the current operation of the document depending on the error severity:\n"
 "  * Warning: there is an error that doesn't prevent the current Electronic Return filing operation to succeed.\n"
@@ -391,9 +587,39 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_cess_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr2b_cess_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_cess_column
+msgid "CESS"
+msgstr ""
+
+#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "CESS Charges"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_cgst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr2b_cgst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_cgst_column
+msgid "CGST"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"Can not send GSTR-1 data because the required scheduled action '%s' is not "
+"active."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"Can not send GSTR-1 data because the required scheduled action '%s' is not active.\n"
+"Please contact your system administrator."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -409,8 +635,42 @@ msgid "Certain Product Lines"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Certain Product Lines does not have HSN in Journal Items."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_04
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_04
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_04
+msgid "Chandigarh"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_22
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_22
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_22
+msgid "Chattisgarh"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
 msgid "Check Status"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Checks Validated"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"Checks have been validated successfully. You can now proceed to the next "
+"step."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -419,8 +679,18 @@ msgid "Choose Bank Template (E.Net)"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Click this button to fetch the GSTR-2B data from the GSTN portal."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_check_kanban_view
 msgid "Click this button to fetch the e-invoice from the government portal."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Click this button to mark the GSTR-2B as completed."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -430,13 +700,17 @@ msgid "Close"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_closing_amount0
+msgid "Closing Stock"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_res_company
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__company_ids
 msgid "Companies"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__company_id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__company_id
 msgid "Company"
 msgstr ""
 
@@ -446,8 +720,19 @@ msgid "Company Name"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__filed
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__completed
+msgid "Complete"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_res_config_settings
 msgid "Config Settings"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_cost_sales0
+msgid "Cost of Revenue"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -457,26 +742,39 @@ msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__create_uid
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__create_uid
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__create_uid
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__create_uid
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__create_date
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__create_date
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__create_date
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__create_date
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Credit Note"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-javascript
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "Credit Notes"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Credit Notes issued without reference to an invoice"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -487,13 +785,56 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__currency_id
-msgid "Currency"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Customer"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__12
-msgid "December"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_26
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_26
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_26
+msgid "Dadra and Nagar Haveli"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_25
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_25
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_25
+msgid "Daman and Diu"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Deduction Date"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_07
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_07
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_07
+msgid "Delhi"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_depreciation0
+msgid "Depreciation"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnur
+msgid "Details of Credit/Debit Note for Unregistered Taxpayers"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_cdnr
+msgid "Details of Credit/Debit Notes for Registered Taxpayers"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,help:l10n_in_reports.field_account_return_type__states_workflow
+msgid "Determines the workflow of the return."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -504,26 +845,23 @@ msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__display_name
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_chart_template__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment_method__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_report__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return_check__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return_type__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__display_name
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__display_name
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_report_handler__display_name
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_reports_balance_sheet_report_handler__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__display_name
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__display_tax_unit
-msgid "Display Tax Unit"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -533,8 +871,34 @@ msgid "Display reversed entry warning"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Done"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Document Summary"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Document Summary Line"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Document Summary Lines"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"Document Summary Lines are required for GSTR-1. Click to enter or verify the"
+" auto generated document summary lines."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/gstr_document_summary.py:0
+msgid "Duplicate value found '%s'. Serial numbers should be unique."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -543,13 +907,23 @@ msgid "E-Invoice IRN is available. Fetching data from the GSTN portal."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "E-invoice fetching is in progress."
+#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_demand_draft
+msgid "ENet Demand Draft"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model,name:l10n_in_reports.model_enet_template
-msgid "ENet Template"
+#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_fund_transfer
+msgid "ENet Fund Transfer"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_neft
+msgid "ENet NEFT"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.payment.method,name:l10n_in_reports.account_payment_method_enet_rtgs
+msgid "ENet RTGS"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -561,18 +935,18 @@ msgid "ENet Vendor Batch Payment"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__end_date
-msgid "End Date"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnur_expwop
+msgid "EXPWOP"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnur_expwp
+msgid "EXPWP"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_enet_bank_template
 msgid "Enet Bank Template"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__enet_template_field_ids
-msgid "Enet Template Field"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -582,29 +956,19 @@ msgid "Enter QR / IRN Manually"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_blocking_level__error
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_blocking_level__error
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_blocking_level__error
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_blocking_level__error
 msgid "Error"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__error_in_invoice
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__error_in_fetching
+msgid "Error In Fetching"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__error_in_invoice
 msgid "Error in Invoice"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_error
-msgid "Error of GSTR-1"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_error
-msgid "Error of GSTR-2B"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Error,"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -615,14 +979,40 @@ msgid "Exception"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_exempt
+msgid "Exempt"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_exempted
+msgid "Exempted"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_expense0
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_less_expenses0
+msgid "Expenses"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_expwp
+msgid "Export with payment - expwp"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_expwop
+msgid "Export without payment - expwop"
+msgstr ""
+
+#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "Failed to decode signed invoice."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__02
-msgid "February"
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__fetch
+msgid "Fetch"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -631,8 +1021,13 @@ msgid "Fetch Automatically"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Fetch GSTR-2B Summary"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_check_kanban_view
+msgid "Fetch E-Invoice"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Fetch GSTR-2B"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -641,10 +1036,16 @@ msgid "Fetch Manually"
 msgstr ""
 
 #. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Fetch Vendor Bills"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_fetch_vendor_edi_feature_enabled
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__l10n_in_fetch_vendor_edi_feature_enabled
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_fetch_vendor_edi_feature_enabled
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__l10n_in_fetch_vendor_edi_feature_enabled
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_fetch_vendor_edi_feature_enabled
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__l10n_in_fetch_vendor_edi_feature
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__l10n_in_fetch_vendor_edi_feature
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.res_config_settings_view_form_inherit_l10n_in_gstr
@@ -654,10 +1055,16 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_gstr_activate_einvoice_fetch
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__l10n_in_gstr_activate_einvoice_fetch
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__l10n_in_gstr_activate_einvoice_fetch
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__l10n_in_gstr_activate_einvoice_fetch
 msgid "Fetch Vendor E-Invoiced Documents"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Fetch Vendor e-invoice"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -667,66 +1074,96 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Fetch vendor e-Invoice data for this return period"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__fetching
+msgid "Fetching"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Fetching IRN details failed with error(s):"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Fetching List of e-invoice..."
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Fetching complete. %s bills have been matched or created."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__field_name
-msgid "Field Name"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "File generation is in progress on the GST portal. Auto retry in 10 minutes."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__filed
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr3b_status__filed
-msgid "Filed"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/res_company.py:0
+msgid "First enable GST e-Filing feature from configuration for company %s."
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "First setup GST user name and validate using OTP from configuration"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_follower_ids
-msgid "Followers"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_partner_ids
-msgid "Followers (Partners)"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__activity_type_icon
-msgid "Font awesome icon e.g. fa-tasks"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Fiscal Year Reversed Move"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "For Journal Entries"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr_b2b_regular
+msgid ""
+"For taxable outward supplies in table 4 other than table 6 - B2B Regular"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr_b2b_reverse_charge
+msgid ""
+"For taxable outward supplies in table 4 other than table 6 - B2B Reverse "
+"charge"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr_sez_wop
+msgid "For taxable outward supplies in table 6B - SEZWOP"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr_sez_wp
+msgid "For taxable outward supplies in table 6B - SEZWP"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_cdnr_de
+msgid "For taxable outward supplies in table 6C - DE"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a
+msgid "From a supplier under composition scheme, Exempt and Nil rated supply"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -737,15 +1174,9 @@ msgstr ""
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_gst_efiling_feature_enabled
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_gst_efiling_feature_enabled
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__l10n_in_gst_efiling_feature_enabled
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__l10n_in_gst_efiling_feature
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__l10n_in_gst_efiling_feature
 msgid "GST E-Filing & Matching Feature"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "GST Filing"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -755,23 +1186,9 @@ msgid "GST Logout Failed"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.actions.act_window,help:l10n_in_reports.l10n_in_gst_return_period_action
-msgid "GST Return Filing"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-#: model:ir.actions.act_window,name:l10n_in_reports.l10n_in_gst_return_period_action
-#: model:ir.model,name:l10n_in_reports.model_l10n_in_gst_return_period
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_gst_return_period_id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_gst_return_period_id
-msgid "GST Return Period"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.ui.menu,name:l10n_in_reports.gst_return_period_menu
-msgid "GST Return Periods"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_account_return_id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_account_return_id
+msgid "GST Tax Return"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -791,13 +1208,8 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "GST Unit main company is different than this period company."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__tax_unit_id
-msgid "GST Units"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -816,32 +1228,31 @@ msgid "GST portal validation."
 msgstr ""
 
 #. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid ""
-"GST return period already exists for %(period)s, but it's not associated "
-"with the relevant tax unit."
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__l10n_in_gstr_gst_username
 msgid "GST username"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:ir.model,name:l10n_in_reports.model_l10n_in_gstr_document_summary_line
+msgid "GSTR Document Summary Line"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_gstr_document_summary_line_search
+msgid "GSTR Document Summary Lines"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report,name:l10n_in_reports.account_report_gstr1
+#: model:account.return.type,name:l10n_in_reports.in_gstr1_return_type
 #: model:ir.ui.menu,name:l10n_in_reports.menu_account_report_gstr1
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
 msgid "GSTR-1"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_base_value
-msgid "GSTR-1 Base Value"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+#: model:mail.activity.type,name:l10n_in_reports.mail_activity_type_gstr1_errors
 msgid "GSTR-1 Errors"
 msgstr ""
 
@@ -852,13 +1263,8 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "GSTR-1 Processed with Error: %s"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "GSTR-1 Report"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -868,29 +1274,41 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "GSTR-1 Send data"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr_reference
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr_reference
 msgid "GSTR-1 Submit Reference"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "GSTR-1 Successfully Sent"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:mail.activity.type,summary:l10n_in_reports.mail_activity_type_gstr1_exception_to_be_sent
-msgid "GSTR-1 exception sent to the responsible user of the journal entry"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"GSTR-1 check status failed: GST token expired or missing, Please regenerate "
+"it by verifying GST OTP."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "GSTR-1:"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "GSTR-1 return has been reset to new state."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"GSTR-1 submission failed:  GST token expired or missing, Please regenerate "
+"it by verifying GST OTP."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -899,34 +1317,52 @@ msgid "GSTR-2 Bills not in Odoo"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_kanban_view
+#: model:account.report,name:l10n_in_reports.account_report_gstr2b
+#: model:account.return.type,name:l10n_in_reports.in_gstr2b_return_type
+#: model:ir.ui.menu,name:l10n_in_reports.menu_account_report_gstr2b
 msgid "GSTR-2B"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_base_value
-msgid "GSTR-2B Base Value"
+#: model:ir.actions.client,name:l10n_in_reports.action_account_report_gstr2b
+msgid "GSTR-2B Purchase Report"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_gstr2b_reconciliation_status
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_gstr2b_reconciliation_status
 msgid "GSTR-2B Reconciliation"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "GSTR-2B:"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr2b_status
+msgid "GSTR-2B Status"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "GSTR-3 Report"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"GSTR-2B data fetching failed: GST token expired or missing, Please "
+"regenerate it by verifying GST OTP."
 msgstr ""
 
 #. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "GSTR-2B return has been reset to fetch state."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "GSTR-2B return has been reset to new state."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report,name:l10n_in_reports.account_report_gstr3b
 #: model:ir.ui.menu,name:l10n_in_reports.menu_account_report_gstr3b
 msgid "GSTR-3B"
 msgstr ""
@@ -937,12 +1373,7 @@ msgid "GSTR-3B Report"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr3b_status
-msgid "GSTR-3B Status"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_json_from_portal_ids
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr2b_json_ids
 msgid "GSTR2B JSON from portal"
 msgstr ""
 
@@ -952,13 +1383,13 @@ msgid "GSTR2B status"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Generate"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_batch_payment_form_inherit_l10n_in_enet_batch_payment
+msgid "Generate Pay Order"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_batch_payment_form_inherit_l10n_in_enet_batch_payment
-msgid "Generate Pay Order"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Generate XLSX"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -968,45 +1399,86 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
 msgid "Go to Company"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Go to Scheduled Action"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
+msgid "Go to Tax units"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/res_company.py:0
+msgid "Go to configuration"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Go to the configuration panel"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_blocking_level
-msgid "Gstr1 Blocking Level"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_30
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_30
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_30
+msgid "Goa"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_spreadsheet_id
-msgid "Gstr1 Spreadsheet"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_imp_goods
+msgid "Goods/Capital goods received from overseas"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr1_status
-msgid "Gstr1 Status"
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_gross_profit0
+msgid "Gross Profit"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_blocking_level
-msgid "Gstr2B Blocking Level"
+#: model:ir.model,name:l10n_in_reports.model_l10n_in_gstr1_submission_wizard
+msgid "Gstr1 Submission Wizard"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr3b_closing_entry
-msgid "Gstr3B Closing Entry"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_24
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_24
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_24
+msgid "Gujarat"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_hsn_b2b
+msgid "HSN B2B"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_hsn_b2c
+msgid "HSN B2C"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "HSN for Service type product shall start with 99,"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"HSN for Service type product shall start with 99, Certain Product Lines do "
+"not comply."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1017,8 +1489,28 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"HSN for other than Service type product shall not start with 99, Certain "
+"Product Lines do not comply."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_hsn
+msgid "HSN summary of inward supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
 msgid "HSN: %s"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_06
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_06
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_06
+msgid "Haryana"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1027,33 +1519,55 @@ msgid "Has Enet Payment Method"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__has_message
-msgid "Has Message"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__include_header
+msgid "Header Included In Csv?"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_02
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_02
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_02
+msgid "Himachal Pradesh"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_account_chart_template__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_journal__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_payment_method__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_report__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return_check__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return_type__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_ir_attachment__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__id
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_report_handler__id
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_reports_balance_sheet_report_handler__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_company__id
 #: model:ir.model.fields,field_description:l10n_in_reports.field_res_config_settings__id
 msgid "ID"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_igst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr2b_igst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_igst_column
+msgid "IGST"
+msgstr ""
+
+#. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "IGST is not applicable for"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "IGST is not applicable for Intra State Transactions."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1069,34 +1583,13 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "IRN Processing is running in the background."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__irn_status
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_irn_status
 msgid "IRN Status"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_exception_icon
-msgid "Icon"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__activity_exception_icon
-msgid "Icon to indicate an exception activity."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__message_needaction
-msgid "If checked, new messages require your attention."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__message_has_error
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__message_has_sms_error
-msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1120,13 +1613,18 @@ msgid "Image 512"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "In case of issues"
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_totalincome0
+msgid "Income"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "In case of issues re-fetch or re-match"
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return_type__states_workflow__l10n_in_gstr1_status
+msgid "India GSTR-1"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return_type__states_workflow__l10n_in_gstr2b_status
+msgid "India GSTR-2B"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1140,12 +1638,12 @@ msgid "Indian Accounting: Refresh GST Token"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.actions.server,name:l10n_in_reports.ir_cron_to_check_gstr1_status_ir_actions_server
+#: model:ir.actions.server,name:l10n_in_reports.ir_cron_to_check_l10n_in_gstr1_status_ir_actions_server
 msgid "Indian Accounting: To Check Status"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.actions.server,name:l10n_in_reports.ir_cron_to_send_gstr1_data_ir_actions_server
+#: model:ir.actions.server,name:l10n_in_reports.ir_cron_to_send_l10n_in_gstr1_data_ir_actions_server
 msgid "Indian Accounting: To Send Json"
 msgstr ""
 
@@ -1170,11 +1668,6 @@ msgid "Indian Accounting; Match GST-2 Data"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model,name:l10n_in_reports.model_l10n_in_reports_balance_sheet_report_handler
-msgid "Indian Custom Handler for Generic Balance Sheet"
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_l10n_in_report_handler
 msgid "Indian Tax Report Custom Handler"
 msgstr ""
@@ -1183,6 +1676,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_bank_statement_line__l10n_in_transaction_type
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_move__l10n_in_transaction_type
 msgid "Indian Transaction Type"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__instructions
+msgid "Instructions"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1197,6 +1695,17 @@ msgid "Inter State Transactions"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a_1
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b_1
+msgid "Inter-State supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_1_a
+msgid "Interest (Manual)"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_move__l10n_in_transaction_type__intra_state
 msgid "Intra State"
 msgstr ""
@@ -1208,9 +1717,22 @@ msgid "Intra State Transactions"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a_2
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b_2
+msgid "Intra-State supplies"
+msgstr ""
+
+#. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Invalid HSN Code"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Invalid HSN Codes"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1221,24 +1743,48 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
+msgid "Invalid OTP. Please enter a valid 6-digit OTP"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Invalid Product Type"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Invalid UQC Code"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Invalid UQC Codes"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/gstr_document_summary.py:0
+msgid ""
+"Invalid format for '%s'. It must be between 1-16 characters, it can contain "
+"only letters, digits, '/', '\\', -, and should have at least one non-zero "
+"letter or digit."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Invalid tax for Inter State Transaction"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Invalid tax for Intra State Transaction"
 msgstr ""
@@ -1249,24 +1795,26 @@ msgid "Irn number must be unique for bills per company."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_is_follower
-msgid "Is Follower"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__list_of_irn_json_attachment_ids
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_irn_json_attachment_ids
 msgid "JSON with list of IRNs"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__01
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__01
-msgid "January"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_01
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_01
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_01
+msgid "Jammu and Kashmir"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_20
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_20
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_20
+msgid "Jharkhand"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model,name:l10n_in_reports.model_account_journal
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__journal_id
 msgid "Journal"
 msgstr ""
 
@@ -1277,33 +1825,41 @@ msgid "Journal Entries"
 msgstr ""
 
 #. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 #: model:ir.model,name:l10n_in_reports.model_account_move
 msgid "Journal Entry"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "Json file that send to Government is attached here"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__07
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__07
-msgid "July"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__06
-msgid "June"
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Journal Item"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid ""
-"Kindly enable the GST e-filing feature before attempting to create a GST "
-"return period."
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Journal Items"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_29
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_29
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_29
+msgid "Karnataka"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_32
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_32
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_32
+msgid "Kerala"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_doc_summary_line_ids
+msgid "L10N In Doc Summary Line"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1312,24 +1868,51 @@ msgid "L10N In Gstr Gst Token Valid"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__label
-msgid "Label"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr1_blocking_level
+msgid "L10N In Gstr1 Blocking Level"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr1_status
+msgid "L10N In Gstr1 Status"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_gstr2b_blocking_level
+msgid "L10N In Gstr2B Blocking Level"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_31
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_31
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_31
+msgid "Lakshadweep"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_irn_fetch_date
+msgid "Last IRN Fetch Datetime"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__write_uid
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__write_uid
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__write_uid
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__write_uid
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_enet_bank_template__write_date
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__write_date
 #: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_otp_validation__write_date
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__write_date
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_1_b
+msgid "Late Fees (Manual)"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1341,6 +1924,27 @@ msgstr ""
 #. module: l10n_in_reports
 #: model_terms:ir.ui.view,arch_db:l10n_in_reports.res_config_settings_view_form_inherit_l10n_in_gstr
 msgid "Logout from GST Portal"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_23
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_23
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_23
+msgid "Madhya Pradesh"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_27
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_27
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_27
+msgid "Maharashtra"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_14
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_14
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_14
+msgid "Manipur"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1360,119 +1964,97 @@ msgid "Manually matched with GSTR-2B bills:"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__03
-msgid "March"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Mark Completed"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
 msgid "Mark as Filed"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Match Vendor Bills"
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__matched
+msgid "Match"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__fully_matched
-msgid "Matched"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__05
-msgid "May"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__company_ids
-msgid "Members of this unit"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_has_error
-msgid "Message Delivery error"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_ids
-msgid "Messages"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_17
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_17
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_17
+msgid "Meghalaya"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Missing Document Summary"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Missing HSN Codes"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
 msgid "Missing HSN for Journal Items"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__month
-msgid "Month"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_15
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_15
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_15
+msgid "Mizoram"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__periodicity__monthly
-msgid "Monthly"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_13
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_13
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_13
+msgid "Nagaland"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__my_activity_date_deadline
-msgid "My Activity Deadline"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__nature_of_document
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_gstr_document_summary_line_search
+msgid "Nature of Document"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Need help? Checkout our tutorial"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__net_issued
+msgid "Net Issued"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_date_deadline
-msgid "Next Activity Deadline"
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_net_profit0
+msgid "Net Profit"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_summary
-msgid "Next Activity Summary"
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__new
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__new
+msgid "New"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_type_id
-msgid "Next Activity Type"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_nil_rated
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_nil
+msgid "Nil Rated"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr3b_status__not_filed
-msgid "Not Filed"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_non_gst
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_nongst
+msgid "Non GST"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__not_received
-msgid "Not Received"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__11
-msgid "November"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_needaction_counter
-msgid "Number of Actions"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_has_error_counter
-msgid "Number of errors"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__message_needaction_counter
-msgid "Number of messages requiring action"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__message_has_error_counter
-msgid "Number of messages with delivery error"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b
+msgid "Non GST supply"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1482,15 +2064,32 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 #: code:addons/l10n_in_reports/wizard/gst_otp_validation.py:0
 msgid "OTP Request"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__10
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__quarter__10
-msgid "October"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Only an Accounting Administrator can reset a tax return"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_opening0
+msgid "Opening Stock"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_income0
+msgid "Operating Income"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_21
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_21
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_21
+msgid "Orissa"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1500,14 +2099,50 @@ msgid "Other Charges"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_financial_report_in_other_income0
+msgid "Other Income"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_97
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_97
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_97
+msgid "Other Territory"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "PAN"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "PDF file for GSTR-1 return"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "PDF file for GSTR-1 return is attached here"
+msgstr ""
+
+#. module: l10n_in_reports
 #: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_move__l10n_in_gstr2b_reconciliation_status__partially_matched
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__partially_matched
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__partially_matched
 msgid "Partially Matched"
 msgstr ""
 
 #. module: l10n_in_reports
 #: model:ir.model.fields,field_description:l10n_in_reports.field_account_batch_payment__l10n_in_pay_order_attachment_ids
 msgid "Pay Order Attachments"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Payment Date"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1544,16 +2179,6 @@ msgid "Pending"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__name
-msgid "Period"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__periodicity
-msgid "Periodicity"
-msgstr ""
-
-#. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_batch_payment.py:0
 msgid ""
@@ -1569,8 +2194,8 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "Please set company GSTIN"
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Please set a valid GST number on company."
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1580,19 +2205,53 @@ msgid "Please, Scan again!"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__irn_status__process_with_error
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_irn_status__process_with_error
 msgid "Process With Error"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Processing is running in the background. You can continue your work."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Push to GSTN"
+#: model:account.report,name:l10n_in_reports.profit_and_loss
+msgid "Profit and Loss"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_34
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_34
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_34
+msgid "Puducherry"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_03
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_03
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_03
+msgid "Punjab"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2b
+msgid "Purchase Received From Registered Taxpayers"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_b2c
+msgid "Purchase Received From Unregistered Taxpayers"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_imp
+msgid "Purchase received from overseas"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.gtr1_submission_wizard_form
+msgid "Push Data"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1602,40 +2261,37 @@ msgid "QRcode"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__quarter
-msgid "Quarter"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_08
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_08
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_08
+msgid "Rajasthan"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__periodicity__trimester
-msgid "Quarterly"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_b2cl
+msgid "Rate wise - B2CL"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Re-Initiate"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Re-Push to GSTN"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_search
-msgid "Recent Period"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Re-Match"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Reconciled Bill"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Regenerate"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "Regenerate Document Summary"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1644,24 +2300,26 @@ msgid "Reset Manual Match"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__activity_user_id
-msgid "Responsible User"
+#: model:mail.activity.type,summary:l10n_in_reports.mail_activity_type_gstr1_errors
+#: model:mail.activity.type,summary:l10n_in_reports.mail_activity_type_gstr1_exception_to_be_sent
+msgid "Resolve GSTR-1 Error"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__return_period_month_year
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr1_submission_wizard__return_id
+msgid "Return"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return__l10n_in_month_year
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__return_period_id
 msgid "Return Period"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_tree_view
-msgid "Return Periods"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.constraint,message:l10n_in_reports.constraint_l10n_in_gst_return_period_unique_period
-msgid "Return period must be unique."
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__reviewed
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_status__reviewed
+msgid "Review"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1677,8 +2335,16 @@ msgid "SGST and CGST are not applicable for"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__message_has_sms_error
-msgid "SMS Delivery error"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "SGST and CGST are not applicable for Inter State Transactions."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr1_sgst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr2b_sgst_column
+#: model:account.report.column,name:l10n_in_reports.account_report_gstr3b_sgst_column
+msgid "SGST/UTGST"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1717,8 +2383,19 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Scheduled Action"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Section %(section)s is unknown"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__sending
+msgid "Send"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1727,23 +2404,26 @@ msgid "Send OTP"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__sending
-msgid "Sending"
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__sending_error
+msgid "Sending Error"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__sent
-msgid "Sent"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_imp_services
+msgid "Services received from overseas"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__month__09
-msgid "September"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_11
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_11
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_11
+msgid "Sikkim"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_enet_template__sequence
-msgid "Sequence"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Solve GSTR-1 Error"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1754,7 +2434,15 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"Some Credit Notes for invoices issued during financial year shouldn't be in GSTR-1 after November 30th,\n"
+"so it's advisable to remove the tax from it."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "Somehow this IRN attachment is not JSON. Please attempt to retrieve the data"
 " from the portal again."
@@ -1762,19 +2450,19 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Somehow, the attached GSTR2B file is not in JSON format."
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Something is wrong in response. Please contact support"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "Something is wrong in response. Please contact support.\n"
 " response: %(response)s"
@@ -1782,53 +2470,128 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "Something is wrong in response. Please contact support. \n"
 " response: %(response)s"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__start_date
-msgid "Start Date"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_sezwp
+msgid "Special economic zone with payment - sezwp"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__gstr2b_status
-msgid "Status"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__activity_state
-msgid ""
-"Status based on activities\n"
-"Overdue: Due date is already passed\n"
-"Today: Activity date is today\n"
-"Planned: Future activities."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.actions.act_window,help:l10n_in_reports.l10n_in_gst_return_period_action
-msgid ""
-"Step-1: Send GSTR-1\n"
-"                        1.Verify the GSTR-1 Report\n"
-"                        2.Then Push to GSTN\n"
-"                        3.Mark as Filed\n"
-"\n"
-"                    Step-2: Receive GSTR-2B\n"
-"                        1.Fetch GSTR-2B Summary  \n"
-"                        2.Match Vendor Bill\n"
-"\n"
-"                    Step-3: Submit GSTR-3\n"
-"                        1.Verify the GSTR-3 Report\n"
-"                        2.Validate GSTR-3 in GST Portal\n"
-"                        3.Update &amp; Post closing entry"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr1_sezwop
+msgid "Special economic zone without payment - sezwop"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Spreadsheet for GSTR-1 return is attached here"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__serial_from
+msgid "Sr. No. From"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__serial_to
+msgid "Sr. No. To"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_account_return_type__states_workflow
+msgid "States"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Status of GSTR-2B must be fully matched or partially matched"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__sent
+msgid "Submit"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp
+msgid "Supplies made to Composition Taxable Persons"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin
+msgid "Supplies made to UIN holders"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur
+msgid "Supplies made to Unregistered Persons"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_nil_exempt_nongst
+msgid ""
+"Supplies received from compounding dealer & exempt/nil/non GST Supplies"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TCS Credit Amount"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TCS Debit Amount"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TCS Rate"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TDS Credit Amount"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TDS Debit Amount"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "TDS Rate"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "TO check status please push the GSTN"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_a_total
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_4_b_total
+msgid "TOTAL"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_33
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_33
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_33
+msgid "Tamil Nadu"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1838,8 +2601,15 @@ msgid "Tap to scan the Bill"
 msgstr ""
 
 #. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_36
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_36
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_36
+msgid "Telangana"
+msgstr ""
+
+#. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The GSTIN as per GSTR-2B is %s"
 msgstr ""
 
@@ -1852,7 +2622,7 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "The NIC portal connection has expired. To re-initiate the connection, you "
 "can send an OTP request."
@@ -1860,66 +2630,58 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The bill date as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The bill type as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The place of supply as GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The reference number as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The reference number is the same as on other bills: %(other_bills)s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "The total amount as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "The value [%(year)s] should be year"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Then,"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Then, Push to GSTN and"
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"There are no transactions available for the current period to send for "
+"GSTR-1 filing."
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/account_move.py:0
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "This bill has been marked as canceled based on the e-invoice status."
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "This bill was created from the GST portal because no existing invoice "
 "matched the provided details."
@@ -1927,7 +2689,7 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "This bill was created from the GSTR-2B reconciliation because no existing "
 "bill matched with the given details."
@@ -1935,19 +2697,13 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "This bill was found in the GST portal while retrieving the list of IRNs."
 msgstr ""
 
 #. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "To Create Return Period Periodicity should be Monthly or Quarterly"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__irn_status__to_download
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_irn_status__to_download
 msgid "To Download"
 msgstr ""
 
@@ -1960,24 +2716,53 @@ msgid ""
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__irn_status__to_process
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_irn_status__to_process
 msgid "To Process"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__to_send
-msgid "To Send"
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__total_cancelled
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_gstr_document_summary_line_tree
+msgid "Total Cancelled"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gstr_document_summary_line__total_issued
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_gstr_document_summary_line_tree
+msgid "Total Issued"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_gstr_document_summary_line_tree
+msgid "Total Net Issued"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Total Taxable amount as per GSTR-2B is %s"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__activity_exception_decoration
-msgid "Type of the exception activity on record."
+#: model:ir.model.constraint,message:l10n_in_reports.constraint_l10n_in_gstr_document_summary_line_check_total_cancell_ab2ce8ad
+msgid "Total cancelled cannot be negative."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.constraint,message:l10n_in_reports.constraint_l10n_in_gstr_document_summary_line_check_cancel_below_issued
+msgid "Total cancelled cannot exceed total issued."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:ir.model.constraint,message:l10n_in_reports.constraint_l10n_in_gstr_document_summary_line_check_total_issued_positive
+msgid "Total issued cannot be negative."
+msgstr ""
+
+#. module: l10n_in_reports
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_16
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_16
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_16
+msgid "Tripura"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -1988,15 +2773,28 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "UQC code must match the Indian GST standards."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "Unable to connect to the GST service.The web service may be temporary down. "
 "Please try again in a moment."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Update &amp; Post Closing Entry:"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
+msgid "Unlinked Credit Notes"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Unlinked Unregistered Credit Notes"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2006,13 +2804,23 @@ msgid "Use QR code scanner attached to computer or scan using mobile camera."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_validate_otp_gstr
-msgid "Validate"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_09
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_09
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_09
+msgid "Uttar Pradesh"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Validate GSTR-3 in GST Portal"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_05
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_05
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_05
+msgid "Uttarakhand"
+msgstr ""
+
+#. module: l10n_in_reports
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.view_validate_otp_gstr
+msgid "Validate"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2021,81 +2829,57 @@ msgid "Validate OTP"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "Verify the"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "View Bills"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "View"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "View Reconciled Bills"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_status__waiting_reception
-msgid "Waiting Reception"
+#: model_terms:ir.ui.view,arch_db:l10n_in_reports.account_return_kanban_view
+msgid "View document summary"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid "Waiting for GSTR-1 processing, try in a few minutes"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_status__waiting_for_status
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_status__waiting_for_status
 msgid "Waiting for Status"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr1_blocking_level__warning
-#: model:ir.model.fields.selection,name:l10n_in_reports.selection__l10n_in_gst_return_period__gstr2b_blocking_level__warning
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr1_blocking_level__warning
+#: model:ir.model.fields.selection,name:l10n_in_reports.selection__account_return__l10n_in_gstr2b_blocking_level__warning
 msgid "Warning"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
+#: code:addons/l10n_in_reports/models/account_return.py:0
 msgid ""
 "We have found the same reference in other bills. For more details, please "
 "check the message in Chatter."
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__website_message_ids
-msgid "Website Messages"
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_cp_19
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_uin_19
+#: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_3_2_ur_19
+msgid "West Bengal"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model:ir.model.fields,help:l10n_in_reports.field_l10n_in_gst_return_period__website_message_ids
-msgid "Website communication history"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model:ir.model.fields,field_description:l10n_in_reports.field_l10n_in_gst_return_period__year
-msgid "Year"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "Wrong CGST/SGST on Inter-State Transactions"
 msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
 #: code:addons/l10n_in_reports/models/ir_attachment.py:0
 msgid "You can't unlink an attachment that you received from the government"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "You cannot change GST filing period after sending/receiving GSTR data"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/gst_return_period.py:0
-msgid "You cannot delete GST Return Period after sending/receiving GSTR data"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2114,6 +2898,14 @@ msgstr ""
 
 #. module: l10n_in_reports
 #. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid ""
+"You cannot lock this return as there are previous returns that are waiting "
+"to be posted."
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-python
 #: code:addons/l10n_in_reports/models/res_config_settings.py:0
 msgid "You have already logged out from the GST portal."
 msgstr ""
@@ -2122,28 +2914,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_reports/models/res_config_settings.py:0
 msgid "You have been successfully logged out from the GST portal."
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "and"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid ""
-"and\n"
-"                                        View"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "and Check Status"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "checkout"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2177,20 +2947,19 @@ msgstr ""
 #. module: l10n_in_reports
 #. odoo-javascript
 #: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
+msgid ""
+"issued without reference to an invoice are reported in the Unregistered "
+"Credit Note section"
+msgstr ""
+
+#. module: l10n_in_reports
+#. odoo-javascript
+#: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
 msgid "must match the Indian GST standards"
 msgstr ""
 
 #. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "or"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "re-fetch"
-msgstr ""
-
-#. module: l10n_in_reports
-#: model_terms:ir.ui.view,arch_db:l10n_in_reports.l10n_in_gst_return_period_form_view
-msgid "re-match"
+#. odoo-python
+#: code:addons/l10n_in_reports/models/account_return.py:0
+msgid "spreadsheet for GSTR-1 return"
 msgstr ""

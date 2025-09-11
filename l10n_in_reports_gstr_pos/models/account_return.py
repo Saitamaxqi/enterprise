@@ -8,7 +8,7 @@ class AccountReturn(models.Model):
     # GSTR-1
     # ===============================
 
-    def _get_gstr1_hsn_json(self, journal_items, tax_details_by_move):
+    def _get_l10n_in_gstr1_hsn_json(self, journal_items, tax_details_by_move):
         """
             We need to show all sold products by product HSN code and in the journal items for POS, it is grouped by tax and sign
             So we check which pos order lines match with which grouped journal items so get a ratio by HSN code + tax rate.
@@ -94,12 +94,12 @@ class AccountReturn(models.Model):
         pos_move_ids = pos_journal_items.move_id
         pos_move_with_hsn = pos_move_ids.filtered(lambda m: any(line.display_type == 'product' and line.l10n_in_hsn_code for line in m.line_ids))
         pos_move_ids -= pos_move_with_hsn
-        hsn_json = super()._get_gstr1_hsn_json(journal_items - pos_move_ids.line_ids, tax_details_by_move)
+        hsn_json = super()._get_l10n_in_gstr1_hsn_json(journal_items - pos_move_ids.line_ids, tax_details_by_move)
         pos_orders = pos_move_ids.pos_session_ids.order_ids.filtered(lambda l: not l.is_invoiced or l.reversed_move_ids)
         pos_order_lines = self.env['pos.order.line'].browse(pos_orders.lines.ids)
         pos_order_lines.fetch(['product_id', 'product_uom_id'])
         details_pos_lines_by_move = _set_details_pos_lines(pos_order_lines)
-        hsn_new_schema_apply_date = self._get_hsn_new_schema_apply_date()
+        hsn_new_schema_apply_date = self._get_l10n_in_hsn_new_schema_apply_date()
         hsn_section = 'data' if self.date_from < hsn_new_schema_apply_date else 'hsn_b2c'
         hsn_json.setdefault(hsn_section, {})
         for move_id in pos_journal_items.mapped("move_id"):

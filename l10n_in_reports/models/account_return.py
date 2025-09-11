@@ -208,7 +208,7 @@ class AccountReturn(models.Model):
                 period.l10n_in_month_year = False
 
     @api.model
-    def _check_config(self, company=False):
+    def _l10n_in_check_config(self, company=False):
         company = company or self.company_id
         action = False
         button_name = msg = ""
@@ -258,7 +258,7 @@ class AccountReturn(models.Model):
             # If token is just refresh in last 30 min then no need to refresh it again
             if company._is_l10n_in_gstr_token_valid() and (
                 company.l10n_in_gstr_gst_token_validity - fields.Datetime.now()) > timedelta(minutes=30):
-                response = self._refresh_token_request(company)
+                response = self._l10n_in_refresh_gstr_token_request(company)
                 if response.get('error'):
                     message = ''.join([
                         f"<p><b>[{error.get('code', '')}]</b> - <b>{error.get('message', '')}</b></p>"
@@ -270,7 +270,7 @@ class AccountReturn(models.Model):
                     "l10n_in_gstr_gst_token_validity": fields.Datetime.now() + timedelta(hours=6)
                 })
 
-    def _get_error_level(self, error_codes):
+    def _get_l10n_in_error_level(self, error_codes):
         blocking_level = "error"
         if "RTN_24" in error_codes:
             # File Generation is in progress, please try after sometime.
@@ -352,7 +352,7 @@ class AccountReturn(models.Model):
             })
         return tax_vals_map
 
-    def _get_hsn_new_schema_apply_date(self):
+    def _get_l10n_in_hsn_new_schema_apply_date(self):
         # TODO: Remove this fallback once the government finalizes the official HSN schema date.
         fallback_value = date(2025, 5, 1)
         try:
@@ -361,7 +361,7 @@ class AccountReturn(models.Model):
         except (ValueError, TypeError):
             return fallback_value
 
-    def _get_gstr1_hsn_json(self, journal_items, tax_details_by_move):
+    def _get_l10n_in_gstr1_hsn_json(self, journal_items, tax_details_by_move):
         # TO OVERRIDE on Point of sale for get details by product
         """
             This method is return hsn json as below
@@ -383,7 +383,7 @@ class AccountReturn(models.Model):
         uoms = self.env['uom.uom'].browse(journal_items.product_uom_id.ids)
         uoms.fetch(['l10n_in_code'])
         hsn_json = {}
-        hsn_new_schema_apply_date = self._get_hsn_new_schema_apply_date()
+        hsn_new_schema_apply_date = self._get_l10n_in_hsn_new_schema_apply_date()
         if self.date_from < hsn_new_schema_apply_date:
             hsn_json = {'data': {}}
         else:
@@ -428,11 +428,11 @@ class AccountReturn(models.Model):
                 hsn_data['csamt'] += line_tax_details.get('cess', 0.00) * -1
         return hsn_json
 
-    def is_einvoice_skippable(self, move_id):
+    def _is_l10n_in_einvoice_skippable(self, move_id):
         # OVERRIDE
         pass
 
-    def _get_doc_issue_json(self):
+    def _get_l10n_in_doc_issue_json(self):
         """
         This method returns the doc_issue JSON (Table 13) as below.
         Here, data is grouped by nature of document and serial range.
@@ -472,7 +472,7 @@ class AccountReturn(models.Model):
         ]
         return {'doc_det': doc_det}
 
-    def _get_gstr1_json(self):
+    def _get_l10n_in_gstr1_json(self):
 
         def _process_hsn_data(hsn_data):
             """Helper function to process HSN data with rounding."""
@@ -517,7 +517,7 @@ class AccountReturn(models.Model):
             for partner, items in journal_items.grouped(lambda l: l.move_id.commercial_partner_id).items():
                 inv_json_list = []
                 for move_id in items.mapped('move_id'):
-                    if self.is_einvoice_skippable(move_id):
+                    if self._is_l10n_in_einvoice_skippable(move_id):
                         continue
                     lines_json = {}
                     is_reverse_charge = False
@@ -702,7 +702,7 @@ class AccountReturn(models.Model):
             for partner, items in journal_items.grouped(lambda l: l.move_id.commercial_partner_id).items():
                 inv_json_list = []
                 for move_id in items.mapped('move_id'):
-                    if self.is_einvoice_skippable(move_id):
+                    if self._is_l10n_in_einvoice_skippable(move_id):
                         continue
                     lines_json = {}
                     is_reverse_charge = False
@@ -846,7 +846,7 @@ class AccountReturn(models.Model):
             """
             export_json = {}
             for move_id in journal_items.mapped('move_id'):
-                if self.is_einvoice_skippable(move_id):
+                if self._is_l10n_in_einvoice_skippable(move_id):
                     continue
                 tax_details = tax_details_by_move.get(move_id)
                 lines_json = {}
@@ -902,7 +902,7 @@ class AccountReturn(models.Model):
             """
             nil_json = {}
             for move_id in journal_items.mapped('move_id'):
-                if self.is_einvoice_skippable(move_id):
+                if self._is_l10n_in_einvoice_skippable(move_id):
                     continue
                 # We sum value of invoice and credit note
                 # so we need positive value for invoice and nagative for credit note
@@ -1028,7 +1028,7 @@ class AccountReturn(models.Model):
         AccountMoveLine = self.env['account.move.line'].sudo()
         AccountMove = self.env["account.move"].sudo()
         tax_details_by_move = self._get_tax_details(self._get_section_domain('hsn'))
-        hsn_json = self._get_gstr1_hsn_json(AccountMoveLine.search(self._get_section_domain('hsn')), tax_details_by_move)
+        hsn_json = self._get_l10n_in_gstr1_hsn_json(AccountMoveLine.search(self._get_section_domain('hsn')), tax_details_by_move)
         nil_json = _get_nil_json(AccountMoveLine.search(self._get_section_domain('nil')))
         return_json = {
             'gstin': self.tax_unit_id.vat or self.company_id.vat,
@@ -1039,7 +1039,7 @@ class AccountReturn(models.Model):
             'cdnr': _get_cdnr_json(AccountMoveLine.search(self._get_section_domain('cdnr'))),
             'cdnur': _get_cdnur_json(AccountMoveLine.search(self._get_section_domain('cdnur'))),
             'exp': _get_exp_json(AccountMoveLine.search(self._get_section_domain('exp'))),
-            'doc_issue': self._get_doc_issue_json(),
+            'doc_issue': self._get_l10n_in_doc_issue_json(),
         }
         if nil_json:
             return_json.update({'nil': nil_json})
@@ -1050,7 +1050,7 @@ class AccountReturn(models.Model):
             }
         return return_json
 
-    def button_send_gstr1(self):
+    def action_l10n_in_send_gstr1(self):
         """ checks the validations and trigger the cron to send the GSTR-1 data
         """
         cron = self.env.ref('l10n_in_reports.ir_cron_to_send_gstr1_data')
@@ -1069,7 +1069,7 @@ class AccountReturn(models.Model):
             else:
                 raise ValidationError(_("Can not send GSTR-1 data because the required scheduled action '%s' is not active.\nPlease contact your system administrator.", cron_sudo.cron_name))
 
-        self._check_config()
+        self._l10n_in_check_config()
         if not self.env['account.move.line'].sudo().search_count(self._get_section_domain('hsn'), limit=1):
             raise ValidationError(_("There are no transactions available for the current period to send for GSTR-1 filing."))
         self.sudo().write({
@@ -1099,7 +1099,7 @@ class AccountReturn(models.Model):
         ])
         process_gstr1 = gstr1_sending[:job_count] if job_count else gstr1_sending
         for return_period in process_gstr1:
-            return_period.send_gstr1()
+            return_period._l10n_in_send_gstr1()
             if len(process_gstr1) > 1:
                 self.env.cr.commit()
         if process_gstr1:
@@ -1107,7 +1107,7 @@ class AccountReturn(models.Model):
         if len(process_gstr1) != len(gstr1_sending):
             self.env.ref("l10n_in_reports.ir_cron_to_send_gstr1_data")._trigger()
 
-    def send_gstr1(self):
+    def _l10n_in_send_gstr1(self):
         """Send GSTR-1 data to the government portal.
         This method prepares the GSTR-1 JSON payload, attaches it to the return record,
         and sends it to the government portal.
@@ -1121,7 +1121,7 @@ class AccountReturn(models.Model):
             self.message_post(body=msg)
             return
         error_msg = ""
-        json_payload = self._get_gstr1_json()
+        json_payload = self._get_l10n_in_gstr1_json()
         self.sudo().message_post(
             subject=_("GSTR-1 Send data"),
             body=_("Attached JSON file contains the submitted GSTR-1 data."),
@@ -1138,7 +1138,7 @@ class AccountReturn(models.Model):
             attachments=[(filename, pdf_base64)],
         )
 
-        response = self._send_gstr1(
+        response = self._l10n_in_send_gstr1_request(
             company=self.company_id,
             json_payload=json_payload,
             month_year=self.l10n_in_month_year)
@@ -1155,7 +1155,7 @@ class AccountReturn(models.Model):
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
-                "l10n_in_gstr1_blocking_level": self._get_error_level(error_codes),
+                "l10n_in_gstr1_blocking_level": self._get_l10n_in_error_level(error_codes),
                 "state": "sending_error",
             })
         else:
@@ -1174,13 +1174,6 @@ class AccountReturn(models.Model):
                 user_id=advisor_user.id,
                 note=_('Solve GSTR-1 Error')
             )
-
-    def button_check_gstr1_status(self):
-        self.ensure_one()
-        if self.l10n_in_gstr1_status != "waiting_for_status":
-            raise AccessError(_("TO check status please push the GSTN"))
-        self._check_config()
-        self.check_gstr1_status()
 
     def _get_gstr_responsible_activity_and_user(self, act_type_xmlid):
         """
@@ -1213,7 +1206,7 @@ class AccountReturn(models.Model):
 
         return advisor_user
 
-    def check_gstr1_status(self):
+    def check_l10n_in_gstr1_status(self):
         """Check GSTR-1 status and update return record accordingly.
         Following status are handled:
         - P: Processed (success)
@@ -1230,7 +1223,7 @@ class AccountReturn(models.Model):
             self.message_post(body=msg)
             return
         error_msg = ""
-        response = self._get_gstr_status(
+        response = self._l10n_in_get_gstr_status_request(
             company=self.company_id, month_year=self.l10n_in_month_year, reference_id=self.l10n_in_gstr_reference)
 
         if response.get('data'):
@@ -1324,7 +1317,7 @@ class AccountReturn(models.Model):
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
-                "l10n_in_gstr1_blocking_level": self._get_error_level(error_codes),
+                "l10n_in_gstr1_blocking_level": self._get_l10n_in_error_level(error_codes),
             })
         else:
             error_msg = _("Something is wrong in response. Please contact support")
@@ -1341,7 +1334,7 @@ class AccountReturn(models.Model):
             ('company_id.l10n_in_gst_efiling_feature', '=', True),
         ])
         for rtn in sent_rtn:
-            rtn.check_gstr1_status()
+            rtn.check_l10n_in_gstr1_status()
 
     def _get_gst_doc_type_domain(self):
         base_domain = [
@@ -1471,7 +1464,7 @@ class AccountReturn(models.Model):
                 'create': False, 'edit': False, 'delete': False
             })
         return {
-            'name': 'GSTR Document Summary',
+            'name': _("GSTR Document Summary"),
             'type': 'ir.actions.act_window',
             'res_model': 'l10n_in.gstr.document.summary.line',
             'views': [(False, 'list')],
@@ -1503,15 +1496,15 @@ class AccountReturn(models.Model):
             "view_mode": "list,form",
         }
 
-    def action_get_gstr2b_data(self):
-        self._check_config()
+    def action_get_l10n_in_gstr2b_data(self):
+        self._l10n_in_check_config()
         self.sudo().write({
             "state": "fetching",
             "l10n_in_gstr2b_blocking_level": False,
         })
         self.env.ref('l10n_in_reports.ir_cron_auto_sync_gstr2b_data')._trigger()
 
-    def get_gstr2b_data(self):
+    def get_l10n_in_gstr2b_data(self):
         if not self.company_id._is_l10n_in_gstr_token_valid():
             self.sudo().write({
                 "l10n_in_gstr2b_blocking_level": "error",
@@ -1520,7 +1513,7 @@ class AccountReturn(models.Model):
             msg = _("GSTR-2B data fetching failed: GST token expired or missing, Please regenerate it by verifying GST OTP.")
             self.message_post(body=msg)
             return
-        response = self._get_gstr2b_data(company=self.company_id, month_year=self.l10n_in_month_year)
+        response = self._l10n_in_get_gstr2b_data_request(company=self.company_id, month_year=self.l10n_in_month_year)
         if response.get("data"):
             gstr2b_data = response["data"]
             attachment_ids = self.env['ir.attachment'].create({
@@ -1531,7 +1524,7 @@ class AccountReturn(models.Model):
             if gstr2b_data.get("data", {}).get('fc'):
                 number_of_files = gstr2b_data.get("data", {}).get('fc') + 1
                 for file_num in range(1, number_of_files):
-                    sub_response = self._get_gstr2b_data(company=self.company_id, month_year=self.l10n_in_month_year, file_number=file_num)
+                    sub_response = self._l10n_in_get_gstr2b_data_request(company=self.company_id, month_year=self.l10n_in_month_year, file_number=file_num)
                     if not sub_response.get('error'):
                         attachment_ids += self.env['ir.attachment'].create({
                             'name': 'gstr2b_%s.json' % (file_num),
@@ -1549,7 +1542,7 @@ class AccountReturn(models.Model):
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
-                "l10n_in_gstr2b_blocking_level": self._get_error_level(error_codes),
+                "l10n_in_gstr2b_blocking_level": self._get_l10n_in_error_level(error_codes),
                 "state": "error_in_fetching"
             })
             self.message_post(body=error_msg)
@@ -1563,9 +1556,9 @@ class AccountReturn(models.Model):
             ('l10n_in_gstr2b_status', '=', 'fetching'),
             ('company_id.l10n_in_gst_efiling_feature', '=', True),
         ]):
-            return_period.get_gstr2b_data()
+            return_period.get_l10n_in_gstr2b_data()
 
-    def convert_to_date(self, date):
+    def _l10n_in_convert_to_date(self, date):
         # can't use field.date.to_date because formate is different then DEFAULT_SERVER_DATE_FORMAT
         return datetime.strptime(date, "%d-%m-%Y").date()
 
@@ -1865,7 +1858,7 @@ class AccountReturn(models.Model):
                     for bill_by_vat in bill_datas:
                         key = section_code == 'cdnr' and 'nt' or 'inv'
                         for doc_data in bill_by_vat.get(key):
-                            bill_date = self.convert_to_date(doc_data.get('dt'))
+                            bill_date = self._l10n_in_convert_to_date(doc_data.get('dt'))
                             vals = {
                                 'vat': bill_by_vat.get('ctin'),
                                 'bill_number': section_code == 'cdnr' and doc_data.get('ntnum') or doc_data.get('inum'),
@@ -1885,7 +1878,7 @@ class AccountReturn(models.Model):
                         vals_list.append({
                             'vat': False,
                             'bill_number': bill_data.get('boenum'),
-                            'bill_date': self.convert_to_date(bill_data.get('boedt')),
+                            'bill_date': self._l10n_in_convert_to_date(bill_data.get('boedt')),
                             'bill_taxable_value': bill_data.get('txval'),
                             'bill_value_json': bill_data,
                             'bill_type': 'bill',
@@ -1897,7 +1890,7 @@ class AccountReturn(models.Model):
                             vals_list.append({
                                 'vat': bill_by_vat.get('ctin'),
                                 'bill_number': bill_data.get('boenum'),
-                                'bill_date': self.convert_to_date(bill_data.get('boedt')),
+                                'bill_date': self._l10n_in_convert_to_date(bill_data.get('boedt')),
                                 'bill_taxable_value': bill_data.get('txval'),
                                 'bill_value_json': bill_data,
                                 'bill_type': 'bill',
@@ -1952,7 +1945,7 @@ class AccountReturn(models.Model):
     # Bills from E-Invoice IRN
     # ===============================
 
-    def action_get_irn_data(self):
+    def action_l10n_in_get_irn_data(self):
         """
         Fetch the IRN (Invoice Reference Number) data for the company.
         Ensures the company is in production and has IAP credits, then triggers a cron to fetch
@@ -1968,7 +1961,7 @@ class AccountReturn(models.Model):
                     body=self.env['account.move']._l10n_in_edi_get_iap_buy_credits_message()
                 )
                 return True
-        self._check_config()
+        self._l10n_in_check_config()
         self.l10n_in_irn_status = 'to_download'
         self.message_post(body=_("IRN Processing is running in the background."))
         self.env.ref('l10n_in_reports.ir_cron_auto_sync_einvoice_irn')._trigger()
@@ -1986,7 +1979,7 @@ class AccountReturn(models.Model):
             }
         }
 
-    def _get_irn_data(self):
+    def _get_l10n_in_irn_data(self):
         """ Fetch and process IRN data
         The process of retrieving IRN data entails the following steps:
         1. Obtain an e-invoice file token from the IAP.
@@ -2025,7 +2018,7 @@ class AccountReturn(models.Model):
             return False
 
         # Retrieve file token
-        file_token_response = self._get_einvoice_file_token(
+        file_token_response = self._l10n_in_get_einvoice_file_token_request(
             company=self.company_id,
             month_year=self.l10n_in_month_year,
             section_code="B2B",
@@ -2037,7 +2030,7 @@ class AccountReturn(models.Model):
         if not file_token:
             raise IrnException(file_token_response.get('error', {}))
         # Retrieve encryption keys and URLs for the e-invoice files
-        einvoice_details_response = self._get_einvoice_details_from_file(
+        einvoice_details_response = self._l10n_in_get_einvoice_details_from_file_request(
             company=self.company_id,
             month_year=self.l10n_in_month_year,
             token=file_token,
@@ -2051,7 +2044,7 @@ class AccountReturn(models.Model):
         # Process the URLs to fetch IRN data and create attachments, exluding those that already exist
         attachment_ids = self.env['ir.attachment']
         for url in url_list:
-            irn_details_response = self._get_encrypted_large_file_data(
+            irn_details_response = self._l10n_in_gstr_encrypted_large_file_data_request(
                 company=self.company_id,
                 month_year=self.l10n_in_month_year,
                 url=url,
@@ -2072,7 +2065,7 @@ class AccountReturn(models.Model):
         self.l10n_in_irn_status = "to_process"
         self.env.ref('l10n_in_reports.ir_cron_auto_match_einvoice_irn')._trigger()
 
-    def irn_match_data(self):
+    def l10n_in_irn_match_data(self):
         """
         Matches or creates bills (account moves) based on IRN (Invoice Reference Number) data retrieved from JSON attachments.
 
@@ -2218,7 +2211,7 @@ class AccountReturn(models.Model):
     def _cron_get_irn_data(self):
         """
         Cron job to fetch IRN data for GST return periods with 'to_download' status.
-        Calls `_get_irn_data()` for each period, handling errors if they occur.
+        Calls `_get_l10n_in_irn_data()` for each period, handling errors if they occur.
 
         :rtype: None
         """
@@ -2228,7 +2221,7 @@ class AccountReturn(models.Model):
         ])
         for return_period in return_periods:
             try:
-                return_period._get_irn_data()
+                return_period._get_l10n_in_irn_data()
             except IrnException as e:
                 return_period.l10n_in_irn_status = 'process_with_error'
                 if str(e) == 'no-credit':
@@ -2242,7 +2235,7 @@ class AccountReturn(models.Model):
         Cron job method that matches IRN data for GST return periods with 'to_process' status.
 
         This method searches for all GST return periods marked for IRN data processing and
-        calls the `irn_match_data` method on each applicable return period to perform the matching operation.
+        calls the `l10n_in_irn_match_data` method on each applicable return period to perform the matching operation.
 
         :rtype: None
         """
@@ -2251,7 +2244,7 @@ class AccountReturn(models.Model):
             ('company_id.l10n_in_fetch_vendor_edi_feature', '=', True),
         ])
         for return_period in return_periods:
-            return_period.irn_match_data()
+            return_period.l10n_in_irn_match_data()
 
     # ========================================
     # Checks and Actions
@@ -2328,15 +2321,15 @@ class AccountReturn(models.Model):
             self.date_lock = fields.Date.context_today(self)
             self.state = 'reviewed'
             return {
-                    'type': 'ir.actions.client',
-                    'tag': 'display_notification',
-                    'params': {
-                        'type': 'success',
-                        'title': self.env._("Checks Validated"),
-                        'message': self.env._("Checks have been validated successfully. You can now proceed to the next step."),
-                        'next': {'type': 'ir.actions.act_window_close'},
-                    },
-                }
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'type': 'success',
+                    'title': self.env._("Checks Validated"),
+                    'message': self.env._("Checks have been validated successfully. You can now proceed to the next step."),
+                    'next': {'type': 'ir.actions.act_window_close'},
+                },
+            }
         return super()._proceed_with_locking(options_to_inject=options_to_inject)
 
     def _run_checks(self, check_codes_to_ignore):
@@ -2351,7 +2344,7 @@ class AccountReturn(models.Model):
             in_checks += self._check_suite_in_gstr1_report(check_codes_to_ignore)
         return super()._run_checks(check_codes_to_ignore) + in_checks
 
-    def _get_aml_domain(self):
+    def _get_l10n_in_reports_aml_domain(self):
         report = self.type_id.report_id
         options = self._get_closing_report_options()
         hsn_base_line_domain = [
@@ -2366,25 +2359,10 @@ class AccountReturn(models.Model):
             ])
         return aml_domain
 
-    def _build_open_records_action(self, name, res_model, views, line_ids):
-        return {
-            'type': 'ir.actions.act_window',
-            'name': name,
-            'res_model': res_model,
-            'views': views,
-            'domain': [('id', 'in', line_ids)],
-            'context': {
-                'create': False,
-                'delete': False,
-                'expand': True,
-            },
-        }
-
     def _check_suite_in_gstr1_report(self, check_codes_to_ignore):
         checks = []
-        aml_domain = self._get_aml_domain()
+        aml_domain = self._get_l10n_in_reports_aml_domain()
         options = self._get_closing_report_options()
-
         # Invalid Intra-State Tax
         if 'invalid_intra_state_tax' not in check_codes_to_ignore:
             _template, line_ids = self.env['l10n_in.report.handler']._get_invalid_intra_state_tax_on_lines(aml_domain)
@@ -2396,7 +2374,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Invalid tax for Intra State Transaction'), 'account.move.line', [(False, 'list')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Invalid tax for Intra State Transaction"),
+                    views=[(False, 'list')]
+                ),
             })
 
         # Invalid Inter-State Tax
@@ -2410,7 +2391,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Invalid tax for Inter State Transaction'), 'account.move.line', [(False, 'list')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Invalid tax for Inter State Transaction"),
+                    views=[(False, 'list')]
+                ),
             })
 
         # Missing HSN
@@ -2424,7 +2408,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Missing HSN for Journal Items'), 'account.move.line', [(False, 'list'), (False, 'form')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Missing HSN for Journal Items"),
+                    views=[(False, 'list'), (False, 'form')]
+                )
             })
 
         # Invalid HSN for Goods products
@@ -2438,7 +2425,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Invalid HSN Code'), 'account.move.line', [(False, 'list'), (False, 'form')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Invalid HSN Code"),
+                    views=[(False, 'list'), (False, 'form')]
+                ),
             })
 
         # Invalid HSN Code for service products
@@ -2452,7 +2442,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Invalid HSN Code'), 'account.move.line', [(False, 'list'), (False, 'form')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Invalid HSN Code"),
+                    views=[(False, 'list'), (False, 'form')]
+                ),
             })
 
         # Invalue UQC code
@@ -2466,7 +2459,10 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move.line').id,
                 'records_count': line_count,
                 'result': 'anomaly' if line_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Invalid UQC Code'), 'uom.uom', [(False, 'list'), (False, 'form')], line_ids),
+                'action': line_ids._get_records_action(
+                    name=_("Invalid UQC Code"),
+                    views=[(False, 'list'), (False, 'form')]
+                ),
             })
 
         # Credit Notes
@@ -2482,7 +2478,7 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move').id,
                 'records_count': move_count,
                 'result': 'anomaly' if move_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Credit Notes'), 'account.move', [(False, 'list'), (False, 'form')], move_ids),
+                'action': move_ids._get_records_action(name=_("Credit Notes")),
             })
 
         if 'unlinked_unregistered_inter_state_reversed_move' not in check_codes_to_ignore:
@@ -2495,7 +2491,7 @@ class AccountReturn(models.Model):
                 'records_model': self.env['ir.model']._get('account.move').id,
                 'records_count': move_count,
                 'result': 'anomaly' if move_ids else 'reviewed',
-                'action': self._build_open_records_action(_('Credit Note'), 'account.move', [(False, 'list'), (False, 'form')], move_ids),
+                'action': move_ids._get_records_action(name=_("Credit Notes")),
             })
 
         # Document Summary Check
@@ -2526,7 +2522,7 @@ class AccountReturn(models.Model):
             })
         return checks
 
-    def _download_gstr1_xlsx(self, attachment_id):
+    def _l10n_in_download_gstr1_xlsx(self, attachment_id):
         return {
             'type': 'ir.actions.act_url',
             'url': f'/web/content/{attachment_id}?download=true',
@@ -2540,7 +2536,7 @@ class AccountReturn(models.Model):
         and returns the file for download.
         """
         self.ensure_one()
-        gstr1_json = self._get_gstr1_json()
+        gstr1_json = self._get_l10n_in_gstr1_json()
 
         # Generate XLSX
         xlsx_data = GSTR1SpreadsheetGenerator(gstr1_json).generate()
@@ -2559,7 +2555,7 @@ class AccountReturn(models.Model):
             'res_id': self.id,
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-        return self._download_gstr1_xlsx(attachment.id)
+        return self._l10n_in_download_gstr1_xlsx(attachment.id)
 
     def action_submit(self):
         self.ensure_one()
@@ -2571,20 +2567,24 @@ class AccountReturn(models.Model):
 
     def action_check_gstr_status(self):
         self.ensure_one()
-        if self.type_external_id == 'l10n_in_reports.in_gstr1_return_type':
-            self.button_check_gstr1_status()
+        if self.type_external_id != 'l10n_in_reports.in_gstr1_return_type':
+            return
+        if self.l10n_in_gstr1_status != "waiting_for_status":
+            raise AccessError(_("To check status please push the GSTN"))
+        self._l10n_in_check_config()
+        self.check_l10n_in_gstr1_status()
 
     def action_gstr2b_fetch(self):
         self.ensure_one()
         if self.type_external_id == 'l10n_in_reports.in_gstr2b_return_type':
             self.is_completed = False
-            self.action_get_gstr2b_data()
+            self.action_get_l10n_in_gstr2b_data()
 
     # ========================================
     # API calls
     # ========================================
 
-    def _request(self, url, company, params=None):
+    def _l10n_in_reports_request(self, url, company, params=None):
         if not params:
             params = {}
         params.update({
@@ -2608,47 +2608,47 @@ class AccountReturn(models.Model):
                 }]
             }
 
-    def _otp_request(self, company):
-        return self._request(url="/iap/l10n_in_reports/1/authentication/otprequest", company=company)
+    def _l10n_in_gstr_otp_request(self, company):
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/authentication/otprequest", company=company)
 
-    def _otp_auth_request(self, company, transaction, otp):
+    def _l10n_in_gstr_otp_auth_request(self, company, transaction, otp):
         params = {"auth_token": transaction, "otp": otp}
-        return self._request(url="/iap/l10n_in_reports/1/authentication/authtoken", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/authentication/authtoken", params=params, company=company)
 
-    def _refresh_token_request(self, company):
+    def _l10n_in_refresh_gstr_token_request(self, company):
         params = {"auth_token": company.sudo().l10n_in_gstr_gst_token}
-        return self._request(
+        return self._l10n_in_reports_request(
             url="/iap/l10n_in_reports/1/authentication/refreshtoken", params=params, company=company)
 
-    def _invalidate_token_request(self, company):
+    def _l10n_in_invalidate_gstr_token_request(self, company):
         params = {"auth_token": company.sudo().l10n_in_gstr_gst_token}
-        return self._request("/iap/l10n_in_reports/1/authentication/logout", company, params)
+        return self._l10n_in_reports_request("/iap/l10n_in_reports/1/authentication/logout", company, params)
 
-    def _send_gstr1(self, company, month_year, json_payload):
+    def _l10n_in_send_gstr1_request(self, company, month_year, json_payload):
         params = {
             "ret_period": month_year,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
             "json_payload": json_payload,
         }
-        return self._request(url="/iap/l10n_in_reports/1/gstr1/retsave", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/gstr1/retsave", params=params, company=company)
 
-    def _get_gstr_status(self, company, month_year, reference_id):
+    def _l10n_in_get_gstr_status_request(self, company, month_year, reference_id):
         params = {
             "ret_period": month_year,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
             "reference_id": reference_id,
         }
-        return self._request(url="/iap/l10n_in_reports/1/retstatus", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/retstatus", params=params, company=company)
 
-    def _get_gstr2b_data(self, company, month_year, file_number=None):
+    def _l10n_in_get_gstr2b_data_request(self, company, month_year, file_number=None):
         params = {
             "ret_period": month_year,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
             "file_number": file_number,
         }
-        return self._request(url="/iap/l10n_in_reports/1/gstr2b/all", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/gstr2b/all", params=params, company=company)
 
-    def _get_einvoice_file_token(self, company, month_year, section_code):
+    def _l10n_in_get_einvoice_file_token_request(self, company, month_year, section_code):
         """
         Retrieve the e-invoice file token for the specified return period and section code.
 
@@ -2664,9 +2664,9 @@ class AccountReturn(models.Model):
             "gstin": company.vat,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
         }
-        return self._request(url="/iap/l10n_in_reports/1/einvoice/vendor/irnlist", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/einvoice/vendor/irnlist", params=params, company=company)
 
-    def _get_einvoice_details_from_file(self, company, month_year, token):
+    def _l10n_in_get_einvoice_details_from_file_request(self, company, month_year, token):
         """
         Get details of the e-invoice file using the provided file token.
 
@@ -2682,9 +2682,9 @@ class AccountReturn(models.Model):
             "file_token": token,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
         }
-        return self._request(url="/iap/l10n_in_reports/1/einvoice/filedtl", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/einvoice/filedtl", params=params, company=company)
 
-    def _get_encrypted_large_file_data(self, company, month_year, url, encryption_key):
+    def _l10n_in_gstr_encrypted_large_file_data_request(self, company, month_year, url, encryption_key):
         """
         Retrieve data from an encrypted large file using its URL and encryption key.
         :returns: Decrypted file data response.
@@ -2696,7 +2696,7 @@ class AccountReturn(models.Model):
             "ret_period": month_year,
             "auth_token": company.sudo().l10n_in_gstr_gst_token,
         }
-        return self._request(url="/iap/l10n_in_reports/1/all/largefile", params=params, company=company)
+        return self._l10n_in_reports_request(url="/iap/l10n_in_reports/1/all/largefile", params=params, company=company)
 
 
 class AccountReturnCheck(models.Model):
@@ -2715,4 +2715,4 @@ class AccountReturnCheck(models.Model):
         self.ensure_one()
         if self.code != 'missing_fetch_einvoice':
             return
-        self.return_id.action_get_irn_data()
+        self.return_id.action_l10n_in_get_irn_data()

@@ -141,13 +141,13 @@ class TestReports(L10nInTestAccountReportsCommon):
         self._setup_moves(self._create_credit_note)
         gstr_report = self._create_gstr_report()
         gstr1_expected_json = self._read_mock_json('gstr1_expected_response.json')
-        self.assertDictEqual(gstr_report._get_gstr1_json(), gstr1_expected_json)
+        self.assertDictEqual(gstr_report._get_l10n_in_gstr1_json(), gstr1_expected_json)
 
     def test_gstr1_debit_note_json(self):
         self._setup_moves(self._create_debit_note)
         gstr_report = self._create_gstr_report()
         gstr1_debit_note_expected_json = self._read_mock_json('gstr1_debit_note_expected_response.json')
-        self.assertDictEqual(gstr_report._get_gstr1_json(), gstr1_debit_note_expected_json)
+        self.assertDictEqual(gstr_report._get_l10n_in_gstr1_json(), gstr1_debit_note_expected_json)
 
     def test_gstr1_credit_note_warning_pre_and_post_november(self):
         invoice_1 = self._init_inv(partner=self.partner_a, taxes=self.comp_igst_18, line_vals={'price_unit': 500, 'quantity': 2}, invoice_date=date(2022, 8, 1))
@@ -178,7 +178,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         )
         self._create_credit_note(inv=b2b_invoice, line_vals={'quantity': 1})  # Creates and posts credit note for the above invoice
         gstr1_report = self._create_gstr_report()
-        gstr1_json = gstr1_report._get_gstr1_json()
+        gstr1_json = gstr1_report._get_l10n_in_gstr1_json()
         self.assertDictEqual(gstr1_json, self._read_mock_json('gstr1_sez_zero_rated_expected_response.json'))
 
     def test_hsn_schema_change_gstr1_json(self):
@@ -192,5 +192,5 @@ class TestReports(L10nInTestAccountReportsCommon):
             'date_from': start_date,
             'date_to': end_date
         })
-        gstr1_json = gstr1_report._get_gstr1_json()
+        gstr1_json = gstr1_report._get_l10n_in_gstr1_json()
         self.assertDictEqual(gstr1_json, self._read_mock_json('gstr1_new_hsn_schema_response.json'))

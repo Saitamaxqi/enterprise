@@ -9,4 +9,4 @@ class L10n_InGstr1SubmissionWizard(models.TransientModel):
     def action_proceed_with_submission(self):
         """Override to handle GSTR-1 submission."""
         # Triggers cron to push gstr1 data and returns a notification about cron running in background
-        return self.return_id.button_send_gstr1()
+        return self.return_id.action_l10n_in_send_gstr1()
