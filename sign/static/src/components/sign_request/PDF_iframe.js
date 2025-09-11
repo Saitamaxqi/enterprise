@@ -223,8 +223,7 @@ export class PDFIframe {
             (isCurrentRole && signItem.name) ||
             (this.readonly && `${signItem.name}\n${signItem.responsible_name}`) ||
             "";
-        const isStampReadOnly = type === 'stamp' && ((!readonly && isCurrentRole && this.props.isSignerHasCompany) || (readonly && signItem.value));
-        const constant = signItem.constant ?? (type === "stamp" && this.props.isSignerHasCompany);
+        const constant = signItem.constant ?? false;
         return Object.assign(signItem, {
             constant: constant,
             readonly: signItem.readonly ?? readonly,
@@ -234,7 +233,6 @@ export class PDFIframe {
             type,
             placeholder: placeholder,
             classes: `
-                ${isStampReadOnly ? "o_sign_item_stamp" : ""}
                 ${isCurrentRole ? "o_sign_sign_item_default" : ""}
                 ${signItem.constant ? "o_sign_sign_item_constant": ""}
                 ${signItem.required && isCurrentRole ? "o_sign_sign_item_required" : ""}

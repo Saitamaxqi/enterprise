@@ -477,23 +477,15 @@ select:focus {
     box-shadow: none;
 }
 
-.o_sign_sign_item.o_sign_sign_item_constant::placeholder,
-.o_sign_sign_item.o_sign_item_stamp::placeholder {
+.o_sign_sign_item.o_sign_sign_item_constant::placeholder {
     color: rgb(var(--bs-dark-rgb));
 } 
 
-.o_sign_sign_item.o_sign_sign_item_constant:hover,
-.o_sign_sign_item.o_sign_item_stamp:hover {
+.o_sign_sign_item.o_sign_sign_item_constant:hover {
     cursor: default;
 } 
 
-.o_sign_sign_item.o_sign_item_stamp {
-    background: none;
-    box-shadow: none;
-}
-
-.o_sign_sign_item.o_sign_stamp_field_border,
-.o_sign_sign_item.o_sign_item_stamp {
+.o_sign_sign_item.o_sign_stamp_field_border {
     padding: 10px;
     border: 3px solid rgb(var(--bs-darkblue-rgb));
 }

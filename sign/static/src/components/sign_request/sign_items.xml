@@ -92,7 +92,7 @@
         </div>
     </div>
 
-    <div t-name="sign.textareaSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_textarea" t-att-style="style" t-att-data-id="id">
+    <div t-name="sign.textareaSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_textarea {{type === 'stamp' and value ? 'o_sign_stamp_field_border' : ''}}" t-att-style="style" t-att-data-id="id">
         <div class="sign_item_body">
             <t t-if="!value">
                 <div class="o_sign_textarea_placeholder">
