@@ -234,7 +234,7 @@ class HrPayslip(models.Model):
                 continue
             version_properties = dict(payslip.version_id.payroll_properties)
             payslip_properties.update({
-                key: version_properties[key] for key in properties_definition_per_structure[payslip.struct_id]
+                key: version_properties.get(key, 0) for key in properties_definition_per_structure[payslip.struct_id]
             })
             payslip.update({
                 'payslip_properties': payslip_properties
