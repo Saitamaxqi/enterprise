@@ -6,6 +6,8 @@ import re
 
 from odoo.addons.delivery_shiprocket.models.shiprocket_request import ShipRocket
 from odoo.addons.delivery_shiprocket.tests.common import ShiprocketCommon
+from odoo.fields import Command
+from odoo.tests import tagged
 
 _logger = logging.getLogger(__name__)
 
@@ -244,3 +246,76 @@ class TestDeliveryShiprocket(ShiprocketCommon):
                 }
             })
             self.assertDictEqual(parcel_data, expected_parcel_data, "Expected parcel data does not match with actual data!")
+
+
+@tagged("post_install", "-at_install")
+class TestDeliveryShiprocketPostInstall(TestDeliveryShiprocket):
+    def test_shiprocket_delivery_with_discounts(self):
+        """
+        Ensure both regular and loyaly discount lines are correctly passed to the carrier.
+        """
+        sale_loyalty_module = self.env['ir.module.module']._get('sale_loyalty')
+        if sale_loyalty_module.state != 'installed':
+            self.skipTest("This test will fail if sale_loyalty is not installed")
+
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.in_partner.id,
+            'order_line': [Command.create({
+                'product_id': self.product_to_ship1.id,
+                'name': "[AHM1232] Door with wings",
+                'product_uom_id': self.product_to_ship1.uom_id.id,
+                'product_uom_qty': 1.0,
+                'price_unit': self.product_to_ship1.lst_price,
+            })],
+        })
+        self.env['choose.delivery.carrier'].with_context({
+            'default_order_id': sale_order.id,
+            'default_carrier_id': self.shiprocket.id
+        })
+
+        # Apply loyalty discount
+        coupon_program = self.env['loyalty.program'].create({
+            'name': '20 bucks discount',
+            'program_type': 'coupons',
+            'applies_on': 'current',
+            'trigger': 'auto',
+            'rule_ids': [Command.create({})],
+            'reward_ids': [Command.create({
+                'reward_type': 'discount',
+                'discount': 20.0,
+                'discount_mode': 'per_order',
+                'discount_applicability': 'order',
+            })]
+        })
+        sale_order._update_programs_and_rewards()
+        self.assertEqual(len(coupon_program.reward_ids), 1)
+        coupon = sale_order.coupon_point_ids.coupon_id.filtered(lambda c: c.program_id == coupon_program)
+        sale_order._apply_program_reward(coupon_program.reward_ids, coupon)
+        self.assertAlmostEqual(sale_order.order_line.filtered(lambda ol: ol.is_reward_line).price_total, -20.0)
+
+        # Apply "regular" discount
+        wizard = self.env['sale.order.discount'].create({
+            'sale_order_id': sale_order.id,
+            'discount_amount': 20,
+            'discount_type': 'amount',
+        })
+        wizard.action_apply_discount()
+        discount_line = sale_order.order_line.filtered(lambda ol: ol.product_id.id == ol.company_id.sale_discount_product_id.id)
+        # Double the discount by changing the quantity instead of the flat value
+        discount_line.product_uom_qty = 2
+        self.assertEqual(discount_line.price_total, -40)
+
+        # Total expected price is 100 - (20 + 40) = 40
+        self.assertAlmostEqual(sale_order.amount_total, 40)
+
+        sale_order.action_confirm()
+        self.assertTrue(sale_order.picking_ids)
+        picking = sale_order.picking_ids
+        picking.move_line_ids[0].quantity = 1.0
+        picking.carrier_id = self.shiprocket.id
+        sr = ShipRocket(self, picking.carrier_id.log_xml)
+        sr.carrier = picking.carrier_id
+        default_package = picking.carrier_id.shiprocket_default_package_type_id
+        package = picking.carrier_id._get_packages_from_picking(picking, default_package)[0]
+        parcel_data = sr._prepare_parcel(picking, package, 1, 0.0)
+        self.assertAlmostEqual(parcel_data['total_discount'], 60)

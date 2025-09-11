@@ -317,8 +317,8 @@ class ShipRocket:
         net_weight_in_kg = self.carrier._shiprocket_convert_weight(package.weight)
         line_vals = self._get_shipping_lines(package, picking).values()
         payment_method = "COD" if self.carrier.allow_cash_on_delivery else "Prepaid"
-        discount_order_lines = picking.sale_id.order_line.filtered(lambda ol: ol.product_id == ol.company_id.sale_discount_product_id)
-        total_discount = abs(sum(discount_order_lines.mapped('price_unit')))
+        discount_order_lines = picking.sale_id.order_line.filtered(lambda ol: ol._is_discount_line())
+        total_discount = abs(sum(discount_order_lines.mapped('price_total')))
         return {
             "request_pickup": self.carrier.shiprocket_pickup_request,
             "print_label": True,
