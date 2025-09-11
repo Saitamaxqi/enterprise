@@ -525,7 +525,7 @@ class FedexRequest:
                     'tins': self._get_tins_from_partner(ship_from),
                 },
                 'recipients': [{
-                    'address': self._get_address_from_partner(ship_to_wh),
+                    'address': self._get_address_from_partner(ship_to_wh, True),
                     'contact': self._get_contact_from_partner(ship_to_wh, ship_to_company),
                     'tins': self._get_tins_from_partner(ship_to_company, self.vat_override),
                 }],
