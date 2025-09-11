@@ -1,13 +1,26 @@
 {
-  "version": "18.4.14",
+  "version": "18.5.10",
   "sheets": [
     {
       "id": "df33ef16-d138-4c86-a257-a2d529a1cdfa",
       "name": "Dashboard",
-      "colNumber": 11,
+      "colNumber": 9,
       "rowNumber": 115,
       "rows": {
-        "6": { "size": 39 },
+        "6": { "size": 45 },
+        "7": { "size": 35 },
+        "8": { "size": 26 },
+        "9": { "size": 26 },
+        "10": { "size": 26 },
+        "11": { "size": 26 },
+        "12": { "size": 26 },
+        "13": { "size": 26 },
+        "14": { "size": 26 },
+        "15": { "size": 26 },
+        "16": { "size": 26 },
+        "17": { "size": 26 },
+        "18": { "size": 26 },
+        "19": { "size": 26 },
         "21": { "size": 42 },
         "22": { "size": 39 },
         "37": { "size": 33 },
@@ -17,51 +30,59 @@
         "87": { "size": 40 }
       },
       "cols": {
-        "1": { "size": 145 },
-        "5": { "size": 19 },
-        "7": { "size": 142 }
+        "0": { "size": 336 },
+        "2": { "size": 87 },
+        "3": { "size": 30 },
+        "5": { "size": 142 }
       },
-      "merges": ["B30:D30", "G8:J8", "G29:J29"],
+      "merges": ["E29:H29"],
       "cells": {
-        "A7": "='By product overview fill rate - On time'!B1",
-        "A23": "=_t(\"Moves lines count by operation\")",
-        "A39": "=_t(\"Internal lead time\")",
+        "A8": "=CHOOSECOLS('By product overview fill rate - On time'!A1:C5, 1)",
+        "A23": "=_t(\"Internal lead time\")",
+        "A39": "=_t(\"Number of Operations by Operation Type\")",
         "A55": "=_t(\"Weekly Stock Moves Lines by operation\")",
         "A71": "=_t(\"Transfers count by responsible and operation\")",
         "A88": "=_t(\"Quantity of stock adjustments by category\")",
-        "G7": "='By product overview fill rate - On time'!B19",
-        "G88": "=_t(\"Qty scrapped product by category\")"
+        "B8": "=CHOOSECOLS('By product overview fill rate - On time'!A1:C5, 2, 3)",
+        "E7": "On Time rate by Demand",
+        "E88": "=_t(\"Qty scrapped product by category\")"
       },
       "styles": {
         "A7": 1,
         "A23": 1,
-        "A39": 1,
         "A55": 1,
         "A71": 1,
         "A88": 1,
-        "G7": 1,
-        "G88": 1
+        "A39:B39": 1,
+        "E88": 1,
+        "E7:I7": 1,
+        "A8:I8": 2,
+        "A9:C21": 3
       },
       "formats": {},
       "borders": {
-        "A7:E7": 1,
-        "A88:E88": 1,
-        "G7:K7": 1,
-        "A23:K23": 1,
-        "A39:K39": 1,
-        "A55:K55": 1,
-        "A71:K71": 1,
-        "G88:K88": 1,
-        "A8:E8": 2,
-        "A89:E89": 2,
-        "G8:K8": 2,
-        "A24:K24": 2,
-        "A40:K40": 2,
-        "A56:K56": 2,
-        "A72:K72": 2,
-        "G89:K89": 2
+        "A9:C21": 1,
+        "A88:C88": 2,
+        "E7:I7": 2,
+        "A23:I23": 2,
+        "A39:I39": 2,
+        "A55:I55": 2,
+        "A71:I71": 2,
+        "E88:I88": 2,
+        "A89:C89": 3,
+        "A24:I24": 3,
+        "A40:I40": 3,
+        "A56:I56": 3,
+        "A72:I72": 3,
+        "E89:I89": 3
       },
-      "conditionalFormats": [],
+      "conditionalFormats": [
+        {
+          "rule": { "type": "DataBarRule", "color": 15531509, "rangeValues": "B9:B18" },
+          "id": "725cff5a-48c7",
+          "ranges": ["A9:A18"]
+        }
+      ],
       "dataValidationRules": [],
       "figures": [
         {
@@ -74,7 +95,7 @@
             "baselineColorUp": "#6aa84f",
             "baselineMode": "text",
             "title": {
-              "text": "Avg Cycle Time",
+              "text": "Avg Lead Time",
               "align": "left",
               "bold": true,
               "color": "#434343"
@@ -84,7 +105,8 @@
             "baseline": "Data!C2",
             "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B2",
-            "humanize": false
+            "humanize": false,
+            "chartId": "00d06fd4-5cb9-443d-80b1-e8b6bf6c05a1"
           },
           "offset": { "x": 227, "y": 10 },
           "col": 0,
@@ -110,7 +132,8 @@
             "baseline": "Data!C3",
             "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B3",
-            "humanize": false
+            "humanize": false,
+            "chartId": "bc286f72-8794-4655-b78e-b3811c2a15c5"
           },
           "offset": { "x": 0, "y": 10 },
           "col": 0,
@@ -131,7 +154,8 @@
             "baseline": "Data!C6",
             "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B6",
-            "humanize": false
+            "humanize": false,
+            "chartId": "d993b670-2faa-49b2-ba06-5dc136d05e88"
           },
           "offset": { "x": 455, "y": 10 },
           "col": 0,
@@ -147,7 +171,7 @@
             "baselineColorUp": "#6aa84f",
             "baselineMode": "difference",
             "title": {
-              "text": "On Time delivery",
+              "text": "On Time Operations",
               "align": "left",
               "bold": true,
               "color": "#434343"
@@ -157,7 +181,8 @@
             "baseline": "Data!C9",
             "baselineDescr": { "text": "last period" },
             "keyValue": "Data!B9",
-            "humanize": false
+            "humanize": false,
+            "chartId": "b6792369-556a-4568-aac3-89524cde3ed0"
           },
           "offset": { "x": 681, "y": 10 },
           "col": 0,
@@ -177,8 +202,7 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.picking",
-              "mode": "bar",
-              "cumulatedStart": false
+              "mode": "bar"
             },
             "searchParams": {
               "comparison": null,
@@ -197,19 +221,18 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": true,
+            "chartId": "b537b287-018f-4e0c-904a-05ac413bd774",
             "fieldMatching": {
               "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime", "offset": 0 },
               "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
               "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "picking_type_id.warehouse_id", "type": "many2one" },
               "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-              "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-              "ad701208-d8cf-431f-97eb-dc72a229a727": {},
               "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
             }
           },
-          "offset": { "x": 0, "y": 1741 },
+          "offset": { "x": 0, "y": 0 },
           "col": 0,
-          "row": 0
+          "row": 71
         },
         {
           "id": "f75d27b8-401c-4b23-be72-1e8c5f48c997",
@@ -225,8 +248,7 @@
               "measure": "__count",
               "order": null,
               "resModel": "stock.move",
-              "mode": "bar",
-              "cumulatedStart": false
+              "mode": "bar"
             },
             "searchParams": {
               "comparison": null,
@@ -245,62 +267,23 @@
             "dataSets": [],
             "verticalAxisPosition": "left",
             "stacked": true,
+            "chartId": "f75d27b8-401c-4b23-be72-1e8c5f48c997",
             "fieldMatching": {
-              "ad701208-d8cf-431f-97eb-dc72a229a727": {},
               "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": 0 },
               "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
               "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
               "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-              "472f70c0-7336-48e5-a84c-9d03754250b7": {},
               "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
             }
           },
-          "offset": { "x": 0, "y": 1359 },
+          "offset": { "x": 0, "y": 0 },
           "col": 0,
-          "row": 0
-        },
-        {
-          "id": "92ad86c5-b988-44b1-b5b3-17b6580743a6",
-          "width": 525,
-          "height": 364,
-          "tag": "chart",
-          "data": {
-            "type": "combo",
-            "dataSetsHaveTitle": true,
-            "dataSets": [
-              {
-                "dataRange": "'By product overview fill rate - On time'!E20:E30",
-                "yAxisId": "y",
-                "trend": { "type": "polynomial", "order": 1, "display": false },
-                "label": "On time rate",
-                "type": "bar"
-              },
-              {
-                "dataRange": "'By product overview fill rate - On time'!D20:D30",
-                "yAxisId": "y1",
-                "label": "Count",
-                "type": "line"
-              }
-            ],
-            "legendPosition": "top",
-            "labelRange": "'By product overview fill rate - On time'!B21:B30",
-            "title": { "text": "" },
-            "aggregated": false,
-            "axesDesign": {
-              "y1": {
-                "title": { "text": "Orders count" }
-              }
-            },
-            "showValues": false
-          },
-          "offset": { "x": 549, "y": 177 },
-          "col": 0,
-          "row": 0
+          "row": 55
         },
         {
           "id": "3832422c-37b7-4b17-92bc-e69219ebb918",
           "width": 1074,
-          "height": 356,
+          "height": 347,
           "tag": "chart",
           "data": {
             "type": "combo",
@@ -321,16 +304,18 @@
             "labelRange": "'WH Operations'!K2:K",
             "title": { "text": "" },
             "aggregated": false,
-            "showValues": false
+            "showValues": false,
+            "humanize": true,
+            "chartId": "3832422c-37b7-4b17-92bc-e69219ebb918"
           },
-          "offset": { "x": 0, "y": 580 },
+          "offset": { "x": 0, "y": 0 },
           "col": 0,
-          "row": 0
+          "row": 39
         },
         {
           "id": "757ff23d-2733-4dd7-98c2-3df3dc5ff6ea",
           "width": 1074,
-          "height": 344,
+          "height": 352,
           "tag": "chart",
           "data": {
             "type": "combo",
@@ -350,15 +335,17 @@
             "legendPosition": "top",
             "labelRange": "'Cycle time'!N:N",
             "title": { "text": "" },
-            "aggregated": false
+            "aggregated": false,
+            "humanize": true,
+            "chartId": "757ff23d-2733-4dd7-98c2-3df3dc5ff6ea"
           },
-          "offset": { "x": 0, "y": 975 },
+          "offset": { "x": 0, "y": 0 },
           "col": 0,
-          "row": 0
+          "row": 23
         },
         {
           "id": "87ab87e6-2bdd-4e75-a59f-a0c34f6742fb",
-          "width": 529,
+          "width": 519,
           "height": 346,
           "tag": "chart",
           "data": {
@@ -379,15 +366,17 @@
             "legendPosition": "top",
             "labelRange": "'Inventory adjustments by category'!H:H",
             "title": { "text": "" },
-            "aggregated": false
+            "aggregated": false,
+            "humanize": true,
+            "chartId": "87ab87e6-2bdd-4e75-a59f-a0c34f6742fb"
           },
-          "offset": { "x": 0, "y": 2149 },
+          "offset": { "x": 0, "y": 0 },
           "col": 0,
-          "row": 0
+          "row": 88
         },
         {
           "id": "f854691a-ed0a-4908-bd7b-3215c44f670a",
-          "width": 527,
+          "width": 526,
           "height": 347,
           "tag": "chart",
           "data": {
@@ -400,49 +389,110 @@
             "legendPosition": "top",
             "labelRange": "Scrap!G:G",
             "title": { "text": "" },
-            "aggregated": false
+            "aggregated": false,
+            "humanize": true,
+            "chartId": "f854691a-ed0a-4908-bd7b-3215c44f670a"
           },
-          "offset": { "x": 549, "y": 2149 },
-          "col": 0,
-          "row": 0
+          "offset": { "x": 0, "y": 0 },
+          "col": 4,
+          "row": 88
         },
         {
-          "id": "106df83f-9731-4842-87d9-a8c7b848399e",
-          "width": 527,
-          "height": 364,
+          "id": "b7d53a20-60ec",
+          "col": 0,
+          "row": 6,
+          "offset": { "x": 0, "y": 11 },
+          "width": 519,
+          "height": 409,
+          "tag": "carousel",
+          "data": {
+            "chartDefinitions": {
+              "106df83f-9731-4842-87d9-a8c7b848399e": {
+                "type": "combo",
+                "dataSetsHaveTitle": true,
+                "dataSets": [
+                  {
+                    "dataRange": "C8:C18",
+                    "yAxisId": "y1",
+                    "trend": { "type": "polynomial", "order": 1, "display": false },
+                    "label": "Fill rate",
+                    "type": "bar"
+                  },
+                  { "dataRange": "B8:B18", "type": "line" }
+                ],
+                "legendPosition": "top",
+                "labelRange": "A8:A18",
+                "title": {},
+                "aggregated": false,
+                "axesDesign": {
+                  "y1": {
+                    "title": { "text": "Demand" }
+                  },
+                  "x": {
+                    "title": { "text": "Fill rate" }
+                  }
+                },
+                "showValues": false,
+                "humanize": true
+              }
+            },
+            "items": [
+              {
+                "type": "chart",
+                "chartId": "106df83f-9731-4842-87d9-a8c7b848399e",
+                "title": "Chart"
+              },
+              { "type": "carouselDataView", "title": "Top 10" }
+            ],
+            "title": {
+              "text": "Fill Rate by Demand",
+              "fontSize": 21,
+              "bold": true,
+              "color": "#01636B"
+            },
+            "fieldMatching": {}
+          }
+        },
+        {
+          "id": "46dbebf5-4ef1",
+          "col": 4,
+          "row": 7,
+          "offset": { "x": 0, "y": 0 },
+          "width": 525,
+          "height": 381,
           "tag": "chart",
           "data": {
             "type": "combo",
             "dataSetsHaveTitle": true,
             "dataSets": [
               {
-                "dataRange": "'By product overview fill rate - On time'!F3:F13",
+                "backgroundColor": "#4EA7F2",
+                "dataRange": "'By product overview fill rate - On time'!B19:B29",
                 "yAxisId": "y",
                 "trend": { "type": "polynomial", "order": 1, "display": false },
-                "label": "Fill rate",
+                "label": "On time rate",
                 "type": "bar"
               },
               {
-                "dataRange": "'By product overview fill rate - On time'!D3:D13",
-                "yAxisId": "y1",
-                "label": "Demand",
-                "type": "line"
+                "dataRange": "'By product overview fill rate - On time'!I19:I29",
+                "type": "line",
+                "backgroundColor": "#EA6175",
+                "yAxisId": "y1"
               }
             ],
             "legendPosition": "top",
-            "labelRange": "'By product overview fill rate - On time'!B4:B13",
+            "labelRange": "'By product overview fill rate - On time'!H19:H29",
             "title": { "text": "" },
             "aggregated": false,
             "axesDesign": {
               "y1": {
-                "title": { "text": "Demand" }
+                "title": { "text": "Orders count" }
               }
             },
-            "showValues": false
-          },
-          "offset": { "x": 0, "y": 177 },
-          "col": 0,
-          "row": 0
+            "showValues": false,
+            "humanize": true,
+            "chartId": "1ce4ca75-777a"
+          }
         }
       ],
       "tables": [],
@@ -495,7 +545,7 @@
         "C8": "=if(ODOO.FILTER.VALUE(\"Period\")<>\"\",PIVOT.VALUE(14,\"__count:sum\"),\"N/A\")",
         "C9": "=if(ODOO.FILTER.VALUE(\"Period\")<>\"\",iferror(C7/C8,\"NA\"),\"N/A\")"
       },
-      "styles": { "A1:C1": 2, "A2:A9": 3 },
+      "styles": { "A1:C1": 4, "A2:A9": 5 },
       "formats": { "B9": 1 },
       "borders": {},
       "conditionalFormats": [],
@@ -529,150 +579,32 @@
     {
       "id": "840a0b8c-6a06-4db4-942b-5b0f3af77426",
       "name": "By product overview fill rate - On time",
-      "colNumber": 22,
-      "rowNumber": 101,
+      "colNumber": 21,
+      "rowNumber": 81,
       "rows": {},
       "cols": {
-        "0": { "size": 33 },
-        "1": { "size": 382 },
-        "7": { "size": 99 }
+        "0": { "size": 382 },
+        "4": { "size": 167 },
+        "6": { "size": 99 }
       },
-      "merges": ["G4:J4", "G20:J20", "I12:J12", "K4:N4", "G14:G15"],
+      "merges": [],
       "cells": {
-        "A20": "=_t(\"Row\")",
-        "A21": "1",
-        "A22": "2",
-        "A23": "3",
-        "A24": "4",
-        "A25": "5",
-        "A26": "6",
-        "A27": "7",
-        "A28": "8",
-        "A29": "9",
-        "A30": "10",
-        "B1": "=_t(\"Fill rate sort by \")&H15& \" \"&H14",
-        "B2": "=pivot(I14,10,false)",
-        "B19": "=_t(\"On time rate sort by \")&H15& \" \"&H14",
-        "B20": "=_t(\"Product\")",
-        "B21": "=PIVOT.HEADER($J$14,\"#product_id\",$A21)",
-        "B22": "=PIVOT.HEADER($J$14,\"#product_id\",$A22)",
-        "B23": "=PIVOT.HEADER($J$14,\"#product_id\",$A23)",
-        "B24": "=PIVOT.HEADER($J$14,\"#product_id\",$A24)",
-        "B25": "=PIVOT.HEADER($J$14,\"#product_id\",$A25)",
-        "B26": "=PIVOT.HEADER($J$14,\"#product_id\",$A26)",
-        "B27": "=PIVOT.HEADER($J$14,\"#product_id\",$A27)",
-        "B28": "=PIVOT.HEADER($J$14,\"#product_id\",$A28)",
-        "B29": "=PIVOT.HEADER($J$14,\"#product_id\",$A29)",
-        "B30": "=PIVOT.HEADER($J$14,\"#product_id\",$A30)",
-        "C20": "=_t(\"On time\")",
-        "C21": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A21,\"is_late\",false)",
-        "C22": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A22,\"is_late\",false)",
-        "C23": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A23,\"is_late\",false)",
-        "C24": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A24,\"is_late\",false)",
-        "C25": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A25,\"is_late\",false)",
-        "C26": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A26,\"is_late\",false)",
-        "C27": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A27,\"is_late\",false)",
-        "C28": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A28,\"is_late\",false)",
-        "C29": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A29,\"is_late\",false)",
-        "C30": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A30,\"is_late\",false)",
-        "D20": "=_t(\"Total count\")",
-        "D21": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A21)",
-        "D22": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A22)",
-        "D23": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A23)",
-        "D24": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A24)",
-        "D25": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A25)",
-        "D26": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A26)",
-        "D27": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A27)",
-        "D28": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A28)",
-        "D29": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A29)",
-        "D30": "=PIVOT.VALUE($J$14,\"__count\",\"#product_id\",$A30)",
-        "E20": "=_t(\"On time rate\")",
-        "E21": "=if(C21<>\"\",C21/D21,\"\")",
-        "E22": "=if(C22<>\"\",C22/D22,\"\")",
-        "E23": "=if(C23<>\"\",C23/D23,\"\")",
-        "E24": "=if(C24<>\"\",C24/D24,\"\")",
-        "E25": "=if(C25<>\"\",C25/D25,\"\")",
-        "E26": "=if(C26<>\"\",C26/D26,\"\")",
-        "E27": "=if(C27<>\"\",C27/D27,\"\")",
-        "E28": "=if(C28<>\"\",C28/D28,\"\")",
-        "E29": "=if(C29<>\"\",C29/D29,\"\")",
-        "E30": "=if(C30<>\"\",C30/D30,\"\")",
-        "F3": "=_t(\"Fill rate\")",
-        "F4": "=if(C4<>\"\",C4/D4,\"\")",
-        "F5": "=if(C5<>\"\",C5/D5,\"\")",
-        "F6": "=if(C6<>\"\",C6/D6,\"\")",
-        "F7": "=if(C7<>\"\",C7/D7,\"\")",
-        "F8": "=if(C8<>\"\",C8/D8,\"\")",
-        "F9": "=if(C9<>\"\",C9/D9,\"\")",
-        "F10": "=if(C10<>\"\",C10/D10,\"\")",
-        "F11": "=if(C11<>\"\",C11/D11,\"\")",
-        "F12": "=if(C12<>\"\",C12/D12,\"\")",
-        "F13": "=if(C13<>\"\",C13/D13,\"\")",
-        "G4": "=_t(\"Dynamic fields for filters fill rate\")",
-        "G14": "=_t(\"Selected filter\")",
-        "H5": "=_t(\"Filter\")",
-        "H6": "=_t(\"Demand\")",
-        "H7": "=_t(\"Count\")",
-        "H14": "=ODOO.FILTER.VALUE(\"Sort graph by\")",
-        "H15": "=ODOO.FILTER.VALUE(\"Top/Bottoms values\")",
-        "I5": "=_t(\"Top\")",
-        "I6": "23",
-        "I7": "24",
-        "I12": "=_t(\"Pivot to choose\")",
-        "I13": "=_t(\"Fill rate\")",
-        "I14": "=index(I6:J7,match(H14,H6:H7,0),match(H15,I5:J5,0))",
-        "J5": "=_t(\"Bottom\")",
-        "J6": "25",
-        "J7": "26",
-        "J13": "=_t(\"On Time\")",
-        "J14": "=index(M6:N7,match(H14,L6:L7,0),match(H15,M5:N5,0))",
-        "K4": "=_t(\"Dynamic fields for on time\")",
-        "L5": "=_t(\"Filter\")",
-        "L6": "=_t(\"Demand\")",
-        "L7": "=_t(\"Count\")",
-        "M5": "=_t(\"Top\")",
-        "M6": "28",
-        "M7": "30",
-        "N5": "=_t(\"Bottom\")",
-        "N6": "29",
-        "N7": "31"
+        "A1": "=pivot(23, 10, FALSE, FALSE)",
+        "A19": "=PIVOT(28, 10,false , FALSE)",
+        "H19": "=PIVOT(29,10,false,false)"
       },
-      "styles": { "B21:B30": 2, "G4:N4": 4, "G14:G15": 5, "I12:J12": 6 },
-      "formats": { "D21:D30": 2, "E21:E30": 3, "F4:F13": 3 },
-      "borders": {
-        "A4:A13": 3,
-        "A21:A30": 3,
-        "B1": 4,
-        "C2:D2": 4,
-        "B19:D19": 4,
-        "B2": 5,
-        "B20": 5,
-        "B3": 6,
-        "B4:B13": 7,
-        "B21:B30": 7,
-        "B14": 8,
-        "B31": 8,
-        "C3:C13": 9,
-        "C20:C30": 9,
-        "D4:D13": 9,
-        "D21:D30": 9,
-        "C14:D14": 10,
-        "C31:D31": 10,
-        "D3": 11,
-        "D20": 11,
-        "E3": 12,
-        "E20": 13,
-        "F3": 13
-      },
+      "styles": { "L4:M4": 6 },
+      "formats": { "E8:E11": 2 },
+      "borders": { "A1": 4 },
       "conditionalFormats": [],
       "dataValidationRules": [],
       "figures": [],
       "tables": [
         {
-          "range": "B2:F13",
-          "type": "static",
+          "range": "A1",
+          "type": "dynamic",
           "config": {
-            "hasFilters": true,
+            "hasFilters": false,
             "totalRow": false,
             "firstColumn": false,
             "lastColumn": false,
@@ -680,14 +612,14 @@
             "bandedRows": true,
             "bandedColumns": false,
             "automaticAutofill": true,
-            "styleId": "TableStyleMedium2"
+            "styleId": "TableStyleMedium5"
           }
         },
         {
-          "range": "B20:E30",
-          "type": "static",
+          "range": "H19",
+          "type": "dynamic",
           "config": {
-            "hasFilters": true,
+            "hasFilters": false,
             "totalRow": false,
             "firstColumn": false,
             "lastColumn": false,
@@ -695,7 +627,22 @@
             "bandedRows": true,
             "bandedColumns": false,
             "automaticAutofill": true,
-            "styleId": "TableStyleMedium2"
+            "styleId": "TableStyleMedium5"
+          }
+        },
+        {
+          "range": "A19",
+          "type": "dynamic",
+          "config": {
+            "hasFilters": false,
+            "totalRow": false,
+            "firstColumn": false,
+            "lastColumn": false,
+            "numberOfHeaders": 1,
+            "bandedRows": true,
+            "bandedColumns": false,
+            "automaticAutofill": true,
+            "styleId": "TableStyleMedium5"
           }
         }
       ],
@@ -730,274 +677,274 @@
         "K1": "=_t(\"Operations\")",
         "K2": "=iferror(UNIQUE(VSTACK(FILTER(A2:A270,A2:A270<>\"Total\",A2:A270<>\"\"),FILTER(F2:F270,F2:F270<>\"Total\",F2:F270<>\"\"))),\"\")",
         "L1": "=_t(\"Current period\")",
-        "L2": "=iferror(if(K2<>\"\",VLOOKUP(K2,A:D,3,0),\"\"),\"\")",
-        "L3": "=iferror(if(K3<>\"\",VLOOKUP(K3,A:D,3,0),\"\"),\"\")",
-        "L4": "=iferror(if(K4<>\"\",VLOOKUP(K4,A:D,3,0),\"\"),\"\")",
-        "L5": "=iferror(if(K5<>\"\",VLOOKUP(K5,A:D,3,0),\"\"),\"\")",
-        "L6": "=iferror(if(K6<>\"\",VLOOKUP(K6,A:D,3,0),\"\"),\"\")",
-        "L7": "=iferror(if(K7<>\"\",VLOOKUP(K7,A:D,3,0),\"\"),\"\")",
-        "L8": "=iferror(if(K8<>\"\",VLOOKUP(K8,A:D,3,0),\"\"),\"\")",
-        "L9": "=iferror(if(K9<>\"\",VLOOKUP(K9,A:D,3,0),\"\"),\"\")",
-        "L10": "=iferror(if(K10<>\"\",VLOOKUP(K10,A:D,3,0),\"\"),\"\")",
-        "L11": "=iferror(if(K11<>\"\",VLOOKUP(K11,A:D,3,0),\"\"),\"\")",
-        "L12": "=iferror(if(K12<>\"\",VLOOKUP(K12,A:D,3,0),\"\"),\"\")",
-        "L13": "=iferror(if(K13<>\"\",VLOOKUP(K13,A:D,3,0),\"\"),\"\")",
-        "L14": "=iferror(if(K14<>\"\",VLOOKUP(K14,A:D,3,0),\"\"),\"\")",
-        "L15": "=iferror(if(K15<>\"\",VLOOKUP(K15,A:D,3,0),\"\"),\"\")",
-        "L16": "=iferror(if(K16<>\"\",VLOOKUP(K16,A:D,3,0),\"\"),\"\")",
-        "L17": "=iferror(if(K17<>\"\",VLOOKUP(K17,A:D,3,0),\"\"),\"\")",
-        "L18": "=iferror(if(K18<>\"\",VLOOKUP(K18,A:D,3,0),\"\"),\"\")",
-        "L19": "=iferror(if(K19<>\"\",VLOOKUP(K19,A:D,3,0),\"\"),\"\")",
-        "L20": "=iferror(if(K20<>\"\",VLOOKUP(K20,A:D,3,0),\"\"),\"\")",
-        "L21": "=iferror(if(K21<>\"\",VLOOKUP(K21,A:D,3,0),\"\"),\"\")",
-        "L22": "=iferror(if(K22<>\"\",VLOOKUP(K22,A:D,3,0),\"\"),\"\")",
-        "L23": "=iferror(if(K23<>\"\",VLOOKUP(K23,A:D,3,0),\"\"),\"\")",
-        "L24": "=iferror(if(K24<>\"\",VLOOKUP(K24,A:D,3,0),\"\"),\"\")",
-        "L25": "=iferror(if(K25<>\"\",VLOOKUP(K25,A:D,3,0),\"\"),\"\")",
-        "L26": "=iferror(if(K26<>\"\",VLOOKUP(K26,A:D,3,0),\"\"),\"\")",
-        "L27": "=iferror(if(K27<>\"\",VLOOKUP(K27,A:D,3,0),\"\"),\"\")",
-        "L28": "=iferror(if(K28<>\"\",VLOOKUP(K28,A:D,3,0),\"\"),\"\")",
-        "L29": "=iferror(if(K29<>\"\",VLOOKUP(K29,A:D,3,0),\"\"),\"\")",
-        "L30": "=iferror(if(K30<>\"\",VLOOKUP(K30,A:D,3,0),\"\"),\"\")",
-        "L31": "=iferror(if(K31<>\"\",VLOOKUP(K31,A:D,3,0),\"\"),\"\")",
-        "L32": "=iferror(if(K32<>\"\",VLOOKUP(K32,A:D,3,0),\"\"),\"\")",
-        "L33": "=iferror(if(K33<>\"\",VLOOKUP(K33,A:D,3,0),\"\"),\"\")",
-        "L34": "=iferror(if(K34<>\"\",VLOOKUP(K34,A:D,3,0),\"\"),\"\")",
-        "L35": "=iferror(if(K35<>\"\",VLOOKUP(K35,A:D,3,0),\"\"),\"\")",
-        "L36": "=iferror(if(K36<>\"\",VLOOKUP(K36,A:D,3,0),\"\"),\"\")",
-        "L37": "=iferror(if(K37<>\"\",VLOOKUP(K37,A:D,3,0),\"\"),\"\")",
-        "L38": "=iferror(if(K38<>\"\",VLOOKUP(K38,A:D,3,0),\"\"),\"\")",
-        "L39": "=iferror(if(K39<>\"\",VLOOKUP(K39,A:D,3,0),\"\"),\"\")",
-        "L40": "=iferror(if(K40<>\"\",VLOOKUP(K40,A:D,3,0),\"\"),\"\")",
-        "L41": "=iferror(if(K41<>\"\",VLOOKUP(K41,A:D,3,0),\"\"),\"\")",
-        "L42": "=iferror(if(K42<>\"\",VLOOKUP(K42,A:D,3,0),\"\"),\"\")",
-        "L43": "=iferror(if(K43<>\"\",VLOOKUP(K43,A:D,3,0),\"\"),\"\")",
-        "L44": "=iferror(if(K44<>\"\",VLOOKUP(K44,A:D,3,0),\"\"),\"\")",
-        "L45": "=iferror(if(K45<>\"\",VLOOKUP(K45,A:D,3,0),\"\"),\"\")",
-        "L46": "=iferror(if(K46<>\"\",VLOOKUP(K46,A:D,3,0),\"\"),\"\")",
-        "L47": "=iferror(if(K47<>\"\",VLOOKUP(K47,A:D,3,0),\"\"),\"\")",
-        "L48": "=iferror(if(K48<>\"\",VLOOKUP(K48,A:D,3,0),\"\"),\"\")",
-        "L49": "=iferror(if(K49<>\"\",VLOOKUP(K49,A:D,3,0),\"\"),\"\")",
-        "L50": "=iferror(if(K50<>\"\",VLOOKUP(K50,A:D,3,0),\"\"),\"\")",
-        "L51": "=iferror(if(K51<>\"\",VLOOKUP(K51,A:D,3,0),\"\"),\"\")",
-        "L52": "=iferror(if(K52<>\"\",VLOOKUP(K52,A:D,3,0),\"\"),\"\")",
-        "L53": "=iferror(if(K53<>\"\",VLOOKUP(K53,A:D,3,0),\"\"),\"\")",
-        "L54": "=iferror(if(K54<>\"\",VLOOKUP(K54,A:D,3,0),\"\"),\"\")",
-        "L55": "=iferror(if(K55<>\"\",VLOOKUP(K55,A:D,3,0),\"\"),\"\")",
-        "L56": "=iferror(if(K56<>\"\",VLOOKUP(K56,A:D,3,0),\"\"),\"\")",
-        "L57": "=iferror(if(K57<>\"\",VLOOKUP(K57,A:D,3,0),\"\"),\"\")",
-        "L58": "=iferror(if(K58<>\"\",VLOOKUP(K58,A:D,3,0),\"\"),\"\")",
-        "L59": "=iferror(if(K59<>\"\",VLOOKUP(K59,A:D,3,0),\"\"),\"\")",
-        "L60": "=iferror(if(K60<>\"\",VLOOKUP(K60,A:D,3,0),\"\"),\"\")",
-        "L61": "=iferror(if(K61<>\"\",VLOOKUP(K61,A:D,3,0),\"\"),\"\")",
-        "L62": "=iferror(if(K62<>\"\",VLOOKUP(K62,A:D,3,0),\"\"),\"\")",
-        "L63": "=iferror(if(K63<>\"\",VLOOKUP(K63,A:D,3,0),\"\"),\"\")",
-        "L64": "=iferror(if(K64<>\"\",VLOOKUP(K64,A:D,3,0),\"\"),\"\")",
-        "L65": "=iferror(if(K65<>\"\",VLOOKUP(K65,A:D,3,0),\"\"),\"\")",
-        "L66": "=iferror(if(K66<>\"\",VLOOKUP(K66,A:D,3,0),\"\"),\"\")",
-        "L67": "=iferror(if(K67<>\"\",VLOOKUP(K67,A:D,3,0),\"\"),\"\")",
-        "L68": "=iferror(if(K68<>\"\",VLOOKUP(K68,A:D,3,0),\"\"),\"\")",
-        "L69": "=iferror(if(K69<>\"\",VLOOKUP(K69,A:D,3,0),\"\"),\"\")",
-        "L70": "=iferror(if(K70<>\"\",VLOOKUP(K70,A:D,3,0),\"\"),\"\")",
-        "L71": "=iferror(if(K71<>\"\",VLOOKUP(K71,A:D,3,0),\"\"),\"\")",
-        "L72": "=iferror(if(K72<>\"\",VLOOKUP(K72,A:D,3,0),\"\"),\"\")",
-        "L73": "=iferror(if(K73<>\"\",VLOOKUP(K73,A:D,3,0),\"\"),\"\")",
-        "L74": "=iferror(if(K74<>\"\",VLOOKUP(K74,A:D,3,0),\"\"),\"\")",
-        "L75": "=iferror(if(K75<>\"\",VLOOKUP(K75,A:D,3,0),\"\"),\"\")",
-        "L76": "=iferror(if(K76<>\"\",VLOOKUP(K76,A:D,3,0),\"\"),\"\")",
-        "L77": "=iferror(if(K77<>\"\",VLOOKUP(K77,A:D,3,0),\"\"),\"\")",
-        "L78": "=iferror(if(K78<>\"\",VLOOKUP(K78,A:D,3,0),\"\"),\"\")",
-        "L79": "=iferror(if(K79<>\"\",VLOOKUP(K79,A:D,3,0),\"\"),\"\")",
-        "L80": "=iferror(if(K80<>\"\",VLOOKUP(K80,A:D,3,0),\"\"),\"\")",
-        "L81": "=iferror(if(K81<>\"\",VLOOKUP(K81,A:D,3,0),\"\"),\"\")",
-        "L82": "=iferror(if(K82<>\"\",VLOOKUP(K82,A:D,3,0),\"\"),\"\")",
-        "L83": "=iferror(if(K83<>\"\",VLOOKUP(K83,A:D,3,0),\"\"),\"\")",
-        "L84": "=iferror(if(K84<>\"\",VLOOKUP(K84,A:D,3,0),\"\"),\"\")",
-        "L85": "=iferror(if(K85<>\"\",VLOOKUP(K85,A:D,3,0),\"\"),\"\")",
-        "L86": "=iferror(if(K86<>\"\",VLOOKUP(K86,A:D,3,0),\"\"),\"\")",
-        "L87": "=iferror(if(K87<>\"\",VLOOKUP(K87,A:D,3,0),\"\"),\"\")",
-        "L88": "=iferror(if(K88<>\"\",VLOOKUP(K88,A:D,3,0),\"\"),\"\")",
-        "L89": "=iferror(if(K89<>\"\",VLOOKUP(K89,A:D,3,0),\"\"),\"\")",
-        "L90": "=iferror(if(K90<>\"\",VLOOKUP(K90,A:D,3,0),\"\"),\"\")",
-        "L91": "=iferror(if(K91<>\"\",VLOOKUP(K91,A:D,3,0),\"\"),\"\")",
-        "L92": "=iferror(if(K92<>\"\",VLOOKUP(K92,A:D,3,0),\"\"),\"\")",
-        "L93": "=iferror(if(K93<>\"\",VLOOKUP(K93,A:D,3,0),\"\"),\"\")",
-        "L94": "=iferror(if(K94<>\"\",VLOOKUP(K94,A:D,3,0),\"\"),\"\")",
-        "L95": "=iferror(if(K95<>\"\",VLOOKUP(K95,A:D,3,0),\"\"),\"\")",
-        "L96": "=iferror(if(K96<>\"\",VLOOKUP(K96,A:D,3,0),\"\"),\"\")",
-        "L97": "=iferror(if(K97<>\"\",VLOOKUP(K97,A:D,3,0),\"\"),\"\")",
-        "L98": "=iferror(if(K98<>\"\",VLOOKUP(K98,A:D,3,0),\"\"),\"\")",
-        "L99": "=iferror(if(K99<>\"\",VLOOKUP(K99,A:D,3,0),\"\"),\"\")",
-        "L100": "=iferror(if(K100<>\"\",VLOOKUP(K100,A:D,3,0),\"\"),\"\")",
-        "L101": "=iferror(if(K101<>\"\",VLOOKUP(K101,A:D,3,0),\"\"),\"\")",
-        "L102": "=iferror(if(K102<>\"\",VLOOKUP(K102,A:D,3,0),\"\"),\"\")",
-        "L103": "=iferror(if(K103<>\"\",VLOOKUP(K103,A:D,3,0),\"\"),\"\")",
-        "L104": "=iferror(if(K104<>\"\",VLOOKUP(K104,A:D,3,0),\"\"),\"\")",
-        "L105": "=iferror(if(K105<>\"\",VLOOKUP(K105,A:D,3,0),\"\"),\"\")",
-        "L106": "=iferror(if(K106<>\"\",VLOOKUP(K106,A:D,3,0),\"\"),\"\")",
-        "L107": "=iferror(if(K107<>\"\",VLOOKUP(K107,A:D,3,0),\"\"),\"\")",
-        "L108": "=iferror(if(K108<>\"\",VLOOKUP(K108,A:D,3,0),\"\"),\"\")",
-        "L109": "=iferror(if(K109<>\"\",VLOOKUP(K109,A:D,3,0),\"\"),\"\")",
-        "L110": "=iferror(if(K110<>\"\",VLOOKUP(K110,A:D,3,0),\"\"),\"\")",
-        "L111": "=iferror(if(K111<>\"\",VLOOKUP(K111,A:D,3,0),\"\"),\"\")",
-        "L112": "=iferror(if(K112<>\"\",VLOOKUP(K112,A:D,3,0),\"\"),\"\")",
-        "L113": "=iferror(if(K113<>\"\",VLOOKUP(K113,A:D,3,0),\"\"),\"\")",
-        "L114": "=iferror(if(K114<>\"\",VLOOKUP(K114,A:D,3,0),\"\"),\"\")",
-        "L115": "=iferror(if(K115<>\"\",VLOOKUP(K115,A:D,3,0),\"\"),\"\")",
-        "L116": "=iferror(if(K116<>\"\",VLOOKUP(K116,A:D,3,0),\"\"),\"\")",
-        "L117": "=iferror(if(K117<>\"\",VLOOKUP(K117,A:D,3,0),\"\"),\"\")",
-        "L118": "=iferror(if(K118<>\"\",VLOOKUP(K118,A:D,3,0),\"\"),\"\")",
-        "L119": "=iferror(if(K119<>\"\",VLOOKUP(K119,A:D,3,0),\"\"),\"\")",
-        "L120": "=iferror(if(K120<>\"\",VLOOKUP(K120,A:D,3,0),\"\"),\"\")",
-        "L121": "=iferror(if(K121<>\"\",VLOOKUP(K121,A:D,3,0),\"\"),\"\")",
-        "L122": "=iferror(if(K122<>\"\",VLOOKUP(K122,A:D,3,0),\"\"),\"\")",
-        "L123": "=iferror(if(K123<>\"\",VLOOKUP(K123,A:D,3,0),\"\"),\"\")",
-        "L124": "=iferror(if(K124<>\"\",VLOOKUP(K124,A:D,3,0),\"\"),\"\")",
-        "L125": "=iferror(if(K125<>\"\",VLOOKUP(K125,A:D,3,0),\"\"),\"\")",
-        "L126": "=iferror(if(K126<>\"\",VLOOKUP(K126,A:D,3,0),\"\"),\"\")",
-        "L127": "=iferror(if(K127<>\"\",VLOOKUP(K127,A:D,3,0),\"\"),\"\")",
-        "L128": "=iferror(if(K128<>\"\",VLOOKUP(K128,A:D,3,0),\"\"),\"\")",
-        "L129": "=iferror(if(K129<>\"\",VLOOKUP(K129,A:D,3,0),\"\"),\"\")",
-        "L130": "=iferror(if(K130<>\"\",VLOOKUP(K130,A:D,3,0),\"\"),\"\")",
-        "L131": "=iferror(if(K131<>\"\",VLOOKUP(K131,A:D,3,0),\"\"),\"\")",
-        "L132": "=iferror(if(K132<>\"\",VLOOKUP(K132,A:D,3,0),\"\"),\"\")",
-        "L133": "=iferror(if(K133<>\"\",VLOOKUP(K133,A:D,3,0),\"\"),\"\")",
-        "L134": "=iferror(if(K134<>\"\",VLOOKUP(K134,A:D,3,0),\"\"),\"\")",
-        "L135": "=iferror(if(K135<>\"\",VLOOKUP(K135,A:D,3,0),\"\"),\"\")",
-        "L136": "=iferror(if(K136<>\"\",VLOOKUP(K136,A:D,3,0),\"\"),\"\")",
-        "L137": "=iferror(if(K137<>\"\",VLOOKUP(K137,A:D,3,0),\"\"),\"\")",
-        "L138": "=iferror(if(K138<>\"\",VLOOKUP(K138,A:D,3,0),\"\"),\"\")",
-        "L139": "=iferror(if(K139<>\"\",VLOOKUP(K139,A:D,3,0),\"\"),\"\")",
-        "L140": "=iferror(if(K140<>\"\",VLOOKUP(K140,A:D,3,0),\"\"),\"\")",
-        "L141": "=iferror(if(K141<>\"\",VLOOKUP(K141,A:D,3,0),\"\"),\"\")",
-        "L142": "=iferror(if(K142<>\"\",VLOOKUP(K142,A:D,3,0),\"\"),\"\")",
-        "L143": "=iferror(if(K143<>\"\",VLOOKUP(K143,A:D,3,0),\"\"),\"\")",
-        "L144": "=iferror(if(K144<>\"\",VLOOKUP(K144,A:D,3,0),\"\"),\"\")",
-        "L145": "=iferror(if(K145<>\"\",VLOOKUP(K145,A:D,3,0),\"\"),\"\")",
-        "L146": "=iferror(if(K146<>\"\",VLOOKUP(K146,A:D,3,0),\"\"),\"\")",
-        "L147": "=iferror(if(K147<>\"\",VLOOKUP(K147,A:D,3,0),\"\"),\"\")",
-        "L148": "=iferror(if(K148<>\"\",VLOOKUP(K148,A:D,3,0),\"\"),\"\")",
-        "L149": "=iferror(if(K149<>\"\",VLOOKUP(K149,A:D,3,0),\"\"),\"\")",
-        "L150": "=iferror(if(K150<>\"\",VLOOKUP(K150,A:D,3,0),\"\"),\"\")",
-        "L151": "=iferror(if(K151<>\"\",VLOOKUP(K151,A:D,3,0),\"\"),\"\")",
-        "L152": "=iferror(if(K152<>\"\",VLOOKUP(K152,A:D,3,0),\"\"),\"\")",
-        "L153": "=iferror(if(K153<>\"\",VLOOKUP(K153,A:D,3,0),\"\"),\"\")",
-        "L154": "=iferror(if(K154<>\"\",VLOOKUP(K154,A:D,3,0),\"\"),\"\")",
-        "L155": "=iferror(if(K155<>\"\",VLOOKUP(K155,A:D,3,0),\"\"),\"\")",
-        "L156": "=iferror(if(K156<>\"\",VLOOKUP(K156,A:D,3,0),\"\"),\"\")",
-        "L157": "=iferror(if(K157<>\"\",VLOOKUP(K157,A:D,3,0),\"\"),\"\")",
-        "L158": "=iferror(if(K158<>\"\",VLOOKUP(K158,A:D,3,0),\"\"),\"\")",
-        "L159": "=iferror(if(K159<>\"\",VLOOKUP(K159,A:D,3,0),\"\"),\"\")",
-        "L160": "=iferror(if(K160<>\"\",VLOOKUP(K160,A:D,3,0),\"\"),\"\")",
-        "L161": "=iferror(if(K161<>\"\",VLOOKUP(K161,A:D,3,0),\"\"),\"\")",
-        "L162": "=iferror(if(K162<>\"\",VLOOKUP(K162,A:D,3,0),\"\"),\"\")",
-        "L163": "=iferror(if(K163<>\"\",VLOOKUP(K163,A:D,3,0),\"\"),\"\")",
-        "L164": "=iferror(if(K164<>\"\",VLOOKUP(K164,A:D,3,0),\"\"),\"\")",
-        "L165": "=iferror(if(K165<>\"\",VLOOKUP(K165,A:D,3,0),\"\"),\"\")",
-        "L166": "=iferror(if(K166<>\"\",VLOOKUP(K166,A:D,3,0),\"\"),\"\")",
-        "L167": "=iferror(if(K167<>\"\",VLOOKUP(K167,A:D,3,0),\"\"),\"\")",
-        "L168": "=iferror(if(K168<>\"\",VLOOKUP(K168,A:D,3,0),\"\"),\"\")",
-        "L169": "=iferror(if(K169<>\"\",VLOOKUP(K169,A:D,3,0),\"\"),\"\")",
-        "L170": "=iferror(if(K170<>\"\",VLOOKUP(K170,A:D,3,0),\"\"),\"\")",
-        "L171": "=iferror(if(K171<>\"\",VLOOKUP(K171,A:D,3,0),\"\"),\"\")",
-        "L172": "=iferror(if(K172<>\"\",VLOOKUP(K172,A:D,3,0),\"\"),\"\")",
-        "L173": "=iferror(if(K173<>\"\",VLOOKUP(K173,A:D,3,0),\"\"),\"\")",
-        "L174": "=iferror(if(K174<>\"\",VLOOKUP(K174,A:D,3,0),\"\"),\"\")",
-        "L175": "=iferror(if(K175<>\"\",VLOOKUP(K175,A:D,3,0),\"\"),\"\")",
-        "L176": "=iferror(if(K176<>\"\",VLOOKUP(K176,A:D,3,0),\"\"),\"\")",
-        "L177": "=iferror(if(K177<>\"\",VLOOKUP(K177,A:D,3,0),\"\"),\"\")",
-        "L178": "=iferror(if(K178<>\"\",VLOOKUP(K178,A:D,3,0),\"\"),\"\")",
-        "L179": "=iferror(if(K179<>\"\",VLOOKUP(K179,A:D,3,0),\"\"),\"\")",
-        "L180": "=iferror(if(K180<>\"\",VLOOKUP(K180,A:D,3,0),\"\"),\"\")",
-        "L181": "=iferror(if(K181<>\"\",VLOOKUP(K181,A:D,3,0),\"\"),\"\")",
-        "L182": "=iferror(if(K182<>\"\",VLOOKUP(K182,A:D,3,0),\"\"),\"\")",
-        "L183": "=iferror(if(K183<>\"\",VLOOKUP(K183,A:D,3,0),\"\"),\"\")",
-        "L184": "=iferror(if(K184<>\"\",VLOOKUP(K184,A:D,3,0),\"\"),\"\")",
-        "L185": "=iferror(if(K185<>\"\",VLOOKUP(K185,A:D,3,0),\"\"),\"\")",
-        "L186": "=iferror(if(K186<>\"\",VLOOKUP(K186,A:D,3,0),\"\"),\"\")",
-        "L187": "=iferror(if(K187<>\"\",VLOOKUP(K187,A:D,3,0),\"\"),\"\")",
-        "L188": "=iferror(if(K188<>\"\",VLOOKUP(K188,A:D,3,0),\"\"),\"\")",
-        "L189": "=iferror(if(K189<>\"\",VLOOKUP(K189,A:D,3,0),\"\"),\"\")",
-        "L190": "=iferror(if(K190<>\"\",VLOOKUP(K190,A:D,3,0),\"\"),\"\")",
-        "L191": "=iferror(if(K191<>\"\",VLOOKUP(K191,A:D,3,0),\"\"),\"\")",
-        "L192": "=iferror(if(K192<>\"\",VLOOKUP(K192,A:D,3,0),\"\"),\"\")",
-        "L193": "=iferror(if(K193<>\"\",VLOOKUP(K193,A:D,3,0),\"\"),\"\")",
-        "L194": "=iferror(if(K194<>\"\",VLOOKUP(K194,A:D,3,0),\"\"),\"\")",
-        "L195": "=iferror(if(K195<>\"\",VLOOKUP(K195,A:D,3,0),\"\"),\"\")",
-        "L196": "=iferror(if(K196<>\"\",VLOOKUP(K196,A:D,3,0),\"\"),\"\")",
-        "L197": "=iferror(if(K197<>\"\",VLOOKUP(K197,A:D,3,0),\"\"),\"\")",
-        "L198": "=iferror(if(K198<>\"\",VLOOKUP(K198,A:D,3,0),\"\"),\"\")",
-        "L199": "=iferror(if(K199<>\"\",VLOOKUP(K199,A:D,3,0),\"\"),\"\")",
-        "L200": "=iferror(if(K200<>\"\",VLOOKUP(K200,A:D,3,0),\"\"),\"\")",
-        "L201": "=iferror(if(K201<>\"\",VLOOKUP(K201,A:D,3,0),\"\"),\"\")",
-        "L202": "=iferror(if(K202<>\"\",VLOOKUP(K202,A:D,3,0),\"\"),\"\")",
-        "L203": "=iferror(if(K203<>\"\",VLOOKUP(K203,A:D,3,0),\"\"),\"\")",
-        "L204": "=iferror(if(K204<>\"\",VLOOKUP(K204,A:D,3,0),\"\"),\"\")",
-        "L205": "=iferror(if(K205<>\"\",VLOOKUP(K205,A:D,3,0),\"\"),\"\")",
-        "L206": "=iferror(if(K206<>\"\",VLOOKUP(K206,A:D,3,0),\"\"),\"\")",
-        "L207": "=iferror(if(K207<>\"\",VLOOKUP(K207,A:D,3,0),\"\"),\"\")",
-        "L208": "=iferror(if(K208<>\"\",VLOOKUP(K208,A:D,3,0),\"\"),\"\")",
-        "L209": "=iferror(if(K209<>\"\",VLOOKUP(K209,A:D,3,0),\"\"),\"\")",
-        "L210": "=iferror(if(K210<>\"\",VLOOKUP(K210,A:D,3,0),\"\"),\"\")",
-        "L211": "=iferror(if(K211<>\"\",VLOOKUP(K211,A:D,3,0),\"\"),\"\")",
-        "L212": "=iferror(if(K212<>\"\",VLOOKUP(K212,A:D,3,0),\"\"),\"\")",
-        "L213": "=iferror(if(K213<>\"\",VLOOKUP(K213,A:D,3,0),\"\"),\"\")",
-        "L214": "=iferror(if(K214<>\"\",VLOOKUP(K214,A:D,3,0),\"\"),\"\")",
-        "L215": "=iferror(if(K215<>\"\",VLOOKUP(K215,A:D,3,0),\"\"),\"\")",
-        "L216": "=iferror(if(K216<>\"\",VLOOKUP(K216,A:D,3,0),\"\"),\"\")",
-        "L217": "=iferror(if(K217<>\"\",VLOOKUP(K217,A:D,3,0),\"\"),\"\")",
-        "L218": "=iferror(if(K218<>\"\",VLOOKUP(K218,A:D,3,0),\"\"),\"\")",
-        "L219": "=iferror(if(K219<>\"\",VLOOKUP(K219,A:D,3,0),\"\"),\"\")",
-        "L220": "=iferror(if(K220<>\"\",VLOOKUP(K220,A:D,3,0),\"\"),\"\")",
-        "L221": "=iferror(if(K221<>\"\",VLOOKUP(K221,A:D,3,0),\"\"),\"\")",
-        "L222": "=iferror(if(K222<>\"\",VLOOKUP(K222,A:D,3,0),\"\"),\"\")",
-        "L223": "=iferror(if(K223<>\"\",VLOOKUP(K223,A:D,3,0),\"\"),\"\")",
-        "L224": "=iferror(if(K224<>\"\",VLOOKUP(K224,A:D,3,0),\"\"),\"\")",
-        "L225": "=iferror(if(K225<>\"\",VLOOKUP(K225,A:D,3,0),\"\"),\"\")",
-        "L226": "=iferror(if(K226<>\"\",VLOOKUP(K226,A:D,3,0),\"\"),\"\")",
-        "L227": "=iferror(if(K227<>\"\",VLOOKUP(K227,A:D,3,0),\"\"),\"\")",
-        "L228": "=iferror(if(K228<>\"\",VLOOKUP(K228,A:D,3,0),\"\"),\"\")",
-        "L229": "=iferror(if(K229<>\"\",VLOOKUP(K229,A:D,3,0),\"\"),\"\")",
-        "L230": "=iferror(if(K230<>\"\",VLOOKUP(K230,A:D,3,0),\"\"),\"\")",
-        "L231": "=iferror(if(K231<>\"\",VLOOKUP(K231,A:D,3,0),\"\"),\"\")",
-        "L232": "=iferror(if(K232<>\"\",VLOOKUP(K232,A:D,3,0),\"\"),\"\")",
-        "L233": "=iferror(if(K233<>\"\",VLOOKUP(K233,A:D,3,0),\"\"),\"\")",
-        "L234": "=iferror(if(K234<>\"\",VLOOKUP(K234,A:D,3,0),\"\"),\"\")",
-        "L235": "=iferror(if(K235<>\"\",VLOOKUP(K235,A:D,3,0),\"\"),\"\")",
-        "L236": "=iferror(if(K236<>\"\",VLOOKUP(K236,A:D,3,0),\"\"),\"\")",
-        "L237": "=iferror(if(K237<>\"\",VLOOKUP(K237,A:D,3,0),\"\"),\"\")",
-        "L238": "=iferror(if(K238<>\"\",VLOOKUP(K238,A:D,3,0),\"\"),\"\")",
-        "L239": "=iferror(if(K239<>\"\",VLOOKUP(K239,A:D,3,0),\"\"),\"\")",
-        "L240": "=iferror(if(K240<>\"\",VLOOKUP(K240,A:D,3,0),\"\"),\"\")",
-        "L241": "=iferror(if(K241<>\"\",VLOOKUP(K241,A:D,3,0),\"\"),\"\")",
-        "L242": "=iferror(if(K242<>\"\",VLOOKUP(K242,A:D,3,0),\"\"),\"\")",
-        "L243": "=iferror(if(K243<>\"\",VLOOKUP(K243,A:D,3,0),\"\"),\"\")",
-        "L244": "=iferror(if(K244<>\"\",VLOOKUP(K244,A:D,3,0),\"\"),\"\")",
-        "L245": "=iferror(if(K245<>\"\",VLOOKUP(K245,A:D,3,0),\"\"),\"\")",
-        "L246": "=iferror(if(K246<>\"\",VLOOKUP(K246,A:D,3,0),\"\"),\"\")",
-        "L247": "=iferror(if(K247<>\"\",VLOOKUP(K247,A:D,3,0),\"\"),\"\")",
-        "L248": "=iferror(if(K248<>\"\",VLOOKUP(K248,A:D,3,0),\"\"),\"\")",
-        "L249": "=iferror(if(K249<>\"\",VLOOKUP(K249,A:D,3,0),\"\"),\"\")",
-        "L250": "=iferror(if(K250<>\"\",VLOOKUP(K250,A:D,3,0),\"\"),\"\")",
-        "L251": "=iferror(if(K251<>\"\",VLOOKUP(K251,A:D,3,0),\"\"),\"\")",
-        "L252": "=iferror(if(K252<>\"\",VLOOKUP(K252,A:D,3,0),\"\"),\"\")",
-        "L253": "=iferror(if(K253<>\"\",VLOOKUP(K253,A:D,3,0),\"\"),\"\")",
-        "L254": "=iferror(if(K254<>\"\",VLOOKUP(K254,A:D,3,0),\"\"),\"\")",
-        "L255": "=iferror(if(K255<>\"\",VLOOKUP(K255,A:D,3,0),\"\"),\"\")",
-        "L256": "=iferror(if(K256<>\"\",VLOOKUP(K256,A:D,3,0),\"\"),\"\")",
-        "L257": "=iferror(if(K257<>\"\",VLOOKUP(K257,A:D,3,0),\"\"),\"\")",
-        "L258": "=iferror(if(K258<>\"\",VLOOKUP(K258,A:D,3,0),\"\"),\"\")",
-        "L259": "=iferror(if(K259<>\"\",VLOOKUP(K259,A:D,3,0),\"\"),\"\")",
-        "L260": "=iferror(if(K260<>\"\",VLOOKUP(K260,A:D,3,0),\"\"),\"\")",
-        "L261": "=iferror(if(K261<>\"\",VLOOKUP(K261,A:D,3,0),\"\"),\"\")",
-        "L262": "=iferror(if(K262<>\"\",VLOOKUP(K262,A:D,3,0),\"\"),\"\")",
-        "L263": "=iferror(if(K263<>\"\",VLOOKUP(K263,A:D,3,0),\"\"),\"\")",
-        "L264": "=iferror(if(K264<>\"\",VLOOKUP(K264,A:D,3,0),\"\"),\"\")",
-        "L265": "=iferror(if(K265<>\"\",VLOOKUP(K265,A:D,3,0),\"\"),\"\")",
-        "L266": "=iferror(if(K266<>\"\",VLOOKUP(K266,A:D,3,0),\"\"),\"\")",
-        "L267": "=iferror(if(K267<>\"\",VLOOKUP(K267,A:D,3,0),\"\"),\"\")",
-        "L268": "=iferror(if(K268<>\"\",VLOOKUP(K268,A:D,3,0),\"\"),\"\")",
-        "L269": "=iferror(if(K269<>\"\",VLOOKUP(K269,A:D,3,0),\"\"),\"\")",
+        "L2": "=iferror(if(K2<>\"\", VLOOKUP(K2, A:D, 4, 0), \"\"), \"\")",
+        "L3": "=iferror(if(K3<>\"\", VLOOKUP(K3, A:D, 4, 0), \"\"), \"\")",
+        "L4": "=iferror(if(K4<>\"\", VLOOKUP(K4, A:D, 4, 0), \"\"), \"\")",
+        "L5": "=iferror(if(K5<>\"\", VLOOKUP(K5, A:D, 4, 0), \"\"), \"\")",
+        "L6": "=iferror(if(K6<>\"\", VLOOKUP(K6, A:D, 4, 0), \"\"), \"\")",
+        "L7": "=iferror(if(K7<>\"\", VLOOKUP(K7, A:D, 4, 0), \"\"), \"\")",
+        "L8": "=iferror(if(K8<>\"\", VLOOKUP(K8, A:D, 4, 0), \"\"), \"\")",
+        "L9": "=iferror(if(K9<>\"\", VLOOKUP(K9, A:D, 4, 0), \"\"), \"\")",
+        "L10": "=iferror(if(K10<>\"\", VLOOKUP(K10, A:D, 4, 0), \"\"), \"\")",
+        "L11": "=iferror(if(K11<>\"\", VLOOKUP(K11, A:D, 4, 0), \"\"), \"\")",
+        "L12": "=iferror(if(K12<>\"\", VLOOKUP(K12, A:D, 4, 0), \"\"), \"\")",
+        "L13": "=iferror(if(K13<>\"\", VLOOKUP(K13, A:D, 4, 0), \"\"), \"\")",
+        "L14": "=iferror(if(K14<>\"\", VLOOKUP(K14, A:D, 4, 0), \"\"), \"\")",
+        "L15": "=iferror(if(K15<>\"\", VLOOKUP(K15, A:D, 4, 0), \"\"), \"\")",
+        "L16": "=iferror(if(K16<>\"\", VLOOKUP(K16, A:D, 4, 0), \"\"), \"\")",
+        "L17": "=iferror(if(K17<>\"\", VLOOKUP(K17, A:D, 4, 0), \"\"), \"\")",
+        "L18": "=iferror(if(K18<>\"\", VLOOKUP(K18, A:D, 4, 0), \"\"), \"\")",
+        "L19": "=iferror(if(K19<>\"\", VLOOKUP(K19, A:D, 4, 0), \"\"), \"\")",
+        "L20": "=iferror(if(K20<>\"\", VLOOKUP(K20, A:D, 4, 0), \"\"), \"\")",
+        "L21": "=iferror(if(K21<>\"\", VLOOKUP(K21, A:D, 4, 0), \"\"), \"\")",
+        "L22": "=iferror(if(K22<>\"\", VLOOKUP(K22, A:D, 4, 0), \"\"), \"\")",
+        "L23": "=iferror(if(K23<>\"\", VLOOKUP(K23, A:D, 4, 0), \"\"), \"\")",
+        "L24": "=iferror(if(K24<>\"\", VLOOKUP(K24, A:D, 4, 0), \"\"), \"\")",
+        "L25": "=iferror(if(K25<>\"\", VLOOKUP(K25, A:D, 4, 0), \"\"), \"\")",
+        "L26": "=iferror(if(K26<>\"\", VLOOKUP(K26, A:D, 4, 0), \"\"), \"\")",
+        "L27": "=iferror(if(K27<>\"\", VLOOKUP(K27, A:D, 4, 0), \"\"), \"\")",
+        "L28": "=iferror(if(K28<>\"\", VLOOKUP(K28, A:D, 4, 0), \"\"), \"\")",
+        "L29": "=iferror(if(K29<>\"\", VLOOKUP(K29, A:D, 4, 0), \"\"), \"\")",
+        "L30": "=iferror(if(K30<>\"\", VLOOKUP(K30, A:D, 4, 0), \"\"), \"\")",
+        "L31": "=iferror(if(K31<>\"\", VLOOKUP(K31, A:D, 4, 0), \"\"), \"\")",
+        "L32": "=iferror(if(K32<>\"\", VLOOKUP(K32, A:D, 4, 0), \"\"), \"\")",
+        "L33": "=iferror(if(K33<>\"\", VLOOKUP(K33, A:D, 4, 0), \"\"), \"\")",
+        "L34": "=iferror(if(K34<>\"\", VLOOKUP(K34, A:D, 4, 0), \"\"), \"\")",
+        "L35": "=iferror(if(K35<>\"\", VLOOKUP(K35, A:D, 4, 0), \"\"), \"\")",
+        "L36": "=iferror(if(K36<>\"\", VLOOKUP(K36, A:D, 4, 0), \"\"), \"\")",
+        "L37": "=iferror(if(K37<>\"\", VLOOKUP(K37, A:D, 4, 0), \"\"), \"\")",
+        "L38": "=iferror(if(K38<>\"\", VLOOKUP(K38, A:D, 4, 0), \"\"), \"\")",
+        "L39": "=iferror(if(K39<>\"\", VLOOKUP(K39, A:D, 4, 0), \"\"), \"\")",
+        "L40": "=iferror(if(K40<>\"\", VLOOKUP(K40, A:D, 4, 0), \"\"), \"\")",
+        "L41": "=iferror(if(K41<>\"\", VLOOKUP(K41, A:D, 4, 0), \"\"), \"\")",
+        "L42": "=iferror(if(K42<>\"\", VLOOKUP(K42, A:D, 4, 0), \"\"), \"\")",
+        "L43": "=iferror(if(K43<>\"\", VLOOKUP(K43, A:D, 4, 0), \"\"), \"\")",
+        "L44": "=iferror(if(K44<>\"\", VLOOKUP(K44, A:D, 4, 0), \"\"), \"\")",
+        "L45": "=iferror(if(K45<>\"\", VLOOKUP(K45, A:D, 4, 0), \"\"), \"\")",
+        "L46": "=iferror(if(K46<>\"\", VLOOKUP(K46, A:D, 4, 0), \"\"), \"\")",
+        "L47": "=iferror(if(K47<>\"\", VLOOKUP(K47, A:D, 4, 0), \"\"), \"\")",
+        "L48": "=iferror(if(K48<>\"\", VLOOKUP(K48, A:D, 4, 0), \"\"), \"\")",
+        "L49": "=iferror(if(K49<>\"\", VLOOKUP(K49, A:D, 4, 0), \"\"), \"\")",
+        "L50": "=iferror(if(K50<>\"\", VLOOKUP(K50, A:D, 4, 0), \"\"), \"\")",
+        "L51": "=iferror(if(K51<>\"\", VLOOKUP(K51, A:D, 4, 0), \"\"), \"\")",
+        "L52": "=iferror(if(K52<>\"\", VLOOKUP(K52, A:D, 4, 0), \"\"), \"\")",
+        "L53": "=iferror(if(K53<>\"\", VLOOKUP(K53, A:D, 4, 0), \"\"), \"\")",
+        "L54": "=iferror(if(K54<>\"\", VLOOKUP(K54, A:D, 4, 0), \"\"), \"\")",
+        "L55": "=iferror(if(K55<>\"\", VLOOKUP(K55, A:D, 4, 0), \"\"), \"\")",
+        "L56": "=iferror(if(K56<>\"\", VLOOKUP(K56, A:D, 4, 0), \"\"), \"\")",
+        "L57": "=iferror(if(K57<>\"\", VLOOKUP(K57, A:D, 4, 0), \"\"), \"\")",
+        "L58": "=iferror(if(K58<>\"\", VLOOKUP(K58, A:D, 4, 0), \"\"), \"\")",
+        "L59": "=iferror(if(K59<>\"\", VLOOKUP(K59, A:D, 4, 0), \"\"), \"\")",
+        "L60": "=iferror(if(K60<>\"\", VLOOKUP(K60, A:D, 4, 0), \"\"), \"\")",
+        "L61": "=iferror(if(K61<>\"\", VLOOKUP(K61, A:D, 4, 0), \"\"), \"\")",
+        "L62": "=iferror(if(K62<>\"\", VLOOKUP(K62, A:D, 4, 0), \"\"), \"\")",
+        "L63": "=iferror(if(K63<>\"\", VLOOKUP(K63, A:D, 4, 0), \"\"), \"\")",
+        "L64": "=iferror(if(K64<>\"\", VLOOKUP(K64, A:D, 4, 0), \"\"), \"\")",
+        "L65": "=iferror(if(K65<>\"\", VLOOKUP(K65, A:D, 4, 0), \"\"), \"\")",
+        "L66": "=iferror(if(K66<>\"\", VLOOKUP(K66, A:D, 4, 0), \"\"), \"\")",
+        "L67": "=iferror(if(K67<>\"\", VLOOKUP(K67, A:D, 4, 0), \"\"), \"\")",
+        "L68": "=iferror(if(K68<>\"\", VLOOKUP(K68, A:D, 4, 0), \"\"), \"\")",
+        "L69": "=iferror(if(K69<>\"\", VLOOKUP(K69, A:D, 4, 0), \"\"), \"\")",
+        "L70": "=iferror(if(K70<>\"\", VLOOKUP(K70, A:D, 4, 0), \"\"), \"\")",
+        "L71": "=iferror(if(K71<>\"\", VLOOKUP(K71, A:D, 4, 0), \"\"), \"\")",
+        "L72": "=iferror(if(K72<>\"\", VLOOKUP(K72, A:D, 4, 0), \"\"), \"\")",
+        "L73": "=iferror(if(K73<>\"\", VLOOKUP(K73, A:D, 4, 0), \"\"), \"\")",
+        "L74": "=iferror(if(K74<>\"\", VLOOKUP(K74, A:D, 4, 0), \"\"), \"\")",
+        "L75": "=iferror(if(K75<>\"\", VLOOKUP(K75, A:D, 4, 0), \"\"), \"\")",
+        "L76": "=iferror(if(K76<>\"\", VLOOKUP(K76, A:D, 4, 0), \"\"), \"\")",
+        "L77": "=iferror(if(K77<>\"\", VLOOKUP(K77, A:D, 4, 0), \"\"), \"\")",
+        "L78": "=iferror(if(K78<>\"\", VLOOKUP(K78, A:D, 4, 0), \"\"), \"\")",
+        "L79": "=iferror(if(K79<>\"\", VLOOKUP(K79, A:D, 4, 0), \"\"), \"\")",
+        "L80": "=iferror(if(K80<>\"\", VLOOKUP(K80, A:D, 4, 0), \"\"), \"\")",
+        "L81": "=iferror(if(K81<>\"\", VLOOKUP(K81, A:D, 4, 0), \"\"), \"\")",
+        "L82": "=iferror(if(K82<>\"\", VLOOKUP(K82, A:D, 4, 0), \"\"), \"\")",
+        "L83": "=iferror(if(K83<>\"\", VLOOKUP(K83, A:D, 4, 0), \"\"), \"\")",
+        "L84": "=iferror(if(K84<>\"\", VLOOKUP(K84, A:D, 4, 0), \"\"), \"\")",
+        "L85": "=iferror(if(K85<>\"\", VLOOKUP(K85, A:D, 4, 0), \"\"), \"\")",
+        "L86": "=iferror(if(K86<>\"\", VLOOKUP(K86, A:D, 4, 0), \"\"), \"\")",
+        "L87": "=iferror(if(K87<>\"\", VLOOKUP(K87, A:D, 4, 0), \"\"), \"\")",
+        "L88": "=iferror(if(K88<>\"\", VLOOKUP(K88, A:D, 4, 0), \"\"), \"\")",
+        "L89": "=iferror(if(K89<>\"\", VLOOKUP(K89, A:D, 4, 0), \"\"), \"\")",
+        "L90": "=iferror(if(K90<>\"\", VLOOKUP(K90, A:D, 4, 0), \"\"), \"\")",
+        "L91": "=iferror(if(K91<>\"\", VLOOKUP(K91, A:D, 4, 0), \"\"), \"\")",
+        "L92": "=iferror(if(K92<>\"\", VLOOKUP(K92, A:D, 4, 0), \"\"), \"\")",
+        "L93": "=iferror(if(K93<>\"\", VLOOKUP(K93, A:D, 4, 0), \"\"), \"\")",
+        "L94": "=iferror(if(K94<>\"\", VLOOKUP(K94, A:D, 4, 0), \"\"), \"\")",
+        "L95": "=iferror(if(K95<>\"\", VLOOKUP(K95, A:D, 4, 0), \"\"), \"\")",
+        "L96": "=iferror(if(K96<>\"\", VLOOKUP(K96, A:D, 4, 0), \"\"), \"\")",
+        "L97": "=iferror(if(K97<>\"\", VLOOKUP(K97, A:D, 4, 0), \"\"), \"\")",
+        "L98": "=iferror(if(K98<>\"\", VLOOKUP(K98, A:D, 4, 0), \"\"), \"\")",
+        "L99": "=iferror(if(K99<>\"\", VLOOKUP(K99, A:D, 4, 0), \"\"), \"\")",
+        "L100": "=iferror(if(K100<>\"\", VLOOKUP(K100, A:D, 4, 0), \"\"), \"\")",
+        "L101": "=iferror(if(K101<>\"\", VLOOKUP(K101, A:D, 4, 0), \"\"), \"\")",
+        "L102": "=iferror(if(K102<>\"\", VLOOKUP(K102, A:D, 4, 0), \"\"), \"\")",
+        "L103": "=iferror(if(K103<>\"\", VLOOKUP(K103, A:D, 4, 0), \"\"), \"\")",
+        "L104": "=iferror(if(K104<>\"\", VLOOKUP(K104, A:D, 4, 0), \"\"), \"\")",
+        "L105": "=iferror(if(K105<>\"\", VLOOKUP(K105, A:D, 4, 0), \"\"), \"\")",
+        "L106": "=iferror(if(K106<>\"\", VLOOKUP(K106, A:D, 4, 0), \"\"), \"\")",
+        "L107": "=iferror(if(K107<>\"\", VLOOKUP(K107, A:D, 4, 0), \"\"), \"\")",
+        "L108": "=iferror(if(K108<>\"\", VLOOKUP(K108, A:D, 4, 0), \"\"), \"\")",
+        "L109": "=iferror(if(K109<>\"\", VLOOKUP(K109, A:D, 4, 0), \"\"), \"\")",
+        "L110": "=iferror(if(K110<>\"\", VLOOKUP(K110, A:D, 4, 0), \"\"), \"\")",
+        "L111": "=iferror(if(K111<>\"\", VLOOKUP(K111, A:D, 4, 0), \"\"), \"\")",
+        "L112": "=iferror(if(K112<>\"\", VLOOKUP(K112, A:D, 4, 0), \"\"), \"\")",
+        "L113": "=iferror(if(K113<>\"\", VLOOKUP(K113, A:D, 4, 0), \"\"), \"\")",
+        "L114": "=iferror(if(K114<>\"\", VLOOKUP(K114, A:D, 4, 0), \"\"), \"\")",
+        "L115": "=iferror(if(K115<>\"\", VLOOKUP(K115, A:D, 4, 0), \"\"), \"\")",
+        "L116": "=iferror(if(K116<>\"\", VLOOKUP(K116, A:D, 4, 0), \"\"), \"\")",
+        "L117": "=iferror(if(K117<>\"\", VLOOKUP(K117, A:D, 4, 0), \"\"), \"\")",
+        "L118": "=iferror(if(K118<>\"\", VLOOKUP(K118, A:D, 4, 0), \"\"), \"\")",
+        "L119": "=iferror(if(K119<>\"\", VLOOKUP(K119, A:D, 4, 0), \"\"), \"\")",
+        "L120": "=iferror(if(K120<>\"\", VLOOKUP(K120, A:D, 4, 0), \"\"), \"\")",
+        "L121": "=iferror(if(K121<>\"\", VLOOKUP(K121, A:D, 4, 0), \"\"), \"\")",
+        "L122": "=iferror(if(K122<>\"\", VLOOKUP(K122, A:D, 4, 0), \"\"), \"\")",
+        "L123": "=iferror(if(K123<>\"\", VLOOKUP(K123, A:D, 4, 0), \"\"), \"\")",
+        "L124": "=iferror(if(K124<>\"\", VLOOKUP(K124, A:D, 4, 0), \"\"), \"\")",
+        "L125": "=iferror(if(K125<>\"\", VLOOKUP(K125, A:D, 4, 0), \"\"), \"\")",
+        "L126": "=iferror(if(K126<>\"\", VLOOKUP(K126, A:D, 4, 0), \"\"), \"\")",
+        "L127": "=iferror(if(K127<>\"\", VLOOKUP(K127, A:D, 4, 0), \"\"), \"\")",
+        "L128": "=iferror(if(K128<>\"\", VLOOKUP(K128, A:D, 4, 0), \"\"), \"\")",
+        "L129": "=iferror(if(K129<>\"\", VLOOKUP(K129, A:D, 4, 0), \"\"), \"\")",
+        "L130": "=iferror(if(K130<>\"\", VLOOKUP(K130, A:D, 4, 0), \"\"), \"\")",
+        "L131": "=iferror(if(K131<>\"\", VLOOKUP(K131, A:D, 4, 0), \"\"), \"\")",
+        "L132": "=iferror(if(K132<>\"\", VLOOKUP(K132, A:D, 4, 0), \"\"), \"\")",
+        "L133": "=iferror(if(K133<>\"\", VLOOKUP(K133, A:D, 4, 0), \"\"), \"\")",
+        "L134": "=iferror(if(K134<>\"\", VLOOKUP(K134, A:D, 4, 0), \"\"), \"\")",
+        "L135": "=iferror(if(K135<>\"\", VLOOKUP(K135, A:D, 4, 0), \"\"), \"\")",
+        "L136": "=iferror(if(K136<>\"\", VLOOKUP(K136, A:D, 4, 0), \"\"), \"\")",
+        "L137": "=iferror(if(K137<>\"\", VLOOKUP(K137, A:D, 4, 0), \"\"), \"\")",
+        "L138": "=iferror(if(K138<>\"\", VLOOKUP(K138, A:D, 4, 0), \"\"), \"\")",
+        "L139": "=iferror(if(K139<>\"\", VLOOKUP(K139, A:D, 4, 0), \"\"), \"\")",
+        "L140": "=iferror(if(K140<>\"\", VLOOKUP(K140, A:D, 4, 0), \"\"), \"\")",
+        "L141": "=iferror(if(K141<>\"\", VLOOKUP(K141, A:D, 4, 0), \"\"), \"\")",
+        "L142": "=iferror(if(K142<>\"\", VLOOKUP(K142, A:D, 4, 0), \"\"), \"\")",
+        "L143": "=iferror(if(K143<>\"\", VLOOKUP(K143, A:D, 4, 0), \"\"), \"\")",
+        "L144": "=iferror(if(K144<>\"\", VLOOKUP(K144, A:D, 4, 0), \"\"), \"\")",
+        "L145": "=iferror(if(K145<>\"\", VLOOKUP(K145, A:D, 4, 0), \"\"), \"\")",
+        "L146": "=iferror(if(K146<>\"\", VLOOKUP(K146, A:D, 4, 0), \"\"), \"\")",
+        "L147": "=iferror(if(K147<>\"\", VLOOKUP(K147, A:D, 4, 0), \"\"), \"\")",
+        "L148": "=iferror(if(K148<>\"\", VLOOKUP(K148, A:D, 4, 0), \"\"), \"\")",
+        "L149": "=iferror(if(K149<>\"\", VLOOKUP(K149, A:D, 4, 0), \"\"), \"\")",
+        "L150": "=iferror(if(K150<>\"\", VLOOKUP(K150, A:D, 4, 0), \"\"), \"\")",
+        "L151": "=iferror(if(K151<>\"\", VLOOKUP(K151, A:D, 4, 0), \"\"), \"\")",
+        "L152": "=iferror(if(K152<>\"\", VLOOKUP(K152, A:D, 4, 0), \"\"), \"\")",
+        "L153": "=iferror(if(K153<>\"\", VLOOKUP(K153, A:D, 4, 0), \"\"), \"\")",
+        "L154": "=iferror(if(K154<>\"\", VLOOKUP(K154, A:D, 4, 0), \"\"), \"\")",
+        "L155": "=iferror(if(K155<>\"\", VLOOKUP(K155, A:D, 4, 0), \"\"), \"\")",
+        "L156": "=iferror(if(K156<>\"\", VLOOKUP(K156, A:D, 4, 0), \"\"), \"\")",
+        "L157": "=iferror(if(K157<>\"\", VLOOKUP(K157, A:D, 4, 0), \"\"), \"\")",
+        "L158": "=iferror(if(K158<>\"\", VLOOKUP(K158, A:D, 4, 0), \"\"), \"\")",
+        "L159": "=iferror(if(K159<>\"\", VLOOKUP(K159, A:D, 4, 0), \"\"), \"\")",
+        "L160": "=iferror(if(K160<>\"\", VLOOKUP(K160, A:D, 4, 0), \"\"), \"\")",
+        "L161": "=iferror(if(K161<>\"\", VLOOKUP(K161, A:D, 4, 0), \"\"), \"\")",
+        "L162": "=iferror(if(K162<>\"\", VLOOKUP(K162, A:D, 4, 0), \"\"), \"\")",
+        "L163": "=iferror(if(K163<>\"\", VLOOKUP(K163, A:D, 4, 0), \"\"), \"\")",
+        "L164": "=iferror(if(K164<>\"\", VLOOKUP(K164, A:D, 4, 0), \"\"), \"\")",
+        "L165": "=iferror(if(K165<>\"\", VLOOKUP(K165, A:D, 4, 0), \"\"), \"\")",
+        "L166": "=iferror(if(K166<>\"\", VLOOKUP(K166, A:D, 4, 0), \"\"), \"\")",
+        "L167": "=iferror(if(K167<>\"\", VLOOKUP(K167, A:D, 4, 0), \"\"), \"\")",
+        "L168": "=iferror(if(K168<>\"\", VLOOKUP(K168, A:D, 4, 0), \"\"), \"\")",
+        "L169": "=iferror(if(K169<>\"\", VLOOKUP(K169, A:D, 4, 0), \"\"), \"\")",
+        "L170": "=iferror(if(K170<>\"\", VLOOKUP(K170, A:D, 4, 0), \"\"), \"\")",
+        "L171": "=iferror(if(K171<>\"\", VLOOKUP(K171, A:D, 4, 0), \"\"), \"\")",
+        "L172": "=iferror(if(K172<>\"\", VLOOKUP(K172, A:D, 4, 0), \"\"), \"\")",
+        "L173": "=iferror(if(K173<>\"\", VLOOKUP(K173, A:D, 4, 0), \"\"), \"\")",
+        "L174": "=iferror(if(K174<>\"\", VLOOKUP(K174, A:D, 4, 0), \"\"), \"\")",
+        "L175": "=iferror(if(K175<>\"\", VLOOKUP(K175, A:D, 4, 0), \"\"), \"\")",
+        "L176": "=iferror(if(K176<>\"\", VLOOKUP(K176, A:D, 4, 0), \"\"), \"\")",
+        "L177": "=iferror(if(K177<>\"\", VLOOKUP(K177, A:D, 4, 0), \"\"), \"\")",
+        "L178": "=iferror(if(K178<>\"\", VLOOKUP(K178, A:D, 4, 0), \"\"), \"\")",
+        "L179": "=iferror(if(K179<>\"\", VLOOKUP(K179, A:D, 4, 0), \"\"), \"\")",
+        "L180": "=iferror(if(K180<>\"\", VLOOKUP(K180, A:D, 4, 0), \"\"), \"\")",
+        "L181": "=iferror(if(K181<>\"\", VLOOKUP(K181, A:D, 4, 0), \"\"), \"\")",
+        "L182": "=iferror(if(K182<>\"\", VLOOKUP(K182, A:D, 4, 0), \"\"), \"\")",
+        "L183": "=iferror(if(K183<>\"\", VLOOKUP(K183, A:D, 4, 0), \"\"), \"\")",
+        "L184": "=iferror(if(K184<>\"\", VLOOKUP(K184, A:D, 4, 0), \"\"), \"\")",
+        "L185": "=iferror(if(K185<>\"\", VLOOKUP(K185, A:D, 4, 0), \"\"), \"\")",
+        "L186": "=iferror(if(K186<>\"\", VLOOKUP(K186, A:D, 4, 0), \"\"), \"\")",
+        "L187": "=iferror(if(K187<>\"\", VLOOKUP(K187, A:D, 4, 0), \"\"), \"\")",
+        "L188": "=iferror(if(K188<>\"\", VLOOKUP(K188, A:D, 4, 0), \"\"), \"\")",
+        "L189": "=iferror(if(K189<>\"\", VLOOKUP(K189, A:D, 4, 0), \"\"), \"\")",
+        "L190": "=iferror(if(K190<>\"\", VLOOKUP(K190, A:D, 4, 0), \"\"), \"\")",
+        "L191": "=iferror(if(K191<>\"\", VLOOKUP(K191, A:D, 4, 0), \"\"), \"\")",
+        "L192": "=iferror(if(K192<>\"\", VLOOKUP(K192, A:D, 4, 0), \"\"), \"\")",
+        "L193": "=iferror(if(K193<>\"\", VLOOKUP(K193, A:D, 4, 0), \"\"), \"\")",
+        "L194": "=iferror(if(K194<>\"\", VLOOKUP(K194, A:D, 4, 0), \"\"), \"\")",
+        "L195": "=iferror(if(K195<>\"\", VLOOKUP(K195, A:D, 4, 0), \"\"), \"\")",
+        "L196": "=iferror(if(K196<>\"\", VLOOKUP(K196, A:D, 4, 0), \"\"), \"\")",
+        "L197": "=iferror(if(K197<>\"\", VLOOKUP(K197, A:D, 4, 0), \"\"), \"\")",
+        "L198": "=iferror(if(K198<>\"\", VLOOKUP(K198, A:D, 4, 0), \"\"), \"\")",
+        "L199": "=iferror(if(K199<>\"\", VLOOKUP(K199, A:D, 4, 0), \"\"), \"\")",
+        "L200": "=iferror(if(K200<>\"\", VLOOKUP(K200, A:D, 4, 0), \"\"), \"\")",
+        "L201": "=iferror(if(K201<>\"\", VLOOKUP(K201, A:D, 4, 0), \"\"), \"\")",
+        "L202": "=iferror(if(K202<>\"\", VLOOKUP(K202, A:D, 4, 0), \"\"), \"\")",
+        "L203": "=iferror(if(K203<>\"\", VLOOKUP(K203, A:D, 4, 0), \"\"), \"\")",
+        "L204": "=iferror(if(K204<>\"\", VLOOKUP(K204, A:D, 4, 0), \"\"), \"\")",
+        "L205": "=iferror(if(K205<>\"\", VLOOKUP(K205, A:D, 4, 0), \"\"), \"\")",
+        "L206": "=iferror(if(K206<>\"\", VLOOKUP(K206, A:D, 4, 0), \"\"), \"\")",
+        "L207": "=iferror(if(K207<>\"\", VLOOKUP(K207, A:D, 4, 0), \"\"), \"\")",
+        "L208": "=iferror(if(K208<>\"\", VLOOKUP(K208, A:D, 4, 0), \"\"), \"\")",
+        "L209": "=iferror(if(K209<>\"\", VLOOKUP(K209, A:D, 4, 0), \"\"), \"\")",
+        "L210": "=iferror(if(K210<>\"\", VLOOKUP(K210, A:D, 4, 0), \"\"), \"\")",
+        "L211": "=iferror(if(K211<>\"\", VLOOKUP(K211, A:D, 4, 0), \"\"), \"\")",
+        "L212": "=iferror(if(K212<>\"\", VLOOKUP(K212, A:D, 4, 0), \"\"), \"\")",
+        "L213": "=iferror(if(K213<>\"\", VLOOKUP(K213, A:D, 4, 0), \"\"), \"\")",
+        "L214": "=iferror(if(K214<>\"\", VLOOKUP(K214, A:D, 4, 0), \"\"), \"\")",
+        "L215": "=iferror(if(K215<>\"\", VLOOKUP(K215, A:D, 4, 0), \"\"), \"\")",
+        "L216": "=iferror(if(K216<>\"\", VLOOKUP(K216, A:D, 4, 0), \"\"), \"\")",
+        "L217": "=iferror(if(K217<>\"\", VLOOKUP(K217, A:D, 4, 0), \"\"), \"\")",
+        "L218": "=iferror(if(K218<>\"\", VLOOKUP(K218, A:D, 4, 0), \"\"), \"\")",
+        "L219": "=iferror(if(K219<>\"\", VLOOKUP(K219, A:D, 4, 0), \"\"), \"\")",
+        "L220": "=iferror(if(K220<>\"\", VLOOKUP(K220, A:D, 4, 0), \"\"), \"\")",
+        "L221": "=iferror(if(K221<>\"\", VLOOKUP(K221, A:D, 4, 0), \"\"), \"\")",
+        "L222": "=iferror(if(K222<>\"\", VLOOKUP(K222, A:D, 4, 0), \"\"), \"\")",
+        "L223": "=iferror(if(K223<>\"\", VLOOKUP(K223, A:D, 4, 0), \"\"), \"\")",
+        "L224": "=iferror(if(K224<>\"\", VLOOKUP(K224, A:D, 4, 0), \"\"), \"\")",
+        "L225": "=iferror(if(K225<>\"\", VLOOKUP(K225, A:D, 4, 0), \"\"), \"\")",
+        "L226": "=iferror(if(K226<>\"\", VLOOKUP(K226, A:D, 4, 0), \"\"), \"\")",
+        "L227": "=iferror(if(K227<>\"\", VLOOKUP(K227, A:D, 4, 0), \"\"), \"\")",
+        "L228": "=iferror(if(K228<>\"\", VLOOKUP(K228, A:D, 4, 0), \"\"), \"\")",
+        "L229": "=iferror(if(K229<>\"\", VLOOKUP(K229, A:D, 4, 0), \"\"), \"\")",
+        "L230": "=iferror(if(K230<>\"\", VLOOKUP(K230, A:D, 4, 0), \"\"), \"\")",
+        "L231": "=iferror(if(K231<>\"\", VLOOKUP(K231, A:D, 4, 0), \"\"), \"\")",
+        "L232": "=iferror(if(K232<>\"\", VLOOKUP(K232, A:D, 4, 0), \"\"), \"\")",
+        "L233": "=iferror(if(K233<>\"\", VLOOKUP(K233, A:D, 4, 0), \"\"), \"\")",
+        "L234": "=iferror(if(K234<>\"\", VLOOKUP(K234, A:D, 4, 0), \"\"), \"\")",
+        "L235": "=iferror(if(K235<>\"\", VLOOKUP(K235, A:D, 4, 0), \"\"), \"\")",
+        "L236": "=iferror(if(K236<>\"\", VLOOKUP(K236, A:D, 4, 0), \"\"), \"\")",
+        "L237": "=iferror(if(K237<>\"\", VLOOKUP(K237, A:D, 4, 0), \"\"), \"\")",
+        "L238": "=iferror(if(K238<>\"\", VLOOKUP(K238, A:D, 4, 0), \"\"), \"\")",
+        "L239": "=iferror(if(K239<>\"\", VLOOKUP(K239, A:D, 4, 0), \"\"), \"\")",
+        "L240": "=iferror(if(K240<>\"\", VLOOKUP(K240, A:D, 4, 0), \"\"), \"\")",
+        "L241": "=iferror(if(K241<>\"\", VLOOKUP(K241, A:D, 4, 0), \"\"), \"\")",
+        "L242": "=iferror(if(K242<>\"\", VLOOKUP(K242, A:D, 4, 0), \"\"), \"\")",
+        "L243": "=iferror(if(K243<>\"\", VLOOKUP(K243, A:D, 4, 0), \"\"), \"\")",
+        "L244": "=iferror(if(K244<>\"\", VLOOKUP(K244, A:D, 4, 0), \"\"), \"\")",
+        "L245": "=iferror(if(K245<>\"\", VLOOKUP(K245, A:D, 4, 0), \"\"), \"\")",
+        "L246": "=iferror(if(K246<>\"\", VLOOKUP(K246, A:D, 4, 0), \"\"), \"\")",
+        "L247": "=iferror(if(K247<>\"\", VLOOKUP(K247, A:D, 4, 0), \"\"), \"\")",
+        "L248": "=iferror(if(K248<>\"\", VLOOKUP(K248, A:D, 4, 0), \"\"), \"\")",
+        "L249": "=iferror(if(K249<>\"\", VLOOKUP(K249, A:D, 4, 0), \"\"), \"\")",
+        "L250": "=iferror(if(K250<>\"\", VLOOKUP(K250, A:D, 4, 0), \"\"), \"\")",
+        "L251": "=iferror(if(K251<>\"\", VLOOKUP(K251, A:D, 4, 0), \"\"), \"\")",
+        "L252": "=iferror(if(K252<>\"\", VLOOKUP(K252, A:D, 4, 0), \"\"), \"\")",
+        "L253": "=iferror(if(K253<>\"\", VLOOKUP(K253, A:D, 4, 0), \"\"), \"\")",
+        "L254": "=iferror(if(K254<>\"\", VLOOKUP(K254, A:D, 4, 0), \"\"), \"\")",
+        "L255": "=iferror(if(K255<>\"\", VLOOKUP(K255, A:D, 4, 0), \"\"), \"\")",
+        "L256": "=iferror(if(K256<>\"\", VLOOKUP(K256, A:D, 4, 0), \"\"), \"\")",
+        "L257": "=iferror(if(K257<>\"\", VLOOKUP(K257, A:D, 4, 0), \"\"), \"\")",
+        "L258": "=iferror(if(K258<>\"\", VLOOKUP(K258, A:D, 4, 0), \"\"), \"\")",
+        "L259": "=iferror(if(K259<>\"\", VLOOKUP(K259, A:D, 4, 0), \"\"), \"\")",
+        "L260": "=iferror(if(K260<>\"\", VLOOKUP(K260, A:D, 4, 0), \"\"), \"\")",
+        "L261": "=iferror(if(K261<>\"\", VLOOKUP(K261, A:D, 4, 0), \"\"), \"\")",
+        "L262": "=iferror(if(K262<>\"\", VLOOKUP(K262, A:D, 4, 0), \"\"), \"\")",
+        "L263": "=iferror(if(K263<>\"\", VLOOKUP(K263, A:D, 4, 0), \"\"), \"\")",
+        "L264": "=iferror(if(K264<>\"\", VLOOKUP(K264, A:D, 4, 0), \"\"), \"\")",
+        "L265": "=iferror(if(K265<>\"\", VLOOKUP(K265, A:D, 4, 0), \"\"), \"\")",
+        "L266": "=iferror(if(K266<>\"\", VLOOKUP(K266, A:D, 4, 0), \"\"), \"\")",
+        "L267": "=iferror(if(K267<>\"\", VLOOKUP(K267, A:D, 4, 0), \"\"), \"\")",
+        "L268": "=iferror(if(K268<>\"\", VLOOKUP(K268, A:D, 4, 0), \"\"), \"\")",
+        "L269": "=iferror(if(K269<>\"\", VLOOKUP(K269, A:D, 4, 0), \"\"), \"\")",
         "M1": "=_t(\"Previous period\")",
         "M2": "=iferror(if(and(K2<>\"\",ODOO.FILTER.VALUE(\"Period\")<>\"\"),VLOOKUP(K2,F:I,3,0),\"\"),\"\")",
         "M3": "=iferror(if(and(K3<>\"\",ODOO.FILTER.VALUE(\"Period\")<>\"\"),VLOOKUP(K3,F:I,3,0),\"\"),\"\")",
@@ -1864,7 +1811,7 @@
         "P86": "=iferror(if(and(N86<>\"\",ODOO.FILTER.VALUE(\"Period\")<>\"\"),VLOOKUP(N86,J85:K170,2,0),\"\"),\"\")",
         "P87": "=iferror(if(and(N87<>\"\",ODOO.FILTER.VALUE(\"Period\")<>\"\"),VLOOKUP(N87,J86:K171,2,0),\"\"),\"\")"
       },
-      "styles": { "G1:H1": 6, "J1:K1": 6 },
+      "styles": { "G1:H1": 7, "J1:K1": 7 },
       "formats": {},
       "borders": {},
       "conditionalFormats": [],
@@ -2788,60 +2735,29 @@
   ],
   "styles": {
     "1": { "bold": true, "fontSize": 16, "textColor": "#01636B" },
-    "2": { "bold": true },
-    "3": { "italic": true },
-    "4": { "align": "center" },
-    "5": { "align": "center", "wrapping": "wrap" },
-    "6": { "bold": true, "align": "center" }
+    "2": { "fontSize": 11, "bold": true, "textColor": "#434343" },
+    "3": { "verticalAlign": "middle" },
+    "4": { "bold": true },
+    "5": { "italic": true },
+    "6": { "align": "center" },
+    "7": { "bold": true, "align": "center" }
   },
-  "formats": { "1": "0.0%", "2": "#,##0.00", "3": "0.00%" },
+  "formats": { "1": "0.0%", "2": "0.00%" },
   "borders": {
     "1": {
-      "bottom": { "style": "thin", "color": "#CCCCCC" }
+      "left": { "style": "thick", "color": "#FFFFFF" },
+      "top": { "style": "thick", "color": "#FFFFFF" },
+      "right": { "style": "thick", "color": "#FFFFFF" },
+      "bottom": { "style": "thick", "color": "#FFFFFF" }
     },
     "2": {
-      "top": { "style": "thin", "color": "#CCCCCC" }
+      "bottom": { "style": "thin", "color": "#CCCCCC" }
     },
     "3": {
-      "right": { "style": "thin", "color": "#2D7E84" }
+      "top": { "style": "thin", "color": "#CCCCCC" }
     },
     "4": {
       "bottom": { "color": "#B498AE", "style": "thin" }
-    },
-    "5": {
-      "top": { "color": "#B498AE", "style": "thin" },
-      "bottom": { "style": "thin", "color": "#2D7E84" }
-    },
-    "6": {
-      "top": { "style": "thin", "color": "#2D7E84" },
-      "bottom": { "style": "thin", "color": "#2D7E84" }
-    },
-    "7": {
-      "left": { "style": "thin", "color": "#2D7E84" },
-      "top": { "style": "thin", "color": "#2D7E84" },
-      "bottom": { "style": "thin", "color": "#2D7E84" }
-    },
-    "8": {
-      "top": { "style": "thin", "color": "#2D7E84" }
-    },
-    "9": {
-      "top": { "color": "#B498AE", "style": "thin" },
-      "bottom": { "color": "#B498AE", "style": "thin" }
-    },
-    "10": {
-      "top": { "color": "#B498AE", "style": "thin" }
-    },
-    "11": {
-      "top": { "color": "#B498AE", "style": "thin" },
-      "right": { "color": "#B498AE", "style": "thin" },
-      "bottom": { "color": "#B498AE", "style": "thin" }
-    },
-    "12": {
-      "left": { "color": "#B498AE", "style": "thin" },
-      "right": { "color": "#B498AE", "style": "thin" }
-    },
-    "13": {
-      "left": { "color": "#B498AE", "style": "thin" }
     }
   },
   "revisionId": "START_REVISION",
@@ -2887,12 +2803,10 @@
       "actionXmlId": "stock_enterprise.stock_report_action_performance",
       "formulaId": "1",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime", "offset": 0 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "operation_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "categ_id", "type": "many2one" }
       }
     },
@@ -2925,12 +2839,10 @@
       "actionXmlId": "stock.stock_move_action",
       "formulaId": "2",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": 0 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
       }
     },
@@ -2962,12 +2874,10 @@
       "actionXmlId": "stock_enterprise.stock_report_action_performance",
       "formulaId": "14",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime", "offset": -1 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "operation_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "categ_id", "type": "many2one" }
       }
     },
@@ -3000,12 +2910,10 @@
       "actionXmlId": "stock.stock_move_action",
       "formulaId": "15",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": -1 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
       }
     },
@@ -3023,90 +2931,27 @@
         "domain": []
       },
       "measures": [
-        { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
-          "id": "product_uom_qty:sum",
-          "fieldName": "product_uom_qty",
-          "aggregator": "sum"
-        }
-      ],
-      "model": "stock.move",
-      "columns": [],
-      "rows": [
-        { "fieldName": "product_id" }
-      ],
-      "name": "[NO DELETE] stock.move -  by Product sort by Top Demand",
-      "actionXmlId": "stock.stock_move_action",
-      "formulaId": "23",
-      "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
-        "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
-        "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
-        "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
-        "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
-      }
-    },
-    "f133549b-f406-4d69-b233-10b56c26e04e": {
-      "type": "ODOO",
-      "domain": [
-        "&",
-        ["state", "=", "done"],
-        ["location_dest_usage", "=", "customer"]
-      ],
-      "context": {},
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
-      },
-      "measures": [
-        { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
+          "id": "quantity:sum",
+          "fieldName": "quantity",
+          "aggregator": "sum",
+          "isHidden": true
+        },
         {
           "id": "product_uom_qty:sum",
           "fieldName": "product_uom_qty",
           "aggregator": "sum"
         },
-        { "id": "__count", "fieldName": "__count", "format": "#,##0.00" }
-      ],
-      "model": "stock.move",
-      "columns": [],
-      "rows": [
-        { "fieldName": "product_id" }
-      ],
-      "name": "[NO DELETE] stock.move -  by Product sort by Top Count",
-      "actionXmlId": "stock.stock_move_action",
-      "formulaId": "24",
-      "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
-        "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
-        "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
-        "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
-        "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
-      }
-    },
-    "e551f5e9-677d-4248-a2be-ed0556547774": {
-      "type": "ODOO",
-      "domain": [
-        "&",
-        ["state", "=", "done"],
-        ["location_dest_usage", "=", "customer"]
-      ],
-      "context": {},
-      "sortedColumn": {
-        "measure": "product_uom_qty:sum",
-        "order": "asc",
-        "domain": []
-      },
-      "measures": [
-        { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
         {
-          "id": "product_uom_qty:sum",
-          "fieldName": "product_uom_qty",
-          "aggregator": "sum"
+          "id": "Fill rate:sum",
+          "fieldName": "Fill rate",
+          "aggregator": "sum",
+          "userDefinedName": "Fill rate",
+          "computedBy": {
+            "sheetId": "840a0b8c-6a06-4db4-942b-5b0f3af77426",
+            "formula": "=if('quantity:sum'<>\"\", 'quantity:sum'/'product_uom_qty:sum', \"\")"
+          },
+          "format": "0.00%"
         }
       ],
       "model": "stock.move",
@@ -3114,52 +2959,10 @@
       "rows": [
         { "fieldName": "product_id" }
       ],
-      "name": "[NO DELETE] stock.move - by Product sort by Bottom Demand",
+      "name": "Fill Rate by Demand",
       "actionXmlId": "stock.stock_move_action",
-      "formulaId": "25",
+      "formulaId": "23",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
-        "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
-        "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
-        "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
-        "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
-      }
-    },
-    "ac6b8779-6e3c-4400-a76e-359074313e62": {
-      "type": "ODOO",
-      "domain": [
-        "&",
-        ["state", "=", "done"],
-        ["location_dest_usage", "=", "customer"]
-      ],
-      "context": {},
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "asc",
-        "domain": []
-      },
-      "measures": [
-        { "id": "quantity:sum", "fieldName": "quantity", "aggregator": "sum" },
-        { "id": "__count", "fieldName": "__count" },
-        {
-          "id": "product_uom_qty:sum",
-          "fieldName": "product_uom_qty",
-          "aggregator": "sum"
-        }
-      ],
-      "model": "stock.move",
-      "columns": [],
-      "rows": [
-        { "fieldName": "product_id" }
-      ],
-      "name": "[NO DELETE] stock.move - by Product sort by Bottom Count",
-      "actionXmlId": "stock.stock_move_action",
-      "formulaId": "26",
-      "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
@@ -3183,12 +2986,18 @@
         "domain": []
       },
       "measures": [
-        { "id": "__count", "fieldName": "__count" },
+        {
+          "id": "__count",
+          "fieldName": "__count",
+          "display": { "type": "%_of_row_total" }
+        },
         {
           "id": "product_qty:sum",
           "fieldName": "product_qty",
-          "aggregator": "sum"
-        }
+          "aggregator": "sum",
+          "isHidden": true
+        },
+        { "id": "__count:sum", "fieldName": "__count", "aggregator": "sum" }
       ],
       "model": "stock.report",
       "columns": [
@@ -3197,12 +3006,10 @@
       "rows": [
         { "fieldName": "product_id" }
       ],
-      "name": "[NO DELETE] stock.report - by Is Late - sort top by quantity",
+      "name": "On Time Rate by Demand % of Total",
       "actionXmlId": "stock_enterprise.stock_report_action_performance",
       "formulaId": "28",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime" },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
@@ -3221,9 +3028,9 @@
       ],
       "context": {},
       "sortedColumn": {
-        "measure": "product_qty:sum",
-        "order": "asc",
-        "domain": []
+        "domain": [],
+        "order": "desc",
+        "measure": "__count"
       },
       "measures": [
         { "id": "__count", "fieldName": "__count" },
@@ -3234,104 +3041,14 @@
         }
       ],
       "model": "stock.report",
-      "columns": [
-        { "fieldName": "is_late" }
-      ],
+      "columns": [],
       "rows": [
         { "fieldName": "product_id" }
       ],
-      "name": "[NO DELETE] stock.report - by Is Late - sort bottom by quantity",
+      "name": "On Time Rate by Demand",
       "actionXmlId": "stock_enterprise.stock_report_action_performance",
       "formulaId": "29",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
-        "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime" },
-        "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
-        "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
-        "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "operation_type_id", "type": "many2one" },
-        "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "categ_id", "type": "many2one" }
-      }
-    },
-    "ce5e29ee-e648-4d74-8ecd-5631ca5da59d": {
-      "type": "ODOO",
-      "domain": [
-        "&",
-        ["picking_type_code", "!=", false],
-        "&",
-        ["state", "=", "done"],
-        ["picking_type_code", "=", "outgoing"]
-      ],
-      "context": {},
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "desc",
-        "domain": []
-      },
-      "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        {
-          "id": "product_qty:sum",
-          "fieldName": "product_qty",
-          "aggregator": "sum"
-        }
-      ],
-      "model": "stock.report",
-      "columns": [
-        { "fieldName": "is_late" }
-      ],
-      "rows": [
-        { "fieldName": "product_id" }
-      ],
-      "name": "[NO DELETE]  stock.report - by Is Late - sort top by count",
-      "actionXmlId": "stock_enterprise.stock_report_action_performance",
-      "formulaId": "30",
-      "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
-        "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime" },
-        "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
-        "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
-        "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "operation_type_id", "type": "many2one" },
-        "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "categ_id", "type": "many2one" }
-      }
-    },
-    "e98925d5-eae6-42e5-822e-c933033b9594": {
-      "type": "ODOO",
-      "domain": [
-        "&",
-        ["picking_type_code", "!=", false],
-        "&",
-        ["state", "=", "done"],
-        ["picking_type_code", "=", "outgoing"]
-      ],
-      "context": {},
-      "sortedColumn": {
-        "measure": "__count",
-        "order": "asc",
-        "domain": []
-      },
-      "measures": [
-        { "id": "__count", "fieldName": "__count" },
-        {
-          "id": "product_qty:sum",
-          "fieldName": "product_qty",
-          "aggregator": "sum"
-        }
-      ],
-      "model": "stock.report",
-      "columns": [
-        { "fieldName": "is_late" }
-      ],
-      "rows": [
-        { "fieldName": "product_id" }
-      ],
-      "name": "[NO DELETE] stock.report - by Is Late - sort bottom by count",
-      "actionXmlId": "stock_enterprise.stock_report_action_performance",
-      "formulaId": "31",
-      "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date_done", "type": "datetime" },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "operation_type_id.warehouse_id", "type": "many2one" },
@@ -3344,9 +3061,7 @@
       "domain": [
         "&",
         ["state", "=", "done"],
-        "|",
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"]
+        ["location_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
       "sortedColumn": {
@@ -3370,8 +3085,6 @@
       "actionXmlId": "stock.stock_move_line_action",
       "formulaId": "34",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "picking_type_id.warehouse_id", "type": "many2one" },
@@ -3384,9 +3097,7 @@
       "domain": [
         "&",
         ["state", "=", "done"],
-        "|",
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"]
+        ["location_id.usage", "=", "inventory"]
       ],
       "context": { "create": 0 },
       "sortedColumn": {
@@ -3410,8 +3121,6 @@
       "actionXmlId": "stock.stock_move_line_action",
       "formulaId": "35",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": -1 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "picking_type_id.warehouse_id", "type": "many2one" },
@@ -3424,9 +3133,7 @@
       "domain": [
         "&",
         ["state", "=", "done"],
-        "|",
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"]
+        ["scrap_id", "!=", false]
       ],
       "context": { "create": 0 },
       "sortedColumn": {
@@ -3450,8 +3157,6 @@
       "actionXmlId": "stock.stock_move_line_action",
       "formulaId": "36",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime" },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "picking_type_id.warehouse_id", "type": "many2one" },
@@ -3464,9 +3169,7 @@
       "domain": [
         "&",
         ["state", "=", "done"],
-        "|",
-        ["location_id.usage", "=", "inventory"],
-        ["location_dest_id.usage", "=", "inventory"]
+        ["scrap_id", "!=", false]
       ],
       "context": { "create": 0 },
       "sortedColumn": {
@@ -3490,8 +3193,6 @@
       "actionXmlId": "stock.stock_move_line_action",
       "formulaId": "37",
       "fieldMatching": {
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": -1 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "picking_type_id.warehouse_id", "type": "many2one" },
@@ -3526,12 +3227,10 @@
       "actionXmlId": "stock.stock_move_action",
       "formulaId": "39",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": 0 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
       }
     },
@@ -3562,33 +3261,17 @@
       "actionXmlId": "stock.stock_move_action",
       "formulaId": "40",
       "fieldMatching": {
-        "ad701208-d8cf-431f-97eb-dc72a229a727": {},
         "4ab93c39-bd84-437b-b00f-9688b680937e": { "chain": "date", "type": "datetime", "offset": -1 },
         "049280a5-d8a4-4e65-a895-8bdfe313b7b2": { "chain": "product_id", "type": "many2one" },
         "81e2a28d-25f4-4ebf-b550-ac5e53833b56": { "chain": "warehouse_id", "type": "many2one" },
         "11efc48d-661b-4b4a-aa83-7bdee9f5f36c": { "chain": "picking_type_id", "type": "many2one" },
-        "472f70c0-7336-48e5-a84c-9d03754250b7": {},
         "f2ff9a3a-a142-4d6e-ab47-c1f4923f3c98": { "chain": "product_id.categ_id", "type": "many2one" }
       }
     }
   },
-  "pivotNextId": 41,
+  "pivotNextId": 42,
   "customTableStyles": {},
   "globalFilters": [
-    {
-      "id": "472f70c0-7336-48e5-a84c-9d03754250b7",
-      "type": "text",
-      "label": "Sort graph by",
-      "defaultValue": ["Demand"],
-      "rangesOfAllowedValues": ["'By product overview fill rate - On time'!H6:H7"]
-    },
-    {
-      "id": "ad701208-d8cf-431f-97eb-dc72a229a727",
-      "type": "text",
-      "label": "Top/Bottoms values",
-      "defaultValue": ["Top"],
-      "rangesOfAllowedValues": ["'By product overview fill rate - On time'!I5:J5"]
-    },
     {
       "id": "4ab93c39-bd84-437b-b00f-9688b680937e",
       "type": "date",
@@ -3621,7 +3304,7 @@
     {
       "id": "11efc48d-661b-4b4a-aa83-7bdee9f5f36c",
       "type": "relation",
-      "label": "Transfer",
+      "label": "Operation",
       "defaultValueDisplayNames": [],
       "modelName": "stock.picking.type",
       "includeChildren": false
@@ -3630,8 +3313,6 @@
   "lists": {},
   "listNextId": 5,
   "chartOdooMenusReferences": {
-    "92ad86c5-b988-44b1-b5b3-17b6580743a6": "stock.stock_move_menu",
-    "106df83f-9731-4842-87d9-a8c7b848399e": "stock.stock_move_menu",
     "3832422c-37b7-4b17-92bc-e69219ebb918": "stock.stock_move_menu",
     "757ff23d-2733-4dd7-98c2-3df3dc5ff6ea": "stock_enterprise.stock_dashboard_menuitem",
     "f854691a-ed0a-4908-bd7b-3215c44f670a": "stock.menu_stock_scrap",
@@ -3639,6 +3320,8 @@
     "bc286f72-8794-4655-b78e-b3811c2a15c5": "stock_enterprise.stock_dashboard_menuitem",
     "d993b670-2faa-49b2-ba06-5dc136d05e88": "stock.stock_move_menu",
     "b6792369-556a-4568-aac3-89524cde3ed0": "stock_enterprise.stock_dashboard_menuitem",
-    "00d06fd4-5cb9-443d-80b1-e8b6bf6c05a1": "stock_enterprise.stock_dashboard_menuitem"
+    "00d06fd4-5cb9-443d-80b1-e8b6bf6c05a1": "stock_enterprise.stock_dashboard_menuitem",
+    "106df83f-9731-4842-87d9-a8c7b848399e": "stock.stock_move_menu",
+    "1ce4ca75-777a": "stock.stock_move_menu"
   }
 }

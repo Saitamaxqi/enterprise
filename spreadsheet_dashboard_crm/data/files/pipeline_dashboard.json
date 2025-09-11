@@ -132,6 +132,7 @@
         "E16": "=ODOO.LIST(1,8,\"country_id\")",
         "E17": "=ODOO.LIST(1,9,\"country_id\")",
         "E18": "=ODOO.LIST(1,10,\"country_id\")",
+        "E21": "[Expected Closing](odoo://ir_menu_xml_id/crm.crm_opportunity_report_menu)",
         "E36": "=PIVOT(8, 10, FALSE, FALSE)",
         "E48": "[Top Mediums](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"type\",\"=\",\"opportunity\"],[\"medium_id\",\"!=\",false]],\"context\":{\"group_by\":[\"medium_id\"],\"pivot_measures\":[\"__count\",\"prorated_revenue\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"medium_id\"]},\"modelName\":\"crm.lead\",\"views\":[[false,\"kanban\"],[false,\"list\"],[false,\"calendar\"],[false,\"pivot\"],[false,\"graph\"],[false,\"map\"],[false,\"form\"],[false,\"activity\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Pipeline\",\"positional\":true})",
         "E49": "=PIVOT(7, 10, FALSE, FALSE)",
@@ -223,6 +224,7 @@
         "E72": 3,
         "A48:C48": 4,
         "A61:C61": 4,
+        "E21:G21": 4,
         "E48:G48": 4,
         "E61:G61": 4,
         "A49:C49": 5,
@@ -389,16 +391,11 @@
         },
         {
           "id": "6c739756-da1e-4e9b-bd26-e74e6cd10c88",
-          "width": 490,
-          "height": 345,
+          "width": 476,
+          "height": 311,
           "tag": "chart",
           "data": {
-            "title": {
-              "text": "Expected Closing",
-              "bold": true,
-              "fontSize": 20,
-              "color": "#01666B"
-            },
+            "title": { "text": "", "bold": true, "fontSize": 20, "color": "#01666B" },
             "background": "#FFFFFF",
             "legendPosition": "top",
             "metaData": {
@@ -450,9 +447,9 @@
               "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
             }
           },
-          "offset": { "x": 35, "y": 7 },
+          "offset": { "x": 49, "y": 1 },
           "col": 3,
-          "row": 20
+          "row": 21
         },
         {
           "id": "371be81c-1fac",
@@ -490,13 +487,13 @@
               { "type": "chart", "chartId": "2a5063b0-4c4b", "title": "Graph" },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
-            "fieldMatching": {},
             "title": {
               "text": "Top Opportunities",
               "fontSize": 21,
               "color": "#01666B",
               "bold": true
-            }
+            },
+            "fieldMatching": {}
           }
         },
         {
@@ -581,6 +578,7 @@
               },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
+            "title": { "text": "Pipeline", "bold": true, "fontSize": 21, "color": "#01666B" },
             "fieldMatching": {
               "5adf5fa8-e0e4-4e13-a3ac-259d67389cfb": {
                 "bf6dcdb0-d22d-468c-b6a9-64f717005043": { "chain": "date_deadline", "type": "date", "offset": 0 },
@@ -602,8 +600,7 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
-            },
-            "title": { "text": "Pipeline", "bold": true, "fontSize": 21, "color": "#01666B" }
+            }
           }
         },
         {
@@ -638,9 +635,7 @@
                 },
                 "type": "odoo_geo",
                 "actionXmlId": "crm_enterprise.crm_opportunity_action_dashboard",
-                "dataSets": [
-                  {}
-                ],
+                "dataSets": [],
                 "colorScale": "blues"
               },
               "df10a4eb-48ac": {
@@ -674,6 +669,12 @@
               { "type": "chart", "chartId": "df10a4eb-48ac", "title": "Leads" },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
+            "title": {
+              "text": "Top Countries",
+              "fontSize": 21,
+              "bold": true,
+              "color": "#01666B"
+            },
             "fieldMatching": {
               "af11f776-28fb": {
                 "bf6dcdb0-d22d-468c-b6a9-64f717005043": { "chain": "date_deadline", "type": "date" },
@@ -695,12 +696,6 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
-            },
-            "title": {
-              "text": "Top Countries",
-              "fontSize": 21,
-              "bold": true,
-              "color": "#01666B"
             }
           }
         },
@@ -708,8 +703,8 @@
           "id": "0f2fc6cd-0b55",
           "col": 3,
           "row": 34,
-          "offset": { "x": 35, "y": 8 },
-          "width": 490,
+          "offset": { "x": 49, "y": 8 },
+          "width": 476,
           "height": 353,
           "tag": "carousel",
           "data": {
@@ -736,15 +731,19 @@
                 },
                 "type": "odoo_treemap",
                 "actionXmlId": "crm_enterprise.crm_opportunity_action_dashboard",
-                "dataSets": [
-                  {}
-                ]
+                "dataSets": []
               }
             },
             "items": [
               { "type": "chart", "chartId": "6aeb5a7c-00a7", "title": "Graph" },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
+            "title": {
+              "text": "Revenues by source",
+              "bold": true,
+              "fontSize": 21,
+              "color": "#01666B"
+            },
             "fieldMatching": {
               "6aeb5a7c-00a7": {
                 "bf6dcdb0-d22d-468c-b6a9-64f717005043": { "chain": "date_deadline", "type": "date" },
@@ -756,12 +755,6 @@
                 "c21a4660-9a0a-4757-8d28-1c8d95f73edb": { "chain": "medium_id", "type": "many2one" },
                 "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
               }
-            },
-            "title": {
-              "text": "Revenues by source",
-              "bold": true,
-              "fontSize": 21,
-              "color": "#01666B"
             }
           }
         }

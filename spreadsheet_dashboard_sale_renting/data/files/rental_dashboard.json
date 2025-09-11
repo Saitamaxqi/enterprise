@@ -45,12 +45,12 @@
       "merges": [],
       "cells": {
         "A7": "[Daily Rentals](odoo://view/{\"viewType\":\"graph\",\"action\":{\"domain\":[[\"state\",\"in\",[\"sale\",\"done\"]]],\"context\":{\"group_by\":[],\"graph_measure\":\"quantity\",\"graph_mode\":\"line\",\"graph_groupbys\":[\"date:day\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Rental Analysis\"})",
-        "A36": "[Top Salespeople](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"state\",\"in\",[\"sale\",\"done\"]],[\"user_id\",\"!=\",false]],\"context\":{\"group_by\":[\"user_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"user_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Salespeople\"})",
-        "E23": "[Top Products](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"state\",\"in\",[\"sale\",\"done\"]],[\"product_id\",\"!=\",false]],\"context\":{\"group_by\":[\"product_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"product_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Products\"})",
-        "E36": "[Top Customers](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[[\"state\",\"in\",[\"sale\",\"done\"]]],\"context\":{\"group_by\":[\"partner_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"partner_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Customers\"})",
         "A24": "=PIVOT(1, 10, FALSE, FALSE)",
+        "A36": "[Top Salespeople](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"state\",\"in\",[\"sale\",\"done\"]],[\"user_id\",\"!=\",false]],\"context\":{\"group_by\":[\"user_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"user_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Salespeople\"})",
         "A37": "=PIVOT(3, 10, FALSE, FALSE)",
+        "E23": "[Top Products](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[\"&\",[\"state\",\"in\",[\"sale\",\"done\"]],[\"product_id\",\"!=\",false]],\"context\":{\"group_by\":[\"product_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"product_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Products\"})",
         "E24": "=PIVOT(2, 10, FALSE, FALSE)",
+        "E36": "[Top Customers](odoo://view/{\"viewType\":\"pivot\",\"action\":{\"domain\":[[\"state\",\"in\",[\"sale\",\"done\"]]],\"context\":{\"group_by\":[\"partner_id\"],\"pivot_measures\":[\"quantity\",\"price\"],\"pivot_column_groupby\":[],\"pivot_row_groupby\":[\"partner_id\"]},\"modelName\":\"sale.rental.report\",\"views\":[[false,\"graph\"],[false,\"pivot\"],[false,\"search\"]]},\"threshold\":0,\"name\":\"Top Customers\"})",
         "E37": "=PIVOT(4, 10, FALSE, FALSE)"
       },
       "styles": {
@@ -249,7 +249,7 @@
           "id": "431c902d-42eb",
           "col": 0,
           "row": 22,
-          "offset": { "x": 0, "y": 9 },
+          "offset": { "x": 0, "y": 7 },
           "width": 474,
           "height": 395,
           "tag": "carousel",
@@ -264,9 +264,7 @@
                   "measure": "price",
                   "order": null,
                   "resModel": "sale.rental.report",
-                  "mode": "bar",
-                  "cumulated": false,
-                  "cumulatedStart": false
+                  "mode": "bar"
                 },
                 "searchParams": {
                   "context": {
@@ -289,6 +287,12 @@
               { "type": "chart", "chartId": "eb6085a9-cc1c" },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
+            "title": {
+              "text": "Top Categories",
+              "bold": true,
+              "fontSize": 21,
+              "color": "#01666B"
+            },
             "fieldMatching": {
               "eb6085a9-cc1c": {
                 "a58dc8ef-f393-4607-bdcd-acb43a20585d": { "chain": "date", "type": "date" },
@@ -297,12 +301,6 @@
                 "b810ed25-c56a-4a70-ab8c-f12f54c0d8f4": { "chain": "user_id", "type": "many2one" },
                 "64e3bd4b-8b6d-4776-b802-d678cf8c4f56": { "chain": "partner_id", "type": "many2one" }
               }
-            },
-            "title": {
-              "text": "Top Categories",
-              "bold": true,
-              "fontSize": 21,
-              "color": "#01666B"
             }
           }
         }

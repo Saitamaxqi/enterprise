@@ -199,6 +199,7 @@
         "A37:C37": 1,
         "A50:C50": 1,
         "A63:C63": 1,
+        "A76:C76": 1,
         "E7:G7": 1,
         "E22:G22": 1,
         "E37:G37": 1,
@@ -601,7 +602,7 @@
           "id": "41a939b0-5396",
           "col": 3,
           "row": 75,
-          "offset": { "x": 49, "y": 8 },
+          "offset": { "x": 49, "y": 6 },
           "width": 489,
           "height": 385,
           "tag": "carousel",
@@ -650,6 +651,12 @@
               { "type": "chart", "chartId": "a1a6cd7a-8749", "title": "Map" },
               { "type": "carouselDataView", "title": "Top 10" }
             ],
+            "title": {
+              "text": "Top Countries",
+              "fontSize": 21,
+              "color": "#01666B",
+              "bold": true
+            },
             "fieldMatching": {
               "a1a6cd7a-8749": {
                 "e6db018b-19ec-42c3-b29e-11b1e3910916": { "chain": "country_id", "type": "many2one" },
@@ -660,12 +667,6 @@
                 "ec466626-f54a-4955-9611-eaa2719f1afb": { "chain": "source_id", "type": "many2one" },
                 "85d94827-6ce2-429c-9775-ef646cfddb6b": { "chain": "medium_id", "type": "many2one" }
               }
-            },
-            "title": {
-              "text": "Top Countries",
-              "fontSize": 21,
-              "color": "#01666B",
-              "bold": true
             }
           }
         }
