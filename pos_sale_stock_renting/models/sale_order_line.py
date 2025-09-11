@@ -18,7 +18,7 @@ class RentalOrderLine(models.Model):
             return
 
         for line in self:
-            if line.is_rental:
+            if line.is_rental and line.product_id.type == 'consu':
                 qty = 0.0
                 outgoing_moves, _ = line.with_context(skip_pos_rental_pickings_check=True)._get_outgoing_incoming_moves()
                 for move in outgoing_moves:

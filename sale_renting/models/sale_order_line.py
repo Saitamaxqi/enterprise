@@ -13,11 +13,6 @@ from odoo.tools.sql import SQL
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
-    _rental_stock_coherence = models.Constraint(
-        'CHECK(NOT is_rental OR qty_returned <= qty_delivered)',
-        "You cannot return more than what has been picked up.",
-    )
-
     order_is_rental = fields.Boolean(related='order_id.is_rental_order', depends=['order_id'])
 
     # Stored because a product could have been rent_ok when added to the SO but then updated
@@ -123,7 +118,7 @@ class SaleOrderLine(models.Model):
         for sol in self.filtered('order_is_rental'):
             if sol.qty_delivered < sol.product_uom_qty:
                 sol.rental_status = 'pickup'
-            elif sol.qty_returned == sol.qty_delivered and sol.qty_delivered == sol.product_uom_qty:
+            elif sol.qty_returned >= sol.qty_delivered and sol.qty_delivered >= sol.product_uom_qty:
                 sol.rental_status = 'returned'
             else:
                 sol.rental_status = 'return'
@@ -157,8 +152,8 @@ class SaleOrderLine(models.Model):
                     CASE
                         WHEN %(qty_delivered)s < %(product_uom_qty)s THEN 'pickup'
                         WHEN (
-                            %(qty_returned)s = %(qty_delivered)s
-                            AND %(qty_delivered)s = %(product_uom_qty)s
+                            %(qty_returned)s >= %(qty_delivered)s
+                            AND %(qty_delivered)s >= %(product_uom_qty)s
                         ) THEN 'returned'
                         ELSE 'return'
                     END IN %(values)s

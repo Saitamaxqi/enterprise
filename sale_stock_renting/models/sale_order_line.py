@@ -558,7 +558,7 @@ class SaleOrderLine(models.Model):
             return
 
         for line in self:
-            if line.is_rental:
+            if line.is_rental and line.product_id.type == 'consu':
                 qty = 0.0
                 outgoing_moves, dummy = line._get_outgoing_incoming_moves()
                 for move in outgoing_moves:
