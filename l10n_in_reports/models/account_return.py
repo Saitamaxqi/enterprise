@@ -2708,9 +2708,9 @@ class AccountReturnCheck(models.Model):
     def action_review(self):
         """
         Create the default document summary only on action click
-        for missing_document_summary
+        for missing_document_summary, (if not already created.)
         """
-        if self.code == 'missing_document_summary':
+        if self.code == 'missing_document_summary' and not self.return_id.l10n_in_doc_summary_line_ids:
             self.return_id.action_generate_document_summary()
         return super().action_review()
 
