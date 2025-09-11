@@ -30,6 +30,9 @@ patch(SalaryPackage.prototype, {
             "input[name='fold_l10n_be_bicyle_cost']": {
                 "t-on-change": this.onchangePrivateBike.bind(this),
             },
+            "input[name='l10n_be_bicyle_cost_manual']": {
+                "t-on-change": this.onchangePrivateBike.bind(this),
+            },
             "input[name='l10n_be_has_ambulatory_insurance_radio']": {
                 "t-on-change": this.onchangeAmbulatory.bind(this),
             },
@@ -132,21 +135,27 @@ patch(SalaryPackage.prototype, {
         }
     },
 
-    onchangePrivateBike(event) {
-        if (event.target.checked) {
-            // Set the fuel card slider value to 0 and disable it
+    onchangePrivateBike: function() {
+        const privateBikeCheckboxEl = this.el.querySelector("input[name='fold_l10n_be_bicyle_cost']");
+        const privateBikeInputEl = this.el.querySelector("input[name='l10n_be_bicyle_cost_manual']");
+        
+        const isCheckboxChecked = privateBikeCheckboxEl?.checked || false;
+        const privateBikeValue = parseFloat(privateBikeInputEl?.value || "0.0");
+        
+        if (isCheckboxChecked && privateBikeValue > 0) {
+            // Set the fuel card values to 0 and disable it
             const fuelCardSliderEl = this.el.querySelector("input[name='fuel_card_slider']");
             const fuelCardEl = this.el.querySelector("input[name='fuel_card']");
             if (fuelCardSliderEl) {
-                fuelCardEl.value = 0;
-                fuelCardEl.disabled = true;
+                fuelCardSliderEl.value = 0;
             }
             if (fuelCardEl) {
                 fuelCardEl.value = 0;
             }
+            this.el.querySelector("label[for='fuel_card']")?.parentElement.classList.add("o_disabled");
         } else {
-            // Enable the fuel card slider when "Private Bike" is unchecked
-            this.el.querySelector("input[name='fuel_card_slider']")?.removeAttribute("disabled");
+            // Enable the fuel card element when checkbox is unchecked or value is 0
+            this.el.querySelector("label[for='fuel_card']")?.parentElement.classList.remove("o_disabled");
         }
     },
 
