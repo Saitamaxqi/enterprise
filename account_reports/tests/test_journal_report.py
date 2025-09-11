@@ -305,6 +305,7 @@ class TestJournalReport(TestAccountReportsCommon):
         options = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'show_payment_lines': False})
 
         journal_report_handler = self.env[self.report.custom_handler_model_name]
+        move_2_pref = self.move_sales_2.payment_reference
         self.assert_journal_vals_for_export(
             self.report,
             options,
@@ -322,8 +323,8 @@ class TestJournalReport(TestAccountReportsCommon):
 
                         {'currency_id': self.other_currency.id, 'amount': 3000},  # Special line for multicurrency
 
-                        {'name': 'partner_a ',                'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
-                        {'name': '',                'debit': '$\xa00.00',                 'credit': '$\xa01,000.00'},
+                        {'name': f'partner_a {move_2_pref}',  'debit': '$\xa01,000.00',             'credit': '$\xa00.00'},
+                        {'name': move_2_pref,       'debit': '$\xa00.00',                 'credit': '$\xa01,000.00'},
 
                         {'currency_id': self.other_currency.id, 'amount': 2000},  # Special line for multicurrency
 
