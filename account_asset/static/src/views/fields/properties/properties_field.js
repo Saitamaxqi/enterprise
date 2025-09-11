@@ -9,6 +9,6 @@ patch(PropertiesField.prototype, {
         if (this.props.record.resModel === 'account.asset') {
             return _t("You can add Property fields only on Assets with an Asset Model set.")
         }
-        super._getPropertyEditWarningText();
+        return super._getPropertyEditWarningText();
     }
 });
