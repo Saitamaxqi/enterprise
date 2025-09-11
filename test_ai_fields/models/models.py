@@ -53,3 +53,4 @@ class TestAiReadModel(models.Model):
 
     currency_id = fields.Many2one('res.currency')
     price = fields.Monetary(currency_field='currency_id')
+    new_binary_field = fields.Binary(attachment=True)

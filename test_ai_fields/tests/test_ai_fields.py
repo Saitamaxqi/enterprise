@@ -309,6 +309,21 @@ class TestAiFields(TransactionCase):
             {'id': str(new_record.message_partner_ids[1].id), 'name': 'Bill'}
         ])
 
+    def test_ai_read_dirty_binary(self):
+        record = self.env['test.ai.read.model'].create({})
+        changed_png_data = base64.b64encode(b"unsaved-changed-png")
+        dirty_record = record.new({"new_binary_field": changed_png_data}, origin=record)
+
+        __, files_dict = dirty_record._ai_read(['new_binary_field'], {})
+
+        self.assertTrue(
+            any(
+                b"unsaved-changed-png" in base64.b64decode(f['value'])
+                for f in files_dict.values()
+            ),
+            "Expected changed (unsaved) PNG data in files_dict for Binary field"
+        )
+
     def test_ai_field_sanitize(self):
         system_prompt = '<p><span data-ai-field="name">name</span> <img src="x" onerror="alert(1)"/></p>'
         expected = '<p><span data-ai-field="name">name</span> <img src="x"/></p>'

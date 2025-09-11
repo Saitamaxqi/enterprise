@@ -129,35 +129,29 @@ class Model(models.AbstractModel):
                         ('res_id', 'in', self.ids)  # ._origin?
                     ])
                     __, files_dict = attachments._ai_read(None, files_dict)  # populate file dict
-                    attachments_by_resid = {att.res_id: att for att in attachments}
-                    for vals in vals_list:
-                        if not vals[fname] or (res_id := vals['id'] or vals['id'].origin) not in attachments_by_resid:
-                            continue
-                        vals[fname] = files_dict[attachments_by_resid[res_id].checksum]['file_ref']
-                else:
-                    for vals in vals_list:
-                        if not vals[fname]:
-                            continue
-                        checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
-                        if checksum not in files_dict:
-                            raw = base64.b64decode(vals[fname])
-                            mimetype = guess_mimetype(raw)
-                            extension = mimetype.split("/")[-1]
-                            file_ref = f'<file_#{len(files_dict) + 1}>'
-                            if extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
-                                # todo: keep 5 pages max and resize images
-                                value = vals[fname].decode()
-                            else:
-                                try:
-                                    value = self.env['ir.attachment']._index(vals[fname], mimetype, checksum=checksum)
-                                except TypeError:
-                                    value = self.env['ir.attachment']._index(vals[fname], mimetype)
-                            files_dict[checksum] = {
-                                'mimetype': mimetype,
-                                'value': value,
-                                'file_ref': file_ref,
-                            }
-                        vals[fname] = files_dict[checksum]['file_ref']
+                for vals in vals_list:
+                    if not vals[fname]:
+                        continue
+                    checksum = self.env['ir.attachment']._compute_checksum(vals[fname])
+                    if checksum not in files_dict:
+                        raw = base64.b64decode(vals[fname])
+                        mimetype = guess_mimetype(raw)
+                        extension = mimetype.split("/")[-1]
+                        file_ref = f'<file_#{len(files_dict) + 1}>'
+                        if extension in (*AI_SUPPORTED_IMG_TYPES, 'pdf'):
+                            # todo: keep 5 pages max and resize images
+                            value = vals[fname].decode()
+                        else:
+                            try:
+                                value = self.env['ir.attachment']._index(vals[fname], mimetype, checksum=checksum)
+                            except TypeError:
+                                value = self.env['ir.attachment']._index(vals[fname], mimetype)
+                        files_dict[checksum] = {
+                            'mimetype': mimetype,
+                            'value': value,
+                            'file_ref': file_ref,
+                        }
+                    vals[fname] = files_dict[checksum]['file_ref']
             elif field.type in ('date', 'datetime'):
                 for vals in vals_list:
                     vals[fname] = field.to_string(vals[fname])
