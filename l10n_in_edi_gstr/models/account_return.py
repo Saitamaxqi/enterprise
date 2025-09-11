@@ -79,7 +79,7 @@ class AccountReturn(models.Model):
                 'code': 'missing_einvoice',
                 'name': _("Missing E-Invoice"),
                 'message': _("Some invoices are missing e-invoice."),
-                'records_name': _("Invoice") if len(move_ids) == 1 else _("Invoices"),
+                'records_model': self.env['ir.model']._get('account.move').id,
                 'records_count': len(move_ids),
                 'result': 'anomaly' if move_ids else 'reviewed',
                 'action': self._build_open_invoice_records_action(_('Missing E-Invoice'), move_ids),
