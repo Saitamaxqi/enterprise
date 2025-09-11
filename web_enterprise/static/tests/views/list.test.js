@@ -35,6 +35,7 @@ defineModels([Foo]);
 const getDefaultConfig = () => ({
     actionId: 1,
     actionType: "ir.actions.act_window",
+    actionXmlId: "action_1",
 });
 
 describe.current.tags("desktop");

@@ -5,7 +5,6 @@ import { patch } from "@web/core/utils/patch";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { PromoteStudioDialog } from "@web_enterprise/webclient/promote_studio/promote_studio_dialog";
 import { _t } from "@web/core/l10n/translation";
-import { onWillDestroy, useState } from "@odoo/owl";
 
 export const patchListRendererDesktop = () => ({
     setup() {
@@ -13,7 +12,8 @@ export const patchListRendererDesktop = () => ({
         this.actionService = useService("action");
         const list = this.props.list;
 
-        const { actionId, actionType } = this.env.config || {};
+        const { actionId, actionType, actionXmlId } = this.env.config || {};
+        const resModel = this.props.list.resModel;
 
         // Start by determining if the current ListRenderer is in a context that would
         // allow the edition of the arch by studio.
@@ -28,58 +28,39 @@ export const patchListRendererDesktop = () => ({
             list === list.model.root &&
             actionId &&
             actionType === "ir.actions.act_window";
-        this.studioEditable = useState({ value: isPotentiallyEditable });
 
-        if (isPotentiallyEditable) {
-            const computeStudioEditable = (action) => {
-                // Finalize the computation when the actionService is ready.
-                // The following code is copied from studioService.
-                if (!action.xml_id) {
-                    return false;
-                }
-                if (
-                    action.res_model.indexOf("settings") > -1 &&
-                    action.res_model.indexOf("x_") !== 0
-                ) {
-                    return false; // settings views aren't editable; but x_settings is
-                }
-                if (action.res_model === "board.board") {
-                    return false; // dashboard isn't editable
-                }
-                if (action.view_mode === "qweb") {
-                    // Apparently there is a QWebView that allows to
-                    // implement ActWindow actions that are completely custom
-                    // but not editable by studio
-                    return false;
-                }
-                if (action.res_model === "knowledge.article") {
-                    // The knowledge form view is very specific and custom, it doesn't make sense
-                    // to edit it. Editing the list and kanban is more debatable, but for simplicity's sake
-                    // we set them to not editable too.
-                    return false;
-                }
-                if (action.res_model === "account.bank.statement.line") {
-                    return false; // bank reconciliation isn't editable
-                }
-                return Boolean(action.res_model);
-            };
-            const onUiUpdated = () => {
-                const action = this.actionService.currentController.action;
-                if (action.id === actionId) {
-                    this.studioEditable.value = computeStudioEditable(action);
-                }
-                stopListening();
-            };
-            const stopListening = () =>
-                this.env.bus.removeEventListener("ACTION_MANAGER:UI-UPDATED", onUiUpdated);
-            this.env.bus.addEventListener("ACTION_MANAGER:UI-UPDATED", onUiUpdated);
+        const computeStudioEditable = () => {
+            // Finalize the computation when the actionService is ready.
+            // The following code is copied from studioService.
+            if (!actionXmlId) {
+                return false;
+            }
+            if (
+                resModel.indexOf("settings") > -1 &&
+                resModel.indexOf("x_") !== 0
+            ) {
+                return false; // settings views aren't editable; but x_settings is
+            }
+            if (resModel === "board.board") {
+                return false; // dashboard isn't editable
+            }
+            if (resModel === "knowledge.article") {
+                // The knowledge form view is very specific and custom, it doesn't make sense
+                // to edit it. Editing the list and kanban is more debatable, but for simplicity's sake
+                // we set them to not editable too.
+                return false;
+            }
+            if (resModel === "account.bank.statement.line") {
+                return false; // bank reconciliation isn't editable
+            }
+            return Boolean(resModel);
+        };
 
-            onWillDestroy(stopListening);
-        }
+        this.studioEditable = isPotentiallyEditable && computeStudioEditable();
     },
 
     isStudioEditable() {
-        return this.studioEditable.value;
+        return this.studioEditable;
     },
 
     get displayOptionalFields() {
