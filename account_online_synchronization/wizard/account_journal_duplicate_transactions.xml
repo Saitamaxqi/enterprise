@@ -9,7 +9,7 @@
                 create="false"
                 js_class="account_duplicate_transactions_form"
             >
-                <h3>Choose a date and a journal from which you want to check the transactions.</h3>
+                <h3>Choose a date from which you want to check the transactions.</h3>
                 <group class="oe_form_field">
                     <field name="date" required="1"/>
                 </group>
