@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:11+0000\n"
-"PO-Revision-Date: 2025-07-01 12:11+0000\n"
+"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"PO-Revision-Date: 2025-09-11 14:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -98,16 +98,6 @@ msgid "Completed flow"
 msgstr ""
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__create_uid
-msgid "Created by"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__create_date
-msgid "Created on"
-msgstr ""
-
-#. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
 msgid ""
 "Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and"
@@ -117,7 +107,6 @@ msgstr ""
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__display_name
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__display_name
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -180,18 +169,18 @@ msgid "Extract status"
 msgstr ""
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_word_ids
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_dates
+msgid "Extracted Dates"
+msgstr ""
+
+#. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_numbers
+msgid "Extracted Numbers"
+msgstr ""
+
+#. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_words
 msgid "Extracted Words"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model,name:iap_extract.model_iap_extracted_words
-msgid "Extracted words from an OCRed document"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__field
-msgid "Field"
 msgstr ""
 
 #. module: iap_extract
@@ -221,7 +210,6 @@ msgstr ""
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__id
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__id
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__id
 msgid "ID"
 msgstr ""
 
@@ -239,9 +227,7 @@ msgstr ""
 
 #. module: iap_extract
 #: model:ir.model.fields,help:iap_extract.field_extract_mixin__message_has_error
-#: model:ir.model.fields,help:iap_extract.field_extract_mixin__message_has_sms_error
 #: model:ir.model.fields,help:iap_extract.field_extract_mixin_with_words__message_has_error
-#: model:ir.model.fields,help:iap_extract.field_extract_mixin_with_words__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
 
@@ -267,16 +253,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__is_in_extractable_state
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__is_in_extractable_state
 msgid "Is In Extractable State"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__write_uid
-msgid "Last Updated by"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__write_date
-msgid "Last Updated on"
 msgstr ""
 
 #. module: iap_extract
@@ -348,11 +324,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__ocr_selected
-msgid "Ocr Selected"
-msgstr ""
-
-#. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__rating_ids
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__rating_ids
 msgid "Ratings"
@@ -365,25 +336,9 @@ msgid "Refresh"
 msgstr ""
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__res_id
-msgid "Resource ID"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__res_model
-msgid "Resource Model"
-msgstr ""
-
-#. module: iap_extract
 #. odoo-javascript
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
 msgid "Retry"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_has_sms_error
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__message_has_sms_error
-msgid "SMS Delivery error"
 msgstr ""
 
 #. module: iap_extract
@@ -447,11 +402,6 @@ msgid "Unsupported image format"
 msgstr ""
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__user_selected
-msgid "User Selected"
-msgstr ""
-
-#. module: iap_extract
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid "Version is unsupported"
@@ -475,53 +425,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:iap_extract.selection__hr_applicant__extract_state__waiting_validation
 #: model:ir.model.fields.selection,name:iap_extract.selection__hr_expense__extract_state__waiting_validation
 msgid "Waiting validation"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__website_message_ids
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__website_message_ids
-msgid "Website Messages"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,help:iap_extract.field_extract_mixin__website_message_ids
-#: model:ir.model.fields,help:iap_extract.field_extract_mixin_with_words__website_message_ids
-msgid "Website communication history"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_angle
-msgid "Word Box Angle"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_height
-msgid "Word Box Height"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_midX
-msgid "Word Box Midx"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_midY
-msgid "Word Box Midy"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_width
-msgid "Word Box Width"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_page
-msgid "Word Page"
-msgstr ""
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_text
-msgid "Word Text"
 msgstr ""
 
 #. module: iap_extract

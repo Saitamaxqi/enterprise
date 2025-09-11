@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:11+0000\n"
-"PO-Revision-Date: 2025-07-01 12:11+0000\n"
+"POT-Creation-Date: 2025-09-11 14:30+0000\n"
+"PO-Revision-Date: 2025-09-11 14:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,21 @@ msgid "Certifications"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model.fields,help:documents_hr.field_res_company__employee_subfolders
+#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+msgid ""
+"Comma separated list of folder names that need to be created under each "
+"employee folder."
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,help:documents_hr.field_res_config_settings__employee_subfolders
+msgid ""
+"Comma separated string of folder names that need to be created under each "
+"employee folder."
+msgstr ""
+
+#. module: documents_hr
 #: model:ir.model,name:documents_hr.model_res_company
 msgid "Companies"
 msgstr ""
@@ -51,6 +66,8 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: documents_hr
+#. odoo-python
+#: code:addons/documents_hr/models/hr_employee.py:0
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_contracts_tags
 msgid "Contracts"
 msgstr ""
@@ -65,10 +82,10 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_documents_tag__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee_public__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_hr_version__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:documents_hr.field_res_users__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -79,6 +96,7 @@ msgstr ""
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__document_count
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee_public__document_count
 msgid "Document Count"
 msgstr ""
 
@@ -88,8 +106,8 @@ msgid "Document Redirect"
 msgstr ""
 
 #. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_public_view_form
 #: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_view_form
-#: model_terms:ir.ui.view,arch_db:documents_hr.res_users_view_form
 msgid "Documents"
 msgstr ""
 
@@ -122,7 +140,7 @@ msgstr ""
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/res_company.py:0
-msgid "Employees"
+msgid "Employees - %s"
 msgstr ""
 
 #. module: documents_hr
@@ -138,18 +156,24 @@ msgid "Employees Folder"
 msgstr ""
 
 #. module: documents_hr
-#: model:documents.document,name:documents_hr.document_hr_folder
-msgid "HR"
+#: model:ir.model.fields,field_description:documents_hr.field_res_company__employee_subfolders
+#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__employee_subfolders
+msgid "Employees Subfolder"
+msgstr ""
+
+#. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
+msgid "Employees Subfolders"
+msgstr ""
+
+#. module: documents_hr
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_contract_folder_id
+msgid "HR Employee Contract Folder"
 msgstr ""
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_folder_id
 msgid "HR Employee Folder"
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_folder
-msgid "HR Folder"
 msgstr ""
 
 #. module: documents_hr
@@ -162,23 +186,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__id
 #: model:ir.model.fields,field_description:documents_hr.field_documents_tag__id
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__id
+#: model:ir.model.fields,field_description:documents_hr.field_hr_employee_public__id
 #: model:ir.model.fields,field_description:documents_hr.field_hr_version__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
-#: model:ir.model.fields,field_description:documents_hr.field_res_users__id
 msgid "ID"
 msgstr ""
 
 #. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/documents_document.py:0
-msgid "Impossible to delete employee subfolders"
-msgstr ""
-
-#. module: documents_hr
-#. odoo-javascript
-#: code:addons/documents_hr/static/src/components/settings_document_permission_widget.xml:0
-msgid "Manage Employee Access to employee folder"
+msgid "Impossible to delete employee folder or employee 'Contract' folder"
 msgstr ""
 
 #. module: documents_hr
@@ -187,8 +205,8 @@ msgid "My documents"
 msgstr ""
 
 #. module: documents_hr
-#: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
-msgid "Root Folder"
+#: model:ir.model,name:documents_hr.model_hr_employee_public
+msgid "Public Employee"
 msgstr ""
 
 #. module: documents_hr
@@ -207,8 +225,9 @@ msgid "Tag"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model,name:documents_hr.model_res_users
-msgid "User"
+#. odoo-python
+#: code:addons/documents_hr/models/hr_employee.py:0
+msgid "You cannot access the employee's folder."
 msgstr ""
 
 #. module: documents_hr
@@ -233,9 +252,4 @@ msgstr ""
 msgid ""
 "You must have a contact linked to the employee in order to use Document's "
 "features."
-msgstr ""
-
-#. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_folder
-msgid "hr default workspace"
 msgstr ""

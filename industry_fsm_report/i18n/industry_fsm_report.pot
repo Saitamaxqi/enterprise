@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:23+0000\n"
-"PO-Revision-Date: 2025-07-03 12:23+0000\n"
+"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"PO-Revision-Date: 2025-09-11 14:35+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -120,6 +120,7 @@ msgid "Customize your <b>layout</b>."
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field6
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Date"
 msgstr ""
@@ -130,6 +131,7 @@ msgid "Default Worksheet"
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field2
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Description of the Intervention"
 msgstr ""
@@ -190,6 +192,7 @@ msgid "Go back to your Field Service <b>task</b>."
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field4
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid ""
 "I hereby certify that this device meets the requirements of an acceptable "
@@ -212,6 +215,7 @@ msgid "ID"
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field1
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Intervention Type"
 msgstr ""
@@ -247,13 +251,14 @@ msgid "Load the worksheet template"
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field3
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Manufacturer"
 msgstr ""
 
 #. module: industry_fsm_report
-#: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_ir_model_fields_8
-#: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_ir_model_fields_8
+#: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_3_field_x_name
+#: model:ir.model.fields,field_description:industry_fsm_report.x_project_task_worksheet_template_4_field_x_name
 msgid "Name"
 msgstr ""
 
@@ -306,7 +311,7 @@ msgstr ""
 #. module: industry_fsm_report
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.project_task_action_fsm_planning_groupby_worksheet2
-msgid "Schedule your tasks and assign them to your workers."
+msgid "Schedule your tasks and assign them to your technicians."
 msgstr ""
 
 #. module: industry_fsm_report
@@ -315,6 +320,7 @@ msgid "Send Report"
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field5
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
 msgid "Serial Number"
 msgstr ""
@@ -364,6 +370,12 @@ msgid "Tasks Analysis"
 msgstr ""
 
 #. module: industry_fsm_report
+#: model:ir.model.fields,field_description:industry_fsm_report.fsm_template_field7
+#: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
+msgid "Technician Signature"
+msgstr ""
+
+#. module: industry_fsm_report
 #. odoo-javascript
 #: code:addons/industry_fsm_report/static/src/js/tours/industry_fsm_report_tour.js:0
 msgid "Use the breadcrumbs to return to your <b>task</b>."
@@ -377,20 +389,17 @@ msgid ""
 "        30h Allocate 30 hours to the task\n"
 "        #tags Set tags on the task\n"
 "        @user Assign the task to a user\n"
-"        ! Set the task a high priority\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
 "\n"
-"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
 
 #. module: industry_fsm_report
 #. odoo-javascript
 #: code:addons/industry_fsm_report/static/src/js/tours/industry_fsm_report_tour.js:0
 msgid "Validate the <b>signature</b>."
-msgstr ""
-
-#. module: industry_fsm_report
-#: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_4
-msgid "Worker Signature"
 msgstr ""
 
 #. module: industry_fsm_report

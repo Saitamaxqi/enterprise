@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-09-11 14:49+0000\n"
+"PO-Revision-Date: 2025-09-11 14:49+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -92,11 +92,6 @@ msgid "(%s weeks)."
 msgstr ""
 
 #. module: website_sale_renting
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
-msgid ", .s_rental_search"
-msgstr ""
-
-#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_collapsible
@@ -153,7 +148,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
 msgid ""
 "<span class=\"d-md-none me-2\">Search period</span>\n"
-"                                <i class=\"fa fa-search\" role=\"img\"/>"
+"                                <i class=\"oi oi-search\" role=\"img\"/>"
 msgstr ""
 
 #. module: website_sale_renting
@@ -168,11 +163,6 @@ msgid "<span>/</span>"
 msgstr ""
 
 #. module: website_sale_renting
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
-msgid "<span>Rental Period</span>"
-msgstr ""
-
-#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
 msgid "<span>per</span>"
@@ -184,6 +174,11 @@ msgid "<strong class=\"attribute_name\">Pricing</strong>"
 msgstr ""
 
 #. module: website_sale_renting
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
+msgid "<strong>Rental Period</strong>"
+msgstr ""
+
+#. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option_plugin.js:0
 msgid "All"
@@ -192,7 +187,6 @@ msgstr ""
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Attribute Filter"
 msgstr ""
 
@@ -209,7 +203,6 @@ msgstr ""
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Day"
 msgstr ""
 
@@ -225,6 +218,7 @@ msgstr ""
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_pricelist__display_name
+#: model:ir.model.fields,field_description:website_sale_renting.field_product_product__display_name
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_template__display_name
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__display_name
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__display_name
@@ -261,7 +255,6 @@ msgstr ""
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Hour"
 msgstr ""
 
@@ -272,6 +265,7 @@ msgstr ""
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_pricelist__id
+#: model:ir.model.fields,field_description:website_sale_renting.field_product_product__id
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_template__id
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__id
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__id
@@ -337,15 +331,18 @@ msgid "Product"
 msgstr ""
 
 #. module: website_sale_renting
+#: model:ir.model,name:website_sale_renting.model_product_product
+msgid "Product Variant"
+msgstr ""
+
+#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form_inherit_website
 msgid "Rent Online"
 msgstr ""
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/product_page_list_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.snippet_options
 msgid "Rental Date"
 msgstr ""
 
@@ -468,7 +465,6 @@ msgstr ""
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search_options
 msgid "Timing"
 msgstr ""
 

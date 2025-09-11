@@ -4,16 +4,22 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-09-11 14:41+0000\n"
+"PO-Revision-Date: 2025-09-11 14:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: quality_mrp
+#. odoo-python
+#: code:addons/quality_mrp/models/quality.py:0
+msgid "%(product_name)s is not in Production Order %(production_name)s"
+msgstr ""
 
 #. module: quality_mrp
 #: model_terms:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
@@ -54,7 +60,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert__display_name
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check__display_name
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_check_on_demand__display_name
+#: model:ir.model.fields,field_description:quality_mrp.field_quality_check_wizard__display_name
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point__display_name
 #: model:ir.model.fields,field_description:quality_mrp.field_stock_move__display_name
 #: model:ir.model.fields,field_description:quality_mrp.field_stock_move_line__display_name
@@ -65,7 +71,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_alert__id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_check__id
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_check_on_demand__id
+#: model:ir.model.fields,field_description:quality_mrp.field_quality_check_wizard__id
 #: model:ir.model.fields,field_description:quality_mrp.field_quality_point__id
 #: model:ir.model.fields,field_description:quality_mrp.field_stock_move__id
 #: model:ir.model.fields,field_description:quality_mrp.field_stock_move_line__id
@@ -74,14 +80,7 @@ msgstr ""
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_production
-#: model:ir.model.fields,field_description:quality_mrp.field_quality_check_on_demand__production_id
 msgid "Manufacturing Order"
-msgstr ""
-
-#. module: quality_mrp
-#. odoo-python
-#: code:addons/quality_mrp/models/mrp_production.py:0
-msgid "On-Demand Quality Check"
 msgstr ""
 
 #. module: quality_mrp
@@ -147,17 +146,8 @@ msgid ""
 msgstr ""
 
 #. module: quality_mrp
-#: model:ir.model,name:quality_mrp.model_quality_check_on_demand
-msgid "Wizard to select on-demand quality check points"
-msgstr ""
-
-#. module: quality_mrp
-#. odoo-python
-#: code:addons/quality_mrp/models/mrp_production.py:0
-#: code:addons/quality_mrp/wizard/on_demand_quality_check_wizard.py:0
-msgid ""
-"You can not create quality check for a draft, done or cancelled "
-"manufacturing order."
+#: model:ir.model,name:quality_mrp.model_quality_check_wizard
+msgid "Wizard for Quality Check Pop Up"
 msgstr ""
 
 #. module: quality_mrp

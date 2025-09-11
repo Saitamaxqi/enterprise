@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-09-11 14:36+0000\n"
+"PO-Revision-Date: 2025-09-11 14:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -76,9 +76,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_purchase_followup_arch
 msgid ""
 "<span style=\"font-size: 12px\">\n"
-"              <font style=\"color: rgb(183, 191, 199)\">250 Executive Park Blvd</font></span>\n"
+"              <font style=\"color: rgb(183, 191, 199)\">8000 Marina Blvd, Suite 300</font></span>\n"
 "            <br/>\n"
-"            <span style=\"font-size: 12px\"><font style=\"color: rgb(183, 191, 199)\">San Francisco, California 94134</font></span>\n"
+"            <span style=\"font-size: 12px\"><font style=\"color: rgb(183, 191, 199)\">Brisbane, California 94005</font></span>\n"
 "            <br/>\n"
 "            <span style=\"font-size: 12px\">\n"
 "              <font style=\"color: rgb(183, 191, 199)\">You received this email from</font>\n"
@@ -354,7 +354,7 @@ msgstr ""
 
 #. module: marketing_automation_website_sale
 #: model_terms:ir.ui.view,arch_db:marketing_automation_website_sale.mailing_anniversary_arch
-msgid "To celebrate, here’s a little something for you."
+msgid "To celebrate, here's a little something for you."
 msgstr ""
 
 #. module: marketing_automation_website_sale

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-09-11 14:44+0000\n"
+"PO-Revision-Date: 2025-09-11 14:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,6 +20,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "% On time deliveries by vendor"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "% of On Time Deliveries"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
@@ -72,6 +78,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Buyer"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Confirmation Date"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
@@ -165,6 +177,12 @@ msgstr ""
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Lead Time"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Lead time"
 msgstr ""
 
@@ -246,7 +264,6 @@ msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Picking Name"
 msgstr ""
@@ -278,13 +295,18 @@ msgid "Product level overview"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Products Purchased cost"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_purchase_stock.spreadsheet_dashboard_purchase
 msgid "Purchase & Vendor analysis"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Purchase Order by buyer"
 msgstr ""
@@ -292,6 +314,17 @@ msgstr ""
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Purchase Value"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Purchase Value by confirmation date"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Purchase Value by creation confirmation date"
 msgstr ""
@@ -333,6 +366,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Selected period"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Supplier Dependency Chart"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
@@ -412,6 +451,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Vendor"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Vendors"
 msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock

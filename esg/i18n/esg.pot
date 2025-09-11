@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"PO-Revision-Date: 2025-09-11 14:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -53,12 +53,6 @@ msgstr ""
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_activity_type_name_uniq
 msgid "A tag with the same name already exists."
-msgstr ""
-
-#. module: esg
-#. odoo-python
-#: code:addons/esg/models/esg_database.py:0
-msgid "ADEME data has been successfully imported."
 msgstr ""
 
 #. module: esg
@@ -235,6 +229,21 @@ msgid "Business Travel"
 msgstr ""
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c4f6
+msgid "C4F6"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_c4f8o
+msgid "C4F8O"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c5f8
+msgid "C5F8"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "CH₄"
@@ -255,6 +264,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Calculation"
+msgstr ""
+
+#. module: esg
+#: model:ir.model.fields,field_description:esg.field_esg_database__can_be_downloaded
+msgid "Can Be Downloaded"
 msgstr ""
 
 #. module: esg
@@ -305,6 +319,11 @@ msgstr ""
 #: model:ir.actions.client,name:esg.action_view_carbon_report
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_report
 msgid "Carbon Footprint"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_co
+msgid "Carbon Monoxide"
 msgstr ""
 
 #. module: esg
@@ -871,10 +890,13 @@ msgid "Global Warming Potential (GWP) cannot be equal to 0."
 msgstr ""
 
 #. module: esg
-#: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
-#: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
-msgid "Group By"
+#: model:esg.gas,name:esg.esg_gas_hfc_125
+msgid "HFC-125"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_134
+msgid "HFC-134"
 msgstr ""
 
 #. module: esg
@@ -888,6 +910,21 @@ msgid "HFC-134a (t)"
 msgstr ""
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_143
+msgid "HFC-143"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_143a
+msgid "HFC-143a"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_152
+msgid "HFC-152"
+msgstr ""
+
+#. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
 msgid "HFC-152a"
 msgstr ""
@@ -895,6 +932,16 @@ msgstr ""
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_152a
 msgid "HFC-152a (t)"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_161
+msgid "HFC-161"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_227ea
+msgid "HFC-227ea"
 msgstr ""
 
 #. module: esg
@@ -908,9 +955,44 @@ msgid "HFC-23 (t)"
 msgstr ""
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_236cb
+msgid "HFC-236cb"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_32
+msgid "HFC-32"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_41
+msgid "HFC-41"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "HFCs"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_cf3ochf2
+msgid "HFE-125"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_chf2ch2ocf3
+msgid "HFE-245fa1"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_cf3cf2ch2och3
+msgid "HFE-365mcf3"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_chf2_c4f9och3
+msgid "HFE-7100"
 msgstr ""
 
 #. module: esg
@@ -1155,6 +1237,11 @@ msgid "Methane (CH₄)"
 msgstr ""
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_ch4
+msgid "Methane (generic) (CH₄)"
+msgstr ""
+
+#. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Missing Emission Factor"
 msgstr ""
@@ -1201,6 +1288,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "New"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_nf3
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__nf3
+msgid "Nitrogen Trifluoride"
 msgstr ""
 
 #. module: esg
@@ -1300,9 +1393,29 @@ msgid "Other Emission"
 msgstr ""
 
 #. module: esg
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__other
+msgid "Other Halogenated substances"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Other Indirect Emissions"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c3f8
+msgid "PFC-218"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c-c4f8
+msgid "PFC-318"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c6f14
+msgid "PFC-51-14"
 msgstr ""
 
 #. module: esg
@@ -1340,6 +1453,11 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__physically
 msgid "Physically (Quantity)"
+msgstr ""
+
+#. module: esg
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__precursors
+msgid "Precursors"
 msgstr ""
 
 #. module: esg
@@ -1402,6 +1520,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__rating_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__rating_ids
 msgid "Ratings"
+msgstr ""
+
+#. module: esg
+#: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
+msgid "Region / Regional Conditions"
 msgstr ""
 
 #. module: esg
@@ -1537,6 +1660,11 @@ msgid "Stationary Combustion"
 msgstr ""
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_so2
+msgid "Sulfur Dioxide (SO2+SO3)"
+msgstr ""
+
+#. module: esg
 #: model:esg.gas,name:esg.esg_gas_sf6
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__sf6
 msgid "Sulfur Hexafluoride (SF₆)"
@@ -1545,6 +1673,12 @@ msgstr ""
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_sf6
 msgid "Sulfur Hexafluoride (SF₆) (t)"
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_database.py:0
+msgid "The IPCC server did not return any file to import the data."
 msgstr ""
 
 #. module: esg
@@ -1770,6 +1904,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "You can't delete the ADEME database."
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_database.py:0
+msgid "You can't delete the IPCC database."
 msgstr ""
 
 #. module: esg

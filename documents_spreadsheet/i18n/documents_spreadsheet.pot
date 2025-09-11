@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:23+0000\n"
-"PO-Revision-Date: 2025-07-03 12:23+0000\n"
+"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"PO-Revision-Date: 2025-09-11 14:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,14 +56,14 @@ msgid ""
 msgstr ""
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid "Can edit the spreadsheet, including structure and content."
 msgstr ""
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid "Can view the spreadsheet. Cannot make changes."
 msgstr ""
 
@@ -125,8 +125,8 @@ msgstr ""
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access__display_name
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_ir_http__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_save_spreadsheet_template__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_cell_thread__display_name
@@ -155,8 +155,8 @@ msgid "Document / Partner"
 msgstr ""
 
 #. module: documents_spreadsheet
-#: model:ir.model,name:documents_spreadsheet.model_documents_access_invite
-msgid "Documents Access Invite"
+#: model:ir.model,name:documents_spreadsheet.model_documents_sharing
+msgid "Documents Sharing"
 msgstr ""
 
 #. module: documents_spreadsheet
@@ -165,7 +165,7 @@ msgid "Edit"
 msgstr ""
 
 #. module: documents_spreadsheet
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__error_message_spreadsheet
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__error_message_spreadsheet
 msgid "Error Message"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_freeze_and_share/spreadsheet_freeze_and_share.xml:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 msgid "Freeze and share"
 msgstr ""
 
@@ -238,8 +238,8 @@ msgstr ""
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access__id
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_ir_http__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_save_spreadsheet_template__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_cell_thread__id
@@ -274,6 +274,12 @@ msgstr ""
 
 #. module: documents_spreadsheet
 #. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+msgid "Move to trash"
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/spreadsheet_template/spreadsheet_template_dialog.js:0
 msgid "My Drive"
 msgstr ""
@@ -300,8 +306,26 @@ msgid "Open with Odoo Spreadsheet"
 msgstr ""
 
 #. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Partner(s): %(partner_names)s."
+msgstr ""
+
+#. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_pipeline
 msgid "Pipeline dashboard"
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/models/documents_document.py:0
+msgid "Portal users cannot be the owner of a spreadsheet."
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Read only spreadsheet(s): %(document_names)s."
 msgstr ""
 
 #. module: documents_spreadsheet
@@ -346,6 +370,7 @@ msgstr ""
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.xml:0
 msgid "Share"
 msgstr ""
@@ -434,6 +459,12 @@ msgid ""
 msgstr ""
 
 #. module: documents_spreadsheet
+#. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+msgid "Spreadsheet moved to trash"
+msgstr ""
+
+#. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 #: model_terms:ir.ui.view,arch_db:documents_spreadsheet.document_view_search_spreadsheet
@@ -463,24 +494,9 @@ msgid "The file is not a xlsx file"
 msgstr ""
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_partner_access.js:0
-msgid "The frozen spreadsheets are readonly."
-msgstr ""
-
-#. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 msgid "The spreadsheet you are trying to access does not exist."
-msgstr ""
-
-#. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
-msgid ""
-"The spreadsheets can not be shared in edit mode with a link, change Internal"
-" to give write access."
 msgstr ""
 
 #. module: documents_spreadsheet
@@ -493,12 +509,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 msgid "The xlsx file is too big"
-msgstr ""
-
-#. module: documents_spreadsheet
-#. odoo-python
-#: code:addons/documents_spreadsheet/wizard/documents_access_invite.py:0
-msgid "This frozen spreadsheet is readonly."
 msgstr ""
 
 #. module: documents_spreadsheet
@@ -569,16 +579,17 @@ msgstr ""
 
 #. module: documents_spreadsheet
 #. odoo-python
-#: code:addons/documents_spreadsheet/wizard/documents_access_invite.py:0
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid ""
-"You can not share a spreadsheet in edit mode to non-internal users "
-"(%(partner_names)s)."
+"You can not share spreadsheet(s) in edit mode (%(document_names)s) to non-"
+"internal users."
 msgstr ""
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_partner_access.js:0
-msgid "You can not share spreadsheet in edit mode to non-internal user."
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid ""
+"You cannot share spreadsheet(s) via link in edit mode (%(document_names)s)."
 msgstr ""
 
 #. module: documents_spreadsheet

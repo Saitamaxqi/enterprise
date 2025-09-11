@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:23+0000\n"
-"PO-Revision-Date: 2025-07-03 12:23+0000\n"
+"POT-Creation-Date: 2025-09-11 14:30+0000\n"
+"PO-Revision-Date: 2025-09-11 14:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,50 +16,8 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_create_activity
-msgid "Add \"To Validate\" activity"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate_tag_add_deprecated
-msgid "Add tag \"Deprecated\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft_tag_add_draft
-msgid "Add tag \"Draft\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_tag_add_to_validate
-msgid "Add tag \"To Validate\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_tag_add_validated
-msgid "Add tag \"Validated\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate
-msgid "Archive"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation
-msgid "Ask for validation"
-msgstr ""
-
-#. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
-msgid "Categorize and share your documents with your customers"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_code
-#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft_code
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_code
-msgid "Check conditions"
+#: model:ir.model,name:documents_project.model_ir_attachment
+msgid "Attachment"
 msgstr ""
 
 #. module: documents_project
@@ -95,13 +53,9 @@ msgid "Default Project Folder"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_tag_ids
-msgid "Default Tags"
-msgstr ""
-
-#. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__display_name
 #: model:ir.model.fields,field_description:documents_project.field_documents_tag__display_name
+#: model:ir.model.fields,field_description:documents_project.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:documents_project.field_project_project__display_name
 #: model:ir.model.fields,field_description:documents_project.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_project.field_res_config_settings__display_name
@@ -118,14 +72,13 @@ msgstr ""
 #: code:addons/documents_project/models/project_project.py:0
 #: model:ir.embedded.actions,name:documents_project.project_embedded_action_documents
 #: model:ir.embedded.actions,name:documents_project.project_embedded_action_documents_dashboard
-#: model:ir.model.fields,field_description:documents_project.field_project_project__use_documents
 #: model_terms:ir.ui.view,arch_db:documents_project.project_view_kanban_inherit_documents
 msgid "Documents"
 msgstr ""
 
 #. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
-msgid "Documents &amp; Analytics"
+#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
+msgid "Documents Folder"
 msgstr ""
 
 #. module: documents_project
@@ -134,7 +87,6 @@ msgid "First Floor Plan"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
 #: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
 msgid "Folder"
 msgstr ""
@@ -142,9 +94,7 @@ msgstr ""
 #. module: documents_project
 #: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
 msgid ""
-"Folder in which all of the documents of this project will be categorized. "
-"All of the attachments of your tasks will be automatically added as "
-"documents in this workspace as well."
+"Folder in which all of the documents of this project will be categorized."
 msgstr ""
 
 #. module: documents_project
@@ -155,6 +105,7 @@ msgstr ""
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__id
 #: model:ir.model.fields,field_description:documents_project.field_documents_tag__id
+#: model:ir.model.fields,field_description:documents_project.field_ir_attachment__id
 #: model:ir.model.fields,field_description:documents_project.field_project_project__id
 #: model:ir.model.fields,field_description:documents_project.field_res_company__id
 #: model:ir.model.fields,field_description:documents_project.field_res_config_settings__id
@@ -164,18 +115,6 @@ msgstr ""
 #. module: documents_project
 #: model:documents.document,name:documents_project.project_1_document_4
 msgid "Important Customer Letter"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate_remove_activities
-#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft_remove_activities
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_remove_activities
-msgid "Mark activities as completed"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft
-msgid "Mark as draft"
 msgstr ""
 
 #. module: documents_project
@@ -193,26 +132,6 @@ msgstr ""
 #: model:documents.document,name:documents_project.document_project_folder
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__project_ids
 msgid "Projects"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_tag_remove_draft
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate_tag_remove_draft
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_tag_remove_draft
-msgid "Remove tag \"Draft\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_tag_remove_to_validate
-msgid "Remove tag \"To Validate\""
-msgstr ""
-
-#. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_tag_remove_validated
-#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate_tag_remove_validated
-msgid "Remove tag \"Validated\""
 msgstr ""
 
 #. module: documents_project
@@ -242,7 +161,7 @@ msgstr ""
 msgid ""
 "This action can't be performed, as it would remove the folders used by the following projects:\n"
 "%(projects)s\n"
-"To continue, choose different folders or turn off the Documents feature for these projects."
+"To continue, choose different folders for these projects."
 msgstr ""
 
 #. module: documents_project
@@ -271,11 +190,6 @@ msgid "Uh-oh! The project app needs the \"%s\" folder, so you can’t delete it.
 msgstr ""
 
 #. module: documents_project
-#: model:ir.actions.server,name:documents_project.ir_actions_server_validate
-msgid "Validate"
-msgstr ""
-
-#. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid "You cannot archive the project base folder (%s)."
@@ -285,10 +199,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
 msgid ""
-"You cannot change the company of this project, because its workspace is linked to the other following projects that are still in the \"%(other_company)s\" company:\n"
-"%(other_workspaces)s\n"
+"You cannot change the company of this project, because its folder is linked to the other following projects that are still in the \"%(other_company)s\" company:\n"
+"%(other_folders)s\n"
 "\n"
-"Please update the company of all projects so that they remain in the same company as their workspace, or leave the company of the \"%(workspace)s\" workspace blank."
+"Please update the company of all projects so that they remain in the same company as their folder, or leave the company of the \"%(folder)s\" folder blank."
 msgstr ""
 
 #. module: documents_project

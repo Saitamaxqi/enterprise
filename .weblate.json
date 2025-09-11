@@ -102,19 +102,24 @@
                 "new_base": "account_budget/i18n/account_budget.pot"
             },
             {
-                "name": "account_disallowed_expenses",
-                "filemask": "account_disallowed_expenses/i18n/*.po",
-                "new_base": "account_disallowed_expenses/i18n/account_disallowed_expenses.pot"
-            },
-            {
-                "name": "account_disallowed_expenses_fleet",
-                "filemask": "account_disallowed_expenses_fleet/i18n/*.po",
-                "new_base": "account_disallowed_expenses_fleet/i18n/account_disallowed_expenses_fleet.pot"
+                "name": "account_budget_purchase",
+                "filemask": "account_budget_purchase/i18n/*.po",
+                "new_base": "account_budget_purchase/i18n/account_budget_purchase.pot"
             },
             {
                 "name": "account_external_tax",
                 "filemask": "account_external_tax/i18n/*.po",
                 "new_base": "account_external_tax/i18n/account_external_tax.pot"
+            },
+            {
+                "name": "account_fiscal_categories",
+                "filemask": "account_fiscal_categories/i18n/*.po",
+                "new_base": "account_fiscal_categories/i18n/account_fiscal_categories.pot"
+            },
+            {
+                "name": "account_fiscal_categories_fleet",
+                "filemask": "account_fiscal_categories_fleet/i18n/*.po",
+                "new_base": "account_fiscal_categories_fleet/i18n/account_fiscal_categories_fleet.pot"
             },
             {
                 "name": "account_followup",
@@ -202,9 +207,54 @@
                 "new_base": "accountant/i18n/accountant.pot"
             },
             {
+                "name": "accountant_fleet",
+                "filemask": "accountant_fleet/i18n/*.po",
+                "new_base": "accountant_fleet/i18n/accountant_fleet.pot"
+            },
+            {
+                "name": "accountant_hr_expense",
+                "filemask": "accountant_hr_expense/i18n/*.po",
+                "new_base": "accountant_hr_expense/i18n/accountant_hr_expense.pot"
+            },
+            {
+                "name": "accountant_knowledge",
+                "filemask": "accountant_knowledge/i18n/*.po",
+                "new_base": "accountant_knowledge/i18n/accountant_knowledge.pot"
+            },
+            {
                 "name": "ai",
                 "filemask": "ai/i18n/*.po",
                 "new_base": "ai/i18n/ai.pot"
+            },
+            {
+                "name": "ai_app",
+                "filemask": "ai_app/i18n/*.po",
+                "new_base": "ai_app/i18n/ai_app.pot"
+            },
+            {
+                "name": "ai_crm",
+                "filemask": "ai_crm/i18n/*.po",
+                "new_base": "ai_crm/i18n/ai_crm.pot"
+            },
+            {
+                "name": "ai_crm_livechat",
+                "filemask": "ai_crm_livechat/i18n/*.po",
+                "new_base": "ai_crm_livechat/i18n/ai_crm_livechat.pot"
+            },
+            {
+                "name": "ai_documents",
+                "filemask": "ai_documents/i18n/*.po",
+                "new_base": "ai_documents/i18n/ai_documents.pot"
+            },
+            {
+                "name": "ai_documents_account",
+                "filemask": "ai_documents_account/i18n/*.po",
+                "new_base": "ai_documents_account/i18n/ai_documents_account.pot"
+            },
+            {
+                "name": "ai_documents_source",
+                "filemask": "ai_documents_source/i18n/*.po",
+                "new_base": "ai_documents_source/i18n/ai_documents_source.pot"
             },
             {
                 "name": "ai_fields",
@@ -217,9 +267,24 @@
                 "new_base": "ai_knowledge/i18n/ai_knowledge.pot"
             },
             {
+                "name": "ai_livechat",
+                "filemask": "ai_livechat/i18n/*.po",
+                "new_base": "ai_livechat/i18n/ai_livechat.pot"
+            },
+            {
                 "name": "ai_server_actions",
                 "filemask": "ai_server_actions/i18n/*.po",
                 "new_base": "ai_server_actions/i18n/ai_server_actions.pot"
+            },
+            {
+                "name": "ai_website",
+                "filemask": "ai_website/i18n/*.po",
+                "new_base": "ai_website/i18n/ai_website.pot"
+            },
+            {
+                "name": "ai_website_livechat",
+                "filemask": "ai_website_livechat/i18n/*.po",
+                "new_base": "ai_website_livechat/i18n/ai_website_livechat.pot"
             },
             {
                 "name": "analytic_enterprise",
@@ -245,6 +310,11 @@
                 "name": "appointment_google_calendar",
                 "filemask": "appointment_google_calendar/i18n/*.po",
                 "new_base": "appointment_google_calendar/i18n/appointment_google_calendar.pot"
+            },
+            {
+                "name": "appointment_google_reserve",
+                "filemask": "appointment_google_reserve/i18n/*.po",
+                "new_base": "appointment_google_reserve/i18n/appointment_google_reserve.pot"
             },
             {
                 "name": "appointment_hr",
@@ -467,12 +537,6 @@
                 "new_base": "documents_hr_payroll/i18n/documents_hr_payroll.pot"
             },
             {
-                "name": "documents_l10n_be_hr_payroll",
-                "filemask": "documents_l10n_be_hr_payroll/i18n/*.po",
-                "new_base": "documents_l10n_be_hr_payroll/i18n/documents_l10n_be_hr_payroll.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
                 "name": "documents_product",
                 "filemask": "documents_product/i18n/*.po",
                 "new_base": "documents_product/i18n/documents_product.pot"
@@ -496,6 +560,16 @@
                 "name": "documents_spreadsheet",
                 "filemask": "documents_spreadsheet/i18n/*.po",
                 "new_base": "documents_spreadsheet/i18n/documents_spreadsheet.pot"
+            },
+            {
+                "name": "documents_spreadsheet_survey",
+                "filemask": "documents_spreadsheet_survey/i18n/*.po",
+                "new_base": "documents_spreadsheet_survey/i18n/documents_spreadsheet_survey.pot"
+            },
+            {
+                "name": "equity",
+                "filemask": "equity/i18n/*.po",
+                "new_base": "equity/i18n/equity.pot"
             },
             {
                 "name": "esg",
@@ -656,6 +730,16 @@
                 "name": "hr_expense_predict_product",
                 "filemask": "hr_expense_predict_product/i18n/*.po",
                 "new_base": "hr_expense_predict_product/i18n/hr_expense_predict_product.pot"
+            },
+            {
+                "name": "hr_expense_stripe",
+                "filemask": "hr_expense_stripe/i18n/*.po",
+                "new_base": "hr_expense_stripe/i18n/hr_expense_stripe.pot"
+            },
+            {
+                "name": "hr_expense_stripe_demo",
+                "filemask": "hr_expense_stripe_demo/i18n/*.po",
+                "new_base": "hr_expense_stripe_demo/i18n/hr_expense_stripe_demo.pot"
             },
             {
                 "name": "hr_holidays_gantt",
@@ -838,72 +922,6 @@
                 "new_base": "knowledge/i18n/knowledge.pot"
             },
             {
-                "name": "l10n_be_hr_contract_salary",
-                "filemask": "l10n_be_hr_contract_salary/i18n/*.po",
-                "new_base": "l10n_be_hr_contract_salary/i18n/l10n_be_hr_contract_salary.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll",
-                "filemask": "l10n_be_hr_payroll/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll/i18n/l10n_be_hr_payroll.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_account",
-                "filemask": "l10n_be_hr_payroll_account/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_account/i18n/l10n_be_hr_payroll_account.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_acerta",
-                "filemask": "l10n_be_hr_payroll_acerta/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_acerta/i18n/l10n_be_hr_payroll_acerta.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_dimona",
-                "filemask": "l10n_be_hr_payroll_dimona/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_dimona/i18n/l10n_be_hr_payroll_dimona.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_fleet",
-                "filemask": "l10n_be_hr_payroll_fleet/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_fleet/i18n/l10n_be_hr_payroll_fleet.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_group_s",
-                "filemask": "l10n_be_hr_payroll_group_s/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_group_s/i18n/l10n_be_hr_payroll_group_s.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_partena",
-                "filemask": "l10n_be_hr_payroll_partena/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_partena/i18n/l10n_be_hr_payroll_partena.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_prisma",
-                "filemask": "l10n_be_hr_payroll_prisma/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_prisma/i18n/l10n_be_hr_payroll_prisma.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_sd_worx",
-                "filemask": "l10n_be_hr_payroll_sd_worx/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_sd_worx/i18n/l10n_be_hr_payroll_sd_worx.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
-                "name": "l10n_be_hr_payroll_ucm",
-                "filemask": "l10n_be_hr_payroll_ucm/i18n/*.po",
-                "new_base": "l10n_be_hr_payroll_ucm/i18n/l10n_be_hr_payroll_ucm.pot",
-                "language_regex": "^(de|fr|nl)$"
-            },
-            {
                 "name": "mail_enterprise",
                 "filemask": "mail_enterprise/i18n/*.po",
                 "new_base": "mail_enterprise/i18n/mail_enterprise.pot"
@@ -989,11 +1007,6 @@
                 "new_base": "mrp_workorder/i18n/mrp_workorder.pot"
             },
             {
-                "name": "mrp_workorder_expiry",
-                "filemask": "mrp_workorder_expiry/i18n/*.po",
-                "new_base": "mrp_workorder_expiry/i18n/mrp_workorder_expiry.pot"
-            },
-            {
                 "name": "mrp_workorder_hr_account",
                 "filemask": "mrp_workorder_hr_account/i18n/*.po",
                 "new_base": "mrp_workorder_hr_account/i18n/mrp_workorder_hr_account.pot"
@@ -1052,6 +1065,11 @@
                 "name": "pos_enterprise",
                 "filemask": "pos_enterprise/i18n/*.po",
                 "new_base": "pos_enterprise/i18n/pos_enterprise.pot"
+            },
+            {
+                "name": "pos_event_iot",
+                "filemask": "pos_event_iot/i18n/*.po",
+                "new_base": "pos_event_iot/i18n/pos_event_iot.pot"
             },
             {
                 "name": "pos_hr_mobile",
@@ -1319,6 +1337,11 @@
                 "new_base": "sale_commission_subscription/i18n/sale_commission_subscription.pot"
             },
             {
+                "name": "sale_enterprise",
+                "filemask": "sale_enterprise/i18n/*.po",
+                "new_base": "sale_enterprise/i18n/sale_enterprise.pot"
+            },
+            {
                 "name": "sale_external_tax",
                 "filemask": "sale_external_tax/i18n/*.po",
                 "new_base": "sale_external_tax/i18n/sale_external_tax.pot"
@@ -1427,6 +1450,11 @@
                 "name": "sign",
                 "filemask": "sign/i18n/*.po",
                 "new_base": "sign/i18n/sign.pot"
+            },
+            {
+                "name": "sign_emsigner",
+                "filemask": "sign_emsigner/i18n/*.po",
+                "new_base": "sign_emsigner/i18n/sign_emsigner.pot"
             },
             {
                 "name": "sign_itsme",
@@ -1649,9 +1677,24 @@
                 "new_base": "voip/i18n/voip.pot"
             },
             {
+                "name": "voip_ai",
+                "filemask": "voip_ai/i18n/*.po",
+                "new_base": "voip_ai/i18n/voip_ai.pot"
+            },
+            {
                 "name": "voip_crm",
                 "filemask": "voip_crm/i18n/*.po",
                 "new_base": "voip_crm/i18n/voip_crm.pot"
+            },
+            {
+                "name": "voip_helpdesk",
+                "filemask": "voip_helpdesk/i18n/*.po",
+                "new_base": "voip_helpdesk/i18n/voip_helpdesk.pot"
+            },
+            {
+                "name": "voip_hr",
+                "filemask": "voip_hr/i18n/*.po",
+                "new_base": "voip_hr/i18n/voip_hr.pot"
             },
             {
                 "name": "voip_hr_recruitment",
@@ -1662,6 +1705,11 @@
                 "name": "voip_onsip",
                 "filemask": "voip_onsip/i18n/*.po",
                 "new_base": "voip_onsip/i18n/voip_onsip.pot"
+            },
+            {
+                "name": "voip_sale_subscription",
+                "filemask": "voip_sale_subscription/i18n/*.po",
+                "new_base": "voip_sale_subscription/i18n/voip_sale_subscription.pot"
             },
             {
                 "name": "voip_sms",
@@ -1834,6 +1882,11 @@
                 "new_base": "website_sale_renting/i18n/website_sale_renting.pot"
             },
             {
+                "name": "website_sale_renting_planning",
+                "filemask": "website_sale_renting_planning/i18n/*.po",
+                "new_base": "website_sale_renting_planning/i18n/website_sale_renting_planning.pot"
+            },
+            {
                 "name": "website_sale_stock_renting",
                 "filemask": "website_sale_stock_renting/i18n/*.po",
                 "new_base": "website_sale_stock_renting/i18n/website_sale_stock_renting.pot"
@@ -1897,6 +1950,11 @@
                 "name": "whatsapp_sale",
                 "filemask": "whatsapp_sale/i18n/*.po",
                 "new_base": "whatsapp_sale/i18n/whatsapp_sale.pot"
+            },
+            {
+                "name": "whatsapp_stock",
+                "filemask": "whatsapp_stock/i18n/*.po",
+                "new_base": "whatsapp_stock/i18n/whatsapp_stock.pot"
             },
             {
                 "name": "whatsapp_website_sale",

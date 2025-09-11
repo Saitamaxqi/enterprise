@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"PO-Revision-Date: 2025-09-11 14:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -227,6 +227,13 @@ msgid "Confirm"
 msgstr ""
 
 #. module: account_loans
+#: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
+msgid ""
+"Confirm that all loans recorded in the accounts actually exist and match the"
+" loan agreements."
+msgstr ""
+
+#. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__count_linked_assets
 msgid "Count Linked Assets"
 msgstr ""
@@ -304,6 +311,12 @@ msgid "Draft & Running Loans"
 msgstr ""
 
 #. module: account_loans
+#. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
+msgid "Due"
+msgstr ""
+
+#. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__duration
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Duration"
@@ -322,6 +335,14 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__payment_end_of_month__end_of_month
 msgid "End of Month"
+msgstr ""
+
+#. module: account_loans
+#: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
+msgid ""
+"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Loans payable within 1 year → Account 42\n"
+"Loans > 1 year → Account 17"
 msgstr ""
 
 #. module: account_loans
@@ -361,12 +382,6 @@ msgid "Generating Loan Line"
 msgstr ""
 
 #. module: account_loans
-#: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
-#: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
-msgid "Group By"
-msgstr ""
-
-#. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__has_message
 msgid "Has Message"
 msgstr ""
@@ -397,6 +412,7 @@ msgstr ""
 
 #. module: account_loans
 #. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__interest
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__interest
@@ -601,6 +617,16 @@ msgid "Loans Analysis"
 msgstr ""
 
 #. module: account_loans
+#: model:account.return.check.template,name:account_loans.account_return_check_template_loans_classification
+msgid "Loans classification"
+msgstr ""
+
+#. module: account_loans
+#: model:account.return.check.template,name:account_loans.account_return_check_template_loans_recording
+msgid "Loans recording"
+msgstr ""
+
+#. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__long_term_account_id
 msgid "Long Term Account"
 msgstr ""
@@ -714,9 +740,16 @@ msgstr ""
 
 #. module: account_loans
 #. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__principal
 msgid "Principal"
+msgstr ""
+
+#. module: account_loans
+#. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
+msgid "Principal & Interest"
 msgstr ""
 
 #. module: account_loans
@@ -733,6 +766,12 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__rating_ids
 msgid "Ratings"
+msgstr ""
+
+#. module: account_loans
+#. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
+msgid "Reclassification LT - ST"
 msgstr ""
 
 #. module: account_loans
@@ -759,6 +798,12 @@ msgstr ""
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Reset"
+msgstr ""
+
+#. module: account_loans
+#. odoo-python
+#: code:addons/account_loans/models/account_loan.py:0
+msgid "Reversal reclassification LT - ST"
 msgstr ""
 
 #. module: account_loans

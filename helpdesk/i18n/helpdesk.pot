@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"PO-Revision-Date: 2025-09-11 14:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -703,10 +703,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
 msgid ""
-"At this time, there is no customer preview available to show. The current "
-"ticket cannot be accessed by the customer, as it belongs to a helpdesk team "
-"that is not publicly available, or there is no customer associated with the "
-"ticket."
+"At this time, there is no preview available to show. The current ticket "
+"cannot be accessed by the customer, as it belongs to a helpdesk team that is"
+" not publicly available, or there is no customer associated with the ticket."
 msgstr ""
 
 #. module: helpdesk
@@ -1109,11 +1108,6 @@ msgid "Criteria"
 msgstr ""
 
 #. module: helpdesk
-#: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
-msgid "Current stage of this ticket"
-msgstr ""
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_bounced_content
 msgid "Custom Bounced Message"
 msgstr ""
@@ -1163,11 +1157,6 @@ msgid "Customer Portal URL"
 msgstr ""
 
 #. module: helpdesk
-#: model:ir.actions.server,name:helpdesk.action_open_customer_preview
-msgid "Customer Preview"
-msgstr ""
-
-#. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.rating_rating_action_helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_rating
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_ratings
@@ -1197,10 +1186,25 @@ msgid "Datetime at which the SLA stage was reached for the first time"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__rotting_days
+msgid "Day count since this resource was last updated"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_report_analysis__sla_exceeded_hours
 msgid ""
 "Day to reach the stage of the SLA, without taking the working calendar into "
 "account"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rotting_days
+msgid "Days Rotting"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__rotting_threshold_days
+msgid "Days to rot"
 msgstr ""
 
 #. module: helpdesk
@@ -1232,6 +1236,11 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_unarchive_wizard
 msgid "Delete Stage"
+msgstr ""
+
+#. module: helpdesk
+#: model:mail.message.subtype,name:helpdesk.mt_ticket_delivery_status
+msgid "Delivery Status"
 msgstr ""
 
 #. module: helpdesk
@@ -1286,6 +1295,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_ir_module_module__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_mail_message__display_name
+#: model:ir.model.fields,field_description:helpdesk.field_portal_share__display_name
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_company__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_partner__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__display_name
@@ -1417,7 +1428,7 @@ msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__fold
-msgid "Folded in Kanban"
+msgid "Folded"
 msgstr ""
 
 #. module: helpdesk
@@ -1479,6 +1490,11 @@ msgid "Get tickets through an online form"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_giftcards
+msgid "Gift Cards"
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Grant discounts, free products or free shipping"
 msgstr ""
@@ -1521,15 +1537,6 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__legend_normal
 msgid "Grey Kanban Label"
-msgstr ""
-
-#. module: helpdesk
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_search
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
-msgid "Group By"
 msgstr ""
 
 #. module: helpdesk
@@ -1687,6 +1694,11 @@ msgid "High priority"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__rotting_threshold_days
+msgid "Highlight tickets that haven't been updated for this many days."
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "History"
 msgstr ""
@@ -1719,6 +1731,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_ir_module_module__id
 #: model:ir.model.fields,field_description:helpdesk.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:helpdesk.field_mail_message__id
+#: model:ir.model.fields,field_description:helpdesk.field_portal_share__id
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_company__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_partner__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__id
@@ -2469,10 +2483,20 @@ msgid "Portal Access URL"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model,name:helpdesk.model_portal_share
+msgid "Portal Sharing"
+msgstr ""
+
+#. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid ""
 "Portal users will be removed from the followers of the team and its tickets."
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.action_open_customer_preview
+msgid "Preview"
 msgstr ""
 
 #. module: helpdesk
@@ -2489,6 +2513,7 @@ msgid "Properties"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model,name:helpdesk.model_rating_rating
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_tree
 msgid "Rating"
 msgstr ""
@@ -2608,6 +2633,11 @@ msgid "Refunds"
 msgstr ""
 
 #. module: helpdesk
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Reimburse customers with a voucher code for future purchases"
+msgstr ""
+
+#. module: helpdesk
 #: model:helpdesk.tag,name:helpdesk.tag_repair
 msgid "Repair"
 msgstr ""
@@ -2620,6 +2650,11 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_repairs
 msgid "Repairs"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_replacements
+msgid "Replacements"
 msgstr ""
 
 #. module: helpdesk
@@ -2655,6 +2690,12 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_returns
 msgid "Returns"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__is_rotting
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Rotting"
 msgstr ""
 
 #. module: helpdesk
@@ -2864,6 +2905,11 @@ msgid ""
 "ticket has been received and is currently being reviewed by the helpdesk "
 "team. Automatically send an email to customers when a ticket reaches a "
 "specific stage in a helpdesk team by setting this template on that stage."
+msgstr ""
+
+#. module: helpdesk
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Send customers a replacement for a lost, damaged, or returned item"
 msgstr ""
 
 #. module: helpdesk
@@ -3181,6 +3227,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__ticket_id
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__ticket_id
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_activity
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -3493,6 +3540,11 @@ msgid "Use Coupons"
 msgstr ""
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__use_giftcards
+msgid "Use Gift Cards"
+msgstr ""
+
+#. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid ""
@@ -3714,11 +3766,6 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.ticket_creation
 msgid "has been created from ticket:"
-msgstr ""
-
-#. module: helpdesk
-#: model:ir.actions.server,name:helpdesk.helpdesk_ratings_server_action
-msgid "helpdesk view rating"
 msgstr ""
 
 #. module: helpdesk

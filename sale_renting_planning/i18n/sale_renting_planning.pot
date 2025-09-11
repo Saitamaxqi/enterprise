@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-09-11 14:42+0000\n"
+"PO-Revision-Date: 2025-09-11 14:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,6 +58,12 @@ msgid "No Rental Order is found."
 msgstr ""
 
 #. module: sale_renting_planning
+#. odoo-python
+#: code:addons/sale_renting_planning/models/planning_slot.py:0
+msgid "No resources are available for the shifts in: %s."
+msgstr ""
+
+#. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_planning_role
 msgid "Planning Role"
 msgstr ""
@@ -78,6 +84,12 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_renting_planning
+#. odoo-python
+#: code:addons/sale_renting_planning/models/planning_slot.py:0
+msgid "Shift added to last order"
+msgstr ""
+
+#. module: sale_renting_planning
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_role__sync_shift_rental
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_slot__role_sync_shift_rental
 msgid "Sync Shifts and Rental Orders"
@@ -87,6 +99,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_renting_planning/models/sale_order_line.py:0
 msgid ""
+"This Sales Order can't be confirmed. No enough resources are available for "
+"the shifts in: %(product_name)s."
+msgstr ""
+
+#. module: sale_renting_planning
+#. odoo-python
+#: code:addons/sale_renting_planning/models/sale_order_line.py:0
+msgid ""
 "This Sales Order can't be confirmed. No resources are available for the "
-"shifts in: %s."
+"shifts in: %(problematic_services)s."
 msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-09-11 14:46+0000\n"
+"PO-Revision-Date: 2025-09-11 14:46+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -107,12 +107,6 @@ msgstr ""
 
 #. module: web_cohort
 #. odoo-javascript
-#: code:addons/web_cohort/static/src/cohort_renderer.xml:0
-msgid "No data available."
-msgstr ""
-
-#. module: web_cohort
-#. odoo-javascript
 #: code:addons/web_cohort/static/src/cohort_renderer.js:0
 msgid ""
 "Period: %(period)s\n"
@@ -156,8 +150,6 @@ msgstr ""
 #. module: web_cohort
 #: model:ir.model.fields,field_description:web_cohort.field_ir_actions_act_window_view__view_mode
 #: model:ir.model.fields,field_description:web_cohort.field_ir_ui_view__type
-#: model:ir.model.fields,field_description:web_cohort.field_website_controller_page__type
-#: model:ir.model.fields,field_description:web_cohort.field_website_page__type
 msgid "View Type"
 msgstr ""
 

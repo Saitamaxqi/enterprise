@@ -4,16 +4,22 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-09-11 14:42+0000\n"
+"PO-Revision-Date: 2025-09-11 14:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "%(lots)s %(are)s reserved on multiple order lines"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -42,6 +48,16 @@ msgid "Activate to use stock deliveries and receipts for rental orders"
 msgstr ""
 
 #. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Add Serial Number"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+msgid "Add a line"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__padding_time
 msgid ""
 "Amount of time (in hours) during which a product is considered unavailable "
@@ -53,6 +69,12 @@ msgstr ""
 msgid ""
 "Amount of time (in hours) during which a product is considered "
 "unavailableprior to renting (preparation time)."
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Auto assign"
 msgstr ""
 
 #. module: sale_stock_renting
@@ -94,6 +116,7 @@ msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__display_name
@@ -103,7 +126,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__display_name
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__display_name
@@ -130,6 +152,7 @@ msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__id
@@ -139,18 +162,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
 msgid "ID"
-msgstr ""
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__is_available
-msgid "Is Available"
 msgstr ""
 
 #. module: sale_stock_renting
@@ -161,6 +178,17 @@ msgstr ""
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_account_move
 msgid "Journal Entry"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "Lot Allocation"
 msgstr ""
 
 #. module: sale_stock_renting
@@ -184,6 +212,14 @@ msgstr ""
 msgid ""
 "No valid quant has been found in location %(location)s for serial number "
 "%(serial_number)s!"
+msgstr ""
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"Not enough %(product)s in stock.\n"
+"%(reserved_qty)s reserved but only %(stock_qty)s in stock."
 msgstr ""
 
 #. module: sale_stock_renting
@@ -252,11 +288,6 @@ msgid "Rental Location"
 msgstr ""
 
 #. module: sale_stock_renting
-#: model:ir.model,name:sale_stock_renting.model_sale_rental_schedule
-msgid "Rental Schedule"
-msgstr ""
-
-#. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Rental Transfers"
 msgstr ""
@@ -272,8 +303,14 @@ msgid "RentalOrderLine transient representation"
 msgstr ""
 
 #. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
+msgid "Reserve product"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__reserved_lot_ids
-msgid "Reserved Lot"
+msgid "Reserved Lots"
 msgstr ""
 
 #. module: sale_stock_renting
@@ -309,16 +346,9 @@ msgid "Sales Order Line"
 msgstr ""
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
-msgid "Security Time"
-msgstr ""
-
-#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__lot_id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__lot_id
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_report_search_view_inherit_lots
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_search_inherit_lots
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_search_schedule
 msgid "Serial Number"
 msgstr ""
 
@@ -340,8 +370,11 @@ msgid "Temporarily make this product unavailable before pickup."
 msgstr ""
 
 #. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_gantt_inherit_stock
-msgid "The product is not available during this period."
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"The number of reserved lots is less than the quantity required for this "
+"order line. Please allocate additional lots."
 msgstr ""
 
 #. module: sale_stock_renting
@@ -384,7 +417,6 @@ msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_warehouse
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__warehouse_id
 msgid "Warehouse"
 msgstr ""
 
@@ -401,7 +433,7 @@ msgstr ""
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.product_template_inherit_view_form_stock_rental
-msgid "hours before orders"
+msgid "hours before its picking time"
 msgstr ""
 
 #. module: sale_stock_renting

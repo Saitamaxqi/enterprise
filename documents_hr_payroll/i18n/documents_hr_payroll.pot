@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:11+0000\n"
-"PO-Revision-Date: 2025-07-01 12:11+0000\n"
+"POT-Creation-Date: 2025-09-11 14:30+0000\n"
+"PO-Revision-Date: 2025-09-11 14:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -58,7 +58,7 @@ msgstr ""
 #. module: documents_hr_payroll
 #. odoo-python
 #: code:addons/documents_hr_payroll/models/hr_payslip.py:0
-msgid "A payslip should be done or paid to be sent to the employee."
+msgid "A payslip should be validated or paid to be sent to the employee."
 msgstr ""
 
 #. module: documents_hr_payroll
@@ -72,6 +72,7 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: documents_hr_payroll
+#: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_employee__display_name
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payroll_declaration_mixin__display_name
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payroll_employee_declaration__display_name
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payslip__display_name
@@ -107,6 +108,11 @@ msgid "Documents Hr Payslips Tags"
 msgstr ""
 
 #. module: documents_hr_payroll
+#: model:ir.model,name:documents_hr_payroll.model_hr_employee
+msgid "Employee"
+msgstr ""
+
+#. module: documents_hr_payroll
 #. odoo-python
 #: code:addons/documents_hr_payroll/models/hr_payslip.py:0
 msgid ""
@@ -122,6 +128,7 @@ msgid ""
 msgstr ""
 
 #. module: documents_hr_payroll
+#: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_employee__id
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payroll_declaration_mixin__id
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payroll_employee_declaration__id
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payslip__id
@@ -145,6 +152,12 @@ msgstr ""
 #. module: documents_hr_payroll
 #: model:ir.model,name:documents_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
+msgstr ""
+
+#. module: documents_hr_payroll
+#. odoo-python
+#: code:addons/documents_hr_payroll/models/res_company.py:0
+msgid "Payroll %s"
 msgstr ""
 
 #. module: documents_hr_payroll
@@ -178,6 +191,12 @@ msgid "Payslips (HR)"
 msgstr ""
 
 #. module: documents_hr_payroll
+#. odoo-python
+#: code:addons/documents_hr_payroll/models/hr_employee.py:0
+msgid "Payslips successfully sent to the employee."
+msgstr ""
+
+#. module: documents_hr_payroll
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_hr_payroll_employee_declaration__pdf_to_post
 msgid "Pdf To Post"
 msgstr ""
@@ -202,6 +221,17 @@ msgstr ""
 #. module: documents_hr_payroll
 #: model:ir.model.fields.selection,name:documents_hr_payroll.selection__hr_payroll_employee_declaration__state__pdf_to_post
 msgid "Queued PDF posting"
+msgstr ""
+
+#. module: documents_hr_payroll
+#. odoo-python
+#: code:addons/documents_hr_payroll/models/hr_employee.py:0
+msgid "Resend All Employee's Payslips"
+msgstr ""
+
+#. module: documents_hr_payroll
+#: model:ir.actions.server,name:documents_hr_payroll.ir_actions_server_send_payslip_by_employee_by_email
+msgid "Resend All Payslips"
 msgstr ""
 
 #. module: documents_hr_payroll
@@ -239,18 +269,19 @@ msgid "The payslip has been re-sent to the employee."
 msgstr ""
 
 #. module: documents_hr_payroll
+#. odoo-python
+#: code:addons/documents_hr_payroll/models/hr_employee.py:0
+msgid "There is no valid payslip to send to the employee."
+msgstr ""
+
+#. module: documents_hr_payroll
 #: model:ir.model.fields,field_description:documents_hr_payroll.field_res_company__worker_payroll_folder_id
 msgid "Worker Payroll Folder"
 msgstr ""
 
 #. module: documents_hr_payroll
 #. odoo-python
-#: code:addons/documents_hr_payroll/models/res_company.py:0
-msgid "Workers Payroll"
-msgstr ""
-
-#. module: documents_hr_payroll
-#. odoo-python
+#: code:addons/documents_hr_payroll/models/hr_employee.py:0
 #: code:addons/documents_hr_payroll/models/hr_payslip.py:0
 msgid "You can not send the documents link to the employee."
 msgstr ""

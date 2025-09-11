@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"PO-Revision-Date: 2025-09-11 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -130,7 +130,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Facebook\">\n"
-"                                            <i class=\"fa fa-lg fa-facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+"                                            <i class=\"fa fa-2x fa-facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -138,7 +138,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Linkedin\">\n"
-"                                            <i class=\"fa fa-lg fa-linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+"                                            <i class=\"fa fa-2x fa-linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -146,7 +146,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Twitter\">\n"
-"                                            <i class=\"fa fa-lg fa-twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
+"                                            <i class=\"fa fa-2x fa-twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -318,6 +318,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_mail_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_sms_view_form
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 msgid "Cancel"
 msgstr ""
 
@@ -389,6 +390,12 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_onboarding_tree
 msgid "Confirm"
+msgstr ""
+
+#. module: hr_referral
+#. odoo-python
+#: code:addons/hr_referral/models/hr_referral_reward.py:0
+msgid "Confirmation"
 msgstr ""
 
 #. module: hr_referral
@@ -529,6 +536,7 @@ msgid "Dismissed User"
 msgstr ""
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_applicant_get_refuse_reason__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__display_name
@@ -561,6 +569,7 @@ msgid "Do not have access"
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid ""
 "Do you want to confirm this reward? After confirmation an HR will contact "
@@ -718,6 +727,11 @@ msgid "Gather your team!"
 msgstr ""
 
 #. module: hr_referral
+#: model:ir.model,name:hr_referral.model_applicant_get_refuse_reason
+msgid "Get Refuse Reason"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__gift_manager_id
 msgid "Gift Responsible"
 msgstr ""
@@ -735,13 +749,6 @@ msgstr ""
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_alert__onclick__all_jobs
 msgid "Go to All Jobs"
-msgstr ""
-
-#. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_report_view_search
-#: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_reward_report_view_search
-#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
-msgid "Group By"
 msgstr ""
 
 #. module: hr_referral
@@ -806,6 +813,7 @@ msgid "Hr Referral Onboarding Page"
 msgstr ""
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_applicant_get_refuse_reason__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__id
@@ -1154,6 +1162,11 @@ msgid ""
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
+msgid "Ok"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__onclick
 msgid "On Click"
 msgstr ""
@@ -1188,6 +1201,7 @@ msgid "Our company is hiring for a"
 msgstr ""
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "Point icon"
 msgstr ""
@@ -1198,6 +1212,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_level__points
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_points__points
 #: model:ir.ui.menu,name:hr_referral.menu_hr_points_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
@@ -1613,7 +1628,7 @@ msgstr ""
 
 #. module: hr_referral
 #. odoo-python
-#: code:addons/hr_referral/models/hr_applicant.py:0
+#: code:addons/hr_referral/wizard/applicant_refuse_reason.py:0
 msgid "Sorry, your referral %s has been refused in the recruitment process."
 msgstr ""
 
@@ -1949,6 +1964,7 @@ msgstr ""
 #. module: hr_referral
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 msgid "reward"
 msgstr ""
 
@@ -1956,4 +1972,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "share"
+msgstr ""
+
+#. module: hr_referral
+#. odoo-python
+#: code:addons/hr_referral/wizard/hr_referral_link_to_share.py:0
+msgid ""
+"🚀 An exciting opportunity for a %(job_name)s at my company. If you're "
+"looking for a new challenge, check it "
+"out!👇%(new_line_code)s🔗%(short_url)s%(new_line_code)s%(hashtag_code)sHiring "
+"%(hashtag_code)sJobOpening %(hashtag_code)sCareerOpportunity"
 msgstr ""

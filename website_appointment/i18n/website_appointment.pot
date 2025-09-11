@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-09-11 14:47+0000\n"
+"PO-Revision-Date: 2025-09-11 14:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,8 +43,24 @@ msgid ""
 msgstr ""
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_pages_kanban_view
-msgid "<span class=\"fa fa-globe\" title=\"website\"/>"
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Easily reserve tennis courts for your next "
+"match, anytime and anywhere.</small>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Explore online cooking lessons and learn new "
+"recipes at your pace.</small>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Schedule your visit today and experience expert "
+"dental care brought right to your doorstep.</small>"
 msgstr ""
 
 #. module: website_appointment
@@ -82,8 +98,42 @@ msgid "<span itemprop=\"name\">Tennis Club</span>"
 msgstr ""
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Doctor's "
+"Office</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid "<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Online</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Tennis "
+"Court</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid "<span>Doctor's Office <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid "<span>Online <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgstr ""
+
+#. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 msgid "<span>See all availabilities <i class=\"fa fa-long-arrow-right\"/></span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid "<span>Tennis Club <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
 msgstr ""
 
 #. module: website_appointment
@@ -120,14 +170,12 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 msgid "All Types"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 msgid "All assigned users"
 msgstr ""
 
@@ -139,7 +187,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Allow Guests"
 msgstr ""
 
@@ -169,7 +216,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option_plugin.js:0
 #: model:ir.model,name:website_appointment.model_appointment_type
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Appointment Type"
 msgstr ""
 
@@ -185,8 +231,6 @@ msgstr ""
 #: code:addons/website_appointment/static/src/plugins/searchbar_option.xml:0
 #: model:ir.ui.menu,name:website_appointment.menu_appointment_pages
 #: model:ir.ui.menu,name:website_appointment.website_appointment_type_menu
-#: model_terms:ir.ui.view,arch_db:website_appointment.appointments_searchbar_input_snippet_options
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 #: model_terms:ir.ui.view,arch_db:website_appointment.snippets
 msgid "Appointments"
 msgstr ""
@@ -194,7 +238,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/website_appointment_page_option_plugin.js:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Appointments Page"
 msgstr ""
 
@@ -258,7 +301,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/website_appointment_page_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Card Design"
 msgstr ""
 
@@ -276,6 +318,11 @@ msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
+msgid "Choose what you would like to book"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 msgid "Choose who you will meet"
 msgstr ""
 
@@ -287,7 +334,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Comma-separated list of parts of appointment names"
 msgstr ""
 
@@ -298,6 +344,8 @@ msgid "Contact us"
 msgstr ""
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
 msgstr ""
@@ -345,7 +393,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Filter On"
 msgstr ""
 
@@ -368,6 +415,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__is_published
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_published
+#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_tree
 msgid "Is Published"
 msgstr ""
 
@@ -379,7 +427,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Names"
 msgstr ""
 
@@ -391,7 +438,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "No Filter"
 msgstr ""
 
@@ -403,6 +449,8 @@ msgstr ""
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
 msgstr ""
@@ -439,7 +487,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Resources"
 msgstr ""
 
@@ -492,49 +539,42 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Show Duration"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Show Time Zone"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Show User/Resource Pictures"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Specific Resources"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 msgid "Specific Types"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Specific Users"
 msgstr ""
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 msgid "Specific users"
 msgstr ""
 
@@ -552,6 +592,8 @@ msgstr ""
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Tennis Court"
 msgstr ""
@@ -592,7 +634,6 @@ msgstr ""
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 #: code:addons/website_appointment/static/src/xml/website_appointment_templates.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Users"
 msgstr ""
 
@@ -672,7 +713,6 @@ msgstr ""
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "e.g. Dental Care, ..."
 msgstr ""
 
@@ -680,20 +720,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "or"
-msgstr ""
-
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
-msgid "⌙ Resources"
-msgstr ""
-
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
-msgid "⌙ Specify"
-msgstr ""
-
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
-msgid "⌙ Users"
 msgstr ""

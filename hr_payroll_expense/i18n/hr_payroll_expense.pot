@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"PO-Revision-Date: 2025-09-11 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -63,6 +63,12 @@ msgid ""
 msgstr ""
 
 #. module: hr_payroll_expense
+#. odoo-python
+#: code:addons/hr_payroll_expense/models/hr_payslip.py:0
+msgid "Expense rules"
+msgstr ""
+
+#. module: hr_payroll_expense
 #: model:hr.payslip.input.type,name:hr_payroll_expense.expense_other_input
 #: model:ir.model.fields,field_description:hr_payroll_expense.field_hr_payslip__expense_ids
 #: model_terms:ir.ui.view,arch_db:hr_payroll_expense.hr_payslip_view_form_inherit_expense
@@ -111,6 +117,12 @@ msgstr ""
 
 #. module: hr_payroll_expense
 #. odoo-python
+#: code:addons/hr_payroll_expense/models/hr_payslip.py:0
+msgid "No debit account for EXPENSES rules"
+msgstr ""
+
+#. module: hr_payroll_expense
+#. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
 "No debit account found in the '%(rule_name)s' payslip salary rule. Please "
@@ -121,9 +133,7 @@ msgstr ""
 #. module: hr_payroll_expense
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_payslip.py:0
-msgid ""
-"No salary rule was found to handle expenses in structure "
-"'%(structure_name)s'."
+msgid "No rule to handle expenses"
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -174,6 +184,12 @@ msgid "Report in Next Payslip"
 msgstr ""
 
 #. module: hr_payroll_expense
+#. odoo-python
+#: code:addons/hr_payroll_expense/models/hr_payslip.py:0
+msgid "Rules"
+msgstr ""
+
+#. module: hr_payroll_expense
 #: model:ir.model,name:hr_payroll_expense.model_hr_payroll_structure
 msgid "Salary Structure"
 msgstr ""
@@ -183,15 +199,6 @@ msgstr ""
 #: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
 "The '%(account_name)s' account for the salary rule '%(rule_name)s' must be "
-"of type 'Payable'."
-msgstr ""
-
-#. module: hr_payroll_expense
-#. odoo-python
-#: code:addons/hr_payroll_expense/models/hr_payslip.py:0
-msgid ""
-"The salary rules with the code 'EXPENSES' must have a debit account set to "
-"be able to properly reimburse the linked expenses. This must be an account "
 "of type 'Payable'."
 msgstr ""
 

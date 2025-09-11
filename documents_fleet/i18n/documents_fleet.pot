@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-09-11 14:30+0000\n"
+"PO-Revision-Date: 2025-09-11 14:30+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -59,6 +59,11 @@ msgid "Documents Fleet Tags"
 msgstr ""
 
 #. module: documents_fleet
+#: model:documents.document,name:documents_fleet.document_driver_folder
+msgid "Drivers"
+msgstr ""
+
+#. module: documents_fleet
 #: model:documents.document,name:documents_fleet.document_fleet_folder
 #: model:ir.model.fields,field_description:documents_fleet.field_res_config_settings__documents_fleet_settings
 msgid "Fleet"
@@ -81,12 +86,8 @@ msgstr ""
 
 #. module: documents_fleet
 #: model:ir.model.fields,field_description:documents_fleet.field_res_company__documents_fleet_folder
-msgid "Fleet Folder"
-msgstr ""
-
-#. module: documents_fleet
 #: model:ir.model.fields,field_description:documents_fleet.field_res_config_settings__documents_fleet_folder
-msgid "Fleet Workspace"
+msgid "Fleet Folder"
 msgstr ""
 
 #. module: documents_fleet
@@ -102,8 +103,14 @@ msgid "ID"
 msgstr ""
 
 #. module: documents_fleet
-#: model:ir.actions.server,name:documents_fleet.ir_actions_server_link_to_vehicule
+#: model:ir.actions.server,name:documents_fleet.ir_actions_server_link_to_vehicle
+#: model:ir.actions.server,name:documents_fleet.ir_actions_server_link_to_vehicle_code
 msgid "Link to a vehicle"
+msgstr ""
+
+#. module: documents_fleet
+#: model:documents.document,name:documents_fleet.document_maintenance_repair_folder
+msgid "Maintenance & Repairs"
 msgstr ""
 
 #. module: documents_fleet
@@ -114,4 +121,9 @@ msgstr ""
 #. module: documents_fleet
 #: model:ir.model,name:documents_fleet.model_fleet_vehicle
 msgid "Vehicle"
+msgstr ""
+
+#. module: documents_fleet
+#: model:documents.document,name:documents_fleet.document_vehicle_folder
+msgid "Vehicles"
 msgstr ""

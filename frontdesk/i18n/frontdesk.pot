@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"PO-Revision-Date: 2025-09-11 14:31+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -54,6 +54,13 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.actions.report,print_report_name:frontdesk.frontdesk_visitor_print_badge
 msgid "'Badge - %s' % (object.name).replace('/', '')"
+msgstr ""
+
+#. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid ""
+")\n"
+"                        will be notified via email/SMS only, as they are not available on Discuss."
 msgstr ""
 
 #. module: frontdesk
@@ -116,6 +123,23 @@ msgid "Administrator"
 msgstr ""
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "All"
+msgstr ""
+
+#. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid "All Employees"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.js:0
+msgid "All departments"
+msgstr ""
+
+#. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Allow visitor to select a drink during registration"
 msgstr ""
@@ -153,6 +177,7 @@ msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
 #: code:addons/frontdesk/static/src/navbar/navbar.xml:0
 msgid "Back"
 msgstr ""
@@ -160,6 +185,12 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid "Best regards,<br/>"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Browse All Hosts"
 msgstr ""
 
 #. module: frontdesk
@@ -241,6 +272,12 @@ msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Choose who you would like to visit"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
 #: code:addons/frontdesk/static/src/end_page/end_page.xml:0
 #: code:addons/frontdesk/static/src/register_page/register_page.xml:0
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_check_out
@@ -274,7 +311,7 @@ msgstr ""
 #. module: frontdesk
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/host_page/host_page.xml:0
-msgid "Confirm"
+msgid "Continue"
 msgstr ""
 
 #. module: frontdesk
@@ -450,9 +487,9 @@ msgid "Frontdesk Visitors"
 msgstr ""
 
 #. module: frontdesk
-#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_search
-#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
-msgid "Group By"
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Go back"
 msgstr ""
 
 #. module: frontdesk
@@ -497,6 +534,12 @@ msgid "Host"
 msgstr ""
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Host Avatar"
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__host_ids
 msgid "Host Name"
 msgstr ""
@@ -504,6 +547,11 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__host_selection
 msgid "Host Selection"
+msgstr ""
+
+#. module: frontdesk
+#: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__host_ids
+msgid "Hosts"
 msgstr ""
 
 #. module: frontdesk
@@ -609,12 +657,6 @@ msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
-#: code:addons/frontdesk/static/src/host_page/many2one/many2one.js:0
-msgid "Loading..."
-msgstr ""
-
-#. module: frontdesk
-#. odoo-javascript
 #: code:addons/frontdesk/static/src/js/tours/frontdesk.js:0
 msgid ""
 "Looking for a better way to manage your visitors? \n"
@@ -690,6 +732,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/drink_page/drink_page.xml:0
 msgid "Nothing, thanks."
+msgstr ""
+
+#. module: frontdesk
+#: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__notify_warning
+msgid "Notify Warning"
 msgstr ""
 
 #. module: frontdesk
@@ -886,6 +933,18 @@ msgid "Responsibles"
 msgstr ""
 
 #. module: frontdesk
+#: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__responsible_ids
+msgid ""
+"Responsibles are people who will welcome the client and handle their drinks,"
+" etc."
+msgstr ""
+
+#. module: frontdesk
+#: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__host_selection
+msgid "Restrict the hosts available from the client to choose from."
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr ""
@@ -902,8 +961,20 @@ msgid "Save the visitor."
 msgstr ""
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Search..."
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__access_token
 msgid "Security Token"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Select Host"
 msgstr ""
 
 #. module: frontdesk
@@ -915,6 +986,12 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Select the color of the Desk"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Selected host:"
 msgstr ""
 
 #. module: frontdesk
@@ -953,6 +1030,11 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Side Message"
+msgstr ""
+
+#. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid "Some employees ("
 msgstr ""
 
 #. module: frontdesk

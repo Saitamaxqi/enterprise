@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:10+0000\n"
-"PO-Revision-Date: 2025-07-01 12:10+0000\n"
+"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"PO-Revision-Date: 2025-09-11 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,6 +25,11 @@ msgstr ""
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_mail_activity
 msgid "Activity"
+msgstr ""
+
+#. module: hr_payroll_holidays
+#: model:ir.model,name:hr_payroll_holidays.model_mail_activity_type
+msgid "Activity Type"
 msgstr ""
 
 #. module: hr_payroll_holidays
@@ -64,13 +69,20 @@ msgid "Deferred Time Off Manager"
 msgstr ""
 
 #. module: hr_payroll_holidays
+#: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_leave__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_payslip__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_version__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:hr_payroll_holidays.field_mail_activity_type__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_res_company__display_name
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_res_config_settings__display_name
 msgid "Display Name"
+msgstr ""
+
+#. module: hr_payroll_holidays
+#: model:ir.model,name:hr_payroll_holidays.model_hr_employee
+msgid "Employee"
 msgstr ""
 
 #. module: hr_payroll_holidays
@@ -85,13 +97,26 @@ msgid "Employee Reference"
 msgstr ""
 
 #. module: hr_payroll_holidays
+#. odoo-python
+#: code:addons/hr_payroll_holidays/models/hr_payslip.py:0
+msgid "Employee has time off to defer"
+msgstr ""
+
+#. module: hr_payroll_holidays
+#: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_leave__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_payslip__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_version__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_mail_activity__id
+#: model:ir.model.fields,field_description:hr_payroll_holidays.field_mail_activity_type__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_res_company__id
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_res_config_settings__id
 msgid "ID"
+msgstr ""
+
+#. module: hr_payroll_holidays
+#: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__leave_ids
+msgid "Leave"
 msgstr ""
 
 #. module: hr_payroll_holidays
@@ -186,15 +211,6 @@ msgid "There is no work entries linked to this time off to report"
 msgstr ""
 
 #. module: hr_payroll_holidays
-#. odoo-python
-#: code:addons/hr_payroll_holidays/models/hr_payslip.py:0
-msgid ""
-"There is some remaining time off to defer for these employees: \n"
-"\n"
-" %s"
-msgstr ""
-
-#. module: hr_payroll_holidays
 #: model:ir.actions.act_window,name:hr_payroll_holidays.hr_leave_work_entry_action
 #: model:ir.model,name:hr_payroll_holidays.model_hr_leave
 #: model_terms:ir.ui.view,arch_db:hr_payroll_holidays.res_config_settings_view_form
@@ -222,6 +238,8 @@ msgid "Time Off to Defer"
 msgstr ""
 
 #. module: hr_payroll_holidays
+#. odoo-python
+#: code:addons/hr_payroll_holidays/models/hr_payslip.py:0
 #: model:ir.ui.menu,name:hr_payroll_holidays.menu_work_entry_leave_to_approve
 msgid "Time Offs"
 msgstr ""
@@ -245,28 +263,4 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_holidays/models/hr_leave.py:0
 msgid "Validated Time Off to Defer"
-msgstr ""
-
-#. module: hr_payroll_holidays
-#. odoo-javascript
-#: code:addons/hr_payroll_holidays/static/src/xml/templates.xml:0
-msgid "You have some"
-msgstr ""
-
-#. module: hr_payroll_holidays
-#. odoo-javascript
-#: code:addons/hr_payroll_holidays/static/src/views/hooks.js:0
-msgid "You have some <button>time off</button> to defer to the next month."
-msgstr ""
-
-#. module: hr_payroll_holidays
-#. odoo-javascript
-#: code:addons/hr_payroll_holidays/static/src/xml/templates.xml:0
-msgid "time off"
-msgstr ""
-
-#. module: hr_payroll_holidays
-#. odoo-javascript
-#: code:addons/hr_payroll_holidays/static/src/xml/templates.xml:0
-msgid "to defer to the next month."
 msgstr ""

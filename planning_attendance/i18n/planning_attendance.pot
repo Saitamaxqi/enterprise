@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.4+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:10+0000\n"
-"PO-Revision-Date: 2025-07-01 12:10+0000\n"
+"POT-Creation-Date: 2025-09-11 14:37+0000\n"
+"PO-Revision-Date: 2025-09-11 14:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -67,11 +67,6 @@ msgstr ""
 #. module: planning_attendance
 #: model:ir.model.fields,field_description:planning_attendance.field_planning_attendance_analysis_report__entry_date
 msgid "Entry Date"
-msgstr ""
-
-#. module: planning_attendance
-#: model_terms:ir.ui.view,arch_db:planning_attendance.planning_attendance_analysis_report_view_search
-msgid "Group By"
 msgstr ""
 
 #. module: planning_attendance
