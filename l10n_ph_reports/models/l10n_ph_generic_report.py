@@ -338,7 +338,7 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
             WHERE %(search_condition)s
             AND %(tag_name)s IN %(tags)s
             GROUP BY partner.id, account_tax.id, tag_name
-            ORDER BY partner.name, account_tax.l10n_ph_atc
+            ORDER BY partner.name, account_tax.l10n_ph_atc, tag_name
             ''',
             tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('account_tag', 'name', query),
             balance_negate=self.env['account.account.tag']._field_to_sql('account_tag', 'balance_negate', query),
@@ -381,7 +381,7 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
             WHERE %(search_condition)s
             AND %(tag_name)s IN %(tags)s
             GROUP BY partner.id, account_tax.id, tag_name
-            ORDER BY partner.name, account_tax.l10n_ph_atc
+            ORDER BY partner.name, account_tax.l10n_ph_atc, tag_name
             ''',
             tag_name=self.env['account.account.tag'].with_context(lang='en_US')._field_to_sql('account_tag', 'name', query),
             balance_negate=self.env['account.account.tag']._field_to_sql('account_tag', 'balance_negate', query),

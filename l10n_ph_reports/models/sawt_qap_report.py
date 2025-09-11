@@ -405,7 +405,7 @@ class L10n_PhSawt_QapReportHandler(models.AbstractModel):
             schedule_number = self._get_schedule_number(form_type_code, line['tag_name'])
             grouped_lines[schedule_number].append(line)
 
-        for schedule, lines in grouped_lines.items():
+        for schedule, lines in sorted(grouped_lines.items()):
             for i, line in enumerate(lines):
                 line_values = self._sawt_qap_get_line_values(line, schedule, i, options)
                 file_rows.append(','.join(line_values))
