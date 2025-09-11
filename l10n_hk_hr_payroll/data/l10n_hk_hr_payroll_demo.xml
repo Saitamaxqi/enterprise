@@ -11,6 +11,19 @@
         <field name="currency_id" ref="base.HKD"/>
         <field name="country_id" ref="base.hk"/>
         <field name="resource_calendar_id" ref="calendar_hk" />
+        <field name="l10n_hk_employer_file_number">123-12345678</field>
+        <field name="l10n_hk_manulife_mpf_scheme">12345678</field>
+        <field name="l10n_hk_employer_name">My Hong Kong Company</field>
+    </record>
+
+    <record id="res_partner_hk_work_address" model="res.partner">
+        <field name="name">HK Office</field>
+        <field name="street">118 Connaught Road West</field>
+        <field name="street2">Unit 07 - 10, 38/F Yat Chau International Plaza</field>
+        <field name="city">Sai Ying Pun</field>
+        <field name="state_id" ref="base.state_hk_hk"/>
+        <field name="country_id" ref="base.hk"/>
+        <field name="company_id" ref="base.demo_company_hk"/>
     </record>
 
     <record id="base.user_admin" model="res.users">
@@ -70,7 +83,7 @@
         <field name="company_ids" eval="[(4, ref('base.demo_company_hk'))]"/>
         <field name="company_id" ref="base.demo_company_hk"/>
         <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
-        <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
+        <field name="image_1920" type="base64" file="l10n_hk_hr_payroll/static/img/employee_natalie.jpg"/>
     </record>
 
     <record id="hk_res_bank_hang_seng" model="res.bank">
@@ -123,7 +136,7 @@
 
     <record id="hr_employee_anthony" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_hk_hr_payroll.res_partner_anthony')).name"/>
-        <field name="image_1920" type="base64" file="hr/static/img/employee_ngh-image.jpg"/>
+        <field name="image_1920" type="base64" file="l10n_hk_hr_payroll/static/img/employee_anthony.jpg"/>
         <field name="work_phone">9964 6983</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_hk_hr_payroll.res_partner_anthony')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="work_contact_id" ref="l10n_hk_hr_payroll.res_partner_anthony"/>
@@ -156,18 +169,18 @@
         <field name="structure_type_id" ref="structure_type_employee_cap57"/>
         <field name="wage_type">monthly</field>
         <field name="wage">25000</field>
-        <field name="hr_responsible_id" ref="l10n_hk_hr_payroll.user_natalie"/>
-        <field name="date_version" eval="time.strftime('%Y-01-01')"/>
-        <field name="contract_date_start" eval="time.strftime('%Y-01-01')"/>
-        <field name="contract_date_end" eval="time.strftime('%Y-12-31')"/>
+        <field name="hr_responsible_id" ref="base.user_admin"/>
         <field name="resource_calendar_id" ref="calendar_hk"/>
         <field name="job_id" ref="hr.job_developer"/>
         <field name="department_id" ref="l10n_hk_hr_payroll.hk_hr_department_rd"/>
+        <field name="address_id" ref="l10n_hk_hr_payroll.res_partner_hk_work_address"/>
+        <field name="date_version" eval="(DateTime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
+        <field name="contract_date_start" eval="(DateTime.now() + relativedelta(years=-1, month=1, day=1)).strftime('%Y-%m-%d')"/>
     </record>
 
     <record id="hr_employee_natalie" model="hr.employee">
         <field name="name" model="res.partner" eval="obj(ref('l10n_hk_hr_payroll.res_partner_natalie')).name"/>
-        <field name="image_1920" type="base64" file="hr/static/img/employee_mit-image.jpg"/>
+        <field name="image_1920" type="base64" file="l10n_hk_hr_payroll/static/img/employee_natalie.jpg"/>
         <field name="work_phone">9932 4387</field>
         <field name="work_email" model="res.partner" eval="obj(ref('l10n_hk_hr_payroll.res_partner_natalie')).name.replace(' ', '.').lower() + '@example.com'"/>
         <field name="parent_id" ref="l10n_hk_hr_payroll.hr_employee_anthony"/>
@@ -204,11 +217,11 @@
         <field name="structure_type_id" ref="structure_type_employee_cap57"/>
         <field name="wage_type">monthly</field>
         <field name="wage">20000</field>
-        <field name="hr_responsible_id" ref="l10n_hk_hr_payroll.user_natalie"/>
-        <field name="date_version" eval="time.strftime('%Y-01-01')"/>
-        <field name="contract_date_start" eval="time.strftime('%Y-01-01')"/>
-        <field name="contract_date_end" eval="time.strftime('%Y-12-31')"/>
+        <field name="hr_responsible_id" ref="base.user_admin"/>
         <field name="resource_calendar_id" ref="calendar_hk"/>
+        <field name="address_id" ref="l10n_hk_hr_payroll.res_partner_hk_work_address"/>
+        <field name="date_version" eval="(DateTime.now() + relativedelta(month=1, day=1)).strftime('%Y-%m-%d')"/>
+        <field name="contract_date_start" eval="(DateTime.now() + relativedelta(month=1, day=1)).strftime('%Y-%m-%d')"/>
     </record>
 
     <record id="demo_rental_hk" model="l10n_hk.rental">
@@ -224,11 +237,11 @@
 
     <!-- PUBLIC HOLIDAYS -->
     <record id="demo_public_holiday" model="resource.calendar.leaves">
-        <field name="name">The first day of January</field>
+        <field name="name">That public holiday everyone is looking forward to</field>
         <field name="company_id" ref="base.demo_company_hk" />
         <field name="calendar_id" ref="calendar_hk"/>
-        <field name="date_from" eval="time.strftime('%Y-01-01 07:00:00')" />
-        <field name="date_to" eval="time.strftime('%Y-01-01 16:00:00')" />
+        <field name="date_from" eval="time.strftime('%Y-%m-01 06:00:00')" />
+        <field name="date_to" eval="time.strftime('%Y-%m-01 15:00:00')" />
         <field name="work_entry_type_id" ref="hr_work_entry.l10n_hk_work_entry_type_statutory_holiday" />
     </record>
 
@@ -237,7 +250,7 @@
         <field name="name">Annual Leave Allocation - HK Employee</field>
         <field name="holiday_status_id" ref="hr_holidays.l10n_hk_leave_type_annual_leave"/>
         <field name="number_of_days">20</field>
-        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony"/>
+        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_natalie"/>
         <field name="date_from" eval="time.strftime('%Y-01-01')"/>
         <field name="date_to" eval="time.strftime('%Y-12-31')"/>
         <field name="state">confirm</field>
@@ -251,46 +264,19 @@
     <!-- LEAVES -->
     <record id="demo_unpaid_leave" model="hr.leave">
         <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony" />
-        <field name="request_date_from" eval="time.strftime('%Y-01-14')" />
-        <field name="request_date_to" eval="time.strftime('%Y-01-17')"/>
+        <field name="request_date_from" eval="time.strftime('%Y-%m-14')" />
+        <field name="request_date_to" eval="time.strftime('%Y-%m-17')"/>
         <field name="holiday_status_id" ref="hr_holidays.l10n_hk_leave_type_unpaid_leave" />
         <field name="state">confirm</field>
     </record>
 
     <record id="demo_annual_leave" model="hr.leave">
-        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony" />
-        <field name="request_date_from" eval="time.strftime('%Y-02-11')" />
-        <field name="request_date_to" eval="time.strftime('%Y-02-15')"/>
+        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_natalie" />
+        <field name="request_date_from" eval="time.strftime('%Y-%m-11')" />
+        <field name="request_date_to" eval="time.strftime('%Y-%m-15')"/>
         <field name="holiday_status_id" ref="hr_holidays.l10n_hk_leave_type_annual_leave" />
         <field name="state">confirm</field>
     </record>
 
-    <!-- PAYSLIPS -->
-    <record id="demo_payslips_batch" model="hr.payslip.run">
-        <field name="name">Demo Batch</field>
-        <field name="company_id" ref="base.demo_company_hk" />
-        <field name="date_start" eval="time.strftime('%Y-01-01')" />
-        <field name="date_end" eval="time.strftime('%Y-12-31')" />
-    </record>
-
-    <record id="demo_payslip_1" model="hr.payslip">
-        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony" />
-        <field name="company_id" ref="base.demo_company_hk" />
-        <field name="payslip_run_id" ref="demo_payslips_batch" />
-        <field name="date_from" eval="time.strftime('%Y-01-01')" />
-        <field name="date_to" eval="time.strftime('%Y-01-31')" />
-        <field name="name" eval="'Salary Slip - Employee HK - ' + time.strftime('January %Y')" />
-        <field name="input_line_ids" eval="[(5, 0, 0),
-            (0, 0, {'input_type_id': ref('l10n_hk_hr_payroll.input_commission'),'amount': 10489.81,}),
-        ]"/>
-    </record>
-
-    <record id="demo_payslip_2" model="hr.payslip">
-        <field name="employee_id" ref="l10n_hk_hr_payroll.hr_employee_anthony" />
-        <field name="company_id" ref="base.demo_company_hk" />
-        <field name="payslip_run_id" ref="demo_payslips_batch" />
-        <field name="date_from" eval="time.strftime('%Y-02-01')" />
-        <field name="date_to" eval="(datetime(datetime.now().year, 2, 1) + relativedelta(months=1, days=-1)).strftime('%Y-%m-%d')" />
-        <field name="name" eval="'Salary Slip - Anthony Choi - ' + time.strftime('February %Y')" />
-    </record>
+    <!-- Install test_l10n_hk_hr_payroll_account for demo payslips -->
 </odoo>
