@@ -303,8 +303,8 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.contract_cdd.generate_work_entries(date(2015, 12, 13), date(2015, 12, 13))
         hours = self.contract_cdd.get_work_hours(date(2015, 12, 13), date(2015, 12, 13))
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
-        # 0 hours after the lower bound
-        self.assertAlmostEqual(sum_hours, 2.3, delta=0.01)
+        # 3 hours after the lower bound
+        self.assertAlmostEqual(sum_hours, 3, delta=0.01, msg='It should count 3 attendance hours')
         entry_exceeding_upper_bound = self.env['hr.work.entry'].create(self.env['hr.version']._generate_work_entries_postprocess([{
             'name': 'Attendance',
             'employee_id': self.richard_emp.id,
@@ -317,8 +317,8 @@ class TestPayslipComputation(TestPayslipContractBase):
         self.contract_cdd.generate_work_entries(date(2015, 12, 14), date(2015, 12, 14))
         hours = self.contract_cdd.get_work_hours(date(2015, 12, 14), date(2015, 12, 14))
         sum_hours = sum(v for k, v in hours.items() if k in self.env.ref('hr_work_entry.work_entry_type_attendance').ids)
-        # 8 hours before the upper bound
-        self.assertAlmostEqual(sum_hours, 5.7, delta=0.01)
+        # 5 hours before the upper bound
+        self.assertAlmostEqual(sum_hours, 5, delta=0.01, msg='It should count 5 attendance hours')
 
     def test_payslip_without_contract(self):
         payslip = self.env['hr.payslip'].create({

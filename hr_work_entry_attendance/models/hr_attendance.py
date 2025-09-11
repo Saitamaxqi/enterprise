@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from datetime import datetime, time, timedelta
+from datetime import datetime, time
 from odoo.exceptions import UserError
 
 from odoo import api, models, _
@@ -30,20 +30,7 @@ class HrAttendance(models.Model):
                 attendance.check_in.date(), attendance.check_out.date())
             for contract in contracts:
                 if attendance.check_out >= contract.date_generated_from and attendance.check_in <= contract.date_generated_to:
-                    start_stamp, start_date = attendance.check_in, attendance.check_in.date()
-                    end_stamp, end_date = attendance.check_out, attendance.check_out.date()
-
-                    if start_date == end_date:
-                        day_bounds = datetime.combine(start_date, time.min), datetime.combine(start_date, time.max)
-                        work_entries_vals_list += contract._get_work_entries_values(*day_bounds)
-                    else:
-                        work_entries_vals_list += contract._get_work_entries_values(start_stamp, datetime.combine(start_date, time.max))
-                        date_cursor = start_date + timedelta(days=1)
-                        while date_cursor < end_date:
-                            bounds = datetime.combine(date_cursor, time.min), datetime.combine(date_cursor, time.max)
-                            work_entries_vals_list += contract._get_work_entries_values(*bounds)
-                            date_cursor += timedelta(days=1)
-                        work_entries_vals_list += contract._get_work_entries_values(datetime.combine(end_date, time.min), end_stamp)
+                    work_entries_vals_list += contract._get_work_entries_values(attendance.check_in, attendance.check_out)
 
         if work_entries_vals_list:
             work_entries_vals_list = self.env['hr.version']._generate_work_entries_postprocess(work_entries_vals_list)
