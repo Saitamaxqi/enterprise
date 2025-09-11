@@ -421,7 +421,8 @@ class AccountMove(models.Model):
     def _get_mail_thread_data_attachments(self):
         res = super()._get_mail_thread_data_attachments()
         res += self.statement_line_id.statement_id.attachment_ids
-        res += self.line_ids.reconciled_lines_ids.move_attachment_ids
+        if self.env.context.get('from_bank_reco'):
+            res += self.line_ids.reconciled_lines_ids.move_attachment_ids
         return res
 
     @contextmanager

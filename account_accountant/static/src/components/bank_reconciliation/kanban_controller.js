@@ -1,9 +1,10 @@
-import { useSubEnv } from "@odoo/owl";
+import { useSubEnv, onWillRender, onWillDestroy } from "@odoo/owl";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { makeActiveField } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "./bank_reconciliation_service";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
+import { user } from "@web/core/user";
 
 export class BankRecKanbanController extends KanbanController {
     static template = "account_accountant.BankRecoKanbanController";
@@ -19,6 +20,8 @@ export class BankRecKanbanController extends KanbanController {
             bypassEditableProtection: true,
             withOverlay: () => this.rootRef.el.querySelector(".bank-chatter-btn"),
         });
+        onWillRender(() => { user.updateContext({ from_bank_reco : true }) });
+        onWillDestroy(() => { user.updateContext({ from_bank_reco : false }) });
     }
 
     async createRecord() {
