@@ -29,8 +29,14 @@ class TestMXEdiStockCommon(TestMxExtendedEdiCommon):
             'l10n_mx_edi_operator_licence': 'a234567890',
         })
 
+        cls.model = cls.env['fleet.vehicle.model'].create({
+            'name': 'Clio',
+            'brand_id': cls.env.ref('fleet.brand_renault').id,
+            'model_year': '2023'
+        })
+
         cls.vehicle_pedro = cls.env['fleet.vehicle'].create({
-            'model_id': cls.env.ref('fleet.model_clio').id,
+            'model_id': cls.model.id,
             'l10n_mx_transport_insurer': 'DEMO INSURER',
             'l10n_mx_transport_insurance_policy': 'DEMO POLICY',
             'l10n_mx_transport_perm_sct': 'TPAF10',
