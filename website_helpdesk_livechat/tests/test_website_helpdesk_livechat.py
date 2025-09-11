@@ -71,7 +71,7 @@ class TestWebsiteHelpdeskLivechat(HttpCase, HelpdeskCommon):
         ticket = self.env['helpdesk.ticket'].search([('team_id', '=', self.test_team.id)])
         self.assertIn('<div data-embedded="file"', ticket.description,
             'The name "Text attachment" should be added to the ticket description.')
-        self.assertIn(f'<img src="/web/content/{attachments[0].id}" alt="Image attachment"', ticket.description,
+        self.assertIn(f'<img src="{attachments[0].image_src}?access_token={attachments[0].access_token}" alt="Image attachment"', ticket.description,
             "The image attachment should be added to the ticket description.")
         self.assertEqual(ticket.message_attachment_count, 1,
             'Only one text-type attachment should be attached to the ticket.')
