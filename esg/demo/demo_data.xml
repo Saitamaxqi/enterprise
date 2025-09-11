@@ -493,8 +493,21 @@
         <!-- Accounts -->
         <record id="account_electricity" model="account.account">
             <field name="name">Electricity</field>
-            <field name="code">606000</field>
+            <field name="prefix">6060</field>
+            <field name="code_digits" eval="6"/>
             <field name="account_type">expense</field>
+        </record>
+        <record id="account_expense" model="account.account">
+            <field name="name">Expense</field>
+            <field name="prefix">6070</field>
+            <field name="code_digits" eval="6"/>
+            <field name="account_type">expense</field>
+        </record>
+        <record id="account_salary" model="account.account">
+            <field name="name">Salary</field>
+            <field name="prefix">6080</field>
+            <field name="code_digits" eval="6"/>
+            <field name="account_type">liability_current</field>
         </record>
 
         <!-- Products -->
@@ -566,7 +579,7 @@
 
         <record id="esg_emission_factor_line_assignation_4" model="esg.assignation.line">
             <field name="esg_emission_factor_id" ref="esg_zero_emission_factor"/>
-            <field name="account_id" model="account.account" search="[('code', '=', '630000')]"/>
+            <field name="account_id" ref="account_expense"/>
         </record>
 
         <!-- Vendor Bills and Misc Entries -->
@@ -619,12 +632,12 @@
             <field name="line_ids" model="account.account" eval="[
                 (0, 0, {
                     'name': 'Salaries January '+time.strftime('%Y'),
-                    'account_id': obj().search([('code', '=', '630000')]).id,
+                    'account_id': ref('account_expense'),
                     'debit': 1500.00,
                 }),
                 (0, 0, {
                     'name': 'Salaries January '+time.strftime('%Y'),
-                    'account_id': obj().search([('code', '=', '230000')]).id,
+                    'account_id': ref('account_salary'),
                     'credit': 1500.00,
                 })
             ]"/>
