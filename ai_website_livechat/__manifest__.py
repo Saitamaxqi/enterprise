@@ -17,7 +17,7 @@
             'ai_website_livechat/static/src/website/components/**/*',
             'ai_website_livechat/static/src/website/interactions/*',
         ],
-        'website.assets_edit_frontend': [
+        'website.assets_inside_builder_iframe': [
             'ai_website_livechat/static/src/website/interactions/edit/**/*',
         ],
         'website.website_builder_assets': [
