@@ -33,9 +33,11 @@ class AccountReturnType(models.Model):
 class AccountReturn(models.Model):
     _inherit = 'account.return'
 
+    is_intrastat_return = fields.Boolean(related="type_id.is_intrastat_return_type")
+
     def _run_checks(self, check_codes_to_ignore):
         checks = super()._run_checks(check_codes_to_ignore)
-        if self.type_id.is_intrastat_return_type:
+        if self.is_intrastat_return:
             checks += self._check_suite_common_intrastat_goods(check_codes_to_ignore)
         return checks
 

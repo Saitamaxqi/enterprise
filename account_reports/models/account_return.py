@@ -657,6 +657,8 @@ class AccountReturn(models.Model):
     return_type_category = fields.Selection(related="type_id.category")
     visible_states = fields.Json(string="Visible States", compute="_compute_visible_states")
     show_submit_button = fields.Boolean(compute="_compute_show_submit_button")
+    is_tax_return = fields.Boolean(related="type_id.is_tax_return_type")
+    is_ec_sales_list_return = fields.Boolean(related="type_id.is_ec_sales_list_return_type")
 
     # Audit
     audit_status = fields.Selection(
@@ -783,10 +785,10 @@ class AccountReturn(models.Model):
         for account_return in self:
             account_return.is_main_company_active = account_return.company_id in self.env.companies
 
-    @api.depends('type_id.is_tax_return_type', 'closing_move_ids')
+    @api.depends('is_tax_return', 'closing_move_ids')
     def _compute_show_amount_to_pay(self):
         for record in self:
-            record.show_amount_to_pay = record.type_id.is_tax_return_type and record.closing_move_ids
+            record.show_amount_to_pay = record.is_tax_return and record.closing_move_ids
 
     @api.depends('type_id')
     def _compute_state(self):
@@ -1098,7 +1100,7 @@ class AccountReturn(models.Model):
         if report := self.type_id.report_id:
             options = {**self._get_closing_report_options(), **(options_to_inject or {})}
 
-            if self.type_id.is_tax_return_type:
+            if self.is_tax_return:
                 # Create the tax closing move
                 self._generate_tax_closing_entries(options)
 
@@ -1122,7 +1124,7 @@ class AccountReturn(models.Model):
 
         self.state = 'reviewed'
 
-        if self.type_id.is_tax_return_type:
+        if self.is_tax_return:
             return {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',
@@ -1198,7 +1200,7 @@ class AccountReturn(models.Model):
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             return self._mark_completed()
 
-        if self.type_id.is_tax_return_type:
+        if self.is_tax_return:
             return self.action_pay()
 
     def action_pay(self):
@@ -1237,7 +1239,7 @@ class AccountReturn(models.Model):
 
     def action_reset_tax_return_common(self):
         self.ensure_one()
-        if not self.type_id.is_tax_return_type:
+        if not self.is_tax_return:
             return True
 
         if not self.env.user.has_group('account.group_account_manager'):
@@ -1965,9 +1967,9 @@ class AccountReturn(models.Model):
         if report_country.code in europe_country_group.mapped('country_ids.code'):
             checks += self._check_suite_eu_vat_report(check_codes_to_ignore)
 
-        if self.type_id.is_tax_return_type:
+        if self.is_tax_return:
             checks += self._check_suite_common_vat_report(check_codes_to_ignore)
-        elif self.type_id.is_ec_sales_list_return_type:
+        elif self.is_ec_sales_list_return:
             checks += self._check_suite_common_ec_sales_list(check_codes_to_ignore)
         if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
             checks += self._check_suite_annual_closing(check_codes_to_ignore)
