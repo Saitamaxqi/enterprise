@@ -453,7 +453,7 @@ class AppointmentUITest(AppointmentUICommon):
         """ Check that appointment and attendee status are correctly
         set based on the auto_confirm and manual_confirmation_percentage fields"""
         self.authenticate(self.env.user.login, self.env.user.login)
-        phone_question = self.apt_type_resource._get_main_phone_question()
+        phone_question = self.apt_type_bxls_2days._get_main_phone_question()
         self.assertTrue(phone_question)
         event_values = {
             'allday': 0,
