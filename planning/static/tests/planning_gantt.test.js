@@ -1056,7 +1056,7 @@ test("publish on gantt view: default end_datetime should cover full range", asyn
 test("planning gantt view: print", async () => {
     onRpc("action_print_plannings", () => {
         expect.step("action_print_plannings()");
-        return {};
+        return false;
     });
 
     await mountGanttView({
