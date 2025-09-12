@@ -2378,7 +2378,7 @@ class DocumentsDocument(models.Model):
         self._ensure_user_role_without_propagation('edit', previous_owner_access_to_keep)
 
         if new_parent_folder and (documents_to_sync := documents_to_move.filtered(lambda d: not d.shortcut_document_id)):
-            documents_to_sync.sudo().action_update_access_rights(
+            documents_to_sync.action_update_access_rights(
                 access_internal=new_parent_folder.access_internal,
                 access_via_link=new_parent_folder.access_via_link,
                 is_access_via_link_hidden=new_parent_folder.is_access_via_link_hidden,
