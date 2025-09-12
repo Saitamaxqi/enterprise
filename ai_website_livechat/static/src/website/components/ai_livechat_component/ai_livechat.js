@@ -70,7 +70,7 @@ export class AILivechatComponent extends Component {
                     lastMessageEl.scrollIntoView({ block: "start", inline: "nearest", behavior: "smooth" });
                     if(!this.state.otherElementsHidden){
                         for (const s of selectorToHide) {
-                            document.querySelector(s).classList.add('d-none');
+                            document.querySelector(s)?.classList.add('d-none');
                         }
                         this.hideOtherSnippets();
                         this.centerAndApplyWidthHeight();
@@ -79,7 +79,7 @@ export class AILivechatComponent extends Component {
                 }
                 else if(this.state.otherElementsHidden) {
                     for (const s of selectorToHide) {
-                        document.querySelector(s).classList.remove('d-none')
+                        document.querySelector(s)?.classList.remove('d-none')
                     }
                     this.showOtherSnippets();
                     this.restorePositionAndWidthHeight();
