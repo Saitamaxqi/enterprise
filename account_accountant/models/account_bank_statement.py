@@ -337,8 +337,13 @@ class AccountBankStatementLine(models.Model):
                                WHERE move_payment_rel.payment_id = payment.id
                            )
                       )
+                 LEFT JOIN res_company aml_company ON aml_company.id = aml.company_id
+                 LEFT JOIN res_company payment_company ON payment_company.id = payment.company_id
                      WHERE aml.move_id NOT IN %(st_move_ids)s
-                       AND aml.company_id = st_line.company_id
+                       AND (
+                              aml_company.parent_path LIKE CONCAT(payment_company.id, '/%%')
+                           OR payment_company.parent_path LIKE CONCAT(aml_company.id, '/%%')
+                       )
                        AND aml.reconciled = false
                        AND aml.account_id IN %(account_ids)s
                        AND ((st_line.amount > 0 AND aml.balance > 0) OR (st_line.amount < 0 AND aml.balance < 0))
@@ -360,9 +365,13 @@ class AccountBankStatementLine(models.Model):
                            payment.id as payment_id
                       FROM account_bank_statement_line st_line
                       JOIN account_payment payment ON st_line.end_to_end_uuid = payment.end_to_end_uuid
+                 LEFT JOIN res_company st_line_company ON st_line_company.id = st_line.company_id
+                 LEFT JOIN res_company payment_company ON payment_company.id = payment.company_id
                      WHERE st_line.id IN %(st_line_ids)s
-                       AND payment.state IN %(payment_state)s
-                       AND payment.company_id = st_line.company_id
+                       AND (
+                              st_line_company.parent_path LIKE CONCAT(payment_company.id, '/%%')
+                           OR payment_company.parent_path LIKE CONCAT(st_line_company.id, '/%%')
+                       )
                        AND (
                              (st_line.amount > 0 AND payment.payment_type = 'inbound')
                            OR (st_line.amount < 0 AND payment.payment_type = 'outbound')
@@ -371,9 +380,9 @@ class AccountBankStatementLine(models.Model):
                 for st_line_id, payment_id in self.env.cr.fetchall():
                     # Guarantees batch prefetching if needed.
                     st_line = self.browse(st_line_id).with_prefetch(self._prefetch_ids)
-                    payment = self.env['account.payment'].browse(payment_id)
+                    payment = self.env['account.payment'].browse(payment_id).with_user(SUPERUSER_ID)
                     amls_to_create = payment.with_company(st_line.company_id)._get_amls_for_payment_without_move()
-                    st_line.with_company(st_line.company_id)._reconcile_payments(payment, amls_to_create)
+                    st_line.with_company(st_line.company_id).with_user(SUPERUSER_ID)._reconcile_payments(payment, amls_to_create)
                     processed_st_line_ids.add(st_line_id)
 
         remaining_st_line_ids = list(set(self.ids) - processed_st_line_ids)
