@@ -214,7 +214,7 @@ patch(PosStore.prototype, {
     },
     async transferOrder(orderUuid, destinationTable = null, destinationOrder = null) {
         const order = this.models["pos.order"].find((o) => o.uuid === orderUuid);
-        if (this.useBlackBoxBe() && order && typeof order.id === "number") {
+        if (this.useBlackBoxBe() && order && order.isSynced) {
             await this.pushCorrection(order);
         }
         await super.transferOrder(orderUuid, destinationTable, destinationOrder);

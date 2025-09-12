@@ -24,14 +24,7 @@ patch(PosStore.prototype, {
         if (this.config.l10n_br_is_nfce) {
             res.onRecordDiscarded = async () => {
                 if (order.id) {
-                    await this.data.callRelated(
-                        "pos.order",
-                        "read_pos_orders",
-                        [[["uuid", "=", order.uuid]]],
-                        {},
-                        false,
-                        true
-                    );
+                    await this.data.loadServerOrders([["uuid", "=", order.uuid]]);
                 }
             };
         }

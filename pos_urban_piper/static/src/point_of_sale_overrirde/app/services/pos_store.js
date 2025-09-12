@@ -72,7 +72,7 @@ patch(PosStore.prototype, {
 
     async getServerOrders() {
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
-            return await this.loadServerOrders([
+            return await this.data.loadServerOrders([
                 ["company_id", "=", this.config.company_id.id],
                 [
                     "delivery_provider_id",

@@ -152,14 +152,7 @@ patch(TicketScreen.prototype, {
         if (status) {
             this._updateScreenState(order, "SYNCED", "DONE");
         }
-        await this.pos.data.callRelated(
-            "pos.order",
-            "read_pos_orders",
-            [[["uuid", "=", order.uuid]]],
-            {},
-            false,
-            true
-        );
+        await this.pos.data.loadServerOrders([["uuid", "=", order.uuid]]);
 
         // make sure the order is identified as paid.
         order = this.pos.models["pos.order"].get(order.id);

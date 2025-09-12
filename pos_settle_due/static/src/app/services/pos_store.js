@@ -80,15 +80,7 @@ patch(PosStore.prototype, {
         return [partners];
     },
     async onClickSettleDue(orderIds, partnerId, commercialPartnerId) {
-        const results = await this.data.callRelated(
-            "pos.order",
-            "read_pos_orders",
-            [[["id", "in", orderIds]]],
-            {},
-            false,
-            true
-        );
-        const orders = results["pos.order"];
+        const orders = await this.data.loadServerOrders([["id", "in", orderIds]]);
         const currentOrder = this.getOrder();
         currentOrder.commercialPartnerId = commercialPartnerId;
         currentOrder.setPartner(partnerId);
