@@ -21,8 +21,8 @@ patch(Composer.prototype, {
             ...config,
             getRecordInfo: () => {
                 return {
-                    resModel: this.thread.model,
-                    resId: this.thread.id,
+                    resModel: this.thread?.model,
+                    resId: this.thread?.id,
                 };
             },
         };
