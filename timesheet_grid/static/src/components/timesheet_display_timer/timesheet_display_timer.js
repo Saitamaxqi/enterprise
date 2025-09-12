@@ -27,7 +27,8 @@ export class TimesheetTimerFloatTimerField extends FloatTimeField {
     }
 
     get value() {
-        return this.props.value;
+        const { timerRunning, value, record, name } = this.props;
+        return timerRunning || !record.data ? value : record.data[name];
     }
 }
 

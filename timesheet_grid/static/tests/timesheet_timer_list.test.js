@@ -235,3 +235,20 @@ test("hr.timesheet (list)(timer): unlink timesheet through timesheet_uom_timer w
         message: "The project input should not exist",
     });
 });
+
+test("timesheet.grid (list)(time): retain edited time after focus change", async () => {
+    await mountView({
+        type: "list",
+        resModel: HRTimesheet._name,
+        arch: `<list editable="bottom" js_class="timesheet_timer_list">
+                <field name="name" />
+                <field name="unit_amount" widget="timesheet_uom_timer" />
+            </list>`,
+    });
+    const targetRow = ".o_data_row:nth-child(1)";
+    await click(`${targetRow} .o_list_number`);
+    await contains(`${targetRow} .o_list_number input`).edit("45", { confirm: false });
+    await click(`${targetRow} .o_list_char`);
+    await animationFrame();
+    expect(`${targetRow} .o_list_number input`).toHaveValue("45:00");
+});
