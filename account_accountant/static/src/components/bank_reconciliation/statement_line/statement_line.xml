@@ -95,9 +95,6 @@
                                     <button class="btn btn-link oi oi-close p-0" t-on-click.stop="removePartner"/>
                                 </div>
                             </div>
-                            <div class="o_row" t-if="!recordData.is_reconciled">
-                                <div class="o_statement_line_divider"/>
-                            </div>
                             <div class="o_row">
                                 <div class="o_button_line">
                                     <BankRecButtonList t-if="!recordData.is_reconciled" suspenseAccountLine="suspenseAccountLine" t-props="buttonListProps"/>
