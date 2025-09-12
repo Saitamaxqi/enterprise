@@ -2,7 +2,7 @@
 
 import base64
 
-from odoo.exceptions import ValidationError
+from odoo.exceptions import ValidationError, UserError
 from odoo.tools import file_open
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase, new_test_user
@@ -230,3 +230,56 @@ class TestSignTemplate(TransactionCase):
                         'height': 0.015,
                         'transaction_id': -4,
                     })
+
+    def test_sign_item_model_name(self):
+        """ Make sure that we can't save a model on sign.template that is incompatible with the sign items """
+        # Use models that are available in the sign application
+        model_sr = self.env['ir.model']._get('sign.request')
+        model_cron = self.env['ir.model']._get('ir.cron')
+        model_partner = self.env['ir.model']._get('res.partner')
+        type_request = self.env["sign.item.type"].create({
+                        'name': "SR field",
+                        'item_type': 'text',
+                        'model_id': model_sr.id,
+                        'auto_field': 'reference',
+
+        })
+        type_partner = self.env["sign.item.type"].create({
+                        'name': "Partner field",
+                        'item_type': 'text',
+                        'model_id': model_partner.id,
+                        'auto_field': 'partner_latitude',
+
+        })
+        type_cron = self.env["sign.item.type"].create({
+                        'name': "Cron field",
+                        'item_type': 'text',
+                        'model_id': model_cron.id,
+                        'auto_field': 'interval_type',
+
+        })
+        res = self.env['sign.template'].with_user(self.test_user).create_from_attachment_data(
+            attachment_data_list=[{'name': 'sample_contract.pdf', 'datas': self.pdf_data}])
+        sign_template_id = res.get('id', 0)
+        sign_template = self.env['sign.template'].with_user(self.test_user).browse(sign_template_id)
+        document_id = sign_template.document_ids[0].id
+        for sign_type in [type_request, type_partner, type_cron]:
+            self.env["sign.item"].create({
+                'template_id': sign_template_id,
+                'document_id': document_id,
+                'type_id': sign_type.id,
+                'name': 'employee_id.name',
+                'required': False,
+                'constant': True,
+                'responsible_id': self.env.ref('sign.sign_item_role_default').id,
+                'page': 1,
+                'posX': 0.273,
+                'posY': 0.458,
+                'width': 0.150,
+                'height': 0.015,
+                'transaction_id': -4,
+            })
+        with self.assertRaises(UserError):
+            sign_template.model_id = type_request.id
+        with self.assertRaises(UserError):
+            sign_template.model_id = type_cron.id

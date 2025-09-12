@@ -66,6 +66,22 @@ class SignTemplate(models.Model):
         "The number of days for expiration must be a positive value.",
     )
 
+    @api.constrains('model_id')
+    def _constraint_model_items(self):
+        for template in self:
+            if not template.model_name:
+                continue
+            model_names = template.document_ids.sign_item_ids.type_id.mapped('model_name')
+            for model_name in model_names:
+                if not model_name or model_name == 'res.partner':
+                    continue
+                if model_name != template.model_name:
+                    raise UserError(self.env._(
+                        "The template model %(t_name)s is incompatible with the signature fields %(model_name)s.",
+                        model_name=model_name,
+                        t_name=template.model_name,
+                    ))
+
     @api.model
     def name_search(self, name='', domain=None, operator='ilike', limit=100):
         # Display favorite templates first
