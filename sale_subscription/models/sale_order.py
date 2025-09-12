@@ -1634,6 +1634,7 @@ class SaleOrder(models.Model):
                             for line in invoiceable_lines:
                                 line.qty_invoiced = line.product_uom_qty
                             updatable_invoice_date._subscription_post_success_free_renewal()
+                            subscription.is_invoice_cron = False
                     continue
 
                 try:
