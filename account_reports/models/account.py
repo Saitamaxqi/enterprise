@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 
-from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
@@ -35,10 +35,9 @@ class AccountAccount(models.Model):
         if not working_file:
             return []
 
-        date_from = working_file.date_from
         date_to = working_file.date_to
         if previous:
-            date_from, date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))
+            date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))[1]
 
         self.env.cr.execute(
             SQL("""
@@ -47,18 +46,18 @@ class AccountAccount(models.Model):
                 FROM (
                     SELECT
                         SUM(COALESCE(account_move_line.%(field_name)s)) as %(field_name)s,
-                        account_move_line.account_id
+                        %(account_or_unaff)s AS account_id
                     FROM account_move_line
-                    WHERE account_move_line.date >= %(date_from)s
-                      AND account_move_line.date <= %(date_to)s
+                    JOIN account_account aml_account ON aml_account.id = account_move_line.account_id
+                    WHERE account_move_line.date <= %(date_to)s
                       AND account_move_line.company_id = ANY(%(company_ids)s)
                       AND account_move_line.parent_state = 'posted'
-                    GROUP BY account_move_line.account_id
+                    GROUP BY %(account_or_unaff)s
                 ) aml
                 WHERE aml.%(field_name)s %(operator)s %(value)s
                 """,
                 field_name=SQL(field_name),
-                date_from=date_from,
+                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "account_move_line", "aml_account"),
                 date_to=date_to,
                 company_ids=working_file.company_ids.ids,
                 operator=SQL(operator),
@@ -99,20 +98,23 @@ class AccountAccount(models.Model):
 
                     SELECT
                         %(variation_select)s,
-                        aml.account_id
+                        %(account_or_unaff)s AS account_id
                     FROM account_move_line aml
+                    JOIN account_account aml_account ON aml_account.id = aml.account_id
 
                     LEFT JOIN (
                         SELECT
                             SUM(COALESCE(prev_aml.balance)) as balance,
-                            prev_aml.account_id
+                            %(prev_account_or_unaff)s AS account_id
                         FROM account_move_line prev_aml
-                        WHERE prev_aml.date >= %(prev_date_from)s AND prev_aml.date <= %(prev_date_to)s AND prev_aml.company_id = ANY(%(company_ids)s)
-                        GROUP BY prev_aml.account_id
-                    ) prev_account_balances ON aml.account_id = prev_account_balances.account_id
+                        JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
+                        WHERE prev_aml.date <= %(prev_date_to)s
+                          AND prev_aml.company_id = ANY(%(company_ids)s)
+                        GROUP BY %(prev_account_or_unaff)s
+                    ) prev_account_balances ON %(account_or_unaff)s = prev_account_balances.account_id
 
-                    WHERE aml.date >= %(date_from)s AND aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
-                    GROUP BY aml.account_id, prev_account_balances.balance
+                    WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
+                    GROUP BY %(account_or_unaff)s, prev_account_balances.balance
 
                 ) account_variation
                 WHERE account_variation.variation %(operator)s %(value)s
@@ -122,6 +124,8 @@ class AccountAccount(models.Model):
                 date_to=working_file.date_to,
                 prev_date_from=prev_date_from,
                 prev_date_to=prev_date_to,
+                prev_account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, prev_date_from, "prev_aml", "prev_aml_account"),
+                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
                 company_ids=working_file.company_ids.ids,
                 operator=SQL(operator),
                 value=value,
@@ -146,62 +150,59 @@ class AccountAccount(models.Model):
     @api.depends_context('working_file_id')
     def _compute_audit_period(self):
         working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
-
-        for account in self:
-            account.audit_debit = 0
-            account.audit_credit = 0
-            account.audit_balance = 0
-            account.audit_previous_balance = 0
+        balances_by_account = {}
 
         if working_file:
-            current_period_start = working_file.date_from
-            current_period_end = working_file.date_to
-            previous_period_start, previous_period_end = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))
+            prev_date_from, prev_date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))
+            audit_period_query = SQL("""
+                    SELECT
+                        COALESCE(SUM(aml.debit), 0) AS current_debit,
+                        COALESCE(SUM(aml.credit), 0) AS current_credit,
+                        COALESCE(SUM(aml.balance), 0) AS current_balance,
+                        prev_account_balances.balance AS prev_balance,
+                        %(account_or_unaff)s AS account_id
+                    FROM account_move_line aml
+                    JOIN account_account aml_account ON aml_account.id = aml.account_id
+                    LEFT JOIN (
+                        SELECT
+                            SUM(COALESCE(prev_aml.balance, 0)) as balance,
+                            %(prev_account_or_unaff)s AS account_id
+                        FROM account_move_line prev_aml
+                        JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
+                        WHERE prev_aml.date <= %(prev_date_to)s
+                        AND prev_aml.company_id = ANY(%(company_ids)s)
+                        GROUP BY %(prev_account_or_unaff)s
+                    ) prev_account_balances ON %(account_or_unaff)s = prev_account_balances.account_id
 
-            current_period_results = self.env['account.move.line']._read_group(
-                [
-                    ('date', '>=', current_period_start),
-                    ('date', '<=', current_period_end),
-                    ('parent_state', '=', 'posted'),
-                ],
-                aggregates=[
-                    'debit:sum',
-                    'credit:sum',
-                    'balance:sum',
-                ],
-                groupby=[
-                    'account_id'
-                ]
+                    WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
+                    GROUP BY %(account_or_unaff)s, prev_account_balances.balance
+                """,
+                date_from=working_file.date_from,
+                date_to=working_file.date_to,
+                prev_date_from=prev_date_from,
+                prev_date_to=prev_date_to,
+                prev_account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, prev_date_from, "prev_aml", "prev_aml_account"),
+                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
+                company_ids=working_file.company_ids.ids,
             )
+            self.env.cr.execute(audit_period_query)
 
-            previous_period_results = self.env['account.move.line']._read_group([
-                    ('date', '>=', previous_period_start),
-                    ('date', '<=', previous_period_end),
-                    ('parent_state', '=', 'posted'),
-                ],
-                aggregates=[
-                    'balance:sum',
-                ],
-                groupby=[
-                    'account_id'
-                ]
-            )
+            balances_by_account = {
+                row['account_id']: (
+                    row['current_debit'],
+                    row['current_credit'],
+                    row['current_balance'],
+                    row['prev_balance'],
+                )
+                for row in self.env.cr.dictfetchall()
+            }
 
-            account_results = defaultdict(dict)
-            for account, balance in previous_period_results:
-                account_results[account]['previous'] = balance
-            for account, debit, credit, balance in current_period_results:
-                account_results[account]['current'] = (debit, credit, balance)
-
-            for account in self:
-                if account in account_results:
-                    current_result = account_results[account].get('current', (0, 0, 0))
-                    previous_result = account_results[account].get('previous', 0)
-
-                    account.audit_debit = current_result[0]
-                    account.audit_credit = current_result[1]
-                    account.audit_balance = current_result[2]
-                    account.audit_previous_balance = previous_result
+        for account in self:
+            debit, credit, balance, prev_balance = balances_by_account.get(account.id, (0, 0, 0, 0))
+            account.audit_debit = debit
+            account.audit_credit = credit
+            account.audit_balance = balance
+            account.audit_previous_balance = prev_balance
 
     @api.depends('audit_balance', 'audit_previous_balance')
     def _compute_audit_variation(self):
@@ -269,13 +270,19 @@ class AccountAccount(models.Model):
                         SUM(COALESCE(aml.debit, 0.0)) as debit,
                         SUM(COALESCE(aml.credit, 0.0)) as credit,
                         SUM(COALESCE(aml.balance, 0.0)) as balance,
-                        aml.account_id as account_id
+                        %(account_or_unaff)s as account_id
                     FROM account_move_line aml
-                    WHERE aml.date >= %s AND aml.date <= %s AND aml.company_id = ANY(%s) AND aml.parent_state = 'posted'
-                    GROUP BY aml.account_id)
+                    JOIN account_account aml_account ON aml_account.id = aml.account_id
+                    WHERE aml.date <= %(date_to)s
+                      AND aml.company_id = ANY(%(company_ids)s)
+                      AND aml.parent_state = 'posted'
+                    GROUP BY %(account_or_unaff)s)
                     """,
-                    date_from, date_to, company_ids
+                    account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
+                    date_to=date_to,
+                    company_ids=company_ids
                 ),
+
                 SQL("%s = %s", SQL.identifier(join_alias, 'account_id'), self._field_to_sql(alias, 'id', query))
             )
 
@@ -327,3 +334,39 @@ class AccountAccount(models.Model):
             **self.env['ir.actions.act_window']._for_xml_id("account.action_account_moves_all"),
             'domain': domain,
         }
+
+    def _get_account_or_unaff_id_sql_redirection(self, audit, date_from, aml_alias="account_move_line", account_alias="account_account"):
+        unaffected_earnings_accounts = self.env['account.account']._read_group(
+            domain=[
+                *self.env['account.account']._check_company_domain(audit.company_ids),
+                ('account_type', '=', 'equity_unaffected'),
+            ],
+            groupby=['company_ids'],
+            aggregates=['id:min'],
+        )
+        unaffected_earnings_accounts = {
+            company.id: account_id
+            for company, account_id in unaffected_earnings_accounts
+        }
+
+        return SQL(
+            """
+            CASE
+                WHEN %(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s])
+                    AND %(date_field)s < %(query_date_from)s
+                THEN (
+                        %(unaffected_earnings_accounts_per_company)s::jsonb
+                        ->>(%(company_id_field)s::text)
+                )::int
+                ELSE %(account_id_field)s
+            END
+            """,
+            account_type=SQL.identifier(account_alias, 'account_type'),
+            income_pattern=r'income%',
+            expense_pattern=r'expense%',
+            date_field=SQL.identifier(aml_alias, 'date'),
+            company_id_field=SQL.identifier(aml_alias, 'company_id'),
+            query_date_from=date_from,  # Is different from audit date_from when computing previous balances
+            unaffected_earnings_accounts_per_company=json.dumps(unaffected_earnings_accounts),
+            account_id_field=SQL.identifier(aml_alias, 'account_id'),
+        )

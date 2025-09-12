@@ -53,6 +53,18 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         cls.annual_return_type = cls.env.ref('account_reports.annual_corporate_tax_return_type')
 
+        cls.audit_return_type = cls.env.ref('account_reports.default_audit_return_type')
+
+        cls.audit_2024 = cls.audit_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-01-01'),
+            forced_date_to=fields.Date.from_string('2024-12-31')
+        )._try_create_returns_for_fiscal_year(cls.env.company, False)
+
+        cls.audit_2025 = cls.audit_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2025-01-01'),
+            forced_date_to=fields.Date.from_string('2025-12-31')
+        )._try_create_returns_for_fiscal_year(cls.env.company, False)
+
         cls.startClassPatcher(freeze_time('2024-01-16'))
 
         with cls._patch_returns_generation():
@@ -1519,3 +1531,30 @@ class TestAccountReturn(TestAccountReportsCommon):
                 draft_entries_check.with_context({"lang": "fr_FR"}).message,
                 "Vérifiez et validez les factures et factures fournisseurs en brouillon pour la période, ou modifiez leur date comptable."
             )
+
+    def test_audit_balances_account(self):
+        unaff_earnings_account = self.env['account.account'].search(domain=[
+            *self.env['account.account']._check_company_domain(self.env.company.ids),
+            ('account_type', '=', 'equity_unaffected'),
+        ], limit=1)
+        self.init_invoice('out_invoice', amounts=[20], post=True, invoice_date='2024-02-01')
+        self.init_invoice('out_invoice', amounts=[30], post=True, invoice_date='2025-02-01')
+
+        self.assertEqual(self.company_data['default_account_receivable'].with_context(working_file_id=self.audit_2024.id).audit_balance, 20)
+        self.assertEqual(self.company_data['default_account_receivable'].with_context(working_file_id=self.audit_2024.id).audit_previous_balance, 0)
+        self.assertEqual(self.company_data['default_account_receivable'].with_context(working_file_id=self.audit_2025.id).audit_balance, 50)
+        self.assertEqual(self.company_data['default_account_receivable'].with_context(working_file_id=self.audit_2025.id).audit_previous_balance, 20)
+
+        self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2024.id).audit_balance, -20)
+        self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2024.id).audit_previous_balance, 0)
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2024.id).audit_balance, 0)
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2024.id).audit_previous_balance, 0)
+
+        self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2025.id).audit_balance, -30)
+        self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2025.id).audit_previous_balance, -20)
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_balance, -20)
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_previous_balance, 0)
+
+        self.init_invoice('out_invoice', amounts=[10], post=True, invoice_date='2023-02-01')
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_balance, -30)
+        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_previous_balance, -10)
