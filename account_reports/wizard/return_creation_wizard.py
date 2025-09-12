@@ -178,11 +178,19 @@ class AccountReturnCreationWizard(models.TransientModel):
             manually_created=True
         )._try_create_returns_for_fiscal_year(company, tax_unit, allow_duplicates=self.category == 'audit')
         returns_created.skipped_check_cycles = ','.join(
-            field for field in [
-                'regulatory_compliance', 'treasury_financing', 'purchases',
-                'operating_expenses', 'sales', 'inventory', 'fixed_assets',
-                'payroll', 'government', 'equity', 'other'
-            ] if not self[field]
+            v for k, v in {
+                'regulatory_compliance': 'regulatory_compliance',
+                'treasury_financing': 'treasury_financing',
+                'purchases': 'purchases',
+                'operating_expenses': 'operating_expenses',
+                'sales': 'sales',
+                'inventory': 'inventory',
+                'fixed_assets': 'fixed_assets',
+                'payroll': 'payroll',
+                'government': 'state',
+                'equity': 'equity',
+                'other': 'other',
+             }.items() if not self[k]
         )
         returns_created.refresh_checks()
         if len(returns_created) == 1:
