@@ -69,6 +69,9 @@ Allow clients to Schedule Appointments through the Portal
             'appointment/static/src/js/appointment_insert_link_form_controller.js',
             'appointment/static/src/appointment_plugin.js',
         ],
+        "web.assets_web_dark": [
+            'appointment/static/src/scss/*.dark.scss',
+        ],
         'web.assets_backend_lazy': [
             'appointment/static/src/xml/*.xml',
             'appointment/static/src/views/gantt/**',

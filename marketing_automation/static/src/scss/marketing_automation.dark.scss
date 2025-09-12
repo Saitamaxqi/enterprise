@@ -6,3 +6,7 @@
     --MarketingAutomation-border-color: #{$o-gray-400};
     --MarketingAutomation__ChildActivityButtons-border-color: #{$o-gray-200};
 }
+
+.o_ma_campaign_picker_card {
+    --PickerCard-background-hover: #{$o-gray-300};
+}
