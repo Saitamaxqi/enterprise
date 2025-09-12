@@ -121,7 +121,7 @@ class IrActionsServer(models.Model):
     def _check_use_in_ai(self):
         for action in self:
             if action.use_in_ai and not action.ai_tool_is_candidate:
-                raise ValidationError(_("This action cannot be used as an AI tool."))
+                raise ValidationError(_("The action '%s' cannot be used as an AI tool.", action.name))
 
     @api.constrains("ai_tool_schema")
     def _check_ai_tool_schema(self):
@@ -342,6 +342,8 @@ class IrActionsServer(models.Model):
         eval_context["env"] = self.env(su=False)
         if self.state == "code":
             self._run_action_code_multi(eval_context=eval_context)
+            if eval_context.get('action'):
+                raise UserError(_('This action is interactive and cannot be executed by the agent.'))
             return eval_context["ai"].get("result")
 
         if self.state == "multi":

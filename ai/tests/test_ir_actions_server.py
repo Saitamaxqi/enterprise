@@ -235,6 +235,58 @@ class TestAiServerActions(TransactionCase):
         self.assertEqual(llm_calls, 2)
         self.assertEqual(partner.name, "name", "The action is disabled and should not be executed")
 
+    @mute_logger("odoo.addons.ai.models.ir_actions_server")
+    def test_ai_server_action_ai_interactive_tool(self):
+        """Check that we raise an error for interactive tools."""
+        llm_calls = 0
+
+        def _mocked_request_llm(
+            service, llm_model, system_prompts, user_prompts, tools=None,
+            files=None, schema=None, temperature=0.2, inputs=(), web_grounding=False,
+        ):
+            nonlocal llm_calls
+            llm_calls += 1
+            if llm_calls == 1:
+                self.assertFalse(inputs)
+                return self._ai_tool_call(f"action_{ir_action_tool.id}", "call_123456", {})
+            return [], [], []
+
+        partner = self.env["res.partner"].create({"name": "Partner"})
+
+        ir_action_tool = self.env["ir.actions.server"].create({
+            "model_id": self.env["ir.model"]._get_id("res.partner"),
+            "state": "code",
+            "name": "Return Value",
+            "use_in_ai": True,
+            # The action tries to open a window action
+            "code": """action = {
+                "type": "ir.actions.act_window",
+                "res_model": "res.partner",
+                "target": "new",
+            }
+            """,
+        })
+
+        action = self.env["ir.actions.server"].create(
+            {
+                "model_id": self.env["ir.model"]._get_id("res.partner"),
+                "state": "ai",
+                "name": "Test",
+                "ai_tool_ids": ir_action_tool.ids,
+                "ai_action_prompt": "Main Prompt",
+            },
+        )
+
+        with patch.object(LLMApiService, "_request_llm", _mocked_request_llm):
+            action.with_context(active_model=partner._name, active_id=partner.id).run()
+
+        self.assertEqual(llm_calls, 2)
+        self.assertIn(
+            'This action is interactive and cannot be executed by the agent.',
+            ''.join(partner.message_ids.mapped('body')),
+            'Should log the error on the partner',
+        )
+
     def _ai_tool_call(self, name, call_id, arguments):
         # Simulate the response of `_request_llm` when the LLM ask to execute a tool
         return [], [(name, call_id, arguments)], [{"call_id": call_id, "name": name, "arguments": json.dumps(arguments)}]

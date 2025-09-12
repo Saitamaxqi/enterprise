@@ -8,7 +8,6 @@ class IrActionsServer(models.Model):
 
     @api.depends("state", "child_ids", "evaluation_type")
     def _compute_ai_tool_is_candidate(self):
-        super()._compute_ai_tool_is_candidate()
-        for action in self:
-            if action.state == "documents_account_record_create":
-                action.ai_tool_is_candidate = True
+        account_actions = self.filtered(lambda a: a.state == "documents_account_record_create")
+        account_actions.ai_tool_is_candidate = True
+        super(IrActionsServer, self - account_actions)._compute_ai_tool_is_candidate()

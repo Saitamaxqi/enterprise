@@ -117,4 +117,4 @@ class AiDocumentsSort(models.TransientModel):
         # Convert the `ir.actions.actions` to `ir.actions.server`
         # (those models share the same ids index, see `base/data/base_data.sql`)
         tool_actions = self.env["ir.actions.server"].browse(tool_actions.ids)
-        return tool_actions.filtered("ai_tool_is_candidate")
+        return tool_actions.filtered("ai_tool_is_candidate").filtered("use_in_ai")
