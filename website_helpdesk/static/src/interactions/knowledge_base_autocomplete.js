@@ -28,12 +28,12 @@ export class KnowledgeBaseAutocomplete extends Interaction {
         this.url = this.el.dataset.acUrl;
     }
 
-    fetch() {
+    async fetch() {
         const search = this.inputEl.value;
         if (!search || search.length < 3) {
             return;
         }
-        return rpc(this.url, { "term": search });
+        return await rpc(this.url, { "term": search });
     }
 
     /**
