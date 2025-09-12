@@ -128,6 +128,18 @@ export default class LineComponent extends Component {
         ].join(" ");
     }
 
+    get showDescription() {
+        // In Barcode we don't get the product's `display_name` with the code, however the description uses it.
+        const possibleNames = [
+            this.line.product_id.display_name,
+            `[${this.line.product_id.default_code}] ${this.line.product_id.display_name}`,
+            `[${this.line.product_id.code}] ${this.line.product_id.display_name}`,
+        ];
+        return (
+            this.line.description_picking && !possibleNames.includes(this.line.description_picking)
+        );
+    }
+
     _getLocationPath(rootLocation, currentLocation) {
         let locationName = currentLocation.display_name;
         if (
