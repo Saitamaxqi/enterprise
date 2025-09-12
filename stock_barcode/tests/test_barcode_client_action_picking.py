@@ -2022,7 +2022,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         self.picking_type_out.show_entire_packs = True
-        out_picking.action_add_entire_packs(pack1)
+        out_picking.action_add_entire_packs(pack1.id)
 
         url = self._get_client_action_url(out_picking.id)
         out_picking.action_confirm()
@@ -2510,7 +2510,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'state': 'draft',
         })
         delivery_with_package_level.action_confirm()
-        delivery_with_package_level.action_add_entire_packs(packages=package1)
+        delivery_with_package_level.action_add_entire_packs(package1.id)
         delivery_with_package_level.action_assign()
 
         delivery_with_move = self.env['stock.picking'].create({
