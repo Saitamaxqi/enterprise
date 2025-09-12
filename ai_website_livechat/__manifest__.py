@@ -3,7 +3,7 @@
     'version': '1.0',
     'category': 'Hidden',
     'summary': "AI website livechat components for web builder",
-    'depends': ['website', 'ai_livechat', 'html_builder'],
+    'depends': ['ai_website', 'ai_livechat', 'html_builder'],
     'data': [
         'views/snippets/snippets.xml',
         'views/snippets/s_ai_livechat.xml',
