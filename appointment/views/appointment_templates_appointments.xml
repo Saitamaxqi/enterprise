@@ -262,7 +262,7 @@
 
     <template id="appointment_calendar" name="Appointment">
         <div t-if="appointment_type.active" class="o_appointment_slots_loading d-flex align-items-center py-5 my-5">
-            <i class="fa fa-3x fa-circle-o-notch fa-spin mx-auto text-o-color-2"/>
+            <i class="fa fa-3x fa-circle-o-notch fa-spin mx-auto"/>
         </div>
         <div id="slots_availabilities" class="d-none">
             <div id="calendar" t-attf-class="p-0 border rounded-3 overflow-hidden #{'d-none' if (month_first_available is False or not appointment_type.active) and capacity == 1 else ''}">
