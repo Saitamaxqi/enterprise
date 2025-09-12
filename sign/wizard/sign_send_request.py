@@ -405,9 +405,7 @@ class SignSendRequest(models.TransientModel):
                 corrected_dict[key] = format_date(self.env, fields.Date.today())
 
         # Fill the fields with the values contained in corrected_dict, set the request state as signed and generate the document.
-        sign_request_item.sudo()._fill(corrected_dict, frame=frames)
-        request.state = 'signed'
-        request.sudo()._generate_completed_documents()
+        sign_request_item.sudo()._sign(corrected_dict, frame=frames)
 
         # Trigger the download and the redirection with a single custom action
         # The reference_doc tells us if the request has been made from somewhere outside of Sign (other apps)
