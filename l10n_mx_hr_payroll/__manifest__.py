@@ -37,7 +37,6 @@ Mexican Payroll Rules.
     'demo': [
         'data/l10n_mx_hr_payroll_demo.xml',
     ],
-    'post_init_hook': '_generate_payslips',
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

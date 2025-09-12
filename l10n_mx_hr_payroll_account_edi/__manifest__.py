@@ -10,6 +10,8 @@
     'description': 'Adds CFDI to the payroll flow',
     'data': [
         'security/ir.model.access.csv',
+        'data/report_paperformat_data.xml',
+        'views/hr_payroll_report.xml',
         'data/4.0/cfdi.xml',
         'data/hr.contract.type.csv',
         'data/hr_payroll_structure_data.xml',
@@ -22,11 +24,17 @@
         'views/hr_salary_rule_views.xml',
         'views/hr_work_entry_type_views.xml',
         'views/l10n_mx_concept_views.xml',
+        'views/report_payslip_templates.xml',
         'views/res_config_settings_views.xml'
     ],
     'demo': [
         'data/l10n_mx_hr_payroll_account_edi_demo.xml',
     ],
+    'assets': {
+        'web.report_assets_common': [
+            'l10n_mx_hr_payroll_account_edi/static/src/scss/*.scss',
+        ]
+    },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

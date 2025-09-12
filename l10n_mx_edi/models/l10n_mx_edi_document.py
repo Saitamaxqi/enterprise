@@ -2126,6 +2126,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             'uuid': get_value(tfd_node, 'UUID'),
             'supplier_rfc': get_value(emisor_node, 'Rfc'),
             'customer_rfc': get_value(receptor_node, 'Rfc'),
+            'pat_rfc': get_value(tfd_node, 'RfcProvCertif'),
             'amount_total': get_value(cfdi_node, 'Total'),
             'cfdi_node': cfdi_node,
             'usage': get_value(receptor_node, 'UsoCFDI'),
