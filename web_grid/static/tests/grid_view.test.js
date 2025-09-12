@@ -1780,6 +1780,46 @@ describe("grid_view_desktop", () => {
         });
     });
 
+    test("columns getter: weekends hidden in 'month' range", async () => {
+        await mountView({
+            type: "grid",
+            resModel: "analytic.line",
+            arch: `<grid editable="1">
+                <field name="project_id" type="row"/>
+                <field name="task_id" type="row"/>
+                <field name="date" type="col">
+                    <range name="month" string="Month" span="month" step="day"/>
+                    <range name="year" string="Year" span="Year" step="month"/>
+                </field>
+                <field name="unit_amount" type="measure" widget="float_time"/>
+            </grid>`,
+        });
+        await contains(".scale_button_selection").click();
+        await contains(".o_show_weekends").click();
+        await animationFrame();
+
+        function getColumnHeaders() {
+            return Array.from(document.querySelectorAll(".o_grid_column_title")).map((el) =>
+                el.textContent.trim()
+            );
+        }
+
+        function hasWeekend(dateLabels) {
+            return dateLabels.some((text) => text.includes("Sat") || text.includes("Sun"));
+        }
+
+        // By default, it's "month"
+        let headers = getColumnHeaders();
+        expect(hasWeekend(headers)).toBe(false);
+
+        // Switch to "year"
+        await contains(".scale_button_selection").click();
+        await contains(".o_scale_button_year").click();
+        await animationFrame();
+        headers = getColumnHeaders();
+        expect(headers.length).toBe(14);
+    });
+
     test("range step should correctly be taken into account to load data", async () => {
         expect.assertions(8 + 7);
 
