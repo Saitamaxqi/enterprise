@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 class L10n_Ar_AfipWsConsult(models.TransientModel):
     _name = 'l10n_ar_afip.ws.consult'
 
-    _description = 'Consult Invoice Data in AFIP'
+    _description = 'Consult Invoice Data in ARCA'
 
     number = fields.Integer(required=True)
     journal_id = fields.Many2one('account.journal', domain="[('l10n_ar_afip_pos_system', 'in', ['RAW_MAW', 'BFEWS', 'FEEWS'])]", required=True)
@@ -18,8 +18,8 @@ class L10n_Ar_AfipWsConsult(models.TransientModel):
     # Technical field used to compute the domain of the documents available for the given journal
     available_document_type_ids = fields.Many2many('l10n_latam.document.type', compute='_compute_available_document_types')
     consult_type = fields.Selection([('specific', 'Specific Invoice Number'), ('last', 'Get Last Invoice')], required=True,
-        default="specific", string="Type", help="* Specific Invoice Number: consult all the invoice information in AFIP"
-        " for the given number\n* Get Last Invoice: it connects to AFIP to get the last invoice number and show it in"
+        default="specific", string="Type", help="* Specific Invoice Number: consult all the invoice information in ARCA"
+        " for the given number\n* Get Last Invoice: it connects to ARCA to get the last invoice number and show it in"
         " the number field")
 
     @api.onchange('journal_id')
@@ -38,17 +38,17 @@ class L10n_Ar_AfipWsConsult(models.TransientModel):
         remaining.available_document_type_ids = False
 
     def button_confirm(self):
-        """ Recover infomation of an invoice that has already been authorized by AFIP.
+        """ Recover infomation of an invoice that has already been authorized by ARCA.
 
         For auditing and troubleshooting purposes you can get the detailed information of an invoice number that has
-        been previously sent to AFIP. You can also get the last number used in AFIP for a specific Document Type and
-        POS Number as support for any possible issues on the sequence synchronization between Odoo and AFIP """
+        been previously sent to ARCA. You can also get the last number used in ARCA for a specific Document Type and
+        POS Number as support for any possible issues on the sequence synchronization between Odoo and ARCA """
         self.ensure_one()
         pos_number = self.journal_id.l10n_ar_afip_pos_number
         afip_ws = self.journal_id.l10n_ar_afip_ws
 
         if not afip_ws:
-            raise UserError(_('No AFIP WS selected on point of sale %s', self.journal_id.name))
+            raise UserError(_('No ARCA WS selected on point of sale %s', self.journal_id.name))
         if not self.number:
             raise UserError(_('Please set the number you want to consult'))
 
@@ -74,12 +74,12 @@ class L10n_Ar_AfipWsConsult(models.TransientModel):
             if response.BFEEvents.EventCode != 0 or response.BFEEvents.EventMsg:
                 error += repr(response.BFEEvents)
         else:
-            raise UserError(_('AFIP WS %s not implemented', afip_ws))
+            raise UserError(_('ARCA WS %s not implemented', afip_ws))
 
         title = _('Invoice number %s\n', self.number)
         if error:
             _logger.warning('%s\n%s' % (title, error))
-            raise UserError(_("AFIP Errors: %(error)s", error=error))
+            raise UserError(_("ARCA Errors: %(error)s", error=error))
 
         msg = ''
         data = serialize_object(res, dict)
@@ -89,7 +89,7 @@ class L10n_Ar_AfipWsConsult(models.TransientModel):
 
     @api.onchange('consult_type', 'journal_id', 'document_type_id')
     def onchange_last_invoice(self):
-        """ Get the info of the last invoice we have in AFIP for this document tye and AFIP POS """
+        """ Get the info of the last invoice we have in ARCA for this document tye and ARCA POS """
         if self.consult_type == 'last':
             if not self.journal_id or not self.document_type_id:
                 raise UserError(_('Please set first the Journal and the Document Type before select this option'))

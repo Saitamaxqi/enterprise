@@ -11,7 +11,7 @@ class AccountJournal(models.Model):
     _inherit = 'account.journal'
 
     l10n_ar_afip_ws = fields.Selection(selection='_get_l10n_ar_afip_ws', compute='_compute_l10n_ar_afip_ws',
-                                       string='AFIP WS')
+                                       string='ARCA WS')
 
     def _get_l10n_ar_afip_ws(self):
         return [('wsfe', _('Domestic market -without detail- RG2485 (WSFEv1)')),
@@ -19,7 +19,7 @@ class AccountJournal(models.Model):
                 ('wsbfe', _('Fiscal Bond -with detail- RG2557 (WSBFE)'))]
 
     def _get_l10n_ar_afip_pos_types_selection(self):
-        """ Add more options to the selection field AFIP POS System, re order options by common use """
+        """ Add more options to the selection field ARCA POS System, re order options by common use """
         res = super()._get_l10n_ar_afip_pos_types_selection()
         res.insert(0, ('RAW_MAW', _('Electronic Invoice - Web Service')))
         res.insert(3, ('BFEWS', _('Electronic Fiscal Bond - Web Service')))
@@ -28,33 +28,33 @@ class AccountJournal(models.Model):
 
     @api.depends('l10n_ar_afip_pos_system')
     def _compute_l10n_ar_afip_ws(self):
-        """ Depending on AFIP POS System selected set the proper AFIP WS """
+        """ Depending on ARCA POS System selected set the proper ARCA WS """
         type_mapping = {'RAW_MAW': 'wsfe', 'FEEWS': 'wsfex', 'BFEWS': 'wsbfe'}
         for rec in self:
             rec.l10n_ar_afip_ws = type_mapping.get(rec.l10n_ar_afip_pos_system, False)
 
     def l10n_ar_check_afip_pos_number(self):
-        """ Return information about the AFIP POS numbers related to the given AFIP WS """
+        """ Return information about the ARCA POS numbers related to the given ARCA WS """
         self.ensure_one()
         connection = self.company_id._l10n_ar_get_connection(self.l10n_ar_afip_ws)
         client, auth = connection._get_client()
         if self.company_id._get_environment_type() == 'testing':
-            raise UserError(_('"Check Available AFIP PoS" is not implemented in testing mode for webservice %s', self.l10n_ar_afip_ws))
+            raise UserError(_('"Check Available ARCA PoS" is not implemented in testing mode for webservice %s', self.l10n_ar_afip_ws))
         if self.l10n_ar_afip_ws == 'wsfe':
             response = client.service.FEParamGetPtosVenta(auth)
         elif self.l10n_ar_afip_ws == 'wsfex':
             response = client.service.FEXGetPARAM_PtoVenta(auth)
         else:
-            raise UserError(_('"Check Available AFIP PoS" is not implemented for webservice %s', self.l10n_ar_afip_ws))
+            raise UserError(_('"Check Available ARCA PoS" is not implemented for webservice %s', self.l10n_ar_afip_ws))
         raise UserError(response)
 
     def _l10n_ar_get_afip_last_invoice_number(self, document_type):
         """ Consult via webservice the number of the last invoice register
-        :return: integer with the last number register in AFIP for the given document type in this journals AFIP POS
+        :return: integer with the last number register in ARCA for the given document type in this journals ARCA POS
         """
         self.ensure_one()
 
-        # do not access to AFIP web service in test mode
+        # do not access to ARCA web service in test mode
         # Note:
         # test mode is enabled only when self.registry.enter_test_mode(cr) is explicitely called.
         # this is the case for upgrade tests for example, but not for l10n_ar_edi tests.
@@ -91,8 +91,8 @@ class AccountJournal(models.Model):
             if response.BFEErr.ErrCode != 0 or response.BFEErr.ErrMsg != 'OK':
                 errors = response.BFEErr
         else:
-            return(_('AFIP WS %s not implemented', afip_ws))
+            return (_('ARCA WS %s not implemented', afip_ws))
 
         if errors:
-            raise UserError(_('We receive this error trying to consult the last invoice number to AFIP:\n%s', str(errors)))
+            raise UserError(_('We receive this error trying to consult the last invoice number to ARCA:\n%s', str(errors)))
         return last

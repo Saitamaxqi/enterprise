@@ -15,32 +15,32 @@ class ResCompany(models.Model):
     _inherit = "res.company"
 
     l10n_ar_afip_verification_type = fields.Selection([('not_available', 'Not Available'), ('available', 'Available'), ('required', 'Required')], required=True,
-        default='not_available', string='AFIP Invoice Verification', help='It adds an option on invoices to'
-        ' verify the invoices in AFIP if the invoices has CAE, CAI or CAEA numbers.\n\n'
-        '* Not Available: Will NOT show "Verify on AFIP" button in the invoices\n'
-        '* Available: Will show "Verify on AFIP" button in the invoices so the user can manually check the vendor'
+        default='not_available', string='ARCA Invoice Verification', help='It adds an option on invoices to'
+        ' verify the invoices in ARCA if the invoices has CAE, CAI or CAEA numbers.\n\n'
+        '* Not Available: Will NOT show "Verify on ARCA" button in the invoices\n'
+        '* Available: Will show "Verify on ARCA" button in the invoices so the user can manually check the vendor'
         ' bills\n'
-        '* Required: The vendor bills will be automatically verified on AFIP before been posted in Odoo. This is to'
+        '* Required: The vendor bills will be automatically verified on ARCA before been posted in Odoo. This is to'
         ' ensure that you have verified all the vendor bills that you are reporting in your Purchase VAT Book. NOTE:'
-        ' Not all the document types can be validated in AFIP, only the ones defined in this link are the ones that '
+        ' Not all the document types can be validated in ARCA, only the ones defined in this link are the ones that '
         ' we are automatically validating https://serviciosweb.afip.gob.ar/genericos/comprobantes/Default.aspx')
 
     l10n_ar_connection_ids = fields.One2many('l10n_ar.afipws.connection', 'company_id', 'Connections')
 
     # Certificate fields
-    l10n_ar_afip_ws_environment = fields.Selection([('testing', 'Testing'), ('production', 'Production')], string="AFIP Environment", default='production',
-        help="Environment used to connect to AFIP webservices. Production is to create real fiscal invoices in AFIP,"
-        " Testing is for testing invoice creation in AFIP (commonly named in AFIP as Homologation environment).")
+    l10n_ar_afip_ws_environment = fields.Selection([('testing', 'Testing'), ('production', 'Production')], string="ARCA Environment", default='production',
+        help="Environment used to connect to ARCA webservices. Production is to create real fiscal invoices in ARCA,"
+        " Testing is for testing invoice creation in ARCA (commonly named in ARCA as Homologation environment).")
     l10n_ar_afip_ws_key_id = fields.Many2one(string='Private Key', comodel_name='certificate.key', domain=[('public', '=', False)],
         compute="_compute_afip_key", store=True, readonly=False,
-        help="This private key is required because is sent to the AFIP when"
+        help="This private key is required because is sent to the ARCA when"
         " trying to create a connection to validate that you are you\n\n * If you have one you can upload it here (In"
         " order to be valid the private key should be in PEM format)\n * if you have not then Odoo will automatically"
         " create a new one when you click in 'Generate Request' or 'Generate Renewal Request' button")
-    l10n_ar_afip_ws_crt_id = fields.Many2one(string='AFIP Certificate', comodel_name="certificate.certificate",
+    l10n_ar_afip_ws_crt_id = fields.Many2one(string='ARCA Certificate', comodel_name="certificate.certificate",
         compute="_compute_afip_crt", store=True, readonly=False,
-        help="This certificate lets us connect to AFIP to validate electronic invoice."
-        " Please select here the AFIP certificate in PEM format. You can get your certificate from your AFIP Portal")
+        help="This certificate lets us connect to ARCA to validate electronic invoice."
+        " Please select here the ARCA certificate in PEM format. You can get your certificate from your ARCA Portal")
     l10n_ar_fce_transmission_type = fields.Selection(
         [('SCA', 'SCA - TRANSFERENCIA AL SISTEMA DE CIRCULACION ABIERTA'), ('ADC', 'ADC - AGENTE DE DEPOSITO COLECTIVO')],
         'FCE: Transmission Option Default',
@@ -96,17 +96,17 @@ class ResCompany(models.Model):
         exception when it has not been defined yet """
         self.ensure_one()
         if not self.l10n_ar_afip_ws_environment:
-            raise UserError(_('AFIP environment not configured for company “%s”, please check accounting settings', self.name))
+            raise UserError(_('ARCA environment not configured for company “%s”, please check accounting settings', self.name))
         return self.l10n_ar_afip_ws_environment
 
     def _l10n_ar_get_connection(self, afip_ws):
-        """ Returns the last existing connection with AFIP web service, or creates a new one  (which means login to AFIP
+        """ Returns the last existing connection with ARCA web service, or creates a new one  (which means login to ARCA
         and save token information in a new connection record in Odoo)
 
         IMPORTANT WARNING: Be careful using this method, when a new connection is created, it will do a cr.commit() """
         self.ensure_one()
         if not afip_ws:
-            raise UserError(_('No AFIP WS selected'))
+            raise UserError(_('No ARCA WS selected'))
 
         env_type = self._get_environment_type()
         connection = self.l10n_ar_connection_ids.search([('type', '=', env_type), ('l10n_ar_afip_ws', '=', afip_ws), ('company_id', '=', self.id)], limit=1)
@@ -128,7 +128,7 @@ class ResCompany(models.Model):
         # one expires.
         if not self.env.context.get('l10n_ar_invoice_skip_commit'):
             self.env.cr.commit()
-        _logger.info("Successful Authenticated with AFIP.")
+        _logger.info("Successful Authenticated with ARCA.")
 
         return connection
 

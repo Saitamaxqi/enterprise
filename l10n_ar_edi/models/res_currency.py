@@ -44,9 +44,9 @@ class ResCurrency(models.Model):
         This is really useful. There is a NTH for the future to integrate this with the automtaic currency rates """
         self.ensure_one()
         if not self.l10n_ar_afip_code:
-            raise UserError(_('No AFIP code for currency %s. Please configure the AFIP code consulting information in AFIP page', self.name))
+            raise UserError(_('No ARCA code for currency %s. Please configure the ARCA code consulting information in ARCA page', self.name))
         if self.l10n_ar_afip_code == 'PES':
-            raise UserError(_('No rate for ARS (is the base currency for AFIP)'))
+            raise UserError(_('No rate for ARS (is the base currency for ARCA)'))
 
         connection = self.env.company._l10n_ar_get_connection(afip_ws)
         client, auth = connection._get_client()
@@ -103,7 +103,7 @@ class ResCurrency(models.Model):
 
         else:
             raise UserError(_(
-                'Get AFIP currency rate not implemented for webservice %(afip_ws)s',
+                'Get ARCA currency rate not implemented for webservice %(afip_ws)s',
                 afip_ws=afip_ws,
             ))
         return date, rate

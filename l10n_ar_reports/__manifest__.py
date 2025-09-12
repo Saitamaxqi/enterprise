@@ -8,7 +8,7 @@
     'description': """
 * Add VAT Book report which is a legal requirement in Argentina and that holds the VAT detail info of sales or purchases made in a period of time.
 * Add a VAT summary report that is used to analyze invoicing
-* Add Digital VAT Book functionality that let us generate TXT files to import in AFIP. The ones we implement are:
+* Add Digital VAT Book functionality that let us generate TXT files to import in ARCA. The ones we implement are:
 
     * LIBRO_IVA_DIGITAL_VENTAS_CBTE
     * LIBRO_IVA_DIGITAL_VENTAS_ALICUOTAS
@@ -16,7 +16,7 @@
     * LIBRO_IVA_DIGITAL_COMPRAS_ALICUOTAS
     * LIBRO_IVA_DIGITAL_IMPORTACION_BIENES_ALICUOTA
 
-Official Documentation AFIP
+Official Documentation ARCA
 
 * Digital VAT Book - record design https://www.afip.gob.ar/libro-iva-digital/documentos/libro-iva-digital-diseno-registros.pdf
 * CITI - record design (same as the Digital VAT Book): https://www.afip.gob.ar/comprasyventas/documentos/RegimendeInformaciondeComprasyVentasDisenosdeRegistros1.xls

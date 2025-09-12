@@ -73,7 +73,7 @@ class TestEdi(TestAr):
         """ Method used to create afip connections and commit then to re use this connections in all the test.
         If a connection can not be set because another instance is already using the certificate then we assign a
         random certificate and try again to create the connections. """
-        # In order to connect AFIP we need to create a token which depend on the configured AFIP certificate.
+        # In order to connect ARCA we need to create a token which depend on the configured ARCA certificate.
         # If the certificate is been used by another testing instance will raise an error telling us that the token
         # can not be used and need to wait 10 minuts or change with another certificate.
         # To avoid this and always run the unit tests we randonly change the certificate and try to create the
@@ -106,7 +106,7 @@ class TestEdi(TestAr):
 
     def _prepare_multicurrency_values(self):
         super()._prepare_multicurrency_values()
-        # Set Rates for USD currency takint into account the value from AFIP
+        # Set Rates for USD currency takint into account the value from ARCA
         USD = self.env.ref('base.USD')
         _date, value = USD.with_context(l10n_ar_invoice_skip_commit=True)._l10n_ar_get_afip_ws_currency_rate(self.journal.l10n_ar_afip_ws)
         self._set_today_rate(USD, 1.0 / value)
@@ -115,7 +115,7 @@ class TestEdi(TestAr):
 
     def _test_connection(self):
         """ Review that the connection is made and all the documents are syncronized"""
-        with self.assertRaisesRegex(UserError, '"Check Available AFIP PoS" is not implemented in testing mode for webservice'):
+        with self.assertRaisesRegex(UserError, '"Check Available ARCA PoS" is not implemented in testing mode for webservice'):
             self.journal.with_context(l10n_ar_invoice_skip_commit=True).l10n_ar_check_afip_pos_number()
 
     def _test_consult_invoice(self, expected_result=None):
@@ -190,7 +190,7 @@ class TestEdi(TestAr):
         except Exception as exc:
             error_msg = repr(exc)
             if 'Code 500' in error_msg or 'Code 501' in error_msg or 'Code 502' in error_msg:
-                self.skipTest("We receive an internal error from AFIP so skip this test")
+                self.skipTest("We receive an internal error from ARCA so skip this test")
             else:
                 raise
 

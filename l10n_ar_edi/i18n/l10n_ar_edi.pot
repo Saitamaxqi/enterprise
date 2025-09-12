@@ -20,21 +20,21 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "\"600: ValidacionDeToken: Error al verificar hash\"\n"
-"    \"600: VerificacionDeHash: Digital signature is not validated\". It is usually an error on AFIP servers, to verify this we can go to the type of documents and do a Get Last Invoice, if we get an error then it is due to an AFIP error. It is usually solved within the day.\n"
-" * \"600: ValidacionDeToken: No apareció CUIT en lista de relacione\" It is likely that you has not delegated AFIP services or electronic invoice setup is not completed"
+"    \"600: VerificacionDeHash: Digital signature is not validated\". It is usually an error on ARCA servers, to verify this we can go to the type of documents and do a Get Last Invoice, if we get an error then it is due to an ARCA error. It is usually solved within the day.\n"
+" * \"600: ValidacionDeToken: No apareció CUIT en lista de relacione\" It is likely that you has not delegated ARCA services or electronic invoice setup is not completed"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
-msgid "\"Check Available AFIP PoS\" is not implemented for webservice %s"
+msgid "\"Check Available ARCA PoS\" is not implemented for webservice %s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid ""
-"\"Check Available AFIP PoS\" is not implemented in testing mode for "
+"\"Check Available ARCA PoS\" is not implemented in testing mode for "
 "webservice %s"
 msgstr ""
 
@@ -72,8 +72,8 @@ msgstr ""
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_l10n_ar_afip_ws_consult__consult_type
 msgid ""
-"* Specific Invoice Number: consult all the invoice information in AFIP for the given number\n"
-"* Get Last Invoice: it connects to AFIP to get the last invoice number and show it in the number field"
+"* Specific Invoice Number: consult all the invoice information in ARCA for the given number\n"
+"* Get Last Invoice: it connects to ARCA to get the last invoice number and show it in the number field"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -102,94 +102,94 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
-msgid "AFIP"
+msgid "ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_mode
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_mode
-msgid "AFIP Authorization Mode"
+msgid "ARCA Authorization Mode"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_crt_id
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_crt_id
-msgid "AFIP Certificate"
+msgid "ARCA Certificate"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.actions.act_window,name:l10n_ar_edi.act_afipws_auth
-msgid "AFIP Connections"
+msgid "ARCA Connections"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_form
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_tree
-msgid "AFIP Connector"
+msgid "ARCA Connector"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_environment
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_environment
-msgid "AFIP Environment"
+msgid "ARCA Environment"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/wizards/l10n_ar_afip_ws_consult.py:0
-msgid "AFIP Errors: %(error)s"
+msgid "ARCA Errors: %(error)s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.actions.act_url,name:l10n_ar_edi.action_help_afip
-msgid "AFIP Help Page"
+msgid "ARCA Help Page"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_company__l10n_ar_afip_verification_type
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_verification_type
-msgid "AFIP Invoice Verification"
+msgid "ARCA Invoice Verification"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "AFIP Messages"
+msgid "ARCA Messages"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_qr_code
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_qr_code
-msgid "AFIP QR Code"
+msgid "ARCA QR Code"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_afipws_auth_form
-msgid "AFIP Servers"
+msgid "ARCA Servers"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "AFIP Validation Error: %(error)s"
+msgid "ARCA Validation Error: %(error)s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "AFIP Validation Event: %(event)s"
+msgid "ARCA Validation Event: %(event)s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "AFIP Validation Observation: %(obs)s"
+msgid "ARCA Validation Observation: %(obs)s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_verification_result
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_verification_result
-msgid "AFIP Verification result"
+msgid "ARCA Verification result"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -197,54 +197,54 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_journal__l10n_ar_afip_ws
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_account_move__l10n_ar_afip_ws
 #: model:ir.model.fields,field_description:l10n_ar_edi.field_l10n_ar_afipws_connection__l10n_ar_afip_ws
-msgid "AFIP WS"
+msgid "ARCA WS"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 #: code:addons/l10n_ar_edi/wizards/l10n_ar_afip_ws_consult.py:0
-msgid "AFIP WS %s not implemented"
+msgid "ARCA WS %s not implemented"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.ui.menu,name:l10n_ar_edi.menu_afipws
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
-msgid "AFIP Web Services"
+msgid "ARCA Web Services"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model,name:l10n_ar_edi.model_l10n_ar_afipws_connection
-msgid "AFIP Webservice Connection"
+msgid "ARCA Webservice Connection"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
-msgid "AFIP authorization"
+msgid "ARCA authorization"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "AFIP authorization verification result: %(observations)s%(errors)s"
+msgid "ARCA authorization verification result: %(observations)s%(errors)s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_company.py:0
 msgid ""
-"AFIP environment not configured for company “%s”, please check accounting "
+"ARCA environment not configured for company “%s”, please check accounting "
 "settings"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_result__a
-msgid "Accepted in AFIP"
+msgid "Accepted in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields.selection,name:l10n_ar_edi.selection__account_move__l10n_ar_afip_result__o
-msgid "Accepted in AFIP with Observations"
+msgid "Accepted in ARCA with Observations"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -272,7 +272,7 @@ msgstr ""
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
 msgid ""
-"Allow or Require to do vendor bill verify in AFIP for documents with CAE, "
+"Allow or Require to do vendor bill verify in ARCA for documents with CAE, "
 "CAI or CAEA numbers"
 msgstr ""
 
@@ -285,22 +285,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid ""
-"Are you invoicing from another computer or system? This error could happen when a access token that is requested to AFIP has been requested multiple times and the last one requested is still valid. You will need to wait 12 hours to generate a new token and be able to connect to AFIP\n"
+"Are you invoicing from another computer or system? This error could happen when a access token that is requested to ARCA has been requested multiple times and the last one requested is still valid. You will need to wait 12 hours to generate a new token and be able to connect to ARCA\n"
 "\n"
-" If not, then could be a overload of AFIP service, please wait some time and try again"
+" If not, then could be a overload of ARCA service, please wait some time and try again"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_result
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_result
 msgid ""
-"Argentina: Result of the electronic invoice request to the AFIP web service."
+"Argentina: Result of the electronic invoice request to the ARCA web service."
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_code_due
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_code_due
-msgid "Argentina: The Due Date of the Invoice given by AFIP."
+msgid "Argentina: The Due Date of the Invoice given by ARCA."
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -308,7 +308,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_fce_is_cancellation
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move_reversal__l10n_ar_afip_fce_is_cancellation
 msgid ""
-"Argentina: When informing a MiPyMEs (FCE) debit/credit notes in AFIP it is "
+"Argentina: When informing a MiPyMEs (FCE) debit/credit notes in ARCA it is "
 "required to send information about whether the original document has been "
 "explicitly rejected by the buyer. More information here "
 "http://www.afip.gob.ar/facturadecreditoelectronica/preguntasFrecuentes/emisor-"
@@ -319,7 +319,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_code
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_code
 msgid ""
-"Argentina: authorization code given by AFIP after electronic invoice is "
+"Argentina: authorization code given by ARCA after electronic invoice is "
 "created and valid."
 msgstr ""
 
@@ -395,14 +395,14 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_account_journal_form
-msgid "Check Available AFIP PoS"
+msgid "Check Available ARCA PoS"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
 msgid ""
 "Click here to create a Resquest Certificate file. This file need to be "
-"uploaded to your AFIP Portal in order to ask AFIP for a certificate"
+"uploaded to your ARCA Portal in order to ask ARCA for a certificate"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -439,25 +439,25 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.l10n_ar_afip_ws_consult_form
-msgid "Consult Data in AFIP"
+msgid "Consult Data in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.model,name:l10n_ar_edi.model_l10n_ar_afip_ws_consult
-msgid "Consult Invoice Data in AFIP"
+msgid "Consult Invoice Data in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_account_journal_form
 msgid ""
-"Consult in AFIP the available numbers we can use to configure the electronic"
+"Consult in ARCA the available numbers we can use to configure the electronic"
 " journal"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model:ir.actions.act_window,name:l10n_ar_edi.action_l10n_ar_afip_ws_consult
 #: model:ir.ui.menu,name:l10n_ar_edi.menu_l10n_ar_afip_ws_consult
-msgid "Consult invoice in AFIP"
+msgid "Consult invoice in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -571,9 +571,9 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_environment
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_environment
 msgid ""
-"Environment used to connect to AFIP webservices. Production is to create "
-"real fiscal invoices in AFIP, Testing is for testing invoice creation in "
-"AFIP (commonly named in AFIP as Homologation environment)."
+"Environment used to connect to ARCA webservices. Production is to create "
+"real fiscal invoices in ARCA, Testing is for testing invoice creation in "
+"ARCA (commonly named in ARCA as Homologation environment)."
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -640,7 +640,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"For invoices of type \"(19) FACTURAS DE EXPORTACION\" and AFIP Concept "
+"For invoices of type \"(19) FACTURAS DE EXPORTACION\" and ARCA Concept "
 "\"Products / Definitive export of goods\" it is require to sent the Incoterm"
 " infomation. Please go to Other Info Tab and select the corresponding value "
 "in the Incoterm field"
@@ -650,7 +650,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"For the invoice case, if you are trying to validate an invoice \"AFIP Concept: Service\" and the invoice currency is not ARS then the currency rate must be the one of the previous business day of the date where the invoice was issued. If the request has a date previous that the one in the invoice then the rate should be the one of previous business day of the request.\n"
+"For the invoice case, if you are trying to validate an invoice \"ARCA Concept: Service\" and the invoice currency is not ARS then the currency rate must be the one of the previous business day of the date where the invoice was issued. If the request has a date previous that the one in the invoice then the rate should be the one of previous business day of the request.\n"
 " * For the case of the Debit or Credit Notes of type \"Services\" the rate should be the same as the related invoice."
 msgstr ""
 
@@ -680,7 +680,7 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_currency.py:0
-msgid "Get AFIP currency rate not implemented for webservice %(afip_ws)s"
+msgid "Get ARCA currency rate not implemented for webservice %(afip_ws)s"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -696,15 +696,15 @@ msgstr ""
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.l10n_ar_afip_ws_consult_form
 msgid ""
-"Get information stored in AFIP. You can get the detail information of an "
-"invoice number or you can get the last number used in AFIP for a specific "
+"Get information stored in ARCA. You can get the detail information of an "
+"invoice number or you can get the last number used in ARCA for a specific "
 "Document Type and POS Number."
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "Go to AFIP page"
+msgid "Go to ARCA page"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -739,8 +739,8 @@ msgid ""
 "If the customer belongs to a Free Zone you should give the customer CUIT number in order to continue\n"
 " * If is a Foreign Customer is possible that Odoo does not have Legal VAT/Natrual VAT configured for your customer country.\n"
 "\n"
-"\t 1. Please go to AFIP page and search for the code in the section \"Tablas del Sistema > Paises\" that is in the bottom right of the page and get the corresponding code for the country.\n"
-"\t 2. Go back to  Odoo, in the menú Sales > Settings > Address Book > Localization > Countries, activate the developer mode and add the AFIP code in the corresponding field"
+"\t 1. Please go to ARCA page and search for the code in the section \"Tablas del Sistema > Paises\" that is in the bottom right of the page and get the corresponding code for the country.\n"
+"\t 2. Go back to  Odoo, in the menú Sales > Settings > Address Book > Localization > Countries, activate the developer mode and add the ARCA code in the corresponding field"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -748,16 +748,16 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "If the invoice amount is:\n"
-"\t- GREATER than the minimum amount indicated by AFIP then it is necessary to report the contact information. Make sure that the invoice contact has First and Last Name, ID type, document number and AFIP Responsibility Final Consumer. For example:\n"
+"\t- GREATER than the minimum amount indicated by ARCA then it is necessary to report the contact information. Make sure that the invoice contact has First and Last Name, ID type, document number and ARCA Responsibility Final Consumer. For example:\n"
 "\t\tMario Nuñez\n"
 "\t\tType of Doc: DNI\n"
 "\t\tID number 34.345.954\n"
-"\t\tAFIP Responsibility \"Final Consumer\"\n"
-"\t- LESS than the minimum amount indicated by AFIP then it is optional: You can register the invoice as \"Anonymous Final Consumer\" or with a \"Final Consumer\" with their tax information.\n"
+"\t\tARCA Responsibility \"Final Consumer\"\n"
+"\t- LESS than the minimum amount indicated by ARCA then it is optional: You can register the invoice as \"Anonymous Final Consumer\" or with a \"Final Consumer\" with their tax information.\n"
 "* If you want to report the invoice with \"\"Anonymous Final Consumer\" check the contact configuration is:\n"
 "\tID type: Sigd,\n"
 "\tID number: Empty\n"
-"\tAFIP Responsibility \"Final Consumer\""
+"\tARCA Responsibility \"Final Consumer\""
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -803,11 +803,11 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_afip_verification_type
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_verification_type
 msgid ""
-"It adds an option on invoices to verify the invoices in AFIP if the invoices has CAE, CAI or CAEA numbers.\n"
+"It adds an option on invoices to verify the invoices in ARCA if the invoices has CAE, CAI or CAEA numbers.\n"
 "\n"
-"* Not Available: Will NOT show \"Verify on AFIP\" button in the invoices\n"
-"* Available: Will show \"Verify on AFIP\" button in the invoices so the user can manually check the vendor bills\n"
-"* Required: The vendor bills will be automatically verified on AFIP before been posted in Odoo. This is to ensure that you have verified all the vendor bills that you are reporting in your Purchase VAT Book. NOTE: Not all the document types can be validated in AFIP, only the ones defined in this link are the ones that  we are automatically validating https://serviciosweb.afip.gob.ar/genericos/comprobantes/Default.aspx"
+"* Not Available: Will NOT show \"Verify on ARCA\" button in the invoices\n"
+"* Available: Will show \"Verify on ARCA\" button in the invoices so the user can manually check the vendor bills\n"
+"* Required: The vendor bills will be automatically verified on ARCA before been posted in Odoo. This is to ensure that you have verified all the vendor bills that you are reporting in your Purchase VAT Book. NOTE: Not all the document types can be validated in ARCA, only the ones defined in this link are the ones that  we are automatically validating https://serviciosweb.afip.gob.ar/genericos/comprobantes/Default.aspx"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -824,7 +824,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"It is possible that you are making a CN/DN but you are setting a wrong value in the \"FCE: Is cancellation\" field. If the AFIP message indicates:\n"
+"It is possible that you are making a CN/DN but you are setting a wrong value in the \"FCE: Is cancellation\" field. If the ARCA message indicates:\n"
 "\t * \"OK - Comprobante electrónico autorizado, NO rechazado por el Comprador\" it means that the \"FCE: Is cancellation\" should NOT be set.\n"
 "\t * \"OK - Comprobante electrónico autorizado pero fue rechazado por el comprador\" it means that the \"FCE: Is cancellation\" should be set."
 msgstr ""
@@ -833,7 +833,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid ""
-"It seems like the certificate has expired. Please renew your AFIP "
+"It seems like the certificate has expired. Please renew your ARCA "
 "certificate"
 msgstr ""
 
@@ -895,27 +895,27 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_company.py:0
-msgid "No AFIP WS selected"
+msgid "No ARCA WS selected"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/wizards/l10n_ar_afip_ws_consult.py:0
-msgid "No AFIP WS selected on point of sale %s"
+msgid "No ARCA WS selected on point of sale %s"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_currency.py:0
 msgid ""
-"No AFIP code for currency %s. Please configure the AFIP code consulting "
-"information in AFIP page"
+"No ARCA code for currency %s. Please configure the ARCA code consulting "
+"information in ARCA page"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "No AFIP code in %s UOM"
+msgid "No ARCA code in %s UOM"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -935,7 +935,7 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/res_currency.py:0
-msgid "No rate for ARS (is the base currency for AFIP)"
+msgid "No rate for ARS (is the base currency for ARCA)"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -985,7 +985,7 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "Please check the next conditions:\n"
-"    * Review that the invoice total invoice is greater than the amount defined by AFIP for this type of document\n"
+"    * Review that the invoice total invoice is greater than the amount defined by ARCA for this type of document\n"
 "    * Review that the customer is a MiPYME"
 msgstr ""
 
@@ -993,12 +993,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"Please note that if you are trying to validate an invoice with a date other than today, you must verify if it falls within the date range according to the AFIP concept or document type:\n"
+"Please note that if you are trying to validate an invoice with a date other than today, you must verify if it falls within the date range according to the ARCA concept or document type:\n"
 " a) If it is Product: N+5 or N-5 with N being today's date.\n"
 " b) If it is Services or Products and Services: N+10 or N-10 with N being today's date.\n"
 " c) If it is a MiPyme Invoice: N-5 or N+1 with N being today's date. For Debit Note or Credit Note only N-5\n"
 "\n"
-"You can go to 'Consult invoice in AFIP' menu and get the information about the last invoice.\n"
+"You can go to 'Consult invoice in ARCA' menu and get the information about the last invoice.\n"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1017,7 +1017,7 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "Please set AFIP Authorization Mode and Code to continue!"
+msgid "Please set ARCA Authorization Mode and Code to continue!"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1079,7 +1079,7 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "Recently ARCA changed the types VAT Conditions available. Please verify the "
-"AFIP Responsibility in the partner is Deprecated and set a valid one."
+"ARCA Responsibility in the partner is Deprecated and set a valid one."
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1107,12 +1107,12 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
-msgid "Select the Certificate that you downloaded from AFIP"
+msgid "Select the Certificate that you downloaded from ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
-msgid "Select the Key used to sign your AFIP documents"
+msgid "Select the Key used to sign your ARCA documents"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1135,7 +1135,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid ""
-"Some documents where validated in AFIP but as we have an error with one document the batch validation was stopped\n"
+"Some documents where validated in ARCA but as we have an error with one document the batch validation was stopped\n"
 "\n"
 "* These documents were validated:\n"
 "%(validate_invoices)s\n"
@@ -1170,14 +1170,14 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
-msgid "The AFIP certificate is expired, please renew in order to continue"
+msgid "The ARCA certificate is expired, please renew in order to continue"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid ""
-"The AFIP electronic billing webservice is not available. Wait a few minutes "
+"The ARCA electronic billing webservice is not available. Wait a few minutes "
 "for it to reset and try to validate the action again."
 msgstr ""
 
@@ -1231,14 +1231,14 @@ msgstr ""
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
-msgid "The invoice date cannot be after the last invoice validated in AFIP."
+msgid "The invoice date cannot be after the last invoice validated in ARCA."
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"The invoice has not been accepted by AFIP, please fix the errors and try "
+"The invoice has not been accepted by ARCA, please fix the errors and try "
 "again"
 msgstr ""
 
@@ -1262,11 +1262,11 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "The number or date of the document does not correspond to the next one to be authorized.\n"
-" * The invoice date not be after the last invoice validated in AFIP.\n"
-" * Verify that the next invoice number in the Journal corresponds with the next one in AFIP\n"
-" * If AFIP Concept \"Services\" or \"Products and Services\" could be due to the Invoice Date: this one could be null or need to be in the range N-10 and N+10 days being N the date of dispatch of the authorization request.\n"
+" * The invoice date not be after the last invoice validated in ARCA.\n"
+" * Verify that the next invoice number in the Journal corresponds with the next one in ARCA\n"
+" * If ARCA Concept \"Services\" or \"Products and Services\" could be due to the Invoice Date: this one could be null or need to be in the range N-10 and N+10 days being N the date of dispatch of the authorization request.\n"
 "\n"
-"You can go to \"Consult invoice in AFIP\" menu and get the information about the last invoice."
+"You can go to \"Consult invoice in ARCA\" menu and get the information about the last invoice."
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1287,7 +1287,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"The registration for the online exportation invoices (invoice generate from AFIP page) is different than the registration for electronic exportation invoices. Therefore you must configure this one also because you will not be able to create invoices of this type in Odoo.\n"
+"The registration for the online exportation invoices (invoice generate from ARCA page) is different than the registration for electronic exportation invoices. Therefore you must configure this one also because you will not be able to create invoices of this type in Odoo.\n"
 "\n"
 "When configuring, you must check the option \"Factura Electrónica Exportación de Servicios\" and then \"Webservice/Facturador Plus\".\n"
 "\n"
@@ -1318,7 +1318,7 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
 "There may have been a mismatch in the numbering of this type of document "
-"between Odoo and AFIP."
+"between Odoo and ARCA."
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1333,14 +1333,14 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_qr_code
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_qr_code
 msgid ""
-"This QR code is mandatory by the AFIP in the electronic invoices when this "
+"This QR code is mandatory by the ARCA in the electronic invoices when this "
 "ones are printed."
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_currency_form
 msgid ""
-"This button let you view the last rate in AFIP for this currency. You can "
+"This button let you view the last rate in ARCA for this currency. You can "
 "use this info to create manually your own rates in Odoo"
 msgstr ""
 
@@ -1354,9 +1354,9 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_crt_id
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_crt_id
 msgid ""
-"This certificate lets us connect to AFIP to validate electronic invoice. "
-"Please select here the AFIP certificate in PEM format. You can get your "
-"certificate from your AFIP Portal"
+"This certificate lets us connect to ARCA to validate electronic invoice. "
+"Please select here the ARCA certificate in PEM format. You can get your "
+"certificate from your ARCA Portal"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1399,7 +1399,7 @@ msgstr ""
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
 msgid ""
-"This information will be sent to AFIP by default when validating electronic "
+"This information will be sent to ARCA by default when validating electronic "
 "FCE documents. RG 4919/2021 requirement."
 msgstr ""
 
@@ -1407,16 +1407,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"This is an internal error in AFIP. Contact to your Odoo provider in order to"
+"This is an internal error in ARCA. Contact to your Odoo provider in order to"
 " let it know that is happening and to investigate what is going on with the "
-"AFIP service"
+"ARCA service"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"This is an internal error in AFIP. Please wait a couple of minutes and try "
+"This is an internal error in ARCA. Please wait a couple of minutes and try "
 "again"
 msgstr ""
 
@@ -1430,11 +1430,11 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_bank_statement_line__l10n_ar_afip_auth_mode
 #: model:ir.model.fields,help:l10n_ar_edi.field_account_move__l10n_ar_afip_auth_mode
 msgid ""
-"This is the type of AFIP Authorization, depending on the way that the invoice is created the mode will change:\n"
+"This is the type of ARCA Authorization, depending on the way that the invoice is created the mode will change:\n"
 "\n"
-" * CAE (Electronic Authorization Code): Means that is an electronic invoice. If you validate a customer invoice this field will be autofill with CAE option. Also, if you trying to verify in AFIP an electronic vendor bill you can set this option\n"
-" * CAI (Printed Authorization Code): Means that is a pre-printed invoice. With this option set you can register and verify in AFIP pre-printed vendor bills\n"
-" * CAEA (Anticipated Electronic Authorization Code): Means that is an electronic invoice. This kind of invoices are generated using a pre ganerated code by AFIP for companies that have a massive invoicing by month so they can pre process all the invoices of the fortnight in one operation with one unique CAEA. Select this option only when verifying in AFIP a vendor bill that have CAEA (invoices with CAEA will not have CAE)"
+" * CAE (Electronic Authorization Code): Means that is an electronic invoice. If you validate a customer invoice this field will be autofill with CAE option. Also, if you trying to verify in ARCA an electronic vendor bill you can set this option\n"
+" * CAI (Printed Authorization Code): Means that is a pre-printed invoice. With this option set you can register and verify in ARCA pre-printed vendor bills\n"
+" * CAEA (Anticipated Electronic Authorization Code): Means that is an electronic invoice. This kind of invoices are generated using a pre ganerated code by ARCA for companies that have a massive invoicing by month so they can pre process all the invoices of the fortnight in one operation with one unique CAEA. Select this option only when verifying in ARCA a vendor bill that have CAEA (invoices with CAEA will not have CAE)"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1451,7 +1451,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_key_id
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_config_settings__l10n_ar_afip_ws_key_id
 msgid ""
-"This private key is required because is sent to the AFIP when trying to create a connection to validate that you are you\n"
+"This private key is required because is sent to the ARCA when trying to create a connection to validate that you are you\n"
 "\n"
 " * If you have one you can upload it here (In order to be valid the private key should be in PEM format)\n"
 " * if you have not then Odoo will automatically create a new one when you click in 'Generate Request' or 'Generate Renewal Request' button"
@@ -1481,23 +1481,23 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.res_config_settings_view_form
-msgid "Verify Vendor Bills validity in AFIP"
+msgid "Verify Vendor Bills validity in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid ""
-"We can not post these vendor bills in Odoo because the AFIP verification fail: %s\n"
-"Please verify in AFIP manually and review the bill chatter for more information"
+"We can not post these vendor bills in Odoo because the ARCA verification fail: %s\n"
+"Please verify in ARCA manually and review the bill chatter for more information"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid ""
-"We can not post this vendor bill in Odoo because the AFIP verification fail: %s\n"
-"Please verify in AFIP manually and review the bill chatter for more information"
+"We can not post this vendor bill in Odoo because the ARCA verification fail: %s\n"
+"Please verify in ARCA manually and review the bill chatter for more information"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1505,20 +1505,20 @@ msgstr ""
 #: code:addons/l10n_ar_edi/models/account_move.py:0
 msgid ""
 "We couldn't validate the document \"%(partner_name)s\" (Draft Invoice "
-"*%(invoice)s) in AFIP"
+"*%(invoice)s) in ARCA"
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_move.py:0
-msgid "We couldn't validate the invoice in AFIP."
+msgid "We couldn't validate the invoice in ARCA."
 msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/account_journal.py:0
 msgid ""
-"We receive this error trying to consult the last invoice number to AFIP:\n"
+"We receive this error trying to consult the last invoice number to ARCA:\n"
 "%s"
 msgstr ""
 
@@ -1526,11 +1526,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"We searched for the destination country of the invoice and had no AFIP code.\n"
+"We searched for the destination country of the invoice and had no ARCA code.\n"
 "\n"
-"Please enter the AFIP page and look for the code in the System Tables section > Countries found in the bottom right and look for the corresponding code.\n"
+"Please enter the ARCA page and look for the code in the System Tables section > Countries found in the bottom right and look for the corresponding code.\n"
 "\n"
-" Then go to Odoo to the Sales menu > Settings > Address book > Localization > Countries, activate developer mode and add the AFIP code in the corresponding field"
+" Then go to Odoo to the Sales menu > Settings > Address book > Localization > Countries, activate developer mode and add the ARCA code in the corresponding field"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1592,7 +1592,7 @@ msgstr ""
 msgid ""
 "it seems like the product \"%s\" has no valid NCM Code.\n"
 "\n"
-"Please set a valid NCM code to continue. You can go to AFIP page and review the list of available NCM codes"
+"Please set a valid NCM code to continue. You can go to ARCA page and review the list of available NCM codes"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1614,10 +1614,10 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_currency_form
-msgid "⇒ Show latest AFIP Rate"
+msgid "⇒ Show latest ARCA Rate"
 msgstr ""
 
 #. module: l10n_ar_edi
 #: model_terms:ir.ui.view,arch_db:l10n_ar_edi.view_move_form
-msgid "⇒ Verify on AFIP"
+msgid "⇒ Verify on ARCA"
 msgstr ""

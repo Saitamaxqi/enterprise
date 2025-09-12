@@ -1,18 +1,18 @@
 <odoo>
     <record id="afip_ri_pkey" model="certificate.key">
-        <field name="name">AFIP key</field>
+        <field name="name">ARCA key</field>
         <field name="content" type="base64" file="l10n_ar_edi/demo/private_key.pem"/>
         <field name="company_id" ref="base.company_ri"/>
     </record>
 
     <record id="afip_mono_pkey" model="certificate.key">
-        <field name="name">AFIP key</field>
+        <field name="name">ARCA key</field>
         <field name="content" type="base64" file="l10n_ar_edi/demo/private_key.pem"/>
         <field name="company_id" ref="base.company_mono"/>
     </record>
 
     <record id="afip_exento_pkey" model="certificate.key">
-        <field name="name">AFIP key</field>
+        <field name="name">ARCA key</field>
         <field name="content" type="base64" file="l10n_ar_edi/demo/private_key.pem"/>
         <field name="company_id" ref="base.company_exento"/>
     </record>

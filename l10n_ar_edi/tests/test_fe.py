@@ -164,16 +164,16 @@ class TestFe(common.TestEdi):
             'lines': [{'price_unit': invoice.amount_total}], 'document_number': invoice.l10n_latam_document_number},
             invoice_type='in_invoice')
 
-        # Set CAE type and number to be able to verify in AFIP
+        # Set CAE type and number to be able to verify in ARCA
         bill.l10n_ar_afip_auth_mode = 'CAE'
         bill.l10n_ar_afip_auth_code = invoice.l10n_ar_afip_auth_code
 
-        # Verify manually vendor bill in AFIP from "Responsable Inscripto" in "Monotributista" Company
+        # Verify manually vendor bill in ARCA from "Responsable Inscripto" in "Monotributista" Company
         self.assertFalse(bill.l10n_ar_afip_verification_result)
         self._l10n_ar_verify_on_afip(bill)
 
         self.assertTrue(bill.l10n_ar_afip_verification_result)
-        # Need to use a real CUIT to be able to verify vendor bills in AFIP, that is why we receive Rejected
+        # Need to use a real CUIT to be able to verify vendor bills in ARCA, that is why we receive Rejected
         self.assertEqual(bill.l10n_ar_afip_verification_result, 'R', bill.message_ids[0].body)
 
     def test_29_payment_foreign_currency(self):

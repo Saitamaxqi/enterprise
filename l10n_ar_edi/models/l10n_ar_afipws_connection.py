@@ -18,14 +18,14 @@ _logger = logging.getLogger(__name__)
 
 
 # Exclude some ciphers in order avoid failure on servers where the DH key is too small
-AFIP_CIPHERS = "DEFAULT:!DH"
+ARCA_CIPHERS = "DEFAULT:!DH"
 
 
 class L10nArHTTPAdapter(HTTPAdapter):
     """ An adapter to block DH ciphers which may not work for *.afip.gov.ar """
 
     def init_poolmanager(self, *args, **kwargs):
-        context = create_urllib3_context(ciphers=AFIP_CIPHERS)
+        context = create_urllib3_context(ciphers=ARCA_CIPHERS)
         kwargs["ssl_context"] = context
         return super().init_poolmanager(*args, **kwargs)
 
@@ -34,7 +34,7 @@ class ARTransport(Transport):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.session.mount('https://', L10nArHTTPAdapter()) # block DH ciphers for AFIP servers
+        self.session.mount('https://', L10nArHTTPAdapter())  # block DH ciphers for ARCA servers
 
     def post(self, address, message, headers):
         """ We overwrite this method only to be able to save the xml request and response.
@@ -67,7 +67,7 @@ class SimpleTransport:
 class L10n_ArAfipwsConnection(models.Model):
     _name = 'l10n_ar.afipws.connection'
 
-    _description = "AFIP Webservice Connection"
+    _description = "ARCA Webservice Connection"
     _rec_name = "l10n_ar_afip_ws"
     _order = "expiration_time desc"
 
@@ -83,7 +83,7 @@ class L10n_ArAfipwsConnection(models.Model):
         ' the company when the connection was created. It\'s needed because if you change from environment to do quick'
         ' tests we could avoid using the last connection and use the one that matches with the new environment')
 
-    l10n_ar_afip_ws = fields.Selection(selection='_get_l10n_ar_afip_ws', string='AFIP WS', required=True)
+    l10n_ar_afip_ws = fields.Selection(selection='_get_l10n_ar_afip_ws', string='ARCA WS', required=True)
 
     def _get_l10n_ar_afip_ws(self):
         """ Return the list of values of the selection field. """
@@ -128,7 +128,7 @@ class L10n_ArAfipwsConnection(models.Model):
         error_msg = _('There was a problem with the connection to the %(webservice)s webservice: %(error)s', webservice=afip_ws, error=error_name)
 
         # Find HINT for error message
-        certificate_expired = _('It seems like the certificate has expired. Please renew your AFIP certificate')
+        certificate_expired = _('It seems like the certificate has expired. Please renew your ARCA certificate')
         token_in_use = 'El CEE ya posee un TA valido para el acceso al WSN solicitado'
         data = {
             'Computador no autorizado a acceder al servicio': _(
@@ -138,9 +138,9 @@ class L10n_ArAfipwsConnection(models.Model):
             '500 Server Error: Internal Server': _('Webservice is down'),
             token_in_use: _(
                 'Are you invoicing from another computer or system? This error could happen when a access token'
-                ' that is requested to AFIP has been requested multiple times and the last one requested is still valid.'
-                ' You will need to wait 12 hours to generate a new token and be able to connect to AFIP'
-                '\n\n If not, then could be a overload of AFIP service, please wait some time and try again'),
+                ' that is requested to ARCA has been requested multiple times and the last one requested is still valid.'
+                ' You will need to wait 12 hours to generate a new token and be able to connect to ARCA'
+                '\n\n If not, then could be a overload of ARCA service, please wait some time and try again'),
             'No se puede decodificar el BASE64': _('The certificate and private key do not match'),
         }
         hint_msg = next((value for item, value in data.items() if item in error_name), None)
@@ -156,16 +156,16 @@ class L10n_ArAfipwsConnection(models.Model):
             error_msg += '\n\nPISTA: ' + hint_msg
         else:
             if isinstance(error, HTTPError) and error.response.status_code == 503:
-                error_msg += '\n\n' + _('The AFIP electronic billing webservice is not available. Wait a few minutes for it to reset and try to validate the action again.')
+                error_msg += _('\n\nThe ARCA electronic billing webservice is not available. Wait a few minutes for it to reset and try to validate the action again.')
             else:
                 error_msg += '\n\n' + _('Please report this error to your Odoo provider')
         raise UserError(error_msg)
 
     def _l10n_ar_get_token_data(self, company, afip_ws):
-        """ Call AFIP Authentication webservice to get token & sign data """
+        """ Call ARCA Authentication webservice to get token & sign data """
         certificate_sudo = company.sudo().l10n_ar_afip_ws_crt_id
         if not certificate_sudo.is_valid:
-            raise UserError(_('The AFIP certificate is expired, please renew in order to continue'))
+            raise UserError(_('The ARCA certificate is expired, please renew in order to continue'))
         environment_type = company._get_environment_type()
         generation_time = fields.Datetime.now()
         expiration_time = fields.Datetime.add(generation_time, hours=12)
@@ -185,7 +185,7 @@ class L10n_ArAfipwsConnection(models.Model):
                 'testing': "https://wsaahomo.afip.gov.ar/ws/services/LoginCms?WSDL"}.get(environment_type)
 
         try:
-            _logger.info('Connect to AFIP to get token: %s %s %s', afip_ws, company.l10n_ar_afip_ws_crt_id.name, company.name)
+            _logger.info('Connect to ARCA to get token: %s %s %s', afip_ws, company.l10n_ar_afip_ws_crt_id.name, company.name)
             transport = ARTransport(operation_timeout=60, timeout=60)
             client = Client(wsdl, transport=transport)
             response = client.service.loginCms(base64.b64encode(signed_request).decode())

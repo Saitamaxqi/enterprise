@@ -59,7 +59,7 @@ class AccountArVatLine(models.Model):
     journal_id = fields.Many2one('account.journal', 'Journal', readonly=True, bypass_search_access=True)
     partner_id = fields.Many2one('res.partner', 'Partner', readonly=True, bypass_search_access=True)
     afip_responsibility_type_id = fields.Many2one(
-        'l10n_ar.afip.responsibility.type', string='AFIP Responsibility Type', readonly=True, bypass_search_access=True)
+        'l10n_ar.afip.responsibility.type', string='ARCA Responsibility Type', readonly=True, bypass_search_access=True)
     company_id = fields.Many2one('res.company', 'Company', readonly=True, bypass_search_access=True)
     company_currency_id = fields.Many2one(related='company_id.currency_id', readonly=True)
     move_id = fields.Many2one('account.move', string='Entry', bypass_search_access=True, index='btree_not_null')

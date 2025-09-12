@@ -35,13 +35,13 @@
                     <field name="l10n_ar_afip_auth_mode" class="oe_inline" readonly="state != 'draft'"/> -
                     <field name="l10n_ar_afip_auth_code" class="oe_inline" readonly="state != 'draft'" required="l10n_ar_afip_auth_mode" placeholder="Code"/> -
                     <field name="l10n_ar_afip_verification_result" class="oe_inline"/>
-                    <button name="l10n_ar_verify_on_afip" type="object" invisible="not l10n_ar_afip_auth_mode" string="⇒ Verify on AFIP" class="oe_inline oe_link" groups="base.group_user"/>
+                    <button name="l10n_ar_verify_on_afip" type="object" invisible="not l10n_ar_afip_auth_mode" string="⇒ Verify on ARCA" class="oe_inline oe_link" groups="base.group_user"/>
                 </div>
             </field>
             <notebook>
-                <page string="AFIP" name="afip" invisible="not l10n_ar_afip_ws">
+                <page string="ARCA" name="afip" invisible="not l10n_ar_afip_ws">
                     <group>
-                        <label for="l10n_ar_afip_auth_code" string="AFIP authorization"/>
+                        <label for="l10n_ar_afip_auth_code" string="ARCA authorization"/>
                         <div class="oe_inline">
                             <field name="l10n_ar_afip_auth_mode" class="oe_inline" readonly="state != 'draft'"/> -
                             <field name="l10n_ar_afip_auth_code" class="oe_inline" readonly="state != 'draft'" required="l10n_ar_afip_auth_mode" placeholder="Code"/>

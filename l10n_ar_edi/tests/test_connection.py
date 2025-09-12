@@ -88,7 +88,7 @@ class TestArConnection(TestAr):
         self.ar_certificate_1.content = ""
         self.ar_private_key.content = ""
 
-        # Get the list of possible AR AFIP WebService connections. This allows us to know how many
+        # Get the list of possible AR ARCA WebService connections. This allows us to know how many
         # elements in the regex we need to repeat for the search.
         conns_len = len(self.env['l10n_ar.afipws.connection']._get_l10n_ar_afip_ws())
         error_content = rf"(.*Connection failed.*\n?){{{conns_len}}}"
@@ -131,7 +131,7 @@ class TestArConnection(TestAr):
             </credentials>
         </loginTicketResponse>
         """
-        # Get the list of possible AR AFIP WebService connections. This allows us to know how many
+        # Get the list of possible AR ARCA WebService connections. This allows us to know how many
         # elements in the regex we need to repeat for the search.
         conns_len = len(self.env['l10n_ar.afipws.connection']._get_l10n_ar_afip_ws())
         error_content = rf"(.*Connection is available\n?){{{conns_len}}}"

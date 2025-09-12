@@ -182,11 +182,11 @@ class TestReports(TestAr, TestAccountReportsCommon):
                 # as we create lines separatelly we need to set journal, if not, misc journal is selected
                 "journal_id": purchase_journal,
                 "invoice_line_ids": [
-                    {'product_id': self.service_wo_tax, "name": "[AFIP_DESPACHO] Despacho de importación", 'price_unit': 5064.98, 'quantity': 1,
+                    {'product_id': self.service_wo_tax, "name": "[ARCA_DESPACHO] Despacho de importación", 'price_unit': 5064.98, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_21_purchase.ids)]},
-                    {'product_id': self.service_wo_tax, "name": "[AFIP_TASA_EST] Tasa Estadística", 'price_unit': 152.08, 'quantity': 1,
+                    {'product_id': self.service_wo_tax, "name": "[ARCA_TASA_EST] Tasa Estadística", 'price_unit': 152.08, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_21_purchase.ids)]},
-                    {'product_id': self.service_iva_no_gravado, "name": "[AFIP_ARANCEL] Arancel", 'price_unit': 10.0, 'quantity': 1,
+                    {'product_id': self.service_iva_no_gravado, "name": "[ARCA_ARANCEL] Arancel", 'price_unit': 10.0, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_no_gravado_purchase.ids)]},
 
                 ],
@@ -203,11 +203,11 @@ class TestReports(TestAr, TestAccountReportsCommon):
                 # as we create lines separatelly we need to set journal, if not, misc journal is selected
                 "journal_id": purchase_journal,
                 "invoice_line_ids": [
-                    {'product_id': self.service_wo_tax, "name": "[AFIP_DESPACHO] Despacho de importación", 'price_unit': 5064.98, 'quantity': 1,
+                    {'product_id': self.service_wo_tax, "name": "[ARCA_DESPACHO] Despacho de importación", 'price_unit': 5064.98, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_21_purchase.ids)]},
-                    {'product_id': self.service_wo_tax, "name": "[AFIP_TASA_EST] Tasa Estadística", 'price_unit': 152.08, 'quantity': 1,
+                    {'product_id': self.service_wo_tax, "name": "[ARCA_TASA_EST] Tasa Estadística", 'price_unit': 152.08, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_21_purchase.ids)]},
-                    {'product_id': self.service_iva_no_gravado, "name": "[AFIP_ARANCEL] Arancel", 'price_unit': 10.0, 'quantity': 1,
+                    {'product_id': self.service_iva_no_gravado, "name": "[ARCA_ARANCEL] Arancel", 'price_unit': 10.0, 'quantity': 1,
                      "tax_ids": [(6, 0, self.tax_no_gravado_purchase.ids)]},
 
                 ],

@@ -31,41 +31,41 @@ class AccountMove(models.Model):
         return super()._auto_init()
 
     l10n_ar_afip_auth_mode = fields.Selection([('CAE', 'CAE'), ('CAI', 'CAI'), ('CAEA', 'CAEA')],
-        string='AFIP Authorization Mode', copy=False,
-        help="This is the type of AFIP Authorization, depending on the way that the invoice is created"
+        string='ARCA Authorization Mode', copy=False,
+        help="This is the type of ARCA Authorization, depending on the way that the invoice is created"
         " the mode will change:\n\n"
         " * CAE (Electronic Authorization Code): Means that is an electronic invoice. If you validate a customer invoice"
-        " this field will be autofill with CAE option. Also, if you trying to verify in AFIP an electronic vendor bill"
+        " this field will be autofill with CAE option. Also, if you trying to verify in ARCA an electronic vendor bill"
         " you can set this option\n"
         " * CAI (Printed Authorization Code): Means that is a pre-printed invoice. With this option set you can"
-        " register and verify in AFIP pre-printed vendor bills\n"
+        " register and verify in ARCA pre-printed vendor bills\n"
         " * CAEA (Anticipated Electronic Authorization Code): Means that is an electronic invoice. This kind of invoices"
-        " are generated using a pre ganerated code by AFIP for companies that have a massive invoicing by month so they"
+        " are generated using a pre ganerated code by ARCA for companies that have a massive invoicing by month so they"
         " can pre process all the invoices of the fortnight in one operation with one unique CAEA. Select this option"
-        " only when verifying in AFIP a vendor bill that have CAEA (invoices with CAEA will not have CAE)")
-    l10n_ar_afip_auth_code = fields.Char('Authorization Code', copy=False, size=24, help="Argentina: authorization code given by AFIP after electronic invoice is created and valid.")
+        " only when verifying in ARCA a vendor bill that have CAEA (invoices with CAEA will not have CAE)")
+    l10n_ar_afip_auth_code = fields.Char('Authorization Code', copy=False, size=24, help="Argentina: authorization code given by ARCA after electronic invoice is created and valid.")
     l10n_ar_afip_auth_code_due = fields.Date('Authorization Due date', copy=False,
-        help="Argentina: The Due Date of the Invoice given by AFIP.")
-    l10n_ar_afip_qr_code = fields.Char(compute='_compute_l10n_ar_afip_qr_code', string='AFIP QR Code',
-        help='This QR code is mandatory by the AFIP in the electronic invoices when this ones are printed.')
+        help="Argentina: The Due Date of the Invoice given by ARCA.")
+    l10n_ar_afip_qr_code = fields.Char(compute='_compute_l10n_ar_afip_qr_code', string='ARCA QR Code',
+        help='This QR code is mandatory by the ARCA in the electronic invoices when this ones are printed.')
 
     # electronic invoice fields
     l10n_ar_afip_xml_request = fields.Text(string='XML Request', copy=False, readonly=True, groups="base.group_system")
     l10n_ar_afip_xml_response = fields.Text(string='XML Response', copy=False, readonly=True, groups="base.group_system")
-    l10n_ar_afip_result = fields.Selection([('A', 'Accepted in AFIP'), ('O', 'Accepted in AFIP with Observations')], 'Result',
-        copy=False, help="Argentina: Result of the electronic invoice request to the AFIP web service.", tracking=True)
+    l10n_ar_afip_result = fields.Selection([('A', 'Accepted in ARCA'), ('O', 'Accepted in ARCA with Observations')], 'Result',
+        copy=False, help="Argentina: Result of the electronic invoice request to the ARCA web service.", tracking=True)
     l10n_ar_afip_ws = fields.Selection(related="journal_id.l10n_ar_afip_ws")
 
-    # fields used to check invoice is valid on AFIP
+    # fields used to check invoice is valid on ARCA
     l10n_ar_afip_verification_type = fields.Selection(
         [('not_available', 'Not Available'), ('available', 'Available'), ('required', 'Required')],
         compute='_compute_l10n_ar_afip_verification_type')
     l10n_ar_afip_verification_result = fields.Selection([('A', 'Approved'), ('O', 'Observed'), ('R', 'Rejected')],
-        string='AFIP Verification result', copy=False, readonly=True)
+        string='ARCA Verification result', copy=False, readonly=True)
 
     # FCE related fields
     l10n_ar_afip_fce_is_cancellation = fields.Boolean(string='FCE: Is Cancellation?',
-        copy=False, help='Argentina: When informing a MiPyMEs (FCE) debit/credit notes in AFIP it is required to send information about whether the'
+        copy=False, help='Argentina: When informing a MiPyMEs (FCE) debit/credit notes in ARCA it is required to send information about whether the'
         ' original document has been explicitly rejected by the buyer. More information here'
         ' http://www.afip.gob.ar/facturadecreditoelectronica/preguntasFrecuentes/emisor-factura.asp')
     l10n_ar_fce_transmission_type = fields.Selection(
@@ -109,7 +109,7 @@ class AccountMove(models.Model):
     def _compute_show_reset_to_draft_button(self):
         """
             EXTENDS 'account.move'
-            When the AFIP approved the move, don't show the reset to draft button
+            When the ARCA approved the move, don't show the reset to draft button
         """
         super()._compute_show_reset_to_draft_button()
         self.filtered(lambda move: move.l10n_ar_afip_result == "A").show_reset_to_draft_button = False
@@ -165,7 +165,7 @@ class AccountMove(models.Model):
 
     @api.depends('l10n_latam_document_type_id', 'company_id')
     def _compute_l10n_ar_afip_verification_type(self):
-        """ Method that tell us if the invoice/vendor bill can be verified in AFIP """
+        """ Method that tell us if the invoice/vendor bill can be verified in ARCA """
         verify_codes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "15", "19", "20", "21",
                         "49", "51", "52", "53", "54", "60", "61", "63", "64"]
         available_to_verify = self.filtered(
@@ -182,15 +182,15 @@ class AccountMove(models.Model):
             not self.company_id.sudo().l10n_ar_afip_ws_crt_id
 
     def _post(self, soft=True):
-        """ After validate the invoice we then validate in AFIP. The last thing we do is request the cae because if an
-        error occurs after CAE requested, the invoice has been already validated on AFIP """
+        """ After validate the invoice we then validate in ARCA. The last thing we do is request the cae because if an
+        error occurs after CAE requested, the invoice has been already validated on ARCA """
         ar_invoices = self.filtered(lambda x: x.is_invoice() and x.country_code == "AR")
         sale_ar_invoices = ar_invoices.filtered(lambda x: x.move_type in ['out_invoice', 'out_refund'])
 
         # Verify only Vendor bills (only when verification is configured as 'required')
         (ar_invoices - sale_ar_invoices)._l10n_ar_check_afip_auth_verify_required()
 
-        # Send invoices to AFIP and get the return info
+        # Send invoices to ARCA and get the return info
         ar_edi_invoices = ar_invoices.filtered(lambda x: x.journal_id.l10n_ar_afip_ws)
         validated = error_invoice = self.env['account.move']
         for inv in ar_edi_invoices:
@@ -210,18 +210,18 @@ class AccountMove(models.Model):
                 validated -= inv
                 break
 
-            # If we get CAE from AFIP then we make commit because we need to save the information returned by AFIP
+            # If we get CAE from ARCA then we make commit because we need to save the information returned by ARCA
             # in Odoo for consistency, this way if an error ocurrs later in another invoice we will have the ones
-            # correctly validated in AFIP in Odoo (CAE, Result, xml response/request).
+            # correctly validated in ARCA in Odoo (CAE, Result, xml response/request).
             if not self.env.context.get('l10n_ar_invoice_skip_commit'):
                 self.env.cr.commit()
 
         if error_invoice:
             if error_invoice.exists():
-                msg = _('We couldn\'t validate the document "%(partner_name)s" (Draft Invoice *%(invoice)s) in AFIP',
+                msg = _('We couldn\'t validate the document "%(partner_name)s" (Draft Invoice *%(invoice)s) in ARCA',
                     partner_name=error_invoice.partner_id.name, invoice=error_invoice.id)
             else:
-                msg = _('We couldn\'t validate the invoice in AFIP.')
+                msg = _('We couldn\'t validate the invoice in ARCA.')
             msg += _('This is what we get:\n%s\n\nPlease make the required corrections and try again', return_info)
 
             # if we've already validate any invoice, we've commit and we want to inform which invoices were validated
@@ -230,7 +230,7 @@ class AccountMove(models.Model):
             if validated:
                 unprocess = self - validated - error_invoice
                 msg = _(
-                    """Some documents where validated in AFIP but as we have an error with one document the batch validation was stopped
+                    """Some documents where validated in ARCA but as we have an error with one document the batch validation was stopped
 
 * These documents were validated:
 %(validate_invoices)s
@@ -247,10 +247,10 @@ class AccountMove(models.Model):
         return validated + super(AccountMove, self - ar_edi_invoices)._post(soft=soft)
 
     def l10n_ar_verify_on_afip(self):
-        """ This method let us to connect to AFIP using WSCDC webservice to verify if a vendor bill is valid on AFIP """
+        """ This method let us to connect to ARCA using WSCDC webservice to verify if a vendor bill is valid on ARCA """
         for inv in self:
             if not inv.l10n_ar_afip_auth_mode or not inv.l10n_ar_afip_auth_code:
-                raise UserError(_('Please set AFIP Authorization Mode and Code to continue!'))
+                raise UserError(_('Please set ARCA Authorization Mode and Code to continue!'))
 
             # get Issuer and Receptor depending on the document type
             issuer, receptor = (inv.commercial_partner_id, inv.company_id.partner_id) \
@@ -286,7 +286,7 @@ class AccountMove(models.Model):
                 'DocNroReceptor': receptor_id_number})
             inv.write({'l10n_ar_afip_verification_result': response.Resultado})
             if response.Observaciones or response.Errors:
-                inv.message_post(body=_('AFIP authorization verification result: %(observations)s%(errors)s', observations=response.Observaciones, errors=response.Errors))
+                inv.message_post(body=_('ARCA authorization verification result: %(observations)s%(errors)s', observations=response.Observaciones, errors=response.Errors))
 
     def l10n_ar_check_rate(self):
         """ If the user indicates that the payment will be done in foreign currency (option YES) then ARCA force that
@@ -326,9 +326,9 @@ class AccountMove(models.Model):
     # Main methods
 
     def _l10n_ar_do_afip_ws_request_cae(self, client, auth, transport):
-        """ Submits the invoice information to AFIP and gets a response of AFIP in return.
+        """ Submits the invoice information to ARCA and gets a response of ARCA in return.
 
-        If we receive a positive response from  AFIP then validate the invoice and save the returned information in the
+        If we receive a positive response from  ARCA then validate the invoice and save the returned information in the
         corresponding invoice fields:
 
         * CAE number (Authorization Electronic Code)
@@ -339,7 +339,7 @@ class AccountMove(models.Model):
 
             NOTE: If there are observations we leave a message in the invoice message chart with the observation.
 
-        If there are errors it means that the invoice has been Rejected by AFIP and we raise an user error with the
+        If there are errors it means that the invoice has been Rejected by ARCA and we raise an user error with the
         processed info about the error and some hint about how to solve it. The invoice is not valided.
         """
         for inv in self.filtered(lambda x: x.journal_id.l10n_ar_afip_ws and not x.l10n_ar_afip_auth_code):
@@ -474,13 +474,13 @@ class AccountMove(models.Model):
             values.update(l10n_ar_afip_xml_request=xml_request, l10n_ar_afip_xml_response=xml_response)
             inv.sudo().write(values)
             if return_info:
-                inv.message_post(body=Markup('<p><b>%s%s</b></p>') % (_('AFIP Messages'), plaintext2html(return_info, 'em')))
+                inv.message_post(body=Markup('<p><b>%s%s</b></p>') % (_('ARCA Messages'), plaintext2html(return_info, 'em')))
 
     # Helpers
 
     def _dummy_afip_validation(self):
-        """ Only when we want to skip AFIP validation in testing environment. Fill the AFIP fields with dummy values in
-        order to continue with the invoice validation without passing to AFIP validations
+        """ Only when we want to skip ARCA validation in testing environment. Fill the ARCA fields with dummy values in
+        order to continue with the invoice validation without passing to ARCA validations
         """
         self.write({'l10n_ar_afip_auth_mode': 'CAE',
                     'l10n_ar_afip_auth_code': '68448767638166',
@@ -490,9 +490,9 @@ class AccountMove(models.Model):
 
     def _l10n_ar_check_afip_auth_verify_required(self):
         """ If the company has set "Verify vendor bills: Required". it will check if the vendor bill has been verified
-        in AFIP, if not will try to verify them.
+        in ARCA, if not will try to verify them.
 
-        If the invoice is sucessfully verified in AFIP (result is Approved or Observations) then will let to continue
+        If the invoice is sucessfully verified in ARCA (result is Approved or Observations) then will let to continue
         with the post of the bill, if not then will raise an expection that will stop the post.
         """
         verification_missing = self.filtered(
@@ -511,12 +511,12 @@ class AccountMove(models.Model):
             if len(still_missing) > 1:
                 raise UserError(_(
                     'We can not post these vendor bills in Odoo because the '
-                    'AFIP verification fail: %s\nPlease verify in AFIP '
+                    'ARCA verification fail: %s\nPlease verify in ARCA '
                     'manually and review the bill chatter for more information',
                     '\n * '.join(still_missing.mapped('display_name'))))
             raise UserError(_(
-                'We can not post this vendor bill in Odoo because the AFIP '
-                'verification fail: %s\nPlease verify in AFIP manually and '
+                'We can not post this vendor bill in Odoo because the ARCA '
+                'verification fail: %s\nPlease verify in ARCA manually and '
                 'review the bill chatter for more information',
                 still_missing.display_name))
 
@@ -543,7 +543,7 @@ class AccountMove(models.Model):
         return False, False
 
     def _found_related_invoice(self):
-        """ List related invoice information to fill associated voucher key for AFIP (CbtesAsoc).
+        """ List related invoice information to fill associated voucher key for ARCA (CbtesAsoc).
         NOTE: for now we only get related document for debit and credit notes because, for eg, an invoice can not be
         related to another one, and that happens if you choose the modify option of the credit note wizard
 
@@ -614,7 +614,7 @@ class AccountMove(models.Model):
 
             # Unit of measure of the product if it sale in a unit of measures different from has been purchase
             if not line.product_uom_id.l10n_ar_afip_code:
-                raise UserError(_('No AFIP code in %s UOM', line.product_uom_id.name))
+                raise UserError(_('No ARCA code in %s UOM', line.product_uom_id.name))
 
             Pro_umed = line.product_uom_id.l10n_ar_afip_code
             values = {
@@ -630,7 +630,7 @@ class AccountMove(models.Model):
 
             if afip_ws == 'wsbfe':
                 if not line.product_id.uom_id.l10n_ar_afip_code:
-                    raise UserError(_('No AFIP code in %s UOM', line.product_id.uom_id.name))
+                    raise UserError(_('No ARCA code in %s UOM', line.product_id.uom_id.name))
 
                 vat_tax = line.tax_ids.filtered(lambda x: x.tax_group_id.l10n_ar_vat_afip_code)
                 vat_taxes_amounts = vat_tax.compute_all(
@@ -679,9 +679,9 @@ class AccountMove(models.Model):
         return optionals
 
     def _get_partner_code_id(self, partner):
-        """ Return the AFIP code of the identification type of the partner.
+        """ Return the ARCA code of the identification type of the partner.
         If not identification type and if the partner responsibility is Final Consumer return
-        AFIP it_Sigd identification type (Sin Categoria / Venta Global)
+        ARCA it_Sigd identification type (Sin Categoria / Venta Global)
         """
         partner_id_code = partner.l10n_latam_identification_type_id.l10n_ar_afip_code
         if partner_id_code:
@@ -697,11 +697,11 @@ class AccountMove(models.Model):
         if any([errors, obs, events]):
             messages = []
             if errors:
-                messages.append(_("AFIP Validation Error: %(error)s", error=errors))
+                messages.append(_("ARCA Validation Error: %(error)s", error=errors))
             if obs and obs != " ":
-                messages.append(_("AFIP Validation Observation: %(obs)s", obs=obs))
+                messages.append(_("ARCA Validation Observation: %(obs)s", obs=obs))
             if events:
-                messages.append(_("AFIP Validation Event: %(event)s", event=events))
+                messages.append(_("ARCA Validation Event: %(event)s", event=events))
 
             hint_msgs = []
             for code in return_codes:
@@ -768,7 +768,7 @@ class AccountMove(models.Model):
             'ImpTrib': float_repr(amounts['not_vat_taxes_amount'], precision_digits=2),
             'ImpIVA': float_repr(amounts['vat_amount'], precision_digits=2),
 
-            # Service dates are only informed when AFIP Concept is (2,3)
+            # Service dates are only informed when ARCA Concept is (2,3)
             'FchServDesde': service_start.strftime(WS_DATE_FORMAT['wsfe']) if service_start else False,
             'FchServHasta': service_end.strftime(WS_DATE_FORMAT['wsfe']) if service_end else False,
             'FchVtoPago': due_payment_date.strftime(WS_DATE_FORMAT['wsfe']) if due_payment_date else False,
@@ -794,7 +794,7 @@ class AccountMove(models.Model):
             'FeDetReq': [{'FECAEDetRequest': res}]}
 
     def get_vat_country(self):
-        """ CUIT PAIS: Is default VAT(CUIT) that AFIP define per country to identify a foreign country partner, We have
+        """ CUIT PAIS: Is default VAT(CUIT) that ARCA define per country to identify a foreign country partner, We have
         3 CUIT PAIS per contry: one for legal entities, one for natural person and others.
 
         Returns (int) number CUIT PAIS of the related partner, Is not CUIT PAIS then return 0 """
@@ -817,7 +817,7 @@ class AccountMove(models.Model):
                     country=self.commercial_partner_id.country_id.name)
             if hint_msg:
                 msg += '\n\n' + hint_msg
-            raise RedirectWarning(msg, self.env.ref('l10n_ar_edi.action_help_afip').id, _('Go to AFIP page'))
+            raise RedirectWarning(msg, self.env.ref('l10n_ar_edi.action_help_afip').id, _('Go to ARCA page'))
 
         related_invoices = self._get_related_invoice_data()
 
@@ -878,7 +878,7 @@ class AccountMove(models.Model):
         res = {'Id': last_id,
                'Tipo_doc': int(partner_id_code) or 0,
                'Nro_doc': vat and int(vat) or 0,
-               'Zona': 1,  # National (the only one returned by AFIP)
+               'Zona': 1,  # National (the only one returned by ARCA)
                'Tipo_cbte': int(self.l10n_latam_document_type_id.code),
                'Punto_vta': int(self.journal_id.l10n_ar_afip_pos_number),
                'Cbte_nro': self._l10n_ar_get_document_number_parts(
@@ -916,14 +916,14 @@ class AccountMove(models.Model):
         return bool(self.l10n_latam_use_documents and self.env.company.account_fiscal_country_id.code == "AR" and self.journal_id.l10n_ar_afip_ws)
 
     def _get_last_sequence_from_afip(self):
-        """ This method is called to return the highest number for electronic invoices, it will try to connect to AFIP
+        """ This method is called to return the highest number for electronic invoices, it will try to connect to ARCA
             only if it is necessary (when we are validating the invoice and need to set the document number)"""
         last_number = 0 if self._is_dummy_afip_validation() or self.l10n_latam_document_number \
             else self.journal_id._l10n_ar_get_afip_last_invoice_number(self.l10n_latam_document_type_id)
         return "%s %05d-%08d" % (self.l10n_latam_document_type_id.doc_code_prefix, self.journal_id.l10n_ar_afip_pos_number, last_number)
 
     def _get_last_sequence(self, relaxed=False, with_prefix=None):
-        """ For argentina electronic invoice, if there is not sequence already then consult the last number from AFIP
+        """ For argentina electronic invoice, if there is not sequence already then consult the last number from ARCA
         @return: string with the sequence, something like 'FA-A 00001-00000011' """
         res = super()._get_last_sequence(relaxed=relaxed, with_prefix=with_prefix)
         if not res and self._is_argentina_electronic_invoice() and self.l10n_latam_document_type_id:

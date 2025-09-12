@@ -23,7 +23,7 @@ class CertificateCertificate(models.Model):
 
         private_key = serialization.load_pem_private_key(base64.b64decode(company.l10n_ar_afip_ws_key_id.pem_key), None)
 
-        common_name = 'AFIP WS %s - %s' % (company._get_environment_type(), company.name)[:50]
+        common_name = 'ARCA WS %s - %s' % (company._get_environment_type(), company.name)[:50]
 
         csr = x509.CertificateSigningRequestBuilder().subject_name(
             x509.Name([

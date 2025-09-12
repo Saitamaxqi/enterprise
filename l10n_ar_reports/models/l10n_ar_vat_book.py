@@ -209,7 +209,7 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
 
     def vat_book_export_files_to_zip(self, options):
         """ Export method that lets us export the VAT book to a zip archive.
-        It contains the files that we upload to AFIP for Purchase VAT Book """
+        It contains the files that we upload to ARCA for Purchase VAT Book """
         tax_type = self._vat_book_get_selected_tax_types(options)
         if len(tax_type) > 1:
             raise UserError(_("Only one tax type should be selected."))
