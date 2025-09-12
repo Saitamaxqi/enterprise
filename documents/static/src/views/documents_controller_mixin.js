@@ -1,4 +1,6 @@
 import { getCommonEmbeddedActions } from "@documents/views/utils";
+import { DETAIL_PANEL_REQUIRED_FIELDS } from "@documents/views/hooks";
+import { makeActiveField } from "@web/model/relational_model/utils";
 import { useSearchBarToggler } from "@web/search/search_bar/search_bar_toggler";
 import { _t } from "@web/core/l10n/translation";
 import { omit } from "@web/core/utils/objects";
@@ -17,6 +19,59 @@ export const DocumentsControllerMixin = (component) =>
         get modelParams() {
             const modelParams = super.modelParams;
             modelParams.multiEdit = true;
+
+            // activeFields for DocumentsDetailsPanel
+            const activeFields = Object.keys(modelParams.config.activeFields);
+
+            DETAIL_PANEL_REQUIRED_FIELDS.forEach((field) => {
+                if (!activeFields.includes(field)) {
+                    modelParams.config.activeFields[field] = makeActiveField();
+                }
+            });
+
+            if (!activeFields.includes("res_id")) {
+                modelParams.config.activeFields.res_id = makeActiveField();
+                modelParams.config.activeFields.res_id.related = {
+                    fields: {
+                        display_name: {
+                            name: "display_name",
+                            type: "char",
+                        },
+                    },
+                    activeFields: {
+                        display_name: makeActiveField(),
+                    },
+                };
+            }
+
+            if (!activeFields.includes("tag_ids")) {
+                modelParams.config.activeFields.tag_ids = makeActiveField();
+                modelParams.config.activeFields.tag_ids.related = {
+                    activeFields: {
+                        display_name: makeActiveField({ readonly: true }),
+                        color: makeActiveField(),
+                    },
+                    fields: {
+                        display_name: {
+                            name: "display_name",
+                            type: "char",
+                            readonly: true,
+                        },
+                        color: {
+                            name: "color",
+                            type: "integer",
+                            readonly: false,
+                        },
+                    },
+                };
+            }
+
+            if (!activeFields.includes("alias_tag_ids")) {
+                modelParams.config.activeFields.alias_tag_ids = {
+                    ...modelParams.config.activeFields.tag_ids,
+                };
+            }
+
             return modelParams;
         }
 

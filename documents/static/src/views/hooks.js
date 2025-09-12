@@ -20,6 +20,27 @@ import {
  * Controller/View hooks
  */
 
+export const DETAIL_PANEL_REQUIRED_FIELDS = [
+    "lock_uid",
+    "shortcut_document_id",
+    "res_name",
+    "res_model_name",
+    "file_size",
+    "res_model",
+    "mail_alias_domain_count",
+    "alias_name",
+    "alias_domain_id",
+    "create_activity_type_id",
+    "type",
+    "name",
+    "folder_id",
+    "company_id",
+    "owner_id",
+    "user_permission",
+    "partner_id",
+    "tag_ids",
+];
+
 export function preSuperSetupFolder() {
     const component = useComponent();
     const orm = useService("orm");
