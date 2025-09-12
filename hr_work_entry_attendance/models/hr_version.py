@@ -18,7 +18,8 @@ class HrVersion(models.Model):
         ondelete={'attendance': 'set default'},
     )
     overtime_from_attendance = fields.Boolean(
-        "Extra hours", help="Add extra hours from attendances to the working entries", groups="hr.group_hr_manager", tracking=True)
+        "Extra hours", help="Add extra hours from attendances to the working entries", store=True, tracking=True,
+        readonly=False, compute='_compute_overtime_from_attendance', groups="hr.group_hr_manager")
 
     def _get_overtime_intervals(self, start_dt, end_dt):
         start_naive = start_dt.replace(tzinfo=None)
@@ -187,3 +188,8 @@ class HrVersion(models.Model):
     @api.model
     def _get_whitelist_fields_from_template(self):
         return super()._get_whitelist_fields_from_template() + ['overtime_from_attendance']
+
+    @api.depends('ruleset_id')
+    def _compute_overtime_from_attendance(self):
+        for record in self:
+            record.overtime_from_attendance = bool(record.ruleset_id)
