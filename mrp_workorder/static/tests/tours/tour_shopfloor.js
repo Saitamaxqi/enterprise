@@ -65,7 +65,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         },
         {
             content: "Register production check",
-            trigger: ".o_mrp_record_line:contains('Register Production') .btn-primary",
+            trigger: ".o_mrp_record_line:contains('Register Production') .btn-outline-secondary",
             run: "click",
         },
         // Handle mrp.production.serials wizard

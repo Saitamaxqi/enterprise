@@ -69,7 +69,10 @@ export class MrpDisplayRecord extends Component {
         if (!this.props.production.data.qty_producing) {
             this.props.production.update({ qty_producing: this.props.production.data.product_qty });
         }
-        if(this.props.production.data.product_tracking == 'serial' && this.props.production.data.product_qty > 1) {
+        if (
+            this.props.production.data.product_tracking == "serial" &&
+            this.props.production.data.product_qty > 1
+        ) {
             const action = await this.props.record.model.orm.call(
                 this.props.record.resModel,
                 "action_generate_serial",
@@ -193,12 +196,14 @@ export class MrpDisplayRecord extends Component {
         return this.props.production.data.log_note;
     }
 
-    get showAssignedEmployees(){
-        return this.props.record.resModel === 'mrp.workorder'
-            && !this.props.isMyWO
-            && !this.record.is_user_working
-            && this.record.employee_assigned_ids
-            && this.record.employee_assigned_ids.resIds.length < 14;
+    get showAssignedEmployees() {
+        return (
+            this.props.record.resModel === "mrp.workorder" &&
+            !this.props.isMyWO &&
+            !this.record.is_user_working &&
+            this.record.employee_assigned_ids &&
+            this.record.employee_assigned_ids.resIds.length < 14
+        );
     }
 
     subRecordProps(subRecord) {
@@ -275,6 +280,7 @@ export class MrpDisplayRecord extends Component {
     }
 
     onClickHeader() {
+        this.env.searchModel.removeMOFilter();
         return this.startWorking(true);
     }
 
@@ -369,6 +375,7 @@ export class MrpDisplayRecord extends Component {
             }
             this.state.underValidation = false;
         }
+        this.env.searchModel.removeMOFilter();
     }
 
     _doAction(action) {

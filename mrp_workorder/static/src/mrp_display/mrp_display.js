@@ -62,7 +62,7 @@ export class MrpDisplay extends Component {
         ) {
             this.pickingTypeId = this.props.context.active_id;
         }
-        useSubEnv({ localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}`});
+        useSubEnv({ localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}` });
 
         const localStoredWC = JSON.parse(localStorage.getItem(this.env.localStorageName));
         const firstLoad = !localStoredWC;
@@ -92,6 +92,11 @@ export class MrpDisplay extends Component {
                     }
                     await record.load();
                     await record.model.notify();
+                    for (let i = 0; i < this.model.root.records.length; i++) {
+                        if (this.model.root.records[i].resId == record.resId) {
+                            this.model.root.records[i] = record;
+                        }
+                    }
                 } else {
                     await this.model.root.load({
                         offset: this.state.offset,
@@ -200,10 +205,7 @@ export class MrpDisplay extends Component {
             }
             // 2. Check if there is a move with this product (WO/MO)
             for (const move of record.data.move_raw_ids.records) {
-                if (
-                    move.data.product_barcode === barcode &&
-                    move.data.manual_consumption
-                ) {
+                if (move.data.product_barcode === barcode && move.data.manual_consumption) {
                     return move.component.onClick();
                 }
             }

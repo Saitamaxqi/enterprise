@@ -71,4 +71,11 @@ export class MrpDisplaySearchModel extends SearchModel {
             this._notify();
         }
     }
+
+    removeMOFilter() {
+        const facet = this.facets.find((f) => f.type === "field");
+        if (facet) {
+            this.deactivateGroup(facet.groupId);
+        }
+    }
 }
