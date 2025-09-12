@@ -19,7 +19,6 @@ class HrVersion(models.Model):
         payslip = self.env['hr.payslip'].sudo().create({
             'employee_id': self.employee_id.id,
             'version_id': self.id,
-            'date_from': self.contract_date_start,
             'struct_id': self.structure_type_id.default_struct_id.id,
             'company_id': self.employee_id.company_id.id,
             'name': 'Payslip Simulation',
