@@ -54,7 +54,7 @@ class AccountMove(models.Model):
 
         all_statuses = self.env['account.audit.account.status'].search([
             ('account_id', 'in', self.line_ids.account_id.ids),
-            ('status', 'in', ('reviewed', 'supervised')),
+            ('status', 'in', (False, 'reviewed', 'supervised')),
         ])
 
         if not all_statuses:

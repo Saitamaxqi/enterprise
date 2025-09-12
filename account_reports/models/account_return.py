@@ -711,11 +711,21 @@ class AccountReturn(models.Model):
                             ('status', '!=', False),
                         ],
                     ).account_id
+                aml_count_by_accounts = dict(self.env['account.move.line']._read_group(
+                    domain=[
+                        ('date', '>=', record.date_from),
+                        ('date', '<=', record.date_to),
+                        ('parent_state', '=', 'posted'),
+                    ],
+                    groupby=['account_id'],
+                    aggregates=['id:count_distinct'],
+                ))
+
                 account_status_create_vals += [
                     {
                         'audit_id': record.id,
                         'account_id': account['id'],
-                        'status': 'todo' if account in previous_accounts_with_status else False,
+                        'status': 'todo' if (account in previous_accounts_with_status) or (account in aml_count_by_accounts) else False,
                     } for account in accounts
                 ]
         self.env['account.audit.account.status'].create(account_status_create_vals)
