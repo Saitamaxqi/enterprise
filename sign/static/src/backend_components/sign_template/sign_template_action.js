@@ -331,8 +331,11 @@ export class SignTemplate extends Component {
     }
 
     async fetchSignItemTypes() {
-        let domain = ['|', ['model_name', '=', false], ['model_name', '=', 'res.partner']];
-        const modelName = this.signTemplate.model_name;
+        let domain = [];
+        let modelName = this.signTemplate.model_name;
+        if (this.referenceDoc && !modelName) {
+            modelName = this.referenceDoc.split(',')[0];
+        }
         if (modelName) {
             domain = ['|', ['model_name', '=', false], ['model_name', 'in', [modelName, 'res.partner']]];
         }

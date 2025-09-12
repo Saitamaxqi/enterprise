@@ -33,15 +33,23 @@ export function useSignViewButtons() {
                 datas: (await getDataURLFromFile(file)).split(",")[1],
             }))
         );
+        const context = user.context;
+        if (referenceDoc) {
+            const modelName = referenceDoc.split(',')[0];
+            context['default_model_name'] = modelName;
+        }
         if (signTemplateId) {
             return await orm.call(
                 "sign.template",
                 "update_from_attachment_data",
                 [signTemplateId],
-                { attachment_data_list: files_list },
+                { attachment_data_list: files_list, context: context },
             );
         } else {
-            return await orm.call("sign.template", "create_from_attachment_data", [files_list, inactive]);
+            return await orm.call("sign.template", "create_from_attachment_data",
+                [files_list, inactive],
+                {context: context}
+            );
         }
     };
 

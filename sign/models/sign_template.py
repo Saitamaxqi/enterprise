@@ -149,8 +149,11 @@ class SignTemplate(models.Model):
             original_pdf_base64 = att_data.get('datas')
             if original_pdf_base64:
                 att_data['datas'] = flatten_pdf(original_pdf_base64)
-
-        template = self.create({
+        context = {**self.env.context}
+        if model_name := self.env.context.get('default_model_name'):
+            model = self.env['ir.model']._get(model_name)
+            context.update(default_model_id=model.id)
+        template = self.with_context(context).create({
             'name': attachment_data_list[0]['name'],
             'active': active,
         })
@@ -438,7 +441,6 @@ class SignTemplate(models.Model):
         attachment = self.env['ir.attachment'].browse(attachment_id).exists()
         if not attachment:
             raise UserError(_("Attachment not found."))
-
         attachment_data = {
             'name': attachment.name,
             'datas': attachment.datas,
