@@ -7425,16 +7425,6 @@ class AccountReportLine(models.Model):
 
         return group_lines
 
-    def _get_groupby_line_name(self, groupby_field_name, groupby_model, grouping_key):
-        # TODO master: remove this method as it is dead code
-        if groupby_model is None:
-            return grouping_key
-
-        if grouping_key is None:
-            return _("Unknown")
-
-        return self.env[groupby_model].browse(grouping_key).display_name
-
     def _parse_groupby(self, options, groupby_to_expand=None):
         """ Retrieves the information needed to handle the groupby feature on the current line.
 
