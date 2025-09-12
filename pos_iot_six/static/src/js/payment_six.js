@@ -27,8 +27,7 @@ export class PaymentSix extends PaymentInterfaceIot {
     getPaymentLineForMessage(order, data) {
         const line = order.getPaymentlineByUuid(data.cid);
         const terminalProxy = line?.payment_method_id.terminal_proxy;
-        const sessionId = this.env.services.iot_longpolling._session_id;
-        if (line && terminalProxy && data.owner === sessionId) {
+        if (line && terminalProxy) {
             return line;
         }
         return null;
