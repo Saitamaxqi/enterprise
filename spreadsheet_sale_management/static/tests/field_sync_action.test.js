@@ -74,6 +74,55 @@ describe("field sync action", () => {
         expect(model.getters.getGlobalFilterValue(filter.id)).toEqual({ operator: "in", ids: [1] });
     });
 
+    test("global filter initialized with orderId with old data version", async () => {
+        const spreadsheetId = 1;
+        const data = {
+            version: "18.4.14",
+            revisionId: "START_REVISION",
+            sheets: [{ id: "sheet1" }],
+            lists: {
+                1: {
+                    columns: [],
+                    domain: [],
+                    model: "sale.order.line",
+                    context: {},
+                    orderBy: [],
+                    id: "1",
+                    name: "Sale order lines",
+                    fieldMatching: {
+                        order_filter_id: {
+                            chain: "order_id",
+                            type: "many2one",
+                        },
+                    },
+                },
+            },
+            globalFilters: [
+                {
+                    id: "order_filter_id",
+                    type: "relation",
+                    label: "Sales Order",
+                    modelName: "sale.order",
+                },
+            ],
+        };
+        const orderId = 1;
+        SaleOrderSpreadsheet._records = [
+            {
+                id: spreadsheetId,
+                name: "My sale order spreadsheet",
+                spreadsheet_data: JSON.stringify(data),
+                order_id: orderId,
+            },
+        ];
+        const { model } = await mountSaleOrderSpreadsheetAction();
+        const [filter] = model.getters.getGlobalFilters();
+        expect(model.getters.getGlobalFilterValue(filter.id)).toEqual({
+            operator: "in",
+            ids: [orderId],
+        });
+    });
+
     test("auto resize list columns", async () => {
         onRpc(
             "/spreadsheet/data/sale.order.spreadsheet/*",

@@ -1,3 +1,4 @@
+import { load } from "@odoo/o-spreadsheet";
 import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { range } from "@web/core/utils/numbers";
@@ -67,6 +68,13 @@ export class SpreadsheetFieldSyncAction extends AbstractSpreadsheetAction {
     _initializeWith(data) {
         super._initializeWith(data);
         this.orderId = data.order_id;
+
+        // ensure the data is upgraded to the latest version
+        this.spreadsheetData = load(this.spreadsheetData);
+
+        // Then, update the filter directly in the raw data instead of later updating
+        // the model to avoid loading the list twice (without the filter, then again
+        // with the filter applied).
         const orderFilter = this.spreadsheetData.globalFilters?.find(
             (filter) => filter.modelName === "sale.order"
         );
