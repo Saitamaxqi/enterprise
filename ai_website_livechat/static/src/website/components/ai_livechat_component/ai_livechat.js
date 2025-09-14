@@ -150,9 +150,11 @@ export class AILivechatComponent extends Component {
 
     restorePositionAndWidthHeight() {
         const aiLivechatContainer = document.querySelector(this.SNIPPET_SELECTOR).querySelector('[data-name="ai_livechat_container"]');
+        const aiLivechatSnippetEl = document.querySelector(this.SNIPPET_SELECTOR);
         if(aiLivechatContainer){
-            aiLivechatContainer.classList.remove('o_ai_livechat_container');
+            aiLivechatContainer.classList.remove('o_ai_livechat_container', 'd-flex', 'flex-column');
         }
+        aiLivechatSnippetEl.classList.remove('s_ai_livechat_fullscreen');
     }
 
     hideOtherSnippets() {
@@ -171,9 +173,12 @@ export class AILivechatComponent extends Component {
 
     centerAndApplyWidthHeight() {
         const aiLivechatContainer = document.querySelector(this.SNIPPET_SELECTOR).querySelector('[data-name="ai_livechat_container"]');
+        const aiLivechatSnippetEl = document.querySelector(this.SNIPPET_SELECTOR);
         if(aiLivechatContainer){
-            aiLivechatContainer.classList.add('o_ai_livechat_container');
+            aiLivechatContainer.classList.add('o_ai_livechat_container', 'd-flex', 'flex-column');
         }
+        aiLivechatSnippetEl.classList.add('s_ai_livechat_fullscreen');
+        aiLivechatSnippetEl.scrollIntoView({ behavior: "smooth" });
     }
 
     onTextareaKeydown(ev) {

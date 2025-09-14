@@ -26,6 +26,7 @@
     <BuilderRow label.translate="URL" level="1" t-if="isActiveItem('aiLivechatFallbackButton')">
         <WebsiteUrlPicker action="'setFallbackButtonURL'" placeholder.translate="e.g. /contactus" default="''"/>
     </BuilderRow>
+    <hr/>
 </t>
 
 </templates>

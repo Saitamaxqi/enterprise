@@ -2,7 +2,7 @@ import { Plugin } from "@html_editor/plugin";
 import { registry } from "@web/core/registry";
 import { BuilderAction } from "@html_builder/core/builder_action";
 import { withSequence } from "@html_editor/utils/resource";
-import { after } from "@html_builder/utils/option_sequence";
+import { before } from "@html_builder/utils/option_sequence";
 import { WEBSITE_BACKGROUND_OPTIONS } from "@website/builder/option_sequence";
 import { AILivechatOption } from "./ai_livechat_option";
 
@@ -28,7 +28,7 @@ class AILivechatOptionPlugin extends Plugin {
     resources = {
         so_content_addition_selector: [".s_ai_livechat"],
         builder_options: [
-            withSequence(after(WEBSITE_BACKGROUND_OPTIONS), {
+            withSequence(before(WEBSITE_BACKGROUND_OPTIONS), {
                 OptionComponent: AILivechatOption,
                 template: "ai_website_livechat.AILivechatOption",
                 selector: ".s_ai_livechat",
@@ -49,6 +49,8 @@ class AILivechatOptionPlugin extends Plugin {
 
     async onSnippetDropped({ snippetEl }) {
         if (snippetEl.matches('.s_ai_livechat')) {
+            snippetEl.querySelector('.s_ai_livechat_preview').remove();
+
             const aiAgentId = await this.services.orm.search(
                 "ai.agent",
                 ["|", ["livechat_channel_rule_ids", "!=", false], ["used_on_website_snippet", "=", true]],
