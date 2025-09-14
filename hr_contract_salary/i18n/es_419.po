@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:33+0000\n"
+"POT-Creation-Date: 2025-09-12 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -55,12 +56,21 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <h2>Congratulations!</h2>\n"
-"                You can configure your salary package by clicking on the link below.<br/>\n"
+"                You can configure your salary package by clicking on the "
+"link below.<br/>\n"
 "                <t t-if=\"ctx.get('validity_end')\">\n"
-"                    The link will expire on <t t-out=\"ctx.get('validity_end')\"/>.\n"
+"                    The link will expire on <t t-"
+"out=\"ctx.get('validity_end')\"/>.\n"
 "                </t>\n"
 "                <div style=\"padding: 16px 0px 16px 0px;\">\n"
-"                    <a t-att-href=\"'/salary_package/simulation/offer/%s%s' % (                             ctx.get('offer_id'),                             ('?token=' + ctx.get('access_token')) if ctx.get('access_token') else ''                         )\" target=\"_blank\" t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;\">\n"
+"                    <a t-att-href=\"'/salary_package/simulation/offer/%s%s' "
+"% "
+"(                             ctx.get('offer_id'),                             "
+"('?token=' + ctx.get('access_token')) if ctx.get('access_token') else "
+"''                         )\" target=\"_blank\" t-attf-style=\"background-"
+"color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-"
+"decoration: none; color: {{object.company_id.email_primary_color or "
+"'#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;\">\n"
 "                        Configure your package\n"
 "                    </a>\n"
 "                </div>\n"
@@ -73,12 +83,20 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <h2>Congratulations!</h2>\n"
-"                You can configure your salary package by clicking on the link below.<br/>\n"
+"                You can configure your salary package by clicking on the "
+"link below.<br/>\n"
 "                <t t-if=\"ctx.get('validity_end')\">\n"
-"                    The link will expire on <t t-out=\"ctx.get('validity_end')\"/>.\n"
+"                    The link will expire on <t t-"
+"out=\"ctx.get('validity_end')\"/>.\n"
 "                </t>\n"
 "                <div style=\"padding: 16px 0px 16px 0px;\">\n"
-"                    <a t-attf-href=\"/salary_package/simulation/offer/{{ctx.get('offer_id')}}?token={{ctx.get('access_token')}}\" target=\"_blank\" t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;\">Configure your package</a>\n"
+"                    <a t-attf-href=\"/salary_package/simulation/offer/"
+"{{ctx.get('offer_id')}}?token={{ctx.get('access_token')}}\" "
+"target=\"_blank\" t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: "
+"none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; "
+"padding: 8px 16px 8px 16px; border-radius: 5px;\">Configure your package</"
+"a>\n"
 "                </div>\n"
 "            </div>\n"
 "        "
@@ -163,10 +181,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_benefit_view_form
 msgid ""
 "<span>\n"
-"                                    This field can only be modified by a server administrator, contact them if these field requires modifications.\n"
+"                                    This field can only be modified by a "
+"server administrator, contact them if these field requires modifications.\n"
 "                                </span>\n"
-"                                <span invisible=\"requested_documents_fields_string\">\n"
-"                                    There are currently no requested fields.\n"
+"                                <span "
+"invisible=\"requested_documents_fields_string\">\n"
+"                                    There are currently no requested "
+"fields.\n"
 "                                </span>"
 msgstr ""
 
@@ -275,15 +296,6 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_employee__wage_with_holidays
-#: model:ir.model.fields,help:hr_contract_salary.field_hr_version__wage_with_holidays
-msgid ""
-"Adapted salary, according to the sacrifices defined on the contract "
-"(Example: Extra-legal time off, a percentage of the salary invested in a "
-"group insurance, etc...)"
-msgstr ""
-
-#. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_benefit_view_form
 msgid "Add a line"
 msgstr ""
@@ -323,8 +335,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_contract_salary/models/hr_applicant.py:0
 msgid ""
-"An %(offer)s for the applicant %(applicant_name)s has been created by "
-"%(user)s."
+"An %(offer)s for the applicant %(applicant_name)s has been created by %"
+"(user)s."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -507,8 +519,10 @@ msgstr ""
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__activity_creation
 msgid ""
 "Choose when the activity is created:\n"
-"- Employee signs his contract: Activity is created as soon as the employee signed the contract\n"
-"- Contract is countersigned: HR responsible have signed the contract and conclude the process."
+"- Employee signs his contract: Activity is created as soon as the employee "
+"signed the contract\n"
+"- Contract is countersigned: HR responsible have signed the contract and "
+"conclude the process."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -781,8 +795,8 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_job__contract_template_id
 msgid ""
-"Default contract used to generate an offer. If empty, benefits will be taken"
-" from current contract of the employee/nothing for an applicant."
+"Default contract used to generate an offer. If empty, benefits will be taken "
+"from current contract of the employee/nothing for an applicant."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -805,16 +819,20 @@ msgstr ""
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__activity_creation_type
 msgid ""
 "Define when the system creates a new activity:\n"
-"- When the benefit is set: Unique creation the first time the employee will take the benefit\n"
-"- When the benefit is modified: Activity will be created for each change regarding the benefit."
+"- When the benefit is set: Unique creation the first time the employee will "
+"take the benefit\n"
+"- When the benefit is modified: Activity will be created for each change "
+"regarding the benefit."
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__sign_frenquency
 msgid ""
 "Define when the system creates a new sign request:\n"
-"- When the benefit is set: Unique signature request the first time the employee will take the benefit\n"
-"- When the benefit is modified: Signature request will be created for each change regarding the benefit."
+"- When the benefit is set: Unique signature request the first time the "
+"employee will take the benefit\n"
+"- When the benefit is modified: Signature request will be created for each "
+"change regarding the benefit."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -1277,7 +1295,10 @@ msgstr ""
 #: model_terms:hr.contract.salary.benefit,description:hr_contract_salary.benefit_extra_time_off
 msgid ""
 "In addition to your legal leaves, you can chose up to 30 extra days off.\n"
-"            The amount of annual time off (legal leaves) you get depends on your work schedule in the previous year. A full-time work schedule through the 12 months of the last year, under your contract, will grant you 20 annual time off (legal leaves)."
+"            The amount of annual time off (legal leaves) you get depends on "
+"your work schedule in the previous year. A full-time work schedule through "
+"the 12 months of the last year, under your contract, will grant you 20 "
+"annual time off (legal leaves)."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -1447,8 +1468,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_contract_salary/models/hr_contract_salary_personal_info.py:0
 msgid ""
-"Mismatch between res_field_id %(field)s and model %(model)s for info "
-"%(personal_info)s"
+"Mismatch between res_field_id %(field)s and model %(model)s for info %"
+"(personal_info)s"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -1739,7 +1760,8 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:hr_contract_salary.hr_contract_salary_offer_action
 msgid ""
 "Offers are sent to employee with a predefined selection of data.\n"
-"                It allows to reflect on the proposition and discuss it.<br><br>"
+"                It allows to reflect on the proposition and discuss it."
+"<br><br>"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -1864,8 +1886,10 @@ msgid ""
 "Fixed value: Set a determined value static for all links\n"
 "Employee Record value: Get the value from a field on the Employee Record\n"
 "Payslip value: Get the value from a field on the payslip record\n"
-"Sum of Benefits value: You can pick in all benefits and compute a sum of them\n"
-"Monthly Total: The information will be a total of all the information in the category Monthly Benefits"
+"Sum of Benefits value: You can pick in all benefits and compute a sum of "
+"them\n"
+"Monthly Total: The information will be a total of all the information in the "
+"category Monthly Benefits"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -2203,15 +2227,16 @@ msgstr ""
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_sign_document_wizard__sign_template_ids
 msgid ""
 "Select only documents with either 1 or 2 different signatories.\n"
-"        Documents with 1 signatory require only the employee's signature, while those with 2 signatories require signatures from both the employee and the HR responsible.\n"
+"        Documents with 1 signatory require only the employee's signature, "
+"while those with 2 signatories require signatures from both the employee and "
+"the HR responsible.\n"
 "        "
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__benefit_ids
 msgid ""
-"Select other Benefits that need to be selected to make this Benefit "
-"available"
+"Select other Benefits that need to be selected to make this Benefit available"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -2505,8 +2530,7 @@ msgstr ""
 #. module: hr_contract_salary
 #. odoo-python
 #: code:addons/hr_contract_salary/models/sign_request.py:0
-msgid ""
-"The offer has been cancelled due to the signature request cancellation."
+msgid "The offer has been cancelled due to the signature request cancellation."
 msgstr ""
 
 #. module: hr_contract_salary
@@ -2649,15 +2673,15 @@ msgid "Wage"
 msgstr ""
 
 #. module: hr_contract_salary
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__wage_with_holidays
-#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_version__wage_with_holidays
-msgid "Wage With Sacrifices"
-msgstr ""
-
-#. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__wage_on_signature
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_version__wage_on_signature
 msgid "Wage on Signature"
+msgstr ""
+
+#. module: hr_contract_salary
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__wage_with_holidays
+#: model:ir.model.fields,field_description:hr_contract_salary.field_hr_version__wage_with_holidays
+msgid "Wage with Holidays"
 msgstr ""
 
 #. module: hr_contract_salary
@@ -2801,13 +2825,13 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer_applicant
 msgid ""
-"{{ object.company_id.name }}: Job Offer - {{ "
-"object.applicant_id.partner_name }}"
+"{{ object.company_id.name }}: Job Offer - "
+"{{ object.applicant_id.partner_name }}"
 msgstr ""
 
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer
 msgid ""
-"{{ object.company_id.name }}: Job Offer - {{ object.employee_version_id.name"
-" }}"
+"{{ object.company_id.name }}: Job Offer - "
+"{{ object.employee_version_id.name }}"
 msgstr ""

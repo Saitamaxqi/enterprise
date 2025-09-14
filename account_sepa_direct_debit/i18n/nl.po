@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa_direct_debit
+# * account_sepa_direct_debit
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2022
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"account_sepa_direct_debit/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -162,6 +164,11 @@ msgstr "Alle betalingen in de batch moeten hetzelfde SDD-schema hebben."
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "As part of your rights, you are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. Your rights are explained in a statement that you can obtain from your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited."
 msgstr ""
+"Als onderdeel van je rechten heb je recht op terugbetaling door je bank "
+"onder de voorwaarden van de overeenkomst met je bank. Je rechten staan "
+"beschreven in een verklaring die je kunt opvragen bij je bank. Een "
+"terugbetaling moet worden aangevraagd binnen 8 weken vanaf de datum waarop "
+"je rekening is afgeschreven."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_attachment_count
@@ -208,7 +215,7 @@ msgstr "Annuleren"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Close"
-msgstr "Sluiten"
+msgstr "Afsluiten"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__sdd_mandate__state__closed
@@ -239,7 +246,7 @@ msgstr "Bedrijf waarvoor het mandaat gebruikt kan worden."
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_partner
@@ -309,7 +316,9 @@ msgstr "Datum vanaf wanneer het mandaat gebruikt kan worden (inclusief)."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__end_date
 msgid "Date until which the mandate can be used. It will automatically be closed after this date."
-msgstr "Datum tot wanneer het mandaat kan worden gebruikt. Het wordt automatisch gesloten na deze datum."
+msgstr ""
+"Datum t/m wanneer het mandaat kan worden gebruikt. Het wordt automatisch "
+"gesloten na deze datum."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
@@ -353,7 +362,7 @@ msgstr "Incassobetalingen te innen"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__display_name
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr "Schermnaam"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__sdd_mandate__state__draft
@@ -375,7 +384,7 @@ msgstr "Einddatum"
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_partner__sdd_mandate_ids
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_users__sdd_mandate_ids
 msgid "Every mandate belonging to this partner."
-msgstr "Elk mandaat van deze relatie"
+msgstr "Elk mandaat van deze partner."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_follower_ids
@@ -385,7 +394,7 @@ msgstr "Volgers"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Volgers (Relaties)"
+msgstr "Volgers (Partners)"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__activity_type_icon
@@ -435,7 +444,7 @@ msgstr "Identificatiecode"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__name
 msgid "Identifier"
-msgstr "Identificatie "
+msgstr "Identifier"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_needaction
@@ -446,7 +455,7 @@ msgstr "Indien aangevinkt vragen nieuwe berichten je aandacht."
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_has_error
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Indien aangevinkt hebben sommige leveringen een fout."
+msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -458,7 +467,7 @@ msgstr "Ongeldige identificator crediteur. Controleer of je geen typefout heeft 
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/res_company.py:0
 msgid "Invalid creditor identifier. Wrong format."
-msgstr "Ongeldige identificator crediteur: Verkeerd formaat"
+msgstr "Ongeldige identifier crediteur: Verkeerd formaat."
 
 #. module: account_sepa_direct_debit
 #: model:mail.message.subtype,description:account_sepa_direct_debit.sdd_mt_invoice_paid_with_mandate
@@ -535,7 +544,7 @@ msgstr "Mandaat formulier"
 #. module: account_sepa_direct_debit
 #: model:ir.model.constraint,message:account_sepa_direct_debit.constraint_sdd_mandate_name_unique
 msgid "Mandate identifier must be unique! Please choose another one."
-msgstr ""
+msgstr "De identificatiecode van het mandaat moet uniek zijn! Kies een andere."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.server,name:account_sepa_direct_debit.sdd_mandate_state_cron_ir_actions_server
@@ -570,7 +579,7 @@ msgstr "Volgende activiteit deadline"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_summary
 msgid "Next Activity Summary"
-msgstr "Omschrijving volgende actie"
+msgstr "Volgende activiteit overzicht"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_type_id
@@ -659,7 +668,7 @@ msgstr "Oeps! Geen geldige SEPA-machtiging voor deze klant."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
 msgid "Open this partner's mandates"
-msgstr "Open de mandaten van deze relatie"
+msgstr "Open de mandaten van deze partner"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
@@ -727,12 +736,13 @@ msgstr "Afdrukken"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Beoordelingen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_batch_booking
 msgid "Request batch booking from the bank for the related bank statements."
-msgstr "Vraag batchboekingen van de bank voor de gerelateerde bankafschriften."
+msgstr ""
+"Vraag batch boekingen van de bank voor de gerelateerde rekeningafschriften."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
@@ -809,7 +819,7 @@ msgstr "SDD-regeling is ingesteld op het mandaat van de klant."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA Business-to-Business Direct Debit Mandate"
-msgstr ""
+msgstr "SEPA Business-to-Business Incasso Machtiging"
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd
@@ -884,7 +894,7 @@ msgid ""
 msgstr ""
 "Status gebaseerd op activiteiten\n"
 "Te laat: Datum is al gepasseerd\n"
-"Vandaag: Activiteit datum is vandaag\n"
+"Vandaag: Datum van activiteit is vandaag\n"
 "Gepland: Toekomstige activiteiten."
 
 #. module: account_sepa_direct_debit
@@ -923,7 +933,9 @@ msgstr "De crediteur identificator is langer dan de maximale lengte van 35 karak
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "The debtor identifier you specified exceeds the limitation of 35 characters imposed by SEPA regulation"
-msgstr "De debiteur identificator die je hebt ingegeven heeft te veel karakters, het SEPA limiet is 35 karakters."
+msgstr ""
+"De debiteur Identifier die je hebt ingegeven heeft te veel karakters, het "
+"SEPA limiet is 35 karakters"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -980,6 +992,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "This mandate is only intended for business-to-business transactions. You are not entitled to a refund from your bank after your account has been debited, but you are entitled to request your bank not to debit your account up until the day on which the payment is due."
 msgstr ""
+"Deze machtiging is alleen bedoeld voor business-to-business transacties. Je "
+"hebt geen recht op terugbetaling door de bank nadat je rekening is "
+"afgeschreven, maar je kunt je bank wel verzoeken om geen afschrijving van je "
+"rekening te doen tot de dag waarop de betaling verschuldigd is."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1009,12 +1025,13 @@ msgstr "Proberen een automatisch incasso XML bestand te maken voor betalingen me
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Trying to register a payment on a mandate belonging to a different partner."
-msgstr "Proberen een betaling te registreren op een mandaat van een andere relatie."
+msgstr ""
+"Proberen een betaling te registreren op een mandaat van een andere partner."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Type van activiteit uitzondering op record."
+msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1030,7 +1047,7 @@ msgstr "Bevestigen"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Validity"
-msgstr "Geldigheid"
+msgstr "Geldig t/m"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__website_message_ids
@@ -1040,7 +1057,7 @@ msgstr "Websiteberichten"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__website_message_ids
 msgid "Website communication history"
-msgstr "Website communicatiegeschiedenis"
+msgstr "Website communicatie geschiedenis"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1058,7 +1075,10 @@ msgstr "Je kunt in geen SEPA-incassobestand genereren met een vereiste collectie
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Your company must have a creditor identifier in order to issue SEPA Direct Debit payments requests. It can be defined in accounting module's settings."
-msgstr "Jouw bedrijf moet een crediteur identificator hebben om SEPA automatische incasso betalingen te versturen. Het kan ingesteld worden in het instellingen van de boekhouding module."
+msgstr ""
+"Je bedrijf moet een crediteur identificator hebben om SEPA automatische "
+"incasso betalingen te versturen. Het kan ingesteld worden in het "
+"instellingen van de boekhouding module."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form

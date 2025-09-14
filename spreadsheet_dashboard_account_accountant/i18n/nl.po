@@ -1,198 +1,202 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_account_accountant
+# * spreadsheet_dashboard_account_accountant
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_account_accountant/nl/>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "(Net sales - Total expenses) / Net sales"
-msgstr ""
+msgstr "(Netto-omzet - Totale kosten) / Netto-omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "(Net sales – COGS) / Net sales"
-msgstr ""
+msgstr "(Netto-omzet – Inkoopwaarde) / Netto-omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 0.7: company might be stuck with non liquid assets"
-msgstr ""
+msgstr "< 0,7: bedrijf zit mogelijk vast met niet-liquide activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 0.8: income might be too low"
-msgstr ""
+msgstr "< 0,8: omzet is mogelijk te laag"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 0: company might not be able to meet obligations"
-msgstr ""
+msgstr "< 0: bedrijf kan mogelijk niet aan verplichtingen voldoen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 1: weak financial performance"
-msgstr ""
+msgstr "< 1: zwakke financiële prestaties"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 2.5: mature company who accumulated a lot of money"
-msgstr ""
+msgstr "< 2.5: volwassen bedrijf dat veel geld heeft verzameld"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 20%: hard to become profitable"
-msgstr ""
+msgstr "< 20%: moeilijk winstgevend te worden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 3%: not efficient at generating business"
-msgstr ""
+msgstr "< 3%: niet efficiënt in het genereren van business"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 45: company gets paid for sales quickly"
-msgstr ""
+msgstr "< 45: het bedrijf wordt snel betaald voor verkopen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 45: company liquidates debts to suppliers quickly"
-msgstr ""
+msgstr "< 45: het bedrijf vereffent snel schulden aan leveranciers"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "< 5%: not efficient at operating business"
-msgstr ""
+msgstr "< 5%: niet efficiënt in bedrijfsvoering"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 0: company can meet financial obligations at any time"
-msgstr ""
+msgstr "> 0: bedrijf kan op elk moment aan financiële verplichtingen voldoen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 1.5: strong financial performance"
-msgstr ""
+msgstr "> 1.5: sterke financiële prestaties"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 10%: very efficient"
-msgstr ""
+msgstr "> 10%: zeer efficiënt"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 10%: very efficient at operating business"
-msgstr ""
+msgstr "> 10%: zeer efficiënt in bedrijfsvoering"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 1: company in highly solvent position"
-msgstr ""
+msgstr "> 1: bedrijf in sterk solvabele positie"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 1: income allow to meet financial obligations"
-msgstr ""
+msgstr "> 1: omzet om aan financiële verplichtingen te kunnen voldoen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 50%: hugely profitable business"
-msgstr ""
+msgstr "> 50%: enorm winstgevende onderneming"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 5: company owns a lot of debt and not of a lot of own money"
-msgstr ""
+msgstr "> 5: bedrijf heeft veel schulden en niet veel eigen geld"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 60: company might not get paid for sales quickly enough"
-msgstr ""
+msgstr "> 60: het bedrijf wordt mogelijk niet snel genoeg betaald voor verkopen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "> 70: company might be slow to pay suppliers"
-msgstr ""
+msgstr "> 70: het bedrijf kan leveranciers traag betalen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Account type"
-msgstr ""
+msgstr "Rekeningsoort"
 
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_accounting
 msgid "Accounting"
-msgstr ""
+msgstr "Boekhouding"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Accounts"
-msgstr ""
+msgstr "Rekeningen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Aggregate"
-msgstr ""
+msgstr "Totaliseren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -200,239 +204,239 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Average creditors days"
-msgstr ""
+msgstr "Gemiddeld aantal dagen crediteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Average debtor days"
-msgstr ""
+msgstr "Gemiddeld aantal dagen debiteur"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Average debtors days"
-msgstr ""
+msgstr "Gemiddeld aantal dagen debiteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Average payable days"
-msgstr ""
+msgstr "Gemiddeld aantal dagen om te betalen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Balance sheet"
-msgstr ""
+msgstr "Balans"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Bank and Cash"
-msgstr ""
+msgstr "Bank en kas"
 
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_benchmark
 msgid "Benchmark"
-msgstr ""
+msgstr "Benchmark"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Best if compared with competitors"
-msgstr ""
+msgstr "Beste in vergelijking met concurrenten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "COGS"
-msgstr ""
+msgstr "COGS"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Cash"
-msgstr ""
+msgstr "Kas"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash asset ratio"
-msgstr ""
+msgstr "Liquiditeitsratio"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Cash flow"
-msgstr ""
+msgstr "Geldstroom"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Cash flow / Current liabilities"
-msgstr ""
+msgstr "Kasstroom / Kortlopende schulden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Cash flow ratio"
-msgstr ""
+msgstr "Kasstroomverhouding"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash received"
-msgstr ""
+msgstr "Geld ontvangen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash spent"
-msgstr ""
+msgstr "Geld uitgegegven"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash surplus"
-msgstr ""
+msgstr "Kasoverschot"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Closing bank balance"
-msgstr ""
+msgstr "Eindsaldo"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Cost of Revenue"
-msgstr ""
+msgstr "Kosten van omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cost of revenue"
-msgstr ""
+msgstr "Kostprijs van de omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Credit Card"
-msgstr ""
+msgstr "Creditcard"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current Assets"
-msgstr ""
+msgstr "Vlottende activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current Liabilities"
-msgstr ""
+msgstr "Kort vreemd vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current assets / Current liabilities"
-msgstr ""
+msgstr "Huidige activa huidige passiva"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Current assets to liabilities"
-msgstr ""
+msgstr "Vlottende activa / Vlottende passiva"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current assets – Current liabilities"
-msgstr ""
+msgstr "Huidige activa – huidige passiva"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Current expense"
-msgstr ""
+msgstr "Huidige kosten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Current income"
-msgstr ""
+msgstr "Huidig omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current ratio"
-msgstr ""
+msgstr "Huidige verhouding"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Debt ratio"
-msgstr ""
+msgstr "Schuldratio"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Debt to Equity"
-msgstr ""
+msgstr "Schuld t.o.v. eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Debt-to-equity"
-msgstr ""
+msgstr "Schuld-naar-eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Depreciation"
-msgstr ""
+msgstr "Afschrijving"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "EBIT / Net sales"
-msgstr ""
+msgstr "EBIT / Netto-omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Equity"
-msgstr ""
+msgstr "Eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -440,33 +444,33 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Expenses"
-msgstr ""
+msgstr "Kosten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Financial balance"
-msgstr ""
+msgstr "Financieel evenwicht"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Financial independence"
-msgstr ""
+msgstr "Financiële onafhankelijkheid"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Vaste activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Formula"
-msgstr ""
+msgstr "Formule"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -474,7 +478,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Gross profit"
-msgstr ""
+msgstr "Bruto winst"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -482,7 +486,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Gross profit margin"
-msgstr ""
+msgstr "Brutowinstmarge"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -490,75 +494,75 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Income"
-msgstr ""
+msgstr "Omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Invoiced"
-msgstr ""
+msgstr "Gefactureerd"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "KPIS"
-msgstr ""
+msgstr "KPI's"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Liquidity"
-msgstr ""
+msgstr "Liquiditeit"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Long term working capital"
-msgstr ""
+msgstr "Werkkapitaal op lange termijn"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Month"
-msgstr ""
+msgstr "Maand"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Month-Year"
-msgstr ""
+msgstr "Maand jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net Credit Purchases / Average accounts payable balance for period"
-msgstr ""
+msgstr "Netto kredietaankopen / gemiddeld crediteurensaldo voor periode"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Net assets"
-msgstr ""
+msgstr "Netto vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net income / Revenue"
-msgstr ""
+msgstr "Netto omzet / omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -566,7 +570,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net profit"
-msgstr ""
+msgstr "Netto winst"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -574,118 +578,118 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net profit margin"
-msgstr ""
+msgstr "Netto winstmarge"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net sales"
-msgstr ""
+msgstr "Netto omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Non-current Assets"
-msgstr ""
+msgstr "Langlopende activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Non-current Liabilities"
-msgstr ""
+msgstr "Lang vreemd vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Off-Balance Sheet"
-msgstr ""
+msgstr "Niet opgenomen in balans"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -1 - Month"
-msgstr ""
+msgstr "Offset -1 - Maand"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -1 - Month-Year"
-msgstr ""
+msgstr "Offset -1 - Maand-Jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -1 - Start date"
-msgstr ""
+msgstr "Offset -1 - Startdatum"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -1 - Year"
-msgstr ""
+msgstr "Offset -1 - Jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -4 - Month"
-msgstr ""
+msgstr "Offset -4 - Maand"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -4 - Month-Year"
-msgstr ""
+msgstr "Offset -4 - Maand-Jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -4 - Start date"
-msgstr ""
+msgstr "Offset -4 - Startdatum"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Offset -4 - Year"
-msgstr ""
+msgstr "Offset -4 - Jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Operating margin"
-msgstr ""
+msgstr "Operationele marge"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Other Income"
-msgstr ""
+msgstr "Overige opbrengsten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Other variables"
-msgstr ""
+msgstr "Andere variabelen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Payable"
-msgstr ""
+msgstr "Crediteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -694,76 +698,76 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Payables"
-msgstr ""
+msgstr "Crediteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Payables / Expenses * 30"
-msgstr ""
+msgstr "Te betalen / Kosten * 30"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Performance"
-msgstr ""
+msgstr "Prestaties"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Permanence"
-msgstr ""
+msgstr "Permanentie"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Position"
-msgstr ""
+msgstr "Positie"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Prepayments"
-msgstr ""
+msgstr "Vooruitbetalingen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Previous expense"
-msgstr ""
+msgstr "Vorige uitgave"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Previous income"
-msgstr ""
+msgstr "Vorige omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Profitability"
-msgstr ""
+msgstr "Winstgevendheid"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Quick assets"
-msgstr ""
+msgstr "Snelle activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Quick assets / Current liabilities"
-msgstr ""
+msgstr "Snelle activa / Kortlopende schulden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -771,7 +775,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Quick ratio"
-msgstr ""
+msgstr "Snelle verhouding"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -779,7 +783,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Receivable"
-msgstr ""
+msgstr "Debiteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -788,130 +792,130 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Receivables"
-msgstr ""
+msgstr "Debiteuren"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Receivables / Income * 30"
-msgstr ""
+msgstr "Vorderingen / omzet * 30"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Return on equity"
-msgstr ""
+msgstr "Rendement op eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Return on investments"
-msgstr ""
+msgstr "Rendement op investeringen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Sales on account / Average accounts receivable balance for period"
-msgstr ""
+msgstr "Verkoop op rekening / Gemiddeld debiteurensaldo voor periode"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Short term cash forecast"
-msgstr ""
+msgstr "Korte termijn kasprognose"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Solvency"
-msgstr ""
+msgstr "Solvabiliteit"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Start date"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Technical name"
-msgstr ""
+msgstr "Technische naam"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total Current assets"
-msgstr ""
+msgstr "Totaal vlottende activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total Current liabilities"
-msgstr ""
+msgstr "Totaal kortlopende schulden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total assets"
-msgstr ""
+msgstr "Totale activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total expense"
-msgstr ""
+msgstr "Totale uitgaven"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total income"
-msgstr ""
+msgstr "Totaal inkomen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total liabilities"
-msgstr ""
+msgstr "Totale verplichtingen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total liabilities / Total shareholders’ equity"
-msgstr ""
+msgstr "Totaal verplichtingen / Totaal eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Total shareholder's equity"
-msgstr ""
+msgstr "Totaal eigen vermogen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Value"
-msgstr ""
+msgstr "Waarde"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Very dependent on the sector"
-msgstr ""
+msgstr "Zeer afhankelijk van de sector"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -919,7 +923,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Working capital"
-msgstr ""
+msgstr "Werkkapitaal"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -927,62 +931,62 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Year"
-msgstr ""
+msgstr "Jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Year Filter"
-msgstr ""
+msgstr "Filter op jaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "bank and cash"
-msgstr ""
+msgstr "bank en contant geld"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "cost of revenue"
-msgstr ""
+msgstr "kostprijs van de omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "expenses + depreciation + cost of revenue"
-msgstr ""
+msgstr "kosten + afschrijvingen + kostprijs van de omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "income"
-msgstr ""
+msgstr "omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "income + other income"
-msgstr ""
+msgstr "omzet + overige omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "last period"
-msgstr ""
+msgstr "vorige periode"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "net sales - COGS"
-msgstr ""
+msgstr "netto-omzet - inkoopwaarde"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -991,41 +995,43 @@ msgstr ""
 msgid ""
 "number of times you can pay off current debts with cash generated per year"
 msgstr ""
+"aantal keren dat je lopende schulden kunt afbetalen met contant geld dat per "
+"jaar wordt gegenereerd"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "payable"
-msgstr ""
+msgstr "betaalbaar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "payable + credit card + current liabilities"
-msgstr ""
+msgstr "te betalen + creditcard / kortlopende schulden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "payable + credit card + current liabilities + non-current liabilities"
-msgstr ""
+msgstr "te betalen + creditcard + kortlopende schulden + langlopende schulden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issue in COGS (Cost of Goods sold)"
-msgstr ""
+msgstr "mogelijke problemen met kostprijs van de omzet"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issue in direct and indirect costs"
-msgstr ""
+msgstr "mogelijk probleem in directe en indirecte kosten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1034,6 +1040,8 @@ msgstr ""
 msgid ""
 "possible issue in payment terms agreement with clients to get paid faster"
 msgstr ""
+"mogelijk probleem in betaalvoorwaarden met klanten om sneller betaald te "
+"worden"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1042,20 +1050,22 @@ msgstr ""
 msgid ""
 "possible issue in providers payments, could lead to loss of suppliers trust"
 msgstr ""
+"mogelijk probleem bij betalingen van leveranciers, kan leiden tot verlies "
+"van vertrouwen van leveranciers"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issue in ressources allocation or missed growth opportunities"
-msgstr ""
+msgstr "mogelijk probleem bij toewijzing van middelen of gemiste groeikansen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issue in the business model"
-msgstr ""
+msgstr "mogelijk probleem in het bedrijfsmodel"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1063,20 +1073,21 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issue with asset distribution and cash availability"
 msgstr ""
+"mogelijk probleem met activadistributie en beschikbaarheid van contanten"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "possible issues in cash availability at short term"
-msgstr ""
+msgstr "mogelijke problemen in contante beschikbaarheid op korte termijn"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "receivable"
-msgstr ""
+msgstr "te ontvangen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1086,45 +1097,47 @@ msgid ""
 "receivable + bank and cash + current assets + non-current assets + "
 "prepayments + fixed assets"
 msgstr ""
+"vordering + bank en geld + vlottende activa + vaste activa + "
+"vooruitbetalingen + vaste activa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "receivable + bank and cash + current assets + prepayments"
-msgstr ""
+msgstr "vorderingen + bank en geld + vlottende activa + vooruitbetalingen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "receivable + bank and cash + prepayments"
-msgstr ""
+msgstr "vorderingen + bank en geld + vooruitbetalingen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "to pay"
-msgstr ""
+msgstr "te betalen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "to receive"
-msgstr ""
+msgstr "te ontvangen"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "total assets - total liabilities"
-msgstr ""
+msgstr "totale activa - totale passiva"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "total income - total expense"
-msgstr ""
+msgstr "totale omzet - totale kosten"

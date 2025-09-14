@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_intrastat
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:46+0000\n"
+"POT-Creation-Date: 2025-09-13 21:43+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_intrastat
@@ -55,12 +56,30 @@ msgstr "百件"
 msgid ""
 "<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Values set here are "
 "company-specific.\"/>"
-msgstr "<span class=\"fa fa-lg fa-building-o ms-2\" title=\"此處設定的值是特定於每間公司的。\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o ms-2\" title=\"此處設定的值是特定於每間"
+"公司的。\"/>"
+
+#. module: account_intrastat
+#: model:ir.model.fields,field_description:account_intrastat.field_product_product__account_fiscal_country_group_codes
+#: model:ir.model.fields,field_description:account_intrastat.field_product_template__account_fiscal_country_group_codes
+msgid "Account Fiscal Country Group Codes"
+msgstr ""
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_line_tree_view_account_intrastat_transaction_codes
 msgid "Account move line"
 msgstr "賬戶分錄資料行"
+
+#. module: account_intrastat
+#: model:ir.model,name:account_intrastat.model_account_return
+msgid "Accounting Return"
+msgstr ""
+
+#. module: account_intrastat
+#: model:ir.model,name:account_intrastat.model_account_return_type
+msgid "Accounting Return Type"
+msgstr ""
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.view_intrastat_code_search
@@ -122,6 +141,12 @@ msgid "Commodity Code"
 msgstr "商品代碼"
 
 #. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Commodity codes configuration"
+msgstr ""
+
+#. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_res_company
 msgid "Companies"
 msgstr "公司"
@@ -139,7 +164,6 @@ msgstr "配置設定"
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_country_code
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_country_code
-#: model:ir.model,name:account_intrastat.model_res_country
 msgid "Country"
 msgstr "國家"
 
@@ -178,13 +202,32 @@ msgstr "派遣"
 #: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_services_report_handler__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return__display_name
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__display_name
-#: model:ir.model.fields,field_description:account_intrastat.field_res_country__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Exclude any domestic or extra-EU sales from the Intrastat report."
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Exclude sales made to private individuals from the listing."
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Exclude services from the report."
+msgstr ""
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -209,11 +252,12 @@ msgstr "有國家/地區區域"
 #: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_services_report_handler__id
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move__id
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return__id
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__id
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__id
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__id
 #: model:ir.model.fields,field_description:account_intrastat.field_res_company__id
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__id
-#: model:ir.model.fields,field_description:account_intrastat.field_res_country__id
 msgid "ID"
 msgstr "識別號"
 
@@ -230,7 +274,9 @@ msgstr "國際貿易術語"
 #. module: account_intrastat
 #: model:account.report.line,name:account_intrastat.intrastat_line
 #: model:account.report.line,name:account_intrastat.intrastat_line_services
+#: model:ir.actions.client,name:account_intrastat.action_account_report_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move_line__intrastat_transaction_id
+#: model:ir.ui.menu,name:account_intrastat.menu_action_account_report_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.invoice_form_inherit_account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_product_form_view_inherit_account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
@@ -280,12 +326,6 @@ msgid "Intrastat Goods Report Custom Handler"
 msgstr "Intrastat 貨物報告自訂處理程式"
 
 #. module: account_intrastat
-#: model:ir.actions.client,name:account_intrastat.action_account_report_intrastat
-#: model:ir.ui.menu,name:account_intrastat.menu_action_account_report_intrastat
-msgid "Intrastat Report"
-msgstr "Intrastat 報表"
-
-#. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_report_handler
 msgid "Intrastat Report Custom Handler"
 msgstr "Intrastat 報表自訂處理程式"
@@ -306,6 +346,12 @@ msgid "Intrastat Supplementary Unit Amount"
 msgstr "Intrastat 補充單位數量"
 
 #. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Intrastat Thresholds"
+msgstr ""
+
+#. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_bank_statement_line__intrastat_transport_mode_id
 #: model:ir.model.fields,field_description:account_intrastat.field_account_move__intrastat_transport_mode_id
 msgid "Intrastat Transport Mode"
@@ -323,15 +369,18 @@ msgid "Intrastat country, arrival for sales, dispatch for purchases"
 msgstr "Intrastat 國家（銷售：送貨目的地；採購：發貨地）"
 
 #. module: account_intrastat
-#: model:ir.model.fields,field_description:account_intrastat.field_res_country__intrastat
-msgid "Intrastat member"
-msgstr "Intrastat 成員"
-
-#. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_res_company__intrastat_region_id
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__intrastat_region_id
 msgid "Intrastat region"
 msgstr "Intrastat 區域"
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid ""
+"Intrastat thresholds may change annually. Verify that your transactions "
+"exceed the threshold for reporting."
+msgstr ""
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_line_tree_view_account_intrastat_transaction_codes
@@ -362,6 +411,12 @@ msgid "Invoice Lines"
 msgstr "發票資料行"
 
 #. module: account_intrastat
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return__is_intrastat_return
+#: model:ir.model.fields,field_description:account_intrastat.field_account_return_type__is_intrastat_return_type
+msgid "Is an Intrastat Return Type"
+msgstr ""
+
+#. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_tree_view_account_intrastat_transport_codes
 msgid "Journal Entries"
 msgstr "日記賬記項"
@@ -389,9 +444,22 @@ msgid "Missing product"
 msgstr "缺漏產品"
 
 #. module: account_intrastat
-#: model:res.country,name:account_intrastat.xi
-msgid "Northern Ireland"
-msgstr "北愛爾蘭"
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Only business customers"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Only goods included"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Only intra-EU transactions"
+msgstr ""
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -446,6 +514,11 @@ msgstr "產品款式"
 #: model_terms:ir.ui.view,arch_db:account_intrastat.view_intrastat_code_search
 msgid "Region"
 msgstr "地區"
+
+#. module: account_intrastat
+#: model_terms:ir.ui.view,arch_db:account_intrastat.account_return_kanban_view
+msgid "Reset"
+msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_commodity_code
@@ -541,6 +614,12 @@ msgid "The number of supplementary units per product quantity."
 msgstr "每個產品數量的補充單位數目。"
 
 #. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "The value of goods should be VAT exclusive."
+msgstr ""
+
+#. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "There are some"
@@ -577,6 +656,18 @@ msgid "Undefined weight products."
 msgstr "產品重量未定義。"
 
 #. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Unit of measure configuration"
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "VAT exclusive"
+msgstr ""
+
+#. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_value
 msgid "Value"
@@ -586,6 +677,20 @@ msgstr "值"
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_value_currency
 msgid "Value Currency"
 msgstr "價格貨幣"
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid "Verify that each good is assigned the right unit of measure."
+msgstr ""
+
+#. module: account_intrastat
+#. odoo-python
+#: code:addons/account_intrastat/models/account_return.py:0
+msgid ""
+"Verify that each item has the appropriate code and description according to "
+"the CN (Combined Nomenclature) codes."
+msgstr ""
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight
@@ -782,3 +887,12 @@ msgstr "重量"
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "when they are required."
 msgstr "當需要它們時。"
+
+#~ msgid "Intrastat Report"
+#~ msgstr "Intrastat 報表"
+
+#~ msgid "Intrastat member"
+#~ msgstr "Intrastat 成員"
+
+#~ msgid "Northern Ireland"
+#~ msgstr "北愛爾蘭"

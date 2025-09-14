@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_timesheet_enterprise
+# * sale_timesheet_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2022
 # Jolien De Paepe, 2022
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"sale_timesheet_enterprise/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__all
@@ -35,12 +37,12 @@ msgstr "Kostenplaats"
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.timesheet_view_grid_by_invoice_type
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -72,7 +74,7 @@ msgstr "Factuur"
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
 msgid "Invoicing Policy"
-msgstr ""
+msgstr "Facturatiebeleid"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_account_move_line
@@ -118,7 +120,7 @@ msgstr "Voortgang"
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "Project"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_form
@@ -185,7 +187,7 @@ msgstr "Totaal resterende tijd. Kan periodiek opnieuw worden geschat door de aan
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__approved
 msgid "Validated timesheets only"
-msgstr "Alleen gevalideerde timesheets"
+msgstr "Alleen goedgekeurde urenstaten"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.timesheet_view_grid_by_invoice_type
@@ -198,5 +200,8 @@ msgid ""
 "With the 'all recorded timesheets' option, all timesheets will be invoiced without distinction, even if they haven't been validated. Additionally, all timesheets will be accessible in your customers' portal. \n"
 "When you choose the 'validated timesheets only' option, only the validated timesheets will be invoiced and appear in your customers' portal."
 msgstr ""
-"Met de optie 'alle geregistreerde urenstaten' worden alle urenstaten zonder onderscheid gefactureerd, ook als ze niet gevalideerd zijn. Bovendien zullen alle urenstaten toegankelijk zijn in je klantenportaal. \n"
-"Kies je voor de optie 'alleen gevalideerde urenstaten', dan worden alleen de gevalideerde urenstaten gefactureerd en verschijnen ze in je klantenportaal."
+"Met de optie 'alle geregistreerde urenstaten' worden alle urenstaten zonder "
+"onderscheid gefactureerd, ook als ze niet goedgekeurd zijn. Bovendien zullen "
+"alle urenstaten toegankelijk zijn in je klantenportaal. \n"
+"Kies je voor de optie 'alleen goedgekeurde urenstaten', dan worden alleen de "
+"goedgekeurde urenstaten gefactureerd en verschijnen ze in je klantenportaal."

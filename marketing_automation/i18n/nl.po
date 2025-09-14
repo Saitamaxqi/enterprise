@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* marketing_automation
+# * marketing_automation
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"marketing_automation/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__link_tracker_click_count
@@ -130,6 +132,10 @@ msgstr "<i class=\"fa fa-reply\"/> Beantwoord na"
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "<i data-trigger-type=\"activity\" class=\"fa fa-code-fork fa-rotate-180 fa-flip-vertical o_ma_text_processed o_add_child_activity text-success\" title=\"Add Another Activity\" role=\"img\" aria-label=\"Add Another Activity\"/>"
 msgstr ""
+"<i data-trigger-type=\"activity\" class=\"fa fa-code-fork fa-rotate-180 fa-"
+"flip-vertical o_ma_text_processed o_add_child_activity text-success\" title="
+"\"Voeg een andere activiteit toe\" role=\"img\" aria-label="
+"\"Add Another Activity\"/>"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
@@ -181,7 +187,7 @@ msgstr "<strong>De workflow is aangepast!</strong>"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__ab_testing_winner_mailing_id
 msgid "A/B Campaign Winner Mailing"
-msgstr ""
+msgstr "Mailing winnaar A/B campagne"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__ab_testing_mailings_count
@@ -220,7 +226,7 @@ msgstr "Activiteit"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__activity_domain
 msgid "Activity Filter"
-msgstr "Activiteitsfilter"
+msgstr "Activiteitenfilter"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
@@ -236,7 +242,10 @@ msgstr "Soort activiteit"
 #. module: marketing_automation
 #: model:ir.model.fields,help:marketing_automation.field_marketing_activity__domain
 msgid "Activity will only be performed if record satisfies this domain, obtained from the combination of the activity filter and its inherited filter"
-msgstr "Activiteit wordt alleen uitgevoegd als het record voldoet aan het domein, opgehaald vanuit de combinatie van de activiteitsfilter en de overgeërfde filter"
+msgstr ""
+"Activiteit wordt alleen uitgevoegd als het record voldoet aan het domein, "
+"opgehaald vanuit de combinatie van de activiteitenfilter en de overgeërfde "
+"filter"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -256,7 +265,7 @@ msgstr "Alle activiteiten die de bovenliggende kunnen zijn van deze"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__social_post_ids
 msgid "All related social media posts"
-msgstr "Alle gerelateerde social media posts"
+msgstr "Alle gerelateerde socialmedia-posts"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__allowed_parent_ids
@@ -345,7 +354,7 @@ msgstr "Annuleren"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
 msgid "Cancel after"
-msgstr "Annuleer na"
+msgstr "Annuleren na"
 
 #. module: marketing_automation
 #: model:ir.model.fields.selection,name:marketing_automation.selection__marketing_trace__state__canceled
@@ -356,6 +365,9 @@ msgstr "Geannuleerd"
 #: model:ir.model.fields,help:marketing_automation.field_marketing_activity__validity_duration
 msgid "Check this to make sure your actions are not executed after a specific amount of time after the scheduled date. (e.g. Time-limited offer, Upcoming event, …)"
 msgstr ""
+"Controleer dit om er zeker van te zijn dan je acties niet na een bepaalde "
+"tijd na de geplande datum worden uitgevoerd (bijv. Tijdsgebonden aanbod, "
+"Aankomend evenement, ...)"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__child_ids
@@ -568,7 +580,7 @@ msgstr "Activiteiten uitvoeren"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
 msgid "Expiry Duration"
-msgstr "Vervalduur"
+msgstr "Aflooptijd"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__mailing_filter_id
@@ -619,7 +631,7 @@ msgstr "ID"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__is_mailing_campaign_activated
 msgid "Is Mailing Campaign Activated"
-msgstr "Is mailingcampagne geactiveerd"
+msgstr "Is e-mailcampagne geactiveerd"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
@@ -680,7 +692,7 @@ msgstr "Link statistieken"
 #. module: marketing_automation
 #: model:ir.ui.menu,name:marketing_automation.link_tracker_menu_reporting_marketing_automation
 msgid "Link Tracker"
-msgstr "Opvolging links"
+msgstr "Link Tracker"
 
 #. module: marketing_automation
 #: model_terms:ir.actions.act_window,help:marketing_automation.link_tracker_action_marketing_campaign
@@ -791,22 +803,22 @@ msgstr "Marketingactiviteit"
 #: model:ir.module.category,name:marketing_automation.module_marketing_automation_category
 #: model:ir.ui.menu,name:marketing_automation.marketing_automation_menu
 msgid "Marketing Automation"
-msgstr "Marketing"
+msgstr "Marketingautomatisering"
 
 #. module: marketing_automation
 #: model:ir.actions.act_window,name:marketing_automation.mail_mass_mailing_action_marketing_automation
 msgid "Marketing Automation Mailings"
-msgstr "Marketing automatisering mailings"
+msgstr "Marketingautomatisering mailings"
 
 #. module: marketing_automation
 #: model:ir.actions.server,name:marketing_automation.ir_cron_campaign_execute_activities_ir_actions_server
 msgid "Marketing Automation: execute activities"
-msgstr "Marketing Automatisering: activiteiten uitvoeren"
+msgstr "Marketingautomatisering: activiteiten uitvoeren"
 
 #. module: marketing_automation
 #: model:ir.actions.server,name:marketing_automation.ir_cron_campaign_sync_participants_ir_actions_server
 msgid "Marketing Automation: sync participants"
-msgstr "Marketing Automatisering: deelnemers synchroniseren"
+msgstr "Marketingautomatisering: deelnemers synchroniseren"
 
 #. module: marketing_automation
 #: model:ir.model,name:marketing_automation.model_marketing_campaign
@@ -872,7 +884,7 @@ msgstr "Bericht voor verkoper"
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_participant__model_id
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_search
 msgid "Model"
-msgstr "Type"
+msgstr "Model"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.ir_model_view_tree_marketing
@@ -967,7 +979,8 @@ msgstr "Aantal klikken gegenereerd vanuit de campagne"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__social_engagement
 msgid "Number of interactions (likes, shares, comments ...) with the social posts"
-msgstr "Aantal interacties (likes, shares, comments...) met de social media posts"
+msgstr ""
+"Aantal interacties (likes, shares, comments...) met de socialmedia-posts"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -1129,12 +1142,12 @@ msgstr "Afgewezen"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_activity.py:0
 msgid "Rejected by activity filter or record deleted / archived"
-msgstr "Afgewezen door activiteitsfilter of record verwijderd / gearchiveerd"
+msgstr "Afgewezen door activiteitenfilter of record verwijderd / gearchiveerd"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Reload a favorite filter"
-msgstr "Een favoriet filter opnieuw laden"
+msgstr "Een favoriete filter opnieuw laden"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
@@ -1238,7 +1251,7 @@ msgstr "Selectie om te bepalen welke winnaarsmailing verstuurd wordt."
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__ab_testing_schedule_datetime
 msgid "Send Final On"
-msgstr "Finale verzenden op"
+msgstr "Finale versie verzenden op"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__interval_number
@@ -1264,7 +1277,7 @@ msgstr "Serveractie"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__social_posts_count
 msgid "Social Media Posts"
-msgstr "Social media posts"
+msgstr "Socialmedia-posts"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -1289,7 +1302,7 @@ msgstr "Fase"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Start"
-msgstr "Start"
+msgstr "Starten"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__state
@@ -1318,7 +1331,7 @@ msgstr "Status"
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Stop"
-msgstr "Stoppen"
+msgstr "Stop"
 
 #. module: marketing_automation
 #: model:ir.model.fields.selection,name:marketing_automation.selection__marketing_campaign__state__stopped
@@ -1405,7 +1418,9 @@ msgstr "Het opgeslagen filter is gericht op een ander model en is niet compatibe
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_activity.py:0
 msgid "To use this feature you should be an administrator or belong to the marketing automation group."
-msgstr "Om deze feature te gebruiken moet je een administrator zijn of toebehoren aan de marketing automatisering groep."
+msgstr ""
+"Om deze feature te gebruiken moet je een administrator zijn of toebehoren "
+"aan de marketingautomatisering-groep."
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__total_bounce
@@ -1443,7 +1458,7 @@ msgstr "Traceringen"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
 msgid "Trigger"
-msgstr "Activeer"
+msgstr "Activeren"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__trigger_category
@@ -1536,7 +1551,7 @@ msgstr "Weken"
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__ab_testing_winner_selection
 msgid "Winner Selection"
-msgstr "Winnaar Selectie"
+msgstr "Selectie winnaar"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -1565,7 +1580,9 @@ msgstr ""
 msgid ""
 "You cannot delete these UTM Campaigns as they are linked to the following marketing campaigns in Marketing Automation:\n"
 "%(campaign_names)s"
-msgstr "Je kunt deze UTM-campagnes niet verwijderen omdat ze zijn gekoppeld aan de volgende marketingcampagnes in Marketing Automation: %(campaign_names)s"
+msgstr ""
+"Je kunt deze UTM-campagnes niet verwijderen omdat ze zijn gekoppeld aan de "
+"volgende marketingcampagnes in Marketingautomatisering %(campaign_names)s"
 
 #. module: marketing_automation
 #. odoo-python
@@ -1573,7 +1590,10 @@ msgstr "Je kunt deze UTM-campagnes niet verwijderen omdat ze zijn gekoppeld aan 
 msgid ""
 "You cannot delete these UTM Sources as they are linked to the following marketing activities in Marketing Automation:\n"
 "%(activities_names)s"
-msgstr "Je kunt deze UTM-bronnen niet verwijderen omdat ze zijn gekoppeld aan de volgende marketingactiviteiten in Marketing Automation: %(activities_names)s"
+msgstr ""
+"Je kunt deze UTM-bronnen niet verwijderen omdat ze zijn gekoppeld aan de "
+"volgende marketingactiviteiten in Marketingautomatisering: "
+"%(activities_names)s"
 
 #. module: marketing_automation
 #. odoo-python
@@ -1594,7 +1614,7 @@ msgstr "begin van de workflow"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_test_view_form
 msgid "e.g. \"Brandon Freeman\""
-msgstr ""
+msgstr "bijv. \"Brandon Freeman\""
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form

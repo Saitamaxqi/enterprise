@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* approvals
+# * approvals
 #
 # Translators:
 # Martin Trigaux, 2022
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2022
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/approvals/"
+"nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -402,7 +404,7 @@ msgstr "Omschrijving"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__display_name
 #: model:ir.model.fields,field_description:approvals.field_approval_request__display_name
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr "Schermnaam"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -419,7 +421,7 @@ msgstr "Documenten"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "E.g: Expenses Paris business trip"
-msgstr "Bijv: Declaraties zakenreis Parijs"
+msgstr "Bijv: Declaratie zakenreis Parijs"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
@@ -454,7 +456,7 @@ msgstr "Volgers"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Volgers (Relaties)"
+msgstr "Volgers (Partners)"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_type_icon
@@ -522,7 +524,7 @@ msgstr "Heeft product"
 #: model:ir.model.fields,field_description:approvals.field_approval_category__has_quantity
 #: model:ir.model.fields,field_description:approvals.field_approval_request__has_quantity
 msgid "Has Quantity"
-msgstr "Heeft hoeveelheid"
+msgstr "Heeft een aantal"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__has_reference
@@ -543,9 +545,11 @@ msgstr ""
 "Hoe de manager van de werknemer omgaat met dit type goedkeuring.\n"
 "\n"
 "         Leeg: niets doen\n"
-"         Is goedkeurder: de manager van de werknemer staat in de goedkeurderslijst\n"
+"         Is goedkeurder: de manager van de werknemer staat in de "
+"goedkeurderslijst\n"
 "         Goedkeuring vereist: de manager van de werknemer moet het verzoek\n"
-"         goedkeuren."
+"         goedkeuren.\n"
+"    "
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__id
@@ -574,7 +578,7 @@ msgstr "Indien aangevinkt vragen nieuwe berichten je aandacht."
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr "indien aangevinkt hebben sommige leveringen een fout."
+msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__automated_sequence
@@ -750,7 +754,7 @@ msgstr "Volgende activiteit deadline"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_summary
 msgid "Next Activity Summary"
-msgstr "Omschrijving volgende actie"
+msgstr "Volgende activiteit overzicht"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_id
@@ -819,7 +823,7 @@ msgstr "Aantal aanvragen om goed te keuren"
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_user
 msgid "Officer: Approve all requests"
-msgstr ""
+msgstr "Functionaris: Alle verzoeken goedkeuren"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__optional
@@ -893,12 +897,12 @@ msgstr "Producten"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__quantity
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Quantity"
-msgstr "Hoeveelheid"
+msgstr "Aantal"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Beoordelingen"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reference
@@ -909,7 +913,7 @@ msgstr "Referentie"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_id
 msgid "Reference Sequence"
-msgstr "Referentiereeks"
+msgstr "Referentie reeks"
 
 #. module: approvals
 #. odoo-javascript
@@ -918,7 +922,7 @@ msgstr "Referentiereeks"
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Refuse"
-msgstr "Afwijzen"
+msgstr "Afkeuren"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__refused
@@ -993,13 +997,13 @@ msgid ""
 msgstr ""
 "Status gebaseerd op activiteiten\n"
 "Te laat: Datum is al gepasseerd\n"
-"Vandaag: Activiteit datum is vandaag\n"
+"Vandaag: Datum van activiteit is vandaag\n"
 "Gepland: Toekomstige activiteiten."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Submit"
-msgstr "Versturen"
+msgstr "Indienen"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__pending
@@ -1056,7 +1060,7 @@ msgstr "In te dienen"
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Type van activiteit uitzondering op record."
+msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_id
@@ -1098,13 +1102,15 @@ msgstr "Je kunt pas goedkeuren na de vorige goedkeurder."
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You cannot assign the same approver multiple times on the same request."
-msgstr "Je kan dezelfde goedkeurder niet meerdere keren aan hetzelfde verzoek toewijzen."
+msgstr ""
+"Je kunt dezelfde goedkeurder niet meerdere keren aan hetzelfde verzoek "
+"toewijzen."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You have to add at least %s approvers to confirm your request."
-msgstr "Voeg minimaal %s goedkeurder(s) toe die je aanvraag moeten goedkeuren"
+msgstr "Voeg minimaal %s goedkeurder(s) toe die je aanvraag moeten goedkeuren."
 
 #. module: approvals
 #. odoo-python

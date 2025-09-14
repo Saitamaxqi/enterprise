@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* appointment_hr_recruitment
+# * appointment_hr_recruitment
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-03 12:22+0000\n"
-"PO-Revision-Date: 2025-07-03 12:22+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"appointment_hr_recruitment/nl/>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,body_html:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
@@ -34,21 +38,45 @@ msgid ""
 "</div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"    <h2>Hallo,</h2>\n"
+"    <div style=\"font-size: 13px;\">\n"
+"        Bedankt voor je sollicitatie en interesse in <t t-out="
+"\"object.company_id.name or ''\">YourCompany</t>.<br/>\n"
+"        <br/>\n"
+"        Graag plan ik een telefonisch gesprek met je in, dat ongeveer 30 "
+"minuten zal duren.\n"
+"        Tijdens het gesprek bespreken we je cv en je motivatie om bij het "
+"team van <t t-out=\"object.company_id.name or ''\">YourCompany</t> aan de "
+"slag te gaan.\n"
+"        Via de knop hieronder kun je eenvoudig een moment in onze agenda "
+"boeken.<br/>\n"
+"    </div>\n"
+"    <br/>\n"
+"    <a t-att-href=\"object._get_interview_invite_url()\" t-attf-style"
+"=\"background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; "
+"text-decoration: none; color: {{user.company_id.email_primary_color or "
+"'#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;\">Mijn "
+"interview inplannen</a><br/>\n"
+"    <br/>\n"
+"    Met vriendelijke groet,\n"
+"</div>\n"
+"        "
 
 #. module: appointment_hr_recruitment
 #: model:ir.model,name:appointment_hr_recruitment.model_hr_applicant
 msgid "Applicant"
-msgstr ""
+msgstr "Sollicitant"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model,website_form_label:appointment_hr_recruitment.model_hr_applicant
 msgid "Apply for a Job"
-msgstr ""
+msgstr "Solliciteren voor een functie"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model,name:appointment_hr_recruitment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Afspraak uitnodiging"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,subject:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
@@ -56,36 +84,40 @@ msgid ""
 "Can we plan an interview together for your {{ (object.job_id.name + ' ') if "
 "object.job_id else '' }}application?"
 msgstr ""
+"Kunnen we een sollicitatiegesprek inplannen voor {{ (object.job_id.name + ' "
+"') if object.job_id else '' }}?"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__display_name
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Schermnaam"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_appointment_invite__id
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment_hr_recruitment
 #: model:ir.model.fields,field_description:appointment_hr_recruitment.field_hr_applicant__interview_invite_code
 msgid "Interview Invite Code"
-msgstr ""
+msgstr "Uitnodigingscode voor interview"
 
 #. module: appointment_hr_recruitment
 #: model:appointment.type,name:appointment_hr_recruitment.appointment_type_interviews
 msgid "Interviews availabilities"
-msgstr ""
+msgstr "Beschikbaarheden interviews"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,name:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
 msgid "Recruitment: Schedule interview"
-msgstr ""
+msgstr "Werving: Interview inplannen"
 
 #. module: appointment_hr_recruitment
 #: model:mail.template,description:appointment_hr_recruitment.email_template_data_applicant_schedule_interview
 msgid ""
 "Send this email when you want to schedule an interview with an applicant"
 msgstr ""
+"Stuur deze e-mail wanneer je een sollicitatiegesprek met een kandidaat wilt "
+"plannen"

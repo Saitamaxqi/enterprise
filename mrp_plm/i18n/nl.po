@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_plm
+# * mrp_plm
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/mrp_plm/nl/"
+">\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_count
@@ -154,7 +156,7 @@ msgstr "Aliasnaam"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias Status"
-msgstr ""
+msgstr "Status alias"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
@@ -164,12 +166,12 @@ msgstr "Aliasdomein"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias status assessed on the last message received."
-msgstr ""
+msgstr "Status alias beoordeeld op het laatste ontvangen bericht."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "Aliased Model"
-msgstr "Aliased Model"
+msgstr "Aliased model"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
@@ -335,7 +337,7 @@ msgstr "Stuklijstregel"
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_boms
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Bill of Materials"
-msgstr "Stuklijsten"
+msgstr "Stuklijst"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
@@ -356,12 +358,12 @@ msgstr ""
 #: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_progress
 #: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_validated
 msgid "Blocked"
-msgstr "Geblokkeerd"
+msgstr "Vergrendeld"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__is_blocking
 msgid "Blocking Stage"
-msgstr "Geblokkeerde fase"
+msgstr "Vergrendelde fase"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -514,12 +516,13 @@ msgstr "Aangemaakt op"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_bounced_content
 msgid "Custom Bounced Message"
-msgstr "Aangepast teruggestuurd bericht"
+msgstr "Aangepast bouncebericht"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__effectivity
 msgid "Date on which the changes should be applied. For reference only."
-msgstr "Datum waarop de wijzigingen toegepast moeten worden. Enkel voor referentie."
+msgstr ""
+"Datum waarop de wijzigingen toegepast moeten worden. Alleen voor referentie."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_defaults
@@ -529,7 +532,7 @@ msgstr "Standaardwaarden"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Define the approval roles on the ECO stages."
-msgstr "Definieer de goedkeuringsrollen voor de ECO-fasen."
+msgstr "Definieer de goedkeuringsrollen voor de ECO-fases."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -741,7 +744,7 @@ msgstr "Boekdatum"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "Email Alias"
-msgstr "E-mail alias"
+msgstr "E-mailalias"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__email_cc
@@ -806,7 +809,7 @@ msgstr "Volgers"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_partner_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Volgers (Relaties)"
+msgstr "Volgers (Partners)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__activity_type_icon
@@ -836,7 +839,7 @@ msgstr "Grijs kanban label"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Group by..."
-msgstr "Groepeer op..."
+msgstr "Groeperen op..."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__has_message
@@ -893,7 +896,7 @@ msgstr "Indien aangevinkt vragen nieuwe berichten je aandacht."
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_error
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "indien aangevinkt hebben sommige leveringen een fout."
+msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_bounced_content
@@ -1123,7 +1126,7 @@ msgstr "Nieuwe of vorige bewerking"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_product_qty
 msgid "New revision quantity"
-msgstr "Nieuwe revisie hoeveelheid"
+msgstr "Nieuwe revisieaantal"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_calendar_event_id
@@ -1138,12 +1141,12 @@ msgstr "Volgende activiteit deadline"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_summary
 msgid "Next Activity Summary"
-msgstr "Omschrijving volgende actie"
+msgstr "Volgende activiteit overzicht"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_type_id
 msgid "Next Activity Type"
-msgstr "Volgende activiteitstype"
+msgstr "Volgende activiteit type"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_bom_action_kanban
@@ -1214,7 +1217,7 @@ msgstr "Wanneer de veranderingen zijn toegepast, worden ECO's verhuist naar deze
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
 msgid "Operation"
-msgstr "Handeling"
+msgstr "Bewerking"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1290,8 +1293,10 @@ msgstr "Bovenliggende record Thread ID"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_model_id
 msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
 msgstr ""
-"Bovenliggend model welke de alias bezit. Het model dat de alias referentie bezit\n"
-"is niet noodzakelijk het model wat wordt gegeven door alias_model_id (bijvoorbeeld: project (parent_model) en taak (model))"
+"Bovenliggend model dat de alias bevat. Het model dat de aliasverwijzing "
+"bevat,\n"
+"is niet noodzakelijk het model dat door alias_model_id wordt gegeven "
+"(bijvoorbeeld: project (parent_model) en taak (model))"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_contact
@@ -1301,10 +1306,12 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"Beleid om een bericht te versturen bij een document door gebruik te maken van de mail gateway.\n"
-"-iedereen: iedereen mag versturen\n"
-"-relaties: alleen geautoriseerde relaties\n"
-"-volgers: allen volgers van een bijbehorend document of volgers van gevolgde kanalen\n"
+"Beleid om een bericht te versturen bij een document door gebruik te maken "
+"van de mail gateway.\n"
+"-iedereen: iedereen mag posten\n"
+"-partners: alleen geautoriseerde partners\n"
+"-volgers: alleen volgers van een bijbehorend document of leden van gevolgde "
+"kanalen\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__previous_bom_id
@@ -1334,7 +1341,7 @@ msgstr "Vorige productmaateenheid"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_product_qty
 msgid "Previous revision quantity"
-msgstr "Vorige revisiehoeveelheid"
+msgstr "Vorige revisieaantal"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__priority
@@ -1385,7 +1392,7 @@ msgstr "Aantal"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__rating_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Beoordelingen"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1395,7 +1402,7 @@ msgstr ""
 #: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_progress
 #: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_validated
 msgid "Ready"
-msgstr "Beschikbaar"
+msgstr "Gereed"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__rebase_id
@@ -1417,7 +1424,7 @@ msgstr "Record Thread ID"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__legend_blocked
 msgid "Red Kanban Label"
-msgstr "Rood kanbanlabel"
+msgstr "Rood kanban label"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__name
@@ -1486,7 +1493,7 @@ msgstr "SMS fout bij versturen"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_search
 msgid "Search"
-msgstr "Zoek"
+msgstr "Zoeken"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__sequence
@@ -1553,14 +1560,14 @@ msgid ""
 msgstr ""
 "Status gebaseerd op activiteiten\n"
 "Te laat: Datum is al gepasseerd\n"
-"Vandaag: Activiteit datum is vandaag\n"
+"Vandaag: Datum van activiteit is vandaag\n"
 "Gepland: Toekomstige activiteiten."
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "Successfully Rebased!"
-msgstr ""
+msgstr "Succesvol geherbaseerd!"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1575,7 +1582,7 @@ msgstr "Labelnaam"
 #. module: mrp_plm
 #: model:ir.model.constraint,message:mrp_plm.constraint_mrp_eco_tag_name_uniq
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "Labelnaam bestaat al!"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__tag_ids
@@ -1586,7 +1593,7 @@ msgstr "Labels"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "Task in progress. Click to block or set as done."
-msgstr "Taak in bewerking. Klik op blokkeer of zet op gereed."
+msgstr "Taak in behandeling. Klik op blokkeer of zet op gereed."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1627,12 +1634,17 @@ msgstr "De huidige versie van het product."
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "Het model waar deze alias bij hoort. Iedere inkomende e-mail dat niet bij een bestaande regel hoort, zal leiden tot het aanmaken van een nieuwe regel in dit model (Bijv. een projecttaak)."
+msgstr ""
+"Het model waar deze alias bijhoort. Iedere inkomende e-mail dat niet bij een "
+"bestaande regel hoort zal leiden tot het aanmaken van een nieuwe regel in "
+"dit model (Bijv. een projecttaak)."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
 msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "De naam van de e-mail alias, bijvoorbeeld: 'vacature' als je alle e-mails van vacature@bedrijf.nl wilt afvangen."
+msgstr ""
+"De naam van de e-mailalias, bijvoorbeeld: 'vacature' als je alle e-mails van "
+"vacature@uwbedrijf.nl wilt afvangen."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_user_id
@@ -1642,7 +1654,7 @@ msgstr "De eigenaar van de regels welke zijn aangemaakt bij het ontvangen van de
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "This step is done. Click to block or set in progress."
-msgstr "Deze stap is gedaan. Klik op blokkeer of zet op gereed."
+msgstr "Deze stap is gedaan. Klik op vergrendel of zet op gereed."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_validation
@@ -1672,7 +1684,7 @@ msgstr "Soort"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Type van activiteit uitzondering op record."
+msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__type_ids
@@ -1713,7 +1725,7 @@ msgstr "Gebruikers"
 #. module: mrp_plm
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
 msgid "Validated"
-msgstr "Goedgekeurd"
+msgstr "Bevestigd"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1743,7 +1755,7 @@ msgstr "Websiteberichten"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__website_message_ids
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__website_message_ids
 msgid "Website communication history"
-msgstr "Website communicatiegeschiedenis"
+msgstr "Website communicatie geschiedenis"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__workcenter_id
@@ -1753,7 +1765,7 @@ msgstr "Werkplek"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
 msgid "Work Centers"
-msgstr "Werkplek"
+msgstr "Werkplekken"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form

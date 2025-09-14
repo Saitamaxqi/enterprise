@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 15:33+0000\n"
+"POT-Creation-Date: 2025-09-13 21:41+0000\n"
 "PO-Revision-Date: 2025-09-12 15:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -128,9 +129,13 @@ msgid "Administrator"
 msgstr ""
 
 #. module: voip
-#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__ask
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__ask
 msgid "Always Ask"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__ask
+msgid "Always ask before calling"
 msgstr ""
 
 #. module: voip
@@ -246,6 +251,12 @@ msgid "Call Status Badge"
 msgstr ""
 
 #. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "Call Via Desk Phone"
+msgstr ""
+
+#. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call cancelled (%(time)s)"
@@ -290,6 +301,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(phone_number)s"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
+msgid "Call with Odoo Phone"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__phone
+msgid "Call with phone's default app"
 msgstr ""
 
 #. module: voip
@@ -379,7 +400,8 @@ msgstr ""
 #: model:ir.model.fields,help:voip.field_voip_call__country_code_from_phone
 #: model:ir.model.fields,help:voip.field_voip_country_code_mixin__country_code_from_phone
 msgid ""
-"Computes the country ISO code (e.g. be for Belgium) from the phone number dialing code (e.g. +32), if any.\n"
+"Computes the country ISO code (e.g. be for Belgium) from the phone number "
+"dialing code (e.g. +32), if any.\n"
 "Useful for displaying the flag associated with a phone number."
 msgstr ""
 
@@ -781,23 +803,8 @@ msgid "If checked, some messages have a delivery error."
 msgstr ""
 
 #. module: voip
-#: model:ir.model.fields,help:voip.field_res_users_settings__should_call_from_another_device
-msgid ""
-"If enabled, placing a call in Odoo will transfer the call to the \"External "
-"device number\". Use this option to place the call in Odoo but handle it "
-"from another device - e.g. your desk phone."
-msgstr ""
-
-#. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__do_not_disturb_until_dt
 msgid "If set, Odoo Phone will be in Do Not Disturb mode until this time."
-msgstr ""
-
-#. module: voip
-#: model:ir.model.fields,help:voip.field_res_users_settings__external_device_number
-msgid ""
-"If the \"Call from another device\" option is enabled, calls placed in Odoo "
-"will be transfered to this phone number."
 msgstr ""
 
 #. module: voip
@@ -1027,6 +1034,12 @@ msgid "No recent calls found"
 msgstr ""
 
 #. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "No redirect"
+msgstr ""
+
+#. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab.xml:0
 msgid "No search results 💔"
@@ -1059,7 +1072,6 @@ msgid "Number of messages with delivery error"
 msgstr ""
 
 #. module: voip
-#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
 msgid "Odoo Phone"
 msgstr ""
@@ -1067,6 +1079,12 @@ msgstr ""
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
 msgid "Officer"
+msgstr ""
+
+#. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "On Mobile"
 msgstr ""
 
 #. module: voip
@@ -1152,7 +1170,6 @@ msgid "Phone number"
 msgstr ""
 
 #. module: voip
-#: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__phone
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__phone
 msgid "Phone's Default App"
 msgstr ""
@@ -1201,6 +1218,12 @@ msgid "Profile picture of %(user)s"
 msgstr ""
 
 #. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "Provider"
+msgstr ""
+
+#. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
 msgid "Providers"
 msgstr ""
@@ -1236,8 +1259,8 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
 msgid ""
-"Record VoIP calls. An indicator is displayed during calls. There is no vocal"
-" announcement by default."
+"Record VoIP calls. An indicator is displayed during calls. There is no vocal "
+"announcement by default."
 msgstr ""
 
 #. module: voip
@@ -1342,6 +1365,12 @@ msgid "Search…"
 msgstr ""
 
 #. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "Secret"
+msgstr ""
+
+#. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "See all other activities"
@@ -1386,7 +1415,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_queue_mixin.py:0
 msgid ""
-"Some leads can’t be added to the call queue since they do not have a phone number set. The fixer-uppers: %(record_names)s.\n"
+"Some leads can’t be added to the call queue since they do not have a phone "
+"number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
 
@@ -1394,6 +1424,15 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/error_screen.js:0
 msgid "Something went wrong 😵‍💫"
+msgstr ""
+
+#. module: voip
+#: model:ir.model.fields,help:voip.field_res_users_settings__external_device_number
+#: model:ir.model.fields,help:voip.field_res_users_settings__should_call_from_another_device
+msgid ""
+"Specify a phone number so that placing a call in Odoo Phone will ring your "
+"preferred device (your desk phone or cell phone) and then connect you to the "
+"recipient."
 msgstr ""
 
 #. module: voip
@@ -1466,7 +1505,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid ""
-"The number is incorrect, the user credentials could be wrong or the connection cannot be made. Please check your configuration.\n"
+"The number is incorrect, the user credentials could be wrong or the "
+"connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
 msgstr ""
 
@@ -1474,10 +1514,13 @@ msgstr ""
 #: model:ir.model.fields,help:voip.field_res_partner__t9_name
 #: model:ir.model.fields,help:voip.field_res_users__t9_name
 msgid ""
-"The partner's name, encoded as the digits that correspond to the letters on an old cell phone keypad.\n"
+"The partner's name, encoded as the digits that correspond to the letters on "
+"an old cell phone keypad.\n"
 "Useful for searching for partners based on this field.\n"
-"Spaces are preserved, characters that can't be encoded are replaced with an 'x'.\n"
-"T9 stands for Text on 9 keys, it comes from the name of the original technology on old cell phones."
+"Spaces are preserved, characters that can't be encoded are replaced with an "
+"'x'.\n"
+"T9 stands for Text on 9 keys, it comes from the name of the original "
+"technology on old cell phones."
 msgstr ""
 
 #. module: voip
@@ -1618,13 +1661,17 @@ msgid "User Settings"
 msgstr ""
 
 #. module: voip
+#: model_terms:ir.ui.view,arch_db:voip.res_user_form
+#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
+msgid "Username"
+msgstr ""
+
+#. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
 msgid "VOIP Queue support"
 msgstr ""
 
 #. module: voip
-#: model_terms:ir.ui.view,arch_db:voip.res_user_form
-#: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "View call history"
 msgstr ""

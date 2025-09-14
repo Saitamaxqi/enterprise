@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* industry_fsm
+# * industry_fsm
 #
 # Translators:
 # Martin Trigaux, 2022
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
 # Jolien De Paepe, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__nbr
@@ -29,7 +31,7 @@ msgstr "# Taken"
 #. module: industry_fsm
 #: model:ir.actions.report,print_report_name:industry_fsm.task_custom_report
 msgid "'Field Service Report - %s - %s' % (object.name, object.partner_id.name)"
-msgstr ""
+msgstr "'Buitendienstrapport - %s - %s' % (object.name, object.partner_id.name)"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -143,7 +145,7 @@ msgstr "Actief"
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.fsm_menu_config_activity_type
 msgid "Activity Types"
-msgstr "Activiteitssoorten"
+msgstr "Activiteitensoorten"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.fsm_form_view_comment
@@ -165,7 +167,7 @@ msgstr "Alle taken"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__planned_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "Toegewezen tijd"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_user_action_report_fsm
@@ -175,7 +177,7 @@ msgstr "Analyseer de voortgang van je taken en de prestaties van je werknemers."
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__user_ids
 msgid "Assignees"
-msgstr "Toegewezen aan"
+msgstr "Toegewezen personen"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__date_assign
@@ -190,7 +192,7 @@ msgstr "Gemiddelde score"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__dependent_ids
 msgid "Block"
-msgstr ""
+msgstr "Blokkeer"
 
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.project_task_menu_planning_by_project_fsm
@@ -205,7 +207,7 @@ msgstr "Per gebruiker"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__partner_city
 msgid "City"
-msgstr ""
+msgstr "Plaats"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.portal_task_sign_button
@@ -235,7 +237,7 @@ msgstr "Bedrijf"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.fsm_menu_settings
@@ -276,7 +278,7 @@ msgstr ""
 #. module: industry_fsm
 #: model:ir.actions.act_window,name:industry_fsm.open_create_project_fsm
 msgid "Create a Project"
-msgstr "Maak project aan"
+msgstr "Maak een project aan"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.res_config_settings_view_form
@@ -336,7 +338,7 @@ msgstr "Klantvoorbeeld"
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.fsm_menu_reporting_customer_ratings
 msgid "Customer Ratings"
-msgstr "Klantenbeoordelingen"
+msgstr "Klantbeoordelingen"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
@@ -471,17 +473,17 @@ msgstr "Buitendienst"
 #. module: industry_fsm
 #: model:ir.actions.report,name:industry_fsm.task_custom_report
 msgid "Field Service Report"
-msgstr ""
+msgstr "Buitendienstrapport"
 
 #. module: industry_fsm
 #: model:mail.template,subject:industry_fsm.mail_template_data_task_report
 msgid "Field Service Report - {{ object.name }}"
-msgstr ""
+msgstr "Buitendienstrapport - {{ object.name }}"
 
 #. module: industry_fsm
 #: model:mail.template,name:industry_fsm.mail_template_data_task_report
 msgid "Field Service: Field Service Report"
-msgstr ""
+msgstr "Buitendienst: Buitendienstrapport"
 
 #. module: industry_fsm
 #: model:mail.template,name:industry_fsm.mail_template_data_intervention_details
@@ -502,7 +504,7 @@ msgstr "Vind hier je routebeschrijving voor de taken van vandaag."
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_fsm
 msgid "Find here your upcoming tasks for the next few days."
-msgstr "Vind hier je aankomende taken voor de komende dagen."
+msgstr "Hier vind je je aankomende taken voor de komende dagen."
 
 #. module: industry_fsm
 #: model:ir.model.fields,help:industry_fsm.field_report_project_task_user_fsm__is_closed
@@ -517,7 +519,7 @@ msgstr "In de toekomst"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Future Activities"
-msgstr ""
+msgstr "Toekomstige activiteiten"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -565,7 +567,7 @@ msgstr "Nodig je klant uit om <b>je taakrapport te bevestigen en te ondertekenen
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Is een volger"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__is_task_phone_update
@@ -602,7 +604,7 @@ msgstr "Laatst bijgewerkt op"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Late Activities"
-msgstr ""
+msgstr "Te late activiteiten"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -641,7 +643,7 @@ msgstr "Kaart"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Mark as done"
-msgstr "Markeer als gereed"
+msgstr "Markeren als gereed"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_ir_ui_menu
@@ -705,7 +707,7 @@ msgstr "Open je <b>werkbon</b> om het in te vullen met de details van je interve
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__overtime
 msgid "Overtime"
-msgstr "Overwerk"
+msgstr "Tijd overschreden"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__parent_id
@@ -769,7 +771,7 @@ msgstr "Projecten"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Properties"
-msgstr ""
+msgstr "Eigenschappen"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__rating_last_value
@@ -780,7 +782,9 @@ msgstr "Beoordelingswaarde (/5)"
 #. odoo-javascript
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
 msgid "Ready to <b>manage your onsite interventions</b>? <i>Click Field Service to start.</i>"
-msgstr "Klaar om <b>je interventies ter plaatse te beheren</b>? <i>Klik op Buitendienst om te starten.</i>"
+msgstr ""
+"Klaar om <b>je interventies op locatie te beheren</b>? <i>Klik op "
+"Buitendienst om te starten.</i>"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__remaining_hours
@@ -813,7 +817,7 @@ msgstr "Plan je taken en wijs ze toe aan je werknemers."
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.report_project_task_user_fsm_view_search
 msgid "Search Planning"
-msgstr ""
+msgstr "Zoek in planning"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -835,7 +839,9 @@ msgstr "Verzend rapport"
 #. module: industry_fsm
 #: model:mail.template,description:industry_fsm.mail_template_data_intervention_details
 msgid "Set this template on a project's stage to automate email when tasks reach stages"
-msgstr "Stel deze sjabloon in op de fase van een project om e-mail te automatiseren wanneer taken de fasen bereiken"
+msgstr ""
+"Stel deze sjabloon in op de fase van een project om e-mail te automatiseren "
+"wanneer taken de fases bereiken"
 
 #. module: industry_fsm
 #: model:ir.actions.act_window,name:industry_fsm.res_config_settings_action_fsm
@@ -944,7 +950,7 @@ msgstr "Taak is gereed"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Taak herhaling"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_report_industry_fsm_worksheet_custom
@@ -1028,13 +1034,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 msgid "Timer started at: %(date)s %(time)s"
-msgstr ""
+msgstr "Timer gestart op : %(date)s %(time)s"
 
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/wizard/project_task_create_timesheet.py:0
 msgid "Timer stopped at: %(date)s %(time)s"
-msgstr ""
+msgstr "Timer gestopt op: %(date)s %(time)s"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.timesheet_view_form
@@ -1055,7 +1061,7 @@ msgstr "Te plannen"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "To Schedule/Assign"
-msgstr ""
+msgstr "Te plannen/toekennen"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_all_fsm
@@ -1083,7 +1089,7 @@ msgstr "Vandaag"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Today Activities"
-msgstr ""
+msgstr "Activiteiten van vandaag"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__total_hours_spent
@@ -1180,7 +1186,7 @@ msgstr "bijv. Ketel vervangen"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "is FSM?"
-msgstr ""
+msgstr "is buitendienst?"
 
 #. module: industry_fsm
 #: model:ir.actions.server,name:industry_fsm.fsm_customer_ratings_server_action

@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-09-13 21:41+0000\n"
 "PO-Revision-Date: 2025-09-11 14:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -50,8 +51,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/controllers/main.py:0
 msgid ""
-"%(partner)s validated the signature by SMS with the phone number "
-"%(phone_number)s."
+"%(partner)s validated the signature by SMS with the phone number %"
+"(phone_number)s."
 msgstr ""
 
 #. module: sign
@@ -249,7 +250,8 @@ msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_expired
-msgid "<i class=\"fa fa-check\"/> A fresh link has just been sent to your inbox!"
+msgid ""
+"<i class=\"fa fa-check\"/> A fresh link has just been sent to your inbox!"
 msgstr ""
 
 #. module: sign
@@ -315,7 +317,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_kanban
 msgid ""
-"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" title=\"Shared\" invisible=\"state != 'shared'\">\n"
+"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" "
+"title=\"Shared\" invisible=\"state != 'shared'\">\n"
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
@@ -323,7 +326,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_kanban
 msgid ""
-"<span class=\"badge rounded-pill text-bg-success\" title=\"Shared\" invisible=\"not is_sharing\">\n"
+"<span class=\"badge rounded-pill text-bg-success\" title=\"Shared\" "
+"invisible=\"not is_sharing\">\n"
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
@@ -369,7 +373,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid ""
 "<span groups=\"base.group_system\">\n"
-"                                    Certify your documents using a provided .pfx or .p12 file.\n"
+"                                    Certify your documents using a "
+"provided .pfx or .p12 file.\n"
 "                                </span>"
 msgstr ""
 
@@ -418,8 +423,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_request
 msgid ""
 "<strong>Warning</strong> do not forward this email to other people!<br/>\n"
-"            They will be able to access this document and sign it as yourself.<br/>\n"
-"            <span>Your IP address and localization are associated to your signature to ensure traceability.</span>"
+"            They will be able to access this document and sign it as "
+"yourself.<br/>\n"
+"            <span>Your IP address and localization are associated to your "
+"signature to ensure traceability.</span>"
 msgstr ""
 
 #. module: sign
@@ -1081,8 +1088,8 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__cc_partner_ids
 msgid ""
-"Contacts in copy will be notified by email once the document is either fully"
-" signed or refused."
+"Contacts in copy will be notified by email once the document is either fully "
+"signed or refused."
 msgstr ""
 
 #. module: sign
@@ -1273,8 +1280,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid ""
-"Deliver one-time codes by SMS to identify signatories when signing a "
-"document"
+"Deliver one-time codes by SMS to identify signatories when signing a document"
 msgstr ""
 
 #. module: sign
@@ -1508,8 +1514,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid ""
-"Draw your most beautiful signature!<br>You can also create one automatically"
-" or load a signature from your computer."
+"Draw your most beautiful signature!<br>You can also create one automatically "
+"or load a signature from your computer."
 msgstr ""
 
 #. module: sign
@@ -1719,8 +1725,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
-"For 1000kg of paper usage, with 10% of recycled paper, environmental savings"
-" are based on"
+"For 1000kg of paper usage, with 10% of recycled paper, environmental savings "
+"are based on"
 msgstr ""
 
 #. module: sign
@@ -1917,8 +1923,8 @@ msgstr ""
 #: model:ir.model.fields,help:sign.field_sign_request_item__change_authorized
 msgid ""
 "If checked, recipient of a document with this role can be changed after "
-"having sent the request. Useful to replace a signatory who is out of office,"
-" etc."
+"having sent the request. Useful to replace a signatory who is out of office, "
+"etc."
 msgstr ""
 
 #. module: sign
@@ -1937,7 +1943,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_not_enough_credits
 msgid ""
-"If you do not want to receive these notifications anymore, you can disable the extra-authentication step in the\n"
+"If you do not want to receive these notifications anymore, you can disable "
+"the extra-authentication step in the\n"
 "                        <code>\n"
 "                            Sign &gt; Configuration &gt; Roles\n"
 "                        </code>\n"
@@ -3703,14 +3710,17 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_template__signature_request_validity
 msgid ""
-"Specify the default validity period (in days) for signature requests. Set to"
-" 0 for requests that don't expire."
+"Specify the default validity period (in days) for signature requests. Set to "
+"0 for requests that don't expire."
 msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__set_sign_order
 msgid ""
-"Specify the order for each signer. The signature request only gets sent to                                     the next signers in the sequence when all signers from the previous level have                                     signed the document.\n"
+"Specify the order for each signer. The signature request only gets sent "
+"to                                     the next signers in the sequence when "
+"all signers from the previous level have                                     "
+"signed the document.\n"
 "                                    "
 msgstr ""
 
@@ -3897,9 +3907,11 @@ msgstr ""
 #: model:ir.model.fields,help:sign.field_res_company__sign_terms_type
 #: model:ir.model.fields,help:sign.field_res_config_settings__sign_terms_type
 msgid ""
-"Terms in Email - The text will be displayed at the bottom of every signature request email.\n"
+"Terms in Email - The text will be displayed at the bottom of every signature "
+"request email.\n"
 "\n"
-"        Terms as Web Page - A link will be pasted at the bottom of every signature request email, leading to your content.\n"
+"        Terms as Web Page - A link will be pasted at the bottom of every "
+"signature request email, leading to your content.\n"
 "        "
 msgstr ""
 
@@ -3927,8 +3939,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.deleted_sign_request
 msgid ""
-"The Odoo Sign document you are trying to reach does not exist. The signature"
-" request might have been deleted or modified."
+"The Odoo Sign document you are trying to reach does not exist. The signature "
+"request might have been deleted or modified."
 msgstr ""
 
 #. module: sign
@@ -3954,8 +3966,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/models/sign_request_item.py:0
 msgid ""
-"The contact of %(role)s has been changed from %(old_partner)s to "
-"%(new_partner)s."
+"The contact of %(role)s has been changed from %(old_partner)s to %"
+"(new_partner)s."
 msgstr ""
 
 #. module: sign
@@ -4480,12 +4492,6 @@ msgid "Waiting for others"
 msgstr ""
 
 #. module: sign
-#. odoo-javascript
-#: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
-msgid "Warning"
-msgstr ""
-
-#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "Waste"
@@ -4500,8 +4506,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/models/sign_request.py:0
 msgid ""
-"We can only send reminders in the future - as soon as we find a way to send reminders in the past we'll notify you.\n"
-"In the mean time, please make sure to input a positive number of days for the reminder interval."
+"We can only send reminders in the future - as soon as we find a way to send "
+"reminders in the past we'll notify you.\n"
+"In the mean time, please make sure to input a positive number of days for "
+"the reminder interval."
 msgstr ""
 
 #. module: sign
@@ -4527,7 +4535,8 @@ msgstr ""
 #: code:addons/sign/static/src/dialogs/sign_refusal_dialog.xml:0
 msgid ""
 "We'll notify the sender, signer and copied contacts.\n"
-"                Your refusal reason will be included to keep things clear and transparent for everyone."
+"                Your refusal reason will be included to keep things clear "
+"and transparent for everyone."
 msgstr ""
 
 #. module: sign
@@ -4583,8 +4592,8 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.deleted_sign_request
 msgid ""
-"You can contact the person who invited you to sign the document by email for"
-" help."
+"You can contact the person who invited you to sign the document by email for "
+"help."
 msgstr ""
 
 #. module: sign
@@ -4722,7 +4731,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_not_enough_credits
 msgid ""
 "because you don't have enough credits for this operation.\n"
-"                    The signatory was able to finish signing, but was not asked to authenticate fully."
+"                    The signatory was able to finish signing, but was not "
+"asked to authenticate fully."
 msgstr ""
 
 #. module: sign

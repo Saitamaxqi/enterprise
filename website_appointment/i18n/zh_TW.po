@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* website_appointment
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:49+0000\n"
+"POT-Creation-Date: 2025-09-13 21:50+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: website_appointment
@@ -52,18 +53,36 @@ msgstr ""
 "                        <span class=\"o_not_editable\">線上</span>"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_pages_kanban_view
-msgid "<span class=\"fa fa-globe\" title=\"website\"/>"
-msgstr "<span class=\"fa fa-globe\" title=\"網站\"/>"
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Easily reserve tennis courts for your next "
+"match, anytime and anywhere.</small>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Explore online cooking lessons and learn new "
+"recipes at your pace.</small>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<small class=\"text-muted\">Schedule your visit today and experience expert "
+"dental care brought right to your doorstep.</small>"
+msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid ""
 "<span class=\"o_not_editable\">Online</span>\n"
-"                                        <i class=\"fa fa-video-camera\" role=\"presentation\"/>"
+"                                        <i class=\"fa fa-video-camera\" "
+"role=\"presentation\"/>"
 msgstr ""
 "<span class=\"o_not_editable\">網上進行</span>\n"
-"                                        <i class=\"fa fa-video-camera\" role=\"presentation\"/>"
+"                                        <i class=\"fa fa-video-camera\" "
+"role=\"presentation\"/>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
@@ -95,9 +114,48 @@ msgid "<span itemprop=\"name\">Tennis Club</span>"
 msgstr "<span itemprop=\"name\">網球俱樂部</span>"
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Doctor's Office</"
+"span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Online</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Tennis Court</"
+"span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid ""
+"<span>Doctor's Office <i class=\"fa fa-marker\" role=\"presentation\"/></"
+"span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid "<span>Online <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgstr ""
+
+#. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
-msgid "<span>See all availabilities <i class=\"fa fa-long-arrow-right\"/></span>"
+msgid ""
+"<span>See all availabilities <i class=\"fa fa-long-arrow-right\"/></span>"
 msgstr "<span>查看所有可用時段 <i class=\"fa fa-long-arrow-right\"/></span>"
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
+msgid ""
+"<span>Tennis Club <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
@@ -131,12 +189,14 @@ msgid "Add an intro message here..."
 msgstr "加入簡介資料⋯"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "All Types"
 msgstr "所有類型"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "All assigned users"
 msgstr "所有已指派用戶"
 
@@ -146,7 +206,8 @@ msgid "All websites"
 msgstr "所有網站"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Allow Guests"
 msgstr "允許訪客"
 
@@ -173,8 +234,9 @@ msgid "Appointment Pages"
 msgstr "預約頁面"
 
 #. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointment_type_option_plugin.js:0
 #: model:ir.model,name:website_appointment.model_appointment_type
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
 msgid "Appointment Type"
 msgstr "預約類型"
 
@@ -185,16 +247,18 @@ msgid "Appointment Type Name"
 msgstr "預約類型名稱"
 
 #. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
+#: code:addons/website_appointment/static/src/plugins/searchbar_option.xml:0
 #: model:ir.ui.menu,name:website_appointment.menu_appointment_pages
 #: model:ir.ui.menu,name:website_appointment.website_appointment_type_menu
-#: model_terms:ir.ui.view,arch_db:website_appointment.appointments_searchbar_input_snippet_options
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
 #: model_terms:ir.ui.view,arch_db:website_appointment.snippets
 msgid "Appointments"
 msgstr "預約"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/website_appointment_page_option_plugin.js:0
 msgid "Appointments Page"
 msgstr "預約頁面"
 
@@ -256,9 +320,27 @@ msgid "Candidate Interview"
 msgstr "應徵者面試"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/website_appointment_page_option.xml:0
 msgid "Card Design"
 msgstr "卡片設計"
+
+#. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
+msgid "Choose a resource..."
+msgstr ""
+
+#. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
+msgid "Choose a user..."
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
+msgid "Choose what you would like to book"
+msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -271,7 +353,8 @@ msgid "Choose your appointment"
 msgstr "選擇您的預約"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Comma-separated list of parts of appointment names"
 msgstr "預約名稱部分的列表，以逗號分隔"
 
@@ -282,9 +365,17 @@ msgid "Contact us"
 msgstr "聯絡我們"
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
 msgstr "牙科護理"
+
+#. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/searchbar_option_plugin.js:0
+msgid "Description"
+msgstr ""
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
@@ -310,18 +401,12 @@ msgstr "顯示名稱"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
-msgid ""
-"Easily reserve tennis courts for your next match, anytime and anywhere."
+msgid "Easily reserve tennis courts for your next match, anytime and anywhere."
 msgstr "隨時隨地，輕鬆為下一場比賽預訂網球場。"
 
 #. module: website_appointment
 #. odoo-javascript
-#: code:addons/website_appointment/static/src/interactions/appointment_form.js:0
-msgid "Error"
-msgstr "錯誤"
-
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Filter On"
 msgstr "篩選於"
 
@@ -344,6 +429,7 @@ msgstr "識別號"
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__is_published
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_published
+#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_tree
 msgid "Is Published"
 msgstr "已發佈"
 
@@ -353,7 +439,8 @@ msgid "Meeting"
 msgstr "會議"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Names"
 msgstr "名稱"
 
@@ -363,7 +450,8 @@ msgid "New Appointment Type"
 msgstr "新的預約類型"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "No Filter"
 msgstr "沒有篩選器"
 
@@ -375,6 +463,8 @@ msgstr "找不到結果："
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
 msgstr "網上烹飪課程"
@@ -404,12 +494,13 @@ msgstr "已發佈"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid ""
-"Reserve your table at our bistro and enjoy a delightful dining experience at"
-" your convenience."
+"Reserve your table at our bistro and enjoy a delightful dining experience at "
+"your convenience."
 msgstr "在我們小酒館預訂座位，輕鬆享受愉快用餐體驗。"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
 msgstr "資源"
 
@@ -440,8 +531,8 @@ msgstr "預約會面"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid ""
-"Schedule your visit today and experience expert dental care brought right to"
-" your doorstep."
+"Schedule your visit today and experience expert dental care brought right to "
+"your doorstep."
 msgstr "今天就預約就診，體驗專業的上門牙科護理服務。"
 
 #. module: website_appointment
@@ -460,39 +551,52 @@ msgid "Seo name"
 msgstr "SEO 名稱"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Show Duration"
 msgstr "顯示時長"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Show Time Zone"
 msgstr "顯示時區"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.snippet_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Show User/Resource Pictures"
 msgstr "顯示使用者/資源圖片"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Resources"
 msgstr "特定資源"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "Specific Types"
 msgstr "特定類型"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Users"
 msgstr "特定使用者"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "Specific users"
 msgstr "特定使用者"
+
+#. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
+msgid "Specify"
+msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
@@ -502,6 +606,8 @@ msgstr "餐桌"
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Tennis Court"
 msgstr "網球場"
@@ -539,8 +645,9 @@ msgstr "使用頂部按鈕 '<b>+ 建立</b>' 新增約會類型。"
 
 #. module: website_appointment
 #. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
+#: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 #: code:addons/website_appointment/static/src/xml/website_appointment_templates.xml:0
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Users"
 msgstr "使用者"
 
@@ -618,7 +725,8 @@ msgid "e.g. \"Technical Demo\""
 msgstr "例：技術示範"
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "e.g. Dental Care, ..."
 msgstr "例：牙科護理，⋯"
 
@@ -628,18 +736,17 @@ msgstr "例：牙科護理，⋯"
 msgid "or"
 msgstr "或"
 
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
-msgid "⌙ Resources"
-msgstr "⌙ 資源"
+#~ msgid "<span class=\"fa fa-globe\" title=\"website\"/>"
+#~ msgstr "<span class=\"fa fa-globe\" title=\"網站\"/>"
 
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
-msgid "⌙ Specify"
-msgstr "⌙ 指定"
+#~ msgid "Error"
+#~ msgstr "錯誤"
 
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment_options
-msgid "⌙ Users"
-msgstr "⌙ 使用者"
+#~ msgid "⌙ Resources"
+#~ msgstr "⌙ 資源"
+
+#~ msgid "⌙ Specify"
+#~ msgstr "⌙ 指定"
+
+#~ msgid "⌙ Users"
+#~ msgstr "⌙ 使用者"

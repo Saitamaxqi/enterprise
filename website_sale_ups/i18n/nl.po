@@ -1,31 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_delivery_ups
+# * website_delivery_ups
 #
 # Translators:
 # Martin Trigaux, 2019
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2019
 # Gunther Clauwaert <gclauwae@hotmail.com>, 2019
 # Yenthe Van Ginneken <yenthespam@gmail.com>, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2019-08-26 09:39+0000\n"
-"Last-Translator: Yenthe Van Ginneken <yenthespam@gmail.com>, 2019\n"
-"Language-Team: Dutch (https://www.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"website_sale_ups/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "(Bill My Account)"
-msgstr "(factureer mijn rekening)"
+msgstr "(Factureer mijn account)"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
@@ -40,7 +42,7 @@ msgstr "<i>In afwachting</i>, Bedankt voor het kiezen voor de rembours optie. De
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "<span>(UPS Billing will remain to the customer)</span>"
-msgstr ""
+msgstr "<span>(UPS facturering blijft voor de klant)</span>"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
@@ -65,7 +67,7 @@ msgstr ""
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Close"
-msgstr "Sluiten"
+msgstr "Afsluiten"
 
 #. module: website_sale_ups
 #: model:ir.model.fields,field_description:website_sale_ups.field_payment_provider__custom_mode
@@ -117,7 +119,7 @@ msgstr "Gebruik maken van account"
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Your UPS Account Number"
-msgstr ""
+msgstr "Je UPS rekeningnummer"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,auth_msg:website_sale_ups.payment_provider_ups_cod

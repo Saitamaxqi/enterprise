@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:33+0000\n"
+"POT-Creation-Date: 2025-09-12 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -75,15 +76,6 @@ msgid ""
 "                <option value=\"50\">Half Time</option>\n"
 "                <option value=\"40\">2/5</option>\n"
 "                <option value=\"20\">1/5</option>"
-msgstr ""
-
-#. module: hr_contract_salary_payroll
-#: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_employee__wage_with_holidays
-#: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_version__wage_with_holidays
-msgid ""
-"Adapted salary, according to the sacrifices defined on the contract "
-"(Example: Extra-legal time off, a percentage of the salary invested in a "
-"group insurance, etc...)"
 msgstr ""
 
 #. module: hr_contract_salary_payroll
@@ -300,8 +292,10 @@ msgid ""
 "Fixed value: Set a determined value static for all links\n"
 "Employee Record value: Get the value from a field on the Employee Record\n"
 "Payslip value: Get the value from a field on the payslip record\n"
-"Sum of Benefits value: You can pick in all benefits and compute a sum of them\n"
-"Monthly Total: The information will be a total of all the information in the category Monthly Benefits"
+"Sum of Benefits value: You can pick in all benefits and compute a sum of "
+"them\n"
+"Monthly Total: The information will be a total of all the information in the "
+"category Monthly Benefits"
 msgstr ""
 
 #. module: hr_contract_salary_payroll
@@ -442,15 +436,15 @@ msgid "Value Type"
 msgstr ""
 
 #. module: hr_contract_salary_payroll
-#: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_with_holidays
-#: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__wage_with_holidays
-msgid "Wage With Sacrifices"
-msgstr ""
-
-#. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_on_signature
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__wage_on_signature
 msgid "Wage on Signature"
+msgstr ""
+
+#. module: hr_contract_salary_payroll
+#: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_with_holidays
+#: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__wage_with_holidays
+msgid "Wage with Holidays"
 msgstr ""
 
 #. module: hr_contract_salary_payroll

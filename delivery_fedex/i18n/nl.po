@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_fedex
+# * delivery_fedex
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Jolien De Paepe, 2022\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"delivery_fedex/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -29,6 +32,8 @@ msgstr ", klik op \"Haal productiesleutel op\" en volg alle stappen."
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "<br/>According to your needs, you will need to contact different certifications:"
 msgstr ""
+"<br/>Afhankelijk van je behoeften, moet je contact opnemen met verschillende "
+"certificeringen:"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -230,7 +235,7 @@ msgstr "Fedex configuratie"
 #. odoo-python
 #: code:addons/delivery_fedex/models/delivery_fedex.py:0
 msgid "Fedex Documents"
-msgstr ""
+msgstr "Fedex Documenten"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_droppoff_type
@@ -432,7 +437,7 @@ msgstr "Ontvanger"
 #. odoo-python
 #: code:addons/delivery_fedex/models/delivery_fedex.py:0
 msgid "Return Label"
-msgstr ""
+msgstr "Retourlabel"
 
 #. module: delivery_fedex
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__fedex_service_type__standard_overnight
@@ -511,7 +516,7 @@ msgstr "Afzender"
 #. odoo-python
 #: code:addons/delivery_fedex/models/delivery_fedex.py:0
 msgid "Shipment #%s has been cancelled"
-msgstr "Levering #%s is geannuleerd."
+msgstr "Levering #%s is geannuleerd"
 
 #. module: delivery_fedex
 #. odoo-python
@@ -522,7 +527,7 @@ msgstr "Levering aangemaakt in Fedex <br/> <b>Traceernummer : </b>%s<br/><b>Verp
 #. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "Verzendwijzes"
+msgstr "Verzendmethoden"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
@@ -553,7 +558,7 @@ msgstr "Standaard diensten"
 #. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_stock_package_type
 msgid "Stock package type"
-msgstr "Verpakkingstype:"
+msgstr "Verpakkingssoort"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_extra_data_rate_request
@@ -588,7 +593,9 @@ msgstr "De laatste stap is de"
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "These certifications usually require that you contact the FedEx support team by email."
-msgstr "Deze certificaties vragen meestal contact met het FedEx ondersteuningsteam via e-mail. "
+msgstr ""
+"Deze certificaties vragen meestal contact met het FedEx ondersteuningsteam "
+"via e-mail."
 
 #. module: delivery_fedex
 #. odoo-python

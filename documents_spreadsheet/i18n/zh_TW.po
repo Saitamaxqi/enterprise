@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* documents_spreadsheet
-# 
+#
 # Translators:
 # Tony Ng, 2025
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 20:45+0000\n"
+"POT-Creation-Date: 2025-09-12 18:44+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: documents_spreadsheet
@@ -71,6 +72,18 @@ msgstr "實際與目標數字比較狀態"
 msgid ""
 "Any user will be able to create a new spreadsheet based on this template."
 msgstr "任何用戶都可以基於此範本建立新的試算表。"
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Can edit the spreadsheet, including structure and content."
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Can view the spreadsheet. Cannot make changes."
+msgstr ""
 
 #. module: documents_spreadsheet
 #: model_terms:ir.ui.view,arch_db:documents_spreadsheet.save_spreadsheet_template_view_form
@@ -130,8 +143,8 @@ msgstr "捨棄"
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access__display_name
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_ir_http__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_save_spreadsheet_template__display_name
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_cell_thread__display_name
@@ -160,9 +173,9 @@ msgid "Document / Partner"
 msgstr "文件 / 合作夥伴"
 
 #. module: documents_spreadsheet
-#: model:ir.model,name:documents_spreadsheet.model_documents_access_invite
-msgid "Documents Access Invite"
-msgstr "文件存取邀請"
+#: model:ir.model,name:documents_spreadsheet.model_documents_sharing
+msgid "Documents Sharing"
+msgstr ""
 
 #. module: documents_spreadsheet
 #: model_terms:ir.ui.view,arch_db:documents_spreadsheet.spreadsheet_template_view_tree
@@ -170,7 +183,7 @@ msgid "Edit"
 msgstr "編輯"
 
 #. module: documents_spreadsheet
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__error_message_spreadsheet
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__error_message_spreadsheet
 msgid "Error Message"
 msgstr "錯誤訊息"
 
@@ -204,7 +217,8 @@ msgstr "凍結並分享"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_freeze_and_share/spreadsheet_freeze_and_share.xml:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 msgid "Freeze and share"
 msgstr "凍結並分享"
 
@@ -248,8 +262,8 @@ msgstr "處理者"
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access__id
-#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_access_invite__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_sharing__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_ir_http__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_save_spreadsheet_template__id
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_spreadsheet_cell_thread__id
@@ -290,6 +304,12 @@ msgstr "建立副本"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+msgid "Move to trash"
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/spreadsheet_template/spreadsheet_template_dialog.js:0
 msgid "My Drive"
 msgstr "我的雲端硬碟"
@@ -311,28 +331,6 @@ msgstr "新試算表"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
-#. odoo-python
-#: code:addons/documents_spreadsheet/models/documents_document.py:0
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
-msgid "New spreadsheet created in Documents"
-msgstr "新的試算表建立於："
-
-#. module: documents_spreadsheet
-#. odoo-javascript
-#. odoo-python
-#: code:addons/documents_spreadsheet/models/documents_document.py:0
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
-msgid "New spreadsheet created in My Drive"
-msgstr "已在「我的雲端硬碟」中建立新的試算表"
-
-#. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_template/spreadsheet_template_action.js:0
-msgid "New spreadsheet template created"
-msgstr "新試算表範本已建立"
-
-#. module: documents_spreadsheet
-#. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/documents_view/documents_spreadsheet_controller_mixin.js:0
 msgid "Open with Odoo Spreadsheet"
 msgstr "以 Odoo 試算表開啟"
@@ -342,6 +340,29 @@ msgstr "以 Odoo 試算表開啟"
 #: code:addons/documents_spreadsheet/demo/files/pipeline_dashboard.json:0
 msgid "Opportunities by Stage"
 msgstr "按階段的銷售機會"
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Partner(s): %(partner_names)s."
+msgstr ""
+
+#. module: documents_spreadsheet
+#: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_pipeline
+msgid "Pipeline dashboard"
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/models/documents_document.py:0
+msgid "Portal users cannot be the owner of a spreadsheet."
+msgstr ""
+
+#. module: documents_spreadsheet
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid "Read only spreadsheet(s): %(document_names)s."
+msgstr ""
 
 #. module: documents_spreadsheet
 #. odoo-javascript
@@ -354,6 +375,11 @@ msgstr "還原"
 #: code:addons/documents_spreadsheet/static/src/documents_view/documents_spreadsheet_controller_mixin.js:0
 msgid "Restore file?"
 msgstr "還原檔案？"
+
+#. module: documents_spreadsheet
+#: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_sales_commission
+msgid "Sales Commissions"
+msgstr ""
 
 #. module: documents_spreadsheet
 #: model:ir.actions.act_window,name:documents_spreadsheet.save_spreadsheet_template_action
@@ -379,6 +405,8 @@ msgstr "序列"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.xml:0
 msgid "Share"
 msgstr "分享"
@@ -467,6 +495,12 @@ msgid ""
 msgstr "不可從垃圾桶處理試算表檔案。想恢復此文件嗎？"
 
 #. module: documents_spreadsheet
+#. odoo-javascript
+#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
+msgid "Spreadsheet moved to trash"
+msgstr ""
+
+#. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 #: model_terms:ir.ui.view,arch_db:documents_spreadsheet.document_view_search_spreadsheet
@@ -496,25 +530,10 @@ msgid "The file is not a xlsx file"
 msgstr "此檔案不是 XLSX 文件"
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_partner_access.js:0
-msgid "The frozen spreadsheets are readonly."
-msgstr "凍結的試算表只限唯讀。"
-
-#. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 msgid "The spreadsheet you are trying to access does not exist."
 msgstr "你嘗試存取的試算表不存在。"
-
-#. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_access_settings.js:0
-msgid ""
-"The spreadsheets can not be shared in edit mode with a link, change Internal"
-" to give write access."
-msgstr "試算表不可透過連結以編輯模式分享。請更改內部設定，授予寫入權限。"
 
 #. module: documents_spreadsheet
 #. odoo-python
@@ -529,12 +548,6 @@ msgid "The xlsx file is too big"
 msgstr "XLSX 文件太大"
 
 #. module: documents_spreadsheet
-#. odoo-python
-#: code:addons/documents_spreadsheet/wizard/documents_access_invite.py:0
-msgid "This frozen spreadsheet is readonly."
-msgstr "這張已凍結的試算表屬唯讀。"
-
-#. module: documents_spreadsheet
 #: model_terms:ir.ui.view,arch_db:documents_spreadsheet.documents_error_live_data
 msgid "This spreadsheet contains live data, only internal users can view it."
 msgstr "此試算表包含實時數據，只供內部使用者查看。"
@@ -545,7 +558,8 @@ msgstr "此試算表包含實時數據，只供內部使用者查看。"
 msgid ""
 "This type of file cannot be previewed or edited directly in Odoo. Opening "
 "your file with Odoo Spreadsheet will allow you to do so."
-msgstr "此類型檔案不可在 Odoo 中直接預覽或編輯。若使用 Odoo 試算表開啟檔案則可以。"
+msgstr ""
+"此類型檔案不可在 Odoo 中直接預覽或編輯。若使用 Odoo 試算表開啟檔案則可以。"
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__thumbnail
@@ -602,17 +616,18 @@ msgstr "你不可凍結一張已凍結的試算表"
 
 #. module: documents_spreadsheet
 #. odoo-python
-#: code:addons/documents_spreadsheet/wizard/documents_access_invite.py:0
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid ""
-"You can not share a spreadsheet in edit mode to non-internal users "
-"(%(partner_names)s)."
-msgstr "在編輯模式中，你不可將試算表與非內部使用者共用（%(partner_names)s）。"
+"You can not share spreadsheet(s) in edit mode (%(document_names)s) to non-"
+"internal users."
+msgstr ""
 
 #. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/documents_permission_panel/documents_partner_access.js:0
-msgid "You can not share spreadsheet in edit mode to non-internal user."
-msgstr "你不可以編輯模式將試算表分享給非內部使用者。"
+#. odoo-python
+#: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
+msgid ""
+"You cannot share spreadsheet(s) via link in edit mode (%(document_names)s)."
+msgstr ""
 
 #. module: documents_spreadsheet
 #. odoo-python
@@ -620,8 +635,37 @@ msgstr "你不可以編輯模式將試算表分享給非內部使用者。"
 msgid "You don't have access to this document"
 msgstr "你無權存取此文件"
 
-#. module: documents_spreadsheet
-#. odoo-javascript
-#: code:addons/documents_spreadsheet/demo/files/pipeline_dashboard.json:0
-msgid "of target"
-msgstr "佔目標"
+#~ msgid "Documents Access Invite"
+#~ msgstr "文件存取邀請"
+
+#~ msgid "New spreadsheet created in Documents"
+#~ msgstr "新的試算表建立於："
+
+#~ msgid "New spreadsheet created in My Drive"
+#~ msgstr "已在「我的雲端硬碟」中建立新的試算表"
+
+#~ msgid "New spreadsheet template created"
+#~ msgstr "新試算表範本已建立"
+
+#~ msgid "The frozen spreadsheets are readonly."
+#~ msgstr "凍結的試算表只限唯讀。"
+
+#~ msgid ""
+#~ "The spreadsheets can not be shared in edit mode with a link, change "
+#~ "Internal to give write access."
+#~ msgstr "試算表不可透過連結以編輯模式分享。請更改內部設定，授予寫入權限。"
+
+#~ msgid "This frozen spreadsheet is readonly."
+#~ msgstr "這張已凍結的試算表屬唯讀。"
+
+#~ msgid ""
+#~ "You can not share a spreadsheet in edit mode to non-internal users (%"
+#~ "(partner_names)s)."
+#~ msgstr ""
+#~ "在編輯模式中，你不可將試算表與非內部使用者共用（%(partner_names)s）。"
+
+#~ msgid "You can not share spreadsheet in edit mode to non-internal user."
+#~ msgstr "你不可以編輯模式將試算表分享給非內部使用者。"
+
+#~ msgid "of target"
+#~ msgstr "佔目標"

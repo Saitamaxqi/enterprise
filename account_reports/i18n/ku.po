@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 21:06+0000\n"
+"POT-Creation-Date: 2025-09-13 21:43+0000\n"
 "PO-Revision-Date: 2025-09-12 21:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -155,16 +156,22 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Dear <t t-out=\"object.name or ''\"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Dear <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    Please find enclosed the list of your open invoices.\n"
 "                    <br/>\n"
-"                    Do not hesitate to contact us if you have any questions.\n"
+"                    Do not hesitate to contact us if you have any "
+"questions.\n"
 "                    <br/>\n"
 "                    Sincerely,\n"
 "                    <br/>\n"
-"                    <t t-out=\"object._get_followup_responsible().name if is_html_empty(object._get_followup_responsible().signature) else object._get_followup_responsible().signature\"/>\n"
+"                    <t t-out=\"object._get_followup_responsible().name if "
+"is_html_empty(object._get_followup_responsible().signature) else "
+"object._get_followup_responsible().signature\"/>\n"
 "                </p>\n"
 "            </div>\n"
 "        "
@@ -175,16 +182,22 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Dear <t t-out=\"object.name or ''\"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Dear <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    Please find enclosed the statement of your account.\n"
 "                    <br/>\n"
-"                    Do not hesitate to contact us if you have any questions.\n"
+"                    Do not hesitate to contact us if you have any "
+"questions.\n"
 "                    <br/>\n"
 "                    Sincerely,\n"
 "                    <br/>\n"
-"\t                <t t-out=\"object._get_followup_responsible().name if is_html_empty(object._get_followup_responsible().signature) else object._get_followup_responsible().signature\"/>\n"
+"\t                <t t-out=\"object._get_followup_responsible().name if "
+"is_html_empty(object._get_followup_responsible().signature) else "
+"object._get_followup_responsible().signature\"/>\n"
 "                </p>\n"
 "            </div>\n"
 "        "
@@ -195,23 +208,33 @@ msgstr ""
 msgid ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Dear <t t-out=\"object.company_id.name\">YourCompany</t>,\n"
+"                    Dear <t t-out=\"object.company_id.name\">YourCompany</"
+"t>,\n"
 "                </p>\n"
 "                <p>\n"
-"                    Based on the documents and information received, the VAT return of <t t-out=\"object.company_id.name\">YourCompany</t>\n"
-"                    for period <t t-out=\"object.type_id._get_period_name(object.company_id, object.date_from, object.date_to)\"/> has been submitted.\n"
+"                    Based on the documents and information received, the VAT "
+"return of <t t-out=\"object.company_id.name\">YourCompany</t>\n"
+"                    for period <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
+"object.date_to)\"/> has been submitted.\n"
 "                </p>\n"
 "                <p>\n"
-"                    It has been determined that an amount of <t t-out=\"format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/> remains payable.\n"
+"                    It has been determined that an amount of <t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/> remains payable.\n"
 "                </p>\n"
-"                <table style=\"border:1px solid black; padding:20px; text-align:left; border-spacing: 16px;\">\n"
+"                <table style=\"border:1px solid black; padding:20px; text-"
+"align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Amount to Pay</td>\n"
-"                        <td><t t-out=\"format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>Due By</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Kind regards,</p>\n"
@@ -258,8 +281,8 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid ""
-"<span invisible=\"context.get('in_checks_view') or unresolved_check_count !="
-" 0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count != "
+"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
 "success\">Passed</span>"
 msgstr ""
 
@@ -274,14 +297,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
 msgid ""
 "<span invisible=\"not records_count or records_count &lt; 21\">20+</span>\n"
-"                                                    <span invisible=\"not records_count\"> </span>"
+"                                                    <span invisible=\"not "
+"records_count\"> </span>"
 msgstr ""
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
 msgid ""
-"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-triangle text-danger pb-2\" title=\"The selected range doesn't match any fiscal period.\"/>\n"
-"                            <span invisible=\"not show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-danger pb-2\" title=\"A return already exists for the selected period.\"/>"
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"The selected range doesn't match any "
+"fiscal period.\"/>\n"
+"                            <span invisible=\"not "
+"show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
+"danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
 
 #. module: account_reports
@@ -318,8 +346,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_tax.py:0
 msgid ""
-"A tax unit must contain a minimum of two companies. You might want to delete"
-" the unit."
+"A tax unit must contain a minimum of two companies. You might want to delete "
+"the unit."
 msgstr ""
 
 #. module: account_reports
@@ -770,9 +798,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
-"All customer VAT numbers are valid under <a "
-"href=\"https://ec.europa.eu/taxation_customs/vies\" "
-"target=\"_blank\">VIES</a>."
+"All customer VAT numbers are valid under <a href=\"https://ec.europa.eu/"
+"taxation_customs/vies\" target=\"_blank\">VIES</a>."
 msgstr ""
 
 #. module: account_reports
@@ -1289,8 +1316,8 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return_type__deadline_days_delay
 msgid ""
-"By default, Odoo applies its own deadline for returns (shown as 0). Entering"
-" a value here will override it and be used as the new deadline."
+"By default, Odoo applies its own deadline for returns (shown as 0). Entering "
+"a value here will override it and be used as the new deadline."
 msgstr ""
 
 #. module: account_reports
@@ -1766,8 +1793,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Could not expand term %(term)s while evaluating formula "
-"%(unexpanded_formula)s"
+"Could not expand term %(term)s while evaluating formula %"
+"(unexpanded_formula)s"
 msgstr ""
 
 #. module: account_reports
@@ -1813,6 +1840,13 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,website_form_label:account_reports.model_res_partner
 msgid "Create a Customer"
+msgstr ""
+
+#. module: account_reports
+#: model_terms:ir.actions.act_window,help:account_reports.action_view_account_audit
+msgid ""
+"Create a new audit working file with dedicated checks and balance reviews to "
+"ensure smooth closings."
 msgstr ""
 
 #. module: account_reports
@@ -2506,8 +2540,8 @@ msgstr ""
 #: model:account.return.check.template,description:account_reports.account_return_check_template_foreign_currency_liabilities
 msgid ""
 "Ensure that foreign currency payables are revalued at year-end closing rate "
-"and that any unrealized exchange differences are properly recorded in profit"
-" or loss (accounts 654/754) under Belgian GAAP."
+"and that any unrealized exchange differences are properly recorded in profit "
+"or loss (accounts 654/754) under Belgian GAAP."
 msgstr ""
 
 #. module: account_reports
@@ -2651,8 +2685,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Expression labelled '%(label)s' of line '%(line)s' is being overwritten when"
-" computing the current report. Make sure the cross-report aggregations of "
+"Expression labelled '%(label)s' of line '%(line)s' is being overwritten when "
+"computing the current report. Make sure the cross-report aggregations of "
 "this report only reference terms belonging to other reports."
 msgstr ""
 
@@ -2693,8 +2727,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Field 'Custom Handler Model' can only reference records inheriting from "
-"[%s]."
+"Field 'Custom Handler Model' can only reference records inheriting from [%s]."
 msgstr ""
 
 #. module: account_reports
@@ -2749,8 +2782,8 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_tax_unit_form
 msgid ""
-"Fiscal Positions should apply to all companies of the tax unit. You may want"
-" to"
+"Fiscal Positions should apply to all companies of the tax unit. You may want "
+"to"
 msgstr ""
 
 #. module: account_reports
@@ -3296,8 +3329,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Inconsistent report_id in options dictionary. Options says "
-"%(options_report)s; report is %(report)s."
+"Inconsistent report_id in options dictionary. Options says %"
+"(options_report)s; report is %(report)s."
 msgstr ""
 
 #. module: account_reports
@@ -3341,8 +3374,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Invalid domain formula in expression \"%(expression)s\" of line "
-"\"%(line)s\": %(formula)s"
+"Invalid domain formula in expression \"%(expression)s\" of line \"%"
+"(line)s\": %(formula)s"
 msgstr ""
 
 #. module: account_reports
@@ -3355,8 +3388,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": "
-"%(subformula)s"
+"Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
+"(subformula)s"
 msgstr ""
 
 #. module: account_reports
@@ -3437,11 +3470,13 @@ msgid "Is Report Set"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__is_tax_return
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__is_tax_return_type
 msgid "Is a Tax Return Return Type"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__is_ec_sales_list_return
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__is_ec_sales_list_return_type
 msgid "Is an EC Sales List Return Type"
 msgstr ""
@@ -3840,7 +3875,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
-"Missing company details (like VAT number or country) can cause errors in your report,\n"
+"Missing company details (like VAT number or country) can cause errors in "
+"your report,\n"
 "such as using the wrong VAT rate, wrongly exempting transactions.\n"
 "                "
 msgstr ""
@@ -5183,8 +5219,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
-"Review the tax code and ensure each transaction is correctly classified as a"
-" supply of goods or services."
+"Review the tax code and ensure each transaction is correctly classified as a "
+"supply of goods or services."
 msgstr ""
 
 #. module: account_reports
@@ -5815,8 +5851,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
-"The operation is refused as it would impact an already issued tax statement."
-" Please change the following lock dates to proceed: %(lock_date_info)s."
+"The operation is refused as it would impact an already issued tax statement. "
+"Please change the following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
 
 #. module: account_reports
@@ -5868,8 +5904,7 @@ msgstr ""
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/wizard/account_report_send.py:0
-msgid ""
-"There are currently reports waiting to be sent, please try again later."
+msgid "There are currently reports waiting to be sent, please try again later."
 msgstr ""
 
 #. module: account_reports
@@ -5989,14 +6024,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid ""
 "This report uses report-specific code.\n"
-"                        You can customize it manually, but any change in the parameters used for its computation could lead to errors."
+"                        You can customize it manually, but any change in the "
+"parameters used for its computation could lead to errors."
 msgstr ""
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/warnings.xml:0
 msgid ""
-"This report uses the CTA conversion method to consolidate multiple companies using different currencies,\n"
+"This report uses the CTA conversion method to consolidate multiple companies "
+"using different currencies,\n"
 "        which can lead the report to be unbalanced."
 msgstr ""
 
@@ -6318,11 +6355,17 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_settlement_in_subsequent_period
 msgid ""
-"Verify that cash and card receipts recorded at period-end are actually settled in the following period. Also check the correct accounting treatment of Dailly* assignments, discounting operations, and factoring contracts**.\n"
+"Verify that cash and card receipts recorded at period-end are actually "
+"settled in the following period. Also check the correct accounting treatment "
+"of Dailly* assignments, discounting operations, and factoring contracts**.\n"
 "\n"
-"* The \"\"Dailly Law\"\" is a French law that allows businesses to assign commercial receivables (like invoices) to a credit institution (like a bank) in exchange for financing.\n"
+"* The \"\"Dailly Law\"\" is a French law that allows businesses to assign "
+"commercial receivables (like invoices) to a credit institution (like a bank) "
+"in exchange for financing.\n"
 "\n"
-"**Factoring contracts involve a business selling its unpaid invoices (accounts receivable) to a third-party company, known as a factor, in exchange for immediate cash.\n"
+"**Factoring contracts involve a business selling its unpaid invoices "
+"(accounts receivable) to a third-party company, known as a factor, in "
+"exchange for immediate cash.\n"
 "            "
 msgstr ""
 
@@ -6529,8 +6572,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid ""
-"You cannot generate entries for a period that does not end at the end of the"
-" month."
+"You cannot generate entries for a period that does not end at the end of the "
+"month."
 msgstr ""
 
 #. module: account_reports
@@ -6568,8 +6611,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
-"You first need to define an opening date for your accounting. Please contact"
-" your administrator."
+"You first need to define an opening date for your accounting. Please contact "
+"your administrator."
 msgstr ""
 
 #. module: account_reports
@@ -6791,15 +6834,17 @@ msgstr ""
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_customer_follow_up_report
 msgid ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name"
-" }} Follow Up - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Follow Up - "
+"{{ object.commercial_company_name }}"
 msgstr ""
 
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_customer_statement
 msgid ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name"
-" }} Statement - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Statement - "
+"{{ object.commercial_company_name }}"
 msgstr ""
 
 #. module: account_reports

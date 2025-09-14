@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social
+# * social
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2022
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/social/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__accounts_count
@@ -36,7 +38,7 @@ msgstr "%s (max. %s tekens)"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid ", you must first link a social media."
-msgstr ", moet je eerst een social media linken."
+msgstr ", moet je eerst een social media-account koppelen."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
@@ -51,7 +53,7 @@ msgstr "<i class=\"fa fa-globe\" title=\"Zie de post\"/>"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
 msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
-msgstr ""
+msgstr "<i class=\"oi oi-arrow-left\"/> Terug naar Odoo"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
@@ -112,12 +114,12 @@ msgstr "Bericht toevoegen"
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add a Stream"
-msgstr "Voeg een stream toe"
+msgstr "Stream toevoegen"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
 msgid "Add a stream"
-msgstr "Voeg een stream toe"
+msgstr "Stream toevoegen"
 
 #. module: social
 #. odoo-javascript
@@ -134,7 +136,7 @@ msgstr "Alle bedrijven"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_post_ids
 msgid "All related social media posts"
-msgstr "Alle gerelateerde social media posts"
+msgstr "Alle gerelateerde socialmedia-posts"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__account_allowed_ids
@@ -156,7 +158,7 @@ msgstr "Zijn accounts beschikbaar?"
 #: model:ir.model.fields,field_description:social.field_social_post__image_ids
 #: model:ir.model.fields,field_description:social.field_social_post_template__image_ids
 msgid "Attach Images"
-msgstr "Voeg afbeeldingen toe"
+msgstr "Afbeeldingen toevoegen"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
@@ -194,7 +196,8 @@ msgstr "Auteurlink naar de externe social.media (bijvoorbeeld: link naar het Twi
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Before posting, links will be converted to be trackable."
-msgstr "Voordat ze worden geplaatst, worden links geconverteerd om traceerbaar te zijn."
+msgstr ""
+"Voordat het wordt geplaatst, worden links omgezet om traceerbaar te zijn."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
@@ -234,7 +237,7 @@ msgstr "Campagnes worden gebruikt om je marketinginspanningen te centraliseren e
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
 msgid "Can link accounts?"
-msgstr ""
+msgstr "Kan accounts koppelen?"
 
 #. module: social
 #. odoo-javascript
@@ -281,7 +284,7 @@ msgstr "Bedrijf"
 #. module: social
 #: model:ir.model,name:social.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_configuration
@@ -307,7 +310,7 @@ msgstr "Inhoud van de social post bericht dat nabewerkt wordt (links worden inge
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__has_streams
 msgid "Controls if social streams are handled on this social media."
-msgstr "Bepaald of social streams afgehandeld worden op dit social medium."
+msgstr "Bepaald of socialmedia-streams afgehandeld worden op dit social medium."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__can_link_accounts
@@ -380,7 +383,7 @@ msgstr "Verwijder reactie"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Demo Mode"
-msgstr "Demo mode"
+msgstr "Demomodus"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__media_description
@@ -435,7 +438,7 @@ msgstr "Wijzig reactie"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__module_social_demo
 msgid "Enable Demo Mode"
-msgstr "Schakel demo mode in"
+msgstr "Demomodus inschakelen"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -503,7 +506,7 @@ msgstr "Volgers"
 #: model:ir.model.fields,field_description:social.field_social_media__message_partner_ids
 #: model:ir.model.fields,field_description:social.field_social_post__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Volgers (Relaties)"
+msgstr "Volgers (Partners)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_type_icon
@@ -531,12 +534,12 @@ msgstr "Ga naar de"
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
 msgid "Group By"
-msgstr "Groepeer op"
+msgstr "Groeperen op"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
 msgid "Handle / Short Name"
-msgstr "Handvat / korte naam"
+msgstr "Gebruikersnaam / korte naam"
 
 #. module: social
 #. odoo-javascript
@@ -600,7 +603,7 @@ msgstr "Indien aangevinkt vragen nieuwe berichten je aandacht."
 #: model:ir.model.fields,help:social.field_social_post__message_has_error
 #: model:ir.model.fields,help:social.field_social_post__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Indien aangevinkt hebben sommige leveringen een fout."
+msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__image
@@ -646,7 +649,9 @@ msgstr "Is een volger"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "It appears there is an issue with the Social Media link, click here to link the account again"
-msgstr "Er lijkt een probleem te zijn met de Social media link, klik hier om het account opnieuw te koppelen"
+msgstr ""
+"Er lijkt een probleem te zijn met de socialmedia-link, klik hier om het "
+"account opnieuw te koppelen"
 
 #. module: social
 #. odoo-javascript
@@ -746,7 +751,7 @@ msgstr "Een nieuw account koppelen"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 msgid "Link account"
-msgstr "Link account"
+msgstr "Account koppelen"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_account
@@ -769,12 +774,12 @@ msgstr "Link van de live post op de doelmedia."
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Link social accounts"
-msgstr "Link social media accounts"
+msgstr "Socialmedia-accounts koppelen"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stats_link
 msgid "Link to the external Social Account statistics"
-msgstr "Link naar de externe social media account statistieken"
+msgstr "Link naar de externe socialmedia-account statistieken"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__is_media_disconnected
@@ -789,7 +794,7 @@ msgstr "Lijst van de accounts die voor dit bericht kunnen worden geselecteerd."
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__live_posts_by_media
 msgid "Live Posts by Social Media"
-msgstr "Live posts via soiale media"
+msgstr "Live posts via socialmedia"
 
 #. module: social
 #. odoo-javascript
@@ -845,6 +850,8 @@ msgstr "Bericht geplaatst"
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr ""
+"Het bericht is gedeeltelijk gepubliceerd. Dit zijn de berichten die niet "
+"gepubliceerd konden worden:%s"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_ids
@@ -918,7 +925,7 @@ msgstr "Volgende activiteit deadline"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_summary
 msgid "Next Activity Summary"
-msgstr "Omschrijving volgende actie"
+msgstr "Volgende activiteit overzicht"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_type_id
@@ -933,7 +940,7 @@ msgstr "Nog geen sociaal account!"
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "No Social Streams yet!"
-msgstr "Nog geen sociale streams!"
+msgstr "Nog geen socialmedia-streams!"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
@@ -950,7 +957,8 @@ msgstr "Nog geen reacties."
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "No social accounts configured, please contact your administrator."
-msgstr "Geen sociale accounts geconfigureerd. Neem contact op met je beheerder."
+msgstr ""
+"Geen socialmedia-accounts geconfigureerd. Neem contact op met je beheerder."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction_counter
@@ -978,7 +986,8 @@ msgstr "Aantal fouten"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
 msgid "Number of interactions (likes, shares, comments ...) with the social posts"
-msgstr "Aantal interacties (likes, shares, comments...) met de social media posts"
+msgstr ""
+"Aantal interacties (likes, shares, comments...) met de socialmedia-posts"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
@@ -1052,7 +1061,7 @@ msgstr "Geef ten minste één account op om naar te posten (voor bericht-ID('s) 
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post"
-msgstr "Posten"
+msgstr "Publiceren"
 
 #. module: social
 #. odoo-javascript
@@ -1090,18 +1099,20 @@ msgstr "Plaats nu"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
 msgid "Post link to the external social.media (ex: link to the actual Facebook Post)."
-msgstr "Plaats een link naar de externe social.media (bijvoorbeeld: link naar de eigenlijke Facebook-post)."
+msgstr ""
+"Plaats een link naar de externe social media (bijvoorbeeld: link naar de "
+"eigenlijke Facebook-post)."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Post on"
-msgstr "Plaats op"
+msgstr "Publiceren op"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__posted
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__posted
 msgid "Posted"
-msgstr "Gepost"
+msgstr "Geplaatst"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__posting
@@ -1115,7 +1126,7 @@ msgstr "Plaatsen"
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_kanban
 msgid "Posts"
-msgstr "Berichten"
+msgstr "Posts"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__live_post_ids
@@ -1168,7 +1179,7 @@ msgstr "Datum gepubliceerd"
 #: model:ir.model.fields,field_description:social.field_social_media__rating_ids
 #: model:ir.model.fields,field_description:social.field_social_post__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Beoordelingen"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__ready
@@ -1221,7 +1232,7 @@ msgstr "Inplannen"
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__scheduled
 msgid "Schedule later"
-msgstr "Plan later"
+msgstr "Later plannen"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__scheduled
@@ -1242,7 +1253,7 @@ msgstr "Geselecteerde accounts (%s) komen niet overeen met het geselecteerde bed
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
 msgid "Send now"
-msgstr "Verzend nu"
+msgstr "Nu verzenden"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__sequence
@@ -1281,12 +1292,12 @@ msgstr "Social account"
 #: model:ir.ui.menu,name:social.menu_social_account
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_list
 msgid "Social Accounts"
-msgstr "Social media accounts"
+msgstr "Socialmedia-accounts"
 
 #. module: social
 #: model:ir.model,name:social.model_social_live_post
 msgid "Social Live Post"
-msgstr "Social media live post"
+msgstr "Socialmedia-livepost"
 
 #. module: social
 #: model:res.groups,name:social.group_social_manager
@@ -1316,56 +1327,56 @@ msgstr "Social media"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_posts_count
 msgid "Social Media Posts"
-msgstr "Social media posts"
+msgstr "Socialmedia-posts"
 
 #. module: social
 #: model:ir.model,name:social.model_social_post
 #: model:ir.model.fields,field_description:social.field_social_live_post__post_id
 #: model_terms:ir.ui.view,arch_db:social.social_live_post_view_form
 msgid "Social Post"
-msgstr "Social media post"
+msgstr "Socialmedia-post"
 
 #. module: social
 #: model:ir.model,name:social.model_social_post_template
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Social Post Template"
-msgstr "Sjabloon voor sociale berichten"
+msgstr "Socialmedia-postsjabloon"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.social_post_template_action
 msgid "Social Post Templates"
-msgstr "Sjablonen voor sociale berichten"
+msgstr "Socialmedia-postsjablonen"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_post
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_calendar
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_pivot
 msgid "Social Posts"
-msgstr "Social media posts"
+msgstr "Socialmedia-posts"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream
 #: model:ir.model.fields,field_description:social.field_social_stream_post__stream_id
 #: model_terms:ir.ui.view,arch_db:social.social_stream_view_form
 msgid "Social Stream"
-msgstr "Social media stream"
+msgstr "Socialmedia-stream"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream_post
 #: model:ir.model,name:social.model_social_stream_type
 msgid "Social Stream Post"
-msgstr "Social media post"
+msgstr "Socialmedia-post"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream_post_image
 msgid "Social Stream Post Image Attachment"
-msgstr "Social media post afbeelding bijlage"
+msgstr "Socialmedia-post afbeeldingbijlage"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_stream
 #: model:ir.ui.menu,name:social.menu_social_stream
 msgid "Social Streams"
-msgstr "Social media streams"
+msgstr "Socialmedia-streams"
 
 #. module: social
 #: model:res.groups,name:social.group_social_user
@@ -1414,7 +1425,7 @@ msgid ""
 msgstr ""
 "Status gebaseerd op activiteiten\n"
 "Te laat: Datum is al gepasseerd\n"
-"Vandaag: Activiteit datum is vandaag\n"
+"Vandaag: Datum van activiteit is vandaag\n"
 "Gepland: Toekomstige activiteiten."
 
 #. module: social
@@ -1469,7 +1480,8 @@ msgstr "Streams ingeschakeld"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_post_ids
 msgid "Sub-posts that will be published on each selected social accounts."
-msgstr "Subposts die worden gepubliceerd op elke geselecteerde sociale account."
+msgstr ""
+"Subposts die worden gepubliceerd op elke geselecteerde socialmedia-account."
 
 #. module: social
 #. odoo-javascript
@@ -1497,7 +1509,9 @@ msgstr "De naam van de auteur van het bericht op basis van informatie van derden
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
 msgid "The post is considered as 'Posted' when all its sub-posts (one per social account) are either 'Failed' or 'Posted'"
-msgstr "Het bericht wordt beschouwd als 'Geplaatst' wanneer alle sub-berichten (één per social media account) 'Mislukt' of 'Geplaatst' zijn"
+msgstr ""
+"Het bericht wordt beschouwd als 'Geplaatst' wanneer alle sub-berichten (één "
+"per socialmedia account) 'Mislukt' of 'Geplaatst' zijn"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1512,12 +1526,13 @@ msgstr "De reden waarom een bericht niet succesvol op de sociale media is geplaa
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
 msgid "The related Social Media's image"
-msgstr "De gerelateerde social media afbeelding"
+msgstr "De gerelateerde socialmedia afbeelding"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__media_ids
 msgid "The social medias linked to the selected social accounts."
-msgstr "De social media die zijn gekoppeld aan de geselecteerde sociale accounts."
+msgstr ""
+"De socialmedia die zijn gekoppeld aan de geselecteerde socialmedia-accounts."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__has_post_errors
@@ -1538,7 +1553,7 @@ msgstr "Titel"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "To add a stream"
-msgstr "Een stream toevoegen"
+msgstr "Om een stream toevoegen"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_type_id
@@ -1548,7 +1563,7 @@ msgstr "Soort"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Type van activiteit uitzondering op record."
+msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 
 #. module: social
 #: model:ir.model,name:social.model_utm_campaign
@@ -1581,7 +1596,10 @@ msgstr "Geüpload bestand lijkt geen geldige afbeelding."
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Use your own Developer Accounts on our Social app. Those credentials are provided in the developer section of your professional social media account."
-msgstr "Gebruik je eigen ontwikkelaarsaccounts op onze Social-app. Die inloggegevens kan je vinden in de ontwikkelaarsgedeelte van je professionele social media-account."
+msgstr ""
+"Gebruik je eigen ontwikkelaarsaccounts op onze Social-app. Die inloggegevens "
+"kan je vinden in de ontwikkelaarsgedeelte van je professionele socialmedia-"
+"account."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
@@ -1606,7 +1624,7 @@ msgstr "Websiteberichten"
 #: model:ir.model.fields,help:social.field_social_media__website_message_ids
 #: model:ir.model.fields,help:social.field_social_post__website_message_ids
 msgid "Website communication history"
-msgstr "Website communicatiegeschiedenis"
+msgstr "Website communicatie geschiedenis"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__post_method
@@ -1622,7 +1640,9 @@ msgstr "Wanneer de algemene post werd gepubliceerd. De werkelijke gepubliceerde 
 #: model:ir.model.fields,help:social.field_social_post__image_ids
 #: model:ir.model.fields,help:social.field_social_post_template__image_ids
 msgid "Will attach images to your posts (if the social media supports it)."
-msgstr "Voegt afbeeldingen toe aan je posts (indien het social media platform dit ondersteund)."
+msgstr ""
+"Voegt afbeeldingen toe aan je posts (indien het socialmedia platform dit "
+"ondersteund)."
 
 #. module: social
 #. odoo-javascript
@@ -1654,7 +1674,8 @@ msgid ""
 "You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
-"Je kunt deze UTM-mediums niet verwijderen omdat ze zijn gekoppeld aan de volgende sociale accounts in Sociaal:\n"
+"Je kunt deze UTM-mediums niet verwijderen omdat ze zijn gekoppeld aan de "
+"volgende socialmedia-accounts in Sociaal:\n"
 "%(social_accounts)s"
 
 #. module: social
@@ -1671,18 +1692,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "You cannot reschedule a post that has already been posted."
-msgstr "Je kan een reeds geplaatste post niet opnieuw inplannen."
+msgstr "Je kunt een reeds geplaatste post niet opnieuw inplannen."
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "You cannot schedule a post in the past."
-msgstr "Je kan geen post in het verleden plannen."
+msgstr "Je kunt geen post in het verleden plannen."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Your Post"
-msgstr "Jouw post"
+msgstr "Je post"
 
 #. module: social
 #. odoo-javascript

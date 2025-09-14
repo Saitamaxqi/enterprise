@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups
+# * delivery_ups
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"delivery_ups/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups
 #. odoo-python
@@ -84,7 +86,7 @@ msgstr "Vervoerder"
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_cod_funds_code__8
 msgid "Cashier's Check or MoneyOrder"
-msgstr "Kassamedewerker cheque of MoneyOrder"
+msgstr "Kassier cheque of MoneyOrder"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_package_dimension_unit__cm
@@ -94,7 +96,7 @@ msgstr "Centimeters"
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_cod_funds_code__0
 msgid "Check, Cashier's Check or MoneyOrder"
-msgstr "Cheque, kascheque of betalingsopdracht"
+msgstr "Cheque, Cashier's Check of MoneyOrder"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_cod
@@ -189,7 +191,7 @@ msgstr "Verpakkingen %s hebben geen positief verzendgewicht."
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Packages:"
-msgstr ""
+msgstr "Verpakkingen:"
 
 #. module: delivery_ups
 #. odoo-python
@@ -243,7 +245,9 @@ msgstr "Geef een geldig land in voor de verzender zijn adres."
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid package type available for service and selected locations."
-msgstr "Geef een geldig pakkettype op dat beschikbaar is voor service en geselecteerde locaties."
+msgstr ""
+"Geef een geldig verpakkingssoort op dat beschikbaar is voor service en "
+"geselecteerde locaties."
 
 #. module: delivery_ups
 #. odoo-python
@@ -402,7 +406,7 @@ msgstr "De extensie van het nummer van de ontvanger mag alleen cijfers bevatten.
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Return label generated"
-msgstr ""
+msgstr "Retourlabel gegenereerd"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__spl
@@ -434,7 +438,7 @@ msgstr "Levering #%s is geannuleerd."
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Shipment created into UPS"
-msgstr ""
+msgstr "Verzending aangemaakt in UPS"
 
 #. module: delivery_ups
 #. odoo-python
@@ -463,12 +467,12 @@ msgstr "De extensie van het nummer van de verzender mag alleen cijfers bevatten.
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "Verzendwijzes"
+msgstr "Verzendmethoden"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_stock_package_type
 msgid "Stock package type"
-msgstr "Verpakkingstype:"
+msgstr "Verpakkingssoort:"
 
 #. module: delivery_ups
 #. odoo-python
@@ -588,7 +592,7 @@ msgstr "Deze waarde toevoegende dienst staat je toe om ook op zaterdag te verstu
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "Traceernummers:"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups

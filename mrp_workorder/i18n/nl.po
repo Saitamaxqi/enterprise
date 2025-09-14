@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_workorder
+# * mrp_workorder
 #
 # Translators:
 # Jolien De Paepe, 2023
 # Martin Trigaux, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"mrp_workorder/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -51,17 +53,17 @@ msgstr "Activiteiten"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "Activiteit Uitzondering Decoratie"
+msgstr "Activiteit uitzondering decoratie"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_state
 msgid "Activity State"
-msgstr "Activiteitsstatus"
+msgstr "Activiteitsfase"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "Pictogram Activiteitstype"
+msgstr "Activiteitensoort icoon"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -83,7 +85,7 @@ msgstr "Bijproduct toevoegen"
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
 msgid "Add Component"
-msgstr "Voeg onderdeel toe"
+msgstr "Onderdeel toevoegen"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -106,7 +108,7 @@ msgstr "Bijkomend product"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__allow_producing_quantity_change
 msgid "Allow Changes to Producing Quantity"
-msgstr "Sta veranderingen toe aan te produceren hoeveelheid"
+msgstr "Sta veranderingen toe aan te produceren aantal"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point_test_type__allow_registration
@@ -149,7 +151,7 @@ msgstr "Stuklijst"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Block"
-msgstr "Blokkeren"
+msgstr "Vergrendeld"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -192,18 +194,18 @@ msgstr "Categorie"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_change_production_qty
 msgid "Change Production Qty"
-msgstr "Productie hoeveelheid wijzigen"
+msgstr "Producthoeveelheid wijzigen"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__check_ids
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move_line__quality_check_ids
 msgid "Check"
-msgstr "Controle"
+msgstr "Controleren"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__check_ids
 msgid "Checks"
-msgstr "Controles"
+msgstr "Cheques"
 
 #. module: mrp_workorder
 #: model:product.attribute,name:mrp_workorder.product_attribute_color_radio
@@ -241,7 +243,7 @@ msgstr "Onderdeel Hvh te doen"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_res_config_settings
 msgid "Config Settings"
-msgstr "Configuratie instellingen"
+msgstr "Configuratie-instellingen"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__consumption
@@ -288,7 +290,7 @@ msgstr "Datum"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
 msgid "Defines the type of the quality control point."
-msgstr "Definieert het type kwaliteitscontrolepunt."
+msgstr "Definieert het soort van kwaliteitscontrole punt."
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -312,7 +314,7 @@ msgstr "Negeren"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__display_name
 msgid "Display Name"
-msgstr "Weergavenaam"
+msgstr "Schermnaam"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
@@ -334,12 +336,12 @@ msgstr "Zorg voor de traceerbaarheid van een product dat kan worden opgeslagen i
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__finished_lot_id
 msgid "Finished Lot/Serial"
-msgstr "Eindproduct partij/serie"
+msgstr "Afgewerkte partij/serienummer"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
 msgid "Finished Lot/Serial Number"
-msgstr "Eindproduct partij/serienummer"
+msgstr "Afgewerkte partij/serienummer"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__finished_product_check_ids
@@ -391,7 +393,7 @@ msgstr "Icoon"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "Icoon om een uitzonderingsactiviteit aan te geven."
+msgstr "Icoon om uitzondering op activiteit aan te geven."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__worksheet_document
@@ -424,7 +426,8 @@ msgstr "Instructies"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_ids
 msgid "Inventory moves for which you must scan a lot number at this work order"
-msgstr "Voorraadverplaatsingen waarvoor je een partijnummer moet scannen bij deze werkorder"
+msgstr ""
+"Voorraadverplaatsingen waarvoor je een partij moet scannen bij deze werkorder"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_tracking
@@ -477,7 +480,7 @@ msgstr "Partij"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__lot_id
 msgid "Lot/Serial"
-msgstr "Partij/Serie"
+msgstr "Partij/Serienummer"
 
 #. module: mrp_workorder
 #: model:res.groups,name:mrp_workorder.group_mrp_wo_tablet_timer
@@ -492,7 +495,7 @@ msgstr "Productieorders"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Mark as Done"
-msgstr "Markeer als gereed"
+msgstr "Markeren als gereed"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -513,7 +516,7 @@ msgstr "Verplaatsingen te volgen"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Mijn activiteitsdeadline"
+msgstr "Mijn activiteit deadline"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__note
@@ -546,7 +549,7 @@ msgstr "Volgende"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Volgende activiteiten op de kalender"
+msgstr "Volgende activiteitenafspraak"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_date_deadline
@@ -647,7 +650,9 @@ msgstr "Je dient een positieve hoeveelheid in te geven."
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "Please set the quantity you are currently producing. It should be different from zero."
-msgstr "Geef de hoeveelheid in die je nu aan het produceren bent. De hoeveelheid mag niet nul zijn."
+msgstr ""
+"Geef het aantal in die je nu aan het produceren bent. Het aantal mag niet "
+"nul zijn."
 
 #. module: mrp_workorder
 #. odoo-python
@@ -743,23 +748,23 @@ msgstr "Kwaliteitscontrole mislukt"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_check_todo
 msgid "Quality Check Todo"
-msgstr "Uit te voeren kwaliteitscontrole"
+msgstr "Kwaliteitscontrole te doen"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_point
 msgid "Quality Control Point"
-msgstr "Kwaliteitscontrolepunt"
+msgstr "Kwaliteit controlepunt"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_point_test_type
 msgid "Quality Control Test Type"
-msgstr "Type test kwaliteitscontrole"
+msgstr "Kwaliteitscontrole test soort"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__quality_point_ids
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_point_ids
 msgid "Quality Point"
-msgstr "Kwaliteitspunt"
+msgstr "Kwaliteitscontrolepunt"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_routing_steps_search
@@ -782,7 +787,7 @@ msgstr "Kwaliteitsstatus"
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
 msgid "Quantity"
-msgstr "Hoeveelheid"
+msgstr "Aantal"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -819,7 +824,7 @@ msgstr "Huidige stap verwijderen"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__test_report_type
 msgid "Report Type"
-msgstr "Rapportsoort"
+msgstr "Rapport soort"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__user_id
@@ -887,9 +892,9 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Status op basis van activiteiten\n"
-"Achterstallig: vervaldatum is al verstreken\n"
-"Vandaag: Activiteitsdatum is vandaag\n"
+"Status gebaseerd op activiteiten\n"
+"Te laat: Datum is al gepasseerd\n"
+"Vandaag: Datum van activiteit is vandaag\n"
 "Gepland: Toekomstige activiteiten."
 
 #. module: mrp_workorder
@@ -961,7 +966,7 @@ msgstr "Technische naam"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__test_type_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__test_type_id
 msgid "Test Type"
-msgstr "Test type"
+msgstr "Soort test"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -988,13 +993,13 @@ msgstr "Totale hvh"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_tracking
 msgid "Tracking"
-msgstr "Tracking"
+msgstr "Traceren"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__type
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_workorder_form
 msgid "Type"
-msgstr "Type"
+msgstr "Soort"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__change_type
@@ -1009,7 +1014,7 @@ msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Unblock"
-msgstr "Deblokkeren"
+msgstr "Ontgrendel"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
@@ -1085,7 +1090,7 @@ msgstr "Werkplek"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_routing_workcenter
 msgid "Work Center Usage"
-msgstr "Werkplek gebruik"
+msgstr "Gebruik werkplek"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_workorder
@@ -1155,7 +1160,9 @@ msgstr "Wauw, je hebt de top 5 gehaald!"
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/change_production_qty.py:0
 msgid "You cannot update the quantity to do of an ongoing manufacturing order for which quality checks have been performed."
-msgstr "Je kunt de te maken hoeveelheid niet bijwerken van een lopende productieorder waarvoor al kwaliteitscontroles zijn uitgevoerd."
+msgstr ""
+"Je kunt het te maken aantal niet bijwerken van een lopende productieorder "
+"waarvoor al kwaliteitscontroles zijn uitgevoerd."
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1173,7 +1180,7 @@ msgstr "Je moet een partij- / serienummer opgeven voor het eindproduct"
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "You still need to do the quality checks!"
-msgstr "Je moet de kwaliteitscontroles nog steeds uitvoeren!"
+msgstr "Je moet de kwaliteitscontroles nog steeds doen!"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__quality_point__test_report_type__zpl

@@ -1,24 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll_account
+# * hr_payroll_account
 #
 # Translators:
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
 # Martin Trigaux, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Martin Trigaux, 2023\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-09-14 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
+"hr_payroll_account/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_chart_template
@@ -29,7 +31,7 @@ msgstr "Grootboekschema sjabloon"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Account Payslip Houserental"
-msgstr ""
+msgstr "Rekening Loonstrook Huurwoning"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
@@ -52,13 +54,13 @@ msgstr "Aanpassingsboeking"
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract_history__analytic_account_id
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__analytic_account_id
 msgid "Analytic Account"
-msgstr "Kostenplaats"
+msgstr "Analytische rekening"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "Weet je zeker dat je wilt doorgaan?"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract_history
@@ -95,7 +97,8 @@ msgstr "Arbeidsovereenkomst"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "Incorrect journal: The journal must be in the same currency as the company"
-msgstr "Onjuiste dagboek: Het dagboek moet in dezelfde valuta zijn als het bedrijf."
+msgstr ""
+"Onjuiste dagboek: Het dagboek moet in dezelfde valuta zijn als het bedrijf"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_journal
@@ -122,13 +125,14 @@ msgstr "Niet netto berekend"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the contract for these payslips has no structure type."
-msgstr "Een van de contracten voor deze salarisstroken heeft geen type structuur."
+msgstr "Een van de contracten voor deze loonstroken heeft geen structuurtype."
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the payroll structures has no account journal defined on it."
-msgstr "In een van de salarisadministratiestructuren is geen rekening gedefinieerd."
+msgstr ""
+"In een van de loonadministratiestructuren is geen rekening gedefinieerd."
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
@@ -139,13 +143,13 @@ msgstr "Loonstrook"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "SLR"
-msgstr ""
+msgstr "SLR"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Salaries"
-msgstr ""
+msgstr "Lonen"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__journal_id
@@ -161,7 +165,7 @@ msgstr "Salarisregel"
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payroll_structure
 msgid "Salary Structure"
-msgstr "Salarisstructuur"
+msgstr "Loonstructuur"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -179,3 +183,4 @@ msgstr "In dit veld kun je de waarde van deze regel in de regel \"Nettosalaris\"
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
 msgstr ""
+"Je kunt het dagboek dat aan een loonstructuur gekoppeld is, niet verwijderen"

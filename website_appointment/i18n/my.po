@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:47+0000\n"
+"POT-Creation-Date: 2025-09-13 21:50+0000\n"
 "PO-Revision-Date: 2025-09-11 14:47+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -67,7 +68,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid ""
 "<span class=\"o_not_editable\">Online</span>\n"
-"                                        <i class=\"fa fa-video-camera\" role=\"presentation\"/>"
+"                                        <i class=\"fa fa-video-camera\" "
+"role=\"presentation\"/>"
 msgstr ""
 
 #. module: website_appointment
@@ -100,25 +102,28 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
 msgid ""
-"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Doctor's "
-"Office</span>"
-msgstr ""
-
-#. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
-msgid "<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Online</span>"
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Doctor's Office</"
+"span>"
 msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
 msgid ""
-"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Tennis "
-"Court</span>"
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Online</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
+msgid ""
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Tennis Court</"
+"span>"
 msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
-msgid "<span>Doctor's Office <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgid ""
+"<span>Doctor's Office <i class=\"fa fa-marker\" role=\"presentation\"/></"
+"span>"
 msgstr ""
 
 #. module: website_appointment
@@ -128,12 +133,14 @@ msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
-msgid "<span>See all availabilities <i class=\"fa fa-long-arrow-right\"/></span>"
+msgid ""
+"<span>See all availabilities <i class=\"fa fa-long-arrow-right\"/></span>"
 msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
-msgid "<span>Tennis Club <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgid ""
+"<span>Tennis Club <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
 msgstr ""
 
 #. module: website_appointment
@@ -380,14 +387,7 @@ msgstr ""
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
-msgid ""
-"Easily reserve tennis courts for your next match, anytime and anywhere."
-msgstr ""
-
-#. module: website_appointment
-#. odoo-javascript
-#: code:addons/website_appointment/static/src/interactions/appointment_form.js:0
-msgid "Error"
+msgid "Easily reserve tennis courts for your next match, anytime and anywhere."
 msgstr ""
 
 #. module: website_appointment
@@ -480,8 +480,8 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid ""
-"Reserve your table at our bistro and enjoy a delightful dining experience at"
-" your convenience."
+"Reserve your table at our bistro and enjoy a delightful dining experience at "
+"your convenience."
 msgstr ""
 
 #. module: website_appointment
@@ -517,8 +517,8 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid ""
-"Schedule your visit today and experience expert dental care brought right to"
-" your doorstep."
+"Schedule your visit today and experience expert dental care brought right to "
+"your doorstep."
 msgstr ""
 
 #. module: website_appointment
