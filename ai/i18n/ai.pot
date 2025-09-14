@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"PO-Revision-Date: 2025-09-13 21:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1411,6 +1411,12 @@ msgid "Text Selection"
 msgstr ""
 
 #. module: ai
+#. odoo-python
+#: code:addons/ai/models/ir_actions_server.py:0
+msgid "The action '%s' cannot be used as an AI tool."
+msgstr ""
+
+#. module: ai
 #: model:ir.model.fields,help:ai.field_ai_composer__name
 msgid "The identifier for the interface component to agent rule"
 msgstr ""
@@ -1457,7 +1463,7 @@ msgstr ""
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
-msgid "This action cannot be used as an AI tool."
+msgid "This action is interactive and cannot be executed by the agent."
 msgstr ""
 
 #. module: ai
@@ -1600,6 +1606,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__user_has_access
 msgid "User Has Access"
+msgstr ""
+
+#. module: ai
+#. odoo-javascript
+#: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
+msgid "User error"
 msgstr ""
 
 #. module: ai

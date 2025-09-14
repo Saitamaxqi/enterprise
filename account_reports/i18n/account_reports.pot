@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 21:06+0000\n"
-"PO-Revision-Date: 2025-09-12 21:06+0000\n"
+"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"PO-Revision-Date: 2025-09-13 21:43+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1816,6 +1816,13 @@ msgid "Create a Customer"
 msgstr ""
 
 #. module: account_reports
+#: model_terms:ir.actions.act_window,help:account_reports.action_view_account_audit
+msgid ""
+"Create a new audit working file with dedicated checks and balance reviews to"
+" ensure smooth closings."
+msgstr ""
+
+#. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_audit_account_status__create_uid
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__create_uid
 #: model:ir.model.fields,field_description:account_reports.field_account_report_annotation__create_uid
@@ -3437,11 +3444,13 @@ msgid "Is Report Set"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__is_tax_return
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__is_tax_return_type
 msgid "Is a Tax Return Return Type"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__is_ec_sales_list_return
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__is_ec_sales_list_return_type
 msgid "Is an EC Sales List Return Type"
 msgstr ""

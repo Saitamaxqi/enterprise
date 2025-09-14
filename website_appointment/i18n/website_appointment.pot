@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:47+0000\n"
-"PO-Revision-Date: 2025-09-11 14:47+0000\n"
+"POT-Creation-Date: 2025-09-13 21:50+0000\n"
+"PO-Revision-Date: 2025-09-13 21:50+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -382,12 +382,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid ""
 "Easily reserve tennis courts for your next match, anytime and anywhere."
-msgstr ""
-
-#. module: website_appointment
-#. odoo-javascript
-#: code:addons/website_appointment/static/src/interactions/appointment_form.js:0
-msgid "Error"
 msgstr ""
 
 #. module: website_appointment
