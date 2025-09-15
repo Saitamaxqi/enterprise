@@ -21,7 +21,7 @@
             </div>
             <button name="create_employee_from_applicant" position="before">
                 <button name="action_generate_offer" type="object" string="Generate Offer"
-                    class="oe_highlight" invisible="not active or application_status == 'hired' or is_pool_applicant or salary_offers_count > 0"
+                    class="oe_highlight" invisible="not active or application_status == 'hired' or is_pool_applicant"
                     data-hotkey="q" groups="hr_recruitment.group_hr_recruitment_user" />
             </button>
         </field>
