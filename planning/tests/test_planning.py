@@ -1460,3 +1460,23 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         })
         data = employee.resource_id.get_avatar_card_data(["name"])[0]
         self.assertEqual(data.get("name"), "Test Emp")
+
+    def test_multi_shift_creation_excludes_non_working_days(self):
+        """Ensure multi-shift creation automatically skips weekends (non-working days)."""
+        self.employee_bert.resource_calendar_id = self.calendar_40h_flex
+        slots = self.env['planning.slot'].with_context(multi_create=True).create([
+            {
+                'start_datetime': datetime(2025, 10, day, 9, 0, 0),
+                'end_datetime': datetime(2025, 10, day, 17, 0, 0),
+                'resource_id': resource.id,
+                'template_id': self.template.id,
+            } for day in range(5, 12) for resource in [self.resource_janice, self.resource_bert, self.resource_joseph]
+        ])
+
+        slots_janice = slots.filtered(lambda slot: slot.resource_id == self.resource_janice)
+        slots_bert = slots.filtered(lambda slot: slot.resource_id == self.resource_bert)
+
+        self.assertEqual(len(slots_janice), 5, "Standard schedule: shifts should be created only on working days.")
+        self.assertEqual([slot.start_datetime.day for slot in slots_janice], [6, 7, 8, 9, 10], "Excluded 5 and 11 (Sat/Sun)")
+        self.assertEqual(len(slots_bert), 5, "Flexible schedule: shifts should be created only on working days.")
+        self.assertEqual([slot.start_datetime.day for slot in slots_bert], [5, 6, 7, 8, 9], "10 and 11 are non-working days.")

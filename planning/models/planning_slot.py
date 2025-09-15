@@ -839,6 +839,31 @@ class PlanningSlot(models.Model):
                     vals['state'] = 'published'
             if not vals.get('company_id'):
                 vals['company_id'] = self.env.company.id
+        if self.env.context.get("multi_create"):
+            vals_list_updated = []
+            resource_per_id = {}
+            user_tz = pytz.timezone(self._get_tz())
+            min_datetime = fields.Datetime.from_string(vals_list[0]['start_datetime']).astimezone(user_tz)
+            max_datetime = fields.Datetime.from_string(vals_list[-1]['end_datetime']).astimezone(user_tz)
+            for vals in vals_list:
+                if resource_id := vals.get('resource_id'):
+                    resource = resource_per_id.get(resource_id)
+                    if not resource:
+                        resource = Resource.browse(resource_id)
+                        resource_per_id[resource_id] = resource
+                        Resource |= resource
+            schedule, _ = Resource._get_valid_work_intervals(min_datetime, max_datetime)
+            for vals in vals_list:
+                if resource_id := vals.get('resource_id'):
+                    shift_interval = Intervals([(
+                        fields.Datetime.from_string(vals.get('start_datetime')).astimezone(user_tz),
+                        fields.Datetime.from_string(vals.get('end_datetime')).astimezone(user_tz),
+                        self.env['resource.calendar.attendance'],
+                    )])
+                    if shift_interval & schedule[resource_id]:
+                        vals_list_updated.append(vals)
+            if vals_list_updated:
+                vals_list = vals_list_updated
         return super().create(vals_list)
 
     def create_batch_from_calendar(self, vals_list):
