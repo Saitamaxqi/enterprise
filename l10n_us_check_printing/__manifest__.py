@@ -22,7 +22,7 @@ You can choose between:
 - Check on bottom: ADP standard (https://www.checkdepot.net/checks/checkorder/laser_bottomcheck.htm)
     """,
     'website': 'https://www.odoo.com/app/accounting',
-    'depends' : ['account_check_printing', 'l10n_us'],
+    'depends': ['account_check_printing', 'l10n_us_account'],
     'data': [
         'data/us_check_printing.xml',
         'report/print_blank_check_bottom.xml',
@@ -34,7 +34,7 @@ You can choose between:
         'report/print_check_bottom.xml',
     ],
     'installable': True,
-    'auto_install': ['l10n_us'],
+    'auto_install': ['l10n_us_account'],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
     'assets': {
