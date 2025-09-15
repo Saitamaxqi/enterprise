@@ -3170,7 +3170,7 @@
                                                 <field name="engine">account_codes</field>
                                                 <field name="formula">
                                                     tag(l10n_dk.account_tag_6110) +
-                                                    tag(l10n_dk.account_tag_6120) +
+                                                    tag(l10n_dk.account_tag_6120)
                                                 </field>
                                             </record>
                                         </field>

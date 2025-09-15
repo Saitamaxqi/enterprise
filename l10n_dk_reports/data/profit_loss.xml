@@ -2495,7 +2495,7 @@
                                                     tag(l10n_dk.account_tag_1710) +
                                                     tag(l10n_dk.account_tag_1740) +
                                                     tag(l10n_dk.account_tag_1770) +
-                                                    tag(l10n_dk.account_tag_1800) +
+                                                    tag(l10n_dk.account_tag_1800)
                                                 </field>
                                                 <field name="green_on_positive" eval="False"/>
                                             </record>
@@ -2526,7 +2526,7 @@
                                                             tag(l10n_dk.account_tag_1930) +
                                                             tag(l10n_dk.account_tag_1950) +
                                                             tag(l10n_dk.account_tag_1970) +
-                                                            tag(l10n_dk.account_tag_1990) +
+                                                            tag(l10n_dk.account_tag_1990)
                                                         </field>
                                                         <field name="green_on_positive" eval="False"/>
                                                     </record>
@@ -2648,7 +2648,7 @@
                                             tag(l10n_dk.account_tag_2965) +
                                             tag(l10n_dk.account_tag_2968) +
                                             tag(l10n_dk.account_tag_2970) +
-                                            tag(l10n_dk.account_tag_2980) +
+                                            tag(l10n_dk.account_tag_2980)
                                         </field>
                                         <field name="green_on_positive" eval="False"/>
                                     </record>
@@ -2674,7 +2674,7 @@
                                             tag(l10n_dk.account_tag_3060) +
                                             tag(l10n_dk.account_tag_3070) +
                                             tag(l10n_dk.account_tag_3080) +
-                                            tag(l10n_dk.account_tag_3090) +
+                                            tag(l10n_dk.account_tag_3090)
                                         </field>
                                         <field name="green_on_positive" eval="False"/>
                                     </record>
