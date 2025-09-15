@@ -2529,7 +2529,7 @@ class AccountReturnCheck(models.Model):
     message = fields.Text(string="Description", translate=True)
     state = fields.Char(string="Return State To Check For", default='new', required=True)
     records_count = fields.Integer(readonly=True)
-    records_name = fields.Char(compute='_compute_records_name')
+    records_name = fields.Char(compute='_compute_records_name', compute_sudo=True)  # sudo is necessary because we're accessing ir.model
     records_model = fields.Many2one(string="Model", comodel_name='ir.model')
     action = fields.Json()
     result = fields.Selection(
