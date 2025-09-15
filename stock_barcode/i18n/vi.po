@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_barcode
+# * stock_barcode
 #
 # Translators:
 # Martin Trigaux, 2022
 # Duy BQ <duybq86@gmail.com>, 2022
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
 # Thi Huong Nguyen, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"stock_barcode/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -47,6 +49,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title="
+"\"Vị trí phế phẩm\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -62,17 +66,17 @@ msgstr "<i class=\"fa fa-fw fa-lg fa-tags me-3\" title=\"Sản phẩm\"/>"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode_kanban_2
 msgid "<i class=\"fa fa-lg fa-archive me-2\" title=\"Package\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-lg fa-archive me-2\" title=\"Kiện hàng\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode_kanban_2
 msgid "<i class=\"fa fa-lg fa-user-o me-2\" title=\"Owner\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-lg fa-user-o me-2\" title=\"Chủ sở hữu\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print barcode commands and operation types"
-msgstr ""
+msgstr "<i class=\"fa fa-print\"/> In lệnh mã vạch và loại hoạt động"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
@@ -82,29 +86,29 @@ msgstr "<i class=\"fa fa-print\"/> In một trang mã vạch demo"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print storage locations"
-msgstr ""
+msgstr "<i class=\"fa fa-print\"/> In vị trí lưu kho"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode
 msgid "<i class=\"fa fs-4 fa-tags me-1\" title=\"Product\"/>"
-msgstr ""
+msgstr "<i class=\"fa fs-4 fa-tags me-1\" title=\"Sản phẩm\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
 msgid "<span>Replenish Quantities</span>"
-msgstr ""
+msgstr "<span>Số lượng bổ sung</span>"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "A GTIN can only contains digits"
-msgstr ""
+msgstr "GTIN chỉ được chứa chữ số"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_product
 msgid "A line's product must be scanned before the line can be edited"
-msgstr ""
+msgstr "Sản phẩm của dòng phải được quét trước khi có thể chỉnh sửa dòng này"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -125,7 +129,7 @@ msgstr "Thêm sản phẩm"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
 msgid "Add colors to operation cards to help users differentiate them."
-msgstr ""
+msgstr "Thêm màu sắc vào thẻ hoạt động để giúp người dùng phân biệt chúng."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -143,7 +147,7 @@ msgstr "Sau mỗi sản phẩm"
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_put_in_pack__optional
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_scan_dest_location__optional
 msgid "After group of products"
-msgstr ""
+msgstr "Sau nhóm sản phẩm"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -159,7 +163,7 @@ msgstr "Phân bổ"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_allow_extra_product
 msgid "Allow extra products"
-msgstr ""
+msgstr "Cho phép thêm sản phẩm"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_validation_full
@@ -172,6 +176,8 @@ msgid ""
 "Allow validating a picking even if nothing has been scanned yet, i.e. do an "
 "immediate transfer"
 msgstr ""
+"Cho phép xác thực phiếu xuất kho ngay cả khi chưa quét bất kỳ mục nào, tức "
+"là thực hiện chuyển hàng ngay lập tức."
 
 #. module: stock_barcode
 #. odoo-python
@@ -180,6 +186,8 @@ msgid ""
 "An error occured during parsing of element_string: AI code %(ai_code)s is "
 "missing for scheme %(scheme_name)s"
 msgstr ""
+"Đã xảy ra lỗi khi phân tích element_string: Mã AI %(ai_code)s bị thiếu cho "
+"sơ đồ %(scheme_name)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -188,6 +196,8 @@ msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
 msgstr ""
+"Đã xảy ra lỗi với trường '%(field_name)s': không tìm thấy AI tương ứng "
+"'%(ai_code)s' trong element_string."
 
 #. module: stock_barcode
 #. odoo-python
@@ -196,12 +206,14 @@ msgid ""
 "An error occured: value of company_prefix_length (%(company_prefix_length)s) "
 "must be between 6 and 12 inclusive."
 msgstr ""
+"Đã xảy ra lỗi: giá trị của company_prefix_length (%(company_prefix_length)s) "
+"phải nằm trong khoảng từ 6 đến 12, bao gồm cả hai số này."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "An error occurred with field '%(field_name)s': %(error_message)s"
-msgstr ""
+msgstr "Đã xảy ra lỗi với trường '%(field_name)s': %(error_message)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -210,12 +222,14 @@ msgid ""
 "An error occurred with field 'partition': no partition value can be found "
 "for the given company_prefix_length"
 msgstr ""
+"Đã xảy ra lỗi với trường 'partition': không tìm thấy giá trị phân vùng nào "
+"cho company_prefix_length được cung cấp."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "An error occurred with method '%(method_name)s': %(error_message)s"
-msgstr ""
+msgstr "Đã xảy ra lỗi với phương thức '%(method_name)s': %(error_message)s"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -224,8 +238,8 @@ msgid ""
 "An unexisting package type was scanned. This part of the barcode can't be "
 "processed."
 msgstr ""
-"Một loại gói không tồn tại đã được quét. Không thể xử lý phần này của mã "
-"vạch."
+"Một loại kiện hàng không tồn tại đã được quét. Không thể xử lý phần này của "
+"mã vạch."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -236,23 +250,23 @@ msgstr ""
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_cancel_operation_view
 msgid "Are you sure you want to cancel this operation?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn huỷ hoạt động này không?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode_kanban_2
 msgid "Available:"
-msgstr ""
+msgstr "Còn lại:"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/backorder_dialog.xml:0
 msgid "Backorder"
-msgstr ""
+msgstr "Đơn hàng tách kiện"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_backorder_confirmation
 msgid "Backorder Confirmation"
-msgstr "Xác nhận đơn hàng tồn đọng"
+msgstr "Xác nhận đơn hàng tách kiện"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -278,17 +292,17 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.actions.client,name:stock_barcode.stock_barcode_inventory_client_action
 msgid "Barcode Inventory Client Action"
-msgstr "Hành động máy khách Tồn kho Mã vạch"
+msgstr "Tác vụ máy khách Tồn kho Mã vạch"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Barcode Nomenclature"
-msgstr "Phép đặt tên mã vạch"
+msgstr "Danh pháp mã vạch"
 
 #. module: stock_barcode
 #: model:ir.actions.client,name:stock_barcode.stock_barcode_picking_client_action
 msgid "Barcode Picking Client Action"
-msgstr "Hành động máy khách Phiếu lấy hàng Mã vạch"
+msgstr "Tác vụ máy khách Phiếu xuất kho Mã vạch"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_scrap___barcode_scanned
@@ -299,20 +313,20 @@ msgstr "Mã vạch được quét"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.xml:0
 msgid "Barcode Scanner"
-msgstr ""
+msgstr "Máy quét mã vạch"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid "Barcode scan is ambiguous with several model: %s. Use the most likely."
 msgstr ""
-"Quét mã vạch một số model không rõ ràng: %s. Sử dụng khả năng cao nhất."
+"Quét mã vạch một số mô hình không rõ ràng: %s. Sử dụng khả năng cao nhất."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "Barcodes are not available."
-msgstr ""
+msgstr "Mã vạch không khả dụng."
 
 #. module: stock_barcode
 #. odoo-python
@@ -320,11 +334,13 @@ msgstr ""
 msgid ""
 "Binary value %(word)s cannot be represented with %(word_size_write)s bits"
 msgstr ""
+"Giá trị nhị phân %(word)s không thể được biểu diễn bằng %(word_size_write)s "
+"bit."
 
 #. module: stock_barcode
 #: model:product.template,name:stock_barcode.product_cable_management_box_2_product_template
 msgid "Cable Management Box"
-msgstr "Cáp hộp quản lý"
+msgstr "Hộp quản lý cáp"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -343,7 +359,7 @@ msgstr "Hủy hoạt động"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Cancel Transfer"
-msgstr ""
+msgstr "Huỷ lệnh chuyển hàng"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_cancel_operation_view
@@ -354,12 +370,12 @@ msgstr "Hủy hoạt động"
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_picking.py:0
 msgid "Cancel this operation?"
-msgstr ""
+msgstr "Hủy hoạt động này?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
 msgid "Card Color"
-msgstr ""
+msgstr "Màu thẻ"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -405,7 +421,7 @@ msgstr "Liên hệ"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Count Entire Locations"
-msgstr ""
+msgstr "Kiểm kê toàn bộ vị trí"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -421,12 +437,12 @@ msgstr "Số lượng đã đếm"
 #. module: stock_barcode
 #: model:ir.model,website_form_label:stock_barcode.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Tạo một khách hàng"
 
 #. module: stock_barcode
 #: model_terms:ir.actions.act_window,help:stock_barcode.stock_picking_action_kanban
 msgid "Create a new transfer"
-msgstr "Tạo một điều chuyển mới"
+msgstr "Tạo một lệnh chuyển hàng mới"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__create_uid
@@ -486,7 +502,7 @@ msgstr "Vị trí đích phải được quét"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Disable sound effect while scanning a barcode."
-msgstr ""
+msgstr "Tắt hiệu ứng âm thanh khi quét mã vạch."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -527,6 +543,8 @@ msgid ""
 "Display reserved lots/serial numbers. When not active, the picker can pick "
 "lots/serials as they want."
 msgstr ""
+"Hiển thị lô/số sê-ri đã được dự trữ. Khi không được kích hoạt, người lấy "
+"hàng có thể lấy lô/sê-ri theo ý muốn."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -535,17 +553,22 @@ msgid ""
 "Do you want to permanently remove this message ? It won't appear anymore, so "
 "make sure you don't need the barcodes sheet or you have a copy."
 msgstr ""
+"Bạn có muốn xóa vĩnh viễn thông báo này không? Thông báo sẽ không xuất hiện "
+"nữa, vì vậy hãy đảm bảo rằng bạn không cần trang mã vạch hoặc bạn có một bản "
+"sao."
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_put_in_pack
 msgid ""
 "Does the picker have to put the scanned products in a package? If yes, when?"
 msgstr ""
+"Người lấy hàng có cần đặt các sản phẩm đã quét vào một kiện không? Nếu có, "
+"thì khi nào?"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
 msgid "Does the picker have to scan the destination? If yes, when?"
-msgstr ""
+msgstr "Người lấy hàng có phải quét vị trí đích không? Nếu có, khi nào?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_cancel_operation_view
@@ -562,19 +585,19 @@ msgstr "Không hiển thị lại thông báo này"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/backorder_dialog.xml:0
 msgid "Done / To do"
-msgstr ""
+msgstr "Hoàn tất/Việc cần làm"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
 msgid "Download demo data sheet"
-msgstr ""
+msgstr "Tải xuống trang tính dữ liệu demo"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.js:0
 msgid "Download operation barcodes"
-msgstr ""
+msgstr "Tải xuống mã vạch hoạt động"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__dummy_id
@@ -585,12 +608,12 @@ msgstr "Dummy"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__electronic_product_code
 msgid "Electronic Product Code"
-msgstr ""
+msgstr "Mã sản phẩm điện tử"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__empty_move_count
 msgid "Empty Move Count"
-msgstr "Số dịch chuyển trống"
+msgstr "Số điều chuyển trống"
 
 #. module: stock_barcode
 #. odoo-python
@@ -599,6 +622,8 @@ msgid ""
 "Error: The product barcode is not a valid Global Trade Item Number, we can't "
 "generate an Electronic Product Code for it."
 msgstr ""
+"Lỗi: Mã vạch sản phẩm không phải là Mã mặt hàng thương mại toàn cầu (GTIN) "
+"hợp lệ, do đó không thể tạo Mã sản phẩm điện tử cho nó."
 
 #. module: stock_barcode
 #. odoo-python
@@ -607,6 +632,8 @@ msgid ""
 "Error: We can't generate an Electronic Product Code for a product without a "
 "barcode."
 msgstr ""
+"Lỗi: Chúng tôi không thể tạo Mã sản phẩm điện tử cho một sản phẩm không có "
+"mã vạch."
 
 #. module: stock_barcode
 #. odoo-python
@@ -615,6 +642,8 @@ msgid ""
 "Error: We can't generate an Electronic Product Code for a tracked product "
 "without a tracking number."
 msgstr ""
+"Lỗi: Chúng tôi không thể tạo Mã sản phẩm điện tử cho một sản phẩm được theo "
+"dõi mà không có số theo dõi."
 
 #. module: stock_barcode
 #. odoo-python
@@ -623,12 +652,14 @@ msgid ""
 "Field '%(field_name)s' is a reserved field, you can't manually update its "
 "value with this method"
 msgstr ""
+"Trường '%(field_name)s' là một trường đã được dự trữ, bạn không thể cập nhật "
+"giá trị của nó theo cách này."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Field '%(field_name)s' not found"
-msgstr ""
+msgstr "Không tìm thấy trường '%(field_name)s'"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
@@ -639,18 +670,20 @@ msgstr "Xác nhận cuối cùng"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Following backorder was created:"
-msgstr ""
+msgstr "Đơn hàng tách kiện sau đã được tạo:"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Following backorders were created:"
-msgstr ""
+msgstr "Các đơn hàng tách kiện sau đã được tạo:"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_allow_extra_product
 msgid "For planned transfers, allow adding non-reserved products"
 msgstr ""
+"Đối với lệnh chuyển hàng theo kế hoạch, cho phép thêm sản phẩm không được dự "
+"trữ"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
@@ -675,7 +708,7 @@ msgstr "Buộc quét vị trí nguồn?"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_validation_after_dest_location
 msgid "Force a destination for all products"
-msgstr ""
+msgstr "Buộc có một vị trí đích cho tất cả sản phẩm"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__barcode_validation_all_product_packed
@@ -685,27 +718,27 @@ msgstr "Buộc tất cả các sản phẩm phải được đóng gói"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__restrict_put_in_pack
 msgid "Force put in pack?"
-msgstr "Buộc đưa vào gói?"
+msgstr "Buộc đóng hàng thành kiện?"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__formatted_product_barcode
 msgid "Formatted Product Barcode"
-msgstr ""
+msgstr "Mã vạch sản phẩm đã định dạng"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_product_product__has_image
 msgid "Has Image"
-msgstr ""
+msgstr "Có hình ảnh"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__hide_lot
 msgid "Hide Lot"
-msgstr ""
+msgstr "Ẩn lô"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__hide_lot_name
 msgid "Hide Lot Name"
-msgstr ""
+msgstr "Ẩn tên lô"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_product_product__id
@@ -745,24 +778,26 @@ msgstr ""
 msgid ""
 "If you validate now, the remaining products will be added to a backorder."
 msgstr ""
+"Nếu bạn xác nhận ngay bây giờ, các sản phẩm còn lại sẽ được thêm vào đơn "
+"hàng tách kiện."
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__image_1920
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_quant__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Hình ảnh"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/backorder_dialog.xml:0
 msgid "Incomplete Transfer"
-msgstr ""
+msgstr "Lệnh chuyển hàng chưa hoàn tất"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.xml:0
 msgid "Install"
-msgstr ""
+msgstr "Cài đặt"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line__product_barcode
@@ -774,25 +809,25 @@ msgstr "Mã số quốc tế được sử dụng để xác định sản phẩ
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid pad_char '%(pad_char)s'. Use '0' or '1'."
-msgstr ""
+msgstr "pad_char '%(pad_char)s' không hợp lệ. Sử dụng '0' hoặc '1'."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid pad_side '%(pad_side)s'. Use 'left' or 'right'."
-msgstr ""
+msgstr "pad_side '%(pad_side)s' không hợp lệ. Use 'trái' or 'phải'."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid word_pad_char '%(word_pad_char)s'. Use '0' or '1'."
-msgstr ""
+msgstr "word_pad_char '%(word_pad_char)s' không hợp lệ. Sử dụng '0' hoặc '1'."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid word_pad_side '%(word_pad_side)s'. Use 'left' or 'right'."
-msgstr ""
+msgstr "word_pad_side '%(word_pad_side)s' không hợp lệ. Use 'trái' or 'phải'."
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_location
@@ -808,7 +843,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__is_barcode_picking_type
 msgid "Is Barcode Picking Type"
-msgstr ""
+msgstr "Là kiểu lấy hàng theo mã vạch"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__write_uid
@@ -830,18 +865,18 @@ msgstr "Thoát ra"
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Length must be a positive integer"
-msgstr ""
+msgstr "Chiều dài phải là một số nguyên dương."
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_product_uom
 msgid "Link between products and their UoMs"
-msgstr ""
+msgstr "Liên kết giữa sản phẩm và ĐVT của chúng"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Loading..."
-msgstr ""
+msgstr "Đang tải..."
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode
@@ -857,7 +892,7 @@ msgstr "Vị trí đã xử lý"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.xml:0
 msgid "Log out"
-msgstr ""
+msgstr "Đăng xuất"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_lot
@@ -887,22 +922,22 @@ msgstr "Vị trí nguồn bắt buộc"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__barcode_max_time_between_keys_in_ms
 msgid "Max time between each key"
-msgstr ""
+msgstr "Thời gian tối đa giữa mỗi key"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_res_config_settings__barcode_max_time_between_keys_in_ms
 msgid "Maximum delay between each key in ms (100 ms by default)"
-msgstr ""
+msgstr "Độ trễ tối đa giữa mỗi key tính bằng ms (mặc định là 100 ms)"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__barcode_separator_regex
 msgid "Multiscan Separator"
-msgstr ""
+msgstr "Phân cách nhiều lần quét"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__stock_barcode_mute_sound_notifications
 msgid "Mute Barcode application sounds"
-msgstr ""
+msgstr "Tắt âm thanh ứng dụng Mã vạch"
 
 #. module: stock_barcode
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_put_in_pack__no
@@ -920,7 +955,7 @@ msgstr "Không %(picking_type)s nào sẵn sàng cho %(barcode_type)s"
 #. odoo-python
 #: code:addons/stock_barcode/models/stock_move_line.py:0
 msgid "No Barcode"
-msgstr ""
+msgstr "Không có mã vạch"
 
 #. module: stock_barcode
 #: model:ir.model.fields.selection,name:stock_barcode.selection__stock_picking_type__restrict_scan_source_location__no
@@ -940,13 +975,15 @@ msgstr ""
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or location or product corresponding to barcode %(barcode)s"
 msgstr ""
-"Không có phiếu kho, vị trí hay sản phẩm nào tương ứng với mã vạch %(barcode)s"
+"Không có phiếu xuất kho, vị trí hay sản phẩm nào tương ứng với mã vạch "
+"%(barcode)s"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or product corresponding to barcode %(barcode)s"
-msgstr "Không có phiếu kho hoặc sản phẩm nào tương ứng với mã vạch %(barcode)s"
+msgstr ""
+"Không có phiếu xuất kho hoặc sản phẩm nào tương ứng với mã vạch %(barcode)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1000,12 +1037,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/apply_quant_dialog.xml:0
 msgid "No, I'll count them later"
-msgstr ""
+msgstr "Không, tôi sẽ đếm sau"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__barcode_nomenclature_id
 msgid "Nomenclature"
-msgstr "Phép đặt tên"
+msgstr "Danh pháp"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1020,6 +1057,8 @@ msgid ""
 "Oops! It seems that this product is not located in %(location)s.\n"
 "Do you confirm you picked from there?"
 msgstr ""
+"Rất tiếc! Có vẻ như sản phẩm này không nằm trong %(location)s.\n"
+"Bạn có xác nhận rằng bạn đã lấy hàng từ đó không?"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1045,7 +1084,7 @@ msgstr "Quét tùy chọn"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
 msgid "Options"
-msgstr ""
+msgstr "Tùy chọn"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__outermost_result_package_id
@@ -1069,43 +1108,43 @@ msgstr "Kiện hàng"
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 #: code:addons/stock_barcode/static/src/models/barcode_quant_model.js:0
 msgid "Package type %(type)s applied to the package %(package)s"
-msgstr ""
+msgstr "Loại kiện hàng %(type)s được áp dụng cho kiện hàng %(package)s"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__packaging_uom_qty
 msgid "Packaging Quantity"
-msgstr "Số lượng đóng gói"
+msgstr "Số lượng gói hàng"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__packaging_uom_id
 msgid "Packaging Unit of Measure"
-msgstr ""
+msgstr "Đơn vị tính bao bì"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line__packaging_uom_id
 msgid "Packaging unit from sale or purchase orders"
-msgstr ""
+msgstr "Đơn vị đóng gói từ đơn bán hoặc mua hàng"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/line.xml:0
 msgid "Packaging:"
-msgstr ""
+msgstr "Bao bì:"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__parent_location_id
 msgid "Parent Location"
-msgstr ""
+msgstr "Vị trí chính"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__parent_location_dest_id
 msgid "Parent Location Dest"
-msgstr ""
+msgstr "Parent Location Dest"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_backorder_confirmation__partial_move_count
 msgid "Partial Move Count"
-msgstr "Số dịch chuyển một phần"
+msgstr "Số điều chuyển một phần"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1114,22 +1153,24 @@ msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
 msgstr ""
+"Không tìm thấy bảng phân vùng %(table_name)s, các bảng có sẵn là: "
+"%(table_list)s)."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_quant_model.js:0
 msgid "Physical Inventory"
-msgstr ""
+msgstr "Hàng tồn kho vật lý"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_picking_barcode
 msgid "Picking Details"
-msgstr "Chi tiết phiếu kho"
+msgstr "Chi tiết phiếu xuất kho"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking_type
 msgid "Picking Type"
-msgstr "Loại phiếu kho"
+msgstr "Kiểu lấy hàng"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1141,7 +1182,7 @@ msgstr "Vui lòng quét vị trí đích cho %s trước khi quét sản phẩm 
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.js:0
 msgid "Please, Scan again!"
-msgstr ""
+msgstr "Vui lòng quét lại!"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1153,13 +1194,13 @@ msgstr "Nhấn xác nhận hoặc quét sản phẩm khác"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Print"
-msgstr ""
+msgstr "In"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Print Barcodes"
-msgstr ""
+msgstr "In mã vạch"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1197,7 +1238,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.js:0
 msgid "Processing %(processed)s/%(toProcess)s barcodes"
-msgstr ""
+msgstr "Đang xử lý %(processed)s/%(toProcess)s mã vạch"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1218,13 +1259,13 @@ msgstr "Mã vạch sản phẩm"
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr "Dịch chuyển sản phẩm (Mục dịch chuyển tồn kho)"
+msgstr "Điều chuyển sản phẩm (Dòng điều chuyển tồn kho)"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__product_reference_code
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_quant__product_reference_code
 msgid "Product Reference Code"
-msgstr ""
+msgstr "Mã tham chiếu sản phẩm"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__product_stock_quant_ids
@@ -1246,23 +1287,23 @@ msgstr "Biến thể sản phẩm"
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_quant_barcode
 msgid "Properties"
-msgstr ""
+msgstr "Thuộc tính"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Put In Pack"
-msgstr "Đóng gói"
+msgstr "Đóng hàng thành kiện"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
 msgid "Put in Pack"
-msgstr "Đóng gói"
+msgstr "Đóng hàng thành kiện"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_move_line__qty_done
 msgid "Qty Done"
-msgstr ""
+msgstr "SL hoàn tất"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -1283,7 +1324,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_move_line__packaging_uom_qty
 msgid "Quantity in the packaging unit"
-msgstr ""
+msgstr "Số lượng theo đơn vị đóng gói"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_quant
@@ -1293,19 +1334,19 @@ msgstr "Quant"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__barcode_rfid_batch_time
 msgid "RFID Timer"
-msgstr ""
+msgstr "Đồng hồ tính giờ RFID"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/count_screen_rfid.xml:0
 msgid "Read Rate"
-msgstr ""
+msgstr "Tốc độ đọc"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/count_screen_rfid.xml:0
 msgid "Read Time"
-msgstr ""
+msgstr "Thời gian đọc"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1317,7 +1358,7 @@ msgstr "Xóa"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Return Products"
-msgstr ""
+msgstr "Trả hàng"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1455,7 +1496,7 @@ msgstr "Quét một kiện hàng"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Scan a package or put in pack"
-msgstr "Quét một kiện hàng hoặc đặt trong gói"
+msgstr "Quét một kiện hàng hoặc đóng hàng thành kiện"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1558,7 +1599,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Scan a product, a package or the destination location"
-msgstr "Quét một sản phẩm, kiện hàng hoặc vị trí đến"
+msgstr "Quét một sản phẩm, kiện hàng hoặc vị trí đích"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1636,7 +1677,7 @@ msgstr "Quét thêm sản phẩm, hoặc quét một vị trí nguồn"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/main_menu/main_menu.xml:0
 msgid "Scan or tap"
-msgstr ""
+msgstr "Quét hoặc chạm"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1669,14 +1710,14 @@ msgid ""
 "Scanned product %s is not reserved for this transfer. Are you sure you want "
 "to add it?"
 msgstr ""
-"Sản phẩm đã quét %s không được dự trữ cho điều chuyển này. Bạn có chắc chắn "
-"muốn thêm sản phẩm?"
+"Sản phẩm đã quét %s không được dự trữ cho lệnh chuyển hàng này. Bạn có chắc "
+"chắn muốn thêm sản phẩm?"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Scanning package"
-msgstr ""
+msgstr "Quét kiện hàng"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1684,12 +1725,12 @@ msgstr ""
 #: model:ir.model,name:stock_barcode.model_stock_scrap
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
 msgid "Scrap"
-msgstr "Phế phẩm"
+msgstr "Loại bỏ"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
 msgid "Scrap Location"
-msgstr ""
+msgstr "Vị trí phế phẩm"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
@@ -1699,7 +1740,7 @@ msgstr "Chọn một sản phẩm"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_move_line_product_selector
 msgid "Select where else to pick the product from"
-msgstr ""
+msgstr "Chọn nơi khác để lấy sản phẩm"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -1711,12 +1752,12 @@ msgstr "Số lô/sê-ri"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Set the maximum delay between each key in ms (100 ms by default.)"
-msgstr ""
+msgstr "Đặt độ trễ tối đa giữa mỗi key tính bằng ms (mặc định là 100 ms)."
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__show_barcode_nomenclature
 msgid "Show Barcode Nomenclature"
-msgstr "Hiển thị phép đặt tên mã vạch"
+msgstr "Hiển thị danh pháp mã vạch"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__show_barcode_validation
@@ -1726,19 +1767,19 @@ msgstr "Hiển thị xác nhận mã vạch"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__show_reserved_sns
 msgid "Show reserved lots/SN"
-msgstr ""
+msgstr "Hiện số lô/sê-ri đã dự trữ"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/main.xml:0
 msgid "Sign"
-msgstr ""
+msgstr "Ký tên"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/apply_quant_dialog.xml:0
 msgid "Some serials where not counted, set them as missing?"
-msgstr ""
+msgstr "Một vài sê-ri không được đếm, đặt là còn thiếu?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -1756,12 +1797,12 @@ msgstr "Kiện hàng nguồn"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/backorder_dialog.xml:0
 msgid "Stay on transfer"
-msgstr ""
+msgstr "Stay on transfer"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Điều chuyển tồn kho"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_package_type
@@ -1774,6 +1815,9 @@ msgid ""
 "Technical field indicating if type should be used in barcode app and used to "
 "control visibility in the related UI."
 msgstr ""
+"Trường kỹ thuật cho biết liệu có nên sử dụng trong ứng dụng mã vạch hay "
+"không và dùng để kiểm soát chế độ hiển thị trong giao diện người dùng liên "
+"quan."
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__show_barcode_validation
@@ -1781,54 +1825,56 @@ msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
 "should be displayed, to support combined groups/invisible complexity."
 msgstr ""
+"Trường kỹ thuật được sử dụng để tính toán xem có nên hiển thị nhóm "
+"\"Xác nhận cuối cùng\" hay không, để hỗ trợ các nhóm kết hợp/tính phức tạp."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "The encoding '%(encoding_name)s' is not supported."
-msgstr ""
+msgstr "Mã hóa '%(encoding_name)s' không được hỗ trợ."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_quant_model.js:0
 msgid "The inventory count has been updated"
-msgstr ""
+msgstr "Số lượng tồn kho này đã được cập nhật"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "The product %s should not be picked in this operation."
-msgstr ""
+msgstr "Không nên lấy sản phẩm %s trong hoạt động này."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "The scanned location doesn't belong to this operation's destination"
-msgstr ""
+msgstr "Vị trí được quét không nằm trong đích của hoạt động này"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "The scanned location doesn't belong to this operation's location"
-msgstr ""
+msgstr "Vị trí được quét không thuộc về vị trí của hoạt động này"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid "The scanned serial number %s is already used."
-msgstr ""
+msgstr "Số sê-ri được quét %s đã được sử dụng."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "The transfer has been cancelled"
-msgstr "Điều chuyển đã bị hủy"
+msgstr "Lệnh chuyển hàng đã bị hủy"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "The transfer has been validated"
-msgstr "Điều chuyển đã được xác nhận"
+msgstr "Lệnh chuyển hàng đã được xác nhận"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1853,19 +1899,19 @@ msgstr "Kiện hàng này đã được quét."
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "This picking is already done"
-msgstr "Phiếu kho này đã hoàn tất"
+msgstr "Phiếu xuất kho này đã hoàn tất"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "This picking is cancelled"
-msgstr "Phiếu kho này đã bị hủy"
+msgstr "Phiếu xuất kho này đã bị hủy"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid "This product doesn't exist."
-msgstr ""
+msgstr "Sản phẩm này không tồn tại."
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_res_config_settings__barcode_separator_regex
@@ -1875,6 +1921,8 @@ msgid ""
 "barcodes when an aggregate barcode (i.e. single barcode consisting of "
 "multiple barcode encodings) is scanned."
 msgstr ""
+"Regex này được sử dụng trong ứng dụng Mã vạch để phân tách các mã vạch riêng "
+"lẻ khi quét mã vạch tổng hợp (tức là một mã vạch bao gồm nhiều mã vạch khác)."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1888,6 +1936,8 @@ msgid ""
 "Time before processing a batch. Used to group communication to the server "
 "and improve global performance at the cost of reactivity."
 msgstr ""
+"Thời gian trước khi xử lý một lô. Được sử dụng để nhóm giao tiếp với máy chủ "
+"và cải thiện hiệu suất chung bằng việc đánh đổi độ phản ứng."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1899,35 +1949,35 @@ msgstr "Để sử dụng kiện hàng, vui lòng bật 'Kiện hàng' trong cà
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/count_screen_rfid.xml:0
 msgid "Total Reads"
-msgstr ""
+msgstr "Tổng lần đọc"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_picking
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__picking_id
 msgid "Transfer"
-msgstr "Điều chuyển"
+msgstr "Lệnh chuyển hàng"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_barcode_cancel_operation__picking_name
 msgid "Transfer Name"
-msgstr "Tên điều chuyển"
+msgstr "Tên lệnh chuyển hàng"
 
 #. module: stock_barcode
 #: model_terms:ir.actions.act_window,help:stock_barcode.stock_picking_action_kanban
 msgid "Transfers allow you to move products from one location to another."
 msgstr ""
-"Điều chuyển cho phép bạn chuyển sản phẩm từ vị trí này sang vị trí khác."
+"Lệnh chuyển hàng cho phép bạn chuyển sản phẩm từ vị trí này sang vị trí khác."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/count_screen_rfid.xml:0
 msgid "Unique Tags"
-msgstr ""
+msgstr "Thẻ duy nhất"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
 msgid "Unit"
-msgstr ""
+msgstr "Đơn vị"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1951,30 +2001,30 @@ msgstr "Xác nhận"
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Value %(value)s cannot be represented with %(length)s bits"
-msgstr ""
+msgstr "Giá trị %(value)s không thể được biểu diễn bằng %(length)s bit."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Value '%(value)s' must be an integer"
-msgstr ""
+msgstr "Giá trị '%(value)s' phải là số nguyên"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_scrap___barcode_scanned
 msgid "Value of the last barcode scanned."
-msgstr "Giá trị mã vạch quét cuối cùng. "
+msgstr "Giá trị mã vạch quét cuối cùng."
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Value to encode contains invalid character(s): %(invalid_chars)s"
-msgstr ""
+msgstr "Giá trị cần nhập chứa (các) ký tự không hợp lệ: %(invalid_chars)s"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/widgets/image_preview.xml:0
 msgid "Viewer"
-msgstr ""
+msgstr "Người xem"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1991,13 +2041,13 @@ msgstr "Kho hàng"
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Word size must be a positive integer"
-msgstr ""
+msgstr "Kích thước từ phải là một số nguyên dương."
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/components/apply_quant_dialog.xml:0
 msgid "Yes"
-msgstr ""
+msgstr "Có"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2007,6 +2057,9 @@ msgid ""
 "(locationName)s but this product isn't reserved in this location.\n"
 "Scan the current location to confirm that."
 msgstr ""
+"Bạn sắp lấy sản phẩm %(productName)s từ vị trí %(locationName)s nhưng sản "
+"phẩm này không được dự trữ ở vị trí đó.\n"
+"Hãy quét vị trí hiện tại để xác nhận."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2029,13 +2082,13 @@ msgstr "Bạn sẽ quét %s hoặc một vị trí nguồn khác"
 msgid "You can't apply a package type. First, scan product or select a line"
 msgstr ""
 "Bạn không thể áp dụng một loại kiện hàng. Đầu tiên, quét sản phẩm hoặc chọn "
-"một mục"
+"một dòng"
 
 #. module: stock_barcode
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "You can't register scrap at this state of the operation"
-msgstr ""
+msgstr "Bạn không thể ghi nhận phế phẩm ở trạng thái hoạt động này"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2044,6 +2097,8 @@ msgid ""
 "You have already scanned %s items of this package. Do you want to scan the "
 "whole package?"
 msgstr ""
+"Bạn đã quét %s mặt hàng của kiện hàng này. Bạn có muốn quét toàn bộ kiện "
+"hàng không?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.view_backorder_confirmation
@@ -2054,7 +2109,7 @@ msgstr "Bạn đã xử lý ít sản phẩm hơn nhu cầu ban đầu:"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "You must scan a package or put in pack"
-msgstr "Bạn phải quét một kiện hàng hoặc đóng gói"
+msgstr "Bạn phải quét một kiện hàng hoặc đóng hàng thành kiện"
 
 #. module: stock_barcode
 #. odoo-javascript

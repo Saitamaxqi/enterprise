@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* payment_sepa_direct_debit
+# * payment_sepa_direct_debit
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:37+0000\n"
-"PO-Revision-Date: 2025-09-11 14:37+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"payment_sepa_direct_debit/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
@@ -28,7 +32,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sepa_state_header
 msgid "<strong>Amount: </strong>"
-msgstr ""
+msgstr "<strong>Import: </strong>"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
@@ -127,7 +131,7 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Línia d'extracte bancari"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
@@ -139,7 +143,7 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacte"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,website_form_label:payment_sepa_direct_debit.model_res_partner
@@ -149,7 +153,7 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_provider__custom_mode
 msgid "Custom Mode"
-msgstr ""
+msgstr "Mode personalitzat"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_account_bank_statement_line__display_name
@@ -165,7 +169,7 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.inline_form
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_account_bank_statement_line__id
@@ -186,13 +190,13 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_transaction__mandate_id
 msgid "Mandate"
-msgstr ""
+msgstr "Mandat"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/controllers/main.py:0
 msgid "Missing or invalid IBAN."
-msgstr ""
+msgstr "Falta un IBAN o no és vàlid."
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_sdd_mandate__payment_transaction_count
@@ -207,22 +211,22 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_account_payment_method
 msgid "Payment Methods"
-msgstr ""
+msgstr "Formes de pagament"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "Proveïdor de pagament"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_payment_token
 msgid "Payment Token"
-msgstr ""
+msgstr "Token de pagament"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_payment_transaction
 msgid "Payment Transaction"
-msgstr ""
+msgstr "Transacció de pagament"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_sdd_mandate__payment_transaction_ids
@@ -245,27 +249,27 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_provider.py:0
 msgid "Restricted to countries in the SEPA zone. Forbidden countries: %s"
-msgstr ""
+msgstr "Restringit a països de la zona SEPA. Països prohibits: %s"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_sdd_mandate
 msgid "SDD Mandate"
-msgstr ""
+msgstr "Mandat SEPA"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields.selection,name:payment_sepa_direct_debit.selection__payment_provider__custom_mode__sepa_direct_debit
 msgid "SEPA Direct Debit"
-msgstr ""
+msgstr "Càrrec directe SEPA"
 
 #. module: payment_sepa_direct_debit
 #: model:account.payment.method,name:payment_sepa_direct_debit.payment_method_sepa_direct_debit
 msgid "SEPA Direct Debit (provider)"
-msgstr ""
+msgstr "Dèbit directe SEPA (proveïdor)"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_token__sdd_mandate_id
 msgid "SEPA Direct Debit Mandate"
-msgstr ""
+msgstr "Mandat de càrrec directe SEPA"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.actions.server,name:payment_sepa_direct_debit.cron_auto_confirm_paid_sepa_txs_ir_actions_server
@@ -275,37 +279,38 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model:mail.template,name:payment_sepa_direct_debit.mail_template_sepa_notify_validation
 msgid "SEPA Direct Debit: Validation Notification"
-msgstr ""
+msgstr "Dèbit directe SEPA: Notificació de validació"
 
 #. module: payment_sepa_direct_debit
 #: model:mail.template,description:payment_sepa_direct_debit.mail_template_sepa_notify_validation
 msgid ""
 "Send the SEPA mandate in attachement, to partners who signed a new mandate"
 msgstr ""
+"Envia el mandat SEPA a l'adjunt, als contactes que han signat un nou mandat"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_provider.py:0
 msgid "The bank account of the journal is not a valid IBAN."
-msgstr ""
+msgstr "El compte bancari del diari no és un IBAN vàlid."
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_transaction.py:0
 msgid "The mandate is invalid."
-msgstr ""
+msgstr "El mandat no és vàlid."
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_provider.py:0
 msgid "The mandate owner and customer do not match."
-msgstr ""
+msgstr "El propietari i el client del mandat no coincideixen."
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_transaction.py:0
 msgid "The token is not linked to a mandate."
-msgstr ""
+msgstr "El testimoni no està vinculat a un mandat."
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form_view
@@ -336,6 +341,9 @@ msgid ""
 "Your company must have a creditor identifier in order to issue a SEPA Direct"
 " Debit payment request. It can be set in Accounting settings."
 msgstr ""
+"La vostra empresa ha de tenir un identificador de creditor per a emetre una "
+"sol·licitud de pagament de domiciliació bancària SEPA. Es pot establir a la "
+"configuració de comptabilitat."
 
 #. module: payment_sepa_direct_debit
 #. odoo-python

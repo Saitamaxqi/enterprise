@@ -1,29 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment_sale
+# * website_appointment_sale
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment_sale/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-check me-1\" role=\"img\"/>Booked"
-msgstr ""
+msgstr "<i class=\"fa fa-check me-1\" role=\"img\"/>予約済"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-clock-o me-1\" role=\"img\"/>Awaiting Payment"
-msgstr ""
+msgstr "<i class=\"fa fa-clock-o me-1\" role=\"img\"/>支払い待ち"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
@@ -31,21 +35,23 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle me-1\" role=\"img\"/>\n"
 "                            Please Contact Us"
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle me-1\" role=\"img\"/>\n"
+"                            ご連絡ください"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-thumbs-up me-1\"/>Reserved"
-msgstr ""
+msgstr "<i class=\"fa fa-thumbs-up me-1\"/>予約済"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__calendar_booking_ids
 msgid "Bookings"
-msgstr ""
+msgstr "予約"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "カレンダーイベント"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__display_name
@@ -54,7 +60,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__id
@@ -63,63 +69,63 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_product_product__is_booking_fee
 msgid "Is Booking Fee"
-msgstr ""
+msgstr "が予約料金"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__calendar_event_id
 msgid "Meeting"
-msgstr ""
+msgstr "ミーティング"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_calendar_booking
 msgid "Meeting Booking"
-msgstr ""
+msgstr "ミーティング予約"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__calendar_event_count
 msgid "Meetings"
-msgstr ""
+msgstr "ミーティング"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.website_sale_confirmation_appointment
 msgid "Oops, it looks like the following Meeting(s) were not booked smoothly:"
-msgstr ""
+msgstr "以下のミーティングはスムーズに予約できなかったようです:"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "プロダクトバリアント"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.calendar_event_view_form
 msgid "Sale Order"
-msgstr ""
+msgstr "販売オーダ"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__order_line_id
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_event__sale_order_line_ids
 msgid "Sale Order Line"
-msgstr ""
+msgstr "受注明細"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "販売オーダ"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_event__sale_order_count
 msgid "Sales Order Count"
-msgstr ""
+msgstr "販売オーダ数"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "販売オーダ明細"
 
 #. module: website_appointment_sale
 #. odoo-python
@@ -129,6 +135,10 @@ msgid ""
 "\n"
 "%(bookings)s"
 msgstr ""
+"以下の予約は選択された期間中に利用できなくなり、カートを更新する必要がありま"
+"す。ご迷惑をおかけして申し訳ございません。\n"
+"\n"
+"%(bookings)s"
 
 #. module: website_appointment_sale
 #. odoo-python
@@ -136,14 +146,15 @@ msgstr ""
 msgid ""
 "The following bookings were not confirmed due to insufficient availability "
 "or configuration changes: %s"
-msgstr ""
+msgstr "以下の予約は、空席が十分でなかったため、または構成が変更されたため、確定され"
+"ませんでした:%s"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "Timezone:"
-msgstr ""
+msgstr "タイムゾーン:"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "View Details"
-msgstr ""
+msgstr "詳細を見る"

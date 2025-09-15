@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_asset
+# * account_asset
 #
 # Translators:
 # arfa simoncelli, 2022
 # Martin Trigaux, 2022
 # Ryanto The <ry.the77@gmail.com>, 2022
 # Abe Manyo, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: Abe Manyo, 2023\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"PO-Revision-Date: 2025-09-15 23:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"account_asset/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_asset
 #. odoo-python
@@ -42,7 +44,7 @@ msgstr "# Entri Penyusutan"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__gross_increase_count
 msgid "# Gross Increases"
-msgstr "# Peningkatan Kotor "
+msgstr "# Peningkatan Kotor"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__depreciation_entries_count
@@ -234,7 +236,7 @@ msgstr "Tindakan"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_needaction
 msgid "Action Needed"
-msgstr "Perlu Tindakan"
+msgstr "Tindakan Diperluka"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__active
@@ -305,7 +307,7 @@ msgstr "Aset akan dibuat untuk peninangkatan value aset. <br/>"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Distribusi Analitik"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution_search
@@ -459,12 +461,12 @@ msgstr "Aset Diunpause. %s"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_move_form_asset_inherit
 msgid "Asset(s)"
-msgstr ""
+msgstr "Aset(s)"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset
 msgid "Asset/Revenue Recognition"
-msgstr "Aktiva/Pengakuan Pendapatan"
+msgstr "Aset/Pengakuan Pendapatan"
 
 #. module: account_asset
 #. odoo-python
@@ -481,7 +483,7 @@ msgstr "Aktiva"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset_report_handler
 msgid "Assets Report Custom Handler"
-msgstr ""
+msgstr "Assets Report Custom Handler"
 
 #. module: account_asset
 #: model:ir.ui.menu,name:account_asset.menu_finance_config_assets
@@ -503,6 +505,8 @@ msgstr "Aktiva dalam status rancangan dan terbuka"
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Atleast one asset (%s) couldn't be set as running because it lacks any required information"
 msgstr ""
+"Setidaknya satu aset (%s) tidak dapat dijalankan karena kurang informasi "
+"yang dibutuhkan"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_attachment_count
@@ -643,7 +647,7 @@ msgstr "Periode Konstan"
 #: model:ir.model.fields,field_description:account_asset.field_account_move__count_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__count_asset
 msgid "Count Asset"
-msgstr ""
+msgstr "Hitung Aset"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__count_deferred_expense
@@ -1075,7 +1079,7 @@ msgstr "Draft"
 #: model:ir.model.fields,field_description:account_asset.field_account_move__draft_asset_exists
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__draft_asset_exists
 msgid "Draft Asset Exists"
-msgstr ""
+msgstr "Draft Aset Tersedia"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__draft_deferred_expense_exists
@@ -1209,7 +1213,7 @@ msgstr "Nilai Keuntungan"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Gross Increase"
-msgstr "Peningkatan Kotor "
+msgstr "Peningkatan Kotor"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__account_asset_id
@@ -1290,7 +1294,7 @@ msgstr "Baris Faktur"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_is_follower
 msgid "Is Follower"
-msgstr "Pengikut"
+msgstr "Adalah Follower"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__salvage_value
@@ -1327,7 +1331,7 @@ msgstr "Item Jurnal"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__original_move_line_ids
 msgid "Journal Items"
-msgstr "Artikel Jurnal"
+msgstr "Item Jurnal"
 
 #. module: account_asset
 #. odoo-python
@@ -1339,13 +1343,13 @@ msgstr "Item Jurnal dari {account} harus memiliki label supaya menghasilkan sebu
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__write_uid
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__write_uid
 msgid "Last Updated by"
-msgstr "Terakhir diperbarui oleh"
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__write_date
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__write_date
 msgid "Last Updated on"
-msgstr "Terakhir diperbarui pada"
+msgstr "Terakhir Diperbarui pada"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
@@ -1506,7 +1510,7 @@ msgstr "Non Deductible Tax Value"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__salvage_value
 msgid "Not Depreciable Amount"
-msgstr "Jumlah Buakan Penyusutan "
+msgstr "Jumlah Bukan Penyusutan"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__salvage_value
@@ -1521,7 +1525,7 @@ msgstr "Catatan"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Jumlah Tindakan"
+msgstr "Jumlah Action"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_model_purchase_tree
@@ -1571,7 +1575,7 @@ msgstr "Jumlah pesan yang butuh tindakan"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "Jumlah dari pesan dengan kesalahan pengiriman"
+msgstr "Jumlah pesan dengan kesalahan pengiriman"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__paused
@@ -1632,7 +1636,7 @@ msgstr "Pembelian: Aktiva"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Rating"
 
 #. module: account_asset
 #. odoo-python
@@ -1750,7 +1754,7 @@ msgstr "Sedang berjalan"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "Kesalahan Pengiriman SMS"
+msgstr "Kesalahan Pengiriman SMS`"
 
 #. module: account_asset
 #. odoo-python
@@ -2010,7 +2014,7 @@ msgstr "Anda tidak dapat post entri terkait draft aset. Mohon post aset tersebut
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot archive a record that is not closed"
-msgstr " Anda tidak dapat mengarsipkan pencatatan yang tidak ditutup"
+msgstr "Anda tidak dapat mengarsipkan pencatatan yang tidak ditutup"
 
 #. module: account_asset
 #. odoo-python

@@ -1,39 +1,43 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_sale_renting
+# * spreadsheet_dashboard_sale_renting
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_sale_renting/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Aktuel"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Customer"
-msgstr ""
+msgstr "Kunde"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -47,13 +51,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Ordered"
-msgstr ""
+msgstr "Bestilt"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -67,13 +71,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Orders"
-msgstr ""
+msgstr "Ordre"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Periode"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -87,39 +91,39 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Forrige"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 msgid "Product Category"
-msgstr ""
+msgstr "Produktkategori"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Quotations"
-msgstr ""
+msgstr "Tilbud"
 
 #. module: spreadsheet_dashboard_sale_renting
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_renting.spreadsheet_dashboard_rental
 msgid "Rental"
-msgstr ""
+msgstr "Leje"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Rentals"
-msgstr ""
+msgstr "Udlejninger"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -133,21 +137,21 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Revenue"
-msgstr ""
+msgstr "Indtægter"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Sælger"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Top Customers"
-msgstr ""
+msgstr "Top kunder"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -160,7 +164,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "Top Products"
-msgstr ""
+msgstr "Top produkt"
 
 #. module: spreadsheet_dashboard_sale_renting
 #. odoo-javascript
@@ -174,4 +178,4 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_renting/data/files/rental_sample_dashboard.json:0
 msgid "since last period"
-msgstr ""
+msgstr "siden sidste periode"

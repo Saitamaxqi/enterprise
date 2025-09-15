@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* timesheet_grid
+# * timesheet_grid
 #
 # Translators:
 # Pernille Kristensen <pernillekristensen1994@gmail.com>, 2022
@@ -9,20 +9,22 @@
 # Martin Trigaux, 2022
 # lhmflexerp <lhm@flexerp.dk>, 2022
 # Mads Søndergaard, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Mads Søndergaard, 2022\n"
-"Language-Team: Danish (https://app.transifex.com/odoo/teams/41243/da/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"timesheet_grid/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -38,12 +40,12 @@ msgstr "<i class=\"fa fa-pause text-warning\" title=\"Timer er Pauset\"/> "
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_kanban
 msgid "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
-msgstr "<i class=\"fa fa-play text-success\" title=\"Timer kører\"/> "
+msgstr "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "<span class=\"col-auto ms-2\">min</span>"
-msgstr ""
+msgstr "<span class=\"col-auto ms-2\">min</span>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -237,7 +239,7 @@ msgstr "Analysekonto"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
 msgid "Approver Reminder"
-msgstr ""
+msgstr "Godkender påmindelse"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_delay
@@ -275,12 +277,14 @@ msgstr "Virksomheder"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_config_settings
 msgid "Config Settings"
-msgstr "Konfigurer opsætning"
+msgstr "Konfigurationsindstillinger"
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
 msgid "Configure reminders in timesheet settings to remind approvers to validate timesheets"
 msgstr ""
+"Opsæt påmindelser i timeseddelindstillinger for at minde godkendere om at "
+"validere timesedler"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -504,7 +508,7 @@ msgstr "Indkodnings måleenhed"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Enter"
-msgstr "Angiv"
+msgstr "Enter"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -572,6 +576,10 @@ msgstr "Sidste uge"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Launch the <b>timer</b> for this project by pressing the <b>[a] key</b>. Easily switch from one project to another by using those keys. <i>Tip: you can also directly add 15 minutes to this project by hitting the <b>shift + [A] keys</b>.</i>"
 msgstr ""
+"Start <b>timeren</b> for dette projekt ved at trykke på <b>[a]-tasten</b>. "
+"Skift nemt fra et projekt til et andet ved at bruge disse taster. <i>Tip: Du "
+"kan også tilføje 15 minutter direkte til dette projekt ved at trykke på "
+"<b>shift + [A]-tasterne</b>.</i>"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -617,7 +625,7 @@ msgstr "Måned"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Department"
-msgstr ""
+msgstr "Min afdeling"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -680,7 +688,7 @@ msgstr "Pause"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press"
-msgstr ""
+msgstr "Tryk"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -712,13 +720,13 @@ msgstr "Påmindelse om at logge dine timesedler"
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder
 msgid "Reminder to validate your team's timesheets"
-msgstr ""
+msgstr "Påmindelse om at godkende dit teams timesedler"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.invalidate_timesheet_action
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_form_view
 msgid "Reset to draft"
-msgstr ""
+msgstr "Nulstil til kladde"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_form
@@ -768,6 +776,8 @@ msgstr "Angiv hvis denne analytiske linje repræsentere en timeseddels linje."
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Set reminders in settings to notify employees who didn't record their timesheet"
 msgstr ""
+"Opsæt påmindelser i indstillinger for at underrette medarbejdere, der ikke "
+"har registreret deres timer"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -802,6 +812,8 @@ msgstr "Stop"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Stop the <b>timer</b> when you are done. <i>Tip: hit <b>[Enter]</b> in the description to automatically log your activity.</i>"
 msgstr ""
+"Stop <b>timeren</b>, når du er færdig. <i>Tip: Tryk på <b>[Enter]</b> i "
+"beskrivelsen for automatisk at logge din aktivitet.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_task
@@ -910,7 +922,7 @@ msgstr "Timer Start"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_public__timesheet_manager_id
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_users__timesheet_manager_id
 msgid "Timesheet"
-msgstr "Tidsskema"
+msgstr "Timeseddel"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.view_employee_tree_inherit_timesheet
@@ -959,7 +971,7 @@ msgstr "Timesedler"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheets_analysis_report
 msgid "Timesheets Analysis Report"
-msgstr ""
+msgstr "Timeseddelsanalyse rapport"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -982,12 +994,12 @@ msgstr "Timesedler til Godkendelse"
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder
 msgid "Timesheets: Approver Reminder"
-msgstr ""
+msgstr "Timesedler: Påmindelse om godkendelse"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Timesheets: Employee Reminder"
-msgstr ""
+msgstr "Timesedler: Påmindelse til medarbejdere"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate

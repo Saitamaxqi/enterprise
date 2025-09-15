@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_easypost
+# * delivery_easypost
 #
 # Translators:
 # Levent Karakaş <levent@mektup.at>, 2022
@@ -15,20 +15,22 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # Umur Akın <umura@projetgrup.com>, 2022
 # Tugay Hatıl <tugayh@projetgrup.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Tugay Hatıl <tugayh@projetgrup.com>, 2023\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_easypost/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -44,9 +46,11 @@ msgid ""
 "                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
 "                <br/>"
 msgstr ""
-"<b>Hesabınız oluşturulduktan sonra, Kontrol Panelinize gidin ve operatör hesaplarınızı yapılandırmak için kullanıcı adınızın yanındaki oka tıklayın.</b>\n"
-"<b>Aynı sayfanın sağ tarafında yeni operatör hesapları ekleyebilirsiniz.</b>\n"
-"<br/>"
+"<b>Hesabınızı oluşturduktan sonra, kontrol panelinize gidin ve kullanıcı "
+"adınızın yanındaki oka tıklayarak taşıyıcı hesaplarınızı yapılandırın. </b>\n"
+"                <b>Aynı sayfanın sağ tarafında yeni taşıyıcı hesapları "
+"ekleyebilirsiniz.</b>\n"
+"                <br/>"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
@@ -103,13 +107,13 @@ msgstr "Taşıyıcı Hesapları"
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__create_uid
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__create_uid
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr "Tarafından oluşturuldu"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__create_date
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturuldu"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -135,7 +139,7 @@ msgstr "Teslim Yöntemi"
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
 msgid "Display Name"
-msgstr "Görünüm Adı"
+msgstr "İsim Göster"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -172,7 +176,7 @@ msgstr "Easypost Yapılandırma"
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "Easypost Documents:"
-msgstr ""
+msgstr "Easypost Belgeleri:"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_label_file_type
@@ -251,7 +255,9 @@ msgstr "Sigorta ücreti oranı (USD)"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "Easypost bu sipariş için gönderi sağlamıyor gibi görünüyor. Başka bir paket tipi veya hizmet seviyesi ile denemenizi tavsiye ederiz."
+msgstr ""
+"Easypost'un bu sipariş için gönderi sağlamadığı anlaşılıyor. Başka bir paket "
+"türü veya hizmet seviyesi ile denemenizi tavsiye ederiz."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -327,7 +333,7 @@ msgstr "Satış Siparişi/Stok Transferi eksik."
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_easypost_carrier_type
 msgid "Select"
-msgstr "Seçmeli"
+msgstr "Seçme"
 
 #. module: delivery_easypost
 #: model:ir.actions.act_window,name:delivery_easypost.act_delivery_easypost_carrier_type
@@ -353,7 +359,7 @@ msgstr "Nakliye Yöntemleri"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Sign up"
-msgstr "Kayıt ol"
+msgstr "Üye Ol"
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_package_type
@@ -425,12 +431,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
-msgstr "Paketlerinizden biri için seçilen hizmet düzeyi için geçerli bir ücret yok. Lütfen başka bir hizmet düzeyi seçin."
+msgstr ""
+"Paketlerinizden biri için seçilen hizmet düzeyinde fiyat mevcut değil. "
+"Lütfen başka bir hizmet seviyesi seçin."
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_picking
 msgid "Transfer"
-msgstr "Transfer"
+msgstr "Aktarım"
 
 #. module: delivery_easypost
 #. odoo-python

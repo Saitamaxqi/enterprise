@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Mads Søndergaard, 2022
@@ -10,26 +10,28 @@
 # Ejner Sønniksen <ejner@vkdata.dk>, 2022
 # Martin Trigaux, 2022
 # Mads Søndergaard, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Mads Søndergaard, 2022\n"
-"Language-Team: Danish (https://app.transifex.com/odoo/teams/41243/da/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "%s days"
-msgstr ""
+msgstr "%s dage"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -54,7 +56,7 @@ msgstr "1 måned"
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
 msgid "Add Custom Field"
-msgstr ""
+msgstr "Tilføj tilpasset felt"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -334,7 +336,8 @@ msgstr "I dag"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Unable to send the instructions by email, please contact the"
-msgstr "Kunne ikke afsende instruktionerne per email, kontakt venligst "
+msgstr ""
+"Det var ikke muligt at sende instruktionerne via email, kontakt venligst"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -375,7 +378,7 @@ msgstr "Din abonnementskode"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription is already linked to a database."
-msgstr "Dine abonnementer er allerede forbundet til en database."
+msgstr "Dine abonnementer er allerede tilknyttet en database."
 
 #. module: web_enterprise
 #. odoo-javascript

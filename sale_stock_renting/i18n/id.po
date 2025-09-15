@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_stock_renting
+# * sale_stock_renting
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:42+0000\n"
-"PO-Revision-Date: 2025-09-11 14:42+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 23:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"sale_stock_renting/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -25,13 +29,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_stock_renting/models/product_product.py:0
 msgid "%(product)s (%(qty)s item)"
-msgstr ""
+msgstr "%(product)s (%(qty)s item)"
 
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/models/product_product.py:0
 msgid "%(product)s (%(qty)s items)"
-msgstr ""
+msgstr "%(product)s (%(qty)s items)"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_order_wizard_view_form
@@ -41,11 +45,17 @@ msgid ""
 "                            Some products don't have the requested qty available for pickup\n"
 "                        </span>"
 msgstr ""
+"<i class=\"fa fa-warning\"/>\n"
+"                        <span>\n"
+"                            Beberapa produk tidak memiliki kuantitas yang "
+"diminta tersedia untuk pickup\n"
+"                        </span>"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Activate to use stock deliveries and receipts for rental orders"
 msgstr ""
+"Aktifkan untuk menggunakan pengiriman stok dan resi untuk pesanan rental"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
@@ -63,6 +73,8 @@ msgid ""
 "Amount of time (in hours) during which a product is considered unavailable "
 "prior to renting (preparation time)."
 msgstr ""
+"Jumlah waktu (dalam jam) di mana produk akan dianggap tidak tersedia sebelum "
+"dirental (waktu persiapan)."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_config_settings__padding_time
@@ -70,6 +82,8 @@ msgid ""
 "Amount of time (in hours) during which a product is considered "
 "unavailableprior to renting (preparation time)."
 msgstr ""
+"Jumlah waktu (dalam jam) di mana produk akan dianggap tidak tersedia sebelum "
+"dirental (waktu persiapan)."
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
@@ -81,38 +95,38 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Availability"
-msgstr ""
+msgstr "Ketersediaan"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__qty_available
 msgid "Available"
-msgstr ""
+msgstr "Tersedia"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__available_reserved_lots
 msgid "Available Reserved Lots"
-msgstr ""
+msgstr "Lot-Lot Direservasi Tersedia"
 
 #. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Available for Rent"
-msgstr ""
+msgstr "Tersedia untuk Dirental"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Perusahaan"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Pengaturan Konfigurasi"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Default Padding Time"
-msgstr ""
+msgstr "Padding Time Default"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__display_name
@@ -132,23 +146,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nama Tampilan"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_rental_order_wizard_line__tracking
 #: model:ir.model.fields,help:sale_stock_renting.field_sale_order_line__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr ""
+msgstr "Pastikan produk storable yang disimpan di gudang Anda dapat dilacak."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__has_lines_missing_stock
 msgid "Has lines whose products have insufficient stock"
-msgstr ""
+msgstr "Memiliki baris produk yang stoknya tidak mencukupi"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__has_tracked_lines
 msgid "Has lines with tracked products"
-msgstr ""
+msgstr "Memiliki baris dengan produk yang dilacak"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__id
@@ -168,22 +182,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__is_product_storable
 msgid "Is Product Storable"
-msgstr ""
+msgstr "Apakah Produk Storable"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Entri Jurnal"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Item Jurnal"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -194,17 +208,17 @@ msgstr ""
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Seri/Lot"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_warehouse_orderpoint
 msgid "Minimum Inventory Rule"
-msgstr ""
+msgstr "Aturan Stok Persediaan Minimum"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Minimum amount of time between two rentals"
-msgstr ""
+msgstr "Jumlah waktu minimal di antara dua rental"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -213,6 +227,8 @@ msgid ""
 "No valid quant has been found in location %(location)s for serial number "
 "%(serial_number)s!"
 msgstr ""
+"Tidak ada kuantitas valid yang ditemukan di lokasi %(location)s untuk nomor "
+"seri %(serial_number)s!"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -225,82 +241,83 @@ msgstr ""
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__padding_time
 msgid "Padding"
-msgstr ""
+msgstr "Padding"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__padding_time
 msgid "Padding Time"
-msgstr ""
+msgstr "Padding Time"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_rental_order_wizard
 msgid "Pick-up/Return products"
-msgstr ""
+msgstr "Pick-up/Kembalikkan produk"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__pickeable_lot_ids
 msgid "Pickeable Lot"
-msgstr ""
+msgstr "Pickeable Lot"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__pickedup_lot_ids
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__pickedup_lot_ids
 msgid "Pickedup Lot"
-msgstr ""
+msgstr "Pickedup Lot"
 
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/wizard/rental_processing.py:0
 msgid "Please specify the serial numbers picked up for the tracked products."
-msgstr ""
+msgstr "Silakan tentukan nomor seri yang dipick up untuk produk yang dilacak."
 
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/wizard/rental_processing.py:0
 msgid "Please specify the serial numbers returned for the tracked products."
 msgstr ""
+"Silakan tentukan nomor seri yang dikembalikkan untuk produk yang dilacak."
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produk"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Varian Produk"
 
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/models/res_company.py:0
 #: model:stock.route,name:sale_stock_renting.route_rental
 msgid "Rental"
-msgstr ""
+msgstr "Rental"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_sale_rental_report
 msgid "Rental Analysis Report"
-msgstr ""
+msgstr "Laporan Analisis Rental"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__rental_loc_id
 msgid "Rental Location"
-msgstr ""
+msgstr "Lokasi Rental"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Rental Transfers"
-msgstr ""
+msgstr "Transfer Rental"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__group_rental_stock_picking
 msgid "Rental pickings"
-msgstr ""
+msgstr "Picking rental"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_rental_order_wizard_line
 msgid "RentalOrderLine transient representation"
-msgstr ""
+msgstr "RentalOrderLine transient representation"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
@@ -317,57 +334,57 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Reserved lots unavailable"
-msgstr ""
+msgstr "Lot yang direservasi tidak tersedia"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Return Picking"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__returnable_lot_ids
 msgid "Returnable Lot"
-msgstr ""
+msgstr "Returnable Lot"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__returned_lot_ids
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__returned_lot_ids
 msgid "Returned Lot"
-msgstr ""
+msgstr "Returned Lot"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Order Penjualan"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Baris Pesanan Penjualan"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__lot_id
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_report_search_view_inherit_lots
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_search_schedule
 msgid "Serial Number"
-msgstr ""
+msgstr "Nomor Seri"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_order_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.report_rental_order_document
 msgid "Serial Numbers"
-msgstr ""
+msgstr "Nomor Seri"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Pergerakan Stok"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_product_product__preparation_time
 #: model:ir.model.fields,help:sale_stock_renting.field_product_template__preparation_time
 msgid "Temporarily make this product unavailable before pickup."
-msgstr ""
+msgstr "Untuk sementara buat produk ini tidak tersedia sebelum pickup."
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -384,12 +401,15 @@ msgid ""
 " location is internal because products in rentalare still considered as "
 "company assets."
 msgstr ""
+"Lokasi teknis ini merupakan stok untuk produk yang saat ini dirental. Lokasi "
+"ini bersifat internal karena produk dirental masih dianggap sebagai aset "
+"perusahaan."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__tracking
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Pelacakan"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -398,38 +418,42 @@ msgid ""
 "Tracking by lots isn't supported for rental products.\n"
 "You should rather change the tracking mode to unique serial numbers."
 msgstr ""
+"Melacak berdasarkan lot tidak didukung untuk produk rental.\n"
+"Anda harus mengganti mode pelacakan menjadi nomor seri unik."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__unavailable_lot_ids
 msgid "Unavailable Lot"
-msgstr ""
+msgstr "Lot Tidak Tersedia"
 
 #. module: sale_stock_renting
 #: model:res.groups,name:sale_stock_renting.group_rental_stock_picking
 msgid "Use pickings for rental orders"
-msgstr ""
+msgstr "Gunakan picking untuk pesanan rental"
 
 #. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "View Rentals"
-msgstr ""
+msgstr "Lihat Rental"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_warehouse
 msgid "Warehouse"
-msgstr ""
+msgstr "Gudang"
 
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/models/sale_order_line.py:0
 msgid "You cannot change the product of lines linked to stock moves."
 msgstr ""
+"Anda tidak dapat mengganti produk untuk baris yang di-link ke pergerakan "
+"stok."
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "hours"
-msgstr ""
+msgstr "jam"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.product_template_inherit_view_form_stock_rental
@@ -440,4 +464,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "to"
-msgstr ""
+msgstr "kepada"

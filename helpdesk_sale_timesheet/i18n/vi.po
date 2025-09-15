@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* helpdesk_sale_timesheet
+# * helpdesk_sale_timesheet
 #
 # Translators:
 # Martin Trigaux, 2022
 # Thi Huong Nguyen, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:08+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"helpdesk_sale_timesheet/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: helpdesk_sale_timesheet
 #: model:helpdesk.sla,name:helpdesk_sale_timesheet.helpdesk_sla_4
@@ -88,7 +91,7 @@ msgstr "Chính sách SLA hỗ trợ"
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_helpdesk_team
 msgid "Helpdesk Team"
-msgstr "Đội ngũ hỗ trợ "
+msgstr "Bộ phận hỗ trợ"
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_helpdesk_ticket
@@ -113,12 +116,12 @@ msgstr "Giờ:"
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
 msgid "Non-billable"
-msgstr ""
+msgstr "Không thể tính phí"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_sla_view_form_inherit_sale_timesheet
 msgid "OR"
-msgstr ""
+msgstr "HOẶC"
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_product_template
@@ -133,7 +136,9 @@ msgstr "Dự án"
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,help:helpdesk_sale_timesheet.field_helpdesk_team__project_id
 msgid "Project to which the timesheets of this helpdesk team's tickets will be linked."
-msgstr "Dự án mà các bảng chấm công phiếu hỗ trợ của đội ngũ hỗ trợ này sẽ được liên kết."
+msgstr ""
+"Dự án mà các bảng chấm công phiếu hỗ trợ của bộ phận hỗ trợ này sẽ được liên "
+"kết."
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__project_sale_order_id
@@ -148,7 +153,7 @@ msgstr "Mã đơn bán hàng"
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__use_helpdesk_sale_timesheet
 msgid "Reinvoicing Timesheet activated on Team"
-msgstr "Xuất lại hóa đơn Bảng chấm công đã kích hoạt cho Đội ngũ"
+msgstr "Xuất lại hóa đơn Bảng chấm công đã kích hoạt cho bộ phận"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
@@ -212,10 +217,13 @@ msgid ""
 "Remove the sales order item in order to make this ticket non-billable.\n"
 "You can also change or remove the sales order item of each timesheet entry individually."
 msgstr ""
-"Hạng mục đơn bán hàng mà thời gian dành cho phiếu hỗ trợ này sẽ được cộng vào để lập hóa đơn cho khách hàng của bạn.\n"
-"Theo mặc định, hạng mục đơn bán hàng trả trước cuối cùng còn thời gian sẽ được chọn.\n"
-"Xóa hạng mục đơn bán hàng để ngăn việc lập hoá đơn thanh toán cho phiếu hỗ trợ này.\n"
-"Bạn cũng có thể thay đổi hoặc xóa hạng mục đơn bán hàng của từng mục nhập bảng chấm công riêng lẻ."
+"Hạng mục đơn bán hàng mà thời gian dành cho phiếu hỗ trợ này sẽ được cộng "
+"vào để lập hóa đơn cho khách hàng của bạn.\n"
+"Theo mặc định, hạng mục đơn bán hàng trả trước cuối cùng còn thời gian sẽ "
+"được chọn.\n"
+"Xóa hạng mục đơn bán hàng để không tính phí phiếu hỗ trợ này.\n"
+"Bạn cũng có thể thay đổi hoặc xóa hạng mục đơn bán hàng của từng mục nhập "
+"bảng chấm công."
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_sla__sale_line_ids

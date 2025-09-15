@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_gantt
+# * web_gantt
 #
 # Translators:
 # Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2022
 # Martin Trigaux, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2023\n"
-"Language-Team: Spanish (https://app.transifex.com/odoo/teams/41243/es/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
+"web_gantt/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -35,7 +38,7 @@ msgstr "Base"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.xml:0
 msgid "Collapse rows"
-msgstr "Colapsar filas"
+msgstr "Ocultar filas"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -54,7 +57,7 @@ msgstr "Día"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -90,7 +93,7 @@ msgstr "Gantt debe tener un atributo \"date_start\""
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_stop' attribute"
-msgstr "Gantt debe tener un atributo \"date_stopt\""
+msgstr "Gantt debe tener un atributo \"date_stop\""
 
 #. module: web_gantt
 #. odoo-python
@@ -126,7 +129,7 @@ msgstr "Atributos no válidos (%s) en la vista gantt. Los atributos deben estar 
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid default_scale '%s' in gantt"
-msgstr "Default_scale '%s' no válida en vista gantt"
+msgstr "Default_scale '%s' no válida en vista de Gantt"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -156,13 +159,13 @@ msgstr "Siguiente"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_controller.js:0
 msgid "Open"
-msgstr "Abierto"
+msgstr "Abrir"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Plan"
-msgstr "Plan"
+msgstr "Planificar"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -204,20 +207,20 @@ msgstr "Hoy"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_model.js:0
 msgid "Undefined %s"
-msgstr "Indefinida %s"
+msgstr "%s sin definir"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 #: model:ir.model,name:web_gantt.model_ir_ui_view
 msgid "View"
-msgstr "Ver"
+msgstr "Vista"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -247,16 +250,16 @@ msgstr "No se pueden reprogramar tareas que no sigan una ruta de dependencia dir
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "hours"
-msgstr ""
+msgstr "horas"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "minutes"
-msgstr ""
+msgstr "minutos"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "months"
-msgstr ""
+msgstr "meses"

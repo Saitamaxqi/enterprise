@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment
+# * website_appointment
 #
 # Translators:
 # Thermo Dynamic <emirhanayar2004@gmail.com>, 2022
@@ -16,20 +16,22 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # Halil, 2023
 # Tugay Hatıl <tugayh@projetgrup.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:50+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Tugay Hatıl <tugayh@projetgrup.com>, 2023\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_top
@@ -97,22 +99,22 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "<span itemprop=\"name\">Bistr-Odoo</span>"
-msgstr ""
+msgstr "<span itemprop=\"name\">Bistr-Odoo</span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "<span itemprop=\"name\">Doctor's Office</span>"
-msgstr ""
+msgstr "<span itemprop=\"name\">Doktor Muayenehanesi</span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "<span itemprop=\"name\">Online</span>"
-msgstr ""
+msgstr "<span itemprop=\"name\">Çevrim içi</span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "<span itemprop=\"name\">Tennis Club</span>"
-msgstr ""
+msgstr "<span itemprop=\"name\">Tenis Kulübü</span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_list_preview_data
@@ -172,7 +174,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 msgid "Add a function here..."
-msgstr "Buraya bir işlev ekleyin..."
+msgstr "Buraya bir fonksiyon ekleyin..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -193,7 +195,7 @@ msgstr "Buraya bir giriş mesajı ekleyin..."
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "All Types"
-msgstr ""
+msgstr "Tüm Türler"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -217,7 +219,7 @@ msgstr ""
 #: code:addons/website_appointment/models/website.py:0
 #: model:website.menu,name:website_appointment.menu_appointment
 msgid "Appointment"
-msgstr "randevu"
+msgstr "Randevu"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_online_appointment_snippet
@@ -227,7 +229,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Randevu Daveti"
 
 #. module: website_appointment
 #: model:ir.actions.act_window,name:website_appointment.action_appointment_pages_list
@@ -286,7 +288,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_online_appointment
 msgid "Book an Appointment"
-msgstr ""
+msgstr "Randevu Oluşturun"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
@@ -351,7 +353,7 @@ msgstr "kiminle buluşacağını seç"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Choose your appointment"
-msgstr ""
+msgstr "Randevunuzu seçin"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -370,7 +372,7 @@ msgstr "Bize Ulaşın"
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
-msgstr ""
+msgstr "Diş Bakımı"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -381,7 +383,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
 msgid "Different Website Message"
-msgstr ""
+msgstr "Farklı Web Sitesi Mesajı"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
@@ -409,7 +411,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Filter On"
-msgstr ""
+msgstr "Filtre Açık"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -437,7 +439,7 @@ msgstr "Yayınlandı"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
 msgid "Meeting"
-msgstr ""
+msgstr "Toplantı"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -454,7 +456,7 @@ msgstr "Yeni Randevu Türü"
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "No Filter"
-msgstr ""
+msgstr "Filtre Yok"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -468,7 +470,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
-msgstr ""
+msgstr "Online Yemek Pişirme Dersi"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
@@ -503,13 +505,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
-msgstr ""
+msgstr "Kaynaklar"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_id
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_id
 msgid "Restrict to a specific website."
-msgstr ""
+msgstr "Belirli bir web sitesine sınırlayın."
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_seo_optimized
@@ -521,7 +523,7 @@ msgstr "SEO en iyileştirildi"
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid "Sample"
-msgstr ""
+msgstr "Örneklem"
 
 #. module: website_appointment
 #. odoo-python
@@ -539,7 +541,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Search..."
-msgstr ""
+msgstr "Ara..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -585,7 +587,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Users"
-msgstr ""
+msgstr "Belirli Kullanıcılar"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -602,7 +604,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Table"
-msgstr ""
+msgstr "Masa"
 
 #. module: website_appointment
 #. odoo-python
@@ -681,7 +683,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_snippet_filter
 msgid "Website Snippet Filter"
-msgstr ""
+msgstr "Web Sitesi Snippet Filtresi"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_url
@@ -724,7 +726,7 @@ msgstr "bize ulaşın"
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/xml/website_appointment_templates.xml:0
 msgid "e.g. \"Technical Demo\""
-msgstr "Örneğin. \"Teknik Demo\""
+msgstr "örneğin \"Teknik Demo\""
 
 #. module: website_appointment
 #. odoo-javascript

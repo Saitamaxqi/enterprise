@@ -1,66 +1,70 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_hr_payroll
+# * spreadsheet_dashboard_hr_payroll
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 23:07+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_hr_payroll/vi/>\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "#Payslips"
-msgstr ""
+msgstr "#Phiếu lương"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Absenteeism Rate"
-msgstr ""
+msgstr "Tỷ lệ vắng mặt"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Attendance Rate"
-msgstr ""
+msgstr "Tỷ lệ chấm công"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Basic Wage"
-msgstr ""
+msgstr "Lương cơ bản trung bình"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Gross Wage"
-msgstr ""
+msgstr "Lương gộp trung bình"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Hours per Days of Work"
-msgstr ""
+msgstr "Giờ trung bình mỗi ngày làm việc"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Net Wage"
-msgstr ""
+msgstr "Lương thực nhận trung bình"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -78,7 +82,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Avg Hours/Days"
-msgstr ""
+msgstr "Giờ trung bình/ngày"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -91,56 +95,56 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Hiện tại"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Days"
-msgstr ""
+msgstr "Ngày"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Employees"
-msgstr ""
+msgstr "Nhân viên"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Employees (%)"
-msgstr ""
+msgstr "Nhân viên (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE"
-msgstr ""
+msgstr "FTE"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE (%)"
-msgstr ""
+msgstr "FTE (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Paid Time Off"
-msgstr ""
+msgstr "Ngày nghỉ năm"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_hr_payroll.spreadsheet_dashboard_payroll
 msgid "Payroll"
-msgstr ""
+msgstr "Bảng lương"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Payroll Analysis"
-msgstr ""
+msgstr "Phân tích bảng lương"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -153,14 +157,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Trước đó"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Basic Wage"
-msgstr ""
+msgstr "Tổng lương cơ bản"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -173,7 +177,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Gross Wage"
-msgstr ""
+msgstr "Tổng lương gộp"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -186,38 +190,38 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Net Wage"
-msgstr ""
+msgstr "Tổng lương thực nhận"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Unpaid TIme Off"
-msgstr ""
+msgstr "Ngày nghỉ không lương"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Days"
-msgstr ""
+msgstr "Ngày làm việc"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Entries Analysis"
-msgstr ""
+msgstr "Phân tích đầu vào công việc"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Hours"
-msgstr ""
+msgstr "Giờ làm việc"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work type"
-msgstr ""
+msgstr "Loại công việc"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript

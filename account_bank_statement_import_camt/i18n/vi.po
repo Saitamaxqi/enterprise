@@ -1,103 +1,106 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Concentration"
-msgstr "ACH Concentration"
+msgstr "Tập trung ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Corporate Trade"
-msgstr "ACH Corporate Trade"
+msgstr "Thương mại công ty ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Credit"
-msgstr "ACH Credit"
+msgstr "Có ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Debit"
-msgstr "ACH Debit"
+msgstr "Nợ ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Pre-Authorised"
-msgstr "ACH Pre-Authorised"
+msgstr "Ủy quyền trước ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Return"
-msgstr "ACH Return"
+msgstr "Hoàn tiền ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Reversal"
-msgstr "ACH Reversal"
+msgstr "Đảo ngược ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Settlement"
-msgstr "ACH Settlement"
+msgstr "Thanh toán ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Transaction"
-msgstr "ACH Transaction"
+msgstr "Giao dịch ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ARP Debit"
-msgstr "ARP Debit"
+msgstr "Ghi nợ ARP"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Balancing"
-msgstr "Account Balancing"
+msgstr "Cân đối tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Closing"
-msgstr "Account Closing"
+msgstr "Đóng tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Management"
-msgstr "Account Management"
+msgstr "Quản lý tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Opening"
-msgstr "Account Opening"
+msgstr "Mở tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Transfer"
-msgstr "Account Transfer"
+msgstr "Luân chuyển tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Additional Info: %s"
-msgstr ""
+msgstr "Thông tin bổ sung: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -107,7 +110,7 @@ msgstr "Additional Miscellaneous Credit Operations"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Additional Miscellaneous Debit Operations"
-msgstr "Additional Miscellaneous Debit Operations"
+msgstr "Hoạt động ghi nợ khác bổ sung"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -117,217 +120,217 @@ msgstr "Address:\n"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Adjustments"
-msgstr "Adjustments"
+msgstr "Điều chỉnh"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Automatic Transfer"
-msgstr "Automatic Transfer"
+msgstr "Chuyển khoản tự động"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Back Value"
-msgstr "Back Value"
+msgstr "Phí ngân hàng nước ngoài thu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bank Cheque"
-msgstr "Bank Cheque"
+msgstr "Séc ngân hàng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bank Fees"
-msgstr "Bank Fees"
+msgstr "Phí ngân hàng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Blocked Transactions"
-msgstr "Blocked Transactions"
+msgstr "Giao dịch bị chặn"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bonus Issue/Capitalisation Issue"
-msgstr "Bonus Issue/Capitalisation Issue"
+msgstr "Vấn đề thưởng/Vấn đề vốn hóa"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Borrowing fee"
-msgstr "Borrowing fee"
+msgstr "Phí vay"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Account Transfer"
-msgstr "Branch Account Transfer"
+msgstr "Chi nhánh Luân chuyển tài khoản"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Deposit"
-msgstr "Branch Deposit"
+msgstr "Chi nhánh Tiền gửi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Withdrawal"
-msgstr "Branch Withdrawal"
+msgstr "Chi nhánh Rút tiền"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Brokerage fee"
-msgstr "Brokerage fee"
+msgstr "Phí môi giới"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Buy Sell Back"
-msgstr "Buy Sell Back"
+msgstr "Mua bán lại"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "CSD Blocked Transactions"
-msgstr "CSD Blocked Transactions"
+msgstr "Giao dịch bị chặn CSD"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Call on intermediate securities"
-msgstr "Call on intermediate securities"
+msgstr "Huy động chứng khoán trung gian"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Capital Gains Distribution"
-msgstr "Capital Gains Distribution"
+msgstr "Phân bổ lợi nhuận vốn"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Deposit"
-msgstr "Cash Deposit"
+msgstr "Tiền gửi tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Dividend"
-msgstr "Cash Dividend"
+msgstr "Cổ tức tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter"
-msgstr "Cash Letter"
+msgstr "Danh sách công cụ tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter Adjustment"
-msgstr "Cash Letter Adjustment"
+msgstr "Điều chỉnh danh sách công cụ tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Management"
-msgstr "Cash Management"
+msgstr "Quản lý tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Pooling"
-msgstr "Cash Pooling"
+msgstr "Quản lý tiền mặt tập trung"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Withdrawal"
-msgstr "Cash Withdrawal"
+msgstr "Rút tiền mặt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash in lieu"
-msgstr "Cash in lieu"
+msgstr "Tiền mặt thay thế"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Certified Customer Cheque"
-msgstr "Certified Customer Cheque"
+msgstr "Chi phiếu bảo chi của khách hàng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charge/fees"
-msgstr "Charge/fees"
+msgstr "Lệ phí/phí"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charges"
-msgstr "Charges"
+msgstr "Lệ phí"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Check Number: %s"
-msgstr ""
+msgstr "Số séc: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque"
-msgstr "Cheque"
+msgstr "Chi phiếu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Deposit"
-msgstr "Cheque Deposit"
+msgstr "Tiền gửi chi phiếu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Reversal"
-msgstr "Cheque Reversal"
+msgstr "Đảo chi phiếu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Under Reserve"
-msgstr "Cheque Under Reserve"
+msgstr "Chi phiếu bảo lưu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Circular Cheque"
-msgstr "Circular Cheque"
+msgstr "Chi phiếu lưu thông"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Clean Collection"
-msgstr "Clean Collection"
+msgstr "Nhờ thu phiếu trơn"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Client Owned Collateral"
-msgstr "Client Owned Collateral"
+msgstr "Tài sản đảm bảo của khách hàng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Collateral Management"
-msgstr "Collateral Management"
+msgstr "Quản lý tài sản đảm bảo"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission"
-msgstr "Commission"
+msgstr "Hoa hồng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission excluding taxes"
-msgstr "Commission excluding taxes"
+msgstr "Hoa hồng chưa bao gồm thuế"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission including taxes"
-msgstr "Commission including taxes"
+msgstr "Hoa hồng bao gồm thuế"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commodities"
-msgstr "Commodities"
+msgstr "Hàng hoá"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Compensation/Claims"
-msgstr "Compensation/Claims"
+msgstr "Tiền bồi thường"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Consumer Loans"
-msgstr "Consumer Loans"
+msgstr "Khoản vay tiêu dùng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Controlled Disbursement"
-msgstr "Controlled Disbursement"
+msgstr "Giải ngân có kiểm soát"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -337,17 +340,17 @@ msgstr "Chuyển đổi"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Action"
-msgstr "Corporate Action"
+msgstr "Tác vụ của công ty"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Own Account Transfer"
-msgstr "Corporate Own Account Transfer"
+msgstr "Luân chuyển tài khoản của công ty"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Rebate"
-msgstr "Corporate Rebate"
+msgstr "Miễn giảm doanh nghiệp"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -362,97 +365,97 @@ msgstr "Corporate mark client owned"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Counter Party: %(partner)s"
-msgstr "Counter Party: %(partner)s"
+msgstr "Đối tác: %(partner)s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Counter Transactions"
-msgstr "Counter Transactions"
+msgstr "Giao dịch đối ứng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustment"
-msgstr "Credit Adjustment"
+msgstr "Điều chỉnh có"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustments"
-msgstr "Credit Adjustments"
+msgstr "Điều chỉnh có"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Card Payment"
-msgstr "Credit Card Payment"
+msgstr "Thanh toán bằng thẻ"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Transfer with agreed Commercial Information"
-msgstr "Credit Transfer with agreed Commercial Information"
+msgstr "Chuyển khoản tín dụng kèm Thông tin thương mại được chấp thuận"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross Trade"
-msgstr "Cross Trade"
+msgstr "Mua bán chéo"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border"
-msgstr "Cross-Border"
+msgstr "Xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Cash Withdrawal"
-msgstr "Cross-Border Cash Withdrawal"
+msgstr "Rút tiền xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Card Payment"
-msgstr "Cross-Border Credit Card Payment"
+msgstr "Thanh toán bằng thẻ xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Transfer"
-msgstr "Cross-Border Credit Transfer"
+msgstr "Chuyển khoản tín dụng xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Direct Debit"
-msgstr "Cross-Border Direct Debit"
+msgstr "Ghi nợ trực tiếp xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Intra Company Transfer"
-msgstr "Cross-Border Intra Company Transfer"
+msgstr "Chuyển khoản liên công ty xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Payroll/Salary Payment"
-msgstr "Cross-Border Payroll/Salary Payment"
+msgstr "Thanh toán lương xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Standing Order"
-msgstr "Cross-Border Standing Order"
+msgstr "Lệnh chi thường xuyên xuyên quốc gia"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Crossed Cheque"
-msgstr "Crossed Cheque"
+msgstr "Chi phiếu gạch chéo"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody"
-msgstr "Custody"
+msgstr "Lưu ký"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody Collection"
-msgstr "Custody Collection"
+msgstr "Thu lưu ký"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Customer Card Transactions"
-msgstr "Customer Card Transactions"
+msgstr "Giao dịch thẻ của khách hàng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -462,12 +465,12 @@ msgstr "Nợ"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit Adjustments"
-msgstr "Debit Adjustments"
+msgstr "Điều chỉnh nợ"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Decrease in Value"
-msgstr "Decrease in Value"
+msgstr "Giảm giá trị"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -477,112 +480,112 @@ msgstr "Giao hàng"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit"
-msgstr "Đặt cọc"
+msgstr "Tiền gửi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit/Contribution"
-msgstr "Deposit/Contribution"
+msgstr "Tiền gửi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Depositary Receipt Issue"
-msgstr "Depositary Receipt Issue"
+msgstr "Vấn đề về biên lai tiền gửi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Derivatives"
-msgstr "Derivatives"
+msgstr "Phái sinh"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit"
-msgstr "Direct Debit"
+msgstr "Ghi nợ trực tiếp"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit Payment"
-msgstr "Direct Debit Payment"
+msgstr "Thanh toán ghi nợ trực tiếp"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit under reserve"
-msgstr "Direct Debit under reserve"
+msgstr "Ghi nợ trực tiếp bảo lưu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Discounted Draft"
-msgstr "Discounted Draft"
+msgstr "Hối phiếu chiết khấu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dishonoured/Unpaid Draft"
-msgstr "Dishonoured/Unpaid Draft"
+msgstr "Hối phiếu bị từ chối/chưa thanh toán"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dividend Option"
-msgstr "Dividend Option"
+msgstr "Tuỳ chọn cổ tức"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dividend Reinvestment"
-msgstr "Dividend Reinvestment"
+msgstr "Tái đầu tư cổ tức"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Documentary Collection"
-msgstr "Documentary Collection"
+msgstr "Nhờ thu kèm chứng từ"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Documentary Credit"
-msgstr "Documentary Credit"
+msgstr "Tín dụng chứng từ"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Domestic Credit Transfer"
-msgstr "Domestic Credit Transfer"
+msgstr "Chuyển khoản tín dụng nội địa"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Draft Maturity Change"
-msgstr "Draft Maturity Change"
+msgstr "Thay đổi ngày đáo hạn hối phiếu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Drafts/BillOfOrders"
-msgstr "Drafts/BillOfOrders"
+msgstr "Hối phiếu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Drawdown"
-msgstr "Drawdown"
+msgstr "Rút vốn"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Drawing"
-msgstr "Drawing"
+msgstr "Rút vốn"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dutch Auction"
-msgstr "Dutch Auction"
+msgstr "Đấu giá kiểu Hà Lan"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "End to end ID: %s"
-msgstr ""
+msgstr "ID E2E: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Entry Info: %s"
-msgstr ""
+msgstr "Thông tin bút toán: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Equity Premium Reserve"
-msgstr "Equity Premium Reserve"
+msgstr "Dự trữ phần bù vốn cổ phần"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -597,12 +600,12 @@ msgstr "Equity mark client owned"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Exchange"
-msgstr "Exchange"
+msgstr "Hối đoái"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Exchange Rate Adjustment"
-msgstr "Exchange Rate Adjustment"
+msgstr "Điều chỉnh tỷ giá hối đoái"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -632,7 +635,7 @@ msgstr "External Account Transfer"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Factor Update"
-msgstr "Factor Update"
+msgstr "Cập nhật hệ số"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -642,7 +645,7 @@ msgstr "Phí"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fees, Commission , Taxes, Charges and Interest"
-msgstr ""
+msgstr "Phí, hoa hồng, thuế, lệ phí và lãi suất"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -772,17 +775,17 @@ msgstr "Inspeci/Share Exchange"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Instruction ID: %s"
-msgstr ""
+msgstr "ID hướng dẫn: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Interest"
-msgstr "Interest"
+msgstr "Lãi suất"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Interest Payment"
-msgstr "Interest Payment"
+msgstr "Thanh toán lãi suất"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -892,7 +895,7 @@ msgstr "Management Fees"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Mandate ID: %s"
-msgstr ""
+msgstr "ID ủy quyền: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -953,6 +956,8 @@ msgstr "Netting"
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "No exchange rate was found to convert an amount into the currency of the journal"
 msgstr ""
+"Không tìm thấy tỷ giá hối đoái nào để chuyển đổi số tiền sang loại tiền tệ "
+"của sổ nhật ký"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -982,7 +987,7 @@ msgstr "Non-Presented Circular Cheque"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Not available"
-msgstr "Không sẵn sàng"
+msgstr "Không khả dụng"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1087,7 +1092,7 @@ msgstr "Khác"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Overdraft"
-msgstr "Chi vượt"
+msgstr "Bội chi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1135,6 +1140,8 @@ msgid ""
 "Please check the currency on your bank journal.\n"
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
+"Vui lòng kiểm tra loại tiền tệ trên sổ nhật ký ngân hàng của bạn.\n"
+"Không tìm thấy sao kê nào bằng loại tiền tệ %s trong tệp CAMT này."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1150,12 +1157,12 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment"
-msgstr "Point-of-Sale (POS) Payment"
+msgstr "Thanh toán (POS)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment - Debit Card"
-msgstr "Point-of-Sale (POS) Payment - Debit Card"
+msgstr "Thanh toán (POS) - Thẻ ghi nợ"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1410,7 +1417,7 @@ msgstr "Standing Order"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Subscription"
-msgstr "Thuê bao"
+msgstr "Gói đăng ký"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1510,7 +1517,7 @@ msgstr "Transaction Fees"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Transaction ID: %s"
-msgstr ""
+msgstr "ID giao dịch: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

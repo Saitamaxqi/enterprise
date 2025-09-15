@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_avatax
+# * account_avatax
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:10+0000\n"
-"PO-Revision-Date: 2025-07-01 12:10+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"account_avatax/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_avatax
 #. odoo-python
@@ -62,21 +66,24 @@ msgid ""
 "<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
 "                                Test connection"
 msgstr ""
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
+"class=\"fa fa-plug fa-fw\"/>\n"
+"                                Test forbindelse"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid "API ID"
-msgstr ""
+msgstr "API ID"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid "API KEY"
-msgstr ""
+msgstr "API-nøgle"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Kontoplansskabelon"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_fiscal_position__avatax_invoice_account_id
@@ -119,7 +126,7 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid "AvaTax"
-msgstr ""
+msgstr "AvaTax"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_res_company__avalara_api_id
@@ -146,7 +153,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__avatax_unique_code
 #: model:ir.model.fields,field_description:account_avatax.field_res_users__avatax_unique_code
 msgid "Avalara Code"
-msgstr ""
+msgstr "Avalara-kode"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__avalara_partner_code
@@ -185,7 +192,7 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.account_fiscal_position_form_inherit
 msgid "Avatax"
-msgstr ""
+msgstr "Avatax"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_product_category__avatax_category_id
@@ -231,24 +238,24 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Annullér"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__city
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "City"
-msgstr ""
+msgstr "By"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_connection_test_result_view_form
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__code
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__code
 msgid "Code"
-msgstr ""
+msgstr "Kode"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -264,12 +271,12 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Virksomheder"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__company_id
 msgid "Company"
-msgstr ""
+msgstr "Virksomhed"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -279,23 +286,23 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurationsindstillinger"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__country_id
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Country"
-msgstr ""
+msgstr "Land"
 
 #. module: account_avatax
 #: model:ir.model,website_form_label:account_avatax.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Opret en kunde"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__create_uid
@@ -303,7 +310,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__create_uid
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Oprettet af"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__create_date
@@ -311,7 +318,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__create_date
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oprettet den"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_partner__avalara_partner_code
@@ -323,7 +330,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__description
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__description
 msgid "Description"
-msgstr ""
+msgstr "Beskrivelse"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__display_name
@@ -342,33 +349,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid "Environment"
-msgstr ""
+msgstr "Miljø"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_fiscal_position
 msgid "Fiscal Position"
-msgstr ""
+msgstr "Bogføringsgruppe"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__validated_latitude
 msgid "Geo Latitude"
-msgstr ""
+msgstr "Geografisk breddegrad"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__validated_longitude
 msgid "Geo Longitude"
-msgstr ""
+msgstr "Geografisk længdegrad"
 
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
 msgid "Go to the configuration panel"
-msgstr ""
+msgstr "Gå til konfigurations fanebladet"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__id
@@ -387,7 +394,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__id
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__is_already_valid
@@ -399,12 +406,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_account_external_tax_mixin__is_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_move__is_avatax
 msgid "Is Avatax"
-msgstr ""
+msgstr "Er Avatax"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Journalbilag"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__write_uid
@@ -412,7 +419,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__write_uid
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Sidst opdateret af"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__write_date
@@ -420,17 +427,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__write_date
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Sidst opdateret den"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Latitude"
-msgstr ""
+msgstr "Breddegrad"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Longitude"
-msgstr ""
+msgstr "Længdegrad"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_account_avatax_unique_code
@@ -445,7 +452,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__name
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #. module: account_avatax
 #. odoo-python
@@ -483,7 +490,7 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: account_avatax
 #. odoo-python
@@ -494,27 +501,27 @@ msgstr ""
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_category
 msgid "Product Category"
-msgstr ""
+msgstr "Produktkategori"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Varevariant"
 
 #. module: account_avatax
 #: model:ir.model.fields.selection,name:account_avatax.selection__res_company__avalara_environment__production
 msgid "Production"
-msgstr ""
+msgstr "Produktion"
 
 #. module: account_avatax
 #: model:ir.model.fields.selection,name:account_avatax.selection__res_company__avalara_environment__sandbox
 msgid "Sandbox"
-msgstr ""
+msgstr "Sandkasse"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -530,18 +537,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__state_id
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__street
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Street"
-msgstr ""
+msgstr "Vej"
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__street2
 msgid "Street2"
-msgstr ""
+msgstr "Gade2"
 
 #. module: account_avatax
 #: model:ir.model,name:account_avatax.model_avatax_validate_address
@@ -627,7 +634,7 @@ msgstr ""
 #: model:ir.model.fields,help:account_avatax.field_res_partner__avatax_unique_code
 #: model:ir.model.fields,help:account_avatax.field_res_users__avatax_unique_code
 msgid "Use this code to cross-reference in the Avalara portal."
-msgstr ""
+msgstr "Brug denne kode til at krydsreferere i Avalara-portalen."
 
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__valid_country_ids
@@ -637,7 +644,7 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_partner_form_inherit
 msgid "Validate"
-msgstr ""
+msgstr "Validér"
 
 #. module: account_avatax
 #. odoo-python
@@ -691,13 +698,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__zip
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
 msgid "Zip Code"
-msgstr ""
+msgstr "Postnummer"
 
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/product.py:0
 msgid "[%(code)s] %(description)s"
-msgstr ""
+msgstr "[%(code)s] %(description)s"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_product_category__avatax_category_id

@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* voip
+# * voip
 #
 # Translators:
 # Vo Thanh Thuy, 2022
 # Martin Trigaux, 2022
 # Thi Huong Nguyen, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/voip/"
+"vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: voip
 #. odoo-javascript
@@ -27,43 +30,43 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/tab_entry.js:0
 #: code:addons/voip/static/src/widgets/flag_phone_field.js:0
 msgid "%(country)s flag"
-msgstr ""
+msgstr "Cờ %(country)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
 msgid "%(hours)s:%(minutes)s:%(seconds)s"
-msgstr ""
+msgstr "%(hours)s:%(minutes)s:%(seconds)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
 msgid "%(minutes)s:%(seconds)s"
-msgstr ""
+msgstr "%(minutes)s:%(seconds)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "%(status)s - %(timer)s"
-msgstr ""
+msgstr "%(status)s - %(timer)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "%s others…"
-msgstr ""
+msgstr "%s nữa…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "1 other…"
-msgstr ""
+msgstr "1 nữa…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "2 others…"
-msgstr ""
+msgstr "2 nữa…"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
@@ -77,23 +80,25 @@ msgid ""
 "A hardware error has occurred while trying to access the audio recording "
 "device. Please ensure that your drivers are up to date and try again."
 msgstr ""
+"Đã xảy ra lỗi phần cứng khi cố gắng truy cập thiết bị ghi âm. Hãy đảm bảo "
+"cập nhật trình điều khiển của bạn và thử lại."
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__aborted
 msgid "Aborted"
-msgstr ""
+msgstr "Đã huỷ"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Aborted call to %(phone_number)s"
-msgstr ""
+msgstr "Đã huỷ cuộc gọi tới %(phone_number)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "Accept the call"
-msgstr ""
+msgstr "Chấp nhận cuộc gọi"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction
@@ -104,7 +109,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Activities"
-msgstr ""
+msgstr "Hoạt động"
 
 #. module: voip
 #. odoo-javascript
@@ -120,7 +125,7 @@ msgstr "Hoạt động"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__activity_name
 msgid "Activity Name"
-msgstr ""
+msgstr "Tên hoạt động"
 
 #. module: voip
 #. odoo-javascript
@@ -150,6 +155,8 @@ msgid ""
 "An error occured involving the audio recording device (%(errorName)s):\n"
 "%(errorMessage)s"
 msgstr ""
+"Đã xảy ra lỗi liên quan đến thiết bị ghi âm (%(errorName)s):\n"
+"%(errorMessage)s"
 
 #. module: voip
 #. odoo-javascript
@@ -159,6 +166,9 @@ msgid ""
 "\n"
 "%(error)s"
 msgstr ""
+"Đã xảy ra lỗi trong quá trình khởi tạo thành phần kết nối phía người dùng:\n"
+"\n"
+"%(error)s"
 
 #. module: voip
 #. odoo-javascript
@@ -168,6 +178,9 @@ msgid ""
 "\n"
 "Error: %(error)s"
 msgstr ""
+"Đã xảy ra lỗi khi cố gắng mời số sau: %(phoneNumber)s\n"
+"\n"
+"Lỗi: %(error)s"
 
 #. module: voip
 #. odoo-javascript
@@ -182,6 +195,8 @@ msgid ""
 "Are you sure you want to delete this activity? It will be lost forever! (A "
 "long time!)"
 msgstr ""
+"Bạn có chắc chắn muốn xóa hoạt động này không? Nó sẽ biến mất mãi mãi (vĩnh "
+"viễn!)."
 
 #. module: voip
 #. odoo-javascript
@@ -199,7 +214,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Available"
-msgstr ""
+msgstr "Có hàng"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
@@ -211,7 +226,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Quay lại"
 
 #. module: voip
 #. odoo-javascript
@@ -241,7 +256,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call Missed (%(time)s)"
-msgstr ""
+msgstr "Cuộc gọi nhỡ (%(time)s)"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
@@ -265,48 +280,48 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call cancelled (%(time)s)"
-msgstr ""
+msgstr "Cuộc gọi bị huỷ (%(time)s)"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call declined (%(time)s)"
-msgstr ""
+msgstr "Cuộc gọi bị từ chối (%(time)s)"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call from %(correspondent)s"
-msgstr ""
+msgstr "Cuộc gọi từ %(correspondent)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call from %(phone_number)s"
-msgstr ""
+msgstr "Cuộc gọi từ %(phone_number)s"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__should_call_from_another_device
 msgid "Call from another device"
-msgstr ""
+msgstr "Cuộc gọi từ một thiết bị khác"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
-msgstr ""
+msgstr "Cuộc gọi bị từ chối (lý do: “%(reasonPhrase)s”)"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(correspondent)s"
-msgstr ""
+msgstr "Cuộc gọi tới %(correspondent)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(phone_number)s"
-msgstr ""
+msgstr "Cuộc gọi tới %(phone_number)s"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
@@ -321,13 +336,13 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__calling
 msgid "Calling"
-msgstr ""
+msgstr "Calling"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Calling…"
-msgstr ""
+msgstr "Đang gọi…"
 
 #. module: voip
 #. odoo-python
@@ -337,7 +352,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "Calls"
-msgstr ""
+msgstr "Cuộc gọi"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_graph
@@ -368,7 +383,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Cancelled call"
-msgstr ""
+msgstr "Cuộc gọi bị hủy"
 
 #. module: voip
 #. odoo-javascript
@@ -379,12 +394,16 @@ msgid ""
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
 msgstr ""
+"Không thể truy cập thiết bị ghi âm. Nếu bạn đã từ chối quyền truy cập vào "
+"micrô của mình, vui lòng cho phép truy cập và thử lại. Nếu không, hãy đảm "
+"bảo rằng trang web này đang chạy trên HTTPS và bạn không cài đặt cho trình "
+"duyệt từ chối quyền truy cập vào các thiết bị đa phương tiện."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Choose a device:"
-msgstr ""
+msgstr "Chọn một thiết bị:"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__how_to_call_on_mobile
@@ -396,7 +415,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Công ty"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
@@ -409,6 +428,9 @@ msgid ""
 "dialing code (e.g. +32), if any.\n"
 "Useful for displaying the flag associated with a phone number."
 msgstr ""
+"Tính toán mã ISO quốc gia (VD: be cho Bỉ) từ mã cuộc gọi quốc tế của số điện "
+"thoại (VD: +32), nếu có.\n"
+"Tính năng này hữu ích khi hiển thị quốc kỳ ứng với số điện thoại."
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
@@ -437,7 +459,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Connecting…"
-msgstr ""
+msgstr "Đang kết nối…"
 
 #. module: voip
 #. odoo-javascript
@@ -471,7 +493,7 @@ msgstr "Liên hệ"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "Contacts with a phone number will be shown here."
-msgstr ""
+msgstr "Liên hệ có số điện thoại sẽ được hiển thị ở đây."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
@@ -481,7 +503,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,name:voip.model_voip_country_code_mixin
 msgid "Country Code Mixin"
-msgstr ""
+msgstr "Mixin mã quốc gia"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
@@ -491,13 +513,13 @@ msgstr ""
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Tạo một khách hàng"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "Create a new contact"
-msgstr ""
+msgstr "Tạo một liên hệ mới"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__create_uid
@@ -515,7 +537,7 @@ msgstr "Được tạo vào"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Credentials"
-msgstr ""
+msgstr "Thông tin đăng nhập"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -532,7 +554,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/contact_info.js:0
 msgid "Default profile picture"
-msgstr ""
+msgstr "Ảnh đại diện mặc định"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__mode__demo
@@ -584,54 +606,54 @@ msgstr "Tên hiển thị"
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Không làm phiền"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__do_not_disturb_until_dt
 msgid "Do Not Disturb until"
-msgstr ""
+msgstr "Không làm phiền cho đến"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Do Not Disturb until %(time)s"
-msgstr ""
+msgstr "Không làm phiền cho đến %(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Do Not Disturb until I turn it back on"
-msgstr ""
+msgstr "Không làm phiền cho đến khi tôi bật lại"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Done"
-msgstr ""
+msgstr "Hoàn tất"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: %(date)s"
-msgstr ""
+msgstr "Ngày đến hạn: %(date)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Today"
-msgstr ""
+msgstr "Ngày đến hạn: Hôm nay"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Tomorrow"
-msgstr ""
+msgstr "Ngày đến hạn: Ngày mai"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Yesterday"
-msgstr ""
+msgstr "Ngày đến hạn: Hôm qua"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__duration
@@ -642,25 +664,25 @@ msgstr "Thời lượng"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Edit"
-msgstr "Sửa"
+msgstr "Chỉnh sửa"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Ngày kết thúc"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Ended unexpectedly"
-msgstr ""
+msgstr "Kết thúc đột ngột"
 
 #. module: voip
 #. odoo-javascript
@@ -702,12 +724,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
 msgid "External Device Number"
-msgstr ""
+msgstr "Số thiết bị bên ngoài"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__external_device_number
 msgid "External device number"
-msgstr ""
+msgstr "Số thiết bị bên ngoài"
 
 #. module: voip
 #. odoo-javascript
@@ -717,6 +739,9 @@ msgid ""
 "\n"
 "%(error)s"
 msgstr ""
+"Không tải được thư viện SIP.js:\n"
+"\n"
+"%(error)s"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
@@ -743,7 +768,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/call_banner.xml:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Hang up"
-msgstr ""
+msgstr "Gác máy"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__has_message
@@ -754,7 +779,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Hide"
-msgstr ""
+msgstr "Ẩn"
 
 #. module: voip
 #. odoo-javascript
@@ -771,18 +796,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Hold"
-msgstr ""
+msgstr "Giữ"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Hold your horses!"
-msgstr ""
+msgstr "Chờ một chút!"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__how_to_call_on_mobile
 msgid "How To Call On Mobile"
-msgstr ""
+msgstr "Cách thực hiện cuộc gọi trên thiết bị di động"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
@@ -822,20 +847,20 @@ msgstr ""
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
-msgstr ""
+msgstr "Đang gọi điện"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__direction__incoming
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Incoming"
-msgstr "Sắp về"
+msgstr "Nhập về"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
-msgstr ""
+msgstr "Cuộc gọi đến"
 
 #. module: voip
 #. odoo-javascript
@@ -847,13 +872,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Incoming calls will be muted"
-msgstr ""
+msgstr "Cuộc gọi đến sẽ bị tắt chuông báo"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/device_selection_dialog.js:0
 msgid "Input device selection"
-msgstr ""
+msgstr "Lựa chọn thiết bị đầu vào"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
@@ -875,7 +900,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_res_users__has_call_in_queue
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__has_call_in_queue
 msgid "Is in the Call Queue"
-msgstr "Có trong hàng đợi cuộc gọi"
+msgstr "Có trong danh sách cuộc gọi chờ"
 
 #. module: voip
 #. odoo-javascript
@@ -907,7 +932,7 @@ msgstr "Cuộc gọi nhìn thấy lần cuối"
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_uid
 #: model:ir.model.fields,field_description:voip.field_voip_provider__write_uid
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_date
@@ -919,7 +944,7 @@ msgstr "Cập nhật lần cuối vào"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Lasted: %(duration)s"
-msgstr ""
+msgstr "Thời lượng: %(duration)s"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__user
@@ -941,7 +966,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Manage Providers"
-msgstr ""
+msgstr "Quản lý nhà cung cấp"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error
@@ -957,7 +982,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Missclicked, sorry"
-msgstr ""
+msgstr "Tôi bấm nhầm, rất xin lỗi!"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__missed
@@ -975,13 +1000,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Missed call"
-msgstr ""
+msgstr "Cuộc gọi nhỡ"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Missed call from %(phone_number)s"
-msgstr ""
+msgstr "Cuộc gọi nhỡ từ %(phone_number)s"
 
 #. module: voip
 #. odoo-javascript
@@ -999,7 +1024,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Tên"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1012,31 +1037,31 @@ msgstr ""
 msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
-msgstr ""
+msgstr "Không có thiết bị ghi âm nào. Cần có micrô để sử dụng ứng dụng này."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "No call activities found"
-msgstr ""
+msgstr "Không tìm thấy hoạt động gọi điện nào"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "No calls scheduled for today 😎"
-msgstr ""
+msgstr "Không có cuộc gọi nào được lên lịch cho hôm nay 😎"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "No contacts found"
-msgstr ""
+msgstr "Không tìm thấy liên hệ nào"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "No recent calls found"
-msgstr ""
+msgstr "Không tìm thấy cuộc gọi nào gần đây"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1048,13 +1073,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab.xml:0
 msgid "No search results 💔"
-msgstr ""
+msgstr "Không tìm thấy kết quả nào 💔"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab.js:0
 msgid "Nothing to see here 😔"
-msgstr ""
+msgstr "Không có gì ở đây 😔"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
@@ -1097,14 +1122,14 @@ msgstr ""
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
-msgstr ""
+msgstr "Đang giữ máy"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "Đang diễn ra"
 
 #. module: voip
 #. odoo-javascript
@@ -1116,7 +1141,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Open related record"
-msgstr ""
+msgstr "Mở bản ghi liên quan"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1127,7 +1152,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__direction__outgoing
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Outgoing"
-msgstr "Chờ xuất đi"
+msgstr "Xuất đi"
 
 #. module: voip
 #. odoo-javascript
@@ -1162,7 +1187,7 @@ msgstr "Điện thoại"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Số điện thoại"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
@@ -1173,7 +1198,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "Phone number"
-msgstr ""
+msgstr "Số điện thoại"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__phone
@@ -1193,12 +1218,14 @@ msgid ""
 "Please try again later. If the problem persists, you may want to ask an "
 "administrator to check the configuration."
 msgstr ""
+"Vui lòng thử lại sau. Nếu sự cố vẫn tiếp diễn, bạn có thể yêu cầu quản trị "
+"viên kiểm tra cấu hình."
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Preferences"
-msgstr ""
+msgstr "Tùy chọn"
 
 #. module: voip
 #. odoo-javascript
@@ -1215,13 +1242,13 @@ msgstr "Sản xuất"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab_entry.xml:0
 msgid "Profile picture"
-msgstr ""
+msgstr "Ảnh đại diện"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/contact_info.js:0
 msgid "Profile picture of %(user)s"
-msgstr ""
+msgstr "Ảnh đại diện của %(user)s"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1284,13 +1311,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/registerer.js:0
 msgid "Registration rejected: %(statusCode)s %(reasonPhrase)s."
-msgstr ""
+msgstr "Đăng ký bị từ chối: %(statusCode)s %(reasonPhrase)s."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "Reject the call"
-msgstr ""
+msgstr "Từ chối cuộc gọi"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__rejected
@@ -1313,19 +1340,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Rejected call from %(phone_number)s"
-msgstr ""
+msgstr "Đã từ chối cuộc gọi từ %(phone_number)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Rejected call to %(phone_number)s"
-msgstr ""
+msgstr "Đã từ chối cuộc gọi tới %(phone_number)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Remember my choice"
-msgstr ""
+msgstr "Nhớ lựa chọn của tôi"
 
 #. module: voip
 #. odoo-javascript
@@ -1336,13 +1363,13 @@ msgstr "Bỏ khỏi danh sách cuộc gọi đợi"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__user_id
 msgid "Responsible"
-msgstr "Phụ trách"
+msgstr "Người phụ trách"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Ringing…"
-msgstr ""
+msgstr "Đang đổ chuông…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_sms_error
@@ -1352,7 +1379,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
 msgid "Schedule & make calls from your database"
-msgstr ""
+msgstr "Lên lịch & thực hiện cuộc gọi từ cơ sở dữ liệu của bạn"
 
 #. module: voip
 #. odoo-javascript
@@ -1362,13 +1389,13 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.xml:0
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Schedule an activity"
-msgstr ""
+msgstr "Lên lịch một hoạt động"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Search…"
-msgstr ""
+msgstr "Tìm kiếm…"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1380,30 +1407,30 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "See all other activities"
-msgstr ""
+msgstr "Xem tất cả hoạt động khác"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "See your contact list"
-msgstr ""
+msgstr "Xem danh sách liên hệ của bạn"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.js:0
 msgid "Select a call method"
-msgstr ""
+msgstr "Chọn phương thức gọi điện"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Send e-mail"
-msgstr ""
+msgstr "Gửi email"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__should_call_from_another_device
 msgid "Should Call From Another Device"
-msgstr ""
+msgstr "Nên gọi từ một thiết bị khác"
 
 #. module: voip
 #. odoo-javascript
@@ -1425,12 +1452,15 @@ msgid ""
 "number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
+"Một số lead không thể được thêm vào hàng đợi cuộc gọi vì chưa có số điện "
+"thoại. Những trường hợp cần bổ sung: %(record_names)s.\n"
+"Hãy thêm số điện thoại còn thiếu và bắt đầu gọi điện!"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/error_screen.js:0
 msgid "Something went wrong 😵‍💫"
-msgstr ""
+msgstr "Đã xảy ra lỗi 😵‍💫"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__external_device_number
@@ -1444,12 +1474,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Ngày bắt đầu"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
+msgstr "Trạng thái"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -1467,7 +1497,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__terminated
 msgid "Terminated"
-msgstr ""
+msgstr "Đã chấm dứt"
 
 #. module: voip
 #. odoo-javascript
@@ -1480,7 +1510,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip
 msgid "The IP address of your PBX Server"
-msgstr ""
+msgstr "Địa chỉ IP của Máy chủ PBX của bạn"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__ws_server
@@ -1491,7 +1521,7 @@ msgstr "URL của WebSocket của bạn"
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "The WebSocket connection was lost and couldn't be reestablished."
-msgstr ""
+msgstr "Đã mất kết nối WebSocket và không thể thiết lập lại."
 
 #. module: voip
 #. odoo-javascript
@@ -1505,7 +1535,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__activity_name
 msgid "The name of the activity related to this phone call, if any."
-msgstr ""
+msgstr "Tên của hoạt động liên quan đến cuộc gọi điện thoại này, nếu có."
 
 #. module: voip
 #. odoo-javascript
@@ -1515,6 +1545,9 @@ msgid ""
 "connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
 msgstr ""
+"Số không chính xác, thông tin đăng nhập của người dùng có thể bị sai hoặc "
+"không thể thực hiện kết nối. Vui lòng kiểm tra cấu hình của bạn.\n"
+"(Lý do nhận được:%(reasonPhrase)s)"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_partner__t9_name
@@ -1528,17 +1561,24 @@ msgid ""
 "T9 stands for Text on 9 keys, it comes from the name of the original "
 "technology on old cell phones."
 msgstr ""
+"Tên đối tác được mã hóa thành các chữ số tương ứng với các chữ cái trên bàn "
+"phím điện thoại di động kiểu cũ.\n"
+"Hữu ích khi cần tìm kiếm đối tác dựa trên trường này. \n"
+"Các khoảng trắng được giữ nguyên, còn các ký tự không thể mã hóa thì được "
+"thay thế bằng ký tự 'x'. \n"
+"T9 là viết tắt của Text on 9 keys, tên của một công nghệ nhắn tin phổ biến "
+"trên điện thoại di động đời đầu."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_secret
 msgid "The password that will be used to register with the PBX server."
-msgstr ""
+msgstr "Mật khẩu sẽ được sử dụng để đăng ký với máy chủ PBX."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "The person you try to contact is currently unavailable."
-msgstr ""
+msgstr "Người bạn cố gắng liên hệ hiện không có mặt."
 
 #. module: voip
 #. odoo-javascript
@@ -1569,6 +1609,8 @@ msgid ""
 "The username (typically the extension number) that will be used to register "
 "with the PBX server."
 msgstr ""
+"Tên người dùng (thường là số máy lẻ) sẽ được sử dụng để đăng ký với máy chủ "
+"PBX."
 
 #. module: voip
 #. odoo-javascript
@@ -1576,7 +1618,7 @@ msgstr ""
 msgid ""
 "The websocket connection to the server has been lost. Attempting to "
 "reestablish the connection…"
-msgstr ""
+msgstr "Đã mất kết nối websocket với máy chủ. Hãy thử kết nối lại…"
 
 #. module: voip
 #. odoo-javascript
@@ -1584,13 +1626,15 @@ msgstr ""
 msgid ""
 "There is still a call in progress, are you sure you want to leave the page?"
 msgstr ""
+"Vẫn còn một cuộc gọi đang diễn ra, bạn có chắc chắn muốn rời khỏi trang này "
+"không?"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Today"
-msgstr ""
+msgstr "Hôm nay"
 
 #. module: voip
 #. odoo-javascript
@@ -1609,7 +1653,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/transfer_view.xml:0
 msgid "Transfer"
-msgstr "Điều chuyển"
+msgstr "Lệnh chuyển hàng"
 
 #. module: voip
 #. odoo-javascript
@@ -1628,13 +1672,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until %(time)s"
-msgstr ""
+msgstr "Cho đến %(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until I turn it back on"
-msgstr ""
+msgstr "Cho đến khi tôi bật lại"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
@@ -1675,7 +1719,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
 msgid "VOIP Queue support"
-msgstr ""
+msgstr "Hỗ trợ danh sách chờ VOIP"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
@@ -1686,7 +1730,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "View caller information"
-msgstr ""
+msgstr "Xem thông tin người gọi"
 
 #. module: voip
 #. odoo-javascript
@@ -1694,31 +1738,31 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/call_summary.xml:0
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "View contact information"
-msgstr ""
+msgstr "Xem thông tin liên hệ"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "View customer details"
-msgstr ""
+msgstr "Xem thông tin khách hàng"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 msgid "Visible to all"
-msgstr ""
+msgstr "Hiển thị với tất cả"
 
 #. module: voip
 #: model:res.groups.privilege,name:voip.res_groups_privilege_voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "VoIP"
-msgstr ""
+msgstr "VoIP"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "VoIP Configuration"
-msgstr ""
+msgstr "Cấu hình VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__mode
@@ -1729,39 +1773,39 @@ msgstr "Môi trưởng VoIP"
 #: model:ir.model,name:voip.model_voip_provider
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_provider_id
 msgid "VoIP Provider"
-msgstr ""
+msgstr "Nhà cung cấp VoIP"
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.action_voip_provider_view
 #: model:ir.ui.menu,name:voip.voip_provider_view_menu
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 msgid "VoIP Providers"
-msgstr ""
+msgstr "Nhà cung cấp VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_secret
 msgid "VoIP secret"
-msgstr ""
+msgstr "Mã bí mật VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_username
 msgid "VoIP username / Extension number"
-msgstr ""
+msgstr "Tên người dùng/số máy lẻ VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_provider_id
 msgid "Voip Provider"
-msgstr ""
+msgstr "Nhà cung cấp VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_secret
 msgid "Voip Secret"
-msgstr ""
+msgstr "Mã bí mật Voip"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_username
 msgid "Voip Username"
-msgstr ""
+msgstr "Tên người dùng Voip"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__ws_server
@@ -1782,14 +1826,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Yes, I know what I'm doing"
-msgstr ""
+msgstr "Có, tôi biết mình đang làm gì."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Yesterday"
-msgstr ""
+msgstr "Hôm qua"
 
 #. module: voip
 #. odoo-javascript
@@ -1804,12 +1848,15 @@ msgid ""
 "Your browser does not support some of the features required for VoIP to "
 "work. Please try updating your browser or using a different one."
 msgstr ""
+"Trình duyệt của bạn không hỗ trợ một số tính năng cần thiết để VoIP có thể "
+"hoạt động. Vui lòng thử cập nhật trình duyệt hoặc sử dụng một trình duyệt "
+"khác."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Your call history is empty! Make a call now and have it listed here 💡"
-msgstr ""
+msgstr "Không có lịch sử cuộc gọi! Hãy gọi ngay để lịch sử hiển thị tại đây. 💡"
 
 #. module: voip
 #. odoo-javascript
@@ -1817,6 +1864,8 @@ msgstr ""
 msgid ""
 "Your login details are not set correctly. Please contact your administrator."
 msgstr ""
+"Thông tin đăng nhập của bạn được cài đặt chưa chính xác. Vui lòng liên hệ "
+"với quản trị viên."
 
 #. module: voip
 #: model:res.groups,comment:voip.group_voip_officer

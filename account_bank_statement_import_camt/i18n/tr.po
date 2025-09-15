@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Murat Kaplan <muratk@projetgrup.com>, 2022
@@ -8,20 +8,22 @@
 # Martin Trigaux, 2022
 # Nadir Gazioglu <nadirgazioglu@gmail.com>, 2022
 # Umur Akın <umura@projetgrup.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -101,7 +103,7 @@ msgstr "Account Transfer"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Additional Info: %s"
-msgstr ""
+msgstr "Ek Bilgi: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -256,7 +258,7 @@ msgstr "Charges"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Check Number: %s"
-msgstr ""
+msgstr "Çek Numarası: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -301,7 +303,7 @@ msgstr "Collateral Management"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission"
-msgstr "Commission"
+msgstr "Komisyon"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -576,12 +578,12 @@ msgstr "Dutch Auction"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "End to end ID: %s"
-msgstr ""
+msgstr "Uçtan uca kimlik: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Entry Info: %s"
-msgstr ""
+msgstr "Kayıt Bilgisi: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -646,7 +648,7 @@ msgstr "Ücret"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fees, Commission , Taxes, Charges and Interest"
-msgstr ""
+msgstr "Ücretler, Komisyonlar, Vergiler, Masraflar ve Faizler"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -776,7 +778,7 @@ msgstr "Inspeci/Share Exchange"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Instruction ID: %s"
-msgstr ""
+msgstr "Talimat Kimliği: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -896,7 +898,7 @@ msgstr "Management Fees"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Mandate ID: %s"
-msgstr ""
+msgstr "Talimat Kimliği: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -957,6 +959,8 @@ msgstr "Netting"
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "No exchange rate was found to convert an amount into the currency of the journal"
 msgstr ""
+"Tutarı yevmiye defterinin para birimine dönüştürmek için bir döviz kuru "
+"bulunamadı."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1091,7 +1095,7 @@ msgstr "Diğer"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Overdraft"
-msgstr "Overdraft"
+msgstr "Fazla Çekim"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1139,6 +1143,8 @@ msgid ""
 "Please check the currency on your bank journal.\n"
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
+"Lütfen banka yevmiye defterinizdeki para birimini kontrol edin.\n"
+"Bu CAMT dosyasında %s para biriminde hiçbir ekstre bulunamadı."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1514,7 +1520,7 @@ msgstr "Transaction Fees"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Transaction ID: %s"
-msgstr ""
+msgstr "İşlem Kimliği: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1599,7 +1605,7 @@ msgstr "Withdrawal/distribution"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Withholding Tax"
-msgstr "Withholding Tax"
+msgstr "Stopaj Vergisi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

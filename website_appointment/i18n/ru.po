@@ -1,23 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment
+# * website_appointment
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:50+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_top
@@ -200,14 +203,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Allow Guests"
-msgstr ""
+msgstr "Разрешить гостям"
 
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website.py:0
 #: model:website.menu,name:website_appointment.menu_appointment
 msgid "Appointment"
-msgstr "Назначение"
+msgstr "Встреча"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_online_appointment_snippet
@@ -217,7 +220,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr "Приглашение на прием"
+msgstr "Приглашение на встречу"
 
 #. module: website_appointment
 #: model:ir.actions.act_window,name:website_appointment.action_appointment_pages_list
@@ -229,7 +232,7 @@ msgstr "Страницы назначений"
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option_plugin.js:0
 #: model:ir.model,name:website_appointment.model_appointment_type
 msgid "Appointment Type"
-msgstr "Тип бронирования"
+msgstr "Тип встречи"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -245,7 +248,7 @@ msgstr "Тип назначения Имя"
 #: model:ir.ui.menu,name:website_appointment.website_appointment_type_menu
 #: model_terms:ir.ui.view,arch_db:website_appointment.snippets
 msgid "Appointments"
-msgstr "Назначения"
+msgstr "Встречи"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -360,7 +363,7 @@ msgstr "Свяжитесь с нами"
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
-msgstr ""
+msgstr "Уход за зубами"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -399,7 +402,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Filter On"
-msgstr ""
+msgstr "Фильтр включен"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -458,7 +461,7 @@ msgstr "Нет результатов для \""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
-msgstr ""
+msgstr "Онлайн-урок кулинарии"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
@@ -493,13 +496,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
-msgstr ""
+msgstr "Ресурсы"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_id
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_id
 msgid "Restrict to a specific website."
-msgstr ""
+msgstr "Ограничить конкретным веб-сайтом."
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_seo_optimized
@@ -511,7 +514,7 @@ msgstr "SEO-оптимизированный"
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid "Sample"
-msgstr ""
+msgstr "Пример"
 
 #. module: website_appointment
 #. odoo-python
@@ -563,7 +566,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Resources"
-msgstr ""
+msgstr "Специальные ресурсы"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -575,7 +578,7 @@ msgstr "Конкретные типы"
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Users"
-msgstr ""
+msgstr "Конкретные пользователи"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -594,7 +597,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Table"
-msgstr ""
+msgstr "Таблица"
 
 #. module: website_appointment
 #. odoo-python
@@ -603,7 +606,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Tennis Court"
-msgstr ""
+msgstr "Теннисный корт"
 
 #. module: website_appointment
 #. odoo-python
@@ -673,7 +676,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_snippet_filter
 msgid "Website Snippet Filter"
-msgstr ""
+msgstr "Фильтр сниппетов веб-сайтов"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_url

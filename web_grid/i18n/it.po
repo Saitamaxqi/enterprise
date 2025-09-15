@@ -1,35 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_grid
+# * web_grid
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/web_grid/"
+"it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr "Vista finestra azione"
+msgstr "Azione visualizzazione finestra"
 
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_controller.xml:0
 #: code:addons/web_grid/static/src/views/grid_renderer.js:0
 msgid "Add a Line"
-msgstr "Aggiungi una Riga"
+msgstr "Aggiungi riga"
 
 #. module: web_grid
 #. odoo-javascript
@@ -40,7 +44,7 @@ msgstr "Aggiungi riga"
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_base
 msgid "Base"
-msgstr "Imponibile"
+msgstr "Base"
 
 #. module: web_grid
 #. odoo-javascript
@@ -55,18 +59,20 @@ msgstr "Griglia"
 #: code:addons/web_grid/static/src/views/grid_model.js:0
 msgid "Grouping by the field used in the column of the grid view is not possible."
 msgstr ""
+"Non è possibile raggruppare in base al campo utilizzato nella colonna della "
+"vista griglia."
 
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_controller.js:0
 msgid "New Record"
-msgstr ""
+msgstr "Nuovo record"
 
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_renderer.xml:0
 msgid "Next"
-msgstr "Succ"
+msgstr "Successivo"
 
 #. module: web_grid
 #. odoo-javascript
@@ -101,7 +107,7 @@ msgstr "Totale"
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_ir_ui_view
 msgid "View"
-msgstr "Visualizza"
+msgstr "Vista"
 
 #. module: web_grid
 #: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__view_mode

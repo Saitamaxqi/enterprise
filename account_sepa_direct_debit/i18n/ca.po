@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa_direct_debit
+# * account_sepa_direct_debit
 #
 # Translators:
 # eriiikgt, 2022
@@ -17,20 +17,22 @@
 # jabelchi, 2022
 # jabiri7, 2022
 # Ivan Espinola, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Ivan Espinola, 2022\n"
-"Language-Team: Catalan (https://app.transifex.com/odoo/teams/41243/ca/)\n"
+"PO-Revision-Date: 2025-09-15 21:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"account_sepa_direct_debit/ca/>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -151,7 +153,7 @@ msgstr "Activitats"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "Decoració de l'activitat d'excepció"
+msgstr "Activitat d'excepció de decoració"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_state
@@ -173,6 +175,11 @@ msgstr "Tots els pagaments en el lot han de tenir el mateix esquema SDD."
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "As part of your rights, you are entitled to a refund from your bank under the terms and conditions of your agreement with your bank. Your rights are explained in a statement that you can obtain from your bank. A refund must be claimed within 8 weeks starting from the date on which your account was debited."
 msgstr ""
+"Com a client, tens dret a sol·licitar un reemborsament al teu banc segons "
+"els termes i condicions de l'acord amb aquest. Els teus drets s'especifiquen "
+"a una declaració que pots obtenir del teu banc. El reemborsament s'ha de "
+"reclamar dins d'un període de 8 setmanes a partir de la data en què es va "
+"efectuar el càrrec al teu compte."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_attachment_count
@@ -214,7 +221,7 @@ msgstr "NUCLI"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "Cancel·la"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -250,7 +257,7 @@ msgstr "Empresa per a les factures de la qual es pot usar el mandat."
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_config_settings
 msgid "Config Settings"
-msgstr "Ajustos de configuració"
+msgstr "Paràmetres de configuració"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_res_partner
@@ -300,7 +307,7 @@ msgstr "Identificador de creditor de la vostra empresa dins l'esquema SEPA."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__partner_id
 msgid "Customer"
-msgstr "Client"
+msgstr "Client/a"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -364,7 +371,7 @@ msgstr "Pagaments de càrrec directe a recollir"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__display_name
 msgid "Display Name"
-msgstr "Nom a mostrar"
+msgstr "Nom mostrat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__sdd_mandate__state__draft
@@ -500,7 +507,7 @@ msgstr "Factures pagades amb aquest mandat."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_is_follower
 msgid "Is Follower"
-msgstr "És seguidor"
+msgstr "És un seguidor"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_journal
@@ -546,7 +553,7 @@ msgstr "Formulari de mandat"
 #. module: account_sepa_direct_debit
 #: model:ir.model.constraint,message:account_sepa_direct_debit.constraint_sdd_mandate_name_unique
 msgid "Mandate identifier must be unique! Please choose another one."
-msgstr ""
+msgstr "L'identificador del mandat ha de ser únic. Si us plau, tria'n un altre."
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.server,name:account_sepa_direct_debit.sdd_mandate_state_cron_ir_actions_server
@@ -738,12 +745,13 @@ msgstr "Imprimir"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valoracions"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_batch_booking
 msgid "Request batch booking from the bank for the related bank statements."
-msgstr "Sol·licitar al banc comptabilització en lot dels apunts bancaris relacionats. "
+msgstr ""
+"Sol·licitar al banc comptabilització en lot dels estats bancaris relacionats."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
@@ -820,7 +828,7 @@ msgstr "L'esquema SDD està establert en el mandat del client."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA Business-to-Business Direct Debit Mandate"
-msgstr ""
+msgstr "Mandat de domiciliació bancària SEPA B2B"
 
 #. module: account_sepa_direct_debit
 #: model:account.payment.method,name:account_sepa_direct_debit.payment_method_sdd
@@ -883,7 +891,7 @@ msgstr "Data inicial"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__state
 msgid "State"
-msgstr "Província"
+msgstr "Estat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__activity_state
@@ -894,7 +902,7 @@ msgid ""
 "Planned: Future activities."
 msgstr ""
 "Estat basat en activitats\n"
-"Sobrepassat: La data límit ja ha passat\n"
+"Vençuda: La data límit ja ha passat\n"
 "Avui: La data de l'activitat és avui\n"
 "Planificat: Activitats futures."
 
@@ -934,13 +942,16 @@ msgstr "L'identificador del creditor excedeix el màxim de 35 caràcters."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "The debtor identifier you specified exceeds the limitation of 35 characters imposed by SEPA regulation"
-msgstr "L'identificador del deutor que heu especificat excedeix la limitació de 35 caràcters imposada per la regulació SEPA "
+msgstr ""
+"L'identificador del deutor que heu especificat excedeix la limitació de 35 "
+"caràcters imposada per la regulació SEPA"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "The end date of the mandate must be posterior or equal to its start date."
-msgstr "La data final del mandat cal que sigui posterior o igual a la data inicial. "
+msgstr ""
+"La data final del mandat cal que sigui posterior o igual a la data inicial."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -957,7 +968,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid "The payment must be linked to a SEPA Direct Debit mandate in order to generate a Direct Debit XML."
-msgstr "Cal que el pagament estigui enllaçat a un mandat SEPA per tal de generar un fitxer SEPA XML. "
+msgstr ""
+"Cal que el pagament estigui enllaçat a un mandat SEPA per tal de generar un "
+"fitxer SEPA XML."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__state
@@ -991,6 +1004,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "This mandate is only intended for business-to-business transactions. You are not entitled to a refund from your bank after your account has been debited, but you are entitled to request your bank not to debit your account up until the day on which the payment is due."
 msgstr ""
+"Aquest mandat està exclusivament destinat a transaccions B2B. No tens dret a "
+"un reemborsament per part del teu banc un cop s'hagi efectuat el càrrec al "
+"teu compte, però sí tens dret a demanar que el banc no faci el càrrec fins a "
+"la data del pagament."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1001,26 +1018,35 @@ msgstr "Per a resoldre això, ha de crear un mandat per a cadascun dels clients 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__one_off
 msgid "True if and only if this mandate can be used for only one transaction. It will automatically go from 'active' to 'closed' after its first use in payment if this option is set.\n"
-msgstr "Cert si, i solament si, aquest mandat només pot usar-se per a una única transacció. Si aquesta opció està marcada, canviarà automàticament de 'actiu' a 'tancat' després del seu primer ús. \n"
+msgstr ""
+"Cert si, i solament si, aquest mandat només pot usar-se per a una única "
+"transacció. Si aquesta opció està marcada, canviarà automàticament de "
+"'actiu' a 'tancat' després del seu primer ús.\n"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid "Trying to generate a Direct Debit XML file containing payments from another company than that file's creditor."
-msgstr "S'està intentant generar un fitxer SEPA XML contenint pagaments d'una altra empresa que el creditor del fitxer. "
+msgstr ""
+"S'està intentant generar un fitxer SEPA XML contenint pagaments d'una altra "
+"empresa que el creditor del fitxer."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid "Trying to generate a Direct Debit XML for payments coming from another payment method than SEPA Direct Debit."
-msgstr "S'està intentant generar un fitxer SEPA XML contenint pagaments d'un mètode de pagament diferent que càrrec directe SEPA. "
+msgstr ""
+"S'està intentant generar un fitxer SEPA XML contenint pagaments d'un mètode "
+"de pagament diferent que càrrec directe SEPA."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Trying to register a payment on a mandate belonging to a different partner."
-msgstr "S'està intentant registrar un pagament en un mandat que pertany a un altre client. "
+msgstr ""
+"S'està intentant registrar un pagament en un mandat que pertany a un altre "
+"client."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__activity_exception_decoration
@@ -1057,7 +1083,7 @@ msgstr "Historial de comunicacions del lloc web"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/res_partner_bank.py:0
 msgid "You cannot delete a bank account linked to an active SEPA Direct Debit mandate."
-msgstr "No podeu eliminar un compte bancari enllaçat a un mandat SEPA actiu. "
+msgstr "No podeu eliminar un compte bancari enllaçat a un mandat SEPA actiu."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1069,9 +1095,15 @@ msgstr "No podeu generar un càrrec directe SEPA amb una data de recollida oblig
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Your company must have a creditor identifier in order to issue SEPA Direct Debit payments requests. It can be defined in accounting module's settings."
-msgstr "Cal que la vostra empresa tingui un identificador de creditor per tal de generar peticions de càrrec directe SEPA. Es pot definir a la configuració del mòdul de comptabilitat. "
+msgstr ""
+"Cal que la vostra empresa tingui un identificador de creditor per tal de "
+"generar peticions de càrrec directe SEPA. Es pot definir a la configuració "
+"del mòdul de comptabilitat."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "to send instructions to your bank to debit your account and (B) your bank to debit your account in accordance with the instructions from"
-msgstr "per a enviar instruccions al vostre banc per a fer càrrecs al vostre compte i (B) al vostre banc per a fer càrrecs al vostre compte d'acord amb les instruccions de "
+msgstr ""
+"per a enviar instruccions al vostre banc per a fer càrrecs al vostre compte "
+"i (B) al vostre banc per a fer càrrecs al vostre compte d'acord amb les "
+"instruccions de"

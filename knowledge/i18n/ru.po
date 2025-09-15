@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* knowledge
+# * knowledge
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:54+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"knowledge/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1555,7 +1560,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">ПЯТНИЦА 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">ПЯТНИЦА 🏠"
+" @дом</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1570,7 +1576,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">МОНДАЙ 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\""
+">ПОНЕДЕЛЬНИК 🏢 @офис</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1600,7 +1607,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">САТУРДАЙ 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">СУББОТА 🏠"
+" @дом</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1615,7 +1623,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">ВОСКРЕСЕНЬЕ 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\""
+">ВОСКРЕСЕНЬЕ 🏠 @дом</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1630,7 +1639,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">ЧЕТВЕРГ 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">ЧЕТВЕРГ 🏢"
+" @офис</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1645,7 +1655,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">ТЕСТОВЫЙ ДЕНЬ 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">ВТОРНИК 🏢"
+" @офис</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1660,7 +1671,8 @@ msgid ""
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">СРЕДА 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">СРЕДА 🏠 "
+"@дом</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -2155,7 +2167,9 @@ msgstr "Вы уверены, что хотите удалить эту обло�
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Are you sure you want to leave your private Article? As you are its last member, it will be moved to the Trash."
-msgstr "Вы уверены, что хотите покинуть приватную статью? Поскольку вы являетесь ее последним участником, она будет перемещена в Корзину."
+msgstr ""
+"Вы уверены, что хотите покинуть свою приватную статью? Поскольку вы её "
+"последний участник, она будет перемещена в корзину."
 
 #. module: knowledge
 #. odoo-javascript
@@ -2295,6 +2309,10 @@ msgid ""
 "Article items are articles that exist inside their parents but are not displayed in the menu.\n"
 "                They can be used to handle lists (Buildings, Tasks, ...)."
 msgstr ""
+"Элементы статьи – это статьи, которые существуют внутри своих родительских "
+"статей, но не отображаются в меню.\n"
+"                Они могут использоваться для работы со списками (Здания, "
+"Задачи, ...)."
 
 #. module: knowledge
 #. odoo-javascript
@@ -2473,7 +2491,9 @@ msgstr "Построение списка элементов"
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_marketing_customer_personas
 msgid "Build fictional representation of your customers to better tailor your advertising messages for them. "
-msgstr "Создайте вымышленное представление о своих клиентах, чтобы лучше адаптировать для них свои рекламные сообщения."
+msgstr ""
+"Создайте вымышленное представление о своих клиентах, чтобы лучше "
+"адаптировать для них свои рекламные сообщения. "
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
@@ -2564,7 +2584,9 @@ msgstr "Отменить"
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "Cannot create an article under article %(parent_name)s which is a non-private parent"
-msgstr "Невозможно создать статью под статьей %(parent_name)s, которая является неприватным родителем"
+msgstr ""
+"Невозможно создать статью под статьёй %(parent_name)s, которая не является "
+"приватной."
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2882,7 +2904,7 @@ msgstr "Создайте простой каталог для предостав
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action_stages
 msgid "Create an Article Item"
-msgstr ""
+msgstr "Создать элемент статьи"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action
@@ -2908,7 +2930,7 @@ msgstr "Создан"
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_date
@@ -2922,7 +2944,7 @@ msgstr "Создано"
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -3905,7 +3927,7 @@ msgstr "JPG"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Job Position:"
-msgstr "Отрасль вакансии:"
+msgstr "Должность:"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
@@ -4014,7 +4036,7 @@ msgstr "Последнее редактирование"
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_uid
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_date
@@ -4026,7 +4048,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_date
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4045,7 +4067,7 @@ msgstr "Оставить статью"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Leave Private Article"
-msgstr "Оставить частную статью"
+msgstr "Покинуть приватную статью"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -4300,7 +4322,7 @@ msgstr "Перейти в частные"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid "Move to Shared"
-msgstr ""
+msgstr "Переместить в «Общие»"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4462,7 +4484,7 @@ msgstr "Нет доступа"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "No article found."
-msgstr "Статья не найдена"
+msgstr "Статья не найдена."
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
@@ -4478,7 +4500,7 @@ msgstr "Скрытые статьи не найдены"
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
 msgid "No stage yet!"
-msgstr "Еще нет сцены!"
+msgstr "Еще нет стадии!"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4882,12 +4904,13 @@ msgstr "Государственные праздники"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid "Q1: <font class=\"text-600\">Would it be possible to...</font>"
-msgstr "Вопрос 1: <font class=\"text-600\">Можно</font> ли..."
+msgstr "Вопрос 1: <font class=\"text-600\">Можно ли...</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid "Q2: <font class=\"text-600\">Would there be an issue if...</font>"
-msgstr "Вопрос 2: Возникнут <font class=\"text-600\">ли проблемы, если</font>..."
+msgstr ""
+"Вопрос 2: Возникнут <font class=\"text-600\">ли проблемы, если...</font>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
@@ -5348,7 +5371,7 @@ msgstr "Этап"
 #: model:ir.ui.menu,name:knowledge.knowledge_article_stage_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_tree
 msgid "Stages"
-msgstr "Туры"
+msgstr "Стадии"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_stage__parent_id
@@ -6057,7 +6080,7 @@ msgstr "Вы не можете удалить шаблон."
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "You are not allowed to make '%(article_name)s' private."
-msgstr "Вам не разрешается делать '%(article_name)s' частным."
+msgstr "Вам не разрешено сделать «%(article_name)s» приватной."
 
 #. module: knowledge
 #. odoo-python
@@ -6069,7 +6092,7 @@ msgstr "Не разрешается перемещать '%(article_name)s' по
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "You are not allowed to move '%(article_name)s'."
-msgstr ""
+msgstr "Вам не разрешено перемещать «%(article_name)s»."
 
 #. module: knowledge
 #. odoo-python
@@ -6153,7 +6176,7 @@ msgstr "Вы не можете переместить статью под %(pare
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "You do not have any private Article."
-msgstr "У вас нет ни одной частной статьи."
+msgstr "У вас нет приватных статей."
 
 #. module: knowledge
 #. odoo-python
@@ -6200,7 +6223,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid "You need at least 2 members for the Article to be shared."
-msgstr ""
+msgstr "Для совместного использования статьи нужно как минимум 2 участника."
 
 #. module: knowledge
 #. odoo-python

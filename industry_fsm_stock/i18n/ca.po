@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* industry_fsm_stock
+# * industry_fsm_stock
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:35+0000\n"
-"PO-Revision-Date: 2025-09-11 14:35+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:14+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm_stock/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_task_form2_inherit
@@ -22,11 +26,14 @@ msgid ""
 "                            to Pick up\n"
 "                        </span>"
 msgstr ""
+"<span class=\"o_stat_text\">\n"
+"                            per recollir\n"
+"                        </span>"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_task_form2_inherit
 msgid "<span>Products</span>"
-msgstr ""
+msgstr "<span>Productes</span>"
 
 #. module: industry_fsm_stock
 #. odoo-python
@@ -36,11 +43,15 @@ msgid ""
 "Your current access rights do not allow you to perform these actions. Please"
 " contact your administrator to request the necessary permissions."
 msgstr ""
+"No és possible afegir o actualitzar aquest producte a causa de l'estat de "
+"seguiment. No tens permisos d'accés per efectuar aquestes accions. Si us "
+"plau, contacta amb el teu administrador per sol·licitar-ne els permisos "
+"necessaris."
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.fsm_stock_tracking_line_view_form
 msgid "Already Delivered"
-msgstr ""
+msgstr "Ja entregat"
 
 #. module: industry_fsm_stock
 #: model:ir.model,website_form_label:industry_fsm_stock.model_project_task
@@ -51,18 +62,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__create_uid
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__create_date
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat el"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.fsm_stock_tracking_line_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__display_name
@@ -74,23 +85,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_stock_move__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom mostrat"
 
 #. module: industry_fsm_stock
 #. odoo-python
 #: code:addons/industry_fsm_stock/wizard/fsm_stock_tracking.py:0
 msgid "Each line needs a Lot/Serial Number"
-msgstr ""
+msgstr "Cada línia necessita un número de lot/sèrie"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,help:industry_fsm_stock.field_fsm_stock_tracking__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
 msgstr ""
+"Assegura la traçabilitat d’un producte emmagatzemable al vostre magatzem."
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order_line__fsm_lot_id
 msgid "Fsm Lot"
-msgstr ""
+msgstr "Lot Fsm"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__id
@@ -102,56 +114,56 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_sale_order_line__id
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_stock_move__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__write_uid
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualització per"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__write_date
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualització el"
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_fsm_stock_tracking_line
 msgid "Lines for FSM Stock Tracking"
-msgstr ""
+msgstr "Línies per al seguiment d'estoc FSM"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__lot_id
 msgid "Lot/Serial Number"
-msgstr ""
+msgstr "Lot/núm. de sèrie"
 
 #. module: industry_fsm_stock
 #. odoo-javascript
 #: code:addons/industry_fsm_stock/static/src/js/product_catalog/sale_order_line/sale_order_line.xml:0
 msgid "Lot/Serial number"
-msgstr ""
+msgstr "Número de lot/sèrie"
 
 #. module: industry_fsm_stock
 #. odoo-python
 #: code:addons/industry_fsm_stock/models/project_task.py:0
 msgid "Pick Up Material"
-msgstr ""
+msgstr "Recollida de material"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__product_id
 msgid "Product"
-msgstr ""
+msgstr "Producte"
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variant de producte"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_task_form2_inherit
 msgid "Products"
-msgstr ""
+msgstr "Productes"
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_project_project
@@ -161,7 +173,7 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking_line__quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Quantitat"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_move_kanban_picking_redirect
@@ -171,12 +183,12 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Comanda de venda"
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Línia de la comanda de venda"
 
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.view_move_kanban_picking_redirect
@@ -186,18 +198,18 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_stock_move
 msgid "Stock Move"
-msgstr ""
+msgstr "Moviment d'estoc"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_project_task__stock_move_customer_product_count
 msgid "Stock Move Customer Product Count"
-msgstr ""
+msgstr "Moviment d'inventari dels productes del client"
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_project_task
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__task_id
 msgid "Task"
-msgstr ""
+msgstr "Tasca"
 
 #. module: industry_fsm_stock
 #. odoo-python
@@ -206,18 +218,20 @@ msgid ""
 "The ordered quantity cannot be decreased below the amount already delivered."
 " Instead, create a return in your inventory."
 msgstr ""
+"La quantitat demanada no es pot reduir per sota de la quantitat ja lliurada. "
+"En comptes d'això, crea un retorn a l'inventari."
 
 #. module: industry_fsm_stock
 #: model:ir.model,name:industry_fsm_stock.model_fsm_stock_tracking
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.fsm_stock_tracking_line_line_view_form
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.fsm_stock_tracking_line_view_form
 msgid "Track Stock"
-msgstr ""
+msgstr "Seguiment d'existències"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,field_description:industry_fsm_stock.field_fsm_stock_tracking__tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Seguiment"
 
 #. module: industry_fsm_stock
 #: model:ir.model.fields,help:industry_fsm_stock.field_project_task__display_name
@@ -237,13 +251,13 @@ msgstr ""
 #. module: industry_fsm_stock
 #: model_terms:ir.ui.view,arch_db:industry_fsm_stock.fsm_stock_tracking_line_view_form
 msgid "Validate"
-msgstr ""
+msgstr "Validar"
 
 #. module: industry_fsm_stock
 #. odoo-python
 #: code:addons/industry_fsm_stock/models/product.py:0
 msgid "Validate Lot/Serial Number"
-msgstr ""
+msgstr "Valida el número de lot/sèrie"
 
 #. module: industry_fsm_stock
 #. odoo-python

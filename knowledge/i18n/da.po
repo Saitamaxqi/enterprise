@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* knowledge
+# * knowledge
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-11 14:36+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/knowledge/"
+"da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: knowledge
 #. odoo-javascript
@@ -71,19 +75,19 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__favorite_count
 msgid "#Is Favorite"
-msgstr ""
+msgstr "#Er favorit"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "%(article_name)s (copy)"
-msgstr ""
+msgstr "%(article_name)s (kopi)"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "%s has been sent to Trash"
-msgstr ""
+msgstr "%s er blevet flyttet til Skraldespanden"
 
 #. module: knowledge
 #. odoo-javascript
@@ -100,7 +104,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
 msgid ".<br/>"
-msgstr ""
+msgstr ".<br/>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -588,6 +592,8 @@ msgid ""
 "<i class=\"fa fa-w fa-info-circle\"/> All external users you selected won't "
 "be added to the members."
 msgstr ""
+"<i class=\"fa fa-w fa-info-circle\"/> Alle de eksterne brugere, du valgte, "
+"vil ikke blive tilføjet til medlemmerne."
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
@@ -595,6 +601,10 @@ msgid ""
 "<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
 "                                    <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title="
+"\"Remove from favorites\"/>\n"
+"                                    <i invisible=\"is_user_favorite\" class="
+"\"fa fa-star-o\" title=\"Add to favorites\"/>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban
@@ -639,6 +649,10 @@ msgid ""
 "                                        5125C\n"
 "                                    </span>"
 msgstr ""
+"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: normal"
+";font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
+"                                        5125C\n"
+"                                    </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -655,6 +669,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task A</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px\">\n"
+"                                    <font class=\"text-600\">Opgave A</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -663,6 +681,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task B</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px\">\n"
+"                                    <font class=\"text-600\">Opgave B</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -671,6 +693,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task C</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px\">\n"
+"                                    <font class=\"text-600\">Opgave C</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -679,6 +705,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task A</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                                    <font class=\"text-600\">Opgave A</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -687,6 +717,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task B</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                                    <font class=\"text-600\">Opgave B</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -695,6 +729,10 @@ msgid ""
 "                                    <font class=\"text-600\">Task C</font>\n"
 "                                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                                    <font class=\"text-600\">Opgave C</font>"
+"\n"
+"                                </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -704,6 +742,10 @@ msgid ""
 "                    (/<span style=\"font-style: italic;\">checklist</span>)\n"
 "                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                    Tilføj en tjekliste\n"
+"                    (/<span style=\"font-style: italic;\">tjekliste</span>)\n"
+"                </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -713,6 +755,10 @@ msgid ""
 "                    (/<span style=\"font-style: italic;\">separator</span>)\n"
 "                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                    Tilføj en separator\n"
+"                    (/<span style=\"font-style: italic;\">separator</span>)\n"
+"                </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -723,6 +769,11 @@ msgid ""
 "                    to convert a text into a title\n"
 "                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                    Brug\n"
+"                    /<span style=\"font-style: italic;\">overskrift</span>\n"
+"                    til at omdanne tekst til en titel\n"
+"                </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -755,6 +806,19 @@ msgid ""
 "            (<span style=\"font-style: italic;\">Drafts, Todo lists, ...</span>)\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">Privat</font>\n"
+"            </span>\n"
+"        </span>\n"
+"        <span style=\"font-size: 14px;\">\n"
+"            — Dette er\n"
+"            <span style=\"font-weight: bolder;\"><font class=\"text-o-color-"
+"2\">dine ting</font></span>,\n"
+"            det du holder for dig selv\n"
+"            (<span style=\"font-style: italic;\">Kladder, Todo-lister, "
+"...</span>)\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -771,6 +835,18 @@ msgid ""
 "            </span>\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">Delte</font>\n"
+"            </span>\n"
+"        </span>\n"
+"        <span style=\"font-size: 14px;\">\n"
+"            — Dette er dem du\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">har inviteret nogen eller er "
+"blevet inviteret til</font>\n"
+"            </span>\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -787,6 +863,17 @@ msgid ""
 "        </span>\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">Arbejdsområde</font>\n"
+"            </span>\n"
+"        </span>\n"
+"        <span style=\"font-size: 14px;\">\n"
+"            — Artikler der kan tilgås af\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">dit team</font>\n"
+"        </span>\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -801,6 +888,15 @@ msgid ""
 "            \"<span style=\"font-weight: bolder;\">/</span>\"\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            Under denne liste, prøv\n"
+"            <span style=\"font-weight: bolder;\">kommandoer</span>\n"
+"            ved at\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">skrive</font>\n"
+"            </span>\n"
+"            \"<span style=\"font-weight: bolder;\">/</span>\"\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -813,6 +909,14 @@ msgid ""
 "            (<span style=\"font-style: italic;\">documentation, tips, reports, ...</span>)\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            Indhold — Bare klik og\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">begynd at skrive</font>\n"
+"            </span>\n"
+"            (<span style=\"font-style: italic;\">dokumentation, tips, "
+"rapporter, ...</span>)\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -828,6 +932,17 @@ msgid ""
 "            (<span style=\"font-style: italic;\">per team, topic, project, ...</span>)\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            Mapper —\n"
+"        </span>\n"
+"        <span style=\"font-size: 14px;\">\n"
+"            <span style=\"font-weight: bolder;\">\n"
+"                <font class=\"text-o-color-2\">Indsæt andre artikler</font>\n"
+"            </span>\n"
+"            under den for at omgruppere dem\n"
+"            (<span style=\"font-style: italic;\">per team, emne, projekt, "
+"...</span>)\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -841,6 +956,16 @@ msgid ""
 "            <span style=\"font-style: italic; text-decoration-line: underline;\">it</span>\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            Vælg tekst for at\n"
+"            <font class=\"bg-o-color-2\">Highlighte</font>,\n"
+"            <span style=\"text-decoration-line: line-through;\""
+">overstrege</span>\n"
+"            eller\n"
+"            <span style=\"font-weight: bolder;\">style</span>\n"
+"            <span style=\"font-style: italic; text-decoration-line: "
+"underline;\">det</span>\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -865,6 +990,12 @@ msgid ""
 "            to share documents that are frequently needed\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"            Brug\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-"
+"2\">fil</font></span>\n"
+"            for at dele dokumenter der ofte anvendes\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -877,6 +1008,14 @@ msgid ""
 "        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Sections</font></span>:\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Artikler</font>\n"
+"        </span>\n"
+"        opbevares i forskellige\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\""
+">Sektioner</font></span>:\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -897,6 +1036,21 @@ msgid ""
 "        to share it with everyone.\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"        En god arbejdsrutine er at skrive dine kladder i\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Privat</font>\n"
+"        </span>\n"
+"        og når de er færdige så flytte dem fra\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Privat</font>\n"
+"        </span>\n"
+"        til\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Arbejdsområde</font>\n"
+"        </span>\n"
+"        hvor de deles med alle.\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -917,6 +1071,21 @@ msgid ""
 "        it.\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"        Og igen, for at flytte en\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Artikel</font>\n"
+"        </span>\n"
+"        fra en\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Sektion</font>\n"
+"        </span>\n"
+"        til en anden skal du blot\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Drag &amp; Drop</font>\n"
+"        </span>\n"
+"        den.\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -936,6 +1105,11 @@ msgid ""
 "        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Articles</font></span>.\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"        Det er dine\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\""
+">Artikler</font></span>.\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -952,6 +1126,17 @@ msgid ""
 "        them\n"
 "    </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"        For at ændre måden hvorpå\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Artikler</font>\n"
+"        </span>\n"
+"        er organiseret, kan du blot\n"
+"        <span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-2\">Drag &amp; Drop</font>\n"
+"        </span>\n"
+"        dem\n"
+"    </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -991,13 +1176,15 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "<span style=\"font-size: 14px;\">And voilà, it is that simple.</span>"
-msgstr ""
+msgstr "<span style=\"font-size: 14px;\">Og voilà, så simpelt er det.</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Check this box to indicate it's done</span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">Afkryds denne boks for at vise, den er "
+"færdig</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1005,11 +1192,14 @@ msgid ""
 "<span style=\"font-size: 14px;\">Click anywhere, and just start "
 "typing</span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">Klik hvor som helst og begynd at "
+"skrive</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "<span style=\"font-size: 14px;\">Each of them can be used both as:</span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">Hver af dem kan bruges som både:</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1059,6 +1249,9 @@ msgid ""
 "    <br/>\n"
 "    <span style=\"font-size: 14px;\">Ready to give it a spin?</span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">Denne private side kan du lege med.</span>\n"
+"    <br/>\n"
+"    <span style=\"font-size: 14px;\">Klar til at prøve?</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1079,6 +1272,9 @@ msgid ""
 "                                <strong>Color</strong>\n"
 "                            </span>"
 msgstr ""
+"<span style=\"font-size: 18px;\">\n"
+"                                <strong>Farve</strong>\n"
+"                            </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1087,6 +1283,9 @@ msgid ""
 "                                <strong>Name</strong>\n"
 "                            </span>"
 msgstr ""
+"<span style=\"font-size: 18px;\">\n"
+"                                <strong>Navn</strong>\n"
+"                            </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1095,6 +1294,9 @@ msgid ""
 "                                <strong>Role</strong>\n"
 "                            </span>"
 msgstr ""
+"<span style=\"font-size: 18px;\">\n"
+"                                <strong>Rolle</strong>\n"
+"                            </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -1166,7 +1368,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "<span style=\"font-size: 48px;\">🚀</span>"
-msgstr ""
+msgstr "<span style=\"font-size: 48px;\">🚀</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1175,6 +1377,9 @@ msgid ""
 "            <font class=\"text-o-color-1\">YouTube</font>\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-1\">YouTube</font>\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1182,6 +1387,8 @@ msgid ""
 "<span style=\"font-weight: bolder;\"><font class=\"text-o-"
 "color-1\">Facebook</font></span>"
 msgstr ""
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\""
+">Facebook</font></span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1231,6 +1438,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">FREDAG 🏠 "
+"@home</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1241,6 +1454,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">MANDAG 🏢 "
+"@office</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1251,6 +1470,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\""
+">Påmindelser</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1261,6 +1486,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">LØRDAG 🏠 "
+"@home</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1271,6 +1502,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">SØNDAG 🏠 "
+"@home</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1281,6 +1518,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">TORSDAG 🏢"
+" @office</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1291,6 +1534,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">TIRSDAG 🏢"
+" @office</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -1301,6 +1550,12 @@ msgid ""
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">\n"
+"                                    <font class=\"text-o-color-1\">ONSDAG 🏠 "
+"@home</font>\n"
+"                                </span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1309,6 +1564,10 @@ msgid ""
 "                                <span style=\"font-size: 18px;\">Name</span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\">Navn</span>"
+"\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1317,6 +1576,10 @@ msgid ""
 "                                <span style=\"font-size: 18px;\">Strengths</span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\""
+">Styrker</span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1325,6 +1588,10 @@ msgid ""
 "                                <span style=\"font-size: 18px;\">Weaknesses</span>\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                <span style=\"font-size: 18px;\""
+">Svagheder</span>\n"
+"                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -1431,7 +1698,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "<strong>Q1,2,3,4</strong>"
-msgstr ""
+msgstr "<strong>Q1,2,3,4</strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
@@ -1520,7 +1787,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 msgid "Access Denied"
-msgstr ""
+msgstr "Adgang nægtet"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1531,7 +1798,7 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_account_management
 msgid "Account Management"
-msgstr ""
+msgstr "Konto administration"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1542,7 +1809,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Handling påkrævet"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1552,27 +1819,27 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Aktiviteter"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Markering af undtagelsesaktivitet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Aktivitetsstatus"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Aktivitetstypeikon"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1590,7 +1857,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add Properties"
-msgstr ""
+msgstr "Tilføj Egenskaber"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1665,11 +1932,13 @@ msgid ""
 "Add articles in your list of favorites by clicking on the <i class=\"fa fa-"
 "star-o\"></i> next to the article name."
 msgstr ""
+"Tilføj artikler i din liste over favoritter ved at klikke på <i class="
+"\"fa fa-star-o\"></i> ved siden af artikelnavnet."
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Add people or email addresses"
-msgstr ""
+msgstr "Tilføj personer eller emailadresser"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1702,12 +1971,14 @@ msgid ""
 "Adding members allows you to share Articles while granting specific access "
 "rights<br>(can write, can read, ...)."
 msgstr ""
+"Ved at tilføje medlemmer får du mulighed for at dele artikler samtidig med "
+"at du tildeler specifikke adgangsrettigheder<br>(kan skrive, kan læse, ...)."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "Advanced Search"
-msgstr ""
+msgstr "Udvidet søgning"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -1845,7 +2116,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Archived"
-msgstr ""
+msgstr "Arkiveret"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1938,6 +2209,8 @@ msgid ""
 "Are you sure you want to restore access? This means this article will now "
 "inherit any access set on its parent articles."
 msgstr ""
+"Er du sikker på, du ønsker at gendanne adgang? Dette betyder, at denne "
+"artikel vil arve enhver adgang angivet på dens overordnede artikel."
 
 #. module: knowledge
 #. odoo-javascript
@@ -1980,7 +2253,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_search
 msgid "Article"
-msgstr ""
+msgstr "Artikel"
 
 #. module: knowledge
 #. odoo-python
@@ -1989,6 +2262,8 @@ msgid ""
 "Article '%s' should always have a writer: inherit write permission, or have "
 "a member with write access"
 msgstr ""
+"Artikel '%s' skal altid have en, der kan skrive: nedarv skrive-tilladelse "
+"eller hav et medlem med skriveadgang"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_thread
@@ -1998,7 +2273,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_properties_definition
 msgid "Article Item Properties"
-msgstr ""
+msgstr "Underartikler egenskaber"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2008,12 +2283,12 @@ msgstr ""
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_item_action_stages
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Article Items"
-msgstr ""
+msgstr "Underartikler"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_member
 msgid "Article Member"
-msgstr ""
+msgstr "Artikelmedlem"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_template_category
@@ -2028,7 +2303,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_url
 msgid "Article URL"
-msgstr ""
+msgstr "Artikel URL"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2039,7 +2314,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__cover_image_id
 msgid "Article cover"
-msgstr ""
+msgstr "Artikel cover"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action_item_calendar
@@ -2053,7 +2328,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_article_item_parent
 msgid "Article items must have a parent."
-msgstr ""
+msgstr "Underartikler skal have en overordnet artikel."
 
 #. module: knowledge
 #. odoo-javascript
@@ -2077,7 +2352,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_article
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Articles"
-msgstr ""
+msgstr "Artikler"
 
 #. module: knowledge
 #. odoo-python
@@ -2085,11 +2360,12 @@ msgstr ""
 msgid ""
 "Articles %s cannot be updated as this would create a recursive hierarchy."
 msgstr ""
+"Artiklerne %s kan ikke opdateres, da det ville skabe et gentagende hierarki."
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__article_ids
 msgid "Articles using cover"
-msgstr ""
+msgstr "Artikler der anvender cover"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2101,18 +2377,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "Vedhæft"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_ir_attachment
 msgid "Attachment"
-msgstr ""
+msgstr "Vedhæftning"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_attachment_count
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Antal vedhæftninger"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_child_default_create
@@ -2142,7 +2418,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid "Backlog"
-msgstr ""
+msgstr "Restordre"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2154,7 +2430,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Based on"
-msgstr ""
+msgstr "Baseret på"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2169,7 +2445,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__body
 msgid "Body"
-msgstr ""
+msgstr "Brødtekst"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2286,14 +2562,14 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_can_write
 msgid "Can Edit"
-msgstr ""
+msgstr "Kan redigere"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_can_read
 msgid "Can Read"
-msgstr ""
+msgstr "Kan læse"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__write
@@ -2312,13 +2588,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article_member.py:0
 msgid "Can not update the article or partner of a member."
-msgstr ""
+msgstr "Kan ikke opdatere artiklen eller et medlems partner."
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article_favorite.py:0
 msgid "Can not update the article or user of a favorite."
-msgstr ""
+msgstr "Kan ikke opdatere artiklen eller brugeren af en favorit."
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__read
@@ -2326,7 +2602,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article_member__permission__read
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_invite__permission__read
 msgid "Can read"
-msgstr ""
+msgstr "Kan læse"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_access_parent_path
@@ -2343,7 +2619,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Annullér"
 
 #. module: knowledge
 #. odoo-python
@@ -2369,12 +2645,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.js:0
 msgid "Categories"
-msgstr ""
+msgstr "Kategorier"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__sequence
 msgid "Category Sequence"
-msgstr ""
+msgstr "Kategorirækkefølge"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -2419,7 +2695,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Change Permission"
-msgstr ""
+msgstr "Skift tilladelse"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2466,7 +2742,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Close"
-msgstr ""
+msgstr "Luk"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2484,7 +2760,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/plugins/comments_plugin/comments_plugin.js:0
 msgid "Comment"
-msgstr ""
+msgstr "Kommentar"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2494,7 +2770,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Details"
-msgstr ""
+msgstr "Virksomhedsdetaljer"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -2504,7 +2780,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Name:"
-msgstr ""
+msgstr "Virksomhedsnavn:"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_company_newsletter
@@ -2536,23 +2812,23 @@ msgstr ""
 #. module: knowledge
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_view.js:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Bekræftelse"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid "Contact Us"
-msgstr ""
+msgstr "Kontakt os"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_contact_our_lawyer
@@ -2587,19 +2863,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.xml:0
 msgid "Copy"
-msgstr ""
+msgstr "Kopiér"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Copy Link"
-msgstr ""
+msgstr "Kopiér link"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.xml:0
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "Kopier til udklipsholder"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2625,17 +2901,17 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__attachment_url
 msgid "Cover URL"
-msgstr ""
+msgstr "Cover URL"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__attachment_id
 msgid "Cover attachment"
-msgstr ""
+msgstr "Cover vedhæftning"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__cover_image_url
 msgid "Cover url"
-msgstr ""
+msgstr "Cover url"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__cover_image_position
@@ -2648,7 +2924,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Create \""
-msgstr ""
+msgstr "Opret \""
 
 #. module: knowledge
 #. odoo-javascript
@@ -2659,7 +2935,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model,website_form_label:knowledge.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Opret en kunde"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2696,7 +2972,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Create an article"
-msgstr ""
+msgstr "Opret en artikel"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_uid
@@ -2710,7 +2986,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created by"
-msgstr ""
+msgstr "Oprettet af"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_date
@@ -2724,7 +3000,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created on"
-msgstr ""
+msgstr "Oprettet den"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -2763,7 +3039,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
 msgid "Dear"
-msgstr ""
+msgstr "Kære"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -2789,7 +3065,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Default Scale"
-msgstr ""
+msgstr "Standard skala"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__internal_permission
@@ -2802,7 +3078,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/search/search_bar_menu/search_bar_menu.js:0
 msgid "Delete Filter"
-msgstr ""
+msgstr "Slet filter"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2834,7 +3110,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__deletion_date
 msgid "Deletion Date"
-msgstr ""
+msgstr "Dato for sletning"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_permission_on_desync
@@ -2863,7 +3139,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Kassér"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2884,7 +3160,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__display_name
 #: model:ir.model.fields,field_description:knowledge.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_brand_assets
@@ -2896,7 +3172,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "Diving in"
-msgstr ""
+msgstr "Dyk ned i det"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_marketing_campaign_brief
@@ -2916,7 +3192,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_done
 msgid "Done"
-msgstr ""
+msgstr "Udført"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2934,25 +3210,25 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/list_view.js:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikér"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
 msgid "EDIT"
-msgstr ""
+msgstr "REDIGER"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Rediger"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Edit Link"
-msgstr ""
+msgstr "Redigér link"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -2987,7 +3263,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Email:"
-msgstr ""
+msgstr "E-mail:"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2998,7 +3274,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__icon
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3017,7 +3293,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Error"
-msgstr ""
+msgstr "Fejl"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -3034,7 +3310,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Everyone"
-msgstr ""
+msgstr "Alle"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3044,7 +3320,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Extra Comment"
-msgstr ""
+msgstr "Ekstra kommentar"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -3055,7 +3331,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Favorite"
-msgstr ""
+msgstr "Favorit"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_favorite
@@ -3074,7 +3350,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_favorite_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_tree
 msgid "Favorites"
-msgstr ""
+msgstr "Favoritter"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
@@ -3096,24 +3372,24 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
 msgid "Folded in kanban view"
-msgstr ""
+msgstr "Foldet i kanban visning"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_follower_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Følgere"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_partner_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Følgere (partnere)"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font Awesome-ikon, f.eks. fa-opgaver"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -3126,7 +3402,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Full Width"
-msgstr ""
+msgstr "Fuld Bredde"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__full_width
@@ -3171,7 +3447,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__has_message
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Har besked"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_write_access
@@ -3202,7 +3478,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "Hello there"
-msgstr ""
+msgstr "Hej med dig"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -3237,7 +3513,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Hidden"
-msgstr ""
+msgstr "Skjult"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3284,7 +3560,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_home
 msgid "Home"
-msgstr ""
+msgstr "Startside"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3382,17 +3658,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__id
 #: model:ir.model.fields,field_description:knowledge.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Ikon"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Ikon for uventet aktivitet."
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3403,7 +3679,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Hvis dette felt er markeret, kræver nye beskeder din opmærksomhed."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error
@@ -3412,6 +3688,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr ""
+"Hvis dette felt er markeret, indeholder nogle beskeder en leveringsfejl."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__is_listed_in_templates_gallery
@@ -3487,7 +3764,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Index"
-msgstr ""
+msgstr "Indeks"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -3513,7 +3790,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__inherited_permission
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_permission
 msgid "Inherited Permission"
-msgstr ""
+msgstr "Nedarvet tilladelse"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__inherited_permission_parent_id
@@ -3525,7 +3802,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.xml:0
 msgid "Insert"
-msgstr ""
+msgstr "Indsæt"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3549,13 +3826,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.js:0
 msgid "Insert a Kanban View"
-msgstr ""
+msgstr "Indsæt kanbanvisning"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a Kanban view of article items"
-msgstr ""
+msgstr "Indsæt en kanbanvisning af artikelindhold"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3567,7 +3844,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a List view of article items"
-msgstr ""
+msgstr "Indsæt en listevisning af artikelindhold"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3579,13 +3856,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/insert_embedded_view.xml:0
 msgid "Insert link in article"
-msgstr ""
+msgstr "Indsæt link i artikel"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/insert_embedded_view.xml:0
 msgid "Insert view in article"
-msgstr ""
+msgstr "Indsæt visning i artikel"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3636,12 +3913,12 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Invite"
-msgstr ""
+msgstr "Inviter"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_invite_action_from_article
 msgid "Invite people"
-msgstr ""
+msgstr "Inviter personer"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__is_article_active
@@ -3651,13 +3928,13 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_user_favorite
 msgid "Is Favorited"
-msgstr ""
+msgstr "Er Favorit"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_is_follower
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Er følger"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_article_item
@@ -3703,12 +3980,12 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Item 1"
-msgstr ""
+msgstr "Genstand 1"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Item 2"
-msgstr ""
+msgstr "Genstand 2"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -3752,17 +4029,17 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_calendar_items
 msgid "Items"
-msgstr ""
+msgstr "Posteringer"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Job Position:"
-msgstr ""
+msgstr "Jobstilling:"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Join"
-msgstr ""
+msgstr "Deltag"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3790,7 +4067,7 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_shared_todos
 msgid "Keep track of your company to-dos and share them with your colleagues."
-msgstr ""
+msgstr "Hold styr på din virksomheds to-dos og del dem med dine kolleger."
 
 #. module: knowledge
 #. odoo-javascript
@@ -3813,22 +4090,22 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_technical
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
 msgid "Knowledge"
-msgstr ""
+msgstr "Viden"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article
 msgid "Knowledge Article"
-msgstr ""
+msgstr "Viden artikel"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_cover
 msgid "Knowledge Cover"
-msgstr ""
+msgstr "Viden cover"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_invite
 msgid "Knowledge Invite Wizard"
-msgstr ""
+msgstr "Viden invitations-wizard"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_stage
@@ -3840,17 +4117,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Last Edit Date"
-msgstr ""
+msgstr "Sidste redigeringsdato"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_uid
 msgid "Last Edited by"
-msgstr ""
+msgstr "Sidst redigeret af"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_date
 msgid "Last Edited on"
-msgstr ""
+msgstr "Sidst redigeret den"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3873,7 +4150,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_uid
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Sidst opdateret af"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_date
@@ -3885,19 +4162,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_date
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Sidst opdateret den"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Leave"
-msgstr ""
+msgstr "Forlad"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Leave Article"
-msgstr ""
+msgstr "Forlad artikel"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3919,13 +4196,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_link_plugin/embedded_view_link_plugin.js:0
 msgid "Link copied to clipboard."
-msgstr ""
+msgstr "Link kopieret til udklipsholder."
 
 #. module: knowledge
 #. odoo-javascript
@@ -3956,7 +4233,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/wysiwyg_article_helper/wysiwyg_article_helper.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Load a Template"
-msgstr ""
+msgstr "Indlæs en skabelon"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3967,7 +4244,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_locked
 msgid "Locked"
-msgstr ""
+msgstr "Låst"
 
 #. module: knowledge
 #. odoo-python
@@ -3980,7 +4257,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Logo"
-msgstr ""
+msgstr "Logo"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -4014,7 +4291,7 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_marketing
 msgid "Marketing"
-msgstr ""
+msgstr "Markedsføring"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_marketing_campaign_brief
@@ -4032,7 +4309,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_meeting
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_meeting
 msgid "Meeting"
-msgstr ""
+msgstr "Møde"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_meeting_example_branding
@@ -4044,7 +4321,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_meeting_minutes_template
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes
 msgid "Meeting Minutes"
-msgstr ""
+msgstr "Mødereferater"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
@@ -4055,7 +4332,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_form
 msgid "Member"
-msgstr ""
+msgstr "Medlem"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4064,12 +4341,12 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_member_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_tree
 msgid "Members"
-msgstr ""
+msgstr "Medlemmer"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_member_ids
 msgid "Members Information"
-msgstr ""
+msgstr "Medlemmers information"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4087,13 +4364,13 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__message
 msgid "Message"
-msgstr ""
+msgstr "Besked"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Besked ved leveringsfejl"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4105,13 +4382,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/message/message_model_patch.js:0
 msgid "Message Link Copy Failed (Permission denied?)!"
-msgstr ""
+msgstr "Linket i meddelelsen kunne ikke kopieres (manglende adgang?)!"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Beskeder"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4185,23 +4462,23 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Move to Trash"
-msgstr ""
+msgstr "Flyt til papirkurv"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid "Move to Workspace"
-msgstr ""
+msgstr "Flyt til arbejdsområde"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Deadline på mine aktiviteter"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "My Favorites"
-msgstr ""
+msgstr "Mine favoritter"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -4227,7 +4504,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Name"
-msgstr ""
+msgstr "Navn"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -4247,7 +4524,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_new
 msgid "New"
-msgstr ""
+msgstr "Ny"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4275,22 +4552,22 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Næste aktivitet i kalenderen"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Deadline for næste aktivitet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Oversigt over næste aktivitet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Næste aktivitetstype"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -4306,7 +4583,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "No Access"
-msgstr ""
+msgstr "Ingen adgang"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4395,25 +4672,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Antal handlinger"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Antal fejl"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Antal meddelelser, der kræver handling"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Antal beskeder med leveringsfejl"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -4440,7 +4717,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "Igangværende"
 
 #. module: knowledge
 #. odoo-python
@@ -4491,7 +4768,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 msgid "Open"
-msgstr ""
+msgstr "Åben"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4571,12 +4848,12 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__parent_id
 msgid "Parent Article"
-msgstr ""
+msgstr "Overordnet artikel"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Overordnet sti"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_form
@@ -4587,7 +4864,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__partner_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 msgid "Partner"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_pay_the_electricity_bill
@@ -4630,7 +4907,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Phone:"
-msgstr ""
+msgstr "Telefon:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_shared_todos
@@ -4690,7 +4967,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Preview"
-msgstr ""
+msgstr "Forhåndsvisning"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -4699,6 +4976,9 @@ msgid ""
 "fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
+"Pris <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
+"i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
@@ -4707,6 +4987,9 @@ msgid ""
 "fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"Pris <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
+"i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -4715,6 +4998,9 @@ msgid ""
 "fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"Pris <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
@@ -4723,6 +5009,9 @@ msgid ""
 "fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i"
 " class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"Pris <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -4732,12 +5021,15 @@ msgid ""
 "star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
 "star-o\"></i></span>​"
 msgstr ""
+"Pris <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
+"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>​"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Primary"
-msgstr ""
+msgstr "Primære"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4746,7 +5038,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__private
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_product_management
@@ -4756,12 +5048,12 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_productivity
 msgid "Productivity"
-msgstr ""
+msgstr "Produktivitet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_properties
 msgid "Properties"
-msgstr ""
+msgstr "Egenskaber"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4797,7 +5089,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 msgid "Public Holidays"
-msgstr ""
+msgstr "Helligdage"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -4818,7 +5110,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__rating_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Bedømmelser"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4830,12 +5122,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "Read"
-msgstr ""
+msgstr "Læs"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__partner_ids
 msgid "Recipients"
-msgstr ""
+msgstr "Modtagere"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -4846,7 +5138,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Refresh"
-msgstr ""
+msgstr "Genopfrisk"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_release_note
@@ -4863,7 +5155,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Remove"
-msgstr ""
+msgstr "Fjern"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4888,7 +5180,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Remove Link"
-msgstr ""
+msgstr "Fjern link"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4926,13 +5218,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.xml:0
 msgid "Rename"
-msgstr ""
+msgstr "Omdøb"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 msgid "Replace"
-msgstr ""
+msgstr "Erstat"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4961,7 +5253,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Ansvarlig bruger"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4969,7 +5261,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Restore"
-msgstr ""
+msgstr "Gendan"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4981,7 +5273,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Restore from Trash"
-msgstr ""
+msgstr "Gendan fra skraldespand"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5019,17 +5311,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_sms_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Fejl ved SMS-levering"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_sales
 msgid "Sales"
-msgstr ""
+msgstr "Salg"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Sales Details"
-msgstr ""
+msgstr "Salgsdetaljer"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sales_playbook
@@ -5042,7 +5334,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Gem"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5111,12 +5403,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Secondary"
-msgstr ""
+msgstr "Anden"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__category
 msgid "Section"
-msgstr ""
+msgstr "Afsnit"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -5139,14 +5431,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/clipboard/macros_embedded_clipboard.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Send as Message"
-msgstr ""
+msgstr "Send som besked"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5166,13 +5458,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__sequence
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sekvens"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Share"
-msgstr ""
+msgstr "Del"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5187,7 +5479,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__shared
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Shared"
-msgstr ""
+msgstr "Delt"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5199,7 +5491,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_shared_todos
 msgid "Shared To-Do List"
-msgstr ""
+msgstr "Delt to-do liste"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5259,7 +5551,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Size:"
-msgstr ""
+msgstr "Størrelse:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -5319,7 +5611,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/view/embedded_view.xml:0
 msgid "Something went wrong!"
-msgstr ""
+msgstr "Noget gik galt!"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -5377,14 +5669,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Stage"
-msgstr ""
+msgstr "Fase"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_stage_action
 #: model:ir.ui.menu,name:knowledge.knowledge_article_stage_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_tree
 msgid "Stages"
-msgstr ""
+msgstr "Faser"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_stage__parent_id
@@ -5400,7 +5692,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Start Date"
-msgstr ""
+msgstr "Start dato"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5435,12 +5727,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Status baseret på aktiviteter\n"
+"Forfaldne: Aktivitetens forfaldsdato er overskredet\n"
+"I dag: Aktiviteten er planlagt til i dag\n"
+"Planlagt: Kommende aktiviteter."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Stop Date"
-msgstr ""
+msgstr "Stop dato"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5458,7 +5754,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_search
 msgid "Template"
-msgstr ""
+msgstr "Skabelon"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_body
@@ -5494,7 +5790,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_preview
 msgid "Template Preview"
-msgstr ""
+msgstr "Forhåndsvisning af skabelon"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_sequence
@@ -5521,7 +5817,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_template_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Templates"
-msgstr ""
+msgstr "Skabeloner"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_template_name_required
@@ -5757,7 +6053,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__name
 msgid "Title"
-msgstr ""
+msgstr "Titel"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -5775,30 +6071,30 @@ msgstr ""
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_action_trashed
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Trash"
-msgstr ""
+msgstr "Skrald"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__to_delete
 #: model:ir.ui.menu,name:knowledge.knowledge_article_menu_trashed
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Trashed"
-msgstr ""
+msgstr "Kasseret"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_trash
 msgid "Trashed articles must be archived."
-msgstr ""
+msgstr "Kasserede artikler skal arkiveres."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Type registreret undtagelsesaktivitet."
 
 #. module: knowledge
 #. odoo-javascript
@@ -5817,13 +6113,13 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Unarchive"
-msgstr ""
+msgstr "Aktivér"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Unlock"
-msgstr ""
+msgstr "Lås op"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5841,18 +6137,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_hierarchy
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
 msgid "Untitled"
-msgstr ""
+msgstr "Uden titel"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Update"
-msgstr ""
+msgstr "Opdater"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Usage"
-msgstr ""
+msgstr "Anvendelse"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5864,7 +6160,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Use as Attachment"
-msgstr ""
+msgstr "Brug som vedhæftning"
 
 #. module: knowledge
 #: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_1
@@ -5898,7 +6194,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__user_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
 msgid "User"
-msgstr ""
+msgstr "Bruger"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_favorite_sequence
@@ -5913,7 +6209,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_permission
 msgid "User permission"
-msgstr ""
+msgstr "Brugertilladelse"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
@@ -5929,7 +6225,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/search/search_bar_menu/search_bar_menu.js:0
 msgid "Warning"
-msgstr ""
+msgstr "Advarsel"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_water_the_plants
@@ -5946,19 +6242,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Beskeder fra hjemmesiden"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Hjemmesidens kommunikationshistorik"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/res_users.py:0
 msgid "Welcome %s"
-msgstr ""
+msgstr "Velkommen %s"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -6079,7 +6375,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__workspace
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Workspace"
-msgstr ""
+msgstr "Arbejdsområde"
 
 #. module: knowledge
 #. odoo-python
@@ -6134,7 +6430,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
 "You are not allowed to move '%(article_name)s' under '%(parent_name)s'."
-msgstr ""
+msgstr "Du må ikke flytte '%(article_name)s' under '%(parent_name)s'."
 
 #. module: knowledge
 #. odoo-python
@@ -6192,6 +6488,8 @@ msgstr ""
 msgid ""
 "You cannot move an article under %(parent_name)s as you cannot write on it"
 msgstr ""
+"Du kan ikke flytte en artikel under %(parent_name)s da du ikke kan skrive på "
+"den"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6324,7 +6622,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 msgid "cover"
-msgstr ""
+msgstr "cover"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6352,7 +6650,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
 msgid "has"
-msgstr ""
+msgstr "har"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
@@ -6375,7 +6673,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
 #: code:addons/knowledge/static/src/components/with_lazy_loading/with_lazy_loading.xml:0
 msgid "loader"
-msgstr ""
+msgstr "loader"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_mail_notification_layout
@@ -6385,17 +6683,17 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__user_permission__none
 msgid "none"
-msgstr ""
+msgstr "ingen"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "or"
-msgstr ""
+msgstr "eller"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__user_permission__read
 msgid "read"
-msgstr ""
+msgstr "læse"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
@@ -6410,7 +6708,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__user_permission__write
 msgid "write"
-msgstr ""
+msgstr "skrive"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -6419,6 +6717,9 @@ msgid ""
 "star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
+"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
+"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -6427,6 +6728,9 @@ msgid ""
 "star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class="
+"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
+"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -6435,6 +6739,9 @@ msgid ""
 "star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class="
+"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
+"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_campaign_brief

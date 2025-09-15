@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_online_synchronization
+# * account_online_synchronization
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-01-08 07:02+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"account_online_synchronization/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_online_synchronization
 #. odoo-python
@@ -324,7 +329,7 @@ msgstr "Отменить"
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.account_missing_transaction_wizard_view_form
 msgid "Choose a date and a journal from which you want to fetch transactions"
-msgstr "Выберите дату и журнал, из которого вы хотите получить транзакции"
+msgstr "Выберите дату и журнал, по которым вы хотите загрузить транзакции"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__client_id
@@ -339,7 +344,9 @@ msgstr "Id клиента"
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_journal__renewal_contact_email
 msgid "Comma separated list of email addresses to send consent renewal notifications 15, 3 and 1 days before expiry"
-msgstr "Список адресов электронной почты, разделенных запятыми, для отправки уведомлений о продлении согласия за 15, 3 и 1 день до истечения срока действия"
+msgstr ""
+"Список адресов электронной почты через запятую для отправки уведомлений о "
+"продлении согласия за 15, 3 и 1 день до истечения срока действия"
 
 #. module: account_online_synchronization
 #: model:ir.model,name:account_online_synchronization.model_res_company
@@ -417,7 +424,7 @@ msgstr "Создайте банковский счет"
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__create_uid
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_bank_selection__create_date
@@ -426,7 +433,7 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__create_date
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_bank_statement_line_transient__currency_id
@@ -683,7 +690,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__write_uid
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_bank_selection__write_date
@@ -692,7 +699,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__write_date
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.account_online_link_view_form
@@ -966,7 +973,7 @@ msgstr "Сообщить о проблеме"
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_link__client_id
 msgid "Represent a link for a given user towards a banking institution"
-msgstr "Представьте ссылку для данного пользователя на банковское учреждение"
+msgstr "Представляет ссылку пользователя на банковскую организацию"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__activity_user_id
@@ -981,7 +988,9 @@ msgstr "Ошибка доставки SMS"
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.portal_renew_consent
 msgid "Security Tip: always check the domain name of this page, before clicking on the button."
-msgstr "Совет по безопасности: всегда проверяйте доменное имя этой страницы, прежде чем нажать на кнопку."
+msgstr ""
+"Совет по безопасности: перед нажатием на кнопку всегда проверяйте доменное "
+"имя этой страницы"
 
 #. module: account_online_synchronization
 #. odoo-javascript
@@ -1036,10 +1045,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Статус, основанный на мероприятии\n"
-"Просроченная: Дата, уже прошла\n"
-"Сегодня: Дата мероприятия сегодня\n"
-"Запланировано: будущая деятельность."
+"Статус дел\n"
+"Просроченные: Срок выполнения уже прошел\n"
+"Сегодня: Срок выполнения сегодня\n"
+"Запланированные: Будущие дела."
 
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.portal_renew_consent
@@ -1050,7 +1059,9 @@ msgstr "Спасибо!"
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_online.py:0
 msgid "The online synchronization service is not available at the moment. Please try again later."
-msgstr "Услуга онлайн-синхронизации в данный момент недоступна. Пожалуйста, повторите попытку позже."
+msgstr ""
+"Служба онлайн-синхронизации в данный момент недоступна. Пожалуйста, "
+"попробуйте позже."
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_link__provider_type
@@ -1061,7 +1072,9 @@ msgstr "Сторонний поставщик"
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_online.py:0
 msgid "This version of Odoo appears to be outdated and does not support the '%s' sync mode. Installing the latest update might solve this."
-msgstr "Эта версия Odoo, по-видимому, устарела и не поддерживает режим синхронизации '%s'. Установка последнего обновления может решить эту проблему."
+msgstr ""
+"Эта версия Odoo устарела и не поддерживает режим синхронизации «%s». "
+"Установка последнего обновления может решить проблему."
 
 #. module: account_online_synchronization
 #: model_terms:ir.actions.act_window,help:account_online_synchronization.action_account_online_link_form
@@ -1069,8 +1082,8 @@ msgid ""
 "To create a synchronization with your banking institution,<br>\n"
 "                please click on <b>Add a Bank Account</b>."
 msgstr ""
-"Чтобы создать синхронизацию с вашим банковским учреждением,<br>\n"
-"                нажмите на кнопку <b>Добавить банковский счет</b>."
+"Чтобы настроить синхронизацию с вашим банком,<br>\n"
+"                нажмите на <b> «Добавить банковский счет»</b>."
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_link__access_token
@@ -1095,7 +1108,9 @@ msgstr "Модель переходного процесса для линии �
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_link__has_unlinked_accounts
 msgid "True if that connection still has accounts that are not linked to an Odoo journal"
-msgstr "Истина, если в этом соединении все еще есть счета, не связанные с журналом Odoo"
+msgstr ""
+"Значение True, если в этом подключении есть счета, не привязанные к журналам "
+"Odoo"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,help:account_online_synchronization.field_account_online_link__activity_exception_decoration
@@ -1134,7 +1149,7 @@ msgid ""
 "You are importing transactions before the creation of your online synchronization\n"
 "                    ("
 msgstr ""
-"Вы импортируете транзакции до создания онлайн-синхронизации\n"
+"Вы импортируете транзакции, датированные до создания онлайн-синхронизации\n"
 "                    ("
 
 #. module: account_online_synchronization
@@ -1154,14 +1169,14 @@ msgstr "Это действие можно выполнить только дл�
 #: code:addons/account_online_synchronization/models/account_journal.py:0
 #: code:addons/account_online_synchronization/wizard/account_journal_missing_transactions.py:0
 msgid "You can't find missing transactions for a journal that isn't connected."
-msgstr "Невозможно найти недостающие транзакции для журнала, который не подключен."
+msgstr "Нельзя искать недостающие транзакции для журнала, который не подключен."
 
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_journal.py:0
 #: code:addons/account_online_synchronization/models/account_online.py:0
 msgid "You cannot have two journals associated with the same Online Account."
-msgstr "Вы не можете иметь два журнала, связанных с одной учетной записью."
+msgstr "Нельзя привязать два журнала к одному онлайн-счету."
 
 #. module: account_online_synchronization
 #. odoo-python

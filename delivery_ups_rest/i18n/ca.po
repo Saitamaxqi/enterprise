@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups_rest
+# * delivery_ups_rest
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-15 21:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"delivery_ups_rest/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_bill_my_account
@@ -22,37 +25,37 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_res_users__bill_my_account
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_sale_order__ups_bill_my_account
 msgid "Bill My Account"
-msgstr ""
+msgstr "Billeja el meu compte"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_cod_funds_code
 msgid "COD Funding Option"
-msgstr ""
+msgstr "Opció de finançament del BACALLÀ"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Transportista"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_cod_funds_code__8
 msgid "Cashier's Check or MoneyOrder"
-msgstr ""
+msgstr "Xec o orde de diners de Cashier"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_dimension_unit__cm
 msgid "Centimeters"
-msgstr ""
+msgstr "Centímetres"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_cod_funds_code__0
 msgid "Check, Cashier's Check or MoneyOrder"
-msgstr ""
+msgstr "Escac, xec d'en Cashier o comanda de diners"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contacte"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -87,12 +90,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Duties paid by"
-msgstr ""
+msgstr "Duques pagades per"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__epl
 msgid "EPL"
-msgstr ""
+msgstr "EPL"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -101,6 +104,8 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Error:\n"
+"%s"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -135,11 +140,14 @@ msgid ""
 "If checked, ecommerce users will be prompted their UPS account number\n"
 "and delivery fees will be charged on it."
 msgstr ""
+"Si està marcada, als usuaris de comerç electrònic se'ls demanarà el seu "
+"número de compte UPS\n"
+"i se li cobraran taxes de lliurament."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_dimension_unit__in
 msgid "Inches"
-msgstr ""
+msgstr "Polzades"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -152,12 +160,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_weight_unit__kgs
 msgid "Kilograms"
-msgstr ""
+msgstr "Quilograms"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Label Format"
-msgstr ""
+msgstr "Format de l'etiqueta"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -186,28 +194,28 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Options"
-msgstr ""
+msgstr "Opcions"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__gif
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_package_dimension_unit
 msgid "Package Size Unit"
-msgstr ""
+msgstr "Unitat de mida del paquet"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Package Weight Unit"
-msgstr ""
+msgstr "Unitat de pes del paquet"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Packages %s do not have a positive shipping weight."
-msgstr ""
+msgstr "Els paquets %s no tenen un pes d'enviament positiu."
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_payment_provider
@@ -218,28 +226,28 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Proporcioneu almenys un element per enviar."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_weight_unit__lbs
 msgid "Pounds"
-msgstr ""
+msgstr "Lliura"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Proveïdor"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_duty_payment__recipient
 msgid "Recipient"
-msgstr ""
+msgstr "Destinatari"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Recipient Phone must be at least 10 alphanumeric characters."
-msgstr ""
+msgstr "El telèfon destinatari ha de tenir almenys 10 caràcters alfanumèrics."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_require_signature
@@ -253,21 +261,23 @@ msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
 msgstr ""
+"Etiqueta de retorn generada<br/><b>Números de seguiment:</b> "
+"%(tracking_numbers)s<br/><b>Paquets:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
 msgid "SPL"
-msgstr ""
+msgstr "SPL"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Comanda"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Saturday Delivery"
-msgstr ""
+msgstr "Lliurament en dissabte"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -277,13 +287,13 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_duty_payment__sender
 msgid "Sender"
-msgstr ""
+msgstr "Remitent"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/delivery_ups.py:0
 msgid "Shipment #%s has been cancelled"
-msgstr ""
+msgstr "Enviament #%s ha estat cancel·lat"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -292,28 +302,30 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
+"Enviament creat a UPS<br/><b>Números de seguiment:</b> %(tracking_numbers)s<"
+"br/><b>Paquets:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Shipper Phone must be at least 10 alphanumeric characters."
-msgstr ""
+msgstr "El telèfon d'enviament ha de tenir almenys 10 caràcters alfanumèrics."
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Mètodes d'enviament"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "Alguna cosa ha anat malament, torneu-ho a provar més tard!!"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Tipus de paquet principal"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -322,6 +334,8 @@ msgid ""
 "The address of your company is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"L'adreça de la teva empresa està desapareguda o equivocada.\n"
+"(Camp(s) perdut(s) : %s)"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -330,6 +344,8 @@ msgid ""
 "The address of your warehouse is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"L'adreça del vostre magatzem no existeix o és incorrecta.\n"
+"(Camp(s) perdut(s) : %s)"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -351,7 +367,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "The name of the customer should be no more than 35 characters."
-msgstr ""
+msgstr "El nom del client no hauria de ser superior a 35 caràcters."
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -360,6 +376,8 @@ msgid ""
 "The recipient address is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"L'adreça del destinatari no existeix o és incorrecta.\n"
+"(Camp(s) perdut(s) : %s)"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -367,23 +385,26 @@ msgid ""
 "This value added service enables UPS to collect the payment of the shipment "
 "from your customer."
 msgstr ""
+"Aquest servei de valor afegit permet al SAI recollir el pagament de "
+"l'enviament del vostre client."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,help:delivery_ups_rest.field_delivery_carrier__ups_saturday_delivery
 msgid ""
 "This value added service will allow you to ship the package on saturday also."
 msgstr ""
+"Aquest servei de valor afegit us permet enviar paquets també en dissabte."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__delivery_type__ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__stock_package_type__package_carrier_type__ups_rest
 msgid "UPS"
-msgstr ""
+msgstr "UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__02
 msgid "UPS 2nd Day"
-msgstr ""
+msgstr "UPS 2n Dia"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__59
@@ -405,7 +426,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_res_partner__property_ups_carrier_account
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_res_users__property_ups_carrier_account
 msgid "UPS Account Number"
-msgstr ""
+msgstr "Número de compte UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_client_id
@@ -420,7 +441,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "UPS Configuration"
-msgstr ""
+msgstr "Configuració d'UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__03
@@ -430,7 +451,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_label_file_type
 msgid "UPS Label File Type"
-msgstr ""
+msgstr "Tipus de fitxer d'etiqueta UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__01
@@ -450,12 +471,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_default_packaging_id
 msgid "UPS Package Type"
-msgstr ""
+msgstr "Tipus de paquet UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_saturday_delivery
 msgid "UPS Saturday Delivery"
-msgstr ""
+msgstr "Lliurament en dissabte UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__65
@@ -465,7 +486,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_default_service_type
 msgid "UPS Service Type"
-msgstr ""
+msgstr "Tipus de servei UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__11
@@ -495,7 +516,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_sale_order__partner_ups_carrier_account
 msgid "UPS account number"
-msgstr ""
+msgstr "Número de compte UPS"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -504,6 +525,9 @@ msgid ""
 "UPS address lines can only contain a maximum of 35 characters. You can split "
 "the contacts addresses on multiple lines to try to avoid this limitation."
 msgstr ""
+"Les línies d'adreces UPS només poden contenir un màxim de 35 caràcters. "
+"Podeu dividir les adreces de contactes en diverses línies per intentar "
+"evitar aquesta limitació."
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -514,24 +538,24 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_duty_payment
 msgid "Ups Duty Payment"
-msgstr ""
+msgstr "Pagament de la taxa de pujada"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_package_weight_unit
 msgid "Ups Package Weight Unit"
-msgstr ""
+msgstr "Unitat de pes del paquet Ups"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Warehouse Phone must be at least 10 alphanumeric characters."
-msgstr ""
+msgstr "El telèfon del magatzem ha de tenir almenys 10 caràcters alfanumèrics."
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/sale_order.py:0
 msgid "You must enter an UPS account number."
-msgstr ""
+msgstr "Heu d'introduir un número de compte UPS."
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -542,7 +566,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__zpl
 msgid "ZPL"
-msgstr ""
+msgstr "ZPL"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -565,7 +589,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "developer.ups.com"
-msgstr ""
+msgstr "developer.ups.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -575,37 +599,37 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 1"
-msgstr ""
+msgstr "ups pas 1"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 2"
-msgstr ""
+msgstr "ups pas 2"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 3"
-msgstr ""
+msgstr "ups pas 3"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 4"
-msgstr ""
+msgstr "ups pas 4"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 5"
-msgstr ""
+msgstr "ups pas 5"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups step 6"
-msgstr ""
+msgstr "ups pas 6"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "ups.com"
-msgstr ""
+msgstr "ups.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form

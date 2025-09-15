@@ -1,111 +1,117 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_usps_rest
+# * delivery_usps_rest
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:31+0000\n"
-"PO-Revision-Date: 2025-02-20 10:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:14+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"delivery_usps_rest/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__3d
 msgid "3D - 3-Digit"
-msgstr ""
+msgstr "3D - 3-stellig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__3n
 msgid "3N - 3-Digit Dimensional Rectangular"
-msgstr ""
+msgstr "3N - 3-stellig, dimensional, rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__3r
 msgid "3R - 3-Digit Dimensional Nonrectangular"
-msgstr ""
+msgstr "3R - 3-stellig, dimensional, nicht rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_label_size__3x5fmp
 msgid "3x5"
-msgstr ""
+msgstr "3x5"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_label_size__4x5label
 msgid "4x5"
-msgstr ""
+msgstr "4x5"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_label_size__4x6label
 msgid "4x6"
-msgstr ""
+msgstr "4x6"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__5d
 msgid "5D - 5-Digit"
-msgstr ""
+msgstr "5D - 5-stellig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__ba
 msgid "BA - Basic"
-msgstr ""
+msgstr "BA - Basis"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__bb
 msgid "BB - Mixed NDC"
-msgstr ""
+msgstr "BB - Gemischte NDC"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__bound_printed_matter
 msgid "Bound Printed Matter"
-msgstr ""
+msgstr "Gebundenes Druckerzeugnis"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__cm
 msgid "CM - USPS Connect® Local Mail"
-msgstr ""
+msgstr "CM - Postversand per USPS Connect® Local"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__cp
 msgid "CP - Cubic Parcel"
-msgstr ""
+msgstr "KP - Würfelförmiges Paket"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_crid
 msgid "CRID"
-msgstr ""
+msgstr "CRID"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Zusteller"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__commercial_sample
 msgid "Commercial Sample"
-msgstr ""
+msgstr "Warenmuster"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Company phone number is invalid. Please insert a US phone number."
 msgstr ""
+"Die Telefonnummer des Unternehmens ist falsch. Bitte tragen Sie eine US-"
+"Telefonnummer ein."
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_rest_content_type
 msgid "Content Type (REST)"
-msgstr ""
+msgstr "Inhaltstyp (REST)"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Couldn't decode the response from USPS."
-msgstr ""
+msgstr "Die Antwort von USPS konnte nicht entschlüsselt werden."
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -114,110 +120,113 @@ msgid ""
 "Couldn't decode the response from USPS.\n"
 "%s"
 msgstr ""
+"Die Antwort von USPS konnte nicht entschlüsselt werden.\n"
+"%s"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__cremated_remains
 msgid "Cremated Remains"
-msgstr ""
+msgstr "Verbrannte Überreste"
 
 #. module: delivery_usps_rest
 #: model_terms:ir.ui.view,arch_db:delivery_usps_rest.view_delivery_carrier_form_with_provider_usps
 msgid "Custom Data"
-msgstr ""
+msgstr "Benutzerdefinierte Daten"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__dc
 msgid "DC - NDC"
-msgstr ""
+msgstr "DC - NDC"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__de
 msgid "DE - SCF"
-msgstr ""
+msgstr "DE - SCF"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__df
 msgid "DF - 5-Digit"
-msgstr ""
+msgstr "DF - 5-stellig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__dn
 msgid "DN - Dimensional Nonrectangular"
-msgstr ""
+msgstr "DN - Dimensional, nicht rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__dr
 msgid "DR - Dimensional Rectangular"
-msgstr ""
+msgstr "DR - Dimensional, rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__dangerous_goods
 msgid "Dangerous Goods"
-msgstr ""
+msgstr "Gefahrengüter"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
-msgstr ""
+msgstr "Lieferungsart"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_stock_package_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__document
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_delivery_nature__domestic
 msgid "Domestic"
-msgstr ""
+msgstr "Inland"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_domestic_rating_indicator
 msgid "Domestic Rating Indicator"
-msgstr ""
+msgstr "Angabe für Inlandssendung"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__e4
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__e4
 msgid ""
 "E4 - Priority Mail Express Flat Rate Envelope - Post Office To Addressee"
-msgstr ""
+msgstr "E4 - Priority-Express-Umschlag mit Pauschale - Postbüro an Empfänger"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__e6
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__e6
 msgid "E6 - Priority Mail Express Legal Flat Rate Envelope"
-msgstr ""
+msgstr "E6 - Priority-Express-Rechtsschreiben mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__e7
 msgid "E7 - Priority Mail Express Legal Flat Rate Envelope Sunday / Holiday"
 msgstr ""
+"E7 - Priority-Express-Rechtsschreiben mit Pauschale an Sonn- u. Feiertagen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_eps_account_number
 msgid "EPS Account Number"
-msgstr ""
+msgstr "EPS-Kontonummer"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_extra_data_payment_token_request
 msgid "Extra Data for Payment Token Requests"
-msgstr ""
+msgstr "Zusatzdaten für Anfragen von Zahlungstoken"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_extra_data_rate_request
 msgid "Extra Data for Rate Requests"
-msgstr ""
+msgstr "Zusatzdaten für Tarifanfragen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_extra_data_shipment_request
 msgid "Extra Data for Shipment Requests"
-msgstr ""
+msgstr "Zusatzdaten für Versandanfragen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,help:delivery_usps_rest.field_delivery_carrier__usps_extra_data_payment_token_request
@@ -232,292 +241,305 @@ msgid ""
 "With the above example, the service (920) will be added to the shipment request.\n"
 "For more information, please refer to the USS API documentation: https://developer.usps.com/apis.\n"
 msgstr ""
+"Zusatzdaten, die in der Anfrage gesendet werden müssen. Es sollte sich um "
+"eine JSON-formatierte Zeichenkette handeln. Beispiel:\n"
+"Diese Funktion ist fortgeschritten/technisch und sollte nur verwendet "
+"werden, wenn Sie wissen, was Sie tun.\n"
+"Beispiel für einen gültigen Wert: ```\n"
+"\"packageDescription\": {\"extraServices\": [920] }\n"
+"```\n"
+"Im obigen Beispiel wird der Service (920) dem Versandauftrag hinzugefügt.\n"
+"Weitere Informationen finden Sie in der USS-API-Dokumentation: https://"
+"developer.usps.com/apis.\n"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fa
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__fa
 msgid "FA - Legal Flat Rate Envelope"
-msgstr ""
+msgstr "FA - Rechtsschreiben mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fb
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__fb
 msgid "FB - Medium Flat Rate Box/Large Flat Rate Bag"
-msgstr ""
+msgstr "FB - Mittelgroßes Paket mit Pauschale / Große Tasche mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fe
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__fe
 msgid "FE - Flat Rate Envelope"
-msgstr ""
+msgstr "FE - Pauschalumschlag"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fp
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__fp
 msgid "FP - Padded Flat Rate Envelope"
-msgstr ""
+msgstr "FP - Versandtasche mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fs
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__fs
 msgid "FS - Small Flat Rate Box"
-msgstr ""
+msgstr "FS - Kleines Paket mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_service__first-class_package_international_service
 msgid "First-Class Package International Service"
-msgstr ""
+msgstr "Premium-Paket – Internationaler Service"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__first-class_package_service
 msgid "First-Class Package Service"
-msgstr ""
+msgstr "Premium-Paketservice"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_processing_category__flats
 msgid "Flats"
-msgstr ""
+msgstr "Pauschalen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__gift
 msgid "Gift"
-msgstr ""
+msgstr "Geschenk"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_service__global_express_guaranteed
 msgid "Global Express Guaranteed"
-msgstr ""
+msgstr "Global Express Guaranteed"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__humanitarian_donations
 msgid "Humanitarian Donations"
-msgstr ""
+msgstr "Humanitäre Spenden"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_delivery_nature__international
 msgid "International"
-msgstr ""
+msgstr "International"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_international_rating_indicator
 msgid "International Rating Indicator"
-msgstr ""
+msgstr "Angabe für internationale Sendung"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid "Invalid syntax for USPS extra data."
-msgstr ""
+msgstr "Ungültige Syntax für USPS-Zusatzdaten."
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_processing_category__irregular
 msgid "Irregular"
-msgstr ""
+msgstr "Unregelmäßig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_label_file_type__jpg
 msgid "JPG"
-msgstr ""
+msgstr "JPG"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__lc
 msgid "LC - USPS Connect® Local Single Piece"
-msgstr ""
+msgstr "LC - Einzelstück USPS Connect® Local"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__lf
 msgid "LF - Flat Rate Box"
-msgstr ""
+msgstr "LF - Großes Paket mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__ll
 msgid "LL - Large Flat Rate Bag"
-msgstr ""
+msgstr "LL - Große Tasche mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__lo
 msgid "LO - USPS Connect® Local Oversized"
-msgstr ""
+msgstr "LO - Übergröße USPS Connect® Local"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__ls
 msgid "LS - Small Flat Rate Bag"
-msgstr ""
+msgstr "LS - Kleine Tasche mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model_terms:ir.ui.view,arch_db:delivery_usps_rest.view_delivery_carrier_form_with_provider_usps
 msgid "Label Format"
-msgstr ""
+msgstr "Etikettenformat"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_processing_category__letters
 msgid "Letters"
-msgstr ""
+msgstr "Briefe"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__library_mail
 msgid "Library Mail"
-msgstr ""
+msgstr "Büchersendung"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_mid
 msgid "MID"
-msgstr ""
+msgstr "MID"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_processing_category__machinable
 msgid "Machinable"
-msgstr ""
+msgstr "Bearbeitungsfähig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_manifest_mid
 msgid "Manifest MID"
-msgstr ""
+msgstr "MID für Sendungsinformationen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__media_mail
 msgid "Media Mail"
-msgstr ""
+msgstr "Mediensendung"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__medical_supplies
 msgid "Medical Supplies"
-msgstr ""
+msgstr "Medizinbedarf"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__merchandise
 msgid "Merchandise"
-msgstr ""
+msgstr "Merchandise"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__np
 msgid "NP - Non-Presorted"
-msgstr ""
+msgstr "NP - Nicht vorsortiert"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_processing_category__non_machinable
 msgid "Non-Machinable"
-msgstr ""
+msgstr "Nicht maschinell bearbeitbar"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__non_negotiable_document
 msgid "Non-Negotiable Document"
-msgstr ""
+msgstr "Unverhandelbares Dokument"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__os
 msgid "OS - Oversized"
-msgstr ""
+msgstr "OS - Übergröße"
 
 #. module: delivery_usps_rest
 #: model_terms:ir.ui.view,arch_db:delivery_usps_rest.view_delivery_carrier_form_with_provider_usps
 msgid "Options"
-msgstr ""
+msgstr "Optionen"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__other
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__p5
 msgid "P5 - Cubic Soft Pack Tier 1"
-msgstr ""
+msgstr "P5 - Würfelförmiges Weichpaket, Stufe 1"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__p6
 msgid "P6 - Cubic Soft Pack Tier 2"
-msgstr ""
+msgstr "P6 - Würfelförmiges Weichpaket, Stufe 2"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__p7
 msgid "P7 - Cubic Soft Pack Tier 3"
-msgstr ""
+msgstr "P7 - Würfelförmiges Weichpaket, Stufe 3"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__p8
 msgid "P8 - Cubic Soft Pack Tier 4"
-msgstr ""
+msgstr "P8 - Würfelförmiges Weichpaket, Stufe 4"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__p9
 msgid "P9 - Cubic Soft Pack Tier 5"
-msgstr ""
+msgstr "P9 - Würfelförmiges Weichpaket, Stufe 5"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__pa
 msgid "PA - Priority Mail Express International Single Piece"
-msgstr ""
+msgstr "PA - Priority-Express-Versand, International, Einzelstück"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__pa
 msgid "PA - Priority Mail Express Single Piece"
-msgstr ""
+msgstr "PA - Priority-Express-Versand, Einzelstück"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_label_file_type__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__pl
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__pl
 msgid "PL - Large Flat Rate Box"
-msgstr ""
+msgstr "PL - Großes Paket mit Pauschale"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__pm
 msgid "PM - Large Flat Rate Box APO/FPO/DPO"
-msgstr ""
+msgstr "PM - Großes Paket mit Pauschale APO/FPO/DPO"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__pr
 msgid "PR - Presorted"
-msgstr ""
+msgstr "PR - Vorsortiert"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__parcel_select
 msgid "Parcel Select"
-msgstr ""
+msgstr "Parcel Select"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__parcel_select_lightweight
 msgid "Parcel Select Lightweight"
-msgstr ""
+msgstr "Parcel Select Lightweight"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__pharmaceuticals
 msgid "Pharmaceuticals"
-msgstr ""
+msgstr "Arzneimittel"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,help:delivery_usps_rest.field_delivery_carrier__usps_processing_category
 msgid "Please check on USPS website to check your package processing category"
 msgstr ""
+"Bitte überprüfen Sie auf der USPS-Website, in welche Kategorie Ihre "
+"Paketbearbeitung fällt."
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Please enter a valid ZIP code in recipient address"
-msgstr ""
+msgstr "Bitte geben Sie eine gültige Postleitzahl in die Empfängeradresse ein."
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Please enter a valid ZIP code in your Company address"
 msgstr ""
+"Bitte geben Sie eine gültige Postleitzahl in der Unternehmensadresse an."
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Bitte geben Sie mindestens einen zu versendenden Artikel an."
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -526,125 +548,127 @@ msgid ""
 "Please set country USA in your company address, Service is only available "
 "for USA"
 msgstr ""
+"Bitte geben Sie in Ihrer Unternehmensadresse das Land U.S.A. an, der Service "
+"ist nur in den U.S.A. verfügbar."
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__priority_mail
 msgid "Priority Mail"
-msgstr ""
+msgstr "Priority Mail"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__priority_mail_express
 msgid "Priority Mail Express"
-msgstr ""
+msgstr "Priority Mail Express"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_service__priority_mail_express_international
 msgid "Priority Mail Express International"
-msgstr ""
+msgstr "Priority Mail Express International"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_service__priority_mail_international
 msgid "Priority Mail International"
-msgstr ""
+msgstr "Priority Mail International"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_processing_category
 msgid "Processing Category"
-msgstr ""
+msgstr "Verarbeitungskategorie"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Anbieter"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__q0
 msgid "Q0 - Cubic Soft Pack Tier 10"
-msgstr ""
+msgstr "Q0 - Würfelförmiges Weichpaket, Stufe 10"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__q6
 msgid "Q6 - Cubic Soft Pack Tier 6"
-msgstr ""
+msgstr "Q6 - Würfelförmiges Weichpaket, Stufe 6"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__q7
 msgid "Q7 - Cubic Soft Pack Tier 7"
-msgstr ""
+msgstr "Q7 - Würfelförmiges Weichpaket, Stufe 7"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__q8
 msgid "Q8 - Cubic Soft Pack Tier 8"
-msgstr ""
+msgstr "Q8 - Würfelförmiges Weichpaket, Stufe 8"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__q9
 msgid "Q9 - Cubic Soft Pack Tier 9"
-msgstr ""
+msgstr "Q9 - Würfelförmiges Weichpaket, Stufe 9"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid "Return Shipment created into USPS"
-msgstr ""
+msgstr "Retoure erstellt in USPS"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__returned_goods
 msgid "Returned Goods"
-msgstr ""
+msgstr "Retournierte Waren"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__sn
 msgid "SN - SCF Dimensional Nonrectangular"
-msgstr ""
+msgstr "SN - SCF - Dimensional, nicht rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__sp
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__sp
 msgid "SP - Single Piece"
-msgstr ""
+msgstr "SP - Einzelstück"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__sr
 msgid "SR - SCF Dimensional Rectangular"
-msgstr ""
+msgstr "SN - SCF - Dimensional, rechteckig"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_label_file_type__svg
 msgid "SVG"
-msgstr ""
+msgstr "SVG"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_content_type__sample
 msgid "Sample"
-msgstr ""
+msgstr "Beispiel"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid "Shipment created into USPS"
-msgstr ""
+msgstr "Sendung erstellt in USPS"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid "Shipment with tracking number %(tracking_ref)s has been cancelled"
-msgstr ""
+msgstr "Sendung mit Sendungsverfolgungsnummer %(tracking_ref)s wurde storniert"
 
 #. module: delivery_usps_rest
 #: model:ir.model,name:delivery_usps_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Versandmethoden"
 
 #. module: delivery_usps_rest
 #: model:ir.model,name:delivery_usps_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Typ des Lagerpakets"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_rest_label_file_type__tiff
 msgid "TIFF"
-msgstr ""
+msgstr "TIFF"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -653,6 +677,9 @@ msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Die Adresse Ihres Unternehmens fehlt oder ist falsch. (Fehlende(s) Feld(er): "
+"\n"
+"%s)"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -661,6 +688,9 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"Der geschätzte Versandpreis kann nicht berechnet werden, da das Gewicht für "
+"folgende(s) Produkt(e) fehlt: \n"
+"%s"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -669,6 +699,8 @@ msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
 msgstr ""
+"Das Paket kann nicht erstellt werden, da das Gesamtgewicht der Produkte in "
+"der Kommissionierung 0,0 beträgt %s"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -677,6 +709,8 @@ msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Die Empfängeradresse fehlt oder ist falsch (Fehlende(s) Feld(er):  \n"
+"%s)"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -684,74 +718,76 @@ msgstr ""
 msgid ""
 "There is no price available for this shipping, please choose another service"
 msgstr ""
+"Für diesen Versand ist kein Preis verfügbar. Bitte wählen Sie einen anderen "
+"Service."
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid "Tracking Number:"
-msgstr ""
+msgstr "Sendungsnummer:"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__delivery_type__usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__stock_package_type__package_carrier_type__usps_rest
 msgid "USPS"
-msgstr ""
+msgstr "USPS"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_api_key
 msgid "USPS API Key"
-msgstr ""
+msgstr "API-Schlüssel von USPS"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_api_secret
 msgid "USPS API Secret"
-msgstr ""
+msgstr "API-Geheimnis von USPS"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_access_token
 msgid "USPS Access Token"
-msgstr ""
+msgstr "USPS-Zugriffstoken"
 
 #. module: delivery_usps_rest
 #: model_terms:ir.ui.view,arch_db:delivery_usps_rest.view_delivery_carrier_form_with_provider_usps
 msgid "USPS Configuration"
-msgstr ""
+msgstr "USPS-Konfiguration"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_connect_local
 msgid "USPS Connect Local"
-msgstr ""
+msgstr "USPS Connect Local"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_connect_mail
 msgid "USPS Connect Mail"
-msgstr ""
+msgstr "USPS-Connect-Versand"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_connect_next_day
 msgid "USPS Connect Next Day"
-msgstr ""
+msgstr "USPS Connect Next Day"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_connect_regional
 msgid "USPS Connect Regional"
-msgstr ""
+msgstr "USPS Connect Regional"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_connect_same_day
 msgid "USPS Connect Same Day"
-msgstr ""
+msgstr "USPS Connect Same Day"
 
 #. module: delivery_usps_rest
 #: model:delivery.carrier,name:delivery_usps_rest.delivery_carrier_usps_domestic
 #: model:product.template,name:delivery_usps_rest.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic"
-msgstr ""
+msgstr "USPS Domestic"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_domestic_service
 msgid "USPS Domestic Service"
-msgstr ""
+msgstr "USPS-Domestic-Dienst"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -760,27 +796,29 @@ msgid ""
 "USPS Domestic is used only to ship inside of the USA. Please change the "
 "delivery method into USPS International."
 msgstr ""
+"USPS Domestic wird nur für den Versand innerhalb der U.S.A. verwendet. Bitte "
+"ändern Sie die Versandart in USPS International."
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_ground_advantage
 msgid "USPS Ground Advantage"
-msgstr ""
+msgstr "USPS Ground Advantage"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_ground_advantage_return_service
 msgid "USPS Ground Advantage Return Service"
-msgstr ""
+msgstr "Rückgabedienst USPS Ground Advantage"
 
 #. module: delivery_usps_rest
 #: model:delivery.carrier,name:delivery_usps_rest.delivery_carrier_usps_international
 #: model:product.template,name:delivery_usps_rest.product_product_delivery_usps_international_product_template
 msgid "USPS International"
-msgstr ""
+msgstr "USPS International"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_international_service
 msgid "USPS International Service"
-msgstr ""
+msgstr "USPS-International-Dienst"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -789,37 +827,41 @@ msgid ""
 "USPS International is used only to ship outside of the USA. Please change "
 "the delivery method into USPS Domestic."
 msgstr ""
+"USPS International wird nur für den Versand außerhalb der U.S.A. verwendet. "
+"Bitte ändern Sie die Versandart in USPS National."
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_rest_label_file_type
 msgid "USPS Label File Type"
-msgstr ""
+msgstr "Dateityp von USPS-Etiketten"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_label_size
 msgid "USPS Label Size"
-msgstr ""
+msgstr "USPS-Etikettgröße"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_default_package_type_id
 msgid "USPS Package Type"
-msgstr ""
+msgstr "USPS-Pakettyp"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields,field_description:delivery_usps_rest.field_delivery_carrier__usps_payment_token
 msgid "USPS Payment Token"
-msgstr ""
+msgstr "USPS-Zahlungstoken"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_retail_ground
 msgid "USPS Retail Ground"
-msgstr ""
+msgstr "USPS Retail Ground"
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "You need to set your USPS API Key and Secret to use this feature."
 msgstr ""
+"Sie müssen Ihren API-Schlüssel und Ihr Passwort von USPS festlegen, um diese "
+"Funktion nutzen zu können."
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -828,9 +870,11 @@ msgid ""
 "You need to set your USPS CRID, MID, Manifest MID and EPS Account Number to "
 "use this feature."
 msgstr ""
+"Sie müssen Ihre USPS-CRID, MID, MID für Sendungsinformationen und EPS-"
+"Kontonummer einstellen, um diese Funktion nutzen zu können."
 
 #. module: delivery_usps_rest
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "Your USPS API Key and Secret are invalid."
-msgstr ""
+msgstr "Ihr API-Schlüssel und Ihr Passwort von USPS sind ungültig"

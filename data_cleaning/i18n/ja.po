@@ -1,37 +1,41 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* data_cleaning
+# * data_cleaning
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:28+0000\n"
-"PO-Revision-Date: 2025-09-11 14:28+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"data_cleaning/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_group.py:0
 msgid "%(model)s - Similarity: %(similarity)s%%"
-msgstr ""
+msgstr "%(model)s - 類似性: %(similarity)s%%"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (コピー)"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "%s records have been merged"
-msgstr ""
+msgstr "%sレコードがマージされました"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
@@ -39,6 +43,8 @@ msgid ""
 "' deduplication rule.<br/>\n"
 "You can merge them"
 msgstr ""
+"'重複排除規則。<br/>\n"
+"それらをマージできます。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
@@ -46,49 +52,51 @@ msgid ""
 "' field cleaning rule.<br/>\n"
 "You can validate changes"
 msgstr ""
+"のフィールドクリーニング規則。<br/>\n"
+"変更を検証できます。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span class=\"me-1\">Every</span>"
-msgstr ""
+msgstr "<span class=\"me-1\">毎</span>"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span class=\"oe_inline\">%</span>"
-msgstr ""
+msgstr "<span class=\"oe_inline\">%</span>"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span invisible=\"not custom_merge_method\">Model specific</span>"
-msgstr ""
+msgstr "<span invisible=\"not custom_merge_method\">モデル固有</span>"
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_rule_uniq_model_id_field_id
 msgid "A field can only appear once!"
-msgstr ""
+msgstr "フィールドは1度しか表示されません！"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Action"
-msgstr ""
+msgstr "アクション"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_display
 msgid "Action Display"
-msgstr ""
+msgstr "アクション表示"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_technical
 msgid "Action Technical"
-msgstr ""
+msgstr "アクション技術的"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__action
 msgid "Actions"
-msgstr ""
+msgstr "アクション"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__active
@@ -97,33 +105,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__active
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__active
 msgid "Active"
-msgstr ""
+msgstr "アクティブ"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__lower
 msgid "All Lowercase"
-msgstr ""
+msgstr "全て小文字"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_trim__all
 msgid "All Spaces"
-msgstr ""
+msgstr "全ての空白"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__upper
 msgid "All Uppercase"
-msgstr ""
+msgstr "全て大文字"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__archive
 msgid "Archive"
-msgstr ""
+msgstr "アーカイブ"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_model_view_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Archived"
-msgstr ""
+msgstr "アーカイブ済"
 
 #. module: data_cleaning
 #. odoo-javascript
@@ -131,123 +139,123 @@ msgstr ""
 msgid ""
 "Are you sure that you want to merge the selected records in their respective"
 " group?"
-msgstr ""
+msgstr "選択したレコードをそれぞれのグループでマージしますが、間違いありませんか？"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "Are you sure that you want to merge these records?"
-msgstr ""
+msgstr "本当にこれらのレコードをマージしますか？"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__cleaning_mode__automatic
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__merge_mode__automatic
 msgid "Automatic"
-msgstr ""
+msgstr "自動"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__is_merge_enabled
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_search
 msgid "Can Be Merged"
-msgstr ""
+msgstr "マージ可"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_case
 msgid "Case"
-msgstr ""
+msgstr "ケース"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_rule.py:0
 msgid "Case/Accent Insensitive Match"
-msgstr ""
+msgstr "大文字/小文字を区別しない一致"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Clean"
-msgstr ""
+msgstr "クリーン"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Cleaning Actions"
-msgstr ""
+msgstr "クリーニングアクション"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__cleaning_mode
 msgid "Cleaning Mode"
-msgstr ""
+msgstr "クリーニングモデル"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_model
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__cleaning_model_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__cleaning_model_id
 msgid "Cleaning Model"
-msgstr ""
+msgstr "クリーニングモデル"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_record
 msgid "Cleaning Record"
-msgstr ""
+msgstr "クリーニングレコード"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_rule
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Cleaning Rule"
-msgstr ""
+msgstr "クリーニング規則"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 msgid "Cleaning Rules"
-msgstr ""
+msgstr "クリーニング規則"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__company_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__company_id
 msgid "Company"
-msgstr ""
+msgstr "会社"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record_notification
 msgid "Configure rules to identify duplicate records"
-msgstr ""
+msgstr "重複レコードを識別するための規則を設定します"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record_notification
 msgid "Configure rules to identify records to clean"
-msgstr ""
+msgstr "クリーニングするレコードを特定するための規則を設定しましょう"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "連絡先"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__ref_merge_ir_act_server_id
 msgid ""
 "Contextual menu action that redirects to the deduplicate view of data_merge."
-msgstr ""
+msgstr "data_merge の重複排除ビューにリダイレクトするコンテキストメニューアクション。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__country_id
 msgid "Country"
-msgstr ""
+msgstr "国"
 
 #. module: data_cleaning
 #: model:ir.model,website_form_label:data_cleaning.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "顧客を作成する"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_create_uid
 msgid "Created By"
-msgstr ""
+msgstr "作成者"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_create_date
 msgid "Created On"
-msgstr ""
+msgstr "作成日"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__create_uid
@@ -258,7 +266,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__create_date
@@ -269,67 +277,67 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__mix_by_company
 msgid "Cross-Company"
-msgstr ""
+msgstr "会社間"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__current_value
 msgid "Current"
-msgstr ""
+msgstr "流動"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__custom_merge_method
 msgid "Custom Merge Method"
-msgstr ""
+msgstr "マージ方法をカスタム"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_clean_records_ir_actions_server
 msgid "Data Cleaning: Clean Records"
-msgstr ""
+msgstr "データクリーニング: レコードをクリーニング"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_cleanup_ir_actions_server
 msgid "Data Merge: Cleanup Records"
-msgstr ""
+msgstr "データマージ: レコードをクリーンナップ"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_find_duplicates_ir_actions_server
 msgid "Data Merge: Find Duplicate Records"
-msgstr ""
+msgstr "データマージ: 重複レコードを見つける"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_cleaning_model.py:0
 msgid "Data to Clean"
-msgstr ""
+msgstr "クリーニングするデータ"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__days
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__days
 msgid "Days"
-msgstr ""
+msgstr "日"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Deduplicate"
-msgstr ""
+msgstr "重複排除"
 
 #. module: data_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_merge_config_rules_deduplication
 #: model:ir.ui.menu,name:data_cleaning.menu_data_merge_group
 msgid "Deduplication"
-msgstr ""
+msgstr "重複排除"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_group
 msgid "Deduplication Group"
-msgstr ""
+msgstr "重複排除グループ"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_model
@@ -337,68 +345,68 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__model_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__model_id
 msgid "Deduplication Model"
-msgstr ""
+msgstr "重複排除モデル"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_record
 msgid "Deduplication Record"
-msgstr ""
+msgstr "重複排除レコード"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_rule
 msgid "Deduplication Rule"
-msgstr ""
+msgstr "重複排除規則"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_config
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__rule_ids
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Deduplication Rules"
-msgstr ""
+msgstr "重複排除規則"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Deduplication is forbidden on the model: %s"
-msgstr ""
+msgstr "モデルでは重複排除は禁止されています: %s"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__delete
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_tree
 msgid "Details"
-msgstr ""
+msgstr "詳細"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__differences
 msgid "Differences"
-msgstr ""
+msgstr "差異"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_record__differences
 msgid "Differences with the master record"
-msgstr ""
+msgstr "マスタレコードとの相違"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_form
 msgid "Disable Merge"
-msgstr ""
+msgstr "マージ無効化"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_record_view_search_merge_action
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Discarded"
-msgstr ""
+msgstr "破棄済"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__display_name
@@ -412,106 +420,106 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__display_name
 #: model:ir.model.fields,field_description:data_cleaning.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__divergent_fields
 msgid "Divergent Fields"
-msgstr ""
+msgstr "不一致のフィールド"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__domain
 msgid "Domain"
-msgstr ""
+msgstr "ドメイン"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__removal_mode
 msgid "Duplicate Removal"
-msgstr ""
+msgstr "重複削除"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_record
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_record_notification
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Duplicates"
-msgstr ""
+msgstr "重複"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Duplicates to Merge"
-msgstr ""
+msgstr "マージする重複"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__create_threshold
 msgid ""
 "Duplicates with a similarity below this threshold will not be suggested"
-msgstr ""
+msgstr "このしきい値を下回る類似度の重複は提案されません。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_form
 msgid "Enable Merge"
-msgstr ""
+msgstr "マージ有効化"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_rule.py:0
 msgid "Exact Match"
-msgstr ""
+msgstr "完全一致"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__field_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__field_id
 msgid "Field"
-msgstr ""
+msgstr "フィールド"
 
 #. module: data_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_config_rules_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_record
 msgid "Field Cleaning"
-msgstr ""
+msgstr "項目クリーニング"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_record
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_record_notification
 msgid "Field Cleaning Records"
-msgstr ""
+msgstr "項目クリーニングレコード"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_config
 msgid "Field Cleaning Rules"
-msgstr ""
+msgstr "項目クリーニング規則"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__field_name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__name
 msgid "Field Name"
-msgstr ""
+msgstr "フィールド名"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_field_form
 msgid "Field To Clean"
-msgstr ""
+msgstr "クリーン対象項目"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__field_values
 msgid "Field Values"
-msgstr ""
+msgstr "項目値"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__first
 msgid "First Letters to Uppercase"
-msgstr ""
+msgstr "最初の文字のみ大文字"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__phone
 msgid "Format Phone"
-msgstr ""
+msgstr "フォーマット電話"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__hide_merge_action
 msgid "Hide merge action button"
-msgstr ""
+msgstr "マージアクションボタンを隠す"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_case
@@ -519,13 +527,14 @@ msgid ""
 "How the type case is set by the rule. 'First Letters to Uppercase' sets "
 "every letter to lowercase except the first letter of each word, which is set"
 " to uppercase."
-msgstr ""
+msgstr "大文字小文字の設定規則。'最初の文字のみ大文字'は、各単語の最初の文字のみ大文"
+"字とし、それ以外は小文字とする。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "I've identified"
-msgstr ""
+msgstr "以下を識別しました:"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__id
@@ -540,21 +549,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_res_partner__id
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__is_merge_enabled
 msgid ""
 "If True, the generic data merge tool is available in the contextual menu of "
 "this model."
-msgstr ""
+msgstr "TRUEの場合、このモデルのコンテクストメニューで汎用データマージツールが利用で"
+"きます。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__is_contextual_merge_action
 msgid ""
 "If True, this record is used for contextual menu action \"Merge\" on the "
 "target model."
-msgstr ""
+msgstr "TRUEの場合、"
+"このレコードはターゲットモデルのコンテキストメニューのアクション\"マージ"
+"\"に使用されます。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__hide_merge_action
@@ -562,27 +574,31 @@ msgid ""
 "If the model already has a custom merge method, the class attribute `_merge_disabled` is set to true on\n"
 "             that model and the generic data merge action should not be available on that model."
 msgstr ""
+"もしモデルが既にカスタムマージ方法を持っている場合、クラス属性 "
+"`_merge_disabled` はそのモデルで\n"
+"　　　"
+"TRUEに設定され、汎用データマージアクションはそのモデルでは利用できません。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_deleted
 msgid "Is Deleted"
-msgstr ""
+msgstr "削除済"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_discarded
 msgid "Is Discarded"
-msgstr ""
+msgstr "破棄済"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_master
 msgid "Is Master"
-msgstr ""
+msgstr "マスターレコード"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__last_notification
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__last_notification
 msgid "Last Notification"
-msgstr ""
+msgstr "最終通知"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__write_uid
@@ -593,7 +609,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__write_date
@@ -604,40 +620,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_record__used_in
 msgid "List of other models referencing this record"
-msgstr ""
+msgstr "このレコードを参照する他のモデルのリスト"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_model__notify_user_ids
 msgid "List of users to notify when there are new records to clean"
-msgstr ""
+msgstr "クリーニングする新しいデータがあるときに通知するユーザのリスト"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__notify_user_ids
 msgid "List of users to notify when there are new records to merge"
-msgstr ""
+msgstr "マージする新しいレコードがあるときに通知するユーザのリスト"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__cleaning_mode__manual
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__merge_mode__manual
 msgid "Manual"
-msgstr ""
+msgstr "手動"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.ir_model_action_merge
 #: model:ir.ui.menu,name:data_cleaning.ir_model_menu_merge_action_manager
 msgid "Manual Merge"
-msgstr ""
+msgstr "手動マージ"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Manual Selection - %s"
-msgstr ""
+msgstr "手動選択 - %s"
 
 #. module: data_cleaning
 #. odoo-javascript
@@ -650,33 +666,33 @@ msgstr ""
 #: model:ir.actions.server,name:data_cleaning.merge_action_res_partner_industry
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "Merge"
-msgstr ""
+msgstr "マージ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__match_mode
 msgid "Merge If"
-msgstr ""
+msgstr "マージ条件"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__merge_mode
 msgid "Merge Mode"
-msgstr ""
+msgstr "マージモード"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__ref_merge_ir_act_server_id
 msgid "Merge Server Action"
-msgstr ""
+msgstr "サーバアクションをマージ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__is_contextual_merge_action
 msgid "Merge action attached"
-msgstr ""
+msgstr "添付済アクションをマージ"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Missing required PostgreSQL extension: unaccent"
-msgstr ""
+msgstr "必要な PostgreSQL 拡張モジュールがありません: unaccent"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__res_model_id
@@ -691,7 +707,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_search
 msgid "Model"
-msgstr ""
+msgstr "モデル"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__res_model_name
@@ -701,31 +717,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__res_model_name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__res_model_name
 msgid "Model Name"
-msgstr ""
+msgstr "モデル名"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "モデル"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__months
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__months
 msgid "Months"
-msgstr ""
+msgstr "月"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__name
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record_notification
 msgid "No cleaning suggestions"
-msgstr ""
+msgstr "クリーニング提案はありません"
 
 #. module: data_cleaning
 #. odoo-python
@@ -733,53 +749,53 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record_notification
 msgid "No duplicates found"
-msgstr ""
+msgstr "重複は見つかりませんでした"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_frequency
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_frequency
 msgid "Notify"
-msgstr ""
+msgstr "通知"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_frequency_period
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_frequency_period
 msgid "Notify Frequency Period"
-msgstr ""
+msgstr "通知頻度期間"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_user_ids
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_user_ids
 msgid "Notify Users"
-msgstr ""
+msgstr "ユーザ通知"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Query Failed."
-msgstr ""
+msgstr "クエリーに失敗しました。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__record_ids
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__res_id
 msgid "Record"
-msgstr ""
+msgstr "レコード"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__group_id
 msgid "Record Group"
-msgstr ""
+msgstr "レコードグループ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__res_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__res_id
 msgid "Record ID"
-msgstr ""
+msgstr "レコードID"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__name
 msgid "Record Name"
-msgstr ""
+msgstr "レコード名"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_record_view_search_merge_action
@@ -787,131 +803,131 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Records"
-msgstr ""
+msgstr "レコード"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__records_to_clean_count
 msgid "Records To Clean"
-msgstr ""
+msgstr "クリーニングするレコード"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__records_to_merge_count
 msgid "Records To Merge Count"
-msgstr ""
+msgstr "マージするレコード数"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__domain
 msgid "Records eligible for the deduplication process"
-msgstr ""
+msgstr "重複除外処理の対象となるレコード"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Records must be of the same model"
-msgstr ""
+msgstr "レコードは同一モデルのものである必要があります。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__merge_threshold
 msgid ""
 "Records with a similarity percentage above this threshold will be "
 "automatically merged"
-msgstr ""
+msgstr "このしきい値以上の類似度を持つレコードは自動的にマージされます。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__name
 msgid "Resource Name"
-msgstr ""
+msgstr "リソース名"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__rule_ids
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Rule"
-msgstr ""
+msgstr "規則"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__rule_ids
 msgid "Rules"
-msgstr ""
+msgstr "規則"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__html
 msgid "Scrap HTML"
-msgstr ""
+msgstr "HTMLを廃棄"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Select a model to configure cleaning actions"
-msgstr ""
+msgstr "クリーニングアクションを設定するモデルを選択します。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Select a model to configure deduplication rules"
-msgstr ""
+msgstr "モデルを選択して重複規則を設定します。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__sequence
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "シーケンス"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__case
 msgid "Set Type Case"
-msgstr ""
+msgstr "大文字小文字の設定"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__similarity
 msgid "Similarity %"
-msgstr ""
+msgstr "類似性 %"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__merge_threshold
 msgid "Similarity Threshold"
-msgstr ""
+msgstr "類似性しきい値"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_group__similarity
 msgid ""
 "Similarity coefficient based on the amount of text fields exactly in common."
-msgstr ""
+msgstr "テキストフィールドが正確に共通している量に基づく類似度係数。"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_storage
 #: model:ir.model,name:data_cleaning.model_ir_attachment_report
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_storage
 msgid "Storage"
-msgstr ""
+msgstr "ストレージ"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/report/data_storage.py:0
 msgid "Storage Detail: %(name)s"
-msgstr ""
+msgstr "ストレージ詳細: %(name)s"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__rule_ids
 msgid "Suggest to merge records matching at least one of these rules"
-msgstr ""
+msgstr "これらの規則の少なくとも1つに一致するレコードをマージするよう提案します。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__suggested_value_display
 msgid "Suggested"
-msgstr ""
+msgstr "提案"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__suggested_value
 msgid "Suggested Value"
-msgstr ""
+msgstr "推奨値"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__create_threshold
 msgid "Suggestion Threshold"
-msgstr ""
+msgstr "提案のしきい値"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_trim__superfluous
 msgid "Superfluous Spaces"
-msgstr ""
+msgstr "余分な空白"
 
 #. module: data_cleaning
 #. odoo-python
@@ -919,138 +935,139 @@ msgstr ""
 msgid ""
 "The Python module `phonenumbers` is not installed. Format phone will not "
 "work."
-msgstr ""
+msgstr "Pythonモジュール `phonenumbers` "
+"がインストールされていません。フォーマットフォンは動作しません。"
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_cleaning_model_check_notif_freq
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_model_check_notif_freq
 msgid "The notification frequency should be greater than 0"
-msgstr ""
+msgstr "通知頻度は0より大きくする必要があります。"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "The referenced record does not exist"
-msgstr ""
+msgstr "参照されたレコードは存在しません。"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "The selected records have been merged"
-msgstr ""
+msgstr "選択されたレコードがマージされました。"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "The target model does not exists."
-msgstr ""
+msgstr "ターゲットモデルは存在しません。"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "There is not referenced record"
-msgstr ""
+msgstr "参照されたレコードがありません。"
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_model_uniq_name
 msgid "This name is already taken"
-msgstr ""
+msgstr "この名前は既に使用されています。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__size
 msgid "Total Size"
-msgstr ""
+msgstr "合計サイズ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_trim
 msgid "Trim"
-msgstr ""
+msgstr "トリム"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__trim
 msgid "Trim Spaces"
-msgstr ""
+msgstr "スペースをトリム"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__field_id
 msgid "Unique ID Field"
-msgstr ""
+msgstr "ユニークID項目"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_cleaning_list_view.xml:0
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.xml:0
 msgid "Unselect"
-msgstr ""
+msgstr "選択解除"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_write_uid
 msgid "Updated By"
-msgstr ""
+msgstr "更新者:"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_write_date
 msgid "Updated On"
-msgstr ""
+msgstr "更新日:"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__used_in
 msgid "Used In"
-msgstr ""
+msgstr "使用箇所"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_cleaning_list_view.xml:0
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Validate"
-msgstr ""
+msgstr "検証"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__weeks
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__weeks
 msgid "Weeks"
-msgstr ""
+msgstr "週"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__mix_by_company
 msgid "When enabled, duplicates across different companies will be suggested"
-msgstr ""
+msgstr "有効にすると、異なる会社間での重複が提案されます。"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_trim
 msgid ""
 "Which spaces are trimmed by the rule. Leading, trailing, and successive "
 "spaces are considered superfluous."
-msgstr ""
+msgstr "トリムされる空白の規則。前、後、連続する空白は余分な空白と見なされます。"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "You must select at least two %s in order to merge them."
-msgstr ""
+msgstr "マージするには少なくとも2つの%sを選択する必要があります。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 msgid "duplicate records with the '"
-msgstr ""
+msgstr "以下と重複したレコード:"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "here"
-msgstr ""
+msgstr "クリック"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_merged
 msgid "merged into"
-msgstr ""
+msgstr "以下にマージ済"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_main
 msgid "merged into this one"
-msgstr ""
+msgstr "これにマージ済:"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "records to clean with the '"
-msgstr ""
+msgstr "以下できれいにするレコード:"

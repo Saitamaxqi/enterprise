@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Michal Veselý <michal@veselyberanek.net>, 2022
@@ -8,20 +8,23 @@
 # Martin Trigaux, 2022
 # karolína schusterová <karolina.schusterova@vdp.sk>, 2022
 # Jiří Podhorecký, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Jiří Podhorecký, 2022\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -101,7 +104,7 @@ msgstr "Převod účtu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Additional Info: %s"
-msgstr ""
+msgstr "Doplňující informace: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -121,7 +124,7 @@ msgstr "Adresa:\n"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Adjustments"
-msgstr "Úpravy"
+msgstr "Úpravy inventáře"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -256,7 +259,7 @@ msgstr "Poplatky"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Check Number: %s"
-msgstr ""
+msgstr "Zkontroluje číslo: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -476,7 +479,7 @@ msgstr "Snížení hodnoty"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Delivery"
-msgstr "Dodání"
+msgstr "Zásilky"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -576,12 +579,12 @@ msgstr "Holandská aukce"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "End to end ID: %s"
-msgstr ""
+msgstr "Koncové ID (End to end ID): %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Entry Info: %s"
-msgstr ""
+msgstr "informace k záznamu: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -646,7 +649,7 @@ msgstr "Poplatky"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fees, Commission , Taxes, Charges and Interest"
-msgstr ""
+msgstr "Poplatky, provize, daně a úroky"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -776,7 +779,7 @@ msgstr "Inspeci / burza akcií"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Instruction ID: %s"
-msgstr ""
+msgstr "ID instrukce (Instruction ID): %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -841,7 +844,7 @@ msgstr "Vydaný převod kreditu v reálném čase"
 #. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_journal
 msgid "Journal"
-msgstr "Deník"
+msgstr "Účetní deník"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -896,7 +899,7 @@ msgstr "Poplatky za správu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Mandate ID: %s"
-msgstr ""
+msgstr "ID mandanta (Mandate ID): %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -921,22 +924,22 @@ msgstr "Fúze"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Credit Operations"
-msgstr "Různé úvěrové operace"
+msgstr "Ostatní kreditní operace"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Debit Operations"
-msgstr "Různé debetní operace"
+msgstr "Ostatní debetní operace"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Deposit"
-msgstr "Různé zálohy"
+msgstr "Ostatní zálohy"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Securities Operations"
-msgstr "Různé operace s cennými papíry"
+msgstr "Ostatní operace s cennými papíry"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -951,12 +954,12 @@ msgstr "Hypoteční úvěry"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Netting"
-msgstr "Síť"
+msgstr "Vyrovnání"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "No exchange rate was found to convert an amount into the currency of the journal"
-msgstr ""
+msgstr "Nebyl nalezen žádný směnný kurz pro přepočet částky na měnu deníku"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1086,7 +1089,7 @@ msgstr "Kontrola objednávky"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Other"
-msgstr "jiný"
+msgstr "Ostatní"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1139,6 +1142,8 @@ msgid ""
 "Please check the currency on your bank journal.\n"
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
+"Prosím zkontrolujte měnu bankovního deníku.\n"
+"V tomto souboru CAMT nebyl nalezen žádný výpis v měně %s."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1379,7 +1384,7 @@ msgstr "Zúčtování vývozního dokladu zraku"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement of Sight Import document"
-msgstr "Zúčtování dovozního dokladu vyhlídky"
+msgstr "Zúčtování importovaného výpisu"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1514,7 +1519,7 @@ msgstr "Transakční poplatky"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Transaction ID: %s"
-msgstr ""
+msgstr "ID tranksace (Transaction ID): %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_followup
+# * account_followup
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:55+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"account_followup/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_followup
 #. odoo-python
@@ -288,7 +293,9 @@ msgstr "<span class=\"o_stat_text\">Due</span>"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.res_partner_view_form
 msgid "<span>Preferred address for follow-up reports. Selected by default when you send reminders about overdue invoices.</span>"
-msgstr "<span>Предпочтительный адрес для последующих отчетов. Выбирается по умолчанию при отправке напоминаний о просроченных счетах.</span>"
+msgstr ""
+"<span>Предпочитаемый адрес для отчетов по последующим действиям. Выбирается "
+"по умолчанию при отправке уведомлений о просроченных счетах.</span>"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -304,7 +311,9 @@ msgstr ""
 #. module: account_followup
 #: model:ir.model.constraint,message:account_followup.constraint_account_followup_followup_line_uniq_name
 msgid "A follow-up action name must be unique. This name is already set to another action."
-msgstr "Имя последующего действия должно быть уникальным. Это имя уже задано для другого действия."
+msgstr ""
+"Название последующего действия должно быть уникальным. Это название уже "
+"используется для другого действия."
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__account_manager
@@ -314,7 +323,7 @@ msgstr "Менеджер Аккаунта"
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.ir_cron_auto_post_draft_entry_ir_actions_server
 msgid "Account Report Followup; Execute followup"
-msgstr "Последующий отчет по счету; выполнение последующих действий"
+msgstr "Отчет по счету – последующее действие; Выполнить последующее действие"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -351,7 +360,7 @@ msgstr "Добавьте контакты для уведомления..."
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__additional_follower_ids
 msgid "Add followers"
-msgstr "Добавить последователей"
+msgstr "Добавить наблюдателей"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
@@ -445,14 +454,14 @@ msgstr "Страна"
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__create_uid
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_missing_information_wizard__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__create_date
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__create_date
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_missing_information_wizard__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
@@ -484,7 +493,9 @@ msgstr "Дата:"
 #. module: account_followup
 #: model:ir.model.constraint,message:account_followup.constraint_account_followup_followup_line_days_uniq
 msgid "Days of the follow-up lines must be different per company"
-msgstr "Дни последующих линий должны быть разными для каждой компании"
+msgstr ""
+"Количество дней между этапами последующих действий должно быть разным для "
+"каждой компании"
 
 #. module: account_followup
 #. odoo-python
@@ -500,14 +511,18 @@ msgid ""
 "Best Regards,\n"
 "\n"
 msgstr ""
-"Уважаемые %s,\n"
+"Здравствуйте, %s!\n"
 "\n"
 "\n"
-"Исключение сделано, если это была наша ошибка, кажется, что следующая сумма остается невыплаченной. Пожалуйста, примите соответствующие меры, чтобы осуществить этот платеж в течение следующих 8 дней.\n"
+"За исключением нашей возможной ошибки, информируем вас о наличии "
+"неоплаченной задолженности. Просим вас принять меры и произвести оплату в "
+"течение 8 дней.\n"
 "\n"
-"Если ваш платеж был осуществлен после отправки этого письма, пожалуйста, проигнорируйте это сообщение. Не стесняйтесь обращаться в нашу бухгалтерию.\n"
+"Если вы уже оплатили счет, пожалуйста, не обращайте внимания на это письмо. "
+"При возникновении вопросов вы можете связаться с нашим бухгалтерским отделом."
 "\n"
-"С наилучшими пожеланиями,\n"
+"\n"
+"С уважением,\n"
 "\n"
 
 #. module: account_followup
@@ -519,7 +534,7 @@ msgstr "Уважаемый клиент, напоминаем вам, что у 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
 msgid "Define follow-up levels and their related actions"
-msgstr "Определите уровни последующих действий и связанные с ними мероприятия"
+msgstr "Определите уровни последующих действий и связанные с ними шаги"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
@@ -539,10 +554,10 @@ msgid ""
 "- Salesperson: Sales Person defined on the invoice\n"
 "- Account Manager: Sales Person defined on the customer"
 msgstr ""
-"Определите, кто будет назначен на это мероприятие:\n"
+"Определите, кто будет назначен ответственным за действие:\n"
 "- Ответственный за последующие действия (по умолчанию)\n"
-"- Продавец: Лицо отдела продаж, определенное в счете-фактуре\n"
-"- Менеджер по работе с клиентами: Сотрудник отдела продаж, определенный для клиента"
+"- Менеджер по продажам: менеджер, указанный в счете\n"
+"- Аккаунт-менеджер: менеджер по продажам, указанный в карточке клиента"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__display_name
@@ -606,25 +621,25 @@ msgstr "Адрес для последующих действий"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr "Критерии Последовательности"
+msgstr "Критерии для последующих действий"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_move_line__followup_line_id
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_line_id
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_line_id
 msgid "Follow-up Level"
-msgstr "Уровень последующего наблюдения"
+msgstr "Уровень последующего действия"
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.action_account_followup_line_definition_form
 #: model:ir.ui.menu,name:account_followup.account_followup_menu
 msgid "Follow-up Levels"
-msgstr "Последующие уровни"
+msgstr "Уровни последующих действий"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_report
 msgid "Follow-up Report"
-msgstr "Последующий отчет"
+msgstr "Отчет по последующим действиям"
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.action_view_list_customer_statements
@@ -640,30 +655,30 @@ msgstr "Отчеты о Последовательностях в Виде Де�
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__followup
 msgid "Follow-up Responsible"
-msgstr "Последующий Ответственный"
+msgstr "Ответственный за последующие действия"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_status
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_status
 msgid "Follow-up Status"
-msgstr "Статус последующих действий"
+msgstr "Статус последующего действия"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
-msgstr "Последующие шаги"
+msgstr "Этапы последующих действий"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.report_followup_print_all
 msgid "Follow-up details"
-msgstr "Подробности последующих действий"
+msgstr "Детали последующего действия"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Follow-up letter generated"
-msgstr "Составлено последующее письмо"
+msgstr "Сформировано письмо для последующего действия"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.account_followup_journal_dashboard_kanban_view
@@ -673,7 +688,7 @@ msgstr "Последующие отчеты"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_missing_information_wizard
 msgid "Followup missing information wizard"
-msgstr "Мастер последующей обработки недостающей информации"
+msgstr "Инструмент для заполнения недостающих данных"
 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
@@ -689,7 +704,7 @@ msgstr ""
 #. module: account_followup
 #: model:mail.template,name:account_followup.demo_followup_email_template_4
 msgid "Fourth reminder followup"
-msgstr "Четвертое повторное напоминание"
+msgstr "Четвертое напоминание"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_search_view
@@ -707,6 +722,8 @@ msgstr "ID"
 #: model:ir.model.fields,help:account_followup.field_account_followup_followup_line__additional_follower_ids
 msgid "If set, those users will be added as followers on the partner and receive notifications about any email reply made by the partner on the reminder email."
 msgstr ""
+"Если установлено, эти пользователи будут добавлены в качестве наблюдателей и "
+"будут получать уведомления о любых ответах партнера на письмо-напоминание."
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__in_need_of_action
@@ -723,7 +740,7 @@ msgstr "Счета"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
 msgid "Invoices Analysis"
-msgstr "Анализ счетов-фактур"
+msgstr "Анализ счетов"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__is_mail_template_editor
@@ -733,7 +750,7 @@ msgstr "Редактор"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_move_line
 msgid "Journal Item"
-msgstr "Наименование в журнале"
+msgstr "Элемент журнала"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -750,14 +767,14 @@ msgstr "Язык"
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__write_uid
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_missing_information_wizard__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__write_date
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__write_date
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_missing_information_wizard__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_move_line__last_followup_date
@@ -878,7 +895,7 @@ msgstr "Печать"
 #. module: account_followup
 #: model:ir.actions.report,name:account_followup.action_report_followup
 msgid "Print Follow-up Letter"
-msgstr "Печать последующего письма"
+msgstr "Печать письма-напоминания"
 
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.action_account_reports_customer_statements_do_followup
@@ -944,12 +961,12 @@ msgstr "Деятельность по расписанию"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_line_filter
 msgid "Search Follow-up"
-msgstr "Последующий поиск"
+msgstr "Поиск последующего действия"
 
 #. module: account_followup
 #: model:mail.template,name:account_followup.demo_followup_email_template_2
 msgid "Second reminder followup"
-msgstr "Второе последующее напоминание"
+msgstr "Второе напоминание"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -1051,7 +1068,9 @@ msgstr "Количество дней после даты оплаты счет�
 #: model:ir.model.fields,help:account_followup.field_res_partner__followup_responsible_id
 #: model:ir.model.fields,help:account_followup.field_res_users__followup_responsible_id
 msgid "The responsible assigned to manual followup activities, if defined in the level."
-msgstr "Ответственный, назначенный на ручные последующие действия, если они определены на уровне."
+msgstr ""
+"Ответственный, назначенный для выполнения последующих действий вручную, если "
+"он определен на этом уровне."
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_tree_view
@@ -1110,7 +1129,9 @@ msgstr "Посмотреть партнеров"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.missing_information_view_form
 msgid "We were not able to process some of the automated follow-up actions due to missing information on the partners."
-msgstr "Мы не смогли обработать некоторые автоматизированные последующие действия из-за отсутствия информации о партнерах."
+msgstr ""
+"Не удалось обработать некоторые автоматические последующие действия из-за "
+"отсутствия информации о партнерах."
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__with_overdue_invoices
@@ -1132,13 +1153,17 @@ msgstr "Напишите ваше сообщение здесь ..."
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an Email, but no follow-up contact has any email address set for customer '%s'"
-msgstr "Вы пытаетесь отправить электронное письмо, но ни один из последующих контактов не имеет адреса электронной почты, установленного для клиента '%s'"
+msgstr ""
+"Вы пытаетесь отправить электронное письмо, но у контакта для последующих "
+"действий нет адреса электронной почты для клиента «%s»"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an SMS, but no follow-up contact has any mobile/phone number set for customer '%s'"
-msgstr "Вы пытаетесь отправить SMS, но ни один из последующих контактов не имеет номера мобильного телефона для клиента '%s'"
+msgstr ""
+"Вы пытаетесь отправить SMS, но у контакта для последующих действий нет "
+"номера телефона для клиента «%s»"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form

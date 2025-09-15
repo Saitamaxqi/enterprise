@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* approvals
+# * approvals
 #
 # Translators:
 # Martin Trigaux, 2022
 # Thi Huong Nguyen, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"approvals/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -38,7 +41,7 @@ msgstr "<span>tới: </span>"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction
 msgid "Action Needed"
-msgstr "Hành động Cần thiết"
+msgstr "Tác vụ cần thiết"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__active
@@ -48,7 +51,7 @@ msgstr "Đang hoạt động"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_ids
 msgid "Activities"
-msgstr "Các hoạt động"
+msgstr "Hoạt động"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_mail_activity
@@ -63,12 +66,12 @@ msgstr "Hoạt động ngoại lệ"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_state
 msgid "Activity State"
-msgstr "Trạng thái Hoạt động"
+msgstr "Trạng thái hoạt động"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "Biểu tượng Kiểu Hoạt động"
+msgstr "Biểu tượng loại hoạt động"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_product
@@ -85,31 +88,34 @@ msgstr "Quản trị viên"
 #: model:ir.actions.act_window,name:approvals.approval_request_action_all
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu_all
 msgid "All Approvals"
-msgstr "Tất cả Phê duyệt"
+msgstr "Tất cả phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__approval_type
 #: model:ir.model.fields,help:approvals.field_approval_request__approval_type
 msgid "Allows you to define which documents you would like to create once the request has been approved"
-msgstr "Cho phép bạn xác định tài liệu nào bạn muốn tạo sau khi yêu cầu đã được phê duyệt"
+msgstr ""
+"Cho phép bạn xác định tài liệu nào bạn muốn tạo khi yêu cầu đã được phê "
+"duyệt."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__amount
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Amount"
-msgstr "Tổng tiền"
+msgstr "Số tiền"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_reference
 #: model:ir.model.fields,help:approvals.field_approval_request__has_reference
 msgid "An additional reference that should be specified on the request."
-msgstr "Mã tham chiếu bổ sung cần được chỉ rõ trong đơn yêu cầu. "
+msgstr "Mã tham chiếu bổ sung cần được chỉ rõ trong yêu cầu."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "An user may not be in the approver list multiple times."
-msgstr "Một người dùng không thể xuất hiện nhiều lần trong danh sách người duyệt. "
+msgstr ""
+"Một người dùng không thể xuất hiện nhiều lần trong danh sách người phê duyệt."
 
 #. module: approvals
 #: model:mail.activity.type,name:approvals.mail_activity_data_approval
@@ -119,13 +125,13 @@ msgstr "Phê duyệt"
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category
 msgid "Approval Category"
-msgstr "Danh mục Phê duyệt"
+msgstr "Danh mục phê duyệt"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_request
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__approval_request_id
 msgid "Approval Request"
-msgstr "Yêu cầu Phê duyệt"
+msgstr "Yêu cầu phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__name
@@ -165,12 +171,12 @@ msgstr "Hình ảnh Loại Phê duyệt"
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu_to_review
 msgid "Approvals to Review"
-msgstr "Phê duyệt cần Xem xét"
+msgstr "Phê duyệt cần xem lại"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review_category
 msgid "Approvals to review"
-msgstr "Phê duyệt cần xem xét"
+msgstr "Phê duyệt cần xem lại"
 
 #. module: approvals
 #. odoo-javascript
@@ -179,7 +185,7 @@ msgstr "Phê duyệt cần xem xét"
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Approve"
-msgstr "Duyệt"
+msgstr "Phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__approved
@@ -198,30 +204,32 @@ msgstr "Người phê duyệt"
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Approver Sequence can only be activated with at least 1 minimum approver."
-msgstr "Trình tự Phê duyệt chỉ có thể được kích hoạt với ít nhất 1 người phê duyệt tối thiểu."
+msgstr ""
+"Trình tự phê duyệt chỉ có thể được kích hoạt khi có ít nhất 1 người phê "
+"duyệt."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__user_ids
 msgid "Approver Users"
-msgstr "Người dùng Phê duyệt"
+msgstr "Người dùng phê duyệt"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Approver(s)"
-msgstr "(Những) Người phê duyệt"
+msgstr "(Những) người phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approver_ids
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approver_ids
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Approvers"
-msgstr "Những Người phê duyệt"
+msgstr "Người phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approver_sequence
 msgid "Approvers Sequence?"
-msgstr "Trình tự Phê duyệt?"
+msgstr "Trình tự phê duyệt?"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -232,28 +240,28 @@ msgstr "Đã lưu trữ"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Attach Document"
-msgstr "Đính kèm Tài liệu"
+msgstr "Đính kèm tài liệu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_attachment_count
 msgid "Attachment Count"
-msgstr "Số lượng Tệp đính kèm"
+msgstr "Số tệp đính kèm"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__automated_sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_request__automated_sequence
 msgid "Automated Sequence?"
-msgstr "Trình tự Tự động?"
+msgstr "Trình tự tự động?"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Back To Draft"
-msgstr "Trở lại Bản nháp"
+msgstr "Trở lại bản nháp"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_borrow_items
 msgid "Borrow Items"
-msgstr "Mượn Đồ"
+msgstr "Mượn đồ"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_business_trip
@@ -263,12 +271,12 @@ msgstr "Công tác"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__change_request_owner
 msgid "Can Change Request Owner"
-msgstr "Có thể Thay đổi Người Yêu cầu"
+msgstr "Có thể thay đổi người yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit
 msgid "Can Edit"
-msgstr "Có thể Chỉnh sửa"
+msgstr "Có thể sửa"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__cancel
@@ -281,7 +289,7 @@ msgstr "Hủy"
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_car_rental_application
 msgid "Car Rental Application"
-msgstr "Đơn xin Thuê Xe"
+msgstr "Đơn xin thuê Xe"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_category_id
@@ -292,7 +300,7 @@ msgstr "Danh mục"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__category_approver
 msgid "Category Approver"
-msgstr "Người phê duyệt Danh mục"
+msgstr "Người phê duyệt danh mục"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_code
@@ -322,7 +330,7 @@ msgstr "Liên hệ"
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_contract_approval
 msgid "Contract Approval"
-msgstr "Phê duyệt Hợp đồng"
+msgstr "Phê duyệt hợp đồng"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_product_line__product_uom_category_id
@@ -350,7 +358,7 @@ msgstr "Được tạo vào"
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action_new_request
 msgid "Dashboard"
-msgstr "Trang tổng quan"
+msgstr "Bảng điều khiển"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date
@@ -362,7 +370,7 @@ msgstr "Ngày"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date_confirmed
 msgid "Date Confirmed"
-msgstr "Ngày được Xác nhận"
+msgstr "Ngày đã được xác nhận"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date_end
@@ -400,7 +408,7 @@ msgstr "Mô tả"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__display_name
 #: model:ir.model.fields,field_description:approvals.field_approval_request__display_name
 msgid "Display Name"
-msgstr "Tên Hiển thị"
+msgstr "Tên hiển thị"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -422,27 +430,27 @@ msgstr "VD: Chi phí chuyến công tác đến Paris"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Edit Request"
-msgstr "Chỉnh sửa Yêu cầu"
+msgstr "Chỉnh sửa yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__manager_approval
 msgid "Employee's Manager"
-msgstr "Quản lý của Nhận viên"
+msgstr "Quản lý của nhân viên"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__existing_request_user_ids
 msgid "Existing Request User"
-msgstr "Người dùng Yêu cầu Hiện có"
+msgstr "Người dùng yêu cầu hiện tại"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__existing_user_ids
 msgid "Existing User"
-msgstr "Người dùng Hiện có"
+msgstr "Người dùng hiện tại"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Fields"
-msgstr "Trường "
+msgstr "Trường"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_follower_ids
@@ -457,17 +465,17 @@ msgstr "Người theo dõi (Đối tác)"
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "Biểu tượng Font awesome  v.d: fa-tasks"
+msgstr "Font biểu tượng, ví dụ: fa-tasks"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
 msgid "General Approval"
-msgstr "Phê duyệt Chung"
+msgstr "Phê duyệt chung"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__has_access_to_request
 msgid "Has Access To Request"
-msgstr "Có Quyền truy cập vào Yêu cầu"
+msgstr "Có quyền truy cập vào yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__has_amount
@@ -491,7 +499,7 @@ msgstr "Có ngày tháng"
 #: model:ir.model.fields,field_description:approvals.field_approval_category__has_location
 #: model:ir.model.fields,field_description:approvals.field_approval_request__has_location
 msgid "Has Location"
-msgstr "Có địa điểm"
+msgstr "Có vị trí"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__has_message
@@ -538,11 +546,13 @@ msgid ""
 "        Is Required Approver: the employee's manager will be required to approve the request.\n"
 "    "
 msgstr ""
-"Cách quản lý của nhân viên tương tác với loại phê duyệt này.\n"
+"Cách thức quản lý của nhân viên tương tác với loại phê duyệt này.\n"
 "\n"
-"        Trống: không thực hiện\n"
-"        Là Người phê duyệt: quản lý của nhân viên sẽ có tên trong danh sách người phê duyệt\n"
-"        Là Người phê duyệt Bắt buộc: quản lý của nhân viên bắt buộc phải duyệt yêu cầu này. \n"
+"        Trống: không làm gì\n"
+"        Là Người phê duyệt: quản lý của nhân viên sẽ có tên trong danh sách "
+"người phê duyệt\n"
+"        Là Người phê duyệt bắt buộc: quản lý của nhân viên bắt buộc phải "
+"duyệt yêu cầu này.\n"
 "    "
 
 #. module: approvals
@@ -562,7 +572,7 @@ msgstr "Biểu tượng"
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "Biểu tượng chỉ ra một hoạt động ngoại lệ."
+msgstr "Biểu tượng cho thấy một hoạt động ngoại lệ."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_needaction
@@ -578,13 +588,16 @@ msgstr "Nếu chọn, một số tin nhắn sẽ có lỗi gửi."
 #: model:ir.model.fields,help:approvals.field_approval_category__automated_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__automated_sequence
 msgid "If checked, the Approval Requests will have an automated generated name based on the given code."
-msgstr "Nếu chọn, Yêu cầu Phê duyệt sẽ có tên được tạo tự động dựa trên mã có sẵn. "
+msgstr ""
+"Nếu chọn, Yêu cầu phê duyệt sẽ có tên được tạo tự động dựa trên mã có sẵn."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__approver_sequence
 msgid "If checked, the approvers have to approve in sequence (one after the other). If Employee's Manager is selected as approver, they will be the first in line."
 msgstr ""
+"Nếu chọn, người phê duyệt phải phê duyệt theo trình tự (lần lượt). Nếu Quản "
+"lý của Nhân viên được chọn làm người phê duyệt, họ sẽ là người đầu tiên."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__image
@@ -595,32 +608,32 @@ msgstr "Hình ảnh"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__invalid_minimum
 msgid "Invalid Minimum"
-msgstr "Lượng tối thiểu Không hợp lệ"
+msgstr "Lượng tối thiểu không hợp lệ"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__invalid_minimum_warning
 msgid "Invalid Minimum Warning"
-msgstr "Cảnh báo Lượng tối thiểu Không hợp lệ"
+msgstr "Cảnh báo lượng tối thiểu không hợp lệ"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__manager_approval__approver
 msgid "Is Approver"
-msgstr "Là Người phê duyệt"
+msgstr "Là người phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_is_follower
 msgid "Is Follower"
-msgstr "Là Người theo dõi"
+msgstr "Là người theo dõi"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__manager_approval__required
 msgid "Is Required Approver"
-msgstr "Là Người phê duyệt Bắt buộc"
+msgstr "Là người phê duyệt bắt buộc"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_job_referral_award
 msgid "Job Referral Award"
-msgstr "Thưởng Giới thiệu Việc làm"
+msgstr "Phần thưởng giới thiệu công việc"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__write_uid
@@ -629,7 +642,7 @@ msgstr "Thưởng Giới thiệu Việc làm"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_uid
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_uid
 msgid "Last Updated by"
-msgstr "Cập nhật Lần cuối bởi"
+msgstr "Cập nhật lần cuối bởi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__write_date
@@ -650,7 +663,7 @@ msgstr "Hãy đi tới"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__location
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Location"
-msgstr "Địa điểm"
+msgstr "Vị trí"
 
 #. module: approvals
 #. odoo-javascript
@@ -671,7 +684,7 @@ msgstr "Quản lý"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error
 msgid "Message Delivery error"
-msgstr "Lỗi Gửi Tin nhắn"
+msgstr "Lỗi gửi tin nhắn"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_ids
@@ -682,28 +695,29 @@ msgstr "Tin nhắn"
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_minimum
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approval_minimum
 msgid "Minimum Approval"
-msgstr "Phê duyệt Tối thiểu"
+msgstr "Phê duyệt tối thiểu"
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Minimum Approval must be equal or superior to the sum of required Approvers."
-msgstr "Phê duyệt Tối thiểu phải bằng hoặc hơn tổng số Người phê duyệt bắt buộc. "
+msgstr ""
+"Phê duyệt tối thiểu phải bằng hoặc hơn tổng số Người phê duyệt bắt buộc."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Hạn chót Hoạt động của Tôi"
+msgstr "Thời hạn hoạt động của tôi"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu
 msgid "My Approvals"
-msgstr "Phê duyệt của Tôi"
+msgstr "Phê duyệt của tôi"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "My Approvals to Review"
-msgstr "Phê duyệt của Tôi cần xem xét"
+msgstr "Phê duyệt của tôi cần xem lại"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
@@ -714,7 +728,7 @@ msgstr "Yêu cầu của tôi"
 #: model:ir.actions.act_window,name:approvals.approval_request_action
 #: model:ir.ui.menu,name:approvals.approvals_request_menu_my
 msgid "My Requests"
-msgstr "Các Yêu cầu của tôi"
+msgstr "Yêu cầu của tôi"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__name
@@ -733,43 +747,43 @@ msgstr "Mới"
 #: model:ir.ui.menu,name:approvals.approvals_category_menu_new
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "New Request"
-msgstr "Yêu cầu Mới"
+msgstr "Yêu cầu mới"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Sự kiện theo Lịch cho Hoạt động Kế tiếp"
+msgstr "Sự kiện trên lịch cho hoạt động tiếp theo"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Hạn chót Hoạt động Kế tiếp"
+msgstr "Thời hạn cho hoạt động tiếp theo"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_summary
 msgid "Next Activity Summary"
-msgstr "Tóm tắt Hoạt động Kế tiếp"
+msgstr "Tóm tắt hoạt động tiếp theo"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_id
 msgid "Next Activity Type"
-msgstr "Kiểu Hoạt động Kế tiếp"
+msgstr "Loại hoạt động tiếp theo"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_all
 msgid "No Approvals"
-msgstr "Không có Phê duyệt"
+msgstr "Không có phê duyệt"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
 msgid "No Approvals Requests"
-msgstr "Không có Yêu cầu Phê duyệt"
+msgstr "Không có yêu cầu phê duyệt"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_to_review
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_to_review_category
 msgid "No new approvals to review"
-msgstr "Không có phê duyệt mới nào cần xem xét"
+msgstr "Không có phê duyệt mới nào cần xem lại"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__no
@@ -782,22 +796,22 @@ msgstr "Không có phê duyệt mới nào cần xem xét"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_quantity__no
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_reference__no
 msgid "None"
-msgstr "Không "
+msgstr "Không"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Số lượng Hành động"
+msgstr "Số lượng tác vụ"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__attachment_number
 msgid "Number of Attachments"
-msgstr "Số lượng Tệp đính kèm"
+msgstr "Số lượng đính kèm"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error_counter
 msgid "Number of errors"
-msgstr "Số lỗi"
+msgstr "Số lượng lỗi"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_needaction_counter
@@ -817,7 +831,7 @@ msgstr "Số yêu cầu cần xác nhận"
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_user
 msgid "Officer: Approve all requests"
-msgstr ""
+msgstr "Người phụ trách: Phê duyệt tất cả các yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__optional
@@ -846,7 +860,7 @@ msgstr "Thanh toán"
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_payment_application
 msgid "Payment Application"
-msgstr "Đơn Thanh toán"
+msgstr "Đơn thanh toán"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -868,12 +882,12 @@ msgstr "Sản phẩm"
 #: model:ir.model,name:approvals.model_approval_product_line
 #: model:ir.model.fields,field_description:approvals.field_approval_request__product_line_ids
 msgid "Product Line"
-msgstr "Mục sản phẩm"
+msgstr "Dòng sản phẩm"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_product_variant
 msgid "Product Variants"
-msgstr "Biến thể Sản phẩm"
+msgstr "Biến thể sản phẩm"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_id
@@ -896,18 +910,18 @@ msgstr "Số lượng"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Đánh giá"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reference
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Reference"
-msgstr "Mã tham chiếu"
+msgstr "Tham chiếu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_id
 msgid "Reference Sequence"
-msgstr "Trình tự Tham chiếu"
+msgstr "Trình tự mã tham chiếu"
 
 #. module: approvals
 #. odoo-javascript
@@ -934,17 +948,17 @@ msgstr "Yêu cầu"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.res_users_view_form
 msgid "Request Approval"
-msgstr "Yêu cầu Phê duyệt"
+msgstr "Yêu cầu phê duyệt"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__request_owner_id
 msgid "Request Owner"
-msgstr "Người Yêu cầu"
+msgstr "Người yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__request_status
 msgid "Request Status"
-msgstr "Trạng thái Yêu cầu"
+msgstr "Trạng thái yêu cầu"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__required
@@ -1018,19 +1032,25 @@ msgstr "Người dùng sẽ có quyền truy cập cấu hình phê duyệt"
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. There is no manager linked to your employee profile."
-msgstr "Yêu cầu này cần phải được quản lý phê duyệt. Không có quản lý nào liên kết với hồ sơ nhân viên của bạn. "
+msgstr ""
+"Yêu cầu này cần phải được quản lý phê duyệt. Không có quản lý nào liên kết "
+"với hồ sơ nhân viên của bạn."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. There is no user linked to your manager."
-msgstr "Yêu cầu này cần phải được quản lý phê duyệt. Không có người dùng nào liên kết với quản lý của bạn. "
+msgstr ""
+"Yêu cầu này cần phải được quản lý phê duyệt. Không có người dùng nào liên "
+"kết với quản lý của bạn."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. Your manager is not in the approvers list."
-msgstr "Yêu cầu này cần phải được quản lý phê duyệt. Quản lý của bạn không nằm trong danh sách người duyệt. "
+msgstr ""
+"Yêu cầu này cần phải được quản lý phê duyệt. Quản lý của bạn không nằm trong "
+"danh sách người duyệt."
 
 #. module: approvals
 #. odoo-javascript
@@ -1039,22 +1059,22 @@ msgstr "Yêu cầu này cần phải được quản lý phê duyệt. Quản l�
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__pending
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__pending
 msgid "To Approve"
-msgstr "Chờ Phê duyệt"
+msgstr "Cần phê duyệt"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "To Review:"
-msgstr "Chờ Xem xét:"
+msgstr "Cần xem lại:"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__new
 msgid "To Submit"
-msgstr "Chờ Gửi"
+msgstr "Cần nộp"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Loại hoạt động ngoại lệ trên hồ sơ."
+msgstr "Loại hoạt động ngoại lệ trong bản ghi."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_id
@@ -1072,13 +1092,13 @@ msgstr "Người dùng"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__user_status
 msgid "User Status"
-msgstr "Trạng thái Người dùng"
+msgstr "Trạng thái người dùng"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__waiting
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__waiting
 msgid "Waiting"
-msgstr "Chờ"
+msgstr "Đang chờ"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1096,7 +1116,9 @@ msgstr "Bạn không thể phê duyệt trước người phê duyệt trước 
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You cannot assign the same approver multiple times on the same request."
-msgstr "Bạn không thể giao cùng một yêu cầu cho cùng một người phê duyệt nhiều lần."
+msgstr ""
+"Bạn không thể phân công cùng một yêu cầu cho cùng một người phê duyệt nhiều "
+"lần."
 
 #. module: approvals
 #. odoo-python
@@ -1114,7 +1136,7 @@ msgstr "Bạn phải đính kèm ít nhất một tài liệu."
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Your minimum approval exceeds the total of default approvers."
-msgstr "Phê duyệt tối thiểu vượt quá tổng số người phê duyệt mặc định. "
+msgstr "Phê duyệt tối thiểu vượt quá tổng số người phê duyệt mặc định."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1124,7 +1146,7 @@ msgstr "VD: Brussel"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "e.g. Procurement"
-msgstr "VD: Cung ứng"
+msgstr "VD: Mua sắm"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action

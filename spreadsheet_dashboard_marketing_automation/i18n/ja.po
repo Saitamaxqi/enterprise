@@ -1,418 +1,422 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_marketing_automation
+# * spreadsheet_dashboard_marketing_automation
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_marketing_automation/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "# of mails opened"
-msgstr ""
+msgstr "開封済メール数"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "# of mails sent"
-msgstr ""
+msgstr "送信済メール数"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Average Order Value (AOV)"
-msgstr ""
+msgstr "平均注文金額 (AOV)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Bounce Rate"
-msgstr ""
+msgstr "バウンス率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Bounce details"
-msgstr ""
+msgstr "バウンス詳細"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Bounced"
-msgstr ""
+msgstr "不達"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Bounced (%)"
-msgstr ""
+msgstr "不達率(%)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Cancelled"
-msgstr ""
+msgstr "キャンセル済"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Click-Through Rate (CTR)"
-msgstr ""
+msgstr "クリック率 (CTR)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Click-to-open Rate (CTOR)"
-msgstr ""
+msgstr "反応率 (CTOR)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Clicked"
-msgstr ""
+msgstr "クリック済"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Clicks (%)"
-msgstr ""
+msgstr "クリック (%)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Conversion Rate"
-msgstr ""
+msgstr "コンバージョン率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Count"
-msgstr ""
+msgstr "カウント"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Delivered"
-msgstr ""
+msgstr "配送済"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Delivery  Rate"
-msgstr ""
+msgstr "到達率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Delivery Rate"
-msgstr ""
+msgstr "到達率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_marketing_automation.spreadsheet_dashboard_marketing_automation
 msgid "Email Marketing"
-msgstr ""
+msgstr "メールマーケティング"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Engagement Rate"
-msgstr ""
+msgstr "エンゲージメント率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Exception"
-msgstr ""
+msgstr "例外"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Mailing Campaign"
-msgstr ""
+msgstr "メーリングキャンペーン"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Mailing campaigns in preparation"
-msgstr ""
+msgstr "準備中のメーリングキャンペーン"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Mails sent over previous period"
-msgstr ""
+msgstr "以前の周期で送信されたメール"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Mails sent per month"
-msgstr ""
+msgstr "月次送信メール"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Mass Mailing"
-msgstr ""
+msgstr "一括メール配信"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Medium"
-msgstr ""
+msgstr "中"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "N-1"
-msgstr ""
+msgstr "N-1"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "New Subscribers"
-msgstr ""
+msgstr "新規登録者"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Number of Clicks"
-msgstr ""
+msgstr "クリック数"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Number of orders"
-msgstr ""
+msgstr "オーダ数"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Open Rate"
-msgstr ""
+msgstr "開封率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Opened"
-msgstr ""
+msgstr "開封"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Opened (%)"
-msgstr ""
+msgstr "開封率(%)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Page Title"
-msgstr ""
+msgstr "ページタイトル"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "期間"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Reason"
-msgstr ""
+msgstr "理由"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Received (%)"
-msgstr ""
+msgstr "受信済 (%)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Recipients Model"
-msgstr ""
+msgstr "宛先モデル"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Replied"
-msgstr ""
+msgstr "返信済"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Replied (%)"
-msgstr ""
+msgstr "返信率(%)"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Requires # of click date defined -> worth ? change ?"
-msgstr ""
+msgstr "定義済のクリック数が必要 -> 相当数 ? 変更 ?"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Responsible"
-msgstr ""
+msgstr "担当者"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Revenue Generated"
-msgstr ""
+msgstr "発生収益"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Scheduled for"
-msgstr ""
+msgstr "予定日"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Sent"
-msgstr ""
+msgstr "送信日"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Sent Date"
-msgstr ""
+msgstr "送信日"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Source"
-msgstr ""
+msgstr "情報源"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Status"
-msgstr ""
+msgstr "状態"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Subject"
-msgstr ""
+msgstr "件名"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Subscribers Growth Rate"
-msgstr ""
+msgstr "登録者増加率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Target URL"
-msgstr ""
+msgstr "ターゲットURL"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Top 10 best link trackers"
-msgstr ""
+msgstr "ベストリンクトラッカー 上位10"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Top 10 recent mailing campaigns"
-msgstr ""
+msgstr "直近メーリングキャンペーン` 上位10"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Top 5 failed reasons"
-msgstr ""
+msgstr "失敗理由 上位5"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Top products sold"
-msgstr ""
+msgstr "販売済プロダクト 上位"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Total"
-msgstr ""
+msgstr "合計"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Unsubscribe Rate"
-msgstr ""
+msgstr "登録解除率"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Unsubscribed"
-msgstr ""
+msgstr "未購読"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Unsubscribers"
-msgstr ""
+msgstr "登録解除者"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Visits"
-msgstr ""
+msgstr "訪問数"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "vs last period"
-msgstr ""
+msgstr "vs 前期間"

@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_edition
+# * spreadsheet_edition
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:57+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_edition/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -68,7 +73,7 @@ msgstr "- номера: %s"
 #. module: spreadsheet_edition
 #: model:ir.model.constraint,message:spreadsheet_edition.constraint_spreadsheet_revision_parent_unique
 msgid "A revision based on the same revision already exists"
-msgstr ""
+msgstr "Уже существует версия, созданная на основе этой же версии"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__active
@@ -144,7 +149,7 @@ msgstr "Отменить"
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_spreadsheet_revision
 msgid "Collaborative spreadsheet revision"
-msgstr "Совместный пересмотр электронных таблиц"
+msgstr "Совместная версия таблицы"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -168,12 +173,12 @@ msgstr "Подтвердить"
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -192,7 +197,7 @@ msgstr "Валюта"
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard_share__current_revision_uuid
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__current_revision_uuid
 msgid "Current Revision Uuid"
-msgstr ""
+msgstr "UUID текущей версии"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -333,13 +338,13 @@ msgstr "Фильтры"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/date_filter_editor_side_panel.js:0
 msgid "From / To"
-msgstr "От /До"
+msgstr "От / До"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/version_history/version_history_action.js:0
 msgid "Heads up!"
-msgstr ""
+msgstr "Внимание!"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__id
@@ -353,6 +358,8 @@ msgid ""
 "If you go ahead, your document will go back to the version from %s.\n"
 "Any changes you've made after that time will disappear. Ready to proceed?"
 msgstr ""
+"Если вы продолжите, документ будет восстановлен к состоянию на %s.\n"
+"Все изменения после этой даты будут потеряны. Продолжить?"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -365,7 +372,7 @@ msgstr "Вставка в электронную таблицу"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/list_view/list_controller.js:0
 msgid "Insert in spreadsheet"
-msgstr ""
+msgstr "Вставить в таблицу"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -401,12 +408,12 @@ msgstr "Метка"
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -445,12 +452,14 @@ msgstr "Имя списка"
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 msgid "List duplicated. Use the \"Re-insert list\" menu item to insert it in a sheet."
 msgstr ""
+"Список продублирован. Используйте пункт меню «Повторно вставить список», "
+"чтобы добавить его в таблицу."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 msgid "List duplication failed"
-msgstr ""
+msgstr "Ошибка при дублировании списка"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -475,7 +484,7 @@ msgstr "Создать копию"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/restore_version_dialog/restore_version_dialog.xml:0
 msgid "Make a copy instead"
-msgstr ""
+msgstr "Сделать копию"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -505,13 +514,13 @@ msgstr "Отсутствующий список #%s"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
 msgid "Missing pivot"
-msgstr "Отсутствующий шарнир"
+msgstr "Отсутствующая cводная таблица"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
 msgid "Missing pivot #%s"
-msgstr "Отсутствующий стержень #%s"
+msgstr "Отсутствующая сводная таблица #%s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -587,7 +596,7 @@ msgstr "Электронная таблица Odoo"
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__parent_revision_id
 msgid "Parent Revision"
-msgstr "Родительский пересмотр"
+msgstr "Родительская версия"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -605,7 +614,7 @@ msgstr "Смещение периода, применяемое к данном�
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Pivot contains duplicate groupbys"
-msgstr "Точка разворота содержит дубликаты групп"
+msgstr "Сводная таблица содержит дубликаты группировок"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -730,7 +739,7 @@ msgstr "Требуется выбранное поле"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_item.js:0
 msgid "Restore this version"
-msgstr ""
+msgstr "Восстановить эту версию"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -741,18 +750,18 @@ msgstr "Ограничение значений диапазоном"
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__revision_uuid
 msgid "Revision Uuid"
-msgstr ""
+msgstr "UUID версии"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__name
 msgid "Revision name"
-msgstr "Название пересмотра"
+msgstr "Название версии"
 
 #. module: spreadsheet_edition
 #: model:ir.actions.act_window,name:spreadsheet_edition.spreadsheet_revision_action
 #: model:ir.ui.menu,name:spreadsheet_edition.menu_technical_spreadsheet_revision
 msgid "Revisions"
-msgstr "Ревизии"
+msgstr "Список версий"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -801,7 +810,7 @@ msgstr "Посмотреть список свойств"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/index.js:0
 msgid "See pivot properties"
-msgstr "См. свойства поворота"
+msgstr "См. свойства Сводной таблицы"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -870,7 +879,7 @@ msgstr "Таблица"
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard_share__spreadsheet_revision_ids
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__spreadsheet_revision_ids
 msgid "Spreadsheet Revision"
-msgstr "Пересмотр электронных таблиц"
+msgstr "Версия таблицы"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard__spreadsheet_snapshot
@@ -907,7 +916,9 @@ msgstr "Текст"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/version_history/version_history_action.js:0
 msgid "The history of your spreadsheet is corrupted and you are likely missing recent revisions. This feature cannot be used."
-msgstr "История вашей электронной таблицы повреждена, и вы, вероятно, пропустили последние изменения. Эта функция не может быть использована."
+msgstr ""
+"История изменений таблицы повреждена. Возможно, отсутствуют последние "
+"версии. Использование этой функции невозможно."
 
 #. module: spreadsheet_edition
 #. odoo-python
@@ -923,34 +934,35 @@ msgid ""
 "\n"
 "Would you like to load the more recent modifications?"
 msgstr ""
-"Есть пропущенные ревизии, которые не позволяют восстановить всю историю издания.\n"
+"Некоторые промежуточные версии отсутствуют, поэтому невозможно восстановить "
+"всю историю изменений.\n"
 "\n"
-"Хотите загрузить последние изменения?"
+"Хотите загрузить только последние изменения?"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_side_panel.xml:0
 msgid "There are no prior revisions for this spreadsheet."
-msgstr "Для этой электронной таблицы не существует предыдущих изменений."
+msgstr "Для этой таблицы нет предыдущих версий."
 
 #. module: spreadsheet_edition
 #: model:ir.model.constraint,message:spreadsheet_edition.constraint_spreadsheet_revision_initial_unique
 msgid "There can be only one initial revision per spreadsheet"
-msgstr ""
+msgstr "В таблице может быть только одна начальная версия"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/icons.xml:0
 msgid "This list is not used"
-msgstr ""
+msgstr "Этот список не используется"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/icons.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
 msgid "This pivot is not used"
-msgstr ""
+msgstr "Эта сводная таблица не используется"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -974,7 +986,7 @@ msgstr "История версий"
 #. odoo-python
 #: code:addons/spreadsheet_edition/models/spreadsheet_mixin.py:0
 msgid "Version restored"
-msgstr ""
+msgstr "Версия восстановлена"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -993,7 +1005,7 @@ msgstr "Год"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/restore_version_dialog/restore_version_dialog.xml:0
 msgid "Yes, restore"
-msgstr ""
+msgstr "Да, восстановить"
 
 #. module: spreadsheet_edition
 #. odoo-python
@@ -1049,7 +1061,7 @@ msgstr "никогда"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.js:0
 msgid "pivot"
-msgstr "поворот"
+msgstr "Сводная таблица"
 
 #. module: spreadsheet_edition
 #. odoo-javascript

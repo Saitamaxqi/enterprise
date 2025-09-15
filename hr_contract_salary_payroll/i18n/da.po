@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_contract_salary_payroll
+# * hr_contract_salary_payroll
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"hr_contract_salary_payroll/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
@@ -29,42 +32,42 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ day"
-msgstr ""
+msgstr "/ dag"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ half-month"
-msgstr ""
+msgstr "/ halv måned"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ half-year"
-msgstr ""
+msgstr "/ halvt år"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ quarter"
-msgstr ""
+msgstr "/ kvartal"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ two months"
-msgstr ""
+msgstr "/ to måneder"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ two weeks"
-msgstr ""
+msgstr "/ to uger"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ week"
-msgstr ""
+msgstr "/ uge"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
 msgid "/ year"
-msgstr ""
+msgstr "/ år"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.salary_package_sidebar_payroll
@@ -77,6 +80,13 @@ msgid ""
 "                <option value=\"40\">2/5</option>\n"
 "                <option value=\"20\">1/5</option>"
 msgstr ""
+"<option value=\"100\" selected=\"1\">Fuldtid</option>\n"
+"                <option value=\"90\">9/10</option>\n"
+"                <option value=\"80\">4/5</option>\n"
+"                <option value=\"60\">3/5</option>\n"
+"                <option value=\"50\">Deltid</option>\n"
+"                <option value=\"40\">2/5</option>\n"
+"                <option value=\"20\">1/5</option>"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_applicant
@@ -112,7 +122,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_resume__code
 msgid "Code"
-msgstr ""
+msgstr "Kode"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -128,7 +138,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_configuration_contract
 msgid "Contracts"
-msgstr ""
+msgstr "Kontrakter"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -149,7 +159,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payslip_worked_days__display_name
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_employee
@@ -170,12 +180,12 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payroll_headcount_line__employer_cost
 msgid "Employer Cost"
-msgstr ""
+msgstr "Medarbejderomkostninger"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.hr_payroll_menu_contract_type
 msgid "Employment Types"
-msgstr ""
+msgstr "Beskæftigelsestype"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -202,7 +212,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_payroll_headcount_line
 msgid "Headcount Line"
-msgstr ""
+msgstr "Medarbejderantal i denne linje"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_applicant__id
@@ -214,12 +224,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payslip_worked_days__id
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_version__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_resume_view_search_inherit
 msgid "Impacts Monthly Total"
-msgstr ""
+msgstr "Påvirker det samlede månedlige beløb"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__is_full_time
@@ -278,12 +288,12 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_resume__value_type__payslip
 msgid "Payslip Value"
-msgstr ""
+msgstr "Lønseddelværdi"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_payslip_worked_days
 msgid "Payslip Worked Days"
-msgstr ""
+msgstr "Lønopgørelse for antal arbejdsdage"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_resume__value_type
@@ -305,6 +315,8 @@ msgid ""
 "Please note that this information may be inaccurate and should be used for "
 "reference only."
 msgstr ""
+"Bemærk venligst, at denne information kan være upræcis og kun bør bruges som "
+"reference."
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
@@ -347,7 +359,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_contract_salary_resume
 msgid "Salary Package Resume"
-msgstr ""
+msgstr "Oversigt over lønpakken"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
@@ -369,7 +381,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_contract_salary_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Select an <strong>HR Responsible</strong> for the contract."
-msgstr ""
+msgstr "Vælg en <strong>personaleansvarlig</strong> for kontrakten."
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
@@ -389,13 +401,13 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.hr_payroll_menu_contract_templates
 msgid "Templates"
-msgstr ""
+msgstr "Skabeloner"
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
 #: code:addons/hr_contract_salary_payroll/static/src/xml/brut2net_modal.xml:0
 msgid "The amounts are calculated  based on a full time permanent contract."
-msgstr ""
+msgstr "Beløbene er beregnet ud fra en fuldtidsansættelse med en fast kontrakt."
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
@@ -404,6 +416,8 @@ msgid ""
 "There is no defined payroll structure for your contract. Please contact a "
 "responsible for more information."
 msgstr ""
+"Din kontrakt har endnu ikke en defineret lønningsstruktur. Kontakt venligst "
+"en ansvarlig for at få mere at vide."
 
 #. module: hr_contract_salary_payroll
 #. odoo-python
@@ -411,6 +425,8 @@ msgstr ""
 msgid ""
 "This is the gross calculated for the current month with a total of %s hours."
 msgstr ""
+"Det beregnede bruttobeløb for denne måned, hvor den samlede arbejdstid udgør "
+"%s timer."
 
 #. module: hr_contract_salary_payroll
 #. odoo-python
@@ -433,7 +449,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_resume__value_type
 msgid "Value Type"
-msgstr ""
+msgstr "Værditype"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_on_signature
@@ -451,7 +467,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__resource_calendar_id
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.salary_package_sidebar_payroll
 msgid "Working Schedule"
-msgstr ""
+msgstr "Arbejdsplan"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__yearly_benefits

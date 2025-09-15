@@ -1,26 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_asset
+# * account_asset
 #
 # Translators:
 # Friederike Fasterling-Nesselbosch, 2022
 # Martin Trigaux, 2022
 # Luca Carlo, 2023
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2023\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"account_asset/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_asset
 #. odoo-python
@@ -54,6 +57,8 @@ msgstr "N. registrazioni ammortamento confermate"
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "%s Future entries will be recomputed to depreciate the asset following the changes."
 msgstr ""
+"%s Le registrazioni future verranno ricalcolate per ammortizzare il cespite "
+"che segue i cambiamenti."
 
 #. module: account_asset
 #. odoo-python
@@ -77,12 +82,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "%s: Depreciation"
-msgstr ""
+msgstr "%s: ammortamento"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "(incl."
-msgstr ""
+msgstr "(incl."
 
 #. module: account_asset
 #. odoo-python
@@ -100,7 +105,7 @@ msgstr "È stato creato un risconto passivo per il movimento:"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "A depreciation entry will be posted on and including the date %s."
-msgstr ""
+msgstr "Verrà inserita una voce di ammortamento che comprende la data %s."
 
 #. module: account_asset
 #. odoo-python
@@ -130,7 +135,7 @@ msgstr "Un documento collegato a %s è stato rimosso: %s"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "A document linked to this move has been deleted: %s"
-msgstr "Un documento collegato a questo trasferimento è stato cancellato: %s"
+msgstr "È stato eliminato un documento collegato al movimento: %s"
 
 #. module: account_asset
 #. odoo-python
@@ -217,7 +222,7 @@ msgstr "Contabilità"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "Rendiconto contabile"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_acquisition_date
@@ -264,7 +269,7 @@ msgstr "Icona tipo di attività"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
 msgid "Add an internal note"
-msgstr ""
+msgstr "Aggiungi nota interna"
 
 #. module: account_asset
 #. odoo-python
@@ -300,12 +305,12 @@ msgstr "È stato creato un cespite per il movimento:"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "An asset will be created for the value increase of the asset. <br/>"
-msgstr ""
+msgstr "Verrà creato un cespite per l'aumento di valore del cespite. <br/>"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Distribuzione analitica"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution_search
@@ -315,7 +320,7 @@ msgstr ""
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Precisione analitica"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -337,7 +342,7 @@ msgstr "In archivio"
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Asset"
-msgstr "Immobilizzazione"
+msgstr "Cespite"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
@@ -348,12 +353,12 @@ msgstr "Conto cespite"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Asset Cancelled"
-msgstr ""
+msgstr "Cespite annullato"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__account_asset_counterpart_id
 msgid "Asset Counterpart Account"
-msgstr ""
+msgstr "Conto di contropartita cespiti"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_id_display_name
@@ -365,7 +370,7 @@ msgstr "Nome visualizzato ID cespite"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_lifetime_days
 msgid "Asset Lifetime Days"
-msgstr ""
+msgstr "Durata di vita dell'asset"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__asset_model
@@ -403,7 +408,7 @@ msgstr "Opzioni cespite"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_paused_days
 msgid "Asset Paused Days"
-msgstr ""
+msgstr "Giorni di sospensione cespite"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__asset_type
@@ -436,35 +441,35 @@ msgstr "Cespite creato"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Asset disposed. %s"
-msgstr ""
+msgstr "Cespite dismesso. %s"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Asset paused. %s"
-msgstr ""
+msgstr "Cespite sospeso. %s"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Asset sold. %s"
-msgstr "Asset creato. %s"
+msgstr "Cespite venduto. %s"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "Asset unpaused. %s"
-msgstr ""
+msgstr "Cespite riattivato. %s"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_move_form_asset_inherit
 msgid "Asset(s)"
-msgstr ""
+msgstr "Cespite/i"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset
 msgid "Asset/Revenue Recognition"
-msgstr "Rilevazione cespite/ricavo"
+msgstr "Riconoscimento cespite/ricavo"
 
 #. module: account_asset
 #. odoo-python
@@ -476,12 +481,12 @@ msgstr "Rilevazione cespite/ricavo"
 #: model:ir.ui.menu,name:account_asset.menu_action_account_asset_form
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_purchase_tree
 msgid "Assets"
-msgstr "Attività"
+msgstr "Cespiti"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset_report_handler
 msgid "Assets Report Custom Handler"
-msgstr ""
+msgstr "Gestore personalizzato rendiconto cespiti"
 
 #. module: account_asset
 #: model:ir.ui.menu,name:account_asset.menu_finance_config_assets
@@ -503,6 +508,8 @@ msgstr "Cespiti con stato bozza e aperto"
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Atleast one asset (%s) couldn't be set as running because it lacks any required information"
 msgstr ""
+"Non è stato possibile definire almeno un cespite (%s) come in corso perché "
+"non presenta tutte le informazioni richieste."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_attachment_count
@@ -532,7 +539,7 @@ msgstr "Automazione"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__daily_computation
 msgid "Based on days per period"
-msgstr ""
+msgstr "Basato su giorni per periodo"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -559,7 +566,7 @@ msgstr "Annulla"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Cancel Asset"
-msgstr ""
+msgstr "Annulla cespite"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__cancelled
@@ -575,7 +582,7 @@ msgstr "Caratteristiche"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__children_ids
 msgid "Children"
-msgstr "Conti figli"
+msgstr "Secondari"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method
@@ -585,6 +592,12 @@ msgid ""
 "  * Declining: Calculated on basis of: Residual Value * Declining Factor\n"
 "  * Declining then Straight Line: Like Declining but with a minimum depreciation value equal to the straight line value."
 msgstr ""
+"Scegliere il metodo da utilizzare per calcolare l'importo delle righe di "
+"ammortamento.\n"
+"  * Linea retta: calcolato in base a Valore lordo / Durata\n"
+"  * Decrescente: calcolato in base a Valore residuo * Fattore decrescente\n"
+"  * Decrescente poi linea retta: come decrescente ma con un valore di "
+"ammortamento minimo pari al valore a linea retta."
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__close
@@ -632,14 +645,14 @@ msgstr "Conferma"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__constant_periods
 msgid "Constant Periods"
-msgstr ""
+msgstr "Periodi costanti"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__count_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_move__count_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__count_asset
 msgid "Count Asset"
-msgstr ""
+msgstr "Numero di cespiti"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__count_deferred_expense
@@ -675,12 +688,12 @@ msgstr "Crea in bozza"
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_form
 msgid "Create new asset"
-msgstr ""
+msgstr "Crea un nuovo cespite"
 
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_model_form
 msgid "Create new asset model"
-msgstr ""
+msgstr "Crea un nuovo modello di cespite"
 
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_expense_form
@@ -763,7 +776,7 @@ msgstr "Data"
 #: model:ir.model.fields,field_description:account_asset.field_account_move__asset_depreciation_beginning_date
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__asset_depreciation_beginning_date
 msgid "Date of the beginning of the depreciation"
-msgstr ""
+msgstr "Data di inizio dell'ammortamento"
 
 #. module: account_asset
 #. odoo-python
@@ -1006,7 +1019,7 @@ msgstr "Piano di ammortamento"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "Depreciation board modified %s"
-msgstr ""
+msgstr "Tabella ammortamenti modificata %s"
 
 #. module: account_asset
 #. odoo-python
@@ -1071,7 +1084,7 @@ msgstr "Bozza"
 #: model:ir.model.fields,field_description:account_asset.field_account_move__draft_asset_exists
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__draft_asset_exists
 msgid "Draft Asset Exists"
-msgstr ""
+msgstr "Cespite in bozza esistente"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__draft_deferred_expense_exists
@@ -1152,7 +1165,7 @@ msgstr "Primo ammortamento"
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__account_asset_id
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_model_search
 msgid "Fixed Asset Account"
-msgstr "Conto immobilizzazione"
+msgstr "Conto immobilizzazioni"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_follower_ids
@@ -1188,7 +1201,7 @@ msgstr "Plusvalenza"
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__gain_account_id
 #: model:ir.model.fields,field_description:account_asset.field_res_company__gain_account_id
 msgid "Gain Account"
-msgstr "Conto utili"
+msgstr "Conto plusvalenza"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__gain_or_loss
@@ -1210,7 +1223,7 @@ msgstr "Incremento lordo"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__account_asset_id
 msgid "Gross Increase Account"
-msgstr ""
+msgstr "Conto incremento lordo"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__gross_increase_value
@@ -1221,7 +1234,7 @@ msgstr "Valore incremento lordo"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/filter_extra_options.xml:0
 msgid "Group By Account"
-msgstr ""
+msgstr "Raggruppa per conto"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_model_search
@@ -1271,12 +1284,16 @@ msgstr "Se selezionata, viene creato automaticamente un costo/ricavo quando veng
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
 msgid "In case of an import from another software, you might need to use this field to have the right depreciation table report. This is the value that was already depreciated with entries not computed from this model"
-msgstr "In caso di importazione da un altro software, potrebbe essere necessario utilizzare questo campo per avere il giusto report della tabella di ammortamento. Si tratta del valore già ammortizzato con voci non calcolate da questo modello."
+msgstr ""
+"In caso di importazione da un altro software, potrebbe essere necessario "
+"utilizzare questo campo per avere il resoconto corretto della tabella di "
+"ammortamento. Si tratta del valore già ammortizzato con registrazioni non "
+"calcolate da questo modello."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__informational_text
 msgid "Informational Text"
-msgstr ""
+msgstr "Testo informativo"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__invoice_line_ids
@@ -1363,12 +1380,12 @@ msgstr "Minusvalenza"
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__loss_account_id
 #: model:ir.model.fields,field_description:account_asset.field_res_company__loss_account_id
 msgid "Loss Account"
-msgstr "Conto perdite"
+msgstr "Conto minusvalenza"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_form_asset_inherit
 msgid "Manage Items"
-msgstr "Gestire gli articoli"
+msgstr "Gestione movimenti"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_has_error
@@ -1486,18 +1503,18 @@ msgstr "Ricavo prossimo periodo"
 #: model:ir.model.fields.selection,name:account_asset.selection__account_account__create_asset__no
 #: model:ir.model.fields.selection,name:account_asset.selection__asset_modify__gain_or_loss__no
 msgid "No"
-msgstr "N°"
+msgstr "No"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__none
 msgid "No Prorata"
-msgstr ""
+msgstr "Nessun pro rata"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__non_deductible_tax_value
 #: model:ir.model.fields,field_description:account_asset.field_account_move_line__non_deductible_tax_value
 msgid "Non Deductible Tax Value"
-msgstr ""
+msgstr "Valore tassa non deducibile"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__salvage_value
@@ -1547,7 +1564,7 @@ msgstr "Numero di cespiti creati per incrementarne il valore"
 #: model:ir.model.fields,field_description:account_asset.field_account_move__asset_number_days
 #: model:ir.model.fields,field_description:account_asset.field_account_payment__asset_number_days
 msgid "Number of days"
-msgstr ""
+msgstr "Numero di giorni"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__total_depreciation_entries_count
@@ -1589,19 +1606,19 @@ msgstr "Valore originale"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__parent_id
 msgid "Parent"
-msgstr "Principale"
+msgstr "Primario"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
 msgid "Pause"
-msgstr "Metti in pausa"
+msgstr "Sospendi"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__paused_prorata_date
 msgid "Paused Prorata Date"
-msgstr ""
+msgstr "Data prorata in pausa"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_model_expense_tree
@@ -1628,13 +1645,13 @@ msgstr "Acquisto: cespite"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valutazioni"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "Re-evaluate"
-msgstr ""
+msgstr "Rivaluta"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_expense_form
@@ -1646,7 +1663,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_asset.field_account_move_line__asset_ids
 #: model_terms:ir.ui.view,arch_db:account_asset.view_move_line_form_asset_inherit
 msgid "Related Assets"
-msgstr ""
+msgstr "Cespiti correlati"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_expense_form
@@ -1656,7 +1673,7 @@ msgstr "Spese correlate"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__related_purchase_value
 msgid "Related Purchase Value"
-msgstr ""
+msgstr "Valore di acquisto correlato"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_revenue_form
@@ -1752,7 +1769,7 @@ msgstr "Errore di consegna SMS"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Sale"
-msgstr "Vendite"
+msgstr "Vendita"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__asset_type__sale
@@ -1762,7 +1779,7 @@ msgstr "Vendite: rilevazione ricavi"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Save as Model"
-msgstr ""
+msgstr "Salva come modello"
 
 #. module: account_asset
 #. odoo-python
@@ -1891,6 +1908,8 @@ msgstr "È presente più di una riga che può essere correlata al cespite"
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "There are unposted depreciations prior to the selected operation date, please deal with them first."
 msgstr ""
+"Ci sono ammortamenti non registrati precedenti alla data dell'operazione "
+"selezionata. Occupati prima di loro."
 
 #. module: account_asset
 #. odoo-javascript
@@ -1912,7 +1931,7 @@ msgstr "Totale"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__total_depreciable_value
 msgid "Total Depreciable Value"
-msgstr ""
+msgstr "Valore ammortizzabile totale"
 
 #. module: account_asset
 #. odoo-python
@@ -1945,7 +1964,7 @@ msgstr "Tipo di attività eccezione sul record."
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Value at Import"
-msgstr ""
+msgstr "Valore all'importazione"
 
 #. module: account_asset
 #. odoo-python
@@ -1963,7 +1982,7 @@ msgstr "Incremento di valore per: %(asset)s"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "Warning for the Original Value of %s"
-msgstr ""
+msgstr "Avviso per il valore originale di %s"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__website_message_ids
@@ -1984,6 +2003,14 @@ msgid ""
 "You can manually close an asset when the depreciation is over.\n"
 "By cancelling an asset, all depreciation entries will be reversed"
 msgstr ""
+"Quando viene creato un cespite, lo stato è «Bozza».\n"
+"Se il cespite viene confermato, lo stato passa a «In corso» e le righe di "
+"ammortamento possono essere confermate in contabilità.\n"
+"Lo stato «In attesa» può essere impostato manualmente quando si vuole "
+"sospendere per qualche tempo l'ammortamento di un cespite.\n"
+"Quando l'ammortamento è terminato è possibile chiudere manualmente un "
+"cespite. Annullando un cespite verranno stornate tutte le registrazioni di "
+"ammortamento."
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__method_period__12
@@ -1996,6 +2023,8 @@ msgstr "Anni"
 #: code:addons/account_asset/models/account_move.py:0
 msgid "You can't post an entry related to a draft asset. Please post the asset before."
 msgstr ""
+"Impossibile confermare una registrazione legata a un cespite in bozza, "
+"confermare prima il cespite."
 
 #. module: account_asset
 #. odoo-python
@@ -2014,7 +2043,9 @@ msgstr "Impossibile automatizzare la registrazione contabile di un cespite con u
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot create an asset from lines containing credit and debit on the account or with a null amount"
-msgstr "Non è possibile creare un'attività da righe contenenti crediti e debiti sul conto o con un importo nullo."
+msgstr ""
+"Impossibile creare un cespite da righe contenenti dare e avere sul conto o "
+"con un importo nullo."
 
 #. module: account_asset
 #. odoo-python
@@ -2036,35 +2067,39 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "You cannot reset to draft an entry related to a posted asset"
-msgstr "Non è possibile reimpostare la stesura di una voce relativa a un'attività registrata"
+msgstr ""
+"Impossibile reimpostare a bozza una registrazione legata a un cespite "
+"confermato"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot resume at a date equal to or before the pause date"
 msgstr ""
+"Impossibile riprendere in una data uguale o precedente alla data di "
+"sospensione"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_balance
 msgid "book_value"
-msgstr ""
+msgstr "book_value"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_date_from
 #: model:account.report.column,name:account_asset.assets_report_depre_date_from
 msgid "date from"
-msgstr ""
+msgstr "data inizio"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_assets_date_to
 #: model:account.report.column,name:account_asset.assets_report_depre_date_to
 msgid "date to"
-msgstr ""
+msgstr "data fine"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "depreciable)"
-msgstr ""
+msgstr "ammortizzabile)"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_revenue_form

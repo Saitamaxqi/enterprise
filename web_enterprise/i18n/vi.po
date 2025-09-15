@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
 # Thi Huong Nguyen, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:07+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -50,7 +52,7 @@ msgstr "1 tháng"
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
 msgid "Add Custom Field"
-msgstr ""
+msgstr "Thêm trường tùy chỉnh"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -93,6 +95,8 @@ msgstr "Liên hệ"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Contact your sales representative to help you to unlink your previous database"
 msgstr ""
+"Liên hệ với đại diện kinh doanh của bạn để giúp bạn hủy liên kết cơ sở dữ "
+"liệu trước đó"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -104,7 +108,7 @@ msgstr "Thanh công cụ bảng điều khiển"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
 msgid "Dark Mode"
-msgstr ""
+msgstr "Chế độ tối"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -138,13 +142,13 @@ msgstr "BỘ LỌC"
 #. module: web_enterprise
 #: model:ir.model,name:web_enterprise.model_ir_http
 msgid "HTTP Routing"
-msgstr "HTTP Routing"
+msgstr "Định tuyến HTTP"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
-msgstr ""
+msgstr "Menu trang chủ"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -212,7 +216,7 @@ msgstr "Dán mã vào đây"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Previous view"
-msgstr ""
+msgstr "Chế độ xem trước đó"
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -284,6 +288,8 @@ msgstr "Xin cảm ơn, bạn đã đăng ký thành công! Cơ sở dữ liệu 
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid "Thank you, your registration was successful! Your database is valid until %s."
 msgstr ""
+"Xin cảm ơn! Bạn đã đăng ký thành công! Cơ sở dữ liệu của bạn có hiệu lực đến "
+"%s."
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -295,7 +301,7 @@ msgstr "Hướng dẫn hủy liên kết đăng ký của bạn khỏi (các) c�
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database has expired. "
-msgstr ""
+msgstr "Cơ sở dữ liệu này đã hết hạn. "
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -401,4 +407,4 @@ msgstr "cho chủ sở hữu đăng ký (email:"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
-msgstr ""
+msgstr "— mở ở mọi nơi với"

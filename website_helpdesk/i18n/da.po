@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_helpdesk
+# * website_helpdesk
 #
 # Translators:
 # Mads Søndergaard, 2022
 # Ejner Sønniksen <ejner@vkdata.dk>, 2022
 # Sanne Kristensen <sanne@vkdata.dk>, 2022
 # Martin Trigaux, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:50+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Danish (https://app.transifex.com/odoo/teams/41243/da/)\n"
+"PO-Revision-Date: 2025-09-15 12:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"website_helpdesk/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
@@ -41,7 +43,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "<span class=\"s_website_form_label_content\">Attachment</span>"
-msgstr ""
+msgstr "<span class=\"s_website_form_label_content\">Vedhæftelse</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
@@ -102,12 +104,12 @@ msgstr "Alle"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_tag
 msgid "All Tags"
-msgstr "Allw Tags"
+msgstr "Alle tags"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_type
 msgid "All Types"
-msgstr ""
+msgstr "Alle typer"
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -124,22 +126,22 @@ msgstr "Vedhæftning"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_date
 msgid "By Date"
-msgstr ""
+msgstr "Efter dato"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_tag
 msgid "By Tags"
-msgstr ""
+msgstr "Efter tags"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_type
 msgid "By Type"
-msgstr ""
+msgstr "Efter type"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__can_publish
 msgid "Can Publish"
-msgstr "Kan udgives "
+msgstr "Kan offentliggøres"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.footer
@@ -155,7 +157,7 @@ msgstr "Kundeservice"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Date Filter"
-msgstr ""
+msgstr "Datofilter"
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -183,25 +185,25 @@ msgstr "Hjælp"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Help Center Page"
-msgstr ""
+msgstr "Hjælpecenterside"
 
 #. module: website_helpdesk
 #. odoo-python
 #: code:addons/website_helpdesk/models/website.py:0
 msgid "Helpdesk Customer Satisfaction"
-msgstr "Helpdesk kundetilfredshed"
+msgstr "Kundetilfredshed med kundeservice"
 
 #. module: website_helpdesk
 #. odoo-javascript
 #: code:addons/website_helpdesk/static/src/js/website_helpdesk_form_editor.js:0
 #: model:ir.model,name:website_helpdesk.model_helpdesk_team
 msgid "Helpdesk Team"
-msgstr "Helpdesk team"
+msgstr "Kundeservice"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__is_published
 msgid "Is Published"
-msgstr "Er udgivet"
+msgstr "Er offentliggjort"
 
 #. module: website_helpdesk
 #. odoo-python
@@ -231,7 +233,7 @@ msgstr "Ingen resultater fundet. Prøv venligst en anden søgning."
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.knowledge_base
 msgid "Search for articles, best practices and more..."
-msgstr ""
+msgstr "Søg efter artikler, bedste praksis og mere ..."
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -243,19 +245,19 @@ msgstr "Emne"
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "Submit Ticket"
-msgstr ""
+msgstr "Indsend supportbillet"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "Submit a Ticket"
-msgstr "Indsend en opgave"
+msgstr "Indsend en supportbillet"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Tags Filter"
-msgstr ""
+msgstr "Tags-filter"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submited
@@ -276,7 +278,7 @@ msgstr ""
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Type Filter"
-msgstr ""
+msgstr "Type filter"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__feature_form_url
@@ -302,12 +304,12 @@ msgstr "Hjemmeside"
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_menu_id
 msgid "Website Menu"
-msgstr "Hjemmesidens menu"
+msgstr "Hjemmesidemenu"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_url
 msgid "Website URL"
-msgstr "Hjemmeside URL"
+msgstr "Webadresse"
 
 #. module: website_helpdesk
 #. odoo-javascript

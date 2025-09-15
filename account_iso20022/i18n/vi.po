@@ -1,29 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa
+# * account_sepa
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"account_iso20022/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "A bank account is not defined."
-msgstr "A bank account is not defined."
+msgstr "Tài khoản ngân hàng không được xác định."
 
 #. module: account_sepa
 #. odoo-python
@@ -34,7 +37,7 @@ msgstr "A bank account must be set on the following documents: "
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
 msgid "Austrian"
-msgstr ""
+msgstr "Áo"
 
 #. module: account_sepa
 #. odoo-python
@@ -45,12 +48,12 @@ msgstr "Bank account %s 's bank does not have any BIC number associated. Please 
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.view_batch_payment_form_inherit
 msgid "Batch Booking"
-msgstr "Batch Booking"
+msgstr "Cách thức xử lý thanh toán"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_batch_payment
 msgid "Batch Payment"
-msgstr "Thanh toán hàng loạt"
+msgstr "Thanh toán theo lô"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_res_company
@@ -65,7 +68,7 @@ msgstr "Cấu hình"
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen IV)."
-msgstr "Thực thể gán nhận dạng (ví dụ: KBE-BCO hoặc Finanzamt Muenchen IV)."
+msgstr "Thực thể gán mã định danh (ví dụ: KBE-BCO hoặc Finanzamt Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03
@@ -75,30 +78,30 @@ msgstr "Tổng quát"
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_de
 msgid "German"
-msgstr ""
+msgstr "Đức"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__has_sepa_ct_payment_method
 msgid "Has Sepa Ct Payment Method"
-msgstr ""
+msgstr "Có phương thức thanh toán chuyển khoản tín dụng SEPA"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification"
-msgstr "Nhận dạng"
+msgstr "Mã định danh"
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_id
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
-msgstr "Nhận dạng được chỉ định bởi một tổ chức (ví dụ: số VAT)."
+msgstr "Mã định danh được chỉ định bởi một tổ chức (ví dụ: mã số thuế GTGT)."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_issr
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Issuer"
-msgstr "Nhà phát hành"
+msgstr "Đơn vị phát hành"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_journal
@@ -120,13 +123,13 @@ msgstr "Tên của Bên tham chiếu chủ nợ. Quy tắc sử dụng: Giới h
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has no country code defined."
-msgstr ""
+msgstr "Chưa xác định mã quốc gia cho đối tác %s."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has not bank account defined."
-msgstr "Partner %s has not bank account defined."
+msgstr "Chưa xác định tài khoản ngân hàng cho đối tác %s."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment_method
@@ -136,7 +139,7 @@ msgstr "Phương thức thanh toán"
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payment to send via SEPA"
-msgstr "Thanh toán để gửi qua SEPA"
+msgstr "Thanh toán cần gửi qua SEPA"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment
@@ -146,7 +149,7 @@ msgstr "Thanh toán"
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payments to send via SEPA"
-msgstr "Thanh toán để gửi qua SEPA"
+msgstr "Thanh toán cần gửi qua SEPA"
 
 #. module: account_sepa
 #. odoo-python
@@ -162,12 +165,12 @@ msgstr "Ghi nhận thanh toán"
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "Request batch booking from the bank for the related bank statements."
-msgstr "Request batch booking from the bank for the related bank statements."
+msgstr "Yêu cầu cách thức xử lý thanh toán cho sao kê liên quan từ ngân hàng."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "SCT Batch Booking"
-msgstr "SCT Batch Booking"
+msgstr "Cách thức xử lý thanh toán SCT"
 
 #. module: account_sepa
 #: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
@@ -200,7 +203,7 @@ msgstr "Sct Generic"
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments are above the maximum amount allowed."
-msgstr "Some payments are above the maximum amount allowed."
+msgstr "Một số khoản thanh toán vượt quá số tiền tối đa được phép."
 
 #. module: account_sepa
 #. odoo-python
@@ -212,7 +215,9 @@ msgstr "Some payments are not made on an IBAN recipient account. This batch migh
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments have no recipient bank account set."
-msgstr "Some payments have no recipient bank account set."
+msgstr ""
+"Tài khoản ngân hàng của người nhận chưa được thiết lập trên một số khoản "
+"thanh toán."
 
 #. module: account_sepa
 #. odoo-python
@@ -283,7 +288,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_payment.py:0
 msgid "The journal '%s' requires a proper IBAN account to pay via SEPA. Please configure it first."
-msgstr "Nhật ký '%s' yêu cầu một tài khoản IBAN thích hợp để thanh toán qua SEPA. Vui lòng định cấu hình trước."
+msgstr ""
+"Sổ nhật ký '%s' yêu cầu một tài khoản IBAN thích hợp để thanh toán qua SEPA. "
+"Vui lòng cấu hình trước."
 
 #. module: account_sepa
 #. odoo-python
@@ -295,7 +302,9 @@ msgstr "Quá nhiều giao dịch cho một tệp."
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Will appear in SEPA payments as the name of the party initiating the payment. Limited to 70 characters."
-msgstr "Sẽ xuất hiện trong thanh toán SEPA làm tên của bên bắt đầu thanh toán. Giới hạn trong 70 ký tự."
+msgstr ""
+"Sẽ xuất hiện trong thanh toán SEPA làm tên của bên thực hiện thanh toán. "
+"Giới hạn trong 70 ký tự."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name

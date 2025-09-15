@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* industry_fsm
+# * industry_fsm
 #
 # Translators:
 # Friederike Fasterling-Nesselbosch, 2022
@@ -8,20 +8,23 @@
 # Martin Trigaux, 2022
 # Marianna Ciofani, 2023
 # Luca Carlo, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Luca Carlo, 2023\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__nbr
@@ -32,6 +35,8 @@ msgstr "N. lavori"
 #: model:ir.actions.report,print_report_name:industry_fsm.task_custom_report
 msgid "'Field Service Report - %s - %s' % (object.name, object.partner_id.name)"
 msgstr ""
+"'Resoconto assistenza sul campo - %s - %s' % (object.name, "
+"object.partner_id.name)"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -118,7 +123,7 @@ msgstr ""
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
 msgid "<strong class=\"me-2\">Total</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Totale</strong>"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
@@ -133,7 +138,7 @@ msgstr ""
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
 msgid "<strong>Worker: </strong>"
-msgstr ""
+msgstr "<strong>Operatore: </strong>"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__active
@@ -165,12 +170,12 @@ msgstr "Tutti i lavori"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__planned_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "Tempo assegnato"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_user_action_report_fsm
 msgid "Analyze the progress of your tasks and the performance of your workers."
-msgstr ""
+msgstr "Analizza l'avanzamento dei lavori e le prestazioni dei lavoratori."
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__user_ids
@@ -190,7 +195,7 @@ msgstr "Valutazione Media"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__dependent_ids
 msgid "Block"
-msgstr ""
+msgstr "Blocco"
 
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.project_task_menu_planning_by_project_fsm
@@ -205,7 +210,7 @@ msgstr "Per utente"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__partner_city
 msgid "City"
-msgstr ""
+msgstr "Città"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.portal_task_sign_button
@@ -252,6 +257,8 @@ msgstr "Conferma"
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
 msgid "Confirm the <b>time spent</b> on your task. <i>Tip: note that the duration has automatically been rounded to 15 minutes.</i>"
 msgstr ""
+"Conferma il <b>tempo speso</b> sulla tua attività. <i>Consiglio: nota che la "
+"durata è stata arrotondata automaticamente a 15 minuti.</i>"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_res_partner
@@ -291,12 +298,14 @@ msgstr "Creare nuovi preventivi direttamente dai lavori"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.res_config_settings_view_form
 msgid "Create new quotations directly from your tasks"
-msgstr "Crea nuovi preventivi direttamente dalle attività"
+msgstr "Creare nuovi preventivi direttamente dai lavori"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_project_action_only_fsm
 msgid "Create projects to organize your tasks and define a different workflow for each project."
-msgstr "Crea progetti per organizzare le tue attività e definisci un flusso di lavoro diverso per ogni progetto."
+msgstr ""
+"Crea progetti per organizzare i tuoi lavori e definisci un flusso di lavoro "
+"diverso per ogni progetto."
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_view_form_inherit
@@ -428,12 +437,12 @@ msgstr "Visualizza i lavori nel modulo di assistenza sul campo e consente di pia
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 msgid "Do you want to stop the running timers?"
-msgstr ""
+msgstr "Vuoi bloccare i timer in attività?"
 
 #. module: industry_fsm
 #: model:mail.template,description:industry_fsm.mail_template_data_task_report
 msgid "Email sent when clicking on \"send report\" in a task"
-msgstr ""
+msgstr "E-mail inviata quando si fa clic su \"invia report\" in un'attività"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__planned_date_end
@@ -453,7 +462,7 @@ msgstr "Preventivi aggiuntivi"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_report_project_task_user_fsm
 msgid "FSM Tasks Analysis"
-msgstr "Analisi lavori da FSM"
+msgstr "Analisi lavori FSM"
 
 #. module: industry_fsm
 #. odoo-python
@@ -471,22 +480,22 @@ msgstr "Assistenza sul campo"
 #. module: industry_fsm
 #: model:ir.actions.report,name:industry_fsm.task_custom_report
 msgid "Field Service Report"
-msgstr ""
+msgstr "Resoconto assistenza sul campo"
 
 #. module: industry_fsm
 #: model:mail.template,subject:industry_fsm.mail_template_data_task_report
 msgid "Field Service Report - {{ object.name }}"
-msgstr ""
+msgstr "Resoconto assistenza sul campo - {{ object.name }}"
 
 #. module: industry_fsm
 #: model:mail.template,name:industry_fsm.mail_template_data_task_report
 msgid "Field Service: Field Service Report"
-msgstr ""
+msgstr "Assistenza sul campo: resoconto assistenza sul campo"
 
 #. module: industry_fsm
 #: model:mail.template,name:industry_fsm.mail_template_data_intervention_details
 msgid "Field Service: Intervention Scheduled"
-msgstr ""
+msgstr "Assistenza sul campo: intervento pianificato"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -497,12 +506,12 @@ msgstr "Compila il tuo <b>foglio di lavoro</b> con i dettagli del tuo intervento
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_fsm_map
 msgid "Find here your itinerary for today's tasks."
-msgstr "Trova qui l'itinerario per le tue attività di oggi."
+msgstr "Trova qui l'itinerario per i lavori odierni."
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_fsm
 msgid "Find here your upcoming tasks for the next few days."
-msgstr ""
+msgstr "Qui puoi trovare i lavori imminenti per i prossimi giorni."
 
 #. module: industry_fsm
 #: model:ir.model.fields,help:industry_fsm.field_report_project_task_user_fsm__is_closed
@@ -512,18 +521,20 @@ msgstr ""
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Future"
-msgstr "in futuro"
+msgstr "Futuro"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Future Activities"
-msgstr ""
+msgstr "Attività future"
 
 #. module: industry_fsm
 #. odoo-javascript
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
 msgid "Give it a <b>title</b> <i>(e.g. Boiler maintenance, Air-conditioning installation, etc.).</i>"
 msgstr ""
+"Aggiungi un <b>titolo</b> <i>(ad es. manutenzione caldaia, installazione "
+"aria condizionata, ecc.).</i>"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -565,7 +576,7 @@ msgstr ""
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Sta seguendo"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__is_task_phone_update
@@ -580,7 +591,9 @@ msgstr "Foglio di lavoro è inviato"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.res_config_settings_view_form
 msgid "Keep track of the products used for your tasks, and invoice your time and material to your customers"
-msgstr "Tieni traccia dei prodotti utilizzati per i tuoi compiti, e fattura il tuo tempo e materiale ai tuoi clienti"
+msgstr ""
+"Tiene traccia dei prodotti utilizzati per i lavori fatturando tempo e "
+"materiali ai clienti"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__date_last_stage_update
@@ -602,7 +615,7 @@ msgstr "Ultimo aggiornamento il"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Late Activities"
-msgstr ""
+msgstr "Attività in ritardo"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -615,6 +628,9 @@ msgstr "Lancia il timer per <b>tracciare il tempo trascorso</b> sul tuo compito.
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
 msgid "Let's <b>mark your task as done!</b> <i>Tip: when doing so, your stock will automatically be updated, and your task will be closed.</i>"
 msgstr ""
+"<b>Contrassegna la tua attività come completata!</b> <i>Consiglio: in "
+"seguito il magazzino verrà aggiornato automaticamente e l'attività verrà "
+"chusa.</i>"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -641,7 +657,7 @@ msgstr "Mappa"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Mark as done"
-msgstr "Imposta a completata"
+msgstr "Segna completato"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_ir_ui_menu
@@ -668,12 +684,12 @@ msgstr "I miei lavori"
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_partner_address_form_industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Navigate To"
-msgstr "Naviga Verso"
+msgstr "Ottieni indicazioni"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_user_action_report_fsm
 msgid "No data yet!"
-msgstr "Ancora nessun dato"
+msgstr "Ancora nessun dato."
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_project_action_only_fsm
@@ -715,7 +731,7 @@ msgstr "Lavoro principale"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__personal_stage_type_ids
 msgid "Personal Stage"
-msgstr ""
+msgstr "Fase personale"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__partner_phone
@@ -769,7 +785,7 @@ msgstr "Progetti"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Properties"
-msgstr ""
+msgstr "Proprietà"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__rating_last_value
@@ -795,7 +811,7 @@ msgstr ""
 #. module: industry_fsm
 #: model:ir.ui.menu,name:industry_fsm.fsm_menu_reporting
 msgid "Reporting"
-msgstr "Rendiconto"
+msgstr "Resoconti"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -808,23 +824,23 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_fsm_planning_groupby_user
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_to_schedule_fsm
 msgid "Schedule your tasks and assign them to your workers."
-msgstr "Pianifica i tuoi compiti e assegnali ai tuoi lavoratori."
+msgstr "Programma i lavori e assegnali agli operatori."
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.report_project_task_user_fsm_view_search
 msgid "Search Planning"
-msgstr ""
+msgstr "Cerca pianificazione"
 
 #. module: industry_fsm
 #. odoo-javascript
 #: code:addons/industry_fsm/static/src/js/tours/industry_fsm_tour.js:0
 msgid "Select the <b>customer</b> for your task."
-msgstr ""
+msgstr "Seleziona il <b>cliente</b> per il lavoro."
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Send Report"
-msgstr "Invia Report"
+msgstr "Invia rapportino"
 
 #. module: industry_fsm
 #. odoo-python
@@ -836,6 +852,8 @@ msgstr "Invia rapporto"
 #: model:mail.template,description:industry_fsm.mail_template_data_intervention_details
 msgid "Set this template on a project's stage to automate email when tasks reach stages"
 msgstr ""
+"Configura questo modello in una fase del progetto per automatizzare le e-"
+"mail quando un lavoro raggiunge una fase specifica"
 
 #. module: industry_fsm
 #: model:ir.actions.act_window,name:industry_fsm.res_config_settings_action_fsm
@@ -885,6 +903,8 @@ msgstr "Firmato da"
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_stop_timer_wizard_form
 msgid "Some employees are still running their timer for this task. Are you sure you want to continue?"
 msgstr ""
+"Alcuni dipendenti hanno ancora il timer attivo per quest'attività. Sei "
+"sicuro di voler continuare?"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__stage_id
@@ -934,7 +954,7 @@ msgstr "Lavoro"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_project__allow_task_dependencies
 msgid "Task Dependencies"
-msgstr "Dipendenze dei compiti"
+msgstr "Dipendenze dei lavori"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_project_task__fsm_done
@@ -944,7 +964,7 @@ msgstr "Lavoro completato"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Ricorrenza lavoro"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_report_industry_fsm_worksheet_custom
@@ -954,12 +974,12 @@ msgstr "Rapportino di lavoro personalizzato"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_project_task_stop_timers_wizard
 msgid "Task stop running timers confirmation wizard"
-msgstr ""
+msgstr "Procedura conferma arresto timer in corso attività"
 
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_project_task_stop_timers_wizard_line
 msgid "Task stop running timers confirmation wizard line"
-msgstr ""
+msgstr "Riga procedura guidata conferma arresto timer in corso attività"
 
 #. module: industry_fsm
 #: model:ir.actions.act_window,name:industry_fsm.project_tasks_action_fsm
@@ -989,30 +1009,30 @@ msgstr "Il foglio di lavoro è stato firmato"
 #. odoo-python
 #: code:addons/industry_fsm/controllers/portal.py:0
 msgid "The worksheet is not in a state requiring customer signature."
-msgstr "Lo stato del foglio di lavoro non richiede la firma del cliente."
+msgstr "Lo stato del rapportino non richiede la firma del cliente."
 
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 msgid "There are no reports to send."
-msgstr "Non ci sono rapporti da inviare."
+msgstr "Non ci sono rapportini da inviare."
 
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Time"
-msgstr "Periodo"
+msgstr "Tempi"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.timesheet_view_form
 msgid "Time Spent"
-msgstr "Tempo Impiegato"
+msgstr "Tempo impiegato"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_res_config_settings__module_industry_fsm_sale
 msgid "Time and Material Invoicing"
-msgstr ""
+msgstr "Fatturazione tempo e materiale"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
@@ -1028,13 +1048,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/industry_fsm/models/project_task.py:0
 msgid "Timer started at: %(date)s %(time)s"
-msgstr ""
+msgstr "Timer avviato il: %(date)s %(time)s"
 
 #. module: industry_fsm
 #. odoo-python
 #: code:addons/industry_fsm/wizard/project_task_create_timesheet.py:0
 msgid "Timer stopped at: %(date)s %(time)s"
-msgstr ""
+msgstr "Timer interrotto il: %(date)s %(time)s"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.timesheet_view_form
@@ -1055,7 +1075,7 @@ msgstr "Da programmare"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "To Schedule/Assign"
-msgstr ""
+msgstr "Da programmare/assegnare"
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_all_fsm
@@ -1063,6 +1083,10 @@ msgid ""
 "To get things done, plan activities and use the task status.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
+"Per svolgere al meglio ogni attività, pianifica e sfrutta lo stato "
+"dell'attività.<br>\n"
+"                Collabora in maniera efficace chattando in tempo reale o "
+"comunicando via e-mail."
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_tasks_action_fsm
@@ -1070,8 +1094,10 @@ msgid ""
 "To get things done, use activities and status on tasks.<br>\n"
 "                Chat in real-time or by email to collaborate efficiently."
 msgstr ""
-"Per fare le cose, usa le attività e lo stato dei compiti.<br>\n"
-"Chatta in tempo reale o via e-mail per collaborare in modo efficiente."
+"Per portare a termine le operazioni, usa le attività e lo stato dei "
+"lavori.<br>\n"
+"                Per collaborare in modo efficiente comunica in tempo reale "
+"via chat o tramite e-mail."
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
@@ -1081,7 +1107,7 @@ msgstr "Oggi"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_view_search_fsm
 msgid "Today Activities"
-msgstr ""
+msgstr "Attività odierne"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__total_hours_spent
@@ -1123,20 +1149,20 @@ msgstr "Procedura guidata"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
 msgid "Worker"
-msgstr "Dipendente"
+msgstr "Operatore"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__working_days_open
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_user_view_graph
 msgid "Working Days to Assign"
-msgstr "Giorni lavorativi da assegnare"
+msgstr "Giorni di lavoro da assegnare"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__working_days_close
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_user_view_graph
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_user_view_pivot
 msgid "Working Days to Close"
-msgstr "Giorni lavorativi da chiudere"
+msgstr "Giorni di lavoro alla chiusura"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__working_hours_open
@@ -1146,7 +1172,7 @@ msgstr "Ore di lavoro da assegnare"
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__working_hours_close
 msgid "Working Hours to Close"
-msgstr "Orario di lavoro da chiudere"
+msgstr "Ore di lavoro alla chiusura"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.portal_my_task
@@ -1178,12 +1204,12 @@ msgstr "es. Sostituzione di caldaie"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "is FSM?"
-msgstr ""
+msgstr "è FSM?"
 
 #. module: industry_fsm
 #: model:ir.actions.server,name:industry_fsm.fsm_customer_ratings_server_action
 msgid "project.project.fsm"
-msgstr ""
+msgstr "project.project.fsm"
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_task_user_view_pivot

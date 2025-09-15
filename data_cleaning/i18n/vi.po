@@ -1,37 +1,41 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* data_cleaning
+# * data_cleaning
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:28+0000\n"
-"PO-Revision-Date: 2025-09-11 14:28+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 23:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"data_cleaning/vi/>\n"
+"Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_group.py:0
 msgid "%(model)s - Similarity: %(similarity)s%%"
-msgstr ""
+msgstr "%(model)s - Tính tương đồng: %(similarity)s%%"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (sao chép)"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "%s records have been merged"
-msgstr ""
+msgstr "%s bản ghi đã được gộp"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
@@ -39,6 +43,8 @@ msgid ""
 "' deduplication rule.<br/>\n"
 "You can merge them"
 msgstr ""
+"' quy tắc loại bỏ trùng lặp.<br/>\n"
+"Bạn có thể gộp chúng"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
@@ -46,49 +52,51 @@ msgid ""
 "' field cleaning rule.<br/>\n"
 "You can validate changes"
 msgstr ""
+"' quy tắc dọn dẹp trường.<br/>\n"
+"Bạn có thể xác nhận các thay đổi"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span class=\"me-1\">Every</span>"
-msgstr ""
+msgstr "<span class=\"me-1\">Mỗi</span>"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span class=\"oe_inline\">%</span>"
-msgstr ""
+msgstr "<span class=\"oe_inline\">%</span>"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "<span invisible=\"not custom_merge_method\">Model specific</span>"
-msgstr ""
+msgstr "<span invisible=\"not custom_merge_method\">Mô hình cụ thể</span>"
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_rule_uniq_model_id_field_id
 msgid "A field can only appear once!"
-msgstr ""
+msgstr "Mỗi trường chỉ có thể xuất hiện một lần!"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Action"
-msgstr ""
+msgstr "Tác vụ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_display
 msgid "Action Display"
-msgstr ""
+msgstr "Hiển thị tác vụ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_technical
 msgid "Action Technical"
-msgstr ""
+msgstr "Tác vụ kỹ thuật"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__action
 msgid "Actions"
-msgstr ""
+msgstr "Tác vụ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__active
@@ -97,33 +105,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__active
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__active
 msgid "Active"
-msgstr ""
+msgstr "Đang hoạt động"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__lower
 msgid "All Lowercase"
-msgstr ""
+msgstr "Tất cả là chữ thường"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_trim__all
 msgid "All Spaces"
-msgstr ""
+msgstr "Tất cả là dấu cách"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__upper
 msgid "All Uppercase"
-msgstr ""
+msgstr "Tất cả là chữ in hoa"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__archive
 msgid "Archive"
-msgstr ""
+msgstr "Lưu trữ"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_model_view_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Archived"
-msgstr ""
+msgstr "Đã lưu trữ"
 
 #. module: data_cleaning
 #. odoo-javascript
@@ -132,122 +140,126 @@ msgid ""
 "Are you sure that you want to merge the selected records in their respective"
 " group?"
 msgstr ""
+"Bạn có chắc chắn muốn gộp các bản ghi đã chọn trong nhóm tương ứng của chúng "
+"không?"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "Are you sure that you want to merge these records?"
-msgstr ""
+msgstr "Bạn có chắc muốn gộp các bản ghi này không?"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__cleaning_mode__automatic
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__merge_mode__automatic
 msgid "Automatic"
-msgstr ""
+msgstr "Tự động"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__is_merge_enabled
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_search
 msgid "Can Be Merged"
-msgstr ""
+msgstr "Có thể gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_case
 msgid "Case"
-msgstr ""
+msgstr "Chữ hoa/thường"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_rule.py:0
 msgid "Case/Accent Insensitive Match"
-msgstr ""
+msgstr "Khớp không phân biệt chữ hoa/thường/dấu"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Clean"
-msgstr ""
+msgstr "Xóa"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Cleaning Actions"
-msgstr ""
+msgstr "Cleaning Actions"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__cleaning_mode
 msgid "Cleaning Mode"
-msgstr ""
+msgstr "Chế độ dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_model
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__cleaning_model_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__cleaning_model_id
 msgid "Cleaning Model"
-msgstr ""
+msgstr "Mô hình dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_record
 msgid "Cleaning Record"
-msgstr ""
+msgstr "Dọn dẹp bản ghi"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_cleaning_rule
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Cleaning Rule"
-msgstr ""
+msgstr "Quy tắc dọn dẹp"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 msgid "Cleaning Rules"
-msgstr ""
+msgstr "Quy tắc dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__company_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__company_id
 msgid "Company"
-msgstr ""
+msgstr "Công ty"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record_notification
 msgid "Configure rules to identify duplicate records"
-msgstr ""
+msgstr "Cấu hình quy tắc để xác định bản ghi trùng lặp"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record_notification
 msgid "Configure rules to identify records to clean"
-msgstr ""
+msgstr "Cấu hình quy tắc để xác định bản ghi cần dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Liên hệ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__ref_merge_ir_act_server_id
 msgid ""
 "Contextual menu action that redirects to the deduplicate view of data_merge."
 msgstr ""
+"Tác vụ menu ngữ cảnh chuyển hướng đến chế độ xem chống trùng lặp của "
+"data_merge."
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__country_id
 msgid "Country"
-msgstr ""
+msgstr "Quốc gia"
 
 #. module: data_cleaning
 #: model:ir.model,website_form_label:data_cleaning.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Tạo một khách hàng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_create_uid
 msgid "Created By"
-msgstr ""
+msgstr "Tạo bởi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_create_date
 msgid "Created On"
-msgstr ""
+msgstr "Được tạo vào"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__create_uid
@@ -258,7 +270,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Được tạo bởi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__create_date
@@ -269,67 +281,67 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__create_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Được tạo vào"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__mix_by_company
 msgid "Cross-Company"
-msgstr ""
+msgstr "Liên công ty"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__current_value
 msgid "Current"
-msgstr ""
+msgstr "Hiện tại"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__custom_merge_method
 msgid "Custom Merge Method"
-msgstr ""
+msgstr "Phương thức gộp tuỳ chỉnh"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_clean_records_ir_actions_server
 msgid "Data Cleaning: Clean Records"
-msgstr ""
+msgstr "Dọn dẹp dữ liệu: Dọn dẹp bản ghi"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_cleanup_ir_actions_server
 msgid "Data Merge: Cleanup Records"
-msgstr ""
+msgstr "Gộp dữ liệu: Dọn dẹp bản ghi"
 
 #. module: data_cleaning
 #: model:ir.actions.server,name:data_cleaning.ir_cron_find_duplicates_ir_actions_server
 msgid "Data Merge: Find Duplicate Records"
-msgstr ""
+msgstr "Gộp dữ liệu: Tìm bản ghi trùng lặp"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_cleaning_model.py:0
 msgid "Data to Clean"
-msgstr ""
+msgstr "Dữ liệu cần dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__days
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__days
 msgid "Days"
-msgstr ""
+msgstr "Ngày"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Deduplicate"
-msgstr ""
+msgstr "Loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_merge_config_rules_deduplication
 #: model:ir.ui.menu,name:data_cleaning.menu_data_merge_group
 msgid "Deduplication"
-msgstr ""
+msgstr "Loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_group
 msgid "Deduplication Group"
-msgstr ""
+msgstr "Nhóm loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_model
@@ -337,68 +349,68 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__model_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__model_id
 msgid "Deduplication Model"
-msgstr ""
+msgstr "Mô hình chống trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_record
 msgid "Deduplication Record"
-msgstr ""
+msgstr "Bản ghi loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_data_merge_rule
 msgid "Deduplication Rule"
-msgstr ""
+msgstr "Quy tắc loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_config
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__rule_ids
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Deduplication Rules"
-msgstr ""
+msgstr "Quy tắc loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Deduplication is forbidden on the model: %s"
-msgstr ""
+msgstr "Chống trùng lặp bị cấm trên mô hình: %s"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__removal_mode__delete
 msgid "Delete"
-msgstr ""
+msgstr "Xoá"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_tree
 msgid "Details"
-msgstr ""
+msgstr "Chi tiết"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__differences
 msgid "Differences"
-msgstr ""
+msgstr "Khác biệt"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_record__differences
 msgid "Differences with the master record"
-msgstr ""
+msgstr "Khác biệt với bản ghi chính"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_form
 msgid "Disable Merge"
-msgstr ""
+msgstr "Tắt tính năng gộp"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "Discard"
-msgstr ""
+msgstr "Huỷ bỏ"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_record_view_search_merge_action
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Discarded"
-msgstr ""
+msgstr "Đã huỷ bỏ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__display_name
@@ -412,106 +424,107 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__display_name
 #: model:ir.model.fields,field_description:data_cleaning.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Tên hiển thị"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__divergent_fields
 msgid "Divergent Fields"
-msgstr ""
+msgstr "Trường khác nhau"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__domain
 msgid "Domain"
-msgstr ""
+msgstr "Miền"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__removal_mode
 msgid "Duplicate Removal"
-msgstr ""
+msgstr "Xóa bản trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_record
 #: model:ir.actions.act_window,name:data_cleaning.action_data_merge_record_notification
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Duplicates"
-msgstr ""
+msgstr "Sao chép"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Duplicates to Merge"
-msgstr ""
+msgstr "Bản trùng lặp cần gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__create_threshold
 msgid ""
 "Duplicates with a similarity below this threshold will not be suggested"
 msgstr ""
+"Dữ liệu trùng lặp có điểm tương đồng dưới ngưỡng này sẽ không được đề xuất"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.ir_model_view_form
 msgid "Enable Merge"
-msgstr ""
+msgstr "Bật tính năng gộp"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_rule.py:0
 msgid "Exact Match"
-msgstr ""
+msgstr "Khớp hoàn toàn"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__field_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__field_id
 msgid "Field"
-msgstr ""
+msgstr "Trường"
 
 #. module: data_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_config_rules_cleaning
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_record
 msgid "Field Cleaning"
-msgstr ""
+msgstr "Dọn dẹp trường"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_record
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_record_notification
 msgid "Field Cleaning Records"
-msgstr ""
+msgstr "Field Cleaning Records"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_cleaning_config
 msgid "Field Cleaning Rules"
-msgstr ""
+msgstr "Quy tắc dọn dẹp trường"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__field_name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__name
 msgid "Field Name"
-msgstr ""
+msgstr "Tên Trường"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_field_form
 msgid "Field To Clean"
-msgstr ""
+msgstr "Trường cần dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__field_values
 msgid "Field Values"
-msgstr ""
+msgstr "Giá trị trường"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_case__first
 msgid "First Letters to Uppercase"
-msgstr ""
+msgstr "Chữ cái đầu tiên viết hoa"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__phone
 msgid "Format Phone"
-msgstr ""
+msgstr "Định dạng số điện thoại"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__hide_merge_action
 msgid "Hide merge action button"
-msgstr ""
+msgstr "Ẩn nút tác vụ gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_case
@@ -520,12 +533,15 @@ msgid ""
 "every letter to lowercase except the first letter of each word, which is set"
 " to uppercase."
 msgstr ""
+"Cách cài đặt loại chữ cái theo quy tắc. 'Chữ cái đầu tiên viết hoa' chuyển "
+"mọi chữ cái thành chữ thường ngoại trừ chữ cái đầu tiên của mỗi từ được đặt "
+"thành chữ hoa."
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "I've identified"
-msgstr ""
+msgstr "Tôi đã xác định"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__id
@@ -540,7 +556,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_res_partner__id
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__is_merge_enabled
@@ -548,6 +564,8 @@ msgid ""
 "If True, the generic data merge tool is available in the contextual menu of "
 "this model."
 msgstr ""
+"Nếu Đúng, công cụ gộp dữ liệu chung khả dụng trong menu ngữ cảnh của mô hình "
+"này."
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__is_contextual_merge_action
@@ -555,6 +573,8 @@ msgid ""
 "If True, this record is used for contextual menu action \"Merge\" on the "
 "target model."
 msgstr ""
+"Nếu Đúng, bản ghi này được sử dụng cho tác vụ menu ngữ cảnh \"Gộp\" trên mô "
+"hình đích."
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__hide_merge_action
@@ -562,27 +582,31 @@ msgid ""
 "If the model already has a custom merge method, the class attribute `_merge_disabled` is set to true on\n"
 "             that model and the generic data merge action should not be available on that model."
 msgstr ""
+"Nếu mô hình đã có phương thức gộp tùy chỉnh, thuộc tính lớp `_merge_disabled`"
+" sẽ được đặt thành true trên\n"
+"              mô hình đó và tác vụ gộp dữ liệu chung sẽ không khả dụng trên "
+"mô hình."
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_deleted
 msgid "Is Deleted"
-msgstr ""
+msgstr "Bị xoá"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_discarded
 msgid "Is Discarded"
-msgstr ""
+msgstr "Bị huỷ bỏ"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__is_master
 msgid "Is Master"
-msgstr ""
+msgstr "Chính"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__last_notification
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__last_notification
 msgid "Last Notification"
-msgstr ""
+msgstr "Thông báo cuối cùng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__write_uid
@@ -593,7 +617,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_uid
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Cập nhật lần cuối bởi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__write_date
@@ -604,40 +628,40 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__write_date
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Cập nhật lần cuối vào"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_record__used_in
 msgid "List of other models referencing this record"
-msgstr ""
+msgstr "Danh sách các mô hình khác tham chiếu bản ghi này"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_model__notify_user_ids
 msgid "List of users to notify when there are new records to clean"
-msgstr ""
+msgstr "Danh sách người dùng cần thông báo khi có bản ghi mới cần dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__notify_user_ids
 msgid "List of users to notify when there are new records to merge"
-msgstr ""
+msgstr "Danh sách người dùng cần thông báo khi có bản ghi mới cần gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__cleaning_mode__manual
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__merge_mode__manual
 msgid "Manual"
-msgstr ""
+msgstr "Thủ công"
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.ir_model_action_merge
 #: model:ir.ui.menu,name:data_cleaning.ir_model_menu_merge_action_manager
 msgid "Manual Merge"
-msgstr ""
+msgstr "Gộp thủ công"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Manual Selection - %s"
-msgstr ""
+msgstr "Chọn thủ công - %s"
 
 #. module: data_cleaning
 #. odoo-javascript
@@ -650,33 +674,33 @@ msgstr ""
 #: model:ir.actions.server,name:data_cleaning.merge_action_res_partner_industry
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_list
 msgid "Merge"
-msgstr ""
+msgstr "Hợp nhất"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__match_mode
 msgid "Merge If"
-msgstr ""
+msgstr "Gộp nếu"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__merge_mode
 msgid "Merge Mode"
-msgstr ""
+msgstr "Chế độ gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__ref_merge_ir_act_server_id
 msgid "Merge Server Action"
-msgstr ""
+msgstr "Tác vụ máy chủ gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__is_contextual_merge_action
 msgid "Merge action attached"
-msgstr ""
+msgstr "Tác vụ gộp đính kèm"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_model.py:0
 msgid "Missing required PostgreSQL extension: unaccent"
-msgstr ""
+msgstr "Thiếu extension PostgreSQL cần thiết: không có dấu"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__res_model_id
@@ -691,7 +715,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_search
 msgid "Model"
-msgstr ""
+msgstr "Mô hình"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__res_model_name
@@ -701,31 +725,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__res_model_name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__res_model_name
 msgid "Model Name"
-msgstr ""
+msgstr "Tên mô hình"
 
 #. module: data_cleaning
 #: model:ir.model,name:data_cleaning.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Mô hình"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__months
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__months
 msgid "Months"
-msgstr ""
+msgstr "Tháng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__name
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__name
 msgid "Name"
-msgstr ""
+msgstr "Tên"
 
 #. module: data_cleaning
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_cleaning_record_notification
 msgid "No cleaning suggestions"
-msgstr ""
+msgstr "Không có đề xuất dọn dẹp nào"
 
 #. module: data_cleaning
 #. odoo-python
@@ -733,53 +757,53 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record
 #: model_terms:ir.actions.act_window,help:data_cleaning.action_data_merge_record_notification
 msgid "No duplicates found"
-msgstr ""
+msgstr "Không tìm thấy dữ liệu trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_frequency
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_frequency
 msgid "Notify"
-msgstr ""
+msgstr "Thông báo"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_frequency_period
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_frequency_period
 msgid "Notify Frequency Period"
-msgstr ""
+msgstr "Tần suất thông báo"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__notify_user_ids
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__notify_user_ids
 msgid "Notify Users"
-msgstr ""
+msgstr "Thông báo cho người dùng"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Query Failed."
-msgstr ""
+msgstr "Truy vấn không thành công."
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__record_ids
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__res_id
 msgid "Record"
-msgstr ""
+msgstr "Bản ghi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__group_id
 msgid "Record Group"
-msgstr ""
+msgstr "Nhóm bản ghi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__res_id
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__res_id
 msgid "Record ID"
-msgstr ""
+msgstr "ID bản ghi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__name
 msgid "Record Name"
-msgstr ""
+msgstr "Tên bản ghi"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_record_view_search_merge_action
@@ -787,28 +811,28 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_search
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Records"
-msgstr ""
+msgstr "Bản ghi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__records_to_clean_count
 msgid "Records To Clean"
-msgstr ""
+msgstr "Bản ghi cần dọn dẹp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__records_to_merge_count
 msgid "Records To Merge Count"
-msgstr ""
+msgstr "Số bản ghi cần gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__domain
 msgid "Records eligible for the deduplication process"
-msgstr ""
+msgstr "Bản ghi đủ điều kiện cho quá trình loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "Records must be of the same model"
-msgstr ""
+msgstr "Các bản ghi phải có cùng mô hình"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__merge_threshold
@@ -816,102 +840,105 @@ msgid ""
 "Records with a similarity percentage above this threshold will be "
 "automatically merged"
 msgstr ""
+"Các bản ghi có tỷ lệ phần trăm tương đồng cao hơn ngưỡng này sẽ tự động được "
+"gộp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__name
 msgid "Resource Name"
-msgstr ""
+msgstr "Tên tài nguyên"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__rule_ids
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_record_search
 msgid "Rule"
-msgstr ""
+msgstr "Quy tắc"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_model__rule_ids
 msgid "Rules"
-msgstr ""
+msgstr "Quy tắc"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__html
 msgid "Scrap HTML"
-msgstr ""
+msgstr "Bỏ HTML"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_model_form
 msgid "Select a model to configure cleaning actions"
-msgstr ""
+msgstr "Select a model to configure cleaning actions"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_merge_model_form
 msgid "Select a model to configure deduplication rules"
-msgstr ""
+msgstr "Chọn một mô hình để cấu hình hành động loại bỏ trùng lặp"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__sequence
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Trình tự"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__case
 msgid "Set Type Case"
-msgstr ""
+msgstr "Cài đặt loại chữ cái"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_group__similarity
 msgid "Similarity %"
-msgstr ""
+msgstr "% tương đồng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__merge_threshold
 msgid "Similarity Threshold"
-msgstr ""
+msgstr "Ngưỡng tương đồng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_group__similarity
 msgid ""
 "Similarity coefficient based on the amount of text fields exactly in common."
 msgstr ""
+"Hệ số tương đồng dựa trên số lượng trường văn bản có điểm chung tuyệt đối."
 
 #. module: data_cleaning
 #: model:ir.actions.act_window,name:data_cleaning.action_data_storage
 #: model:ir.model,name:data_cleaning.model_ir_attachment_report
 #: model:ir.ui.menu,name:data_cleaning.menu_data_cleaning_storage
 msgid "Storage"
-msgstr ""
+msgstr "Lưu trữ"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/report/data_storage.py:0
 msgid "Storage Detail: %(name)s"
-msgstr ""
+msgstr "Thông tin lưu trữ: %(name)s"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__rule_ids
 msgid "Suggest to merge records matching at least one of these rules"
-msgstr ""
+msgstr "Đề xuất gộp các bản ghi khớp với ít nhất một trong các quy tắc này"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__suggested_value_display
 msgid "Suggested"
-msgstr ""
+msgstr "Được đề xuất"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_record__suggested_value
 msgid "Suggested Value"
-msgstr ""
+msgstr "Giá trị được gợi ý"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_model__create_threshold
 msgid "Suggestion Threshold"
-msgstr ""
+msgstr "Ngưỡng gợi ý"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action_trim__superfluous
 msgid "Superfluous Spaces"
-msgstr ""
+msgstr "Dấu cách thừa"
 
 #. module: data_cleaning
 #. odoo-python
@@ -920,101 +947,104 @@ msgid ""
 "The Python module `phonenumbers` is not installed. Format phone will not "
 "work."
 msgstr ""
+"Phân hệ Python `phonenumbers` chưa được cài đặt. Định dạng số điện thoại sẽ "
+"không hoạt động."
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_cleaning_model_check_notif_freq
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_model_check_notif_freq
 msgid "The notification frequency should be greater than 0"
-msgstr ""
+msgstr "Tần suất thông báo phải lớn hơn 0"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "The referenced record does not exist"
-msgstr ""
+msgstr "Bản ghi được tham chiếu không tồn tại"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid "The selected records have been merged"
-msgstr ""
+msgstr "Các bản ghi đã chọn đã được gộp"
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "The target model does not exists."
-msgstr ""
+msgstr "Mô hình mục tiêu không tồn tại."
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "There is not referenced record"
-msgstr ""
+msgstr "Không có bản ghi được tham chiếu"
 
 #. module: data_cleaning
 #: model:ir.model.constraint,message:data_cleaning.constraint_data_merge_model_uniq_name
 msgid "This name is already taken"
-msgstr ""
+msgstr "Tên này đã được sử dụng"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_attachment_report__size
 msgid "Total Size"
-msgstr ""
+msgstr "Tổng kích thước"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_cleaning_rule__action_trim
 msgid "Trim"
-msgstr ""
+msgstr "Xoá bớt"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_rule__action__trim
 msgid "Trim Spaces"
-msgstr ""
+msgstr "Xoá bớt dấu cách"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_rule__field_id
 msgid "Unique ID Field"
-msgstr ""
+msgstr "Trường ID duy nhất"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_cleaning_list_view.xml:0
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.xml:0
 msgid "Unselect"
-msgstr ""
+msgstr "Bỏ chọn"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_write_uid
 msgid "Updated By"
-msgstr ""
+msgstr "Cập nhật bởi"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__record_write_date
 msgid "Updated On"
-msgstr ""
+msgstr "Cập nhật vào"
 
 #. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_data_merge_record__used_in
 msgid "Used In"
-msgstr ""
+msgstr "Dùng trong"
 
 #. module: data_cleaning
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_cleaning_list_view.xml:0
 #: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_cleaning_record_list
 msgid "Validate"
-msgstr ""
+msgstr "Xác nhận"
 
 #. module: data_cleaning
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_cleaning_model__notify_frequency_period__weeks
 #: model:ir.model.fields.selection,name:data_cleaning.selection__data_merge_model__notify_frequency_period__weeks
 msgid "Weeks"
-msgstr ""
+msgstr "Tuần"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__mix_by_company
 msgid "When enabled, duplicates across different companies will be suggested"
 msgstr ""
+"Khi được bật, các bản trùng lặp giữa nhiều công ty khác nhau sẽ được đề xuất"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_trim
@@ -1022,35 +1052,37 @@ msgid ""
 "Which spaces are trimmed by the rule. Leading, trailing, and successive "
 "spaces are considered superfluous."
 msgstr ""
+"Những dấu cách nào được xoá bớt theo quy tắc. Các dấu cách ở đầu, cuối và "
+"liền kề nhau được coi là không cần thiết."
 
 #. module: data_cleaning
 #. odoo-python
 #: code:addons/data_cleaning/models/data_merge_record.py:0
 msgid "You must select at least two %s in order to merge them."
-msgstr ""
+msgstr "Bạn cần có ít nhất hai %s để tiến hành gộp."
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 msgid "duplicate records with the '"
-msgstr ""
+msgstr "bản ghi trùng với '"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "here"
-msgstr ""
+msgstr "ở đây"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_merged
 msgid "merged into"
-msgstr ""
+msgstr "được gộp vào"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_main
 msgid "merged into this one"
-msgstr ""
+msgstr "được gộp vào đây"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "records to clean with the '"
-msgstr ""
+msgstr "bản ghi cần dọn dẹp với '"

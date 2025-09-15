@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_iot
+# * pos_iot
 #
 # Translators:
 # Mads Søndergaard, 2022
@@ -8,30 +8,32 @@
 # Martin Trigaux, 2022
 # lhmflexerp <lhm@flexerp.dk>, 2022
 # Mads Søndergaard, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Mads Søndergaard, 2022\n"
-"Language-Team: Danish (https://app.transifex.com/odoo/teams/41243/da/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/pos_iot/"
+"da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with a Worldline payment terminal"
-msgstr "Modtag betalinger med en Worldline betalingsterminal"
+msgstr "Acceptér betalinger med en Worldline-betalingsterminal"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with an Ingenico payment terminal"
-msgstr "Accepter betalinger med en Ingenico betalingsterminal"
+msgstr "Acceptér betalinger med en Ingenico-betalingsterminal"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -55,12 +57,12 @@ msgstr "Beløb:"
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Barcode Scanners/Card Readers"
-msgstr "Stregkode Scannere/Kortlæsere"
+msgstr "Stregkodescannere/kortlæsere"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_config__iface_print_via_proxy
 msgid "Bypass browser printing and prints via the hardware proxy."
-msgstr "Omgå browser printning og udprintning via hardware proxy'en."
+msgstr "Undgå udskrivning via browseren, og brug i stedet hardwareproxyen."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -72,24 +74,26 @@ msgstr "Åbn kasseapparatet"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "Click on Advanced/Show Details/Details/More information"
-msgstr "Klik på Avanceret/Vis detaljer/Detaljer/Mere information"
+msgstr "Klik på Avanceret/Vis detaljer/Detaljer/Flere oplysninger"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "Click on Proceed to .../Add Exception/Visit this website/Go on to the webpage"
-msgstr "Klik på Fortsæt til.../Tilføj undtagelse/Besøg denne hjemmeside/Gå videre til hjemmesiden"
+msgstr ""
+"Klik på Fortsæt til .../Tilføj undtagelse/Besøg denne hjemmeside/Gå videre "
+"til hjemmesiden"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "Close this window and try again"
-msgstr "Luk dette vindue og prøv igen"
+msgstr "Luk dette vindue, og prøv igen"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_res_config_settings
 msgid "Config Settings"
-msgstr "Konfigurer opsætning"
+msgstr "Konfigurationsindstillinger"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -102,13 +106,13 @@ msgstr "Konfiguration af betalingsterminalen mislykkedes"
 #: code:addons/pos_iot/static/src/js/iot_longpolling.js:0
 #: code:addons/pos_iot/static/src/js/payment.js:0
 msgid "Connection to IoT Box failed"
-msgstr "Forbindelse til IoT boks slog fejl"
+msgstr "Forbindelsen til IoT-boksen mislykkedes"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/js/payment.js:0
 msgid "Connection to terminal failed"
-msgstr "Forbindelse til terminal mislykkedes"
+msgstr "Forbindelse til terminalen mislykkedes"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -120,7 +124,7 @@ msgstr "Kunne ikke forbinde til IoT vægt"
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Customer Display"
-msgstr "Kunde visning"
+msgstr "Kundevisning"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_customer_facing_display_via_proxy
@@ -145,18 +149,20 @@ msgstr "Elektronisk betaling er igang"
 #: model:ir.model.fields,help:pos_iot.field_pos_config__iface_scanner_ids
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__pos_iface_scanner_ids
 msgid "Enable barcode scanning with a remotely connected barcode scanner and card swiping with a Vantiv card reader."
-msgstr "Aktiver stregkode scanning med en fjernforbundet stregkode scanner og kort aflæsning med en Vantiv kortlæser."
+msgstr ""
+"Aktivér stregkodescanning med en fjernforbundet stregkodescanner og "
+"kortaflæsning med en Vantiv-kortlæser."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_config__iface_electronic_scale
 msgid "Enables Electronic Scale integration."
-msgstr "Aktiverer elektronisk vægt integration."
+msgstr "Aktiverer integrationen med elektronisk vægt."
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "Firefox only: Click on Confirm Security Exception"
-msgstr ""
+msgstr "Kun Firefox: Klik på Godkend sikkerhedsundtagelse"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -167,37 +173,39 @@ msgstr "Indhent vægt"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
 msgid "Identifier"
-msgstr ""
+msgstr "Identifikator"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "If you are on a secure server (HTTPS) check if you accepted the certificate:"
-msgstr "Hvis du er på en sikker server (HTTPS), bør du tjekke at du accepterede certifikatet:"
+msgstr ""
+"Hvis du er på en sikker server (HTTPS), bør du sikre dig, at du har "
+"accepteret certifikatet:"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_display_id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__pos_iface_display_id
 msgid "Iface Display"
-msgstr "Iface Displayet"
+msgstr "Iface-displayet"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_printer_id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__pos_iface_printer_id
 msgid "Iface Printer"
-msgstr "Iface Printer"
+msgstr "Iface-printer"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_scale_id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__pos_iface_scale_id
 msgid "Iface Scale"
-msgstr "Iface vægt"
+msgstr "Iface-vægt"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_scanner_ids
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__pos_iface_scanner_ids
 msgid "Iface Scanner"
-msgstr "Iface Scanner"
+msgstr "Iface-scanner"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -207,29 +215,29 @@ msgstr "Ingenico (BENELUX)"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__ingenico_payment_terminal
 msgid "Ingenico Payment Terminal"
-msgstr "Ingenico betalingsterminal"
+msgstr "Ingenico-betalingsterminal"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "IoT Box Homepage"
-msgstr "IoT Box hjemmeside"
+msgstr "IoT-boks-startside"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_id
 msgid "IoT Device"
-msgstr ""
+msgstr "IoT-enhed"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "IoT Devices"
-msgstr "IoT enheder"
+msgstr "IoT-enheder"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
 msgid "Iot Device"
-msgstr "IoT enhed"
+msgstr "IoT-enhed"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -268,7 +276,7 @@ msgstr "Betalingsterminal"
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
 #: model:ir.model.fields,field_description:pos_iot.field_pos_payment_method__iot_device_id
 msgid "Payment Terminal Device"
-msgstr "Betalingsterminal enhed"
+msgstr "Betalingsterminalenhed"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -281,13 +289,13 @@ msgstr "Betalingsterminal fejl"
 #: code:addons/pos_iot/static/src/js/payment.js:0
 #: code:addons/pos_iot/static/src/xml/IoTErrorPopup.xml:0
 msgid "Please check if the IoT Box is still connected."
-msgstr "Tjek venligst om IoT boksen stadig er forbundet."
+msgstr "Kontrollér venligst, om IoT-boksen stadig er forbundet."
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/js/payment.js:0
 msgid "Please check if the terminal is still connected."
-msgstr "Tjek venligst om terminalen stadig er forbundet."
+msgstr "Kontrollér venligst, om terminalen stadig er forbundet."
 
 #. module: pos_iot
 #. odoo-javascript
@@ -299,27 +307,27 @@ msgstr "Venligst kontrollér netværksforbindelsen og derefter status på den si
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/pos_store.js:0
 msgid "Please process or cancel the current transaction."
-msgstr "Venligst gennemfør eller annullér den nuværende transaktion."
+msgstr "Gennemfør eller annullér venligst den nuværende transaktion."
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr "POS konfiguration"
+msgstr "POS-konfiguration"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_pos_payment_method
 msgid "Point of Sale Payment Methods"
-msgstr "Point of Sale betalingsmetoder"
+msgstr "POS-betalingsformer"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_pos_printer
 msgid "Point of Sale Printer"
-msgstr ""
+msgstr "POS-printer"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_pos_session
 msgid "Point of Sale Session"
-msgstr "POS session"
+msgstr "POS-session"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_print_via_proxy
@@ -329,13 +337,13 @@ msgstr "Print via Proxy"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
 msgid "Proxy IP Address"
-msgstr ""
+msgstr "Proxy-IP-adresse"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Receipt Printer"
-msgstr "Udskrivning af kvittering"
+msgstr "Kvitteringsprinter"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_scan_via_proxy
@@ -356,7 +364,7 @@ msgstr "Terminal ikke forbundet"
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_printer__proxy_ip
 msgid "The IP Address or hostname of the Printer's hardware proxy"
-msgstr ""
+msgstr "IP-adresse eller værtsnavn for printerens hardwareproxy"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -407,7 +415,7 @@ msgstr "Worldline - Sidste transaktionsstatus"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__worldline_payment_terminal
 msgid "Worldline Payment Terminal"
-msgstr "Worldline betalingsterminal"
+msgstr "Worldline-betalingsterminal"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -419,4 +427,4 @@ msgstr "Du kan ikke kontrollere status på den seneste transaktion, når en beta
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/js/payment.js:0
 msgid "You must select a payment terminal in your POS config."
-msgstr "Du skal vælge en betalingsterminal i din POS konfiguration."
+msgstr "Du skal vælge en betalingsterminal i din POS-konfiguration."

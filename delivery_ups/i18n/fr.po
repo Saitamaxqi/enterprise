@@ -1,36 +1,44 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups
+# * delivery_ups
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"delivery_ups/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "A shipment cannot have a KGS/IN or LBS/CM as its unit of measurements. Configure it from the delivery method."
-msgstr "Une expédition ne peut pas avoir KGS/IN ou LBS/CM comme unités de mesures. Configurez-les depuis le mode de livraison. "
+msgstr ""
+"Une livraison ne peut pas avoir KGS/IN ou LBS/CM comme unités de mesures. "
+"Configurez-les depuis le mode de livraison."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Access License number is Invalid. Provide a valid number (Length should be 0-35 alphanumeric characters)"
-msgstr "Le numéro Access License est incorrect. Veuillez fournir un numéro valide (la longueur devrait être de 0 à 35 caractères alphanumériques) "
+msgstr ""
+"Le numéro Access License est incorrect. Veuillez fournir un numéro valide ("
+"la longueur devrait être de 0 à 35 caractères alphanumériques)"
 
 #. module: delivery_ups
 #. odoo-python
@@ -108,7 +116,7 @@ msgstr "Contact"
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Duties paid by"
-msgstr "Frais de douanes payés par"
+msgstr "Taxes payées par"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__epl
@@ -156,7 +164,7 @@ msgstr "Kilogrammes"
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Label Format"
-msgstr "Format d'étiquette"
+msgstr "Format de libellé"
 
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
@@ -188,7 +196,7 @@ msgstr "Les colis %s n'ont pas un poids d'expédition positif."
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Packages:"
-msgstr ""
+msgstr "Colis :"
 
 #. module: delivery_ups
 #. odoo-python
@@ -372,7 +380,7 @@ msgstr "Le numéro de suivi fourni n'est pas valide."
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr "Transporteur"
+msgstr "Fournisseur"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_duty_payment__recipient
@@ -401,7 +409,7 @@ msgstr "L'extension de numéro de téléphone du destinataire ne peut contenir q
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Return label generated"
-msgstr ""
+msgstr "Étiquette de retour générée"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__spl
@@ -411,12 +419,12 @@ msgstr "SPL"
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_sale_order
 msgid "Sales Order"
-msgstr "Bon de commande"
+msgstr "Commande client"
 
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Saturday Delivery"
-msgstr "Livraison le samedi "
+msgstr "Livraison le samedi"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_duty_payment__sender
@@ -433,7 +441,7 @@ msgstr "L'expédition #%s a été annulée"
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Shipment created into UPS"
-msgstr ""
+msgstr "Envoi créé dans UPS"
 
 #. module: delivery_ups
 #. odoo-python
@@ -561,7 +569,8 @@ msgstr "Le service sélectionné n'est pas disponible depuis votre entrepôt pou
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The selected service is not valid with the selected packaging."
-msgstr "Le service sélectionné n'est pas valide pour l'emballage sélectionné."
+msgstr ""
+"Le service sélectionné n'est pas valide pour le conditionnement sélectionné."
 
 #. module: delivery_ups
 #. odoo-python
@@ -583,13 +592,15 @@ msgstr "Ce service à valeur ajoutée permet à UPS de collecter le paiement de 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_saturday_delivery
 msgid "This value added service will allow you to ship the package on saturday also."
-msgstr "Ce service à valeur ajoutée vous permettra également d'expédier le paquet le samedi."
+msgstr ""
+"Ce service à valeur ajoutée vous permettra également d'expédier le colis le "
+"samedi."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "Numéros de suivi :"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups
@@ -670,7 +681,7 @@ msgstr "UPS US"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_username
 msgid "UPS Username"
-msgstr "Nom utilisateur UPS"
+msgstr "Nom d'utilisateur UPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order__partner_ups_carrier_account
@@ -691,7 +702,7 @@ msgstr "Paiement des droits UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_package_weight_unit
 msgid "Ups Package Weight Unit"
-msgstr "Unité de poids du paquet UPS"
+msgstr "Unité de poids du colis UPS"
 
 #. module: delivery_ups
 #. odoo-python

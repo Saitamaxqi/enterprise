@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_iot
+# * delivery_iot
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:29+0000\n"
-"PO-Revision-Date: 2025-09-11 14:29+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_iot/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_iot
 #: model:ir.actions.report,print_report_name:delivery_iot.action_report_shipping_docs
@@ -47,6 +51,8 @@ msgid ""
 "Choose the scales you want to use for this operation type. Those scales can "
 "be used to weigh the packages created."
 msgstr ""
+"Vælg vægtene du vil bruge til denne operationstype. De vægte kan bruges til "
+"at veje de pakker der oprettes."
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -59,12 +65,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_ip
 msgid "Domain Address"
-msgstr ""
+msgstr "Domæne adresse"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -82,17 +88,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "IoT Enhed"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_identifier
 msgid "Identifier"
-msgstr ""
+msgstr "Identifikator"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_picking_type__auto_print_carrier_labels
@@ -123,27 +129,27 @@ msgstr ""
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.iot_device_view_form_inherit
 msgid "Linked Operation Types"
-msgstr ""
+msgstr "Forbundet Operationstyper"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manual Measurement"
-msgstr ""
+msgstr "Manuel Måling"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manually read the measurement from the device"
-msgstr ""
+msgstr "Læs målinger manuelt fra enheden"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__picking_type_ids
 msgid "Operation Types"
-msgstr ""
+msgstr "Aktivitetstyper"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Pluk type"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_put_in_pack
@@ -154,18 +160,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/delivery_iot/static/src/field_many2one_iot_scale.xml:0
 msgid "Read weight"
-msgstr ""
+msgstr "Læs vægt"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_id
 msgid "Scale"
-msgstr ""
+msgstr "Vægt"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__iot_scale_ids
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Scales"
-msgstr ""
+msgstr "Vægte"
 
 #. module: delivery_iot
 #: model:ir.actions.report,name:delivery_iot.action_report_shipping_docs
@@ -180,4 +186,4 @@ msgstr ""
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Overfør"

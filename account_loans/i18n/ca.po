@@ -1,44 +1,48 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_loans
+# * account_loans
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-11 14:25+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"account_loans/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "1st amortization schedule"
-msgstr ""
+msgstr "Primera data d'amortització"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__30a/360
 msgid "30A/360"
-msgstr ""
+msgstr "30A/360"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__30e/360
 msgid "30E/360"
-msgstr ""
+msgstr "30E/360"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__30e/360_isda
 msgid "30E/360 ISDA"
-msgstr ""
+msgstr "30E/360 ISDA"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__30u/360
 msgid "30U/360"
-msgstr ""
+msgstr "30U/360"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
@@ -46,6 +50,9 @@ msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
 "                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
 msgstr ""
+"<span class=\"oe_inline\" invisible=\"duration == 1\">mesos</span>\n"
+"                                        <span class=\"oe_inline\" invisible="
+"\"duration != 1\">mes</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -53,31 +60,34 @@ msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
 "                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
 msgstr ""
+"<span class=\"oe_inline\" invisible=\"loan_term == 1\">anys</span>\n"
+"                                    <span class=\"oe_inline\" invisible="
+"\"loan_term != 1\">any</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "<span class=\"oe_inline\">%</span>"
-msgstr ""
+msgstr "<span class=\"oe_inline\">%</span>"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__a/360
 msgid "A/360"
-msgstr ""
+msgstr "A/360"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__a/365f
 msgid "A/365F"
-msgstr ""
+msgstr "A/365F"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__a/a_afb
 msgid "A/A AFB"
-msgstr ""
+msgstr "A/A AFB"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__compounding_method__a/a_isda
 msgid "A/A ISDA"
-msgstr ""
+msgstr "A/A ISDA"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_return
@@ -87,39 +97,39 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Acció necessària"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__active
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__active
 msgid "Active"
-msgstr ""
+msgstr "Actiu"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_close_wizard
 msgid "All draft entries after the"
-msgstr ""
+msgstr "Tots els assentaments esborrany després del"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Amortization schedule"
-msgstr ""
+msgstr "Data d'amortització"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__amount_borrowed
 msgid "Amount Borrowed"
-msgstr ""
+msgstr "Import prestat"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__amount_borrowed_difference
 msgid "Amount Borrowed Difference"
-msgstr ""
+msgstr "Diferència de l'import prestat"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_close_wizard
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "Apply"
-msgstr ""
+msgstr "Aplica"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_asset_group
@@ -128,103 +138,103 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Asset Group"
-msgstr ""
+msgstr "Grup d'actius"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_asset
 msgid "Asset/Revenue Recognition"
-msgstr ""
+msgstr "Reconeixement d'actius/ ingressos"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__payment_end_of_month__at_anniversary
 msgid "At Anniversary"
-msgstr ""
+msgstr "En l'aniversari"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Nombre d'adjunts"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 msgid "Balance"
-msgstr ""
+msgstr "Saldo"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Cancel·la"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan__state__cancelled
 msgid "Cancelled"
-msgstr ""
+msgstr "Cancel·lat"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Close"
-msgstr ""
+msgstr "Tancar"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_close_wizard__date
 msgid "Close Date"
-msgstr ""
+msgstr "Data de tancament"
 
 #. module: account_loans
 #: model:ir.actions.act_window,name:account_loans.action_view_account_loan_close_wizard
 #: model:ir.model,name:account_loans.model_account_loan_close_wizard
 msgid "Close Loan Wizard"
-msgstr ""
+msgstr "Assistent de tancament de préstec"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan__state__closed
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Closed"
-msgstr ""
+msgstr "Tancat"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Closed Loans"
-msgstr ""
+msgstr "Préstecs tancats"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_close_wizard.py:0
 msgid "Closed on the %(date)s"
-msgstr ""
+msgstr "Tancat el %(date)s"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__company_id
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__company_id
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__compounding_method
 msgid "Compounding Method"
-msgstr ""
+msgstr "Mètode de composició"
 
 #. module: account_loans
 #. odoo-javascript
 #: code:addons/account_loans/static/src/components/loans/file_upload.xml:0
 msgid "Compute"
-msgstr ""
+msgstr "Calcula"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Compute New Loan"
-msgstr ""
+msgstr "Calcular nou préstec"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
@@ -236,13 +246,13 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__count_linked_assets
 msgid "Count Linked Assets"
-msgstr ""
+msgstr "Nombre d'actius vinculats"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_asset__count_linked_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_asset_group__count_linked_loans
 msgid "Count Linked Loans"
-msgstr ""
+msgstr "Compta préstecs vinculats"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__create_uid
@@ -250,7 +260,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__create_uid
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creat per"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__create_date
@@ -258,20 +268,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__create_date
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creat el"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__currency_id
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__currency_id
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Divisa"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Current"
-msgstr ""
+msgstr "Actiu"
 
 #. module: account_loans
 #. odoo-python
@@ -279,13 +289,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__date
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_close_wizard
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_asset__display_name
@@ -297,45 +307,45 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_loans.field_account_return__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom mostrat"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "Esborrany"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Draft & Running Loans"
-msgstr ""
+msgstr "Préstecs en esborrany i en curs"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Due"
-msgstr ""
+msgstr "Degut"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__duration
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Duration"
-msgstr ""
+msgstr "Durada"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__duration_difference
 msgid "Duration Difference"
-msgstr ""
+msgstr "Diferència de duració"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Data de finalització"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan_compute_wizard__payment_end_of_month__end_of_month
 msgid "End of Month"
-msgstr ""
+msgstr "Final de mes"
 
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
@@ -348,43 +358,43 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan_line__generated_move_ids
 msgid "Entries that we generated from this loan line"
-msgstr ""
+msgstr "Assentament que es van generar a partir d'aquesta línia del préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__expense_account_id
 msgid "Expense Account"
-msgstr ""
+msgstr "Compte de despeses"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__first_payment_date
 msgid "First Payment"
-msgstr ""
+msgstr "Primer pagament"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidors"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidors (Partners)"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__generated_move_ids
 msgid "Generated Entries"
-msgstr ""
+msgstr "Genera Assentaments"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_bank_statement_line__generating_loan_line_id
 #: model:ir.model.fields,field_description:account_loans.field_account_move__generating_loan_line_id
 msgid "Generating Loan Line"
-msgstr ""
+msgstr "Generant línia de préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Té un missatge"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_asset__id
@@ -397,18 +407,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_move__id
 #: model:ir.model.fields,field_description:account_loans.field_account_return__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_has_error
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si està marcat, alguns missatges tenen un error d'entrega."
 
 #. module: account_loans
 #. odoo-python
@@ -417,66 +427,66 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__interest
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__interest
 msgid "Interest"
-msgstr ""
+msgstr "interessos"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__interest_difference
 msgid "Interest Difference"
-msgstr ""
+msgstr "Diferència d'interès"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__interest_rate
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "Interest Rate"
-msgstr ""
+msgstr "Tipus d'interès"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 msgid "Interest Rate must be between 0 and 100"
-msgstr ""
+msgstr "El tipus d'interès ha d'estar entre 0 i 100"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Interests"
-msgstr ""
+msgstr "Interessos"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "És un seguidor"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_bank_statement_line__is_loan_payment_move
 #: model:ir.model.fields,field_description:account_loans.field_account_move__is_loan_payment_move
 msgid "Is Loan Payment Move"
-msgstr ""
+msgstr "És un moviment corresponent a un pagament de préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__is_payment_move_posted
 msgid "Is Payment Move Posted"
-msgstr ""
+msgstr "És un moviment corresponent a un pagament publicat"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__is_wrong_date
 msgid "Is Wrong Date"
-msgstr ""
+msgstr "És una data errònia"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_journal
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__journal_id
 msgid "Journal"
-msgstr ""
+msgstr "Diari"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Assentament comptable"
 
 #. module: account_loans
 #: model:account.journal,name:account_loans.account_loans_journal_loan
 msgid "Journal Loan Demo"
-msgstr ""
+msgstr "Demostració de diari de préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__write_uid
@@ -484,7 +494,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__write_uid
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualització per"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__write_date
@@ -492,26 +502,26 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__write_date
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualització el"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_bank_statement_line__generating_loan_line_id
 #: model:ir.model.fields,help:account_loans.field_account_move__generating_loan_line_id
 msgid "Line of the loan that generated this entry"
-msgstr ""
+msgstr "Línia del préstec que va generar aquest assentament"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__linked_assets_ids
 msgid "Linked Assets"
-msgstr ""
+msgstr "Actius vinculats"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_asset.py:0
 msgid "Linked loans"
-msgstr ""
+msgstr "Préstecs vinculats"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_loan
@@ -524,80 +534,80 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Loan"
-msgstr ""
+msgstr "Préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__loan_amount
 msgid "Loan Amount"
-msgstr ""
+msgstr "Import del préstec"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 msgid "Loan Amount must be positive"
-msgstr ""
+msgstr "L'import del préstec ha de ser positiu"
 
 #. module: account_loans
 #: model:ir.actions.act_window,name:account_loans.action_view_account_loan_compute_wizard
 #: model:ir.model,name:account_loans.model_account_loan_compute_wizard
 msgid "Loan Compute Wizard"
-msgstr ""
+msgstr "Assistent per calcular el préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__date
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__loan_date
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 msgid "Loan Date"
-msgstr ""
+msgstr "Data del préstec"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Loan Entries"
-msgstr ""
+msgstr "Assentaments del préstec"
 
 #. module: account_loans
 #: model:ir.model,name:account_loans.model_account_loan_line
 msgid "Loan Line"
-msgstr ""
+msgstr "Línia del préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__line_ids
 msgid "Loan Lines"
-msgstr ""
+msgstr "Línies del préstec"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Loan Settings"
-msgstr ""
+msgstr "Ajustos per a préstecs"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__loan_term
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "Loan Term"
-msgstr ""
+msgstr "Termini del préstec"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 msgid "Loan Term must be positive"
-msgstr ""
+msgstr "El termini del préstec ha de ser positiu"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Loan lines"
-msgstr ""
+msgstr "Línies del préstec"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__display_name
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Loan name"
-msgstr ""
+msgstr "Nom del préstec"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.asset_group_form_view_inherit_loan
 msgid "Loan(s)"
-msgstr ""
+msgstr "Préstec(s)"
 
 #. module: account_loans
 #. odoo-python
@@ -607,14 +617,14 @@ msgstr ""
 #: model:ir.ui.menu,name:account_loans.menu_action_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_list_view
 msgid "Loans"
-msgstr ""
+msgstr "Préstecs"
 
 #. module: account_loans
 #: model:ir.actions.act_window,name:account_loans.action_view_account_loans_analysis
 #: model:ir.ui.menu,name:account_loans.menu_action_loans_analysis
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_pivot_view
 msgid "Loans Analysis"
-msgstr ""
+msgstr "Anàlisi de préstecs"
 
 #. module: account_loans
 #: model:account.return.check.template,name:account_loans.account_return_check_template_loans_classification
@@ -629,63 +639,63 @@ msgstr ""
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__long_term_account_id
 msgid "Long Term Account"
-msgstr ""
+msgstr "Compte per a préstecs de llarga durada"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__long_term_theoretical_balance
 msgid "Long-Term"
-msgstr ""
+msgstr "Llarg termini"
 
 #. module: account_loans
 #: model_terms:ir.actions.act_window,help:account_loans.action_view_account_loans
 msgid "Manage Your Acquired Loans with Automated Adjustments."
-msgstr ""
+msgstr "Gestioneu els vostres préstecs adquirits amb ajustos automàtics."
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Error d'entrega del missatge"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Missatges"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_journal__loan_properties_definition
 msgid "Model Properties"
-msgstr ""
+msgstr "Propietats del model"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__name
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__loan_name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__nb_posted_entries
 msgid "Nb Posted Entries"
-msgstr ""
+msgstr "Nombre d'assentaments publicats"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Nombre d'accions"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Nombre d'errors"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Nombre de missatges que requereixen una acció"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Nombre de missatges amb error d'entrega"
 
 #. module: account_loans
 #. odoo-python
@@ -700,13 +710,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_loans/models/account_move.py:0
 msgid "Original Loan"
-msgstr ""
+msgstr "Préstec original"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__outstanding_balance
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__outstanding_balance
 msgid "Outstanding Balance"
-msgstr ""
+msgstr "Saldo pendent"
 
 #. module: account_loans
 #. odoo-python
@@ -714,29 +724,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__payment_end_of_month
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__payment
 msgid "Payment"
-msgstr ""
+msgstr "Pagament"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Payments"
-msgstr ""
+msgstr "Pagaments"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Please add a name before computing the loan"
-msgstr ""
+msgstr "Si us plau, afegeix un nom abans de calcular el préstec"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Posted Entries"
-msgstr ""
+msgstr "Entrades publicades"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__preview
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid "Preview"
-msgstr ""
+msgstr "Vista prèvia"
 
 #. module: account_loans
 #. odoo-python
@@ -744,88 +754,88 @@ msgstr ""
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__principal
 msgid "Principal"
-msgstr ""
+msgstr "Principal"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Principal & Interest"
-msgstr ""
+msgstr "Principal i interès"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Principals"
-msgstr ""
+msgstr "Principals"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__loan_properties
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Properties"
-msgstr ""
+msgstr "Propietats"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valoracions"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Reclassification LT - ST"
-msgstr ""
+msgstr "Reclassificació de llarg a curt termini"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Related Asset(s)"
-msgstr ""
+msgstr "Actiu(s) relacionat(s)"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_move_form_inherit_loan
 msgid "Related Loan"
-msgstr ""
+msgstr "Préstec relacionat"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_asset_form_inherit_loan
 msgid "Related Loan(s)"
-msgstr ""
+msgstr "Préstec(s) relacionat(s)"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_asset__linked_loans_ids
 #: model:ir.model.fields,field_description:account_loans.field_account_asset_group__linked_loan_ids
 msgid "Related Loans"
-msgstr ""
+msgstr "Préstecs relacionats"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Reset"
-msgstr ""
+msgstr "Reinicia"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Reversal reclassification LT - ST"
-msgstr ""
+msgstr "Reversió de la reclassificació de llarg a curt termini"
 
 #. module: account_loans
 #: model:ir.model.fields.selection,name:account_loans.selection__account_loan__state__running
 msgid "Running"
-msgstr ""
+msgstr "En procés"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Error de lliurament SMS"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_search_view
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_search_view
 msgid "Search Loan"
-msgstr ""
+msgstr "Buscar préstec"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid "Set to Draft"
-msgstr ""
+msgstr "Canvia a esborrany"
 
 #. module: account_loans
 #: model_terms:ir.actions.act_window,help:account_loans.action_view_account_loans
@@ -833,64 +843,67 @@ msgid ""
 "Set up your amortization schedule, or import it, and let Odoo handle the "
 "monthly interest and principal adjustments automatically."
 msgstr ""
+"Configura el pla d'amortització o importa'l i deixa que Odoo gestioni "
+"automàticament els ajustos mensuals d'interessos i de capital."
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__short_term_account_id
 msgid "Short Term Account"
-msgstr ""
+msgstr "Compte per a préstecs de curta durada"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__short_term_theoretical_balance
 msgid "Short-Term"
-msgstr ""
+msgstr "Curt termini"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__skip_until_date
 msgid "Skip until"
-msgstr ""
+msgstr "Saltar fins a"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__start_date
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_compute_wizard__start_date
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_list_view
 msgid "Start Date"
-msgstr ""
+msgstr "Data inicial"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__state
 #: model:ir.model.fields,field_description:account_loans.field_account_loan_line__loan_state
 msgid "Status"
-msgstr ""
+msgstr "Estat"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/wizard/account_loan_compute_wizard.py:0
 msgid "The First Payment Date must be before the end of the loan."
 msgstr ""
+"La primera data de pagament ha de ser anterior a la de venciment del préstec."
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The amount borrowed must be positive"
-msgstr ""
+msgstr "La quantitat prestada ha de ser positiva"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The duration must be positive"
-msgstr ""
+msgstr "La durada ha de ser positiva"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The interest must be positive"
-msgstr ""
+msgstr "L'interès ha de ser positiu"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan accounts should be set."
-msgstr ""
+msgstr "Ha de configurar els comptes del préstec."
 
 #. module: account_loans
 #. odoo-python
@@ -899,18 +912,23 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
+"L'import del préstec %(loan_amount)s hauria de ser igual a la suma dels "
+"principals: %(principal_sum)s (diferència %(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan date should be earlier than the loan lines date."
 msgstr ""
+"La data del préstec hauria de ser anterior a la data de les línies del "
+"préstec."
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan duration should be equal to the number of loan lines."
 msgstr ""
+"La durada del préstec hauria de ser igual al nombre de línies del préstec,"
 
 #. module: account_loans
 #. odoo-python
@@ -918,67 +936,69 @@ msgstr ""
 msgid ""
 "The loan interest should be equal to the sum of the loan lines interest."
 msgstr ""
+"L'interès del préstec hauria de ser igual a la suma de l'interès de les "
+"línies del préstec,"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan journal should be set."
-msgstr ""
+msgstr "Cal configurar el diari del préstec."
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan name should be set."
-msgstr ""
+msgstr "Cal configurar el nom del préstec."
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "This entry has been %s"
-msgstr ""
+msgstr "Aquest assentament ha sigut %s"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "This entry has been reversed from %s"
-msgstr ""
+msgstr "Aquest assentament ha estat revertit des de %s"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_list_view
 msgid "Total Amounts Borrowed"
-msgstr ""
+msgstr "Import total prestat"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_list_view
 msgid "Total Outstanding Balance"
-msgstr ""
+msgstr "Import total pendent"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Total interests"
-msgstr ""
+msgstr "Total d'interessos"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Total payments"
-msgstr ""
+msgstr "Total de pagaments"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_line_list_view
 msgid "Total principals"
-msgstr ""
+msgstr "Principals totals"
 
 #. module: account_loans
 #. odoo-javascript
 #: code:addons/account_loans/static/src/components/loans/file_upload.xml:0
 msgid "Upload"
-msgstr ""
+msgstr "Pujar"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "Uploaded file"
-msgstr ""
+msgstr "Arxiu pujat"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__skip_until_date
@@ -988,16 +1008,19 @@ msgid ""
 "you have already manually created entries prior to the creation of this "
 "loan."
 msgstr ""
+"Un cop confirmat el préstec, Odoo ignorarà les línies del préstec fins a "
+"aquesta data (inclusivament) i no en crearà assentaments. Això és útil si ja "
+"has creat manualment els assentaments abans de la creació d'aquest préstec."
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Missatges del lloc web"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historial de comunicacions del lloc web"
 
 #. module: account_loans
 #. odoo-python
@@ -1015,4 +1038,4 @@ msgstr ""
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_close_wizard
 msgid "will be deleted and the loan will be marked as closed."
-msgstr ""
+msgstr "s'eliminarà i el préstec es marcarà com tancat."

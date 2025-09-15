@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* timesheet_grid
+# * timesheet_grid
 #
 # Translators:
 # Martin Trigaux, 2022
@@ -8,20 +8,23 @@
 # Cécile Collart <cco@odoo.com>, 2022
 # Alexandra Jubert, 2022
 # Jolien De Paepe, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 12:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"timesheet_grid/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -42,7 +45,7 @@ msgstr "<i class=\"fa fa-play text-success\" title=\"Le minuteur fonctionne\"/>"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "<span class=\"col-auto ms-2\">min</span>"
-msgstr ""
+msgstr "<span class=\"col-auto ms-2\">min</span>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -209,7 +212,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "A timer is running in another company."
-msgstr ""
+msgstr "Un minuteur est en cours dans une autre entreprise."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_all_timesheets
@@ -236,7 +239,7 @@ msgstr "Compte analytique"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
 msgid "Approver Reminder"
-msgstr ""
+msgstr "Rappel à l'approbateur"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_delay
@@ -247,7 +250,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_interval
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_interval
 msgid "Approver Reminder Frequency"
-msgstr ""
+msgstr "Fréquence de rappel à l'approbateur"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -265,6 +268,8 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Click on the cell to set the number of hours you spent on this project."
 msgstr ""
+"Cliquez sur la cellule pour définir le nombre d'heures que vous avez passée "
+"sur ce projet."
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_company
@@ -280,6 +285,8 @@ msgstr "Paramètres de configuration"
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
 msgid "Configure reminders in timesheet settings to remind approvers to validate timesheets"
 msgstr ""
+"Configurez des rappels dans les paramètres des feuilles de temps pour "
+"rappeler aux approbateurs de valider les feuilles de temps"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -324,7 +331,7 @@ msgstr "Créé le"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
 msgid "Daily overtime"
-msgstr ""
+msgstr "Heures supplémentaires quotidiennes"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__date
@@ -346,7 +353,7 @@ msgstr "Jours passés —"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_delay
 msgid "Days to Remind Approver"
-msgstr ""
+msgstr "Jours pour rappeler l'approbateur"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
@@ -372,7 +379,9 @@ msgstr "Décrire votre activité"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Describe your activity <i>(e.g. sent an e-mail, meeting with the customer...)</i>."
-msgstr "Décrivez votre activité <i>(par ex. envoi d'un email, réunion avec le client...)</i>."
+msgstr ""
+"Décrivez votre activité <i>(par ex. envoi d'un e-mail, réunion avec le "
+"client...)</i>."
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -405,12 +414,14 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/employee_overtime_indication/employee_overtime_indication.xml:0
 msgid "Difference between the number of hours recorded and the number of hours the employee was supposed to work according to his contract"
 msgstr ""
+"Différence entre le nombre d'heures enregistrées et le nombre d'heures "
+"l'employé était censé travailler en vertu de son contrat"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
 msgid "Difference between the time allocated and the time recorded"
-msgstr ""
+msgstr "Différence entre le temps alloué et le temps enregistré"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -503,7 +514,7 @@ msgstr "Unité de mesure d'encodage"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Enter"
-msgstr "Saisir"
+msgstr "Enter"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -548,13 +559,13 @@ msgstr "Le mois dernier"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr "Mis à jour par"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Mis à jour le"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__last_validated_timesheet_date
@@ -657,12 +668,18 @@ msgstr "Aucune feuille de temps à valider"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_delay
 msgid "Number of days after the end of the week/month after which an automatic email reminder will be sent to timesheet managers that still have timesheets to validate."
-msgstr "Nombre de jours après la fin de la semaine/mois après lesquels un rappel automatique par email sera envoyé aux managers de feuilles de temps qui ont encore des feuilles de temps à valider."
+msgstr ""
+"Nombre de jours après la fin de la semaine/mois après lesquels un rappel "
+"automatique par e-mail sera envoyé aux managers de feuilles de temps qui ont "
+"encore des feuilles de temps à valider."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_user_delay
 msgid "Numbers of days after the end of the week/month after which an automatic email reminder will be sent to timesheet users that still have timesheets to encode (according to their working hours)."
-msgstr "Nombre de jours après la fin de la semaine/mois après lesquels un email de rappel automatique sera envoyé aux utilisateurs de feuilles de temps qui ont encore des feuilles de temps à encoder (selon leurs heures de travail)."
+msgstr ""
+"Nombre de jours après la fin de la semaine/mois après lesquels un e-mail de "
+"rappel automatique sera envoyé aux utilisateurs de feuilles de temps qui ont "
+"encore des feuilles de temps à encoder (selon leurs heures de travail)."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -679,7 +696,7 @@ msgstr "Mettre en pause"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press"
-msgstr ""
+msgstr "Appuyer sur"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -696,7 +713,7 @@ msgstr "Projet"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee_public
 msgid "Public Employee"
-msgstr "Employé public"
+msgstr "Fonctionnaire"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__unit_amount
@@ -757,8 +774,11 @@ msgid ""
 "Select the user responsible for approving \"Timesheet\" of this employee.\n"
 "If empty, the approval is done by a Timesheets > Administrator or a Timesheets > User: all timesheets (as determined in the users settings)."
 msgstr ""
-"Sélectionnez l'utilisateur responsable pour l'approbation des \"feuilles de temps\" de cet employé.\n"
-"Si la case est vide, l'approbation est faite par Feuilles de temps > Administrateur ou Feuilles de temps > Utilisateur : toutes les feuilles de temps (comme il est déterminé dans les paramètres des utilisateurs)."
+"Sélectionnez l'utilisateur responsable pour la validation des "
+"\"feuilles de temps\" de cet employé.\n"
+"Si la case est vide, la validation est faite par Feuilles de temps > "
+"Administrateur ou Feuilles de temps > Utilisateur : toutes les feuilles de "
+"temps (comme il est déterminé dans les paramètres des utilisateurs)."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__is_timesheet
@@ -802,7 +822,10 @@ msgstr "Arrêter"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Stop the <b>timer</b> when you are done. <i>Tip: hit <b>[Enter]</b> in the description to automatically log your activity.</i>"
-msgstr "Arrêtez le <b>minuteur</b> lorsque vous avez terminé. <i>Astuce : appuyez sur <b>[Entrer]</b> dans la description pour enregistrer votre activité automatiquement.</i>"
+msgstr ""
+"Arrêtez le <b>minuteur</b> lorsque vous avez terminé. <i>Astuce : appuyez "
+"sur <b>[Enter]</b> dans la description pour enregistrer votre activité "
+"automatiquement.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_task
@@ -887,7 +910,7 @@ msgstr "Temps"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Time Rounding"
-msgstr ""
+msgstr "Arrondi du temps"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -942,12 +965,12 @@ msgstr "Unité de temps des feuilles de temps"
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
 msgid "Timesheet: Approvers Email Reminder"
-msgstr ""
+msgstr "Feuille de temps : rappel par e-mail aux approbateurs"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
 msgid "Timesheet: Employees Email Reminder"
-msgstr "Feuille de temps : rappel par email pour les employés"
+msgstr "Feuille de temps : rappel par e-mail pour les employés"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__timesheet_ids
@@ -983,12 +1006,12 @@ msgstr "Feuilles de temps à valider"
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder
 msgid "Timesheets: Approver Reminder"
-msgstr ""
+msgstr "Feuilles de temps : rappel à l'approbateur"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Timesheets: Employee Reminder"
-msgstr ""
+msgstr "Feuilles de temps : rappel à l'employé"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
@@ -1081,7 +1104,7 @@ msgstr "Semaine"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
 msgid "Weekly overtime"
-msgstr ""
+msgstr "Heures supplémentaires hebdomadaires"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__user_can_validate
@@ -1140,7 +1163,7 @@ msgstr "Vous ne pouvez pas valider les feuilles de temps des employés qui ne fo
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_employee_interval__months
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_interval__months
 msgid "after the end of the month"
-msgstr "après la fin du mois "
+msgstr "après la fin du mois"
 
 #. module: timesheet_grid
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_employee_interval__weeks

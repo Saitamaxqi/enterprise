@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* documents_account
+# * documents_account
 #
 # Translators:
 # Sanne Kristensen <sanne@vkdata.dk>, 2022
@@ -9,26 +9,29 @@
 # Mads Søndergaard, 2022
 # lhmflexerp <lhm@flexerp.dk>, 2022
 # Ejner Sønniksen <ejner@vkdata.dk>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Ejner Sønniksen <ejner@vkdata.dk>, 2022\n"
-"Language-Team: Danish (https://app.transifex.com/odoo/teams/41243/da/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"documents_account/da/>\n"
 "Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "<b>Deselect this page</b> as we plan to process all bills first."
-msgstr "<b>Fravælg denne side</b> eftersom vi planlægger at behandle alle regninger først."
+msgstr ""
+"<b>Fravælg denne side</b>, da vi planlægger at behandle alle regninger først."
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_workflow_rule
@@ -38,12 +41,12 @@ msgstr "En række betingelser og handlinger der vil være tilgængelige for alle
 #. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique
 msgid "A setting already exists for this journal"
-msgstr "En indstilling eksisterer allerede for denne journal"
+msgstr "Der findes allerede en indstilling for denne journal"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__documents_account_settings
 msgid "Accounting "
-msgstr "Bogføring"
+msgstr "Bogføring "
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder
@@ -59,17 +62,17 @@ msgstr "Lad os dele denne PDF og behandle den i partier, eftersom den indeholder
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_attachment
 msgid "Attachment"
-msgstr "Vedhæftning"
+msgstr "Vedhæftet fil"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_bank_statement
 msgid "Bank Statement"
-msgstr ""
+msgstr "Kontoudtog fra bank"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Centralize accounting files and documents"
-msgstr "Centraliser bogførings filer og dokumenter"
+msgstr "Centralisér bogføringsfiler og dokumenter"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
@@ -86,13 +89,16 @@ msgstr "Klik på et kort for at <b>vælge dokumentet</b>."
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Click on a thumbnail to <b>preview the document</b>."
-msgstr "Klik på miniaturebilledet for at <b>forhåndsvise dokumentet</b>."
+msgstr ""
+"Klik på miniaturebilledet for at se en<b>forhåndsvisning af dokumentet</b>."
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Click on the <b>page separator</b>: we don't want to split these two pages as they belong to the same document."
-msgstr "Klik på <b>side deleren</b>: Vi vil ikke dele disse to sider, eftersom de tilhører samme dokument."
+msgstr ""
+"Klik på <b>sidedeleren</b>: De to sider bør ikke deles, da de tilhører samme "
+"dokument."
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
@@ -107,7 +113,7 @@ msgstr "Virksomhed"
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_config_settings
 msgid "Config Settings"
-msgstr "Konfigurer opsætning"
+msgstr "Konfigurationsindstillinger"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__create_model
@@ -117,7 +123,7 @@ msgstr "Opret"
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.credit_note_rule
 msgid "Create Customer Credit Note"
-msgstr ""
+msgstr "Opret kundekreditnota"
 
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.customer_invoice_rule
@@ -132,7 +138,7 @@ msgstr ""
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.vendor_bill_rule_financial
 msgid "Create Vendor Bill"
-msgstr ""
+msgstr "Opret leverandørfaktura"
 
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.vendor_refund_rule
@@ -172,17 +178,17 @@ msgstr "Vis navn"
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_company__documents_account_settings
 msgid "Documents Account Settings"
-msgstr "Dokumenter Konto Indstillinger"
+msgstr "Kontoindstillinger for dokumenter"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard_format
 msgid "Export format for accounting's reports"
-msgstr "Eksport format for regnskabsrapporter"
+msgstr "Eksportformat for regnskabsrapporter"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard
 msgid "Export wizard for accounting's reports"
-msgstr "Eksport guide for regnskabsrapporter"
+msgstr "Eksportguide for regnskabsrapporter"
 
 #. module: documents_account
 #: model:mail.activity.type,name:documents_account.mail_documents_activity_data_fs
@@ -197,7 +203,7 @@ msgstr "Mappe"
 #. module: documents_account
 #: model:ir.model.fields,help:documents_account.field_account_reports_export_wizard__folder_id
 msgid "Folder where to save the generated file"
-msgstr "Mappe hvori den genereret fil skal gemmes"
+msgstr "Destinationsmappe for den genererede fil"
 
 #. module: documents_account
 #. odoo-python
@@ -213,7 +219,7 @@ msgstr "ID"
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.bank_statement_rule
 msgid "Import Bank Statement"
-msgstr ""
+msgstr "Importér kontoudtog"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__journal_id
@@ -224,12 +230,12 @@ msgstr "Journal"
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_move
 msgid "Journal Entry"
-msgstr "Postering"
+msgstr "Journalbilag"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_account_folder_setting
 msgid "Journal and Folder settings"
-msgstr "Journal og mappe indstillinger"
+msgstr "Journal- og mappeindstillinger"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
@@ -239,7 +245,7 @@ msgstr "Journaler"
 #. module: documents_account
 #: model:ir.actions.act_window,name:documents_account.action_folder_settings_installer
 msgid "Journals to synchronize"
-msgstr "Journaler der skal synkroniseres"
+msgstr "Journaler, der skal synkroniseres"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__write_uid
@@ -261,7 +267,7 @@ msgstr "Lad os behandle dokumenter i din indbakke.<br/><i>Råd: Brug tags til at
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Let's process these bills: turn them into vendor bills."
-msgstr "Lad os behandle disse regninger: omdan dem til leverandørfaktura."
+msgstr "Behandl disse regninger: Omdan dem til leverandørfakturaer."
 
 #. module: documents_account
 #. odoo-javascript
@@ -278,7 +284,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_entry
 msgid "Miscellaneous Operations"
-msgstr ""
+msgstr "Diverse handlinger"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__move_type
@@ -290,7 +296,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_account_move__suspense_statement_line_id
 #: model:ir.model.fields,field_description:documents_account.field_account_payment__suspense_statement_line_id
 msgid "Request document from a bank statement line"
-msgstr ""
+msgstr "Anmod om dokument fra kontoudtogslinjen"
 
 #. module: documents_account
 #. odoo-javascript
@@ -317,12 +323,12 @@ msgstr "Moms kontoudtog"
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "This invoice has been initiated by a bank transaction."
-msgstr ""
+msgstr "Fakturaen er genereret ud fra en banktransaktion."
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_in_refund
 msgid "Vendor Credit Note"
-msgstr "Leverandør kreditnota"
+msgstr "Leverandørkreditnota"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_in_invoice
@@ -333,7 +339,9 @@ msgstr "Leverandørfaktura"
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Want to become a <b>paperless company</b>? Let's discover Odoo Documents."
-msgstr "Vil du blive en <b>papirløs virksomhed</b>? Lad os udforske Odoo Dokumenter."
+msgstr ""
+"Er du klar til at tage skridtet mod en <b>papirløs virksomhed</b>? Lad os "
+"udforske Odoo Dokumenter."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__folder_id
@@ -350,9 +358,9 @@ msgstr "Wow... 6 dokumenter behandlet på et par sekunder; du er god! <br/>Rundv
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
 msgid "account default folder"
-msgstr "default finans mappe"
+msgstr "standardkontomappe"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "to mark this invoice as paid."
-msgstr "Markér faktura som fuldt betalt"
+msgstr "Markér faktura som betalt"

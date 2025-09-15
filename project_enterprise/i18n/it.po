@@ -1,31 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_enterprise
+# * project_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:47+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2022\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"project_enterprise/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "%(partner)s has %(amount)s tasks at the same time."
-msgstr ""
+msgstr "%(partner)s ha %(amount)s attività nello stesso orario."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
@@ -33,27 +35,30 @@ msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
 msgstr ""
+"<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title="
+"\"Dependency warning\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
+"<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Deadline:</strong>"
-msgstr ""
+msgstr "<strong>Scadenza:</strong>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Planned Date:</strong>"
-msgstr ""
+msgstr "<strong>Data pianificata:</strong>"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__allocated_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "Tempo assegnato"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__user_ids
@@ -66,17 +71,17 @@ msgstr "Assegnatari"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/view_dialogs/select_auto_plan_create_dialog.xml:0
 msgid "Auto Plan"
-msgstr ""
+msgstr "Pianificazione automatica"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
-msgstr ""
+msgstr "Dai un'occhiata <i class=\"oi oi-chevron-right ms-2\"/>"
 
 #. module: project_enterprise
 #: model:ir.model,website_form_label:project_enterprise.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Creare un'attività"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
@@ -109,7 +114,7 @@ msgstr "Nome visualizzato"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Failed to undo reschedule"
-msgstr ""
+msgstr "Impossibile annullare la riprogrammazione"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
@@ -133,6 +138,8 @@ msgid ""
 "One parameter is missing to use this method. You should give a start and end "
 "dates."
 msgstr ""
+"Manca un paramentro per utilizzare questo metodo. Inserisci una data di "
+"inizio e di fine."
 
 #. module: project_enterprise
 #. odoo-python
@@ -145,7 +152,7 @@ msgstr "Data pianificata"
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_start
 msgid "Planned Date Start"
-msgstr ""
+msgstr "Inizio data pianificata"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
@@ -165,13 +172,13 @@ msgstr "Progetto"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project due"
-msgstr ""
+msgstr "Progetto dovuto"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project start"
-msgstr ""
+msgstr "Inizio progetto"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -191,7 +198,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "Some tasks were planned after their initial deadline."
-msgstr ""
+msgstr "Alcune attività sono state pianificate dopo la scadenza iniziale."
 
 #. module: project_enterprise
 #. odoo-python
@@ -201,6 +208,10 @@ msgid ""
 "limited availability of the assignees. The planned dates for these tasks may "
 "not align with their allocated hours."
 msgstr ""
+"Alcune attività sono state programmate contemporaneamente, portando ad un "
+"conflitto dovuto alla disponibilità limitata degli assegnatari. Le date "
+"pianificate per le attività potrebbero non essere allineate con le ore "
+"assegnate."
 
 #. module: project_enterprise
 #. odoo-python
@@ -209,6 +220,8 @@ msgid ""
 "Some tasks weren't planned because the closest available starting date was "
 "too far ahead in the future"
 msgstr ""
+"Alcune attivita non sono state pianificate in quanto la data di inizio "
+"disponibile più vicina era troppo lontana"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_begin
@@ -224,37 +237,37 @@ msgstr "Lavoro"
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Ricorrenza lavoro"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task could not be removed"
-msgstr ""
+msgstr "Impossibile eliminare il lavoro"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task duplicated"
-msgstr ""
+msgstr "Lavoro duplicato"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task removed"
-msgstr ""
+msgstr "Lavoro eliminato"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task reschedule undone"
-msgstr ""
+msgstr "Ripianificazione lavoro annullata"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task rescheduled"
-msgstr ""
+msgstr "Lavoro ripianificato"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_report_project_task_user
@@ -266,18 +279,20 @@ msgstr "Analisi lavori"
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Tasks have been successfully scheduled for the upcoming periods."
 msgstr ""
+"Le attività sono state programmate con successo per i periodi in arrivo."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_search_conflict_task_project_enterprise
 msgid "Tasks in Conflict"
-msgstr ""
+msgstr "Lavori in conflitto"
 
 #. module: project_enterprise
 #: model:ir.model.constraint,message:project_enterprise.constraint_project_task_planned_dates_check
 msgid "The planned start date must be before the planned end date."
 msgstr ""
+"La data di inizio pianificata deve precedere la data di fine pianificata."
 
 #. module: project_enterprise
 #. odoo-python
@@ -286,12 +301,14 @@ msgid ""
 "The tasks could not be rescheduled due to the assignees' lack of "
 "availability at this time."
 msgstr ""
+"Non è stato possibile riprogrammare le attività per via della mancanza di "
+"disponibilità degli assegnatari in quel momento."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "La barra di avanzamento non è implementata."
 
 #. module: project_enterprise
 #. odoo-python
@@ -300,6 +317,8 @@ msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
 msgstr ""
+"L'attività non può essere pianificata prima delle attività da cui dipende: "
+"%(task_list)s"
 
 #. module: project_enterprise
 #. odoo-python
@@ -308,6 +327,8 @@ msgid ""
 "This user isn't expected to have any tasks assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"Non sono previste attività assegnate all'utente durante questo periodo "
+"perché non presentano contratti in essere."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
@@ -346,13 +367,13 @@ msgstr "Utente"
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 msgid "View Tasks"
-msgstr ""
+msgstr "Mostra lavori"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_renderer.xml:0
 msgid "View customer locations for your tasks"
-msgstr ""
+msgstr "Mostra posizione clienti per le attività"
 
 #~ msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 #~ msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Freccia\"/>"

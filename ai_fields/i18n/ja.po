@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* ai_fields
+# * ai_fields
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-11 14:27+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"ai_fields/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -21,115 +25,115 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ai_fields.view_model_fields_form
 #: model_terms:ir.ui.view,arch_db:ai_fields.view_model_form
 msgid "AI"
-msgstr ""
+msgstr "AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Checkbox"
-msgstr ""
+msgstr "AIチェックボックス"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Date"
-msgstr ""
+msgstr "AI 日付"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Date & Time"
-msgstr ""
+msgstr "AI 日時"
 
 #. module: ai_fields
 #: model:ir.actions.server,name:ai_fields.ir_cron_fill_ai_fields_ir_actions_server
 msgid "AI Fields: Compute AI fields"
-msgstr ""
+msgstr "AI フィールド: AIフィールドを計算"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Float"
-msgstr ""
+msgstr "AI 予測値"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Html"
-msgstr ""
+msgstr "AI Html"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Integer"
-msgstr ""
+msgstr "AI 整数"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2Many Tags"
-msgstr ""
+msgstr "AI 多対多タグ"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2Many Tags Avatar"
-msgstr ""
+msgstr "AI 多対多タグアバター"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2One"
-msgstr ""
+msgstr "AI 多対1"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Monetary"
-msgstr ""
+msgstr "AI 予測金額"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__system_prompt
 msgid "AI Prompt"
-msgstr ""
+msgstr "AI プロンプト"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Selection"
-msgstr ""
+msgstr "AI 選択"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Text"
-msgstr ""
+msgstr "AI テキスト"
 
 #. module: ai_fields
 #: model:ir.model.fields,help:ai_fields.field_ir_model_fields__ai
 msgid "AI computed field"
-msgstr ""
+msgstr "AI 計算フィールド"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__ai
 msgid "AI field"
-msgstr ""
+msgstr "AI フィールド"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__ai_domain
 msgid "AI field domain"
-msgstr ""
+msgstr "AI フィールドドメイン"
 
 #. module: ai_fields
 #: model:ir.model,name:ai_fields.model_base
 msgid "Base"
-msgstr ""
+msgstr "ベース"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__display_name
 #: model:ir.model.fields,field_description:ai_fields.field_mail_message__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -140,7 +144,7 @@ msgstr ""
 #. module: ai_fields
 #: model:ir.model,name:ai_fields.model_ir_model_fields
 msgid "Fields"
-msgstr ""
+msgstr "フィールド"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -170,12 +174,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__id
 #: model:ir.model.fields,field_description:ai_fields.field_mail_message__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai_fields
 #: model:ir.model,name:ai_fields.model_mail_message
 msgid "Message"
-msgstr ""
+msgstr "メッセージ"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -223,18 +227,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/properties_field_patch/properties_field_patch.xml:0
 msgid "Prompt"
-msgstr ""
+msgstr "プロンプト"
 
 #. module: ai_fields
 #: model:ir.model.fields,help:ai_fields.field_ir_model_fields__system_prompt
 msgid "Prompt given to the AI model to compute the field value"
-msgstr ""
+msgstr "フィールド値を計算するために AI モデルに与えられるプロンプト"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.xml:0
 msgid "Refresh value"
-msgstr ""
+msgstr "値をリフレッシュ"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -246,7 +250,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/properties_field_patch/properties_field_patch.xml:0
 msgid "Write a prompt, use '/field' to insert dynamic values"
-msgstr ""
+msgstr "プロンプトを書き、 '/field' を使用して動的値を挿入してください。"
 
 #. module: ai_fields
 #. odoo-python
@@ -258,4 +262,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.xml:0
 msgid "ai icon"
-msgstr ""
+msgstr "ai アイコン"

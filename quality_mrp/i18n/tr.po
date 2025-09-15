@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* quality_mrp
+# * quality_mrp
 #
 # Translators:
 # Yedigen, 2022
@@ -11,20 +11,22 @@
 # abc Def <hdogan1974@gmail.com>, 2022
 # Martin Trigaux, 2022
 # Murat Kaplan <muratk@projetgrup.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"quality_mrp/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: quality_mrp
 #: model_terms:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
@@ -44,7 +46,7 @@ msgstr "<span class=\"o_stat_text\">Kalite Uyarıları</span>"
 #. module: quality_mrp
 #: model_terms:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Checks</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Kalite Kontrolleri</span>"
 
 #. module: quality_mrp
 #: model_terms:ir.ui.view,arch_db:quality_mrp.worksheet_page
@@ -59,12 +61,12 @@ msgstr "İkazlar"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__check_ids
 msgid "Checks"
-msgstr "Çekler"
+msgstr "Kontroller"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr "Ürün Hareketleri (Stok Hareket Satırları)"
+msgstr "Ürün Harketleri (Stok Hareket Satırları)"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_mrp_production
@@ -77,12 +79,12 @@ msgstr "Üretim Emri"
 #: model:ir.model,name:quality_mrp.model_quality_alert
 #: model_terms:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 msgid "Quality Alert"
-msgstr "Kalite Uyarısı"
+msgstr "Kalite Alarmı"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__quality_alert_count
 msgid "Quality Alert Count"
-msgstr "Kalite Uyarı Sayısı"
+msgstr "Kalite Alarmı Sayısı"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check
@@ -92,18 +94,18 @@ msgstr "Kalite Kontrol"
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__quality_check_fail
 msgid "Quality Check Fail"
-msgstr "Kalite Kontrol Hatası"
+msgstr "Başarısız Kalite Kontrol"
 
 #. module: quality_mrp
 #: model:ir.model.fields,field_description:quality_mrp.field_mrp_production__quality_check_todo
 msgid "Quality Check Todo"
-msgstr "Kalite Kontrol İş Listesi"
+msgstr "Yapılacak Kalite Kontrol"
 
 #. module: quality_mrp
 #: model:ir.actions.act_window,name:quality_mrp.quality_check_action_mo
 #: model_terms:ir.ui.view,arch_db:quality_mrp.mrp_production_view_form_inherit_quality
 msgid "Quality Checks"
-msgstr "Nitelik Denetimleri"
+msgstr "Kalite Kontrolleri"
 
 #. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_point

@@ -1,36 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_workorder
+# * mrp_workorder
 #
 # Translators:
 # Martin Trigaux, 2023
 # Thi Huong Nguyen, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Thi Huong Nguyen, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"mrp_workorder/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "%(user_name)s suggests to delete this instruction"
-msgstr "%(user_name)s đề xuất xoá chỉ dẫn này"
+msgstr "%(user_name)s đề xuất xoá hướng dẫn này"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "%(user_name)s suggests to use this document as instruction"
-msgstr "%(user_name)s đề xuất sử dụng tài liệu này làm chỉ dẫn"
+msgstr "%(user_name)s đề xuất sử dụng tài liệu này làm hướng dẫn"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
@@ -40,7 +43,7 @@ msgstr "<i class=\"fa fa-print\"/> In lệnh mã vạch"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_operation_form_view
 msgid "<span class=\"o_stat_text\">Instructions</span>"
-msgstr "<span class=\"o_stat_text\">Chỉ dẫn</span>"
+msgstr "<span class=\"o_stat_text\">Hướng dẫn</span>"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_ids
@@ -82,7 +85,7 @@ msgstr "Thêm phụ phẩm"
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
 msgid "Add Component"
-msgstr "Thêm nguyên liệu"
+msgstr "Thêm thành phần"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -142,13 +145,13 @@ msgstr "Tuyệt vời! Chúc mừng bạn!"
 #: model:ir.model,name:mrp_workorder.model_mrp_bom
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_id
 msgid "Bill of Material"
-msgstr "Định mức nguyên liệu"
+msgstr "Danh mục vật tư"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Block"
-msgstr "Khoá"
+msgstr "Chặn"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -160,7 +163,7 @@ msgstr "Phản hồi về ĐMNL %s (%s)"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_product_ids
 msgid "Bom Product"
-msgstr "Sản phẩm ĐMNL"
+msgstr "Sản phẩm BoM"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__mrp_workorder_additional_product__type__byproduct
@@ -191,7 +194,7 @@ msgstr "Danh mục"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_change_production_qty
 msgid "Change Production Qty"
-msgstr "Thay đổi sản lượng"
+msgstr "Thay đổi SL sản xuất"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__check_ids
@@ -230,7 +233,7 @@ msgstr "Thời gian hoàn thành:"
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__component_ids
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__mrp_workorder_additional_product__type__component
 msgid "Component"
-msgstr "Nguyên liệu"
+msgstr "Thành phần"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_qty_to_do
@@ -287,7 +290,7 @@ msgstr "Ngày"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
 msgid "Defines the type of the quality control point."
-msgstr "Xác định loại của điểm kiểm tra chất lượng"
+msgstr "Xác định loại điểm kiểm tra chất lượng."
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -322,7 +325,7 @@ msgstr "Tài liệu"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__qty_done
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__qty_done
 msgid "Done"
-msgstr "Hoàn thành"
+msgstr "Hoàn tất"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder_additional_product__product_tracking
@@ -358,7 +361,7 @@ msgstr "Bước đã hoàn thành"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "Font biểu tượng ví dụ: fa-tasks"
+msgstr "Font biểu tượng, ví dụ: fa-tasks"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -407,18 +410,18 @@ msgstr "Trong trường hợp kiểm tra chất lượng theo số lượng, m�
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 msgid "Instruction"
-msgstr "Chỉ dẫn"
+msgstr "Hướng dẫn"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "Instruction:"
-msgstr "Chỉ dẫn:"
+msgstr "Hướng dẫn:"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__quality_point_count
 msgid "Instructions"
-msgstr "Chỉ dẫn"
+msgstr "Hướng dẫn"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_ids
@@ -428,7 +431,7 @@ msgstr "Dịch chuyển tồn kho mà bạn phải quét số lô tại công đ
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_tracking
 msgid "Is Component Tracked"
-msgstr "Là nguyên liệu được theo dõi"
+msgstr "Là thành phần được theo dõi"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__is_last_unfinished_wo
@@ -453,7 +456,7 @@ msgstr "Là bước công đoạn"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__is_user_working
 msgid "Is the Current User Working"
-msgstr "Là người dùng hiện đang làm "
+msgstr "Là người dùng hiện đang làm"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__write_uid
@@ -496,7 +499,7 @@ msgstr "Đánh dấu là hoàn tất"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Mark as Done and Close MO"
-msgstr "Đánh dấu là hoàn tất và đóng LSX"
+msgstr "Đánh dấu là hoàn tất và đóng MO"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -512,18 +515,18 @@ msgstr "Dịch chuyển cần theo dõi"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Hạn chót hoạt động của tôi"
+msgstr "Thời hạn hoạt động của tôi"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__note
 msgid "New Instruction"
-msgstr "Chỉ dẫn mới"
+msgstr "Hướng dẫn mới"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "New Instruction suggested by %(user_name)s"
-msgstr "Chỉ dẫn mới được đề xuất bởi %(user_name)s"
+msgstr "Hướng dẫn mới được đề xuất bởi %(user_name)s"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -545,12 +548,12 @@ msgstr "Tiếp theo"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Sự kiện theo lịch cho hoạt động tiếp theo"
+msgstr "Sự kiện trên lịch cho hoạt động tiếp theo"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Hạn chót cho hoạt động tiếp theo"
+msgstr "Thời hạn cho hoạt động tiếp theo"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_summary
@@ -612,17 +615,17 @@ msgstr "PDF"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__picture
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__picture
 msgid "Picture"
-msgstr "Ảnh"
+msgstr "Hình ảnh"
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_production
 msgid "Planning by Production"
-msgstr "Hoạch định theo LSX"
+msgstr "Lập kế hoạch theo sản xuất"
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_workcenter
 msgid "Planning by Workcenter"
-msgstr "Hoạch định theo khu vực sản xuất"
+msgstr "Lập kế hoạch theo khu vực sản xuất"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -672,7 +675,7 @@ msgstr "Sản phẩm"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr "Dịch chuyển sản phẩm (Mục dịch chuyển tồn kho)"
+msgstr "Điều chuyển sản phẩm (Dòng điều chuyển tồn kho)"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__component_id
@@ -803,7 +806,7 @@ msgstr "Ghi nhận sản phẩm bổ sung"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_active
 msgid "Related Bill of Material Active"
-msgstr "ĐMNL liên quan đang hoạt động "
+msgstr "Danh mục vật tư liên quan đang hoạt động"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_remaining_qty
@@ -839,7 +842,7 @@ msgstr "Kết quả"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Scrap"
-msgstr "Phế phẩm"
+msgstr "Loại bỏ"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -861,7 +864,7 @@ msgstr "Đặt một hình ảnh mới"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_routing_workcenter_tree_view_inherited
 msgid "Show Instructions"
-msgstr "Hiển thị chỉ dẫn"
+msgstr "Hiển thị hướng dẫn"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
@@ -887,9 +890,9 @@ msgid ""
 "Planned: Future activities."
 msgstr ""
 "Trạng thái dựa trên hoạt động\n"
-"Quá hạn: Ngày đến hạn phải được chuyển\n"
+"Quá hạn: Hạn chót hạn đã qua\n"
 "Hôm nay: Hôm nay là ngày phải thực hiện\n"
-"Kế hoạch: Các hoạt động trong tương lai."
+"Kế hoạch: Cần thực hiện trong tương lai."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__operation_id
@@ -917,7 +920,7 @@ msgstr "Bước"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_id
 msgid "Stock Move"
-msgstr "Dịch chuyển tồn kho"
+msgstr "Điều chuyển tồn kho"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_line_id
@@ -949,7 +952,7 @@ msgstr "Đề xuất cải thiện bảng công tác"
 #. module: mrp_workorder
 #: model:ir.actions.client,name:mrp_workorder.tablet_client_action
 msgid "Tablet Client Action"
-msgstr "Hành động máy khách máy tính bảng"
+msgstr "Tác vụ máy khách máy tính bảng"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__test_type
@@ -966,7 +969,9 @@ msgstr "Cách kiểm tra"
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "This workcenter isn't expected to have open workorders during this period. Work hours :"
-msgstr "Khu vực làm việc này dự kiến sẽ không có công đoạn nào mở trong khoảng thời gian này. Giờ làm việc :"
+msgstr ""
+"Khu vực sản xuất này dự kiến sẽ không có công đoạn nào mở trong khoảng thời "
+"gian này. Giờ làm việc :"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__group_mrp_wo_tablet_timer
@@ -1003,7 +1008,7 @@ msgstr "Loại thay đổi"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Loại hoạt động ngoại lệ trong dữ liệu."
+msgstr "Loại hoạt động ngoại lệ trong bản ghi."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -1034,7 +1039,7 @@ msgstr "Cập nhật bước hiện tại"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Update Instructions"
-msgstr "Cập nhật chỉ dẫn"
+msgstr "Cập nhật hướng dẫn"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
@@ -1044,7 +1049,9 @@ msgstr "Tải lên tập tin PDF của bạn."
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
 msgid "Use steps to show instructions on a worksheet to operators, or trigger quality checks at specific steps of the work order."
-msgstr "Sử dụng các bước để hiển thị chỉ dẫn lên bảng công tác cho người vận hành hoặc kích hoạt kiểm tra chất lượng ở các bước cụ thể của công đoạn. "
+msgstr ""
+"Sử dụng các bước để hiển thị hướng dẫn lên bảng công tác cho người vận hành "
+"hoặc kích hoạt kiểm tra chất lượng ở các bước cụ thể của công đoạn."
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
@@ -1053,9 +1060,11 @@ msgid ""
 "            The tablet provides worksheets for your workers and allow them to scrap products, track time,\n"
 "            launch a maintenance request, perform quality tests, etc."
 msgstr ""
-"Sử dụng bảng điều khiển khu vực sản xuất để bàn để ghi nhận trực tiếp hoạt động sản xuất.\n"
-"            Máy tính bảng cung cấp bảng công tác cho công nhân và cho phép họ loại bỏ sản phẩm, theo dõi thời gian, \n"
-"            kích hoạt yêu cầu bảo trì, tiến hành kiểm tra chất lượng,..."
+"Sử dụng bảng điều khiển khu vực sản xuất để bàn để ghi nhận trực tiếp hoạt "
+"động tại xưởng.\n"
+"            Máy tính bảng cung cấp bảng công tác cho công nhân và cho phép "
+"họ loại bỏ sản phẩm, theo dõi thời gian, \n"
+"            kích hoạt yêu cầu bảo dưỡng, tiến hành kiểm tra chất lượng,..."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
@@ -1065,7 +1074,7 @@ msgstr "XÁC NHẬN"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder___barcode_scanned
 msgid "Value of the last barcode scanned."
-msgstr "Giá trị mã vạch quét cuối cùng. "
+msgstr "Giá trị mã vạch quét cuối cùng."
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1095,7 +1104,7 @@ msgstr "Công đoạn"
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_tree
 msgid "Work Order Operation"
-msgstr "Hoạt động công đoạn"
+msgstr "Hoạt động của công đoạn"
 
 #. module: mrp_workorder
 #: model:ir.actions.act_window,name:mrp_workorder.mrp_workorder_action_tablet
@@ -1106,7 +1115,7 @@ msgstr "Công đoạn"
 #. module: mrp_workorder
 #: model:ir.actions.server,name:mrp_workorder.action_mrp_workorder_dependencies_workcenter
 msgid "Work Orders Planning"
-msgstr "Hoạch định công đoạn"
+msgstr "Lập kế hoạch công đoạn"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workcenter_view_kanban_inherit_workorder
@@ -1120,7 +1129,8 @@ msgid ""
 "            Operations are defined in the bill of materials or added in the manufacturing order directly."
 msgstr ""
 "Công đoạn là các hoạt động thành phần của một lệnh sản xuất. \n"
-"                    Các hoạt động được nêu rõ trong định mức nguyên liệu hoặc thêm trực tiếp vào lệnh sản xuất. "
+"                    Các hoạt động được nêu rõ trong danh mục vật tư hoặc "
+"thêm trực tiếp vào lệnh sản xuất."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__working_state

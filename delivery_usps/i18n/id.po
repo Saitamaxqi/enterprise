@@ -1,29 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_usps
+# * delivery_usps
 #
 # Translators:
 # Martin Trigaux, 2022
 # Abe Manyo, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Abe Manyo, 2023\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"PO-Revision-Date: 2025-09-15 23:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"delivery_usps/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_intl_non_delivery_option__abandon
 msgid "Abandon"
-msgstr ""
+msgstr "Tinggalkan"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_account_validated
@@ -39,7 +42,7 @@ msgstr "Centang kotak ini jika akun kamu sudah disahkan oleh USPS"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Company phone number is invalid. Please insert a US phone number."
-msgstr ""
+msgstr "Nomor telepon perusahaan tidak valid. Mohon masukkan nomor telepon US."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
@@ -49,7 +52,7 @@ msgstr "Multipurpose Internet Mail Extension"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
-msgstr ""
+msgstr "Tipe Pengiriman"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -59,7 +62,7 @@ msgstr "Dokumen"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__domestic
 msgid "Domestic"
-msgstr ""
+msgstr "Lokal"
 
 #. module: delivery_usps
 #. odoo-python
@@ -68,16 +71,18 @@ msgid ""
 "Error:\n"
 "%s"
 msgstr ""
+"Error:\n"
+"%s"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_service__express
 msgid "Express"
-msgstr ""
+msgstr "Express"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_service__first_class
 msgid "First Class"
-msgstr ""
+msgstr "First Class"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__flat
@@ -87,35 +92,35 @@ msgstr "Flat"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_mail_type__flatrate
 msgid "Flat Rate"
-msgstr ""
+msgstr "Tarif Tetap"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__flat_rate_box
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_international_regular_container__flatratebox
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_mail_type__flatratebox
 msgid "Flat Rate Box"
-msgstr ""
+msgstr "Tarif Tetap Kotak"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__flat_rate_envelope
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_international_regular_container__flatrateenv
 msgid "Flat Rate Envelope"
-msgstr ""
+msgstr "Tarif Tetap Amplop"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
-msgstr ""
+msgstr "Hadiah"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
 msgid "International"
-msgstr ""
+msgstr "Internasional"
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "Label Format"
-msgstr ""
+msgstr "Format Label"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_size_container__large
@@ -125,49 +130,49 @@ msgstr "Besar"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_mail_type__largeenvelope
 msgid "Large Envelope"
-msgstr ""
+msgstr "Amplop Besar"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__lg_flat_rate_box
 msgid "Large Flat Rate Box"
-msgstr ""
+msgstr "Tarif Tetap Kotak Besar"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__legal_flat_rate_envelope
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_international_regular_container__legalflatrateenv
 msgid "Legal Flat Rate Envelope"
-msgstr ""
+msgstr "Tarif Tetap Amplop Legal"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__letter
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_mail_type__letter
 msgid "Letter"
-msgstr ""
+msgstr "Sura"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Machinable"
-msgstr ""
+msgstr "Machinable"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__md_flat_rate_box
 msgid "Medium Flat Rate Box"
-msgstr ""
+msgstr "Tarif Tetap Kotak Medium"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__merchandise
 msgid "Merchandise"
-msgstr ""
+msgstr "Merchandise"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_intl_non_delivery_option
 msgid "Non delivery option"
-msgstr ""
+msgstr "Opsi tanpa pengiriman"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__nonrectangular
 msgid "Non-rectangular"
-msgstr ""
+msgstr "Tidak-persegi panjang"
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -177,7 +182,7 @@ msgstr "Opsi"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_label_file_type__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_mail_type__package
@@ -187,73 +192,75 @@ msgstr "Kemasan"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_girth
 msgid "Package Girth"
-msgstr ""
+msgstr "Ketebalan Paket"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_height
 msgid "Package Height"
-msgstr ""
+msgstr "Tinggi Paket"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_length
 msgid "Package Length"
-msgstr ""
+msgstr "Panjang Paket"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__package_service
 msgid "Package Service"
-msgstr ""
+msgstr "Layanan Paket"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_custom_container_width
 msgid "Package Width"
-msgstr ""
+msgstr "Lebar Paket"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__padded_flat_rate_envelope
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_international_regular_container__paddedflatrateenv
 msgid "Padded Flat Rate Envelope"
-msgstr ""
+msgstr "Tarif Tetap Amplop Gelembung"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__parcel
 msgid "Parcel"
-msgstr ""
+msgstr "Parsel"
 
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Please check on USPS website to ensure that your package is machinable."
-msgstr ""
+msgstr "Mohon periksa website USPS untuk memastikan paket Anda machinable."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr ""
+msgstr "Mohon pilih layanan lain (maksimum bobot layanan ini adalah 4 lbs)"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please enter a valid ZIP code in recipient address"
-msgstr ""
+msgstr "Mohon masukkan kode POS yang valid di alamat penerima"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please enter a valid ZIP code in your Company address"
-msgstr ""
+msgstr "Mohon masukkan kode POS yang valid di alamat Perusahaan"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Mohon sediakan setidaknya satu barang untuk dikirim."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
 msgstr ""
+"Mohon tetapkan negara Amerika Serikat di alamat perusahaan, Layanan hanya "
+"tersedia untuk Amerika Serikat"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__postcard
@@ -274,18 +281,19 @@ msgstr "Pemberi"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Quantity for each move line should be less than 1000."
-msgstr ""
+msgstr "Kuantitas untuk setiap baris pergerakkan harus lebih kecil dari 1000."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Recipient address cannot be found. Please check the address exists."
 msgstr ""
+"Alamat penerima tidak dapat ditemukan. Mohon periksa bahwa alamat tersedia."
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__rectangular
 msgid "Rectangular"
-msgstr ""
+msgstr "Persegi Panjang"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_intl_non_delivery_option__redirect
@@ -295,7 +303,7 @@ msgstr "Redirect"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_redirect_partner_id
 msgid "Redirect Partner"
-msgstr ""
+msgstr "Alihkan Ulang Partner"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_size_container__regular
@@ -305,7 +313,7 @@ msgstr "Biasa"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__variable
 msgid "Regular < 12 inch"
-msgstr ""
+msgstr "Reguler < 12 inci"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__return
@@ -322,19 +330,19 @@ msgstr "Sampel"
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
 msgid "Shipment #%s has been cancelled"
-msgstr ""
+msgstr "Pengiriman #%s telah dibatalka"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
 msgid "Shipment created into USPS"
-msgstr ""
+msgstr "Pengiriman dibuat ke USPS"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
 msgid "Shipment created into USPS <br/> <b>Tracking Number: </b>%s"
-msgstr ""
+msgstr "Pengiriman dibuat ke USPS <br/> <b>Nomor Pelacak: </b>%s"
 
 #. module: delivery_usps
 #: model:ir.model,name:delivery_usps.model_delivery_carrier
@@ -344,17 +352,17 @@ msgstr "Metode Pengiriman"
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__sm_flat_rate_box
 msgid "Small Flat Rate Box"
-msgstr ""
+msgstr "Tarif Tetap Kotak Kecil"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_domestic_regular_container__sm_flat_rate_envelope
 msgid "Small Flat Rate Envelope"
-msgstr ""
+msgstr "Tarif Tetap Amplop Kecil"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_label_file_type__tif
 msgid "TIF"
-msgstr ""
+msgstr "TIF"
 
 #. module: delivery_usps
 #. odoo-python
@@ -363,6 +371,8 @@ msgid ""
 "The address of your company is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Alamat perusahaan Anda hilang atau salah (Field yang kurang) :  \n"
+" %s)"
 
 #. module: delivery_usps
 #. odoo-python
@@ -371,6 +381,9 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"Estimasi harga pengiriman tidak dapat dihitung karena berat tidak ada untuk "
+"produk berikut: \n"
+" %s"
 
 #. module: delivery_usps
 #. odoo-python
@@ -379,33 +392,37 @@ msgid ""
 "The recipient address is missing or wrong (Missing field(s) :  \n"
 " %s)"
 msgstr ""
+"Alamat penerima hilang atau kurang (Field yang kurang :  \n"
+" %s)"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
 msgstr ""
+"Layanan USPS yang dipilih (%s) tidak dapat digunakan untuk mengirimkan paket "
+"ini."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/delivery_usps.py:0
 msgid "Tracking Number:"
-msgstr ""
+msgstr "Nomor Pelacak:"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_international_regular_container
 msgid "Type of USPS International regular container"
-msgstr ""
+msgstr "Tipe kontainer reguler USPS Internasional"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_domestic_regular_container
 msgid "Type of USPS domestic regular container"
-msgstr ""
+msgstr "Tipe kontainer reguler USPS domestik"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_container
 msgid "Type of container"
-msgstr ""
+msgstr "Tipe kontainer"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
@@ -421,18 +438,20 @@ msgstr "Konfigurasi USPS"
 #: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_domestic
 #: model:product.template,name:delivery_usps.product_product_delivery_usps_domestic_product_template
 msgid "USPS Domestic Flat Rate Envelope"
-msgstr ""
+msgstr "Tarif Tetap Amplop USPS Domestik"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
 msgstr ""
+"USPS Domestik hanya digunakan untuk mengirimkan di dalam Amerika Serikat. "
+"Mohon ubah metode pengiriman menjadi USPS Internasional."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_first_class_mail_type
 msgid "USPS First Class Mail Type"
-msgstr ""
+msgstr "USPS Tipe Email First Class"
 
 #. module: delivery_usps
 #: model:delivery.carrier,name:delivery_usps.delivery_carrier_usps_international
@@ -445,6 +464,8 @@ msgstr "Kotak Tarif Rata Internasional USPS"
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
 msgstr ""
+"USPS Internasional hanya digunakan untuk mengirim ke luar Amerika Serikat. "
+"Silakan ubah metode pengiriman menjadi USPS Domestik."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
@@ -454,12 +475,12 @@ msgstr ""
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
 msgid "USPS Mail Type"
-msgstr ""
+msgstr "Tipe Email USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
-msgstr "Jasa Layanan USPS"
+msgstr "Layanan USPS"
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
@@ -470,20 +491,20 @@ msgstr "Metode Pengiriman USPS"
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
 msgid "USPS User ID"
-msgstr ""
+msgstr "User ID USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_size_container
 msgid "Usps Size Container"
-msgstr ""
+msgstr "Ukuran Kontainer USPS"
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Your company or recipient ZIP code is incorrect."
-msgstr ""
+msgstr "Perusahaan atau kode ZIP penerima Anda tidak tepat."
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
-msgstr ""
+msgstr "inci"

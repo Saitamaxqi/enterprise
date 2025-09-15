@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_grid
+# * web_grid
 #
 # Translators:
 # Ediz Duman <neps1192@gmail.com>, 2022
@@ -11,25 +11,27 @@
 # abc Def <hdogan1974@gmail.com>, 2022
 # Martin Trigaux, 2022
 # Buket Şeker <buket_skr@hotmail.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Buket Şeker <buket_skr@hotmail.com>, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/web_grid/"
+"tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr "Pencere Eylem Görünümü"
+msgstr "Pencere Aksiyon Görünümü"
 
 #. module: web_grid
 #. odoo-javascript
@@ -79,7 +81,7 @@ msgstr "Sonraki"
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_renderer.js:0
 msgid "No activities found"
-msgstr "Etkinlik bulunamadı"
+msgstr "Aktivite bulunamadı."
 
 #. module: web_grid
 #. odoo-javascript

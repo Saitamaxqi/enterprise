@@ -1,36 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll_account
+# * hr_payroll_account
 #
 # Translators:
 # Martin Trigaux, 2022
 # karolína schusterová <karolina.schusterova@vdp.sk>, 2022
 # Jiří Podhorecký, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Jiří Podhorecký, 2023\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"hr_payroll_account/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_chart_template
 msgid "Account Chart Template"
-msgstr "Šablona schématu účtu"
+msgstr "Šablona účtové osnovy"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Account Payslip Houserental"
-msgstr ""
+msgstr "Výplatní páska účtu Houserental"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
@@ -90,7 +93,7 @@ msgstr "Debetní účet"
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract
 msgid "Employee Contract"
-msgstr "Smlouva zaměstnance"
+msgstr "Zaměstnanecká smlouva"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -101,7 +104,7 @@ msgstr "Nesprávný deník: deník musí být ve stejné měně jako společnost
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_journal
 msgid "Journal"
-msgstr "Deník"
+msgstr "Účetní deník"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_payslip__date
@@ -134,7 +137,7 @@ msgstr "Jedna ze struktur mezd nemá v sobě definován žádný deník účtu."
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
 msgid "Pay Slip"
-msgstr "Mzdový list"
+msgstr "Výplatní páska"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -146,7 +149,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Salaries"
-msgstr ""
+msgstr "Platy"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__journal_id
@@ -157,18 +160,18 @@ msgstr "Deník platů"
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_salary_rule
 msgid "Salary Rule"
-msgstr "Platové pravidlo"
+msgstr "Mzdové pravidlo"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payroll_structure
 msgid "Salary Structure"
-msgstr "Struktura platu"
+msgstr "Mzdová struktura"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "The Expense Journal \"%s\" has not properly configured the default Account!"
-msgstr ""
+msgstr "Výdajový deník \"%s\" nemá správně nakonfigurován výchozí účet!"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
@@ -179,4 +182,4 @@ msgstr "Toto pole umožňuje odstranit hodnotu tohoto pravidla v pravidle „Či
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
-msgstr ""
+msgstr "Peněžní deník spojený se strukturou platu nelze odstranit."

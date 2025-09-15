@@ -1,91 +1,95 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_settle_due
+# * pos_settle_due
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:39+0000\n"
-"PO-Revision-Date: 2025-09-11 14:39+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:15+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"pos_settle_due/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "(with cart:"
-msgstr ""
+msgstr "(mit Warenkorb:"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_bank_statement_line__pos_amount_unsettled
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_move__pos_amount_unsettled
 msgid "Amount To Pay In POS"
-msgstr ""
+msgstr "Zu bezahlender Betrag im Kassensystem"
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
 msgid "Amount total"
-msgstr ""
+msgstr "Gesamtbetrag"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__commercial_partner_id
 msgid "Commercial Entity"
-msgstr ""
+msgstr "Handelsgesellschaft"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: pos_settle_due
 #: model:ir.model,website_form_label:pos_settle_due.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Kunden erstellen"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_list.xml:0
 msgid "Credit limit reached!"
-msgstr ""
+msgstr "Kreditlimit erreicht"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Credit limit:"
-msgstr ""
+msgstr "Kreditlimit:"
 
 #. module: pos_settle_due
 #: model:product.template,name:pos_settle_due.product_product_deposit_product_template
 msgid "Deposit"
-msgstr ""
+msgstr "Anzahlung"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_config__deposit_product_id
 msgid "Deposit Product"
-msgstr ""
+msgstr "Anzahlungsprodukt"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Deposit money"
-msgstr ""
+msgstr "Geld einzahlen"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Deposited:"
-msgstr ""
+msgstr "Eingezahlt:"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_move__display_name
@@ -97,13 +101,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_company__display_name
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Do you want to deposit %s to %s?"
-msgstr ""
+msgstr "Möchten Sie %s auf %s einzahlen?"
 
 #. module: pos_settle_due
 #. odoo-javascript
@@ -112,31 +116,33 @@ msgid ""
 "Do you want to deposit money to a specific customer? If so, first select "
 "him/her."
 msgstr ""
+"Möchten Sie Geld für einen bestimmten Kunden einzahlen? Wenn ja, wählen Sie "
+"ihn zunächst aus."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__customer_due_total
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
 msgid "Due"
-msgstr ""
+msgstr "Fällig"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Empty Order"
-msgstr ""
+msgstr "Leerer Auftrag"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Empty orders cannot be invoiced."
-msgstr ""
+msgstr "Leere Aufträge können nicht abgerechnet werden."
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.js:0
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Error"
-msgstr ""
+msgstr "Fehler"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_move__id
@@ -148,159 +154,159 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_company__id
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__init_customer_due_total
 msgid "Initial due (before any settlement)"
-msgstr ""
+msgstr "Anfänglich fälliger Betrag (vor jeglicher Abwicklung)"
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
 msgid "Invoice Date"
-msgstr ""
+msgstr "Rechnungsdatum"
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Journalbuchung"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__settled_orders_count
 msgid "Number of settled orders"
-msgstr ""
+msgstr "Anzahl abgewickelter Aufträge"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.js:0
 msgid "One of the selected orders is already being settled."
-msgstr ""
+msgstr "Einer der ausgewählten Aufträge wurde bereits abgewickelt."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_bank_statement_line__pos_order_line_ids
 #: model:ir.model.fields,field_description:pos_settle_due.field_account_move__pos_order_line_ids
 msgid "Order lines settling the invoice"
-msgstr ""
+msgstr "Bestellzeilen, die abgerechnet werden"
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view
 msgid "POS Orders"
-msgstr ""
+msgstr "Kassenaufträge"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Kassensystem-Konfiguration"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_pos_order_line
 msgid "Point of Sale Order Lines"
-msgstr ""
+msgstr "Kassenauftragszeilen"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Kassenaufträge"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Kassensitzung"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/services/pos_store.js:0
 msgid "Select the payment method to deposit money"
-msgstr ""
+msgstr "Wählen Sie die Zahlungsmethode für die Einzahlung aus"
 
 #. module: pos_settle_due
 #: model:product.template,name:pos_settle_due.product_product_settle_product_template
 msgid "Settle Due"
-msgstr ""
+msgstr "Fälligen Betrag begleichen"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_config__settle_due_product_id
 msgid "Settle Due Product"
-msgstr ""
+msgstr "Fälliges Produkt begleichen"
 
 #. module: pos_settle_due
 #: model:product.template,name:pos_settle_due.product_product_settle_invoice_product_template
 msgid "Settle Invoice"
-msgstr ""
+msgstr "Abrechnen"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_config__settle_invoice_product_id
 msgid "Settle Invoice Product"
-msgstr ""
+msgstr "Abrechnungsprodukt"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Settle due amount"
-msgstr ""
+msgstr "Fälligen Betrag abrechnen"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Settle due orderlines"
-msgstr ""
+msgstr "Fällige Auftragszeilen begleichen"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Settle invoices"
-msgstr ""
+msgstr "Abrechnen"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Settle orders"
-msgstr ""
+msgstr "Aufträge abrechnen"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order_line__settled_invoice_id
 msgid "Settled Invoice"
-msgstr ""
+msgstr "Abgerechnet"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order_line__settled_order_id
 msgid "Settled Order"
-msgstr ""
+msgstr "Abgewickelter Auftrag"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_pos_order__settled_order_line_ids
 msgid "Settled Order Lines"
-msgstr ""
+msgstr "Abgewickelte Auftragszeilen"
 
 #. module: pos_settle_due
 #. odoo-python
 #: code:addons/pos_settle_due/models/pos_order.py:0
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.pos_order_form_inherit_pos_settle_due
 msgid "Settled Orders"
-msgstr ""
+msgstr "Abgewickelte Aufträge"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__pos_orders_amount_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_users__pos_orders_amount_due
 msgid "Sum of customers PoS orders's due amount"
-msgstr ""
+msgstr "Gesamtsumme der fälligen Kassenbeträge der Kunden"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_partner__invoices_amount_due
 #: model:ir.model.fields,field_description:pos_settle_due.field_res_users__invoices_amount_due
 msgid "Sum of customers's invoice due amount"
-msgstr ""
+msgstr "Gesamtsumme der fälligen Rechnungsbeträge der Kunden"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "The order is empty"
-msgstr ""
+msgstr "Der Auftrag ist leer"
 
 #. module: pos_settle_due
 #. odoo-javascript
@@ -309,59 +315,64 @@ msgid ""
 "The selected customer is not in the list of partners of the ongoing settling"
 " orderlines."
 msgstr ""
+"Der ausgewählte Kunde ist nicht in der Liste der Partner der laufenden "
+"Abwicklungsauftragszeilen aufgeführt."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__settle_due_product_id
 msgid "This product is used as to settle due of customer account."
 msgstr ""
+"Dieses Produkt wird verwendet, um fällige Beträge auf dem Kundenkonto zu "
+"begleichen."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__settle_invoice_product_id
 msgid "This product is used as to settle invoices of customer."
-msgstr ""
+msgstr "Dieses Produkt wird verwendet, um Kunden abzurechnen."
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__deposit_product_id
 msgid "This product is used to deposit money on customer account."
-msgstr ""
+msgstr "Dieses Produkt wird verwendet, um Geld auf ein Kundenkonto einzuzahlen."
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.due_account_move_list_view
 msgid "Total due"
-msgstr ""
+msgstr "Fälliger Gesamtbetrag"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/partner_list/partner_line/partner_line.xml:0
 msgid "Total due:"
-msgstr ""
+msgstr "Fälliger Gesamtbetrag:"
 
 #. module: pos_settle_due
 #: model:ir.model,name:pos_settle_due.model_ir_ui_view
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "Yes"
-msgstr ""
+msgstr "Ja"
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "You can not deposit zero amount."
-msgstr ""
+msgstr "Sie können keinen Betrag von 0,00 einzahlen."
 
 #. module: pos_settle_due
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid "You cannot refund a deposit/settling order."
 msgstr ""
+"Sie können eine Einzahlung oder einen Abrechnungsauftrag nicht erstatten."
 
 #. module: pos_settle_due
 #. odoo-python
 #: code:addons/pos_settle_due/models/pos_order.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"

@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* marketing_automation_whatsapp
+# * marketing_automation_whatsapp
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
+"marketing_automation_whatsapp/da/>\n"
+"Language: da\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_summary_template_whatsapp
@@ -38,7 +42,7 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Bounced after"
-msgstr ""
+msgstr "<i class=\"fa fa-exclamation-circle\"/> Ikke Leveret efter"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
@@ -73,7 +77,7 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "<i class=\"fa fa-pie-chart\"/> Details"
-msgstr ""
+msgstr "<i class=\"fa fa-pie-chart\"/> Detaljer"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
@@ -122,22 +126,22 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_activity__activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Aktivitetstype"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "Clicked"
-msgstr ""
+msgstr "Klikkede"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_message__links_click_datetime
 msgid "Clicked On"
-msgstr ""
+msgstr "Klikkede på"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_discuss_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Diskussionskanal"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_discuss_channel__display_name
@@ -149,7 +153,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_template__display_name
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_template_button__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Vis navn"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
@@ -167,12 +171,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_template__id
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_template_button__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_link_tracker_click
 msgid "Link Tracker Click"
-msgstr ""
+msgstr "Link sporer klik"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_view_form
@@ -184,7 +188,7 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_marketing_activity
 msgid "Marketing Activity"
-msgstr ""
+msgstr "Marketing aktivitet"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.actions.act_window,name:marketing_automation_whatsapp.whatsapp_template_action_marketing_automation
@@ -194,18 +198,18 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_marketing_campaign
 msgid "Marketing Campaign"
-msgstr ""
+msgstr "Marketingkampagne"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_trace__whatsapp_message_id
 msgid "Marketing Template"
-msgstr ""
+msgstr "Marketing skabelon"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_marketing_trace
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_message__marketing_trace_ids
 msgid "Marketing Trace"
-msgstr ""
+msgstr "Marketing spor"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
@@ -230,7 +234,7 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "Opened"
-msgstr ""
+msgstr "Åbnet"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python
@@ -260,7 +264,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/marketing_automation_whatsapp/models/marketing_activity.py:0
 msgid "Participants of %(name)s (%(filter)s)"
-msgstr ""
+msgstr "Deltagere af  %(name)s (%(filter)s)"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_activity_view_form
@@ -270,59 +274,59 @@ msgstr ""
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "Replied"
-msgstr ""
+msgstr "Besvaret"
 
 #. module: marketing_automation_whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 msgid "Sent"
-msgstr ""
+msgstr "Sendt"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,help:marketing_automation_whatsapp.field_whatsapp_message__links_click_datetime
 msgid "Stores last click datetime in case of multi clicks."
-msgstr ""
+msgstr "Gemmer sidste klik datetime i tilfælde af flere klik."
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__whatsapp_template_button__url_type__tracked
 msgid "Tracked"
-msgstr ""
+msgstr "Sporet"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_activity__trigger_category
 msgid "Trigger Category"
-msgstr ""
+msgstr "Udløser Kategori"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_marketing_activity__trigger_type
 msgid "Trigger Type"
-msgstr ""
+msgstr "Udløsnings type"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields,field_description:marketing_automation_whatsapp.field_whatsapp_template_button__url_type
 msgid "Url Type"
-msgstr ""
+msgstr "Url Type"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model.fields.selection,name:marketing_automation_whatsapp.selection__marketing_activity__trigger_category__whatsapp
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:marketing_automation_whatsapp.marketing_participant_view_form
 msgid "WhatsApp"
-msgstr ""
+msgstr "WhatsApp"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_whatsapp_message
 msgid "WhatsApp Messages"
-msgstr ""
+msgstr "WhatsApp beskeder"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_whatsapp_template
 msgid "WhatsApp Template"
-msgstr ""
+msgstr "WhatsApp Skabelon"
 
 #. module: marketing_automation_whatsapp
 #: model:ir.model,name:marketing_automation_whatsapp.model_whatsapp_template_button
 msgid "WhatsApp Template Button"
-msgstr ""
+msgstr "WhatsApp skabelonknap"
 
 #. module: marketing_automation_whatsapp
 #. odoo-python

@@ -1,23 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll_account
+# * hr_payroll_account
 #
 # Translators:
 # Martin Trigaux, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Martin Trigaux, 2023\n"
-"Language-Team: Japanese (https://app.transifex.com/odoo/teams/41243/ja/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"hr_payroll_account/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_chart_template
@@ -28,7 +31,7 @@ msgstr "勘定科目表テンプレート"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Account Payslip Houserental"
-msgstr ""
+msgstr "口座振込明細書 家賃"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
@@ -57,7 +60,7 @@ msgstr "分析勘定"
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "本当に進めますか？"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract_history
@@ -94,7 +97,7 @@ msgstr "従業員契約"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "Incorrect journal: The journal must be in the same currency as the company"
-msgstr ""
+msgstr "間違った仕訳帳:仕訳帳の通貨は会社と同じである必要があります。"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_journal
@@ -104,7 +107,7 @@ msgstr "仕訳帳"
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_payslip__date
 msgid "Keep empty to use the period of the validation(Payslip) date."
-msgstr "給与明細書の発効日の期間を使うために、空白にしておいてください。"
+msgstr "発効日(給与明細)の期間を使うために、空白にしておいて下さい。"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -115,13 +118,13 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "Not computed in net accountably"
-msgstr ""
+msgstr "正味で計算されていません"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the contract for these payslips has no structure type."
-msgstr ""
+msgstr "これらの給与明細の契約書の1つには、構造タイプがありません。"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -138,13 +141,13 @@ msgstr "給与明細"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "SLR"
-msgstr ""
+msgstr "SLR"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Salaries"
-msgstr ""
+msgstr "給与"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__journal_id
@@ -155,7 +158,7 @@ msgstr "給与仕訳"
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_salary_rule
 msgid "Salary Rule"
-msgstr ""
+msgstr "給与規則"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payroll_structure
@@ -166,15 +169,18 @@ msgstr "給与体系"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "The Expense Journal \"%s\" has not properly configured the default Account!"
-msgstr ""
+msgstr "経費仕訳帳 \"%s\" はデフォルト勘定科目を正しく設定していません。"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "This field allows you to delete the value of this rule in the \"Net Salary\" rule at the accounting level to explicitly display the value of this rule in the accounting. For example, if you want to display the value of your representation fees, you can check this field."
 msgstr ""
+"このフィールドを使用すると、会計レベルの'正味給与'規則でこの規則の値を削除し"
+"て、会計でこの規則の値を明示的に表示することができます。例えば、代理人報酬の"
+"値を表示したい場合は、このフィールドをチェックします。"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
-msgstr ""
+msgstr "給与構造にリンクされた仕訳帳は削除できません。"

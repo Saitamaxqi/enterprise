@@ -1,29 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "%s days"
-msgstr ""
+msgstr "%s giorni"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -91,6 +95,8 @@ msgstr "Contatto"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Contact your sales representative to help you to unlink your previous database"
 msgstr ""
+"contattare il proprio referente vendite per ricevere aiuto sulla rimozione "
+"del collegamento al precedente database"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -102,7 +108,7 @@ msgstr "Barra degli strumenti del pannello di controllo"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
 msgid "Dark Mode"
-msgstr ""
+msgstr "Modalità scura"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -114,7 +120,7 @@ msgstr "Scadenza database:"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Dismiss"
-msgstr "Scarta"
+msgstr "Ignora"
 
 #. module: web_enterprise
 #: model:ir.actions.server,name:web_enterprise.download_contact
@@ -142,7 +148,7 @@ msgstr "Instradamento HTTP"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
-msgstr ""
+msgstr "Menù principale"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -155,7 +161,7 @@ msgstr "Installa Odoo Studio"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Log in as an administrator to correct the issue."
-msgstr "Collegati come amministratore per correggere il problema."
+msgstr "Per correggere il problema accedere come amministratore."
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -185,7 +191,7 @@ msgstr "Odoo"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
 msgid "Odoo Enterprise Edition License V1.0"
-msgstr "Odoo Enterprise Edition License V1.0"
+msgstr "Licenza edizione Enterprise di Odoo V1.0"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -198,19 +204,19 @@ msgstr "Odoo Studio"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Odoo Support"
-msgstr "Supporto Odoo"
+msgstr "supporto Odoo"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Paste code here"
-msgstr "Incolla il codice qui"
+msgstr "Incolla qui il codice"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Previous view"
-msgstr ""
+msgstr "Vista precedente"
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -251,13 +257,15 @@ msgstr "Scansione codici a barre"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Sending the instructions by email ..."
-msgstr "Inviare le istruzioni via e-mail ..."
+msgstr "Invio delle istruzioni via e-mail..."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Something went wrong while registering your database. You can try again or contact"
-msgstr "Qualcosa è andato storto mentre registravo il database. Puoi riprovare o contattare"
+msgstr ""
+"Qualcosa è andato storto durante la registrazione del database. Riprovare o "
+"contattare il"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -269,43 +277,48 @@ msgstr "Codice abbonamento:"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "TIP"
-msgstr ""
+msgstr "SUGGERIMENTO"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Thank you, your registration was successful! Your database is valid until"
-msgstr "Grazie, la tua registrazione è andata a buon fine. Il tuo database è valido fino a "
+msgstr ""
+"Grazie, la registrazione è andata a buon fine. Il database è valido fino al"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid "Thank you, your registration was successful! Your database is valid until %s."
 msgstr ""
+"Grazie, la registrazione è andata a buon fine. Il database è valido fino al "
+"%s."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "The instructions to unlink your subscription from the previous database(s) have been sent"
-msgstr "Le istruzioni per scollegare il tuo abbonamento dai precedenti database sono state inviate"
+msgstr ""
+"Le istruzioni per rimuovere il collegamento dell'abbonamento dai precedenti "
+"database sono state inviate"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database has expired. "
-msgstr ""
+msgstr "Il database è scaduto. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database will expire in %s. "
-msgstr ""
+msgstr "Il database scade fra %s. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This demo database will expire in %s. "
-msgstr ""
+msgstr "Il database di prova scade fra %s. "
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -328,13 +341,13 @@ msgstr "Oggi"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Unable to send the instructions by email, please contact the"
-msgstr "Impossibile inviare le istruzioni via e-mail, contatta"
+msgstr "Impossibile inviare le istruzioni via e-mail, contattare il"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Upgrade your subscription"
-msgstr "Aggiorna il tuo abbonamento"
+msgstr "Aggiorna abbonamento"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -351,43 +364,47 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "You have more users or more apps installed than your subscription allows."
-msgstr "Hai più utenti o più applicazioni installate di quanto il tuo abbonamento permetta."
+msgstr ""
+"Sono presenti più utenti o applicazioni installate di quante ne permetta "
+"l'abbonamento."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "You will be able to register your database once you have installed your first app."
-msgstr "Potrai registrare il tuo database una volta che avrai installato la tua prima app."
+msgstr ""
+"Una volta installata la prima applicazione sarà possibile registrare il "
+"database."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription code"
-msgstr "Il tuo codice abbonamento"
+msgstr "Codice abbonamento"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription is already linked to a database."
-msgstr "Il tuo abbonamento è già collegato a un database."
+msgstr "L'abbonamento è già collegato a un database."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription was updated and is valid until"
-msgstr "Il tuo abbonamento è stato aggiornato ed è valido fino a"
+msgstr "L'abbonamento è stato aggiornato ed è valido fino al"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "buy a subscription"
-msgstr "compra un abbonamento"
+msgstr "acquista un abbonamento"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "or"
-msgstr "/"
+msgstr "o"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -399,4 +416,4 @@ msgstr "al proprietario dell'abbonamento (email:"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
-msgstr ""
+msgstr "— aprimi ovunque con"

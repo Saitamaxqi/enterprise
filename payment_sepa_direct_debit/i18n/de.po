@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* payment_sepa_direct_debit
+# * payment_sepa_direct_debit
 #
 # Translators:
 # Udo Hennig <info@udohennig.de>, 2022
 # Martin Trigaux, 2022
 # Felix Schubert <felix.schubert@go-erp.com>, 2022
 # Larissa Manderfeld, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Larissa Manderfeld, 2023\n"
-"Language-Team: German (https://app.transifex.com/odoo/teams/41243/de/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"payment_sepa_direct_debit/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.inline_form
@@ -298,7 +300,7 @@ msgstr "Zahlungsanbieter"
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_payment_token
 msgid "Payment Token"
-msgstr "Zahlungs-Token"
+msgstr "Zahlungstoken"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_payment_transaction
@@ -357,7 +359,7 @@ msgstr "SEPA Direct Debit: Ändere Benachrichtigung"
 #. module: payment_sepa_direct_debit
 #: model:mail.template,name:payment_sepa_direct_debit.mail_template_sepa_notify_validation
 msgid "SEPA Direct Debit: Validation Notification"
-msgstr "SEPA-Lastschriftverfahren: Validierungsbenachrichtigung"
+msgstr "SEPA-Lastschrift: Validierungsbenachrichtigung"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_provider__sdd_sms_credits
@@ -570,7 +572,10 @@ msgstr "Ihr SEPA-Lastschriftmandat mit {{ object.payment_journal_id.company_id.n
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/payment_provider.py:0
 msgid "Your company must have a creditor identifier in order to issue a SEPA Direct Debit payment request. It can be set in Accounting settings."
-msgstr "Ihr Unternehmen benötigt eine Kreditoren-ID, damit Anfragen für SEPA-Lastschriftzahlungen ausgestellt werden können. Dies kann in den Buchhaltungseinstellungen festgelegt werden."
+msgstr ""
+"Ihr Unternehmen benötigt eine Gläubiger-Identifikationsnummer, damit "
+"Anfragen für SEPA-Lastschriftzahlungen ausgestellt werden können. Dies kann "
+"in den Buchhaltungseinstellungen festgelegt werden."
 
 #. module: payment_sepa_direct_debit
 #. odoo-python

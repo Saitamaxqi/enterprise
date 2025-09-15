@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_amazon
+# * sale_amazon
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:54+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"sale_amazon/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_amazon
 #: model:mail.template,body_html:sale_amazon.order_sync_failure
@@ -311,7 +316,7 @@ msgstr "Токен сессии AWS"
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__account_id
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_search
 msgid "Account"
-msgstr "Аккаунт"
+msgstr "Счёт"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
@@ -661,7 +666,7 @@ msgstr "Не удалось обработать документ, отправ�
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__create_uid
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_recover_order_wizard__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__create_date
@@ -669,7 +674,7 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__create_date
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_recover_order_wizard__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
@@ -790,7 +795,9 @@ msgstr ""
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_order_view_form
 msgid "If the sale is locked, you can not modify it anymore. However, you will still be able to invoice or deliver."
-msgstr "Если продажа закрытаа, вы не можете ее изменить. Однако, вы по-прежнему можете выставить счет или произвести доставку."
+msgstr ""
+"Если продажа закрыта, вы не можете ее изменить. Однако, вы по-прежнему "
+"можете выставить счет или произвести доставку."
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
@@ -820,7 +827,7 @@ msgstr "Токен доступа LWA"
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__access_token_expiry
 msgid "LWA Access Token Expiry"
-msgstr ""
+msgstr "Срок действия токена доступа LWA"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__refresh_token
@@ -838,7 +845,7 @@ msgstr "Синхронизация последних заказов"
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__write_uid
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_recover_order_wizard__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__write_date
@@ -846,7 +853,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_offer__write_date
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_recover_order_wizard__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form
@@ -1004,7 +1011,7 @@ msgstr "Токен ограниченных данных"
 #. module: sale_amazon
 #: model:ir.model.fields,field_description:sale_amazon.field_amazon_account__restricted_data_token_expiry
 msgid "Restricted Data Token Expiry"
-msgstr ""
+msgstr "Срок действия токена ограниченных данных"
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.picking_view_form
@@ -1148,6 +1155,8 @@ msgstr "Ссылка на заказ Amazon должна быть в форма�
 #: code:addons/sale_amazon/models/amazon_account.py:0
 msgid "The Amazon order with reference %(ref)s was not recovered because its currency was missing from the Amazon order data."
 msgstr ""
+"Заказ Amazon с номером %(ref)s не был восстановлен, потому что в данных "
+"заказа не была указана валюта."
 
 #. module: sale_amazon
 #. odoo-python
@@ -1263,6 +1272,9 @@ msgstr "Момент, когда токен становится недейст�
 #: code:addons/sale_amazon/models/sale_order.py:0
 msgid "The order has been cancelled by the Amazon customer while someproducts have already been delivered. Please create a return for this order to adjust the stock."
 msgstr ""
+"Заказ был отменен покупателем Amazon, в то время как некоторые товары уже "
+"были доставлены. Пожалуйста, создайте возврат для этого заказа, чтобы "
+"скорректировать запасы."
 
 #. module: sale_amazon
 #. odoo-python
@@ -1369,7 +1381,9 @@ msgstr "Для данной ссылки заказа Amazon может суще
 #. module: sale_amazon
 #: model:ir.model.constraint,message:sale_amazon.constraint_sale_order_line_unique_amazon_item_ref
 msgid "There can only exist one sale order line for a given Amazon Item Reference."
-msgstr "Для данной ссылки на товар Amazon может существовать только одна строка заказа на продажу."
+msgstr ""
+"Для данной ссылки на товар Amazon может существовать только одна позиция "
+"заказа на продажу."
 
 #. module: sale_amazon
 #: model_terms:ir.ui.view,arch_db:sale_amazon.amazon_account_view_form

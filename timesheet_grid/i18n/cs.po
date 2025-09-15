@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* timesheet_grid
+# * timesheet_grid
 #
 # Translators:
 # Jan Horzinka <jan.horzinka@centrum.cz>, 2022
@@ -10,20 +10,23 @@
 # karolína schusterová <karolina.schusterova@vdp.sk>, 2022
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2022
 # Aleš Fiala <f.ales1@seznam.cz>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Aleš Fiala <f.ales1@seznam.cz>, 2023\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"timesheet_grid/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -216,7 +219,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_all_timesheets
 msgid "All Timesheets"
-msgstr "Všechny pracovní výkazy"
+msgstr "Všechny časové výkazy"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__amount
@@ -228,6 +231,7 @@ msgstr "Částka"
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "An employee must be linked to your user to record time."
 msgstr ""
+"Zaměstnanec musí být propojen s vaším uživatelem, aby mohl zaznamenávat čas."
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -255,6 +259,8 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
 msgid "Check that your employees correctly filled in their timesheets and that their time is billable."
 msgstr ""
+"Zkontrolujte, zda vaši zaměstnanci správně vyplnili své pracovní výkazy a "
+"zda je jejich čas zúčtovatelný."
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -276,7 +282,7 @@ msgstr "Společnosti"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_config_settings
 msgid "Config Settings"
-msgstr "Nastavení konfigurace"
+msgstr "Konfigurační nastavení"
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
@@ -293,7 +299,7 @@ msgstr "Potvrďte strávený čas"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Congratulations, you are now a master of Timesheets."
-msgstr ""
+msgstr "Gratulujeme, nyní jste mistrem Časových výkazů."
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.action_timesheet_previous_month
@@ -314,13 +320,13 @@ msgstr "Vytvořte pracovní výkaz z úkolu"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__create_uid
 msgid "Created by"
-msgstr "Vytvořeno od"
+msgstr "Vytvořeno uživatelem"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__create_date
 msgid "Created on"
-msgstr "Vytvořeno"
+msgstr "Vytvořeno dne"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -426,7 +432,7 @@ msgstr "Zrušit"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__display_name
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__display_name
 msgid "Display Name"
-msgstr "Zobrazované jméno"
+msgstr "Zobrazovací název"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__display_timer
@@ -550,18 +556,18 @@ msgstr "Poslední měsíc"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_uid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__write_uid
 msgid "Last Updated by"
-msgstr "Naposledy upraveno od"
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__write_date
 msgid "Last Updated on"
-msgstr "Naposled upraveno"
+msgstr "Naposledy upraveno dne"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__last_validated_timesheet_date
 msgid "Last Validated Timesheet Date"
-msgstr ""
+msgstr "Datum posledního ověřeného časového výkazu"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
@@ -573,6 +579,10 @@ msgstr "Minulý týden"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Launch the <b>timer</b> for this project by pressing the <b>[a] key</b>. Easily switch from one project to another by using those keys. <i>Tip: you can also directly add 15 minutes to this project by hitting the <b>shift + [A] keys</b>.</i>"
 msgstr ""
+"Spusťte <b>časovač</b> pro tento projekt stisknutím <b>klávesy [a]</b>. "
+"Pomocí těchto kláves můžete snadno přepínat z jednoho projektu do druhého. "
+"<i>Tip: K tomuto projektu můžete také přímo přidat 15 minut stisknutím "
+"<b>kláves Shift + [A]</b>.</i>"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -588,7 +598,7 @@ msgstr "Sloučit"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
 msgid "Merge Timesheet"
-msgstr ""
+msgstr "Sloučit časový výkaz"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -596,12 +606,12 @@ msgstr ""
 #: model:ir.actions.server,name:timesheet_grid.merge_timesheet_action
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_merge_wizard
 msgid "Merge Timesheets"
-msgstr ""
+msgstr "Sloučení časových výkazů"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_min_duration
 msgid "Minimal Duration"
-msgstr ""
+msgstr "Minimální doba trvání"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_ir_module_module
@@ -628,7 +638,7 @@ msgstr "Mé projekty"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Tasks"
-msgstr "Moje úkoly"
+msgstr "Mé úkoly"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -654,7 +664,7 @@ msgstr "Žádné aktivity k ověření."
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
 msgid "No timesheets to validate"
-msgstr ""
+msgstr "Žádné časové výkazy k ověření"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_delay
@@ -681,7 +691,7 @@ msgstr "Pozastavit"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press"
-msgstr ""
+msgstr "Stiskněte"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -693,7 +703,7 @@ msgstr "Stisknutím klávesy Esc akci zrušíte"
 #: model:ir.model,name:timesheet_grid.model_project_project
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__project_id
 msgid "Project"
-msgstr "Projekt"
+msgstr "Projekty"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee_public
@@ -713,13 +723,13 @@ msgstr "Připomenutí k zaznamenání vašich pracovních výkazů"
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder
 msgid "Reminder to validate your team's timesheets"
-msgstr ""
+msgstr "Připomenutí k ověření časových výkazů vašeho týmu"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.invalidate_timesheet_action
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_form_view
 msgid "Reset to draft"
-msgstr ""
+msgstr "Resetovat na návrh"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_form
@@ -729,12 +739,12 @@ msgstr "Shrnutí"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
 msgid "Round up"
-msgstr ""
+msgstr "Zaokrouhlit nahoru"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Rounding applied when tracking your time using the timer"
-msgstr ""
+msgstr "Při sledování času pomocí časovače se použije zaokrouhlení"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_create_timesheet_view_form
@@ -790,7 +800,7 @@ msgstr "Je nám líto, pro ověřený pracovní výkaz nelze použít časovač"
 #: code:addons/timesheet_grid/static/src/components/timesheet_uom_hour_timer/timesheet_uom_hour_timer.js:0
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_form
 msgid "Start"
-msgstr "Počáteční bod"
+msgstr "Začít"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -805,13 +815,15 @@ msgstr "Zastavit"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Stop the <b>timer</b> when you are done. <i>Tip: hit <b>[Enter]</b> in the description to automatically log your activity.</i>"
 msgstr ""
+"Po dokončení zastavte <b>časovač</b>. <i>Tip: Klepnutím na <b>[Enter]</b> v "
+"popisu automaticky zaznamenáte svou aktivitu.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_task
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__task_id
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__task_id
 msgid "Task"
-msgstr "Úloha"
+msgstr "Úkol"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_project_task_create_timesheet__task_id
@@ -832,7 +844,7 @@ msgstr "Doba trvání časového rozvrhu zakódovaného pomocí časovače bude 
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_controller.js:0
 msgid "The timesheet entry has successfully been created."
-msgstr ""
+msgstr "Záznam časového výkazu byl úspěšně vytvořen."
 
 #. module: timesheet_grid
 #: model:ir.model.constraint,message:timesheet_grid.constraint_project_task_create_timesheet_time_positive
@@ -843,19 +855,19 @@ msgstr "Čas v pracovním výkaze musí být kladný"
 #. odoo-python
 #: code:addons/timesheet_grid/wizard/timesheet_merge_wizard.py:0
 msgid "The timesheets have successfully been merged."
-msgstr ""
+msgstr "Časové výkazy byly úspěšně sloučeny."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "The timesheets have successfully been reset to draft."
-msgstr ""
+msgstr "Časové výkazy byly úspěšně resetovány na koncept."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "The timesheets have successfully been validated."
-msgstr ""
+msgstr "Časové výkazy byly úspěšně ověřeny."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -867,13 +879,15 @@ msgstr "Pracovní výkazy musí mít stejnou jednotku kódování"
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "There are no timesheets to merge."
-msgstr ""
+msgstr "Neexistují žádné časové výkazy ke sloučení."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "There are no timesheets to reset to draft or they have already been invoiced."
 msgstr ""
+"Neexistují žádné časové výkazy, které by bylo možné resetovat na koncept, "
+"nebo již byly fakturovány."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -923,7 +937,7 @@ msgstr "Schvalovatel pracovního výkazu"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_grid_mixin
 msgid "Timesheet Grid mixin"
-msgstr ""
+msgstr "Mixin mřížkového zobrazení časových výkazů"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__duration_unit_amount
@@ -957,12 +971,12 @@ msgstr "Pracovní výkaz: Připomenutí e-mailu zaměstnanců"
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Timesheets"
-msgstr "Pracovní výkazy"
+msgstr "Časové výkazy"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheets_analysis_report
 msgid "Timesheets Analysis Report"
-msgstr ""
+msgstr "Analýza časových výkazů"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -995,13 +1009,14 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
 msgid "To Validate"
-msgstr "K ověření"
+msgstr "Ke schválení"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Track the <b>time spent</b> on your projects. <i>It starts here.</i>"
 msgstr ""
+"Sledujte <b>čas strávený</b> na vašich projektech. <i>Tady to začíná.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_users
@@ -1011,7 +1026,7 @@ msgstr "Uživatel"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__user_can_validate
 msgid "User Can Validate"
-msgstr ""
+msgstr "Uživatel může ověřovat"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_interval
@@ -1038,18 +1053,18 @@ msgstr "Uživatel odpovědný za ověření časového rozvrhu. Měl by být spr
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee_validation
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_tree_user_inherited
 msgid "Validate"
-msgstr "Ověřit"
+msgstr "Potvrdit"
 
 #. module: timesheet_grid
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__account_analytic_line__validated_status__validated
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "Validated"
-msgstr "Ověřeno"
+msgstr "Potvrzeno"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated_status
 msgid "Validated Status"
-msgstr ""
+msgstr "Stav ověřen"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated
@@ -1088,19 +1103,23 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__user_can_validate
 msgid "Whether or not the current user can validate/reset to draft the record."
-msgstr ""
+msgstr "Zda může aktuální uživatel ověřit/resetovat na koncept záznamu."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You can only reset to draft the timesheets of employees of whom you are the manager or the timesheet approver."
 msgstr ""
+"Můžete pouze obnovovat na koncept časových výkazů zaměstnanců, jejichž jste "
+"manažerem nebo schvalovatelem časových výkazů."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You can only validate the timesheets of employees of whom you are the manager or the timesheet approver."
 msgstr ""
+"Můžete pouze ověřovat časové výkazy zaměstnanců, jejichž jste manažerem nebo "
+"schvalovatelem časových výkazů."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1113,6 +1132,7 @@ msgstr "Nemáte přístup k pracovním výkazům, které nejsou vaše."
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You cannot adjust the time of the timesheet for a project with timesheets disabled."
 msgstr ""
+"Nemůžete upravit čas časového výkazu pro projekt s vypnutými časovými výkazy."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1125,12 +1145,14 @@ msgstr ""
 #: code:addons/timesheet_grid/models/project.py:0
 msgid "You cannot start the timer for a project in a company encoding its timesheets in days."
 msgstr ""
+"Nemůžete spustit časovač pro projekt ve společnosti kódující své časové "
+"výkazy ve dnech."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You cannot use the timer on validated timesheets."
-msgstr ""
+msgstr "Nelze použít časovač na ověřených pracovních výkazech."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1153,7 +1175,7 @@ msgstr "po konci týdne"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "days"
-msgstr "dnů"
+msgstr "dny"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1183,7 +1205,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "to add"
-msgstr ""
+msgstr "přidat"
 
 #. module: timesheet_grid
 #. odoo-javascript

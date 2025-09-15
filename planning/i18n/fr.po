@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* planning
+# * planning
 #
 # Translators:
 # gdp Odoo <gdp@odoo.com>, 2022
@@ -9,20 +9,23 @@
 # Alexandra Jubert, 2022
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/planning/"
+"fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: planning
 #. odoo-python
@@ -54,7 +57,7 @@ msgstr "04:00"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "08:00"
-msgstr ""
+msgstr "08:00"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -336,16 +339,25 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">04:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">04:00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">12:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">12:00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">16:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">16:00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -459,7 +471,7 @@ msgstr "Message additionnel"
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_send__note
 msgid "Additional message displayed in the email sent to employees"
-msgstr "Message additionnel affiché dans l'email envoyé aux employés"
+msgstr "Message additionnel affiché dans l'e-mail envoyé aux employés"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
@@ -476,11 +488,13 @@ msgstr "Administrateur"
 #: code:addons/planning/static/src/views/planning_hooks.js:0
 msgid "All open shifts have already been assigned, or there are no resources available to take them at this time."
 msgstr ""
+"Tous les postes ouverts ont déjà été assignés ou aucune ressource n'est "
+"disponible pour les prendre en ce moment."
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__all
 msgid "All shifts"
-msgstr ""
+msgstr "Tous les postes"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
@@ -537,7 +551,9 @@ msgstr "Un poste doit être dans la même société que celle de sa récurrence.
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_report_action_analysis
 msgid "Analyze the allocation of your resources across roles, projects, and sales orders, and estimate future needs."
-msgstr "Analysez l'allocation de vos ressources entre les fonctions, les projets et les commandes client, et estimez les besoins futurs."
+msgstr ""
+"Analysez l'allocation de vos ressources entre les rôles, les projets et les "
+"commandes client, et estimez les besoins futurs."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_form
@@ -574,7 +590,11 @@ msgstr "Demander à changer"
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Assign a <b>resource</b>, or leave it open for the moment. <i>Tip: Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available.</i>"
-msgstr "Assignez une <b>ressource</b> ou laissez-le ouvert pour le moment. <i>Astuce : créez des postes ouverts pour les fonctions dont vous aurez besoin pour accomplir une mission. Ensuite, affectez ces postes ouverts aux ressources disponibles.</i>"
+msgstr ""
+"Assignez une <b>ressource</b> ou laissez-le ouvert pour le moment. <i>Astuce "
+": créez des postes ouverts pour les rôles dont vous aurez besoin pour "
+"accomplir une mission. Ensuite, affectez ces postes ouverts aux ressources "
+"disponibles.</i>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
@@ -588,14 +608,14 @@ msgstr "Responsable"
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Auto Plan"
-msgstr ""
+msgstr "Planifier automatiquement"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.xml:0
 msgid "Automatically plan open shifts and sales orders"
-msgstr ""
+msgstr "Planifier automatiquement des postes ouverts et des commandes"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_resource_resource__avatar_128
@@ -620,7 +640,7 @@ msgstr "Par ressource"
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule_by_role
 msgid "By Role"
-msgstr "Par fonction"
+msgstr "Par rôle"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
@@ -782,22 +802,32 @@ msgstr "Date limite en jours pour se déssasigner d'un poste"
 #: model:ir.model.fields,field_description:planning.field_hr_employee__default_planning_role_id
 #: model:ir.model.fields,field_description:planning.field_resource_resource__default_role_id
 msgid "Default Role"
-msgstr ""
+msgstr "Rôle par défaut"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Define a work email address for the following employees so they will receive the planning."
-msgstr "Définissez une adresse email professionnelle pour les employés suivants afin qu'ils reçoivent le planning."
+msgstr ""
+"Définissez une adresse e-mail professionnelle pour les employés suivants "
+"afin qu'ils reçoivent le planning."
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_slot__role_id
 msgid "Define the roles your resources perform (e.g. Chef, Bartender, Waiter...). Create open shifts for the roles you need to complete a mission. Then, assign those open shifts to the resources that are available."
-msgstr "Définissez les fonctions que vos ressources exécutent (par exemple, Chef, Barman, Serveur...). Créez des postes ouverts pour les fonctions dont vous aurez besoin pour accomplir une mission. Ensuite, assignez ces postes ouverts aux ressources disponibles."
+msgstr ""
+"Définissez les rôles que vos ressources exécutent (par exemple, Chef, "
+"Barman, Serveur...). Créez des postes ouverts pour les rôles dont vous aurez "
+"besoin pour accomplir une mission. Ensuite, assignez ces postes ouverts aux "
+"ressources disponibles."
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Define the roles your resources perform (e.g. Chef, Bartender, Waiter...). Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available."
-msgstr "Définissez les fonctions que vos ressources exécutent (par exemple, Chef, Barman, Serveur...). Créez des équipes ouvertes pour les fonctions dont vous aurez besoin pour accomplir une mission. Ensuite, assignez ces postes ouverts aux ressources disponibles."
+msgstr ""
+"Définissez les rôles que vos ressources exécutent (par exemple, Chef, "
+"Barman, Serveur...). Créez des équipes ouvertes pour les rôles dont vous "
+"aurez besoin pour accomplir une mission. Ensuite, assignez ces postes "
+"ouverts aux ressources disponibles."
 
 #. module: planning
 #. odoo-javascript
@@ -811,7 +841,7 @@ msgstr "Supprimer"
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.js:0
 msgid "Delete Recurring Shift"
-msgstr ""
+msgstr "Supprimer un poste récurrent"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__department_id
@@ -889,7 +919,7 @@ msgstr "Durée en jours"
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_kanban
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_kanban
 msgid "Edit"
-msgstr "Éditer"
+msgstr "Modifier"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -904,12 +934,14 @@ msgstr "Email envoyé automatiquement lorsque l'employé s'assigne lui-même à 
 #. module: planning
 #: model:mail.template,description:planning.email_template_slot_single
 msgid "Email sent automatically when publishing a shift"
-msgstr "Email envoyé automatiquement lorsqu'un poste est publié"
+msgstr "E-mail envoyé automatiquement lorsqu'un poste est publié"
 
 #. module: planning
 #: model:mail.template,description:planning.email_template_planning_planning
 msgid "Email sent automatically when publishing the schedule of your employees"
-msgstr "Email envoyé automatiquement lorsque les horaires de vos employés sont publiés"
+msgstr ""
+"E-mail envoyé automatiquement lorsque les horaires de vos employés sont "
+"publiés"
 
 #. module: planning
 #: model:ir.model,name:planning.model_hr_employee
@@ -936,7 +968,7 @@ msgstr "Les employés qui recevront le planning par email lorsque vous cliquez s
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Employees with no Work Email"
-msgstr "Employés sans adresse email professionnelle"
+msgstr "Employés sans adresse e-mail professionnelle"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_send__employees_no_email
@@ -985,7 +1017,9 @@ msgstr "Message suplémentaire"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_my_calendar
 msgid "Find here your planning. Assign yourself open shifts that match your roles, or indicate your unavailability."
-msgstr "Retrouvez ici votre planning. Attribuez-vous des postes ouverts qui correspondent à vos fonctions ou indiquez votre indisponibilité."
+msgstr ""
+"Retrouvez ici votre planning. Attribuez-vous des postes ouverts qui "
+"correspondent à vos rôles ou indiquez votre indisponibilité."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.view_employee_filter_inherit_hr
@@ -1000,7 +1034,7 @@ msgstr "Horaire flexible"
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__allocation_type__forecast
 msgid "Forecast"
-msgstr "Prévisions"
+msgstr "Prévision"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_type__forever
@@ -1043,7 +1077,7 @@ msgstr "Regrouper par"
 #: model:ir.model.fields,field_description:planning.field_hr_employee_base__has_slots
 #: model:ir.model.fields,field_description:planning.field_hr_employee_public__has_slots
 msgid "Has Slots"
-msgstr ""
+msgstr "A des créneaux"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__request_to_switch
@@ -1162,7 +1196,7 @@ msgstr "Dernière date de fin générée"
 #: model:ir.model.fields,field_description:planning.field_planning_slot__write_uid
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__write_uid
 msgid "Last Updated by"
-msgstr "Dernière mise à jour par"
+msgstr "Mis à jour par"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__write_date
@@ -1172,7 +1206,7 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:planning.field_planning_slot__write_date
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__write_date
 msgid "Last Updated on"
-msgstr "Dernière mise à jour le"
+msgstr "Mis à jour le"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
@@ -1357,7 +1391,7 @@ msgstr "Maintenant que cette semaine est prête, commençons par le programme de
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__repeat_type__x_times
 msgid "Number of Occurrences"
-msgstr ""
+msgstr "Nombre d'occurrences"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_type__x_times
@@ -1440,7 +1474,7 @@ msgstr "Analyse du planning"
 #. module: planning
 #: model:ir.model,name:planning.model_planning_analysis_report
 msgid "Planning Analysis Report"
-msgstr "Rapport d'analyse du planning"
+msgstr "Rapport d'analyse de la planification"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_recurrency
@@ -1471,7 +1505,7 @@ msgstr "Planning :"
 #. module: planning
 #: model:mail.template,name:planning.email_template_planning_planning
 msgid "Planning: New Schedule"
-msgstr "Planning : Nouvel horaire"
+msgstr "Planning : Nouveau planning"
 
 #. module: planning
 #: model:mail.template,name:planning.email_template_slot_single
@@ -1545,7 +1579,7 @@ msgstr "Taux de génération des postes"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__recurrence_update
 msgid "Recurrence Update"
-msgstr ""
+msgstr "Mise à jour de la récurrence"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__recurrency_id
@@ -1672,6 +1706,10 @@ msgid ""
 "Role that will be selected by default when creating a shift for this resource.\n"
 "This role will also have precedence over the other roles of the resource when planning shifts."
 msgstr ""
+"Rôle qui sera sélectionné par défaut lors de la création d'un poste pour "
+"cette ressource. \n"
+"Ce rôle aura également la priorité sur les autres rôles de la ressources "
+"lors de la planification des postes."
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_roles
@@ -1697,46 +1735,48 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Save"
-msgstr "Sauvegarder"
+msgstr "Enregistrer"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Save & Send Schedule"
-msgstr "Sauver & Envoyer l'horaire"
+msgstr "Enregistrer & Envoyer le planning"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__template_creation
 msgid "Save as Template"
-msgstr "Sauvegarder comme modèle"
+msgstr "Enregistrer comme modèle"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Save this shift once it is ready."
-msgstr "Sauvegardez ce poste une fois qu'il est prêt."
+msgstr "Enregistrez ce poste une fois qu'il est prêt."
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
 msgid "Schedule"
-msgstr "Horaire"
+msgstr "Planning"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_schedule_by_resource
 msgid "Schedule by Resource"
-msgstr "Horaire par ressource"
+msgstr "Planning par ressource"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_schedule_by_role
 msgid "Schedule by Role"
-msgstr "Horaire par rôle"
+msgstr "Planning par rôle"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_resource
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_role
 msgid "Schedule your human and material resources across roles, projects and sales orders."
-msgstr "Planifiez vos ressources humaines et matérielles à travers des rôles, projets et bons de commandes."
+msgstr ""
+"Planifiez vos ressources humaines et matérielles à travers des rôles, "
+"projets et commandes."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_hr_employee__employee_token
@@ -1766,7 +1806,7 @@ msgstr "Envoyer le planning par email"
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.xml:0
 msgid "Send schedule"
-msgstr "Envoyer l'horaire"
+msgstr "Envoyer le planning"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_role__sequence
@@ -1817,7 +1857,7 @@ msgstr "Modèles de poste"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Shifts Planned"
-msgstr ""
+msgstr "Postes planifiés"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
@@ -1856,7 +1896,7 @@ msgstr "Certaines modifications ont été apportées depuis la publication de ce
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.resource_planning
 msgid "Start"
-msgstr "Démarrer"
+msgstr "Lancer"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__start_datetime
@@ -2014,7 +2054,7 @@ msgstr "L'heure de début doit être supérieure ou égale à 0 et inférieure �
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "There are no resources available for this open shift."
-msgstr ""
+msgstr "Il n'y a aucune ressource disponible pour ce poste ouvert."
 
 #. module: planning
 #. odoo-javascript
@@ -2053,7 +2093,7 @@ msgstr "Cette semaine"
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__subsequent
 msgid "This and following shifts"
-msgstr ""
+msgstr "Ce poste et les suivants"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
@@ -2063,13 +2103,13 @@ msgstr "Ce poste ouvert n'est plus disponible ou le planning a été mis à jour
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__this
 msgid "This shift"
-msgstr ""
+msgstr "Ce poste"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "This shift is recurrent. Delete:"
-msgstr ""
+msgstr "Ce poste est récurrent. Supprimer :"
 
 #. module: planning
 #. odoo-javascript
@@ -2096,6 +2136,11 @@ msgstr "À renvoyer"
 #: model:ir.model.fields,help:planning.field_planning_slot__repeat
 msgid "To avoid polluting your database and performance issues, shifts are only created for the next 6 months. They are then gradually created as time passes by in order to always get shifts 6 months ahead. This value can be modified from the settings of Planning, in debug mode."
 msgstr ""
+"Pour éviter de polluer votre base de données et de poser des problèmes de "
+"performance, les postes ne sont créés que pour les 6 mois à venir. Ils sont "
+"ensuite créés progressivement au fur et à mesure que le temps passe afin "
+"d'avoir toujours des postes 6 mois à l'avance. Cette valeur peut être "
+"modifiée dans les paramètres de la planification, en mode débogage."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
@@ -2128,7 +2173,7 @@ msgstr "Type"
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_type__until
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__repeat_type__until
 msgid "Until"
-msgstr "Jusqu'àu"
+msgstr "Jusqu'au"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
@@ -2153,7 +2198,7 @@ msgstr "Utilisateur"
 #: model:ir.actions.server,name:planning.model_hr_employee_action_planning_view
 #: model:ir.actions.server,name:planning.model_hr_employee_public_action_planning_view
 msgid "View Planning"
-msgstr "Voir planning"
+msgstr "Voir le planning"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -2180,7 +2225,7 @@ msgstr "Adresse professionnelle"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__work_email
 msgid "Work Email"
-msgstr "Adresse email professionnelle"
+msgstr "Adresse e-mail professionnelle"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__work_location_id
@@ -2197,7 +2242,11 @@ msgstr "Jours de travail"
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Write the <b>role</b> your employee will perform (<i>e.g. Chef, Bartender, Waiter, etc.</i>). <i>Tip: Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available.</i>"
-msgstr "Écrivez la <b>fonction</b> que votre employé occupera (par exemple, chef, barman, serveur, etc.<i>). <i>Conseil : créez des postes ouverts pour les fonction dont vous aurez besoin pour accomplir une mission. Ensuite, affectez ces postes ouverts aux ressources disponibles.</i>"
+msgstr ""
+"Écrivez le <b>rôle</b> que votre employé occupera (par exemple, chef, "
+"barman, serveur, etc.<i>). <i>Conseil : créez des postes ouverts pour les "
+"rôles dont vous aurez besoin pour accomplir une mission. Ensuite, affectez "
+"ces postes ouverts aux ressources disponibles.</i>"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_unit__year
@@ -2294,7 +2343,7 @@ msgstr "Votre poste le {{ ctx.get('start_datetime') }} a été réassigné à {{
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "all shifts"
-msgstr ""
+msgstr "tous les postes"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
@@ -2337,18 +2386,18 @@ msgstr "autre(s) poste(s) en conflit."
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "this and following shifts"
-msgstr ""
+msgstr "ce poste et les suivants"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "this shift"
-msgstr ""
+msgstr "ce poste"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "to"
-msgstr "à"
+msgstr "au"
 
 #. module: planning
 #: model:mail.template,subject:planning.email_template_slot_single

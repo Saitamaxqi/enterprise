@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* voip
+# * voip
 #
 # Translators:
 # Rastislav Brencic <rastislav.brencic@azet.sk>, 2022
@@ -10,21 +10,22 @@
 # Michal Veselý <michal@veselyberanek.net>, 2022
 # Jiří Podhorecký, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/voip/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: voip
 #. odoo-javascript
@@ -50,7 +51,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "%(status)s - %(timer)s"
-msgstr ""
+msgstr "%(status)s - %(timer)s"
 
 #. module: voip
 #. odoo-javascript
@@ -109,7 +110,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Activities"
-msgstr ""
+msgstr "Aktivity"
 
 #. module: voip
 #. odoo-javascript
@@ -120,7 +121,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 #: model:ir.model,name:voip.model_mail_activity
 msgid "Activity"
-msgstr "Činnost"
+msgstr "Aktivita"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__activity_name
@@ -204,7 +205,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Available"
-msgstr ""
+msgstr "Dostupný"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
@@ -216,7 +217,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Zpět"
 
 #. module: voip
 #. odoo-javascript
@@ -293,7 +294,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__should_call_from_another_device
 msgid "Call from another device"
-msgstr ""
+msgstr "Volejte z jiného zařízení"
 
 #. module: voip
 #. odoo-javascript
@@ -305,13 +306,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(correspondent)s"
-msgstr ""
+msgstr "Volat %(correspondent)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(phone_number)s"
-msgstr ""
+msgstr "Volat %(phone_number)s"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
@@ -326,7 +327,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__calling
 msgid "Calling"
-msgstr ""
+msgstr "Povolání"
 
 #. module: voip
 #. odoo-javascript
@@ -401,7 +402,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Společnost"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
@@ -425,7 +426,7 @@ msgstr ""
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdit"
 
 #. module: voip
 #. odoo-javascript
@@ -496,7 +497,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Vytvořit zákazníka"
 
 #. module: voip
 #. odoo-javascript
@@ -508,19 +509,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_voip_call__create_uid
 #: model:ir.model.fields,field_description:voip.field_voip_provider__create_uid
 msgid "Created by"
-msgstr "Vytvořeno od"
+msgstr "Vytvořeno uživatelem"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__create_date
 #: model:ir.model.fields,field_description:voip.field_voip_provider__create_date
 msgid "Created on"
-msgstr "Vytvořeno"
+msgstr "Vytvořeno dne"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Credentials"
-msgstr ""
+msgstr "Pověření"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -582,7 +583,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_voip_provider__display_name
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__display_name
 msgid "Display Name"
-msgstr "Zobrazované jméno"
+msgstr "Zobrazovací název"
 
 #. module: voip
 #. odoo-javascript
@@ -612,7 +613,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Done"
-msgstr ""
+msgstr "Hotovo"
 
 #. module: voip
 #. odoo-javascript
@@ -653,12 +654,12 @@ msgstr "Upravit"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Datum do"
 
 #. module: voip
 #. odoo-javascript
@@ -712,7 +713,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__external_device_number
 msgid "External device number"
-msgstr ""
+msgstr "Číslo externího zařízení"
 
 #. module: voip
 #. odoo-javascript
@@ -759,7 +760,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Hide"
-msgstr ""
+msgstr "Skrýt"
 
 #. module: voip
 #. odoo-javascript
@@ -840,7 +841,7 @@ msgstr "Příchozí"
 #: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
-msgstr ""
+msgstr "Příchozí hovor"
 
 #. module: voip
 #. odoo-javascript
@@ -906,19 +907,19 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
 msgid "Last Seen Phone Call"
-msgstr ""
+msgstr "Naposledy viděný telefonát"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_uid
 #: model:ir.model.fields,field_description:voip.field_voip_provider__write_uid
 msgid "Last Updated by"
-msgstr "Naposledy upraveno od"
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_date
 #: model:ir.model.fields,field_description:voip.field_voip_provider__write_date
 msgid "Last Updated on"
-msgstr "Naposled upraveno"
+msgstr "Naposledy upraveno dne"
 
 #. module: voip
 #. odoo-javascript
@@ -1004,7 +1005,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1018,6 +1019,8 @@ msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
 msgstr ""
+"Není k dispozici žádné zařízení pro záznam zvuku. Aplikace vyžaduje k "
+"použití mikrofon."
 
 #. module: voip
 #. odoo-javascript
@@ -1109,7 +1112,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "Pokračující"
 
 #. module: voip
 #. odoo-javascript
@@ -1155,7 +1158,7 @@ msgstr "PBX Server IP"
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "PBX or Websocket address is missing. Please check your settings."
-msgstr ""
+msgstr "Chybí adresa PBX nebo Websocket. Zkontrolujte prosím svá nastavení."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__phone
@@ -1166,7 +1169,7 @@ msgstr "Telefon"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Telefonní číslo"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
@@ -1177,7 +1180,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "Phone number"
-msgstr ""
+msgstr "Telefonní číslo"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__phone
@@ -1188,7 +1191,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Please accept the use of the microphone."
-msgstr ""
+msgstr "Přijměte prosím použití mikrofonu."
 
 #. module: voip
 #. odoo-javascript
@@ -1197,12 +1200,14 @@ msgid ""
 "Please try again later. If the problem persists, you may want to ask an "
 "administrator to check the configuration."
 msgstr ""
+"Prosím zkuste to znovu později. Pokud problém přetrvává, můžete požádat "
+"správce o kontrolu nastavení."
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Preferences"
-msgstr ""
+msgstr "Předvolby"
 
 #. module: voip
 #. odoo-javascript
@@ -1288,7 +1293,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/registerer.js:0
 msgid "Registration rejected: %(statusCode)s %(reasonPhrase)s."
-msgstr ""
+msgstr "Registrace zamítnuta: %(statusCode)s %(reasonPhrase)s."
 
 #. module: voip
 #. odoo-javascript
@@ -1366,7 +1371,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.xml:0
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Schedule an activity"
-msgstr ""
+msgstr "Plánovat aktivitu"
 
 #. module: voip
 #. odoo-javascript
@@ -1402,7 +1407,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Send e-mail"
-msgstr ""
+msgstr "Odeslat e-mail"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__should_call_from_another_device
@@ -1448,12 +1453,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Počáteční datum"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
+msgstr "Stav"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -1484,7 +1489,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip
 msgid "The IP address of your PBX Server"
-msgstr ""
+msgstr "IP adresa vašeho PBX serveru"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__ws_server
@@ -1536,7 +1541,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_secret
 msgid "The password that will be used to register with the PBX server."
-msgstr ""
+msgstr "Heslo, které bude použito pro registraci k serveru PBX."
 
 #. module: voip
 #. odoo-javascript
@@ -1573,6 +1578,8 @@ msgid ""
 "The username (typically the extension number) that will be used to register "
 "with the PBX server."
 msgstr ""
+"Uživatelské jméno (obvykle číslo rozšíření), které bude použito pro "
+"registraci na serveru PBX."
 
 #. module: voip
 #. odoo-javascript
@@ -1594,7 +1601,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Today"
-msgstr ""
+msgstr "Dnes"
 
 #. module: voip
 #. odoo-javascript
@@ -1632,13 +1639,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until %(time)s"
-msgstr ""
+msgstr "Do %(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until I turn it back on"
-msgstr ""
+msgstr "Dokud to znovu nezapnu"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
@@ -1668,7 +1675,7 @@ msgstr "Uživatel"
 #. module: voip
 #: model:ir.model,name:voip.model_res_users_settings
 msgid "User Settings"
-msgstr ""
+msgstr "Uživatelské nastavení"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1679,7 +1686,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
 msgid "VOIP Queue support"
-msgstr ""
+msgstr "VOIP podpora fronty"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
@@ -1710,24 +1717,24 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 msgid "Visible to all"
-msgstr ""
+msgstr "Viditelné pro všechny"
 
 #. module: voip
 #: model:res.groups.privilege,name:voip.res_groups_privilege_voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "VoIP"
-msgstr ""
+msgstr "VoIP"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "VoIP Configuration"
-msgstr ""
+msgstr "Nastavení VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__mode
 msgid "VoIP Environment"
-msgstr ""
+msgstr "Prostředí VoIP"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_provider
@@ -1745,12 +1752,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_secret
 msgid "VoIP secret"
-msgstr ""
+msgstr "Tajný klíč VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_username
 msgid "VoIP username / Extension number"
-msgstr ""
+msgstr "Uživatelské jméno VoIP / Číslo rozšíření"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_provider_id
@@ -1793,7 +1800,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Yesterday"
-msgstr ""
+msgstr "Včera"
 
 #. module: voip
 #. odoo-javascript

@@ -1,29 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa
+# * account_sepa
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"PO-Revision-Date: 2025-09-15 23:08+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"account_iso20022/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "A bank account is not defined."
-msgstr ""
+msgstr "Akun bank belum ditetapkan."
 
 #. module: account_sepa
 #. odoo-python
@@ -34,7 +37,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
 msgid "Austrian"
-msgstr ""
+msgstr "Austria"
 
 #. module: account_sepa
 #. odoo-python
@@ -45,7 +48,7 @@ msgstr ""
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.view_batch_payment_form_inherit
 msgid "Batch Booking"
-msgstr ""
+msgstr "Batch Booking"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_batch_payment
@@ -66,6 +69,8 @@ msgstr "Pengaturan Konfigurasi"
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen IV)."
 msgstr ""
+"Entitas yang menetapkan identifikasi (contohnya KBE-BCO or Finanzamt "
+"Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03
@@ -75,12 +80,12 @@ msgstr "Umum"
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_de
 msgid "German"
-msgstr ""
+msgstr "Jerman"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__has_sepa_ct_payment_method
 msgid "Has Sepa Ct Payment Method"
-msgstr ""
+msgstr "Memiliki Metode Pembayaran Sepa Ct"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
@@ -115,18 +120,20 @@ msgstr ""
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters in length."
 msgstr ""
+"Nama dari Creditor Reference Party. Peraturan Penggunaan: Terbatas hanya 70 "
+"karakter saja."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has no country code defined."
-msgstr ""
+msgstr "Mitra %s tidak memiliki kode negara."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has not bank account defined."
-msgstr ""
+msgstr "Mitra %s tidak memiliki akun bank."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment_method
@@ -162,23 +169,23 @@ msgstr "Buat Pembayaran"
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "Request batch booking from the bank for the related bank statements."
-msgstr ""
+msgstr "Minta batch booking dari bank untuk laporan bank yang terkait."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "SCT Batch Booking"
-msgstr ""
+msgstr "SCT Batch Booking"
 
 #. module: account_sepa
 #: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
 msgid "SEPA Credit Transfer"
-msgstr ""
+msgstr "SEPA Credit Transfer"
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal_dashboard.py:0
 msgid "SEPA Credit Transfers to Send"
-msgstr ""
+msgstr "Transfer Kredit SEPA untuk Dikirim"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__sepa_pain_version
@@ -200,7 +207,7 @@ msgstr "Sct Umum"
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments are above the maximum amount allowed."
-msgstr ""
+msgstr "Beberapa pembayaran di atas jumlah maksimal yang diizinkan."
 
 #. module: account_sepa
 #. odoo-python
@@ -212,7 +219,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments have no recipient bank account set."
-msgstr ""
+msgstr "Beberapa pembayaran tidak memiliki akun bank penerima."
 
 #. module: account_sepa
 #. odoo-python
@@ -280,21 +287,25 @@ msgstr ""
 #: code:addons/account_sepa/models/account_payment.py:0
 msgid "The journal '%s' requires a proper IBAN account to pay via SEPA. Please configure it first."
 msgstr ""
+"Jurnal '%s' membutuhkan akun IBAN yang benar untuk membayar melalui SEPA. "
+"Mohon konfigurasi terlebih dahulu."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Too many transactions for a single file."
-msgstr ""
+msgstr "Terlalu banyak transaksi untuk satu file."
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Will appear in SEPA payments as the name of the party initiating the payment. Limited to 70 characters."
 msgstr ""
+"Akan muncul di pembayaran SEPA sebagai nama pihak yang memulai pembayaran. "
+"Terbatas sampai 70 karakter."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name
 #: model:ir.model.fields,field_description:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Your Company Name"
-msgstr ""
+msgstr "Nama Perusahaan Anda"

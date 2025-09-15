@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* marketing_automation_sms
+# * marketing_automation_sms
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-11 14:36+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:16+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"marketing_automation_sms/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms
@@ -28,27 +32,27 @@ msgstr ""
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_campaign__mailing_sms_count
 msgid "# SMS Mailings"
-msgstr ""
+msgstr "# Correus SMS"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "<i class=\"fa fa-exclamation-circle\"/> Bounced after"
-msgstr ""
+msgstr "<i class=\"fa fa-exclamation-circle\"/>Rebotat després"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Clicked after"
-msgstr ""
+msgstr "<i class=\"fa fa-hand-pointer-o\"/> Clicat després"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "<i class=\"fa fa-hand-pointer-o\"/> Not clicked within"
-msgstr ""
+msgstr "<i class=\"fa fa-hand-pointer-o\"/>No s'ha fet clic a"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "<i class=\"fa fa-pie-chart\"/> Details"
-msgstr ""
+msgstr "<i class=\"fa fa-pie-chart\"/>Detalls"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
@@ -57,16 +61,25 @@ msgid ""
 "                    <i data-trigger-type=\"sms_not_click\" class=\"fa fa-hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" title=\"Not Clicked\" role=\"img\" aria-label=\"Not Clicked\"/>\n"
 "                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" title=\"Bounced\" role=\"img\" aria-label=\"Bounced\"/>"
 msgstr ""
+"<i data-trigger-type=\"sms_click\" class=\"fa fa-hand-pointer-o "
+"o_ma_text_processed o_add_child_activity text-success\" title=\"Clicked\" "
+"role=\"img\" aria-label=\"Clicked\"/>\n"
+"                    <i data-trigger-type=\"sms_not_click\" class="
+"\"fa fa-hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"Not Clicked\" role=\"img\" aria-label=\"Not Clicked\"/>\n"
+"                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-"
+"exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"Bounced\" role=\"img\" aria-label=\"Bounced\"/>"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_activity__activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Tipus d'activitat"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "Clicked"
-msgstr ""
+msgstr "Clicat"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_mailing_mailing__display_name
@@ -83,7 +96,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/marketing_automation_sms/models/marketing_activity.py:0
 msgid "Exception in SMS Marketing: %s"
-msgstr ""
+msgstr "Excepció en el màrqueting per SMS:%s"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_mailing_mailing__id
@@ -104,55 +117,55 @@ msgstr ""
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_mailing_trace
 msgid "Mailing Statistics"
-msgstr ""
+msgstr "Estadístiques de correu"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_activity__mass_mailing_id_mailing_type
 msgid "Mailing Type"
-msgstr ""
+msgstr "Tipus de correu"
 
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_marketing_activity
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_sms_composer__marketing_activity_id
 msgid "Marketing Activity"
-msgstr ""
+msgstr "Activitat de màrqueting"
 
 #. module: marketing_automation_sms
 #: model:ir.actions.act_window,name:marketing_automation_sms.mail_mass_mailing_action_marketing_automation_sms
 msgid "Marketing Automation SMS"
-msgstr ""
+msgstr "S'està comercialitzant l'automatització dels SMS"
 
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_marketing_campaign
 msgid "Marketing Campaign"
-msgstr ""
+msgstr "Campanya de marketing"
 
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_marketing_trace
 msgid "Marketing Trace"
-msgstr ""
+msgstr "Traça de màrqueting"
 
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_mailing_mailing
 msgid "Mass Mailing"
-msgstr ""
+msgstr "Enviament massiu de correus"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "Opened"
-msgstr ""
+msgstr "Obert"
 
 #. module: marketing_automation_sms
 #. odoo-python
 #: code:addons/marketing_automation_sms/models/marketing_trace.py:0
 msgid "Parent activity SMS bounced"
-msgstr ""
+msgstr "S'ha retornat l'SMS de l'activitat pare"
 
 #. module: marketing_automation_sms
 #. odoo-python
 #: code:addons/marketing_automation_sms/models/marketing_trace.py:0
 msgid "Parent activity SMS clicked"
-msgstr ""
+msgstr "S'ha fet clic a l'SMS de l'activitat pare"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields.selection,name:marketing_automation_sms.selection__marketing_activity__activity_type__sms
@@ -162,17 +175,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_tree
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_participant_view_form
 msgid "SMS"
-msgstr ""
+msgstr "SMS"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "SMS Sent"
-msgstr ""
+msgstr "SMS enviats"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_view_form
 msgid "SMS Template"
-msgstr ""
+msgstr "Plantilla de SMS"
 
 #. module: marketing_automation_sms
 #. odoo-python
@@ -185,32 +198,32 @@ msgstr ""
 #: code:addons/marketing_automation_sms/models/mailing_trace.py:0
 #: code:addons/marketing_automation_sms/models/marketing_activity.py:0
 msgid "SMS failed"
-msgstr ""
+msgstr "SMS fallit"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields.selection,name:marketing_automation_sms.selection__marketing_activity__trigger_type__sms_bounce
 msgid "SMS: bounced"
-msgstr ""
+msgstr "SMS: retornat"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields.selection,name:marketing_automation_sms.selection__marketing_activity__trigger_type__sms_click
 msgid "SMS: clicked"
-msgstr ""
+msgstr "SMS: premut"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields.selection,name:marketing_automation_sms.selection__marketing_activity__trigger_type__sms_not_click
 msgid "SMS: not clicked"
-msgstr ""
+msgstr "SMS: no clicat"
 
 #. module: marketing_automation_sms
 #: model:ir.model,name:marketing_automation_sms.model_sms_composer
 msgid "Send SMS Wizard"
-msgstr ""
+msgstr "Assistent d'enviament de SMS"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "Sent"
-msgstr ""
+msgstr "Enviat"
 
 #. module: marketing_automation_sms
 #. odoo-python
@@ -219,16 +232,18 @@ msgid ""
 "To use this feature you should be an administrator or belong to the "
 "marketing automation group."
 msgstr ""
+"Per a utilitzar aquesta funció ha de ser un administrador o pertànyer al "
+"grup d'automatització de màrqueting."
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_activity__trigger_category
 msgid "Trigger Category"
-msgstr ""
+msgstr "Categoria de l'activador"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_activity__trigger_type
 msgid "Trigger Type"
-msgstr ""
+msgstr "Tipus d'activació"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms

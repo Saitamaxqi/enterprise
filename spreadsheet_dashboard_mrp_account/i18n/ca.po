@@ -1,261 +1,265 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_mrp_account
+# * spreadsheet_dashboard_mrp_account
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:15+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_mrp_account/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Available time (min)"
-msgstr ""
+msgstr "Temps disponible (minuts)"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Average Cost / Unit"
-msgstr ""
+msgstr "Cost mitjà/unitat"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Average cost / unit"
-msgstr ""
+msgstr "Cost mitjà/unitat"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Bamboo Toothbrush"
-msgstr ""
+msgstr "Raspall de dents de bambú"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Carbon-Fiber Tripod"
-msgstr ""
+msgstr "Trípode de fibra de carboni"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Confirmed"
-msgstr ""
+msgstr "Confirmat"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Actual"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Done"
-msgstr ""
+msgstr "Fet"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "EcoSmart LED Bulb"
-msgstr ""
+msgstr "Bombeta LED EcoSmart"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_mrp_account
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_mrp_account.spreadsheet_dashboard_manufacturing
 msgid "Manufacturing"
-msgstr ""
+msgstr "Fabricació"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "Ordres de producció"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Manufacturing orders"
-msgstr ""
+msgstr "Ordres de fabricació"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Most Produced Products"
-msgstr ""
+msgstr "Productes més produïts"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Noise-Canceling Headphones"
-msgstr ""
+msgstr "Auriculars amb cancel·lació de soroll"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "OEE"
-msgstr ""
+msgstr "OEE"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Operation Type"
-msgstr ""
+msgstr "Tipus d'operació"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Orders"
-msgstr ""
+msgstr "Comandes"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Organic Green Tea"
-msgstr ""
+msgstr "Te verd ecològic"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Període"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Anterior"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "Producte"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Productive time (min)"
-msgstr ""
+msgstr "Temps productiu (minuts)"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Qty Produced"
-msgstr ""
+msgstr "Quantitat produïda"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Quantity Produced"
-msgstr ""
+msgstr "Quantitat produïda"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Responsible"
-msgstr ""
+msgstr "Responsable"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Reusable Water Bottle"
-msgstr ""
+msgstr "Ampolla d'aigua reutilitzable"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Smart Thermostat"
-msgstr ""
+msgstr "Termòstat intel·ligent"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "To Close"
-msgstr ""
+msgstr "Per tancar"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Top Operation Types"
-msgstr ""
+msgstr "Tipus d'operacions principals"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Top Products"
-msgstr ""
+msgstr "Productes Top"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Top Responsibles"
-msgstr ""
+msgstr "Màxims responsables"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Total quantity"
-msgstr ""
+msgstr "Quantitat total"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Total time (min)"
-msgstr ""
+msgstr "Temps total (minuts)"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Vegan Leather Wallet"
-msgstr ""
+msgstr "Cartera de cuir vegà"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "Weekly Production"
-msgstr ""
+msgstr "Producció setmanal"
 
 #. module: spreadsheet_dashboard_mrp_account
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_mrp_account/data/files/manufacturing_sample_dashboard.json:0
 msgid "since last period"
-msgstr ""
+msgstr "des de l'últim període"

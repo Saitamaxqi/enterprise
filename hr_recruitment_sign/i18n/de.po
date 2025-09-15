@@ -1,45 +1,49 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_recruitment_sign
+# * hr_recruitment_sign
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:11+0000\n"
-"PO-Revision-Date: 2025-07-01 12:11+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:14+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"hr_recruitment_sign/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_applicant__sign_request_count
 msgid "# Signatures"
-msgstr ""
+msgstr "# Signaturen"
 
 #. module: hr_recruitment_sign
 #. odoo-python
 #: code:addons/hr_recruitment_sign/wizard/hr_recruitment_sign_document_wizard.py:0
 msgid "%(partner)s and %(responsible)s are the signatories."
-msgstr ""
+msgstr "%(partner)s und %(responsible)s sind Unterzeichner."
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_applicant_sign_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Signaturanfragen</span>"
 
 #. module: hr_recruitment_sign
 #: model:ir.model,name:hr_recruitment_sign.model_hr_applicant
 msgid "Applicant"
-msgstr ""
+msgstr "Bewerber"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__applicant_role_id
 msgid "Applicant Role"
-msgstr ""
+msgstr "Rolle des Bewerbers"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,help:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__applicant_role_id
@@ -47,64 +51,66 @@ msgid ""
 "Applicant's role on the templates to sign. The same role must be present in "
 "all the templates"
 msgstr ""
+"Die Rolle des Bewerbers auf der zu unterzeichnenden Vorlage. Dieselbe Rolle "
+"muss in allen Vorlagen angegeben werden"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__applicant_ids
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Applicants"
-msgstr ""
+msgstr "Bewerber"
 
 #. module: hr_recruitment_sign
 #: model:ir.model,website_form_label:hr_recruitment_sign.model_hr_applicant
 msgid "Apply for a Job"
-msgstr ""
+msgstr "Um Stelle bewerben"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Attach a file"
-msgstr ""
+msgstr "Eine Datei anhängen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__attachment_ids
 msgid "Attachment"
-msgstr ""
+msgstr "Dateianhang"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__cc_partner_ids
 msgid "Copy to"
-msgstr ""
+msgstr "Kopieren nach"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Discard"
-msgstr ""
+msgstr "Verwerfen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_applicant__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_sign_send_request__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: hr_recruitment_sign
 #: model:ir.actions.act_window,name:hr_recruitment_sign.sign_recruitment_wizard_action
 msgid "Document Signature"
-msgstr ""
+msgstr "Dokumentsignatur"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__sign_template_ids
 msgid "Documents to sign"
-msgstr ""
+msgstr "Zu unterzeichnende Dokumente"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,help:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__sign_template_ids
@@ -113,38 +119,45 @@ msgid ""
 "        Documents with 1 responsible will only have to be signed by the applicant while documents with 2 different responsible will have to be signed by both the applicant and the responsible.\n"
 "        "
 msgstr ""
+"Zu unterzeichnende Dokumente. Es können nur Dokumente mit 1 oder 2 "
+"verschiedenen Verantwortlichen ausgewählt werden.\n"
+"        Dokumente mit 1 Verantwortlichen müssen nur vom Bewerber "
+"unterzeichnet werden, während Dokumente mit 2 verschiedenen Verantwortlichen "
+"sowohl vom Bewerber als auch vom Verantwortlichen unterzeichnet werden "
+"müssen.\n"
+"        "
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__has_both_template
 msgid "Has Both Template"
-msgstr ""
+msgstr "Hat beide Vorlagen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_applicant__id
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__id
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_sign_send_request__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Mail Options"
-msgstr ""
+msgstr "E-Mail-Optionen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__message
 msgid "Message"
-msgstr ""
+msgstr "Nachricht"
 
 #. module: hr_recruitment_sign
 #. odoo-python
@@ -153,57 +166,59 @@ msgid ""
 "No appropriate template could be found, please make sure you configured them"
 " properly."
 msgstr ""
+"Es konnte keine passende Vorlage gefunden werden, bitte stellen Sie sicher, "
+"dass Sie sie richtig konfiguriert haben."
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "No template available"
-msgstr ""
+msgstr "Keine Vorlage verfügbar"
 
 #. module: hr_recruitment_sign
 #. odoo-python
 #: code:addons/hr_recruitment_sign/wizard/hr_recruitment_sign_document_wizard.py:0
 msgid "Only %s has to sign."
-msgstr ""
+msgstr "Nur %s muss unterzeichnen."
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Optional Message..."
-msgstr ""
+msgstr "Optionale Nachricht ..."
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__possible_template_ids
 msgid "Possible Template"
-msgstr ""
+msgstr "Mögliche Vorlage"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__responsible_id
 msgid "Responsible"
-msgstr ""
+msgstr "Verantwortlich"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Send"
-msgstr ""
+msgstr "Senden"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Sign Request Options"
-msgstr ""
+msgstr "Optionen für Signaturanfragen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__sign_template_responsible_ids
 msgid "Sign Template Responsible"
-msgstr ""
+msgstr "Unterschriftsvorlage Verantwortlicher"
 
 #. module: hr_recruitment_sign
 #: model:ir.model,name:hr_recruitment_sign.model_hr_recruitment_sign_document_wizard
 msgid "Sign document in recruitment"
-msgstr ""
+msgstr "Dokument in Personalbeschaffung unterzeichnen"
 
 #. module: hr_recruitment_sign
 #: model:ir.model,name:hr_recruitment_sign.model_sign_send_request
 msgid "Sign send request"
-msgstr ""
+msgstr "Anfrage unterzeichnen und senden"
 
 #. module: hr_recruitment_sign
 #. odoo-python
@@ -211,36 +226,36 @@ msgstr ""
 #: model:ir.actions.server,name:hr_recruitment_sign.action_signature_request_multi
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Signature Request"
-msgstr ""
+msgstr "Signaturanfrage"
 
 #. module: hr_recruitment_sign
 #. odoo-python
 #: code:addons/hr_recruitment_sign/wizard/hr_recruitment_sign_document_wizard.py:0
 msgid "Signature Request - %s"
-msgstr ""
+msgstr "Signaturanfrage - %s"
 
 #. module: hr_recruitment_sign
 #. odoo-python
 #: code:addons/hr_recruitment_sign/models/hr_applicant.py:0
 msgid "Signature Requests"
-msgstr ""
+msgstr "Signaturanfrage"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__subject
 msgid "Subject"
-msgstr ""
+msgstr "Betreff"
 
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,field_description:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__template_warning
 msgid "Template Warning"
-msgstr ""
+msgstr "Vorlagenwarnung"
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.hr_recruitment_sign_view
 msgid "Write email or search contact..."
-msgstr ""
+msgstr "E-Mail schreiben oder Kontakt suchen ..."
 
 #. module: hr_recruitment_sign
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_sign.message_signature_request
 msgid "requested a new signature on the following documents:"
-msgstr ""
+msgstr "bittet um eine neue Unterschrift auf den folgenden Dokumenten:"

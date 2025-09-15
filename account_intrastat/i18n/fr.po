@@ -1,33 +1,35 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_intrastat
+# * account_intrastat
 #
 # Translators:
 # laje_odoo, 2022
 # Cécile Collart <cco@odoo.com>, 2022
 # Martin Trigaux, 2023
 # Jolien De Paepe, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"account_intrastat/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % "
-"1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid ", which cannot be reported."
-msgstr ""
+msgstr ", qui ne peut/peuvent pas être reporté(s)."
 
 #. module: account_intrastat
 #: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__supplementary_unit__1_000_kwh
@@ -59,6 +61,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Values set here are "
 "company-specific.\"/>"
 msgstr ""
+"<span class=\"fa fa-lg fa-building-o ms-2\" title="
+"\"Les valeurs définies ici sont spécifiques à l'entreprise.\"/>"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__account_fiscal_country_group_codes
@@ -90,7 +94,7 @@ msgstr "Actif"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "All partners"
-msgstr ""
+msgstr "Tous les partenaires"
 
 #. module: account_intrastat
 #. odoo-python
@@ -138,7 +142,7 @@ msgstr "Marchandise"
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_product_tree_view_account_intrastat_weight
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
 msgid "Commodity Code"
-msgstr "Code de la marchandise"
+msgstr "Code marchandises"
 
 #. module: account_intrastat
 #. odoo-python
@@ -209,7 +213,7 @@ msgstr "Expédition"
 #: model:ir.model.fields,field_description:account_intrastat.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: account_intrastat
 #. odoo-python
@@ -239,12 +243,12 @@ msgstr "Mode étendu"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "Extended mode"
-msgstr ""
+msgstr "Mode étendu"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__has_country_regions
 msgid "Has Country Regions"
-msgstr ""
+msgstr "A des régions et des pays"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_intrastat_goods_report_handler__id
@@ -259,17 +263,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_intrastat.field_res_company__id
 #: model:ir.model.fields,field_description:account_intrastat.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_value_currency
 msgid "In Currency"
-msgstr ""
+msgstr "En devise"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_incoterm_code
 msgid "Incoterm"
-msgstr ""
+msgstr "Incoterm"
 
 #. module: account_intrastat
 #: model:account.report.line,name:account_intrastat.intrastat_line
@@ -286,12 +290,12 @@ msgstr "Intrastat"
 #. module: account_intrastat
 #: model:account.report,name:account_intrastat.intrastat_report
 msgid "Intrastat (Goods)"
-msgstr ""
+msgstr "Intrastat (Biens)"
 
 #. module: account_intrastat
 #: model:account.report,name:account_intrastat.intrastat_report_services
 msgid "Intrastat (Services)"
-msgstr ""
+msgstr "Intrastat (Services)"
 
 #. module: account_intrastat
 #: model:ir.actions.act_window,name:account_intrastat.action_report_intrastat_code_tree
@@ -306,13 +310,13 @@ msgstr "Code Intrastat"
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__intrastat_code_domain
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__intrastat_code_domain
 msgid "Intrastat Code Domain"
-msgstr ""
+msgstr "Domaine des codes Intrastat"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__valid_intrastat_code_ids
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__valid_intrastat_code_ids
 msgid "Intrastat Code IDs"
-msgstr ""
+msgstr "Identifiants des codes Intrastat"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_bank_statement_line__intrastat_country_id
@@ -323,7 +327,7 @@ msgstr "Pays Intrastat"
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_goods_report_handler
 msgid "Intrastat Goods Report Custom Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé du rapport Intrastat (Biens)"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_report_handler
@@ -333,17 +337,17 @@ msgstr "Gestionnaire personnalisé de rapport Intrastat"
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_intrastat_services_report_handler
 msgid "Intrastat Services Report Custom Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé du rapport Intrastat (Services)"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__intrastat_supplementary_unit
 msgid "Intrastat Supplementary Unit"
-msgstr ""
+msgstr "Unité supplémentaire Intrastat"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_template__intrastat_supplementary_unit_amount
 msgid "Intrastat Supplementary Unit Amount"
-msgstr ""
+msgstr "Montant de l'unité supplémentaire Intrastat"
 
 #. module: account_intrastat
 #. odoo-python
@@ -403,12 +407,12 @@ msgstr "Saisies de code Intrastat de transaction invalides."
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "Invalid transport mode code entries."
-msgstr ""
+msgstr "Saisies de codes de mode de transport invalides."
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_line_tree_view_account_intrastat_product_origin_country_id
 msgid "Invoice Lines"
-msgstr ""
+msgstr "Lignes de facture"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_account_return__is_intrastat_return
@@ -419,7 +423,7 @@ msgstr ""
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.account_move_tree_view_account_intrastat_transport_codes
 msgid "Journal Entries"
-msgstr ""
+msgstr "Pièces comptables"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_account_move
@@ -435,13 +439,13 @@ msgstr "Écriture comptable"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "Missing country of origin"
-msgstr ""
+msgstr "Pays d'origine manquant"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "Missing product"
-msgstr ""
+msgstr "Produit manquant"
 
 #. module: account_intrastat
 #. odoo-python
@@ -465,7 +469,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filter_intrastat_report.xml:0
 msgid "Only with VAT numbers"
-msgstr "Seulement avec des numéros de TVA "
+msgstr "Seulement avec des numéros de TVA"
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.report_invoice_document_intrastat_2019
@@ -476,7 +480,7 @@ msgstr "Origine"
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_product_origin_country
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_services_product_origin_country
 msgid "Origin Country"
-msgstr ""
+msgstr "Pays d'origine"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_partner_vat
@@ -488,7 +492,7 @@ msgstr "TVA du partenaire"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "Partners with VAT numbers"
-msgstr ""
+msgstr "Partenaires avec un numéro de TVA"
 
 #. module: account_intrastat
 #: model:ir.model,name:account_intrastat.model_product_template
@@ -525,12 +529,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__type__service
 #: model_terms:ir.ui.view,arch_db:account_intrastat.view_intrastat_code_search
 msgid "Service"
-msgstr ""
+msgstr "Service"
 
 #. module: account_intrastat
 #: model_terms:ir.ui.view,arch_db:account_intrastat.product_template_form_view_inherit_account_intrastat
 msgid "Service Code"
-msgstr ""
+msgstr "Code du service"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -548,19 +552,19 @@ msgstr "Certaines lignes ont un Intrastat prématuré"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "Some lines have undefined"
-msgstr "Il manque pour certaines lignes "
+msgstr "Il manque pour certaines lignes"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "Some products have undefined"
-msgstr "Il manque pour certains produits "
+msgstr "Il manque pour certains produits"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/filters/filters.js:0
 msgid "Standard mode"
-msgstr ""
+msgstr "Mode standard"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__intrastat_supplementary_unit
@@ -588,24 +592,24 @@ msgstr "Système"
 #. module: account_intrastat
 #: model:ir.model.fields.selection,name:account_intrastat.selection__product_template__intrastat_supplementary_unit__tj
 msgid "TJ"
-msgstr ""
+msgstr "TJ"
 
 #. module: account_intrastat
 #: model:ir.model.fields,help:account_intrastat.field_res_config_settings__company_country_id
 msgid "The country to use the tax reports from for this company"
-msgstr "Le pays à utiliser pour les déclarations de TVA de cette société"
+msgstr "Le pays à utiliser pour les déclarations fiscales de cette entreprise."
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "The date range must be a full month"
-msgstr ""
+msgstr "L’intervalle de dates doit couvrir un mois complet"
 
 #. module: account_intrastat
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "The date range must be a full month or a full quarter."
-msgstr ""
+msgstr "L’intervalle de dates doit couvrir un mois ou un trimestre complet."
 
 #. module: account_intrastat
 #: model:ir.model.fields,help:account_intrastat.field_product_product__intrastat_supplementary_unit_amount
@@ -623,7 +627,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "There are some"
-msgstr ""
+msgstr "Il y a quelques"
 
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_transaction_code
@@ -676,7 +680,7 @@ msgstr "Valeur"
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_value_currency
 msgid "Value Currency"
-msgstr ""
+msgstr "Valeur de la devise"
 
 #. module: account_intrastat
 #. odoo-python
@@ -695,7 +699,7 @@ msgstr ""
 #. module: account_intrastat
 #: model:account.report.column,name:account_intrastat.intrastat_report_column_weight
 msgid "Weight (kg)"
-msgstr ""
+msgstr "Poids (kg)"
 
 #. module: account_intrastat
 #: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__supplementary_unit__c/k
@@ -731,7 +735,7 @@ msgstr "gi F / S"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "journals items with no product"
-msgstr ""
+msgstr "écritures comptables sans produit"
 
 #. module: account_intrastat
 #: model:ir.model.fields.selection,name:account_intrastat.selection__account_intrastat_code__supplementary_unit__kg_90_%_sdt
@@ -832,13 +836,13 @@ msgstr "produit"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "product commodity codes"
-msgstr ""
+msgstr "codes marchandises du produit"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "product service codes"
-msgstr ""
+msgstr "codes des services produits"
 
 #. module: account_intrastat
 #. odoo-javascript
@@ -850,13 +854,13 @@ msgstr "codes marchandises du produit"
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "product's service codes"
-msgstr ""
+msgstr "codes des services du produit"
 
 #. module: account_intrastat
 #. odoo-javascript
 #: code:addons/account_intrastat/static/src/components/intrastat_report/warnings.xml:0
 msgid "service codes"
-msgstr ""
+msgstr "codes des services"
 
 #. module: account_intrastat
 #. odoo-javascript

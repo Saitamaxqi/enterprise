@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* iot
+# * iot
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 22:20+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/iot/ru/>"
+"\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -62,7 +67,7 @@ msgstr ""
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
 msgid "Add IoT Box wizard"
-msgstr "Мастер добавления IoT Box"
+msgstr "Инструмент для добавления IoT-коробки"
 
 #. module: iot
 #. odoo-javascript
@@ -74,7 +79,7 @@ msgstr "Вы уверены, что хотите перезагрузить IoT-
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Are you sure you want to restart Odoo on the IoT box?"
-msgstr "Вы уверены, что хотите перезапустить Odoo на коробке IoT?"
+msgstr "Вы уверены, что хотите перезапустить Odoo на IoT-коробке?"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
@@ -84,7 +89,7 @@ msgstr "Автоматическое обновление драйверов"
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_box__drivers_auto_update
 msgid "Automatically update drivers when the IoT Box boots"
-msgstr "Автоматическое обновление драйверов при загрузке IoT Box"
+msgstr "Автоматически обновлять драйверы при загрузке IoT-коробки"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scanner
@@ -189,7 +194,7 @@ msgstr "Подключение"
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_connection_error_dialog.js:0
 msgid "Connection to IoT Box failed"
-msgstr "Не удалось установить соединение с IoT Box"
+msgstr "Не удалось подключиться к IoT-коробке"
 
 #. module: iot
 #. odoo-javascript
@@ -205,7 +210,7 @@ msgstr "Не удалось установить соединение с уст�
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__create_uid
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_date
@@ -215,7 +220,7 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__create_date
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__device_ids
@@ -340,7 +345,7 @@ msgstr "Идентификатор (Mac-адрес)"
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__connected
 msgid "If device is connected to the IoT Box"
-msgstr "Если устройство подключено к IoT Box"
+msgstr "Если устройство подключено к IoT-коробке"
 
 #. module: iot
 #. odoo-javascript
@@ -363,18 +368,18 @@ msgstr "IoT"
 #: model:ir.model.fields,field_description:iot.field_iot_device__iot_id
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "IoT Box"
-msgstr "IoT Box"
+msgstr "IoT-коробка"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip_url
 msgid "IoT Box Home Page"
-msgstr "Главная страница IoT Box"
+msgstr "Домашняя страница IoT-коробки"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action
 #: model:ir.ui.menu,name:iot.iot_box_menu_action
 msgid "IoT Boxes"
-msgstr "IoT-боксы"
+msgstr "IoT-коробки"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
@@ -415,7 +420,7 @@ msgstr "Последнее отправленное значение"
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__write_uid
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_date
@@ -425,7 +430,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__write_date
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: iot
 #. odoo-javascript
@@ -474,7 +479,7 @@ msgstr "Сеть"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "No IoT Box found!"
-msgstr "IoT Box не найден!"
+msgstr "IoT-коробка не найдена!"
 
 #. module: iot
 #. odoo-javascript
@@ -486,7 +491,7 @@ msgstr "Нет отчета для показа"
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
 msgid "Odoo cannot reach the IoT Box."
-msgstr "Odoo не может связаться с IoT Box."
+msgstr "Odoo не может подключиться к IoT-коробке."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -507,13 +512,15 @@ msgstr "Платежный терминал"
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
 msgid "Please accept the certificate of your IoT Box (procedure depends on your browser):"
-msgstr "Примите сертификат вашего IoT Box (процедура зависит от браузера):"
+msgstr ""
+"Пожалуйста, примите сертификат вашей IoT-коробки (процедура зависит от "
+"вашего браузера):"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
 msgid "Please check if the IoT Box is still connected."
-msgstr "Проверьте, подключен ли IoT Box."
+msgstr "Проверьте, подключена ли IoT-коробка."
 
 #. module: iot
 #. odoo-javascript
@@ -544,7 +551,7 @@ msgstr "Принтеры"
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
 msgid "Publisher Warranty Contract For IoT Box"
-msgstr "Издательский гарантийный контракт для IoT Box"
+msgstr "Гарантийный договор изготовителя IoT-коробки"
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_actions_report
@@ -629,12 +636,12 @@ msgstr "Указанный вами код сопряжения не найде�
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action_search_iot_box
 msgid "There is no device connected to this IoT Box"
-msgstr "К этому IoT Box не подключено ни одно устройство"
+msgstr "К этой IoT-коробке не подключено ни одного устройства"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
 msgid "There is no device connected to your IoT Boxes"
-msgstr "К вашим IoT Boxes не подключено ни одно устройство"
+msgstr "К вашим IoT-коробкам не подключено ни одного устройства"
 
 #. module: iot
 #. odoo-javascript
@@ -687,12 +694,14 @@ msgstr "Вариант"
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "We had troubles pairing your IoT Box. Please try again later."
-msgstr "У нас возникли проблемы с сопряжением вашего IoT Box. Пожалуйста, повторите попытку позже."
+msgstr ""
+"Возникли проблемы при привязке IoT-коробки. Пожалуйста, попробуйте позже."
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_ir_actions_report__device_ids
 msgid "When setting a device here, the report will be printed through this device on the IoT Box"
-msgstr "Если задать здесь устройство, отчет будет печататься через это устройство на IoT Box"
+msgstr ""
+"Если здесь задано устройство, отчет будет напечатан через него на IoT-коробке"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -702,4 +711,4 @@ msgstr "Подключить"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
-msgstr "чтобы добавить IoT Box."
+msgstr "для добавления IoT-коробки."

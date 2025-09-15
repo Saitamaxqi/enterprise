@@ -1,251 +1,255 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_studio_ai_fields
+# * web_studio_ai_fields
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"web_studio_ai_fields/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "AI"
-msgstr ""
+msgstr "AI"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/interactive_editor.js:0
 msgid "AI Field"
-msgstr ""
+msgstr "AIフィールド"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Field"
-msgstr ""
+msgstr "フィールドを追加"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Values"
-msgstr ""
+msgstr "値を追加"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add an AI Field"
-msgstr ""
+msgstr "AIフィールドを追加"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Checkbox"
-msgstr ""
+msgstr "チェックボックス"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Datetime"
-msgstr ""
+msgstr "日付時刻"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Decimal"
-msgstr ""
+msgstr "10進数"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Edit Values"
-msgstr ""
+msgstr "値の編集"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Field Type"
-msgstr ""
+msgstr "項目タイプ"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Integer"
-msgstr ""
+msgstr "整数"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Many2one"
-msgstr ""
+msgstr "Many2one"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Monetary"
-msgstr ""
+msgstr "金額"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Multiline Text"
-msgstr ""
+msgstr "複数行テキスト"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI CheckBox"
-msgstr ""
+msgstr "新規AIチェックボックス"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Date"
-msgstr ""
+msgstr "新規AI日付"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Datetime"
-msgstr ""
+msgstr "新規AI日時"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Decimal"
-msgstr ""
+msgstr "新規AI小数点"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI HTML"
-msgstr ""
+msgstr "新規AI HTML"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Integer"
-msgstr ""
+msgstr "新規AI整数"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Many2One"
-msgstr ""
+msgstr "新規AI多対1"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Monetary"
-msgstr ""
+msgstr "新規AI予測金額"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Multiline Text"
-msgstr ""
+msgstr "新規AI複数行テキスト"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Selection"
-msgstr ""
+msgstr "新規AI選択"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Tags"
-msgstr ""
+msgstr "新規AIタグ"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Text"
-msgstr ""
+msgstr "新規AIテキスト"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "Prompt"
-msgstr ""
+msgstr "プロンプト"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Relation"
-msgstr ""
+msgstr "関係"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Selection"
-msgstr ""
+msgstr "選択"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Selection Values"
-msgstr ""
+msgstr "選択肢の値"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Tags"
-msgstr ""
+msgstr "タグ"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Write a prompt, use '/field' to insert dynamic values"
-msgstr ""
+msgstr "プロンプトを書き、 '/field' を使用して動的値を挿入してください。"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "ai icon"
-msgstr ""
+msgstr "ai アイコン"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "button to run your prompt."
-msgstr ""
+msgstr "ボタンをクリックしてプロンプトを実行します。"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "fields won't update automatically - Click the"
-msgstr ""
+msgstr "フィールドは自動的には更新されません。"

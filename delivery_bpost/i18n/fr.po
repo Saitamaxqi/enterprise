@@ -1,24 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_bpost
+# * delivery_bpost
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"delivery_bpost/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_label_stock_type__a4
@@ -125,7 +129,7 @@ msgstr "Détruire"
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__domestic
 msgid "Domestic"
-msgstr "Domestique"
+msgstr "National"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__gift
@@ -135,7 +139,7 @@ msgstr "CADEAU"
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__goods
 msgid "GOODS"
-msgstr "MARCHANDISES"
+msgstr "BIENS"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__international
@@ -198,13 +202,13 @@ msgstr "Fournisseur"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return labels created into bpost"
-msgstr ""
+msgstr "Étiquettes de retour créées dans Bpost"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return shipment created into bpost"
-msgstr ""
+msgstr "Envoi de retour créé dans Bpost"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_parcel_return_instructions__rta
@@ -225,13 +229,13 @@ msgstr "ÉCHANTILLON"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Shipment #%s has been cancelled"
-msgstr "L'expédition #%s à été annulée"
+msgstr "L'expédition #%s a été annulée"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Shipment created into bpost"
-msgstr ""
+msgstr "Envoi créé dans Bpost"
 
 #. module: delivery_bpost
 #: model:ir.model,name:delivery_bpost.model_delivery_carrier
@@ -289,19 +293,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Links"
-msgstr ""
+msgstr "Liens de suivi"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Number:"
-msgstr ""
+msgstr "Numéro de suivi :"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "Numéros de suivi :"
 
 #. module: delivery_bpost
 #. odoo-python
@@ -365,13 +369,17 @@ msgstr "Type de colis par défaut de bpost"
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."
-msgstr "Bpost Domestique ne peut être utilisé que pour des livraisons en Belgique. Changez le mode de livraison en Bpost International."
+msgstr ""
+"bpost Domestic ne peut être utilisé que pour des livraisons en Belgique. "
+"Changez le mode de livraison en bpost International."
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."
-msgstr "Bpost International ne peut être utilisé que pour des livraisons en dehors de la Belgique. Changez le mode de livraison en Bpost Domestique."
+msgstr ""
+"bpost International ne peut être utilisé que pour des livraisons à l’"
+"extérieur de la Belgique. Changez le mode de livraison en bpost Domestic."
 
 #. module: delivery_bpost
 #: model_terms:ir.ui.view,arch_db:delivery_bpost.res_config_settings_view_form_sale

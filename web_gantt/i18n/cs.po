@@ -1,26 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_gantt
+# * web_gantt
 #
 # Translators:
 # karolína schusterová <karolina.schusterova@vdp.sk>, 2022
 # Jiří Podhorecký, 2022
 # Martin Trigaux, 2022
 # Michal Veselý <michal@veselyberanek.net>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Michal Veselý <michal@veselyberanek.net>, 2023\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/web_gantt/"
+"cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -31,7 +34,7 @@ msgstr "Opravdu chcete tento záznam smazat?"
 #. module: web_gantt
 #: model:ir.model,name:web_gantt.model_base
 msgid "Base"
-msgstr "Základní část"
+msgstr "Jádro"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -56,7 +59,7 @@ msgstr "Den"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -80,31 +83,33 @@ msgstr "Gantův diagram"
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt child can only be field or template, got %s"
-msgstr ""
+msgstr "Ganttův potomek může být pouze pole nebo šablona, dostal %s"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_start' attribute"
-msgstr ""
+msgstr "Gantt musí mít atribut 'date_start'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_stop' attribute"
-msgstr ""
+msgstr "Gantt musí mít atribut 'date_stop'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'dependency_inverted_field' attribute once the 'dependency_field' is specified"
 msgstr ""
+"Gantt musí mít atribut 'dependency_inverted_field', jakmile je specifikováno "
+"'dependency_field'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt view can contain only one templates tag"
-msgstr ""
+msgstr "Zobrazení Gantt může obsahovat pouze jeden štítek šablony"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -116,7 +121,7 @@ msgstr "Seskupování podle data není podporováno"
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
 msgid "Insufficient fields for Gantt View!"
-msgstr ""
+msgstr "Nedostatečná pole pro zobrazení Gantt!"
 
 #. module: web_gantt
 #. odoo-python
@@ -128,7 +133,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid default_scale '%s' in gantt"
-msgstr ""
+msgstr "Neplatný default_scale '%s' v gantt"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -158,7 +163,7 @@ msgstr "Další"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_controller.js:0
 msgid "Open"
-msgstr "Otevřít"
+msgstr "Volný"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -206,20 +211,20 @@ msgstr "Dnes"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Total"
-msgstr ""
+msgstr "Celkem"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_model.js:0
 msgid "Undefined %s"
-msgstr ""
+msgstr "Nedefinováno %s"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 #: model:ir.model,name:web_gantt.model_ir_ui_view
 msgid "View"
-msgstr "Pohled"
+msgstr "Zobrazení"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -249,16 +254,16 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "hours"
-msgstr ""
+msgstr "hodin"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "minutes"
-msgstr ""
+msgstr "minut"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "months"
-msgstr ""
+msgstr "měsíce"

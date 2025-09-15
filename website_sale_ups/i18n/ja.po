@@ -6,29 +6,34 @@
 # Martin Trigaux, 2018
 # Yoshi Tashiro <tashiro@roomsfor.hk>, 2018
 # Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2018
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2018-09-21 14:07+0000\n"
-"Last-Translator: Norimichi Sugimoto <norimichi.sugimoto@tls-ltd.co.jp>, 2018\n"
-"Language-Team: Japanese (https://www.transifex.com/odoo/teams/41243/ja/)\n"
+"PO-Revision-Date: 2025-09-15 12:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"website_sale_ups/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "(Bill My Account)"
-msgstr ""
+msgstr "（マイアカウントに請求する）"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"Delete\" title=\"Delete\"/>"
 msgstr ""
+"<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"Delete\" title="
+"\"Delete\"/>"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,pending_msg:website_sale_ups.payment_provider_ups_cod
@@ -38,7 +43,7 @@ msgstr ""
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "<span>(UPS Billing will remain to the customer)</span>"
-msgstr ""
+msgstr "<span>（UPS請求が顧客に残ります）</span>"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
@@ -53,7 +58,7 @@ msgstr ""
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Cancel"
-msgstr "取消"
+msgstr "キャンセル"
 
 #. module: website_sale_ups
 #: model:ir.model.fields.selection,name:website_sale_ups.selection__payment_provider__custom_mode__cash_on_delivery
@@ -90,12 +95,12 @@ msgstr ""
 #. module: website_sale_ups
 #: model:ir.model,name:website_sale_ups.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "販売オーダ"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "UPS Bill My Account"
-msgstr ""
+msgstr "UPS請求マイアカウント"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.property_ups_carrier_account_inherit_portal_details
@@ -110,12 +115,12 @@ msgstr ""
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "Using Account"
-msgstr ""
+msgstr "アカウントを利用する"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Your UPS Account Number"
-msgstr ""
+msgstr "お客様のUPSアカウント番号"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,auth_msg:website_sale_ups.payment_provider_ups_cod

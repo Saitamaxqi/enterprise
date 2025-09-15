@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_pricer
+# * pos_pricer
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:55+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"pos_pricer/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_pricer
 #: model:ir.model.constraint,message:pos_pricer.constraint_pricer_tag_name_unique
@@ -35,24 +40,24 @@ msgstr "Связанный продукт"
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__auth_url
 msgid "Auth Url"
-msgstr "Урл авторизации"
+msgstr "URL-адрес авторизации"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__create_or_update_products_url
 msgid "Create Or Update Products Url"
-msgstr "Создать или обновить Url товаров"
+msgstr "Создать или обновить URL-адреса товаров"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__create_uid
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__create_date
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__last_update_datetime
@@ -75,7 +80,7 @@ msgstr "Ошибка: %s - %s"
 #. odoo-python
 #: code:addons/pos_pricer/models/pricer_store.py:0
 msgid "Error: check Pricer credentials"
-msgstr "Ошибка: проверьте учетные данные прайсера"
+msgstr "Ошибка: проверьте учетные данные в системе Pricer"
 
 #. module: pos_pricer
 #. odoo-python
@@ -113,13 +118,13 @@ msgstr "Статус последнего обновления"
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__write_uid
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__write_date
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__link_tags_url
@@ -134,7 +139,7 @@ msgstr "Вход в учетную запись Pricer"
 #. module: pos_pricer
 #: model:ir.actions.server,name:pos_pricer.pricer_sync_cron_ir_actions_server
 msgid "POS Pricer: tags update synchronization "
-msgstr "POS Pricer: синхронизация обновления тегов"
+msgstr "POS Pricer: синхронизация обновления тегов "
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__pricer_password
@@ -151,28 +156,28 @@ msgstr "Прайсер"
 #: model:ir.model.fields,field_description:pos_pricer.field_product_product__pricer_display_price
 #: model:ir.model.fields,field_description:pos_pricer.field_product_template__pricer_display_price
 msgid "Pricer Display Price"
-msgstr "Отображение цены"
+msgstr "Цена в Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__pricer_login
 msgid "Pricer Login"
-msgstr "Вход в систему"
+msgstr "Логин для Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__pricer_password
 msgid "Pricer Password"
-msgstr "Пароль Pricer"
+msgstr "Пароль для Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_product_product__pricer_product_to_create_or_update
 #: model:ir.model.fields,field_description:pos_pricer.field_product_template__pricer_product_to_create_or_update
 msgid "Pricer Product To Create Or Update"
-msgstr "Ценовой продукт для создания или обновления"
+msgstr "Продукт в Pricer для создания или обновления"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__pricer_product_to_link
 msgid "Pricer Product To Link"
-msgstr "Более дорогой продукт По ссылке"
+msgstr "Продукт в Pricer для привязки"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_product_product__pricer_store_id
@@ -180,7 +185,7 @@ msgstr "Более дорогой продукт По ссылке"
 #: model_terms:ir.ui.view,arch_db:pos_pricer.pricer_pricer_store_form_view
 #: model_terms:ir.ui.view,arch_db:pos_pricer.pricer_pricer_store_view_list
 msgid "Pricer Store"
-msgstr "Магазин \"Прайсер"
+msgstr "Магазин Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__pricer_store_identifier
@@ -201,7 +206,7 @@ msgstr "Название магазина Pricer в базе данных Odoo"
 #. module: pos_pricer
 #: model:ir.model,name:pos_pricer.model_pricer_store
 msgid "Pricer Store regrouping pricer tags"
-msgstr "Магазин цен перегруппировывает теги ценников"
+msgstr "Магазин Pricer перегруппировывает метки ценников"
 
 #. module: pos_pricer
 #: model:ir.actions.act_window,name:pos_pricer.action_open_pricer_stores
@@ -212,19 +217,19 @@ msgstr "Магазины Pricer"
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__name
 msgid "Pricer Tag Barcode ID"
-msgstr "Идентификатор штрих-кода бирки Pricer Tag"
+msgstr "Идентификатор штрих-кода для метки Pricer"
 
 #. module: pos_pricer
 #: model:ir.actions.act_window,name:pos_pricer.action_open_pricer_tags
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__pricer_tag_ids
 #: model:ir.ui.menu,name:pos_pricer.menu_pos_pricer_tags
 msgid "Pricer Tags"
-msgstr "Теги цены"
+msgstr "Метки Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__pricer_tenant_name
 msgid "Pricer Tenant Name"
-msgstr "Ценник Имя арендатора"
+msgstr "Имя владельца Pricer"
 
 #. module: pos_pricer
 #: model:ir.model,name:pos_pricer.model_pricer_tag
@@ -234,13 +239,13 @@ msgstr "Электронная метка Pricer"
 #. module: pos_pricer
 #: model_terms:ir.ui.view,arch_db:pos_pricer.pricer_pricer_tag_view_list
 msgid "Pricer tag"
-msgstr "Метка для ценника"
+msgstr "Метка Pricer"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_product_product__pricer_tag_ids
 #: model:ir.model.fields,field_description:pos_pricer.field_product_template__pricer_tag_ids
 msgid "Pricer tags ids"
-msgstr "Идентификаторы ценовых меток"
+msgstr "Идентификаторы меток Pricer"
 
 #. module: pos_pricer
 #: model:ir.model,name:pos_pricer.model_product_template

@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* voip
+# * voip
 #
 # Translators:
 # Martin Trigaux, 2022
 # Abe Manyo, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Abe Manyo, 2023\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"PO-Revision-Date: 2025-09-15 23:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/voip/"
+"id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: voip
 #. odoo-javascript
@@ -26,43 +29,43 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/tab_entry.js:0
 #: code:addons/voip/static/src/widgets/flag_phone_field.js:0
 msgid "%(country)s flag"
-msgstr ""
+msgstr "Bendera %(country)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
 msgid "%(hours)s:%(minutes)s:%(seconds)s"
-msgstr ""
+msgstr "%(hours)s:%(minutes)s:%(seconds)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/call_model.js:0
 msgid "%(minutes)s:%(seconds)s"
-msgstr ""
+msgstr "%(minutes)s:%(seconds)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "%(status)s - %(timer)s"
-msgstr ""
+msgstr "%(status)s - %(timer)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "%s others…"
-msgstr ""
+msgstr "%s lainnya…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "1 other…"
-msgstr ""
+msgstr "1 lainnya…"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "2 others…"
-msgstr ""
+msgstr "2 lainnya…"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
@@ -76,23 +79,25 @@ msgid ""
 "A hardware error has occurred while trying to access the audio recording "
 "device. Please ensure that your drivers are up to date and try again."
 msgstr ""
+"Error hardware terjadi selagi mencoba mengakses perangkat perekam audio. "
+"Mohon pastikan driver Anda sudah diupdate dan coba lagi."
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__aborted
 msgid "Aborted"
-msgstr ""
+msgstr "Dibatalkan"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Aborted call to %(phone_number)s"
-msgstr ""
+msgstr "Panggilan ke %(phone_number)s dibatalkan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "Accept the call"
-msgstr ""
+msgstr "Terima panggilan"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction
@@ -103,7 +108,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Activities"
-msgstr ""
+msgstr "Aktivitas"
 
 #. module: voip
 #. odoo-javascript
@@ -119,13 +124,13 @@ msgstr "Aktivitas"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__activity_name
 msgid "Activity Name"
-msgstr ""
+msgstr "Nama Kegiatan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/web/call_queue_switch.js:0
 msgid "Add to Call Queue"
-msgstr ""
+msgstr "Tambahkan ke Antrian Panggilan Telepon"
 
 #. module: voip
 #: model:res.groups,name:voip.group_voip_admin
@@ -149,6 +154,8 @@ msgid ""
 "An error occured involving the audio recording device (%(errorName)s):\n"
 "%(errorMessage)s"
 msgstr ""
+"Terjadi error yang melibatkan perangkat perekam audio (%(errorName)s):\n"
+"%(errorMessage)s"
 
 #. module: voip
 #. odoo-javascript
@@ -158,6 +165,9 @@ msgid ""
 "\n"
 "%(error)s"
 msgstr ""
+"Terjadi error pada instantiation Agen User:\n"
+"\n"
+"%(error)s"
 
 #. module: voip
 #. odoo-javascript
@@ -167,6 +177,9 @@ msgid ""
 "\n"
 "Error: %(error)s"
 msgstr ""
+"Terjadi eror saat mencoba mengundang nomor berikut: %(phoneNumber)s\n"
+"\n"
+"Eror: %(error)s"
 
 #. module: voip
 #. odoo-javascript
@@ -181,6 +194,7 @@ msgid ""
 "Are you sure you want to delete this activity? It will be lost forever! (A "
 "long time!)"
 msgstr ""
+"Apakah Anda yakin ingin menghapus kegiatan ini? Ini akan hilang selamanya!"
 
 #. module: voip
 #. odoo-javascript
@@ -198,7 +212,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Available"
-msgstr ""
+msgstr "Tersedia"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__avatar_128
@@ -210,13 +224,13 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Kembali"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Backspace"
-msgstr ""
+msgstr "Backspace"
 
 #. module: voip
 #. odoo-javascript
@@ -240,7 +254,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call Missed (%(time)s)"
-msgstr ""
+msgstr "Panggilan Tidak Dijawab (%(time)s)"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
@@ -264,48 +278,48 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call cancelled (%(time)s)"
-msgstr ""
+msgstr "Panggilan dibatalkan (%(time)s)"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Call declined (%(time)s)"
-msgstr ""
+msgstr "Panggilan ditolak (%(time)s)"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call from %(correspondent)s"
-msgstr ""
+msgstr "Panggilan dari %(correspondent)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call from %(phone_number)s"
-msgstr ""
+msgstr "Panggilan dari %(phone_number)s"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__should_call_from_another_device
 msgid "Call from another device"
-msgstr ""
+msgstr "Panggilan dari perangkat lain"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
-msgstr ""
+msgstr "Panggilan ditolak (alasan: “%(reasonPhrase)s”)"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(correspondent)s"
-msgstr ""
+msgstr "Panggilan ke %(correspondent)s"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Call to %(phone_number)s"
-msgstr ""
+msgstr "Panggilan ke %(phone_number)s"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
@@ -320,13 +334,13 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__calling
 msgid "Calling"
-msgstr ""
+msgstr "Menelepon"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Calling…"
-msgstr ""
+msgstr "Memanggil…"
 
 #. module: voip
 #. odoo-python
@@ -336,7 +350,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "Calls"
-msgstr ""
+msgstr "Panggilan-Panggilan"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_graph
@@ -367,7 +381,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Cancelled call"
-msgstr ""
+msgstr "Panggilan dibatalkan"
 
 #. module: voip
 #. odoo-javascript
@@ -378,12 +392,16 @@ msgid ""
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
 msgstr ""
+"Tidak dapat mengakses perangkat perekam audio. Bila Anda menolak akses ke "
+"microfon Anda, mohon izinkan dan coba lagi. Jika tidak, psatikan website ini "
+"menjalankan HTTPS dan bahwa browser Anda tidak disetel untuk menolak akses "
+"ke perangkat media."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Choose a device:"
-msgstr ""
+msgstr "Pilih perangkat:"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__how_to_call_on_mobile
@@ -395,7 +413,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Perusahaan"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
@@ -408,6 +426,9 @@ msgid ""
 "dialing code (e.g. +32), if any.\n"
 "Useful for displaying the flag associated with a phone number."
 msgstr ""
+"Menghitung kode ISO negara (contoh be untuk Belgia) dari kode nomor telepon "
+"pemanggil (contoh +32), bila ada.\n"
+"Berguna untuk menampilkan bendera terkait nomor telepon."
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
@@ -419,7 +440,7 @@ msgstr ""
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "Konfirmasi"
 
 #. module: voip
 #. odoo-javascript
@@ -436,7 +457,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Connecting…"
-msgstr ""
+msgstr "Menghubungi…"
 
 #. module: voip
 #. odoo-javascript
@@ -470,7 +491,7 @@ msgstr "Kontak"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "Contacts with a phone number will be shown here."
-msgstr ""
+msgstr "Kontak dengan nomor telepon akan ditunjukkan di sini."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
@@ -480,7 +501,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,name:voip.model_voip_country_code_mixin
 msgid "Country Code Mixin"
-msgstr ""
+msgstr "Mixin Kode Negara"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_flag_url
@@ -490,13 +511,13 @@ msgstr ""
 #. module: voip
 #: model:ir.model,website_form_label:voip.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Buat Pelanggan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "Create a new contact"
-msgstr ""
+msgstr "Buat kontak baru"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__create_uid
@@ -514,7 +535,7 @@ msgstr "Dibuat pada"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Credentials"
-msgstr ""
+msgstr "Kredensial"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -531,7 +552,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/contact_info.js:0
 msgid "Default profile picture"
-msgstr ""
+msgstr "Gambar profil default"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__mode__demo
@@ -583,54 +604,54 @@ msgstr "Nama Tampilan"
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 #: code:addons/voip/static/src/softphone/dnd_selector.xml:0
 msgid "Do Not Disturb"
-msgstr ""
+msgstr "Do Not Disturb"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__do_not_disturb_until_dt
 msgid "Do Not Disturb until"
-msgstr ""
+msgstr "Do Not Disturb sampai"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Do Not Disturb until %(time)s"
-msgstr ""
+msgstr "Do Not Disturb sampai %(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Do Not Disturb until I turn it back on"
-msgstr ""
+msgstr "Do Not Disturb sampai saya nyalakan kembali"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Done"
-msgstr ""
+msgstr "Selesai"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: %(date)s"
-msgstr ""
+msgstr "Jatuh Tempo: %(date)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Today"
-msgstr ""
+msgstr "Jatuh Tempo: Hari Ini"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Tomorrow"
-msgstr ""
+msgstr "Jatuh Tempo: Besok"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Due: Yesterday"
-msgstr ""
+msgstr "Jatuh Tempo: Kemarin"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__duration
@@ -647,19 +668,19 @@ msgstr "Edit"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Tanggal Berakhir"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Ended unexpectedly"
-msgstr ""
+msgstr "Diakhiri mendadak"
 
 #. module: voip
 #. odoo-javascript
@@ -701,12 +722,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__external_device_number
 msgid "External Device Number"
-msgstr ""
+msgstr "Nomor Perangkat Eksterna"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__external_device_number
 msgid "External device number"
-msgstr ""
+msgstr "Angka perangkat eksternal"
 
 #. module: voip
 #. odoo-javascript
@@ -716,6 +737,9 @@ msgid ""
 "\n"
 "%(error)s"
 msgstr ""
+"Gagal untuk memuat pustaka SIP.js:\n"
+"\n"
+"%(error)s"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
@@ -742,7 +766,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/call_banner.xml:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Hang up"
-msgstr ""
+msgstr "Tutup panggilan"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__has_message
@@ -753,7 +777,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Hide"
-msgstr ""
+msgstr "Sembunyikan"
 
 #. module: voip
 #. odoo-javascript
@@ -770,18 +794,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Hold"
-msgstr ""
+msgstr "Hold"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Hold your horses!"
-msgstr ""
+msgstr "Tahan sebentar!"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__how_to_call_on_mobile
 msgid "How To Call On Mobile"
-msgstr ""
+msgstr "Bagaimana Cara Menelepon Di Mobile"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__id
@@ -821,7 +845,7 @@ msgstr ""
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
-msgstr ""
+msgstr "Di panggilan"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__direction__incoming
@@ -834,7 +858,7 @@ msgstr "Barang Masuk"
 #: code:addons/voip/static/src/softphone/softphone.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Incoming call"
-msgstr ""
+msgstr "Panggilan masuk"
 
 #. module: voip
 #. odoo-javascript
@@ -846,13 +870,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Incoming calls will be muted"
-msgstr ""
+msgstr "Panggilan masuk akan di-mute"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/device_selection_dialog.js:0
 msgid "Input device selection"
-msgstr ""
+msgstr "Pilihan perangkat input"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
@@ -874,7 +898,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:voip.field_res_users__has_call_in_queue
 #: model:ir.model.fields,field_description:voip.field_voip_queue_mixin__has_call_in_queue
 msgid "Is in the Call Queue"
-msgstr ""
+msgstr "Apakah dalam Antrian Panggilan"
 
 #. module: voip
 #. odoo-javascript
@@ -890,7 +914,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Keypad"
-msgstr ""
+msgstr "Keypad"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
@@ -900,25 +924,25 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
 msgid "Last Seen Phone Call"
-msgstr ""
+msgstr "Panggilan Telepon Terakhir Terlihat"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_uid
 #: model:ir.model.fields,field_description:voip.field_voip_provider__write_uid
 msgid "Last Updated by"
-msgstr "Terakhir diperbarui oleh"
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__write_date
 #: model:ir.model.fields,field_description:voip.field_voip_provider__write_date
 msgid "Last Updated on"
-msgstr "Terakhir diperbarui pada"
+msgstr "Terakhir Diperbarui pada"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_summary.js:0
 msgid "Lasted: %(duration)s"
-msgstr ""
+msgstr "Durasi: %(duration)s"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__user
@@ -940,7 +964,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Manage Providers"
-msgstr ""
+msgstr "Kelola Provider"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error
@@ -956,13 +980,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Missclicked, sorry"
-msgstr ""
+msgstr "Misklik, maaf"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__missed
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Missed"
-msgstr ""
+msgstr "Tidak dijawab"
 
 #. module: voip
 #. odoo-javascript
@@ -974,19 +998,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Missed call"
-msgstr ""
+msgstr "Panggilan tidak dijawab"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Missed call from %(phone_number)s"
-msgstr ""
+msgstr "Panggilan tidak dijawab dari %(phone_number)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "Mute"
-msgstr ""
+msgstr "Mute"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
@@ -998,7 +1022,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Nama"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1012,30 +1036,32 @@ msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
 msgstr ""
+"Tidak ada perangkat perekam audio yang tersedia. Aplikasi membutuhkan "
+"mikrofon agar dapat digunakan."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "No call activities found"
-msgstr ""
+msgstr "Tidak ada kegiatan panggilan yang ditemukan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "No calls scheduled for today 😎"
-msgstr ""
+msgstr "Tidak ada jadwal panggilan untuk hari ini 😎"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/address_book.xml:0
 msgid "No contacts found"
-msgstr ""
+msgstr "Tidak ada kontak yang ditemukan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "No recent calls found"
-msgstr ""
+msgstr "Tidak ada panggilan akhir-akhir ini yang ditemukan"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1047,13 +1073,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab.xml:0
 msgid "No search results 💔"
-msgstr ""
+msgstr "Tidak ada hasil pencarian 💔"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab.js:0
 msgid "Nothing to see here 😔"
-msgstr ""
+msgstr "Tidak ada yang apa pun di sini 😔"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
@@ -1096,14 +1122,14 @@ msgstr ""
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
-msgstr ""
+msgstr "On hold"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "Sedang Berlangsung"
 
 #. module: voip
 #. odoo-javascript
@@ -1115,7 +1141,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Open related record"
-msgstr ""
+msgstr "Buka rekaman terkait"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1143,13 +1169,13 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip
 msgid "PBX Server IP"
-msgstr ""
+msgstr "PBX Server IP"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "PBX or Websocket address is missing. Please check your settings."
-msgstr ""
+msgstr "Kurang alamat PBX atau Websocket. Mohon periksa pengaturan Anda."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__phone
@@ -1160,7 +1186,7 @@ msgstr "Telepon"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Nomor Telepon"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
@@ -1171,7 +1197,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/keypad.js:0
 msgid "Phone number"
-msgstr ""
+msgstr "Nomor telepon"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__phone
@@ -1182,7 +1208,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Please accept the use of the microphone."
-msgstr ""
+msgstr "Silakan terima penggunaan mikrofon."
 
 #. module: voip
 #. odoo-javascript
@@ -1191,12 +1217,14 @@ msgid ""
 "Please try again later. If the problem persists, you may want to ask an "
 "administrator to check the configuration."
 msgstr ""
+"Silakan coba lagi nanti. Bila masalah berlanjut, Anda mungkin ingin meminta "
+"administrator untuk memeriksa konfigurasi."
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Preferences"
-msgstr ""
+msgstr "Preferensi"
 
 #. module: voip
 #. odoo-javascript
@@ -1213,13 +1241,13 @@ msgstr "Produksi"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/tab_entry.xml:0
 msgid "Profile picture"
-msgstr ""
+msgstr "Gambar profil"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/contact_info.js:0
 msgid "Profile picture of %(user)s"
-msgstr ""
+msgstr "Gambar profil %(user)s"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1246,7 +1274,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Recent"
-msgstr ""
+msgstr "Terkini"
 
 #. module: voip
 #. odoo-javascript
@@ -1282,13 +1310,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/core/registerer.js:0
 msgid "Registration rejected: %(statusCode)s %(reasonPhrase)s."
-msgstr ""
+msgstr "Pendaftaran ditolak: %(statusCode)s %(reasonPhrase)s."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "Reject the call"
-msgstr ""
+msgstr "Tolak panggilan"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__rejected
@@ -1311,25 +1339,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Rejected call from %(phone_number)s"
-msgstr ""
+msgstr "Panggilan dari %(phone_number)s ditolak"
 
 #. module: voip
 #. odoo-python
 #: code:addons/voip/models/voip_call.py:0
 msgid "Rejected call to %(phone_number)s"
-msgstr ""
+msgstr "Panggilan ke %(phone_number)s ditolak"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Remember my choice"
-msgstr ""
+msgstr "Ingat pilihan saya"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/web/call_queue_switch.js:0
 msgid "Remove from Call Queue"
-msgstr ""
+msgstr "Hapus dari Antrian Panggilan"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__user_id
@@ -1340,7 +1368,7 @@ msgstr "Penanggung Jawab"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Ringing…"
-msgstr ""
+msgstr "Menelepon…"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_sms_error
@@ -1350,7 +1378,7 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_config_settings_view_form
 msgid "Schedule & make calls from your database"
-msgstr ""
+msgstr "Jadwalkan & buat panggilan dari database Anda"
 
 #. module: voip
 #. odoo-javascript
@@ -1360,13 +1388,13 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/history.xml:0
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "Schedule an activity"
-msgstr ""
+msgstr "Jadwalkan aktivitas"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/search_bar.xml:0
 msgid "Search…"
-msgstr ""
+msgstr "Cari…"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1378,30 +1406,30 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "See all other activities"
-msgstr ""
+msgstr "Lihat semua kegiatan lainnya"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "See your contact list"
-msgstr ""
+msgstr "Lihat daftar kontak Anda"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.js:0
 msgid "Select a call method"
-msgstr ""
+msgstr "Pilih metode panggilan telepon"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Send e-mail"
-msgstr ""
+msgstr "Kirim e-mail"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__should_call_from_another_device
 msgid "Should Call From Another Device"
-msgstr ""
+msgstr "Sebaiknya Panggil Dari Perangkat Lain"
 
 #. module: voip
 #. odoo-javascript
@@ -1423,12 +1451,15 @@ msgid ""
 "number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
+"Beberapa lead tidak dapat ditambahkan ke antrian panggilan karena mereka "
+"belum menetapkan nomor telepon. Lead terkait: %(record_names)s.\n"
+"Ayo tambahkan nomor yang kurang dan mulai menelepon!"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/error_screen.js:0
 msgid "Something went wrong 😵‍💫"
-msgstr ""
+msgstr "Terjadiu kesalahan 😵‍💫"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__external_device_number
@@ -1442,12 +1473,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Tanggal Mulai"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
+msgstr "Status"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -1465,7 +1496,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__terminated
 msgid "Terminated"
-msgstr ""
+msgstr "Dihentikan"
 
 #. module: voip
 #. odoo-javascript
@@ -1478,18 +1509,18 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__pbx_ip
 msgid "The IP address of your PBX Server"
-msgstr ""
+msgstr "Alamat IP dari Server PBX Anda"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_provider__ws_server
 msgid "The URL of your WebSocket"
-msgstr ""
+msgstr "URL dari WebSocket Anda"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "The WebSocket connection was lost and couldn't be reestablished."
-msgstr ""
+msgstr "Hubungan WebSocket terputus dan tidak dapat dihubungkan kembali."
 
 #. module: voip
 #. odoo-javascript
@@ -1503,7 +1534,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__activity_name
 msgid "The name of the activity related to this phone call, if any."
-msgstr ""
+msgstr "Nama kegiatan yang terkait panggilan telepon ini, bila ada."
 
 #. module: voip
 #. odoo-javascript
@@ -1513,6 +1544,9 @@ msgid ""
 "connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
 msgstr ""
+"Nomor tidak benar, kredensial user bisa jadi salah atau hubungan tidak dapat "
+"dilakukan. Mohon periksa konfigurasi Anda.\n"
+"(Alasan yang diterima: %(reasonPhrase)s)"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_partner__t9_name
@@ -1526,17 +1560,23 @@ msgid ""
 "T9 stands for Text on 9 keys, it comes from the name of the original "
 "technology on old cell phones."
 msgstr ""
+"Nama partner, di-encode sebagai digit yang sesuai dengan angka di keypad "
+"telepon genggam tua.\n"
+"Berguna untuk mencari partner berdasarkan field ini.\n"
+"Spasi diawetkan, karakter yang tidak dapat dienkode diganti dengan 'x'.\n"
+"T9 berarti Teks di kunci 9, datang dari nama teknologi awal telepon genggam "
+"tua."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_secret
 msgid "The password that will be used to register with the PBX server."
-msgstr ""
+msgstr "Password yang akan digunakan untuk mendaftar dengan server PBX"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "The person you try to contact is currently unavailable."
-msgstr ""
+msgstr "Orang yang Anda ingin hubungi saat ini tidak tersedia."
 
 #. module: voip
 #. odoo-javascript
@@ -1567,6 +1607,8 @@ msgid ""
 "The username (typically the extension number) that will be used to register "
 "with the PBX server."
 msgstr ""
+"Username (biasanya nomor ekstensi) akan digunakan untuk mendaftar dengan "
+"server PBX."
 
 #. module: voip
 #. odoo-javascript
@@ -1575,6 +1617,7 @@ msgid ""
 "The websocket connection to the server has been lost. Attempting to "
 "reestablish the connection…"
 msgstr ""
+"Hubungan websocket dengan server hilang. Mencoba membuat kembali hubungan…"
 
 #. module: voip
 #. odoo-javascript
@@ -1582,13 +1625,15 @@ msgstr ""
 msgid ""
 "There is still a call in progress, are you sure you want to leave the page?"
 msgstr ""
+"Masih ada panggilan yang berlangsung, apakah Anda yakin ingin meninggalkan "
+"halaman?"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Today"
-msgstr ""
+msgstr "Hari Ini"
 
 #. module: voip
 #. odoo-javascript
@@ -1626,13 +1671,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until %(time)s"
-msgstr ""
+msgstr "Sampai %(time)s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/dnd_selector.js:0
 msgid "Until I turn it back on"
-msgstr ""
+msgstr "Sampai saya nyalakan lagi"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__country_flag_url
@@ -1662,7 +1707,7 @@ msgstr "Pengguna"
 #. module: voip
 #: model:ir.model,name:voip.model_res_users_settings
 msgid "User Settings"
-msgstr ""
+msgstr "Pengaturan User"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1673,7 +1718,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
 msgid "VOIP Queue support"
-msgstr ""
+msgstr "Bantuan antrian QOIP"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
@@ -1684,7 +1729,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/call_invitation.xml:0
 msgid "View caller information"
-msgstr ""
+msgstr "Lihat informasi pemanggil"
 
 #. module: voip
 #. odoo-javascript
@@ -1692,79 +1737,79 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/call_summary.xml:0
 #: code:addons/voip/static/src/softphone/keypad.xml:0
 msgid "View contact information"
-msgstr ""
+msgstr "Lihat informasi kontak"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "View customer details"
-msgstr ""
+msgstr "Lihat detail pelanggan"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 msgid "Visible to all"
-msgstr ""
+msgstr "Terlihat untuk semua"
 
 #. module: voip
 #: model:res.groups.privilege,name:voip.res_groups_privilege_voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "VoIP"
-msgstr ""
+msgstr "VoIP"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "VoIP Configuration"
-msgstr ""
+msgstr "Konfigurasi VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__mode
 msgid "VoIP Environment"
-msgstr ""
+msgstr "Environment VoIP"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_provider
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_provider_id
 msgid "VoIP Provider"
-msgstr ""
+msgstr "Provider VoIP"
 
 #. module: voip
 #: model:ir.actions.act_window,name:voip.action_voip_provider_view
 #: model:ir.ui.menu,name:voip.voip_provider_view_menu
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_tree_view
 msgid "VoIP Providers"
-msgstr ""
+msgstr "Provider-Provider VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_secret
 msgid "VoIP secret"
-msgstr ""
+msgstr "Secret VoIP"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__voip_username
 msgid "VoIP username / Extension number"
-msgstr ""
+msgstr "Username VoIP / nomor ekstensi"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_provider_id
 msgid "Voip Provider"
-msgstr ""
+msgstr "Provider Voip"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_secret
 msgid "Voip Secret"
-msgstr ""
+msgstr "Voip Secret"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__voip_username
 msgid "Voip Username"
-msgstr ""
+msgstr "Voip Username"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__ws_server
 msgid "WebSocket"
-msgstr ""
+msgstr "WebSocket"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__website_message_ids
@@ -1780,14 +1825,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.js:0
 msgid "Yes, I know what I'm doing"
-msgstr ""
+msgstr "Ya, saya tahu apa yang saya lakukan"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Yesterday"
-msgstr ""
+msgstr "Kemarin"
 
 #. module: voip
 #. odoo-javascript
@@ -1802,12 +1847,16 @@ msgid ""
 "Your browser does not support some of the features required for VoIP to "
 "work. Please try updating your browser or using a different one."
 msgstr ""
+"Browser Anda tidak mendukung beberapa fitur yang dibutuhkan agar VoIP dapat "
+"bekerja. Mohon update browser Anda atau gunakan browser lain."
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.xml:0
 msgid "Your call history is empty! Make a call now and have it listed here 💡"
 msgstr ""
+"Sejarah panggilan Anda kosong! Lakukan panggilan sekarang agar muncul di "
+"sini 💡"
 
 #. module: voip
 #. odoo-javascript
@@ -1815,6 +1864,8 @@ msgstr ""
 msgid ""
 "Your login details are not set correctly. Please contact your administrator."
 msgstr ""
+"Detail login Anda tidak ditetapkan dengan benar. Silakan hubungi "
+"administrator Anda."
 
 #. module: voip
 #: model:res.groups,comment:voip.group_voip_officer

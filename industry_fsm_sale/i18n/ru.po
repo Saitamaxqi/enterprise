@@ -1,27 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* industry_fsm_sale
+# * industry_fsm_sale
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:56+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:08+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm_sale/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm_sale
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/project_task.py:0
 msgid "%(project_name)s - %(task_name)s"
-msgstr ""
+msgstr "%(project_name)s - %(task_name)s"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -60,6 +65,11 @@ msgid ""
 "                    Define the service and the rate at which an employee's time is billed based on their expertise, skills or experience.\n"
 "                </span>"
 msgstr ""
+"<span invisible=\"not is_fsm\">\n"
+"                    Определите услугу и тариф, по которому будет "
+"оплачиваться время сотрудника, в зависимости от его квалификации, навыков "
+"или опыта.\n"
+"                </span>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
@@ -75,7 +85,7 @@ msgstr "<span>Продукция</span>"
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<strong class=\"mr16\">Subtotal</strong>"
-msgstr "<strong class=«mr16»>Подитог</strong>"
+msgstr "<strong class=\"mr16\">Подытог</strong>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
@@ -173,12 +183,12 @@ msgstr "Подтвердите создание <b>счета-фактуры</b>
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_task_view_list_fsm_sale_inherit
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Create Invoice"
-msgstr "Создание счета-фактуры"
+msgstr "Создать счет"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
 msgid "Create new quotations directly from tasks"
-msgstr "Создавайте новые предложения непосредственно из задач"
+msgstr "Создавайте новые Коммерческие предложения непосредственно из задач"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__currency_id
@@ -219,13 +229,13 @@ msgstr "Отображение Создать счет-фактуру втори
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/sale_order.py:0
 msgid "Extra Quotation Created: %s"
-msgstr "Создана дополнительная цитата: %s"
+msgstr "Создано дополнительное Коммерческое предложение: %s"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__allow_quotations
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__allow_quotations
 msgid "Extra Quotations"
-msgstr "Дополнительные цитаты"
+msgstr "Дополнительные Коммерческие предложения"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_report_project_task_user_fsm
@@ -235,12 +245,12 @@ msgstr "Анализ задач FSM"
 #. module: industry_fsm_sale
 #: model:product.template,name:industry_fsm_sale.field_service_product_product_template
 msgid "Field Service"
-msgstr "Служебное Поле"
+msgstr "Сервисная служба"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__invoiced
 msgid "Fully Invoiced"
-msgstr "Счёт выставлен"
+msgstr "Полностью выставлен счет"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -263,13 +273,13 @@ msgstr "Счет"
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__portal_invoice_count
 msgid "Invoice Count"
-msgstr "Количество Счетов"
+msgstr "Количество счетов"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__invoice_status
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_report_project_task_user_fsm__invoice_status
 msgid "Invoice Status"
-msgstr "Статус счета-фактуры"
+msgstr "Статус счета"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.project_task_action_to_invoice_fsm
@@ -314,7 +324,7 @@ msgstr "Количество материала"
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "New Quotation"
-msgstr "Новое предложение"
+msgstr "Новое коммерческое предложение"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.product_action_fsm
@@ -329,7 +339,7 @@ msgstr "Заданий не найдено. Давайте создадим од
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__no
 msgid "Nothing to Invoice"
-msgstr "Нечего выставлять счета"
+msgstr "Нет позиций для выставления счета"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__invoice_count
@@ -339,7 +349,7 @@ msgstr "Количество счетов-фактур"
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__portal_quotation_count
 msgid "Portal Quotation Count"
-msgstr "Подсчет котировок на портале"
+msgstr "Подсчет Коммерческих предложений на портале"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__pricelist_id
@@ -392,12 +402,12 @@ msgstr "Количество"
 #. odoo-python
 #: code:addons/industry_fsm_sale/controllers/portal.py:0
 msgid "Quotation"
-msgstr "Цитирование"
+msgstr "Коммерческое предложение"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__quotation_count
 msgid "Quotation Count"
-msgstr "Котировочный счет"
+msgstr "Количество коммерческих предложений"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -405,7 +415,7 @@ msgstr "Котировочный счет"
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_sharing_project_task_inherit_view_form
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Quotations"
-msgstr "Предложения"
+msgstr "Коммерческие предложения"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_order_form_inherit_sale_project
@@ -472,7 +482,7 @@ msgstr "Повторение заданий"
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_sale_order__task_id
 msgid "Task from which this quotation have been created"
-msgstr "Задание, на основе которого была создана эта цитата"
+msgstr "Задача, на основе которой было создано Коммерческое Предложение"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
@@ -500,7 +510,7 @@ msgstr "Время и люди; Материал"
 #: model:ir.ui.menu,name:industry_fsm_sale.fsm_menu_all_tasks_invoice
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_task_view_search_fsm_inherit_sale
 msgid "To Invoice"
-msgstr "Оставшуюся сумма для выставления счета"
+msgstr "Необходимо выставить счет"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.product_action_fsm
@@ -521,7 +531,7 @@ msgstr "Цена за единицу"
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__upselling
 msgid "Upselling Opportunity"
-msgstr "Возможность повышения продаж"
+msgstr "Возможность допродажи"
 
 #. module: industry_fsm_sale
 #. odoo-javascript

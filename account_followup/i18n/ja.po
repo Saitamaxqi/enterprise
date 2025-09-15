@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_followup
+# * account_followup
 #
 # Translators:
 # Noma Yuki, 2022
 # Martin Trigaux, 2022
 # Andy Yiu, 2023
 # Ryoko Tsuda <ryoko@quartile.co>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Ryoko Tsuda <ryoko@quartile.co>, 2023\n"
-"Language-Team: Japanese (https://app.transifex.com/odoo/teams/41243/ja/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"account_followup/ja/>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_followup
 #. odoo-python
@@ -37,7 +39,7 @@ msgstr "%s 入金督促 - %s"
 #. module: account_followup
 #: model:ir.actions.report,print_report_name:account_followup.action_report_followup
 msgid "'Follow-up ' + object.display_name"
-msgstr "'Follow-up ' + object.display_name"
+msgstr "'フォローアップ ' + object.display_name"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_res_partner__type
@@ -217,7 +219,7 @@ msgstr "アカウントマネージャー"
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.ir_cron_auto_post_draft_entry_ir_actions_server
 msgid "Account Report Followup; Execute followup"
-msgstr ""
+msgstr "アカウントレポートフォローアップ；フォローアップを実施する"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -244,7 +246,7 @@ msgstr "活動タイプ"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
 msgid "Add a note"
-msgstr "メモ追加"
+msgstr "メモを追加"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -271,7 +273,7 @@ msgstr "請求書を添付"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__attachment_ids
 msgid "Attachment"
-msgstr "添付"
+msgstr "添付ファイル"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__auto_execute
@@ -294,7 +296,7 @@ msgstr "本文編集可"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Cancel"
-msgstr "取消"
+msgstr "キャンセル"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -305,7 +307,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Communication"
-msgstr "コミュニケーション"
+msgstr "通信費"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__company_id
@@ -321,7 +323,7 @@ msgstr "連絡先"
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
 msgid "Content Template"
-msgstr "内容テンプレート"
+msgstr "コンテンツテンプレート"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__body
@@ -391,12 +393,24 @@ msgid ""
 "Best Regards,\n"
 "\n"
 msgstr ""
+"%s様\n"
+"\n"
+"\n"
+"弊社で確認を致しましたが、こちらの手違いである場合を除き、下記の金額が未払い"
+"のようです。つきましては、8日以内にお支払いをお願い致します。\n"
+"\n"
+"このメールが送信後、すでにお支払い済みの場合は、ご容赦願います。何かございま"
+"したら、弊社経理部までご連絡下さい。\n"
+"\n"
+"宜しくお願い致します。\n"
+"\n"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Dear client, we kindly remind you that you still have unpaid invoices. Please check them and take appropriate action. %s"
-msgstr ""
+msgstr "お客様　"
+"未払の請求書のリマインダです。ご確認の上、必要なお手続きをお願い致します。%s"
 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
@@ -418,8 +432,8 @@ msgid ""
 msgstr ""
 "活動に割り当てるユーザを設定:\n"
 "- フォローアップ担当者 (デフォルト)\n"
-"- Salesperson: Sales Person defined on the invoice\n"
-"- Account Manager: Sales Person defined on the customer"
+"- 営業担当者: 請求書に指定された営業担当者\n"
+"- アカウントマネージャー: 顧客に指定した営業担当者"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__display_name
@@ -431,17 +445,17 @@ msgstr "表示名"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Due Date"
-msgstr "期日"
+msgstr "支払期日"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__delay
 msgid "Due Days"
-msgstr "超過日数"
+msgstr "遅延日数"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__email
 msgid "Email"
-msgstr "Eメール"
+msgstr "メール"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -522,7 +536,7 @@ msgstr "フォローアップ担当者"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_status
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_status
 msgid "Follow-up Status"
-msgstr "フォローアップステータス"
+msgstr "フォローアップ状態"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -534,7 +548,7 @@ msgstr "フォローアップステップ"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Follow-up letter generated"
-msgstr "フォローアップレターは作成されました"
+msgstr "フォローアップレターは生成されました"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.account_followup_journal_dashboard_kanban_view
@@ -590,7 +604,7 @@ msgstr "請求書"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__is_mail_template_editor
 msgid "Is Editor"
-msgstr "編集者であり"
+msgstr "編集者である"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_move_line
@@ -627,7 +641,7 @@ msgstr "最新フォローアップ"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Letter/Email Content"
-msgstr "レター/メール内容"
+msgstr "手紙・メール内容"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__mail_template_id
@@ -657,7 +671,7 @@ msgstr "次のリマインダ日は%sにセットしました"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_next_action_date
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_next_action_date
 msgid "Next reminder"
-msgstr "次のリマインダー"
+msgstr "次のリマインダ"
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__no_action_needed
@@ -672,7 +686,7 @@ msgstr "送付すべきフォローアップはありません！"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_note
 msgid "Note"
-msgstr "ノート"
+msgstr "メモ"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -682,7 +696,10 @@ msgstr "通知"
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_followup_manual_reminder__lang
 msgid "Optional translation language (ISO code) to select when sending out an email. If not set, the english version will be used. This should usually be a placeholder expression that provides the appropriate language, e.g. {{ object.partner_id.lang }}."
-msgstr "メールを送信時に、オプションで選択可能な翻訳言語 (ISOコード)"
+msgstr ""
+"メールを送信時に、オプションで選択可能な翻訳言語 "
+"(ISOコード)。セットしてない場合は、英語版が使われます。これは通常、適切な言語"
+"を提供するプレースホルダ式であります、例: {{ object.partner_id.lang }}"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -699,7 +716,7 @@ msgstr "移動元"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_search_view
 msgid "Overdue Invoices"
-msgstr "滞納請求書"
+msgstr "期限超過請求書"
 
 #. module: account_followup
 #. odoo-python
@@ -749,7 +766,7 @@ msgstr "リマインド"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_reminder_type
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_reminder_type
 msgid "Reminders"
-msgstr "リマインド"
+msgstr "リマインダ"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__render_model
@@ -782,7 +799,7 @@ msgstr "販売担当者"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__create_activity
 msgid "Schedule Activity"
-msgstr "活動をスケジュール　"
+msgstr "活動をスケジュール"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_line_filter
@@ -817,7 +834,7 @@ msgstr "SMSメッセージを送信"
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.manual_reminder_action
 msgid "Send and Print"
-msgstr "送付と印刷"
+msgstr "送信して印刷します"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms
@@ -838,7 +855,7 @@ msgstr "Sms内容"
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__sms_template_id
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms_template_id
 msgid "Sms Template"
-msgstr "SMSテンプレート"
+msgstr "Smsテンプレート"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -853,7 +870,7 @@ msgstr "件名"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_summary
 msgid "Summary"
-msgstr "サマリ"
+msgstr "概要"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_res_partner__followup_next_action_date
@@ -871,18 +888,19 @@ msgstr ""
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_move_line__invoice_origin
 msgid "The document(s) that generated the invoice."
-msgstr "請求書を生成したことを文書(複数可)。"
+msgstr "請求書を生成した文書。"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_followup_followup_line__delay
 msgid "The number of days after the due date of the invoice to wait before sending the reminder. Can be negative if you want to send the reminder before the invoice due date."
-msgstr ""
+msgstr "リマインダを送信する前に待機する請求書期日後の日数。請求書の期日前にリマイン"
+"ダーを送りたい場合は負数を指定できます。"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_res_partner__followup_responsible_id
 #: model:ir.model.fields,help:account_followup.field_res_users__followup_responsible_id
 msgid "The responsible assigned to manual followup activities, if defined in the level."
-msgstr ""
+msgstr "レベルで定義されている場合に手動フォローアップ活動に割り当てられた担当者。"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -905,7 +923,7 @@ msgstr "合計金額"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_due
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_due
 msgid "Total Due"
-msgstr "未払合計"
+msgstr "合計未払金額"
 
 #. module: account_followup
 #. odoo-python
@@ -913,7 +931,7 @@ msgstr "未払合計"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_overdue
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_overdue
 msgid "Total Overdue"
-msgstr "滞納合計"
+msgstr "合計延滞金額"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__unpaid_invoice_ids
@@ -931,7 +949,7 @@ msgstr "未払請求書数"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__unreconciled_aml_ids
 #: model:ir.model.fields,field_description:account_followup.field_res_users__unreconciled_aml_ids
 msgid "Unreconciled Aml"
-msgstr "未消込仕訳項目"
+msgstr "未消込仕訳明細"
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__with_overdue_invoices
@@ -953,13 +971,15 @@ msgstr "ここにメッセージを書いてください..."
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an Email, but no follow-up contact has any email address set for customer '%s'"
-msgstr ""
+msgstr "メールを送信しようとしていますが、"
+"フォローアップ連絡先にメールアドレスが設定されていません '%s'"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an SMS, but no follow-up contact has any mobile/phone number set for customer '%s'"
-msgstr ""
+msgstr "SMSを送信しようとしていますが、"
+"フォローアップ連絡先に電話番号が設定されていません '%s'"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -985,7 +1005,7 @@ msgstr "例: 一回目のリマインダメール"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "payment reminder"
-msgstr ""
+msgstr "支払リマインダ"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report

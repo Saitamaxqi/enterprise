@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social_push_notifications
+# * social_push_notifications
 #
 # Translators:
 # Martin Trigaux, 2022
 # Cécile Collart <cco@odoo.com>, 2022
 # Jolien De Paepe, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Jolien De Paepe, 2023\n"
-"Language-Team: French (https://app.transifex.com/odoo/teams/41243/fr/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"social_push_notifications/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -30,7 +33,7 @@ msgstr "<span class=\"ps-2\">secondes</span>"
 #: model:ir.model.fields,field_description:social_push_notifications.field_marketing_campaign__social_post_ids
 #: model:ir.model.fields,field_description:social_push_notifications.field_utm_campaign__social_post_ids
 msgid "All related social media posts"
-msgstr "Toutes les publications liées aux réseaux sociaux"
+msgstr "Tous les posts liés aux réseaux sociaux"
 
 #. module: social_push_notifications
 #. odoo-javascript
@@ -93,7 +96,9 @@ msgstr "Activer les notifications push"
 #: code:addons/social_push_notifications/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Enable push notifications to be notified about new features."
-msgstr "Activez les notifications push pour être informé des nouvelles fonctionnalités."
+msgstr ""
+"Activer les notifications push pour être informé des nouvelles "
+"fonctionnalités."
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_admin_key_file
@@ -174,7 +179,7 @@ msgstr "Heure locale"
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_media__media_type
 msgid "Media Type"
-msgstr "Type de média"
+msgstr "Type de réseau"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -216,7 +221,7 @@ msgstr "Titre de la demande de notification"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Notification Title"
-msgstr "Titre de la notification "
+msgstr "Titre de la notification"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_form
@@ -316,7 +321,7 @@ msgstr "URL cible des push"
 #. module: social_push_notifications
 #: model:ir.model.constraint,message:social_push_notifications.constraint_website_visitor_push_subscription_push_token_uniq
 msgid "Push token can't be duplicated!"
-msgstr "Le jeton push ne peut pas être dupliqué !"
+msgstr "Le jeton push ne peut pas être dupliqué !"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__reached_visitor_ids
@@ -358,12 +363,12 @@ msgstr "ID de l'expéditeur"
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_account
 msgid "Social Account"
-msgstr "Compte réseaux sociaux"
+msgstr "Compte social"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_live_post
 msgid "Social Live Post"
-msgstr "Publication en direct"
+msgstr "Post en direct"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_media
@@ -373,7 +378,7 @@ msgstr "Réseaux sociaux"
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_post
 msgid "Social Post"
-msgstr "Publication"
+msgstr "Post social"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_social_post_template
@@ -384,7 +389,8 @@ msgstr "Modèle de post social"
 #. odoo-python
 #: code:addons/social_push_notifications/models/website_visitor.py:0
 msgid "Some selected visitors do not allow push notifications."
-msgstr "Certains visiteurs sélectionnés n'ont pas souscrit aux notifications push. "
+msgstr ""
+"Certains visiteurs sélectionnés n'ont pas souscrit aux notifications push."
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
@@ -461,7 +467,7 @@ msgstr "Clé API Web"
 #: model:ir.model,name:social_push_notifications.model_website
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__website_id
 msgid "Website"
-msgstr "Site web"
+msgstr "Site Web"
 
 #. module: social_push_notifications
 #: model:ir.model,name:social_push_notifications.model_website_visitor
@@ -480,6 +486,8 @@ msgstr "Vous ne pouvez pas supprimer un compte de notifications push."
 #: code:addons/social_push_notifications/models/social_account.py:0
 msgid "You have to install \"google_auth>=1.18.0\" to be able to send push notifications."
 msgstr ""
+"Vous devez installer \"google_auth>=1.18.0\" pour pouvoir envoyer des "
+"notifications push."
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -505,4 +513,6 @@ msgstr "par ex. \"my-project-id\""
 #: model:ir.model.fields,help:social_push_notifications.field_social_post__use_visitor_timezone
 #: model:ir.model.fields,help:social_push_notifications.field_social_post_template__use_visitor_timezone
 msgid "e.g: If you post at 15:00 your time, all visitors will receive the post at 15:00 their time."
-msgstr "par ex. si vous publiez à 15 heures chez vous, les visiteurs recevront la publication à 15 heures chez eux. "
+msgstr ""
+"par ex. si vous publiez à 15 heures chez vous, les visiteurs recevront la "
+"publication à 15 heures chez eux."

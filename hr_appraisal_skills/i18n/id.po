@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_appraisal_skills
+# * hr_appraisal_skills
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:32+0000\n"
-"PO-Revision-Date: 2025-09-11 14:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 23:07+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"hr_appraisal_skills/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_template_view_hierarchy
@@ -25,12 +29,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "Add new skills"
-msgstr ""
+msgstr "Tambahkan skills baru"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__appraisal_id
 msgid "Appraisal"
-msgstr ""
+msgstr "Appraisal"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_goal
@@ -40,13 +44,13 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_skill
 msgid "Appraisal Skills"
-msgstr ""
+msgstr "Ketrampilan Appraisal"
 
 #. module: hr_appraisal_skills
 #: model:ir.actions.act_window,name:hr_appraisal_skills.hr_appraisal_skill_report_action
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_skill_report
 msgid "Appraisal Skills Report"
-msgstr ""
+msgstr "Laporan Appraisal Skills"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_skill_view_form
@@ -63,30 +67,30 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__color
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__color
 msgid "Color"
-msgstr ""
+msgstr "Warna"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__company_id
 msgid "Company"
-msgstr ""
+msgstr "Perusahaan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__create_date
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Create Date"
-msgstr ""
+msgstr "Tanggal dibuat"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__create_uid
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Dibuat oleh"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__create_date
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Dibuat pada"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
@@ -96,7 +100,7 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal__current_appraisal_skill_ids
 msgid "Current Appraisal Skill"
-msgstr ""
+msgstr "Ketrampilan Appraisal Saat Ini"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal__current_goal_skill_ids
@@ -111,23 +115,23 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__current_skill_level_id
 msgid "Current Level"
-msgstr ""
+msgstr "Level Saat Ini"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__current_level_progress
 msgid "Current Progress"
-msgstr ""
+msgstr "Progress Saat Ini"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__decline
 msgid "Decline"
-msgstr ""
+msgstr "Tolak"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__department_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Department"
-msgstr ""
+msgstr "Departemen"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal__display_name
@@ -136,36 +140,36 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__display_name
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nama Tampilan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__display_warning_message
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__display_warning_message
 msgid "Display Warning Message"
-msgstr ""
+msgstr "Tampilkan Pesan Peringatan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__employee_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__employee_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Employee"
-msgstr ""
+msgstr "Karyawan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal
 msgid "Employee Appraisal"
-msgstr ""
+msgstr "Penilaian karyawan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__evolution
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Evolution"
-msgstr ""
+msgstr "Evolusi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__evolution_sequence
 msgid "Evolution Sequence"
-msgstr ""
+msgstr "Urutan Evolusi"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_template_view_form
@@ -185,19 +189,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_appraisal_skills
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "If skills are missing, they can be created by an HR officer."
-msgstr ""
+msgstr "Bila ketrampilan tidak ada, mereka dapat dibuat oleh petugas HR."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__improvement
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Improvement"
-msgstr ""
+msgstr "Perkembangan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__target_job_skill_progress
@@ -212,41 +216,41 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__just_added
 msgid "Just added"
-msgstr ""
+msgstr "Baru ditambahkan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__justification
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__justification
 msgid "Justification"
-msgstr ""
+msgstr "Alasan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__write_uid
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Terakhir Diperbarui oleh"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__write_date
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Terakhir Diperbarui pada"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__levels_count
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__levels_count
 msgid "Levels Count"
-msgstr ""
+msgstr "Jumlah Level"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__manager_ids
 msgid "Manager"
-msgstr ""
+msgstr "Manajer"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "No Change"
-msgstr ""
+msgstr "Tidak ada Perubahan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__number_of_recommended_goals
@@ -257,39 +261,39 @@ msgstr ""
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal_skill__levels_count
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_skill__levels_count
 msgid "Number of levels linked to this skill type"
-msgstr ""
+msgstr "Jumlah level terhubung ke tipe ketrampilan ini"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__previous_skill_level_id
 msgid "Previous Level"
-msgstr ""
+msgstr "Level Sebelumnya"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__previous_level_progress
 msgid "Previous Progress"
-msgstr ""
+msgstr "Progress Sebelumnya"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__previous_skill_level_id
 msgid "Previous Skill Level"
-msgstr ""
+msgstr "Tingkat Skill Sebelumnya"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__level_progress
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__level_progress
 msgid "Progress"
-msgstr ""
+msgstr "Kemajuan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__progress_evolution
 msgid "Progress Evolution"
-msgstr ""
+msgstr "Evolusi Progress"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal_skill__level_progress
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_skill__level_progress
 msgid "Progress from zero knowledge (0%) to fully mastered (100%)."
-msgstr ""
+msgstr "Progress dari nol pengetahuan (0%) ke sepenuhnya dikuasai (100%)."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.constraint,message:hr_appraisal_skills.constraint_hr_appraisal_skill_check_goals_completion_percentage
@@ -309,31 +313,31 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Regression"
-msgstr ""
+msgstr "Penyusutan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__same
 msgid "Same"
-msgstr ""
+msgstr "Sama"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__skill_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__skill_id
 msgid "Skill"
-msgstr ""
+msgstr "Kemampuan"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_graph
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_pivot
 msgid "Skill Analysis"
-msgstr ""
+msgstr "Analisis Ketrampilan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_level_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__skill_level_id
 msgid "Skill Level"
-msgstr ""
+msgstr "Tingkat Skill"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_type_id
@@ -341,7 +345,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__skill_type_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Skill Type"
-msgstr ""
+msgstr "Tipe Skill"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal__appraisal_skill_ids
@@ -354,18 +358,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "Skills"
-msgstr ""
+msgstr "Kemampuan"
 
 #. module: hr_appraisal_skills
 #: model:ir.ui.menu,name:hr_appraisal_skills.menu_appraisal_skills_report
 #: model_terms:ir.actions.act_window,help:hr_appraisal_skills.hr_appraisal_skill_report_action
 msgid "Skills Evolution"
-msgstr ""
+msgstr "Evolusi Skill"
 
 #. module: hr_appraisal_skills
 #: model:ir.actions.act_window,name:hr_appraisal_skills.hr_skill_type_action_appraisal
 msgid "Skills Type"
-msgstr ""
+msgstr "Tipe Ketrampilan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_goal_skill
@@ -414,41 +418,42 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__valid_from
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__valid_from
 msgid "Validity Start"
-msgstr ""
+msgstr "Awal Validitas"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__valid_to
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__valid_to
 msgid "Validity Stop"
-msgstr ""
+msgstr "Validitas Berakhir"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.actions.act_window,help:hr_appraisal_skills.hr_appraisal_skill_report_action
 msgid ""
 "View the evolution of employee's skill between the two latest appraisals."
-msgstr ""
+msgstr "Lihat evolusi ketrampilan karyawan di antara dua appraisal terkini."
 
 #. module: hr_appraisal_skills
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "You can add skills from our library to the employee profile."
 msgstr ""
+"Anda dapat menambahkan ketrampilan dari pustaka kami ke profil karyawan."
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been added."
-msgstr ""
+msgstr "telah ditambahkan."
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been deleted."
-msgstr ""
+msgstr "telah dihapus."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal_skill__is_certification
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_skill__is_certification
 msgid "if checked the skill type become a certification type"
-msgstr ""
+msgstr "bila dicentang tipe skill menjadi tipe sertifikasi"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
@@ -458,4 +463,4 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "infinite"
-msgstr ""
+msgstr "tanpa batas"

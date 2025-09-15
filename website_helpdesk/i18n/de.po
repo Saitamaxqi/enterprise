@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_helpdesk
+# * website_helpdesk
 #
 # Translators:
 # Friederike Fasterling-Nesselbosch, 2022
 # Martin Trigaux, 2022
 # Larissa Manderfeld, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:50+0000\n"
-"Last-Translator: Larissa Manderfeld, 2023\n"
-"Language-Team: German (https://app.transifex.com/odoo/teams/41243/de/)\n"
+"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"website_helpdesk/de/>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
@@ -128,7 +131,7 @@ msgstr "Nach Datum"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_tag
 msgid "By Tags"
-msgstr "Nach Tags"
+msgstr "Nach Stichwörtern"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_type
@@ -188,14 +191,14 @@ msgstr "Hilfezentrumsseite"
 #. odoo-python
 #: code:addons/website_helpdesk/models/website.py:0
 msgid "Helpdesk Customer Satisfaction"
-msgstr "Helpdesk Kundenzufriedenheit"
+msgstr "Kundenzufriedenheit für Kundendienst"
 
 #. module: website_helpdesk
 #. odoo-javascript
 #: code:addons/website_helpdesk/static/src/js/website_helpdesk_form_editor.js:0
 #: model:ir.model,name:website_helpdesk.model_helpdesk_team
 msgid "Helpdesk Team"
-msgstr "Helpdesk-Team"
+msgstr "Kundendienstteam"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__is_published
@@ -225,12 +228,12 @@ msgstr "Letztes Jahr"
 #: code:addons/website_helpdesk/static/src/xml/website_helpdesk.xml:0
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.search_results
 msgid "No results found. Please try another search."
-msgstr "Kein Treffer, versuchen Sie es mit einem anderen Stichwort."
+msgstr "Kein Treffer gefunden. Versuchen Sie es mit einer anderen Suche."
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.knowledge_base
 msgid "Search for articles, best practices and more..."
-msgstr "Suchen Sie nach Artikeln, bewährten Verfahren und mehr..."
+msgstr "Suchen Sie nach Artikeln, bewährten Verfahren und mehr ..."
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -242,14 +245,14 @@ msgstr "Betreff"
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "Submit Ticket"
-msgstr ""
+msgstr "Ticket einreichen"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "Submit a Ticket"
-msgstr "Senden Sie ein Ticket"
+msgstr "Ein Ticket einreichen"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
@@ -275,7 +278,7 @@ msgstr "Das Team-Unternehmen und das Website-Unternehmen sollten zusammenpassen"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Type Filter"
-msgstr "Typenfilter"
+msgstr "Artenfilter"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__feature_form_url

@@ -1,23 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_studio
+# * web_studio
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"web_studio/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
-"(n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio
 #. odoo-python
@@ -183,7 +186,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:web_tour.tour,rainbow_man_message:web_studio.web_studio_new_app_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
-msgstr ""
+msgstr "<b>Отличная работа!</b> Вы прошли все этапы этого тура."
 
 #. module: web_studio
 #. odoo-javascript
@@ -254,7 +257,7 @@ msgstr "Действие"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Требуются действия"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_act_window
@@ -289,7 +292,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: model:ir.model,name:web_studio.model_ir_actions_actions
 msgid "Actions"
-msgstr ""
+msgstr "Действия"
 
 #. module: web_studio
 #. odoo-python
@@ -356,7 +359,7 @@ msgstr "Добавить кнопку"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer_components.js:0
 msgid "Add a pipeline status bar"
-msgstr "Добавьте строку состояния трубопровода"
+msgstr "Добавьте строку статуса Воронки"
 
 #. module: web_studio
 #. odoo-javascript
@@ -469,7 +472,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Apply"
-msgstr ""
+msgstr "Применить"
 
 #. module: web_studio
 #. odoo-javascript
@@ -587,7 +590,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__approver_ids
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Approvers"
-msgstr ""
+msgstr "Утвердители"
 
 #. module: web_studio
 #. odoo-javascript
@@ -672,12 +675,12 @@ msgstr "Прикрепить изображение к записи"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Количество вложений"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__include_attachment
 msgid "Attachments"
-msgstr ""
+msgstr "Вложения"
 
 #. module: web_studio
 #. odoo-javascript
@@ -764,7 +767,7 @@ msgstr "Заголовки и колонтитулы"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/button_properties.js:0
 msgid "Button"
-msgstr ""
+msgstr "Кнопка"
 
 #. module: web_studio
 #. odoo-javascript
@@ -915,7 +918,7 @@ msgstr "Churn"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/class_attribute/class_attribute.xml:0
 msgid "Class"
-msgstr ""
+msgstr "Класс"
 
 #. module: web_studio
 #. odoo-javascript
@@ -952,13 +955,13 @@ msgstr "Цвет"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.js:0
 msgid "Color Picker"
-msgstr ""
+msgstr "Выбор цвета"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/form/form_editor_sidebar/form_editor_sidebar.js:0
 msgid "Column"
-msgstr ""
+msgstr "Колонка"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1120,6 +1123,8 @@ msgstr "Создайте новую модель"
 msgid ""
 "Create your <b>selection values</b> (e.g.: Romance, Polar, Fantasy, etc.)"
 msgstr ""
+"Создайте ваши <b>значение выбора</b> (eg: Романтика, Полярный, Фэнтези, и "
+"т.д ..)"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1155,7 +1160,7 @@ msgstr "Создайте свое меню"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__create_uid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__create_date
@@ -1167,7 +1172,7 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__create_date
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1187,7 +1192,7 @@ msgstr "Валюта"
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_menu.py:0
 msgid "Custom Configuration"
-msgstr "Кстомные настройки"
+msgstr "Расширенная конфигурация"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_module_uninstall__custom_fields
@@ -1270,7 +1275,7 @@ msgstr "Дата и календарь"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__date_to
 msgid "Date To"
-msgstr ""
+msgstr "Дата до"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1409,7 +1414,7 @@ msgstr "Удалить"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__is_demo_data
 msgid "Demo"
-msgstr ""
+msgstr "Демо"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1464,7 +1469,7 @@ msgstr "Отменить изменения"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/gantt/gantt_editor_sidebar.xml:0
 msgid "Display Mode"
-msgstr ""
+msgstr "Режим отображения"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_automation__display_name
@@ -1695,13 +1700,13 @@ msgstr "Ошибка"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "Error message:"
-msgstr ""
+msgstr "Сообщение об ошибке:"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "Error name:"
-msgstr ""
+msgstr "Имя ошибки:"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1746,7 +1751,7 @@ msgstr "Внешний"
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__action_xmlid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__xmlid
 msgid "External ID"
-msgstr ""
+msgstr "Внешний ID"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1859,18 +1864,18 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Подписчики"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Подписчики"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.js:0
 msgid "Footer"
-msgstr ""
+msgstr "Футер"
 
 #. module: web_studio
 #. odoo-python
@@ -1891,7 +1896,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Forever"
-msgstr ""
+msgstr "Навсегда"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1947,13 +1952,15 @@ msgstr "Назад"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Go on, you are almost done!"
-msgstr ""
+msgstr "Продолжайте, вы почти закончили!"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Good job! To add more <b>fields</b>, come back to the <i>Add tab</i>."
 msgstr ""
+"Хорошая работа! Для добавления <b>полей,</b> вернитесь на <i>вкладку "
+"Добавить.</i>"
 
 #. module: web_studio
 #. odoo-python
@@ -2024,7 +2031,7 @@ msgstr "Полчаса"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Есть сообщение"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2050,6 +2057,8 @@ msgid ""
 "Here, you can <b>name</b> your field (e.g. Book reference, ISBN, Internal "
 "Note, etc.)."
 msgstr ""
+"Здесь вы можете <b>назвать</b> ваше поле (например, ссылки книги, ISBN, "
+"внутренняя примечание пр.)."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2096,13 +2105,13 @@ msgstr "Час"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "How do you want to <b>name</b> your app? Library, Academy, …?"
-msgstr ""
+msgstr "Как вы хотите <b>назвать</b> ваше приложение? Библиотека, Академия ...?"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "How do you want to name your first <b>menu</b>? My books, My courses?"
-msgstr ""
+msgstr "Как вы хотите назвать ваше первое <b>меню?</b> Мои книги, мои курсы?"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2110,6 +2119,8 @@ msgstr ""
 msgid ""
 "I bet you can <b>build an app</b> in 5 minutes. Ready for the challenge?"
 msgstr ""
+"Мы уверены, что вы сможете <b>создать приложение</b> за 5 минут. Готовы к "
+"испытанию?"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_automation__id
@@ -2154,7 +2165,7 @@ msgstr "ID"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "IDs"
-msgstr ""
+msgstr "IDs"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2166,12 +2177,13 @@ msgstr "Иконка"
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction
 msgid "If checked, new messages require your attention."
 msgstr ""
+"Если флажок установлен, значит, новые сообщения требуют вашего внимания."
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Если отмечено, некоторые сообщения имеют ошибку доставки."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2218,6 +2230,8 @@ msgid ""
 "If you discard the current edits, all unsaved changes will be lost. You can "
 "cancel to return to edit mode."
 msgstr ""
+"Если отменить текущее редактирование, все несохраненные изменения будут "
+"потеряны. Чтобы вернуться в режим редактирования, можно отменить действие."
 
 #. module: web_studio
 #. odoo-python
@@ -2301,13 +2315,13 @@ msgstr "Вставка таблицы на основе реляционного
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/editor_plugins/qweb_table_plugin.js:0
 msgid "Insert left"
-msgstr ""
+msgstr "Вставка слева"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/editor_plugins/qweb_table_plugin.js:0
 msgid "Insert right"
-msgstr ""
+msgstr "Вставить справа"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2347,7 +2361,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Является подписчиком"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_module_uninstall__is_studio
@@ -2402,7 +2416,7 @@ msgstr "Метка"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__write_uid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__write_date
@@ -2414,7 +2428,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__write_date
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2522,7 +2536,7 @@ msgstr "Меры"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/rainbow_effect.js:0
 msgid "Medium"
-msgstr "Средний"
+msgstr "Канал"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2540,12 +2554,12 @@ msgstr "Сообщение"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Ошибка доставки сообщения"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Сообщения"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2607,7 +2621,7 @@ msgstr "Данные модели"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__model_name
 msgid "Model Description"
-msgstr ""
+msgstr "Описание модели"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__model
@@ -2711,7 +2725,7 @@ msgstr "Мои записи"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "N/A"
-msgstr ""
+msgstr "Н/A"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2865,12 +2879,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Now, customize your icon. Make it yours."
-msgstr ""
+msgstr "Теперь настройте свою иконку. Сделайте это самостоятельно."
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Число действий"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__entries_count
@@ -2880,17 +2894,17 @@ msgstr "Число записей"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Число ошибок"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Количество сообщений, требующих принятия мер"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Количество недоставленных сообщений"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2902,7 +2916,7 @@ msgstr "Odoo Студия"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "On view (ir.ui.view):"
-msgstr ""
+msgstr "При просмотре (ir.ui.view):"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2985,7 +2999,7 @@ msgstr "Главное меню"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "Parent View (inherit_id)"
-msgstr ""
+msgstr "Родительский вид (inherit_id)"
 
 #. module: web_studio
 #. odoo-python
@@ -3015,20 +3029,20 @@ msgstr "Круговая"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 msgid "Pipeline stages"
-msgstr "Стадии трубопровода"
+msgstr "Стадии Воронки"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer_components.js:0
 msgid "Pipeline status bar"
-msgstr "Строка состояния трубопровода"
+msgstr "Строка статуса Воронки"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Pivot"
-msgstr "Точка Вращения"
+msgstr "Сводная таблица"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3039,7 +3053,7 @@ msgstr "Заполнитель"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__post
 msgid "Post"
-msgstr ""
+msgstr "Запись"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__pre
@@ -3049,7 +3063,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.models_to_export_list
 msgid "Preset"
-msgstr ""
+msgstr "Пресет"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3139,7 +3153,7 @@ msgstr "Человек-радуга"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Рейтинги"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3151,7 +3165,7 @@ msgstr "Только для чтения"
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Ready"
-msgstr "Готово"
+msgstr "Подтверждение"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_form_view
@@ -3167,12 +3181,12 @@ msgstr "ID записи"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__name
 msgid "Record Name"
-msgstr ""
+msgstr "Имя Записи"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__records_count
 msgid "Records"
-msgstr ""
+msgstr "Записи"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3230,7 +3244,7 @@ msgstr "Удалить из просмотра"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/button_properties.xml:0
 msgid "Remove rule"
-msgstr ""
+msgstr "Удалить правило"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3294,7 +3308,7 @@ msgstr "Обязательно"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__res_id
 msgid "Res"
-msgstr ""
+msgstr "Ресет"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3361,7 +3375,7 @@ msgstr "Аннулировать"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.js:0
 msgid "Ribbon"
-msgstr ""
+msgstr "Лента"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3412,7 +3426,7 @@ msgstr "Запуск действия сервера"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Ошибка доставки SMS"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3425,7 +3439,7 @@ msgstr "Сохранить"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Save."
-msgstr ""
+msgstr "Сохранить."
 
 #. module: web_studio
 #. odoo-javascript
@@ -3480,13 +3494,13 @@ msgstr "Второе измерение"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_xml/report_editor_xml.xml:0
 msgid "See what changes have been made to this view"
-msgstr ""
+msgstr "Просмотрите изменения, внесённые в это представление"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/field_selector_dialog.xml:0
 msgid "Select a Field"
-msgstr ""
+msgstr "выбрать поле"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_form_view_quick_create
@@ -3595,7 +3609,7 @@ msgstr "Показать невидимые элементы"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "Show Traceback"
-msgstr ""
+msgstr "Показать трассировку"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3648,8 +3662,8 @@ msgid ""
 "Some records were skipped because approvals were missing "
 "to                                    proceed with your request: "
 msgstr ""
-"Некоторые записи были пропущены, потому что не было одобрения для выполнения "
-"вашего запроса:"
+"Некоторые записи были пропущены, потому что не было одобрения "
+"для                                     выполнения вашего запроса: "
 
 #. module: web_studio
 #. odoo-javascript
@@ -3705,7 +3719,7 @@ msgstr "Название этапа"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 msgid "Stage and visualize records in a custom pipeline"
-msgstr "Постановка и визуализация записей в пользовательском конвейере"
+msgstr "Постановка и визуализация записей в пользовательской воронке"
 
 #. module: web_studio
 #. odoo-python
@@ -3728,7 +3742,7 @@ msgstr "Поле даты начала"
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_button_configuration_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_kanban_view
 msgid "Step"
-msgstr ""
+msgstr "Шаг"
 
 #. module: web_studio
 #: model:ir.model.fields.selection,name:web_studio.selection__studio_approval_rule__notification_order__1
@@ -4000,6 +4014,10 @@ msgid ""
 "some view inherits from another but targets a node that doesn't exist. It "
 "might be due to the mutations of the base views during the upgrade process."
 msgstr ""
+"Отчет не удалось загрузить, так как произошла какая-то ошибка. Обычно это "
+"означает, что какое-то представление наследуется от другого, но нацелено на "
+"несуществующий узел. Это может быть связано с мутациями базовых "
+"представлений в процессе обновления."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4059,7 +4077,7 @@ msgstr ""
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid ""
 "There is no method %(method)s on the model %(model_name)s (%(model_id)s)"
-msgstr ""
+msgstr "В модели %(method)s (%(model_name)s) нет метода %(model_id)s"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4180,7 +4198,7 @@ msgstr "Виды временной шкалы"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "To <b>customize a field</b>, click on its <i>label</i>."
-msgstr ""
+msgstr "Чтобы <b>настроить поле,</b> нажмите на эту <i>иконку.</i>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4216,18 +4234,18 @@ msgstr "Отменить"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__date_to
 msgid "Until"
-msgstr ""
+msgstr "Окончание"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid "Until %s"
-msgstr ""
+msgstr "До %s"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__updatable
 msgid "Updatable"
-msgstr ""
+msgstr "Обновляемый"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4302,7 +4320,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "View in Error:"
-msgstr ""
+msgstr "Просмотр в ошибке:"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4336,12 +4354,12 @@ msgstr "Вебзацепы"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Веб-сайт сообщения"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "История общений с сайта"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4366,7 +4384,7 @@ msgstr "Добро пожаловать в"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "What about a <b>Kanban view</b>?"
-msgstr ""
+msgstr "Как насчет <b>просмотра канбан?</b>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4394,7 +4412,7 @@ msgstr "Является ли эта модель абстрактной"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/views/kanban_report/new_report_dialog.xml:0
 msgid "Which type of report do you want to create?"
-msgstr ""
+msgstr "Тип отчета нужно создать?"
 
 #. module: web_studio
 #. odoo-javascript

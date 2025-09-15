@@ -1,289 +1,293 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl_rest
+# * delivery_dhl_rest
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl_rest/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__0
 msgid "0 - Logistics Services"
-msgstr ""
+msgstr "0 - 物流サービス"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__1
 msgid "1 - Domestic Express 12:00"
-msgstr ""
+msgstr "1 - Domestic Express 12:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__2
 msgid "2 - B2C"
-msgstr ""
+msgstr "2 - B2C"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__3
 msgid "3 - B2C"
-msgstr ""
+msgstr "3 - B2C"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__4
 msgid "4 - Jetline"
-msgstr ""
+msgstr "4 - Jetline"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__5
 msgid "5 - Sprintline"
-msgstr ""
+msgstr "5 - Sprintline"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__6
 msgid "6 - Secureline"
-msgstr ""
+msgstr "6 - Secureline"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_a4_pdf
 msgid "6X4_A4_PDF"
-msgstr ""
+msgstr "6X4_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_pdf
 msgid "6X4_PDF"
-msgstr ""
+msgstr "6X4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_thermal
 msgid "6X4_thermal"
-msgstr ""
+msgstr "6X4_thermal"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__7
 msgid "7 - Express Easy"
-msgstr ""
+msgstr "7 - Express Easy"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__8
 msgid "8 - Express Easy"
-msgstr ""
+msgstr "8 - Express Easy"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_a4_pdf
 msgid "8X4_A4_PDF"
-msgstr ""
+msgstr "8X4_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_a4_tc_pdf
 msgid "8X4_A4_TC_PDF"
-msgstr ""
+msgstr "8X4_A4_TC_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ci_pdf
 msgid "8X4_CI_PDF"
-msgstr ""
+msgstr "8X4_CI_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ci_thermal
 msgid "8X4_CI_thermal"
-msgstr ""
+msgstr "8X4_CI_thermal"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_pdf
 msgid "8X4_PDF"
-msgstr ""
+msgstr "8X4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ru_a4_pdf
 msgid "8X4_RU_A4_PDF"
-msgstr ""
+msgstr "8X4_RU_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_thermal
 msgid "8X4_thermal"
-msgstr ""
+msgstr "8X4_thermal"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__9
 msgid "9 - Europack"
-msgstr ""
+msgstr "9 - Europack"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__a
 msgid "A - Auto Reversals"
-msgstr ""
+msgstr "A - Auto Reversals"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__am
 msgid "America"
-msgstr ""
+msgstr "アメリカ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__ap
 msgid "Asia Pacific"
-msgstr ""
+msgstr "アジア太平洋地域"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__b
 msgid "B - Break Bulk Express"
-msgstr ""
+msgstr "B - Break Bulk Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__c
 msgid "C - Medical Express"
-msgstr ""
+msgstr "C - Medical Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "配送業者"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,help:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
-msgstr ""
+msgstr "荷物が関税対象の場合はチェックしてください。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Could not decode the response from DHL."
-msgstr ""
+msgstr "DHL からの応答をデコードできませんでした。"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Custom Data"
-msgstr ""
+msgstr "カスタムデータ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__d
 msgid "D - Express Worldwide"
-msgstr ""
+msgstr "D - Express Worldwide"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__delivery_type__dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__stock_package_type__package_carrier_type__dhl_rest
 msgid "DHL"
-msgstr ""
+msgstr "DHL"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_api_key
 msgid "DHL API Key"
-msgstr ""
+msgstr "DHL APIキー"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_api_secret
 msgid "DHL API Secret"
-msgstr ""
+msgstr "DHL APIシークレット"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "DHL API key is missing, please modify your delivery method settings."
-msgstr ""
+msgstr "DHLのAPIキーが設定されていません。配送方法の設定を修正してください。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid ""
 "DHL API secret is missing, please modify your delivery method settings."
-msgstr ""
+msgstr "DHLのAPIシークレットが設定されていません。配送方法の設定を修正してください。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
-msgstr ""
+msgstr "DHLアカウント番号"
 
 #. module: delivery_dhl_rest
 #: model:delivery.carrier,name:delivery_dhl_rest.delivery_carrier_dhl_be_dom
 #: model:product.template,name:delivery_dhl_rest.product_product_delivery_dhl_be_dom_product_template
 msgid "DHL BE"
-msgstr ""
+msgstr "DHL BE"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "DHL Configuration"
-msgstr ""
+msgstr "DHL設定"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "DHL Documents"
-msgstr ""
+msgstr "DHLドキュメント"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
-msgstr ""
+msgstr "DHLプロダクト"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
-msgstr ""
+msgstr "DHLアカウント番号が欠落しています、配送方法の設定を変更してください。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_default_package_type_id
 msgid "DHLxw Package Type"
-msgstr ""
+msgstr "DHLxwパッケージタイプ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_duty_payment
 msgid "Dhl Duty Payment"
-msgstr ""
+msgstr "DHL関税支払"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
-msgstr ""
+msgstr "課税材質"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Duties paid by"
-msgstr ""
+msgstr "関税支払者:"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__e
 msgid "E - Express 9:00"
-msgstr ""
+msgstr "E - Express 9:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__epl2
 msgid "EPL2"
-msgstr ""
+msgstr "EPL2"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__eu
 msgid "Europe"
-msgstr ""
+msgstr "ヨーロッパ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_rate_request
 msgid "Extra data for rate requests"
-msgstr ""
+msgstr "レートリクエスト用追加データ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_return_request
 msgid "Extra data for return requests"
-msgstr ""
+msgstr "返品リクエスト用の追加データ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_ship_request
 msgid "Extra data for ship requests"
-msgstr ""
+msgstr "出荷リクエスト用の追加データ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,help:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_rate_request
@@ -300,176 +304,187 @@ msgid ""
 "With the above example, the description of each package will be updated.\n"
 "For more information, please refer to the DHL API documentation: https://developer.dhl.com/api-reference/dhl-express-mydhl-api.\n"
 msgstr ""
+"リクエストで送信する追加データ。JSON 形式にしてください。\n"
+"この機能は高度な技術設定であるため、その使用方法をよく理解している場合にのみ"
+"使用してください。\n"
+"\n"
+"有効な値の例: ```\n"
+"\"content\": {\"packages\": {\"description\": \"amazing package\"}}\n"
+"```\n"
+"\n"
+"上記の例では、各パッケージの説明が更新されます。\n"
+"詳細については、DHL API ドキュメント: https://developer.dhl.com/"
+"api-reference/dhl-express-mydhl-api をご確認ください。\n"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__f
 msgid "F - Freight Worldwide"
-msgstr ""
+msgstr "F - Freight Worldwide"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__g
 msgid "G - Domestic Economy Select"
-msgstr ""
+msgstr "G - Domestic Economy Select"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__h
 msgid "H - Economy Select"
-msgstr ""
+msgstr "H - Economy Select"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__i
 msgid "I - Break Bulk Economy"
-msgstr ""
+msgstr "I - Break Bulk Economy"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_unit_system__imperial
 msgid "Imperial"
-msgstr ""
+msgstr "ヤード・ポンド法"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "Invalid syntax for DHL extra data."
-msgstr ""
+msgstr "DHLの追加データの構文が無効です。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__j
 msgid "J - Jumbo Box"
-msgstr ""
+msgstr "J - Jumbo Box"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__k
 msgid "K - Express 9:00"
-msgstr ""
+msgstr "K - Express 9:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__l
 msgid "L - Express 10:30"
-msgstr ""
+msgstr "L - Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Label Format"
-msgstr ""
+msgstr "ラベルフォーマット"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_label_image_format
 msgid "Label Image Format"
-msgstr ""
+msgstr "ラベル画像フォーマット"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_label_template
 msgid "Label Template"
-msgstr ""
+msgstr "ラベルテンプレート"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__m
 msgid "M - Express 10:30"
-msgstr ""
+msgstr "M - Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_unit_system__metric
 msgid "Metric"
-msgstr ""
+msgstr "メートル法"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__n
 msgid "N - Domestic Express"
-msgstr ""
+msgstr "N - Domestic Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__o
 msgid "O - DOM Express 10:30"
-msgstr ""
+msgstr "O - DOM Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Options"
-msgstr ""
+msgstr "オプション"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__p
 msgid "P - Express Worldwide"
-msgstr ""
+msgstr "P - Express Worldwide"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "出荷する品目を少なくとも1つ指定してください。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "プロバイダー"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__q
 msgid "Q - Medical Express"
-msgstr ""
+msgstr "Q - Medical Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__r
 msgid "R - GlobalMail Business"
-msgstr ""
+msgstr "R - GlobalMail Business"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__r
 msgid "Recipient"
-msgstr ""
+msgstr "宛先"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_region_code
 msgid "Region"
-msgstr ""
+msgstr "地域"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__s
 msgid "S - Same Day"
-msgstr ""
+msgstr "S - Same Day"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__s
 msgid "Sender"
-msgstr ""
+msgstr "送信者"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "Shipment created into DHL"
-msgstr ""
+msgstr "DHLに配送が作成されました"
 
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "配送方法"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "問題が発生しました。後ほど再試行して下さい!"
 
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "在庫梱包タイプ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__t
 msgid "T - Express 12:00"
-msgstr ""
+msgstr "T - Express 12:00"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -478,6 +493,8 @@ msgid ""
 "The address of the customer is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"顧客のアドレスが見つからないか、誤っています(フィールド(複数可)が欠落:\n"
+"%s）"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -486,6 +503,9 @@ msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"あなたの会社の倉庫のアドレスが見つからないか、誤っています(フィールド(複数可)"
+"が欠落:\n"
+"%s）"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -494,6 +514,8 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"以下のプロダクトの重量がないため、見積送料を計算できません: \n"
+" %s"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -501,13 +523,13 @@ msgstr ""
 msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
-msgstr ""
+msgstr "梱包を作成できません。ピッキングのプロダクトの合計重量が0.0 %sのためです。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "The planned date for the shipment must be in the future."
-msgstr ""
+msgstr "出荷予定日は現在より後の日付を指定してください。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -515,56 +537,57 @@ msgstr ""
 msgid ""
 "There is no price available for this shipping, you should rather try with "
 "the DHL product %s"
-msgstr ""
+msgstr "この配送のために利用可能な価格がありません。DHLプロダクト%sを試してみて下さい"
+"。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "Tracking Number"
-msgstr ""
+msgstr "追跡番号"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__u
 msgid "U - Express Worldwide"
-msgstr ""
+msgstr "U - Express Worldwide"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_unit_system
 msgid "Unit System"
-msgstr ""
+msgstr "単位系"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__v
 msgid "V - Europack"
-msgstr ""
+msgstr "V - Europack"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__w
 msgid "W - Economy Select"
-msgstr ""
+msgstr "W - Economy Select"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__x
 msgid "X - Express Envelope"
-msgstr ""
+msgstr "X - Express Envelope"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__y
 msgid "Y - Express 12:00"
-msgstr ""
+msgstr "Y - Express 12:00"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "You can't cancel DHL shipping without pickup date."
-msgstr ""
+msgstr "DHL配送のキャンセルには、集荷日が必要です。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__z
 msgid "Z - Destination Charges"
-msgstr ""
+msgstr "Z - Destination Charges"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__zpl2
 msgid "ZPL2"
-msgstr ""
+msgstr "ZPL2"

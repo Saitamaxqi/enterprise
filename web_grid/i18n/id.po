@@ -1,29 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_grid
+# * web_grid
 #
 # Translators:
 # Martin Trigaux, 2022
 # Abe Manyo, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Abe Manyo, 2023\n"
-"Language-Team: Indonesian (https://app.transifex.com/odoo/teams/41243/id/)\n"
+"PO-Revision-Date: 2025-09-15 23:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"web_grid/id/>\n"
 "Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_ir_actions_act_window_view
 msgid "Action Window View"
-msgstr "Tampilan Jendela Tindakan"
+msgstr "Jendela Tindakan"
 
 #. module: web_grid
 #. odoo-javascript
@@ -56,18 +59,20 @@ msgstr "Grid"
 #: code:addons/web_grid/static/src/views/grid_model.js:0
 msgid "Grouping by the field used in the column of the grid view is not possible."
 msgstr ""
+"Mengelompokkan berdasarkan field yang digunakan di kolom tampilan grid tidak "
+"dapat dilakukan."
 
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_controller.js:0
 msgid "New Record"
-msgstr ""
+msgstr "Record Baru"
 
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_renderer.xml:0
 msgid "Next"
-msgstr "Berikutnya"
+msgstr "Next"
 
 #. module: web_grid
 #. odoo-javascript
@@ -85,7 +90,7 @@ msgstr "Tidak Ada"
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_renderer.xml:0
 msgid "Previous"
-msgstr "Sebelumnya"
+msgstr "Sebelum"
 
 #. module: web_grid
 #. odoo-javascript

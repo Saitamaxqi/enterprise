@@ -1,31 +1,34 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* esg
+# * esg
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:14+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/esg/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor_line.py:0
 msgid "%(gas_name)s (%(quantity)s kg)"
-msgstr ""
+msgstr "%(gas_name)s (%(quantity)s kg)"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_other_emission.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (Kopie)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
@@ -34,32 +37,37 @@ msgid ""
 "                    You are modifying an emission factor already assigned to emissions.\n"
 "                    Changing it will update these emissions. To keep the old value, duplicate the factor."
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
+"                    Sie bearbeiten einen Emissionsfaktor, der bereits "
+"Emissionen zugewiesen wurde.\n"
+"                    Die Änderung wird diese Emissionen anpassen. Duplizieren "
+"Sie den Faktor, um den alten Wert beizubehalten."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_kanban_view
 msgid "<span class=\"ms-1\">kgCO₂e</span>"
-msgstr ""
+msgstr "<span class=\"ms-1\">kgCO₂e</span>"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "<span class=\"ms-2\">kgCO₂e</span>"
-msgstr ""
+msgstr "<span class=\"ms-2\">kgCO₂e</span>"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.view_move_form_inherit_esg
 msgid "<span>kgCO₂e</span>"
-msgstr ""
+msgstr "<span>kgCO₂e</span>"
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_activity_type_name_uniq
 msgid "A tag with the same name already exists."
-msgstr ""
+msgstr "Es besteht bereits ein Stichwort mit demselben Namen."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "ADEME data is already up to date."
-msgstr ""
+msgstr "ADEME-Daten wurden bereits aktualisiert."
 
 #. module: esg
 #: model:res.groups,comment:esg.esg_group_user
@@ -67,67 +75,70 @@ msgid ""
 "Access to ESG features including viewing data, reporting, and mapping "
 "emissions with emissions factors, but without configuration rights."
 msgstr ""
+"Greifen Sie ohne Konfigurationsrechte auf die ESG-Funktionen, einschließlich "
+"Datenanzeige, Berichtwesen und Abbildung von Emissionen mit "
+"Emissionsfaktoren, zu."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__account_move_line_ids
 msgid "Account Move Line"
-msgstr ""
+msgstr "Kontobuchungszeile"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Accounting"
-msgstr ""
+msgstr "Buchhaltung"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 msgid "Act"
-msgstr ""
+msgstr "Handeln"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aktion notwendig"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__active
 msgid "Active"
-msgstr ""
+msgstr "Aktiv"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__activity_flow
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_form_view
 msgid "Activity Flow"
-msgstr ""
+msgstr "Aktivitätsablauf"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_activity_type
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__activity_type_id
 msgid "Activity Type"
-msgstr ""
+msgstr "Aktivitätstyp"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__activity_type_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__activity_type_ids
 msgid "Activity Types"
-msgstr ""
+msgstr "Aktivitätstypen"
 
 #. module: esg
 #: model:res.groups,name:esg.esg_group_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__price_subtotal
 msgid "Amount"
-msgstr ""
+msgstr "Betrag"
 
 #. module: esg
 #. odoo-python
@@ -136,6 +147,8 @@ msgid ""
 "An assignation with the rules (%(account_id)s, %(partner_id)s, "
 "%(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
+"Es existiert bereits eine Zuweisung mit den Regeln (%(account_id)s, "
+"%(partner_id)s, %(product_id)s) im Emissionsfaktor '%(factor_name)s'."
 
 #. module: esg
 #. odoo-javascript
@@ -143,7 +156,7 @@ msgstr ""
 #: code:addons/esg/models/esg_assignation_line.py:0
 #: code:addons/esg/static/src/widgets/emission_factor_x2many_field/emission_factor_list_renderer.js:0
 msgid "Any Account"
-msgstr ""
+msgstr "Beliebiges Konto"
 
 #. module: esg
 #. odoo-javascript
@@ -151,7 +164,7 @@ msgstr ""
 #: code:addons/esg/models/esg_assignation_line.py:0
 #: code:addons/esg/static/src/widgets/emission_factor_x2many_field/emission_factor_list_renderer.js:0
 msgid "Any Partner"
-msgstr ""
+msgstr "Beliebiger Partner"
 
 #. module: esg
 #. odoo-javascript
@@ -159,66 +172,66 @@ msgstr ""
 #: code:addons/esg/models/esg_assignation_line.py:0
 #: code:addons/esg/static/src/widgets/emission_factor_x2many_field/emission_factor_list_renderer.js:0
 msgid "Any Product"
-msgstr ""
+msgstr "Beliebiges Produkt"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Application Period"
-msgstr ""
+msgstr "Anwendungszeitrau"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Archived"
-msgstr ""
+msgstr "Archiviert"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Assign"
-msgstr ""
+msgstr "Zuweisen"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.factors_auto_assignment_wizard_action
 #: model:ir.actions.server,name:esg.action_apply_factors_auto_assignment
 msgid "Assign Emission Factors"
-msgstr ""
+msgstr "Emissionsfaktoren zuweisen"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_assignation_line
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__assignation_line_ids
 msgid "Assignation Line"
-msgstr ""
+msgstr "Zuweisungszeile"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Assignations"
-msgstr ""
+msgstr "Zuweisungen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_attachment_count
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Anzahl Anhänge"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/carbon_report.py:0
 msgid "Audit Emissions"
-msgstr ""
+msgstr "Emissionen prüfen"
 
 #. module: esg
 #: model:ir.model,name:esg.model_factors_auto_assignment_wizard
 msgid "Auto-assignment of emission factors to move lines"
-msgstr ""
+msgstr "Automatische Zuweisung von Emissionsfaktoren an Buchungszeilen"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4b
 msgid "Biogenic Methane (CH₄)"
-msgstr ""
+msgstr "Biogenes Methan (CH₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_ch4b
 msgid "Biogenic Methane (CH₄) (t)"
-msgstr ""
+msgstr "Biogenes Methan (CH₄) (t)"
 
 #. module: esg
 #. odoo-javascript
@@ -226,7 +239,7 @@ msgstr ""
 #: model:esg.activity.type,name:esg.esg_activity_type_6
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_6
 msgid "Business Travel"
-msgstr ""
+msgstr "Geschäftsreise"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c4f6
@@ -247,24 +260,24 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "CH₄"
-msgstr ""
+msgstr "CH₄"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "CO₂"
-msgstr ""
+msgstr "CO₂"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_co2
 msgid "CO₂ (t)"
-msgstr ""
+msgstr "CO₂ (t)"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Calculation"
-msgstr ""
+msgstr "Berechnung"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__can_be_downloaded
@@ -275,19 +288,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Can be added manually"
-msgstr ""
+msgstr "Kann manuell hinzugefügt werden"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_2
 msgid "Capital Goods"
-msgstr ""
+msgstr "Investitionsgüter"
 
 #. module: esg
 #. odoo-javascript
@@ -297,19 +310,19 @@ msgstr ""
 #: model:ir.actions.act_window,name:esg.action_carbon_emission_report_analytics_views
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_analytics
 msgid "Carbon Analytics"
-msgstr ""
+msgstr "Kohlendioxid-Analyse"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co2
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__co2
 msgid "Carbon Dioxide (CO₂)"
-msgstr ""
+msgstr "Kohlenstoffdioxid (CO₂)"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_emissions
 #: model:ir.ui.menu,name:esg.menu_esg_collect_carbon_emissions
 msgid "Carbon Emissions"
-msgstr ""
+msgstr "Kohlendioxid-Emissionen"
 
 #. module: esg
 #. odoo-javascript
@@ -319,7 +332,7 @@ msgstr ""
 #: model:ir.actions.client,name:esg.action_view_carbon_report
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_report
 msgid "Carbon Footprint"
-msgstr ""
+msgstr "CO2-Fußabdruck"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co
@@ -329,17 +342,17 @@ msgstr ""
 #. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_report_handler
 msgid "Carbon Report Custom Handler"
-msgstr ""
+msgstr "Kohlendioxid-Bericht Benutzerdefinierter Handler"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_cf4
 msgid "Carbon Tetrafluoride (CF₄)"
-msgstr ""
+msgstr "Tetrafluormethan (CF₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_cf4
 msgid "Carbon Tetrafluoride (CF₄) (t)"
-msgstr ""
+msgstr "Tetrafluormethan (CF₄) (t)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_source
@@ -347,104 +360,106 @@ msgid ""
 "Categorize your data into Scope 1, 2, and 3 to structure your carbon "
 "emission reporting."
 msgstr ""
+"Kategorisieren Sie Ihre Daten in Rahmen 1,2 und 3, um einen Bericht über "
+"Ihre CO2-Emissionen zu erhalten."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__category
 msgid "Category"
-msgstr ""
+msgstr "Kategorie"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
 msgid "Child"
-msgstr ""
+msgstr "Kind"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 msgid "Close the onboarding tips"
-msgstr ""
+msgstr "Einführungstipps schließen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__code
 #: model:ir.model.fields,field_description:esg.field_esg_gas__code
 msgid "Code"
-msgstr ""
+msgstr "Code"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 #: model:ir.ui.menu,name:esg.menu_esg_collect
 msgid "Collect"
-msgstr ""
+msgstr "Sammeln"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "Collect Emissions"
-msgstr ""
+msgstr "Emissionsdaten sammeln"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__color
 msgid "Color"
-msgstr ""
+msgstr "Farbe"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Company Facilities"
-msgstr ""
+msgstr "Einrichtungen des Unternehmens"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_direct_indirect__company_reporting
 msgid "Company Reporting"
-msgstr ""
+msgstr "Berichtwesen des Unternehmens"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Company Vehicles"
-msgstr ""
+msgstr "Firmenfahrzeuge"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Company reporting"
-msgstr ""
+msgstr "Berichtwesen des Unternehmens"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope_complete_name
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Vollständiger Name"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__compute_method
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__compute_method
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__compute_method
 msgid "Compute Method"
-msgstr ""
+msgstr "Berechnungsmethode"
 
 #. module: esg
 #: model:product.template,name:esg.product_computer_product_template
 msgid "Computer"
-msgstr ""
+msgstr "Computer"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguration"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Bestätigen"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__start_date
@@ -452,21 +467,23 @@ msgid ""
 "Correspond to the period to consider for the assignment of the factors to "
 "the move lines."
 msgstr ""
+"Entspricht dem Zeitraum, der für die Zuweisung der Faktoren zu den "
+"Buchungszeilen berücksichtigt werden soll."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
 msgid "Create and configure greenhouse gases."
-msgstr ""
+msgstr "Erstellen und konfigurieren Sie Treibhausgase."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_factor
 msgid "Create emission factors."
-msgstr ""
+msgstr "Erstellen Sie Emissionsfaktoren."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_source
 msgid "Create emission sources."
-msgstr ""
+msgstr "Erstellen Sie Emissionsquellen."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__create_uid
@@ -479,7 +496,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__create_date
@@ -492,7 +509,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__currency_id
@@ -500,43 +517,43 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__currency_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Currency"
-msgstr ""
+msgstr "Währung"
 
 #. module: esg
 #: model:ir.actions.client,name:esg.ir_actions_esg_dashboard_action
 #: model:ir.ui.menu,name:esg.menu_esg_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_database
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__database_id
 msgid "Database"
-msgstr ""
+msgstr "Datenbank"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "Database file is missing"
-msgstr ""
+msgstr "Datei der Datenbank fehlt"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_view_database
 msgid "Databases"
-msgstr ""
+msgstr "Datenbanken"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__date
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__date
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__date_end
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__date_end
 msgid "Date End"
-msgstr ""
+msgstr "Enddatum"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
@@ -544,28 +561,31 @@ msgid ""
 "Define gases to convert emissions into CO₂ equivalents using Global Warming "
 "Potential values."
 msgstr ""
+"Definieren Sie Gase, um Emissionen anhand der Werte für das "
+"Treibhauspotenzial in CO₂-Äquivalente umzurechnen."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_emission_factor
 msgid "Define how activity data translates into CO₂e."
 msgstr ""
+"Legen Sie fest, wie Aktivitätsdaten in CO₂-Äquivalente umgerechnet werden."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__description
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Description"
-msgstr ""
+msgstr "Beschreibung"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Detailed by gas"
-msgstr ""
+msgstr "Aufgeführt nach Gas"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Direct Emissions"
-msgstr ""
+msgstr "Direkte Emissionen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
@@ -582,7 +602,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__display_name
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
@@ -590,76 +610,80 @@ msgid ""
 "Do you want to automatically assign the selected emission factor(s) to the "
 "move lines based on your predefined assignation rules?"
 msgstr ""
+"Möchten Sie die ausgewählten Emissionsfaktor(en) automatisch Buchungszeilen "
+"auf der Grundlage Ihrer vordefinierten Zuweisunfsregeln zuweisen?"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Download"
-msgstr ""
+msgstr "Herunterladen"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
 msgid ""
 "Download a certified database we provide or upload your own in Odoo format."
 msgstr ""
+"Laden Sie eine von uns angebotene, zertifizierte Datenbank herunter oder "
+"laden Sie Ihre eigene im Odoo-Format hoch."
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_indirect_others__downstream
 msgid "Downstream"
-msgstr ""
+msgstr "Nachgelagerte Emissionen"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_5
 msgid "Downstream Leased Assets"
-msgstr ""
+msgstr "Nachgelagerte geleaste Vermögenswerte"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_1
 msgid "Downstream Transportation and Distribution"
-msgstr ""
+msgstr "Nachgelagerter Transport und Vertrieb"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Downstream activities"
-msgstr ""
+msgstr "Nachgelagerte Aktivitäten"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.esg_main_menu
 #: model:res.groups.privilege,name:esg.res_groups_privilege_esg
 msgid "ESG"
-msgstr ""
+msgstr "ESG"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_emission_report
 msgid "ESG Carbon Emissions Report"
-msgstr ""
+msgstr "ESG-Bericht zu Kohlendioxid-Emissionen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Effortless"
-msgstr ""
+msgstr "Mühelos"
 
 #. module: esg
 #: model:account.account,name:esg.account_electricity
 msgid "Electricity"
-msgstr ""
+msgstr "Strom"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_2
 msgid "Electricity for Cars"
-msgstr ""
+msgstr "Strom für Autos"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_1
 msgid "Electricity for Office"
-msgstr ""
+msgstr "Strom für Büros"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Emission"
-msgstr ""
+msgstr "Emission"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_emission_factor
@@ -669,39 +693,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__esg_emission_factor_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_emission_factor_id
 msgid "Emission Factor"
-msgstr ""
+msgstr "Emissionsfaktor"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_emission_factor_line
 msgid "Emission Factor Line"
-msgstr ""
+msgstr "Emissionsfaktorzeile"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_view_emission_factor
 #: model:ir.ui.menu,name:esg.menu_esg_emission_factors
 msgid "Emission Factors"
-msgstr ""
+msgstr "Emissionsfaktoren"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_emission_source
 msgid "Emission Source"
-msgstr ""
+msgstr "Emissionsquelle"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_view_emission_source
 #: model:ir.ui.menu,name:esg.menu_esg_type_of_emissions
 msgid "Emission Sources"
-msgstr ""
+msgstr "Emissionsquellen"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
 msgid "Emission source"
-msgstr ""
+msgstr "Emissionsquelle"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Emissions"
-msgstr ""
+msgstr "Emissionen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_bank_statement_line__esg_emissions_value
@@ -712,7 +736,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__esg_emissions_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_emissions_value
 msgid "Emissions (kgCO₂e)"
-msgstr ""
+msgstr "Emissionen (kgCO₂e)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
@@ -721,36 +745,40 @@ msgid ""
 "Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
 "                You can also manually add other emission not linked to journal entries."
 msgstr ""
+"Emissionsdaten werden automatisch aus der Buchhaltung synchronisiert, wenn "
+"Sie Lieferantenrechnungen erhalten.<br>\n"
+"                Sie können auch andere Emissionen, die nicht mit "
+"Journalbuchungen verknüpft sind, hinzufügen"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/account_move.py:0
 msgid "Emissions of %(move_name)s"
-msgstr ""
+msgstr "Emissionen von %(move_name)s"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.js:0
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "Emissions to define"
-msgstr ""
+msgstr "Zu definierende Emissionen"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor.py:0
 msgid "Emissions using %(emission_factor)s"
-msgstr ""
+msgstr "Emissionen mit %(emission_factor)s"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Emitted"
-msgstr ""
+msgstr "Ausstoß"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_emitted_emission_report_views
 #: model:ir.ui.menu,name:esg.menu_esg_emitted_emissions
 msgid "Emitted Emissions"
-msgstr ""
+msgstr "Ausgestoßene Emissionen"
 
 #. module: esg
 #. odoo-javascript
@@ -758,102 +786,104 @@ msgstr ""
 #: model:esg.activity.type,name:esg.esg_activity_type_5
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_7
 msgid "Employee Commuting"
-msgstr ""
+msgstr "Pendelverhalten der Mitarbeiter"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Enddatum"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_4
 msgid "End-of-Life Treatment of Sold Products"
-msgstr ""
+msgstr "Entsorgung von verkauften Produkten"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "End-of-life Treatment of Sold Products"
-msgstr ""
+msgstr "Entsorgung von verkauften Produkten"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_0
 msgid "Energy Consumption"
-msgstr ""
+msgstr "Energieverbrauch"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_environment
 msgid "Environment"
-msgstr ""
+msgstr "Umgebung"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_other_emission_ids
 msgid "Esg Other Emission"
-msgstr ""
+msgstr "ESG: andere Emissionen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_bank_statement_line__esg_show_emissions_button
 #: model:ir.model.fields,field_description:esg.field_account_move__esg_show_emissions_button
 msgid "Esg Show Emissions Button"
-msgstr ""
+msgstr "ESG: Emissionsschaltfläche zeigen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Follower"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_partner_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Follower (Partner)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_8
 msgid "Food Consumption"
-msgstr ""
+msgstr "Lebensmittelverbrauch"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4f
 msgid "Fossil Methane (CH₄)"
-msgstr ""
+msgstr "Fossiles Methan (CH₄)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_ch4f
 msgid "Fossil Methane (CH₄) (t)"
-msgstr ""
+msgstr "Fossiles Methan (CH₄) (t)"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_6
 msgid "Franchises"
-msgstr ""
+msgstr "Franchise"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Fuel and Energy Related Activities"
-msgstr ""
+msgstr "Aktivitäten in Bezug auf Treibstoff und Energie"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_3
 msgid "Fuel and Energy-Related Activites"
-msgstr ""
+msgstr "Aktivitäten in Bezug auf Treibstoff und Energie"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_4
 msgid "Fugitive Emissions"
-msgstr ""
+msgstr "Flüchtige Emissionen"
 
 #. module: esg
 #: model:res.groups,comment:esg.esg_group_manager
 msgid "Full access to all ESG features including configuration rights."
 msgstr ""
+"Vollständiger Zugriff auf alle ESG-Funktionen, einschließlich "
+"Konfigurationsrechten."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.esg_gas_kanban_view
 msgid "GWP:"
-msgstr ""
+msgstr "THP"
 
 #. module: esg
 #. odoo-javascript
@@ -861,33 +891,33 @@ msgstr ""
 #: model:ir.model,name:esg.model_esg_gas
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__gas_id
 msgid "Gas"
-msgstr ""
+msgstr "Gas"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Gas Emissions"
-msgstr ""
+msgstr "Gasausstoß"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__gas_line_ids
 msgid "Gas Line"
-msgstr ""
+msgstr "Gas-Zeile"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_esg_gasses_list
 #: model:ir.ui.menu,name:esg.menu_esg_configuration_carbon_emissions_gasses
 msgid "Gases"
-msgstr ""
+msgstr "Gase"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__global_warming_potential
 msgid "Global Warming Potential (GWP)"
-msgstr ""
+msgstr "Treibhauspotential (THP)"
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_gas_non_null_gwp
 msgid "Global Warming Potential (GWP) cannot be equal to 0."
-msgstr ""
+msgstr "Treibhauspotential (THP) kann nicht gleich 0 sein."
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_125
@@ -902,12 +932,12 @@ msgstr ""
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134a
 msgid "HFC-134a"
-msgstr ""
+msgstr "HFC-134a"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_134a
 msgid "HFC-134a (t)"
-msgstr ""
+msgstr "HFC-134a (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143
@@ -927,12 +957,12 @@ msgstr ""
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
 msgid "HFC-152a"
-msgstr ""
+msgstr "HFC-152a"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_152a
 msgid "HFC-152a (t)"
-msgstr ""
+msgstr "HFC-152a (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_161
@@ -947,12 +977,12 @@ msgstr ""
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_23
 msgid "HFC-23"
-msgstr ""
+msgstr "HFC-23"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_hfc_23
 msgid "HFC-23 (t)"
-msgstr ""
+msgstr "HFC-23 (t)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_236cb
@@ -973,7 +1003,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "HFCs"
-msgstr ""
+msgstr "HFCs"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3ochf2
@@ -999,27 +1029,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Hat eine Nachricht"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c2f6
 msgid "Hexafluoroethane (C₂F₆)"
-msgstr ""
+msgstr "Hexafluorethan (C₂F₆)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_c2f6
 msgid "Hexafluoroethane (C₂F₆) (t)"
-msgstr ""
+msgstr "Hexafluorethan (C₂F₆) (t)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "High Uncertainty (20-50%)"
-msgstr ""
+msgstr "Hohe Unsicherheit (20-50 %)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__hfc
 msgid "Hydrofluorocarbons (HFCs)"
-msgstr ""
+msgstr "Fluorkohlenwasserstoffe (FKW)"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move__id
@@ -1036,12 +1066,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__id
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_7
 msgid "IT Operations"
-msgstr ""
+msgstr "IT-Betrieb"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
@@ -1050,12 +1080,16 @@ msgid ""
 "(manually or automatically assigned) will be reassigned if a matching factor"
 " is found based on your configuration."
 msgstr ""
+"Wenn diese Option aktiviert ist, werden alle Emissionszeilen, denen bereits "
+"ein Emissionsfaktor (manuell oder automatisch) zugewiesen wurde, neu "
+"zugewiesen, wenn ein passender Faktor basierend auf Ihrer Konfiguration "
+"gefunden wird."
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Falls markiert, erfordern neue Nachrichten Ihre Aufmerksamkeit."
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error
@@ -1063,91 +1097,91 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Falls markiert, weisen einige Nachrichten einen Zustellungsfehler auf."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__image
 msgid "Image"
-msgstr ""
+msgstr "Bild"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Included in Accounting"
-msgstr ""
+msgstr "In Buchhaltung berücksichtigt"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Included in Invoicing"
-msgstr ""
+msgstr "In Rechnungsstellung berücksichtigt"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Indirect Emissions"
-msgstr ""
+msgstr "Indirekte Emissionen"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "Invalid URL."
-msgstr ""
+msgstr "Ungültige URL."
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Investment"
-msgstr ""
+msgstr "Investition"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_7
 msgid "Investments"
-msgstr ""
+msgstr "Investitionen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_is_follower
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Ist Follower"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__is_mandatory_gas
 msgid "Is Mandatory Gas"
-msgstr ""
+msgstr "Ist obligatorisches Gas"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "JSON response could not be decoded."
-msgstr ""
+msgstr "JSON-Antwort konnte nicht entschlüsselt werden."
 
 #. module: esg
 #: model:ir.model,name:esg.model_account_move
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__move_id
 msgid "Journal Entry"
-msgstr ""
+msgstr "Journalbuchung"
 
 #. module: esg
 #: model:ir.model,name:esg.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Buchungszeile"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__kanban_text
 msgid "Kanban Text"
-msgstr ""
+msgstr "Kanban-Text"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_footprint_box/esg_carbon_footprint_box.xml:0
 msgid "Last 6 Months"
-msgstr ""
+msgstr "Die letzten 6 Monate"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__last_update
 msgid "Last Update"
-msgstr ""
+msgstr "Zuletzt aktualisiert"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__write_uid
@@ -1160,7 +1194,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__write_date
@@ -1173,68 +1207,68 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_footprint_box/esg_carbon_footprint_box.xml:0
 msgid "Last Year"
-msgstr ""
+msgstr "Letztes Jahr"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__latest_version
 msgid "Latest Version"
-msgstr ""
+msgstr "Neueste Version"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Leased Assets"
-msgstr ""
+msgstr "Angemietete oder geleaste Sachanlagen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__level
 msgid "Level"
-msgstr ""
+msgstr "Level"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Low Uncertainty (< 5%)"
-msgstr ""
+msgstr "Niedrige Unsicherheit (< 5 %)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_2
 msgid "Material Production"
-msgstr ""
+msgstr "Materialproduktion"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 #: model:ir.ui.menu,name:esg.menu_esg_measure
 msgid "Measure"
-msgstr ""
+msgstr "Messen"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Medium Uncertainty (5-20%)"
-msgstr ""
+msgstr "Mittlere Unsicherheit (5-20 %)"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Nachricht mit Zustellungsfehler"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Nachrichten"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__ch4
 msgid "Methane (CH₄)"
-msgstr ""
+msgstr "Methan (CH₄)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4
@@ -1244,24 +1278,24 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Missing Emission Factor"
-msgstr ""
+msgstr "Fehlender Emissionsfaktor"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2
 msgid "Mobile Combustion"
-msgstr ""
+msgstr "Mobile Verbrennungssysteme"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__monetary
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Monetary"
-msgstr ""
+msgstr "Monetär"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "NF₃"
-msgstr ""
+msgstr "NF₃"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__name
@@ -1272,23 +1306,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_gas__name
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__name
 msgid "Name"
-msgstr ""
+msgstr "Name"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__nb_linked_emissions
 msgid "Nb Linked Emissions"
-msgstr ""
+msgstr "Anzahl verbundener Emissionen"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_neutral
 msgid "Neutral"
-msgstr ""
+msgstr "Neutral"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "New"
-msgstr ""
+msgstr "Neu"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_nf3
@@ -1300,97 +1334,97 @@ msgstr ""
 #: model:esg.gas,name:esg.esg_gas_n2o
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__n2o
 msgid "Nitrous Oxide (N₂O)"
-msgstr ""
+msgstr "Distickstoffmonoxid (N₂O)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_n2o
 msgid "Nitrous Oxide (N₂O) (t)"
-msgstr ""
+msgstr "Distickstoffmonoxid (N₂O) (t)"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid "No Emission yet!"
-msgstr ""
+msgstr "Noch keine Emissionen"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
 msgid "No emissions were updated."
-msgstr ""
+msgstr "Keine Emissionen wurden aktualisiert."
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
 msgid "No source database found."
-msgstr ""
+msgstr "Keine Quelldatenbank gefunden."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Not detailed by gas"
-msgstr ""
+msgstr "Nicht aufgeführt nach Gas"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "Not loaded"
-msgstr ""
+msgstr "Nicht geladen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__note
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__note
 msgid "Note"
-msgstr ""
+msgstr "Notiz"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Anzahl der Aktionen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Anzahl der Fehler"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Anzahl der Nachrichten mit Zustellungsfehler."
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "N₂O"
-msgstr ""
+msgstr "N₂O"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Offset"
-msgstr ""
+msgstr "Verschiebung"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.action_offset_emission_report_views
 #: model:ir.ui.menu,name:esg.menu_esg_offset_emissions
 msgid "Offset Emissions"
-msgstr ""
+msgstr "Emissionsausgleich"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Other"
-msgstr ""
+msgstr "Andere"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_other_emission
 msgid "Other Emission"
-msgstr ""
+msgstr "Andere Emissio"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__other
@@ -1401,7 +1435,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Other Indirect Emissions"
-msgstr ""
+msgstr "Andere indirekte Emissionen"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c3f8
@@ -1422,38 +1456,38 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "PFCs"
-msgstr ""
+msgstr "PFC"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Übergeordnet"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Übergeordneter Pfad"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__partner_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__pfc
 msgid "Perfluorocarbons (PFCs)"
-msgstr ""
+msgstr "Perfluorcarbone (PFC)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Physically"
-msgstr ""
+msgstr "Physisch"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__physically
 msgid "Physically (Quantity)"
-msgstr ""
+msgstr "Physisch (Menge)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__precursors
@@ -1463,64 +1497,64 @@ msgstr ""
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_3
 msgid "Process Emissions"
-msgstr ""
+msgstr "Prozessemissionen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Processing of Sold Product"
-msgstr ""
+msgstr "Verarbeitung verkaufter Produkte"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_2
 msgid "Processing of Sold Products"
-msgstr ""
+msgstr "Verarbeitung verkaufter Produkte"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_4
 msgid "Product Usage and Disposal"
-msgstr ""
+msgstr "Produktnutzung und -entsorgung"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_1
 msgid "Purchased Electricity"
-msgstr ""
+msgstr "Erworbener Strom"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Purchased Electricity, Steam, Heating, and Cooling for own use"
-msgstr ""
+msgstr "Erworbene Elektrizität, Dampf, Heizung und Kühlung zur Eigennutzung"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_1
 msgid "Purchased Goods and Services"
-msgstr ""
+msgstr "Eingekaufte Waren und Dienstleistungen"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_indirect_2
 msgid "Purchased Steam, Heat or Cooling"
-msgstr ""
+msgstr "Erworbener Dampf (Heizen oder Kühlen)"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__quantity
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__quantity
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Quantity"
-msgstr ""
+msgstr "Menge"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__rating_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Bewertungen"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
@@ -1532,71 +1566,73 @@ msgstr ""
 msgid ""
 "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr ""
+"Relative Auswirkungen von Gas auf die globale Erwärmung im Vergleich zu CO₂ "
+"im Laufe von 100 Jahren"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid "Replace Previous Factors"
-msgstr ""
+msgstr "Vorherige Faktoren ersetzen"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Replace existing assignations"
-msgstr ""
+msgstr "Bestehende Zuweisungen ersetzen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "SF₆"
-msgstr ""
+msgstr "SF₆"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_sms_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS-Zustellungsfehler"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__scope
 msgid "Scope"
-msgstr ""
+msgstr "Rahmen"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 1"
-msgstr ""
+msgstr "Rahmen 1"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__direct
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
 msgid "Scope 1: Direct"
-msgstr ""
+msgstr "Rahmen 1: Direkt"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 2"
-msgstr ""
+msgstr "Rahmen 2"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__indirect
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
 msgid "Scope 2: Indirect"
-msgstr ""
+msgstr "Rahmen 2: Indirekt"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Scope 3"
-msgstr ""
+msgstr "Rahmen 3"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__scope__indirect_others
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
 msgid "Scope 3: Others Indirect"
-msgstr ""
+msgstr "Rahmen 3: andere Indirekte"
 
 #. module: esg
 #. odoo-javascript
@@ -1605,24 +1641,26 @@ msgid ""
 "Seamlessly bring all your ESG data together, whether from Odoo or outside, "
 "in a simple and organized way."
 msgstr ""
+"Sammeln Sie alle Ihre ESG-Daten einfach und übersichtlich, egal ob aus Odoo "
+"oder aus anderen Quellen."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__sequence
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__sequence
 #: model:ir.model.fields,field_description:esg.field_esg_gas__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequenz"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "Server returned an unexpected error: %(error)s"
-msgstr ""
+msgstr "Der Server hat einen unerwarteten Fehler zurückgegeben: %(error)s"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_settings
 msgid "Settings"
-msgstr ""
+msgstr "Einstellungen"
 
 #. module: esg
 #. odoo-python
@@ -1631,33 +1669,35 @@ msgid ""
 "Some gases you're trying to delete are used for data imports:\n"
 "%(gases)s"
 msgstr ""
+"Einige Gase, die Sie löschen möchten, werden für Datenimporte verwendet:\n"
+"%(gases)s"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__source_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__source_id
 msgid "Source"
-msgstr ""
+msgstr "Quelle"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__database_id
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
 msgid "Source Database"
-msgstr ""
+msgstr "Quelldatenbank"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_source_databases
 msgid "Source Databases"
-msgstr ""
+msgstr "Quelldatenbanken"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_1
 msgid "Stationary Combustion"
-msgstr ""
+msgstr "Stationäre Verbrennung"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_so2
@@ -1668,12 +1708,12 @@ msgstr ""
 #: model:esg.gas,name:esg.esg_gas_sf6
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__sf6
 msgid "Sulfur Hexafluoride (SF₆)"
-msgstr ""
+msgstr "Schwefelhexafluorid (SF₆)"
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_sf6
 msgid "Sulfur Hexafluoride (SF₆) (t)"
-msgstr ""
+msgstr "Schwefelhexafluorid (SF₆) (t)"
 
 #. module: esg
 #. odoo-python
@@ -1684,28 +1724,28 @@ msgstr ""
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
 msgid "The assignation rule must have at least one field filled"
-msgstr ""
+msgstr "In der Zuweisungsregel muss mindestens ein Feld ausgefüllt sein"
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_gas_code_unique
 msgid "The code of a gas must be unique."
-msgstr ""
+msgstr "Der Codes des Gases muss eindeutig sein."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "The file format doesn't seem to be correct."
-msgstr ""
+msgstr "Das Dateiformat scheint nicht korrekt zu sein."
 
 #. module: esg
 #: model:account.report.column,name:esg.carbon_report_column_co2e
 msgid "Total (t CO₂e)"
-msgstr ""
+msgstr "Gesamt (t CO₂e)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_list_view
 msgid "Total Emissions (kgCO₂e)"
-msgstr ""
+msgstr "Gesamtemissionen (kgCO₂e)"
 
 #. module: esg
 #. odoo-javascript
@@ -1715,23 +1755,27 @@ msgid ""
 "generate reports to meet compliance requirements all while making informed, "
 "strategic decisions."
 msgstr ""
+"Verfolgen Sie Ihre ESG-Leistung, wandeln Sie Daten in umsetzbare "
+"Erkenntnisse um und erstellen Sie Berichte zur Erfüllung von "
+"Konformitätsanforderungen, während Sie fundierte, strategische "
+"Entscheidungen treffen."
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Track your company's"
-msgstr ""
+msgstr "Behalten Sie eine Übersicht über"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Transportation and Distribution"
-msgstr ""
+msgstr "Transport und Distribution"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_1
 msgid "Transportation and Logistics"
-msgstr ""
+msgstr "Transport und Logistik"
 
 #. module: esg
 #. odoo-javascript
@@ -1740,6 +1784,9 @@ msgid ""
 "Turn insights into action, monitor your impact in real-time, and drive "
 "meaningful change across your organization."
 msgstr ""
+"Setzen Sie Erkenntnisse in die Tat um, überwachen Sie Ihre Auswirkungen in "
+"Echtzeit und treiben Sie sinnvolle Veränderungen in Ihrem gesamten "
+"Unternehmen voran."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move_line__esg_uncertainty_value
@@ -1747,164 +1794,164 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_uncertainty_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_uncertainty_value
 msgid "Uncertainty (%)"
-msgstr ""
+msgstr "Unsicherheit (%)"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move_line__esg_uncertainty_absolute_value
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_uncertainty_absolute_value
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__esg_uncertainty_absolute_value
 msgid "Uncertainty (kgCO₂e)"
-msgstr ""
+msgstr "Unsicherheit (kgCO₂e)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_kanban_view
 msgid "Uncertainty:"
-msgstr ""
+msgstr "Unsicherheit:"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__code
 msgid "Unique code identifying the gas"
-msgstr ""
+msgstr "Eindeutiger Code, der das Gas identifiziert"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
 msgid "Unit"
-msgstr ""
+msgstr "Einheit"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__unit_name
 msgid "Unit Name"
-msgstr ""
+msgstr "Name der Einheit"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__uom_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__uom_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Maßeinheit"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__uom_id
 msgid "UoM"
-msgstr ""
+msgstr "Maßeinheit"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Update"
-msgstr ""
+msgstr "Aktualisieren"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
 msgid "Updated Emissions"
-msgstr ""
+msgstr "Aktualisierte Emissionen"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "Updated on: %(date)s"
-msgstr ""
+msgstr "Aktualisiert am: %(date)s"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_factor_line.py:0
 msgid "Updated values for %(gas_name)s (%(activity_type_name)s)"
-msgstr ""
+msgstr "Aktualisierte Werte für %(gas_name)s (%(activity_type_name)s)"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_direct_indirect__upstream
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_source__activity_flow_indirect_others__upstream
 msgid "Upstream"
-msgstr ""
+msgstr "Vorgelagerte Emissionen"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_8
 msgid "Upstream Leased Assets"
-msgstr ""
+msgstr "Vorgelagerte geleaste Vermögenswerte"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_4
 msgid "Upstream Transportation and Distribution"
-msgstr ""
+msgstr "Vorgelagerter Transport und Vertrieb"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Upstream activities"
-msgstr ""
+msgstr "Vorgelagerte Aktivitäten"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__url
 msgid "Url"
-msgstr ""
+msgstr "URL"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_3
 msgid "Use of Sold Products"
-msgstr ""
+msgstr "Nutzung verkaufter Produkte"
 
 #. module: esg
 #: model:res.groups,name:esg.esg_group_user
 msgid "User"
-msgstr ""
+msgstr "Benutzer"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_from
 msgid "Valid From"
-msgstr ""
+msgstr "Gültig ab"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_to
 msgid "Valid To"
-msgstr ""
+msgstr "Gültig bis"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2_1
 msgid "Vehicle Type 1"
-msgstr ""
+msgstr "Fahrzeugtyp 1"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_2_2
 msgid "Vehicle Type 2"
-msgstr ""
+msgstr "Fahrzeugtyp 2"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Very High Uncertainty (> 50%)"
-msgstr ""
+msgstr "Sehr hohe Unsicherheit (> 50 %)"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
 msgid "Waste Generated in Operations"
-msgstr ""
+msgstr "In Vorgängen produzierter Abfall"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_3
 msgid "Waste Management"
-msgstr ""
+msgstr "Abfallwirtschaft"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Website-Nachrichten"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Website-Kommunikationsverlauf"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "You can't delete the ADEME database."
-msgstr ""
+msgstr "Sie können die ADEME-Datenbank nicht löschen."
 
 #. module: esg
 #. odoo-python
@@ -1917,79 +1964,82 @@ msgstr ""
 #: code:addons/esg/report/esg_carbon_emission_report.py:0
 msgid "You cannot copy emissions linked to journal items."
 msgstr ""
+"Sie können Emissionen, die mit Buchungszeilen verknüpft sind, nicht kopieren."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_emission_source.py:0
 msgid "You cannot create a cyclic hierarchy of emission sources."
 msgstr ""
+"Es ist nicht möglich, eine zyklische Hierarchie von Emissionsquellen zu "
+"erstellen."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/report/esg_carbon_emission_report.py:0
 msgid "You cannot delete journal items from here."
-msgstr ""
+msgstr "Sie können hier keine Journalbuchungen löschen."
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 msgid "e.g. ADEME"
-msgstr ""
+msgstr "z. B. ADEME"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "e.g. Bus Transportation"
-msgstr ""
+msgstr "z. B. Bustransport"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.esg_gas_form_view
 msgid "e.g. Fossil Methane (CH₄)"
-msgstr ""
+msgstr "z. B. Fossiles Methan (CH₄)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_source_form_view
 msgid "e.g. Mobile Combustion"
-msgstr ""
+msgstr "z. B. Mobile Verbrennungssysteme"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "e.g. Office Computer"
-msgstr ""
+msgstr "z. B. Büro-Computer"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 msgid "e.g. https://base-empreinte.ademe.fr/"
-msgstr ""
+msgstr "z. B. https://base-empreinte.ademe.fr/"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__quantity
 msgid "kg"
-msgstr ""
+msgstr "kg"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/widgets/esg_value/esg_value.xml:0
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_kanban_view
 msgid "kgCO₂e /"
-msgstr ""
+msgstr "kgCO₂e /"
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 msgid "n/a"
-msgstr ""
+msgstr "k. A."
 
 #. module: esg
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__esg_emissions_value_t
 msgid "tCO₂e"
-msgstr ""
+msgstr "tCO₂e"
 
 #. module: esg
 #. odoo-javascript
@@ -1998,3 +2048,6 @@ msgid ""
 "with ease! Most emissions are seamlessly calculated from your accounting "
 "data, using account move lines to generate precise and compliant reports."
 msgstr ""
+"Ihres Unternehmens! Die meisten Emissionen werden nahtlos aus Ihren "
+"Buchhaltungsdaten berechnet, wobei Buchungszeilen verwendet werden, um "
+"präzise und konforme Berichte zu erstellen."

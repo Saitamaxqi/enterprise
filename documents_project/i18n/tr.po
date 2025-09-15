@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* documents_project
+# * documents_project
 #
 # Translators:
 # Martin Trigaux, 2022
@@ -10,20 +10,22 @@
 # Gökhan Erdoğdu <gokhan.erdogdu@mechsoft.com.tr>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # Murat Kaplan <muratk@projetgrup.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Murat Kaplan <muratk@projetgrup.com>, 2023\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"documents_project/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_project
 #. odoo-python
@@ -49,7 +51,7 @@ msgstr "Ek"
 #. module: documents_project
 #: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
 msgid "Categorize and share your documents with your customers"
-msgstr ""
+msgstr "Belgelerinizi kategorilere ayırın ve müşterilerinizle paylaşın."
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_documents_facet
@@ -105,7 +107,7 @@ msgstr "Belgeler"
 #. module: documents_project
 #: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
 msgid "Documents &amp; Analytics"
-msgstr ""
+msgstr "Belgeler ve Analitik"
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_documents_folder
@@ -121,13 +123,13 @@ msgstr "Taslak"
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid "Invalid project search"
-msgstr ""
+msgstr "Geçersiz proje araması"
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
 msgid "Invalid task search"
-msgstr ""
+msgstr "Geçersiz görev araması"
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__is_shared
@@ -149,7 +151,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/documents_workflow_rule.py:0
 msgid "New task from Documents"
-msgstr ""
+msgstr "Belgeler'den yeni görev oluşturuldu"
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_project_project__document_count
@@ -203,7 +205,7 @@ msgstr "Görev"
 #. odoo-python
 #: code:addons/documents_project/models/documents_workflow_rule.py:0
 msgid "Task created from document %s"
-msgstr ""
+msgstr "Belgeden %s görev oluşturuldu"
 
 #. module: documents_project
 #. odoo-python
@@ -215,13 +217,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/project_task.py:0
 msgid "Task's Documents"
-msgstr ""
+msgstr "Göreve Ait Belgeler"
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_folder.py:0
 msgid "The \"%s\" workspace is required by the Project application and cannot be deleted."
 msgstr ""
+"\"%s\" çalışma alanı, Proje Yönetimi uygulaması tarafından gerekli "
+"kılınmıştır ve silinemez."
 
 #. module: documents_project
 #. odoo-python
@@ -254,6 +258,8 @@ msgstr "Onaylanacak"
 #: model_terms:ir.actions.act_window,help:documents_project.action_view_documents_project_task
 msgid "Upload <span class=\"fw-normal\">a file or </span>drag <span class=\"fw-normal\">it here.</span>"
 msgstr ""
+"<span class=\"fw-normal\">Bir dosya </span> yükleyin veya <span class=\"fw-"
+"normal\">buraya</span>sürükleyin."
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_project_task__project_use_documents

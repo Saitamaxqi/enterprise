@@ -1,31 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_enterprise
+# * project_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Thi Huong Nguyen, 2023
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:47+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"project_enterprise/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "%(partner)s has %(amount)s tasks at the same time."
-msgstr ""
+msgstr "%(partner)s có %(amount)s nhiệm vụ cùng một lúc."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
@@ -33,27 +35,31 @@ msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
 msgstr ""
+"<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title="
+"\"Cảnh báo phụ thuộc\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
+"<i class=\"fa fa-random me-2\" role=\"img\" title=\"Lập kế hoạch chồng chéo\""
+"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Deadline:</strong>"
-msgstr ""
+msgstr "<strong>Thời hạn:</strong>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Planned Date:</strong>"
-msgstr ""
+msgstr "<strong>Ngày được lập kế hoạch:</strong>"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__allocated_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "Thời gian được phân bổ"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__user_ids
@@ -66,17 +72,17 @@ msgstr "Người được phân công"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/view_dialogs/select_auto_plan_create_dialog.xml:0
 msgid "Auto Plan"
-msgstr ""
+msgstr "Tự động lập kế hoạch"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
-msgstr ""
+msgstr "Xem <i class=\"oi oi-chevron-right ms-2\"/>"
 
 #. module: project_enterprise
 #: model:ir.model,website_form_label:project_enterprise.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Tạo một nhiệm vụ"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
@@ -133,6 +139,8 @@ msgid ""
 "One parameter is missing to use this method. You should give a start and end "
 "dates."
 msgstr ""
+"Thiếu một tham số để sử dụng phương pháp này. Bạn nên đặt ngày bắt đầu và "
+"ngày kết thúc."
 
 #. module: project_enterprise
 #. odoo-python
@@ -140,12 +148,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Planned Date"
-msgstr "Ngày theo Kế hoạch"
+msgstr "Ngày theo kế hoạch"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_start
 msgid "Planned Date Start"
-msgstr ""
+msgstr "Ngày bắt đầu theo kế hoạch"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
@@ -165,13 +173,13 @@ msgstr "Dự án"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project due"
-msgstr ""
+msgstr "Dự án đến hạn"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project start"
-msgstr ""
+msgstr "Dự án bắt đầu"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -191,7 +199,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "Some tasks were planned after their initial deadline."
-msgstr ""
+msgstr "Một số nhiệm vụ đã được lên kế hoạch sau thời hạn ban đầu."
 
 #. module: project_enterprise
 #. odoo-python
@@ -201,6 +209,9 @@ msgid ""
 "limited availability of the assignees. The planned dates for these tasks may "
 "not align with their allocated hours."
 msgstr ""
+"Một số nhiệm vụ được lên lịch đồng thời, dẫn đến xung đột do khung giờ trống "
+"của người được phân công có hạn. Ngày được lên kế hoạch cho những nhiệm vụ "
+"này có thể không tương ứng với số giờ được phân bổ."
 
 #. module: project_enterprise
 #. odoo-python
@@ -209,6 +220,8 @@ msgid ""
 "Some tasks weren't planned because the closest available starting date was "
 "too far ahead in the future"
 msgstr ""
+"Một số nhiệm vụ không được lên kế hoạch vì ngày bắt đầu gần nhất có thể chọn "
+"nằm quá xa trong tương lai"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_begin
@@ -219,12 +232,12 @@ msgstr "Ngày bắt đầu"
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task
 msgid "Task"
-msgstr "Công việc"
+msgstr "Nhiệm vụ"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Chu kỳ lặp nhiệm vụ"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -236,13 +249,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task duplicated"
-msgstr ""
+msgstr "Nhiệm vụ đã được sao chép"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task removed"
-msgstr ""
+msgstr "Nhiệm vụ đã bị gỡ bỏ"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -254,7 +267,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task rescheduled"
-msgstr ""
+msgstr "Nhiệm vụ đã được lên lịch lại"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_report_project_task_user
@@ -265,19 +278,19 @@ msgstr "Phân tích nhiệm vụ"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Tasks have been successfully scheduled for the upcoming periods."
-msgstr ""
+msgstr "Nhiệm vụ đã được lên kế hoạch thành công cho giai đoạn sắp tới."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_search_conflict_task_project_enterprise
 msgid "Tasks in Conflict"
-msgstr ""
+msgstr "Nhiệm vụ bị xung đột"
 
 #. module: project_enterprise
 #: model:ir.model.constraint,message:project_enterprise.constraint_project_task_planned_dates_check
 msgid "The planned start date must be before the planned end date."
-msgstr ""
+msgstr "Ngày bắt đầu theo kế hoạch phải trước ngày kết thúc theo kế hoạch."
 
 #. module: project_enterprise
 #. odoo-python
@@ -286,12 +299,14 @@ msgid ""
 "The tasks could not be rescheduled due to the assignees' lack of "
 "availability at this time."
 msgstr ""
+"Không thể lên lịch lại nhiệm vụ do người được phân công không có khung giờ "
+"trống vào thời điểm này."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "This Progress Bar is not implemented."
-msgstr "Thanh tiến trình này không được triển khai."
+msgstr "Thanh tiến độ này không được triển khai."
 
 #. module: project_enterprise
 #. odoo-python
@@ -300,6 +315,8 @@ msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
 msgstr ""
+"Không thể lập kế hoạch cho nhiệm vụ này trước các nhiệm vụ mà nó phụ thuộc "
+"sau đây: %(task_list)s"
 
 #. module: project_enterprise
 #. odoo-python
@@ -308,6 +325,8 @@ msgid ""
 "This user isn't expected to have any tasks assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"Người dùng này sẽ không được giao bất kỳ nhiệm vụ nào trong giai đoạn này vì "
+"họ không có bất kỳ hợp đồng nào còn hiệu lực."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
@@ -320,7 +339,7 @@ msgstr "Bảng chấm công"
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt_inherited_project_sharing_task
 msgid "Unschedule"
-msgstr "Không có kế hoạch"
+msgstr "Huỷ lịch trình"
 
 #. module: project_enterprise
 #: model:ir.model.fields,help:project_enterprise.field_project_task__display_name
@@ -346,13 +365,13 @@ msgstr "Người dùng"
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 msgid "View Tasks"
-msgstr ""
+msgstr "Xem nhiệm vụ"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_renderer.xml:0
 msgid "View customer locations for your tasks"
-msgstr ""
+msgstr "Xem vị trí của khách hàng cho nhiệm vụ của bạn"
 
 #~ msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 #~ msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Mũi tên\"/>"

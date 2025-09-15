@@ -1,26 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* approvals
+# * approvals
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-02-12 10:54+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:04+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"approvals/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "<span class=\"fa fa-warning\" title=\"Invalid minimum approvals\"/>"
-msgstr "<span class=\"fa fa-warning\" title=\"Invalid minimum approvals\"/>"
+msgstr ""
+"<span class=\"fa fa-warning\" title="
+"\"Неверное минимальное количество согласований\"/>"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -35,7 +42,7 @@ msgstr "<span>к: </span>"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction
 msgid "Action Needed"
-msgstr "Требуются действия"
+msgstr "Требуется действие"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__active
@@ -45,12 +52,12 @@ msgstr "Активный"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_ids
 msgid "Activities"
-msgstr "Активность"
+msgstr "Дела"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_mail_activity
 msgid "Activity"
-msgstr "Активность"
+msgstr "Дело"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_exception_decoration
@@ -60,18 +67,18 @@ msgstr "Оформление исключения активности"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_state
 msgid "Activity State"
-msgstr "Состояние активности"
+msgstr "Статус дела"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "Значок типа активности"
+msgstr "Иконка категории дела"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_product
 #: model:ir.model.fields,help:approvals.field_approval_request__has_product
 msgid "Additional products that should be specified on the request."
-msgstr "Дополнительные продукты, которые должны быть указаны в заявке."
+msgstr "Дополнительные товары, которые должны быть указаны в заявке."
 
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_manager
@@ -82,13 +89,15 @@ msgstr "Администратор"
 #: model:ir.actions.act_window,name:approvals.approval_request_action_all
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu_all
 msgid "All Approvals"
-msgstr "Все утверждения"
+msgstr "Заявки на согласование"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__approval_type
 #: model:ir.model.fields,help:approvals.field_approval_request__approval_type
 msgid "Allows you to define which documents you would like to create once the request has been approved"
-msgstr "Позволяет определить, какие документы необходимо создать после утверждения запроса"
+msgstr ""
+"Позволяет определить, какие документы вы хотите создать после согласования "
+"заявки"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__amount
@@ -111,23 +120,23 @@ msgstr "Пользователь не может быть в списке утв
 #. module: approvals
 #: model:mail.activity.type,name:approvals.mail_activity_data_approval
 msgid "Approval"
-msgstr "Одобрение"
+msgstr "Согласование"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category
 msgid "Approval Category"
-msgstr "Категория утверждения"
+msgstr "Категория согласования"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_request
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__approval_request_id
 msgid "Approval Request"
-msgstr "Запрос на утверждение"
+msgstr "Заявка на согласование"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__name
 msgid "Approval Subject"
-msgstr "Объект утверждения"
+msgstr "Предмет согласования"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_type
@@ -135,23 +144,23 @@ msgstr "Объект утверждения"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approval_type
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Approval Type"
-msgstr "Тип утверждения"
+msgstr "Тип согласования"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_category_approver
 msgid "Approval Type Approver"
-msgstr "Тип утверждения Утверждающее лицо"
+msgstr "Согласующий данного типа согласования"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_root
 msgid "Approvals"
-msgstr "Одобрения"
+msgstr "Согласования"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action
 #: model:ir.ui.menu,name:approvals.approvals_category_menu_config
 msgid "Approvals Types"
-msgstr "Типы разрешений"
+msgstr "Тип согласований"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
@@ -162,12 +171,12 @@ msgstr "Типы утверждений Изображение"
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu_to_review
 msgid "Approvals to Review"
-msgstr "Утверждения для рассмотрения"
+msgstr "Согласования к проверке"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review_category
 msgid "Approvals to review"
-msgstr "Утверждения для рассмотрения"
+msgstr "Согласования к проверке"
 
 #. module: approvals
 #. odoo-javascript
@@ -175,7 +184,7 @@ msgstr "Утверждения для рассмотрения"
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Approve"
-msgstr "Одобрить"
+msgstr "Согласовать"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__approved
@@ -183,7 +192,7 @@ msgstr "Одобрить"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__approved
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Approved"
-msgstr "Одобрено"
+msgstr "Согласовано"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_approver
@@ -195,12 +204,14 @@ msgstr "Утверждающий"
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Approver Sequence can only be activated with at least 1 minimum approver."
-msgstr "Последовательность утверждения может быть активирована только при наличии хотя бы 1 минимального утверждающего."
+msgstr ""
+"Последовательность согласующих лиц может быть включена только при наличии "
+"хотя бы одного согласующего."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__user_ids
 msgid "Approver Users"
-msgstr "Пользователи утверждения"
+msgstr "Согласующие пользователи"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -212,13 +223,13 @@ msgstr "Утверждающий(ие)"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approver_ids
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Approvers"
-msgstr "Утвердители"
+msgstr "Согласующие"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approver_sequence
 msgid "Approvers Sequence?"
-msgstr "Последовательность утверждений?"
+msgstr "Очередность согласования?"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -275,7 +286,7 @@ msgstr "Можно редактировать"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit_user_id
 msgid "Can Edit User"
-msgstr "Может редактировать пользователя"
+msgstr "Можно редактировать пользователя"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__cancel
@@ -305,7 +316,7 @@ msgstr "Категория"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__category_approver
 msgid "Category Approver"
-msgstr "Утвердитель категории"
+msgstr "Согласующий категории"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_code
@@ -330,17 +341,20 @@ msgstr "Конфигурация"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__partner_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Contact"
-msgstr "Контакты"
+msgstr "Контакт"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_contract_approval
 msgid "Contract Approval"
-msgstr "Утверждение контракта"
+msgstr "Согласование договора"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_product_line__product_uom_category_id
 msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
-msgstr "Пересчет между единицами измерения может произойти только в том случае, если они принадлежат к одной и той же категории. Пересчет будет осуществляться на основе коэффициентов."
+msgstr ""
+"Конверсия между единицами измерения возможна только в том случае, если они "
+"принадлежат к одной категории. Конверсия будет выполнена на основе "
+"коэффициентов."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_uid
@@ -349,7 +363,7 @@ msgstr "Пересчет между единицами измерения мож
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__create_uid
 #: model:ir.model.fields,field_description:approvals.field_approval_request__create_uid
 msgid "Created by"
-msgstr "Создано"
+msgstr "Создано:"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_date
@@ -358,12 +372,12 @@ msgstr "Создано"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__create_date
 #: model:ir.model.fields,field_description:approvals.field_approval_request__create_date
 msgid "Created on"
-msgstr "Создано"
+msgstr "Дата создания:"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action_new_request
 msgid "Dashboard"
-msgstr "Панель управления"
+msgstr "Дашборд"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date
@@ -380,7 +394,7 @@ msgstr "Дата подтверждена"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date_end
 msgid "Date end"
-msgstr "Дата конца"
+msgstr "Дата окончания"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__date_start
@@ -407,7 +421,7 @@ msgstr "Описание"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__display_name
 #: model:ir.model.fields,field_description:approvals.field_approval_request__display_name
 msgid "Display Name"
-msgstr "Отображаемое имя"
+msgstr "Отображаемое название"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -439,7 +453,7 @@ msgstr "Менеджер сотрудника"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__existing_request_user_ids
 msgid "Existing Request User"
-msgstr "Существующий пользователь запроса"
+msgstr "Пользователь, создавший запрос"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__existing_user_ids
@@ -459,12 +473,12 @@ msgstr "Подписчики"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "Подписчики"
+msgstr "Наблюдатели (партнеры)"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "Шрифт, отличный значок, например. к.-а.-задачи"
+msgstr "Иконка Font awesome, например, fa-tasks"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
@@ -550,11 +564,12 @@ msgid ""
 "        Is Required Approver: the employee's manager will be required to approve the request.\n"
 "    "
 msgstr ""
-"Как руководитель сотрудника взаимодействует с этим типом одобрения.\n"
+"Как менеджер сотрудника взаимодействует с данным типом согласования. \n"
 "\n"
-"        Пустой: ничего не делать\n"
-"        Is Approver: менеджер сотрудника будет в списке утверждающих\n"
-"        Is Required Approver: менеджер сотрудника должен будет одобрить запрос.\n"
+"        Пусто: можно ничего не делать\n"
+"        Согласующий: менеджер сотрудника есть в списке согласующих\n"
+"        Обязательный согласующий: менеджер сотрудника в обязательном порядке "
+"должен согласовать заявку.\n"
 "    "
 
 #. module: approvals
@@ -585,7 +600,7 @@ msgstr "Если флажок установлен, значит, новые с�
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "Если отмечено, некоторые сообщения имеют ошибку доставки."
+msgstr "Если флажок установлен, некоторые сообщения не были доставлены."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__automated_sequence
@@ -597,7 +612,10 @@ msgstr "Если флажок установлен, запросы на утве
 #: model:ir.model.fields,help:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__approver_sequence
 msgid "If checked, the approvers have to approve in sequence (one after the other). If Employee's Manager is selected as approver, they will be the first in line."
-msgstr "Если флажок установлен, то утверждающие должны утверждать в порядке очереди (друг за другом). Если в качестве утверждающего выбран менеджер сотрудника, он будет первым в очереди."
+msgstr ""
+"Если флажок установлен, то согласующие лица должны согласовать заявку в "
+"определенной последовательности (друг за другом). Если в качестве "
+"утверждающего выбран менеджер сотрудника, то он будет первым в очереди."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__image
@@ -618,22 +636,22 @@ msgstr "Предупреждение о недопустимом минимум�
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__manager_approval__approver
 msgid "Is Approver"
-msgstr "Утверждающий"
+msgstr "Согласующий"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_is_follower
 msgid "Is Follower"
-msgstr "Является подписчиком"
+msgstr "Наблюдатель"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__manager_approval__required
 msgid "Is Required Approver"
-msgstr "Требуется Утверждающий"
+msgstr "Обязательный согласующий"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_job_referral_award
 msgid "Job Referral Award"
-msgstr "Награда за направление на работу"
+msgstr "Награда за рекомендацию кандидата"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__write_uid
@@ -642,7 +660,7 @@ msgstr "Награда за направление на работу"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_uid
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_uid
 msgid "Last Updated by"
-msgstr "Последнее обновление"
+msgstr "Последнее обновление:"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__write_date
@@ -651,7 +669,7 @@ msgstr "Последнее обновление"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_date
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_date
 msgid "Last Updated on"
-msgstr "Последнее обновление"
+msgstr "Дата последнего обновления:"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -673,7 +691,7 @@ msgstr "Основное вложение"
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_manager
 msgid "Manager"
-msgstr "Руководитель"
+msgstr "Менеджер"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error
@@ -695,38 +713,40 @@ msgstr "Минимальное одобрение"
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Minimum Approval must be equal or superior to the sum of required Approvers."
-msgstr "Минимальное одобрение должно быть равно или превышать сумму требуемых одобрителей."
+msgstr ""
+"Минимальное согласование должно быть равно или превышать сумму необходимых "
+"согласующих лиц."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Крайний срок моей активности"
+msgstr "Срок выполнения дела"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_approval_menu
 msgid "My Approvals"
-msgstr "Мои одобрения"
+msgstr "Мои согласования"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "My Approvals to Review"
-msgstr "Мои одобрения для просмотра"
+msgstr "Мои согласования, ожидающие проверки"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "My Request"
-msgstr "Моя просьба"
+msgstr "Моя заявка"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action
 #: model:ir.ui.menu,name:approvals.approvals_request_menu_my
 msgid "My Requests"
-msgstr "Мои запросы"
+msgstr "Мои заявки"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__name
 msgid "Name"
-msgstr "Имя"
+msgstr "Название"
 
 #. module: approvals
 #. odoo-python
@@ -745,27 +765,27 @@ msgstr "Новый запрос"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Следующее событие календаря активности"
+msgstr "Следующее дело Календарь"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Следующий срок мероприятия"
+msgstr "Срок выполнения следующего дела"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_summary
 msgid "Next Activity Summary"
-msgstr "Резюме следующего действия"
+msgstr "Краткое описание следующего дела"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_id
 msgid "Next Activity Type"
-msgstr "Следующий Тип Мероприятия"
+msgstr "Категория следующего дела"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_all
 msgid "No Approvals"
-msgstr "Нет одобрений"
+msgstr "Нет согласований"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -776,7 +796,7 @@ msgstr "Нет запросов на утверждение"
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_to_review
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_to_review_category
 msgid "No new approvals to review"
-msgstr "Нет новых разрешений для рассмотрения"
+msgstr "Нет новых заявок к проверке"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__no
@@ -824,7 +844,7 @@ msgstr "Количество запросов на проверку"
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_user
 msgid "Officer: Approve all requests"
-msgstr "Офицер: Одобрить все запросы"
+msgstr "Сотрудник: Согласовать все заявки"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__optional
@@ -848,7 +868,7 @@ msgstr "Опции"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Payment"
-msgstr "Оплата"
+msgstr "Платеж"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_payment_application
@@ -875,12 +895,12 @@ msgstr "Товар"
 #: model:ir.model,name:approvals.model_approval_product_line
 #: model:ir.model.fields,field_description:approvals.field_approval_request__product_line_ids
 msgid "Product Line"
-msgstr "Линия продуктов"
+msgstr "Линия товара"
 
 #. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_product_variant
 msgid "Product Variants"
-msgstr "Варианты продуктов"
+msgstr "Вариация товара"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_id
@@ -910,7 +930,7 @@ msgstr "Рейтинги"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reference
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Reference"
-msgstr "Справка"
+msgstr "Ссылка"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence_id
@@ -923,7 +943,7 @@ msgstr "Эталонная последовательность"
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Refuse"
-msgstr "Отказаться"
+msgstr "Отклонить"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__refused
@@ -931,7 +951,7 @@ msgstr "Отказаться"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__refused
 #: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Refused"
-msgstr "Отказано"
+msgstr "Отклонено"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__request_id
@@ -978,7 +998,7 @@ msgstr "Ответственный пользователь"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "Ошибка доставки SMS"
+msgstr "Ошибка доставки СМС"
 
 #. module: approvals
 #. odoo-python
@@ -992,7 +1012,10 @@ msgstr "Последовательность"
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_approver__can_edit_user_id
 msgid "Simple users should not be able to remove themselves as approvers because they will lose access to the record if they misclick."
-msgstr "Простые пользователи не должны иметь возможности удалять себя как утверждающих, поскольку в случае ошибки они потеряют доступ к записи."
+msgstr ""
+"Простые пользователи не должны иметь возможности удалять себя в качестве "
+"согласующих, поскольку в случае ошибочного нажатия они потеряют доступ к "
+"записи."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__status
@@ -1008,10 +1031,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Статус, основанный на мероприятии\n"
-"Просроченная: Дата, уже прошла\n"
-"Сегодня: Дата мероприятия сегодня\n"
-"Запланировано: будущая деятельность."
+"Статус дел\n"
+"Просроченные: Срок выполнения уже прошел\n"
+"Сегодня: Срок выполнения сегодня\n"
+"Запланированные: Будущие дела."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1026,30 +1049,38 @@ msgstr "Отправлено"
 #. module: approvals
 #: model:res.groups,comment:approvals.group_approval_user
 msgid "The user will be able to access all requests and approve/refuse them."
-msgstr "Пользователь сможет получить доступ ко всем запросам и одобрить/отклонить их."
+msgstr ""
+"Пользователь сможет получить доступ ко всем заявкам и согласовать/отклонить "
+"их."
 
 #. module: approvals
 #: model:res.groups,comment:approvals.group_approval_manager
 msgid "The user will have access to the approvals configuration."
-msgstr "Пользователь получит доступ к конфигурации утверждений."
+msgstr "Пользователь будет иметь доступ к конфигурации согласований."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. There is no manager linked to your employee profile."
-msgstr "Этот запрос должен быть одобрен вашим руководителем. К вашему профилю сотрудника не привязан менеджер."
+msgstr ""
+"Эта заявка должна быть согласована вашим менеджером. В вашем профиле не "
+"указан менеджер."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. There is no user linked to your manager."
-msgstr "Этот запрос должен быть одобрен вашим руководителем. Нет пользователя, связанного с вашим менеджером."
+msgstr ""
+"Эта заявка должна быть согласована вашим менеджером. В системе нет "
+"пользователя, связанного с вашим менеджером."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "This request needs to be approved by your manager. Your manager is not in the approvers list."
-msgstr "Этот запрос должен быть одобрен вашим руководителем. Вашего менеджера нет в списке утверждающих."
+msgstr ""
+"Эта заявка должна быть согласована вашим менеджером. Вашего менеджера нет в "
+"списке согласующих лиц."
 
 #. module: approvals
 #. odoo-javascript
@@ -1062,12 +1093,12 @@ msgstr "К согласованию"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "To Review:"
-msgstr "Просмотреть:"
+msgstr "К проверке:"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__new
 msgid "To Submit"
-msgstr "К Подтверждению"
+msgstr "Оправить"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration
@@ -1099,12 +1130,12 @@ msgstr "Ожидание"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__website_message_ids
 msgid "Website Messages"
-msgstr "Веб-сайт сообщения"
+msgstr "Сообщения с вебсайта"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__website_message_ids
 msgid "Website communication history"
-msgstr "История общений с сайта"
+msgstr "История коммуникаций с сайта"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1116,25 +1147,30 @@ msgstr "Вывести"
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You cannot approve before the previous approver."
-msgstr "Вы не можете утвердить документ раньше предыдущего утвердителя."
+msgstr "Вы не можете согласовать раньше предыдущего согласующего сотрудника."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You cannot assign the same approver multiple times on the same request."
-msgstr "Вы не можете назначить одного и того же утверждающего несколько раз для одного и того же запроса."
+msgstr ""
+"Вы не можете назначить одного и того же согласующего несколько раз на одну "
+"заявку."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/ir_attachment.py:0
 msgid "You cannot unlink an attachment which is linked to a validated, refused or cancelled approval request."
-msgstr "Вы не можете отсоединить вложение, связанное с подтвержденным, отклоненным или отмененным запросом на утверждение."
+msgstr ""
+"Нельзя открепить вложение, связанное с согласованной, отклоненной или "
+"отмененной заявкой на согласование."
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "You have to add at least %s approvers to confirm your request."
-msgstr "Для подтверждения запроса необходимо добавить не менее %s одобрителей."
+msgstr ""
+"Для подтверждения заявки необходимо добавить не менее %s согласующих лиц."
 
 #. module: approvals
 #. odoo-python
@@ -1146,7 +1182,9 @@ msgstr "Вы должны приложить как минимум один до
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
 msgid "Your minimum approval exceeds the total of default approvers."
-msgstr "Ваше минимальное одобрение превышает общее количество одобрителей по умолчанию."
+msgstr ""
+"Установленное минимальное согласование превышает общее количество "
+"согласующих по умолчанию."
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -1156,7 +1194,7 @@ msgstr "например, Брюссель"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "e.g. Procurement"
-msgstr "например, закупки"
+msgstr "например, снабжение"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action

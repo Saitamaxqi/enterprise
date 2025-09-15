@@ -1,38 +1,41 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_plm
+# * mrp_plm
 #
 # Translators:
 # Martin Trigaux, 2022
 # Stefano Consolaro <stefano.consolaro@mymage.it>, 2022
 # Marianna Ciofani, 2023
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2023\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 12:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/mrp_plm/"
+"it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_count
 msgid "# Attachments"
-msgstr "# Allegati"
+msgstr "N. allegati"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__eco_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product__eco_count
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template__eco_count
 msgid "# ECOs"
-msgstr "N. OMT"
+msgstr "N. ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__eco_inprogress_count
@@ -43,12 +46,14 @@ msgstr "N. OMT in corso"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "%(approval_name)s %(approver_name)s %(approval_status)s this ECO"
-msgstr ""
+msgstr "%(approval_name)s %(approver_name)s %(approval_status)s quest'OMT"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title=\"Domain alias\"/>&amp;nbsp;"
-msgstr "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title=\"Domain alias\"/>&amp;nbsp;"
+msgstr ""
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Alias dominio\" "
+"title=\"Alias dominio\"/>&amp;nbsp;"
 
 #. module: mrp_plm
 #. odoo-python
@@ -61,9 +66,11 @@ msgid ""
 "                    </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
-"                        Importare file nell'ordine di modifica tecnica. Verranno aggiunti al prodotto ulterioramente\n"
+"                        Caricare file per l'ECO, verranno successivamente "
+"aggiunti al prodotto.\n"
 "                    </p><p>\n"
-"                        Usare questa funzionalità per immagazzinare qualsiasi file, come disegni o specificazioni.\n"
+"                        Utilizzare questa funzionalità per memorizzare "
+"qualsiasi file, come i disegni o le specifiche.\n"
 "                    </p>"
 
 #. module: mrp_plm
@@ -131,7 +138,7 @@ msgstr "Aggiungi una descrizione..."
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_tag_action
 msgid "Add a new tag"
-msgstr "Aggiunge una nuova etichetta"
+msgstr "Aggiungi nuova etichetta"
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_manager
@@ -156,7 +163,7 @@ msgstr "Nome alias"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias Status"
-msgstr ""
+msgstr "Stato alias"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
@@ -166,7 +173,7 @@ msgstr "Dominio alias"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias status assessed on the last message received."
-msgstr ""
+msgstr "Stato alias verificato sull'ultimo messaggio ricevuto."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_model_id
@@ -181,43 +188,43 @@ msgstr "Tutti"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "All Validations"
-msgstr "Tutte le validazioni"
+msgstr "Tutte le convalide"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__allow_change_kanban_state
 msgid "Allow Change Kanban State"
-msgstr ""
+msgstr "Consenti cambio stato kanban"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__allow_change_stage
 msgid "Allow Change Stage"
-msgstr "Permetti cambio Fase"
+msgstr "Consenti cambio fase"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__allow_apply_change
 msgid "Allow to apply changes"
-msgstr "Consentire l'applicazione di modifiche"
+msgstr "Consentire applicazione modifiche"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__allow_apply_change
 msgid "Allow to apply changes from this stage."
-msgstr "Consentire l'applicazione di modifiche da questa fase."
+msgstr "Consente di applicare modifiche da questa fase."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_tree
 msgid "Apply Changes"
-msgstr "Applicare modifiche"
+msgstr "Applica modifiche"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Apply Rebase"
-msgstr "Applicare aggiornamenti"
+msgstr "Applica reimpostazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__type
 msgid "Apply on"
-msgstr "Applicato a"
+msgstr "Applicare a"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__approval_date
@@ -227,17 +234,17 @@ msgstr "Data di approvazione"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__approval_roles
 msgid "Approval Roles"
-msgstr "Ruoli di approvazione"
+msgstr "Ruoli approvazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__template_stage_id
 msgid "Approval Stage"
-msgstr "Fase Approvazione"
+msgstr "Fase di approvazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__approval_type
 msgid "Approval Type"
-msgstr "Tipo approvazione"
+msgstr "Tipo di approvazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__approval_ids
@@ -250,7 +257,7 @@ msgstr "Approvazioni"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__approval_ids
 msgid "Approvals by stage"
-msgstr "Approvazione per fase"
+msgstr "Approvazioni per fase"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -261,7 +268,7 @@ msgstr "Approva"
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__kanban_state__done
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_approval__status__approved
 msgid "Approved"
-msgstr "Approvata"
+msgstr "Approvato"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__user_id
@@ -346,9 +353,10 @@ msgid ""
 "              used to make a finished product; through a manufacturing\n"
 "              order or a pack of products."
 msgstr ""
-"Le distinte base permettono di definire l'elenco dei componenti necessari\n"
-"utilizzati per realizzare un prodotto finito, attraverso un ordine\n"
-"di produzione o un pacchetto di prodotti."
+"Le distinte base consentono di definire l'elenco di componenti necessari\n"
+"              utilizzati per creare un prodotto finito, attraverso un "
+"ordine\n"
+"              di produzione o una confezione di prodotti."
 
 #. module: mrp_plm
 #. odoo-python
@@ -375,12 +383,12 @@ msgstr "Modifiche della distinta base"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Rebase"
-msgstr "Aggiornare distinta base"
+msgstr "Reimpostazione DiBa"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_revision
 msgid "BoM Revision"
-msgstr "Revisione distinta base"
+msgstr "Revisione DiBa"
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -392,7 +400,7 @@ msgstr "Versione DiBa"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "BoM:"
-msgstr "Distinta base:"
+msgstr "DiBa:"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
@@ -402,7 +410,7 @@ msgstr "Può approvare"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Can Reject"
-msgstr "Può rifiutare"
+msgstr "Può respingere"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -412,7 +420,7 @@ msgstr "Modifiche"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made in previous eco"
-msgstr "Modifiche effettuate nell'ordine di modifica tecnica precedente"
+msgstr "Modifiche apportate nell'ECO precedente"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -422,7 +430,7 @@ msgstr "Modifiche apportate alla vecchia distinta base"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Changes made on the new revision bill of materials"
-msgstr "Modifiche apportate alla nuova distinta base revisionata"
+msgstr "Modifiche apportate alla nuova distinta base in revisione"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -467,7 +475,7 @@ msgstr "Configurazione"
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__state__conflict
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Conflict"
-msgstr "Conflitto"
+msgstr "In conflitto"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -477,18 +485,18 @@ msgstr "Conflitto risolto"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__operation_change
 msgid "Consumed in Operation"
-msgstr "Consumato nell'Operazione"
+msgstr "Consumato nell'operazione"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "Create a new ECO stage"
-msgstr "Creare una nuova fase OMT"
+msgstr "Creare una nuova fase ECO"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_dashboard
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_type_action_form
 msgid "Create a new ECO type"
-msgstr "Creare un nuovo tipo OMT"
+msgstr "Crea un nuova tipologia ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__create_uid
@@ -522,7 +530,8 @@ msgstr "Messaggio personalizzato di non recapito"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__effectivity
 msgid "Date on which the changes should be applied. For reference only."
-msgstr "Data in cui le modifiche devono essere applicate. Solo per riferimento."
+msgstr ""
+"Data nella quale devono essere applicate le modifiche. Solo per riferimento."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_defaults
@@ -532,7 +541,7 @@ msgstr "Valori predefiniti"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Define the approval roles on the ECO stages."
-msgstr "Definire i ruoli di approvazione sulle fasi dell'ECO."
+msgstr "Definire i ruoli di approvazione per le fasi dell'ECO."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -549,7 +558,7 @@ msgstr "Descrizione"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__description
 msgid "Description and tooltips of the stage states."
-msgstr ""
+msgstr "Descrizione e informazioni sugli stati della fase."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -559,12 +568,12 @@ msgstr "Descrizione della modifica e motivo."
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__bom_change_ids
 msgid "Difference between old BoM and new BoM revision"
-msgstr "Differenza tra la vecchia distinta base e la nuova distinta base revisionata"
+msgstr "Differenza tra vecchia e nuova revisione della DiBa"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__routing_change_ids
 msgid "Difference between old operation and new operation revision"
-msgstr "Differenza tra la revisione della vecchia operazione e la nuova operazione"
+msgstr "Differenza tra vecchia e nuova revisione dell'operazione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__display_name
@@ -581,7 +590,7 @@ msgstr "Nome visualizzato"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__displayed_image_id
 msgid "Displayed Image"
-msgstr "Immagine Mostrata"
+msgstr "Immagine visualizzata"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -602,39 +611,39 @@ msgstr "Durata"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__eco_id
 msgid "ECO"
-msgstr "OMT"
+msgstr "ECO"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_graph
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_pivot
 msgid "ECO Analysis"
-msgstr "Analisi OMT"
+msgstr "Analisi ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
 #: model:mail.activity.type,name:mrp_plm.mail_activity_eco_approval
 msgid "ECO Approval"
-msgstr "Approvazione OMT"
+msgstr "Approvazione ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval_template
 msgid "ECO Approval Template"
-msgstr "Modello approvazione OMT"
+msgstr "Modello approvazione ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids
 msgid "ECO BoM Changes"
-msgstr "Modifiche distinta base OMT"
+msgstr "Modifiche distinta base ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
 msgid "ECO BoM changes"
-msgstr "Modifiche distinta base OMT"
+msgstr "Modifiche distinta base ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_rebase_id
 msgid "ECO Rebase"
-msgstr "Aggiornamento OMT"
+msgstr "Reimpostazione ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__routing_change_ids
@@ -645,31 +654,31 @@ msgstr "Modifiche ciclo di produzione ECO"
 #: model:ir.model,name:mrp_plm.model_mrp_eco_stage
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__eco_stage_id
 msgid "ECO Stage"
-msgstr "Fase OMT"
+msgstr "Fase ECO"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_stage_action
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_stages
 msgid "ECO Stages"
-msgstr "Fasi OMT"
+msgstr "Fasi ECO"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_tag_action
 #: model:ir.model,name:mrp_plm.model_mrp_eco_tag
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_tag
 msgid "ECO Tags"
-msgstr "Etichette OMT"
+msgstr "Etichette ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_type
 msgid "ECO Type"
-msgstr "Tipo OMT"
+msgstr "Tipologia ECO"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_type_action_form
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_types
 msgid "ECO Types"
-msgstr "Tipi OMT"
+msgstr "Tipologie ECO"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
@@ -680,17 +689,17 @@ msgstr "Dettagli OMT"
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "ECO stages give the different stages for the Engineering Change Orders"
-msgstr "Le fasi OMT danno le diverse fasi di ordini di modifica tecnica"
+msgstr "Le fasi ECO forniscono le varie fasi degli ordini di modifica tecnica"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__eco_ids
 msgid "ECO to be applied"
-msgstr "OMT da applicare"
+msgstr "ECO da applicare"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "ECO(s)"
-msgstr "OMT"
+msgstr "ECO"
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -706,19 +715,19 @@ msgstr "OMT"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.report_mrp_bom_inherit_mrp_plm
 msgid "ECOs"
-msgstr "OMT"
+msgstr "ECO"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "Eco"
-msgstr "OMT"
+msgstr "ECO"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "Eco BoM"
-msgstr "Distinta base OMT"
+msgstr "Distinta base ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
@@ -761,7 +770,7 @@ msgstr "Modifica tecnica"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco
 msgid "Engineering Change Order (ECO)"
-msgstr "Ordine di modifica tecnica (OMT)"
+msgstr "Ordine di modifica tecnica (ECO)"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action
@@ -797,7 +806,7 @@ msgstr "Fase finale"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__folded
 msgid "Folded in kanban view"
-msgstr "Chiuso nella vista kanban"
+msgstr "Minimizzata nella vista kanban"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_follower_ids
@@ -906,12 +915,14 @@ msgstr "Se impostato, il contenuto verrà inviato automaticamente, al posto del 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
 msgid "If the active field is set to False, it will allow you to hide the engineering change order without removing it."
-msgstr "Se il campo \"Attivo\" è impostato a Falso, permette di nascondere l'ordine di modifica tecnica senza rimuoverlo. "
+msgstr ""
+"Se il campo Attivo è impostato a falso, consente di nascondere l'ordine di "
+"modifica tecnica senza rimuoverlo."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
 msgid "Image 128"
-msgstr "Immagine 128"
+msgstr "Immagine a 128"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
@@ -941,7 +952,7 @@ msgstr "È approvato"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__is_closed
 msgid "Is Closed"
-msgstr "È chiusa"
+msgstr "È chiuso"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_is_follower
@@ -952,12 +963,12 @@ msgstr "Sta seguendo"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__is_rejected
 msgid "Is Rejected"
-msgstr "È Rifiutato"
+msgstr "È respinto"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_approval_template__approval_type__mandatory
 msgid "Is required to approve"
-msgstr "È richiesto per l'approvazione"
+msgstr "Approvazione necessaria"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__legend_blocked
@@ -1016,7 +1027,7 @@ msgstr "Attività in ritardo"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__latest_bom_id
 msgid "Latest Bom"
-msgstr "Ultima distinta base"
+msgstr "Ultima DiBa"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -1031,9 +1042,10 @@ msgid ""
 "              Gather the related documentation and receive the necessary approvals\n"
 "              before applying your changes."
 msgstr ""
-"Gestisci i cambiamenti dei prodotti e delle distinte base con gli ECO.\n"
-"Raccogli la documentazione relativa e ricevi le approvazioni necessarie\n"
-"prima di applicare le modifiche."
+"Gestione dei prodotti e delle modifiche alle distinte base con gli ECO.\n"
+"              Prima di applicare le modifiche, raccogliere la relativa "
+"documentazione e\n"
+"              ricevere le approvazioni necessarie."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_cycle_manual
@@ -1060,7 +1072,7 @@ msgstr "Messaggi"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
-msgstr "Etichette OMT MRP"
+msgstr "Etichette ECO MRP"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1070,12 +1082,12 @@ msgstr "Scadenza mie attività"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Change Orders"
-msgstr "Ordini di modifica"
+msgstr "I miei ordini di modifica"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
 msgid "My Validations"
-msgstr "Validazioni"
+msgstr "Le mie convalide"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__name
@@ -1096,7 +1108,7 @@ msgstr "Nuova distinta base"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
 msgid "New Bom"
-msgstr "Nuova distinta base"
+msgstr "Nuova DiBa"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_operation_id
@@ -1111,7 +1123,7 @@ msgstr "Introduzione nuovo prodotto"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_uom_id
 msgid "New Product UoM"
-msgstr "Nuova distinta base di prodotto"
+msgstr "Nuova UdM prodotto"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__new_time_cycle_manual
@@ -1126,7 +1138,7 @@ msgstr "Operazione nuova o precedente"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_product_qty
 msgid "New revision quantity"
-msgstr "Nuova quantità revisionata"
+msgstr "Nuova quantità in revisione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_calendar_event_id
@@ -1212,7 +1224,8 @@ msgstr "Vecchia durata manuale"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__final_stage
 msgid "Once the changes are applied, the ECOs will be moved to this stage."
-msgstr "Una volta applicate le modifiche, gli OMT saranno spostati in questa fase."
+msgstr ""
+"Una volta applicate le modifiche, gli ECO vengono spostati in questa fase."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1222,7 +1235,7 @@ msgstr "Operazione"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Operation Changes"
-msgstr "Modifiche al funzionamento"
+msgstr "Modifiche alle operazioni"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1233,7 +1246,10 @@ msgstr "Operazione non supportata"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
 msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "ID facoltativo di un thread (record) a cui verranno allegati tutti i messaggi in arrivo, anche se non hanno risposto ad esso. Se impostato, disabiliterà completamente la creazione di nuovi record."
+msgstr ""
+"ID opzionale di una discussione (record) alla quale vengono allegati tutti i "
+"messaggi in arrivo, non solo le risposte. Se impostato, viene disabilitata "
+"in modo completo la creazione di nuovi record."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_document__origin_attachment_id
@@ -1244,19 +1260,25 @@ msgstr "Allegato d'origine"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_blocked
 msgid "Override the default value displayed for the blocked state for kanban selection, when the ECO is in that stage."
-msgstr "Sovrascrivi il valore predefinito visualizzato per lo stato bloccato per la selezione kanban, quando l'ECO è in quella fase."
+msgstr ""
+"Nella selezione kanban, sostituisce il valore predefinito visualizzato per "
+"lo stato bloccato, quando l'ECO si trova in quella fase."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_done
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_done
 msgid "Override the default value displayed for the done state for kanban selection, when the ECO is in that stage."
-msgstr "Sovrascrivi il valore predefinito visualizzato per lo stato fatto per la selezione kanban, quando l'ECO è in quella fase."
+msgstr ""
+"Nella selezione kanban, sostituisce il valore predefinito visualizzato per "
+"lo stato completato, quando l'ECO si trova in quella fase."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_normal
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_normal
 msgid "Override the default value displayed for the normal state for kanban selection, when the ECO is in that stage."
-msgstr "Sovrascrivi il valore predefinito visualizzato per lo stato normale per la selezione kanban, quando l'ECO è in quella fase."
+msgstr ""
+"Nella selezione kanban, sostituisce il valore predefinito visualizzato per "
+"lo stato normale, quando l'ECO si trova in quella fase."
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_dashboard
@@ -1272,12 +1294,12 @@ msgstr "Proprietario"
 #: model:ir.module.category,name:mrp_plm.module_category_manufacturing_product_lifecycle_management_(plm)
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_root
 msgid "PLM"
-msgstr "Gestione del ciclo di vita del prodotto"
+msgstr "PLM"
 
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_type_action_dashboard
 msgid "PLM Overview"
-msgstr "Panoramica gestione del ciclo di vita del prodotto"
+msgstr "Panoramica PLM"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_parent_model_id
@@ -1305,12 +1327,13 @@ msgstr ""
 "Politica di pubblicazione messaggi su documenti usando il gateway di posta.\n"
 "- tutti: tutti possono pubblicare\n"
 "- partner: solo partner autenticati\n"
-"- follower: solo chi segue il documento collegato o gli iscritti ai relativi canali\n"
+"- chi sta seguendo: solo chi segue il documento collegato o gli iscritti ai "
+"relativi canali\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__previous_bom_id
 msgid "Previous BoM"
-msgstr "Distinta base precedente"
+msgstr "DiBa precedente"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_operation_id
@@ -1320,7 +1343,7 @@ msgstr "Precedente consumato nell'operazione"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__previous_change_ids
 msgid "Previous ECO Changes"
-msgstr "Precedenti modifiche OMT"
+msgstr "Modifiche ECO precedenti"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1386,7 +1409,7 @@ msgstr "Quantità"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__rating_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valutazioni"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1403,17 +1426,19 @@ msgstr "Pronta"
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__state__rebase
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Rebase"
-msgstr "Aggiornare"
+msgstr "Reimpostazione"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
-msgstr "Aggiornamento della distinta base dalla precedente distinta base OMT  e delle modifiche apportate. "
+msgstr ""
+"Reimposta la nuova revisione della DiBa con le modifiche della DiBa ECO "
+"precedente e della vecchia DiBa."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_force_thread_id
 msgid "Record Thread ID"
-msgstr "Registra ID discussione"
+msgstr "ID record discussione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__legend_blocked
@@ -1428,17 +1453,17 @@ msgstr "Riferimento"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Reject"
-msgstr "Rifiuta"
+msgstr "Respingi"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_approval__status__rejected
 msgid "Rejected"
-msgstr "Rifiutato"
+msgstr "Respinto"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__displayed_image_attachment_id
 msgid "Related attachment"
-msgstr "Allegato "
+msgstr "Allegato correlato"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__remove
@@ -1450,7 +1475,7 @@ msgstr "Rimuovi"
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_reporting
 msgid "Reporting"
-msgstr "Rendiconto"
+msgstr "Resoconti"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__required_user_ids
@@ -1476,7 +1501,7 @@ msgstr "Ruolo"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Routing"
-msgstr "Routing"
+msgstr "Ciclo di produzione"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_has_sms_error
@@ -1499,12 +1524,12 @@ msgstr "Sequenza"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "Set Cover Image"
-msgstr "Imposta foto"
+msgstr "Imposta copertina"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__allow_apply_change
 msgid "Show Apply Change"
-msgstr "Visualizzare le modifiche apportate"
+msgstr "Mostra applica modifica"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
@@ -1536,7 +1561,7 @@ msgstr "Avvia la revisione"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "State"
-msgstr "Provincia"
+msgstr "Stato"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__state
@@ -1561,7 +1586,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "Successfully Rebased!"
-msgstr ""
+msgstr "Rielaborazione effettuata con successo!"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1576,7 +1601,7 @@ msgstr "Nome etichetta"
 #. module: mrp_plm
 #: model:ir.model.constraint,message:mrp_plm.constraint_mrp_eco_tag_name_uniq
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "Nome etichetta già esistente."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__tag_ids
@@ -1597,12 +1622,14 @@ msgstr "Lavoro bloccato. Fare clic per sbloccarlo o impostarlo a completato."
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_approve
 msgid "Technical field to check if approval by current user is required"
-msgstr "Campo tecnico per verificare se l'approvazione dell'utente attuale è richiesta"
+msgstr ""
+"Campo tecnico per controllare se è richiesta l'approvazione da parte "
+"dell'utente corrente."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Technical field to check if reject by current user is possible"
-msgstr "Campo tecnico per verificare se il rifiuto dell'utente attuale è possibile"
+msgstr "Campo tecnico per controllare se l'utente corrente può respingere."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__approval_template_id
@@ -1612,28 +1639,33 @@ msgstr "Modello"
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_manager
 msgid "The PLM manager manages products lifecycle management"
-msgstr "Il manager PLM gestisce la gestione del ciclo di vita dei prodotti"
+msgstr "Il supervisore PLM organizza la gestione del ciclo di vita dei prodotti"
 
 #. module: mrp_plm
 #: model:res.groups,comment:mrp_plm.group_plm_user
 msgid "The PLM user uses products lifecycle management"
-msgstr "L'utente PLM usa la gestione del ciclo di vita"
+msgstr "L'utente PLM utilizza la gestione del ciclo di vita dei prodotti"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_product_product__version
 #: model:ir.model.fields,help:mrp_plm.field_product_template__version
 msgid "The current version of the product."
-msgstr "La versione attuale del prodotto."
+msgstr "Attuale versione del prodotto."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "Il modello (tipo di documento Odoo) a cui corrisponde questo alias. Le e-mail in ingresso che non rispondono a un record esistente attiveranno la creazione di un nuovo record per questo modello (es. lavoro di un progetto)"
+msgstr ""
+"Il modello (tipo di documento Odoo) a cui corrisponde questo alias. Le e-"
+"mail in arrivo che non rispondono a un record esistente attivano la "
+"creazione di un nuovo record per questo modello (es. lavoro di un progetto)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
 msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "Il nome dell’alias e-mail, es. “jobs” per intercettare le e-mail <jobs@example.odoo.com>"
+msgstr ""
+"Nome dell’alias e-mail, es. “lavori”, per intercettare le e-mail a "
+"<lavori@example.odoo.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_user_id
@@ -1714,7 +1746,7 @@ msgstr "Utenti"
 #. module: mrp_plm
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
 msgid "Validated"
-msgstr "Validata"
+msgstr "Convalidato"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1727,7 +1759,7 @@ msgstr "Versione"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
 msgid "Waiting Approvals"
-msgstr "Attesa approvazioni"
+msgstr "In attesa di approvazioni"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals_my
@@ -1759,7 +1791,9 @@ msgstr "Centri di lavoro"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
-msgstr "È inoltre possibile aggiungere una descrizione per aiutare i colleghi a capire il significato e lo scopo della fase. "
+msgstr ""
+"È inoltre possibile aggiungere una descrizione per aiutare i colleghi a "
+"capire il significato e lo scopo della fase."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1767,8 +1801,8 @@ msgid ""
 "You can define here labels that will be displayed for the state instead\n"
 "                            of the default labels."
 msgstr ""
-"Puoi definire qui le etichette che saranno visualizzate per lo stato al posto\n"
-"delle etichette predefinite. "
+"Qui è possibile indicare le etichette da visualizzare per lo stato kanban\n"
+"                            al posto di quelle predefinite."
 
 #. module: mrp_plm
 #. odoo-python
@@ -1780,7 +1814,8 @@ msgstr "Impossibile cambiare la fase, il processo richiede delle approvazioni."
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "You cannot change the stage, as approvals are still required."
-msgstr "Impossibile modificare la fase, sono ancora richieste delle approvazioni."
+msgstr ""
+"Impossibile modificare la fase, sono richieste ancora delle approvazioni."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1790,7 +1825,7 @@ msgstr "es. Prodotto fantastico 2.0"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "e.g. Engineering Department"
-msgstr "es. Dipartimento di Ingegneria"
+msgstr "es. Dipartimento di Ingegneria"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban

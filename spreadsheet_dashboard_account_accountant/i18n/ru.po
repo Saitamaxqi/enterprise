@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_account_accountant
+# * spreadsheet_dashboard_account_accountant
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 22:21+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_account_accountant/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -177,7 +182,7 @@ msgstr "Совокупный"
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Average creditors days"
-msgstr "Средние кредитные дни"
+msgstr "Средний срок погашения кредиторской задолженности"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -189,7 +194,7 @@ msgstr "Средние дни работы дебиторов"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Average debtors days"
-msgstr "Средние дни работы дебиторов"
+msgstr "Средний срок погашения дебиторской задолженности"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -212,7 +217,7 @@ msgstr "Банк и касса"
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_benchmark
 msgid "Benchmark"
-msgstr "Бенчмарк"
+msgstr "Стандарты"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -260,19 +265,19 @@ msgstr "Полученные денежные средства"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash spent"
-msgstr "Израсходованные денежные средства"
+msgstr "Денежные средства, выплаченные"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash surplus"
-msgstr "Остаток денежных средств"
+msgstr "Избыточные денежные средства"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Closing bank balance"
-msgstr "Конечный банковский остаток"
+msgstr "Остатки на банковских счетах"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -284,13 +289,13 @@ msgstr "Код"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Cost of Revenue"
-msgstr "Стоимость выручки"
+msgstr "Себестоимость"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cost of revenue"
-msgstr "Стоимость выручки"
+msgstr "Себестоимость"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -308,7 +313,7 @@ msgstr "Текущие активы"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Current Liabilities"
-msgstr "Текущие обязательства"
+msgstr "Краткосрочные обязательства"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -320,7 +325,7 @@ msgstr "Текущие активы / Текущие обязательства"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Current assets to liabilities"
-msgstr "Отношение текущих активов к обязательствам"
+msgstr "Коэффициент текущей ликвидности"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -387,7 +392,7 @@ msgstr "Финансовая независимость"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Fixed Assets"
-msgstr "Основные Активы"
+msgstr "Основные средства"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -420,7 +425,7 @@ msgstr "Доходы"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Invoiced"
-msgstr "Счёт-фактура выставлена"
+msgstr "Выставлен счет"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -560,7 +565,7 @@ msgstr "Операционная маржа"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Other Income"
-msgstr "Прочие доходы"
+msgstr "Прочий доход"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -591,13 +596,13 @@ msgstr "Кредиторская задолженность / Расходы * 3
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Performance"
-msgstr "Производительность"
+msgstr "Эффективность"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Position"
-msgstr "Позиция"
+msgstr "Финансовое положение"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -640,14 +645,14 @@ msgstr "Быстрые активы / Краткосрочные обязате�
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Quick ratio"
-msgstr "Коэффициент быстроты"
+msgstr "Коэффициент быстрой ликвидности"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "Receivable"
-msgstr "К получению"
+msgstr "Дебиторская задолженность"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -776,7 +781,7 @@ msgstr "банк и касса"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "cost of revenue"
-msgstr "стоимость выручки"
+msgstr "Себестоимость"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -794,7 +799,7 @@ msgstr "доход"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "income + other income"
-msgstr "доход + прочие доходы"
+msgstr "доход + прочий доход"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -890,13 +895,17 @@ msgstr "дебиторская задолженность"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "receivable + bank and cash + current assets + non-current assets + prepayments + fixed assets"
-msgstr "дебиторская задолженность + банк и денежные средства + оборотные активы + внеоборотные активы + авансы + основные средства"
+msgstr ""
+"дебиторская задолженность + банк и денежные средства + текущие активы + "
+"внеоборотные активы + предоплата + основные средства"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 msgid "receivable + bank and cash + current assets + prepayments"
-msgstr "дебиторская задолженность + банк и денежные средства + оборотные активы + авансы"
+msgstr ""
+"дебиторская задолженность + банк и денежные средства + текущие активы + "
+"авансы"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -908,13 +917,13 @@ msgstr "дебиторская задолженность + банк и дене
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "to pay"
-msgstr "платить"
+msgstr "к оплате"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "to receive"
-msgstr "получать"
+msgstr "к получению"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript

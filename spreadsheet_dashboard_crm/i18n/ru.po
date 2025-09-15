@@ -1,21 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_crm
+# * spreadsheet_dashboard_crm
 #
 # Translators:
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-10-26 22:21+0000\n"
-"PO-Revision-Date: 2024-01-30 15:14+0400\n"
-"Last-Translator: \n"
-"Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
+"PO-Revision-Date: 2025-09-15 21:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_crm/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
+"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -28,7 +33,7 @@ msgstr " дней"
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "# Leads"
-msgstr "# Свинцы"
+msgstr "# Лиды"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -185,7 +190,7 @@ msgstr "Причина проигрыша"
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "Medium"
-msgstr "Средний"
+msgstr "Канал"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -197,7 +202,7 @@ msgstr "Открытые возможности"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "Opportunity"
-msgstr "Предложение"
+msgstr "Возможность"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -221,7 +226,7 @@ msgstr "Воронка продаж"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "Pipeline Stages"
-msgstr "Этапы строительства трубопровода"
+msgstr "Этапы воронки"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -310,7 +315,7 @@ msgstr "Ведущие страны"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid "Top Lost Reasons"
-msgstr "Топ потерянных причин"
+msgstr "Топ причин потери лида"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -374,7 +379,7 @@ msgstr "Общее количество лидов"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid "Won leads"
-msgstr "Завоеванные позиции"
+msgstr "Выигранные лиды"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript

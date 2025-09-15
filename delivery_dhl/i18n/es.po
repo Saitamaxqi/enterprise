@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl
+# * delivery_dhl
 #
 # Translators:
 # Martin Trigaux, 2022
 # marcescu, 2022
 # Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Leonardo J. Caballero G. <leonardocaballero@gmail.com>, 2022\n"
-"Language-Team: Spanish (https://app.transifex.com/odoo/teams/41243/es/)\n"
+"PO-Revision-Date: 2025-09-15 11:58+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl/es/>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
@@ -164,7 +167,7 @@ msgstr "Centímetros"
 #. module: delivery_dhl
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
-msgstr "Selecciona este si tu paquete es gravable."
+msgstr "Compruébelo si su paquete es imponible."
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
@@ -190,12 +193,12 @@ msgstr "DHL"
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
-msgstr "DHL Número de cuenta"
+msgstr "Número de cuenta de DHL"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "DHL Configuration"
-msgstr "Configuración DHL"
+msgstr "Configuración de DHL"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -223,12 +226,12 @@ msgstr "Tipo de paquete DHL"
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
-msgstr "Contraseña DHL"
+msgstr "Contraseña de DHL"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
-msgstr "Producto DHL"
+msgstr "Producto de DHL"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
@@ -240,12 +243,13 @@ msgstr "Métodos de envío de DHL"
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "DHL Site ID is missing, please modify your delivery method settings."
-msgstr "El ID del sitio DHL no está, por favor modifica tus ajustes de método de entrega."
+msgstr ""
+"Falta el ID del sitio de DHL, modifique los ajustes de su método de envío."
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_SiteID
 msgid "DHL SiteID"
-msgstr "DHL SiteID"
+msgstr "ID del sitio DHL"
 
 #. module: delivery_dhl
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_us_dom
@@ -263,7 +267,9 @@ msgstr "DHL EE.UU. -> Internacional"
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "DHL account number is missing, please modify your delivery method settings."
-msgstr "Falta el número de cuenta de DHL, por favor, modifica la configuración de tu forma de envío."
+msgstr ""
+"Falta el número de cuenta de DHL, modifique los ajustes de su método de "
+"envío."
 
 #. module: delivery_dhl
 #. odoo-python
@@ -275,22 +281,23 @@ msgstr "DHL no es compatible con productos cuyo nombre tiene más de 75 caracter
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "DHL password is missing, please modify your delivery method settings."
-msgstr "La contraseña de DHL no está disponible, por favor modifica tu configuración de método de envío."
+msgstr ""
+"Falta su contraseña de DHL, modifique los ajustes de su método de envío."
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_duty_payment
 msgid "Dhl Duty Payment"
-msgstr "Pago de Impuestos de Dhl"
+msgstr "Pago de impuestos DHL"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
-msgstr "Material gravable"
+msgstr "Material imponible"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "Duties paid by"
-msgstr "Derechos pagados por"
+msgstr "Derechos de aduana pagados por"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__e
@@ -326,7 +333,7 @@ msgstr "H - Economy Select"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Hint: The destination may not require the dutiable option."
-msgstr "Pista: puede que el destino no requiera la opción de aduana."
+msgstr "Consejo: puede que el destino no necesite la opción imponible."
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__i
@@ -342,7 +349,7 @@ msgstr "Pulgadas"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Invalid syntax for DHL custom data."
-msgstr "Sintaxis inválida para los datos personalizados de DHL."
+msgstr "Sintaxis no válida para los datos personalizados de DHL."
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__j
@@ -412,7 +419,7 @@ msgstr "PDF"
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_dimension_unit
 msgid "Package Dimension Unit"
-msgstr "Unidad de Dimensión de Paquete"
+msgstr "Unidad de dimensiones del paquete"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_package_weight_unit
@@ -423,13 +430,15 @@ msgstr "Unidad de peso del paquete"
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "Please define an incoterm in the associated sale order or set a default incoterm for the company in the accounting's settings."
-msgstr "Defina un Incoterm en la orden de venta asociada o establezca un incoterm predeterminado para la empresa en los ajustes de la empresa."
+msgstr ""
+"Defina un Incoterm en el pedido de venta asociado o establezca un incoterm "
+"por defecto para la empresa en los ajustes de la empresa."
 
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr "Por favor, proporciona al menos un dato para envío. "
+msgstr "Proporcione al menos un artículo para enviar."
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_package_weight_unit__l
@@ -464,7 +473,7 @@ msgstr "Región"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__s
 msgid "S - Same Day"
-msgstr "M - Mismo día"
+msgstr "S - Same Day"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_duty_payment__s
@@ -475,7 +484,7 @@ msgstr "Remitente"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Shipment created into DHL <br/> <b>Tracking Number: </b>%s"
-msgstr ""
+msgstr "Envío creado en DHL <br/> <b>Número de rastreo: </b>%s"
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_delivery_carrier
@@ -485,7 +494,7 @@ msgstr "Métodos de envío"
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_stock_package_type
 msgid "Stock package type"
-msgstr "Tipo de paquete de existencias"
+msgstr "Tipo de paquete de stock"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__t
@@ -509,7 +518,8 @@ msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
-"La dirección de la bodega de tu empresa no está o es incorrecta (Campo(s) faltante(s):\n"
+"No se encontró la dirección del almacén de su empresa o no es la correcta ("
+"Campos faltantes:\n"
 "%s)"
 
 #. module: delivery_dhl
@@ -519,8 +529,9 @@ msgid ""
 "        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
-"Los datos personalizados en DHL se organiza como en un archivo json..\n"
-"        Hay 3 claves posibles: 'tarifa', 'envío', 'devolución' que puede agregar a sus datos personalizados.\n"
+"Los datos personalizados en DHL se organiza como en un archivo json.\n"
+"        Hay 3 claves posibles: 'tarifa', 'envío', 'devolución' que puede "
+"añadir a sus datos personalizados.\n"
 "        Puede consultar más información en https://xmlportal.dhl.com/"
 
 #. module: delivery_dhl
@@ -537,7 +548,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "There is no price available for this shipping, you should rather try with the DHL product %s"
-msgstr "No hay un precio disponible para este envío, deberías intentar con el producto DHL %s"
+msgstr ""
+"No se puede mostrar el precio de este envío, inténtelo con el producto DHL %s"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__u
@@ -568,7 +580,7 @@ msgstr "Y - Express 12:00"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "You can't cancel DHL shipping without pickup date."
-msgstr "No se puede cancelar el envío de DHL sin fecha de recogida."
+msgstr "No puede cancelar un envío DHL sin fecha de recolección."
 
 #. module: delivery_dhl
 #. odoo-python

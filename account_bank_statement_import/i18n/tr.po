@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import
+# * account_bank_statement_import
 #
 # Translators:
 # Nadir Gazioglu <nadirgazioglu@gmail.com>, 2022
@@ -8,20 +8,22 @@
 # Umur Akın <umura@projetgrup.com>, 2022
 # Murat Kaplan <muratk@projetgrup.com>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -38,7 +40,7 @@ msgstr "1 işlem zaten içe aktarılmış ve gözardı edildi."
 #. module: account_bank_statement_import
 #: model:ir.model.constraint,message:account_bank_statement_import.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transactions can be imported only once!"
-msgstr ""
+msgstr "Banka hesap hareketleri yalnızca bir kez içe aktarılabilir!"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
@@ -54,7 +56,9 @@ msgstr "Banka kurulum yapılandırması"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Cannot find in which journal import this statement. Please manually select a journal."
-msgstr "Bu kaydın hangi yevmiyeye aktarılacağını bulunamıyor. Lütfen elle bir yevmiye seçin."
+msgstr ""
+"Bu kaydın hangi yevmiyeye aktarılacağı bulunamıyor. Lütfen manuel olarak bir "
+"yevmiye seçin."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -63,12 +67,14 @@ msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
 msgstr ""
+"İlgili dosya ilişkilendirilemedi.\n"
+"Bu dosyayı destekleyecek modülü yüklediniz mi?"
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Go to Apps"
-msgstr ""
+msgstr "Uygulamalara Git"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -85,7 +91,7 @@ msgstr "ID İçe Aktar"
 #. odoo-javascript
 #: code:addons/account_bank_statement_import/static/src/account_bank_statement_import_model.js:0
 msgid "Import Template for Bank Statements"
-msgstr ""
+msgstr "Banka ekstresi için şablon aktarımı"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_journal
@@ -96,7 +102,7 @@ msgstr "Yevmiye"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Manual (or import %(import_formats)s)"
-msgstr ""
+msgstr "Manuel (veya %(import_formats)s formatında içe aktar)"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -126,7 +132,7 @@ msgstr "Banka hesap esktresinin para birimi (%s) yevmiye para birimi ile aynı d
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "The following files could not be imported:\n"
-msgstr ""
+msgstr "Aşağıdaki dosyalar içeri alınamadı\n"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -149,25 +155,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "View successfully imported statements"
-msgstr ""
+msgstr "Başarıyla aktarılmış ekstreleri görüntüleyin."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "You already have imported that file."
-msgstr "Bu dosya çoktan içe aktarılmış."
+msgstr "Bu dosyayı daha önce içeri aktarmıştınız."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "You have to set a Default Account for the journal: %s"
-msgstr "You have to set a Default Account for the journal: %s"
+msgstr "%s yevmiyesi için bir ön tanımlı hesap belirlemelisiniz."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "You uploaded an invalid or empty file."
-msgstr ""
+msgstr "Geçersiz veya boş bir dosya yüklediniz."
 
 #. module: account_bank_statement_import
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit

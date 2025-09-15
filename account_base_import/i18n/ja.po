@@ -1,96 +1,100 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_base_import
+# * account_base_import
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:24+0000\n"
-"PO-Revision-Date: 2025-09-11 14:24+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:03+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
+"account_base_import/ja/>\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "<span class=\"text-muted\">(end of year balances)</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">(年度末残高)</span>"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "<span class=\"text-muted\">(for full history)</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">(全履歴)</span>"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_account
 msgid "Account"
-msgstr ""
+msgstr "勘定科目"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Account Winbooks Import module"
-msgstr ""
+msgstr "勘定科目Winbooksインポートモジュール"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_import_summary
 msgid "Account import summary view"
-msgstr ""
+msgstr "勘定科目インポート概要ビュー"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Accounting Import"
-msgstr ""
+msgstr "会計インポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_guide.js:0
 #: model:ir.actions.client,name:account_base_import.action_open_import_guide
 msgid "Accounting Import Guide"
-msgstr ""
+msgstr "会計インポートご案内"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Accounting Import Options"
-msgstr ""
+msgstr "会計インポートオプション"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_base_import_import
 msgid "Base Import"
-msgstr ""
+msgstr "基本インポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 #: model:ir.actions.act_window,name:account_base_import.action_open_coa_setup
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "勘定科目表"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Choose how you want to setup your CoA"
-msgstr ""
+msgstr "勘定科目表をどのように設定するかを選択"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 msgid "Customers"
-msgstr ""
+msgstr "顧客"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_account__display_name
@@ -98,31 +102,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_base_import.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:account_base_import.field_base_import_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Download"
-msgstr ""
+msgstr "ダウンロード"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Excel Import"
-msgstr ""
+msgstr "Excelでインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "FEC"
-msgstr ""
+msgstr "FEC"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "FEC Import module"
-msgstr ""
+msgstr "FECインポートモジュール"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_account__id
@@ -130,14 +134,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_base_import.field_account_move_line__id
 #: model:ir.model.fields,field_description:account_base_import.field_base_import_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 #: model_terms:ir.ui.view,arch_db:account_base_import.view_account_base_import_list
 #: model_terms:ir.ui.view,arch_db:account_base_import.view_account_setup_base_import_list
 msgid "Import"
-msgstr ""
+msgstr "インポート"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -151,85 +155,85 @@ msgstr ""
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model:ir.actions.client,name:account_base_import.action_account_import
 msgid "Import Chart of Accounts"
-msgstr ""
+msgstr "勘定科目表をインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import CoA"
-msgstr ""
+msgstr "勘定科目表をインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import Contacts"
-msgstr ""
+msgstr "連絡先をインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model:ir.actions.client,name:account_base_import.action_account_move_line_import
 msgid "Import Journal Items"
-msgstr ""
+msgstr "仕訳明細をインポート"
 
 #. module: account_base_import
 #: model:ir.actions.client,name:account_base_import.action_partner_import
 msgid "Import Partners"
-msgstr ""
+msgstr "取引先をインポート"
 
 #. module: account_base_import
 #. odoo-python
 #: code:addons/account_base_import/wizard/account_import_summary.py:0
 msgid "Import Summary"
-msgstr ""
+msgstr "概要をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_account_ids
 msgid "Import Summary Account"
-msgstr ""
+msgstr "概要勘定科目をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_journal_ids
 msgid "Import Summary Journal"
-msgstr ""
+msgstr "概要仕訳帳をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_move_ids
 msgid "Import Summary Move"
-msgstr ""
+msgstr "概要仕訳をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_name
 msgid "Import Summary Name"
-msgstr ""
+msgstr "概要名をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_partner_ids
 msgid "Import Summary Partner"
-msgstr ""
+msgstr "概要取引先をインポート"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_tax_ids
 msgid "Import Summary Tax"
-msgstr ""
+msgstr "概要税をインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import contacts"
-msgstr ""
+msgstr "連絡先をインポート"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import customers or suppliers (partners) and their contacts using a"
-msgstr ""
+msgstr "お客様や仕入先 (取引先)の連絡先情報をインポートするに"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import the Chart of Accounts and initial balances using a"
-msgstr ""
+msgstr "勘定科目表及び開始残高をインポートするに"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -240,39 +244,39 @@ msgstr ""
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "Imported Data"
-msgstr ""
+msgstr "データをインポート"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Initial Setup"
-msgstr ""
+msgstr "初期セットアップ"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_guide.js:0
 msgid "Install a module"
-msgstr ""
+msgstr "モジュールをインストール"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "仕訳明細"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 msgid "Journal Items"
-msgstr ""
+msgstr "仕訳明細"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -280,7 +284,8 @@ msgstr ""
 msgid ""
 "Most accounting software in Europe support exporting SAF-T file for audit purposes.\n"
 "                            Use the"
-msgstr ""
+msgstr "フランスの大抵の会計ソフトは、監査目的としたSAF-Tファイルのエクスポートに対応"
+"しています。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -288,55 +293,56 @@ msgstr ""
 msgid ""
 "Most accounting software in France support exporting FEC file for audit purposes.\n"
 "                            Use the"
-msgstr ""
+msgstr "フランス大抵の会計ソフトは、監査目的としたFECファイルのエクスポートに対応して"
+"います。"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "No data was imported."
-msgstr ""
+msgstr "インポートされたデータはありません。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Optional, but useful to import open receivables & payables using a"
-msgstr ""
+msgstr "オプションですが、役に立ちます。未決済の買掛・売掛をインポートするに"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Review Manually"
-msgstr ""
+msgstr "手動で確認"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SAF-T"
-msgstr ""
+msgstr "SAF-T"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SAF-T Import module"
-msgstr ""
+msgstr "SAF-Tインポートモジュール"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SIE 4 Import module"
-msgstr ""
+msgstr "SIE 4 インポートモジュール"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SIE 4/5"
-msgstr ""
+msgstr "SIE 4/5"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SIE 5 Import module"
-msgstr ""
+msgstr "SIE 5 インポートモジュール"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -345,12 +351,17 @@ msgid ""
 "The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data\n"
 "                            from and to other accounting applications. Odoo support importing data from both type 4 and 5 of SIE."
 msgstr ""
+"SIE標準ファイル形式は、スウェーデンでは監査、他の会計アプリケーションとのデー"
+"タのインポートおよびエクスポートなど、\n"
+"                            "
+"さまざまな用途で広く使用されています。Odooは、SIEのタイプ4とタイプ5の両方から"
+"のデータインポートをサポートしています。"
 
 #. module: account_base_import
 #. odoo-python
 #: code:addons/account_base_import/models/account_move_line.py:0
 msgid "The import file is missing the following required columns: %s"
-msgstr ""
+msgstr "インポートファイルには以下の必須カラムがありません：%s"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -360,18 +371,22 @@ msgid ""
 " import. Only use the Journal Items import for unreconciled entries in your "
 "Payable and Receivable Accounts."
 msgstr ""
+"ヒント: "
+"開始残高のインポートは、勘定科目表インポートを使用することをお勧めします。売"
+"掛及び買掛の勘定科目に未収・未払の項目がある場合のみ、仕訳明細のインポートを"
+"使用してください。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use predefined format to import your data faster."
-msgstr ""
+msgstr "既定フォーマットで、より速くデータをインポートします。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use templates to import CSV or Excel for your accounting setup."
-msgstr ""
+msgstr "会計設定をするために、テンプレートを使ってCSVやExcelをインポートします。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -379,13 +394,13 @@ msgstr ""
 msgid ""
 "We will setup your charts of accounts and the history of journal entries, "
 "that will stay in draft."
-msgstr ""
+msgstr "勘定科目表と仕訳履歴を設定し、ドラフトに残します。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Winbooks"
-msgstr ""
+msgstr "Winbooks"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -393,7 +408,7 @@ msgstr ""
 msgid ""
 "Winbooks is an old school Belgian accounting software acquired by Exact.\n"
 "                            Use the"
-msgstr ""
+msgstr "Winbooksは、Exactに買収されたベルギーの会計ソフトです。"
 
 #. module: account_base_import
 #. odoo-python
@@ -401,12 +416,13 @@ msgstr ""
 msgid ""
 "You must provide both the `code_mapping_ids/company_id` and the "
 "`code_mapping_ids/code` columns."
-msgstr ""
+msgstr "`code_mapping_ids/company_id` および `code_mapping_ids/code` "
+"列両方が必要です。"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "accounts imported"
-msgstr ""
+msgstr "インポート済勘定科目"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -416,6 +432,11 @@ msgid ""
 "                                    By design, it's also backward compatible with previous SIE versions (version 1 up to 3).\n"
 "                                    This import will not validate the correctness of the file."
 msgstr ""
+"が、SIE 4ファイルをインポートするには必要です。\n"
+"                                    "
+"設計上、以前のSIEバージョン(バージョン1から3まで)との下位互換性もあります。\n"
+"                                    "
+"このインポートでは、ファイルの正確性が検証されることはありません。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -426,32 +447,40 @@ msgid ""
 "                                    (journals data must be present in the file).\n"
 "                                    For the SIE 5 entry, only entries and partners will be created, the rest must already be present in the system."
 msgstr ""
+"SIE 5 および SIE 5 仕訳ファイルをインポートする必要があります。\n"
+"                                    一般的な SIE 5 "
+"については、勘定科目残高表、仕訳帳、取引先、仕訳帳の履歴を設定します\n"
+"                                    "
+"(仕訳帳データはファイル内に存在する必要があります)。\n"
+"                                    SIE 5 "
+"仕訳については、仕訳と取引先のみが作成され、残りのデータはすでにシステム内に"
+"存在している必要があります。"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "journals imported"
-msgstr ""
+msgstr "インポート済仕訳帳"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "moves imported"
-msgstr ""
+msgstr "インポート済記帳"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "or"
-msgstr ""
+msgstr "又は"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "partners imported"
-msgstr ""
+msgstr "インポート済取引先"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "taxes imported"
-msgstr ""
+msgstr "インポート済税"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -463,7 +492,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "template."
-msgstr ""
+msgstr "テンプレートを使います。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -472,6 +501,10 @@ msgid ""
 "to import a Winbooks full back-up (Maintenance > Backup) to get the chart of accounts, contacts, taxes, history of journal entries, and documents.\n"
 "                            Support versions: Winbooks Desktop 5.50, 6, 7, 8."
 msgstr ""
+"を使って、Winbooks完全バックアップ (整備 > "
+"バックアップ)をインポートして、勘定科目表、連絡先、税金、仕訳履歴、及びドキュ"
+"メントを取得します。\n"
+"対応バージョン: Winbooks Desktop 5.50, 6, 7, 8"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -479,10 +512,11 @@ msgstr ""
 msgid ""
 "to import the FEC file. We will setup your charts of accounts and the "
 "history of journal entries."
-msgstr ""
+msgstr "を使って、FECファイルをインポートしましょう。こちらが勘定科目表及び仕訳履歴を"
+"設定します。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "to import the SAF-T file."
-msgstr ""
+msgstr "SAF-Tファイルをインポート。"

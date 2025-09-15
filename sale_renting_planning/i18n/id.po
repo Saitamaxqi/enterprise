@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_renting_planning
+# * sale_renting_planning
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:42+0000\n"
-"PO-Revision-Date: 2025-09-11 14:42+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 23:06+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
+"sale_renting_planning/id/>\n"
+"Language: id\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_renting_planning
 #: model:ir.model.fields,help:sale_renting_planning.field_planning_role__sync_shift_rental
@@ -24,11 +28,17 @@ msgid ""
 "- On the website, users can’t select dates when no resources are available.\n"
 "- The order's rental period and the shift dates are synchronized."
 msgstr ""
+"- Buat pesanan rental untuk shift Anda.\n"
+"- Pesanan untuk produk yang terhubung ke peran ini tidak dapat dikonfirmasi "
+"bila tidak ada sumber daya ynag tersedia untuk menangani shift.\n"
+"- Di website, user tidak dapat memilih tanggal saat tidak ada sumber daya "
+"yang tersedia.\n"
+"- Periode rental pesanan dan tanggal shift akan disinkronisasikan."
 
 #. module: sale_renting_planning
 #: model_terms:ir.ui.view,arch_db:sale_renting_planning.planning_view_form_in_gantt_inherit
 msgid "Add to Last Order"
-msgstr ""
+msgstr "Tambahkan ke Pesanan Terakhir"
 
 #. module: sale_renting_planning
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_role__display_name
@@ -36,7 +46,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting_planning.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_renting_planning.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nama Tampilan"
 
 #. module: sale_renting_planning
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_role__id
@@ -44,18 +54,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting_planning.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_renting_planning.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_renting_planning
 #: model_terms:ir.ui.view,arch_db:sale_renting_planning.planning_view_form_in_gantt_inherit
 msgid "New Order"
-msgstr ""
+msgstr "Buat Pesanan Baru"
 
 #. module: sale_renting_planning
 #. odoo-python
 #: code:addons/sale_renting_planning/models/planning_slot.py:0
 msgid "No Rental Order is found."
-msgstr ""
+msgstr "Tidak ada Pesanan Rental yang ditemukan."
 
 #. module: sale_renting_planning
 #. odoo-python
@@ -66,22 +76,22 @@ msgstr ""
 #. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_planning_role
 msgid "Planning Role"
-msgstr ""
+msgstr "Merencanakan peran"
 
 #. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_planning_slot
 msgid "Planning Shift"
-msgstr ""
+msgstr "Merencanakan Shift"
 
 #. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Order Penjualan"
 
 #. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Baris Pesanan Penjualan"
 
 #. module: sale_renting_planning
 #. odoo-python
@@ -93,7 +103,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_role__sync_shift_rental
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_slot__role_sync_shift_rental
 msgid "Sync Shifts and Rental Orders"
-msgstr ""
+msgstr "Sinkronisasi Shift dan Pesanan Rental"
 
 #. module: sale_renting_planning
 #. odoo-python
@@ -102,6 +112,8 @@ msgid ""
 "This Sales Order can't be confirmed. No enough resources are available for "
 "the shifts in: %(product_name)s."
 msgstr ""
+"Sales Order ini tidak dapat dikonfirmasi. Tidak ada sumber daya yang "
+"tersedia untuk shift pada: %(product_name)s."
 
 #. module: sale_renting_planning
 #. odoo-python
@@ -110,3 +122,5 @@ msgid ""
 "This Sales Order can't be confirmed. No resources are available for the "
 "shifts in: %(problematic_services)s."
 msgstr ""
+"Sales Order ini tidak dapat dikonfirmasi. Tidak ada sumber daya yang "
+"tersedia untuk shift di: %(problematic_services)s."

@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_referral
+# * hr_referral
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # Marianna Ciofani, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Marianna Ciofani, 2023\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"hr_referral/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_referral
 #. odoo-python
@@ -55,7 +58,7 @@ msgstr "<i class=\"text-danger fa fa-times\" title=\"Chiusa\"/>"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
 msgid "<i class=\"text-success fa fa-check\" title=\"Done\"/>"
-msgstr "<i class=\"text-success fa fa-check\" title=\"Done\"/>"
+msgstr "<i class=\"text-success fa fa-check\" title=\"Completata\"/>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_level_form
@@ -71,13 +74,15 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span class=\"o_stat_text\">\n"
-"                                    Premiato\n"
+"                                    Premiati\n"
 "                                </span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "<span title=\"Buy\"><i class=\"fa fa-shopping-basket me-3\" role=\"img\" aria-label=\"Buy\"/>Buy</span>"
 msgstr ""
+"<span title=\"Acquista\"><i class=\"fa fa-shopping-basket me-3\" role=\"img\""
+" aria-label=\"Acquista\"/>Acquista</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -139,7 +144,7 @@ msgstr "Avviso"
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_alert
 msgid "Alert in Referral App"
-msgstr "Avviso nell'applicazione referenze"
+msgstr "Avviso nell'applicazione referral dipendenti"
 
 #. module: hr_referral
 #: model:ir.actions.act_window,name:hr_referral.action_hr_referral_alert_configuration
@@ -192,7 +197,7 @@ msgstr "Dipendenti premiati"
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_friend__position__back
 msgid "Back"
-msgstr "Indietro"
+msgstr "Dietro"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.res_config_settings_view__form
@@ -309,7 +314,7 @@ msgstr "Data creazione"
 #: model:ir.actions.client,name:hr_referral.action_hr_referral_welcome_screen
 #: model:ir.ui.menu,name:hr_referral.menu_hr_applicant_employee_referral_dashboard
 msgid "Dashboard"
-msgstr "Bacheca"
+msgstr "Dashboard"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_friend__image
@@ -334,7 +339,10 @@ msgstr "Alla data"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__position
 msgid "Define the position of the friend. If it's a small friend like a dog, you must select Front, it will be placed in the front of the dashboard, above superhero."
-msgstr "Definisci la posizione dell'amico. Se si tratta di un piccolo amico come un cane, devi selezionare Front, sarà posizionato nella parte anteriore del dashboard, sopra il supereroe."
+msgstr ""
+"Definisce la posizione dell'amico. Se è piccolo, come un cane, deve essere "
+"selezionato davanti. Nella bacheca verrà posizionato di fronte, sopra il "
+"supereroe."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__department_id
@@ -362,7 +370,7 @@ msgstr "Referenza diretta"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__dismissed_user_ids
 msgid "Dismissed User"
-msgstr ""
+msgstr "Utente licenziato"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__display_name
@@ -382,12 +390,14 @@ msgstr "Nome visualizzato"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_send_mail.py:0
 msgid "Do not have access"
-msgstr "Non hanno accesso"
+msgstr "Accesso non consentito"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "Do you want to confirm this reward? After confirmation an HR will contact you."
-msgstr "Vuoi confermare questa ricompensa? Dopo la conferma un addetto HR ti contatterà."
+msgstr ""
+"Confermare questo premio? Dopo la conferma verrai contattato da un "
+"responsabile RU."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__earned_points
@@ -414,12 +424,12 @@ msgstr "Dipendente"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__employee_referral_hired
 msgid "Employee Referral Hired"
-msgstr "Dipendenti con referenze assunti"
+msgstr "Assunti con referenza dipendente"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__employee_referral_refused
 msgid "Employee Referral Refused"
-msgstr "Dipendenti con referenze respinti"
+msgstr "Respinti con referenza dipendente"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_report
@@ -499,7 +509,7 @@ msgstr "Amici per referenze"
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_friend__position__front
 msgid "Front"
-msgstr ""
+msgstr "Davanti"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -526,7 +536,7 @@ msgstr "Regali"
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_alert__onclick__all_jobs
 msgid "Go to All Jobs"
-msgstr "Vai a tutti i lavori"
+msgstr "Andare a tutti i lavori"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_report_view_search
@@ -537,7 +547,7 @@ msgstr "Raggruppa per"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_alert_view_search
 msgid "HR Referral Alert Search"
-msgstr ""
+msgstr "Ricerca avviso referenza RU"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__has_message
@@ -660,12 +670,12 @@ msgstr "Posizioni lavorative"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Job Referral Program"
-msgstr "Programma referenze lavorative"
+msgstr "Programma di referenze lavorative"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__job_open_date
 msgid "Job Start Recruitment Date"
-msgstr ""
+msgstr "Data avvio selezione lavoro"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__write_date
@@ -706,7 +716,7 @@ msgstr "Ultima fase di valore"
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_referral_reward_configuration
 msgid "Let's create Super Rewards to thank your employees."
-msgstr "Crea dei Super Premi per ringraziare i tuoi dipendenti."
+msgstr "Per ringraziare i dipendenti creiamo dei super premi."
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_referral_reward
@@ -749,7 +759,7 @@ msgstr "Link"
 #: model:ir.actions.act_window,name:hr_referral.hr_referral_link_to_share_action
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid "Link to Share"
-msgstr "Link per condividere"
+msgstr "Link da condividere"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__linkedin
@@ -770,7 +780,7 @@ msgstr "Punti massimi"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__medium_id
 msgid "Medium"
-msgstr "Medio"
+msgstr "Mezzo"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_has_error
@@ -796,7 +806,7 @@ msgstr "Le mie referenze"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_alert_mail_wizard.py:0
 msgid "New Alert In Referrals App"
-msgstr ""
+msgstr "Nuovo avviso nell'app Referral dipendenti"
 
 #. module: hr_referral
 #. odoo-python
@@ -808,7 +818,7 @@ msgstr "Assegnato un nuovo regalo per %s"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Next"
-msgstr "Succ"
+msgstr "Successivo"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_calendar_event_id
@@ -838,7 +848,7 @@ msgstr "Nessuna posizione lavorativa disponibile per la condivisione."
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_alert__onclick__no
 msgid "Not Clickable"
-msgstr "Non cliccabile"
+msgstr "Clic non possibile"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_applicant__referral_state__closed
@@ -916,13 +926,13 @@ msgstr "Punti dati per non assunto"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__points_missing
 msgid "Points Missing"
-msgstr "Punti Mancanti"
+msgstr "Punti mancanti"
 
 #. module: hr_referral
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Points Received"
-msgstr ""
+msgstr "Punti ricevuti"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -937,19 +947,19 @@ msgstr "Riga punti per referenze"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "Points to buy this"
-msgstr "Punti richiesti per comprare questo"
+msgstr "punti per acquistarlo"
 
 #. module: hr_referral
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Points to spend"
-msgstr ""
+msgstr "Punti da spendere"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_friend__position
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid "Position"
-msgstr "Ruolo"
+msgstr "Posizione"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -969,7 +979,7 @@ msgstr "Nome prodotto"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valutazioni"
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_applicant_employee_referral
@@ -990,7 +1000,7 @@ msgstr "Fasi di selezione"
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_report_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_report_view_tree
 msgid "Referer"
-msgstr ""
+msgstr "Referente"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
@@ -1000,13 +1010,13 @@ msgstr "Referenza"
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_alert_mail_wizard
 msgid "Referral Alert Mail Wizard"
-msgstr ""
+msgstr "Procedura guidata e-mail di notifica referenza"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_res_company__hr_referral_background
 #: model:ir.model.fields,field_description:hr_referral.field_res_config_settings__hr_referral_background
 msgid "Referral Background"
-msgstr ""
+msgstr "Sfondo referenza"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_link_to_share
@@ -1026,7 +1036,7 @@ msgstr "Punti referenza"
 #. module: hr_referral
 #: model:res.groups,name:hr_referral.group_hr_referral_reward_responsible_user
 msgid "Referral Reward Responsible User"
-msgstr ""
+msgstr "Utente responsabile ricompensa referenza"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_send_mail
@@ -1057,7 +1067,7 @@ msgstr "Referenza: %s (%s)"
 #: model:ir.ui.menu,name:hr_referral.menu_hr_referral_root
 #: model_terms:ir.ui.view,arch_db:hr_referral.res_config_settings_view__form
 msgid "Referrals"
-msgstr "Referenze"
+msgstr "Referral dipendenti"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_applicant_view_search_bis_inherit_referral
@@ -1072,7 +1082,7 @@ msgstr "Segnalato da utente"
 #. module: hr_referral
 #: model:ir.ui.menu,name:hr_referral.menu_report_employee_referral_all
 msgid "Reporting"
-msgstr "Rendiconto"
+msgstr "Resoconti"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_level_form
@@ -1093,7 +1103,7 @@ msgstr "Ricomincia inserimento lavorativo"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.res_config_settings_view__form
 msgid "Restore Default"
-msgstr ""
+msgstr "Ripristina predefinito"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1138,19 +1148,19 @@ msgstr "Invia"
 #. module: hr_referral
 #: model:ir.actions.act_window,name:hr_referral.hr_referral_send_mail_action
 msgid "Send Job Offer by Mail"
-msgstr "Invia offerta lavoro via e-mail"
+msgstr "Invio offerta di lavoro via e-mail"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_mail_view_form
 msgid "Send Job by Mail"
-msgstr "Invia offerta lavoro via e-mail"
+msgstr "Invio lavoro via e-mail"
 
 #. module: hr_referral
 #: model:ir.actions.act_window,name:hr_referral.hr_referral_alert_mail_wizard_action
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_mail_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_alert_form
 msgid "Send Mail"
-msgstr "Invia email"
+msgstr "Invia e-mail"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_onboarding__sequence
@@ -1193,12 +1203,12 @@ msgstr "Condividi su {{source.name}}"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__shared_item_infos
 msgid "Shared Item Infos"
-msgstr ""
+msgstr "Informazioni elemento condiviso"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_stage__use_in_referral
 msgid "Show in Referrals"
-msgstr ""
+msgstr "Mostra in Referral dipendenti"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1217,11 +1227,13 @@ msgstr "Salta e inizia"
 #: code:addons/hr_referral/models/hr_applicant.py:0
 msgid "Sorry, your referral %s has been refused in the recruitment process."
 msgstr ""
+"Ci dispiace, la tua referenza %s è stata rifiutata durante il processo di "
+"selezione."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_res_users__utm_source_id
 msgid "Source"
-msgstr "Fonte"
+msgstr "Origine"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_alert__onclick__url
@@ -1237,7 +1249,7 @@ msgstr "Fase"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Start"
-msgstr "Avvio"
+msgstr "Inizia"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1284,11 +1296,15 @@ msgstr "Campo che contiene l'immagine usata per l'amico nella bacheca, con limit
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
 msgid "This field holds the image used as image for the head's friend when the user must choose a new friend, limited to 1024x1024px."
 msgstr ""
+"Il campo contiene l'immagine utilizzata per il viso quando un utente deve "
+"scegliere un nuovo amico, con limite a 1024x1024 px."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__image
 msgid "This field holds the image used as image for the product, limited to 1024x1024px."
-msgstr "Questo campo contiene l'immagine usata per il prodotto, limitata a 1024x1024px."
+msgstr ""
+"Campo che contiene l'immagine usata per il prodotto, con limite a 1024x1024 "
+"px."
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
@@ -1299,6 +1315,9 @@ msgstr "Il link è monitorato in modo da dar conto a una referenza alle persone 
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__use_in_referral
 msgid "This option is used in app 'Referrals'. If checked, the stage is displayed in 'Referrals Dashboard' and points are given to the employee."
 msgstr ""
+"L'opzione è utilizzata nell'applicazione \"Referral dipendenti\". Se "
+"selezionata, la fase viene visualizzata nella \"Bacheca delle referenze\" e "
+"vengono assegnati punti al dipendente."
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.employee_referral_report_action
@@ -1369,7 +1388,7 @@ msgstr "Utente responsabile per il regalo."
 #. module: hr_referral
 #: model:res.groups,name:hr_referral.group_hr_recruitment_referral_user
 msgid "User: Referral only"
-msgstr ""
+msgstr "Utente: solo referenza"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1396,7 +1415,7 @@ msgstr "Cronologia comunicazioni sito web"
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_onboarding
 msgid "Welcome Onboarding in Referral App"
-msgstr ""
+msgstr "Configurazione di benvenuto nell'applicazione Referral dipendenti"
 
 #. module: hr_referral
 #. odoo-python
@@ -1411,6 +1430,9 @@ msgid ""
 "You cannot delete these UTM Campaigns as they are linked to the following jobs in Referral:\n"
 "%(job_names)s"
 msgstr ""
+"Non è possibile eliminare le campagne UTM perché sono legate ai seguenti "
+"lavori nell'app Referral dipendenti:\n"
+"%(job_names)s"
 
 #. module: hr_referral
 #. odoo-python
@@ -1419,6 +1441,9 @@ msgid ""
 "You cannot delete these UTM Sources as they are linked to the following users in Referral:\n"
 "%(employee_names)s"
 msgstr ""
+"Non è possibile eliminare le fonti UTM perché sono legate ai seguenti utenti "
+"nella referenza:\n"
+"%(employee_names)s"
 
 #. module: hr_referral
 #. odoo-python
@@ -1434,7 +1459,7 @@ msgstr "Hai guadagnato"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "You need another"
-msgstr "Hai bisogno di un altro/a"
+msgstr "Sono necessari altri"
 
 #. module: hr_referral
 #. odoo-python

@@ -1,135 +1,139 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* room
+# * room
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:41+0000\n"
-"PO-Revision-Date: 2025-09-11 14:41+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 12:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/room/ja/"
+">\n"
+"Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "1 hour"
-msgstr ""
+msgstr "1時間"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "15 min"
-msgstr ""
+msgstr "15分"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "30 min"
-msgstr ""
+msgstr "30分"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
 msgid "<i class=\"fa fa-long-arrow-right mx-1\" title=\"Until\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-long-arrow-right mx-1\" title=\"Until\"/>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
 msgid "<i class=\"fa fa-long-arrow-right\" title=\"Until\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Until\"/>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "<span class=\"o_stat_text\">Next Meeting</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">次のミーティング</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "<span invisible=\"next_booking_start\">No Upcoming Meetings</span>"
-msgstr ""
+msgstr "<span invisible=\"next_booking_start\">ミーティング予定なし</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
 msgid "<strong>Date: </strong>"
-msgstr ""
+msgstr "<strong>日付: </strong>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
 msgid "<strong>Organizer: </strong>"
-msgstr ""
+msgstr "<strong>主催者: </strong>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
 msgid "<strong>Room: </strong>"
-msgstr ""
+msgstr "<strong>ルーム: </strong>"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "アクセストークン"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "要アクション"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__active
 msgid "Active"
-msgstr ""
+msgstr "アクティブ"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Add"
-msgstr ""
+msgstr "追加"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Add a Booking"
-msgstr ""
+msgstr "予約を追加"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__description
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Amenities"
-msgstr ""
+msgstr "設備"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Appearance"
-msgstr ""
+msgstr "表示"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Archived"
-msgstr ""
+msgstr "アーカイブ済"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Are you sure you want to delete this booking?"
-msgstr ""
+msgstr "この予約を本当に削除しますか？"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Are you sure you want to end the current booking ?"
-msgstr ""
+msgstr "本当に現在の予約を終了しますか？"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_attachment_count
 #: model:ir.model.fields,field_description:room.field_room_room__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "添付数"
 
 #. module: room
 #. odoo-javascript
@@ -137,33 +141,33 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Available"
-msgstr ""
+msgstr "利用可能"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__bookable_background_color
 msgid "Available Background Color"
-msgstr ""
+msgstr "利用可能な背景色"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_background_image
 msgid "Background Image"
-msgstr ""
+msgstr "背景画像"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Booked"
-msgstr ""
+msgstr "会場予約済"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__booked_background_color
 msgid "Booked Background Color"
-msgstr ""
+msgstr "予約済背景色"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "Booking"
-msgstr ""
+msgstr "予約"
 
 #. module: room
 #. odoo-javascript
@@ -171,13 +175,13 @@ msgstr ""
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 #: model:ir.model.fields,field_description:room.field_room_booking__name
 msgid "Booking Name"
-msgstr ""
+msgstr "予約名"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Booking Now"
-msgstr ""
+msgstr "今すぐ予約"
 
 #. module: room
 #. odoo-python
@@ -187,68 +191,68 @@ msgstr ""
 #: model:ir.ui.menu,name:room.room_booking_menu
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
 msgid "Bookings"
-msgstr ""
+msgstr "予約"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Busy"
-msgstr ""
+msgstr "利用中"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
 msgid "Capacity: 6 people"
-msgstr ""
+msgstr "定員: 6名"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__company_id
 #: model:ir.model.fields,field_description:room.field_room_office__company_id
 #: model:ir.model.fields,field_description:room.field_room_room__company_id
 msgid "Company"
-msgstr ""
+msgstr "会社"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
 msgid "Create Rooms"
-msgstr ""
+msgstr "ルームを作成"
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
 msgid "Create a Room"
-msgstr ""
+msgstr "ルームを作成"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_uid
 #: model:ir.model.fields,field_description:room.field_room_office__create_uid
 #: model:ir.model.fields,field_description:room.field_room_room__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_date
 #: model:ir.model.fields,field_description:room.field_room_office__create_date
 #: model:ir.model.fields,field_description:room.field_room_room__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "Date"
-msgstr ""
+msgstr "日付"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Delete"
-msgstr ""
+msgstr "削除"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__display_name
@@ -256,52 +260,52 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__display_name
 #: model:ir.model.fields,field_description:room.field_room_room__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: room
 #: model:res.groups,comment:room.group_room_manager
 msgid "Enable the user to manage meeting rooms available for booking"
-msgstr ""
+msgstr "ユーザに予約可能な会議室の管理を許可する"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "End Booking"
-msgstr ""
+msgstr "予約を終了"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__stop_datetime
 msgid "End Datetime"
-msgstr ""
+msgstr "終了日時"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_follower_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_partner_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "フォロワー (取引先)"
 
 #. module: room
 #: model:ir.model,name:room.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTPルーティング"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__has_message
 #: model:ir.model.fields,field_description:room.field_room_room__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "メッセージあり"
 
 #. module: room
 #: model:room.office,name:room.room_office_head_office
 msgid "Head Office"
-msgstr ""
+msgstr "本社"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__id
@@ -309,217 +313,218 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__id
 #: model:ir.model.fields,field_description:room.field_room_room__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "チェックした場合は、新しいメッセージに注意が必要です。"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
 #: model:ir.model.fields,help:room.field_room_room__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "チェックした場合は、一部のメッセージに配信エラーが発生されました。"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Install Application"
-msgstr ""
+msgstr "アプリケーションをインストールする"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
 msgid "Is Currently Available"
-msgstr ""
+msgstr "現在利用可能"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_is_follower
 #: model:ir.model.fields,field_description:room.field_room_room__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "フォロー中"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__is_available
 msgid "Is Room Currently Available"
-msgstr ""
+msgstr "現在可能なルーム"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__write_uid
 #: model:ir.model.fields,field_description:room.field_room_office__write_uid
 #: model:ir.model.fields,field_description:room.field_room_room__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__write_date
 #: model:ir.model.fields,field_description:room.field_room_office__write_date
 #: model:ir.model.fields,field_description:room.field_room_room__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日"
 
 #. module: room
 #: model:room.office,name:room.room_office_main_office
 msgid "Main Office"
-msgstr ""
+msgstr "メインオフィス"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
 msgid ""
 "Make meeting room sharing easy by centralizing all meetings in this App"
-msgstr ""
+msgstr "このアプリで全てのミーティングを一元管理することで、会議室の共有が簡単になり"
+"ます。"
 
 #. module: room
 #: model:res.groups,name:room.group_room_manager
 msgid "Manage Rooms"
-msgstr ""
+msgstr "ルーム管理"
 
 #. module: room
 #: model:ir.ui.menu,name:room.room_menu_root
 msgid "Meeting Rooms"
-msgstr ""
+msgstr "会議室"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "Meeting name"
-msgstr ""
+msgstr "ミーティング名"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "メッセージ配信エラー"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "メッセージ"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "My Meetings"
-msgstr ""
+msgstr "自分のミーティング"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_list
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__next_booking_start
 msgid "Next Booking Start"
-msgstr ""
+msgstr "次の予約開始"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Next Week"
-msgstr ""
+msgstr "来週"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "No Bookings Planned"
-msgstr ""
+msgstr "予約が計画されていません"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "No Bookings for Today"
-msgstr ""
+msgstr "今日の予約はありません"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
 msgid "No Bookings found. Let’s schedule one!"
-msgstr ""
+msgstr "予約が見つかりません。予約を入れましょう!"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "アクション数"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "エラー数"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,help:room.field_room_room__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "アクションを必要とするメッセージの数"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,help:room.field_room_room__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "配信エラーが発生されたメッセージ数"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__office_id
 #: model:ir.model.fields,field_description:room.field_room_room__office_id
 msgid "Office"
-msgstr ""
+msgstr "オフィス"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__name
 #: model_terms:ir.ui.view,arch_db:room.room_office_view_form
 msgid "Office Name"
-msgstr ""
+msgstr "オフィス名"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Open"
-msgstr ""
+msgstr "開く"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Or"
-msgstr ""
+msgstr "または"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__organizer_id
 msgid "Organizer"
-msgstr ""
+msgstr "オーガナイザ"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Previous Week"
-msgstr ""
+msgstr "先週"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_2
 msgid "Projector"
-msgstr ""
+msgstr "プロジェクター"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_1
 msgid "Projector, whiteboard"
-msgstr ""
+msgstr "プロジェクタ、ホワイトボード"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_properties
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Properties"
-msgstr ""
+msgstr "属性"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Public Booking"
-msgstr ""
+msgstr "公開予約"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__rating_ids
 #: model:ir.model.fields,field_description:room.field_room_room__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "評価"
 
 #. module: room
 #: model:ir.actions.act_window,name:room.room_room_action
@@ -528,137 +533,137 @@ msgstr ""
 #: model:res.groups.privilege,name:room.res_groups_privilege_room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Room"
-msgstr ""
+msgstr "ルーム"
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
 msgid "Room %(room_name)s is already booked during the selected time slot."
-msgstr ""
+msgstr "ルーム%(room_name)sは選択された時間帯ですでに予約されています。"
 
 #. module: room
 #: model:ir.model,name:room.model_room_booking
 msgid "Room Booking"
-msgstr ""
+msgstr "ルーム予約"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_booking_url
 msgid "Room Link"
-msgstr ""
+msgstr "部屋リンク"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__name
 msgid "Room Name"
-msgstr ""
+msgstr "ルーム名"
 
 #. module: room
 #: model:ir.model,name:room.model_room_office
 msgid "Room Office"
-msgstr ""
+msgstr "ルームオフィス"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__room_properties_definition
 msgid "Room Properties"
-msgstr ""
+msgstr "部屋プロパティ"
 
 #. module: room
 #: model:ir.ui.menu,name:room.room_room_menu
 msgid "Rooms"
-msgstr ""
+msgstr "ルーム"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "Select a Room..."
-msgstr ""
+msgstr "部屋を選択..."
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "短縮コード"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__start_datetime
 msgid "Start Datetime"
-msgstr ""
+msgstr "日時の開始"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Start now"
-msgstr ""
+msgstr "今すぐ開始"
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_access_token
 msgid "The access token must be unique"
-msgstr ""
+msgstr "アクセストークンは一意にして下さい。"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "The booking you were editing has been updated or deleted."
-msgstr ""
+msgstr "編集していた予約は更新または削除されました。"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "The next booking is starting soon."
-msgstr ""
+msgstr "次の予約がまもなく開始します。"
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_short_code
 msgid "The short code must be unique."
-msgstr ""
+msgstr "ショートコードは一意にして下さい。"
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
 msgid "The start date of %(booking_name)s must be earlier than the end date."
-msgstr ""
+msgstr "%(booking_name)sの開始日は終了日より早くして下さい。"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
 msgid "They can then be booked for meetings from a Tablet or the back-end."
-msgstr ""
+msgstr "タブレットやバックエンドからミーティングの予約ができます。"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "This room is as free as a fish in a sea of endless possibilities"
-msgstr ""
+msgstr "このルームは、現在、何度でもお使いいただけます。"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Until"
-msgstr ""
+msgstr "終了"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Update Meeting"
-msgstr ""
+msgstr "ミーティングを更新する"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "e.g. Blue Meeting Room"
-msgstr ""
+msgstr "例: 会議室 青"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "e.g. Headquarters"
-msgstr ""
+msgstr "例: 本社"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "e.g. Team Meeting"
-msgstr ""
+msgstr "例: チームミーティング"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "e.g. projector, capacity 6 people"
-msgstr ""
+msgstr "例: プロジェクタ、定員6名"
 
 #. module: room
 #. odoo-python
 #: code:addons/room/models/room_room.py:0
 msgid "room_id"
-msgstr ""
+msgstr "room_id"

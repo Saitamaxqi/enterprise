@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_fedex_rest
+# * delivery_fedex_rest
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:14+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
+"delivery_fedex_rest/ca/>\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -28,6 +32,10 @@ msgid ""
 "<b>Once your account is created, go to the My Projects tab and create a new API project. Make sure to select the options indicated below:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>Un cop hagis creat el compte, dirigeix-te a la pestanya «Els meus "
+"projectes» i crea un nou projecte API. Assegura't de seleccionar les "
+"següents opcions:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -35,6 +43,13 @@ msgid ""
 "<b>To enable the creation of FedEx shipping labels, the last step is the Certification Process, click on 'Go to API certification' and follow the required steps to get your account certified for label creation.</b>\n"
 "                                <br/>These certifications usually require that you contact the FedEx support team by email."
 msgstr ""
+"<b>Per activar l'opció de crear d'etiquetes d'enviament de FedEx, l'últim "
+"pas és el procés de certificació. Fes clic en «Dirigir-se a la certificació "
+"API» i segueix els passos necessaris per certificar el teu compte i crear-ne "
+"etiquetes.</b>\n"
+"                                <br/>En general, per obtindre aquestes "
+"certificacions és necessari posar-se en contacte amb l'equip de suport de "
+"FedEx a través del correu electrònic."
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -42,6 +57,10 @@ msgid ""
 "<b>To move to production, generate a production key and link it to a FedEx account number (you can add/create one if necessary), you will receive production API and secret keys:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>Per passar a l'etapa de producció, genera una clau de producció i vincula-"
+"la a un número de compte de FedEx (si cal, pots afegir/crear-ne un). A "
+"continuació, rebràs les claus de producció de l'API i la clau secreta:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -53,7 +72,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "<span class=\"o_form_label\">Package Length Unit</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Unitat de longitud del paquet</span>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -61,21 +80,24 @@ msgid ""
 "<span invisible=\"fedex_rest_weight_unit != 'KG'\">Centimeters</span>\n"
 "                                <span invisible=\"fedex_rest_weight_unit != 'LB'\">Inches</span>"
 msgstr ""
+"<span invisible=\"fedex_rest_weight_unit != 'KG'\">Centímetres</span>\n"
+"                                <span invisible="
+"\"fedex_rest_weight_unit != 'LB'\">Polzades</span>"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_key
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
-msgstr ""
+msgstr "Número de compte"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__always
 msgid "Always"
-msgstr ""
+msgstr "Sempre"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -88,7 +110,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Transportista"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__check
@@ -130,12 +152,12 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Duties paid by"
-msgstr ""
+msgstr "Duques pagades per"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__epl2
 msgid "EPL2"
-msgstr ""
+msgstr "EPL2"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__etd
@@ -145,7 +167,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_email_notifications
 msgid "Email Notifications"
-msgstr ""
+msgstr "Notificacions per correu electrònic"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -158,28 +180,28 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Extra Data"
-msgstr ""
+msgstr "Dades extres"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_rate_request
 msgid "Extra data for rate"
-msgstr ""
+msgstr "Dades addicionals per a la taxa"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_return_request
 msgid "Extra data for return"
-msgstr ""
+msgstr "Dades extres per retornar"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_ship_request
 msgid "Extra data for ship"
-msgstr ""
+msgstr "Dades addicionals per a la nau"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__delivery_type__fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__stock_package_type__package_carrier_type__fedex_rest
 msgid "FedEx"
-msgstr ""
+msgstr "FedEx"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__fedex_1_day_freight
@@ -214,7 +236,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_account_number
 msgid "FedEx Account Number"
-msgstr ""
+msgstr "Número de compte FedEx"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_droppoff_type
@@ -394,12 +416,12 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_uom_uom__fedex_code
 msgid "Fedex Code"
-msgstr ""
+msgstr "Codi Fedex"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Configuration"
-msgstr ""
+msgstr "Configuració de Fedex"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -410,7 +432,7 @@ msgstr ""
 #: model:delivery.carrier,name:delivery_fedex_rest.delivery_carrier_fedex_inter
 #: model:product.template,name:delivery_fedex_rest.product_product_delivery_fedex_inter_product_template
 msgid "Fedex International"
-msgstr ""
+msgstr "Fedex International"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_duty_payment
@@ -425,13 +447,13 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Tutorial"
-msgstr ""
+msgstr "Guia d'aprenentatge de Fedex"
 
 #. module: delivery_fedex_rest
 #: model:delivery.carrier,name:delivery_fedex_rest.delivery_carrier_fedex_us
 #: model:product.template,name:delivery_fedex_rest.product_product_delivery_fedex_us_product_template
 msgid "Fedex US"
-msgstr ""
+msgstr "Fedex US"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
@@ -447,12 +469,12 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
 msgid "Generate invoice"
-msgstr ""
+msgstr "Generar factura"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Go to"
-msgstr ""
+msgstr "Anar"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__id
@@ -470,12 +492,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "Invalid syntax for FedEx extra data."
-msgstr ""
+msgstr "Sintaxi no vàlida per a les dades addicionals de FedEx."
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_weight_unit__kg
 msgid "Kilograms"
-msgstr ""
+msgstr "Quilograms"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_label_file_type
@@ -485,7 +507,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Label Format"
-msgstr ""
+msgstr "Format de l'etiqueta"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_label_stock_type
@@ -495,72 +517,72 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__never
 msgid "Never"
-msgstr ""
+msgstr "Mai"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__none
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Options"
-msgstr ""
+msgstr "Opcions"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x6
 msgid "PAPER_4X6"
-msgstr ""
+msgstr "PAPER_4X6"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x6_75
 msgid "PAPER_4X6.75"
-msgstr ""
+msgstr "PAPER_4X6.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x8
 msgid "PAPER_4X8"
-msgstr ""
+msgstr "PAPER_4X8"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x9
 msgid "PAPER_4X9"
-msgstr ""
+msgstr "PAPER_4X9"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_7x4_75
 msgid "PAPER_7X4.75"
-msgstr ""
+msgstr "PAPER_7X4.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_8_5x11_bottom_half_label
 msgid "PAPER_8.5X11_BOTTOM_HALF_LABEL"
-msgstr ""
+msgstr "PAPER_8.5X11_BOTTOM_HALF_LABEL"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_8_5x11_top_half_label
 msgid "PAPER_8.5X11_TOP_HALF_LABEL"
-msgstr ""
+msgstr "PAPER_8.5X11_TOP_HALF_LABEL"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_letter
 msgid "PAPER_LETTER"
-msgstr ""
+msgstr "PAPER_LETTER"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__png
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Package Weight Unit"
-msgstr ""
+msgstr "Unitat de pes del paquet"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -576,27 +598,27 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_weight_unit__lb
 msgid "Pounds"
-msgstr ""
+msgstr "Lliura"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__invoice
 msgid "Print PDF"
-msgstr ""
+msgstr "Imprimir PDF"
 
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_uom_uom
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "Unitat de mesura del producte"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Proveïdor"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_duty_payment__recipient
 msgid "Recipient"
-msgstr ""
+msgstr "Destinatari"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -613,62 +635,62 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/delivery_fedex.py:0
 msgid "Return Label"
-msgstr ""
+msgstr "Etiqueta de retorn"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6
 msgid "STOCK_4X6"
-msgstr ""
+msgstr "STOCK_4X6"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75
 msgid "STOCK_4X6.75"
-msgstr ""
+msgstr "STOCK_4X6.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75_leading_doc_tab
 msgid "STOCK_4X6.75_LEADING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X6.75_LEADING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75_trailing_doc_tab
 msgid "STOCK_4X6.75_TRAILING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X6.75_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x8
 msgid "STOCK_4X8"
-msgstr ""
+msgstr "STOCK_4X8"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9
 msgid "STOCK_4X9"
-msgstr ""
+msgstr "STOCK_4X9"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9_leading_doc_tab
 msgid "STOCK_4X9_LEADING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X9_LEADING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9_trailing_doc_tab
 msgid "STOCK_4X9_TRAILING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Screenshot"
-msgstr ""
+msgstr "Captura de pantalla"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_password
 msgid "Secret Key"
-msgstr ""
+msgstr "Clau secreta"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_duty_payment__sender
 msgid "Sender"
-msgstr ""
+msgstr "Remitent"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -685,18 +707,18 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Mètodes d'enviament"
 
 #. module: delivery_fedex_rest
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "Alguna cosa ha anat malament, torneu-ho a provar més tard!!"
 
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Tipus de paquet principal"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_rate_request
@@ -763,7 +785,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__zplii
 msgid "ZPLII"
-msgstr ""
+msgstr "ZPLII"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex

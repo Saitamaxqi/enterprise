@@ -1,32 +1,37 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups
+# * delivery_ups
 #
 # Translators:
 # Michal Veselý <michal@veselyberanek.net>, 2022
 # Martin Trigaux, 2022
 # Jan Horzinka <jan.horzinka@centrum.cz>, 2022
 # Jiří Podhorecký, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Jiří Podhorecký, 2022\n"
-"Language-Team: Czech (https://app.transifex.com/odoo/teams/41243/cs/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"delivery_ups/cs/>\n"
 "Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n <= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
+"<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "A shipment cannot have a KGS/IN or LBS/CM as its unit of measurements. Configure it from the delivery method."
 msgstr ""
+"Zásilka nemůže mít jako měrnou jednotku KGS/IN nebo LBS/CM. Nakonfigurujte "
+"jej ze způsobu doručení."
 
 #. module: delivery_ups
 #. odoo-python
@@ -39,6 +44,7 @@ msgstr "Číslo přístupové licence je neplatné. Zadejte platné číslo (dé
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Access License number is invalid for this delivery provider."
 msgstr ""
+"Přístupové licenční číslo je pro tohoto poskytovatele doručování neplatné."
 
 #. module: delivery_ups
 #. odoo-python
@@ -69,13 +75,14 @@ msgstr "Platba na můj účet"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_cod_funds_code
 msgid "COD Funding Option"
-msgstr ""
+msgstr "Možnost financování na dobírku"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Cancel shipment not available at this time , Please try again Later."
 msgstr ""
+"Zrušení zásilky není v tuto chvíli k dispozici , zkuste to prosím později."
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__package_carrier_type
@@ -95,7 +102,7 @@ msgstr "Centimetry"
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_cod_funds_code__0
 msgid "Check, Cashier's Check or MoneyOrder"
-msgstr ""
+msgstr "Šek, pokladní šek nebo peněžní příkaz"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_cod
@@ -110,7 +117,7 @@ msgstr "Kontakt"
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
 msgid "Duties paid by"
-msgstr ""
+msgstr "Kolkovné zaplaceno"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__epl
@@ -132,6 +139,7 @@ msgstr ""
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Exceeds Total Number of allowed pieces per World Wide Express Shipment."
 msgstr ""
+"Překračuje celkový počet povolených kusů na jednu zásilku World Wide Express."
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -171,7 +179,7 @@ msgstr "PDF"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_package_dimension_unit
 msgid "Package Size Unit"
-msgstr ""
+msgstr "Jednotka velikosti balíku"
 
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
@@ -194,31 +202,31 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid City in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu uveďte platné město."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid Country in recipient's address."
-msgstr ""
+msgstr "U adresy příjemce uveďte platnou zemi."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid Country in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu uveďte platnou zemi."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid State in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu uveďte platný stát."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid Zip in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu uveďte platné PSČ."
 
 #. module: delivery_ups
 #. odoo-python
@@ -230,19 +238,19 @@ msgstr "U adresy příjemce uveďte platné město."
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid city in the shipper's address."
-msgstr ""
+msgstr "U adresy odesílatele uveďte platné město."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid country in the shipper's address."
-msgstr ""
+msgstr "U adresy odesílatele uveďte platnou zemi."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid package type available for service and selected locations."
-msgstr ""
+msgstr "Uveďte prosím platný typ balíčku dostupný pro službu a vybraná místa."
 
 #. module: delivery_ups
 #. odoo-python
@@ -254,43 +262,43 @@ msgstr "Uveďte prosím platné telefonní číslo příjemce."
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid shipper Number/Carrier Account."
-msgstr ""
+msgstr "Uveďte prosím platné číslo odesílatele/účtu přepravce."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid shipper number/Carrier Account."
-msgstr ""
+msgstr "Uveďte prosím platné číslo odesílatele/účtu přepravce."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid shipper phone number."
-msgstr ""
+msgstr "Uveďte prosím platné telefonní číslo odesílatele."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid state in the recipient address."
-msgstr ""
+msgstr "U adresy příjemce uveďte platný stát."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid state in the shipper's address."
-msgstr ""
+msgstr "U adresy odesílatele uveďte platný stát."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid street in shipper's address."
-msgstr ""
+msgstr "U adresy odesílatele uveďte platnou ulici."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid street in the recipient address."
-msgstr ""
+msgstr "U adresy příjemce uveďte platnou ulici."
 
 #. module: delivery_ups
 #. odoo-python
@@ -308,31 +316,31 @@ msgstr "Uveďte prosím platné telefonní číslo skladu"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid zip code in the recipient address."
-msgstr ""
+msgstr "U adresy příjemce uveďte platné PSČ."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid zip code in the shipper's address."
-msgstr ""
+msgstr "U adresy odesílatele uveďte platné PSČ."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid zip code in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu uveďte platné PSČ."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide a valid zipcode in the recipient address."
-msgstr ""
+msgstr "U adresy příjemce uveďte platné PSČ."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide at least one item to ship"
-msgstr ""
+msgstr "Zadejte alespoň jednu položku k odeslání"
 
 #. module: delivery_ups
 #. odoo-python
@@ -344,13 +352,13 @@ msgstr "Zadejte alespoň jednu položku k odeslání."
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please set a valid country in the recipient address."
-msgstr ""
+msgstr "U adresy příjemce nastavte platnou zemi."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please set a valid country in the warehouse address."
-msgstr ""
+msgstr "U adresy skladu nastavte platnou zemi."
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_package_weight_unit__lbs
@@ -361,13 +369,13 @@ msgstr "Libry"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Provided Access License Number not found in the UPS database"
-msgstr ""
+msgstr "Poskytnuté přístupové licenční číslo nebylo nalezeno v databázi UPS."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Provided Tracking Ref. Number is invalid."
-msgstr ""
+msgstr "Poskytnuté sledovací ref. číslo je neplatné."
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__delivery_type
@@ -383,19 +391,19 @@ msgstr "Adresát"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Recipient Phone must be at least 10 alphanumeric characters."
-msgstr ""
+msgstr "Telefon příjemce musí mít alespoň 10 alfanumerických znaků."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Recipient PhoneExtension cannot exceed the length of 4."
-msgstr ""
+msgstr "Telefonní přípona příjemce nesmí překročit délku 4."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Recipient PhoneExtension must contain only numbers."
-msgstr ""
+msgstr "Telefonní přípona příjemce musí obsahovat pouze čísla."
 
 #. module: delivery_ups
 #. odoo-python
@@ -439,41 +447,42 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Shipper Phone must be at least 10 alphanumeric characters."
-msgstr ""
+msgstr "Telefon odesílatele musí mít alespoň 10 alfanumerických znaků."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Shipper number must contain alphanumeric characters only."
-msgstr ""
+msgstr "Číslo odesílatele musí obsahovat pouze alfanumerické znaky."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Shipper phone extension cannot exceed the length of 4."
-msgstr ""
+msgstr "Telefonní přípona odesílatele nesmí překročit délku 4."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Shipper phone extension must contain only numbers."
-msgstr ""
+msgstr "Telefonní přípona odesílatele musí obsahovat pouze čísla."
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "Způsoby přepravy"
+msgstr "Přepravní metody"
 
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Typ balení"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The UserId is currently locked out; please try again in 24 hours."
 msgstr ""
+"Uživatelské Id je momentálně uzamčené; zkuste to prosím znovu za 24 hodin."
 
 #. module: delivery_ups
 #. odoo-python
@@ -482,6 +491,8 @@ msgid ""
 "The address of your company is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"Adresa vaší společnosti chybí nebo je špatná\n"
+"(chybějící pole (nebo více): %s)"
 
 #. module: delivery_ups
 #. odoo-python
@@ -506,18 +517,23 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"Odhadovanou cenu dopravy nelze vypočítat, protože u následujících produktů "
+"chybí hmotnost:\n"
+" %s"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The maximum number of user access attempts was exceeded. So please try again later"
 msgstr ""
+"Byl překročen maximální počet pokusů o přístup uživatele. Zkuste to tedy "
+"znovu později"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The name of the customer should be no more than 35 characters."
-msgstr ""
+msgstr "Jméno zákazníka by nemělo mít více než 35 znaků."
 
 #. module: delivery_ups
 #. odoo-python
@@ -533,43 +549,52 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The requested service is unavailable between the selected locations."
-msgstr ""
+msgstr "Požadovaná služba není mezi vybranými lokacemi dostupná."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The selected service is invalid from the requested warehouse, please choose another service."
 msgstr ""
+"Vybraná služba z požadovaného skladu je neplatná, vyberte prosím jinou "
+"službu."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The selected service is invalid to the recipient address, please choose another service."
 msgstr ""
+"Vybraná služba je pro adresu příjemce neplatná, vyberte prosím jinou službu."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The selected service is not possible from your warehouse to the recipient address, please choose another service."
 msgstr ""
+"Vybraná služba není možná z vašeho skladu na adresu příjemce, vyberte si "
+"prosím jinou službu."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The selected service is not valid with the selected packaging."
-msgstr ""
+msgstr "Vybraná služba není platná s vybraným balením."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "This measurement system is not valid for the selected country. Please switch from LBS/IN to KGS/CM (or vice versa). Configure it from delivery method"
 msgstr ""
+"Tento systém měření není platný pro vybranou zemi. Přepněte z LBS/IN na KGS/"
+"CM (nebo naopak). Nakonfigurujte jej ze způsobu doručení"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "This measurement system is not valid for the selected country. Please switch from LBS/IN to KGS/CM (or vice versa). Configure it from the delivery method."
 msgstr ""
+"Tento systém měření není platný pro vybranou zemi. Přepněte z LBS/IN na KGS/"
+"CM (nebo naopak). Nakonfigurujte jej ze způsobu doručení."
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_cod
@@ -585,7 +610,7 @@ msgstr "Tato služba s přidanou hodnotou vám umožní poslat balíček i v sob
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "Sledovací čísla:"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups
@@ -596,13 +621,13 @@ msgstr "UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_access_number
 msgid "UPS Access Key"
-msgstr ""
+msgstr "Přístupový klíč UPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_res_partner__property_ups_carrier_account
 #: model:ir.model.fields,field_description:delivery_ups.field_res_users__property_ups_carrier_account
 msgid "UPS Account Number"
-msgstr ""
+msgstr "Číslo účtu UPS"
 
 #. module: delivery_ups
 #: model:delivery.carrier,name:delivery_ups.delivery_carrier_ups_be
@@ -618,7 +643,7 @@ msgstr "Konfigurace UPS"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_label_file_type
 msgid "UPS Label File Type"
-msgstr ""
+msgstr "Typ souboru štítků UPS"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_default_package_type_id
@@ -639,7 +664,7 @@ msgstr "UPS sobotní doručení"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "UPS Server Not Found"
-msgstr ""
+msgstr "Server UPS nenalezen"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_default_service_type
@@ -671,18 +696,20 @@ msgstr "UPS Uživatelské jméno"
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order__partner_ups_carrier_account
 msgid "UPS account number"
-msgstr ""
+msgstr "Číslo účtu UPS"
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "UPS address lines can only contain a maximum of 35 characters. You can split the contacts addresses on multiple lines to try to avoid this limitation."
 msgstr ""
+"Řádky adresy UPS mohou obsahovat maximálně 35 znaků. Chcete-li se tomuto "
+"omezení vyhnout, můžete adresy kontaktů rozdělit do více řádků."
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_duty_payment
 msgid "Ups Duty Payment"
-msgstr ""
+msgstr "Platba cla Ups"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_package_weight_unit
@@ -694,6 +721,7 @@ msgstr "Jednotka hmotnosti balíku Ups"
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Username/Password is invalid for this delivery provider."
 msgstr ""
+"Uživatelské jméno/heslo je pro tohoto poskytovatele doručování neplatné."
 
 #. module: delivery_ups
 #. odoo-python
@@ -705,19 +733,19 @@ msgstr "Skladový telefon musí mít alespoň 10 alfanumerických znaků."
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Warehouse Phone must contain only numbers."
-msgstr ""
+msgstr "Skladový telefon musí obsahovat pouze čísla."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Warehouse PhoneExtension cannot exceed the length of 4."
-msgstr ""
+msgstr "Telefonní přípona skladu nesmí překročit délku 4."
 
 #. module: delivery_ups
 #. odoo-python
 #: code:addons/delivery_ups/models/sale.py:0
 msgid "You must enter an UPS account number."
-msgstr ""
+msgstr "Musíte zadat číslo účtu UPS."
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__zpl

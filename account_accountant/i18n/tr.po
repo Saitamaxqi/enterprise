@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_accountant
+# * account_accountant
 #
 # Translators:
 # Halil, 2022
@@ -20,20 +20,22 @@
 # Murat Kaplan <muratk@projetgrup.com>, 2023
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2023
 # Ediz Duman <neps1192@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: Ediz Duman <neps1192@gmail.com>, 2023\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:02+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"account_accountant/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_accountant
 #. odoo-python
@@ -54,12 +56,16 @@ msgstr ""
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "%(display_name_html)s with an open amount of %(open_amount)s will be fully reconciled by the transaction."
 msgstr ""
+"%(display_name_html)s açık bir miktarla %(open_amount)s işlemle tam olarak "
+"mutabakat sağlanacaktır."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "%(display_name_html)s with an open amount of %(open_amount)s will be reduced by %(amount)s."
 msgstr ""
+"%(display_name_html)s Açık tutarı %(open_amount)s tarafından "
+"çıkarılacaktır.%(amount)s."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_form
@@ -93,6 +99,9 @@ msgid ""
 "<i title=\"Run manually\" role=\"img\" aria-label=\"Run manually\" class=\"fa fa-refresh\"/>\n"
 "                            Run manually"
 msgstr ""
+"<i title=\"Run manually\" role=\"img\" aria-label=\"Run manually\" class="
+"\"fa fa-refresh\"/>\n"
+"                            Manuel olarak çalıştır."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -127,12 +136,12 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">1 Bank Transaction</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">1 Banka İşlemi</span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">Bank Statement</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\"> Banka Hesap Özeti</span>"
 
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
@@ -181,12 +190,12 @@ msgstr "Hesap Etiketleri"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_from_account_id
 msgid "Account Transfer From"
-msgstr ""
+msgstr "Hesabindan Transfer"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_wizard
 msgid "Account reconciliation wizard"
-msgstr ""
+msgstr "Hesap denkleştirme sihirbazı"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_accounting
@@ -224,12 +233,12 @@ msgstr "Genel Kilit Tarihi"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_model_autocomplete_ids
 msgid "All reconciliation models"
-msgstr ""
+msgstr "Tüm mutabakat modelleri"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__allow_partials
 msgid "Allow partials"
-msgstr ""
+msgstr "Kısmi ödemeye izin ver"
 
 #. module: account_accountant
 #: model:res.groups,name:account_accountant.group_fiscal_year
@@ -257,12 +266,12 @@ msgstr "Para Birimi Tutarı"
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/bank_rec_widget_form_lines_widget.js:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Amount in Currency"
-msgstr "Para Birimi Tutarı"
+msgstr "Dövizli Tutarı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__amount
 msgid "Amount in company currency"
-msgstr ""
+msgstr "Şirket para birimi cinsinden tutar"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_amount
@@ -284,7 +293,7 @@ msgstr "Analitik Hesap"
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__analytic_distribution
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Analitik Dağılımı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__analytic_distribution_search
@@ -347,7 +356,7 @@ msgstr "Hesap Ekstresi.pdf"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_bank_rec_widget
 msgid "Bank reconciliation widget for a single statement line"
-msgstr ""
+msgstr "Tek bir ekstre satırı için banka mutabakatı widget'ı"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -371,6 +380,8 @@ msgstr "Faturayı kontrol edin ve doğrulayın. Satıcı bulunmadıysa, doğrula
 #: model:ir.model.fields,help:account_accountant.field_account_reconcile_wizard__to_check
 msgid "Check if you are not certain of all the information of the counterpart."
 msgstr ""
+"Karşı tarafla ilgili tüm bilgilerin doğruluğundan emin değilseniz kontrol "
+"edin."
 
 #. module: account_accountant
 #. odoo-javascript
@@ -398,12 +409,12 @@ msgstr "Şirketler"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__company_id
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__company_id
 msgid "Company"
-msgstr "Şirket"
+msgstr "Firma"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__company_currency_id
 msgid "Company currency"
-msgstr ""
+msgstr "Şirket para birimi"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_config_settings
@@ -424,7 +435,7 @@ msgstr "Karşı Değerler"
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_form_bank_rec_widget
 msgid "Create Statement"
-msgstr ""
+msgstr "Ekstre Oluştur"
 
 #. module: account_accountant
 #: model_terms:ir.actions.act_window,help:account_accountant.action_account_group_tree
@@ -442,14 +453,14 @@ msgstr "İlk tedarikçi faturanızı oluşturun.<br/><br/><i>İpucu: Elinizde yo
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__create_uid
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__create_uid
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr "Tarafından oluşturuldu"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__create_date
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__create_date
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturuldu"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -461,7 +472,7 @@ msgstr "Alacak"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__cron_last_check
 msgid "Cron Last Check"
-msgstr ""
+msgstr "Zamanlayıcı Son Kontrol"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -469,12 +480,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__currency_id
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Currency"
-msgstr "Para Birimi"
+msgstr "Kur"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_currency_id
 msgid "Currency to use for reconciliation"
-msgstr ""
+msgstr "Mutabakat için kullanılacak para birimi"
 
 #. module: account_accountant
 #. odoo-python
@@ -508,7 +519,7 @@ msgstr "Bir yıldan daha uzun ya da kısa mali yıl tanımlayın"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Deposits"
-msgstr ""
+msgstr "Mevduatlar"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_digest_digest
@@ -518,7 +529,7 @@ msgstr "Özet"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
 msgid "Discard"
-msgstr ""
+msgstr "Sil"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -532,17 +543,17 @@ msgstr "Mesajlaşma"
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__display_name
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__display_name
 msgid "Display Name"
-msgstr "Görünüm Adı"
+msgstr "İsim Göster"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__display_stroked_amount_currency
 msgid "Display Stroked Amount Currency"
-msgstr ""
+msgstr "Üzeri Çizilmiş Tutar Para Birimini Göster"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__display_stroked_balance
 msgid "Display Stroked Balance"
-msgstr ""
+msgstr "Üzeri Çizili Bakiye Göster"
 
 #. module: account_accountant
 #. odoo-python
@@ -564,13 +575,18 @@ msgstr "Mali yıla dahil olan Bitiş Tarihi."
 #: model:ir.model.fields,help:account_accountant.field_res_company__invoicing_switch_threshold
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__invoicing_switch_threshold
 msgid "Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting entries related to it. Use this option after installing Accounting if you were using only Invoicing before, before importing all your actual accounting data in to Odoo."
-msgstr "Bu tarihten önceki her ödeme ve fatura, ilgili tüm muhasebe kayıtlarını gizleyerek 'Faturadan' durumunu alacaktır. Tüm gerçek muhasebe verilerinizi Odoo'ya aktarmadan önce, daha önce yalnızca Faturalama kullanıyorsanız, Hesap Oluşturma'yı yükledikten sonra bu seçeneği kullanın."
+msgstr ""
+"Bu tarihten önceki tüm ödeme ve faturalar “Faturalandırma” durumuna geçecek "
+"ve ilgili tüm muhasebe kayıtları gizlenecektir. Bu zamana dek yalnızca "
+"Faturalandırma özelliğini kullandıysanız, Muhasebe özelliğini yükledikten "
+"sonra, tüm hakiki muhasebe verilerinizi Odoo'ya aktarmadan önce bu seçeneği "
+"kullanın."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "Exchange Difference: %s"
-msgstr ""
+msgstr "Kur Farkı: %s"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_fiscal_year
@@ -609,7 +625,7 @@ msgstr "Bayrak"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__force_price_included_taxes
 msgid "Force Price Included Taxes"
-msgstr ""
+msgstr "Vergi Dahil Fiyatı Zorla"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__form_account_id
@@ -654,7 +670,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__form_index
 msgid "Form Index"
-msgstr ""
+msgstr "Form İndeksi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__form_name
@@ -752,7 +768,7 @@ msgstr "Harika! Devam edelim."
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__group_tax_id
 msgid "Group Tax"
-msgstr ""
+msgstr "Toplu Vergi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__id
@@ -782,7 +798,7 @@ msgstr "Hatalı mali yıl tarihi. Belirtilen ay için belirtilen gün kapsam dı
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__index
 msgid "Index"
-msgstr ""
+msgstr "Endeks"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget__state__invalid
@@ -792,7 +808,7 @@ msgstr "Geçersiz"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Invalid statements"
-msgstr ""
+msgstr "Geçersiz Ekstreler"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_bank_rec_widget__state
@@ -801,6 +817,9 @@ msgid ""
 "Valid: The bank transaction can be validated.\n"
 "Reconciled: The bank transaction has already been processed. Nothing left to do."
 msgstr ""
+"Geçersiz: Banka işlemi geçici hesap hala dahil olduğu için doğrulanamaz\n"
+"Geçerli: Banka işlemi doğrulanabilir.\n"
+"Mutabık: Banka işlemi zaten işlenmiş. Yapılacak başka bir işlem yok."
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__invoicing_switch_threshold
@@ -816,22 +835,22 @@ msgstr "Denkleştirildi mi"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__is_write_off_required
 msgid "Is a write-off move required to reconcile"
-msgstr ""
+msgstr "Denkleştirme için gereken borç silme"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__is_transfer_required
 msgid "Is an account transfer required"
-msgstr ""
+msgstr "Hesap aktarımı gerekiyor mu?"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_warning_message
 msgid "Is an account transfer required to reconcile"
-msgstr ""
+msgstr "Mutabakat için hesap aktarımı gerekli mi?"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__lock_date_violated_warning_message
 msgid "Is the date violating the lock date of moves"
-msgstr ""
+msgstr "Bu tarih, hareketlerin kilit tarihini ihlal ediyor mu?"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
@@ -883,7 +902,7 @@ msgstr "Nakit Banka Hesabı Değer KPI"
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__label
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Label"
-msgstr "Etiket"
+msgstr "Açıklama"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -984,12 +1003,12 @@ msgstr "Eşleştir"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Match Existing Entries"
-msgstr ""
+msgstr "Mevcut Kayıtlarla Eşleştir"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Matched"
-msgstr ""
+msgstr "Eşleştirildi"
 
 #. module: account_accountant
 #. odoo-python
@@ -1000,7 +1019,7 @@ msgstr "Eşleşen İşlemler"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__matching_rules_allow_auto_reconcile
 msgid "Matching Rules Allow Auto Reconcile"
-msgstr ""
+msgstr "Eşleştirme Kuralları Otomatik Mutabakata İzin Veriyor"
 
 #. module: account_accountant
 #. odoo-python
@@ -1016,7 +1035,7 @@ msgstr "Ekli belgeyi taşı"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__move_line_ids
 msgid "Move lines to reconcile"
-msgstr ""
+msgstr "Mutabakat için hareket satırlarını taşı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__name
@@ -1038,7 +1057,7 @@ msgstr "Bağlı ek yok."
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "No statement"
-msgstr ""
+msgstr "Ekstre yok"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__tax_lock_date
@@ -1053,7 +1072,7 @@ msgstr "Müşavirler de dahil, hiçbir kullanıcı bu tarihten önce ve bu tarih
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Not Matched"
-msgstr ""
+msgstr "Eşleşmedi"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -1111,7 +1130,7 @@ msgstr "İş Ortağı"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Payable:"
-msgstr ""
+msgstr "Borçlar:"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_payment_form_inherit_account_accountant
@@ -1151,17 +1170,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__predict_bill_product
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__predict_bill_product
 msgid "Predict Bill Product"
-msgstr ""
+msgstr "Fatura Ürününü Tahmin Et"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Predict vendor bill product"
-msgstr ""
+msgstr "Tedarikçi faturası ürününü tahmin et"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_model
 msgid "Preset to create journal entries during a invoices and payments matching"
 msgstr ""
+"Fatura ve ödemeler eşleştirilirken yevmiye girişleri oluşturmak üzere "
+"önceden ayarlanmış"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__fiscalyear_lock_date
@@ -1187,7 +1208,7 @@ msgstr "Bu işlemi gerçekleştirin."
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Receivable:"
-msgstr ""
+msgstr "Alacaklar:"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__reco_models_widget
@@ -1204,17 +1225,17 @@ msgstr "Denkleştir"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
 msgid "Reconcile & open"
-msgstr ""
+msgstr "Mutabık kal ve aç"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_account_id
 msgid "Reconcile Account"
-msgstr ""
+msgstr "Hesabı Mutabıklaştır"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__reconcile_model_id
 msgid "Reconcile Model"
-msgstr ""
+msgstr "Mutabakat Modeli"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget__state__reconciled
@@ -1229,7 +1250,7 @@ msgstr "Denkleştirme"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_model_id
 msgid "Reconciliation model"
-msgstr ""
+msgstr "Denkleştirme Modeli"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -1239,7 +1260,7 @@ msgstr "Yevmiye girişlerinizde satılan malların maliyetini kaydedin"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Reference"
-msgstr ""
+msgstr "Referans"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -1249,7 +1270,7 @@ msgstr "Sıfırla"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_model_line
 msgid "Rules for the reconciliation model"
-msgstr ""
+msgstr "Denkleştirme modeli için kurallar"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -1269,7 +1290,7 @@ msgstr "Kaydet & Yeni"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__selected_aml_ids
 msgid "Selected Aml"
-msgstr ""
+msgstr "Seçilen Yevmiye Kalemi"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -1279,42 +1300,42 @@ msgstr "İşaretli Olarak Ayarla"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_aml_id
 msgid "Source Aml"
-msgstr ""
+msgstr "Kaynak Yevmiye Kalemi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_aml_move_id
 msgid "Source Aml Move"
-msgstr ""
+msgstr "Kaynak Yevmiye Hareketi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_aml_move_name
 msgid "Source Aml Move Name"
-msgstr ""
+msgstr "Kaynak AML Hareket Adı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_amount_currency
 msgid "Source Amount Currency"
-msgstr ""
+msgstr "Kaynak Tutar Para Birimi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_balance
 msgid "Source Balance"
-msgstr ""
+msgstr "Kaynak Bakiye"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_credit
 msgid "Source Credit"
-msgstr ""
+msgstr "Kaynak Alacak"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__source_debit
 msgid "Source Debit"
-msgstr ""
+msgstr "Kaynak Borç"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__st_line_id
 msgid "St Line"
-msgstr ""
+msgstr "Ekstre Satırı"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__date_from
@@ -1324,7 +1345,7 @@ msgstr "Başlama Tarihi"
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_fiscal_year__date_from
 msgid "Start Date, included in the fiscal year."
-msgstr "Mali yıla dahil olan Başlangıç ​​Tarihi."
+msgstr "Mali yıla dahil olan Başlangıç Tarihi."
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__state
@@ -1357,7 +1378,7 @@ msgstr "Vergi"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__tax_base_amount_currency
 msgid "Tax Base Amount Currency"
-msgstr ""
+msgstr "Vergi Matrahı Para Birimi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__tax_lock_date
@@ -1377,7 +1398,7 @@ msgstr "Vergi İadesi Kilit Tarihi"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__tax_tag_ids
 msgid "Tax Tag"
-msgstr ""
+msgstr "Vergi Etiketi"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1396,24 +1417,30 @@ msgstr ""
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "The date you set violates the lock date of one of your entry. It will be overriden by the following date : %(replacement_date)s"
 msgstr ""
+"Belirttiğiniz tarih, bir kaydın kilit tarihini ihlal ediyor. Bu tarih, "
+"aşağıdaki tarihle değiştirilecektir : %(replacement_date)s"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "The ending date must not be prior to the starting date."
-msgstr "Bitiş tarihi, başlangıç ​​tarihinden önce olmamalıdır."
+msgstr "Bitiş tarihi, başlangıç tarihinden önce olmamalıdır."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "The invoice %(display_name_html)s with an open amount of %(open_amount)s will be entirely paid by the transaction."
 msgstr ""
+"%(display_name_html)s faturasının %(open_amount)s tutarındaki açık bakiyesi, "
+"bu işlemle tamamen ödenecektir."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "The invoice %(display_name_html)s with an open amount of %(open_amount)s will be reduced by %(amount)s."
 msgstr ""
+"Açık bakiyesi %(open_amount)s olan %(display_name_html)s faturası, %(amount)"
+"s tutarında azaltılacaktır."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -1424,24 +1451,30 @@ msgstr "Bu tarihe kadar olan faturalar muhasebe kaydı olarak dikkate alınmayac
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "The system will try to predict the product on vendor bill lines based on the label of the line"
 msgstr ""
+"Sistem, satıcı faturası satırlarında ürün tahminini satırdaki etiket "
+"bilgisini kullanarak yapmaya çalışacaktır"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_bank_statement.py:0
 msgid "This bank transaction has been automatically validated using the reconciliation model '%s'."
 msgstr ""
+"Bu banka işlemi, '%s' mutabakat modeli kullanılarak otomatik olarak "
+"doğrulandı."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "This can only be used on journal items"
-msgstr ""
+msgstr "Bu yalnızca yevmiye kalemlerinde kullanılabilir"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model_line.py:0
 msgid "This reconciliation model can't be used in the manual reconciliation widget because its configuration is not adapted"
 msgstr ""
+"Bu denkleştirme modeli, yapılandırması uyarlanmadığından manuel mutabakat "
+"widget'ında kullanılamaz"
 
 #. module: account_accountant
 #: model:digest.tip,name:account_accountant.digest_tip_account_accountant_0
@@ -1464,12 +1497,12 @@ msgstr "Kontrol Edilecek"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_kanban_bank_rec_widget
 msgid "To check"
-msgstr ""
+msgstr "Kontrol edilecek"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__todo_command
 msgid "Todo Command"
-msgstr ""
+msgstr "Yapılacak Komutu"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
@@ -1479,35 +1512,35 @@ msgstr "İşlem"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__transaction_currency_id
 msgid "Transaction Currency"
-msgstr ""
+msgstr "İşlem Para Birimi"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Transaction Details"
-msgstr ""
+msgstr "İşlem Detayları"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Transfer from %s"
-msgstr ""
+msgstr "%s'dan transfer"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Transfer to %s"
-msgstr ""
+msgstr "Transfer %s"
 
 #. module: account_accountant
 #: model:ir.actions.server,name:account_accountant.auto_reconcile_bank_statement_line_ir_actions_server
 msgid "Try to reconcile automatically your statement lines"
-msgstr ""
+msgstr "Ekstrelerinizin satırlarını otomatik olarak denkleştirmeye çalışın"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/res_company.py:0
 msgid "Unreconciled statements lines"
-msgstr ""
+msgstr "Denkleştirilmiş ekstre satırları"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget__state__valid
@@ -1536,7 +1569,7 @@ msgstr "Sihirbaz"
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__company_currency_id
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__company_currency_id
 msgid "Wizard Company Currency"
-msgstr ""
+msgstr "Sihirbaz Şirket Para Birimi"
 
 #. module: account_accountant
 #. odoo-python
@@ -1548,19 +1581,23 @@ msgstr "Borç Silme"
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Write-Off Entry"
-msgstr ""
+msgstr "Borç silme kaydı"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "You can not have an overlap between two fiscal years, please correct the start and/or end dates of your fiscal years."
-msgstr "İki mali yıl arasında bir çakışma olamaz, lütfen mali yıllarınızın başlangıç ​​ve / veya bitiş tarihlerini düzeltin."
+msgstr ""
+"İki mali yıl arasında bir çakışma olamaz, lütfen mali yıllarınızın başlangıç "
+"ve / veya bitiş tarihlerini düzeltin."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "You can only reconcile entries with up to two different accounts: %s"
 msgstr ""
+"Yalnızca en fazla iki farklı hesap içeren kayıtlar ile mutabakat yapılabilir:"
+" %s"
 
 #. module: account_accountant
 #. odoo-python
@@ -1591,69 +1628,74 @@ msgstr ""
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to %(btn_start)sfully reconcile%(btn_end)s the document."
 msgstr ""
+"Belgeyi %(btn_start)s eksiksiz mutabıklaştırmak%(btn_end)s isteyebilirsiniz."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to make a %(btn_start)spartial reconciliation%(btn_end)s instead."
 msgstr ""
+"Bunun yerine %(btn_start)s kısmi mutabakat %(btn_end)s yapmak "
+"isteyebilirsiniz."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to record a %(btn_start)spartial payment%(btn_end)s."
-msgstr ""
+msgstr "%(btn_start)s kısmi bir ödeme %(btn_end)s kaydetmek isteyebilirsiniz."
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to set the invoice as %(btn_start)sfully paid%(btn_end)s."
 msgstr ""
+"Faturayı %(btn_start)s \"tamamen ödendi\" %(btn_end)s olarak işaretlemek "
+"isteyebilirsiniz."
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__aml
 msgid "aml"
-msgstr ""
+msgstr "mhs"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__auto_balance
 msgid "auto_balance"
-msgstr ""
+msgstr "otomatik_bakiye"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_model_widget_wizard
 msgid "e.g. Bank Fees"
-msgstr "örn. Banka Masrafları"
+msgstr "örn.: Banka Masrafları"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__early_payment
 msgid "early_payment"
-msgstr ""
+msgstr "erken_ödeme"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__exchange_diff
 msgid "exchange_diff"
-msgstr ""
+msgstr "kur_farkı"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__liquidity
 msgid "liquidity"
-msgstr ""
+msgstr "likidite"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__manual
 msgid "manual"
-msgstr ""
+msgstr "manuel"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__new_aml
 msgid "new_aml"
-msgstr ""
+msgstr "yeni_mhs"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__tax_line
 msgid "tax_line"
-msgstr ""
+msgstr "vergi_satırı"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view

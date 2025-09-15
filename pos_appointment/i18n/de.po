@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_appointment
+# * pos_appointment
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:37+0000\n"
-"PO-Revision-Date: 2025-09-11 14:37+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-15 21:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
+"pos_appointment/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -23,56 +27,56 @@ msgstr ""
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "<span>people</span>"
-msgstr ""
+msgstr "<span>Personen</span>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Duration: </strong>"
-msgstr ""
+msgstr "<strong>Dauer: </strong>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Phone: </strong>"
-msgstr ""
+msgstr "<strong>Telefon: </strong>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Start Date: </strong>"
-msgstr ""
+msgstr "<strong>Startdatum:</strong>"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__appointment_status
 msgid "Appointment Status"
-msgstr ""
+msgstr "Terminstatus"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_config__appointment_type_id
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__pos_appointment_type_id
 msgid "Appointment Type"
-msgstr ""
+msgstr "Terminart"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.res_config_settings_view_form
 msgid "Appointment type"
-msgstr ""
+msgstr "Terminart"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "Booked"
-msgstr ""
+msgstr "Gebucht"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/components/navbar/navbar.xml:0
 msgid "Booking"
-msgstr ""
+msgstr "Buchung"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "Booking Details"
-msgstr ""
+msgstr "Buchungsdetails"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -88,12 +92,12 @@ msgstr ""
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "Kalender-Ereignis"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "Cancel"
-msgstr ""
+msgstr "Abbrechen"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -102,18 +106,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
 msgid "Check In"
-msgstr ""
+msgstr "Anmelden"
 
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurationseinstellungen"
 
 #. module: pos_appointment
 #. odoo-python
 #: code:addons/pos_appointment/models/calendar_event.py:0
 msgid "Create Booking"
-msgstr ""
+msgstr "Buchung erstellen"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -125,7 +129,7 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__display_name
@@ -133,7 +137,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -144,20 +148,20 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Duration:"
-msgstr ""
+msgstr "Dauer:"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #. module: pos_appointment
 #. odoo-python
 #: code:addons/pos_appointment/models/calendar_event.py:0
 msgid "Edit Booking"
-msgstr ""
+msgstr "Buchung bearbeiten"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -168,7 +172,7 @@ msgstr ""
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "Event Details"
-msgstr ""
+msgstr "Veranstaltungsdetails"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -181,7 +185,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -193,7 +197,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/pos_appointment/models/calendar_event.py:0
 msgid "Manage Bookings"
-msgstr ""
+msgstr "Buchungen verwalten"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -206,17 +210,17 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "No Show"
-msgstr ""
+msgstr "Teilnehmer nicht erschienen"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
 msgid "No show"
-msgstr ""
+msgstr "Nicht erschienen"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__phone_number
 msgid "Phone number"
-msgstr ""
+msgstr "Telefonnummer"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -227,22 +231,22 @@ msgstr ""
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Kassensystem-Konfiguration"
 
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Kassensitzung"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__answers
 msgid "Q&A answers"
-msgstr ""
+msgstr "Antworten der FAQ"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "Reservation for"
-msgstr ""
+msgstr "Reservierung für"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -253,7 +257,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_controller.xml:0
 msgid "Select Date"
-msgstr ""
+msgstr "Datum auswählen"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -270,7 +274,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Start Date:"
-msgstr ""
+msgstr "Startdatum:"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -282,31 +286,31 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 msgid "View"
-msgstr ""
+msgstr "Ansicht"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
 msgid "Waiting"
-msgstr ""
+msgstr "Wartend"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__waiting_list_capacity
 msgid "Waiting List Capacity"
-msgstr ""
+msgstr "Umfang der Warteliste"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "e.g. \"John Doe\""
-msgstr ""
+msgstr "z. B. Lieschen Müller"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "for:"
-msgstr ""
+msgstr "für:"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "hours"
-msgstr ""
+msgstr "Stunden"

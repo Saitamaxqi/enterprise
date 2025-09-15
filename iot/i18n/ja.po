@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* iot
+# * iot
 #
 # Translators:
 # Martin Trigaux, 2022
 # 江口和志 <sandwhale1010@gmail.com>, 2022
 # Ryoko Tsuda <ryoko@quartile.co>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Ryoko Tsuda <ryoko@quartile.co>, 2022\n"
-"Language-Team: Japanese (https://app.transifex.com/odoo/teams/41243/ja/)\n"
+"PO-Revision-Date: 2025-09-15 11:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/iot/ja/>"
+"\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -66,7 +68,7 @@ msgstr ""
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
 msgid "Add IoT Box wizard"
-msgstr ""
+msgstr "IoT Box ウィザードを追加"
 
 #. module: iot
 #. odoo-javascript
@@ -78,7 +80,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Are you sure you want to restart Odoo on the IoT box?"
-msgstr ""
+msgstr "本当にIoT boxでOdooを再起動しますか？"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
@@ -88,7 +90,7 @@ msgstr "ドライバーの自動更新"
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_box__drivers_auto_update
 msgid "Automatically update drivers when the IoT Box boots"
-msgstr "IoT Boxの起動時にドライバーを自動でアップデート"
+msgstr "IoT Boxの起動時にドライバを自動で更新"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scanner
@@ -109,7 +111,7 @@ msgstr "カメラ"
 #. odoo-javascript
 #: code:addons/iot/static/src/views/iot_device_form.js:0
 msgid "Check if the device is still connected"
-msgstr ""
+msgstr "デバイスがまだ接続されているか確認して下さい。"
 
 #. module: iot
 #. odoo-javascript
@@ -138,7 +140,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "Click on the"
-msgstr ""
+msgstr "以下をクリック"
 
 #. module: iot
 #. odoo-javascript
@@ -220,7 +222,7 @@ msgstr "デバイス"
 #: model:ir.model.fields,field_description:iot.field_iot_box__device_count
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 msgid "Device Count"
-msgstr ""
+msgstr "デバイス数"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
@@ -239,7 +241,7 @@ msgstr ""
 #: model:ir.ui.menu,name:iot.iot_device_menu_action
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Devices"
-msgstr "機器"
+msgstr "デバイス"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__display
@@ -257,7 +259,7 @@ msgstr "表示名"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_url
 msgid "Display URL"
-msgstr ""
+msgstr "URLを表示"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip
@@ -286,7 +288,7 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
 msgid "Fiscal Data Module"
-msgstr ""
+msgstr "会計データモジュール"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
@@ -358,7 +360,7 @@ msgstr "IoT ボックスホームページ"
 #: model:ir.actions.act_window,name:iot.iot_box_action
 #: model:ir.ui.menu,name:iot.iot_box_menu_action
 msgid "IoT Boxes"
-msgstr "IoT ボックス"
+msgstr "IoT Box"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__device_id
@@ -407,7 +409,7 @@ msgstr "最終更新日"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Last restarting process hasn't finished yet"
-msgstr ""
+msgstr "最後の再起動プロセスがまだ終了していません。"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__layout
@@ -422,12 +424,12 @@ msgstr "手動計測"
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__manual_measurement
 msgid "Manually read the measurement from the device"
-msgstr ""
+msgstr "デバイスから測定値を手動で読み込む"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__is_scanner
 msgid "Manually switch the device type between keyboard and scanner"
-msgstr ""
+msgstr "キーボードとスキャナの間のデバイスタイプを手動で切替"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__manufacturer
@@ -449,7 +451,7 @@ msgstr "ネットワーク"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "No IoT Box found!"
-msgstr ""
+msgstr "IoT Boxが見つかりません！"
 
 #. module: iot
 #. odoo-javascript
@@ -470,7 +472,7 @@ msgstr "ペアリングコード"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__payment
 msgid "Payment Terminal"
-msgstr "支払ターミナル"
+msgstr "決済端末"
 
 #. module: iot
 #. odoo-javascript
@@ -488,7 +490,7 @@ msgstr "IoTボックスがまだ接続されているかどうかを確認して
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Please wait"
-msgstr ""
+msgstr "お待ち下さい"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__printer
@@ -509,7 +511,7 @@ msgstr "プリンタレポート"
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
 msgid "Publisher Warranty Contract For IoT Box"
-msgstr "IoTボックスの発行者保証契約"
+msgstr "IoT Boxの発行者保証契約"
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_actions_report
@@ -530,19 +532,19 @@ msgstr "レポート"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restart Failed"
-msgstr ""
+msgstr "再起動に失敗しました"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restart finished"
-msgstr ""
+msgstr "再起動完了しました"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restarting"
-msgstr ""
+msgstr "再起動中"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scale
@@ -552,12 +554,12 @@ msgstr "スケール"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__serial
 msgid "Serial"
-msgstr ""
+msgstr "シリアル"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connected
 msgid "Status"
-msgstr "ステータス"
+msgstr "状態"
 
 #. module: iot
 #. odoo-javascript
@@ -585,13 +587,13 @@ msgstr "このIoT ボックスに接続されたデバイスはありません�
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
 msgid "There is no device connected to your IoT Boxes"
-msgstr "IoT ボックスに接続されたデバイスはありません。"
+msgstr "IoT Boxに接続されたデバイスはありません。"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Timed out"
-msgstr ""
+msgstr "時間切れ"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__token
@@ -616,7 +618,8 @@ msgstr "機器タイプ"
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__display_url
 msgid "URL of the page that will be displayed by the device, leave empty to use the customer facing display of the POS."
-msgstr "機器で表示されるページのURL。POSの顧客向けディスプレイとして使用する場合は空欄にします。"
+msgstr "機器で表示されるページのURL。POSの顧客用画面として使用する場合は空欄にします"
+"。"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__direct
@@ -626,7 +629,7 @@ msgstr "USB"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__variant
 msgid "Variant"
-msgstr "製品バリアント"
+msgstr "バリアント"
 
 #. module: iot
 #. odoo-python
@@ -647,4 +650,4 @@ msgstr "接続"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
-msgstr "IoTボックスのIPアドレス"
+msgstr "IoT BoxのIPアドレス"

@@ -1,23 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_easypost
+# * delivery_easypost
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Vietnamese (https://app.transifex.com/odoo/teams/41243/vi/)\n"
+"PO-Revision-Date: 2025-09-15 23:05+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
+"delivery_easypost/vi/>\n"
 "Language: vi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -25,7 +28,7 @@ msgid ""
 "<b>Copy your API keys in Odoo</b>\n"
 "                <br/>"
 msgstr ""
-"<b>Copy your API keys in Odoo</b>\n"
+"<b>Sao chép mã khóa API vào Odoo</b>\n"
 "                <br/>"
 
 #. module: delivery_easypost
@@ -35,8 +38,10 @@ msgid ""
 "                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
 "                <br/>"
 msgstr ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Khi tài khoản được tạo, đi tới Bảng điều khiển và bấm vào mũi tên cạnh "
+"tên người dùng để cấu hình tài khoản đơn vị vận chuyển của bạn. </b>\n"
+"                <b>Bạn có thể thêm tài khoản đơn vị vận chuyển mới ở bên "
+"phải trong cùng một trang.</b>\n"
 "                <br/>"
 
 #. module: delivery_easypost
@@ -49,17 +54,18 @@ msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "A production key is required in order to load your easypost carriers."
 msgstr ""
+"Cần có mã khóa production để tải các đơn vị vận chuyển easypost của bạn."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "A production key is required in order to load your insurance fees."
-msgstr ""
+msgstr "Cần có mã khóa production để tải phí bảo hiểm của bạn."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "API keys"
-msgstr "API keys"
+msgstr "Mã khóa API"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_easypost_carrier_type
@@ -69,13 +75,13 @@ msgstr "Hủy"
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr "Nhà vận chuyển"
+msgstr "Đơn vị vận chuyển"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__easypost_carrier
 #: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__easypost_carrier
 msgid "Carrier Prefix"
-msgstr "Carrier Prefix"
+msgstr "Tiền tố đơn vị vận chuyển"
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_delivery_carrier_easypost
@@ -83,12 +89,12 @@ msgstr "Carrier Prefix"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_easypost_carrier_type
 msgid "Carrier Type"
-msgstr "Carrier Type"
+msgstr "Loại đơn vị vận chuyển"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Carrier accounts"
-msgstr "Carrier accounts"
+msgstr "Tài khoản đơn vị vận chuyển"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__create_uid
@@ -105,17 +111,17 @@ msgstr "Được tạo vào"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Default Package Type"
-msgstr "Default Package Type"
+msgstr "Loại kiện hàng mặc định"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_default_package_type_id
 msgid "Default Package Type for Easypost"
-msgstr "Default Package Type for Easypost"
+msgstr "Loại kiện hàng mặc định cho Easypost"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_default_service_id
 msgid "Default Service Level"
-msgstr "Default Service Level"
+msgstr "Cấp độ dịch vụ mặc định"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__delivery_carrier_id
@@ -131,7 +137,9 @@ msgstr "Tên hiển thị"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
-msgstr "Do not forget to load your Easypost carrier accounts for a valid configuration."
+msgstr ""
+"Đừng quên tải tài khoản đơn vị vận chuyển Easypost của bạn để có cấu hình "
+"hợp lệ."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__epl2
@@ -147,75 +155,75 @@ msgstr "Easypost"
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_delivery_type
 msgid "Easypost Carrier Type"
-msgstr "Easypost Carrier Type"
+msgstr "Loại đơn vị vận chuyển Easypost"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_delivery_type_id
 msgid "Easypost Carrier Type ID, technical for API request"
-msgstr "Easypost Carrier Type ID, technical for API request"
+msgstr "ID loại đơn vị vận chuyển Easypost, yêu cầu kỹ thuật cho API"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Easypost Configuration"
-msgstr "Easypost Configuration"
+msgstr "Cấu hình Easypost"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "Easypost Documents:"
-msgstr ""
+msgstr "Chứng từ Easypost:"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_label_file_type
 msgid "Easypost Label File Type"
-msgstr "Easypost Label File Type"
+msgstr "Kiểu tệp nhãn Easypost"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__ep_order_ref
 msgid "Easypost Order Reference"
-msgstr "Easypost Order Reference"
+msgstr "Mã đơn hàng Easypost"
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_easypost_service
 msgid "Easypost Service"
-msgstr "Easypost Service"
+msgstr "Dịch vụ Easypost"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.res_config_settings_view_form_sale
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.res_config_settings_view_form_stock
 msgid "Easypost Shipping Methods"
-msgstr "Easypost Shipping Methods"
+msgstr "Phương thức vận chuyển Easypost"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Easypost Tutorial"
-msgstr "Easypost Tutorial"
+msgstr "Hướng dẫn dùng Easypost"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Easypost Website"
-msgstr "Easypost Website"
+msgstr "Trang web Easypost"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Easypost returned an error: %s"
-msgstr "Easypost returned an error: %s"
+msgstr "Easypost báo lỗi sau: %s"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,help:delivery_easypost.field_delivery_carrier__easypost_production_api_key
 msgid "Enter your API production key from Easypost account"
-msgstr "Enter your API production key from Easypost account"
+msgstr "Nhập mã khóa API hoạt động thực tế từ tài khoản Easypost"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,help:delivery_easypost.field_delivery_carrier__easypost_test_api_key
 msgid "Enter your API test key from Easypost account."
-msgstr "Enter your API test key from Easypost account."
+msgstr "Nhập mã khóa kiểm thử API từ tài khoản Easypost."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Go to"
-msgstr "Đến"
+msgstr "Đi đến"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
@@ -226,34 +234,36 @@ msgstr "ID"
 #. module: delivery_easypost
 #: model:ir.model.fields,help:delivery_easypost.field_delivery_carrier__easypost_default_service_id
 msgid "If not set, the less expensive available service level will be chosen."
-msgstr "If not set, the less expensive available service level will be chosen."
+msgstr "Nếu không thiết lập, dịch vụ khả dụng với giá rẻ hơn sẽ được chọn."
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_insurance_fee_minimum
 msgid "Insurance fee minimum (USD)"
-msgstr ""
+msgstr "Phí bảo hiểm tối thiểu (USD)"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_insurance_fee_rate
 msgid "Insurance fee rate (USD)"
-msgstr ""
+msgstr "Mức phí bảo hiểm (USD)"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
+msgstr ""
+"Có vẻ Easypost không cung cấp lô vận chuyển cho đơn hàng này.                "
+"Chúng tôi khuyên bạn nên thử loại đóng gói khác hoặc cấp độ dịch vụ khác."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Label Format"
-msgstr "Label Format"
+msgstr "Định dạng nhãn"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__write_uid
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__write_uid
 msgid "Last Updated by"
-msgstr "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__write_date
@@ -264,7 +274,7 @@ msgstr "Cập nhật lần cuối vào"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "Load your Easypost carrier accounts"
-msgstr "Load your Easypost carrier accounts"
+msgstr "Tải tài khoản đơn vị vận chuyển Easypost của bạn"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -285,7 +295,7 @@ msgstr "PNG"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Package type used in pack %s is not configured for easypost."
-msgstr "Kiểu đóng gói dùng trong gói %s không được định cấu hình cho easypost."
+msgstr "Loại kiện hàng dùng trong gói %s không được định cấu hình cho easypost."
 
 #. module: delivery_easypost
 #. odoo-python
@@ -296,7 +306,7 @@ msgstr "Vui lòng cung cấp ít nhất một mặt hàng để giao hàng."
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_production_api_key
 msgid "Production API Key"
-msgstr "Production API Key"
+msgstr "Khoá API production"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__delivery_type
@@ -307,13 +317,13 @@ msgstr "Nhà cung cấp"
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "Return Label<br/>"
-msgstr ""
+msgstr "Nhãn trả hàng<br/>"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Sale Order/Stock Picking is missing."
-msgstr "Sale Order/Stock Picking is missing."
+msgstr "Đơn bán hàng/Phiếu xuất kho bị thiếu."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_easypost_carrier_type
@@ -323,23 +333,23 @@ msgstr "Chọn"
 #. module: delivery_easypost
 #: model:ir.actions.act_window,name:delivery_easypost.act_delivery_easypost_carrier_type
 msgid "Select a carrier"
-msgstr "Select a carrier"
+msgstr "Chọn đơn vị vận chuyển"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__name
 msgid "Service Level Name"
-msgstr "Service Level Name"
+msgstr "Tên cấp độ dịch vụ"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "Shipment created into Easypost<br/><b>Tracking Numbers:</b> %s<br/>"
-msgstr "Shipment created into Easypost<br/><b>Tracking Numbers:</b> %s<br/>"
+msgstr "Lô hàng được tạo trong Easypost<br/><b>Số theo dõi:</b> %s<br/>"
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "Shipping Methods"
+msgstr "Phương thức vận chuyển"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -349,12 +359,12 @@ msgstr "Đăng ký"
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_package_type
 msgid "Stock package type"
-msgstr "Kiểu đóng gói kho"
+msgstr "Loại kiện hàng tồn kho"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_test_api_key
 msgid "Test API Key"
-msgstr "Test API Key"
+msgstr "Khoá API kiểm thử"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -363,8 +373,8 @@ msgid ""
 "The %s carrier is missing (Missing field(s) :\n"
 " Default Package Type)"
 msgstr ""
-"Nhà vận chuyển %s bị thiếu (Trường bị thiếu :\n"
-" Kiểu đóng gói mặc định)"
+"Đơn vị vận chuyển %s bị thiếu (Trường bị thiếu :\n"
+" Loại kiện hàng mặc định)"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -373,8 +383,8 @@ msgid ""
 "The %s carrier is missing (Missing field(s) :\n"
 " Delivery Carrier Type)"
 msgstr ""
-"The %s carrier is missing (Missing field(s) :\n"
-" Delivery Carrier Type)"
+"Đơn vị vận chuyển %s bị thiếu (Trường bị thiếu :\n"
+" Kiểu dịch vụ giao hàng)"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -383,8 +393,8 @@ msgid ""
 "The %s carrier is missing (Missing field(s) :\n"
 " Production API Key)"
 msgstr ""
-"The %s carrier is missing (Missing field(s) :\n"
-" Production API Key)"
+"Đơn vị vận chuyển %s bị thiếu (Trường bị thiếu :\n"
+" Khoá API production)"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -393,8 +403,8 @@ msgid ""
 "The %s carrier is missing (Missing field(s) :\n"
 " Test API Key)"
 msgstr ""
-"The %s carrier is missing (Missing field(s) :\n"
-" Test API Key)"
+"Đơn vị vận chuyển %s bị thiếu (Trường bị thiếu :\n"
+" Khoá API kiểm thử)"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -416,24 +426,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
-msgstr "There is no rate available for the selected service level for one of your package. Please choose another service level."
+msgstr ""
+"Cấp độ dịch vụ được chọn cho một kiện hàng của bạn không có mức phí. Vui "
+"lòng chọn cấp độ dịch vụ khác."
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_picking
 msgid "Transfer"
-msgstr "Điều chuyển"
+msgstr "Lệnh chuyển hàng"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "Unable to retrieve your default insurance rates."
-msgstr ""
+msgstr "Không thể truy xuất mức phí bảo hiểm mặc định của bạn."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Unknown error"
-msgstr "Lỗi chưa xác định"
+msgstr "Lỗi không xác định"
 
 #. module: delivery_easypost
 #. odoo-python
@@ -445,13 +457,16 @@ msgstr "Trường không xác định"
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "You can't cancel Easypost shipping."
-msgstr "You can't cancel Easypost shipping."
+msgstr "Bạn không thể hủy vận chuyển Easypost."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"Bạn không có đơn vị vận chuyển liên kết với tài khoản "
+"Easypost.                Vui lòng kết nối với Easypost, liên kết tài khoản "
+"của bạn với đơn vị vận chuyển và thử lại."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -461,4 +476,4 @@ msgstr "ZPL"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
-msgstr "to create a new account:"
+msgstr "để tạo một tài khoản mới:"

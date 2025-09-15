@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_referral
+# * hr_referral
 #
 # Translators:
 # Ahmet Altinisik <aaltinisik@altinkaya.com.tr>, 2022
@@ -18,20 +18,22 @@
 # Ozlem Cikrikci <ozlemc@eskayazilim.com.tr>, 2022
 # Ertuğrul Güreş <ertugrulg@projetgrup.com>, 2022
 # Umur Akın <umura@projetgrup.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Umur Akın <umura@projetgrup.com>, 2022\n"
-"Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
+"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"hr_referral/tr/>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_referral
 #. odoo-python
@@ -90,6 +92,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "<span title=\"Buy\"><i class=\"fa fa-shopping-basket me-3\" role=\"img\" aria-label=\"Buy\"/>Buy</span>"
 msgstr ""
+"<span title=\"Satın alın\"><i class=\"fa fa-shopping-basket me-3\" role="
+"\"img\" aria-label=\"Buy\"/>Satın Alın</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -110,12 +114,14 @@ msgstr "<span title=\"Send by Mail\">Arkadaşını Yönlendir</span>"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_alert_mail_wizard.py:0
 msgid "A new alert has been added to the Referrals app! Check your <a href=%(url)s>dashboard</a> now!"
-msgstr "Yönlendirmeler uygulamasına yeni bir uyarı eklendi! <a href=\"%(url)s\">Kontrol panelinizi</a> şimdi kontrol edin!"
+msgstr ""
+"Referans uygulamasına yeni bir uyarı eklendi! Hemen<a href=%(url)s> gösterge "
+"panelinizi </a> kontrol edin!"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_needaction
 msgid "Action Needed"
-msgstr "Eylem Gerekiyor"
+msgstr "Aksiyon Gerekiyor"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__active
@@ -131,7 +137,7 @@ msgstr "Aktiviteler"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "Aktivite İstisna Donatımı"
+msgstr "Etkinlik İstisna Dekorasyonu"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_state
@@ -141,7 +147,7 @@ msgstr "Aktivite Durumu"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_type_icon
 msgid "Activity Type Icon"
-msgstr "Aktivite Simge Tipi"
+msgstr "Aktivite Türü İmgesi"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__name
@@ -162,7 +168,9 @@ msgstr "İkazlar"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__points
 msgid "Amount of points that the referent will receive when the applicant will reach this stage"
-msgstr "Başvuran bu aşamaya ulaştığında başvuranın alacağı puan miktarı"
+msgstr ""
+"Başvuru sahibi bu aşamaya ulaştığında yönlendiren kişinin kazanacağı puan "
+"miktarı"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_applicant
@@ -266,7 +274,7 @@ msgstr "Şirketler"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_points__company_id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__company_id
 msgid "Company"
-msgstr "Şirket"
+msgstr "Firma"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_res_config_settings
@@ -276,7 +284,7 @@ msgstr "Yapılandırma Ayarları"
 #. module: hr_referral
 #: model:ir.ui.menu,name:hr_referral.menu_hr_referral_configuration
 msgid "Configuration"
-msgstr "Yapılandırma"
+msgstr "Ayarlar"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__cost
@@ -300,7 +308,7 @@ msgstr "Yeni uyarı oluştur"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__create_uid
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__create_uid
 msgid "Created by"
-msgstr "Oluşturan"
+msgstr "Tarafından oluşturuldu"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__create_date
@@ -313,7 +321,7 @@ msgstr "Oluşturan"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__create_date
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__create_date
 msgid "Created on"
-msgstr "Oluşturulma"
+msgstr "Oluşturuldu"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -321,7 +329,7 @@ msgstr "Oluşturulma"
 #: model:ir.actions.client,name:hr_referral.action_hr_referral_welcome_screen
 #: model:ir.ui.menu,name:hr_referral.menu_hr_applicant_employee_referral_dashboard
 msgid "Dashboard"
-msgstr "Pano"
+msgstr "Kontrol Paneli"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_friend__image
@@ -346,7 +354,10 @@ msgstr "Date To"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__position
 msgid "Define the position of the friend. If it's a small friend like a dog, you must select Front, it will be placed in the front of the dashboard, above superhero."
-msgstr "Arkadaşınızın konumunu tanımlayın. Köpek gibi küçük bir arkadaşsa, Ön'ü seçmelisiniz, panelin önüne süper kahramanın üzerine yerleştirilecektir."
+msgstr ""
+"Arkadaşın konumunu tanımlayın. Eğer köpek gibi küçük bir arkadaşsa, Ön kısmı "
+"seçmelisiniz; gösterge panelinin ön tarafına, süper kahramanın üzerine "
+"yerleştirilecektir."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__department_id
@@ -388,7 +399,7 @@ msgstr "Kapatılan Kullanıcı"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__display_name
 msgid "Display Name"
-msgstr "Görünüm Adı"
+msgstr "İsim Göster"
 
 #. module: hr_referral
 #. odoo-python
@@ -399,7 +410,9 @@ msgstr "Erişim yok"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "Do you want to confirm this reward? After confirmation an HR will contact you."
-msgstr "Bu ödülü onaylamak ister misiniz? Onaydan sonra bir İK sorumlusu sizinle iletişime geçecektir."
+msgstr ""
+"Bu ödülü onaylamak istiyor musunuz? Onaydan sonra bir İK yetkilisi sizinle "
+"iletişime geçecektir."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__earned_points
@@ -421,7 +434,7 @@ msgstr "Arkadaşına e-posta gönder"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_report_view_search
 msgid "Employee"
-msgstr "Personel"
+msgstr "Çalışan"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__employee_referral_hired
@@ -441,7 +454,7 @@ msgstr "Yönlendirme ile Gelen Personel Raporu"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_form
 msgid "Employees"
-msgstr "Personel"
+msgstr "Çalışanlar"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_report_view_graph
@@ -460,7 +473,9 @@ msgstr "Yönlendirme ile Gelen Personel Analizi"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_alert__url
 msgid "External links must start with 'http://www.'. For an internal url, you don't need to put domain name, you can just insert the path."
-msgstr "Harici bağlantılar 'http: // www.' İle başlamalıdır. Dahili bir URL için alan adı girmenize gerek yoktur, sadece yolu ekleyebilirsiniz."
+msgstr ""
+"Harici bağlantılar ‘http://www.’ ile başlamalıdır. Dahili bağlantı için alan "
+"adı girmenize gerek yoktur, sadece yolu girebilirsiniz."
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__facebook
@@ -485,7 +500,7 @@ msgstr "Takipçiler (İş ortakları)"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "Harika font ikonları örn. fa-tasks"
+msgstr "Yazı tipi harika simgesi ör. fa-görevler"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__friend_id
@@ -612,12 +627,12 @@ msgstr "ID"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_exception_icon
 msgid "Icon"
-msgstr "İkon"
+msgstr "Simge"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "Bir istisna aktivite gösteren simge."
+msgstr "İstisnai bir etkinliği belirtmek için kullanılan simge."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__message_needaction
@@ -643,12 +658,12 @@ msgstr "Görsel"
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_report__referral_state__progress
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_filter
 msgid "In Progress"
-msgstr "Devam Eden"
+msgstr "İşlemde"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_is_follower
 msgid "Is Follower"
-msgstr "Takipçi"
+msgstr "Takipçi mi"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_link_to_share__job_id
@@ -782,7 +797,7 @@ msgstr "Maksimum Puan"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__medium_id
 msgid "Medium"
-msgstr "Orta"
+msgstr "Aracı:"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_has_error
@@ -797,7 +812,7 @@ msgstr "Mesajlar"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr "Aktivite Zaman Sınırım"
+msgstr "Aktivite Son Tarihim"
 
 #. module: hr_referral
 #: model:ir.actions.act_window,name:hr_referral.action_hr_applicant_employee_referral
@@ -825,12 +840,12 @@ msgstr "Sonraki"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "Sonraki Aktivite Takvim Etkinliği"
+msgstr "Sonraki Aktivite Takvimi Etkinliği"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr "Sonraki Aktivite Zaman Sınırı"
+msgstr "Sonraki Aktivite Son Tarihi"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_summary
@@ -840,7 +855,7 @@ msgstr "Sonraki Aktivite Özeti"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__activity_type_id
 msgid "Next Activity Type"
-msgstr "Sonraki Aktivite Türü"
+msgstr "Sonraki Aktivitie Türü"
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_job_employee_referral
@@ -862,7 +877,7 @@ msgstr "İşe Alınmadı"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Eylemlerin Adedi"
+msgstr "Aksiyon Sayısı"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_has_error_counter
@@ -894,7 +909,7 @@ msgstr "İşe Alım"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Ongoing"
-msgstr "Süren"
+msgstr "Devam eden"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -934,7 +949,7 @@ msgstr "Puan Eksik"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Points Received"
-msgstr ""
+msgstr "Elde Edilen Puanlar"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
@@ -955,7 +970,7 @@ msgstr "Bunu satın almak için puanlar"
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "Points to spend"
-msgstr ""
+msgstr "Harcanabilir puanlar"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_friend__position
@@ -981,7 +996,7 @@ msgstr "Ürün Adı"
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Değerlendirmeler"
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_applicant_employee_referral
@@ -1018,7 +1033,7 @@ msgstr "Yönlendirme Uyarısı Posta Sihirbazı"
 #: model:ir.model.fields,field_description:hr_referral.field_res_company__hr_referral_background
 #: model:ir.model.fields,field_description:hr_referral.field_res_config_settings__hr_referral_background
 msgid "Referral Background"
-msgstr ""
+msgstr "Referans Arka Planı"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_hr_referral_link_to_share
@@ -1105,7 +1120,7 @@ msgstr "İşe Alımı Yeniden Başlat"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.res_config_settings_view__form
 msgid "Restore Default"
-msgstr ""
+msgstr "Varsayılanı Geri Yükle"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1145,7 +1160,7 @@ msgstr "Yönlendirme Ara"
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_alert_mail_wizard_view_form
 msgid "Send"
-msgstr "Para Gönderme"
+msgstr "Gönder"
 
 #. module: hr_referral
 #: model:ir.actions.act_window,name:hr_referral.hr_referral_send_mail_action
@@ -1168,7 +1183,7 @@ msgstr "İleti Gönder"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_onboarding__sequence
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__sequence
 msgid "Sequence"
-msgstr "Sıra"
+msgstr "Sıralama"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_points__sequence_stage
@@ -1228,7 +1243,7 @@ msgstr "Atla ve Başlat"
 #. odoo-python
 #: code:addons/hr_referral/models/hr_applicant.py:0
 msgid "Sorry, your referral %s has been refused in the recruitment process."
-msgstr ""
+msgstr "Üzgünüz, referansınız %s, işe alım süreci sırasında reddedilmiştir."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_res_users__utm_source_id
@@ -1265,10 +1280,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"Aktivitelerde aşamalar\n"
-"Gecikmiş: Tarihi geçmiş \n"
-"Bugün: Aktivite tarihi bugün\n"
-"Planlanan: Gelecek aktiviteler."
+"Faaliyetlere dayalı durum\n"
+"Gecikmiş: Son tarih geçmiş\n"
+"Bugün: Etkinlik tarihi bugün\n"
+"Planlanan: Gelecekteki faaliyetler."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert_mail_wizard__subject
@@ -1290,7 +1305,9 @@ msgstr "Metin"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image
 msgid "This field holds the image used as image for the friend on the dashboard, limited to 1024x1024px."
-msgstr "Bu alanda 1024x1024px kontrol panelindeki arkadaş görselini tutar."
+msgstr ""
+"Bu alan, gösterge panelinde arkadaş için kullanılan görüntüyü içerir ve "
+"çözünürlüğü 1024x1024 piksel ile sınırlıdır."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
@@ -1305,12 +1322,17 @@ msgstr "Bu alan, resimi ürünün resimi olarak tutar, 1024x1024px ile sınırla
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid "This link contains a tracker so that people clicking on it will account to a referral for you, even if they apply on a position after a few days."
-msgstr "Bu bağlantı bir izleyici içerir, böylece onu tıklayan insanlar birkaç gün sonra bir pozisyona başvursalar bile sizin için bir yönlendirme olarak hesaplanacaktır."
+msgstr ""
+"Bu bağlantı bir izleyici içerir, böylece bu bağlantıya tıklayan kişiler, "
+"birkaç gün sonra bir pozisyona başvurmuş olsalar bile, sizin için bir "
+"referans olarak sayılırlar."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__use_in_referral
 msgid "This option is used in app 'Referrals'. If checked, the stage is displayed in 'Referrals Dashboard' and points are given to the employee."
-msgstr "Bu seçenek 'Yönlendirmeler' uygulamasında kullanılır. İşaretlenirse, aşama 'Yönlendirmeler Kontrol Paneli'nde görüntülenir ve çalışana puan verilir."
+msgstr ""
+"Bu seçenek, ‘Referans’ uygulamasında kullanılır. İşaretlendiğinde, aşama "
+"'Referanslar Paneli'nde görüntülenir ve çalışana puan verilir."
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.employee_referral_report_action
@@ -1342,7 +1364,7 @@ msgstr "Twitter Tıklanma"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Kayıttaki istisna aktivite türü."
+msgstr "Kayıtlardaki istisna etkinliğinin türü."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__url
@@ -1352,7 +1374,7 @@ msgstr "URL"
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_utm_campaign
 msgid "UTM Campaign"
-msgstr "UTM kampanyası"
+msgstr "UTM Kampanyası"
 
 #. module: hr_referral
 #: model:ir.model,name:hr_referral.model_utm_source
@@ -1381,7 +1403,7 @@ msgstr "Bu hediyeden sorumlu kullanıcı."
 #. module: hr_referral
 #: model:res.groups,name:hr_referral.group_hr_recruitment_referral_user
 msgid "User: Referral only"
-msgstr ""
+msgstr "Kullanıcı: sadece Referans"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1393,7 +1415,7 @@ msgstr "İşleri Görüntüle"
 #. odoo-python
 #: code:addons/hr_referral/models/hr_job.py:0
 msgid "Visit Webpage"
-msgstr "Web Sayfasını Ziyaret Et"
+msgstr "Web Sayfasını Ziyareti"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__website_message_ids
@@ -1423,6 +1445,9 @@ msgid ""
 "You cannot delete these UTM Campaigns as they are linked to the following jobs in Referral:\n"
 "%(job_names)s"
 msgstr ""
+"Referans'ta şu işler ile bağlantılı olduklarından bu UTM Kampanyalarını "
+"silemezsiniz:\n"
+"%(job_names)s"
 
 #. module: hr_referral
 #. odoo-python
@@ -1431,12 +1456,17 @@ msgid ""
 "You cannot delete these UTM Sources as they are linked to the following users in Referral:\n"
 "%(employee_names)s"
 msgstr ""
+"Referans'ta şu kullanıcılar ile bağlantılı olduklarından bu UTM Kaynaklarını "
+"silemezsiniz: \n"
+"%(employee_names)s"
 
 #. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/models/hr_referral_reward.py:0
 msgid "You do not have enough points in this company to buy this product. In this company, you have %s points."
-msgstr "Bu şirkette bu ürünü satın almak için yeterli puanınız yok. Bu şirkette %s puanınız var."
+msgstr ""
+"Bu ürünü satın almak için bu şirkette yeterli puanınız yok. Bu şirkette %s "
+"puanınız var."
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
