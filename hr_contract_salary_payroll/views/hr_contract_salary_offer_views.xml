@@ -21,7 +21,7 @@
                             <div class="border-bottom" colspan="2">
                                 <h3>Salary Simulation Preview</h3>
                             </div>
-                            <div class="border rounded-3 mt-2" colspan="2" style="background-color: #F9FAFB;">
+                            <div class="border rounded-3 mt-2 text-bg-secondary bg-opacity-25" colspan="2">
                                 <div class="d-grid gap-1 p-2" style="grid-template-columns: 1fr auto auto auto;">
                                     <div class="fw-bold">Gross <span invisible="is_full_time">(Part Time)</span></div>
                                     <div>
@@ -106,7 +106,7 @@
                         </group>
                     </div>
                     <div class="col-md-5">
-                        <div class="border rounded-3" style="background-color: #F9FAFB;">
+                        <div class="border rounded-3 text-bg-secondary bg-opacity-25">
                             <div class="d-grid gap-1 p-2" style="grid-template-columns: 1fr auto auto auto;">
                                 <div class="fw-bold">Gross <span invisible="is_full_time">(Part Time)</span></div>
                                 <div class="text-end">
