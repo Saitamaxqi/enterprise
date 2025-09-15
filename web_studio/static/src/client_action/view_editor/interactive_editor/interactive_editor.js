@@ -25,7 +25,7 @@ import {
     countPreviousSiblings,
 } from "@web_studio/client_action/view_editor/editors/xml_utils";
 import { DefaultViewSidebar } from "@web_studio/client_action/view_editor/default_view_sidebar/default_view_sidebar";
-import { waitUntil } from "@odoo/hoot-dom";
+import { waitUntil } from "@web/core/macro";
 
 const NO_M2O_AVAILABLE = _t(`
     There are no many2one fields related to the current model.
