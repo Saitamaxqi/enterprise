@@ -382,7 +382,7 @@ class SaleOrderLine(models.Model):
     def _prepare_invoice_line(self, **optional_values):
         self.ensure_one()
         res = super()._prepare_invoice_line(**optional_values)
-        if self.display_type:
+        if self.display_type or self.product_id.type == 'combo':
             # we change it to 'line_note' so it is treated as a note instead of a discount line.
             # This avoids the need to modify the entire invoice logic and manage constraints
             # in account.move.line, making the process simpler.
@@ -426,13 +426,10 @@ class SaleOrderLine(models.Model):
             res.update({
                 'name': description,
                 'quantity': qty_to_invoice,
+                'deferred_start_date': new_period_start,
+                'deferred_end_date': new_period_stop,
                 'subscription_id': parent_order_id,
             })
-            if self.product_type != 'combo':
-                res.update({
-                    'deferred_start_date': new_period_start,
-                    'deferred_end_date': new_period_stop,
-                })
         elif self.order_id.is_subscription and not res.get('subscription_id'):
             # This is needed in case we only need to invoice this line or Downpayments
             res.update({
