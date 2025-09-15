@@ -217,7 +217,7 @@ class ProductTemplate(models.Model):
             'price': unit_price,
             'subscription_default_pricing_price': default_pricing_data.get('price', ''),
             'subscription_default_pricing_plan_id': default_pricing_data.get('plan_id', False),
-            'subscription_pricing_select': len(pricings) > 1 and not request.cart.plan_id,
+            'subscription_pricing_select': (product_or_template.allow_one_time_sale or len(pricings) > 1) and not request.cart.plan_id,
             'prevent_zero_price_sale': website.prevent_zero_price_sale and currency.is_zero(
                 unit_price,
             ),
