@@ -95,6 +95,7 @@ class Sign(http.Controller):
         date_format = ""
         if lang:
             date_format = posix_to_ldml(lang.date_format, locale=locale)
+        portal = post.get('portal')
 
         result['rendering_context'] = {
             'sign_request': sign_request,
@@ -112,11 +113,11 @@ class Sign(http.Controller):
             'readonly': not (current_request_item and current_request_item.state == 'sent' and sign_request.state in ['sent', 'shared']),
             'sign_item_types': sign_item_types,
             'sign_item_select_options': sign_request.template_id.sign_item_ids.mapped('option_ids'),
-            'portal': post.get('portal'),
+            'portal': portal,
             'company_id': (sign_request.communication_company_id or sign_request.create_uid.company_id).id,
             'today_formatted_date': format_date(http.request.env, fields.Date.today(), lang_code=lang_code),
             'date_format': date_format.lower(),
-            'show_thank_you_dialog': bool(sign_request.completed_document_attachment_ids),
+            'show_thank_you_dialog': bool(sign_request.completed_document_attachment_ids) and not portal,
         }
         return result
 
