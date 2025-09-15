@@ -189,12 +189,7 @@ that cover all your company needs:
 CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
             """)
             elif it.type_id.item_type == "stamp":
-                value = self.env._("""
-                    My US Company
-                    1034 Wildwood Street
-                    44654 Millersburg Ohio United States
-                    +1 555-555-5556
-                """)
+                value = self.env._("""My US Company\n1034 Wildwood Street\n44654 Millersburg Ohio United States\n+1 555-555-5556""")
             elif it.type_id.item_type == "checkbox":
                 value = "on"
             elif it.type_id.item_type == "selection":
