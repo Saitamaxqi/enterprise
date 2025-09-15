@@ -4,6 +4,7 @@ import { patch } from "@web/core/utils/patch";
 patch(Thread.prototype, {
     /** @type {boolean|undefined} */
     knowledgePreLoading: undefined,
+    /** @type {number|undefined} */
     articleId: undefined,
 
     /**
