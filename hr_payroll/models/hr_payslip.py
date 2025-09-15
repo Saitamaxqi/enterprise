@@ -1381,9 +1381,15 @@ class HrPayslip(models.Model):
                 slip.issues = dict(enumerate(errors + warnings))
 
     def _get_error_message(self):
-        return ('\n').join([f' • {slip.name}: ' + issue['message']
+        if len(self) == 1:
+            return '\n'.join([
+                f' • {issue["message"]}'
+                for issue in self.issues.values() if issue['level'] == 'danger'
+            ])
+        return '\n'.join([
+            f' • {slip.name}: {issue["message"]}'
             for slip in self
-            for issue in (slip.issues or {}).values() if issue['level'] == 'danger'
+            for issue in slip.issues.values() if issue['level'] == 'danger'
         ])
 
     @api.depends('date_from', 'date_to', 'struct_id')
