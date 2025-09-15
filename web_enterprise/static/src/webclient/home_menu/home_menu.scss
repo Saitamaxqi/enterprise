@@ -29,6 +29,16 @@
 
 .o_home_menu {
     font-size: $font-size-base;
+    scrollbar-color: #{rgba($body-color, .5)} transparent;
+
+    &::-webkit-scrollbar {
+        width: map-get($spacers, 2);
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: #{rgba($body-color, .5)};
+        border-radius: $border-radius-pill;
+    }
 
     .container {
         @include media-breakpoint-up(md) {
