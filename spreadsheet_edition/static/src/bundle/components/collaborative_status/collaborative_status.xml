@@ -4,7 +4,7 @@
         <div class="o_spreadsheet_users list-group list-group-horizontal">
             <div t-foreach="this.usersThumbnail" t-as="user" t-key="user_index" class="o_spreadsheet_user ms-1">
                 <img t-att-src="user.avatar" class="rounded justify-content-between"
-                    t-att-style="'padding: 0.15rem;background-color: ' + user.color"
+                    t-att-style="'border-color: ' + user.color"
                     t-att-data-tooltip="'Go to ' + user.name"
                     t-on-click="() => this.jumpToUser(user)"
                     t-on-mouseenter="() => this.showUser(user)"
