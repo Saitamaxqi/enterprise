@@ -42,11 +42,13 @@ test("clears selected filters and sets time to all", async () => {
     const comp = await mountWithCleanup(PrepDisplay, {});
     store.selectedCategoryIds.add(1);
     store.selectedProductIds.add(2);
-    store.selectedTime = "today";
+    store.selectedTimeIds.add("today");
+    store.selectedPresetIds.add(1);
     comp.resetFilter();
     expect(store.selectedCategoryIds.size).toBe(0);
     expect(store.selectedProductIds.size).toBe(0);
-    expect(store.selectedTime).toBe("all");
+    expect(store.selectedTimeIds.size).toBe(0);
+    expect(store.selectedPresetIds.size).toBe(0);
 });
 
 test("toggles the showCategoryFilter flag", async () => {

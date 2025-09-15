@@ -30,7 +30,7 @@ class PosPrepDisplay(models.Model):
                 raise ValidationError(_("The interval auto clear time must be positive."))
 
     def _load_preparation_data_models(self):
-        return ['pos.category', 'pos.prep.order', 'pos.order', 'pos.prep.state', 'pos.prep.line', 'pos.prep.stage', 'product.product', 'pos.preset', 'product.attribute', 'product.template.attribute.value', 'resource.calendar.attendance', 'product.attribute.custom.value']
+        return ['pos.category', 'pos.prep.order', 'pos.order', 'pos.prep.state', 'pos.prep.line', 'pos.prep.stage', 'product.product', 'pos.preset', 'product.attribute', 'product.template.attribute.value', 'resource.calendar.attendance', 'product.attribute.custom.value', 'pos.config']
 
     def load_preparation_data(self):
         # Init our first record, in case of self_order is pos_config

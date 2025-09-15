@@ -23,6 +23,7 @@ patch(PosSession.prototype, {
             "resource.calendar.attendance",
             "product.attribute.custom.value",
             "pos.session",
+            "pos.config",
         ];
     },
     getModelsToLoad(opts) {

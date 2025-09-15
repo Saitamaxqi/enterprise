@@ -31,7 +31,12 @@ export class PrepDisplay extends Component {
         });
     }
     get filterSelected() {
-        return this.prepDisplay.selectedCategoryIds.size + this.prepDisplay.selectedProductIds.size;
+        return (
+            this.prepDisplay.selectedCategoryIds.size +
+            this.prepDisplay.selectedProductIds.size +
+            this.prepDisplay.selectedTimeIds.size +
+            this.prepDisplay.selectedPresetIds.size
+        );
     }
     get selectedStage() {
         return this.prepDisplay.data.models["pos.prep.stage"].get(this.prepDisplay.selectedStageId);
@@ -53,11 +58,13 @@ export class PrepDisplay extends Component {
     resetFilter() {
         this.prepDisplay.selectedCategoryIds = new Set();
         this.prepDisplay.selectedProductIds = new Set();
-        this.prepDisplay.selectedTime = "all";
+        this.prepDisplay.selectedTimeIds = new Set();
+        this.prepDisplay.selectedPresetIds = new Set();
         this.prepDisplay.saveFilterToLocalStorage();
     }
     toggleCategoryFilter() {
         this.prepDisplay.showCategoryFilter = !this.prepDisplay.showCategoryFilter;
+        this.prepDisplay.computeOrderCounts();
     }
     recallLastChange() {
         if (!this.isHistoryEmpty()) {
@@ -83,5 +90,8 @@ export class PrepDisplay extends Component {
     }
     openMenu() {
         this.state.isMenuOpened = true;
+    }
+    get presets() {
+        return this.prepDisplay.data.models["pos.preset"].getAll();
     }
 }
