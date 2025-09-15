@@ -169,7 +169,7 @@ class AccountReturnCreationWizard(models.TransientModel):
         tax_unit = self.env['account.tax.unit'].sudo().search([('company_ids', 'in', root_company.ids)], limit=1)
         apply_tax_unit = tax_unit and self.return_type_id.report_id.filter_multi_company == 'tax_units'
         company = tax_unit.main_company_id if apply_tax_unit else root_company
-        if not company.has_access('write'):
+        if not company.has_access('read'):
             raise UserError(self.env._("You are trying to create returns for a company you don't have access to, please select it in the company selector"))
 
         returns_created = self.return_type_id.with_context(
