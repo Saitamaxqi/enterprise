@@ -669,3 +669,38 @@ class TestEditView(TestStudioController):
               </form>
             """
         )
+
+    def test_edit_inherited_view(self):
+        # accidentally pass the id of extension view instead of the primary
+        main = self.env["ir.ui.view"].create({
+            "name": "test",
+            "model": "res.partner",
+            "type": "list",
+            "arch": """<list><field name="display_name" /></list>"""
+        })
+        inherit = self.env["ir.ui.view"].create({
+            "name": "test",
+            "mode": "extension",
+            "inherit_id": main.id,
+            "model": "res.partner",
+            "type": "list",
+            "arch": """<xpath position="after" expr="//field[@name='display_name']">
+                <field name="function" />
+                </xpath>
+            """
+        })
+        op = {
+            'type': 'attributes',
+            'target': {
+                'tag': 'list',
+                'attrs': {},
+                'xpath_info': [
+                    {'tag': 'list', 'indice': 1},
+                ],
+            },
+            'position': 'attributes',
+            'new_attrs': {'create': True}
+        }
+        res = self.edit_view(inherit, "", [op])
+        studio_view_id = self.env["ir.ui.view"].browse(res["studio_view_id"])
+        self.assertEqual(studio_view_id.inherit_id, main)

@@ -73,6 +73,13 @@ class IrUiView(models.Model):
         'web.external_layout_bubble',
     ]
 
+    def _get_closest_primary_view(self):
+        self.ensure_one()
+        view = self
+        while view.mode != "primary":
+            view = view.inherit_id
+        return view
+
     def _get_x2many_missing_view_archs(self, field, field_node, node_info):
         missing = super()._get_x2many_missing_view_archs(field, field_node, node_info)
         if not missing or not self.env.context.get("studio"):

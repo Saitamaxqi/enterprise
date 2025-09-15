@@ -450,6 +450,7 @@ class WebStudioController(http.Controller):
         return True
 
     def _get_studio_view(self, view):
+        view = view._get_closest_primary_view()
         domain = [('inherit_id', '=', view.id), ('name', '=', self._generate_studio_view_name(view))]
         return view.search(domain, order='priority desc, name desc, id desc', limit=1)
 
@@ -787,6 +788,7 @@ class WebStudioController(http.Controller):
         return actions_list
 
     def _create_studio_view(self, view, arch):
+        view = view._get_closest_primary_view()
         # We have to play with priorities in order for our customization to be the last
         # to be applied.
         # In studio, what the user sees is the resulting view from all the inheritance.
