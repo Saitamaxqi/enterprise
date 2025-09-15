@@ -35,5 +35,8 @@
         'web.assets_frontend': [
             'l10n_be_hr_contract_salary/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'l10n_be_hr_contract_salary/static/tests/**/*',
+        ]
     }
 }

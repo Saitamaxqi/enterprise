@@ -202,13 +202,9 @@ registry.category("web_tour.tours").add("hr_contract_salary_applicant_flow_tour"
             trigger: "select[name=country_of_birth]:not(:visible)",
             run: "selectByLabel Belgium",
         },
-        {
-            content: "Lang",
-            trigger: "select[name=lang]:not(:visible)",
-            run: "selectByLabel English",
-        },
         // Submit Salary Configurator
         {
+            id: "submit_step",
             content: "submit",
             trigger: "button#hr_cs_submit",
             run: "click",

@@ -1,5 +1,4 @@
 import { registry } from "@web/core/registry";
-import { inputFiles } from "@web/../tests/utils";
 import { redirect } from "@web/core/utils/urls";
 
 registry.category("web_tour.tours").add("hr_contract_salary_employee_flow_tour", {
@@ -85,7 +84,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_employee_flow_tour",
         {
             content: "Sex",
             trigger: "input[name=sex]:not(:visible)",
-            run: function () {
+            run() {
                 document.querySelector('input[value="female"]').checked = true;
             },
         },
@@ -141,29 +140,15 @@ registry.category("web_tour.tours").add("hr_contract_salary_employee_flow_tour",
             run: "click"
         },
         {
-            content: "Select nationality Option",
-            trigger: ".o_select_menu_item div.text-wrap:contains('Egypt')",
-            run: "click"
-        },
-                {
-            content: "Open Language Dropdown",
-            trigger: "div[name='lang'] div.o-dropdown.dropdown-toggle",
-            run: "click"
+            content: "Nationality",
+            trigger: "select[name=country_id]:not(:visible)",
+            run: "selectByLabel Belgium",
         },
         {
-            content: "Select Option",
-            trigger: ".o_select_menu_item div.text-wrap:contains('English')",
-            run: "click"
-        },
-        {
-            content: "Open Certificate Dropdown",
-            trigger: "div[name='certificate'] div.o-dropdown.dropdown-toggle",
-            run: "click"
-        },
-        {
-            content: "Select Certificate Option",
-            trigger: ".o_select_menu_item div.text-wrap:contains('Bachelor')",
-            run: "click"
+            id: "certificate_step",
+            content: "Certificate",
+            trigger: "select[name=certificate]:not(:visible)",
+            run: "selectByLabel Master",
         },
         {
             content: "School",
@@ -196,56 +181,9 @@ registry.category("web_tour.tours").add("hr_contract_salary_employee_flow_tour",
             run: "edit +32 2 290 34 90",
         },
         {
-            content: "Open Country of Birth Dropdown",
-            trigger: "div[name='country_of_birth'] div.o-dropdown.dropdown-toggle",
-            run: "click"
-        },
-        {
-            content: "Select Option",
-            trigger: ".o_select_menu_item div.text-wrap:contains('Egypt')",
-            run: "click"
-        },
-        {
-            content: "Upload ID card copy (Both Sides)",
-            trigger: 'input[name="id_card"]',
-            async run() {
-                const file = new File(["hello, world"], "employee_id_card.pdf", {
-                    type: "application/pdf",
-                });
-                await inputFiles('input[name="id_card"]', [file]);
-            },
-        },
-        {
-            content: "Upload Mobile Subscription Invoice",
-            trigger: 'input[name="mobile_invoice"]',
-            async run() {
-                const file = new File(["hello, world"], "employee_mobile_invoice.pdf", {
-                    type: "application/pdf",
-                });
-
-                await inputFiles('input[name="mobile_invoice"]', [file]);
-            },
-        },
-        {
-            content: "Upload Sim Card Copy",
-            trigger: 'input[name="sim_card"]',
-            async run() {
-                const file = new File(["hello, world"], "employee_sim_card.pdf", {
-                    type: "application/pdf",
-                });
-
-                await inputFiles('input[name="sim_card"]', [file]);
-            },
-        },
-        {
-            content: "Upload Internet Subscription invoice",
-            trigger: 'input[name="internet_invoice"]',
-            async run() {
-                const file = new File(["hello, world"], "employee_internet_invoice.pdf", {
-                    type: "application/pdf",
-                });
-                await inputFiles('input[name="internet_invoice"]', [file]);
-            },
+            content: "Country of Birth",
+            trigger: "select[name=country_of_birth]:not(:visible)",
+            run: "selectByLabel Belgium",
         },
         // Submit Salary Configurator
         {
