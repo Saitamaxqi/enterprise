@@ -199,13 +199,13 @@
                 <field name="fsm_done" />
             </xpath>
             <xpath expr="//field[@name='partner_id']" position="replace">
-                <div t-if="!record.is_template.raw_value" class="d-flex">
+                <div t-if="!record.is_template.raw_value and !record.has_project_template.raw_value" class="d-flex">
                     <field class="text-truncate" name="partner_id"/>
                     <span t-if="record.is_fsm.raw_value and record.partner_city.value" class="ms-1 text-truncate">
                         •<field name="partner_city" class="ms-1"/>
                     </span>
                 </div>
-                <field name="partner_phone" t-if="!record.is_template.raw_value and record.is_fsm.raw_value" invisible="not context.get('is_form_gantt')"/>
+                <field name="partner_phone" t-if="!record.is_template.raw_value and !record.has_project_template.raw_value and record.is_fsm.raw_value" invisible="not context.get('is_form_gantt')"/>
             </xpath>
         </field>
     </record>
@@ -222,7 +222,7 @@
             </field>
             <field name="project_id" position="attributes">
                 <attribute name="required">1</attribute>
-                <attribute name="domain">[('is_fsm', '=', True), ('is_template', 'in', [is_template, False])]</attribute>
+                <attribute name="domain">[('is_fsm', '=', True)]</attribute>
             </field>
         </field>
     </record>
