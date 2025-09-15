@@ -510,6 +510,9 @@ export class SalaryPackage extends Interaction {
 
     checkInputSelected(benefit) {
         const target = $("input[name='" + benefit + "']").toArray();
+        if (!target.length) {
+            return false;
+        }
         let type = target[0].type;
         let newValue;
         if (type === "radio") {
