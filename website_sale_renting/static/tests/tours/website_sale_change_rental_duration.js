@@ -1,4 +1,4 @@
-import { delay } from "@odoo/hoot-dom";
+import { delay } from "@web/core/utils/concurrency";
 import { registry } from "@web/core/registry";
 import * as tourUtils from '@website_sale/js/tours/tour_utils';
 
