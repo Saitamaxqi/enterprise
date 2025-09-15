@@ -390,18 +390,28 @@ class TestFsmFlowSale(TestFsmFlowSaleCommon):
         # Case 1: Product price is zero and Anglo-Saxon accounting is enabled.
         self.service_product_delivered.list_price = 0.0
         self.service_product_delivered.with_user(self.project_user).with_context({'fsm_task_id': self.task.id}).fsm_add_quantity()
-        sol = self.task.sale_order_id.order_line[0]
+        so = self.task.sale_order_id
+        sol = so.order_line[0]
+        if so.state == 'draft':
+            so.action_confirm()  # needed if stock is not installed
         self.assertEqual(
             sol.invoice_status,
             'to invoice',
             "Invoice status should be 'to invoice' when Anglo-Saxon accounting is enabled and the price is zero."
         )
+        self.assertEqual(sol.qty_to_invoice, 1.0, "Qty to invoice should be set on anglo-saxon lines")
         # Case 2: Product price is greater than zero and Anglo-Saxon accounting is enabled.
         self.service_product_ordered.with_user(self.project_user).with_context({'fsm_task_id': self.task.id}).fsm_add_quantity()
         self.assertEqual(
             sol.invoice_status,
             'to invoice',
             "Invoice status should be 'to invoice' when the price is greater than zero."
+        )
+        so._create_invoices()
+        self.assertEqual(
+            sol.invoice_status,
+            'invoiced',
+            "Invoice status should be 'invoiced' when Anglo-Saxon accounting is enabled and invoice is generated."
         )
         # Case 3: Product price is zero and Anglo-Saxon accounting is disabled.
         self.env.company.anglo_saxon_accounting = False

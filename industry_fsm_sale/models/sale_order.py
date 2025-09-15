@@ -3,7 +3,7 @@
 from collections import defaultdict
 
 from odoo import api, models, fields, _
-from odoo.tools import float_is_zero
+from odoo.tools import float_compare, float_is_zero
 
 
 class SaleOrder(models.Model):
@@ -115,7 +115,12 @@ class SaleOrderLine(models.Model):
         sol_from_task_with_anglo = sol_from_task_without_amount.filtered(
             lambda sol: sol.company_id.anglo_saxon_accounting
         )
-        sol_from_task_with_anglo.invoice_status = 'to invoice'
+        precision = self.env['decimal.precision'].precision_get('Product Unit of Measure')
+        sol_from_task_with_anglo_invoiced = sol_from_task_with_anglo.filtered(
+            lambda sol: float_compare(sol.qty_invoiced, sol.product_uom_qty, precision_digits=precision) >= 0
+        )
+        sol_from_task_with_anglo_invoiced.invoice_status = 'invoiced'
+        (sol_from_task_with_anglo - sol_from_task_with_anglo_invoiced).invoice_status = 'to invoice'
         (sol_from_task_without_amount - sol_from_task_with_anglo).invoice_status = 'no'
         super(SaleOrderLine, self - sol_from_task_without_amount)._compute_invoice_status()
 
