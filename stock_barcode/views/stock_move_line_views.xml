@@ -176,7 +176,7 @@
     <field name="model">stock.quant</field>
     <field name="priority">1000</field>
     <field name="arch" type="xml">
-        <kanban class="o_kanban_mobile">
+        <kanban class="o_kanban_mobile" create="0">
             <field name="id"/>
             <templates>
                 <t t-name="card">
