@@ -109,7 +109,6 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         })
 
     @freeze_time('2017-01-01')
-    @users('apt_manager')
     def test_request_meeting_message_for_manual_confirmation(self):
         """ Make sure appointments send a custom mail on request to all relevant contacts """
         apt_type = self.apt_type_bxls_2days
@@ -117,8 +116,9 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         apt_type.schedule_based_on = 'users'
         phone_question = apt_type._get_main_phone_question()
         self.assertTrue(phone_question)
+        self._create_invite_test_data()
 
-        self.authenticate(self.env.user.login, self.env.user.login)
+        self.authenticate(None, None)
         now_str = self.reference_now.strftime(DTF)
         with self.mock_mail_gateway(), self.mock_mail_app():
             apt_data = {
@@ -128,7 +128,9 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
                 "csrf_token": http.Request.csrf_token(self),
                 "datetime_str": now_str,
                 "duration_str": "1.0",
-                "email": self.env.user.email,
+                "email": 'someattendee@test.lan',
+                "filter_appointment_type_ids": apt_type.ids,  # required for invites
+                "invite_token": self.invite_apt_type_bxls_2days.access_token,
                 "name": "Test Online Meeting",
                 f"question_{phone_question.id}": "12345",
                 "staff_user_id": self.staff_user_bxls.id
@@ -143,43 +145,59 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
         ], limit=1)
         self.assertTrue(calendar_event, "Calendar event was not created.")
 
+        attendee = calendar_event.partner_ids - calendar_event.partner_id
+        self.assertEqual(attendee.email_normalized, 'someattendee@test.lan')
+
         # Request mails
-        self.assertEqual(len(self._new_mails), 4)
-        self.assertMailMailWRecord(
-            calendar_event,
-            [self.apt_type_follower],
-            'sent',
+        self.assertEqual(len(self._new_mails), 3)
+        # find the message and ensure each one has 1 recipient, assertMailMail gets a bit confused here
+        booked_follower_mail = self.assertMailMail(
+            self.apt_type_follower, 'sent',
             author=self.staff_user_bxls.partner_id,
             email_values={
                 'subject': 'Appointment Requested: Bxls Appt Type',
                 'email_from': self.staff_user_bxls.email_formatted,
             },
         )
-        self.assertMailMailWRecord(
-            calendar_event,
-            self.env.user.partner_id | self.staff_user_bxls.partner_id,
-            'sent',
+        attendee_mail = self.assertMailMail(
+            attendee, 'sent',
             author=self.staff_user_bxls.partner_id,
             email_values={
                 'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
                 'email_from': self.staff_user_bxls.email_formatted,
             },
         )
+        organizer_mail = self.assertMailMail(
+            self.staff_user_bxls.partner_id, 'sent',
+            author=self.staff_user_bxls.partner_id,
+            email_values={
+                'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
+                'email_from': self.staff_user_bxls.email_formatted,
+            },
+        )
+        self.assertEqual(booked_follower_mail | attendee_mail | organizer_mail, self._new_mails)
 
         with self.mock_mail_gateway(), self.mock_mail_app():
             # Confirm the appointment manually
-            with Form(calendar_event) as form:
+            with Form(calendar_event.with_user(self.apt_manager)) as form:
                 form.appointment_status = 'booked'
 
         # Confirmation mails
         self.assertEqual(len(self._new_mails), 2)
-        self.assertMailMailWRecord(
-            calendar_event,
-            self.env.user.partner_id | self.staff_user_bxls.partner_id,
-            'sent',
+        attendee_mail = self.assertMailMail(
+            attendee, 'sent',
             author=self.staff_user_bxls.partner_id,
             email_values={
                 'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
                 'email_from': self.staff_user_bxls.email_formatted,
             },
         )
+        organizer_mail = self.assertMailMail(
+            self.staff_user_bxls.partner_id, 'sent',
+            author=self.staff_user_bxls.partner_id,
+            email_values={
+                'subject': 'Invitation to Test Online Meeting - Bxls Appt Type Booking',
+                'email_from': self.staff_user_bxls.email_formatted,
+            },
+        )
+        self.assertEqual(attendee_mail | organizer_mail, self._new_mails)

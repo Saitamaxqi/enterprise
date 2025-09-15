@@ -22,17 +22,14 @@
         </t>
     </h1>
     <p style="margin: 0;">
-        <t t-if="appointment_booker_name">
-            Hello <t t-out="appointment_booker_name or ''">John Booker</t>,
-        </t>
-        <t t-else="">
-            Hello,
-        </t>
-        <br/>
         <span style="display: block; margin-top: 8px;">
-            Your appointment for <t t-out="object.appointment_type_id.name or ''">Technical Demo</t> <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users' and object.partner_id"> with <t t-out="object.partner_id.name or ''">Brandon Freeman</t></t>
-            <t t-if="not object.appointment_type_id.is_always_confirm and object.appointment_status == 'request'">has been requested.</t>
-            <t t-else="">has been booked.</t>
+            <t t-out="appointment_booker_name or ''">John Booker</t>
+            <t t-if="not object.appointment_type_id.is_always_confirm and object.appointment_status == 'request'"> has requested </t>
+            <t t-else=""> has booked </t>
+            an appointment: <t t-out="object.appointment_type_id.name or ''">Technical Demo</t>
+            <t t-if="object.appointment_type_id.category not in ['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == 'users' and object.partner_id">
+                with <t t-out="object.partner_id.name or ''">Brandon Freeman</t>
+            </t>.
         </span>
     </p>
     <div style="text-align: center; padding: 16px 0px 16px 0px; margin-top: 16px;">
@@ -135,9 +132,6 @@
             </li>
         </ul>
     </div>
-    <p style="margin: 32px 0 0;">
-        See you soon!
-    </p>
 </div>
             </field>
             <field name="auto_delete" eval="True"/>
