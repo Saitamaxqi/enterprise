@@ -32,6 +32,12 @@
         <record id="product.product_product_4c" model="product.product">
             <field name="barcode">6016478556431</field>
         </record>
+        <record id="product.product_product_4e" model="product.product">
+            <field name="barcode">20133785566715</field>
+        </record>
+        <record id="product.product_product_4f" model="product.product">
+            <field name="barcode">20133785566726</field>
+        </record>
         <record id="product.product_product_3" model="product.product">
             <field name="barcode">6016478556448</field>
         </record>
@@ -55,6 +61,12 @@
         </record>
         <record id="product.product_product_25" model="product.product">
             <field name="barcode">6016478556530</field>
+        </record>
+        <record id="product.product_product_acoustic_bloc_screens_white" model="product.product">
+            <field name="barcode">40164785566121</field>
+        </record>
+        <record id="product.product_delivery_01" model="product.product">
+            <field name="barcode">6016478556348</field>
         </record>
 
         <record id="demo_package" model="stock.package" />

@@ -116,16 +116,17 @@ OBTPACK
 OBTVALI
 
 
-BATCH/00002
+BATCH/OUT/00002
 6016478556370
 6016478556516
 6016478556356
 OBTVALI
 
-BATCH/00001
-6016478556523
-CLUSTER-PACK-1
+BATCH/OUT/00001
 6016478556530
+6016478556523
+SN-000007
+SN-000008
 CLUSTER-PACK-1
 6016478556516
 CLUSTER-PACK-2
@@ -150,8 +151,8 @@ cat > barcodes_demo_header_pg_2.ps << HEADER
 (OBTVALI) 85 608 showCode
 
 (Batch picking (activate Batch Pickings)) 45 577 showLabel
-(BATCH/00002) 45 557 showTitle
-(BATCH/00002) 85 498 showCode
+(BATCH/OUT/00002) 45 557 showTitle
+(BATCH/OUT/00002) 85 498 showCode
 (Large Meeting Table) 230 557 showTitle
 (6016478556370) 271 498 showCode
 (Four Person Desk) 415 557 showTitle
@@ -162,22 +163,24 @@ cat > barcodes_demo_header_pg_2.ps << HEADER
 (OBTVALI) 271 388 showCode
 
 (Batch picking with cluster pickings (activate Batch Pickings and Packages)) 45 357 showLabel
-(BATCH/00001) 45 337 showTitle
-(BATCH/00001) 85 278 showCode
-(Cabinet with Doors) 230 337 showTitle
-(6016478556523) 271 278 showCode
-(CLUSTER-PACK-1) 415 337 showTitle
-(CLUSTER-PACK-1) 456 278 showCode
-(Acoustic Bloc Screens) 45 227 showTitle
-(6016478556530) 85 168 showCode
-(CLUSTER-PACK-1) 230 227 showTitle
-(CLUSTER-PACK-1) 271 168 showCode
-(Four Person Desk) 415 227 showTitle
-(6016478556516) 456 168 showCode
-(CLUSTER-PACK-2) 45 117 showTitle
-(CLUSTER-PACK-2) 85 58 showCode
-(Validate) 230 117 showTitle
-(OBTVALI) 271 58 showCode
+(BATCH/OUT/00001) 45 337 showTitle
+(BATCH/OUT/00001) 85 278 showCode
+(Acoustic Bloc Screens) 230 337 showTitle
+(6016478556530) 271 278 showCode
+(Cabinet with Doors) 415 337 showTitle
+(6016478556523) 456 278 showCode
+(SN-000007) 45 227 showTitle
+(SN-000007) 85 168 showCode
+(SN-000008) 230 227 showTitle
+(SN-000008) 271 168 showCode
+(CLUSTER-PACK-1) 415 227 showTitle
+(CLUSTER-PACK-1) 456 168 showCode
+(Four Person Desk) 45 117 showTitle
+(6016478556516) 85 58 showCode
+(CLUSTER-PACK-2) 230 117 showTitle
+(CLUSTER-PACK-2) 271 58 showCode
+(Validate) 415 117 showTitle
+(OBTVALI) 456 58 showCode
 
 (Don't have any barcode scanner? Right click on your screen > Inspect > Console and type the following command:) 45 35 showFooter
 (   odoo.__WOWL_DEBUG__.root.env.services.barcode.bus.trigger("barcode_scanned", {barcode:"setyourbarcodehere"})) 45 25 showFooter

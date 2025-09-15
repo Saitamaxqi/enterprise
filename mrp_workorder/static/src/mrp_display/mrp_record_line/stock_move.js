@@ -107,7 +107,7 @@ export class StockMove extends QualityCheck {
             resModel: "stock.quant",
             noCreate: !this.isTracked,
             multiSelect: false,
-            domain: [["product_id", "=", product.id]],
+            domain: [["product_id", "=", product.id], ['location_id.usage', '=', 'internal']],
             title: _t("Add line: %(productName)s", { productName: product.display_name }),
             context: {
                 single_product: true,

@@ -14,6 +14,7 @@
                 </button>
                 <button class="o_btn_icon btn" t-att-class="{'p-0' : showImage}"
                         t-attf-class="{{isActive ? activeClass : 'btn-outline-secondary'}}"
+                        t-att-barcode_trigger="isActive ? barcode : false"
                         t-att-style="showImage ? `background: url(${imageUrl}) no-repeat center/contain;` : ''">
                     <i t-if="!showImage" t-att-class="icon"/>
                 </button>

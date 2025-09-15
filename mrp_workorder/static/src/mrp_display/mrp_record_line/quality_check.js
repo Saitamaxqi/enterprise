@@ -73,6 +73,15 @@ export class QualityCheck extends MrpWorkorder {
         }
     }
 
+    get barcode() {
+        switch (this.type) {
+            case "print_label":
+                return "PRPL";
+            default:
+                return "NEXT";
+        }
+    }
+
     get isActive() {
         return this.props.isCurrent;
     }

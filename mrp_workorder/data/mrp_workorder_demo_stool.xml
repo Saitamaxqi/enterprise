@@ -240,15 +240,15 @@
         </record>
         <function model="product.product" name="write">
             <value eval="[ref('product_product_stool_top_1')]"/>
-            <value eval="{'default_code': 'FURN_1245_GR'}"/>
+            <value eval="{'default_code': 'FURN_1245_GR', 'barcode': '20133785575275'}"/>
         </function>
         <function model="product.product" name="write">
             <value eval="[ref('product_product_stool_top_2')]"/>
-            <value eval="{'default_code': 'FURN_1245_G'}"/>
+            <value eval="{'default_code': 'FURN_1245_G', 'barcode': '20133785575264'}"/>
         </function>
         <function model="product.product" name="write">
             <value eval="[ref('product_product_stool_top_3')]"/>
-            <value eval="{'default_code': 'FURN_1245_N'}"/>
+            <value eval="{'default_code': 'FURN_1245_N', 'barcode': '20133785575286'}"/>
         </function>
         <function model="product.template" name="write">
             <value eval="[ref('product_template_stool_top')]"/>

@@ -20,6 +20,14 @@ patch(QualityCheck.prototype, {
                 return super.icon;
         }
     },
+    get barcode() {
+        switch (this.type) {
+            case "passfail":
+                return "PASS";
+            default:
+                return super.barcode;
+        }
+    },
     get showQty() {
         if (this.type === "measure" && this.isComplete) {
             const { measure, norm_unit } = this.props.record.data;

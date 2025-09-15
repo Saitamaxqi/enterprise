@@ -1,3 +1,4 @@
+import { useSubEnv } from "@odoo/owl";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";
 import { useBus, useService } from "@web/core/utils/hooks";
 
@@ -7,6 +8,12 @@ export class MrpSelectQuantDialog extends SelectCreateDialog {
         super.setup();
         this.barcode = useService("barcode");
         useBus(this.barcode.bus, "barcode_scanned", this._onBarcodeScanned);
+        useSubEnv({
+            config: {
+                ...this.env.config,
+                disableSearchBarAutofocus: true,
+            },
+        });
     }
 
     async _onBarcodeScanned(event) {
