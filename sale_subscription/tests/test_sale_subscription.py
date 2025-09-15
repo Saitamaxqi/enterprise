@@ -2897,3 +2897,31 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             inv = sale_order._create_recurring_invoice()
             self.assertAlmostEqual(inv.amount_untaxed, 14.19, msg="The invoiced amount should be 14.19 because the recurring service should be prorated and the non recurring one shouldn't.")
             self.assertFalse(product_tmpl5.allow_prorated_price, "The product is not a subscription, so it should not be prorated.")
+
+    @freeze_time('2025-09-15')
+    def test_postpaid_first_day(self):
+        """ Ensure the behavior is correct when all lines are postpaid and the contracts are aligned on first day of the month """
+        product_tmpl1 = self.ProductTmpl.create({
+                'name': 'Prorated Service Product',
+                'type': 'service',
+                'recurring_invoice': True,
+                'invoice_policy': 'delivery',
+        })
+        product_tmpl2 = product_tmpl1.copy()
+
+        sale_order = self.env['sale.order'].create({
+            'name': 'Test Sale Order',
+            'partner_id': self.partner_a.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [Command.create({
+                    'product_id': product_tmpl1.product_variant_id.id,
+                    'product_uom_qty': 1,
+                    'price_unit': 10}),
+                    Command.create({
+                    'product_id': product_tmpl2.product_variant_id.id,
+                    'product_uom_qty': 1,
+                    'price_unit': 20})]
+        })
+        sale_order.plan_id.billing_first_day = True
+        sale_order.action_confirm()
+        self.assertEqual(sale_order.next_invoice_date, datetime.date(2025, 10, 1), "The next invoice date is first of october")

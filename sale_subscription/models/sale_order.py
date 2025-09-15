@@ -1373,10 +1373,15 @@ class SaleOrder(models.Model):
         for order in self:
             if not order.is_subscription:
                 continue
-            last_invoice_date = order.next_invoice_date or order.start_date
-            if last_invoice_date:
-                order.next_invoice_date = last_invoice_date + order.plan_id.billing_period
-                order.last_reminder_date = False
+            next_invoice_dates = []
+            # Invoices parameters are computed based on the line. We should get the same next invoice date for all
+            # lines. geeting the values for all lines is a precaution.
+            for line in order.order_line:
+                parameters = line._get_invoice_line_parameters()
+                # next invoice date is end of the invoicing period + 1 day
+                next_invoice_dates.append(parameters[1] + relativedelta(days=1))
+            order.next_invoice_date = next_invoice_dates and min(next_invoice_dates)
+            order.last_reminder_date = False
 
     def _update_subscription_payment_failure_values(self):
         # allow to override the subscription values in case of payment failure
