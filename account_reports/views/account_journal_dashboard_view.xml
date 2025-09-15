@@ -22,7 +22,7 @@
             </xpath>
 
             <xpath expr="//div[@id='bank_and_cash_container']//div[@name='action_card_reconciliation']" position="inside">
-                <a type="action" name="%(action_account_report_bank_reconciliation)d">Report</a>
+                <a type="action" name="%(action_account_report_bank_reconciliation)d" groups="account.group_account_user" >Report</a>
             </xpath>
 
             <t t-call="JournalMiscelaneous" position="before">
