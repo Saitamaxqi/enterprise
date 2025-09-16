@@ -62,7 +62,7 @@ class HrVersion(models.Model):
         compute="_compute_l10n_in_fixed_allowance_percentage", store=True, readonly=False, tracking=True,
         groups="hr_payroll.group_hr_payroll_user", help='Fixed Allowance computed as percentage(%)')
     l10n_in_fixed_allowance = fields.Monetary(string='Fixed Allowance', tracking=True,
-        compute="_compute_l10n_in_fixed_allowance", store=True, groups="hr_payroll.group_hr_payroll_user",
+        compute="_compute_l10n_in_fixed_allowance", store=True, groups="hr_payroll.group_hr_payroll_user", readonly=False,
         help='The remaining variable amount is computed as the fixed allowance after all other allowances defined.\
         this will represents the portion of wages remaining after the total of all other allowances.')
     l10n_in_phone_subscription = fields.Monetary(string="Phone Subscription", groups="hr_payroll.group_hr_payroll_user",
@@ -88,7 +88,7 @@ class HrVersion(models.Model):
     l10n_in_insured_first_children = fields.Boolean(string="Insured First-Child", groups="hr_payroll.group_hr_payroll_user")
     l10n_in_insured_second_children = fields.Boolean(string="Insured Second-Child", groups="hr_payroll.group_hr_payroll_user")
     l10n_in_medical_insurance_total = fields.Monetary(string='Medical Insurance Amount', tracking=True,
-        compute='_compute_l10n_in_medical_insurance_total', store=True, groups="hr_payroll.group_hr_payroll_user")
+        compute='_compute_l10n_in_medical_insurance_total', store=True, groups="hr_payroll.group_hr_payroll_user", readonly=False)
     pt_rule_parameter_id = fields.Many2one(
         'hr.rule.parameter',
         string='Professional Tax slab',
@@ -106,17 +106,17 @@ class HrVersion(models.Model):
     l10n_in_gratuity = fields.Monetary(string='Gratuity', compute="_compute_l10n_in_gratuity",
         groups="hr_payroll.group_hr_payroll_user", readonly=False, store=True, tracking=True,
         help='Gratuity amount as a percentage of the basic salary.')
-    l10n_in_provident_fund = fields.Boolean(related='company_id.l10n_in_provident_fund', groups="hr_payroll.group_hr_payroll_user")
+    l10n_in_provident_fund = fields.Boolean(related='company_id.l10n_in_provident_fund', groups="hr_payroll.group_hr_payroll_user", readonly=False)
     l10n_in_pf_employee_amount = fields.Monetary(compute="_compute_l10n_in_pf_employee_amount",
         store=True, readonly=False, tracking=True, groups="hr_payroll.group_hr_payroll_user",
         help='Employee contributes a percentage of the Basic salary + Dearness allowance.')
     l10n_in_pf_employee_percentage = fields.Float(string="Employee PF Percentage",
-        compute="_compute_l10n_in_pf_employee_percentage", store=True, groups="hr_payroll.group_hr_payroll_user")
+        compute="_compute_l10n_in_pf_employee_percentage", store=True, groups="hr_payroll.group_hr_payroll_user", readonly=False)
     l10n_in_pf_employer_amount = fields.Monetary(string="Employer", compute="_compute_l10n_in_pf_employer_amount",
         store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user", tracking=True,
         help='Employer contributes a percentage of the Basic salary + Dearness allowance.')
     l10n_in_pf_employer_percentage = fields.Float(string="Employer PF Percentage",
-        compute="_compute_l10n_in_pf_employer_percentage", store=True, groups="hr_payroll.group_hr_payroll_user")
+        compute="_compute_l10n_in_pf_employer_percentage", store=True, groups="hr_payroll.group_hr_payroll_user", readonly=False)
     l10n_in_pt = fields.Boolean(related='company_id.l10n_in_pt', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_esic = fields.Boolean(related='company_id.l10n_in_esic', groups="hr_payroll.group_hr_payroll_user")
     l10n_in_esic_employee_amount = fields.Monetary(groups="hr_payroll.group_hr_payroll_user",
