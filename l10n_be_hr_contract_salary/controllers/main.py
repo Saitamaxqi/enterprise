@@ -14,6 +14,8 @@ class SignContract(Sign):
 
     def _update_version_on_signature(self, request_item, version, offer):
         super()._update_version_on_signature(request_item, version, offer)
+        if version.country_code != 'BE':
+            return
         # Only the applicant/employee has signed
         if request_item.sign_request_id.nb_closed == 1 and version.car_id:
             if version.car_id and version.driver_id != version.employee_id.work_contact_id:
@@ -60,7 +62,7 @@ class HrContractSalary(main.HrContractSalary):
 
     def check_access_to_salary_configurator(self, request_token, offer, version):
         has_access, error_page = super().check_access_to_salary_configurator(request_token, offer, version)
-        if not has_access:
+        if offer.country_code != 'BE' or not has_access:
             return has_access, error_page
 
         if version.sudo().l10n_be_time_credit and version.sudo()._get_work_time_rate() == 0:
@@ -73,6 +75,8 @@ class HrContractSalary(main.HrContractSalary):
     def onchange_benefit(self, benefit_field, new_value, offer_id, benefits, **kw):
         res = super().onchange_benefit(benefit_field, new_value, offer_id, benefits, **kw)
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
+        if offer.country_code != 'BE':
+            return res
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             version = offer._get_version()
@@ -160,27 +164,18 @@ class HrContractSalary(main.HrContractSalary):
             sp.rollback()
         return res
 
-    def _append_additional_benefit_info(self, benefit_info, version, field_names, field_name):
-        super()._append_additional_benefit_info(benefit_info, version, field_names, field_name)
-        if field_name == 'company_car_total_depreciated_cost':
-            benefit_info.append(
-                (field_names['hr.version']['car_id'], version['car_id'].display_name))
-        elif field_name == 'wishlist_car_total_depreciated_cost':
-            benefit_info.append(
-                (field_names['hr.version']['new_car_model_id'], version['new_car_model_id'].display_name))
-        elif field_name == 'company_bike_depreciated_cost':
-            bike_field_name = 'new_bike_model_id' if version.new_bike else 'bike_id'
-            benefit_info.append(
-                (field_names['hr.version'][bike_field_name], version[bike_field_name].display_name))
-
     def _get_default_template_values(self, version, offer):
         values = super()._get_default_template_values(version, offer)
+        if version.country_code != 'BE':
+            return values
         values['l10n_be_canteen_cost'] = version.l10n_be_canteen_cost
         values['contract_type_id'] = offer.contract_type_id.id
         return values
 
     def _get_benefits(self, version_vals, offer):
         res = super()._get_benefits(version_vals, offer)
+        if offer.country_code != 'BE':
+            return res
         display_wishlist = offer.new_car
         if not display_wishlist:
             res -= request.env.ref('l10n_be_hr_contract_salary.l10n_be_transport_new_car')
@@ -188,7 +183,8 @@ class HrContractSalary(main.HrContractSalary):
 
     def _get_benefits_values(self, version, offer):
         mapped_benefits, mapped_dependent_benefits, mandatory_benefits, mandatory_benefits_names, benefit_types, dropdown_options, dropdown_group_options, initial_values = super()._get_benefits_values(version, offer)
-
+        if version.country_code != 'BE':
+            return mapped_benefits, mapped_dependent_benefits, mandatory_benefits, mandatory_benefits_names, benefit_types, dropdown_options, dropdown_group_options, initial_values
         available_cars = request.env['fleet.vehicle'].sudo().with_company(version.company_id).search(
             version._get_available_vehicles_domain(version.employee_id.work_contact_id)
         ).filtered(lambda car: not car.state_id.hide_in_offer).sorted(key=lambda car: car.total_depreciated_cost)
@@ -372,6 +368,8 @@ class HrContractSalary(main.HrContractSalary):
 
     def _get_new_version_values(self, version_vals, employee, benefits, offer):
         res = super()._get_new_version_values(version_vals, employee, benefits, offer)
+        if offer.country_code != 'BE':
+            return res
         fields_to_copy = [
             'has_laptop', 'work_time_rate',
             'rd_percentage', 'no_onss', 'no_withholding_taxes', 'meal_voucher_amount',
@@ -389,6 +387,8 @@ class HrContractSalary(main.HrContractSalary):
     def create_new_version(self, version_vals, offer_id, benefits, no_write=False, **kw):
         new_version, version_diff = super().create_new_version(version_vals, offer_id, benefits, no_write=no_write, **kw)
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id).exists()
+        if offer.country_code != 'BE':
+            return new_version, version_diff
         if new_version.l10n_be_time_credit:
             new_version.date_end = version_vals.get('date_end')
         if new_version.car_id.id != version_vals.get('car_id'):
@@ -429,6 +429,8 @@ class HrContractSalary(main.HrContractSalary):
 
     def _get_compute_results(self, new_version):
         result = super()._get_compute_results(new_version)
+        if new_version.structure_type_id != self.env.ref('hr.structure_type_employee_cp200', raise_if_not_found=False):
+            return result
         result['double_holiday_wage'] = round(new_version.double_holiday_wage, 2)
         wage_to_apply = self._get_wage_to_apply()
         # Horrible hack: Add a sequence / display condition fields on salary resume model in master
@@ -459,7 +461,8 @@ class HrContractSalary(main.HrContractSalary):
         result = super().update_salary(offer_id, benefits, **kw)
         wishlist_result = {}
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id)
-
+        if offer.country_code != 'BE':
+            return result
         request.env.flush_all()
         with request.env.cr.savepoint(flush=False) as sp:
             version = offer._get_version()
@@ -503,12 +506,13 @@ class HrContractSalary(main.HrContractSalary):
 
             request.env.flush_all()
             sp.rollback()
-
         return result
 
     # TODO check this
     def _generate_payslip(self, new_version):
         payslip = super()._generate_payslip(new_version)
+        if new_version.country_code != 'BE':
+            return payslip
         if new_version.car_id:
             payslip.vehicle_id = new_version.car_id
         if new_version.commission_on_target:
@@ -525,11 +529,15 @@ class HrContractSalary(main.HrContractSalary):
 
     def _get_payslip_line_values(self, payslip, codes):
         res = super()._get_payslip_line_values(payslip, codes + ['BASIC', 'COMMISSION'])
+        if payslip.country_code != 'BE':
+            return res
         res['SALARY'][payslip.id]['total'] = res['BASIC'][payslip.id]['total'] + res['COMMISSION'][payslip.id]['total']
         return res
 
     def _get_personal_infos_langs(self, version, personal_info):
         active_langs = super()._get_personal_infos_langs(version, personal_info)
+        if version.country_code != 'BE':
+            return active_langs
         personal_info_lang = request.env.ref('l10n_be_hr_contract_salary.hr_contract_salary_personal_info_lang')
         if version._is_struct_from_country('BE') and personal_info == personal_info_lang:
             belgian_langs = active_langs.filtered(lambda l: l.code in ["fr_BE", "fr_FR", "nl_BE", "nl_NL", "de_BE", "de_DE"])

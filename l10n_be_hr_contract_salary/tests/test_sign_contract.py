@@ -11,9 +11,16 @@ class TestSignContract(SignRequestCommon):
     def test_update_contract_on_signature_custom_logic(self):
         """Test _update_version_on_signature updates future driver and flags correctly"""
         # Prepare contract and vehicles
+        company = self.env['res.company'].create({
+            'name': 'Test Belgium Company',
+            'country_id': self.env.ref('base.be').id,
+        })
+
         employee = self.env['hr.employee'].create({
             'name': 'John Tester',
             'work_contact_id': self.partner_2.id,
+            'company_id': company.id,
+            'country_code': 'BE',
         })
 
         brand = self.env['fleet.vehicle.model.brand'].create({
@@ -50,6 +57,7 @@ class TestSignContract(SignRequestCommon):
             'company_id': employee.company_id.id,
             'contract_template_id': version.id,
             'sign_request_ids': [(4, sign_request.id)],
+            'state': 'half_signed',
         })
 
         # Instantiate your custom controller and call the method
