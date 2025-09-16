@@ -175,6 +175,14 @@ class AccountReturnType(models.Model):
             ('is_completed', '=', False),
         ])._compute_deadline()
 
+    def copy_data(self, default=None):
+        default = dict(default or {})
+        vals_list = super().copy_data(default=default)
+        if 'name' not in default:
+            for return_type, vals in zip(self, vals_list):
+                vals['name'] = self.env._("%s (copy)", return_type.name)
+        return vals_list
+
     def _can_return_exist(self, company, tax_unit=False):
         """ Returns whether a return can exist for this type with the provided company and tax units. This is used to know which returns need
         to be deleted when a change of configuration has occured.
