@@ -40,7 +40,7 @@
                                 </div>
                             </div>
                             <div class="o_payment_ref user-select-text d-none d-md-block" t-att-class="isUnfolded ? 'overflow-wrap' : 'text-truncate'">
-                                <h6 class="d-inline" t-esc="recordData.payment_ref"/>
+                                <h7 class="d-inline" t-esc="recordData.payment_ref"/>
                             </div>
                             <div name="statement_line_partner_name" class="text-truncate text-muted">
                                 <t t-if="isUnfolded and recordData?.partner_name">

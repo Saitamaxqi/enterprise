@@ -7,7 +7,7 @@
             t-on-click.stop="() => props?.action()"
         >
             <span t-esc="props?.label" class="m-auto"/>
-            <span class="rounded-pill px-2 bg-black-25" t-if="props?.count">
+            <span class="rounded-pill px-2 o_bg-black-10" t-if="props?.count">
                 <t t-esc="props.count"/>
             </span>
         </button>
