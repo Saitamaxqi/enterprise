@@ -100,3 +100,37 @@ class TestIndustryFsmTask(TestFsmFlowSaleCommon):
                 view="industry_fsm_sale.project_sharing_project_task_inherit_view_form",
             )
         )
+
+    def test_under_warranty_copied_when_creating_task_from_template(self):
+        template_task = self.env["project.task"].create({
+            "name": "Template",
+            "project_id": self.fsm_project.id,
+            "is_template": True,
+            "under_warranty": True,
+            "description": "Template description",
+        })
+
+        task_id = template_task.action_create_from_template()
+        task = self.env["project.task"].browse(task_id)
+        self.assertTrue(task.under_warranty, "The 'under_warranty' is not copied from the template task.")
+
+    def test_under_warranty_copied_when_creating_project_from_project_template(self):
+        fsm_project = self.env['project.project'].create({
+            'name': 'Field Service',
+            'is_fsm': True,
+            'allow_billable': True,
+            'allow_timesheets': True,
+            'is_template': True,
+            'company_id': self.env.company.id,
+        })
+
+        self.env["project.task"].create({
+            'name': 'Template',
+            'project_id': fsm_project.id,
+            'is_template': True,
+            'under_warranty': True,
+            'description': 'Template description',
+        })
+
+        project_id = fsm_project.action_create_from_template()
+        self.assertTrue(project_id.task_ids.under_warranty, "The 'under_warranty' is not copied from the template task.")

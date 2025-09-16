@@ -667,6 +667,8 @@ class ProjectTask(models.Model):
     def copy_data(self, default=None):
         vals_list = super().copy_data(default)
         for task, vals in zip(self, vals_list):
+            if self.env.context.get('copy_from_template') and task.under_warranty:
+                vals['under_warranty'] = task.under_warranty
             if task.is_fsm and not task.recurring_task and not self.env.context.get('copy_from_template'):
                 vals.update({
                     'sale_order_id': False,
