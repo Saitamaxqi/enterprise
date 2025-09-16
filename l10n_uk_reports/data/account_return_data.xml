@@ -14,6 +14,7 @@
             <field name="default_deadline_periodicity">monthly</field>
             <field name="auto_generate" eval="False"/>
             <field name="country_id" ref="base.uk"/>
+            <field name="default_deadline_days_delay">21</field>
         </record>
     </data>
 </odoo>

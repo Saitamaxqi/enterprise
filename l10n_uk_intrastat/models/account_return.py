@@ -51,17 +51,3 @@ class AccountReturnType(models.Model):
             return_type._try_create_return_for_period(date_from, main_company, tax_unit)
 
         return rslt
-
-
-class AccountReturn(models.Model):
-    _inherit = 'account.return'
-
-    @api.model
-    def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        if return_type_external_id in (
-                'l10n_uk_intrastat.uk_intrastat_goods_return_type',
-                'l10n_uk_intrastat.uk_intrastat_service_return_type',
-        ):
-            return date_to + relativedelta(days=21)
-
-        return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)

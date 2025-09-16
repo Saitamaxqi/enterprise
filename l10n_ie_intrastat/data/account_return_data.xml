@@ -7,6 +7,7 @@
             <field name="default_deadline_periodicity">monthly</field>
             <field name="auto_generate" eval="False"/>
             <field name="country_id" ref="base.ie"/>
+            <field name="default_deadline_days_delay">23</field>
         </record>
 
         <record id="ie_intrastat_service_return_type" model="account.return.type">
@@ -15,6 +16,7 @@
             <field name="default_deadline_periodicity">monthly</field>
             <field name="auto_generate" eval="False"/>
             <field name="country_id" ref="base.ie"/>
+            <field name="default_deadline_days_delay">23</field>
         </record>
     </data>
 </odoo>
