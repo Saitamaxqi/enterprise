@@ -96,8 +96,9 @@
             <field name="model">account.return.check</field>
             <field name="arch" type="xml">
                 <search>
-                    <field name="result"/>
                     <field name="name"/>
+                    <field name="result"/>
+                    <field name="cycle"/>
                     <field name="type"/>
                     <field name="return_id"/>
                     <field name="template_id"/>
