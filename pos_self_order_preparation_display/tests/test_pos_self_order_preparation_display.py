@@ -58,7 +58,14 @@ class TestPosSelfOrderPreparationDisplay(SelfOrderCommonTest):
         self.pos_config.current_session_id.set_opening_control(0, "")
 
         self_route = self.pos_config._get_self_order_route()
-        self.start_tour(self_route, 'test_ensure_mobile_order_preparation_display')
+        with self.assertLogs(level='WARNING') as log_catcher:
+            self.start_tour(self_route, 'test_ensure_mobile_order_preparation_display')
+
+        self.assertEqual(len(log_catcher.output), 1, "Exactly one warning should be logged")
+        self.assertIn(
+            "This order cannot be cancelled because it's already in preparation.",
+            log_catcher.output[0],
+        )
 
         order = self.env['pos.order'].search([], limit=1)
         preparation_order = self.env['pos.prep.order'].search([('pos_order_id', '=', order.id)], limit=1)
