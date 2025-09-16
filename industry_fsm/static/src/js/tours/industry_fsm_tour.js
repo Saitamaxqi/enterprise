@@ -21,6 +21,13 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
             run: "click",
         },
         {
+    isActive: ["body:has(.o-kanban-button-new.o-dropdown-caret"],
+    trigger: '.o-dropdown-item:contains("New Task")',
+    content: _t('Let\'s start from scratch.'),
+    tooltipPosition: 'right',
+            run: "click",
+        },
+        {
             trigger: ".o_form_editable",
         },
         {
