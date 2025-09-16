@@ -73,7 +73,7 @@ export class AccountReturnDashboardList extends Component {
      */
     async openTaxReturn(accountReturn) {
         const returnTypeId = accountReturn?.type_id || '';
-        const viewId = await this.orm.call("account.return", "get_kanban_view_id", [[accountReturn.id]]);
+        const [viewId, searchViewId] = await this.orm.call("account.return", "get_kanban_view_and_search_view_id", [[accountReturn.id]]);
 
         // Open the filtered Tax Return view
         this.action.doAction({
@@ -84,12 +84,14 @@ export class AccountReturnDashboardList extends Component {
                 [viewId || false, 'kanban'],
                 [false, 'calendar'],
             ],
+            search_view_id: [searchViewId || false],
             context: {
                 'search_default_groupby_deadline': 1,
                 'search_default_todo_returns': 1,
                 // Apply name filter using return type
                 'search_default_type_id': returnTypeId,
             },
+            domain: [['return_type_category', '=', 'account_return']],
         });
     }
 }

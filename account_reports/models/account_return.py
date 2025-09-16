@@ -2513,12 +2513,14 @@ such as using the wrong VAT rate, wrongly exempting transactions.
             'result': 'anomaly' if draft_entries_count else 'reviewed',
         }
 
-    def get_kanban_view_id(self):
+    def get_kanban_view_and_search_view_id(self):
         if self.return_type_category == 'audit':
-            xml_id = 'account_reports.account_audit_kanban_view'
+            kanban_view_xml_id = 'account_reports.account_audit_kanban_view'
+            search_view_xml_id = 'account_reports.account_audit_search_view'
         else:
-            xml_id = 'account_reports.account_return_kanban_view'
-        return self.env.ref(xml_id).id
+            kanban_view_xml_id = 'account_reports.account_return_kanban_view'
+            search_view_xml_id = 'account_reports.account_return_search_view'
+        return (self.env.ref(kanban_view_xml_id).id, self.env.ref(search_view_xml_id).id)
 
 
 class AccountReturnCheck(models.Model):
