@@ -613,6 +613,7 @@ class ProjectTask(models.Model):
                 sol = sols_by_product_and_price_dict.get((timesheet_product_id, price_unit))  # get the existing SOL with the product and the correct price unit
                 mapping_uom = self.env['uom.uom'].browse(uom_id)
                 total_amount = 0
+                timesheet_product = self.env['product.product'].browse(timesheet_product_id)
                 for timesheet in timesheets:
                     if timesheet.product_uom_id != mapping_uom:
                         total_amount += timesheet.product_uom_id._compute_quantity(timesheet.unit_amount, mapping_uom, rounding_method='HALF-UP')
@@ -622,14 +623,14 @@ class ProjectTask(models.Model):
                     order = self.sale_order_id
                     sol_vals = {
                         **self._get_sale_order_line_vals(),
-                        'price_unit': 0.0 if self.under_warranty else self.env['product.product'].browse(timesheet_product_id)._get_tax_included_unit_price(
+                        'price_unit': 0.0 if self.under_warranty else timesheet_product._get_tax_included_unit_price(
                             order.company_id,
                             order.currency_id,
                             order.date_order,
                             'sale',
                             fiscal_position=order.fiscal_position_id,
                             product_price_unit=price_unit,
-                            product_currency=order.currency_id
+                            product_currency=timesheet_product.currency_id
                         ),
                         'product_id': timesheet_product_id,
                         'product_uom_qty': total_amount,
