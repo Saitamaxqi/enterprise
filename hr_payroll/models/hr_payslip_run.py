@@ -364,8 +364,8 @@ class HrPayslipRun(models.Model):
                 date_to = slip_tz.localize(datetime.combine(slip.date_to, time.max)).astimezone(utc).replace(tzinfo=None)
                 if version_work_entries := all_work_entries.get(slip.version_id):
                     version_work_entries.filtered_domain([
-                        ('date_stop', '<=', date_to),
-                        ('date_start', '>=', date_from),
+                        ('date', '<=', date_to),
+                        ('date', '>=', date_from),
                     ])
                     version_work_entries._check_undefined_slots(slip.date_from, slip.date_to)
 
