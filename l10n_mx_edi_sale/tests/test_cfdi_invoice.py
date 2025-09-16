@@ -7,6 +7,11 @@ from odoo.addons.l10n_mx_edi.tests.common import TestMxEdiCommon, EXTERNAL_MODE
 @tagged('post_install_l10n', 'post_install', '-at_install', *(['-standard', 'external'] if EXTERNAL_MODE else []))
 class TestCFDIInvoiceSale(TestMxEdiCommon):
 
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env.user.write({'group_ids': [(4, cls.env.ref('sales_team.group_sale_salesman').id)]})
+
     def test_global_discount(self):
         product1 = self.product
         product2 = self._create_product()
