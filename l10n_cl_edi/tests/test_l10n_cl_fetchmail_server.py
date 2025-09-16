@@ -107,6 +107,35 @@ class TestClFetchmailServer(TestL10nClEdiCommon):
         self.assertEqual(move.amount_tax, 56104)
 
     @patch('odoo.fields.Date.context_today', return_value=fields.Date.from_string('2019-11-23'))
+    def test_duplicate_invoice_33_from_attachment(self, context_today):
+        """DTE with known partner twice to trigger the "already exist" message."""
+
+        partner_sii_same_company = self.env['res.partner'].create({
+            'name': 'Other Partner SII Same Company',
+            'is_company': 1,
+            # Same company as the receiver on the XML
+            'company_id': self.company_data['company'].id,
+            # Same VAT as in the invoice XML
+            'vat': '76086428-1',  # Invalid VAT works as there is no country_id
+        })
+
+        att_name = 'incoming_invoice_33.xml'
+        from_address = 'incoming_dte@test.com'
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        move = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
+        self.assertEqual(move.partner_id, partner_sii_same_company)
+
+        move_2 = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
+        message = move_2.message_ids[1]
+        self.assertEqual(message.preview, 'E-invoice already exist: 1')
+
+    @patch('odoo.fields.Date.context_today', return_value=fields.Date.from_string('2019-11-23'))
     def test_create_invoice_33_from_attachment_with_discounts(self, context_today):
         """DTE with discounts """
         att_name = 'incoming_invoice_33_with_discount.xml'

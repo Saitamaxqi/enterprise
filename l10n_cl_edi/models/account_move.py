@@ -1104,7 +1104,7 @@ services reception has been received as well.
             ('l10n_latam_document_type_id', '=', document_type.id),
             *self.env['account.move']._check_company_domain(self.company_id.id),
         ]).filtered(lambda m: m.l10n_latam_document_number.lstrip('0') == document_number.lstrip('0')):
-            messages.append('E-invoice already exist: %s', document_number)
+            messages.append(_('E-invoice already exist: %s', document_number))
 
         vals['l10n_latam_document_type_id'] = document_type
         vals['l10n_latam_document_number'] = document_number
