@@ -38,10 +38,7 @@ registry.category("web_tour.tours").add("test_settle_invoice_good_price_cl", {
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
-            PartnerList.clickPartnerOptions("AA Partner SII"),
-            PartnerList.clickDropDownItemText("Settle Invoices"),
-            PartnerList.clickSettleOrderName("FAC"),
-            ProductScreen.totalAmountIs("20"),
+            PartnerList.settleCustomerAccount("AA Partner SII", "20", "FAC", false),
         ].flat(),
 });
 

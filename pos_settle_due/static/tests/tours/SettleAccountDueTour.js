@@ -14,9 +14,22 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
-            PartnerList.clickPartnerOptions("Partner Test 1"),
-            PartnerList.clickDropDownItemText("Settle invoices"),
-            PartnerList.clickSettleOrderName("TSJ/", "/00001", true),
+            PartnerList.settleCustomerAccount("Partner Test 1", "10", "TSJ/", "/00001", true),
+            ProductScreen.clickPartnerButton(),
+            // Confirm that same invoice shouldn't be in the list again
+            PartnerList.settleCustomerAccount(
+                "Partner Test 1",
+                "10",
+                "TSJ/",
+                "/00001",
+                true,
+                false,
+                false
+            ),
+            Dialog.cancel(),
+            // On cancelling it will remove customer as well
+            ProductScreen.clickPartnerButton(),
+            ProductScreen.clickCustomer("Partner Test 1"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),
             PaymentScreen.clickValidate(),
@@ -63,13 +76,30 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             ReceiptScreen.paymentLineContains("Customer Account", "19.80"),
             ReceiptScreen.clickNextOrder(),
             ProductScreen.clickPartnerButton(),
-            {
-                trigger: "tr:contains('A Partner') .partner-due:contains('19.80')",
-            },
-            // Settle partially
-            PartnerList.clickPartnerOptions("A Partner"),
-            PartnerList.clickDropDownItemText("Settle orders"),
-            PartnerList.clickSettleOrderName("Shop - 000001"),
+            PartnerList.settleCustomerAccount(
+                "A Partner",
+                "19.80",
+                "Shop - 000001",
+                "",
+                false,
+                true
+            ),
+            ProductScreen.clickPartnerButton(),
+            // Confirm that same invoice shouldn't be in the list again
+            PartnerList.settleCustomerAccount(
+                "A Partner",
+                "19.80",
+                "Shop - 000001",
+                "",
+                false,
+                true,
+                false,
+                false
+            ),
+            Dialog.cancel(),
+            // On cancelling it will remove customer as well
+            ProductScreen.clickPartnerButton(),
+            ProductScreen.clickCustomer("A Partner"),
             ProductScreen.modeIsActive("Price"),
             ProductScreen.clickNumpad("1", "0"),
             ProductScreen.totalAmountIs("10.00"),
@@ -79,13 +109,14 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
             Dialog.confirm("Yes"),
             ReceiptScreen.clickNextOrder(),
             ProductScreen.clickPartnerButton(),
-            {
-                trigger: "tr:contains('A Partner') .partner-due:contains('9.80')",
-            },
-            // Settle the rest and invoice it
-            PartnerList.clickPartnerOptions("A Partner"),
-            PartnerList.clickDropDownItemText("Settle orders"),
-            PartnerList.clickSettleOrderName("Shop - 000001"),
+            PartnerList.settleCustomerAccount(
+                "A Partner",
+                "9.80",
+                "Shop - 000001",
+                "",
+                false,
+                true
+            ),
             ProductScreen.totalAmountIs("9.80"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),
@@ -121,12 +152,7 @@ registry.category("web_tour.tours").add("test_settle_order_partially_backend_01"
             PaymentScreen.clickValidate(),
             ReceiptScreen.clickNextOrder(),
             ProductScreen.clickPartnerButton(),
-            {
-                trigger: "tr:contains('A Partner') .partner-due:contains('19.80')",
-            },
-            PartnerList.clickPartnerOptions("A Partner"),
-            PartnerList.clickDropDownItemText("Settle invoices"),
-            PartnerList.clickSettleOrderName("TSJ/", "/00001", true),
+            PartnerList.settleCustomerAccount("A Partner", "19.80", "TSJ/", "/00001", true),
             ProductScreen.modeIsActive("Price"),
             ProductScreen.clickNumpad("1", "0"),
             ProductScreen.totalAmountIs("10.00"),
@@ -145,9 +171,7 @@ registry.category("web_tour.tours").add("test_settle_order_partially_backend_02"
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
-            PartnerList.clickPartnerOptions("A Partner"),
-            PartnerList.clickDropDownItemText("Settle invoices"),
-            PartnerList.clickSettleOrderName("TSJ/", "/00001", true),
+            PartnerList.settleCustomerAccount("A Partner", "4.80", "TSJ/", "/00001", true),
             ProductScreen.totalAmountIs("4.80"),
             ProductScreen.clickPayButton(),
             PaymentScreen.clickPaymentMethod("Bank"),
