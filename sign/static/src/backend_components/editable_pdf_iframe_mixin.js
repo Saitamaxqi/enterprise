@@ -848,8 +848,10 @@ export const EditablePDFIframeMixin = (pdfClass) =>
 
         onSidebarDragStart(e) {
             const firstPage = this.root.querySelector('.page[data-page-number="1"]');
-            if (!firstPage || !this.isActive) {
+            if (!firstPage) {
                 e.preventDefault();
+                return;
+            } else if (!this.isActive) {
                 return;
             }
             this.setCanvasVisibility("hidden");
