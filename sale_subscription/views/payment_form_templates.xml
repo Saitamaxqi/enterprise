@@ -22,9 +22,6 @@
             </label>
         </xpath>
         <!-- Invite customers for automating payments with new token. -->
-        <xpath expr="//div[@name='o_payment_inline_form']//div[hasclass('d-flex')][hasclass('flex-column')]" position="attributes">
-            <attribute name="class" remove="flex-column" separator=" "/>
-        </xpath>
         <xpath  expr="//div[@name='o_payment_tokenize_container']//label" position="before">
             <t t-if="is_subscription and not sale_order and mode == 'payment' and not reference_prefix">
                 <label>
