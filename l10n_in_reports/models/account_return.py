@@ -279,21 +279,6 @@ class AccountReturn(models.Model):
             blocking_level = "warning"
         return blocking_level
 
-    # =================
-    # State Actions
-    # =================
-
-    def _get_state_field(self):
-        """
-        Overrids to returns the gstr1 and gstr2b state field name that is used to store the state of the return.
-        """
-        self.ensure_one()
-        if self.type_external_id == 'l10n_in_reports.in_gstr1_return_type':
-            return 'l10n_in_gstr1_status'
-        elif self.type_external_id == 'l10n_in_reports.in_gstr2b_return_type':
-            return 'l10n_in_gstr2b_status'
-        return super()._get_state_field()
-
     # ===============================
     # GSTR-1
     # ===============================
