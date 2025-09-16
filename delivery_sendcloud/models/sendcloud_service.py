@@ -320,7 +320,7 @@ class SendCloud:
                     'quantity': commodity.qty,
                     'weight': float_repr(carrier.sendcloud_convert_weight(commodity.product_id.weight), 3),
                     'value': round(value, 2),
-                    'hs_code': hs_code[:8],
+                    'hs_code': hs_code[:12],
                     'origin_country': commodity.country_of_origin or '',
                     'sku': commodity.product_id.barcode or '',
                 }
