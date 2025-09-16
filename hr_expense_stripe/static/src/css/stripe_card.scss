@@ -2,6 +2,7 @@
     &:not(.o_kanban_ghost) {
         padding: 0;
         border: 0px;
+        background-color: transparent;
     }
 
     > div {
@@ -11,7 +12,7 @@
         border-radius: 20px;
         padding: 20px;
 
-        background-color: #714B67;
+        background-color: black;  // Needs to be black, not $o-black because we want to match the real color
         color: white;
         display: flex;
         flex-direction: column;

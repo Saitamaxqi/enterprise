@@ -38,7 +38,9 @@
     ],
     'assets': {
         'web.assets_backend': [
-            'hr_expense_stripe/static/src/**/*',
+            'hr_expense_stripe/static/src/components/*',
+            'hr_expense_stripe/static/src/fields/*',
+            'hr_expense_stripe/static/src/css/stripe_card.scss',
         ],
         'web.assets_web_dark': [
             'hr_expense_stripe/static/src/css/*dark.scss',
