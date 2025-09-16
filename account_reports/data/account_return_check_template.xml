@@ -396,10 +396,10 @@
 
         <record id="account_return_check_template_aged_receivable_followup" model="account.return.check.template">
             <field name="name">Aged receivables and follow-up</field>
-            <field name="description">"For each high risk receivables (>60 days), verify the following:
+            <field name="description">For each high risk receivables (>60 days), verify the following:
 - Is there documented follow-up?
 - Has a payment plan been negotiated?
-- Is a provision recorded if recovery is doubtful?"</field>
+- Is a provision recorded if recovery is doubtful?</field>
             <field name="type">check</field>
             <field name="model" eval="False"/>
             <field name="cycle">sales</field>
@@ -416,7 +416,7 @@
                     'selected_variant_id': ref('account_reports.aged_receivable_report'),
                     'sections_source_id': ref('account_reports.aged_receivable_report'),
                     'tax_unit': 'company_only',
-                    'aging_interval'; 60,
+                    'aging_interval': 60,
                 },
                 'ignore_session': True
             }</field>
