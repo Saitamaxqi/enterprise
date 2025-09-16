@@ -146,7 +146,7 @@
             <field name="name">hr.payslip.line.pivot</field>
             <field name="model">hr.payslip.line</field>
             <field name="arch" type="xml">
-                <pivot string="Payroll Analysis" sample="1">
+                <pivot string="Payroll Analysis" sample="1" disable_linking="True">
                     <field name="salary_rule_id" type="row"/>
                     <field name="date_from" interval="month" type="col"/>
                     <field name="amount" type="measure"/>
@@ -187,6 +187,8 @@
                 <filter string="Draft" name="is_draft" domain="[('slip_id.state', '=', 'draft')]"/>
                 <separator />
                 <filter string="Date" name="date_from" date="date_from" default_period="year"/>
+                <filter string="Salary Rule Category" name="category_id" context="{'group_by':'category_id'}"/>
+                <filter string="Salary Rule" name="salary_rule_id" context="{'group_by': 'salary_rule_id'}"/>
             </search>
         </field>
     </record>

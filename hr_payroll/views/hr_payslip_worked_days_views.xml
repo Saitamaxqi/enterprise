@@ -21,7 +21,7 @@
         <field name="name">hr.payslip.worked_days.pivot</field>
         <field name="model">hr.payslip.worked_days</field>
         <field name="arch" type="xml">
-            <pivot string="Payroll Analysis" sample="1">
+            <pivot string="Payroll Analysis" sample="1" disable_linking="True">
                 <field name="work_entry_type_id" type="row"/>
                 <field name="date_from" interval="month" type="col"/>
                 <field name="amount" type="measure"/>
@@ -43,6 +43,8 @@
                 <filter string="Waiting" name="is_waiting" domain="[('payslip_id.state', '=', 'draft')]"/>
                 <separator />
                 <filter string="Date" name="date_from" date="date_from" default_period="year"/>
+                <filter string="Description" name="name" context="{'group_by':'name'}"/>
+
             </search>
         </field>
     </record>
