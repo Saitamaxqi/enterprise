@@ -5,7 +5,7 @@ import json
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
-from odoo.tools import SQL, OrderedSet
+from odoo.tools import SQL, OrderedSet, html2plaintext
 from odoo.addons.account_reports.models.account_audit_account_status import STATUS_SELECTION
 
 
@@ -26,6 +26,7 @@ class AccountAccount(models.Model):
     audit_status = fields.Selection(selection=STATUS_SELECTION, string="Status", compute="_compute_audit_status", inverse="_inverse_audit_status")
 
     account_status = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='account_id')
+    last_message = fields.Char(string="Last Message", compute='_compute_last_message')
 
     def _common_audit_search(self, field_name, operator, value, previous=False):
         if isinstance(value, OrderedSet):
@@ -259,6 +260,32 @@ class AccountAccount(models.Model):
     @api.depends('audit_previous_balance')
     def _compute_audit_previous_balance_show_warning(self):
         self._compute_balance_warning('audit_previous_balance', 'audit_previous_balance_show_warning')
+
+    @api.depends_context('working_file_id')
+    def _compute_last_message(self):
+        working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
+        if not working_file:
+            for account in self:
+                account.last_message = False
+            return
+
+        self.env['mail.message'].flush_model(['model', 'res_id', 'body'])
+        self.env['account.report.annotation'].flush_model(['message_id'])
+
+        self.env.cr.execute("""
+            SELECT DISTINCT ON (message.res_id) message.res_id, message.body
+            FROM mail_message message
+            JOIN account_report_annotation annotation ON annotation.message_id = message.id
+            WHERE message.model = 'account.account' AND message.res_id = ANY(%s)
+            ORDER BY message.res_id, message.create_date DESC
+        """, (self.ids,))
+        last_message_by_account = {
+            row[0]: html2plaintext(row[1])
+            for row in self.env.cr.fetchall()
+        }
+
+        for account in self:
+            account.last_message = last_message_by_account.get(account.id, False)
 
     def _field_to_sql(self, alias, field_expr, query=None) -> SQL:
         def add_aml_join(join_alias, date_from, date_to, company_ids):

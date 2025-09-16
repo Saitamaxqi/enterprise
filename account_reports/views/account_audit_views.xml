@@ -129,6 +129,7 @@
                     <field name="audit_previous_balance" readonly="1"/>
                     <field name="audit_var_n_1" readonly="1"/>
                     <field name="audit_var_percentage" widget="percentage" digits="[0,2]" readonly="1"/>
+                    <field name="last_message" readonly="1" />
                     <field
                         widget="account_return_selection_badge"
                         name="audit_status"

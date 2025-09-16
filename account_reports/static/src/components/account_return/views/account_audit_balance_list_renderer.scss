@@ -44,3 +44,7 @@
         color: var(--body-color) !important;
     }
 }
+
+th[data-name=last_message], td[name=last_message] {
+    max-width: 300px;
+}

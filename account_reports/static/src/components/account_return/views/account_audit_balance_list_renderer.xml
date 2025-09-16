@@ -10,6 +10,7 @@
                     threadId="chatterService.chatterState.res_id"
                     threadModel="'account.account'"
                     date_to="chatterService.chatterState.date_to"
+                    list="props.list"
                 />
             </div>
         </xpath>

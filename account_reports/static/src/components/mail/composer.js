@@ -2,7 +2,7 @@ import { Composer } from "@mail/core/common/composer";
 const { DateTime } = luxon;
 
 export class AccountReportComposer extends Composer {
-    static props = [...Composer.props, "reportController?", "date_to"];
+    static props = [...Composer.props, "reportController?", "date_to", "list?"];
 
     get postData() {
         return {
@@ -19,6 +19,12 @@ export class AccountReportComposer extends Composer {
             message.res_id,
             message.body
         );
+        this.props.list?.records.forEach((record) => {
+            if (record.isInEdition) {
+                record.load();
+            }
+            return record;
+        });
         return message;
     }
 

@@ -4,6 +4,7 @@
         <xpath expr="//Composer" position="attributes" type="add">
             <attribute name="reportController">props.reportController</attribute>
             <attribute name="date_to">props.date_to</attribute>
+            <attribute name="list">props.list</attribute>
         </xpath>
         <xpath expr="//Thread" position="attributes" type="add">
             <attribute name="reportController">props.reportController</attribute>
