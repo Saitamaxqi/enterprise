@@ -83,11 +83,10 @@ class SignContract(Sign):
                 # to be able to unarchive the new version without triggering the constraint if the two dates are equal
                 current_employee_version.date_version = version.date_version - timedelta(days=1)
                 must_archive_current_version = True
-            version.write({'active': True})
             request.env.flush_all()
+            version.write({'active': True})
             if must_archive_current_version:
                 current_employee_version.write({'active': False})
-                request.env.flush_all()
             if version.employee_id:
                 version.employee_id.active = True
                 if version.applicant_id:
