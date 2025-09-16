@@ -1956,6 +1956,18 @@ class AccountReport(models.Model):
             return options
 
     ####################################################
+    # OPTIONS: CONSOLIDATION
+    ####################################################
+    def _init_options_consolidation(self, options, previous_options):
+        options['show_consolidation'] = len(self.get_report_company_ids(options)) > 1 and any(
+            groupby.strip() == 'account_id'
+            for groupby_str in self.line_ids.mapped('user_groupby')
+            for groupby in (groupby_str or '').split(',')
+        )
+
+        options['consolidation'] = options['show_consolidation'] and previous_options.get('consolidation', False)
+
+    ####################################################
     # OPTIONS: BUDGETS
     ####################################################
     def _init_options_budgets(self, options, previous_options):
@@ -2129,6 +2141,7 @@ class AccountReport(models.Model):
             self._init_options_comparison: 50,
             self._init_options_export_mode: 60,
             self._init_options_integer_rounding: 70,
+            self._init_options_consolidation: 75,
             self._init_options_journals: 80,
             self._init_options_journals_names: 90,
             self._init_options_audit: 100,
@@ -7491,8 +7504,16 @@ class AccountReportLine(models.Model):
 
     def _get_groupby(self, options):
         self.ensure_one()
+
         if options['export_mode'] == 'file':
             return self.groupby
+
+        groupby_lst = [groupby.strip() for groupby in (self.user_groupby or '').split(',')]
+        if options['consolidation'] and 'account_id' in groupby_lst:
+            index_account_id = groupby_lst.index('account_id')
+            groupby_lst.insert(index_account_id, 'account_code')
+            return ','.join(groupby_lst)
+
         return self.user_groupby
 
     def action_reset_custom_groupby(self):
