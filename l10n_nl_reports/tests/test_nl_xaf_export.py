@@ -192,13 +192,13 @@ class TestNlXafExport(TestNlXafExportCommon):
                     <vatCodes>
                         <vatCode>
                             <vatID>___ignore___</vatID>
-                            <vatDesc>21% (Copy)</vatDesc>
+                            <vatDesc>21% (copy)</vatDesc>
                         </vatCode><vatCode>
                             <vatID>___ignore___</vatID>
                             <vatDesc>21% ST</vatDesc>
                         </vatCode><vatCode>
                             <vatID>___ignore___</vatID>
-                            <vatDesc>21% ST (Copy)</vatDesc>
+                            <vatDesc>21% ST (copy)</vatDesc>
                         </vatCode>
                     </vatCodes>
                     <periods>
@@ -352,7 +352,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                                     <accID>150000</accID>
                                     <docRef>/</docRef>
                                     <effDate>2019-01-01</effDate>
-                                    <desc>21% ST (Copy)</desc>
+                                    <desc>21% ST (copy)</desc>
                                     <amnt>42.0</amnt>
                                     <amntTp>C</amntTp>
                                     <custSupID>___ignore___</custSupID>
@@ -429,7 +429,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                                     <accID>150000</accID>
                                     <docRef>/</docRef>
                                     <effDate>2019-01-01</effDate>
-                                    <desc>21% ST (Copy)</desc>
+                                    <desc>21% ST (copy)</desc>
                                     <amnt>42.0</amnt>
                                     <amntTp>C</amntTp>
                                     <custSupID>___ignore___</custSupID>
@@ -506,7 +506,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                                     <accID>150000</accID>
                                     <docRef>/</docRef>
                                     <effDate>2019-01-01</effDate>
-                                    <desc>21% ST (Copy)</desc>
+                                    <desc>21% ST (copy)</desc>
                                     <amnt>42.0</amnt>
                                     <amntTp>C</amntTp>
                                     <custSupID>___ignore___</custSupID>
@@ -583,7 +583,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                                     <accID>150000</accID>
                                     <docRef>/</docRef>
                                     <effDate>2019-01-01</effDate>
-                                    <desc>21% ST (Copy)</desc>
+                                    <desc>21% ST (copy)</desc>
                                     <amnt>42.0</amnt>
                                     <amntTp>D</amntTp>
                                     <custSupID>___ignore___</custSupID>
@@ -651,7 +651,7 @@ class TestNlXafExport(TestNlXafExportCommon):
                                     <accID>152000</accID>
                                     <docRef>/</docRef>
                                     <effDate>2019-01-01</effDate>
-                                    <desc>21% (Copy)</desc>
+                                    <desc>21% (copy)</desc>
                                     <amnt>201.6</amnt>
                                     <amntTp>D</amntTp>
                                     <custSupID>___ignore___</custSupID>
