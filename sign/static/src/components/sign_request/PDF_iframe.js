@@ -340,7 +340,7 @@ export class PDFIframe {
             height: type.default_height,
             alignment: alignment,
             type: type.item_type,
-            placeholder: type.placeholder,
+            placeholder: type.placeholder || type.name,
             classes: `o_color_responsible_${this.roleColors[roleId]}`,
             style: `
                 width: ${type.default_width * 100}%;
