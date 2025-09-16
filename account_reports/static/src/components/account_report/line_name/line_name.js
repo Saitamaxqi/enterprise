@@ -93,11 +93,11 @@ export class AccountReportLineName extends Component {
 
     get accountStatusBadgeOptions() {
         return {
-            todo: 'muted',
-            reviewed: 'info',
-            supervised: 'success',
-            anomaly: 'danger',
-        }
+            todo: { decoration: "muted" },
+            reviewed: { decoration: "info" },
+            supervised: { decoration: "success" },
+            anomaly: { decoration: "danger" },
+        };
     }
 
     get modelName() {
