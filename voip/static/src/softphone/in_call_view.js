@@ -112,6 +112,7 @@ export class InCallView extends Component {
 
     onClickTransfer() {
         this.softphone.inCallView.activeView = "transfer";
+        this.softphone.addressBook.searchInputValue = "";
     }
 
     onClickConfirmTransfer() {
