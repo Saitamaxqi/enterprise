@@ -6,7 +6,7 @@
 
     input {
         max-width: 100%;
-        text-overflow: clip;
+        text-overflow: ellipsis;
         overflow: hidden;
         padding: 0px 5px 0px 2px;
         color: $o-brand-secondary;

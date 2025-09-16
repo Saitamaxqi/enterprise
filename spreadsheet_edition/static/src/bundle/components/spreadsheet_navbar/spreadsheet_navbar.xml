@@ -30,7 +30,7 @@
                 </t>
                 <SpreadsheetName name="props.spreadsheetName" isReadonly="props.isReadonly" onSpreadsheetNameChanged="props.onSpreadsheetNameChanged" />
                 <t t-slot="navbar-additional-actions"/>
-                <div t-if="!props.isReadonly" class="o_spreadsheet_sync_status text-muted fst-italic">
+                <div t-if="!props.isReadonly" class="o_spreadsheet_sync_status text-muted fst-italic d-flex align-items-baseline gap-1">
                     <t t-if="isSynced">
                         <i class="fa fa-check" /> Saved
                     </t>
