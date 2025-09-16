@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll_account
+# * hr_payroll_account
 #
 # Translators:
 # Joao Felix <jrmfelix@gmail.com>, 2022
@@ -9,20 +9,23 @@
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2022
 # Manuela Silva <mmsrs@sky.com>, 2023
 # Pedro Castro Silva <pedrocs@exo.pt>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Pedro Castro Silva <pedrocs@exo.pt>, 2023\n"
-"Language-Team: Portuguese (https://app.transifex.com/odoo/teams/41243/pt/)\n"
+"PO-Revision-Date: 2025-09-16 21:25+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
+"hr_payroll_account/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_chart_template
@@ -33,7 +36,7 @@ msgstr "Modelo de Plano de Contas"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Account Payslip Houserental"
-msgstr ""
+msgstr "Conta - Holerite para aluguel residencial"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
@@ -62,7 +65,7 @@ msgstr "Conta Analítica"
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "Tem certeza de que quer continuar?"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract_history
@@ -73,7 +76,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Create Draft Entry"
-msgstr ""
+msgstr "Criar lançamento provisório"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__account_credit
@@ -99,7 +102,7 @@ msgstr "Contrato do Funcionário"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "Incorrect journal: The journal must be in the same currency as the company"
-msgstr ""
+msgstr "Diário incorreto: o diário deve estar na mesma moeda que a empresa"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_journal
@@ -120,19 +123,20 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "Not computed in net accountably"
-msgstr ""
+msgstr "Não calculado na contabilidade global"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the contract for these payslips has no structure type."
-msgstr ""
+msgstr "Um dos contratos desses holerites não tem tipo estruturado."
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the payroll structures has no account journal defined on it."
 msgstr ""
+"Uma das estruturas de folha de pagamento não tem diário contábil definido."
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
@@ -143,13 +147,13 @@ msgstr "Recibo de Vencimento"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "SLR"
-msgstr ""
+msgstr "SLR"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Salaries"
-msgstr ""
+msgstr "Salários"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__journal_id
@@ -171,15 +175,19 @@ msgstr "Estrutura de Salários"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "The Expense Journal \"%s\" has not properly configured the default Account!"
-msgstr ""
+msgstr "O diário de despesas \"%s\" não configurou corretamente a conta padrão."
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "This field allows you to delete the value of this rule in the \"Net Salary\" rule at the accounting level to explicitly display the value of this rule in the accounting. For example, if you want to display the value of your representation fees, you can check this field."
 msgstr ""
+"Este campo permite que você exclua o valor desta regra na regra "
+"\"Salário líquido\" no nível contábil para exibir explicitamente o valor "
+"desta regra na contabilidade. Por exemplo, se você deseja exibir o valor de "
+"suas taxas de representação, você pode marcar este campo."
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
-msgstr ""
+msgstr "Não é possível excluir o diário vinculado a uma estrutura salarial"

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_helpdesk_livechat
+# * website_helpdesk_livechat
 #
 # Translators:
 # Veikko Väätäjä <veikko.vaataja@gmail.com>, 2022
@@ -9,20 +9,22 @@
 # Martin Trigaux, 2022
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2022
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:50+0000\n"
-"Last-Translator: Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 17:05+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"website_helpdesk_livechat/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -42,7 +44,7 @@ msgstr "%(name)s:n tukipyyntö"
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_done
 msgid "Alright, we should have everything we need"
-msgstr "Ok, meillä pitäisi olla kaikki mitä tarvitsemme"
+msgstr "Ok, meillä pitäisi olla kaikki, mitä tarvitsemme"
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_technical_serial_misc
@@ -63,12 +65,12 @@ msgstr "Valmiiden vastausten haku"
 #. module: website_helpdesk_livechat
 #: model:ir.model,name:website_helpdesk_livechat.model_chatbot_script
 msgid "Chatbot Script"
-msgstr "Chatbot käsikirjoitus"
+msgstr "Chatbotin komentosarja"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model,name:website_helpdesk_livechat.model_chatbot_script_step
 msgid "Chatbot Script Step"
-msgstr "Chatbotin käsikirjoituksen askel"
+msgstr "Chatbotin-käsikirjoituksen vaihe"
 
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
@@ -78,7 +80,7 @@ msgstr ""
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Configure Live Chat Channel"
-msgstr ""
+msgstr "Livechat-kanavan määrittäminen"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields.selection,name:website_helpdesk_livechat.selection__chatbot_script_step__step_type__create_ticket
@@ -89,7 +91,7 @@ msgstr "Luo tukipyyntö"
 #. odoo-javascript
 #: code:addons/website_helpdesk_livechat/static/src/messaging_service_patch.js:0
 msgid "Create a new helpdesk ticket (/ticket ticket title)"
-msgstr ""
+msgstr "Luo uusi asiakastukipyyntö (/ticket tukipyynnön otsikko)"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -105,7 +107,7 @@ msgstr "Keskustelukanava"
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_dispatch
 msgid "First, what is the nature of your issue?"
-msgstr "Ensinnäkin, mikä on ongelmasi luonne?"
+msgstr "Ensinnäkin, mitä ongelmasi koskee?"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_chatbot_script__ticket_count
@@ -120,7 +122,7 @@ msgstr "Hienoa, se helpottaa elämäämme."
 #. module: website_helpdesk_livechat
 #: model:chatbot.script,title:website_helpdesk_livechat.chatbot_script_helpdesk_bot
 msgid "Helpdesk Bot"
-msgstr "Helpdesk Bot"
+msgstr "Asiakaspalvelun botti"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model,name:website_helpdesk_livechat.model_helpdesk_team
@@ -156,7 +158,7 @@ msgstr "Vielä viimeinen asia, voisimmeko saada sähköpostiosoitteesi?"
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team__use_website_helpdesk_livechat
 msgid "Live Chat"
-msgstr ""
+msgstr "Livechat"
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.answer,name:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref_answer_no
@@ -193,7 +195,7 @@ msgstr "Kirjoita alle asiakasviitteesi."
 #. odoo-javascript
 #: code:addons/website_helpdesk_livechat/static/src/messaging_service_patch.js:0
 msgid "Search helpdesk tickets (/search_tickets keyword)"
-msgstr ""
+msgstr "Etsi asiakastukipyyntöjä (/search_tickets avainsana)"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -220,7 +222,7 @@ msgstr "Kiitos, se auttaa insinöörejämme näkemään, mikä meni pieleen."
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.chatbot_script_view_form
 msgid "Tickets"
-msgstr "Pääsyliput"
+msgstr "Tukipyynnöt"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -234,7 +236,7 @@ msgid ""
 "To start with, do you have a customer reference?\n"
 "They are written on each invoice you received, next to your name."
 msgstr ""
-"Aluksi, onko sinulla asiakasreferenssiä?\n"
+"Ensinnäkin, onko sinulla asiakasviitettä?\n"
 "Ne on kirjoitettu jokaiseen saamaasi laskuun nimesi viereen."
 
 #. module: website_helpdesk_livechat
@@ -245,7 +247,7 @@ msgstr "Käyttäjä"
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_issue
 msgid "We're all set. Now, what is your issue?"
-msgstr "Kaikki on valmista. Mikä on sinun ongelmasi?"
+msgstr "Kaikki on valmista. Mikä on ongelmasi?"
 
 #. module: website_helpdesk_livechat
 #: model_terms:ir.actions.act_window,help:website_helpdesk_livechat.helpdesk_im_livechat_canned_response_action

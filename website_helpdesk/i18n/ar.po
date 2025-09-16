@@ -1,26 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_helpdesk
+# * website_helpdesk
 #
 # Translators:
 # Mustafa Rawi <mustafa@cubexco.com>, 2022
 # Martin Trigaux, 2022
 # Niyas Raphy, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:50+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:39+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"website_helpdesk/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
@@ -41,7 +44,7 @@ msgstr "<span class=\"navbar-brand h4 my-0 me-auto\">مركز المساعدة</
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "<span class=\"s_website_form_label_content\">Attachment</span>"
-msgstr "<span class=\"s_website_form_label_content\">المرفق</span> "
+msgstr "<span class=\"s_website_form_label_content\">المرفق</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
@@ -102,18 +105,18 @@ msgstr "الكل"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_tag
 msgid "All Tags"
-msgstr "كافة علامات التصنيف "
+msgstr "كافة علامات التصنيف"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_type
 msgid "All Types"
-msgstr "كافة الأنواع "
+msgstr "كافة الأنواع"
 
 #. module: website_helpdesk
 #. odoo-javascript
 #: code:addons/website_helpdesk/static/src/xml/website_helpdesk.xml:0
 msgid "All results"
-msgstr "كافة النتائج "
+msgstr "كافة النتائج"
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -124,22 +127,22 @@ msgstr "مرفق"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_date
 msgid "By Date"
-msgstr "حسب التاريخ "
+msgstr "حسب التاريخ"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_tag
 msgid "By Tags"
-msgstr "بواسطة الوسوم"
+msgstr "حسب علامات التصنيف"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.navbar_search_type
 msgid "By Type"
-msgstr "حسب النوع "
+msgstr "حسب النوع"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__can_publish
 msgid "Can Publish"
-msgstr "بإمكانه النشر "
+msgstr "بإمكانه النشر"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.footer
@@ -155,7 +158,7 @@ msgstr "خدمة العملاء"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Date Filter"
-msgstr "عامل تصفية التاريخ "
+msgstr "عامل تصفية التاريخ"
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -183,7 +186,7 @@ msgstr "المساعدة"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Help Center Page"
-msgstr "صفحة مكتب المساعدة "
+msgstr "صفحة مكتب المساعدة"
 
 #. module: website_helpdesk
 #. odoo-python
@@ -201,7 +204,7 @@ msgstr "فريق مكتب المساعدة"
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__is_published
 msgid "Is Published"
-msgstr "تم نشره "
+msgstr "تم نشره"
 
 #. module: website_helpdesk
 #. odoo-python
@@ -226,12 +229,12 @@ msgstr "العام الماضي"
 #: code:addons/website_helpdesk/static/src/xml/website_helpdesk.xml:0
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.search_results
 msgid "No results found. Please try another search."
-msgstr "لم يتم العثور على نتائج. الرجاء محاولة بحث آخر. "
+msgstr "لم يتم العثور على نتائج. الرجاء محاولة بحث آخر."
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.knowledge_base
 msgid "Search for articles, best practices and more..."
-msgstr "ابحث عن المقالات وأفضل الممارسات وغير ذلك الكثير... "
+msgstr "ابحث عن المقالات وأفضل الممارسات وغير ذلك الكثير..."
 
 #. module: website_helpdesk
 #. odoo-javascript
@@ -243,7 +246,7 @@ msgstr "الموضوع "
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "Submit Ticket"
-msgstr ""
+msgstr "إرسال التذكرة"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team
@@ -255,7 +258,7 @@ msgstr "إرسال تذكرة"
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Tags Filter"
-msgstr "عامل تصفية علامات التصنيف "
+msgstr "عامل تصفية علامات التصنيف"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submited
@@ -276,7 +279,7 @@ msgstr "يجب أن تتطابق كل من شركة الفريق وشركة ال
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.snippet_options
 msgid "Type Filter"
-msgstr "كتابة عامل التصفية "
+msgstr "كتابة عامل التصفية"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__feature_form_url
@@ -291,7 +294,7 @@ msgstr ""
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_published
 msgid "Visible on current website"
-msgstr "مرئي في الموقع الإلكتروني الحالي "
+msgstr "مرئي في الموقع الإلكتروني الحالي"
 
 #. module: website_helpdesk
 #: model:ir.model,name:website_helpdesk.model_website
@@ -302,12 +305,12 @@ msgstr "الموقع الإلكتروني"
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_menu_id
 msgid "Website Menu"
-msgstr "قائمة الموقع الإلكتروني "
+msgstr "قائمة الموقع الإلكتروني"
 
 #. module: website_helpdesk
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_team__website_url
 msgid "Website URL"
-msgstr "رابط URL للموقع الإلكتروني "
+msgstr "رابط URL للموقع الإلكتروني"
 
 #. module: website_helpdesk
 #. odoo-javascript

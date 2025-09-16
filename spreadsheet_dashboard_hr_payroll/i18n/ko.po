@@ -1,66 +1,70 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_hr_payroll
+# * spreadsheet_dashboard_hr_payroll
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 12:13+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_hr_payroll/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "#Payslips"
-msgstr ""
+msgstr "#급여 명세서"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Absenteeism Rate"
-msgstr ""
+msgstr "결근률"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Attendance Rate"
-msgstr ""
+msgstr "출석률"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Basic Wage"
-msgstr ""
+msgstr "평균 기본 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Gross Wage"
-msgstr ""
+msgstr "평균 총 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Hours per Days of Work"
-msgstr ""
+msgstr "근무 일수당 평균 근무 시간"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Net Wage"
-msgstr ""
+msgstr "평균 순 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -78,7 +82,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Avg Hours/Days"
-msgstr ""
+msgstr "평균 시간/일"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -91,56 +95,56 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "현재"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Days"
-msgstr ""
+msgstr "일"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Employees"
-msgstr ""
+msgstr "임직원 관리"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Employees (%)"
-msgstr ""
+msgstr "직원 수 (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE"
-msgstr ""
+msgstr "FTE"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE (%)"
-msgstr ""
+msgstr "FTE (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Paid Time Off"
-msgstr ""
+msgstr "유급 휴가"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_hr_payroll.spreadsheet_dashboard_payroll
 msgid "Payroll"
-msgstr ""
+msgstr "급여"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Payroll Analysis"
-msgstr ""
+msgstr "급여 분석"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -153,14 +157,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "이전"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Basic Wage"
-msgstr ""
+msgstr "전체 기본 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -173,7 +177,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Gross Wage"
-msgstr ""
+msgstr "전체 총 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -186,38 +190,38 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Net Wage"
-msgstr ""
+msgstr "전체 순 임금"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Unpaid TIme Off"
-msgstr ""
+msgstr "미지급 휴가"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Days"
-msgstr ""
+msgstr "근무일"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Entries Analysis"
-msgstr ""
+msgstr "근로 항목 분석"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Hours"
-msgstr ""
+msgstr "근무 시간"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work type"
-msgstr ""
+msgstr "근무 유형"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript

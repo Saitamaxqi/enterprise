@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* planning
+# * planning
 #
 # Translators:
 # Diogo Fonseca <dsf@thinkopensolutions.pt>, 2022
@@ -17,20 +17,23 @@
 # Joao Felix <jrmfelix@gmail.com>, 2022
 # Luiz Fernando <lfpsgs@outlook.com>, 2022
 # Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2023\n"
-"Language-Team: Portuguese (https://app.transifex.com/odoo/teams/41243/pt/)\n"
+"PO-Revision-Date: 2025-09-16 21:18+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
+"planning/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: planning
 #. odoo-python
@@ -41,38 +44,38 @@ msgstr "%s (cópia)"
 #. module: planning
 #: model:ir.actions.report,print_report_name:planning.report_planning_slot
 msgid "'Planning'"
-msgstr ""
+msgstr "\"Planejamento\""
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning_template.py:0
 msgid "(%s days span)"
-msgstr ""
+msgstr "(%s dias de intervalo)"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
 msgid ".&amp;nbsp;"
-msgstr ""
+msgstr ".&amp;nbsp;"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "04:00"
-msgstr ""
+msgstr "04h00"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "08:00"
-msgstr ""
+msgstr "08h00"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "12:00"
-msgstr ""
+msgstr "12h00"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "16:00"
-msgstr ""
+msgstr "16h00"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -88,6 +91,7 @@ msgstr ""
 #: model_terms:digest.tip,tip_description:planning.digest_tip_planning_0
 msgid "<b class=\"tip_title\">Tip: Record your planning faster</b>"
 msgstr ""
+"<b class=\"tip_title\">Dica: Registre seu planejamento mais rapidamente</b>"
 
 #. module: planning
 #. odoo-javascript
@@ -100,12 +104,15 @@ msgstr ""
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "<b>Drag & drop</b> your shift to reschedule it. <i>Tip: hit CTRL (or Cmd) to duplicate it instead.</i> <b>Adjust the size</b> of the shift to modify its period."
 msgstr ""
+"<b>Arraste e solte</b> seu turno para reprogramá-lo. <i>Dica: Em vez disso, "
+"pressione CTRL para duplicá-lo.</i> <b>Ajuste o tamanho</b> do turno para "
+"modificar o período."
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "<b>Publish & send</b> your employee's planning."
-msgstr ""
+msgstr "<b>Publicar e enviar</b> o planejamento do seu funcionário."
 
 #. module: planning
 #: model:mail.template,body_html:planning.email_template_shift_switch_email
@@ -272,11 +279,15 @@ msgstr "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Date\" title=\"Data
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_kanban
 msgid "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Hours\" title=\"Hours\"/>"
 msgstr ""
+"<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Hours\" title=\"Hours\""
+"/>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_assignee_contact_popover
 msgid "<i class=\"fa fa-envelope-o\" title=\"Mail\" role=\"img\" style=\"padding-right: 2px\"/>"
 msgstr ""
+"<i class=\"fa fa-envelope-o\" title=\"Mail\" role=\"img\" style=\"padding-"
+"right: 2px\"/>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_shift_notification
@@ -292,11 +303,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_form
 msgid "<i class=\"fa fa-long-arrow-right my-1 mx-1\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right my-1 mx-1\" aria-label=\"Arrow icon\" "
+"title=\"Arrow\"/>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
 msgid "<i class=\"fa fa-long-arrow-right\" aria-label=\"Arrow icon\" title=\"Arrow\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right\" aria-label=\"Arrow icon\" title=\"Arrow\""
+"/>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
@@ -307,6 +322,8 @@ msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 #: model_terms:ir.ui.view,arch_db:planning.planning_assignee_contact_popover
 msgid "<i class=\"fa fa-phone\" title=\"Phone\" role=\"img\" style=\"padding-right: 2px\"/>"
 msgstr ""
+"<i class=\"fa fa-phone\" title=\"Phone\" role=\"img\" style=\"padding-right: "
+"2px\"/>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -342,16 +359,25 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">04:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">04h00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">12:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">12h00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "<span class=\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\">16:00</span>"
 msgstr ""
+"<span class="
+"\"o_gantt_consolidated_pill_title bg-view text-truncate px-1 mb-1\""
+">16h00</span>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -400,6 +426,10 @@ msgid ""
 "                                    <i class=\"mx-1 fa fa-long-arrow-right\" aria-label=\"Arrow icon\" title=\"Arrow\"/>\n"
 "                                    <span class=\"o_end_date\"/>"
 msgstr ""
+"<span class=\"o_start_date\"/>\n"
+"                                    <i class=\"mx-1 fa fa-long-arrow-right\" "
+"aria-label=\"Arrow icon\" title=\"Arrow\"/>\n"
+"                                    <span class=\"o_end_date\"/>"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -421,11 +451,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
 msgid "<span>The employee assigned would like to switch shifts with someone else.</span>"
 msgstr ""
+"<span>O funcionário atribuído gostaria de trocar de turno com outra "
+"pessoa.</span>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
 msgid "<span>months ahead</span>"
-msgstr ""
+msgstr "<span>próximos meses</span>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
@@ -436,6 +468,8 @@ msgstr ""
 #: model:ir.model.constraint,message:planning.constraint_planning_recurrency_check_until_limit
 msgid "A recurrence repeating itself until a certain date must have its limit set"
 msgstr ""
+"Recorrências que se repetem até uma determinada data deve ter um limite "
+"definido"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
@@ -452,7 +486,7 @@ msgstr "Ativo"
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.js:0
 msgid "Add Shift"
-msgstr ""
+msgstr "Adicionar turno"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_send_view_form
@@ -462,12 +496,12 @@ msgstr "Mensagem adicional"
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_send__note
 msgid "Additional message displayed in the email sent to employees"
-msgstr ""
+msgstr "Mensagem adicional exibida no e-mail enviado aos funcionários"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 msgid "Additional note sent to the employee"
-msgstr ""
+msgstr "Nota adicional enviada ao funcionário"
 
 #. module: planning
 #: model:res.groups,name:planning.group_planning_manager
@@ -479,16 +513,20 @@ msgstr "Administrador"
 #: code:addons/planning/static/src/views/planning_hooks.js:0
 msgid "All open shifts have already been assigned, or there are no resources available to take them at this time."
 msgstr ""
+"Todos os turnos abertos já foram atribuídos ou não há recursos disponíveis "
+"para assumi-los neste momento."
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__all
 msgid "All shifts"
-msgstr ""
+msgstr "Todos os turnos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "All subsequent shifts will be deleted. Are you sure you want to continue?"
 msgstr ""
+"Todos os turnos subsequentes serão excluídos. Tem certeza de que quer "
+"continuar?"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__allocated_hours
@@ -499,12 +537,12 @@ msgstr "Horas Alocadas"
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allocated_hours
 #: model_terms:ir.ui.view,arch_db:planning.resource_planning
 msgid "Allocated Time"
-msgstr ""
+msgstr "Tempo alocado"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allocated_percentage
 msgid "Allocated Time %"
-msgstr ""
+msgstr "Tempo alocado %"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__allocated_percentage
@@ -515,6 +553,7 @@ msgstr "Tempo Alocado (%)"
 #: model:ir.model.constraint,message:planning.constraint_planning_slot_check_allocated_hours_positive
 msgid "Allocated hours and allocated time percentage cannot be negative."
 msgstr ""
+"As horas alocadas e a porcentagem de tempo alocada não podem ser negativas."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allocation_type
@@ -541,6 +580,8 @@ msgstr "Um turno deve estar na mesma empresa que a sua recorrência."
 #: model_terms:ir.actions.act_window,help:planning.planning_report_action_analysis
 msgid "Analyze the allocation of your resources across roles, projects, and sales orders, and estimate future needs."
 msgstr ""
+"Analise a alocação dos seus recursos entre funções, projetos e ordens de "
+"vendas e faça previsões de suas necessidades futuras."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_form
@@ -554,7 +595,7 @@ msgstr "Arquivados"
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_form/planning_form_view.js:0
 msgid "Are you sure you want to delete this shift?"
-msgstr ""
+msgstr "Tem certeza de que quer excluir esse turno?"
 
 #. module: planning
 #. odoo-python
@@ -566,18 +607,21 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Ask To Switch"
-msgstr ""
+msgstr "Pedir para trocar"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "Ask to Switch"
-msgstr ""
+msgstr "Pedir para trocar"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Assign a <b>resource</b>, or leave it open for the moment. <i>Tip: Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available.</i>"
 msgstr ""
+"Atribua um <b>recurso</b> ou deixe aberto por enquanto. <i>Dica: Crie turnos "
+"abertos para as funções que você precisará para cumprir uma missão. Então, "
+"atribua esses turnos abertos aos recursos disponíveis.</i>"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
@@ -591,14 +635,14 @@ msgstr "Responsável"
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Auto Plan"
-msgstr ""
+msgstr "Planejamento automático"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 #: code:addons/planning/static/src/views/planning_gantt/planning_gantt_controller.xml:0
 msgid "Automatically plan open shifts and sales orders"
-msgstr ""
+msgstr "Planeje turnos abertos e ordens de vendas automaticamente"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_resource_resource__avatar_128
@@ -608,7 +652,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Bartender"
-msgstr ""
+msgstr "Bartender"
 
 #. module: planning
 #: model:ir.model,name:planning.model_hr_employee_base
@@ -618,7 +662,7 @@ msgstr ""
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule_by_resource
 msgid "By Resource"
-msgstr ""
+msgstr "Por recurso"
 
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule_by_role
@@ -628,7 +672,7 @@ msgstr "Por Função"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
 msgid "CANCEL SWITCH"
-msgstr ""
+msgstr "CANCELAR TROCA"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_res_company__planning_allow_self_unassign
@@ -640,7 +684,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Cancel Switch"
-msgstr ""
+msgstr "Cancelar troca"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
@@ -657,7 +701,7 @@ msgstr "Cor"
 #. module: planning
 #: model:planning.role,name:planning.planning_role_cm
 msgid "Community Manager"
-msgstr ""
+msgstr "Gerente da comunidade"
 
 #. module: planning
 #: model:ir.model,name:planning.model_res_company
@@ -678,6 +722,8 @@ msgstr "Empresa"
 #: model:ir.model.fields,help:planning.field_planning_planning__company_id
 msgid "Company linked to the material resource. Leave empty for the resource to be available in every company."
 msgstr ""
+"Empresa vinculada ao recurso material. Deixe em branco para que o recurso "
+"fique disponível para todas as empresas."
 
 #. module: planning
 #: model:ir.model,name:planning.model_res_config_settings
@@ -703,7 +749,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 msgid "Copy previous"
-msgstr ""
+msgstr "Copiar anterior"
 
 #. module: planning
 #. odoo-javascript
@@ -761,7 +807,7 @@ msgstr "Dias"
 #: model:ir.model.fields,field_description:planning.field_res_company__planning_self_unassign_days_before
 #: model:ir.model.fields,field_description:planning.field_res_config_settings__planning_self_unassign_days_before
 msgid "Days before shift for unassignment"
-msgstr ""
+msgstr "Dias anteriores ao turno para retirar atribuição"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
@@ -779,28 +825,37 @@ msgstr ""
 #: model:ir.model.fields,help:planning.field_res_company__planning_self_unassign_days_before
 #: model:ir.model.fields,help:planning.field_res_config_settings__planning_self_unassign_days_before
 msgid "Deadline in days for shift unassignment"
-msgstr ""
+msgstr "Prazo final em dias para retirar atribuição do turno"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_hr_employee__default_planning_role_id
 #: model:ir.model.fields,field_description:planning.field_resource_resource__default_role_id
 msgid "Default Role"
-msgstr ""
+msgstr "Função padrão"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Define a work email address for the following employees so they will receive the planning."
 msgstr ""
+"Defina um endereço de e-mail de trabalho para os seguintes funcionários para "
+"que recebam o planejamento."
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_slot__role_id
 msgid "Define the roles your resources perform (e.g. Chef, Bartender, Waiter...). Create open shifts for the roles you need to complete a mission. Then, assign those open shifts to the resources that are available."
 msgstr ""
+"Defina as funções realizadas por seus recursos (Ex: chef, bartender, garçom "
+"etc.). Crie turnos abertos para as funções necessárias para cumprir uma "
+"missão. Então, atribua esses turnos abertos aos recursos disponíveis."
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Define the roles your resources perform (e.g. Chef, Bartender, Waiter...). Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available."
 msgstr ""
+"Defina as funções realizadas por seus recursos (Ex: chef, bartender, garçom "
+"etc.). Crie turnos abertos para as funções que serão necessárias para "
+"cumprir uma missão. Então, atribua esses turnos abertos aos recursos "
+"disponíveis."
 
 #. module: planning
 #. odoo-javascript
@@ -814,7 +869,7 @@ msgstr "Eliminar"
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.js:0
 msgid "Delete Recurring Shift"
-msgstr ""
+msgstr "Excluir turno recorrente"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__department_id
@@ -827,12 +882,12 @@ msgstr "Departamento"
 #. module: planning
 #: model:ir.model,name:planning.model_hr_departure_wizard
 msgid "Departure Wizard"
-msgstr ""
+msgstr "Assistente de desligamento"
 
 #. module: planning
 #: model:planning.role,name:planning.planning_role_developer
 msgid "Developer"
-msgstr ""
+msgstr "Desenvolvedor"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
@@ -855,12 +910,12 @@ msgstr "Nome"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_resources
 msgid "Distribute your material resources across projects and sales orders."
-msgstr ""
+msgstr "Distribua seus recursos materiais entre projetos e ordens de vendas."
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Doris Cole (Bartender)"
-msgstr ""
+msgstr "Doris Cole (Bartender)"
 
 #. module: planning
 #. odoo-javascript
@@ -886,7 +941,7 @@ msgstr "Duração"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__duration_days
 msgid "Duration Days"
-msgstr ""
+msgstr "Dias de duração"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_kanban
@@ -897,7 +952,7 @@ msgstr "Editar"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Eli Lambert (Waiter)"
-msgstr ""
+msgstr "Eli Lambert (Garçom)"
 
 #. module: planning
 #: model:mail.template,description:planning.email_template_shift_switch_email
@@ -907,12 +962,13 @@ msgstr ""
 #. module: planning
 #: model:mail.template,description:planning.email_template_slot_single
 msgid "Email sent automatically when publishing a shift"
-msgstr ""
+msgstr "E-mail enviado automaticamente ao publicar um turno"
 
 #. module: planning
 #: model:mail.template,description:planning.email_template_planning_planning
 msgid "Email sent automatically when publishing the schedule of your employees"
 msgstr ""
+"E-mail enviado automaticamente ao publicar a agenda dos seus funcionários"
 
 #. module: planning
 #: model:ir.model,name:planning.model_hr_employee
@@ -939,7 +995,7 @@ msgstr "Funcionários que vão receber o planeamento por email se clicar em Publ
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Employees with no Work Email"
-msgstr ""
+msgstr "Funcionários sem e-mail de trabalho"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_send__employees_no_email
@@ -949,7 +1005,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.resource_planning
 msgid "End"
-msgstr ""
+msgstr "Fim"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__end_datetime
@@ -962,12 +1018,12 @@ msgstr "Data Final"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__end_time
 msgid "End Hour"
-msgstr ""
+msgstr "Horário de término"
 
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_hr_employee_employee_token_unique
 msgid "Error: each employee token must be unique"
-msgstr ""
+msgstr "Erro: os tokens de funcionário devem ser exclusivos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
@@ -989,16 +1045,18 @@ msgstr "Mensagem Extra"
 #: model_terms:ir.actions.act_window,help:planning.planning_action_my_calendar
 msgid "Find here your planning. Assign yourself open shifts that match your roles, or indicate your unavailability."
 msgstr ""
+"Consulte seu planejamento aqui. Atribua a si mesmo turnos abertos que "
+"correspondam às suas funções ou indique sua indisponibilidade."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.view_employee_filter_inherit_hr
 msgid "Fixed Hours"
-msgstr ""
+msgstr "Horas fixas"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.view_employee_filter_inherit_hr
 msgid "Flexible Hours"
-msgstr ""
+msgstr "Horas flexíveis"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__allocation_type__forecast
@@ -1026,12 +1084,12 @@ msgstr "Futuro"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
 msgid "Generate shifts"
-msgstr ""
+msgstr "Gerar turnos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.brand_promotion
 msgid "Give depth to your"
-msgstr ""
+msgstr "Dar profundidade a"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
@@ -1046,12 +1104,12 @@ msgstr "Agrupar por"
 #: model:ir.model.fields,field_description:planning.field_hr_employee_base__has_slots
 #: model:ir.model.fields,field_description:planning.field_hr_employee_public__has_slots
 msgid "Has Slots"
-msgstr ""
+msgstr "Tem faixas de horário"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__request_to_switch
 msgid "Has there been a request to switch on this shift slot?"
-msgstr ""
+msgstr "Houve alguma solicitação de troca nessa faixa de turnos?"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__name
@@ -1069,13 +1127,13 @@ msgstr "Humano"
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "I Am Unavailable"
-msgstr ""
+msgstr "Estou indisponível"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "I Take It"
-msgstr ""
+msgstr "Eu assumo"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
@@ -1098,22 +1156,26 @@ msgstr "ID"
 #: model:ir.model.fields,help:planning.field_planning_slot__publication_warning
 msgid "If checked, it means that the shift contains has changed since its last publish."
 msgstr ""
+"Se marcado, significa que o conteúdo do turno foi alterado desde sua última "
+"publicação."
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "If you are happy with your planning, you can now <b>send</b> it to your employees."
 msgstr ""
+"Se está satisfeito com seu planejamento, você pode <b>enviá-lo</b> para seus "
+"funcionários agora."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_send__include_unassigned
 msgid "Include Open Shifts"
-msgstr ""
+msgstr "Incluir turnos abertos"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__include_unassigned
 msgid "Includes Open Shifts"
-msgstr ""
+msgstr "Inclui turnos abertos"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__is_hatched
@@ -1143,7 +1205,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Jeffrey Kelly (Bartender)"
-msgstr ""
+msgstr "Jeffrey Kelly (Bartender)"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__job_title
@@ -1186,13 +1248,13 @@ msgstr "Semana Passada"
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_calendar/planning_calendar_controller.xml:0
 msgid "Legend"
-msgstr ""
+msgstr "Legenda"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__allow_self_unassign
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allow_self_unassign
 msgid "Let Employee Unassign Themselves"
-msgstr ""
+msgstr "Permitir que funcionários retirem suas atribuições"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
@@ -1204,17 +1266,19 @@ msgstr ""
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Let's create your first <b>shift</b>. <i>Tip: use the (+) shortcut available on each cell of the Gantt view to save time.</i>"
 msgstr ""
+"Vamos criar seu primeiro <b>turno</b>. <i>Dica: Use o atalho (+) disponível "
+"em cada célula da visão de Gantt para ganhar tempo.</i>"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Let's start managing your employees' schedule!"
-msgstr ""
+msgstr "Vamos gerenciar a agenda dos seus funcionários."
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_shift_template
 msgid "Make encoding shifts easy with templates."
-msgstr ""
+msgstr "Facilite a codificação de turnos usando modelos."
 
 #. module: planning
 #: model:planning.role,name:planning.planning_role_management
@@ -1246,7 +1310,7 @@ msgstr "Materiais"
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__publication_warning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__publication_warning
 msgid "Modified Since Last Publication"
-msgstr ""
+msgstr "Modificado desde a última publicação"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -1264,7 +1328,7 @@ msgstr "Meses"
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_search
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "My Department"
-msgstr ""
+msgstr "Meu departamento"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_my_calendar
@@ -1279,7 +1343,7 @@ msgstr "O Meu Planeamento"
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_search
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "My Roles"
-msgstr ""
+msgstr "Minhas funções"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
@@ -1313,7 +1377,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_recurrency__repeat_number
 msgid "No Of Repetitions of the plannings"
-msgstr ""
+msgstr "Número de repetições dos planejamentos"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_report_action_analysis
@@ -1323,17 +1387,17 @@ msgstr "Sem dados!"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_resources
 msgid "No material resources found. Let's create one!"
-msgstr ""
+msgstr "Nenhum recurso material encontrado. Vamos criá-los!"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "No roles found. Let's create one!"
-msgstr ""
+msgstr "Nenhuma função encontrada. Vamos criá-las!"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_shift_template
 msgid "No shift templates found. Let's create one!"
-msgstr ""
+msgstr "Nenhum modelo de turno encontrado. Vamos criá-los!"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_my_calendar
@@ -1356,11 +1420,13 @@ msgstr "Nota"
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Now that this week is ready, let's get started on <b>next week's schedule</b>."
 msgstr ""
+"Agora que esta semana está pronta, vamos começar o <b>cronograma da próxima "
+"semana</b>."
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__repeat_type__x_times
 msgid "Number of Occurrences"
-msgstr ""
+msgstr "Número de ocorrências"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_type__x_times
@@ -1375,18 +1441,20 @@ msgstr "Número de Repetições"
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 #: model_terms:ir.ui.view,arch_db:planning.slot_report
 msgid "Open Shifts"
-msgstr ""
+msgstr "Turnos abertos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.open_slots_list_template
 msgid "Open Shifts Available"
-msgstr ""
+msgstr "Turnos abertos disponíveis"
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "Operation not supported, you should always compare overlap_slot_count to 0 value with = or > operator."
 msgstr ""
+"Operação não suportada. Você sempre deve comparar overlap_slot_count ao "
+"valor 0 com o operador = ou >."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__overlap_slot_count
@@ -1438,28 +1506,28 @@ msgstr "Planeamento"
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_report_view_graph
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_report_view_pivot
 msgid "Planning Analysis"
-msgstr ""
+msgstr "Análise do planejamento"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_analysis_report
 msgid "Planning Analysis Report"
-msgstr ""
+msgstr "Relatório de análise do planejamento"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_recurrency
 msgid "Planning Recurrence"
-msgstr ""
+msgstr "Recorrência do planejamento"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_role
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_form
 msgid "Planning Role"
-msgstr ""
+msgstr "Função de planejamento"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_tree
 msgid "Planning Role List"
-msgstr ""
+msgstr "Lista de funções do planejamento"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_slot
@@ -1469,44 +1537,44 @@ msgstr "Planear Turno"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "Planning:"
-msgstr ""
+msgstr "Planejamento:"
 
 #. module: planning
 #: model:mail.template,name:planning.email_template_planning_planning
 msgid "Planning: New Schedule"
-msgstr ""
+msgstr "Planejamento: Nova agenda"
 
 #. module: planning
 #: model:mail.template,name:planning.email_template_slot_single
 msgid "Planning: New Shift"
-msgstr ""
+msgstr "Planejamento: Novo turno"
 
 #. module: planning
 #: model:mail.template,name:planning.email_template_shift_switch_email
 msgid "Planning: Shift Re-assigned"
-msgstr ""
+msgstr "Planejamento: Turno reatribuído"
 
 #. module: planning
 #: model:ir.actions.server,name:planning.ir_cron_forecast_schedule_ir_actions_server
 msgid "Planning: generate next recurring shifts"
-msgstr ""
+msgstr "Planejamento: Gerar próximos turnos recorrentes"
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "Planning: new open shift available on"
-msgstr ""
+msgstr "Planejamento: Novo turno aberto disponível em"
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "Planning: new shift on"
-msgstr ""
+msgstr "Planejamento: Novo turno em"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.brand_promotion
 msgid "Plans"
-msgstr ""
+msgstr "Planos"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__previous_template_id
@@ -1527,7 +1595,7 @@ msgstr "Publicar"
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_tree
 msgid "Publish & Send"
-msgstr ""
+msgstr "Publicar e enviar"
 
 #. module: planning
 #. odoo-javascript
@@ -1543,12 +1611,12 @@ msgstr "Publicada"
 #: model:ir.model.fields,field_description:planning.field_res_company__planning_generation_interval
 #: model:ir.model.fields,field_description:planning.field_res_config_settings__planning_generation_interval
 msgid "Rate Of Shift Generation"
-msgstr ""
+msgstr "Taxa de geração de turnos"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__recurrence_update
 msgid "Recurrence Update"
-msgstr ""
+msgstr "Atualizar recorrência"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__recurrency_id
@@ -1559,12 +1627,12 @@ msgstr "Recorrência"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
 msgid "Recurring Shifts"
-msgstr ""
+msgstr "Turnos recorrentes"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_recurrency__slot_ids
 msgid "Related Planning Entries"
-msgstr ""
+msgstr "Entradas de planejamento relacionadas"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_slot__user_id
@@ -1589,7 +1657,7 @@ msgstr "Repetir a Cada"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__repeat_type
 msgid "Repeat Type"
-msgstr ""
+msgstr "Tipo de repetição"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_recurrency__repeat_unit
@@ -1606,7 +1674,7 @@ msgstr "Repetir Até"
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__repeat_interval
 msgid "Repeat every"
-msgstr ""
+msgstr "Repetir todo"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_recurrency__repeat_number
@@ -1622,7 +1690,7 @@ msgstr "Relatórios"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Requests to Switch"
-msgstr ""
+msgstr "Solicitações de troca"
 
 #. module: planning
 #: model:ir.actions.server,name:planning.model_planning_slot_action_reset_to_draft
@@ -1666,6 +1734,10 @@ msgid ""
 "Role that will be selected by default when creating a shift for this employee.\n"
 "This role will also have precedence over the other roles of the employee when planning orders."
 msgstr ""
+"Função que será selecionada por padrão ao criar um turno para esse "
+"funcionário.\n"
+"Esta função também terá preferência sobre as outras funções do funcionário "
+"ao planejar ordens."
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_resource_resource__default_role_id
@@ -1673,6 +1745,9 @@ msgid ""
 "Role that will be selected by default when creating a shift for this resource.\n"
 "This role will also have precedence over the other roles of the resource when planning shifts."
 msgstr ""
+"Função que será selecionada por padrão ao criar um turno para esse recurso.\n"
+"Essa função também terá preferência sobra as outras funções do recurso ao "
+"planejar turnos."
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_roles
@@ -1680,7 +1755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_resource_resource__role_ids
 #: model:ir.ui.menu,name:planning.planning_menu_settings_role
 msgid "Roles"
-msgstr ""
+msgstr "Funções"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_hr_employee__planning_role_ids
@@ -1690,6 +1765,14 @@ msgid ""
 "Additionally, the employee will only be assigned orders for these roles (with the default planning role having precedence over the other ones).\n"
 "Leave empty for the employee to be assigned shifts regardless of the role."
 msgstr ""
+"Funções que o funcionário pode cumprir. Ao criar um turno para esse "
+"funcionário, somente os modelos de turno dessas funções serão exibidos.\n"
+"Do mesmo modo, somente os turnos abertos disponíveis para estas funções "
+"serão enviados para o funcionário quando a agenda for publicada.\n"
+"Além disso, o funcionário só será atribuído a ordens dessas funções (e a "
+"função padrão de planejamento tem preferência sobre as outras).\n"
+"Deixe em branco para que o funcionário seja atribuído a turnos "
+"independentemente da função."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
@@ -1699,18 +1782,18 @@ msgstr "Guardar"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.employee_no_email_list_wizard
 msgid "Save & Send Schedule"
-msgstr ""
+msgstr "Salvar e enviar agenda"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__template_creation
 msgid "Save as Template"
-msgstr ""
+msgstr "Salvar como modelo"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Save this shift once it is ready."
-msgstr ""
+msgstr "Salve este turno quando estiver pronto."
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_planning
@@ -1727,13 +1810,15 @@ msgstr "Planear por Recurso"
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_schedule_by_role
 msgid "Schedule by Role"
-msgstr ""
+msgstr "Agenda por função"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_resource
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_role
 msgid "Schedule your human and material resources across roles, projects and sales orders."
 msgstr ""
+"Programe seus recursos humanos e materiais entre funções, projetos e pedidos "
+"de vendas."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_hr_employee__employee_token
@@ -1787,7 +1872,7 @@ msgstr "Turno"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_tree
 msgid "Shift List"
-msgstr ""
+msgstr "Lista de turnos"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_slot_template
@@ -1797,48 +1882,48 @@ msgstr "Modelo de Turno"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_form
 msgid "Shift Template Form"
-msgstr ""
+msgstr "Formulário do modelo de turno"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_tree
 msgid "Shift Template List"
-msgstr ""
+msgstr "Lista de modelos de turno"
 
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_shift_template
 #: model:ir.model.fields,field_description:planning.field_planning_slot__template_id
 #: model:ir.ui.menu,name:planning.planning_menu_settings_shift_template
 msgid "Shift Templates"
-msgstr ""
+msgstr "Modelos de turno"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Shifts Planned"
-msgstr ""
+msgstr "Turnos planejados"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "Shifts from"
-msgstr ""
+msgstr "Turnos de"
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Shifts in Conflict"
-msgstr ""
+msgstr "Turnos em conflito"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Shifts of Your Department Member"
-msgstr ""
+msgstr "Turnos do membro do seu departamento"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "Shifts of Your Team Member"
-msgstr ""
+msgstr "Turnos do membro da sua equipe"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_send__slot_ids
@@ -1848,7 +1933,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
 msgid "Some changes were made since this shift was published."
-msgstr ""
+msgstr "Algumas alterações foram feitas desde a publicação do turno."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.resource_planning
@@ -1879,7 +1964,7 @@ msgstr "Estado"
 #: model:ir.model.fields,field_description:planning.field_planning_planning__end_datetime
 #: model:ir.model.fields,field_description:planning.field_planning_send__end_datetime
 msgid "Stop Date"
-msgstr ""
+msgstr "Data de encerramento"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__template_autocomplete_ids
@@ -1895,6 +1980,8 @@ msgstr ""
 #: model:ir.model.constraint,message:planning.constraint_res_company_planning_self_unassign_days_before_positive
 msgid "The amount of days before unassignment must be positive or equal to zero."
 msgstr ""
+"A quantidade de dias antes da retirada da atribuição deve ser positiva ou "
+"igual a zero."
 
 #. module: planning
 #. odoo-python
@@ -1906,7 +1993,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "The deadline for unassignment has passed."
-msgstr ""
+msgstr "O prazo final para retirar a atribuição passou."
 
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_planning_slot_template_check_duration_positive
@@ -1922,13 +2009,13 @@ msgstr ""
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_planning_slot_check_start_date_lower_end_date
 msgid "The end date of a shift should be after its start date."
-msgstr ""
+msgstr "A data de término de um turno deve ser posterior a sua data de início."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning_recurrency.py:0
 msgid "The number of repetitions cannot be negative."
-msgstr ""
+msgstr "O número de repetições não pode ser negativo."
 
 #. module: planning
 #. odoo-javascript
@@ -1939,7 +2026,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_planning_recurrency_check_repeat_interval_positive
 msgid "The recurrence should be greater than 0."
-msgstr ""
+msgstr "A recorrência deve ser maior que 0."
 
 #. module: planning
 #. odoo-python
@@ -1977,7 +2064,7 @@ msgstr ""
 #: code:addons/planning/static/src/views/planning_hooks.js:0
 #: code:addons/planning/wizard/planning_send.py:0
 msgid "The shifts have already been published, or there are no shifts to publish."
-msgstr ""
+msgstr "Os turnos já foram publicados ou não há turnos para publicar."
 
 #. module: planning
 #. odoo-python
@@ -1989,17 +2076,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "The shifts have successfully been published and sent."
-msgstr ""
+msgstr "Os turnos foram publicados e enviados com sucesso."
 
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_planning_slot_template_check_start_time_lower_than_24
 msgid "The start hour cannot be greater than 24."
-msgstr ""
+msgstr "A hora de início não pode ser superior a 24."
 
 #. module: planning
 #: model:ir.model.constraint,message:planning.constraint_planning_slot_template_check_start_time_positive
 msgid "The start hour cannot be negative."
-msgstr ""
+msgstr "A hora de início não pode ser negativa."
 
 #. module: planning
 #. odoo-python
@@ -2011,36 +2098,37 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "There are no resources available for this open shift."
-msgstr ""
+msgstr "Não há recursos disponíveis para esse turno aberto."
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_hooks.js:0
 msgid "There are no shifts planned for the previous week, or they have already been copied."
 msgstr ""
+"Não há turnos planejados para a semana anterior ou eles já foram copiados."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "There are no shifts to publish and send."
-msgstr ""
+msgstr "Não há turnos para publicar e enviar."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "There are no shifts to reset to draft."
-msgstr ""
+msgstr "Não há turnos para redefinir como provisório."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "Esta barra de progresso não foi implementada."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__was_copied
 msgid "This Shift Was Copied From Previous Week"
-msgstr ""
+msgstr "Este turno foi copiado da semana anterior"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
@@ -2050,23 +2138,25 @@ msgstr "Esta Semana"
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__subsequent
 msgid "This and following shifts"
-msgstr ""
+msgstr "Turno atual e seguintes"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
 msgid "This open shift is no longer available, or the planning has been updated in the meantime. Please contact your manager for further information."
 msgstr ""
+"Este turno aberto não está mais disponível ou o planejamento foi atualizado "
+"enquanto isso. Entre em contato com seu gerente para obter mais informações."
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__recurrence_update__this
 msgid "This shift"
-msgstr ""
+msgstr "Este turno"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "This shift is recurrent. Delete:"
-msgstr ""
+msgstr "Esse turno é recorrente. Excluir:"
 
 #. module: planning
 #. odoo-javascript
@@ -2082,7 +2172,7 @@ msgstr ""
 #. module: planning
 #: model:digest.tip,name:planning.digest_tip_planning_0
 msgid "Tip: Record your planning faster"
-msgstr ""
+msgstr "Dica: Registre seu planejamento mais rapidamente"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
@@ -2093,6 +2183,11 @@ msgstr ""
 #: model:ir.model.fields,help:planning.field_planning_slot__repeat
 msgid "To avoid polluting your database and performance issues, shifts are only created for the next 6 months. They are then gradually created as time passes by in order to always get shifts 6 months ahead. This value can be modified from the settings of Planning, in debug mode."
 msgstr ""
+"Para evitar poluir sua base de dados e causar problemas de desempenho, são "
+"criados turnos somente para os próximos seis meses. Então, eles são criados "
+"gradualmente com o passar do tempo de modo que sempre haja turnos para os "
+"próximos seis meses. Esse valor pode ser modificado pelas definições de "
+"Planejamento, com o modo desenvolvedor."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
@@ -2130,12 +2225,12 @@ msgstr "Até"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
 msgid "Unwanted Shifts Available"
-msgstr ""
+msgstr "Turnos recusados disponíveis"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_recurrency__repeat_until
 msgid "Up to which date should the plannings be repeated"
-msgstr ""
+msgstr "Até qual data os planejamentos devem ser repetidos"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__user_id
@@ -2155,7 +2250,7 @@ msgstr "Ver Planejamento"
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
 msgid "Waiter"
-msgstr ""
+msgstr "Garçom"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_roles
@@ -2188,19 +2283,23 @@ msgstr "Localização de Trabalho"
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__working_days_count
 #: model:ir.model.fields,field_description:planning.field_planning_slot__working_days_count
 msgid "Working Days"
-msgstr ""
+msgstr "Dias de trabalho"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/js/tours/planning.js:0
 msgid "Write the <b>role</b> your employee will perform (<i>e.g. Chef, Bartender, Waiter, etc.</i>). <i>Tip: Create open shifts for the roles you will be needing to complete a mission. Then, assign those open shifts to the resources that are available.</i>"
 msgstr ""
+"Escreva a <b>função</b> que seu funcionário realizará (<i>Ex: chef, "
+"bartender, garçom, etc</i>.). <i>Dica: Crie turnos abertos para as funções "
+"necessárias para cumprir uma missão. Então, atribua esses turnos abertos aos "
+"recursos disponíveis.</i>"
 
 #. module: planning
 #: model:ir.model.fields.selection,name:planning.selection__planning_recurrency__repeat_unit__year
 #: model:ir.model.fields.selection,name:planning.selection__planning_slot__repeat_unit__year
 msgid "Years"
-msgstr ""
+msgstr "Anos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
@@ -2217,7 +2316,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You can not assign yourself to an already assigned shift."
-msgstr ""
+msgstr "Você não pode atribuir um turno já atribuído a si mesmo."
 
 #. module: planning
 #. odoo-python
@@ -2235,25 +2334,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You can not unassign another employee than yourself."
-msgstr ""
+msgstr "Você não pode retirar a atribuição de outro funcionário."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You cannot cancel a request to switch that is in the past."
-msgstr ""
+msgstr "Você não pode cancelar uma solicitação de troca que já passou."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You cannot switch a shift that is in the past."
-msgstr ""
+msgstr "Você não pode trocar um turno que já passou."
 
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You don't have the right to cancel a request to switch."
-msgstr ""
+msgstr "Você não tem direito de cancelar uma solicitação de troca."
 
 #. module: planning
 #. odoo-python
@@ -2265,22 +2364,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
 msgid "You don't have the right to switch shifts."
-msgstr ""
+msgstr "Você não tem direito de trocar turnos."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.slot_unassign
 msgid "You have been successfully unassigned from this shift"
-msgstr ""
+msgstr "Sua atribuição a este turno foi retirada com sucesso"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.slot_unassign
 msgid "Your Planning"
-msgstr ""
+msgstr "Seu planejamento"
 
 #. module: planning
 #: model:mail.template,subject:planning.email_template_planning_planning
 msgid "Your planning from {{ format_date(ctx.get('start_datetime')) }} to {{ format_date(ctx.get('end_datetime')) }}"
 msgstr ""
+"Seu planejamento de {{ format_date(ctx.get('start_datetime')) }} até {{ "
+"format_date(ctx.get('end_datetime')) }}"
 
 #. module: planning
 #: model:mail.template,subject:planning.email_template_shift_switch_email
@@ -2291,12 +2392,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "all shifts"
-msgstr ""
+msgstr "todos os turnos"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.res_config_settings_view_form
 msgid "days before the beginning of the shift"
-msgstr ""
+msgstr "dias antes do início do turno"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_slot_template_view_form
@@ -2307,13 +2408,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_tree
 msgid "e.g. Bartender"
-msgstr ""
+msgstr "ex: bartender"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.resource_resource_form_view_inherit
 #: model_terms:ir.ui.view,arch_db:planning.resource_resource_tree_view_inherit
 msgid "e.g. Crane"
-msgstr ""
+msgstr "ex: guindaste"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
@@ -2328,19 +2429,19 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
 msgid "other shift(s) in conflict."
-msgstr ""
+msgstr "outro(s) turno(s) em conflito."
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "this and following shifts"
-msgstr ""
+msgstr "turno atual e seguintes"
 
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog.xml:0
 msgid "this shift"
-msgstr ""
+msgstr "turno atual"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.period_report_template
@@ -2350,4 +2451,4 @@ msgstr "a"
 #. module: planning
 #: model:mail.template,subject:planning.email_template_slot_single
 msgid "{{ ctx.get('mail_subject', '') }} {{ ctx.get('start_datetime' , '') }}"
-msgstr ""
+msgstr "{{ ctx.get('mail_subject', '') }} {{ ctx.get('start_datetime' , '') }}"

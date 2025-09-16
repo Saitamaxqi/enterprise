@@ -1,29 +1,31 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_maintenance
+# * mrp_maintenance
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2022\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:24+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/mrp_maintenance/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
 msgid "<span class=\"o_stat_text\">Maintenance</span>"
-msgstr "<span class=\"o_stat_text\">维护</span>"
+msgstr "<span class=\"o_stat_text\">维护保养</span>"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__company_id
@@ -33,7 +35,7 @@ msgstr "公司"
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment__estimated_next_failure
 msgid "Computed as Latest Failure Date + MTBF"
-msgstr "按最近故障日期 + MTBF 计算"
+msgstr "按最近故障日期+平均故障间隔时间（MTBF）计算"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture1
@@ -48,7 +50,7 @@ msgstr "丢弃"
 #. module: mrp_maintenance
 #: model:maintenance.equipment,name:mrp_maintenance.equipment_furniture3
 msgid "Drill Machine"
-msgstr "钻孔机"
+msgstr "钻机"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
@@ -58,28 +60,28 @@ msgstr "设备"
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_form_inherit_maintenance
 msgid "Est. Next Failure"
-msgstr "估计的下次故障"
+msgstr "预估下次故障"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Estimated Next Failure"
-msgstr "估计的下次故障"
+msgstr "预估下次故障"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment__estimated_next_failure
 msgid "Estimated time before next failure (in days)"
-msgstr "预估下次故障前置时间(按天)"
+msgstr "预估下次故障前的时间（天）"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment__expected_mtbf
 msgid "Expected MTBF"
-msgstr "预计的MTBF"
+msgstr "预估平均故障间隔时间（MTBF）"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment__expected_mtbf
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Expected Mean Time Between Failure"
-msgstr "预计的平均故障间隔时间"
+msgstr "预估平均故障间隔时间"
 
 #. module: mrp_maintenance
 #: model:maintenance.equipment.category,name:mrp_maintenance.equipment_furniture_tools
@@ -99,28 +101,28 @@ msgstr "最近故障日期"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment__mtbf
 msgid "MTBF"
-msgstr "MTBF"
+msgstr "平均故障间隔时间（MTBF）"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_equipment__mttr
 msgid "MTTR"
-msgstr "MTTR"
+msgstr "平均维修时间（MTTR）"
 
 #. module: mrp_maintenance
 #: model:ir.ui.menu,name:mrp_maintenance.menu_equipment_dashboard
 msgid "Machines & Tools"
-msgstr "机器 & 工具"
+msgstr "机器和工具"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_workcenter_view_kanban_inherit_maintenance
 msgid "Maintenance"
-msgstr "维护"
+msgstr "维护保养"
 
 #. module: mrp_maintenance
 #: model:ir.model,name:mrp_maintenance.model_maintenance_equipment
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__equipment_ids
 msgid "Maintenance Equipment"
-msgstr "设备保养"
+msgstr "维护保养设备"
 
 #. module: mrp_maintenance
 #. odoo-javascript
@@ -128,13 +130,13 @@ msgstr "设备保养"
 #: model:ir.model,name:mrp_maintenance.model_maintenance_request
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.mrp_production_view_form_inherit_maintenance
 msgid "Maintenance Request"
-msgstr "维护请求"
+msgstr "维护保养请求"
 
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
 msgid "Maintenance Requests"
-msgstr "保养请求"
+msgstr "维护保养请求"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__production_id
@@ -149,29 +151,29 @@ msgstr "平均故障间隔时间"
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment__mtbf
 msgid "Mean Time Between Failure, computed based on done corrective maintenances."
-msgstr "平均故障间隔时间，基于完成的纠正保养计算"
+msgstr "平均故障间隔时间，根据已完成的纠正性维护保养计算。"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_equipment__mttr
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "Mean Time To Repair"
-msgstr "平均修复时间"
+msgstr "平均维修时间"
 
 #. module: mrp_maintenance
 #. odoo-python
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
 msgid "New Maintenance Request"
-msgstr "新保养请求"
+msgstr "新维护保养请求"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production__maintenance_count
 msgid "Number of maintenance requests"
-msgstr "维护请求的数量"
+msgstr "维护保养请求数量"
 
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_request_view_search_inherit_mrp
 msgid "Operation"
-msgstr "操作"
+msgstr "作业"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_maintenance_request__production_company_id
@@ -219,7 +221,7 @@ msgstr "工单"
 #. module: mrp_maintenance
 #: model_terms:ir.ui.view,arch_db:mrp_maintenance.maintenance_equipment_view_form_inherit_mrp
 msgid "days"
-msgstr "天数"
+msgstr "天"
 
 #. module: mrp_maintenance
 #. odoo-python

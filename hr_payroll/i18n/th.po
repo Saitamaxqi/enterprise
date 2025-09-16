@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll
+# * hr_payroll
 #
 # Translators:
 # Pornvibool Tippayawat <pornvibool.t@gmail.com>, 2022
@@ -9,26 +9,28 @@
 # Khwunchai Jaengsawang <khwunchai.j@ku.th>, 2022
 # Martin Trigaux, 2022
 # Wichanon Jamwutthipreecha, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Wichanon Jamwutthipreecha, 2022\n"
-"Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
+"PO-Revision-Date: 2025-09-16 22:54+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/hr_payroll/"
+"th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_worked_days.py:0
 msgid " (Half-Day)"
-msgstr ""
+msgstr " (ครึ่งวัน)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__count
@@ -69,13 +71,13 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.actions.report,print_report_name:hr_payroll.action_report_payslip
 msgid "'Payslip - %s' % (object.name)"
-msgstr ""
+msgstr "'สลิปเงินเดือน - %s' % (object.name)"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "(%s Payslips)"
-msgstr ""
+msgstr "(%s สลิปเงินเดือน)"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__state
@@ -125,7 +127,7 @@ msgstr "เงินเดือนที่ 13"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "1st semester of %s"
-msgstr ""
+msgstr "ภาคการศึกษาที่ 1 ของ %s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -136,7 +138,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "2nd semester of %s"
-msgstr ""
+msgstr "ภาคการศึกษาที่ 2 ของ %s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -163,6 +165,9 @@ msgid ""
 "                            Work Entries\n"
 "                            </span>"
 msgstr ""
+"<span class=\"o_stat_text\">\n"
+"                            รายการงาน\n"
+"                            </span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -342,13 +347,13 @@ msgstr "ไอคอนประเภทกิจกรรม"
 #: code:addons/hr_payroll/static/src/views/payslip_batch_form/payslip_batch_form.js:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
 msgid "Add Payslips"
-msgstr ""
+msgstr "เพิ่มสลิปเงินเดือน"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Add a <strong>name</strong> to the contract."
-msgstr ""
+msgstr "เพิ่ม<strong>ชื่อ</strong>ให้กับสัญญา"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_view_hr_payroll_structure_from_type
@@ -424,6 +429,7 @@ msgstr "ประจำปี"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Another refund payslip with the same amount has been found. Do you want to create a new one?"
 msgstr ""
+"พบสลิปการคืนเงินอีกอันที่มีจำนวนเงินเท่ากัน คุณต้องการสร้างอันใหม่หรือไม่?"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line__appears_on_payslip
@@ -453,7 +459,7 @@ msgstr "เก็บถาวรแล้ว"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard/todo_list/todo_list.js:0
 msgid "Are you sure you want to delete this note? All content will be definitely lost."
-msgstr ""
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบหมายเหตุนี้ เนื้อหาทั้งหมดจะหายไป"
 
 #. module: hr_payroll
 #. odoo-python
@@ -468,6 +474,7 @@ msgstr "การมอบหมายเงินเดือน"
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "At least one previous negative net could be reported on this payslip for %s"
 msgstr ""
+"สามารถรายงานผลลบสุทธิก่อนหน้านี้อย่างน้อยหนึ่งรายการในสลิปเงินเดือนนี้สำหรับ %s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_attachment_count
@@ -503,12 +510,12 @@ msgstr "ความพร้อมใช้งานในโครงสร้
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__avatar_1920
 msgid "Avatar"
-msgstr ""
+msgstr "อวตาร"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "อวตาร 128"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_report_view_tree
@@ -626,6 +633,8 @@ msgstr "ไม่สามารถทำเครื่องหมายสล
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_worked_days__code
 msgid "Careful, the Code is used in many references, changing it could lead to unwanted changes."
 msgstr ""
+"โปรดระวัง มีการใช้ Code ในการอ้างอิงจำนวนมาก "
+"การเปลี่ยนแปลงอาจนำไปสู่การเปลี่ยนแปลงที่ไม่พึงประสงค์ได้"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__category_id
@@ -646,6 +655,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Check the <strong>Work Entries</strong> linked to your newly created Contract."
 msgstr ""
+"ตรวจสอบ<strong>รายการงาน</strong>ที่เชื่อมโยงกับสัญญาที่สร้างขึ้นใหม่ของคุณ"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -664,7 +674,7 @@ msgstr "ค่าเลี้ยงดูบุตร"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_category__children_ids
 msgid "Children"
-msgstr "เด็ก ๆ "
+msgstr "เด็ก ๆ"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -675,13 +685,13 @@ msgstr "เลือกการแปลเงินเดือน"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click here to create a new <strong>Contract</strong>."
-msgstr ""
+msgstr "คลิกที่นี่เพื่อสร้าง<strong>สัญญา</strong>ใหม่"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click here to generate a <strong>Batch</strong> for the displayed Employees."
-msgstr ""
+msgstr "คลิกที่นี่เพื่อสร้าง<strong>กลุ่ม</strong>สำหรับพนักงานที่แสดง"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -693,31 +703,33 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click on <strong>Salary Information</strong> to access additional fields."
-msgstr ""
+msgstr "คลิกที่<strong>ข้อมูลเงินเดือน</strong>เพื่อเข้าถึงสาขาเพิ่มเติม"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click on Employees to pick one of your <strong>Employees</strong>."
-msgstr ""
+msgstr "คลิกที่ข้อมูลพนักงานเพื่อเลือก<strong>พนักงาน</strong>ของคุณ"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click on Payroll to manage your employee's <strong>Work Entries</strong>, <strong>Contracts</strong> and <strong>Payslips</strong>."
 msgstr ""
+"คลิกที่บัญชีเงินเดือนเพื่อจัดการ<strong>รายการงาน</strong> <strong>สัญญา</strong> "
+"และ<strong>สลิปเงินเดือน</strong>ของพนักงานของคุณ"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click on the <strong>Payslip</strong>."
-msgstr ""
+msgstr "คลิกที่สลิปเงินเดือน"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Click on the <strong>Work Entries</strong> menu."
-msgstr ""
+msgstr "คลิกที่เมนู<strong>รายการงาน</strong>"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -759,7 +771,7 @@ msgstr "โค้ด:"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_company
 msgid "Companies"
-msgstr "หลายบริษัท"
+msgstr "บริษัท"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_note__company_id
@@ -774,7 +786,7 @@ msgstr "หลายบริษัท"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_report_view_search
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Company"
-msgstr "บริษัทเดียว"
+msgstr "บริษัท"
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.COMP
@@ -786,7 +798,7 @@ msgstr "ผลงานของบริษัท"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract__full_time_required_hours
 #: model:ir.model.fields,field_description:hr_payroll.field_resource_calendar__full_time_required_hours
 msgid "Company Full Time"
-msgstr ""
+msgstr "บริษัทเต็มเวลา"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__close
@@ -834,7 +846,7 @@ msgstr "ยืนยัน"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Confirm the <strong>Payslip</strong>."
-msgstr ""
+msgstr "ยืนยันสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__verify
@@ -962,7 +974,7 @@ msgstr "สร้างสัญญาใหม่"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/dashboard/todo_list/todo_list.xml:0
 msgid "Create new todo note"
-msgstr ""
+msgstr "สร้างบันทึกสิ่งที่ต้องทำใหม่"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__create_uid
@@ -1021,7 +1033,7 @@ msgstr "ใบลดหนี้"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract_history__time_credit
 msgid "Credit time"
-msgstr ""
+msgstr "เครดิตเวลา"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__currency_id
@@ -1114,7 +1126,7 @@ msgstr "ประเภทการเข้างานเริ่มต้น
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Define a <strong>Wage</strong>."
-msgstr ""
+msgstr "กำหนดค่าจ้าง"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_contract__schedule_pay
@@ -1201,7 +1213,7 @@ msgstr "แสดงสลิปเงินเดือน"
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_payslip_display
 msgid "Display payslip PDF"
-msgstr ""
+msgstr "แสดงสลิปเงินเดือน PDF"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__attachment
@@ -1259,13 +1271,13 @@ msgstr "ร่างสลิป"
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 #: model:ir.actions.server,name:hr_payroll.action_edit_payslip_lines
 msgid "Edit Payslip Lines"
-msgstr "แก้ไขไลน์สลิปเงินเดือน"
+msgstr "แก้ไขรายการสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__edit_payslip_lines_wizard_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__edit_payslip_lines_wizard_id
 msgid "Edit Payslip Lines Wizard"
-msgstr "ตัวช่วยแก้ไขไลน์สลิปเงินเดือน"
+msgstr "ตัวช่วยแก้ไขรายการสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_edit_payslip_worked_days_line
@@ -1275,12 +1287,12 @@ msgstr "ตัวช่วยแก้ไขวันทำงานของต
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_edit_payslip_lines_wizard
 msgid "Edit payslip lines wizard"
-msgstr "ตัวช่วยแก้ไขไลน์เงินเดือน"
+msgstr "ตัวช่วยแก้ไขรายการสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_edit_payslip_line
 msgid "Edit payslip lines wizard line"
-msgstr "ไลน์ตัวช่วยแก้ไขไลน์สลิปเงินเดือน"
+msgstr "รายการตัวช่วยแก้ไขรายการสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__edited
@@ -1290,7 +1302,7 @@ msgstr "แก้ไขแล้ว"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_edit_payslip_lines_form_wizard
 msgid "Edition of Payslip Lines in the Payslip"
-msgstr "ตัวแก้ไขของไลน์สลิปเงินเดือนในสลิปเงินเดือน"
+msgstr "ตัวแก้ไขของรายการสลิปเงินเดือนในสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__email_cc
@@ -1375,7 +1387,7 @@ msgstr "พนักงาน"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employees (With Running Contracts) missing from open batches"
-msgstr ""
+msgstr "พนักงาน (ที่มีสัญญาที่ดำเนินอยู่) หายไปจากชุดงานที่เปิดอยู่"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1387,25 +1399,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employees With Multiple Open Payslips of Same Type"
-msgstr ""
+msgstr "พนักงานที่มีสลิปเงินเดือนประเภทเดียวกันหลายใบ"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employees Without Bank account Number"
-msgstr ""
+msgstr "พนักงานที่ไม่มีหมายเลขบัญชีธนาคาร"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employees Without Identification Number"
-msgstr ""
+msgstr "พนักงานที่ไม่มีหมายเลขประจำตัว"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employees Without Running Contracts"
-msgstr ""
+msgstr "พนักงานที่ไม่มีสัญญาจ้าง"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1417,7 +1429,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Employer Cost"
-msgstr ""
+msgstr "ต้นทุนนายจ้าง"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__date_to
@@ -1461,7 +1473,7 @@ msgstr "ส่งออกสลิปเงินเดือน"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "First, we'll create a new <strong>Contract</strong>."
-msgstr ""
+msgstr "ก่อนอื่น เราจะสร้าง<strong>สัญญา</strong>ใหม่"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line__amount_fix
@@ -1499,7 +1511,7 @@ msgstr "ตัวอย่างเช่น ป้อน 50.0 เพื่อ�
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_fr_hr_payroll
 msgid "French Payroll"
-msgstr "French Payroll"
+msgstr "บัญชีเงินเดือนสำหรับประเทศฝรั่งเศส"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__date_from
@@ -1707,7 +1719,7 @@ msgstr "ถ้าเลือก ข้อความบางข้อคว�
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__is_non_resident
 #: model:ir.model.fields,help:hr_payroll.field_res_users__is_non_resident
 msgid "If recipient lives in a foreign country"
-msgstr ""
+msgstr "หากผู้รับอาศัยอยู่ในต่างประเทศ"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__active
@@ -1717,12 +1729,12 @@ msgstr "หากฟิลด์ที่ใช้งานอยู่ถูก
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__image_1920
 msgid "Image"
-msgstr ""
+msgstr "รูปภาพ"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__image_128
 msgid "Image 128"
-msgstr ""
+msgstr "รูปภาพ 128"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_view_tree
@@ -1743,7 +1755,7 @@ msgstr "ดัชนีสัญญา"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_in_hr_payroll
 msgid "Indian Payroll"
-msgstr "Indian Payroll"
+msgstr "บัญชีเงินเดือนสำหรับประเทศอินเดีย"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__credit_note
@@ -1753,7 +1765,7 @@ msgstr "ตั้งว่าสลิปเงินเดือนนี้ม
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Input Data"
-msgstr "ข้อมูลอินพุต"
+msgstr "ป้อนข้อมูล"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__note
@@ -1801,7 +1813,7 @@ msgstr "เป็นผู้ใช้ขั้นสูง"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__is_wrong_duration
 msgid "Is Wrong Duration"
-msgstr ""
+msgstr "ระยะเวลาไม่ถูกต้อง"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__quantity
@@ -1830,7 +1842,7 @@ msgstr "สลิปเงินเดือน 365 วันที่ผ่า�
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Last Departures"
-msgstr ""
+msgstr "การออกเดินทางครั้งล่าสุด"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
@@ -1889,7 +1901,7 @@ msgstr "อัปเดตครั้งล่าสุดเมื่อ"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
 msgid "Line Name"
-msgstr "ชื่อไลน์"
+msgstr "ชื่อรายการ"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule_category__parent_id
@@ -1904,7 +1916,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__paid
 msgid "Made Payment Order? "
-msgstr ""
+msgstr "สั่งซื้อการชำระเงินแล้วหรือยัง? "
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -1936,7 +1948,7 @@ msgstr "ทำเครื่องหมายว่าชำระเงิน
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__master_department_id
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_report_view_search
 msgid "Master Department"
-msgstr ""
+msgstr "สาขาวิชาปริญญาโท"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__condition_range_max
@@ -2140,7 +2152,7 @@ msgstr "ไม่มีพารามิเตอร์กฎที่มีโ
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__is_non_resident
 #: model:ir.model.fields,field_description:hr_payroll.field_res_users__is_non_resident
 msgid "Non-resident"
-msgstr ""
+msgstr "ไม่ใช่ผู้มีถิ่นที่อยู่"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__normal_wage
@@ -2158,6 +2170,7 @@ msgstr "โน้ต"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
 msgid "Note a description of your parameter, when it's used, how is it computed, what's the source, ..."
 msgstr ""
+"จดคำอธิบายพารามิเตอร์ของคุณ ใช้งานเมื่อใด วิธีคำนวณ แหล่งที่มาคืออะไร ..."
 
 #. module: hr_payroll
 #. odoo-python
@@ -2209,7 +2222,7 @@ msgstr "จํานวนข้อผิดพลาด"
 #: model:ir.model.fields,help:hr_payroll.field_hr_contract__full_time_required_hours
 #: model:ir.model.fields,help:hr_payroll.field_resource_calendar__full_time_required_hours
 msgid "Number of hours to work on the company schedule to be considered as fulltime."
-msgstr ""
+msgstr "จำนวนชั่วโมงทำงานในบริษัทที่กำหนดให้ถือเป็นงานเต็มเวลา"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip__message_needaction_counter
@@ -2228,7 +2241,7 @@ msgstr "จํานวนข้อความที่มีข้อผิด
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_user
 msgid "Officer: Manage all contracts"
-msgstr ""
+msgstr "เจ้าหน้าที่ : จัดการสัญญาทั้งหมด"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -2239,24 +2252,27 @@ msgstr "On the"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "On the first tab is the amount of worked time giving you a <strong>gross amount</strong>."
-msgstr ""
+msgstr "บนแท็บแรกคือระยะเวลาทำงานซึ่งให้<strong>จำนวนเงินรวม</strong>กับคุณ"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "On the second tab is the computation of the rules linked to the Structure resulting in a <strong>net amount</strong>."
 msgstr ""
+"บนแท็บที่สองคือการคำนวณกฎที่เชื่อมโยงกับโครงสร้างซึ่งส่งผลให้เป็น<strong>จำนวนเงินสุทธิ</strong"
+">"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "On the smartbutton, you can find all the <strong>Payslips</strong> included in the Batch."
 msgstr ""
+"บนปุ่มอัจฉริยะ คุณจะพบ<strong>สลิปเงินเดือน</strong>ทั้งหมดที่รวมอยู่ในชุด"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.ir_actions_server_action_open_reporting
 msgid "Open Payroll Reporting"
-msgstr ""
+msgstr "เปิดรายงานเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -2272,17 +2288,17 @@ msgstr "ข้อมูลเข้าอื่น ๆ"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__input_line_type_ids
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input___allowed_input_type_ids
 msgid "Other Input Line"
-msgstr "ไลน์ขาเข้าอื่น ๆ"
+msgstr "รายการขาเข้าอื่น"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payslip_entry_type_view
 msgid "Other Input Types"
-msgstr "ประเภทข้อมูลขาเข้าอื่น ๆ "
+msgstr "ประเภทข้อมูลขาเข้าอื่น ๆ"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Other Inputs"
-msgstr "อินพุตอื่น"
+msgstr "ป้อนข้อมูลอื่น"
 
 #. module: hr_payroll
 #: model:hr.work.entry.type,name:hr_payroll.hr_work_entry_type_out_of_contract
@@ -2320,12 +2336,12 @@ msgstr "หลัก"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_form_inherit
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_search_inherit
 msgid "Part Time"
-msgstr ""
+msgstr "พาร์ทไทม์"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract__time_credit_type_id
 msgid "Part Time Work Entry Type"
-msgstr ""
+msgstr "ประเภทงานพาร์ทไทม์"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_line__partner_id
@@ -2387,12 +2403,12 @@ msgstr "รายงานการวิเคราะห์บัญชีเ
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__code
 msgid "Payroll Code"
-msgstr ""
+msgstr "รหัสบัญชีเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.actions.client,name:hr_payroll.hr_payroll_dashboard_open
 msgid "Payroll Dashboard"
-msgstr ""
+msgstr "แดชบอร์ดเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -2402,12 +2418,12 @@ msgstr "รายการเงินเดือน"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_note
 msgid "Payroll Note"
-msgstr ""
+msgstr "บันทึกเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
 msgid "Payroll Rules"
-msgstr ""
+msgstr "กฎการจ่ายเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -2427,7 +2443,7 @@ msgstr "กฎการจ่ายเงินเดือนที่ใช้
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "Payroll tips &amp; tricks:"
-msgstr ""
+msgstr "เคล็ดลับ &amp; เทคนิคของเงินเดือน:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_hr_payroll_account
@@ -2447,7 +2463,7 @@ msgstr "เงินเดือน: สร้าง pdfs"
 #. module: hr_payroll
 #: model:mail.template,name:hr_payroll.mail_template_new_payslip
 msgid "Payroll: New Payslip"
-msgstr "เงินเดือน: สลิปเงินเดือนใหม่"
+msgstr "บัญชีเงินเดือน: สลิปเงินเดือนใหม่"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.ir_cron_update_payroll_data_ir_actions_server
@@ -2467,7 +2483,7 @@ msgstr "สลิปเงินเดือน"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Payslip 'Date From' must be earlier than 'Date To'."
-msgstr ""
+msgstr "สลิปเงินเดือน 'วันที่จาก' จะต้องอยู่ก่อนหน้า 'วันที่ถึง'"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
@@ -2495,7 +2511,7 @@ msgstr "วันที่สิ้นสุดสลิปเงินเดื
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_tree
 msgid "Payslip Input"
-msgstr "อินพุตสลิปเงินเดือน"
+msgstr "ป้อนข้อมูลสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_tree
@@ -2510,7 +2526,7 @@ msgstr "ประเภทข้อมูลขาเข้าสลิปเง
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__input_line_ids
 msgid "Payslip Inputs"
-msgstr "อินพุตสลิปเงินเดือน"
+msgstr "ป้อนข้อมูลสลิปเงินเดือน"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payslip_line
@@ -2590,7 +2606,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Payslips Generated On Previous Contract"
-msgstr ""
+msgstr "สลิปเงินเดือนที่สร้างขึ้นในสัญญาก่อนหน้า"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_payslip_action_view_to_pay
@@ -2753,7 +2769,7 @@ msgstr "อัตรา (%)"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_run__rating_ids
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "การให้คะแนน"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_recompute_whole_sheet
@@ -2763,7 +2779,8 @@ msgstr "คำนวณใหม่ทั้งแผ่น"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Recompute the payslip lines only, not the worked days / input lines"
-msgstr "คำนวณไลน์สลิปเงินเดือนใหม่เท่านั้น ไม่ใช่วันทำงาน / ไลน์ข้อมูลขาเข้า"
+msgstr ""
+"คำนวณรายการสลิปเงินเดือนใหม่เท่านั้น ไม่ใช่วันทำงาน / รายการข้อมูลขาเข้า"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3106,7 +3123,7 @@ msgstr "ประจำสองปี"
 #. module: hr_payroll
 #: model:mail.template,description:hr_payroll.mail_template_new_payslip
 msgid "Sent to employee to notify them about their new payslip"
-msgstr ""
+msgstr "ส่งให้พนักงานแจ้งเกี่ยวกับสลิปเงินเดือนใหม่"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__sequence
@@ -3132,7 +3149,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Set the Contract as <strong><q>Running</q></strong>."
-msgstr ""
+msgstr "ตั้งค่าสัญญาว่า<strong><q>กำลังใช้งานอยู่</q></strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -3167,7 +3184,7 @@ msgstr "ไม่สามารถตรวจสอบรายการงา
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract__standard_calendar_id
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract_history__standard_calendar_id
 msgid "Standard Calendar"
-msgstr ""
+msgstr "ปฏิทินมาตรฐาน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__date_from
@@ -3272,6 +3289,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_form_inherit
 msgid "The Standard Calendar is the calendar used by the people working at a 100% rate. It's used here to compute your part-time percentage."
 msgstr ""
+"ปฏิทินมาตรฐานคือปฏิทินที่ใช้โดยพนักงานในอัตรา 100% ใช้สำหรับคำนวณเปอร์เซ็นต์นอกเวลาของคุณที่นี่"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__is_unforeseen
@@ -3312,7 +3330,7 @@ msgstr "สัญญาวันทำงานนี้ควรใช้กั
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The duration of the payslip is not accurate according to the structure type."
-msgstr ""
+msgstr "ระยะเวลาของสลิปเงินเดือนไม่ถูกต้องตามประเภทโครงสร้าง"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3359,18 +3377,19 @@ msgstr "สลิปเงินเดือนควรอยู่ในสถ
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/add_payslips_hook.js:0
 msgid "The payslips(s) are now added to the batch"
-msgstr ""
+msgstr "ขณะนี้มีการเพิ่มสลิปเงินเดือนลงในชุดแล้ว"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "The period selected does not match the contract validity period."
-msgstr ""
+msgstr "ระยะเวลาที่เลือกไม่ตรงกับระยะเวลาที่มีผลบังคับใช้ของสัญญา"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_contract__time_credit_type_id
 msgid "The work entry type used when generating work entries to fit full time working schedule."
 msgstr ""
+"ประเภทรายการงานที่ใช้เมื่อสร้างรายการงานให้พอดีกับตารางการทำงานแบบเต็มเวลา"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__unpaid_structure_ids
@@ -3415,7 +3434,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "This payslip can be erroneous :"
-msgstr ""
+msgstr "สลิปเงินเดือนนี้อาจผิดพลาดได้:"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3555,7 +3574,7 @@ msgstr "การขาดงานที่คาดไม่ถึง"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Unknown State"
-msgstr ""
+msgstr "รัฐที่ไม่รู้จัก"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_work_entry_type_view_form_inherit
@@ -3590,7 +3609,7 @@ msgstr "ขึ้น"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__use_worked_day_lines
 msgid "Use Worked Day Lines"
-msgstr "ใช้ไลน์วันทำงาน"
+msgstr "ใช้รายการวันทำงาน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_line__sequence
@@ -3607,7 +3626,7 @@ msgstr "ใช้เพื่อแสดงกฎเงินเดือนบ
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
 msgid "Used to display the value in the employer cost dashboard."
-msgstr ""
+msgstr "ใช้เพื่อแสดงค่าในแดชบอร์ดต้นทุนของผู้จ้างงาน"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_users
@@ -3617,7 +3636,7 @@ msgstr "ผู้ใช้"
 #. module: hr_payroll
 #: model:res.groups,comment:hr_payroll.group_hr_payroll_user
 msgid "User can manage all contracts, work entries and create payslips."
-msgstr ""
+msgstr "ผู้ใช้สามารถจัดการสัญญา รายการงาน และสร้างสลิปเงินเดือนทั้งหมดได้"
 
 #. module: hr_payroll
 #: model:res.groups,comment:hr_payroll.group_hr_payroll_employee_manager
@@ -3627,7 +3646,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:res.groups,comment:hr_payroll.group_hr_payroll_manager
 msgid "User have full access on the application."
-msgstr ""
+msgstr "ผู้ใช้สามารถเข้าถึงแอปพลิเคชันได้อย่างสมบูรณ์"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
@@ -3654,12 +3673,12 @@ msgstr "เวอร์ชั่น"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__appears_on_employee_cost_dashboard
 msgid "View on Employer Cost Dashboard"
-msgstr ""
+msgstr "ดูบนแดชบอร์ดค่าใช้จ่ายของผู้ว่าจ้าง"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__appears_on_payroll_report
 msgid "View on Payroll Reporting"
-msgstr ""
+msgstr "ดูการรายงานบัญชีเงินเดือน"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_view_kanban
@@ -3730,7 +3749,7 @@ msgstr "ประวัติการสื่อสารของเว็บ
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Week %(week_number)s of %(year)s"
-msgstr ""
+msgstr "สัปดาห์ที่ %(week_number)s จาก %(year)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_structure__schedule_pay__weekly
@@ -3742,7 +3761,7 @@ msgstr "รายสัปดาห์"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Weeks %(week)s and %(week1)s of %(year)s"
-msgstr ""
+msgstr "สัปดาห์ที่ %(week)s และ %(week1)s ของปี %(year)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_work_entry_type__round_days
@@ -3787,6 +3806,8 @@ msgstr "รายงานการวิเคราะห์การเข้
 #: code:addons/hr_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Work Entries are generated for each <strong>time period</strong> defined in the Working Schedule of the Contract."
 msgstr ""
+"รายการของงานจะถูกสร้างขึ้นสำหรับ<strong>แต่ละช่วงเวลา</strong>ที่กำหนดไว้ในตารางการทำงา"
+"นของสัญญา"
 
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_work_entry_report
@@ -3797,7 +3818,7 @@ msgstr "วิเคราะห์การเข้างาน"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__work_entry_source
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_report__work_entry_source
 msgid "Work Entry Source"
-msgstr ""
+msgstr "แหล่งที่มาของรายการงาน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__work_entry_type_id
@@ -3821,7 +3842,7 @@ msgstr "อัตราเวลาทำงาน"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Work entries may not be generated for the period from %(start)s to %(end)s."
-msgstr ""
+msgstr "รายการงานอาจไม่ถูกสร้างขึ้นในช่วงเวลาตั้งแต่ %(start)s ถึง %(end)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure_type__default_work_entry_type_id
@@ -3832,7 +3853,7 @@ msgstr "ประเภทการเข้างานสำหรับกา
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract__work_time_rate
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_contract_history__work_time_rate
 msgid "Work time rate"
-msgstr ""
+msgstr "อัตราเวลาทำงาน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_resource_calendar__work_time_rate
@@ -3843,7 +3864,7 @@ msgstr "อัตราเวลาทำงานเทียบกับตา
 #: model:ir.model.fields,help:hr_payroll.field_hr_contract__work_time_rate
 #: model:ir.model.fields,help:hr_payroll.field_hr_contract_history__work_time_rate
 msgid "Work time rate versus full time working schedule."
-msgstr ""
+msgstr "อัตราเวลาทำงานเทียบกับตารางการทำงานเต็มเวลา"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_report__work_code
@@ -3869,12 +3890,12 @@ msgstr "วันที่ทำงาน"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Worked Days & Inputs"
-msgstr "วันทำงานและอินพุต"
+msgstr "วันทำงานและป้อนข้อมูล"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__worked_days_line_ids
 msgid "Worked Days Lines"
-msgstr "ไลน์วันทำงาน"
+msgstr "รายการวันทำงาน"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_structure__use_worked_day_lines
@@ -3929,6 +3950,7 @@ msgstr "กำหนดเงื่อนไขช่วงที่ไม่ถ
 #: code:addons/hr_payroll/models/res_users.py:0
 msgid "You are receiving this message because you are the HR Responsible of this employee."
 msgstr ""
+"คุณได้รับข้อความนี้เนื่องจากคุณเป็นผู้รับผิดชอบด้านทรัพยากรบุคคลของพนักงานรายนี้"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3947,6 +3969,7 @@ msgstr "คุณไม่สามารถตรวจสอบสลิปเ
 #: code:addons/hr_payroll/models/hr_payslip_input_type.py:0
 msgid "You cannot delete %s as it is used in another module but you can archive it instead."
 msgstr ""
+"คุณไม่สามารถลบ %s ได้ เนื่องจากถูกใช้ในโมดูลอื่นแต่คุณสามารถเก็บถาวรแทนได้"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3995,7 +4018,7 @@ msgstr "คุณต้องเลือกพนักงานเพื่อ
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_line.py:0
 msgid "You must set a contract to create a payslip line."
-msgstr "คุณต้องกำหนดสัญญาเพื่อสร้างไลน์สลิปเงินเดือน"
+msgstr "คุณต้องกำหนดสัญญาเพื่อสร้างรายการสลิปเงินเดือน"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4031,7 +4054,7 @@ msgstr "เช่น การจ่ายปกติ"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "https://www.odoo.com/fr_FR/slides/slide/manage-payroll-1002"
-msgstr ""
+msgstr "https://www.odoo.com/fr_FR/slides/slide/manage-payroll-1002"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip

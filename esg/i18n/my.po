@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* esg
+# * esg
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 15:31+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/esg/my/>"
+"\n"
+"Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: esg
 #. odoo-python
@@ -169,7 +173,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Archived"
-msgstr ""
+msgstr "သိမ်းဆည်းထားသည်"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
@@ -479,7 +483,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "ဖန်တီးသူ"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__create_date

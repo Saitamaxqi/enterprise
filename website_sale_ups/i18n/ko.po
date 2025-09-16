@@ -6,30 +6,33 @@
 # Martin Trigaux, 2018
 # Linkup <link-up@naver.com>, 2018
 # Seongseok Shin <shinss61@hotmail.com>, 2018
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2018-08-24 11:49+0000\n"
-"Last-Translator: Seongseok Shin <shinss61@hotmail.com>, 2018\n"
-"Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
+"PO-Revision-Date: 2025-09-16 12:13+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
+"website_sale_ups/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "(Bill My Account)"
-msgstr ""
+msgstr "(본인 지불 계좌)"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"Delete\" title=\"Delete\"/>"
 msgstr ""
+"<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"삭제\" title=\"삭제\"/>"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,pending_msg:website_sale_ups.payment_provider_ups_cod
@@ -39,7 +42,7 @@ msgstr "<i>보류 중</i>, COD(현금결제)옵션을 선택해 주셔서 감사
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.payment_delivery_methods
 msgid "<span>(UPS Billing will remain to the customer)</span>"
-msgstr ""
+msgstr "<span>(UPS 요금은 고객에게 청구됩니다)</span>"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
@@ -64,7 +67,7 @@ msgstr ""
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Close"
-msgstr "마감"
+msgstr "닫기"
 
 #. module: website_sale_ups
 #: model:ir.model.fields,field_description:website_sale_ups.field_payment_provider__custom_mode
@@ -91,12 +94,12 @@ msgstr ""
 #. module: website_sale_ups
 #: model:ir.model,name:website_sale_ups.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "판매 주문"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "UPS Bill My Account"
-msgstr "UPS 지불 내 계정"
+msgstr "UPS 본인 지불 계정"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.property_ups_carrier_account_inherit_portal_details
@@ -116,7 +119,7 @@ msgstr "계정 사용"
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
 msgid "Your UPS Account Number"
-msgstr ""
+msgstr "UPS 계정 번호"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,auth_msg:website_sale_ups.payment_provider_ups_cod

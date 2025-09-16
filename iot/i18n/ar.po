@@ -1,24 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* iot
+# * iot
 #
 # Translators:
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:38+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/iot/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -65,7 +67,7 @@ msgstr ""
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
 msgid "Add IoT Box wizard"
-msgstr "إضافة معالج جهاز IoT "
+msgstr "إضافة معالج جهاز IoT"
 
 #. module: iot
 #. odoo-javascript
@@ -77,22 +79,22 @@ msgstr "هل أنت متأكد من أنك ترغب في إعادة تشغيل �
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Are you sure you want to restart Odoo on the IoT box?"
-msgstr "هل أنت متأكد من أنك ترغب في إعادة تشغيل أودو في جهاز IoT؟ "
+msgstr "هل أنت متأكد من أنك ترغب في إعادة تشغيل أودو في جهاز IoT؟"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__drivers_auto_update
 msgid "Automatic drivers update"
-msgstr "تحديث برامج التشغيل تلقائياً "
+msgstr "تحديث برامج التشغيل تلقائياً"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_box__drivers_auto_update
 msgid "Automatically update drivers when the IoT Box boots"
-msgstr "قم بتحديث برامج التشغيل تلقائياً عند بدء جهاز IoT "
+msgstr "قم بتحديث برامج التشغيل تلقائياً عند بدء جهاز IoT"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scanner
 msgid "Barcode Scanner"
-msgstr "ماسح الباركود "
+msgstr "ماسح الباركود"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__bluetooth
@@ -102,13 +104,13 @@ msgstr "بلوتوث"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__camera
 msgid "Camera"
-msgstr "الكاميرا "
+msgstr "الكاميرا"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/views/iot_device_form.js:0
 msgid "Check if the device is still connected"
-msgstr "تحقق ما إذا كان الجهاز لا يزال متصلاً "
+msgstr "تحقق ما إذا كان الجهاز لا يزال متصلاً"
 
 #. module: iot
 #. odoo-javascript
@@ -156,7 +158,7 @@ msgstr "إغلاق هذه النافذة ثم المحاولة من جديد "
 #: model:ir.model.fields,field_description:iot.field_iot_box__company_id
 #: model:ir.model.fields,field_description:iot.field_iot_device__company_id
 msgid "Company"
-msgstr "الشركة "
+msgstr "الشركة"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
@@ -186,7 +188,7 @@ msgstr "تعذر الاتصال بجهاز IoT "
 #. odoo-javascript
 #: code:addons/iot/static/src/views/iot_device_form.js:0
 msgid "Connection to device failed"
-msgstr "تعذر الاتصال بالجهاز "
+msgstr "تعذر الاتصال بالجهاز"
 
 #. module: iot
 #. odoo-javascript
@@ -219,7 +221,7 @@ msgstr "الجهاز"
 #: model:ir.model.fields,field_description:iot.field_iot_box__device_count
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 msgid "Device Count"
-msgstr "عدد الأجهزة "
+msgstr "عدد الأجهزة"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
@@ -251,18 +253,18 @@ msgstr "عرض"
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__display_name
 msgid "Display Name"
-msgstr "اسم العرض "
+msgstr "اسم العرض"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_url
 msgid "Display URL"
-msgstr "عرض رابط URL "
+msgstr "عرض رابط URL"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip
 #: model:ir.model.fields,field_description:iot.field_iot_device__iot_ip
 msgid "Domain Address"
-msgstr "عنوان النطاق "
+msgstr "عنوان النطاق"
 
 #. module: iot
 #. odoo-javascript
@@ -285,12 +287,12 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
 msgid "Fiscal Data Module"
-msgstr "تطبيق البيانات المالية "
+msgstr "تطبيق البيانات المالية"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "Group By"
-msgstr "التجميع حسب "
+msgstr "تجميع حسب"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
@@ -308,7 +310,7 @@ msgstr "المُعرف"
 #. module: iot
 #: model:ir.model,name:iot.model_iot_device
 msgid "IOT Device"
-msgstr "جهاز IoT "
+msgstr "جهاز IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__identifier
@@ -334,7 +336,7 @@ msgstr "إذا كنت في خادم آمن (HTTPS) تحقق من قبولك لل
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
 msgid "Image Version"
-msgstr "نسخة الصورة "
+msgstr "نسخة الصورة"
 
 #. module: iot
 #: model:ir.ui.menu,name:iot.iot_menu_root
@@ -346,7 +348,7 @@ msgstr "IoT"
 #: model:ir.model.fields,field_description:iot.field_iot_device__iot_id
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "IoT Box"
-msgstr "جهاز IoT "
+msgstr "جهاز IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip_url
@@ -357,34 +359,34 @@ msgstr "الصفحة الرئيسية لجهاز IoT "
 #: model:ir.actions.act_window,name:iot.iot_box_action
 #: model:ir.ui.menu,name:iot.iot_box_menu_action
 msgid "IoT Boxes"
-msgstr "أجهزة IoT "
+msgstr "أجهزة IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__device_id
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_search
 msgid "IoT Device"
-msgstr "جهاز IoT "
+msgstr "جهاز IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__is_scanner
 msgid "Is Scanner"
-msgstr "ماسح ضوئي "
+msgstr "ماسح ضوئي"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__keyboard
 msgid "Keyboard"
-msgstr "لوحة المفاتيح "
+msgstr "لوحة المفاتيح"
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_keyboard_layout
 #: model:ir.model.fields,field_description:iot.field_iot_device__keyboard_layout
 msgid "Keyboard Layout"
-msgstr "مخطط لوحة المفاتيح "
+msgstr "مخطط لوحة المفاتيح"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
 msgid "Last Sent Value"
-msgstr "آخر قيمة مرسلة "
+msgstr "آخر قيمة مرسلة"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_uid
@@ -406,7 +408,7 @@ msgstr "آخر تحديث في"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Last restarting process hasn't finished yet"
-msgstr "لم تنته آخر عملية إعادة تشغيل بعد "
+msgstr "لم تنته آخر عملية إعادة تشغيل بعد"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__layout
@@ -416,22 +418,22 @@ msgstr "مخطط"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__manual_measurement
 msgid "Manual Measurement"
-msgstr "القياس اليدوي "
+msgstr "القياس اليدوي"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__manual_measurement
 msgid "Manually read the measurement from the device"
-msgstr "قم بقراءة القياسات يدوياً من الجهاز "
+msgstr "قم بقراءة القياسات يدوياً من الجهاز"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__is_scanner
 msgid "Manually switch the device type between keyboard and scanner"
-msgstr "قم بتبديل نوع الجهاز يدوياً بين لوحة المفاتيح والماسح الضوئي "
+msgstr "قم بتبديل نوع الجهاز يدوياً بين لوحة المفاتيح والماسح الضوئي"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__manufacturer
 msgid "Manufacturer"
-msgstr "مصنِّع "
+msgstr "مصنِّع"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__name
@@ -448,7 +450,7 @@ msgstr "الشبكة"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "No IoT Box found!"
-msgstr ""
+msgstr "لم يتم العثور على جهاز IoT!"
 
 #. module: iot
 #. odoo-javascript
@@ -464,12 +466,12 @@ msgstr "اقتران "
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__pairing_code
 msgid "Pairing Code"
-msgstr "رمز الاقتران "
+msgstr "رمز الاقتران"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__payment
 msgid "Payment Terminal"
-msgstr "جهاز الدفع بالبطاقة "
+msgstr "جهاز الدفع بالبطاقة"
 
 #. module: iot
 #. odoo-javascript
@@ -487,7 +489,7 @@ msgstr "يرجى التحقق ما إذا كان جهاز IoT لا يزال مت
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Please wait"
-msgstr "يرجى الانتظار "
+msgstr "يرجى الانتظار"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__printer
@@ -508,7 +510,7 @@ msgstr "تقارير الطابعة"
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
 msgid "Publisher Warranty Contract For IoT Box"
-msgstr "عقد ضمان الناشر لجهاز IoT "
+msgstr "عقد ضمان الناشر لجهاز IoT"
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_actions_report
@@ -529,19 +531,19 @@ msgstr "التقارير"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restart Failed"
-msgstr "فشلت عملية إعادة التشغيل "
+msgstr "فشلت عملية إعادة التشغيل"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restart finished"
-msgstr "انتهت عملية إعادة التشغيل "
+msgstr "انتهت عملية إعادة التشغيل"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Restarting"
-msgstr "إعادة التشغيل "
+msgstr "إعادة التشغيل"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scale
@@ -551,7 +553,7 @@ msgstr "الميزان"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__serial
 msgid "Serial"
-msgstr "تسلسلي "
+msgstr "تسلسلي"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connected
@@ -584,18 +586,18 @@ msgstr "ليس هناك جهاز متصل بجهاز IoT هذا "
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
 msgid "There is no device connected to your IoT Boxes"
-msgstr "لا يوجد جهاز متصل بأجهزة IoT الخاصة بك "
+msgstr "لا يوجد جهاز متصل بأجهزة IoT الخاصة بك"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Timed out"
-msgstr ""
+msgstr "انتهت المهلة"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__token
 msgid "Token"
-msgstr "الرمز "
+msgstr "الرمز"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__type
@@ -615,7 +617,9 @@ msgstr "نوع الجهاز."
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__display_url
 msgid "URL of the page that will be displayed by the device, leave empty to use the customer facing display of the POS."
-msgstr "رابط URL للصفحة التي سوف يتم عرضها بواسطة الجهاز. اتركه فارغاً لاستخدام العرض المواجه للعميل في نقطة البيع. "
+msgstr ""
+"رابط URL للصفحة التي سوف يتم عرضها بواسطة الجهاز. اتركه فارغاً لاستخدام العرض "
+"المواجه للعميل في نقطة البيع."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__direct
@@ -625,7 +629,7 @@ msgstr "USB"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__variant
 msgid "Variant"
-msgstr "المتغير "
+msgstr "المتغير"
 
 #. module: iot
 #. odoo-python
@@ -636,7 +640,7 @@ msgstr "واجهتنا مشاكل أثناء اقتران جهاز IoT الخا�
 #. module: iot
 #: model:ir.model.fields,help:iot.field_ir_actions_report__device_id
 msgid "When setting a device here, the report will be printed through this device on the IoT Box"
-msgstr "عند إعداد جهاز هنا، سيتم طباعة التقرير من خلال هذا الجهاز على جهاز IoT "
+msgstr "عند إعداد جهاز هنا، سيتم طباعة التقرير من خلال هذا الجهاز على جهاز IoT"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -646,4 +650,4 @@ msgstr "اتصال"
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
-msgstr "لإضافة جهاز IoT. "
+msgstr "لإضافة جهاز IoT."

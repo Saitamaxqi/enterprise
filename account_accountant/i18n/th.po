@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_accountant
+# * account_accountant
 #
 # Translators:
 # Odoo Thaidev <odoothaidev@gmail.com>, 2022
@@ -8,20 +8,22 @@
 # Martin Trigaux, 2023
 # Wichanon Jamwutthipreecha, 2023
 # Amin Cheloh <amincheloh@gmail.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: Amin Cheloh <amincheloh@gmail.com>, 2023\n"
-"Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
+"PO-Revision-Date: 2025-09-16 22:57+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"account_accountant/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_accountant
 #. odoo-python
@@ -57,12 +59,13 @@ msgstr "-> กระทบยอด"
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_0
 msgid "<b class=\"tip_title\">Tip: Bulk update journal items</b>"
-msgstr ""
+msgstr "<b class=\"tip_title\"> เคล็ดลับ: อัปเดตรายการสมุดรายวันจำนวนมาก </b>"
 
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "<b class=\"tip_title\">Tip: Find an Accountant or register your Accounting Firm</b>"
 msgstr ""
+"<b class=\"tip_title\">เคล็ดลับ: ค้นหานักบัญชี หรือ ลงทะเบียนให้กับสำนักงานบัญชีของคุณ</b>"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -115,22 +118,22 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">1 Bank Transaction</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">1 ธุรกรรมทางธนาคาร</span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
 msgid "<span class=\"o_stat_text\">Bank Statement</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">รายการเดินบัญชีธนาคาร</span>"
 
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "<span class=\"tip_button_text\">Find an Accountant</span>"
-msgstr ""
+msgstr "<span class=\"tip_button_text\">ค้นหานักบัญชี</span>"
 
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "<span class=\"tip_button_text\">Register your Accounting Firm</span>"
-msgstr ""
+msgstr "<span class=\"tip_button_text\">ลงทะเบียนสำนักงานบัญชีของคุณ</span>"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -164,17 +167,17 @@ msgstr "กลุ่มบัญชี"
 #: model:ir.actions.act_window,name:account_accountant.account_tag_action
 #: model:ir.ui.menu,name:account_accountant.account_tag_menu
 msgid "Account Tags"
-msgstr "ป้ายกำกับ..."
+msgstr "แท็กบัญชี"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_from_account_id
 msgid "Account Transfer From"
-msgstr ""
+msgstr "บัญชีโอนจาก"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_wizard
 msgid "Account reconciliation wizard"
-msgstr ""
+msgstr "โปรแกรมการกระทบยอดบัญชี"
 
 #. module: account_accountant
 #: model:ir.ui.menu,name:account_accountant.menu_accounting
@@ -212,12 +215,12 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_model_autocomplete_ids
 msgid "All reconciliation models"
-msgstr ""
+msgstr "โมเดลการกระทบยอดทั้งหมด"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__allow_partials
 msgid "Allow partials"
-msgstr ""
+msgstr "อนุญาตบางส่วน"
 
 #. module: account_accountant
 #: model:res.groups,name:account_accountant.group_fiscal_year
@@ -250,7 +253,7 @@ msgstr "ยอดเงินในสกุลเงิน"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__amount
 msgid "Amount in company currency"
-msgstr ""
+msgstr "จำนวนเงินในสกุลเงินของบริษัท"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_amount
@@ -289,7 +292,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__use_anglo_saxon
 msgid "Anglo-Saxon Accounting"
-msgstr ""
+msgstr "ระบบบัญชีแบบ Anglo-Saxon"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__balance
@@ -299,7 +302,7 @@ msgstr "ยอดคงเหลือ"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__kpi_account_bank_cash
 msgid "Bank & Cash Moves"
-msgstr ""
+msgstr "การย้ายธนาคารและเงินสด"
 
 #. module: account_accountant
 #. odoo-python
@@ -313,7 +316,7 @@ msgstr "Bank Reconciliation Move Presets"
 #: model:ir.model,name:account_accountant.model_account_bank_statement
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "Bank Statement"
-msgstr "ใบแจ้งยอดจากธนาคาร"
+msgstr "รายการเดินบัญชีธนาคาร"
 
 #. module: account_accountant
 #. odoo-python
@@ -324,7 +327,7 @@ msgstr "Bank Statement %s.pdf"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "รายการใบแจ้งยอดจากธนาคาร"
+msgstr "บรรทัดรายการเดินบัญชีธนาคาร"
 
 #. module: account_accountant
 #. odoo-python
@@ -347,7 +350,7 @@ msgstr "ยกเลิก"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_change_lock_date
 msgid "Change Lock Date"
-msgstr ""
+msgstr "เปลี่ยนวันที่ล็อค"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -358,13 +361,13 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_reconcile_wizard__to_check
 msgid "Check if you are not certain of all the information of the counterpart."
-msgstr ""
+msgstr "ตรวจสอบว่าคุณไม่มั่นใจในข้อมูลทั้งหมดของคู่สัญญาหรือไม่"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/move_line_list/move_line_list.xml:0
 msgid "Choose a line to preview its attachments."
-msgstr ""
+msgstr "เลือกบรรทัดเพื่อดูตัวอย่างไฟล์แนบ"
 
 #. module: account_accountant
 #: model_terms:ir.actions.act_window,help:account_accountant.actions_account_fiscal_year
@@ -374,24 +377,24 @@ msgstr "คลิกที่นี่เพื่อสร้างปีบั
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "Click here to find an accountant or if you want to list out your accounting services on Odoo"
-msgstr ""
+msgstr "คลิกที่นี่เพื่อ ค้นหานักบัญชี หรือ ลงรายการบริการด้านบัญชีของคุณบน Odoo"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_company
 msgid "Companies"
-msgstr "หลายบริษัท"
+msgstr "บริษัท"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__company_id
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__company_id
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__company_id
 msgid "Company"
-msgstr "บริษัทเดียว"
+msgstr "บริษัท"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__company_currency_id
 msgid "Company currency"
-msgstr ""
+msgstr "สกุลเงินของบริษัท"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_config_settings
@@ -402,7 +405,7 @@ msgstr "ตั้งค่าการกำหนดค่า"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "Connect your bank and get your latest transactions."
-msgstr ""
+msgstr "เชื่อมต่อกับธนาคารของคุณและรับธุรกรรมล่าสุดของคุณ"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_model_widget_wizard
@@ -412,7 +415,7 @@ msgstr "บัญชีคู่"
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_form_bank_rec_widget
 msgid "Create Statement"
-msgstr ""
+msgstr "สร้างคำสั่ง"
 
 #. module: account_accountant
 #: model_terms:ir.actions.act_window,help:account_accountant.action_account_group_tree
@@ -424,6 +427,8 @@ msgstr "สร้างกลุ่มบัญชีใหม่"
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "Create your first vendor bill.<br/><br/><i>Tip: If you don’t have one on hand, use our sample bill.</i>"
 msgstr ""
+"สร้างใบเรียกเก็บเงินผู้ขายครั้งแรกของคุณ<br/><br/><i>เคล็ดลับ: หากคุณไม่มี "
+"ให้ใช้ใบเรียกเก็บเงินตัวอย่างของเรา</i>"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__create_uid
@@ -449,7 +454,7 @@ msgstr "เครดิต"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__cron_last_check
 msgid "Cron Last Check"
-msgstr ""
+msgstr "เช็คล่าสุดของ Cron"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -462,7 +467,7 @@ msgstr "สกุลเงิน"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_currency_id
 msgid "Currency to use for reconciliation"
-msgstr ""
+msgstr "สกุลเงินที่จะใช้สำหรับการกระทบยอด"
 
 #. module: account_accountant
 #. odoo-python
@@ -491,22 +496,22 @@ msgstr "เดบิต"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Define fiscal years of more or less than one year"
-msgstr ""
+msgstr "ให้กำหนดปีของบัญชีมากกว่าหรือน้อยกว่าหนึ่งปี"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Deposits"
-msgstr ""
+msgstr "เงินฝาก"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_digest_digest
 msgid "Digest"
-msgstr "ไดเจส"
+msgstr "สรุปย่อ"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
 msgid "Discard"
-msgstr ""
+msgstr "ละทิ้ง"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -536,7 +541,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/models/digest.py:0
 msgid "Do not have access, skip this data for user's digest email"
-msgstr "ไม่มีสิทธิ์เข้าถึง ข้ามข้อมูลนี้สำหรับอีเมลไดเจสของผู้ใช้"
+msgstr "ไม่มีสิทธิ์เข้าถึง ให้ข้ามข้อมูลนี้ไปสำหรับอีเมลสรุปของผู้ใช้"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__date_to
@@ -553,6 +558,9 @@ msgstr "วันที่สิ้นสุด ที่รวมอยู่�
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__invoicing_switch_threshold
 msgid "Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting entries related to it. Use this option after installing Accounting if you were using only Invoicing before, before importing all your actual accounting data in to Odoo."
 msgstr ""
+"ทุกการชำระเงินและใบแจ้งหนี้ก่อนวันที่นี้จะได้รับสถานะ 'จากการออกใบแจ้งหนี้' "
+"ซึ่งจะซ่อนรายการทางบัญชีทั้งหมดที่เกี่ยวข้อง ใช้ตัวเลือกนี้หลังจากติดตั้งการบัญชี "
+"หากคุณเคยใช้เฉพาะการออกใบแจ้งหนี้มาก่อน ก่อนที่จะนำเข้าข้อมูลการบัญชีจริงทั้งหมดของคุณไปยัง Odoo"
 
 #. module: account_accountant
 #. odoo-python
@@ -564,7 +572,7 @@ msgstr ""
 #: model:ir.model,name:account_accountant.model_account_fiscal_year
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Year"
-msgstr "ปีบัญชี"
+msgstr "ปีงบประมาณ"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.action_account_fiscal_year_form
@@ -577,12 +585,12 @@ msgstr "ปีงบประมาณ 2018"
 #: model:ir.ui.menu,name:account_accountant.menu_account_fiscal_year
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Fiscal Years"
-msgstr "ปีบัญชี"
+msgstr "ปีงบประมาณ"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__fiscalyear_last_day
 msgid "Fiscalyear Last Day"
-msgstr "วันสุดท้ายปีงบประมาณ"
+msgstr "วันสุดท้ายของปีงบประมาณ"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__fiscalyear_last_month
@@ -718,6 +726,9 @@ msgstr ""
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_0
 msgid "From any list view, select multiple records and the list becomes editable. If you update a cell, selected records are updated all at once. Use this feature to update multiple journal entries from the General Ledger, or any Journal view."
 msgstr ""
+"จากมุมมองรายการใดก็ตาม ให้เลือกบันทึกและรายการหลายรายการก็จะสามารถทำการแก้ไขได้ "
+"หากคุณอัปเดตเซลล์ บันทึกที่เลือกจะถูกอัปเดตทั้งหมดในครั้งเดียว "
+"ใช้ฟีเจอร์นี้เพื่ออัปเดตรายการสมุดรายวันหลายรายการจากบัญชีแยกประเภททั่วไปหรือมุมมองสมุดรายวัน"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -780,7 +791,7 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Invalid statements"
-msgstr ""
+msgstr "คำสั่งไม่ถูกต้อง"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_bank_rec_widget__state
@@ -794,7 +805,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__invoicing_switch_threshold
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__invoicing_switch_threshold
 msgid "Invoicing Switch Threshold"
-msgstr ""
+msgstr "เกณฑ์การเปลี่ยนใบแจ้งหนี้"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__st_line_is_reconciled
@@ -804,22 +815,22 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__is_write_off_required
 msgid "Is a write-off move required to reconcile"
-msgstr ""
+msgstr "จำเป็นต้องมีการย้ายการตัดจำหน่ายจึงจะกระทบยอดได้"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__is_transfer_required
 msgid "Is an account transfer required"
-msgstr ""
+msgstr "จำเป็นต้องโอนบัญชี"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__transfer_warning_message
 msgid "Is an account transfer required to reconcile"
-msgstr ""
+msgstr "จำเป็นต้องโอนบัญชีเพื่อกระทบยอด"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__lock_date_violated_warning_message
 msgid "Is the date violating the lock date of moves"
-msgstr ""
+msgstr "เป็นวันที่ฝ่าฝืนการล็อควันที่ย้าย"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
@@ -849,7 +860,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_search_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Journal Entry"
-msgstr "รายการบันทึกประจำวัน"
+msgstr "รายการสมุดรายวัน"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_move_line
@@ -865,18 +876,18 @@ msgstr "รายการสมุดบัญชีรายวัน"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__kpi_account_bank_cash_value
 msgid "Kpi Account Bank Cash Value"
-msgstr ""
+msgstr "มูลค่าเงินสดของธนาคารในบัญชี Kpi"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__label
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
 msgid "Label"
-msgstr "ป้าย"
+msgstr "ป้ายกำกับ"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Last Day"
-msgstr ""
+msgstr "วันสุดท้าย"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__write_uid
@@ -902,7 +913,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "Let’s go back to the dashboard."
-msgstr "กลับไปที่แดชบอร์ดกันเถอะ"
+msgstr "กลับไปที่แดชบอร์ด"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -925,7 +936,7 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__line_ids
 msgid "Line"
-msgstr "ไลน์"
+msgstr "บรรทัด"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_bank_rec_widget_line
@@ -977,13 +988,13 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Matched"
-msgstr ""
+msgstr "ตรงกัน"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_payment.py:0
 msgid "Matched Transactions"
-msgstr ""
+msgstr "ธุรกรรมที่ตรงกัน"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget__matching_rules_allow_auto_reconcile
@@ -999,12 +1010,12 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_move_line__move_attachment_ids
 msgid "Move Attachment"
-msgstr ""
+msgstr "ย้ายเอกสารที่แนบมา"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__move_line_ids
 msgid "Move lines to reconcile"
-msgstr ""
+msgstr "ย้ายบรรทัดเพื่อกระทบยอด"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__name
@@ -1021,12 +1032,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/move_line_list/move_line_list.xml:0
 msgid "No attachments linked."
-msgstr ""
+msgstr "ไม่มีไฟล์แนบที่เชื่อมโยง"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "No statement"
-msgstr ""
+msgstr "ไม่มีคำสั่ง"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__tax_lock_date
@@ -1041,7 +1052,7 @@ msgstr "ไม่มีผู้ใช้รายใด รวมถึงผ�
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Not Matched"
-msgstr ""
+msgstr "ไม่ตรงกัน"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -1055,6 +1066,7 @@ msgstr "โน้ต"
 #: code:addons/account_accountant/wizard/account_change_lock_date.py:0
 msgid "Only Billing Administrators are allowed to change lock dates!"
 msgstr ""
+"เฉพาะผู้ดูแลระบบการเรียกเก็บเงินเท่านั้นที่ได้รับอนุญาตให้เปลี่ยนวันที่ล็อค!"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__period_lock_date
@@ -1111,7 +1123,7 @@ msgstr "การจับคู่การชําระเงิน"
 #: model:ir.model.fields,field_description:account_accountant.field_account_move__payment_state_before_switch
 #: model:ir.model.fields,field_description:account_accountant.field_account_payment__payment_state_before_switch
 msgid "Payment State Before Switch"
-msgstr ""
+msgstr "สถานะการชำระเงินก่อนเปลี่ยน"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_payment
@@ -1139,17 +1151,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__predict_bill_product
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__predict_bill_product
 msgid "Predict Bill Product"
-msgstr ""
+msgstr "คาดการณ์ใบเรียกเก็บเงินสินค้า"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Predict vendor bill product"
-msgstr ""
+msgstr "คาดการณ์ใบเรียกเก็บเงินสินค้าของผู้จำหน่าย"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_model
 msgid "Preset to create journal entries during a invoices and payments matching"
 msgstr ""
+"ตั้งค่าล่วงหน้าเพื่อสร้างรายการสมุดรายวันระหว่างการจับคู่ใบแจ้งหนี้และการชำระเงิน"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__fiscalyear_lock_date
@@ -1192,12 +1205,12 @@ msgstr "กระทบยอด"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
 msgid "Reconcile & open"
-msgstr ""
+msgstr "กระทบยอดและเปิด"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_account_id
 msgid "Reconcile Account"
-msgstr ""
+msgstr "กระทบยอดบัญชี"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_bank_rec_widget_line__reconcile_model_id
@@ -1217,12 +1230,12 @@ msgstr "การกระทบยอด"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__reco_model_id
 msgid "Reconciliation model"
-msgstr ""
+msgstr "โมเดลการกระทบยอด"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Record cost of goods sold in your journal entries"
-msgstr ""
+msgstr "บันทึกต้นทุนสินค้าที่ขายในรายการสมุดรายวันของคุณ"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_widget_form
@@ -1237,7 +1250,7 @@ msgstr "ตั้งค่าใหม่"
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_model_line
 msgid "Rules for the reconciliation model"
-msgstr ""
+msgstr "กฎสำหรับโมเดลการกระทบยอด"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -1329,7 +1342,7 @@ msgstr "รายการเดินบัญชีธนาคาร"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
 msgid "Statement Line"
-msgstr "บรรทัดรายการเดินบัญชีธนาคาร"
+msgstr "บรรทัดรายการเดินบัญชี"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_list_bank_rec_widget
@@ -1384,12 +1397,14 @@ msgstr ""
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "The date you set violates the lock date of one of your entry. It will be overriden by the following date : %(replacement_date)s"
 msgstr ""
+"วันทีคุณตั้งไว้ ได้ละเมิดวันที่ล็อคของรายการใดรายการหนึ่งของคุณ มันจะถูกแทนที่ภายในวันที่ต่อไปนี้: "
+"%(replacement_date)s"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "The ending date must not be prior to the starting date."
-msgstr "The ending date must not be prior to the starting date."
+msgstr "วันที่สิ้นสุดจะต้องไม่อยู่ก่อนวันที่เริ่มต้น"
 
 #. module: account_accountant
 #. odoo-python
@@ -1412,6 +1427,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "The system will try to predict the product on vendor bill lines based on the label of the line"
 msgstr ""
+"ระบบจะพยายามคาดการณ์สินค้าในรายการเรียกเก็บเงินของผู้จำหน่ายตามป้ายชื่อของรายการ"
 
 #. module: account_accountant
 #. odoo-python
@@ -1423,23 +1439,25 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "This can only be used on journal items"
-msgstr ""
+msgstr "สามารถใช้กับรายการสมุดรายวันได้เท่านั้น"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_reconcile_model_line.py:0
 msgid "This reconciliation model can't be used in the manual reconciliation widget because its configuration is not adapted"
 msgstr ""
+"ไม่สามารถใช้แบบจำลองการกระทบยอดนี้ในวิดเจ็ตการกระทบยอดด้วยตนเอง "
+"เนื่องจากไม่มีการปรับเปลี่ยนการกำหนดค่า"
 
 #. module: account_accountant
 #: model:digest.tip,name:account_accountant.digest_tip_account_accountant_0
 msgid "Tip: Bulk update journal items"
-msgstr ""
+msgstr "เคล็ดลับ: อัปเดตรายการสมุดรายวันจำนวนมาก"
 
 #. module: account_accountant
 #: model:digest.tip,name:account_accountant.digest_tip_account_accountant_1
 msgid "Tip: Find an Accountant or register your Accounting Firm"
-msgstr ""
+msgstr "เคล็ดลับ: ค้นหานักบัญชี หรือ ลงทะเบียนสำนักงานบัญชีของคุณ"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__to_check
@@ -1478,24 +1496,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Transfer from %s"
-msgstr ""
+msgstr "โอนย้ายจาก %s"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Transfer to %s"
-msgstr ""
+msgstr "โอนย้ายไปยัง %s"
 
 #. module: account_accountant
 #: model:ir.actions.server,name:account_accountant.auto_reconcile_bank_statement_line_ir_actions_server
 msgid "Try to reconcile automatically your statement lines"
-msgstr ""
+msgstr "พยายามกระทบยอดบรรทัดรายการเดินบัญชีของคุณโดยอัตโนมัติ"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/res_company.py:0
 msgid "Unreconciled statements lines"
-msgstr ""
+msgstr "บรรทัดรายการเดินบัญชีที่ไม่กระทบยอด"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget__state__valid
@@ -1536,19 +1554,22 @@ msgstr "ใช้กับการแก้ไข"
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "Write-Off Entry"
-msgstr ""
+msgstr "รายการตัดจำหน่าย"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "You can not have an overlap between two fiscal years, please correct the start and/or end dates of your fiscal years."
-msgstr "You can not have an overlap between two fiscal years, please correct the start and/or end dates of your fiscal years."
+msgstr ""
+"คุณไม่สามารถมีการทับซ้อนกันระหว่างสองปีบัญชีได้ โปรดแก้ไข วันที่เริ่มต้นและ/หรือสิ้นสุด "
+"ของปีบัญชีของคุณ"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "You can only reconcile entries with up to two different accounts: %s"
 msgstr ""
+"คุณสามารถปรับยอดรายการกับบัญชีที่แตกต่างกันได้สูงสุดสองบัญชีเท่านั้น: %s"
 
 #. module: account_accountant
 #. odoo-python
@@ -1578,25 +1599,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to %(btn_start)sfully reconcile%(btn_end)s the document."
-msgstr ""
+msgstr "คุณอาจต้องการ %(btn_start)s กระทบยอดเอกสาร %(btn_end)s อย่างสมบูรณ์"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to make a %(btn_start)spartial reconciliation%(btn_end)s instead."
-msgstr ""
+msgstr "คุณอาจต้องทำการ %(btn_start)s กระทบยอดบางส่วน %(btn_end)s แทน"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to record a %(btn_start)spartial payment%(btn_end)s."
-msgstr ""
+msgstr "คุณอาจต้องบันทึก %(btn_start)s การชำระเงินบางส่วน %(btn_end)s"
 
 #. module: account_accountant
 #. odoo-python
 #: code:addons/account_accountant/models/bank_rec_widget.py:0
 msgid "You might want to set the invoice as %(btn_start)sfully paid%(btn_end)s."
 msgstr ""
+"คุณอาจต้องการตั้งค่าใบแจ้งหนี้เป็น %(btn_start)sชำเงินเต็มจำนวนแล้ว %(btn_end)s"
 
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__bank_rec_widget_line__flag__aml

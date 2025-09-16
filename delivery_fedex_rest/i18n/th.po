@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_fedex_rest
+# * delivery_fedex_rest
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 22:59+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"delivery_fedex_rest/th/>\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -21,6 +25,8 @@ msgid ""
 "<b>After finishing creation of the project, you will see your test API key, secret key and account number:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>หลังจากเสร็จสิ้นการสร้างโปรเจ็กต์ คุณจะเห็นรหัสทดสอบ API รหัสลับ และหมายเลขบัญชี:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -28,6 +34,9 @@ msgid ""
 "<b>Once your account is created, go to the My Projects tab and create a new API project. Make sure to select the options indicated below:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>เมื่อสร้างบัญชีแล้ว ให้ไปที่แท็บโปรเจ็กต์ของฉัน และสร้างโปรเจ็กต์ API ใหม่ "
+"อย่าลืมเลือกตัวเลือกที่ระบุไว้ด้านล่าง:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -35,6 +44,11 @@ msgid ""
 "<b>To enable the creation of FedEx shipping labels, the last step is the Certification Process, click on 'Go to API certification' and follow the required steps to get your account certified for label creation.</b>\n"
 "                                <br/>These certifications usually require that you contact the FedEx support team by email."
 msgstr ""
+"<b>หากต้องการเปิดใช้งานการสร้างฉลากการจัดส่ง FedEx ขั้นตอนสุดท้ายคือกระบวนการรับรอง คลิกที่ "
+"\"ไปที่การรับรอง API\" "
+"และทำตามขั้นตอนที่จำเป็นเพื่อให้บัญชีของคุณได้รับการรับรองสำหรับการสร้างฉลาก</b>\n"
+"                                <br/"
+">โดยปกติแล้วการรับรองเหล่านี้จะต้องให้คุณติดต่อทีมสนับสนุนของ FedEx ทางอีเมล"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -42,6 +56,9 @@ msgid ""
 "<b>To move to production, generate a production key and link it to a FedEx account number (you can add/create one if necessary), you will receive production API and secret keys:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>หากต้องการย้ายไปยังการผลิต ให้สร้างคีย์การผลิตและเชื่อมโยงกับหมายเลขบัญชี FedEx "
+"(คุณสามารถเพิ่ม/สร้างได้หากจำเป็น) คุณจะได้รับ API การผลิตและคีย์ความลับ:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -49,11 +66,14 @@ msgid ""
 "<b>When asked to select APIs for the project, make sure to enable at least the following APIs:</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>เมื่อได้รับคำขอให้เลือก API สำหรับโปรเจ็กต์ โปรดตรวจสอบให้แน่ใจว่าได้เปิดใช้งาน API "
+"อย่างน้อยดังต่อไปนี้:</b>\n"
+"                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "<span class=\"o_form_label\">Package Length Unit</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">หน่วยความยาวบรรจุภัณฑ์</span>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -65,17 +85,17 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_key
 msgid "API Key"
-msgstr ""
+msgstr "API Key"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Account Number"
-msgstr ""
+msgstr "หมายเลขบัญชี"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__always
 msgid "Always"
-msgstr ""
+msgstr "เสมอ"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -88,12 +108,12 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "ผู้ให้บริการ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__check
 msgid "Check using FedEx Address API"
-msgstr ""
+msgstr "ตรวจสอบโดยใช้ FedEx Address API"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_droppoff_type__contact_fedex_to_schedule
@@ -104,7 +124,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "Could not decode response"
-msgstr ""
+msgstr "ไม่สามารถถอดรหัสคำตอบได้"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_residential_address
@@ -114,28 +134,31 @@ msgid ""
 "this information using the FedEx Address API, we assume that the address is "
 "residential unless it is marked explicitly as a BUSINESS address."
 msgstr ""
+"กำหนดว่าจะระบุที่อยู่ผู้รับเป็นที่อยู่ที่อยู่อาศัยหรือไม่ "
+"(เพื่อคำนวณค่าธรรมเนียมเพิ่มเติมที่อาจเกิดขึ้นได้อย่างถูกต้อง) โปรดทราบว่า: เมื่อดึงข้อมูลนี้โดยใช้ "
+"FedEx Address API เราจะถือว่าที่อยู่เป็นที่อยู่อาศัย เว้นแต่จะระบุอย่างชัดเจนว่าเป็นที่อยู่ธุรกิจ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__display_name
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_uom_uom__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "แสดงชื่อ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_droppoff_type__dropoff_at_fedex_location
 msgid "Drop off at FedEx location"
-msgstr ""
+msgstr "ส่งที่ FedEx"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Duties paid by"
-msgstr ""
+msgstr "ค่าภาษีจ่ายโดย"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__epl2
 msgid "EPL2"
-msgstr ""
+msgstr "EPL2"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__etd
@@ -158,28 +181,28 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Extra Data"
-msgstr ""
+msgstr "ข้อมูลพิเศษ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_rate_request
 msgid "Extra data for rate"
-msgstr ""
+msgstr "ข้อมูลเพิ่มเติมสำหรับอัตรา"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_return_request
 msgid "Extra data for return"
-msgstr ""
+msgstr "ข้อมูลเพิ่มเติมสำหรับการส่งคืนสินค้า"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_ship_request
 msgid "Extra data for ship"
-msgstr ""
+msgstr "ข้อมูลเพิ่มเติมสำหรับการจัดส่ง"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__delivery_type__fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__stock_package_type__package_carrier_type__fedex_rest
 msgid "FedEx"
-msgstr ""
+msgstr "FedEx"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__fedex_1_day_freight
@@ -214,7 +237,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_account_number
 msgid "FedEx Account Number"
-msgstr ""
+msgstr "หมายเลขบัญชี FedEx"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_droppoff_type
@@ -264,7 +287,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__smart_post
 msgid "FedEx Ground® Economy (Formerly known as FedEx SmartPost®)"
-msgstr ""
+msgstr "FedEx Ground® Economy (เดิมเรียกว่า FedEx SmartPost®)"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__ground_home_delivery
@@ -294,7 +317,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__fedex_ground
 msgid "FedEx International Ground® and FedEx Domestic Ground®"
-msgstr ""
+msgstr "FedEx International Ground® และ FedEx Domestic Ground®"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__international_priority_distribution
@@ -304,7 +327,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__international_distribution_freight
 msgid "FedEx International Priority DirectDistribution® Freight"
-msgstr ""
+msgstr "FedEx International Priority DirectDistribution® การขนส่งสินค้า"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__fedex_international_priority
@@ -399,7 +422,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Configuration"
-msgstr ""
+msgstr "การกำหนดค่า Fedex"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
@@ -410,7 +433,7 @@ msgstr ""
 #: model:delivery.carrier,name:delivery_fedex_rest.delivery_carrier_fedex_inter
 #: model:product.template,name:delivery_fedex_rest.product_product_delivery_fedex_inter_product_template
 msgid "Fedex International"
-msgstr ""
+msgstr "Fedex International"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_duty_payment
@@ -425,13 +448,13 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Fedex Tutorial"
-msgstr ""
+msgstr "บทเรียน Fedex"
 
 #. module: delivery_fedex_rest
 #: model:delivery.carrier,name:delivery_fedex_rest.delivery_carrier_fedex_us
 #: model:product.template,name:delivery_fedex_rest.product_product_delivery_fedex_us_product_template
 msgid "Fedex US"
-msgstr ""
+msgstr "Fedex US"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
@@ -443,6 +466,11 @@ msgid ""
 "FedEx. It can also be submitted directly as ETD information to FedEx upon "
 "shipment validation."
 msgstr ""
+"สำหรับการจัดส่งระหว่างประเทศ (หรือการจัดส่งภายในประเทศบางรายการ) "
+"อาจต้องใช้ใบแจ้งหนี้เชิงพาณิชย์เพื่อผ่านพิธีการศุลกากร FedEx "
+"สามารถสร้างใบแจ้งหนี้เชิงพาณิชย์นี้โดยอิงตามข้อมูลการจัดส่งและส่งกลับเป็น PDF "
+"เพื่อพิมพ์และแนบไปกับการจัดส่งหรือส่งด้วยตนเองทางอิเล็กทรอนิกส์ไปยัง FedEx นอกจากนี้ "
+"ยังสามารถส่งโดยตรงเป็นข้อมูล ETD ไปยัง FedEx เมื่อมีการตรวจสอบการจัดส่ง"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
@@ -452,14 +480,14 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Go to"
-msgstr ""
+msgstr "ไปที่"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__id
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_uom_uom__id
 msgid "ID"
-msgstr ""
+msgstr "ไอดี"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__intl_ground_distribution
@@ -470,12 +498,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "Invalid syntax for FedEx extra data."
-msgstr ""
+msgstr "ไวยากรณ์ไม่ถูกต้องสำหรับข้อมูลเพิ่มเติมของ FedEx"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_weight_unit__kg
 msgid "Kilograms"
-msgstr ""
+msgstr "กิโลกรัม"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_label_file_type
@@ -485,7 +513,7 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Label Format"
-msgstr ""
+msgstr "รูปแบบฉลาก"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_label_stock_type
@@ -495,88 +523,88 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__never
 msgid "Never"
-msgstr ""
+msgstr "ไม่เคย"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__none
 msgid "No"
-msgstr ""
+msgstr "ไม่"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Options"
-msgstr ""
+msgstr "ตัวเลือก"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x6
 msgid "PAPER_4X6"
-msgstr ""
+msgstr "PAPER_4X6"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x6_75
 msgid "PAPER_4X6.75"
-msgstr ""
+msgstr "PAPER_4X6.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x8
 msgid "PAPER_4X8"
-msgstr ""
+msgstr "PAPER_4X8"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_4x9
 msgid "PAPER_4X9"
-msgstr ""
+msgstr "PAPER_4X9"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_7x4_75
 msgid "PAPER_7X4.75"
-msgstr ""
+msgstr "PAPER_7X4.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_8_5x11_bottom_half_label
 msgid "PAPER_8.5X11_BOTTOM_HALF_LABEL"
-msgstr ""
+msgstr "PAPER_8.5X11_BOTTOM_HALF_LABEL"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_8_5x11_top_half_label
 msgid "PAPER_8.5X11_TOP_HALF_LABEL"
-msgstr ""
+msgstr "PAPER_8.5X11_TOP_HALF_LABEL"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__paper_letter
 msgid "PAPER_LETTER"
-msgstr ""
+msgstr "PAPER_LETTER"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__png
 msgid "PNG"
-msgstr ""
+msgstr "PNG"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Package Weight Unit"
-msgstr ""
+msgstr "หน่วยน้ำหนักบรรจุภัณฑ์"
 
 #. module: delivery_fedex_rest
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/delivery_fedex.py:0
 msgid "Packages:"
-msgstr ""
+msgstr "แพ็คเกจ:"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_droppoff_type__use_scheduled_pickup
 msgid "Part of regular scheduled pickup"
-msgstr ""
+msgstr "ส่วนหนึ่งของการรับสินค้าตามกำหนดปกติ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_weight_unit__lb
 msgid "Pounds"
-msgstr ""
+msgstr "Pounds"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__invoice
@@ -586,17 +614,17 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_uom_uom
 msgid "Product Unit of Measure"
-msgstr ""
+msgstr "หน่วยวัดสินค้า"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "ผู้ให้บริการ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_duty_payment__recipient
 msgid "Recipient"
-msgstr ""
+msgstr "ผู้รับ"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -613,62 +641,62 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/delivery_fedex.py:0
 msgid "Return Label"
-msgstr ""
+msgstr "ฉลากการส่งคืน"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6
 msgid "STOCK_4X6"
-msgstr ""
+msgstr "STOCK_4X6"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75
 msgid "STOCK_4X6.75"
-msgstr ""
+msgstr "STOCK_4X6.75"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75_leading_doc_tab
 msgid "STOCK_4X6.75_LEADING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X6.75_LEADING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x6_75_trailing_doc_tab
 msgid "STOCK_4X6.75_TRAILING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X6.75_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x8
 msgid "STOCK_4X8"
-msgstr ""
+msgstr "STOCK_4X8"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9
 msgid "STOCK_4X9"
-msgstr ""
+msgstr "STOCK_4X9"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9_leading_doc_tab
 msgid "STOCK_4X9_LEADING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X9_LEADING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_stock_type__stock_4x9_trailing_doc_tab
 msgid "STOCK_4X9_TRAILING_DOC_TAB"
-msgstr ""
+msgstr "STOCK_4X9_TRAILING_DOC_TAB"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid "Screenshot"
-msgstr ""
+msgstr "ภาพหน้าจอ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_password
 msgid "Secret Key"
-msgstr ""
+msgstr "คีย์ลับ"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_duty_payment__sender
 msgid "Sender"
-msgstr ""
+msgstr "ผู้ส่ง"
 
 #. module: delivery_fedex_rest
 #. odoo-python
@@ -685,18 +713,18 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "วิธีการการจัดส่ง"
 
 #. module: delivery_fedex_rest
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "มีข้อผิดพลาดเกิดขึ้น โปรดลองอีกครั้งในภายหลัง!!"
 
 #. module: delivery_fedex_rest
 #: model:ir.model,name:delivery_fedex_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "ประเภทบรรจุภัณฑ์ของสต็อก"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_rate_request
@@ -707,12 +735,15 @@ msgid ""
 "This functionality is advanced/technical and should only be used if you know what you are doing.\n"
 "More info on https://www.developer.fedex.com"
 msgstr ""
+"ข้อมูลเพิ่มเติมใน FedEx จะถูกจัดระเบียบเหมือนกับข้อมูลภายในไฟล์ json\n"
+"ฟังก์ชันนี้เป็นฟังก์ชันขั้นสูง/ทางเทคนิค และควรใช้เฉพาะในกรณีที่คุณรู้ว่ากำลังทำอะไรอยู่เท่านั้น\n"
+"ข้อมูลเพิ่มเติมที่ https://www.developer.fedex.com"
 
 #. module: delivery_fedex_rest
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/delivery_fedex.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "หมายเลขติดตาม:"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_service_type__transborder_distribution
@@ -743,6 +774,8 @@ msgid ""
 "When enabled, the customer will receive email notifications from FedEx about"
 " this shipment (when an email address is configured on the customer)"
 msgstr ""
+"เมื่อเปิดใช้งานแล้ว ลูกค้าจะได้รับการแจ้งเตือนทางอีเมลจาก FedEx เกี่ยวกับการจัดส่งนี้ "
+"(เมื่อกำหนดค่าที่อยู่อีเมลบนตัวลูกค้าแล้ว)"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_override_shipper_vat
@@ -753,17 +786,21 @@ msgid ""
 "provided the regular tax id on the company will be used with type "
 "BUSINESS_NATIONAL."
 msgstr ""
+"จะมีการจัดทำหมายเลขประจำตัวผู้เสียภาษีของบริษัทหลักให้กับ FedEx ตามประเภท BUSINESS_UNION "
+"เพื่อใส่ในใบแจ้งหนี้ที่สร้างขึ้น ใช้หมายเลขนี้เมื่อคุณต้องการใช้หมายเลข IOSS หรือ EORI "
+"ร่วมกับหมายเลขประจำตัวผู้เสียภาษีของประเทศ หากไม่ได้จัดทำ "
+"หมายเลขประจำตัวผู้เสียภาษีปกติของบริษัทจะถูกใช้ร่วมกับประเภท BUSINESS_NATIONAL"
 
 #. module: delivery_fedex_rest
 #. odoo-python
 #: code:addons/delivery_fedex_rest/models/fedex_request.py:0
 msgid "You must setup a client ID and secret on the carrier first"
-msgstr ""
+msgstr "คุณต้องตั้งค่ารหัสลูกค้าและรหัสลับบนผู้ให้บริการก่อน"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_label_file_type__zplii
 msgid "ZPLII"
-msgstr ""
+msgstr "ZPLII"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex

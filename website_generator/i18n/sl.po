@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_generator
+# * website_generator
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:48+0000\n"
-"PO-Revision-Date: 2025-09-11 14:48+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:29+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"website_generator/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_generator
 #: model:mail.template,body_html:website_generator.email_template_website_scrapped
@@ -38,7 +43,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "An error occurred"
-msgstr ""
+msgstr "Pojavila se je napaka"
 
 #. module: website_generator
 #. odoo-python
@@ -71,12 +76,12 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_ir_http__display_name
@@ -84,7 +89,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__display_name
 #: model:ir.model.fields,field_description:website_generator.field_website_page__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: website_generator
 #. odoo-python
@@ -95,7 +100,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP usmerjanje"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_ir_http__id
@@ -103,7 +108,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__id
 #: model:ir.model.fields,field_description:website_generator.field_website_page__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_generator
 #. odoo-javascript
@@ -174,17 +179,17 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__notified
 msgid "Notified"
-msgstr ""
+msgstr "Obveščen"
 
 #. module: website_generator
 #. odoo-python
@@ -201,7 +206,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__page_count
 msgid "Number of pages"
-msgstr ""
+msgstr "Število strani"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__uuid
@@ -211,25 +216,25 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_website_page
 msgid "Page"
-msgstr ""
+msgstr "Stran"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Pages"
-msgstr ""
+msgstr "Strani"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Processing"
-msgstr ""
+msgstr "V teku"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Products"
-msgstr ""
+msgstr "Proizvodi"
 
 #. module: website_generator
 #. odoo-python
@@ -241,13 +246,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Server is currently under maintenance. Please retry later"
-msgstr ""
+msgstr "Strežnik je trenutno v vzdrževanju. Poskusite znova pozneje."
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
 msgid "Something went wrong"
-msgstr ""
+msgstr "Nekaj je šlo narobe"
 
 #. module: website_generator
 #. odoo-javascript
@@ -258,18 +263,18 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status_message
 msgid "Status Message"
-msgstr ""
+msgstr "Sporočilo o stanju"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Success"
-msgstr ""
+msgstr "Uspešno"
 
 #. module: website_generator
 #. odoo-javascript
@@ -323,7 +328,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/page.py:0
 msgid "Top Menu for Website %s"
-msgstr ""
+msgstr "Vrhnji meni za spletno stran %s"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__target_url
@@ -333,7 +338,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__version
 msgid "Version"
-msgstr ""
+msgstr "Različica"
 
 #. module: website_generator
 #. odoo-python
@@ -363,12 +368,12 @@ msgstr ""
 #: model:ir.model,name:website_generator.model_website
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__website_id
 msgid "Website"
-msgstr ""
+msgstr "Spletna stran"
 
 #. module: website_generator
 #: model:ir.actions.client,name:website_generator.website_generator_screen
 msgid "Website Generator"
-msgstr ""
+msgstr "Generator spletnih strani"
 
 #. module: website_generator
 #: model:ir.actions.server,name:website_generator.action_convert_scraping_request_ICP
@@ -394,7 +399,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Website URL"
-msgstr ""
+msgstr "URL spletne strani"
 
 #. module: website_generator
 #. odoo-python
@@ -429,7 +434,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "and"
-msgstr ""
+msgstr "in"
 
 #. module: website_generator
 #. odoo-javascript

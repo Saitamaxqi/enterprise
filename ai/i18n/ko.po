@@ -1,20 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* ai
+# * ai
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-11 14:26+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-16 12:13+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/ai/ko/>\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -321,7 +323,8 @@ msgstr ""
 msgid ""
 "A topic includes instructions and tools that guide Odoo AI in helping the "
 "user complete their tasks."
-msgstr ""
+msgstr "이 주제에는 Odoo AI가 사용자의 작업을 완료할 수 있도록 지원하는 지침과 "
+"도구가 포함되어 있습니다."
 
 #. module: ai
 #. odoo-javascript
@@ -330,7 +333,7 @@ msgstr ""
 #: code:addons/ai/static/src/web/systray_action.xml:0
 #: model:ir.model.fields.selection,name:ai.selection__ir_actions_server__state__ai
 msgid "AI"
-msgstr ""
+msgstr "AI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
@@ -341,7 +344,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
 msgid "AI Agent"
-msgstr ""
+msgstr "AI 상담원"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
@@ -361,7 +364,7 @@ msgstr ""
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
 msgid "AI Embedding: Generate Embeddings"
-msgstr ""
+msgstr "AI 임베딩: 임베딩 생성"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__name
@@ -391,12 +394,12 @@ msgstr ""
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 #: model:ir.model.fields,field_description:ai.field_ai_topic__tool_ids
 msgid "AI Tools"
-msgstr ""
+msgstr "AI 도구"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__discuss_channel__channel_type__ai_chat
 msgid "AI chat"
-msgstr ""
+msgstr "AI 채팅"
 
 #. module: ai
 #. odoo-javascript
@@ -414,7 +417,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_composer
 msgid "AI model configurations (system prompts) for text drafting."
-msgstr ""
+msgstr "텍스트 작성용 AI 모델 환경설정(시스템 프롬프트)"
 
 #. module: ai
 #. odoo-python
@@ -426,7 +429,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/discuss_channel.py:0
 msgid "AI: %(name)s"
-msgstr ""
+msgstr "AI: %(name)s"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_adjust_search
@@ -556,12 +559,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_partner__agent_ids
 #: model:ir.model.fields,field_description:ai.field_res_users__agent_ids
 msgid "Agent"
-msgstr ""
+msgstr "상담원"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__name
 msgid "Agent Name"
-msgstr ""
+msgstr "상담원 이름"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_agent_id
@@ -607,7 +610,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
-msgstr ""
+msgstr "분석적"
 
 #. module: ai
 #. odoo-javascript
@@ -616,7 +619,7 @@ msgstr ""
 #: code:addons/ai/static/src/mail_composer_chatgpt.xml:0
 #: code:addons/ai/static/src/web/systray_action.xml:0
 msgid "Ask AI"
-msgstr ""
+msgstr "AI에게 물어보기"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
@@ -628,12 +631,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__attachment_id
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "첨부 파일"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_embedding
 msgid "Attachment Chunks Embedding"
-msgstr ""
+msgstr "첨부 파일 전체 임베딩"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
@@ -648,22 +651,22 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__balanced
 msgid "Balanced"
-msgstr ""
+msgstr "균형 조정"
 
 #. module: ai
 #: model:ir.model,name:ai.model_base
 msgid "Base"
-msgstr ""
+msgstr "기준액"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_template__body_html
 msgid "Body"
-msgstr ""
+msgstr "본문"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__channel_type
 msgid "Channel Type"
-msgstr ""
+msgstr "채널 유형"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_discuss_channel__channel_type
@@ -671,6 +674,9 @@ msgid ""
 "Chat is private and unique between 2 persons. Group is private among invited "
 "persons. Channel can be freely joined (depending on its configuration)."
 msgstr ""
+"채팅은 두 사람 사이에 비공개로 고유하게 진행됩니다. 그룹은 초대받은 "
+"사람들간에 비공개로 진행됩니다. 채널은 자유롭게 가입할 수 있습니다 (설정에 "
+"따라 다름)."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
@@ -680,7 +686,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__content
 msgid "Chunk Content"
-msgstr ""
+msgstr "대량 콘텐츠"
 
 #. module: ai
 #. odoo-javascript
@@ -692,28 +698,28 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__composer_id
 msgid "Composer"
-msgstr ""
+msgstr "작성자"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "환경설정"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "연락처"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_compose_message__body
 #: model:ir.model.fields,field_description:ai.field_mail_composer_mixin__body
 msgid "Contents"
-msgstr ""
+msgstr "내용"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_env_context
 msgid "Context for AI agent"
-msgstr ""
+msgstr "AI 상담원용 컨텍스트"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_prompt_shortcut
@@ -731,14 +737,15 @@ msgstr ""
 #. module: ai
 #: model:ir.model,website_form_label:ai.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "고객 만들기"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_topic
 msgid ""
 "Create a topic that leverages instructions and tools to direct Odoo AI in "
 "assisting the user with their tasks."
-msgstr ""
+msgstr "다양한 지침과 도구를 활용하는 방법에 대한 주제를 생성하세요. Odoo AI에서 "
+"작업을 지원해 드립니다."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_uid
@@ -748,7 +755,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "작성자"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_date
@@ -758,17 +765,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_date
 msgid "Created on"
-msgstr ""
+msgstr "작성일자"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__creative
 msgid "Creative"
-msgstr ""
+msgstr "창의적"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__system_prompt
 msgid "Customize to control relevance and formatting."
-msgstr ""
+msgstr "관련성 및 형식을 제어하도록 사용자 지정합니다."
 
 #. module: ai
 #. odoo-javascript
@@ -776,7 +783,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent__subtitle
 #: model:ir.model.fields,field_description:ai.field_ai_topic__description
 msgid "Description"
-msgstr ""
+msgstr "설명"
 
 #. module: ai
 #. odoo-javascript
@@ -796,7 +803,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_discuss_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "메일 및 채팅 채널"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__display_name
@@ -816,7 +823,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ai.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "표시명"
 
 #. module: ai
 #. odoo-javascript
@@ -834,12 +841,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Editor"
-msgstr ""
+msgstr "편집기"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_template
 msgid "Email Templates"
-msgstr ""
+msgstr "이메일 양식"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_thread
@@ -854,7 +861,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__embedding_vector
 msgid "Embedding Vector"
-msgstr ""
+msgstr "임베디드 벡터"
 
 #. module: ai
 #. odoo-python
@@ -865,12 +872,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key_enabled
 msgid "Enable custom Google API key"
-msgstr ""
+msgstr "사용자 지정 Google API 키 사용"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key_enabled
 msgid "Enable custom OpenAI API key"
-msgstr ""
+msgstr "사용자 지정 OpenAI API 키 사용"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__error_details
@@ -908,7 +915,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Generate or transform content with AI"
-msgstr ""
+msgstr "AI로 콘텐츠 생성 또는 변환"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__chatter_ai_button
@@ -918,12 +925,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__gemini-embedding-001
 msgid "Google"
-msgstr ""
+msgstr "구글"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key
 msgid "Google AI API key"
-msgstr ""
+msgstr "Google AI API 키"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_http
@@ -939,7 +946,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/thread_patch.js:0
 msgid "Hello, what can I help you with?"
-msgstr ""
+msgstr "안녕하세요, 무엇을 도와드릴까요?"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__id
@@ -959,12 +966,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ai.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__restrict_to_sources
 msgid "If checked, the agent will only respond based on the provided sources."
-msgstr ""
+msgstr "선택할 경우, 상담원은 제공된 자료에만 의거하여 응답합니다."
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent_source__is_active
@@ -974,7 +981,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__image_128
 msgid "Image"
-msgstr ""
+msgstr "이미지"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__indexed
@@ -998,7 +1005,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 msgid "Insert an AI prompt"
-msgstr ""
+msgstr "AI 프롬프트 삽입"
 
 #. module: ai
 #. odoo-javascript
@@ -1016,7 +1023,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_composer__default_prompt
 #: model:ir.model.fields,field_description:ai.field_ai_topic__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "지침"
 
 #. module: ai
 #. odoo-python
@@ -1075,7 +1082,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__llm_model
 msgid "LLM Model"
-msgstr ""
+msgstr "LLM 모델"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_uid
@@ -1085,7 +1092,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "최근 갱신한 사람"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_date
@@ -1095,29 +1102,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "최근 갱신 일자"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Log Note"
-msgstr ""
+msgstr "로그 기록"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Log as Note"
-msgstr ""
+msgstr "메모 로그"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_composer_mixin
 msgid "Mail Composer Mixin"
-msgstr ""
+msgstr "메일 쓰기 혼합"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_render_mixin
 msgid "Mail Render Mixin"
-msgstr ""
+msgstr "메일 렌더링 혼합"
 
 #. module: ai
 #. odoo-javascript
@@ -1146,13 +1153,13 @@ msgstr ""
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__name
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/llm_api_service.py:0
 msgid "No API key set for provider '%s'"
-msgstr ""
+msgstr "%s' 공급업체 API 키가 설정되지 않았습니다."
 
 #. module: ai
 #. odoo-python
@@ -1176,7 +1183,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No provider found for the selected model"
-msgstr ""
+msgstr "선택한 모델의 공급업체를 찾을 수 없습니다."
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -1208,7 +1215,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "Online"
-msgstr ""
+msgstr "온라인"
 
 #. module: ai
 #. odoo-python
@@ -1219,17 +1226,17 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
 msgid "OpenAI"
-msgstr ""
+msgstr "OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key
 msgid "OpenAI API key"
-msgstr ""
+msgstr "OpenAI API 키"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "협력사"
 
 #. module: ai
 #. odoo-javascript
@@ -1260,7 +1267,7 @@ msgstr ""
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "Prompt"
-msgstr ""
+msgstr "프롬프트"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_prompt_button
@@ -1300,12 +1307,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__response_style
 msgid "Response Style"
-msgstr ""
+msgstr "응답 스타일"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__restrict_to_sources
 msgid "Restrict to Sources"
-msgstr ""
+msgstr "소스 제한"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_text_select
@@ -1339,24 +1346,24 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Send Message"
-msgstr ""
+msgstr "메시지 보내기"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Send as Message"
-msgstr ""
+msgstr "메시지로 전송"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__sequence
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "순서"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "서버 작업"
 
 #. module: ai
 #. odoo-javascript
@@ -1400,7 +1407,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_ids
 msgid "Sources"
-msgstr ""
+msgstr "출처"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_fully_processed
@@ -1450,7 +1457,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
 msgid "System Prompt"
-msgstr ""
+msgstr "시스템 프롬프트"
 
 #. module: ai
 #. odoo-python
@@ -1550,7 +1557,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_topic__name
 msgid "Title"
-msgstr ""
+msgstr "제목"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1566,7 +1573,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
 msgid "Topics"
-msgstr ""
+msgstr "주제"
 
 #. module: ai
 #. odoo-javascript
@@ -1654,7 +1661,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Use this"
-msgstr ""
+msgstr "다음 내용 사용:"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
@@ -1681,7 +1688,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "User is online"
-msgstr ""
+msgstr "사용자 온라인"
 
 #. module: ai
 #. odoo-javascript

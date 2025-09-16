@@ -1,32 +1,34 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_enterprise
+# * project_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Niyas Raphy, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:47+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:39+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"project_enterprise/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
-"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "%(partner)s has %(amount)s tasks at the same time."
-msgstr ""
+msgstr "%(partner)s لديه %(amount)s مهام في الوقت ذاته."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
@@ -34,50 +36,53 @@ msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
 msgstr ""
+"<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title="
+"\"تحذير تبعيات المهام \"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
+"<i class=\"fa fa-random me-2\" role=\"img\" title=\"تضارب في التخطيط \"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Deadline:</strong>"
-msgstr ""
+msgstr "<strong>الموعد النهائي:</strong>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Planned Date:</strong>"
-msgstr ""
+msgstr "<strong>التاريخ المخطط له:</strong>"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__allocated_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "الوقت المخصص"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__user_ids
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Assignees"
-msgstr "المسند إليهم "
+msgstr "المسند إليهم"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/view_dialogs/select_auto_plan_create_dialog.xml:0
 msgid "Auto Plan"
-msgstr ""
+msgstr "التخطيط التلقائي"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
-msgstr ""
+msgstr "ألقِ نظرة <i class=\"oi oi-chevron-right ms-2\"/>"
 
 #. module: project_enterprise
 #: model:ir.model,website_form_label:project_enterprise.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "إنشاء مهمة"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
@@ -95,7 +100,7 @@ msgstr "التاريخ"
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form_in_gantt
 msgid "Discard"
-msgstr "إهمال "
+msgstr "إهمال"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__display_name
@@ -104,13 +109,13 @@ msgstr "إهمال "
 #: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__display_name
 #: model:ir.model.fields,field_description:project_enterprise.field_res_users__display_name
 msgid "Display Name"
-msgstr "اسم العرض "
+msgstr "اسم العرض"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Failed to undo reschedule"
-msgstr ""
+msgstr "فشل إلغاء إعادة الجدولة"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
@@ -125,7 +130,7 @@ msgstr "المُعرف"
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Milestone"
-msgstr "مؤشر التقدم "
+msgstr "مؤشر التقدم"
 
 #. module: project_enterprise
 #. odoo-python
@@ -134,6 +139,8 @@ msgid ""
 "One parameter is missing to use this method. You should give a start and end "
 "dates."
 msgstr ""
+"أحد المعايير غير موجود لاستخدام هذه الطريقة. عليك إدخال تواريخ البدء "
+"والانتهاء."
 
 #. module: project_enterprise
 #. odoo-python
@@ -141,12 +148,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Planned Date"
-msgstr "التاريخ المخطط "
+msgstr "التاريخ المخطط"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_start
 msgid "Planned Date Start"
-msgstr ""
+msgstr "بدء التاريخ المخطط له"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
@@ -166,13 +173,13 @@ msgstr "المشروع"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project due"
-msgstr ""
+msgstr "تاريخ تسليم المشروع"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project start"
-msgstr ""
+msgstr "بداية المشروع"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -192,7 +199,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "Some tasks were planned after their initial deadline."
-msgstr ""
+msgstr "تم التخطيط لبعض المهام بعد موعدها النهائي الذي تم تحديده في البداية."
 
 #. module: project_enterprise
 #. odoo-python
@@ -202,6 +209,9 @@ msgid ""
 "limited availability of the assignees. The planned dates for these tasks may "
 "not align with their allocated hours."
 msgstr ""
+"تمت جدولة بعض المهام بشكل متتالي، مما تسبب في حدوث تعارض بسبب محدودية توافر "
+"الأفراد الذين تُسنَد إليهم المهام. قد لا تتوافق التواريخ المخطط لها مع الساعات "
+"المخصصة لها."
 
 #. module: project_enterprise
 #. odoo-python
@@ -210,7 +220,7 @@ msgid ""
 "Some tasks weren't planned because the closest available starting date was "
 "too far ahead in the future"
 msgstr ""
-"بعض المهام لم يتم التخطيط لها لأن أقرب تاريخ بدء متاح بعيد جداً في المستقبل "
+"بعض المهام لم يتم التخطيط لها لأن أقرب تاريخ بدء متاح بعيد جداً في المستقبل"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_begin
@@ -226,25 +236,25 @@ msgstr "المهمة"
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "تكرار المهمة"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task could not be removed"
-msgstr ""
+msgstr "تعذر إزالة المهمة"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task duplicated"
-msgstr ""
+msgstr "تم نسخ المهمة"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task removed"
-msgstr ""
+msgstr "تمت إزالة المهمة"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -256,7 +266,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Task rescheduled"
-msgstr ""
+msgstr "تمت إعادة جدولة المهمة"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_report_project_task_user
@@ -267,19 +277,19 @@ msgstr "تحليل المهام"
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Tasks have been successfully scheduled for the upcoming periods."
-msgstr ""
+msgstr "تمت جدولة المهام بنجاح للفترات المقبلة."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_search_conflict_task_project_enterprise
 msgid "Tasks in Conflict"
-msgstr ""
+msgstr "المهام المتعارضة"
 
 #. module: project_enterprise
 #: model:ir.model.constraint,message:project_enterprise.constraint_project_task_planned_dates_check
 msgid "The planned start date must be before the planned end date."
-msgstr "يجب ألا يقع تاريخ الانتهاء قبل تاريخ البداية. "
+msgstr "يجب ألا يقع تاريخ الانتهاء قبل تاريخ البداية."
 
 #. module: project_enterprise
 #. odoo-python
@@ -288,12 +298,14 @@ msgid ""
 "The tasks could not be rescheduled due to the assignees' lack of "
 "availability at this time."
 msgstr ""
+"تعذر إعادة جدولة المهام نظراً لأن الأفراد الذين تُسنَد إليهم المهام غير متاحون "
+"في ذلك الوقت."
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "This Progress Bar is not implemented."
-msgstr "لم يتم تطبيق شريط التقدم. "
+msgstr "لم يتم تطبيق شريط التقدم."
 
 #. module: project_enterprise
 #. odoo-python
@@ -302,6 +314,7 @@ msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
 msgstr ""
+"لا يمكن تخطيط هذه المهمة قبل المهام التالية التي تعتمد عليها: %(task_list)s"
 
 #. module: project_enterprise
 #. odoo-python
@@ -310,11 +323,13 @@ msgid ""
 "This user isn't expected to have any tasks assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"ليس من المتوقع أن يكون لهذا المستخدم أي مهام مسندة أثناء هذه الفترة لأنه ليس "
+"لديه أي عقد جاري."
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
 msgid "Timesheets"
-msgstr "الجداول الزمنية "
+msgstr "الجداول الزمنية"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -322,7 +337,7 @@ msgstr "الجداول الزمنية "
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt_inherited_project_sharing_task
 msgid "Unschedule"
-msgstr "إلغاء الجدولة "
+msgstr "إلغاء الجدولة"
 
 #. module: project_enterprise
 #: model:ir.model.fields,help:project_enterprise.field_project_task__display_name
@@ -348,13 +363,13 @@ msgstr "المستخدم"
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 msgid "View Tasks"
-msgstr ""
+msgstr "عرض المهام"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_renderer.xml:0
 msgid "View customer locations for your tasks"
-msgstr ""
+msgstr "إظهار مواقع العملاء لمهامك"
 
 #~ msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 #~ msgstr "<i class=\"fa fa-long-arrow-right\" title=\"سهم \"/>"

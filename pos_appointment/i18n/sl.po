@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_appointment
+# * pos_appointment
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:37+0000\n"
-"PO-Revision-Date: 2025-09-11 14:37+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:21+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"pos_appointment/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -23,33 +28,33 @@ msgstr ""
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "<span>people</span>"
-msgstr ""
+msgstr "<span>ljudje</span>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Duration: </strong>"
-msgstr ""
+msgstr "<strong>Trajanje: </strong>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Phone: </strong>"
-msgstr ""
+msgstr "<strong>Telefon: </strong>"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "<strong>Start Date: </strong>"
-msgstr ""
+msgstr "<strong>Datum začetka: </strong>"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__appointment_status
 msgid "Appointment Status"
-msgstr ""
+msgstr "Status sestanka"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_config__appointment_type_id
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__pos_appointment_type_id
 msgid "Appointment Type"
-msgstr ""
+msgstr "Tip termina"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.res_config_settings_view_form
@@ -61,18 +66,18 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "Booked"
-msgstr ""
+msgstr "Rezervirano"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/components/navbar/navbar.xml:0
 msgid "Booking"
-msgstr ""
+msgstr "Rezervacija"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "Booking Details"
-msgstr ""
+msgstr "Podrobnosti rezervacije"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -88,12 +93,12 @@ msgstr ""
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "Dogodek v koledarju"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -102,18 +107,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
 msgid "Check In"
-msgstr ""
+msgstr "Prijava"
 
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Uredi nastavitve"
 
 #. module: pos_appointment
 #. odoo-python
 #: code:addons/pos_appointment/models/calendar_event.py:0
 msgid "Create Booking"
-msgstr ""
+msgstr "Ustvari rezervacijo"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -125,7 +130,7 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Izbriši"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__display_name
@@ -133,7 +138,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -144,14 +149,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Duration:"
-msgstr ""
+msgstr "Trajanje:"
 
 #. module: pos_appointment
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 #. module: pos_appointment
 #. odoo-python
@@ -168,7 +173,7 @@ msgstr ""
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "Event Details"
-msgstr ""
+msgstr "Podrobnosti dogodka"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_form_gantt_booking
@@ -181,7 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_appointment.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_appointment.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -206,7 +211,7 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.js:0
 msgid "No Show"
-msgstr ""
+msgstr "Ni se pojavil/a"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
@@ -216,7 +221,7 @@ msgstr ""
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__phone_number
 msgid "Phone number"
-msgstr ""
+msgstr "Telefonska številka"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -227,12 +232,12 @@ msgstr ""
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Nastavitve POS-blagajne"
 
 #. module: pos_appointment
 #: model:ir.model,name:pos_appointment.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Seja POS"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__answers
@@ -270,7 +275,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 msgid "Start Date:"
-msgstr ""
+msgstr "Začetni datum:"
 
 #. module: pos_appointment
 #. odoo-javascript
@@ -282,12 +287,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_appointment/static/src/app/gantt_overrides/gantt_renderer.js:0
 msgid "View"
-msgstr ""
+msgstr "Prikaz"
 
 #. module: pos_appointment
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_kanban
 msgid "Waiting"
-msgstr ""
+msgstr "V čakanju"
 
 #. module: pos_appointment
 #: model:ir.model.fields,field_description:pos_appointment.field_calendar_event__waiting_list_capacity
@@ -309,4 +314,4 @@ msgstr ""
 #: code:addons/pos_appointment/static/src/app/kanban_extend/kanban_record.xml:0
 #: model_terms:ir.ui.view,arch_db:pos_appointment.calendar_event_view_gantt_booking_resource
 msgid "hours"
-msgstr ""
+msgstr "ure"

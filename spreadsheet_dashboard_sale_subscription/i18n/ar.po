@@ -1,39 +1,44 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_sale_subscription
+# * spreadsheet_dashboard_sale_subscription
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:45+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 13:40+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_sale_subscription/ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Orders"
-msgstr ""
+msgstr "عدد الطلبات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Subscriptions"
-msgstr ""
+msgstr "عدد الاشتراكات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "/sub."
-msgstr ""
+msgstr "/sub."
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -42,70 +47,70 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "ARR"
-msgstr ""
+msgstr "الإيرادات السنوية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Active sub."
-msgstr ""
+msgstr "اشتراك نشط"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "All time data"
-msgstr ""
+msgstr "البيانات التاريخية"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Average Revenue"
-msgstr ""
+msgstr "متوسط الإيرادات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Average revenue"
-msgstr ""
+msgstr "متوسط الإيرادات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Avg MRR / Subscriptions"
-msgstr ""
+msgstr "متوسط الإيرادات الشهرية المتكررة / الاشتراكات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Before"
-msgstr ""
+msgstr "قبل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "CLTV"
-msgstr ""
+msgstr "CLTV"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Camera Services"
-msgstr ""
+msgstr "خدمات الكاميرا"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Car Leasing"
-msgstr ""
+msgstr "تأجير السيارات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "China"
-msgstr ""
+msgstr "الصين"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -114,54 +119,54 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Churn"
-msgstr ""
+msgstr "توقف العميل عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Churn ($)"
-msgstr ""
+msgstr "توقف العميل عن استخدام الخدمات ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Churn (MRR)"
-msgstr ""
+msgstr "توقف العميل عن استخدام الخدمات (الإيرادات الشهرية المتكررة)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Churn (count)"
-msgstr ""
+msgstr "توقف العميل عن استخدام الخدمات (العدد)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Churn ARR"
-msgstr ""
+msgstr "الإيرادات السنوية المتكررة المتوقفة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Churned"
-msgstr ""
+msgstr "توقف عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Churned %"
-msgstr ""
+msgstr "نسبة العملاء المتوقفين عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Churns"
-msgstr ""
+msgstr "توقف العميل عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -170,32 +175,32 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Contraction"
-msgstr ""
+msgstr "التقلص"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Contraction ($)"
-msgstr ""
+msgstr "التقلص (بالدولار)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Contraction (MRR)"
-msgstr ""
+msgstr "التقلص (الإيرادات الشهرية المتكررة)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Contraction (count)"
-msgstr ""
+msgstr "التقلص (العدد)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Countries"
-msgstr ""
+msgstr "الدول"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -204,19 +209,19 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Country"
-msgstr ""
+msgstr "الدولة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Cumul"
-msgstr ""
+msgstr "التراكمي"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Cumul period"
-msgstr ""
+msgstr "الفترة التراكمية"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -229,28 +234,28 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "الحالي"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Cust. Life Time Value"
-msgstr ""
+msgstr "قيمة العمر الافتراضي للعميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Cust. Lifespan"
-msgstr ""
+msgstr "العمر الافتراضي للعميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Cust. Lifetime Value"
-msgstr ""
+msgstr "قيمة العمر الافتراضي للعميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -259,47 +264,47 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Customer"
-msgstr ""
+msgstr "العميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Customer Churn Rate"
-msgstr ""
+msgstr "معدل توقف العملاء عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Customer Churn rate"
-msgstr ""
+msgstr "معدل توقف العملاء عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Customer Life Time Value"
-msgstr ""
+msgstr "قيمة العمر الافتراضي للعميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Customer Life time value"
-msgstr ""
+msgstr "قيمة العمر الافتراضي للعميل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Customer churn rate"
-msgstr ""
+msgstr "معدل توقف العملاء عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -308,44 +313,44 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Expansion"
-msgstr ""
+msgstr "التوسع"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Expansion ($)"
-msgstr ""
+msgstr "التوسع ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Expansion (MRR)"
-msgstr ""
+msgstr "التوسع (الإيرادات الشهرية المتكررة)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Expansion (count)"
-msgstr ""
+msgstr "التوسع (العدد)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "France"
-msgstr ""
+msgstr "فرنسا"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Inbound"
-msgstr ""
+msgstr "واردة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Italy"
-msgstr ""
+msgstr "إيطاليا"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -358,34 +363,34 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "المؤشرات الرئيسية للأداء"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Last 30 Days analysis"
-msgstr ""
+msgstr "تحليل آخر 30 يوم"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Last 30 days"
-msgstr ""
+msgstr "آخر 30 يوم"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Lifespan"
-msgstr ""
+msgstr "العمر الافتراضي"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Lifetime Value"
-msgstr ""
+msgstr "قيمة العمر الافتراضي"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -398,14 +403,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "MRR Breakdown"
-msgstr ""
+msgstr "تحليل الإيرادات الشهرية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -417,7 +422,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR Change (normalized)"
-msgstr ""
+msgstr "تغير الإيرادات الشهرية المتكررة (متطبع)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -425,7 +430,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_mrr_evolution
 msgid "MRR Evolution"
-msgstr ""
+msgstr "تطور الإيرادات الشهرية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -433,19 +438,19 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR by Country"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب الدولة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR by Products"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب المنتجات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "MRR by Products Category"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب فئة المنتج"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -454,101 +459,101 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR by Recurrence"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب التكرار"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR by Sales Team"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب فريق المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "MRR by Team"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة حسب الفريق"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "MRR delta"
-msgstr ""
+msgstr "دلتا الإيرادات الشهرية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "MRR over time"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة مع مرور الوقت"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Medium"
-msgstr ""
+msgstr "متوسط"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Month(s)"
-msgstr ""
+msgstr "شهور"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Monthly"
-msgstr ""
+msgstr "شهرياً"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Monthly Growth"
-msgstr ""
+msgstr "النمو الشهري"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Monthly Rec. Rev."
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Montly analysis"
-msgstr ""
+msgstr "التحليل الشهري"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Motion Sensors"
-msgstr ""
+msgstr "أجهزة استشعار الحركة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Net New"
-msgstr ""
+msgstr "صافي الجديد"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Net New ARR"
-msgstr ""
+msgstr "صافي الايرادات السنوية المتكررة الجديدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Net Retention"
-msgstr ""
+msgstr "صافي معدل الاحتفاظ بالعملاء"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -561,32 +566,32 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Net Retention rate"
-msgstr ""
+msgstr "صافي معدل الاحتفاظ بالعملاء"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New"
-msgstr ""
+msgstr "جديد"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "New (MRR)"
-msgstr ""
+msgstr "جديد (الإيرادات الشهرية المتكررة)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "New (count)"
-msgstr ""
+msgstr "جديد (عدد)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "New ARR"
-msgstr ""
+msgstr "الإيرادات السنوية المتكررة الجديدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -595,88 +600,88 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "New MRR"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة الجديدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New Subscriptions"
-msgstr ""
+msgstr "الاشتراكات الجديدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New subscriptions"
-msgstr ""
+msgstr "الاشتراكات الجديدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New subscriptions ($)"
-msgstr ""
+msgstr "الاشتراكات الجديدة ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Non Rec. Invoiced "
-msgstr ""
+msgstr "الإيرادات غير المتكررة التي تمت فوترتها "
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Non Rec. Rev."
-msgstr ""
+msgstr "الإيرادات الشهرية غير المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Non Recurring Invoiced"
-msgstr ""
+msgstr "الإيرادات غير المتكررة التي تمت فوترتها"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Non Recurring Invoiced (%)"
-msgstr ""
+msgstr "نسبة ما تمت فوترته غير المتكرر (%)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Non-recurring revenue"
-msgstr ""
+msgstr "الإيرادات غير المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Office Cleaning"
-msgstr ""
+msgstr "تنظيف المكاتب"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Outbound"
-msgstr ""
+msgstr "صادرة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 msgid "Period"
-msgstr ""
+msgstr "الفترة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Plans"
-msgstr ""
+msgstr "الخطط"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -685,14 +690,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "السابق"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "المنتج"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -700,33 +705,33 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Recurrence"
-msgstr ""
+msgstr "التكرار"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Recurring Invoiced"
-msgstr ""
+msgstr "الإيرادات المتكررة التي تمت فوترتها"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Recurring Invoiced (%)"
-msgstr ""
+msgstr "نسبة الإيرادات المتكررة التي تمت فوترتها (%)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_retention
 msgid "Retention"
-msgstr ""
+msgstr "الاحتفاظ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Revenue Churn"
-msgstr ""
+msgstr "توقف الإيرادات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -738,14 +743,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Revenue Churn rate"
-msgstr ""
+msgstr "معدل توقف الإيرادات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Revenue churn rate"
-msgstr ""
+msgstr "معدل توقف الإيرادات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -754,13 +759,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Sales Team"
-msgstr ""
+msgstr "فريق المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 msgid "Salesperon"
-msgstr ""
+msgstr "مندوب المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -770,19 +775,19 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_salesperson
 msgid "Salesperson"
-msgstr ""
+msgstr "مندوب المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Source"
-msgstr ""
+msgstr "المصدر"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Spain"
-msgstr ""
+msgstr "إسبانيا"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -793,149 +798,149 @@ msgstr ""
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_subscriptions
 #: model:spreadsheet.dashboard.group,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_group_subscriptions
 msgid "Subscriptions"
-msgstr ""
+msgstr "الاشتراكات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "This month"
-msgstr ""
+msgstr "هذا الشهر"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Today"
-msgstr ""
+msgstr "اليوم"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Countries"
-msgstr ""
+msgstr "أعلى البلدان"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Top Expansion"
-msgstr ""
+msgstr "أفضل التوسعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Top New"
-msgstr ""
+msgstr "أفضل ما هو جديد"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Plans"
-msgstr ""
+msgstr "أفضل الخطط"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Products"
-msgstr ""
+msgstr "أهم المنتجات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Quotations"
-msgstr ""
+msgstr "أهم عروض الأسعار"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Top Recurrence"
-msgstr ""
+msgstr "أفضل التكرارات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Recurrences"
-msgstr ""
+msgstr "أفضل التكرارات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Sales Team"
-msgstr ""
+msgstr "أفضل فِرَق المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Salesman"
-msgstr ""
+msgstr "أفضل مندوبي المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Top Salesperson"
-msgstr ""
+msgstr "أفضل مندوبي المبيعات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Subscriptions"
-msgstr ""
+msgstr "أفضل الاشتراكات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Top upgrades"
-msgstr ""
+msgstr "أفضل الترقيات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Total Subscriptions"
-msgstr ""
+msgstr "إجمالي الاشتراكات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Total churned"
-msgstr ""
+msgstr "إجمالي المتوقفين عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Transfer"
-msgstr ""
+msgstr "تحويل"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "United States"
-msgstr ""
+msgstr "الولايات المتحدة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Up/Down ARR"
-msgstr ""
+msgstr "الإيرادات الشهرية المتكررة المتزايدة / المنخفضة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Up/Downgrade"
-msgstr ""
+msgstr "الترقية/خفض الرتبة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -943,51 +948,51 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Value"
-msgstr ""
+msgstr "القيمة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Worst Churn"
-msgstr ""
+msgstr "أسوأ حالات توقف العملاء عن استخدام الخدمات"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Worst Contraction"
-msgstr ""
+msgstr "أسوأ انقباض"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Worst Downgrades"
-msgstr ""
+msgstr "أسوأ حالات خفض الرتبة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Yearly"
-msgstr ""
+msgstr "سنويًا"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Yearly Recurring"
-msgstr ""
+msgstr "السنوية المتكررة"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "of total invoiced"
-msgstr ""
+msgstr "من إجمالي ما تمت فوترته"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "over the period"
-msgstr ""
+msgstr "خلال الفترة"

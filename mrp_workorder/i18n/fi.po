@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_workorder
+# * mrp_workorder
 #
 # Translators:
 # Mikko Virtanen <mikko.virtanen2013@gmail.com>, 2022
@@ -17,20 +17,22 @@
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2022
 # Martin Trigaux, 2023
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 17:04+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"mrp_workorder/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -160,7 +162,7 @@ msgstr "Osaluettelo"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Block"
-msgstr "Ryhmä"
+msgstr "Lohko"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -209,12 +211,12 @@ msgstr "Muuta tuotantomäärää"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__check_ids
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move_line__quality_check_ids
 msgid "Check"
-msgstr "Sekki"
+msgstr "Tarkastus"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__check_ids
 msgid "Checks"
-msgstr "Shekit"
+msgstr "Šekit"
 
 #. module: mrp_workorder
 #: model:product.attribute,name:mrp_workorder.product_attribute_color_radio
@@ -402,7 +404,7 @@ msgstr "Kuvake"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "Ikoni joka kertoo poikkeustoiminnosta."
+msgstr "Kuvake joka kertoo poikkeustoiminnosta."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__worksheet_document
@@ -498,7 +500,7 @@ msgstr "Hallitse työtilauksen ajastinta tablet-näkymässä"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
 msgid "Manufacturing Orders"
-msgstr "Valmistustilaukset"
+msgstr "Tuotantotilaukset"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -582,7 +584,7 @@ msgstr "Seuraava tarkistus"
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
 msgid "No manufacturing steps defined yet!"
-msgstr "Valmistusvaiheita ei ole vielä määritelty!"
+msgstr "Tuotantovaiheita ei ole vielä määritelty!"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
@@ -901,7 +903,7 @@ msgstr ""
 "Tila aktiviteetin perusteella\n"
 "Myöhässä: Eräpäivä on menneisyydessä\n"
 "Tänään: Eräpäivä on tänään\n"
-"Suunniteltu: Tulevaisuudessa"
+"Suunniteltu: Tulevaisuudessa."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__operation_id
@@ -1015,7 +1017,7 @@ msgstr "Muutoksen tyyppi"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "Poikkeusaktiviteetin tyyppi tietueella"
+msgstr "Poikkeusaktiviteetin tyyppi tietueella."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -1065,8 +1067,10 @@ msgid ""
 "            The tablet provides worksheets for your workers and allow them to scrap products, track time,\n"
 "            launch a maintenance request, perform quality tests, etc."
 msgstr ""
-"Pöytätyökeskuksen ohjauspaneelin avulla voit rekisteröidä toiminnot suoraan työpajassa.\n"
-"            Tabletti tarjoaa työpöytätyöntekijöitäsi varten työarkit ja antaa heille mahdollisuuden romuttaa tuotteita, seurata aikaa,\n"
+"Pöytien työkeskuksen ohjauspaneelin avulla voit rekisteröidä toiminnot "
+"suoraan Valmistusketjussa.\n"
+"            Tabletti tarjoaa työntekijöillesi työkirjat ja antaa heille "
+"mahdollisuuden romuttaa tuotteita, seurata aikaa,\n"
 "            käynnistää huoltopyynnön, suorittaa laatutestejä jne."
 
 #. module: mrp_workorder
@@ -1131,8 +1135,9 @@ msgid ""
 "Work orders are operations to do as part of a manufacturing order.\n"
 "            Operations are defined in the bill of materials or added in the manufacturing order directly."
 msgstr ""
-"Työtilaukset ovat valmistustilauksen osana suoritettavia toimenpiteitä.\n"
-"            Työt määritellään osaluettelossa tai lisätään suoraan valmistustilaukseen."
+"Työtilaukset ovat tuotantotilauksen osana suoritettavia toimenpiteitä.\n"
+"            Työt määritellään materiaaliluettelossa tai lisätään suoraan "
+"tuotantotilaukseen."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__working_state
@@ -1166,7 +1171,8 @@ msgstr "Vau, pääsit viiden parhaan joukkoon!"
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/change_production_qty.py:0
 msgid "You cannot update the quantity to do of an ongoing manufacturing order for which quality checks have been performed."
-msgstr "Et voi päivittää meneillään olevan valmistustilauksen, jolle on suoritettu laatutarkastukset, tekemistä edellyttävää määrää."
+msgstr ""
+"Et voi päivittää edellytettyä määrää keskeneräisessä tuotantotilauksessa."
 
 #. module: mrp_workorder
 #. odoo-python

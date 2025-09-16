@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* ai
+# * ai
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-11 14:26+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-16 13:42+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/ai/ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -322,6 +325,8 @@ msgid ""
 "A topic includes instructions and tools that guide Odoo AI in helping the "
 "user complete their tasks."
 msgstr ""
+"يتضمن الموضوع التعليمات والأدوات التي توجه الذكاء الاصطناعي في أودو لمساعدة "
+"المستخدم على إكمال مهامه."
 
 #. module: ai
 #. odoo-javascript
@@ -330,7 +335,7 @@ msgstr ""
 #: code:addons/ai/static/src/web/systray_action.xml:0
 #: model:ir.model.fields.selection,name:ai.selection__ir_actions_server__state__ai
 msgid "AI"
-msgstr ""
+msgstr "الذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
@@ -341,7 +346,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
 msgid "AI Agent"
-msgstr ""
+msgstr "مشغّل يعمل بالذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
@@ -361,7 +366,7 @@ msgstr ""
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
 msgid "AI Embedding: Generate Embeddings"
-msgstr ""
+msgstr "تضمين الذكاء الاصطناعي: إنشاء عمليات التضمين"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__name
@@ -391,12 +396,12 @@ msgstr ""
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 #: model:ir.model.fields,field_description:ai.field_ai_topic__tool_ids
 msgid "AI Tools"
-msgstr ""
+msgstr "أدوات الذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__discuss_channel__channel_type__ai_chat
 msgid "AI chat"
-msgstr ""
+msgstr "الدردشة باستخدام الذكاء الاصطناعي"
 
 #. module: ai
 #. odoo-javascript
@@ -414,7 +419,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_composer
 msgid "AI model configurations (system prompts) for text drafting."
-msgstr ""
+msgstr "تهيئات نموذج الذكاء الاصطناعي (مدخلات النظام) لصياغة النصوص."
 
 #. module: ai
 #. odoo-python
@@ -426,7 +431,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/discuss_channel.py:0
 msgid "AI: %(name)s"
-msgstr ""
+msgstr "الذكاء الاصطناعي: %(name)s"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_adjust_search
@@ -556,12 +561,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_partner__agent_ids
 #: model:ir.model.fields,field_description:ai.field_res_users__agent_ids
 msgid "Agent"
-msgstr ""
+msgstr "الوكيل"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__name
 msgid "Agent Name"
-msgstr ""
+msgstr "اسم موظف الدعم"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_agent_id
@@ -607,7 +612,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
-msgstr ""
+msgstr "تحليلي"
 
 #. module: ai
 #. odoo-javascript
@@ -616,7 +621,7 @@ msgstr ""
 #: code:addons/ai/static/src/mail_composer_chatgpt.xml:0
 #: code:addons/ai/static/src/web/systray_action.xml:0
 msgid "Ask AI"
-msgstr ""
+msgstr "اسأل الذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
@@ -628,12 +633,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__attachment_id
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "مرفق"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_embedding
 msgid "Attachment Chunks Embedding"
-msgstr ""
+msgstr "تضمين أجزاء المرفقات"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
@@ -648,22 +653,22 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__balanced
 msgid "Balanced"
-msgstr ""
+msgstr "متوازن"
 
 #. module: ai
 #: model:ir.model,name:ai.model_base
 msgid "Base"
-msgstr ""
+msgstr "قاعدة"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_template__body_html
 msgid "Body"
-msgstr ""
+msgstr "المتن"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__channel_type
 msgid "Channel Type"
-msgstr ""
+msgstr "نوع القناة"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_discuss_channel__channel_type
@@ -671,6 +676,8 @@ msgid ""
 "Chat is private and unique between 2 persons. Group is private among invited "
 "persons. Channel can be freely joined (depending on its configuration)."
 msgstr ""
+"تكون الدردشة خاصة وفريدة بين شخصين 2. الدردشات الجماعية خاصة للأشخاص "
+"المدعوين إليها. بوسك الانضمام إلى القناة متى شئت (بناءً على تهيئتها)."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
@@ -680,7 +687,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__content
 msgid "Chunk Content"
-msgstr ""
+msgstr "محتوى مجمع"
 
 #. module: ai
 #. odoo-javascript
@@ -692,28 +699,28 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__composer_id
 msgid "Composer"
-msgstr ""
+msgstr "الكاتب"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "تهيئة الإعدادات"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "جهة الاتصال"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_compose_message__body
 #: model:ir.model.fields,field_description:ai.field_mail_composer_mixin__body
 msgid "Contents"
-msgstr ""
+msgstr "المحتويات"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_env_context
 msgid "Context for AI agent"
-msgstr ""
+msgstr "السياق لموظف الدعم الذي يعمل بواسطة الذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_prompt_shortcut
@@ -731,7 +738,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,website_form_label:ai.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Create a Customer"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_topic
@@ -739,6 +746,8 @@ msgid ""
 "Create a topic that leverages instructions and tools to direct Odoo AI in "
 "assisting the user with their tasks."
 msgstr ""
+"أنشئ موضوعاً يستعين بالتعليمات والأدوات لتوجيه الذكاء الاصطناعي لدى أودو نحو "
+"مساعدة المستخدم في مهامه."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_uid
@@ -748,7 +757,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "أنشئ بواسطة"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_date
@@ -758,17 +767,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_date
 msgid "Created on"
-msgstr ""
+msgstr "أنشئ في"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__creative
 msgid "Creative"
-msgstr ""
+msgstr "إبداعي"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__system_prompt
 msgid "Customize to control relevance and formatting."
-msgstr ""
+msgstr "التخصيص للتحكم في ملاءمة المحتوى وتنسيقه."
 
 #. module: ai
 #. odoo-javascript
@@ -776,7 +785,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent__subtitle
 #: model:ir.model.fields,field_description:ai.field_ai_topic__description
 msgid "Description"
-msgstr ""
+msgstr "الوصف"
 
 #. module: ai
 #. odoo-javascript
@@ -796,7 +805,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_discuss_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "قناة المناقشة"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__display_name
@@ -816,7 +825,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ai.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: ai
 #. odoo-javascript
@@ -834,12 +843,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Editor"
-msgstr ""
+msgstr "المحرر"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_template
 msgid "Email Templates"
-msgstr ""
+msgstr "قوالب البريد الإلكتروني"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_thread
@@ -854,7 +863,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__embedding_vector
 msgid "Embedding Vector"
-msgstr ""
+msgstr "صورة مضمنة"
 
 #. module: ai
 #. odoo-python
@@ -865,12 +874,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key_enabled
 msgid "Enable custom Google API key"
-msgstr ""
+msgstr "تمكين مفتاح API المخصص لـ Google"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key_enabled
 msgid "Enable custom OpenAI API key"
-msgstr ""
+msgstr "تمكين مفتاح API المخصص لـ OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__error_details
@@ -908,7 +917,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Generate or transform content with AI"
-msgstr ""
+msgstr "قم بإنشاء أو تحويل المحتوى باستخدام الذكاء الاصطناعي"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__chatter_ai_button
@@ -918,12 +927,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__gemini-embedding-001
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key
 msgid "Google AI API key"
-msgstr ""
+msgstr "مفتاح الواجهة البرمجية للتطبيق لـ Google AI"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_http
@@ -939,7 +948,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/thread_patch.js:0
 msgid "Hello, what can I help you with?"
-msgstr ""
+msgstr "مرحباً، كيف يمكنني مساعدتك؟"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__id
@@ -959,12 +968,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ai.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__restrict_to_sources
 msgid "If checked, the agent will only respond based on the provided sources."
-msgstr ""
+msgstr "إذا تم تحديده، فلن يستجيب الوكيل إلا بناءً على المصادر المتوفرة."
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent_source__is_active
@@ -974,7 +983,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__image_128
 msgid "Image"
-msgstr ""
+msgstr "صورة"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__indexed
@@ -998,7 +1007,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 msgid "Insert an AI prompt"
-msgstr ""
+msgstr "إدراج توجيه للذكاء الاصطناعي"
 
 #. module: ai
 #. odoo-javascript
@@ -1016,7 +1025,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_composer__default_prompt
 #: model:ir.model.fields,field_description:ai.field_ai_topic__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "التعليمات"
 
 #. module: ai
 #. odoo-python
@@ -1075,7 +1084,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__llm_model
 msgid "LLM Model"
-msgstr ""
+msgstr "نموذج LLM"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_uid
@@ -1085,7 +1094,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "آخر تحديث بواسطة"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_date
@@ -1095,29 +1104,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "آخر تحديث في"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Log Note"
-msgstr ""
+msgstr "ملاحظة"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Log as Note"
-msgstr ""
+msgstr "التدوين كملاحظة"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_composer_mixin
 msgid "Mail Composer Mixin"
-msgstr ""
+msgstr "مجموعة مخصصات معالجة البريد"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_render_mixin
 msgid "Mail Render Mixin"
-msgstr ""
+msgstr "مجموعة مخصصات معالجة البريد الإلكتروني"
 
 #. module: ai
 #. odoo-javascript
@@ -1146,13 +1155,13 @@ msgstr ""
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__name
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/llm_api_service.py:0
 msgid "No API key set for provider '%s'"
-msgstr ""
+msgstr "لم يتم تعيين مفتاح API للمزوّد '%s'"
 
 #. module: ai
 #. odoo-python
@@ -1176,7 +1185,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No provider found for the selected model"
-msgstr ""
+msgstr "لم يتم العثور على مزوّد للنموذج المحدد"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -1208,7 +1217,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "Online"
-msgstr ""
+msgstr "عبر الإنترنت"
 
 #. module: ai
 #. odoo-python
@@ -1219,17 +1228,17 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
 msgid "OpenAI"
-msgstr ""
+msgstr "OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key
 msgid "OpenAI API key"
-msgstr ""
+msgstr "مفتاح الواجهة البرمجية لـ OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "الشريك"
 
 #. module: ai
 #. odoo-javascript
@@ -1260,7 +1269,7 @@ msgstr ""
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "Prompt"
-msgstr ""
+msgstr "توجيه"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_prompt_button
@@ -1300,12 +1309,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__response_style
 msgid "Response Style"
-msgstr ""
+msgstr "أسلوب الرد"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__restrict_to_sources
 msgid "Restrict to Sources"
-msgstr ""
+msgstr "التقييد للمصادر فقط"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_text_select
@@ -1339,24 +1348,24 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Send Message"
-msgstr ""
+msgstr "إرسال رسالة"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Send as Message"
-msgstr ""
+msgstr "الإرسال كرسالة"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__sequence
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "تسلسل"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "إجراء الخادم"
 
 #. module: ai
 #. odoo-javascript
@@ -1400,7 +1409,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_ids
 msgid "Sources"
-msgstr ""
+msgstr "المصادر"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_fully_processed
@@ -1450,7 +1459,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
 msgid "System Prompt"
-msgstr ""
+msgstr "مدخلات النظام"
 
 #. module: ai
 #. odoo-python
@@ -1550,7 +1559,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_topic__name
 msgid "Title"
-msgstr ""
+msgstr "العنوان"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1566,7 +1575,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
 msgid "Topics"
-msgstr ""
+msgstr "المواضيع"
 
 #. module: ai
 #. odoo-javascript
@@ -1654,7 +1663,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Use this"
-msgstr ""
+msgstr "استخدم هذا"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
@@ -1681,7 +1690,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "User is online"
-msgstr ""
+msgstr "المستخدم متصل الآن"
 
 #. module: ai
 #. odoo-javascript

@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* esg_project
+# * esg_project
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 18:38+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Norwegian Bokmål <https://translate.odoo.com/projects/odoo-19/"
+"esg_project/nb_NO/>\n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: esg_project
 #. odoo-python
@@ -73,7 +77,7 @@ msgstr ""
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnavn"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_2
@@ -98,7 +102,7 @@ msgstr ""
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_4
@@ -146,7 +150,7 @@ msgstr ""
 #. module: esg_project
 #: model:ir.model,name:esg_project.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "Prosjekt"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_3
@@ -161,13 +165,13 @@ msgstr ""
 #. module: esg_project
 #: model:project.project,label_tasks:esg_project.esg_project_project_0
 msgid "Tasks"
-msgstr ""
+msgstr "Oppgaver"
 
 #. module: esg_project
 #. odoo-javascript
 #: code:addons/esg_project/static/src/components/esg_dashboard/esg_project_initiatives_box/esg_project_initiatives_box.xml:0
 msgid "Total"
-msgstr ""
+msgstr "Totalt"
 
 #. module: esg_project
 #. odoo-python

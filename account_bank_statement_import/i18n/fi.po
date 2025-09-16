@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import
+# * account_bank_statement_import
 #
 # Translators:
 # Kari Lindgren <kari.lindgren@emsystems.fi>, 2022
@@ -12,47 +12,49 @@
 # Veikko Väätäjä <veikko.vaataja@gmail.com>, 2022
 # Eino Mäkitalo <eino.makitalo@netitbe.fi>, 2022
 # Konsta Aavaranta, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Konsta Aavaranta, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 15:18+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "%d transactions had already been imported and were ignored."
-msgstr "%d tapatumaa on jo aiemmin tuotu, joten ne ohitettiin."
+msgstr "%d tapatumia oli tuotu jo aiemmin, joten ne ohitettiin."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "1 transaction had already been imported and was ignored."
-msgstr "1 tapahtuma on aiemmin tuotu ja ohitettiin."
+msgstr "1 tapahtuma on aiemmin tuotu ja se ohitettiin."
 
 #. module: account_bank_statement_import
 #: model:ir.model.constraint,message:account_bank_statement_import.constraint_account_bank_statement_line_unique_import_id
 msgid "A bank account transactions can be imported only once!"
-msgstr ""
+msgstr "Pankkitilitapahtumia voidaan tuoda vain kerran!"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr "Pankkitiliotteen rivi"
+msgstr "Tiliotteen rivi"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_setup_bank_manual_config
 msgid "Bank setup manual config"
-msgstr "Pankin konfiguraatio"
+msgstr "Pankin asennus ja manuaalinen määritys"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -67,12 +69,14 @@ msgid ""
 "Could not make sense of the given file.\n"
 "Did you install the module to support this type of file?"
 msgstr ""
+"Annetusta tiedostosta ei saatu selvää.\n"
+"Oletko asentanut moduulin, joka tukee tämäntyyppistä tiedostoa?"
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Go to Apps"
-msgstr "Mene sovelluksiin"
+msgstr "Siirry sovelluksiin"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -83,13 +87,13 @@ msgstr "Jos se sisältää tapahtumia useammalle kuin yhdelle tilille, se on tuo
 #. module: account_bank_statement_import
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
-msgstr "Tuonnin ID"
+msgstr "Tuonnin tunnus"
 
 #. module: account_bank_statement_import
 #. odoo-javascript
 #: code:addons/account_bank_statement_import/static/src/account_bank_statement_import_model.js:0
 msgid "Import Template for Bank Statements"
-msgstr ""
+msgstr "Tiliotteiden tuontimalli"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_journal
@@ -100,19 +104,19 @@ msgstr "Päiväkirja"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Manual (or import %(import_formats)s)"
-msgstr ""
+msgstr "Manuaalinen (tai tuonti %(import_formats)s)"
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "No attachment was provided"
-msgstr "Liitettä ei toimitettu"
+msgstr "Liitettä ei annettu"
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "No currency found matching '%s'."
-msgstr "Ei löydetty valuuttaa joka vastaisi  '%s'."
+msgstr "Ei löydetty valuuttaa, joka vastaisi  '%s'."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -153,7 +157,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "View successfully imported statements"
-msgstr ""
+msgstr "Näytä onnistuneesti tuodut tiliotteet"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -171,7 +175,7 @@ msgstr "Olet asettanut oletustilin päiväkirjalle: %s"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "You uploaded an invalid or empty file."
-msgstr ""
+msgstr "Latasit virheellisen tai tyhjän tiedoston."
 
 #. module: account_bank_statement_import
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit

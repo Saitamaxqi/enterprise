@@ -1,30 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_contract_sign
+# * hr_contract_sign
 #
 # Translators:
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:38+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/hr_sign/"
+"ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_contract_sign
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "%(user_name)s requested a new signature on the following documents:"
-msgstr ""
+msgstr "%(user_name)s طلب توقيعاً جديداً للمستندات التالية:"
 
 #. module: hr_contract_sign
 #. odoo-python
@@ -36,13 +39,13 @@ msgstr "%s و %s هي الأطراف الموقعة. "
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "%s does not have a private email set."
-msgstr ""
+msgstr "ليس لـ%s بريد إلكتروني خاص."
 
 #. module: hr_contract_sign
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "%s does not have a work email set."
-msgstr "ليس لـ%s بريد إلكتروني للعمل. "
+msgstr "ليس لـ%s بريد إلكتروني للعمل."
 
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.hr_contract_sign_view_form
@@ -89,12 +92,12 @@ msgstr "أنشئ في"
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.view_hr_contract_sign
 msgid "Discard"
-msgstr "إهمال "
+msgstr "إهمال"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__display_name
 msgid "Display Name"
-msgstr "اسم العرض "
+msgstr "اسم العرض"
 
 #. module: hr_contract_sign
 #: model:ir.actions.act_window,name:hr_contract_sign.sign_contract_wizard_action
@@ -104,12 +107,12 @@ msgstr "توقيع المستند"
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_plan_activity_type__sign_template_id
 msgid "Document to sign"
-msgstr "المستند للتوقيع عليه "
+msgstr "المستند للتوقيع عليه"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__sign_template_ids
 msgid "Documents to sign"
-msgstr "المستندات لتوقيعها "
+msgstr "المستندات لتوقيعها"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,help:hr_contract_sign.field_hr_contract_sign_document_wizard__sign_template_ids
@@ -125,7 +128,7 @@ msgstr ""
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__mail_to
 msgid "Email"
-msgstr ""
+msgstr "البريد الإلكتروني"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,help:hr_contract_sign.field_hr_contract_sign_document_wizard__mail_to
@@ -156,7 +159,8 @@ msgstr "دور الموظف"
 #: model:ir.model.fields,help:hr_contract_sign.field_hr_contract_sign_document_wizard__employee_role_id
 #: model:ir.model.fields,help:hr_contract_sign.field_hr_plan_activity_type__employee_role_id
 msgid "Employee's role on the templates to sign. The same role must be present in all the templates"
-msgstr "دور الموظف في القوالب لتوقيعها. يجب أن يكون نفس الدور موجوداً في كافة القوالب "
+msgstr ""
+"دور الموظف في القوالب لتوقيعها. يجب أن يكون نفس الدور موجوداً في كافة القوالب"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__employee_ids
@@ -166,12 +170,12 @@ msgstr "الموظفون"
 #. module: hr_contract_sign
 #: model:sign.item.role,name:hr_contract_sign.sign_item_role_job_responsible
 msgid "HR Responsible"
-msgstr "مسؤول الموارد البشرية "
+msgstr "مسؤول الموارد البشرية"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__has_both_template
 msgid "Has Both Template"
-msgstr "يحتوي على كلا القالبين "
+msgstr "يحتوي على كلا القالبين"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__id
@@ -181,7 +185,7 @@ msgstr "المُعرف"
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_plan_activity_type__is_signature_request
 msgid "Is Signature Request"
-msgstr "طلب توقيع "
+msgstr "طلب توقيع"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__write_uid
@@ -196,12 +200,12 @@ msgstr "آخر تحديث في"
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.view_hr_contract_sign
 msgid "Mail Options"
-msgstr "خيارات البريد "
+msgstr "خيارات البريد"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__message
 msgid "Message"
-msgstr "رسالة "
+msgstr "رسالة"
 
 #. module: hr_contract_sign
 #. odoo-python
@@ -212,13 +216,13 @@ msgstr "لم يتم العثور على أي قالب مناسب. يرجى ال�
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.view_hr_contract_sign
 msgid "No template available"
-msgstr "لا توجد قوالب "
+msgstr "لا توجد قوالب"
 
 #. module: hr_contract_sign
 #. odoo-python
 #: code:addons/hr_contract_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "Only %s has to sign."
-msgstr "وحده %s عليه التوقيع. "
+msgstr "وحده %s عليه التوقيع."
 
 #. module: hr_contract_sign
 #: model:sign.template,redirect_url_text:hr_contract_sign.template_sign_termination
@@ -243,12 +247,12 @@ msgstr "تخطيط نوع النشاط "
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__possible_template_ids
 msgid "Possible Template"
-msgstr "القالب المحتمل "
+msgstr "القالب المحتمل"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields.selection,name:hr_contract_sign.selection__hr_contract_sign_document_wizard__mail_to__private
 msgid "Private"
-msgstr ""
+msgstr "خاص"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields.selection,name:hr_contract_sign.selection__hr_contract_sign_document_wizard__mail_to__public
@@ -264,12 +268,12 @@ msgstr "التوقيعات المطلوبة"
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__responsible_id
 msgid "Responsible"
-msgstr "المسؤول "
+msgstr "المسؤول"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_plan_activity_type__responsible_count
 msgid "Responsible Count"
-msgstr "عدد المسؤولين "
+msgstr "عدد المسؤولين"
 
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.view_hr_contract_sign
@@ -286,18 +290,18 @@ msgstr "عدد طلبات التوقيع"
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.view_hr_contract_sign
 msgid "Sign Request Options"
-msgstr "خيارات طلب التوقيع "
+msgstr "خيارات طلب التوقيع"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__sign_template_responsible_ids
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_plan_activity_type__sign_template_responsible_ids
 msgid "Sign Template Responsible"
-msgstr "المسؤول عن قالب التوقيع "
+msgstr "المسؤول عن قالب التوقيع"
 
 #. module: hr_contract_sign
 #: model:ir.model,name:hr_contract_sign.model_hr_contract_sign_document_wizard
 msgid "Sign document in contract"
-msgstr "توقيع المستند في العقد "
+msgstr "توقيع المستند في العقد"
 
 #. module: hr_contract_sign
 #. odoo-python
@@ -318,12 +322,12 @@ msgstr "طلب التوقيع - %s"
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__subject
 msgid "Subject"
-msgstr "الموضوع "
+msgstr "الموضوع"
 
 #. module: hr_contract_sign
 #: model:ir.model.fields,field_description:hr_contract_sign.field_hr_contract_sign_document_wizard__template_warning
 msgid "Template Warning"
-msgstr "تحذير القالب "
+msgstr "تحذير القالب"
 
 #. module: hr_contract_sign
 #. odoo-python
@@ -345,7 +349,7 @@ msgstr "اكتب رسالة بريد إلكتروني أو ابحث عن جهة 
 #. odoo-python
 #: code:addons/hr_contract_sign/models/hr_contract.py:0
 msgid "You can't delete a contract linked to a signed document, archive it instead."
-msgstr "لا يمكنك حذف عقد مرتبط بمستند مُوقع. قم بأرشفته عوضاً عن ذلك. "
+msgstr "لا يمكنك حذف عقد مرتبط بمستند مُوقع. قم بأرشفته عوضاً عن ذلك."
 
 #. module: hr_contract_sign
 #: model_terms:ir.ui.view,arch_db:hr_contract_sign.hr_contract_history_view_form

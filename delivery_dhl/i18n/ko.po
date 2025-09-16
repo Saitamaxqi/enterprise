@@ -1,29 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl
+# * delivery_dhl
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sarah Park, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Sarah Park, 2023\n"
-"Language-Team: Korean (https://app.transifex.com/odoo/teams/41243/ko/)\n"
+"PO-Revision-Date: 2025-09-16 12:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "'rate': {}, 'ship': {}, 'return': {}"
-msgstr ""
+msgstr "'요율': {}, '선적': {}, '반품': {}"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__0
@@ -168,12 +171,12 @@ msgstr "패키지가 과세 대상인 경우 이를 확인하십시오."
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "Custom Data"
-msgstr ""
+msgstr "사용자 지정 데이터"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_custom_data_request
 msgid "Custom data for DHL requests,"
-msgstr ""
+msgstr "DHL 요청에 대한 사용자 지정 데이터"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__d
@@ -200,19 +203,19 @@ msgstr "DHL 환경 설정"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "DHL Documents"
-msgstr ""
+msgstr "DHL 문서"
 
 #. module: delivery_dhl
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_eu_dom
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_eu_dom_product_template
 msgid "DHL EU"
-msgstr ""
+msgstr "DHL EU"
 
 #. module: delivery_dhl
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_eu_intl
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_eu_intl_product_template
 msgid "DHL EU -> International"
-msgstr ""
+msgstr "DHL EU -> 국제"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
@@ -250,13 +253,13 @@ msgstr "DHL 사이트 ID"
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_us_dom
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_us_dom_product_template
 msgid "DHL US"
-msgstr ""
+msgstr "DHL US"
 
 #. module: delivery_dhl
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_us_intl
 #: model:product.template,name:delivery_dhl.product_product_delivery_dhl_us_intl_product_template
 msgid "DHL US -> International"
-msgstr ""
+msgstr "DHL US -> 국제"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -268,7 +271,7 @@ msgstr "DHL 계정 번호가 없습니다. 배송 방법 설정을 수정하십�
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "DHL doesn't support products with name greater than 75 characters."
-msgstr ""
+msgstr "DHL에서는  75자를 초과하는 품목명은 지원되지 않습니다."
 
 #. module: delivery_dhl
 #. odoo-python
@@ -289,7 +292,7 @@ msgstr "과세 대상"
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "Duties paid by"
-msgstr ""
+msgstr "관세 납부자"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__e
@@ -325,7 +328,7 @@ msgstr "H - 경제형 선택"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Hint: The destination may not require the dutiable option."
-msgstr ""
+msgstr "참고: 도착지에 관세 선택 항목이 필요 없을 수도 있습니다."
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__i
@@ -341,7 +344,7 @@ msgstr "인치"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Invalid syntax for DHL custom data."
-msgstr ""
+msgstr "DHL 사용자 지정 데이터의 구문 오류"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__j
@@ -422,7 +425,8 @@ msgstr "패키지 무게 단위"
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "Please define an incoterm in the associated sale order or set a default incoterm for the company in the accounting's settings."
-msgstr "관련 판매발주서나에서 인코텀즈를 정의하거나 회계 설정에서 회사의 기본 인코텀즈를 설정하십시오."
+msgstr "관련 판매주문서에서 인코텀즈를 정의하거나 회계 설정에서 회사의 기본 "
+"인코텀즈를 설정하십시오."
 
 #. module: delivery_dhl
 #. odoo-python
@@ -474,17 +478,17 @@ msgstr "보낸 사람"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Shipment created into DHL <br/> <b>Tracking Number: </b>%s"
-msgstr ""
+msgstr "DHL 배송 시작 <br/> <b>배송 조회 번호: </b>%s"
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr "선적 방법"
+msgstr "배송 방법"
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "재고 포장 유형"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__t
@@ -518,6 +522,10 @@ msgid ""
 "        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
+"DHL 사용자 지정 데이터는 json 파일 내용과 같이 구성되어 있습니다.\n"
+"        '요금', '배송', '반품'의 3가지 키가 있으며, 사용자 지정 데이터를 "
+"추가할 수 있습니다.\n"
+"        자세한 정보는 다음을 참고하세요 https://xmlportal.dhl.com/"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -526,6 +534,8 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"다음 품목의 중량 정보가 누락되어 예상 배송 비용을 계산할 수 없습니다.\n"
+"%s"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -562,13 +572,13 @@ msgstr "Y - 특송 12:00"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "You can't cancel DHL shipping without pickup date."
-msgstr "픽업 날짜 없이 DHL 배송을 취소할 수 없습니다."
+msgstr "DHL 배송을 취소하려면 수령 날짜가 있어야 합니다."
 
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "You cannot delete the commercial invoice sequence."
-msgstr ""
+msgstr "상업 송장 순서는 삭제할 수 없습니다."
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__z

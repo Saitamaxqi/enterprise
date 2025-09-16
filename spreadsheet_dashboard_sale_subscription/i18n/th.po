@@ -1,32 +1,36 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_sale_subscription
+# * spreadsheet_dashboard_sale_subscription
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:45+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 22:58+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_sale_subscription/th/>\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Orders"
-msgstr ""
+msgstr "# คำสั่งซื้อ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Subscriptions"
-msgstr ""
+msgstr "# สมัครสมาชิก"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -80,7 +84,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Before"
-msgstr ""
+msgstr "ก่อนหน้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -93,7 +97,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Camera Services"
-msgstr ""
+msgstr "บริการกล้องถ่ายรูป"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -105,7 +109,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "China"
-msgstr ""
+msgstr "จีน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -114,14 +118,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Churn"
-msgstr ""
+msgstr "การเสียลูกค้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Churn ($)"
-msgstr ""
+msgstr "การยกเลิกการใช้บริการ ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -147,7 +151,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Churned"
-msgstr ""
+msgstr "การเสียลูกค้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -170,14 +174,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Contraction"
-msgstr ""
+msgstr "การหดตัว"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Contraction ($)"
-msgstr ""
+msgstr "การลดการใช้งาน ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -195,7 +199,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Countries"
-msgstr ""
+msgstr "ประเทศ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -204,7 +208,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Country"
-msgstr ""
+msgstr "ประเทศ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -229,7 +233,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "ปัจจุบัน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -259,7 +263,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Customer"
-msgstr ""
+msgstr "ลูกค้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -299,7 +303,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 msgid "Date"
-msgstr ""
+msgstr "วันที่"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -308,14 +312,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Expansion"
-msgstr ""
+msgstr "การขยาย"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "Expansion ($)"
-msgstr ""
+msgstr "การเพิ่มการใช้งาน ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -333,19 +337,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "France"
-msgstr ""
+msgstr "ฝรั่งเศส"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Inbound"
-msgstr ""
+msgstr "ขาเข้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Italy"
-msgstr ""
+msgstr "อิตาลี"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -358,7 +362,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -371,7 +375,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Last 30 days"
-msgstr ""
+msgstr "30 วันล่าสุด"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -398,14 +402,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR"
-msgstr ""
+msgstr "MRR"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "MRR Breakdown"
-msgstr ""
+msgstr "รายละเอียด MRR"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -417,7 +421,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR Change (normalized)"
-msgstr ""
+msgstr "MRR การเปลี่ยนแปลง (ทำให้เป็นมาตรฐาน)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -425,7 +429,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_mrr_evolution
 msgid "MRR Evolution"
-msgstr ""
+msgstr "วิวัฒนาการ MRR"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -488,7 +492,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Medium"
-msgstr ""
+msgstr "วิธีที่เข้ามา"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -501,7 +505,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Monthly"
-msgstr ""
+msgstr "รายเดือน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -527,7 +531,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Motion Sensors"
-msgstr ""
+msgstr "เซนเซอร์ตรวจจับความเคลื่อนไหว"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -567,7 +571,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New"
-msgstr ""
+msgstr "ใหม่"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -595,7 +599,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "New MRR"
-msgstr ""
+msgstr "MRR ใหม่"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -616,7 +620,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "New subscriptions ($)"
-msgstr ""
+msgstr "สมัครสมาชิกใหม่ ($)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -663,20 +667,20 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Outbound"
-msgstr ""
+msgstr "ขาออก"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 msgid "Period"
-msgstr ""
+msgstr "ช่วงเวลา"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Plans"
-msgstr ""
+msgstr "แผน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -685,14 +689,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "ก่อนหน้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "สินค้า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -700,7 +704,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Recurrence"
-msgstr ""
+msgstr "การเกิดซ้ำ"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -719,7 +723,7 @@ msgstr ""
 #. module: spreadsheet_dashboard_sale_subscription
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_retention
 msgid "Retention"
-msgstr ""
+msgstr "การเก็บรักษา"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -754,7 +758,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Sales Team"
-msgstr ""
+msgstr "ทีมขาย"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -770,19 +774,19 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_salesperson
 msgid "Salesperson"
-msgstr ""
+msgstr "พนักงานขาย"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Source"
-msgstr ""
+msgstr "แหล่งที่มา"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Spain"
-msgstr ""
+msgstr "สเปน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -793,25 +797,25 @@ msgstr ""
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_subscriptions
 #: model:spreadsheet.dashboard.group,name:spreadsheet_dashboard_sale_subscription.spreadsheet_dashboard_group_subscriptions
 msgid "Subscriptions"
-msgstr ""
+msgstr "การสมัครสมาชิก"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "This month"
-msgstr ""
+msgstr "เดือนนี้"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Today"
-msgstr ""
+msgstr "วันนี้"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Countries"
-msgstr ""
+msgstr "ประเทศยอดนิยม"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -839,14 +843,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Products"
-msgstr ""
+msgstr "สินค้ายอดนิยม"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Quotations"
-msgstr ""
+msgstr "ใบเสนอราคายอดนิยม"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -915,13 +919,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 msgid "Transfer"
-msgstr ""
+msgstr "โอน"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "United States"
-msgstr ""
+msgstr "สหรัฐอเมริกา"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -943,7 +947,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Value"
-msgstr ""
+msgstr "ค่า"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -970,13 +974,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Yearly"
-msgstr ""
+msgstr "รายปี"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Yearly Recurring"
-msgstr ""
+msgstr "เกิดขึ้นซ้ำทุกปี"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript

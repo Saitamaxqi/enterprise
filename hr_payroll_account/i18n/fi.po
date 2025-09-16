@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_payroll_account
+# * hr_payroll_account
 #
 # Translators:
 # Tuomo Aura <tuomo.aura@web-veistamo.fi>, 2022
@@ -10,20 +10,22 @@
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2022
 # Kari Lindgren <kari.lindgren@emsystems.fi>, 2023
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 17:03+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"hr_payroll_account/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_chart_template
@@ -34,7 +36,7 @@ msgstr "Tilikarttamalli"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Account Payslip Houserental"
-msgstr ""
+msgstr "Tilin palkkalaskelman vuokra-asunto"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_salary_rule_view_form
@@ -50,7 +52,7 @@ msgstr "Kirjanpitovienti"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "Adjustment Entry"
-msgstr "Korjausvienti"
+msgstr "Oikaisuvienti"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_contract__analytic_account_id
@@ -63,7 +65,7 @@ msgstr "Kustannuspaikka"
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Are you sure you want to proceed?"
-msgstr ""
+msgstr "Haluatko varmasti jatkaa?"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract_history
@@ -74,22 +76,22 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid "Create Draft Entry"
-msgstr ""
+msgstr "Luo luonnoskirjaus"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__account_credit
 msgid "Credit Account"
-msgstr "Kredit-tili"
+msgstr "Luottotili"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip__date
 msgid "Date Account"
-msgstr ""
+msgstr "Päivätili"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__account_debit
 msgid "Debit Account"
-msgstr "Käyttötili"
+msgstr "Veloitustili"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_contract
@@ -101,6 +103,8 @@ msgstr "Työsopimus"
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "Incorrect journal: The journal must be in the same currency as the company"
 msgstr ""
+"Virheellinen päiväkirja: Päiväkirjan on oltava samassa valuutassa kuin "
+"yrityksen"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_account_journal
@@ -110,7 +114,8 @@ msgstr "Päiväkirja"
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_payslip__date
 msgid "Keep empty to use the period of the validation(Payslip) date."
-msgstr "Jätä tyhjäksi käyttääksesi jakson tarkistus(palkkalaskelman) päivämäärää."
+msgstr ""
+"Jätä tyhjäksi käyttääksesi jakson tarkistuspäivämäärää (palkkalaskelman)."
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -121,19 +126,19 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "Not computed in net accountably"
-msgstr ""
+msgstr "Ei lasketa nettona kirjanpidollisesti"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the contract for these payslips has no structure type."
-msgstr ""
+msgstr "Yhdessä palkkalaskelmien sopimuksessa ei ole rakennetyyppiä."
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "One of the payroll structures has no account journal defined on it."
-msgstr ""
+msgstr "Yhdelle palkkalaskelmista ei ole määritelty tilipäiväkirjaa."
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
@@ -144,13 +149,13 @@ msgstr "Palkkalaskelma"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "SLR"
-msgstr ""
+msgstr "Sairauslomaraha"
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_chart_template.py:0
 msgid "Salaries"
-msgstr ""
+msgstr "Palkat"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payroll_structure__journal_id
@@ -161,7 +166,7 @@ msgstr "Palkkapäiväkirja"
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_salary_rule
 msgid "Salary Rule"
-msgstr ""
+msgstr "Palkkasäännöt"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payroll_structure
@@ -172,15 +177,19 @@ msgstr "Palkkarakenne"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
 msgid "The Expense Journal \"%s\" has not properly configured the default Account!"
-msgstr ""
+msgstr "Menojen päiväkirjalle \"%s\" ei ole määritetty oletustiliä oikein!"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_salary_rule__not_computed_in_net
 msgid "This field allows you to delete the value of this rule in the \"Net Salary\" rule at the accounting level to explicitly display the value of this rule in the accounting. For example, if you want to display the value of your representation fees, you can check this field."
 msgstr ""
+"Tämän kentän avulla voit poistaa tämän säännön arvon \"Nettopalkka\"-"
+"säännöstä kirjanpitotasolla, jotta tämän säännön arvo näkyy nimenomaisesti "
+"kirjanpidossa. Jos esimerkiksi haluat näyttää edustuspalkkioiden arvon, voit "
+"merkitä tämän kentän."
 
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
-msgstr ""
+msgstr "Palkkarakenteeseen liittyvää päiväkirjaa ei voi poistaa"

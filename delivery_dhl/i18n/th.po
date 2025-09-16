@@ -1,30 +1,32 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl
+# * delivery_dhl
 #
 # Translators:
 # Khwunchai Jaengsawang <khwunchai.j@ku.th>, 2022
 # Martin Trigaux, 2022
 # Wichanon Jamwutthipreecha, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Wichanon Jamwutthipreecha, 2022\n"
-"Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
+"PO-Revision-Date: 2025-09-16 22:57+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl/th/>\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "'rate': {}, 'ship': {}, 'return': {}"
-msgstr ""
+msgstr "'อัตรา': {}, 'จัดส่ง': {}, 'ส่งคืน': {}"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__0
@@ -149,7 +151,7 @@ msgstr "B - Break Bulk Express"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__c
 msgid "C - Medical Express"
-msgstr "C - Medical Express"
+msgstr "C - การแพทย์แบบด่วน"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_stock_package_type__package_carrier_type
@@ -169,12 +171,12 @@ msgstr "ตรวจสอบว่าแพ็คเกจของคุณต
 #. module: delivery_dhl
 #: model_terms:ir.ui.view,arch_db:delivery_dhl.view_delivery_carrier_form_with_provider_dhl
 msgid "Custom Data"
-msgstr ""
+msgstr "ข้อมูลที่กำหนดเอง"
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_custom_data_request
 msgid "Custom data for DHL requests,"
-msgstr ""
+msgstr "ข้อมูลที่กำหนดเองสำหรับคำขอของ DHL"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__d
@@ -201,7 +203,7 @@ msgstr "การกำหนดค่า DHL"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "DHL Documents"
-msgstr ""
+msgstr "เอกสาร DHL"
 
 #. module: delivery_dhl
 #: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_eu_dom
@@ -269,7 +271,7 @@ msgstr "ไม่มีหมายเลขบัญชี DHL โปรดแ�
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid "DHL doesn't support products with name greater than 75 characters."
-msgstr ""
+msgstr "DHL ไม่รองรับสินค้าที่มีชื่อยาวเกิน 75 ตัวอักษร"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -342,7 +344,7 @@ msgstr "นิ้ว"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Invalid syntax for DHL custom data."
-msgstr ""
+msgstr "ไวยากรณ์ไม่ถูกต้องสำหรับข้อมูลที่กำหนดเองของ DHL"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__j
@@ -444,7 +446,7 @@ msgstr "ผู้ให้บริการ"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__q
 msgid "Q - Medical Express"
-msgstr "Q - Medical Express"
+msgstr "Q - การแพทย์แบบด่วน"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__r
@@ -475,7 +477,7 @@ msgstr "ผู้ส่ง"
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "Shipment created into DHL <br/> <b>Tracking Number: </b>%s"
-msgstr ""
+msgstr "การจัดส่งที่สร้างขึ้นใน DHL <br/> <b>หมายเลขติดตาม: </b>%s"
 
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_delivery_carrier
@@ -485,7 +487,7 @@ msgstr "วิธีการการจัดส่ง"
 #. module: delivery_dhl
 #: model:ir.model,name:delivery_dhl.model_stock_package_type
 msgid "Stock package type"
-msgstr "ประเภทของสต๊อกบรรจุภัณฑ์"
+msgstr "ประเภทของสต็อกบรรจุภัณฑ์"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__t
@@ -519,6 +521,10 @@ msgid ""
 "        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
+"ข้อมูลที่กำหนดเองใน DHL ได้รับการจัดระเบียบเหมือนกับภายในไฟล์ json\n"
+"        มี 3 ปุ่มที่เป็นไปได้: 'อัตรา', 'จัดส่ง', 'การส่งคืน' "
+"ซึ่งคุณสามารถเพิ่มข้อมูลที่คุณกำหนดเองได้\n"
+"        More info on https://xmlportal.dhl.com/"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -571,7 +577,7 @@ msgstr "คุณไม่สามารถยกเลิกการจัด
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
 msgid "You cannot delete the commercial invoice sequence."
-msgstr ""
+msgstr "คุณไม่สามารถลบลำดับใบแจ้งหนี้เชิงพาณิชย์ได้"
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__z

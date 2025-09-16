@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_mps
+# * mrp_mps
 #
 # Translators:
 # Martin Trigaux, 2022
 # Tony Peng <umingpeng@gmail.com>, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2022\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:24+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/mrp_mps/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -70,7 +72,7 @@ msgstr "实际需求Y-2"
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__total_qty
 msgid "Actual Replenishment"
-msgstr "实际补给"
+msgstr "实际补货"
 
 #. module: mrp_mps
 #. odoo-python
@@ -89,19 +91,19 @@ msgstr "添加产品"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/models/master_production_schedule_model.js:0
 msgid "Are you sure you want to delete these records?"
-msgstr "您确认要删除这些数据吗？"
+msgstr "确定删除数据？"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/models/master_production_schedule_model.js:0
 msgid "Are you sure you want to delete this record?"
-msgstr "您确认要删除这些数据吗？"
+msgstr "确定删除数据？"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 msgid "Available to Promise"
-msgstr "最小数量保证"
+msgstr "可用量"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_bom
@@ -156,7 +158,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__create_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__create_date
 msgid "Created on"
-msgstr "创建时间"
+msgstr "创建日期"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__day
@@ -171,13 +173,13 @@ msgstr "日期"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__product_uom_id
 msgid "Default unit of measure used for all stock operations."
-msgstr "所有库存作业的默认单位。"
+msgstr "用于所有库存作业的默认计量单位。"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_config_settings__manufacturing_period
 msgid "Default value for the time ranges in Master Production Schedule report."
-msgstr "主生产计划报告中的时间范围的默认值。"
+msgstr "主生产计划报表中的时间范围默认值。"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -200,7 +202,7 @@ msgstr "显示实际需求"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_demand_year_minus_2
 msgid "Display Actual Demand Before Year"
-msgstr "显示年度前的实际需求"
+msgstr "显示年度之前的实际需求"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_demand_year_minus_1
@@ -210,12 +212,12 @@ msgstr "显示去年的实际需求"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_replenishment
 msgid "Display Actual Replenishment"
-msgstr "显示实际补给"
+msgstr "显示实际补货"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_available_to_promise
 msgid "Display Available to Promise"
-msgstr "显示最小数量保证"
+msgstr "显示可用量"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_demand_forecast
@@ -247,12 +249,12 @@ msgstr "显示初始库存"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_to_replenish
 msgid "Display To Replenish"
-msgstr "显示待补充"
+msgstr "显示待补货"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__excessive_replenishment
 msgid "Excessive Replenishment"
-msgstr ""
+msgstr "过量补货"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -264,12 +266,12 @@ msgstr "导出"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "External ID"
-msgstr "外部 ID"
+msgstr "外部ID"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_forecast_details
 msgid "Forecast Demand Details"
-msgstr "预测需求详情"
+msgstr "需求预测详情"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -281,7 +283,7 @@ msgstr "预估报表"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "Forecasted"
-msgstr "预测"
+msgstr "预测的"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -299,7 +301,7 @@ msgstr "预测库存"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__forecast_ids
 msgid "Forecasted quantity at date"
-msgstr "该时刻预测数量"
+msgstr "该日期的预测数量"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__sequence
@@ -317,26 +319,26 @@ msgstr "ID"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 msgid "Indirect Demand Forecast"
-msgstr "间接需求预测数量"
+msgstr "间接需求预测"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__write_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__write_uid
 msgid "Last Updated by"
-msgstr "最后更新人"
+msgstr "上一更新人"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__write_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__write_date
 msgid "Last Updated on"
-msgstr "最后更新时间"
+msgstr "上一更新日期"
 
 #. module: mrp_mps
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_menu_planning
 msgid "MPS"
-msgstr "MPS"
+msgstr "主生产计划MPS"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_details_form_view
@@ -366,7 +368,7 @@ msgstr "最大补充数量"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__min_to_replenish_qty
 msgid "Minimum to Replenish"
-msgstr "最小补充数量"
+msgstr "最小补货量"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__month
@@ -376,13 +378,13 @@ msgstr "每月"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__move_ids
 msgid "Move"
-msgstr "移动"
+msgstr "分录"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.xml:0
 msgid "No product yet. Add one to start scheduling."
-msgstr "暂无产品。 添加一个开始调度。"
+msgstr "无产品。添加产品，以开始计划。"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
@@ -402,7 +404,7 @@ msgstr "在主生产排程中显示的生产期间列数"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__procurement_launched
 msgid "Procurement has been run for this forecast"
-msgstr "此预测的生产计划MRP已运行"
+msgstr "为该预测运行的采购"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_template
@@ -428,7 +430,7 @@ msgstr "产品模板"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__product_uom_id
 msgid "Product UoM"
-msgstr "产品计量单位"
+msgstr "产品计量单位（UoM）"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_product
@@ -438,7 +440,7 @@ msgstr "产品变体"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__production_schedule_id
 msgid "Production Schedule"
-msgstr "生产调度"
+msgstr "生产计划"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__warehouse_id
@@ -458,23 +460,23 @@ msgstr "采购订单明细"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__moves_qty
 msgid "Quantity from Incoming Moves"
-msgstr "入库数量"
+msgstr "来自传入分录的数量"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__manufacture_qty
 msgid "Quantity from Manufacturing Order"
-msgstr "生产订单数量"
+msgstr "来自制造订单的数量"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__rfq_qty
 msgid "Quantity from RFQ"
-msgstr "采购数量"
+msgstr "来自报价请求（RFQ）的数量"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "Quantity predicted to be available for sale at the end of the period (= to replenish - actual demand)."
-msgstr "在此期间后，可用于销售的数量(= 补货数量 - 实际需求数量)."
+msgstr "该期间结束时预计可销售数量（=待补货数量-实际需求数量）。"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_details_form_view
@@ -487,32 +489,32 @@ msgstr "收据"
 #: code:addons/mrp_mps/static/src/components/main.js:0
 #: code:addons/mrp_mps/static/src/components/main.xml:0
 msgid "Replenish"
-msgstr "补充"
+msgstr "补货"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__replenish_state
 msgid "Replenish State"
-msgstr ""
+msgstr "补货状态"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__replenish_qty_updated
 msgid "Replenish_qty has been manually updated"
-msgstr "补货数量已被手工更新"
+msgstr "Replenish_qty已手动更新"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Replenishment Too High"
-msgstr ""
+msgstr "补货数量过高"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Replenishment Too Low"
-msgstr ""
+msgstr "补货数量过低"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_details_form_view
 msgid "Requests for quotation"
-msgstr "询价"
+msgstr "报价请求"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -533,12 +535,12 @@ msgstr "保存"
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_production_schedule
 msgid "Schedule the production of Product in a warehouse"
-msgstr "在此仓库中进行产品生产计划"
+msgstr "在仓库中进行的产品生产计划"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_purchase_order__date_planned_mps
 msgid "Scheduled Date"
-msgstr "安排的日期"
+msgstr "计划日期"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_bom__schedule_count
@@ -548,18 +550,18 @@ msgstr "安排的日期"
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_normal_form_view_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.product_template_only_form_view_mps
 msgid "Schedules"
-msgstr "排程"
+msgstr "计划"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__sequence
 msgid "Sequence"
-msgstr "单号规则"
+msgstr "序列"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 msgid "Starting Inventory"
-msgstr "初始库存"
+msgstr "期初库存"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_stock_rule
@@ -575,42 +577,42 @@ msgstr "建议的补给"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__replenish_state
 msgid "Technical field to support filtering by replenish state"
-msgstr ""
+msgstr "支持按补货状态进行筛选的技术字段"
 
 #. module: mrp_mps
 #: model:ir.model.constraint,message:mrp_mps.constraint_mrp_production_schedule_warehouse_product_ref_uniq
 msgid "The combination of warehouse and product must be unique!"
-msgstr ""
+msgstr "仓库和产品组合须唯一的！"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The confirmed demand, based on the confirmed sales orders."
-msgstr "确定的需求，源于确定的销售订单"
+msgstr "已确定需求，基于已确定销售订单。"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The forecasted demand to fulfill the needs in components of the Manufacturing Orders."
-msgstr "生产单计算出来的半成品及原材料的预测需求"
+msgstr "满足制造订单组件需求的预测需求数量。"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The forecasted demand. This value has to be entered manually."
-msgstr "需求预测。相关数量已被人工输入。"
+msgstr "预测需求数量，须手动输入。"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The forecasted quantity in stock at the beginning of the period."
-msgstr "在此期间开始，预测的库存数量"
+msgstr "期初预测库存数量。"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The forecasted quantity in stock at the end of the period."
-msgstr "在此期间结束后，预测的库存数量"
+msgstr "期末预测库存数量。"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -620,9 +622,9 @@ msgid ""
 "                    It ensures everything gets scheduled on time, based on constraints such as: safety stock, production capacity, lead times.\n"
 "                    It's the perfect tool to support your S&OP meetings."
 msgstr ""
-"主计划将您的销售和需求预测转换为每个组件的生产和采购计划。\n"
-"它可以根据诸如安全库存，生能力力，交货时间之类的约束确保一切按计划进行。\n"
-"它是支持您的S＆OP会议的理想工具。"
+"主计划将销售和需求预测转换为组件生产和采购计划。\n"
+"                    根据安全库存、生产力和提前期等约束条件确保完成计划。\n"
+"                    是支持销售与运营计划（S＆OP）会议的理想工具。"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__max_to_replenish_qty
@@ -633,18 +635,18 @@ msgstr " MPS  每个期间运用的最大补货数量。 注意，如果需求�
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The quantity being replenished, based on the Requests for Quotation and the Manufacturing Orders."
-msgstr "计算补货生产的指定数量，基于已存在的销售订单及生产单。"
+msgstr "补货数量，基于报价请求和制造订单。"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The quantity to replenish through Purchase Orders or Manufacturing Orders."
-msgstr "通过采购或生产，补货的累计数量。"
+msgstr "通过采购订单或制造订单补货的数量。"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__forecast_target_qty
 msgid "This is the minimum free stock you want to keep for that product at all times."
-msgstr "这个产品总是保持这个最小的可发货数量"
+msgstr "希望始终为该产品保持的最小可发货数量。"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
@@ -658,17 +660,17 @@ msgstr "时间范围"
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__to_replenish
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "To Replenish"
-msgstr "待补充"
+msgstr "待补货"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__under_replenishment
 msgid "Under Replenishment"
-msgstr ""
+msgstr "补货中"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__min_to_replenish_qty
 msgid "Unless the demand is 0, Odoo will always at least replenish this quantity."
-msgstr "除非需求为 0，否则 Odoo 始终填充这个数量。"
+msgstr "除非需求为 0，否则Odoo始终补货该数量。"
 
 #. module: mrp_mps
 #. odoo-python
@@ -685,4 +687,4 @@ msgstr "每周"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "by"
-msgstr "单位"
+msgstr "以"

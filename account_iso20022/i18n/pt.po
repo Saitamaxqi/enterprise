@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa
+# * account_sepa
 #
 # Translators:
 # Reinaldo Ramos <reinaldo.ramos@arxi.pt>, 2022
@@ -10,26 +10,29 @@
 # Manuela Silva <mmsrs@sky.com>, 2022
 # Ricardo Correia <rcorreiavv@gmail.com>, 2022
 # 425fe09b3064b9f906f637fff94056ae_a00ea56 <0fa3588fa89906bfcb3a354600956e0e_308047>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: 425fe09b3064b9f906f637fff94056ae_a00ea56 <0fa3588fa89906bfcb3a354600956e0e_308047>, 2022\n"
-"Language-Team: Portuguese (https://app.transifex.com/odoo/teams/41243/pt/)\n"
+"PO-Revision-Date: 2025-09-16 21:29+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
+"account_iso20022/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "A bank account is not defined."
-msgstr ""
+msgstr "Uma conta bancária não foi definida."
 
 #. module: account_sepa
 #. odoo-python
@@ -40,7 +43,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
 msgid "Austrian"
-msgstr ""
+msgstr "Austríaco"
 
 #. module: account_sepa
 #. odoo-python
@@ -51,7 +54,7 @@ msgstr ""
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.view_batch_payment_form_inherit
 msgid "Batch Booking"
-msgstr ""
+msgstr "Processamento em lote"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_batch_payment
@@ -81,12 +84,12 @@ msgstr "Genérica"
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_de
 msgid "German"
-msgstr ""
+msgstr "Alemão"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__has_sepa_ct_payment_method
 msgid "Has Sepa Ct Payment Method"
-msgstr ""
+msgstr "Tem forma de pagamento SEPA CT"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
@@ -121,18 +124,19 @@ msgstr ""
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters in length."
 msgstr ""
+"Nome da parte de referência credora. Regra de uso: limitado a 70 caracteres."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has no country code defined."
-msgstr ""
+msgstr "O usuário %s não tem um código de país definido."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has not bank account defined."
-msgstr ""
+msgstr "O usuário %s não tem uma conta bancária definida."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment_method
@@ -169,16 +173,18 @@ msgstr "Registar Pagamento"
 #: model:ir.model.fields,help:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "Request batch booking from the bank for the related bank statements."
 msgstr ""
+"Solicite o processamento em lote do banco para os extratos bancários "
+"relacionados."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_batch_payment__sct_batch_booking
 msgid "SCT Batch Booking"
-msgstr ""
+msgstr "Processamento em lote SCT"
 
 #. module: account_sepa
 #: model:account.payment.method,name:account_sepa.account_payment_method_sepa_ct
 msgid "SEPA Credit Transfer"
-msgstr ""
+msgstr "Transferência de Crédito SEPA"
 
 #. module: account_sepa
 #. odoo-python
@@ -206,7 +212,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments are above the maximum amount allowed."
-msgstr ""
+msgstr "Alguns pagamentos estão acima do valor máximo permitido."
 
 #. module: account_sepa
 #. odoo-python
@@ -218,7 +224,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments have no recipient bank account set."
-msgstr ""
+msgstr "Alguns pagamentos não têm conta bancária de destinatário definida."
 
 #. module: account_sepa
 #. odoo-python

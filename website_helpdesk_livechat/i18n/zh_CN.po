@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_helpdesk_livechat
+# * website_helpdesk_livechat
 #
 # Translators:
 # Martin Trigaux, 2022
 # 稀饭~~ <wangwhai@qq.com>, 2022
 # Raymond Yu <cl_yu@hotmail.com>, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:50+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2022\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:25+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/website_helpdesk_livechat/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -76,7 +78,7 @@ msgstr ""
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Configure Live Chat Channel"
-msgstr ""
+msgstr "设置在线客服频道"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields.selection,name:website_helpdesk_livechat.selection__chatbot_script_step__step_type__create_ticket
@@ -87,7 +89,7 @@ msgstr "创建工单"
 #. odoo-javascript
 #: code:addons/website_helpdesk_livechat/static/src/messaging_service_patch.js:0
 msgid "Create a new helpdesk ticket (/ticket ticket title)"
-msgstr ""
+msgstr "新建技术支持请求（/ticket 请求主题）"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -154,7 +156,7 @@ msgstr "最后一件事，能不能给我们提供您的电子邮件地址？"
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_helpdesk_team__use_website_helpdesk_livechat
 msgid "Live Chat"
-msgstr ""
+msgstr "在线聊天"
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.answer,name:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref_answer_no
@@ -191,7 +193,7 @@ msgstr "请在下面写您的客户参考号码。"
 #. odoo-javascript
 #: code:addons/website_helpdesk_livechat/static/src/messaging_service_patch.js:0
 msgid "Search helpdesk tickets (/search_tickets keyword)"
-msgstr ""
+msgstr "搜索服务台技术支持请求（/search_tickets 关键字）"
 
 #. module: website_helpdesk_livechat
 #. odoo-python

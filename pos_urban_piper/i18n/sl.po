@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_urban_piper
+# * pos_urban_piper
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:39+0000\n"
-"PO-Revision-Date: 2025-09-11 14:39+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:28+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"pos_urban_piper/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -39,7 +44,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.xml:0
 msgid "Accept"
-msgstr ""
+msgstr "Sprejmi"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__pos_order__delivery_status__acknowledged
@@ -55,7 +60,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__name
 msgid "An internal identification of the point of sale."
-msgstr ""
+msgstr "Notrajna identifikacija za POS"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -84,17 +89,17 @@ msgstr ""
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/product_screen/product_screen.js:0
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/product_screen/product_screen.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Nazaj"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.pos_urban_piper_test_order_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__pos_order__delivery_status__cancelled
 msgid "Cancelled"
-msgstr ""
+msgstr "Preklicano"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -106,13 +111,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Cash"
-msgstr ""
+msgstr "Gotovina"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Channel"
-msgstr ""
+msgstr "Kanal"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_platform_ids
@@ -135,12 +140,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Zaključi"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Podjetja"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -151,12 +156,12 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__pos_order__delivery_status__completed
 msgid "Completed"
-msgstr ""
+msgstr "Končano"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Uredi nastavitve"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -179,20 +184,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__create_uid
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_delivery_provider__create_date
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__create_date
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Customer Email"
-msgstr ""
+msgstr "E-pošta stranke"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -204,20 +209,20 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Customer Name"
-msgstr ""
+msgstr "Naziv stranke"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Customer Phone"
-msgstr ""
+msgstr "Telefon stranke"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/receipt_screen/receipt/order_receipt.xml:0
 msgid "Delivery Address"
-msgstr ""
+msgstr "Naslov za dostavo"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -287,7 +292,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_order__delivery_status
 msgid "Delivery Status"
-msgstr ""
+msgstr "Status dostave"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -310,7 +315,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.xml:0
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -340,19 +345,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_company__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/delivery_button/delivery_button.xml:0
 msgid "Done"
-msgstr ""
+msgstr "Opravljeno"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Uredi"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__product_template__urbanpiper_meal_type__3
@@ -373,7 +378,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -395,7 +400,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Fiscal Position"
-msgstr ""
+msgstr "Davčno območje"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__urbanpiper_fiscal_position_id
@@ -475,7 +480,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_company__id
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__is_alcoholic_on_urbanpiper
@@ -544,14 +549,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__write_uid
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_delivery_provider__write_date
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__write_date
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__urbanpiper_last_sync_date
@@ -585,14 +590,14 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__product_template__urbanpiper_meal_type__4
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_delivery_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_delivery_provider__name
@@ -603,7 +608,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/delivery_button/delivery_button.xml:0
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -636,7 +641,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/delivery_button/delivery_button.xml:0
 msgid "Ongoing"
-msgstr ""
+msgstr "V teku"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_config_settings__pos_urbanpiper_payment_methods_ids
@@ -676,7 +681,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Order Time"
-msgstr ""
+msgstr "Čas naročila"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -693,7 +698,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Others"
-msgstr ""
+msgstr "Ostali"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -760,7 +765,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.pos_urban_piper_test_order_wizard_view_form
@@ -781,17 +786,17 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_config__name
 msgid "Point of Sale"
-msgstr ""
+msgstr "Prodajna točka"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Nastavitve POS-blagajne"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Naročila POS"
 
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_payment_method
@@ -806,7 +811,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Seja POS"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__urbanpiper_store_identifier
@@ -827,7 +832,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Prepaid"
-msgstr ""
+msgstr "Naročene količine"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -844,7 +849,7 @@ msgstr ""
 #: model:ir.model,name:pos_urban_piper.model_product_pricelist
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Pricelist"
-msgstr ""
+msgstr "Cenik"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__urbanpiper_pricelist_id
@@ -856,7 +861,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__product_id
 #: model:ir.model.fields,field_description:pos_urban_piper.field_product_urban_piper_status__product_tmpl_id
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_urban_piper_status__is_product_linked
@@ -893,7 +898,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Količina"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__is_recommended_on_urbanpiper
@@ -920,7 +925,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.xml:0
 msgid "Reject"
-msgstr ""
+msgstr "Zavrni"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -966,7 +971,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Select Fiscal Position"
-msgstr ""
+msgstr "Izberite davčno območje"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -993,7 +998,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup.js:0
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_status
@@ -1036,7 +1041,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Sistemski parameter"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1135,7 +1140,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Today"
-msgstr ""
+msgstr "Danes"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -1271,7 +1276,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Username"
-msgstr ""
+msgstr "Uporabniško ime"
 
 #. module: pos_urban_piper
 #. odoo-javascript

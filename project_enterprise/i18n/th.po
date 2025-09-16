@@ -1,26 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_enterprise
+# * project_enterprise
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:47+0000\n"
-"PO-Revision-Date: 2025-09-11 14:40+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-16 22:58+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"project_enterprise/th/>\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "%(partner)s has %(amount)s tasks at the same time."
-msgstr ""
+msgstr "%(partner)s มี %(amount)s งานในเวลาเดียวกัน"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
@@ -28,68 +31,71 @@ msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
 msgstr ""
+"<i class=\"fa fa-exclamation-circle me-2\" role=\"รูปภาพ\" title="
+"\"คำเตือนการขึ้นต่อกัน\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
+"<i class=\"fa fa-random me-2\" role=\"รูปภาพ\" title=\"การวางแผนทับซ้อน\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Deadline:</strong>"
-msgstr ""
+msgstr "<strong>วันครบกำหนด:</strong>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Planned Date:</strong>"
-msgstr ""
+msgstr "<strong>วันที่วางแผนไว้:</strong>"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__allocated_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "เวลาที่ถูกจัดสรร"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__user_ids
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Assignees"
-msgstr ""
+msgstr "ผู้รับมอบหมาย"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/view_dialogs/select_auto_plan_create_dialog.xml:0
 msgid "Auto Plan"
-msgstr ""
+msgstr "แผนอัตโนมัติ"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Check it out <i class=\"oi oi-chevron-right ms-2\"/>"
-msgstr ""
+msgstr "ลองดูเลย <i class=\"oi oi-chevron-right ms-2\"/>"
 
 #. module: project_enterprise
 #: model:ir.model,website_form_label:project_enterprise.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "สร้างงาน"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__partner_id
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Customer"
-msgstr ""
+msgstr "ลูกค้า"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 msgid "Date"
-msgstr ""
+msgstr "วันที่"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form_in_gantt
 msgid "Discard"
-msgstr ""
+msgstr "ละทิ้ง"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__display_name
@@ -98,13 +104,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__display_name
 #: model:ir.model.fields,field_description:project_enterprise.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "แสดงชื่อ"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Failed to undo reschedule"
-msgstr ""
+msgstr "ไม่สามารถยกเลิกการกำหนดเวลาใหม่ได้"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_project__id
@@ -113,13 +119,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__id
 #: model:ir.model.fields,field_description:project_enterprise.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "ไอดี"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view_no_title
 msgid "Milestone"
-msgstr ""
+msgstr "เหตุการณ์สำคัญ"
 
 #. module: project_enterprise
 #. odoo-python
@@ -128,6 +134,7 @@ msgid ""
 "One parameter is missing to use this method. You should give a start and end "
 "dates."
 msgstr ""
+"ขาดพารามิเตอร์หนึ่งตัวในการใช้วิธีนี้ คุณควรระบุวันที่เริ่มต้นและสิ้นสุด"
 
 #. module: project_enterprise
 #. odoo-python
@@ -135,44 +142,44 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid "Planned Date"
-msgstr ""
+msgstr "วันที่ตามแผน"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_start
 msgid "Planned Date Start"
-msgstr ""
+msgstr "วันที่วางแผนเริ่มต้น"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt_inherited_project_sharing_task
 msgid "Planning"
-msgstr ""
+msgstr "การวางแผน"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_project
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__project_id
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_map_view
 msgid "Project"
-msgstr ""
+msgstr "โปรเจ็กต์"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project due"
-msgstr ""
+msgstr "ครบกำหนดโครงการ"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_common/milestones_popover.xml:0
 msgid "Project start"
-msgstr ""
+msgstr "เริ่มโครงการ"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form_in_gantt
 msgid "Save"
-msgstr ""
+msgstr "บันทึก"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -186,7 +193,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "Some tasks were planned after their initial deadline."
-msgstr ""
+msgstr "งานบางอย่างได้รับการวางแผนหลังจากกำหนดเวลาเริ่มแรก"
 
 #. module: project_enterprise
 #. odoo-python
@@ -196,6 +203,9 @@ msgid ""
 "limited availability of the assignees. The planned dates for these tasks may "
 "not align with their allocated hours."
 msgstr ""
+"งานบางงานได้รับการกำหนดเวลาพร้อมกัน "
+"ส่งผลให้เกิดข้อขัดแย้งเนื่องจากความพร้อมของผู้ได้รับมอบหมายมีจำกัด "
+"วันที่วางแผนไว้สำหรับงานเหล่านี้อาจไม่สอดคล้องกับชั่วโมงที่จัดสรรไว้"
 
 #. module: project_enterprise
 #. odoo-python
@@ -204,22 +214,23 @@ msgid ""
 "Some tasks weren't planned because the closest available starting date was "
 "too far ahead in the future"
 msgstr ""
+"งานบางอย่างไม่ได้วางแผนไว้ เนื่องจากวันที่เริ่มต้นที่ใกล้เคียงที่สุดอยู่ไกลเกินไปในอนาคต"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__planned_date_begin
 #: model:ir.model.fields,field_description:project_enterprise.field_report_project_task_user__planned_date_begin
 msgid "Start date"
-msgstr ""
+msgstr "วันเริ่มต้น"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task
 msgid "Task"
-msgstr ""
+msgstr "งาน"
 
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "การเกิดซ้ำของงาน"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -254,25 +265,25 @@ msgstr ""
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_report_project_task_user
 msgid "Tasks Analysis"
-msgstr ""
+msgstr "วิเคราะห์งาน"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/task_gantt/task_gantt_renderer.js:0
 msgid "Tasks have been successfully scheduled for the upcoming periods."
-msgstr ""
+msgstr "งานได้รับการกำหนดเวลาเรียบร้อยแล้วสำหรับช่วงต่อไป"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_search_conflict_task_project_enterprise
 msgid "Tasks in Conflict"
-msgstr ""
+msgstr "งานที่มีความขัดแย้ง"
 
 #. module: project_enterprise
 #: model:ir.model.constraint,message:project_enterprise.constraint_project_task_planned_dates_check
 msgid "The planned start date must be before the planned end date."
-msgstr ""
+msgstr "วันที่เริ่มต้นจะต้องอยู่ก่อนวันที่สิ้นสุดที่วางแผนไว้"
 
 #. module: project_enterprise
 #. odoo-python
@@ -280,13 +291,13 @@ msgstr ""
 msgid ""
 "The tasks could not be rescheduled due to the assignees' lack of "
 "availability at this time."
-msgstr ""
+msgstr "ไม่สามารถกำหนดเวลางานใหม่ได้เนื่องจากผู้รับมอบหมายไม่ว่างในขณะนี้"
 
 #. module: project_enterprise
 #. odoo-python
 #: code:addons/project_enterprise/models/project_task.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "แถบความคืบหน้านี้ไม่ได้ถูกนำมาใช้"
 
 #. module: project_enterprise
 #. odoo-python
@@ -294,7 +305,7 @@ msgstr ""
 msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
-msgstr ""
+msgstr "ไม่สามารถวางแผนงานนี้ได้ก่อนงานต่อไปนี้ซึ่งขึ้นอยู่กับ: %(task_list)s"
 
 #. module: project_enterprise
 #. odoo-python
@@ -303,11 +314,12 @@ msgid ""
 "This user isn't expected to have any tasks assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"ผู้ใช้รายนี้ไม่คาดว่าจะได้รับมอบหมายงานใดๆ ในช่วงเวลานี้ เนื่องจากไม่มีสัญญาที่ดำเนินการอยู่"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
 msgid "Timesheets"
-msgstr ""
+msgstr "ใบบันทึกเวลา"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt
@@ -315,7 +327,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_gantt_inherited_project_sharing_task
 msgid "Unschedule"
-msgstr ""
+msgstr "ยังไม่กำหนดเวลา"
 
 #. module: project_enterprise
 #: model:ir.model.fields,help:project_enterprise.field_project_task__display_name
@@ -336,15 +348,15 @@ msgstr ""
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_res_users
 msgid "User"
-msgstr ""
+msgstr "ผู้ใช้"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_project_view_gantt
 msgid "View Tasks"
-msgstr ""
+msgstr "ดูงาน"
 
 #. module: project_enterprise
 #. odoo-javascript
 #: code:addons/project_enterprise/static/src/views/project_task_map/project_task_map_renderer.xml:0
 msgid "View customer locations for your tasks"
-msgstr ""
+msgstr "ดูสถานที่ตั้งของลูกค้าสำหรับงานของคุณ"

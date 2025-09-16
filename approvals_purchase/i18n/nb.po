@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* approvals_purchase
+# * approvals_purchase
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 18:40+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Norwegian Bokmål <https://translate.odoo.com/projects/odoo-19/"
+"approvals_purchase/nb_NO/>\n"
+"Language: nb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,help:approvals_purchase.field_approval_category__approval_type
@@ -25,22 +29,22 @@ msgstr ""
 #. module: approvals_purchase
 #: model:ir.model,name:approvals_purchase.model_approval_category
 msgid "Approval Category"
-msgstr ""
+msgstr "Godkjenningskategori"
 
 #. module: approvals_purchase
 #: model:ir.model,name:approvals_purchase.model_approval_request
 msgid "Approval Request"
-msgstr ""
+msgstr "Godkjenningsønske"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_category__approval_type
 msgid "Approval Type"
-msgstr ""
+msgstr "Godkjenningstype"
 
 #. module: approvals_purchase
 #: model:ir.model,name:approvals_purchase.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: approvals_purchase
 #: model:approval.category,name:approvals_purchase.approval_category_data_rfq
@@ -61,7 +65,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals_purchase.field_purchase_order__display_name
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnavn"
 
 #. module: approvals_purchase
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.exception_approval_request_canceled
@@ -71,7 +75,7 @@ msgstr ""
 #. module: approvals_purchase
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.exception_approval_request_canceled
 msgid "Exception(s):"
-msgstr ""
+msgstr "Unntak:"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_category__id
@@ -80,7 +84,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals_purchase.field_purchase_order__id
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: approvals_purchase
 #. odoo-python
@@ -96,12 +100,12 @@ msgstr ""
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_product_line__product_template_id
 msgid "Product Template"
-msgstr ""
+msgstr "Produktmal"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_product_line__product_id
 msgid "Products"
-msgstr ""
+msgstr "Produkter"
 
 #. module: approvals_purchase
 #. odoo-python
@@ -112,24 +116,24 @@ msgstr ""
 #. module: approvals_purchase
 #: model:ir.model,name:approvals_purchase.model_purchase_order
 msgid "Purchase Order"
-msgstr ""
+msgstr "Innkjøpsordre"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_request__purchase_order_count
 msgid "Purchase Order Count"
-msgstr ""
+msgstr "Antall innkjøpsordre"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_product_line__purchase_order_line_id
 msgid "Purchase Order Line"
-msgstr ""
+msgstr "Innkjøpsordrelinje"
 
 #. module: approvals_purchase
 #. odoo-python
 #: code:addons/approvals_purchase/models/approval_request.py:0
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.approval_purchase_request_view_form_inherit
 msgid "Purchase Orders"
-msgstr ""
+msgstr "Innkjøpsordrer"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_product_line__po_uom_qty
@@ -148,7 +152,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_partner__category_id
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_users__category_id
 msgid "Tags"
-msgstr ""
+msgstr "Etiketter"
 
 #. module: approvals_purchase
 #. odoo-python
@@ -179,7 +183,7 @@ msgstr ""
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_approval_product_line__seller_id
 msgid "Vendors"
-msgstr ""
+msgstr "Leverandører"
 
 #. module: approvals_purchase
 #. odoo-python
@@ -196,7 +200,7 @@ msgstr ""
 #. module: approvals_purchase
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.exception_approval_request_canceled
 msgid "cancelled"
-msgstr ""
+msgstr "kansellert"
 
 #. module: approvals_purchase
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.exception_approval_request_canceled
@@ -208,4 +212,4 @@ msgstr ""
 #. module: approvals_purchase
 #: model_terms:ir.ui.view,arch_db:approvals_purchase.exception_approval_request_canceled
 msgid "of"
-msgstr ""
+msgstr "av"

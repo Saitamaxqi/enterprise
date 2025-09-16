@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Kim Asplund <kim.asplund@gmail.com>, 2022
@@ -9,110 +9,112 @@
 # lynnliuying <lynn.liu1971@gmail.com>, 2022
 # Martin Trigaux, 2022
 # Mikael Åkerberg <mikael.akerberg@mariaakerberg.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Mikael Åkerberg <mikael.akerberg@mariaakerberg.com>, 2023\n"
-"Language-Team: Swedish (https://www.transifex.com/odoo/teams/41243/sv/)\n"
+"PO-Revision-Date: 2025-09-16 21:26+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Concentration"
-msgstr ""
+msgstr "ACH-koncentration"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Corporate Trade"
-msgstr ""
+msgstr "ACH Företagshandel"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Credit"
-msgstr ""
+msgstr "ACH-kredit"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Debit"
-msgstr ""
+msgstr "ACH Debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Pre-Authorised"
-msgstr ""
+msgstr "ACH Förhandsgodkänd"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Return"
-msgstr ""
+msgstr "ACH-retur"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Reversal"
-msgstr ""
+msgstr "Återföring av ACH"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Settlement"
-msgstr ""
+msgstr "ACH Avveckling"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Transaction"
-msgstr ""
+msgstr "ACH-transaktion"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ARP Debit"
-msgstr ""
+msgstr "ARP Debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Balancing"
-msgstr ""
+msgstr "Balansering av konton"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Closing"
-msgstr ""
+msgstr "Avslutande av konto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Management"
-msgstr ""
+msgstr "Kontoinställningar"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Opening"
-msgstr ""
+msgstr "Öppnande av konto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Transfer"
-msgstr ""
+msgstr "Överföring av konto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Additional Info: %s"
-msgstr ""
+msgstr "Ytterligare information: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Additional Miscellaneous Credit Operations"
-msgstr ""
+msgstr "Ytterligare Diverse Kreditoperationer"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Additional Miscellaneous Debit Operations"
-msgstr ""
+msgstr "Ytterligare Diverse Debetoperationer"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -122,217 +124,217 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Adjustments"
-msgstr ""
+msgstr "Justeringar"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Automatic Transfer"
-msgstr ""
+msgstr "Automatisk överföring"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Back Value"
-msgstr ""
+msgstr "Bakvärde"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bank Cheque"
-msgstr ""
+msgstr "Bankcheck"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bank Fees"
-msgstr ""
+msgstr "Bankavgifter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Blocked Transactions"
-msgstr ""
+msgstr "Blockerade transaktioner"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bonus Issue/Capitalisation Issue"
-msgstr ""
+msgstr "Fondemission/kapitaliseringsemission"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Borrowing fee"
-msgstr ""
+msgstr "Avgift för upplåning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Account Transfer"
-msgstr ""
+msgstr "Överföring av filialkonto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Deposit"
-msgstr ""
+msgstr "Filial Insättning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Withdrawal"
-msgstr ""
+msgstr "Uttag från filial"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Brokerage fee"
-msgstr ""
+msgstr "Mäklararvode"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Buy Sell Back"
-msgstr ""
+msgstr "Köp Sälj Tillbaka"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "CSD Blocked Transactions"
-msgstr ""
+msgstr "Blockerade transaktioner i CSD"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Call on intermediate securities"
-msgstr ""
+msgstr "Inlösen av intermediära värdepapper"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Capital Gains Distribution"
-msgstr ""
+msgstr "Fördelning av kapitalvinster"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Deposit"
-msgstr ""
+msgstr "Kontantinsättning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Dividend"
-msgstr ""
+msgstr "Kontant utdelning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter"
-msgstr ""
+msgstr "Kontantbrev"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter Adjustment"
-msgstr ""
+msgstr "Justering av kontantbrev"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Management"
-msgstr ""
+msgstr "Hantering av likvida medel"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Pooling"
-msgstr ""
+msgstr "Gemensam förvaltning av likvida medel"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Withdrawal"
-msgstr ""
+msgstr "Uttag av kontanter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash in lieu"
-msgstr ""
+msgstr "Kontanter i stället"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Certified Customer Cheque"
-msgstr ""
+msgstr "Certifierad kundcheck"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charge/fees"
-msgstr ""
+msgstr "Avgifter/avgifter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charges"
-msgstr ""
+msgstr "Kostnader"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Check Number: %s"
-msgstr ""
+msgstr "Kontrollnummer: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque"
-msgstr ""
+msgstr "Check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Deposit"
-msgstr ""
+msgstr "Insättning av check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Reversal"
-msgstr ""
+msgstr "Återföring av check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Under Reserve"
-msgstr ""
+msgstr "Check under reserv"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Circular Cheque"
-msgstr ""
+msgstr "Cirkulär check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Clean Collection"
-msgstr ""
+msgstr "Ren samling"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Client Owned Collateral"
-msgstr ""
+msgstr "Kundägda säkerheter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Collateral Management"
-msgstr ""
+msgstr "Hantering av säkerheter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission"
-msgstr ""
+msgstr "Kommissionen"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission excluding taxes"
-msgstr ""
+msgstr "Provision exklusive skatter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission including taxes"
-msgstr ""
+msgstr "Provision inklusive skatter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commodities"
-msgstr ""
+msgstr "Råvaror"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Compensation/Claims"
-msgstr ""
+msgstr "Ersättning/anspråk"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Consumer Loans"
-msgstr ""
+msgstr "Konsumentkrediter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Controlled Disbursement"
-msgstr ""
+msgstr "Kontrollerad utbetalning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -342,122 +344,122 @@ msgstr "Konvertering"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Action"
-msgstr ""
+msgstr "Företagets agerande"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Own Account Transfer"
-msgstr ""
+msgstr "Överföring av företagsägda konton"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Rebate"
-msgstr ""
+msgstr "Företagsrabatt"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate mark broker owned"
-msgstr ""
+msgstr "Ägda av företag eller mäklare"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate mark client owned"
-msgstr ""
+msgstr "Företagsmärkning kundägd"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Counter Party: %(partner)s"
-msgstr ""
+msgstr "Motpart: %(partner)s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Counter Transactions"
-msgstr ""
+msgstr "Mottransaktioner"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustment"
-msgstr ""
+msgstr "Kreditjustering"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustments"
-msgstr ""
+msgstr "Kreditjusteringar"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Card Payment"
-msgstr ""
+msgstr "Kreditkortsbetalning"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Transfer with agreed Commercial Information"
-msgstr ""
+msgstr "Kreditöverföring med avtalad kommersiell information"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross Trade"
-msgstr ""
+msgstr "Korsvis handel"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border"
-msgstr ""
+msgstr "Gränsöverskridande"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Cash Withdrawal"
-msgstr ""
+msgstr "Gränsöverskridande kontantuttag"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Card Payment"
-msgstr ""
+msgstr "Gränsöverskridande kreditkortsbetalningar"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Transfer"
-msgstr ""
+msgstr "Gränsöverskridande kreditöverföring"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Direct Debit"
-msgstr ""
+msgstr "Gränsöverskridande direktdebitering"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Intra Company Transfer"
-msgstr ""
+msgstr "Gränsöverskridande företagsintern överföring"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Payroll/Salary Payment"
-msgstr ""
+msgstr "Gränsöverskridande löner/lönebetalningar"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Standing Order"
-msgstr ""
+msgstr "Stående order över gränserna"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Crossed Cheque"
-msgstr ""
+msgstr "Korsad check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody"
-msgstr ""
+msgstr "Förvaring"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody Collection"
-msgstr ""
+msgstr "Insamling av förvaring"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Customer Card Transactions"
-msgstr ""
+msgstr "Transaktioner med kundkort"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -467,12 +469,12 @@ msgstr "Debet"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit Adjustments"
-msgstr ""
+msgstr "Justeringar av debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Decrease in Value"
-msgstr ""
+msgstr "Värdenedgång"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -487,22 +489,22 @@ msgstr "Deposition"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit/Contribution"
-msgstr ""
+msgstr "Insättning/Bidrag"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Depositary Receipt Issue"
-msgstr ""
+msgstr "Utgivning av depåbevis"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Derivatives"
-msgstr ""
+msgstr "Derivatinstrument"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit"
-msgstr ""
+msgstr "Direktdebitering"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -697,42 +699,42 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Cheque"
-msgstr ""
+msgstr "Utländsk check"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Cheque Under Reserve"
-msgstr ""
+msgstr "Utländsk check under förbehåll"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Currency Deposit"
-msgstr ""
+msgstr "Insättning i utländsk valuta"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Currency Withdrawal"
-msgstr ""
+msgstr "Uttag av utländsk valuta"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Exchange"
-msgstr ""
+msgstr "Utländsk valuta"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards"
-msgstr ""
+msgstr "Terminer"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards broker owned collateral"
-msgstr ""
+msgstr "Mäklarägd säkerhet för terminer"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards client owned collateral"
-msgstr ""
+msgstr "Kundägd säkerhet för terminer"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -987,7 +989,7 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Not available"
-msgstr ""
+msgstr "Ej tillgänglig"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1087,12 +1089,12 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Other"
-msgstr "Annat"
+msgstr "Övriga"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Overdraft"
-msgstr ""
+msgstr "Övertrassering"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1477,7 +1479,7 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Taxes"
-msgstr "Moms"
+msgstr "Skatter"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

@@ -1,25 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* industry_fsm_sale
+# * industry_fsm_sale
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:35+0000\n"
-"PO-Revision-Date: 2025-09-11 14:35+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:27+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"industry_fsm_sale/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: industry_fsm_sale
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/project_task.py:0
 msgid "%(project_name)s - %(task_name)s"
-msgstr ""
+msgstr "%(project_name)s - %(task_name)s"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -72,7 +76,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<span>Disc.%</span>"
-msgstr ""
+msgstr "<span>Rabatt %</span>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_sharing_project_task_inherit_view_form
@@ -83,7 +87,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<strong class=\"mr16\">Subtotal</strong>"
-msgstr ""
+msgstr "<strong class=\"mr16\">Delsumma</strong>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
@@ -93,17 +97,17 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<strong>Taxes</strong>"
-msgstr ""
+msgstr "<strong>Skatter</strong>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<strong>Total</strong>"
-msgstr ""
+msgstr "<strong>Totalt</strong>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "<strong>Untaxed amount</strong>"
-msgstr ""
+msgstr "<strong>Skattefri summa</strong>"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -115,7 +119,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/project_task.py:0
 msgid "Add Products"
-msgstr ""
+msgstr "Lägg till produkter"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.industry_fsm_sale_product_catalog_inherit_search_view
@@ -125,7 +129,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "Amount"
-msgstr ""
+msgstr "Belopp"
 
 #. module: industry_fsm_sale
 #: model:ir.model.constraint,message:industry_fsm_sale.constraint_project_project_fsm_imply_task_rate
@@ -141,7 +145,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Objekttransaktion"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -152,7 +156,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__allow_billable
 msgid "Billable"
-msgstr ""
+msgstr "Fakturerbar"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -188,12 +192,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_task_view_list_fsm_sale_inherit
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Create Invoice"
-msgstr ""
+msgstr "Skapa faktura"
 
 #. module: industry_fsm_sale
 #: model:ir.model,website_form_label:industry_fsm_sale.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Skapa en uppgift"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
@@ -203,7 +207,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -228,7 +232,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -249,12 +253,12 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:product.template,name:industry_fsm_sale.field_service_product_product_template
 msgid "Field Service"
-msgstr ""
+msgstr "Fälttjänst"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__invoiced
 msgid "Fully Invoiced"
-msgstr ""
+msgstr "Fullt fakturerad"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -285,7 +289,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_task__under_warranty
@@ -305,17 +309,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/project_task.py:0
 msgid "Invoice"
-msgstr ""
+msgstr "Faktura"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__portal_invoice_count
 msgid "Invoice Count"
-msgstr ""
+msgstr "Antal fakturor"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_report_project_task_user_fsm__invoice_status
 msgid "Invoice Status"
-msgstr ""
+msgstr "Fakturastatus"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.project_task_action_to_invoice_fsm
@@ -330,7 +334,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_sharing_project_task_inherit_view_form
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Invoices"
-msgstr ""
+msgstr "Fakturor"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -357,7 +361,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "New Quotation"
-msgstr ""
+msgstr "Ny offert"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.product_action_fsm
@@ -368,12 +372,12 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.project_task_action_to_invoice_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm_sale.project_task_action_to_invoice_fsm2
 msgid "No tasks found. Let's create one!"
-msgstr ""
+msgstr "Ingen aktivitet hittad. Låt oss skapa en!"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__no
 msgid "Nothing to Invoice"
-msgstr ""
+msgstr "Ingenting att fakturera"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__invoice_count
@@ -411,19 +415,19 @@ msgstr ""
 #: model:ir.model,name:industry_fsm_sale.model_product_template
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariant"
 
 #. module: industry_fsm_sale
 #: model:ir.actions.act_window,name:industry_fsm_sale.product_action_fsm
 #: model:ir.ui.menu,name:industry_fsm_sale.fsm_menu_settings_product
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Products"
-msgstr ""
+msgstr "Produkter"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__allow_material
@@ -435,28 +439,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_product_product__project_id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_product_template__project_id
 msgid "Project"
-msgstr ""
+msgstr "Projekt"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_project_sale_line_employee_map
 msgid "Project Sales line, employee mapping"
-msgstr ""
+msgstr "Projekt Sales line, kartläggning av medarbetare"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "Quantity"
-msgstr ""
+msgstr "Antal"
 
 #. module: industry_fsm_sale
 #. odoo-python
 #: code:addons/industry_fsm_sale/controllers/portal.py:0
 msgid "Quotation"
-msgstr ""
+msgstr "Offert"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__quotation_count
 msgid "Quotation Count"
-msgstr ""
+msgstr "Antal offerter"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -464,7 +468,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_sharing_project_task_inherit_view_form
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_task_form2_inherit
 msgid "Quotations"
-msgstr ""
+msgstr "Offerter"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.view_order_form_inherit_sale_project
@@ -479,22 +483,22 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr ""
+msgstr "Försäljning, faktura för förskottsbetalning"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Försäljningsorder"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__sale_line_id
 msgid "Sales Order Item"
-msgstr ""
+msgstr "Säljorderobjekt"
 
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Försäljningsorderrad"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_project__sale_line_id
@@ -502,6 +506,11 @@ msgid ""
 "Sales order item that will be selected by default on the tasks and timesheets of this project, except if the employee set on the timesheets is explicitely linked to another sales order item on the project.\n"
 "It can be modified on each task and timesheet entry individually if necessary."
 msgstr ""
+"Försäljningsorderpost som kommer att väljas som standard för uppgifter och "
+"tidrapporter i det här projektet, förutom om den anställda som anges på "
+"tidrapporterna uttryckligen är kopplad till en annan försäljningsorderpost i "
+"projektet.\n"
+"Den kan ändras individuellt för varje uppgift och tidrapport om det behövs."
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -512,7 +521,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_sale_line_employee_map__timesheet_product_id
 msgid "Service"
-msgstr ""
+msgstr "Tjänst"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__task_id
@@ -522,7 +531,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_project_task
 msgid "Task"
-msgstr ""
+msgstr "Aktivitet"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_sale_order__task_id
@@ -538,7 +547,7 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "Taxes"
-msgstr ""
+msgstr "Skatter"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -564,7 +573,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.portal_my_task
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_custom_page
 msgid "Time &amp; Material"
-msgstr ""
+msgstr "Tid &amp; material"
 
 #. module: industry_fsm_sale
 #: model:ir.actions.act_window,name:industry_fsm_sale.project_task_action_to_invoice_fsm
@@ -573,7 +582,7 @@ msgstr ""
 #: model:ir.ui.menu,name:industry_fsm_sale.fsm_menu_all_tasks_invoice
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_task_view_search_fsm_inherit_sale
 msgid "To Invoice"
-msgstr ""
+msgstr "Att fakturera"
 
 #. module: industry_fsm_sale
 #: model:ir.actions.server,name:industry_fsm_sale.project_task_to_invoice_fsm_server_action
@@ -593,18 +602,18 @@ msgstr ""
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__under_warranty
 msgid "Under Warranty"
-msgstr ""
+msgstr "Under garanti"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_sale_line_employee_map__price_unit
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
 msgid "Unit Price"
-msgstr ""
+msgstr "Enhetspris"
 
 #. module: industry_fsm_sale
 #: model:ir.model.fields.selection,name:industry_fsm_sale.selection__report_project_task_user_fsm__invoice_status__upselling
 msgid "Upselling Opportunity"
-msgstr ""
+msgstr "Tillfälle för merförsäljning"
 
 #. module: industry_fsm_sale
 #. odoo-javascript

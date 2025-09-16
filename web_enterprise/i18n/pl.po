@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Maksym <ms@myodoo.pl>, 2022
@@ -17,20 +17,24 @@
 # Maja Stawicka <mjstwck@wp.pl>, 2022
 # Martin Trigaux, 2022
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023\n"
-"Language-Team: Polish (https://app.transifex.com/odoo/teams/41243/pl/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -61,7 +65,7 @@ msgstr "1 miesiąc"
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
 msgid "Add Custom Field"
-msgstr "Dodaj customowe pole"
+msgstr "Dodaj niestandardowe pole"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -155,7 +159,7 @@ msgstr "Wytyczanie HTTP"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
-msgstr "Menu główne"
+msgstr "Menu gówne"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -306,19 +310,19 @@ msgstr "Instrukcje do odłączenia Twojej subskrypcji z poprzedniej bazy(baz) da
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database has expired. "
-msgstr "Ta baza danych straciła ważność."
+msgstr "Ta baza danych straciła ważność. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database will expire in %s. "
-msgstr "Ta baza danych straci ważność w ciągu %s."
+msgstr "Ta baza danych straci ważność w ciągu %s. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This demo database will expire in %s. "
-msgstr "Ta demonstracyjna baza danych straci ważność w ciągu %s."
+msgstr "Ta demonstracyjna baza danych straci ważność w ciągu %s. "
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form

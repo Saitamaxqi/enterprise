@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* esg
+# * esg
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:23+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/esg/sl/"
+">\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: esg
 #. odoo-python
@@ -25,7 +30,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_other_emission.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kopija)"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
@@ -53,7 +58,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_activity_type_name_uniq
 msgid "A tag with the same name already exists."
-msgstr ""
+msgstr "Oznaka z istim imenom že obstaja."
 
 #. module: esg
 #. odoo-python
@@ -72,34 +77,34 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__account_move_line_ids
 msgid "Account Move Line"
-msgstr ""
+msgstr "Vrstica za premikanje računa"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Accounting"
-msgstr ""
+msgstr "Knjigovodstvo"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 msgid "Act"
-msgstr ""
+msgstr "Zakon"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Potreben je ukrep"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__active
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__activity_flow
@@ -111,23 +116,23 @@ msgstr ""
 #: model:ir.model,name:esg.model_esg_activity_type
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__activity_type_id
 msgid "Activity Type"
-msgstr ""
+msgstr "Tip aktivnosti"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__activity_type_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__activity_type_ids
 msgid "Activity Types"
-msgstr ""
+msgstr "Tipi aktivnosti"
 
 #. module: esg
 #: model:res.groups,name:esg.esg_group_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Administrator"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__price_subtotal
 msgid "Amount"
-msgstr ""
+msgstr "Znesek"
 
 #. module: esg
 #. odoo-python
@@ -169,12 +174,12 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Archived"
-msgstr ""
+msgstr "Arhivirano"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Assign"
-msgstr ""
+msgstr "Dodelitev"
 
 #. module: esg
 #: model:ir.actions.act_window,name:esg.factors_auto_assignment_wizard_action
@@ -197,7 +202,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_attachment_count
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Število prilog"
 
 #. module: esg
 #. odoo-python
@@ -280,14 +285,14 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "Prekliči"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_2
 msgid "Capital Goods"
-msgstr ""
+msgstr "Kapitalno blago"
 
 #. module: esg
 #. odoo-javascript
@@ -319,7 +324,7 @@ msgstr ""
 #: model:ir.actions.client,name:esg.action_view_carbon_report
 #: model:ir.ui.menu,name:esg.menu_esg_carbon_report
 msgid "Carbon Footprint"
-msgstr ""
+msgstr "Ogljični odtis"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_co
@@ -351,12 +356,12 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__category
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
 msgid "Child"
-msgstr ""
+msgstr "Otrok"
 
 #. module: esg
 #. odoo-javascript
@@ -368,7 +373,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__code
 #: model:ir.model.fields,field_description:esg.field_esg_gas__code
 msgid "Code"
-msgstr ""
+msgstr "Oznaka"
 
 #. module: esg
 #. odoo-javascript
@@ -386,14 +391,14 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__color
 msgid "Color"
-msgstr ""
+msgstr "Barva"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__company_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__company_id
 msgid "Company"
-msgstr ""
+msgstr "Podjetje"
 
 #. module: esg
 #. odoo-javascript
@@ -422,7 +427,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope_complete_name
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__complete_name
 msgid "Complete Name"
-msgstr ""
+msgstr "Celotni naziv"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__compute_method
@@ -434,17 +439,17 @@ msgstr ""
 #. module: esg
 #: model:product.template,name:esg.product_computer_product_template
 msgid "Computer"
-msgstr ""
+msgstr "Računalnik"
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
 msgid "Confirm"
-msgstr ""
+msgstr "Potrdi"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__start_date
@@ -479,7 +484,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__create_date
@@ -492,7 +497,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__create_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__currency_id
@@ -500,19 +505,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__currency_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: esg
 #: model:ir.actions.client,name:esg.ir_actions_esg_dashboard_action
 #: model:ir.ui.menu,name:esg.menu_esg_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "Nadzorna plošča"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_database
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__database_id
 msgid "Database"
-msgstr ""
+msgstr "Podatkovna zbirka"
 
 #. module: esg
 #. odoo-python
@@ -530,13 +535,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__date
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__date_end
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__date_end
 msgid "Date End"
-msgstr ""
+msgstr "Zaključek"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
@@ -554,7 +559,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__description
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
@@ -582,7 +587,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__display_name
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.factors_auto_assignment_wizard_form_view
@@ -595,7 +600,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Download"
-msgstr ""
+msgstr "Prenesi"
 
 #. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
@@ -701,7 +706,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid "Emissions"
-msgstr ""
+msgstr "Emisije"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_bank_statement_line__esg_emissions_value
@@ -763,7 +768,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Končni datum"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_downstream_4
@@ -784,7 +789,7 @@ msgstr ""
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_environment
 msgid "Environment"
-msgstr ""
+msgstr "Okolje"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__esg_other_emission_ids
@@ -801,13 +806,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Sledilci"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_partner_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Sledilci (partnerji)"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_8
@@ -861,7 +866,7 @@ msgstr ""
 #: model:ir.model,name:esg.model_esg_gas
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__gas_id
 msgid "Gas"
-msgstr ""
+msgstr "Plin"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
@@ -999,7 +1004,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Ima sporočilo"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c2f6
@@ -1036,7 +1041,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__id
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_7
@@ -1055,7 +1060,7 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Če je označeno, zahtevajo nova sporočila vašo pozornost."
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error
@@ -1063,12 +1068,12 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Če je označeno, nekatera sporočila vsebujejo napako pri dostavi."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__image
 msgid "Image"
-msgstr ""
+msgstr "Slika"
 
 #. module: esg
 #. odoo-javascript
@@ -1109,7 +1114,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_is_follower
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je sledilec"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__is_mandatory_gas
@@ -1126,12 +1131,12 @@ msgstr ""
 #: model:ir.model,name:esg.model_account_move
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__move_id
 msgid "Journal Entry"
-msgstr ""
+msgstr "Temeljnica"
 
 #. module: esg
 #: model:ir.model,name:esg.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Postavka"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__kanban_text
@@ -1147,7 +1152,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__last_update
 msgid "Last Update"
-msgstr ""
+msgstr "Zadnja posodobitev"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__write_uid
@@ -1160,7 +1165,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_uid
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__write_date
@@ -1173,18 +1178,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__write_date
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_footprint_box/esg_carbon_footprint_box.xml:0
 msgid "Last Year"
-msgstr ""
+msgstr "Prejšnje leto"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__latest_version
 msgid "Latest Version"
-msgstr ""
+msgstr "Zadnja različica"
 
 #. module: esg
 #. odoo-javascript
@@ -1195,7 +1200,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__level
 msgid "Level"
-msgstr ""
+msgstr "Nivo"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
@@ -1212,7 +1217,7 @@ msgstr ""
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 #: model:ir.ui.menu,name:esg.menu_esg_measure
 msgid "Measure"
-msgstr ""
+msgstr "Mera"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
@@ -1223,13 +1228,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Napaka pri dostavi sporočila"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Sporočila"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__ch4
@@ -1255,7 +1260,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__monetary
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
 msgid "Monetary"
-msgstr ""
+msgstr "Denarno"
 
 #. module: esg
 #. odoo-javascript
@@ -1272,7 +1277,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_gas__name
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__name
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__nb_linked_emissions
@@ -1282,13 +1287,13 @@ msgstr ""
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_neutral
 msgid "Neutral"
-msgstr ""
+msgstr "Nevtralno"
 
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "New"
-msgstr ""
+msgstr "Novo"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_nf3
@@ -1339,31 +1344,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__note
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__note
 msgid "Note"
-msgstr ""
+msgstr "Opomba"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Število aktivnosti"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Število napak"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Število sporočil, ki zahtevajo ukrepanje"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_has_error_counter
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Število sporočil, ki niso bila pravilno dostavljena."
 
 #. module: esg
 #. odoo-javascript
@@ -1385,7 +1390,7 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Other"
-msgstr ""
+msgstr "Drugo"
 
 #. module: esg
 #: model:ir.model,name:esg.model_esg_other_emission
@@ -1427,18 +1432,18 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_id
 msgid "Parent"
-msgstr ""
+msgstr "Nadrejeni"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Pot nadrejenega"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__partner_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__pfc
@@ -1479,7 +1484,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__product_id
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_4
@@ -1514,13 +1519,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__quantity
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Quantity"
-msgstr ""
+msgstr "Količina"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__rating_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Ocene"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
@@ -1553,14 +1558,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_has_sms_error
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Napaka pri dostavi SMS"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__scope
 msgid "Scope"
-msgstr ""
+msgstr "Obseg"
 
 #. module: esg
 #. odoo-javascript
@@ -1611,7 +1616,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__sequence
 #: model:ir.model.fields,field_description:esg.field_esg_gas__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Zaporedje"
 
 #. module: esg
 #. odoo-python
@@ -1622,7 +1627,7 @@ msgstr ""
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_settings
 msgid "Settings"
-msgstr ""
+msgstr "Nastavitve"
 
 #. module: esg
 #. odoo-python
@@ -1636,7 +1641,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__source_id
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__source_id
 msgid "Source"
-msgstr ""
+msgstr "Vir"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__database_id
@@ -1652,7 +1657,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_factors_auto_assignment_wizard__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Začetni datum"
 
 #. module: esg
 #: model:esg.emission.source,name:esg.esg_emission_source_direct_1
@@ -1769,30 +1774,30 @@ msgstr ""
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_list_view
 msgid "Unit"
-msgstr ""
+msgstr "Enota"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__unit_name
 msgid "Unit Name"
-msgstr ""
+msgstr "Ime enote"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__uom_id
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__uom_id
 #: model_terms:ir.ui.view,arch_db:esg.other_emission_form_view
 msgid "Unit of Measure"
-msgstr ""
+msgstr "Enota mere"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__uom_id
 msgid "UoM"
-msgstr ""
+msgstr "EM"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.database_form_view
 #: model_terms:ir.ui.view,arch_db:esg.database_kanban_view
 msgid "Update"
-msgstr ""
+msgstr "Posodobi"
 
 #. module: esg
 #. odoo-python
@@ -1837,7 +1842,7 @@ msgstr ""
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_database__url
 msgid "Url"
-msgstr ""
+msgstr "Url"
 
 #. module: esg
 #. odoo-javascript
@@ -1849,7 +1854,7 @@ msgstr ""
 #. module: esg
 #: model:res.groups,name:esg.esg_group_user
 msgid "User"
-msgstr ""
+msgstr "Uporabnik"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__valid_from
@@ -1886,19 +1891,19 @@ msgstr ""
 #. module: esg
 #: model:esg.activity.type,name:esg.esg_activity_type_3
 msgid "Waste Management"
-msgstr ""
+msgstr "Ravnanje z odpadki"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Sporočila iz spletne strani"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Kronologija komunikacij spletne strani"
 
 #. module: esg
 #. odoo-python
@@ -1964,12 +1969,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/wizard/factors_auto_assignment_wizard.py:0
 msgid "id"
-msgstr ""
+msgstr "identifikacija"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__quantity
 msgid "kg"
-msgstr ""
+msgstr "kg"
 
 #. module: esg
 #. odoo-javascript
@@ -1982,7 +1987,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/controllers/esg_dashboard.py:0
 msgid "n/a"
-msgstr ""
+msgstr "n/a"
 
 #. module: esg
 #. odoo-python

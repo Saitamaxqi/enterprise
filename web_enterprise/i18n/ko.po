@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sarah Park, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Sarah Park, 2023\n"
-"Language-Team: Korean (https://app.transifex.com/odoo/teams/41243/ko/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -49,7 +52,7 @@ msgstr "1개월"
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
 msgid "Add Custom Field"
-msgstr ""
+msgstr "맞춤 설정 필드 추가"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -91,7 +94,7 @@ msgstr "연락처"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Contact your sales representative to help you to unlink your previous database"
-msgstr ""
+msgstr "이전 데이터베이스 연결을 해제하려면 영업 담당자에게 문의해주세요."
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -143,7 +146,7 @@ msgstr "HTTP 라우팅"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
-msgstr ""
+msgstr "홈 메뉴"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -205,13 +208,13 @@ msgstr "Odoo 고객지원"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Paste code here"
-msgstr "여기에 코드 붙여 넣기"
+msgstr "여기에 코드를 입력하세요"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Previous view"
-msgstr ""
+msgstr "이전 보기"
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -228,7 +231,7 @@ msgstr "구독 상품 상태 새로 고침"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Register your subscription"
-msgstr "구독 상품 등록하기"
+msgstr "정기 구독 등록"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -270,19 +273,19 @@ msgstr "가입 코드 :"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "TIP"
-msgstr ""
+msgstr "팁"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Thank you, your registration was successful! Your database is valid until"
-msgstr "감사합니다. 등록이 완료되었습니다! 데이터베이스 유효기간은 다음과 같습니다 : "
+msgstr "감사합니다. 등록이 완료되었습니다! 데이터베이스 유효기간은 다음과 같습니다 :"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid "Thank you, your registration was successful! Your database is valid until %s."
-msgstr ""
+msgstr "감사합니다, 등록이 완료되었습니다. 데이터베이스의 유효기간은 %s까지 입니다."
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -300,13 +303,13 @@ msgstr "데이터베이스가 만료되었습니다. "
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database will expire in %s. "
-msgstr "데이터베이스가 %s 후 만료됩니다. "
+msgstr "데이터베이스가 %s 후 만료됩니다: "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This demo database will expire in %s. "
-msgstr "시연용 데이터베이스가 %s 후 만료됩니다."
+msgstr "시연용 데이터베이스가 %s 후 만료됩니다. "
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -335,7 +338,7 @@ msgstr "이메일로 지시 사항을 보낼 수 없습니다."
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Upgrade your subscription"
-msgstr "구독 상품 업그레이드하기"
+msgstr "정기 구독 요금제 업그레이드"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -382,7 +385,7 @@ msgstr "구독 상품이 업데이트되었으며 다음까지 유효합니다."
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "buy a subscription"
-msgstr "구독 상품 구매하기"
+msgstr "정기 구독 요금 확인"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -400,4 +403,4 @@ msgstr "구독 상품 소유자 (이메일 :"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
-msgstr ""
+msgstr "- 다음 단축키로 어디에서나 편리하게 검색할 수 있습니다"

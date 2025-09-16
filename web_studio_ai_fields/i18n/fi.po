@@ -1,251 +1,255 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_studio_ai_fields
+# * web_studio_ai_fields
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 17:07+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"web_studio_ai_fields/fi/>\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "AI"
-msgstr ""
+msgstr "Tekoäly"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/interactive_editor.js:0
 msgid "AI Field"
-msgstr ""
+msgstr "Tekoälykenttä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Field"
-msgstr ""
+msgstr "Lisää kenttä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Values"
-msgstr ""
+msgstr "Lisää arvoja"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add an AI Field"
-msgstr ""
+msgstr "Lisää tekoälykenttä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Checkbox"
-msgstr ""
+msgstr "Valintaruutu"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Date"
-msgstr ""
+msgstr "Päivämäärä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Datetime"
-msgstr ""
+msgstr "Päivämäärä ja aika"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Decimal"
-msgstr ""
+msgstr "Desimaali"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Hylkää"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Edit Values"
-msgstr ""
+msgstr "Muokkaa arvoja"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Field Type"
-msgstr ""
+msgstr "Kentän tyyppi"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Integer"
-msgstr ""
+msgstr "Kokonaisluku"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Many2one"
-msgstr ""
+msgstr "Many2one"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Monetary"
-msgstr ""
+msgstr "Rahallinen"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Multiline Text"
-msgstr ""
+msgstr "Monirivinen teksti"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI CheckBox"
-msgstr ""
+msgstr "Uusi tekoäly-valintaruutu"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Date"
-msgstr ""
+msgstr "Uusi tekoälyn päivämäärä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Datetime"
-msgstr ""
+msgstr "Uusi tekoälyn aika ja päivämäärä"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Decimal"
-msgstr ""
+msgstr "Uusi tekoälyn desimaaliluku"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI HTML"
-msgstr ""
+msgstr "Uusi tekoälyn HTML"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Integer"
-msgstr ""
+msgstr "Uusi tekoälyn kokonaisluku"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Many2One"
-msgstr ""
+msgstr "Uusi tekoälyn monesta-yhteen (Many2One)"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Monetary"
-msgstr ""
+msgstr "Uusi tekoälyn rahallinen"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Multiline Text"
-msgstr ""
+msgstr "Uusi tekoälyn monirivinen teksti"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Selection"
-msgstr ""
+msgstr "Uusi tekoälyn valinta"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Tags"
-msgstr ""
+msgstr "Uudet tekoälytunnisteet"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Text"
-msgstr ""
+msgstr "Uusi tekoäly-teksti"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "Prompt"
-msgstr ""
+msgstr "Kehote"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Relation"
-msgstr ""
+msgstr "Suhde"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Selection"
-msgstr ""
+msgstr "Valinta"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Selection Values"
-msgstr ""
+msgstr "Valintavaihtoehdot"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Tags"
-msgstr ""
+msgstr "Tunnisteet"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Text"
-msgstr ""
+msgstr "Teksti"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Write a prompt, use '/field' to insert dynamic values"
-msgstr ""
+msgstr "Kirjoita kehote, käytä '/field' lisätäksesi dynaamisia arvoja"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "ai icon"
-msgstr ""
+msgstr "tekoälykuvake"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "button to run your prompt."
-msgstr ""
+msgstr "painiketta suorittaaksesi kehotteen."
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "fields won't update automatically - Click the"
-msgstr ""
+msgstr "kentät eivät päivity automaattisesti – Klikkaa"

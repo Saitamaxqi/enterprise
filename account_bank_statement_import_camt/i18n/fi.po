@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Pekko Tuomisto <pekko.tuomisto@web-veistamo.fi>, 2022
@@ -12,70 +12,72 @@
 # Mikko Salmela <salmemik@gmail.com>, 2022
 # Martin Trigaux, 2022
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 15:19+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Concentration"
-msgstr "ACH-pitoisuus"
+msgstr "ACH Concentration (automaattinen varojen siirto)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Corporate Trade"
-msgstr "ACH Yrityskauppa"
+msgstr "ACH-Yrityskauppa"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Credit"
-msgstr "ACH credit"
+msgstr "ACH-luotto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Debit"
-msgstr "ACH debit"
+msgstr "ACH-debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Pre-Authorised"
-msgstr "ACH esihyväksytty"
+msgstr "ACH-esihyväksytty"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Return"
-msgstr "ACH palautus"
+msgstr "ACH-palautus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Reversal"
-msgstr "ACH peruutus"
+msgstr "ACH-peruutus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Settlement"
-msgstr "ACH tilitys"
+msgstr "ACH-tilitys"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Transaction"
-msgstr "ACH transaktio"
+msgstr "ACH-tapahtuma"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ARP Debit"
-msgstr "ARP Debit"
+msgstr "ARP-debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -100,7 +102,7 @@ msgstr "Tilin avaaminen"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Account Transfer"
-msgstr "Tilin siirto"
+msgstr "Tilisiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -110,12 +112,12 @@ msgstr "Lisätietoja: %s"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Additional Miscellaneous Credit Operations"
-msgstr "Muut sekalaiset credit-operaatiot"
+msgstr "Muut sekalaiset luotto-operaatiot"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Additional Miscellaneous Debit Operations"
-msgstr "Muut sekalaiset debit-operaatiot"
+msgstr "Muut sekalaiset debet-operaatiot"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -135,7 +137,7 @@ msgstr "Automaattinen siirto"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Back Value"
-msgstr "Takaisinsiirtyvä arvo"
+msgstr "Takautuva arvo"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -155,7 +157,7 @@ msgstr "Estetyt tapahtumat"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bonus Issue/Capitalisation Issue"
-msgstr "Bonus-liikkellelasku / pääomituksen liikkeellelasku"
+msgstr "Bonus-liikkellelasku/Pääomituksen liikkeellelasku"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -165,7 +167,7 @@ msgstr "Lainanottomaksu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Account Transfer"
-msgstr "Sivukonttoritilin siirto"
+msgstr "Sivukonttorin tilisiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -190,12 +192,12 @@ msgstr "Osta ja myy takaisin"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "CSD Blocked Transactions"
-msgstr "CSD:n estetyt transaktiot"
+msgstr "Arvopaperikeskuksen estetämät tapahtumat"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Call on intermediate securities"
-msgstr "Vaihtovelkakirjojen ostotarjoukset"
+msgstr "Arvopapereiden lunastaminen"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -250,7 +252,7 @@ msgstr "Varmistettu asiakkaan šekki"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charge/fees"
-msgstr "Maksu/maksut"
+msgstr "Hinta/maksut"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -260,7 +262,7 @@ msgstr "Maksut"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Check Number: %s"
-msgstr "Šekin numero: %s"
+msgstr "Sekin numero: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -285,12 +287,12 @@ msgstr "Varaukseen sisältyvä šekki"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Circular Cheque"
-msgstr "Kiertošhekki"
+msgstr "Šhekki, joka on voimassa 3kk"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Clean Collection"
-msgstr "Puhdas keruu"
+msgstr "Ei-kaupallisten rahoitusasiakirjojen kerääminen (Clean collection)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -305,17 +307,17 @@ msgstr "Vakuuksien hallinta"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission"
-msgstr "Komissio"
+msgstr "Toimeksianto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission excluding taxes"
-msgstr "Komissio ilman veroja"
+msgstr "Toimeksianto ilman veroja"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission including taxes"
-msgstr "Komissio veroineen"
+msgstr "Toimeksianto veroineen"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -350,7 +352,7 @@ msgstr "Yritystoiminta"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Own Account Transfer"
-msgstr "Yrityksen siirto omilla tileillä"
+msgstr "Yrityksen omien tilien välinen siirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -380,12 +382,12 @@ msgstr "Vastatapahtumat"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustment"
-msgstr "Credit-korjaus"
+msgstr "Luoton oikaisut"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustments"
-msgstr "Credit-korjaus"
+msgstr "Luoton oikaisut"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -440,7 +442,7 @@ msgstr "Rajat ylittävä palkanlaskenta/palkanmaksu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Standing Order"
-msgstr "Rajat ylittävä pysyväisvaltuutus"
+msgstr "Rajat ylittävä maksusopimus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -465,12 +467,12 @@ msgstr "Asiakaskorttitapahtumat"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit"
-msgstr "Debit"
+msgstr "Debet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit Adjustments"
-msgstr "Debit-sovitukset"
+msgstr "Veloituksen oikaisut"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -495,7 +497,7 @@ msgstr "Talletus/Lahjoitus"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Depositary Receipt Issue"
-msgstr "Talletustodistusten liikkeeseenlasku"
+msgstr "Talletustodistusten liikkeellelasku"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -545,12 +547,12 @@ msgstr "Asiakirjaremburssien keruu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Documentary Credit"
-msgstr "Asiakirjaremburssi"
+msgstr "Remburssi"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Domestic Credit Transfer"
-msgstr "Kotimaisten luottosiirto"
+msgstr "Kotimaisnen luottosiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -580,7 +582,7 @@ msgstr "Laskevan hinnan huutokauppa"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "End to end ID: %s"
-msgstr "Päästä päähän ID: %s"
+msgstr "Päästä päähän tunnus: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -675,7 +677,7 @@ msgstr "Rahoituslaitoksen suoraveloitusmaksu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Financial Institution Own Account Transfer"
-msgstr "Rahoituslaitoksen oman tilin siirto"
+msgstr "Rahoituslaitoksen siirto omilla tileillä"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -880,7 +882,7 @@ msgstr "Listatut johdannaiset - Futuurit"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Listed Derivatives – Options"
-msgstr "Listatut johdannaiset - optiot"
+msgstr "Listatut johdannaiset - Pptiot"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -925,12 +927,12 @@ msgstr "Sulautuma"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Credit Operations"
-msgstr "Satunnaiset credit-operaatiot"
+msgstr "Sekalaiset luotto-operaatiot"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Debit Operations"
-msgstr "Satunnaiset debit-operaatiot"
+msgstr "Sekalaiset debet-operaatiot"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -985,7 +987,7 @@ msgstr "Verottomat palkkiot"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non-Presented Circular Cheque"
-msgstr "Esittämättä jätetty kiertošekki"
+msgstr "Esittämättä jätetty šekki, joka on voimassa 3kk"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1015,7 +1017,7 @@ msgstr "OTC CCP"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Bonds"
-msgstr "OTC-johdannaiset - joukkovelkakirjat"
+msgstr "OTC-johdannaiset – Joukkovelkakirjat"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1025,7 +1027,7 @@ msgstr "OTC-johdannaiset - Luottojohdannaiset"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Equity"
-msgstr "OTC-johdannaiset - osakkeet"
+msgstr "OTC-johdannaiset - Osakkeet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1035,7 +1037,7 @@ msgstr "OTC-johdannaiset - Korot"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Structured Exotic Derivatives"
-msgstr "OTC-johdannaiset - strukturoidut eksoottiset johdannaiset"
+msgstr "OTC-johdannaiset - Strukturoidut eksoottiset johdannaiset"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1045,12 +1047,12 @@ msgstr "OTC-johdannaiset - Swapit"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Non-CCP"
-msgstr "OTC Non-CCP"
+msgstr "OTC, joita ei selvitetä keskusvastapuolen (CCP) kautta."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Odd Lot Sale/Purchase"
-msgstr "Pariton erä Myynti/osto"
+msgstr "Pariton erä, myynti/osto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1144,7 +1146,7 @@ msgid ""
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
 "Tarkista pankkipäiväkirjasi valuutta.\n"
-"Tässä CAMT-tiedostossa ei löydetty valuuttana %s olevia tiliotteita."
+"Tässä CAMT-tiedostossa ei löydetty tiliotteita valuuttassa %s."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1160,12 +1162,12 @@ msgstr ""
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment"
-msgstr "Maksaminen myyntipisteessä (POS)"
+msgstr "Maksaminen kassajärjestelmässä (POS)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment - Debit Card"
-msgstr "Maksaminen myyntipisteessä (POS) - pankkikortti"
+msgstr "Maksaminen kassajärjestelmässä (POS) - pankkikortti"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1200,17 +1202,17 @@ msgstr "Pääomamaksu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Priority Credit Transfer"
-msgstr "Ensisijainen credit-siirto"
+msgstr "Ensisijainen luottosiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Priority Issue"
-msgstr "Tärkeä liikkeellelasku"
+msgstr "Etuoikeus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Put Redemption"
-msgstr "Laita lunastus"
+msgstr "Lunastusoikeus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1235,7 +1237,7 @@ msgstr "Saadut suoraveloitukset"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Real Time Credit Transfer"
-msgstr "Vastaanotettu reaaliaikainen credit-siirto"
+msgstr "Vastaanotettu reaaliaikainen luottosiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1275,7 +1277,7 @@ msgstr "Haltuunotto"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Repurchase offer/Issuer Bid/Reverse Rights."
-msgstr "Takaisinostotarjous/Liikkeellelaskijan tarjous / Poisveto-oikeudet"
+msgstr "Takaisinostotarjous/Liikkeellelaskijan tarjous/Kumoamisoikeudet"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1310,12 +1312,12 @@ msgstr "Maksun peruutuspyynnöstä johtuva peruutus"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reverse Repo"
-msgstr "Käänteinen haltuunotto"
+msgstr "Kumoa repo"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Rights Issue/Subscription Rights/Rights Offer"
-msgstr "Merkintäoikeusanti/merkintäoikeus/oikeustarjous"
+msgstr "Merkintäoikeusanti/Merkintäoikeus/Oikeustarjous"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1330,12 +1332,12 @@ msgstr "SEPA Core Direct Debit"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "SEPA Credit Transfer"
-msgstr "SEPA credit-siirto"
+msgstr "SEPA luottosiirto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Same Day Value Credit Transfer"
-msgstr "Päivän sisäinen credit-arvon siirto"
+msgstr "Luottosiirto päivän arvolla"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1355,7 +1357,7 @@ msgstr "Arvopaperiluotonanto"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sell Buy Back"
-msgstr "Myy Osta takaisin"
+msgstr "Myy takaisinosto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1400,7 +1402,7 @@ msgstr "Smart-Card-maksaminen"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Spots"
-msgstr "Spots"
+msgstr "Yksittäiset tapahtumat"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1415,7 +1417,7 @@ msgstr "Valmiusluottoilmoitus"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Standing Order"
-msgstr "Pysyvä tilaus"
+msgstr "Maksusopimus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1450,12 +1452,12 @@ msgstr "Swapit"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sweep"
-msgstr "Sweep"
+msgstr "Sweep (automaattinen varojen siirto)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sweeping"
-msgstr "Sweeping"
+msgstr "Sweeping (automaattinen varojen siirto)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1465,17 +1467,17 @@ msgstr "Vaihto"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Syndicated"
-msgstr "Syndikoitu"
+msgstr "Syndikoitu (liitto)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Syndications"
-msgstr "Syndikaatiot"
+msgstr "Syndikaatiot (liitot)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "TBA closing"
-msgstr "TBA sulkeminen"
+msgstr "TBA (ennalta sovittu myöhemmin täsmennettävä) sulkeminen"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1495,7 +1497,7 @@ msgstr "Maksu"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Topping"
-msgstr "Päälle"
+msgstr "Lisät"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1535,12 +1537,12 @@ msgstr "Siirto ulos"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Travellers Cheques Deposit"
-msgstr "Matkasekkien talletus"
+msgstr "Matkašekkien talletus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Travellers Cheques Withdrawal"
-msgstr "Matkasekkien nosto"
+msgstr "Matkašekkien nosto"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1555,7 +1557,7 @@ msgstr "Kolmannen osapuolen haltuunotto"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Triparty Reverse Repo"
-msgstr "Kolmannen osapuolen käänteinen haltuunotto"
+msgstr "Kolmikantarepon kumoaminen"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1610,7 +1612,7 @@ msgstr "Lähdevero"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "YTD Adjustment"
-msgstr "Vuodesta vuoteen korjaus"
+msgstr "Vuodesta kuluvaan päivään korjaus"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

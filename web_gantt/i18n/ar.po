@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_gantt
+# * web_gantt
 #
 # Translators:
 # Martin Trigaux, 2023
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:39+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/web_gantt/"
+"ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -29,13 +32,13 @@ msgstr "هل أنت متأكد من أنك ترغب في حذف هذا السج�
 #. module: web_gantt
 #: model:ir.model,name:web_gantt.model_base
 msgid "Base"
-msgstr "أساس"
+msgstr "قاعدة"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.xml:0
 msgid "Collapse rows"
-msgstr "تصغير الصفوف "
+msgstr "تصغير الصفوف"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -54,13 +57,13 @@ msgstr "اليوم"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Edit"
-msgstr ""
+msgstr "تحرير"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.xml:0
 msgid "Expand rows"
-msgstr "تكبير الصفوف "
+msgstr "تكبير الصفوف"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -78,31 +81,33 @@ msgstr "أداة عرض جانت"
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt child can only be field or template, got %s"
-msgstr "يمكن أن يكون تابع غانت إما حقل أو قالب فقط، به %s "
+msgstr "يمكن أن يكون تابع غانت إما حقل أو قالب فقط، به %s"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_start' attribute"
-msgstr "يجب أن يكون لعرض غانت خاصية 'date_start' "
+msgstr "يجب أن يكون لعرض غانت خاصية 'date_start'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_stop' attribute"
-msgstr "يجب أن يكون لعرض غانت خاصية 'date_stop' "
+msgstr "يجب أن يكون لعرض غانت خاصية 'date_stop'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'dependency_inverted_field' attribute once the 'dependency_field' is specified"
-msgstr "يجب أن يكون لنافذة عرض غانت خاصية 'dependency_inverted_field' بمجرد أن يتم تحديد 'dependency_field' "
+msgstr ""
+"يجب أن يكون لنافذة عرض غانت خاصية 'dependency_inverted_field' بمجرد أن يتم "
+"تحديد 'dependency_field'"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt view can contain only one templates tag"
-msgstr "يمكن أن يحتوي عرض غانت على علامة تصنيف قوالب واحدة فقط "
+msgstr "يمكن أن يحتوي عرض غانت على علامة تصنيف قوالب واحدة فقط"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -114,7 +119,7 @@ msgstr "خاصية التجميع حسب التاريخ غير مدعومة "
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
 msgid "Insufficient fields for Gantt View!"
-msgstr "لا توجد حقول كافية لعرض غانت! "
+msgstr "لا توجد حقول كافية لعرض غانت!"
 
 #. module: web_gantt
 #. odoo-python
@@ -126,7 +131,7 @@ msgstr "خواص غير صالحة (%s) في عرض غانت. يجب أن تكو
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid default_scale '%s' in gantt"
-msgstr "default_scale '%s' غير صالح في عرض غانت "
+msgstr "default_scale '%s' غير صالح في عرض غانت"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -138,7 +143,7 @@ msgstr "الشهر"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_popover.xml:0
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -162,7 +167,7 @@ msgstr "فتح"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Plan"
-msgstr "الخطة "
+msgstr "الخطة"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -186,13 +191,13 @@ msgstr "لا يمكن إعادة جدولة السجلات التي هي في ا
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_popover.xml:0
 msgid "Start"
-msgstr ""
+msgstr "ابدأ"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_popover.xml:0
 msgid "Stop"
-msgstr ""
+msgstr "إيقاف"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -204,20 +209,20 @@ msgstr "اليوم"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Total"
-msgstr ""
+msgstr "الإجمالي"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_model.js:0
 msgid "Undefined %s"
-msgstr "غير محدد %s "
+msgstr "غير محدد %s"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 #: model:ir.model,name:web_gantt.model_ir_ui_view
 msgid "View"
-msgstr "عرض "
+msgstr "أداة العرض"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -247,16 +252,16 @@ msgstr "لا يمكنك إعادة جدولة المهام التي لا تتب�
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "hours"
-msgstr ""
+msgstr "ساعات"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "minutes"
-msgstr ""
+msgstr "دقائق"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "months"
-msgstr ""
+msgstr "شهور"

@@ -1,154 +1,159 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl_rest
+# * delivery_dhl_rest
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:21+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl_rest/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__0
 msgid "0 - Logistics Services"
-msgstr ""
+msgstr "0 - Logistične storitve"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__1
 msgid "1 - Domestic Express 12:00"
-msgstr ""
+msgstr "1 - Domači Ekspres 12:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__2
 msgid "2 - B2C"
-msgstr ""
+msgstr "2 - B2C"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__3
 msgid "3 - B2C"
-msgstr ""
+msgstr "3 - B2C"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__4
 msgid "4 - Jetline"
-msgstr ""
+msgstr "4 - Jetline"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__5
 msgid "5 - Sprintline"
-msgstr ""
+msgstr "5 - Sprintline"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__6
 msgid "6 - Secureline"
-msgstr ""
+msgstr "6 - Varna linija"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_a4_pdf
 msgid "6X4_A4_PDF"
-msgstr ""
+msgstr "6X4_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_pdf
 msgid "6X4_PDF"
-msgstr ""
+msgstr "6X4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_thermal
 msgid "6X4_thermal"
-msgstr ""
+msgstr "6X4_termični"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__7
 msgid "7 - Express Easy"
-msgstr ""
+msgstr "7 - Express enostavno"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__8
 msgid "8 - Express Easy"
-msgstr ""
+msgstr "8 - Express enostavno"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_a4_pdf
 msgid "8X4_A4_PDF"
-msgstr ""
+msgstr "8X4_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_a4_tc_pdf
 msgid "8X4_A4_TC_PDF"
-msgstr ""
+msgstr "8X4_A4_TC_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ci_pdf
 msgid "8X4_CI_PDF"
-msgstr ""
+msgstr "8X4_CI_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ci_thermal
 msgid "8X4_CI_thermal"
-msgstr ""
+msgstr "8X4_CI_termični"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_pdf
 msgid "8X4_PDF"
-msgstr ""
+msgstr "8X4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_ru_a4_pdf
 msgid "8X4_RU_A4_PDF"
-msgstr ""
+msgstr "8X4_RU_A4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__8x4_thermal
 msgid "8X4_thermal"
-msgstr ""
+msgstr "8X4_termični"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__9
 msgid "9 - Europack"
-msgstr ""
+msgstr "9 - Europack"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__a
 msgid "A - Auto Reversals"
-msgstr ""
+msgstr "A - Samodejni vzvratni premiki"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__am
 msgid "America"
-msgstr ""
+msgstr "Amerika"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__ap
 msgid "Asia Pacific"
-msgstr ""
+msgstr "Azija Pacific"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__b
 msgid "B - Break Bulk Express"
-msgstr ""
+msgstr "B - Break Bulk Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__c
 msgid "C - Medical Express"
-msgstr ""
+msgstr "C - Medicina Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Prevoznik"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,help:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
-msgstr ""
+msgstr "Označite to, če je vaš paket obdavčen."
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -159,18 +164,18 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Custom Data"
-msgstr ""
+msgstr "Podatki po meri"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__d
 msgid "D - Express Worldwide"
-msgstr ""
+msgstr "D - Express Po vsem svetu"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__delivery_type__dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__stock_package_type__package_carrier_type__dhl_rest
 msgid "DHL"
-msgstr ""
+msgstr "DHL"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_api_key
@@ -198,7 +203,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
-msgstr ""
+msgstr "DHL Številka računa"
 
 #. module: delivery_dhl_rest
 #: model:delivery.carrier,name:delivery_dhl_rest.delivery_carrier_dhl_be_dom
@@ -209,18 +214,18 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "DHL Configuration"
-msgstr ""
+msgstr "Konfiguracija DHL-a"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "DHL Documents"
-msgstr ""
+msgstr "Dokumenti DHL"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
-msgstr ""
+msgstr "DHL Izdelek"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -228,47 +233,48 @@ msgstr ""
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
 msgstr ""
+"Manjka številka računa DHL, prosimo, spremenite nastavitve načina dostave."
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_default_package_type_id
 msgid "DHLxw Package Type"
-msgstr ""
+msgstr "DHLxw Vrsta paketa"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_duty_payment
 msgid "Dhl Duty Payment"
-msgstr ""
+msgstr "Dhl Plačilo dajatev"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
-msgstr ""
+msgstr "Davčno obdavčljiv material"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Duties paid by"
-msgstr ""
+msgstr "Dajatve plača"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__e
 msgid "E - Express 9:00"
-msgstr ""
+msgstr "E - Express 9:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__epl2
 msgid "EPL2"
-msgstr ""
+msgstr "EPL2"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__eu
 msgid "Europe"
-msgstr ""
+msgstr "Evropa"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_rate_request
@@ -304,28 +310,28 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__f
 msgid "F - Freight Worldwide"
-msgstr ""
+msgstr "F - Tovor po vsem svetu"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__g
 msgid "G - Domestic Economy Select"
-msgstr ""
+msgstr "G - Izberite domače gospodarstvo"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__h
 msgid "H - Economy Select"
-msgstr ""
+msgstr "H - Izberite ekonomično"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__i
 msgid "I - Break Bulk Economy"
-msgstr ""
+msgstr "I - Prekini gospodarstvo v razsutem stanju"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_unit_system__imperial
@@ -341,37 +347,37 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__j
 msgid "J - Jumbo Box"
-msgstr ""
+msgstr "J - Jumbo Škatla"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__k
 msgid "K - Express 9:00"
-msgstr ""
+msgstr "K - Express 9:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__l
 msgid "L - Express 10:30"
-msgstr ""
+msgstr "L - Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Label Format"
-msgstr ""
+msgstr "Oblika oznake"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_label_image_format
 msgid "Label Image Format"
-msgstr ""
+msgstr "Oblika slike nalepke"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_label_template
 msgid "Label Template"
-msgstr ""
+msgstr "Predloga etikete"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__m
 msgid "M - Express 10:30"
-msgstr ""
+msgstr "M - Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_unit_system__metric
@@ -381,68 +387,68 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__n
 msgid "N - Domestic Express"
-msgstr ""
+msgstr "N -  Domači Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__o
 msgid "O - DOM Express 10:30"
-msgstr ""
+msgstr "O - DOM Express 10:30"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Options"
-msgstr ""
+msgstr "Možnosti"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__p
 msgid "P - Express Worldwide"
-msgstr ""
+msgstr "P - Express Po vsem svetu"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Prosimo, navedite vsaj en artikel za pošiljanje."
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Ponudnik"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__q
 msgid "Q - Medical Express"
-msgstr ""
+msgstr "Q - Medicina Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__r
 msgid "R - GlobalMail Business"
-msgstr ""
+msgstr "R - Globalno poštno poslovanje"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__r
 msgid "Recipient"
-msgstr ""
+msgstr "Prejemnik"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_region_code
 msgid "Region"
-msgstr ""
+msgstr "Regija"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__s
 msgid "S - Same Day"
-msgstr ""
+msgstr "I - Isti dan"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__s
 msgid "Sender"
-msgstr ""
+msgstr "Pošiljatelj"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -453,23 +459,23 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Metode odpreme"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "Nekaj je šlo narobe, poskusite znova pozneje!!"
 
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Tip paketa zaloge"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__t
 msgid "T - Express 12:00"
-msgstr ""
+msgstr "T - Express 12:00"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -478,6 +484,8 @@ msgid ""
 "The address of the customer is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"Naslov stranke manjka ali je napačen (manjkajoče polje(-a) :\n"
+" %s)"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -486,6 +494,8 @@ msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"Naslov skladišča vašega podjetja manjka ali je napačen (Manjkajoča polja :\n"
+" %s)"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -494,6 +504,9 @@ msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
 msgstr ""
+"Ocenjene cene pošiljanja ni mogoče izračunati, ker za naslednje izdelke "
+"manjka teža: \n"
+" %s"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -502,6 +515,8 @@ msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
 msgstr ""
+"Paketa ni mogoče ustvariti, ker je skupna teža izdelkov v komisioniranju 0,0 "
+"%s"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -515,7 +530,7 @@ msgstr ""
 msgid ""
 "There is no price available for this shipping, you should rather try with "
 "the DHL product %s"
-msgstr ""
+msgstr "Za to pošiljanje ni na voljo cene, raje poskusite z DHL-om. %s"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -526,7 +541,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__u
 msgid "U - Express Worldwide"
-msgstr ""
+msgstr "U - Express Po vsem svetu"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_unit_system
@@ -536,35 +551,35 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__v
 msgid "V - Europack"
-msgstr ""
+msgstr "V - Evropak"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__w
 msgid "W - Economy Select"
-msgstr ""
+msgstr "W - Izberite ekonomično"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__x
 msgid "X - Express Envelope"
-msgstr ""
+msgstr "X - Express Ovojnica"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__y
 msgid "Y - Express 12:00"
-msgstr ""
+msgstr "Y - Express 12:00"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "You can't cancel DHL shipping without pickup date."
-msgstr ""
+msgstr "Dostave DHL ne morete preklicati brez datuma prevzema."
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__z
 msgid "Z - Destination Charges"
-msgstr ""
+msgstr "Z - Stroški destinacije"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__zpl2
 msgid "ZPL2"
-msgstr ""
+msgstr "ZPL2"

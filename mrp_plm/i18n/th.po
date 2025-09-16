@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* mrp_plm
+# * mrp_plm
 #
 # Translators:
 # Chatcha Mee, 2022
@@ -8,20 +8,22 @@
 # Khwunchai Jaengsawang <khwunchai.j@ku.th>, 2022
 # Wichanon Jamwutthipreecha, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
+"PO-Revision-Date: 2025-09-16 22:58+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/mrp_plm/th/>"
+"\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_count
@@ -44,7 +46,7 @@ msgstr "# ECOs อยู่ระหว่างดำเนินการ"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "%(approval_name)s %(approver_name)s %(approval_status)s this ECO"
-msgstr ""
+msgstr "%(approval_name)s %(approver_name)s %(approval_status)s ECO นี้"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -157,7 +159,7 @@ msgstr "นามแฝง"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias Status"
-msgstr ""
+msgstr "สถานะนามแฝง"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
@@ -167,7 +169,7 @@ msgstr "นามแฝงโดเมน"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias status assessed on the last message received."
-msgstr ""
+msgstr "ประเมินสถานะนามแฝงตามข้อความล่าสุดที่ได้รับ"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_model_id
@@ -213,7 +215,7 @@ msgstr "อนุญาตการเปลี่ยนแปลง"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Apply Rebase"
-msgstr "ใช้รีเบส"
+msgstr "ใช้การปรับฐาน"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__type
@@ -318,7 +320,7 @@ msgstr "รอการตรวจสอบ"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_report_mrp_report_bom_structure
 msgid "BOM Overview Report"
-msgstr ""
+msgstr "รายงานภาพรวมบิลวัสดุ (BOM)"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -328,7 +330,7 @@ msgstr "บิลวัสดุ"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_line
 msgid "Bill of Material Line"
-msgstr "ไลน์บิลวัสดุ"
+msgstr "รายการบิลวัสดุ"
 
 #. module: mrp_plm
 #. odoo-python
@@ -348,7 +350,7 @@ msgid ""
 "              order or a pack of products."
 msgstr ""
 "บิลวัสดุช่วยให้คุณสามารถกำหนดรายการส่วนประกอบที่จำเป็นได้\n"
-"              ใช้ทำผลิตภัณฑ์สำเร็จรูป ผ่านการผลิต\n"
+"              ใช้ทำสินค้าสำเร็จรูป ผ่านการผลิต\n"
 "              สั่งซื้อหรือแพ็คสินค้า"
 
 #. module: mrp_plm
@@ -376,7 +378,7 @@ msgstr "เปลี่ยน BoM"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Rebase"
-msgstr "รีเบส BoM "
+msgstr "ปรับฐาน BoM"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_revision
@@ -455,7 +457,7 @@ msgstr "เฉพาะแสดงความคิดเห็น"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__company_id
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Company"
-msgstr "บริษัทเดียว"
+msgstr "บริษัท"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -609,7 +611,7 @@ msgstr "ECO"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_graph
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_pivot
 msgid "ECO Analysis"
-msgstr " การวิเคราะห์ ECO"
+msgstr "การวิเคราะห์ ECO"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
@@ -630,12 +632,12 @@ msgstr "การเปลี่ยนแปลง BoM ECO"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
 msgid "ECO BoM changes"
-msgstr "การเปลี่ยนแปลง BoM ECO "
+msgstr "การเปลี่ยนแปลง BoM ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_rebase_id
 msgid "ECO Rebase"
-msgstr "รีเบส ECO"
+msgstr "ปรับฐาน ECO"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__routing_change_ids
@@ -873,7 +875,8 @@ msgstr "ไอดี"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_thread_id
 msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ไอดีของบันทึกหลักที่มีนามแฝง (ตัวอย่าง: โปรเจกต์ที่มีนามแฝงในการสร้างงาน)"
+msgstr ""
+"ไอดีของบันทึกหลักที่มีนามแฝง (ตัวอย่าง: โปรเจ็กต์ที่มีนามแฝงในการสร้างงาน)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_exception_icon
@@ -907,7 +910,9 @@ msgstr "หากตั้งค่าไว้ เนื้อหานี้�
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
 msgid "If the active field is set to False, it will allow you to hide the engineering change order without removing it."
-msgstr "หากฟิลด์ที่ใช้งานอยู่ถูกตั้งค่าเป็น เท็จ จะช่วยให้คุณสามารถซ่อนลำดับการเปลี่ยนแปลงทางวิศวกรรมโดยไม่ต้องลบออก"
+msgstr ""
+"หากข้อมูลที่ใช้งานอยู่ถูกตั้งค่าเป็น เท็จ "
+"จะช่วยให้คุณสามารถซ่อนลำดับการเปลี่ยนแปลงทางวิศวกรรมโดยไม่ต้องลบออก"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -1331,7 +1336,7 @@ msgstr "การเปลี่ยนแปลง Eco Bom ก่อนหน้
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_uom_id
 msgid "Previous Product UoM"
-msgstr "UoM สินค้าก่อนหน้า "
+msgstr "UoM สินค้าก่อนหน้า"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_product_qty
@@ -1387,7 +1392,7 @@ msgstr "ปริมาณ"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__rating_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "การให้คะแนน"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1404,12 +1409,12 @@ msgstr "พร้อม"
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__state__rebase
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Rebase"
-msgstr "รีเบส"
+msgstr "ปรับฐาน"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
-msgstr "รีเบสการแก้ไขใหม่ของ BoM ด้วย eco bom ก่อนหน้าและการเปลี่ยนแปลง bom แบบเก่า"
+msgstr "ปรับฐานการแก้ไข BoM ใหม่ด้วย eco bom ก่อนหน้าและการเปลี่ยนแปลง bom เก่า"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1562,7 +1567,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "Successfully Rebased!"
-msgstr ""
+msgstr "ปรับฐานใหม่สำเร็จแล้ว!"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1577,7 +1582,7 @@ msgstr "ชื่อแท็ก"
 #. module: mrp_plm
 #: model:ir.model.constraint,message:mrp_plm.constraint_mrp_eco_tag_name_uniq
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "มีชื่อแท็กแล้ว!"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__tag_ids
@@ -1598,12 +1603,14 @@ msgstr "งานถูกบล็อก คลิกเพื่อเลิ�
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_approve
 msgid "Technical field to check if approval by current user is required"
-msgstr "ฟิลด์เทคนิคเพื่อตรวจสอบว่าจำเป็นต้องได้รับการอนุมัติจากผู้ใช้ปัจจุบันหรือไม่"
+msgstr ""
+"ข้อมูลทางเทคนิคเพื่อตรวจสอบว่าจำเป็นต้องได้รับการอนุมัติจากผู้ใช้ปัจจุบันหรือไม่"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Technical field to check if reject by current user is possible"
-msgstr "ฟิลด์เทคนิคเพื่อตรวจสอบว่าการปฏิเสธโดยผู้ใช้ปัจจุบันเป็นไปได้หรือไม่"
+msgstr ""
+"ข้อมูลทางเทคนิคเพื่อตรวจสอบว่าการปฏิเสธโดยผู้ใช้ปัจจุบันเป็นไปได้หรือไม่"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__approval_template_id
@@ -1629,7 +1636,9 @@ msgstr "เวอร์ชันปัจจุบันของสินค้
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "โมเดล (ชนิดเอกสาร Odoo) ซึ่งสอดคล้องกับนามแฝงนี้ อีเมลขาเข้าใดๆ ที่ไม่ตอบกลับบันทึกที่มีอยู่จะทำให้เกิดการสร้างบันทึกใหม่ของโมเดลนี้ (เช่น โปรเจกต์งาน)"
+msgstr ""
+"โมเดล (ชนิดเอกสาร Odoo) ซึ่งสอดคล้องกับนามแฝงนี้ อีเมลขาเข้าใด "
+"ที่ไม่ตอบกลับบันทึกที่มีอยู่จะทำให้เกิดการสร้างบันทึกใหม่ของโมเดลนี้ (เช่น โปรเจ็กต์งาน)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name

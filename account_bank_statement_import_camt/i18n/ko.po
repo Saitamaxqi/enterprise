@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sarah Park, 2023
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Sarah Park, 2023\n"
-"Language-Team: Korean (https://app.transifex.com/odoo/teams/41243/ko/)\n"
+"PO-Revision-Date: 2025-09-16 12:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/ko/>\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -198,7 +201,7 @@ msgstr "자본 이득 분배"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Deposit"
-msgstr "현금 보증금"
+msgstr "현금 예금"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -208,12 +211,12 @@ msgstr "현금 배당"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter"
-msgstr "현금 편지"
+msgstr "당좌예금 입금표"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Letter Adjustment"
-msgstr "현금 편지 조정"
+msgstr "당좌예금 입금표 조정"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -263,7 +266,7 @@ msgstr "수표"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Deposit"
-msgstr "수표 보증금"
+msgstr "수표 예금"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -418,7 +421,7 @@ msgstr "국가 간 신용 이체"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Direct Debit"
-msgstr "국가 간 출근 이체"
+msgstr "국가 간 직불 결제"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -478,17 +481,17 @@ msgstr "배송"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit"
-msgstr "보증금"
+msgstr "선결제 금액"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit/Contribution"
-msgstr "보증금/공제금"
+msgstr "예금/공제금"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Depositary Receipt Issue"
-msgstr "보증금 영수증 문제"
+msgstr "선결제 대금 영수증 문제"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -498,12 +501,12 @@ msgstr "파생 상품"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit"
-msgstr "자동 이체"
+msgstr "직불 결제"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit Payment"
-msgstr "자동 이체 결제"
+msgstr "직불 결제 납부"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -798,7 +801,7 @@ msgstr "내부 계좌 이체"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Internal Book Transfer"
-msgstr "내부 도서 이전"
+msgstr "내부 장부 전송용"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -838,7 +841,7 @@ msgstr "실시간 신용 이체 발행"
 #. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_journal
 msgid "Journal"
-msgstr "분개장"
+msgstr "전표"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -938,7 +941,7 @@ msgstr "기타 증권 운영"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Mixed Deposit"
-msgstr "혼합 보증금"
+msgstr "다중 예금"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -953,7 +956,7 @@ msgstr "순"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "No exchange rate was found to convert an amount into the currency of the journal"
-msgstr "해당 금액을 분개장에서 지정한 통화로 변환하는 환율을 찾을 수 없습니다"
+msgstr "해당 금액을 전표에서 지정한 통화로 변환할 환율을 찾을 수 없습니다"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1136,8 +1139,8 @@ msgid ""
 "Please check the currency on your bank journal.\n"
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
-"은행 분개장에서 통화를 확인하십시오.\n"
-"이 CAMT 파일에서 %s 통화 명세서를 찾을 수 없습니다. "
+"은행 전표에서 통화를 확인하십시오.\n"
+"이 CAMT 파일에서 %s 통화 명세서를 찾을 수 없습니다."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1145,7 +1148,11 @@ msgid ""
 "Please set the IBAN account on your bank journal.\n"
 "\n"
 "This CAMT file is targeting several IBAN accounts but none match the current journal."
-msgstr "은행 분개장에 IBAN 계정을 설정하십시오.이 CAMT 파일은 여러 IBAN 계정을 대상으로 하지만 현재 분개장과 일치하는 계정이 없습니다."
+msgstr ""
+"은행 전표에 IBAN 계정을 설정하십시오.\n"
+"\n"
+"이 CAMT 파일은 여러 IBAN 계정을 대상으로 하고 있으나 현재 전표와 일치하는 "
+"계정이 없습니다."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1245,12 +1252,12 @@ msgstr "상환 인출 계획"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reimbursements"
-msgstr "상환"
+msgstr "환급"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Renewal"
-msgstr "갱신"
+msgstr "업데이트"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1280,7 +1287,7 @@ msgstr "지불 취소 요청으로 인한 취소"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Payment Return/reimbursement of a Credit Transfer"
-msgstr "신용 이전의 지불 반품 / 환급으로 인한 역 분개"
+msgstr "신용 이전으로 인한 지불 반품/환급으로 인한 역분개"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1475,7 +1482,7 @@ msgstr "세금 회수"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Taxes"
-msgstr "세금"
+msgstr "세무"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1595,7 +1602,7 @@ msgstr "인출 / 배포"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Withholding Tax"
-msgstr "원천 징수 세금"
+msgstr "원천세"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

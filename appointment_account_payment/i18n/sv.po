@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* appointment_account_payment
+# * appointment_account_payment
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-11 14:27+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:15+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"appointment_account_payment/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: appointment_account_payment
 #. odoo-python
@@ -91,17 +95,17 @@ msgstr ""
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid "<strong>Warning</strong> The currency is missing or incorrect."
-msgstr ""
+msgstr "<strong>Warning</strong> Valutan saknas eller är felaktig."
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid "<strong>Warning</strong> You must be logged in to pay."
-msgstr ""
+msgstr "<strong>Warning</strong> Du måste vara inloggad för att betala."
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__booking_token
 msgid "Access Token"
-msgstr ""
+msgstr "Åtkomsttecken"
 
 #. module: appointment_account_payment
 #: model:ir.model.constraint,message:appointment_account_payment.constraint_appointment_type_check_product_and_payment_step
@@ -116,12 +120,12 @@ msgstr ""
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid "Amount"
-msgstr ""
+msgstr "Belopp"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view_form
 msgid "Answers"
-msgstr ""
+msgstr "Svar"
 
 #. module: appointment_account_payment
 #: model:ir.model,name:appointment_account_payment.model_appointment_answer_input
@@ -136,7 +140,7 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__appointment_invite_id
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Bokningsinbjudan"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__account_move_id
@@ -147,7 +151,7 @@ msgstr ""
 #: model:ir.model,name:appointment_account_payment.model_appointment_type
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__appointment_type_id
 msgid "Appointment Type"
-msgstr ""
+msgstr "Tidsbokningstyp"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__asked_capacity
@@ -157,7 +161,7 @@ msgstr ""
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 msgid "Attendees"
-msgstr ""
+msgstr "Deltagare"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view_form
@@ -182,7 +186,7 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_answer_input__calendar_event_id
 msgid "Calendar Event"
-msgstr ""
+msgstr "Kalenderhändelse"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__capacity_reserved
@@ -202,29 +206,29 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__partner_id
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__create_uid
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Skapad av"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__create_date
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Skapad den"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__product_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Valuta"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__name
 msgid "Customer Name"
-msgstr ""
+msgstr "Kundnamn"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__description
@@ -252,23 +256,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_account_payment.field_product_product__display_name
 #: model:ir.model.fields,field_description:appointment_account_payment.field_product_template__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__duration
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 msgid "Duration"
-msgstr ""
+msgstr "Varaktighet"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 msgid "For"
-msgstr ""
+msgstr "För"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__guest_ids
 msgid "Guests"
-msgstr ""
+msgstr "Gäster"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_account_move__id
@@ -279,7 +283,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_account_payment.field_product_product__id
 #: model:ir.model.fields,field_description:appointment_account_payment.field_product_template__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__not_available
@@ -289,19 +293,19 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model,name:appointment_account_payment.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Verifikat"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__write_uid
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Senast uppdaterad av"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__write_date
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Senast uppdaterad den"
 
 #. module: appointment_account_payment
 #. odoo-python
@@ -319,7 +323,7 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__calendar_event_id
 msgid "Meeting"
-msgstr ""
+msgstr "Möte"
 
 #. module: appointment_account_payment
 #: model:ir.model,name:appointment_account_payment.model_calendar_booking
@@ -349,7 +353,7 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__staff_user_id
 msgid "Operator"
-msgstr ""
+msgstr "Operatör"
 
 #. module: appointment_account_payment
 #. odoo-python
@@ -382,12 +386,12 @@ msgstr ""
 #: model:ir.model,name:appointment_account_payment.model_product_template
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__product_id
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: appointment_account_payment
 #: model:ir.model,name:appointment_account_payment.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariant"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,help:appointment_account_payment.field_appointment_type__has_payment_step
@@ -397,13 +401,13 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__appointment_resource_id
 msgid "Resource"
-msgstr ""
+msgstr "Resurs"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view_form
 msgid "Resources"
-msgstr ""
+msgstr "Resurser"
 
 #. module: appointment_account_payment
 #. odoo-python
@@ -414,22 +418,22 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__product_lst_price
 msgid "Sales Price"
-msgstr ""
+msgstr "Försäljningspris"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid "Service"
-msgstr ""
+msgstr "Tjänst"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__start
 msgid "Start"
-msgstr ""
+msgstr "Start"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__stop
 msgid "Stop"
-msgstr ""
+msgstr "Stoppa"
 
 #. module: appointment_account_payment
 #: model_terms:appointment.type,message_confirmation:appointment_account_payment.appointment_type_online_cooking_lesson
@@ -457,11 +461,13 @@ msgid ""
 "The sale price is managed from the product template. Click on the 'Configure"
 " Variants' button to set the extra attribute prices."
 msgstr ""
+"Försäljningspriset hanteras från produktmallen. Klicka på knappen "
+"\"Konfigurera varianter\" för att ställa in priserna för de extra attributen."
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid "There is nothing to pay."
-msgstr ""
+msgstr "Det finns inget att betala."
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
@@ -498,12 +504,12 @@ msgstr ""
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking_line__appointment_user_id
 msgid "Users"
-msgstr ""
+msgstr "Användare"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 msgid "When"
-msgstr ""
+msgstr "När"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
@@ -520,17 +526,17 @@ msgstr ""
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_validated
 msgid "at"
-msgstr ""
+msgstr "på"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_validated
 msgid "or"
-msgstr ""
+msgstr "eller"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
 msgid "people"
-msgstr ""
+msgstr "människor"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_info

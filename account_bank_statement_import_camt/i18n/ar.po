@@ -1,71 +1,74 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_bank_statement_import_camt
+# * account_bank_statement_import_camt
 #
 # Translators:
 # Martin Trigaux, 2022
 # Niyas Raphy, 2022
 # Mehjabin Farsana, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2023\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:37+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"account_bank_statement_import_camt/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Concentration"
-msgstr "تركيز غرفة المقاصة الآلية (ACH) "
+msgstr "تركيز غرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Corporate Trade"
-msgstr "تجارة الشركات عن طريق غرفة المقاصة الآلية (ACH) "
+msgstr "تجارة الشركات عن طريق غرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Credit"
-msgstr "رصيد غرفة المقاصة الآلية "
+msgstr "رصيد غرفة المقاصة الآلية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Debit"
-msgstr "خصم غرفة المقاصة الآلية "
+msgstr "خصم غرفة المقاصة الآلية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Pre-Authorised"
-msgstr "تخويل مسبق لغرفة المقاصة الآلية (ACH)"
+msgstr "تفويض مسبق لغرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Return"
-msgstr "عائد غرفة المقاصة الآلية (ACH) "
+msgstr "عائد غرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Reversal"
-msgstr "عكس معاملة في غرفة المقاصة الآلية "
+msgstr "عكس معاملة في غرفة المقاصة الآلية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Settlement"
-msgstr "تسوية غرفة المقاصة الآلية (ACH) "
+msgstr "تسوية غرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "ACH Transaction"
-msgstr "معاملة غرفة المقاصة الآلية (ACH) "
+msgstr "معاملة غرفة المقاصة الآلية (ACH)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -130,12 +133,12 @@ msgstr "التحويل التلقائي"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Back Value"
-msgstr "استحقاق سابق "
+msgstr "استحقاق سابق"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Bank Cheque"
-msgstr "شيك بنكي "
+msgstr "شيك بنكي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -160,22 +163,22 @@ msgstr "رسوم الاقتراض"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Account Transfer"
-msgstr "تحويل الحساب إلى الفرع "
+msgstr "تحويل الحساب إلى الفرع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Deposit"
-msgstr "إيداع في الفرع "
+msgstr "إيداع في الفرع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Branch Withdrawal"
-msgstr "السحب من الفرع "
+msgstr "السحب من الفرع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Brokerage fee"
-msgstr "رسوم سمسرة "
+msgstr "رسوم سمسرة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -185,7 +188,7 @@ msgstr "إعادة الشراء/ البيع"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "CSD Blocked Transactions"
-msgstr "المعاملات المحظورة للإيداع المركزي للأوراق المالية (CSD) "
+msgstr "المعاملات المحظورة للإيداع المركزي للأوراق المالية (CSD)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -200,12 +203,12 @@ msgstr "توزيع أرباح رأس المال"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Deposit"
-msgstr "الإيداع النقدي "
+msgstr "الإيداع النقدي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Dividend"
-msgstr "توزيعات الأرباح المالية "
+msgstr "توزيعات الأرباح المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -220,7 +223,7 @@ msgstr "تعديل خطاب نقدي"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Management"
-msgstr "إدارة النقد "
+msgstr "إدارة النقد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -230,27 +233,27 @@ msgstr "تجميع النقد"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash Withdrawal"
-msgstr "السحب النقدي "
+msgstr "السحب النقدي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cash in lieu"
-msgstr "نقد بالمقابل "
+msgstr "نقد بالمقابل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Certified Customer Cheque"
-msgstr "شيك عميل معتمَد "
+msgstr "شيك عميل معتمَد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charge/fees"
-msgstr "الرسوم "
+msgstr "الرسوم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Charges"
-msgstr "الرسوم "
+msgstr "الرسوم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -260,12 +263,12 @@ msgstr "رقم الشيك: %s"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque"
-msgstr "الشيك "
+msgstr "الشيك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cheque Deposit"
-msgstr "إيداع الشيك "
+msgstr "إيداع الشيك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -290,72 +293,72 @@ msgstr "مجموعة نظيفة"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Client Owned Collateral"
-msgstr "الضمانات التي يمتلكها العميل "
+msgstr "الضمانات التي يمتلكها العميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Collateral Management"
-msgstr "إدارة الضمانات "
+msgstr "إدارة الضمانات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission"
-msgstr "عمولة "
+msgstr "العمولة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission excluding taxes"
-msgstr "العمولة غير الشاملة للضريبة "
+msgstr "العمولة غير الشاملة للضريبة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commission including taxes"
-msgstr "العمولة الشاملة للضريبة "
+msgstr "العمولة الشاملة للضريبة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Commodities"
-msgstr "السلع "
+msgstr "السلع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Compensation/Claims"
-msgstr "التعويضات/المطالبات "
+msgstr "التعويضات/المطالبات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Consumer Loans"
-msgstr "قروض المستهلك "
+msgstr "قروض المستهلك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Controlled Disbursement"
-msgstr "الصرف الخاضع للرقابة "
+msgstr "الصرف الخاضع للرقابة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Conversion"
-msgstr "تحويل"
+msgstr "التحويل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Action"
-msgstr "إجراء مؤسسي "
+msgstr "إجراء مؤسسي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Own Account Transfer"
-msgstr "تحويل الحساب الخاص بالمؤسسة "
+msgstr "تحويل الحساب الخاص بالمؤسسة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate Rebate"
-msgstr "خصم المؤسسة "
+msgstr "خصم المؤسسة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Corporate mark broker owned"
-msgstr "علامة تجارية مملوكة للسمسار "
+msgstr "علامة تجارية مملوكة للسمسار"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -370,192 +373,192 @@ msgstr "الطرف المقابل: %(partner)s"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Counter Transactions"
-msgstr "المعاملات المقابلة "
+msgstr "المعاملات المقابلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustment"
-msgstr "تسوية الائتمان "
+msgstr "تسوية الائتمان"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Adjustments"
-msgstr "تسويات الائتمان "
+msgstr "تسويات الائتمان"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Card Payment"
-msgstr "الدفع عن طريق بطاقة الائتمان "
+msgstr "الدفع عن طريق بطاقة الائتمان"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Credit Transfer with agreed Commercial Information"
-msgstr "تحويل الرصيد مع معلومات تجارية متفق عليها "
+msgstr "تحويل الرصيد مع معلومات تجارية متفق عليها"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross Trade"
-msgstr "التجارة العابرة "
+msgstr "التجارة العابرة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border"
-msgstr "عبر الحدود "
+msgstr "عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Cash Withdrawal"
-msgstr "السحب النقدي عبر الحدود "
+msgstr "السحب النقدي عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Card Payment"
-msgstr "الدفع عن طريق البطاقة الائتمانية عبر الحدود "
+msgstr "الدفع عن طريق البطاقة الائتمانية عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Credit Transfer"
-msgstr "تحويل الرصيد عبر الحدود "
+msgstr "تحويل الرصيد عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Direct Debit"
-msgstr "الخصم المباشر عبر الحدود "
+msgstr "الخصم المباشر عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Intra Company Transfer"
-msgstr "التحويل ما بين الشركات عبر الحدود "
+msgstr "التحويل ما بين الشركات عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Payroll/Salary Payment"
-msgstr "كشوفات المرتبات/دفع الراتب عبر الحدود "
+msgstr "كشوفات المرتبات/دفع الراتب عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Cross-Border Standing Order"
-msgstr "أمر دائم عبر الحدود "
+msgstr "أمر دائم عبر الحدود"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Crossed Cheque"
-msgstr "شيك مشطوب "
+msgstr "شيك مشطوب"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody"
-msgstr "عهدة "
+msgstr "عهدة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Custody Collection"
-msgstr "تحصيل العهدة "
+msgstr "تحصيل العهدة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Customer Card Transactions"
-msgstr "معاملات بطاقة العميل "
+msgstr "معاملات بطاقة العميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit"
-msgstr "الخصم "
+msgstr "المدين"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Debit Adjustments"
-msgstr "تعديلات الخصم "
+msgstr "تعديلات الخصم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Decrease in Value"
-msgstr "انخفاض القيمة "
+msgstr "انخفاض القيمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Delivery"
-msgstr "التوصيل "
+msgstr "التوصيل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit"
-msgstr "إيداع "
+msgstr "إيداع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Deposit/Contribution"
-msgstr "إيداع/مساهمة "
+msgstr "إيداع/مساهمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Depositary Receipt Issue"
-msgstr "إصدار إيصال إيداع "
+msgstr "إصدار إيصال إيداع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Derivatives"
-msgstr "المشتقات "
+msgstr "المشتقات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit"
-msgstr "الخصم المباشر "
+msgstr "الخصم المباشر"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit Payment"
-msgstr "دفع الخصم المباشر "
+msgstr "دفع الخصم المباشر"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Direct Debit under reserve"
-msgstr "الخصم المباشر تحت الحجز "
+msgstr "الخصم المباشر تحت الحجز"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Discounted Draft"
-msgstr "مسودة الخصم "
+msgstr "مسودة الخصم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dishonoured/Unpaid Draft"
-msgstr ""
+msgstr "كمبيالة مرفوضة / غير مدفوعة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dividend Option"
-msgstr "خيار الأرباح "
+msgstr "خيار الأرباح"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dividend Reinvestment"
-msgstr "إعادة استثمار الأرباح "
+msgstr "إعادة استثمار الأرباح"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Documentary Collection"
-msgstr "المجموعة المستندية "
+msgstr "المجموعة المستندية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Documentary Credit"
-msgstr ""
+msgstr "الاعتمادات المستندية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Domestic Credit Transfer"
-msgstr "تحويل الرصيد المحلي "
+msgstr "تحويل الرصيد المحلي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Draft Maturity Change"
-msgstr ""
+msgstr "مسودة تغيير النضج"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Drafts/BillOfOrders"
-msgstr "مسودات/فواتير الطلبات "
+msgstr "مسودات/فواتير الطلبات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -575,27 +578,27 @@ msgstr "Dutch Auction"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "End to end ID: %s"
-msgstr ""
+msgstr "معرف طرف إلى طرف: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Entry Info: %s"
-msgstr "معلومات القيد: %s "
+msgstr "معلومات القيد: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Equity Premium Reserve"
-msgstr ""
+msgstr "احتياطي أقساط حقوق الملكية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Equity mark broker owned"
-msgstr ""
+msgstr "علامة سهم مملوكة للسمسار"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Equity mark client owned"
-msgstr ""
+msgstr "علامة سهم مملوكة للعميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -610,17 +613,17 @@ msgstr "تعديل سعر الصرف"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Exchange Traded"
-msgstr "متداولة "
+msgstr "متداولة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Exchange Traded CCP"
-msgstr ""
+msgstr "CCP المؤشرات المتداولة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Exchange Traded Non-CCP"
-msgstr ""
+msgstr "المؤشرات المتداولة لغير CCP"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -630,12 +633,12 @@ msgstr "نطاق موسّع"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "External Account Transfer"
-msgstr "تحويل حساب خارجي "
+msgstr "تحويل حساب خارجي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Factor Update"
-msgstr "تحديث العامل "
+msgstr "تحديث العامل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -645,92 +648,92 @@ msgstr "رسوم"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fees, Commission , Taxes, Charges and Interest"
-msgstr "الرسوم والعمولات والضرائب والتكاليف والفوائد "
+msgstr "الرسوم والعمولات والضرائب والتكاليف والفوائد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Final Maturity"
-msgstr "تاريخ الاستحقاق النهائي "
+msgstr "تاريخ الاستحقاق النهائي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Final Payment"
-msgstr "الدفع النهائي "
+msgstr "الدفع النهائي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Financial Institution Credit Transfer"
-msgstr "تحويل الرصيد للمنشأة المالية "
+msgstr "تحويل الرصيد للمنشأة المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Financial Institution Direct Debit Payment"
-msgstr "دفع الخصم المباشر للمنشأة المالية "
+msgstr "دفع الخصم المباشر للمنشأة المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Financial Institution Own Account Transfer"
-msgstr ""
+msgstr "التحويل للحساب الشخصي للمنشأة المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fixed Deposit Interest Amount"
-msgstr ""
+msgstr "إجمالي نسبة الفائدة الثابتة من الإيداع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fixed Term Deposits"
-msgstr "الإيداعات بسعر فائدة ثابت "
+msgstr "الإيداعات بسعر فائدة ثابت"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Fixed Term Loans"
-msgstr "قروض بسعر فائدة ثابت "
+msgstr "قروض بسعر فائدة ثابت"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Float adjustment"
-msgstr "تعديل الفاصلة "
+msgstr "تعديل الفاصلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Cheque"
-msgstr "شيك أجنبي "
+msgstr "شيك أجنبي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Cheque Under Reserve"
-msgstr "شيك أجنبي تحت الحجز "
+msgstr "شيك أجنبي تحت الحجز"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Currency Deposit"
-msgstr "إيداع العملة الأجنبية "
+msgstr "إيداع العملة الأجنبية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Currency Withdrawal"
-msgstr "سحب العملة الأجنبية "
+msgstr "سحب العملة الأجنبية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Foreign Exchange"
-msgstr "تحويل العملة الأجنبية "
+msgstr "تحويل العملة الأجنبية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards"
-msgstr ""
+msgstr "العقود الآجلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards broker owned collateral"
-msgstr ""
+msgstr "ضمانات العقود الآجلة المملوكة للسمسار"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Forwards client owned collateral"
-msgstr ""
+msgstr "ضمانات العقود الآجلة المملوكة للعميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -740,12 +743,12 @@ msgstr "تجميد الأموال"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Full Call / Early Redemption"
-msgstr ""
+msgstr "الدفع قبل تاريخ الاستحقاق / التحصيل قبل تاريخ الاستحقاق"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Future Variation Margin"
-msgstr "هامش الاختلاف المستقبلي "
+msgstr "هامش الاختلاف المستقبلي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -755,12 +758,12 @@ msgstr "العقود الآجلة"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Futures Commission"
-msgstr "عمولة العقود الآجلة "
+msgstr "عمولة العقود الآجلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Futures Residual Amount"
-msgstr "المبالغ المتبقية من العقود الآجلة "
+msgstr "المبالغ المتبقية من العقود الآجلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -770,72 +773,72 @@ msgstr "ضمانات"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Inspeci/Share Exchange"
-msgstr ""
+msgstr "Inspeci/Share Exchange"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Instruction ID: %s"
-msgstr ""
+msgstr "معرف التعليمات: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Interest"
-msgstr "الفائدة "
+msgstr "الفائدة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Interest Payment"
-msgstr "دفع الفوائد "
+msgstr "دفع الفوائد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Interest Payment with Principle"
-msgstr ""
+msgstr "دفع الفوائد مع المبلغ المتفق عليه"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Internal Account Transfer"
-msgstr "تحويل الحساب الداخلي "
+msgstr "تحويل الحساب الداخلي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Internal Book Transfer"
-msgstr ""
+msgstr "تحويل داخلي من حساب إلى آخر"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Intra Company Transfer"
-msgstr "التحويل داخل الشركة "
+msgstr "التحويل داخل الشركة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Invoice Accepted with Differed Due Date"
-msgstr "تم قبول الفاتورة بتاريخ استحقاق مختلف "
+msgstr "تم قبول الفاتورة بتاريخ استحقاق مختلف"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Issued Cash Concentration Transactions"
-msgstr ""
+msgstr "معاملات التركيز النقدي التي تم إصدارها"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Issued Cheques"
-msgstr "الشيكات المصدرة "
+msgstr "الشيكات المصدرة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Issued Credit Transfers"
-msgstr "تحويلات الرصيد المصدرة "
+msgstr "تحويلات الرصيد المصدرة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Issued Direct Debits"
-msgstr "الخصومات المباشرة المصدرة "
+msgstr "الخصومات المباشرة المصدرة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Issued Real Time Credit Transfer"
-msgstr "عملية تحويل الرصيد في الوقت الفعلي المصدرة "
+msgstr "عملية تحويل الرصيد في الوقت الفعلي المصدرة"
 
 #. module: account_bank_statement_import_camt
 #: model:ir.model,name:account_bank_statement_import_camt.model_account_journal
@@ -850,137 +853,137 @@ msgstr "قلة"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Lending Broker Owned Cash Collateral"
-msgstr ""
+msgstr "إقراض الضمانات النقدية المملوكة للسمسار"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Lending Client Owned Cash Collateral"
-msgstr ""
+msgstr "إقراض الضمانات النقدية المملوكة للعميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Lending income"
-msgstr "دخل الإقراض "
+msgstr "دخل الإقراض"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Liquidation Dividend / Liquidation Payment"
-msgstr ""
+msgstr "توزيعات أرباح التصفية / مدفوعات التصفية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Listed Derivatives – Futures"
-msgstr ""
+msgstr "المشتقات المسجلة – العقود الآجلة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Listed Derivatives – Options"
-msgstr "المشتقات المسجلة – الخيارات "
+msgstr "المشتقات المسجلة – الخيارات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Loans, Deposits & Syndications"
-msgstr ""
+msgstr "القروض، الإيداعات والقروض المشتركة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Lockbox Transactions"
-msgstr ""
+msgstr "معاملات صندوق الأمانات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Management Fees"
-msgstr "رسوم إدارية "
+msgstr "رسوم إدارية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Mandate ID: %s"
-msgstr "معرف التوكيل: %s "
+msgstr "معرف التوكيل: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Margin Payments"
-msgstr "مدفوعات الهوامش "
+msgstr "مدفوعات الهوامش"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Margin client owned cash collateral"
-msgstr ""
+msgstr "الضمانات النقدية للهامش المملوكة للعميل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Merchant Card Transactions"
-msgstr "معاملات بطاقة التاجر "
+msgstr "معاملات بطاقة التاجر"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Merger"
-msgstr ""
+msgstr "اندماج"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Credit Operations"
-msgstr "العمليات الائتمانية المتنوعة "
+msgstr "العمليات الائتمانية المتنوعة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Debit Operations"
-msgstr "عمليات الخصم المتنوعة "
+msgstr "عمليات الخصم المتنوعة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Deposit"
-msgstr "إيداع متنوعات "
+msgstr "إيداع متنوعات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Miscellaneous Securities Operations"
-msgstr "عمليات الأوراق المالية المتنوعة "
+msgstr "عمليات الأوراق المالية المتنوعة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Mixed Deposit"
-msgstr "إيداع مختلط "
+msgstr "إيداع مختلط"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Mortgage Loans"
-msgstr "قروض التمويل العقاري "
+msgstr "قروض التمويل العقاري"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Netting"
-msgstr ""
+msgstr "حساب الصافي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "No exchange rate was found to convert an amount into the currency of the journal"
-msgstr "لم يتم العثور على سعر صرف لتحويل مبلغ إلى عملة دفتر اليومية "
+msgstr "لم يتم العثور على سعر صرف لتحويل مبلغ إلى عملة دفتر اليومية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non Deliverable"
-msgstr ""
+msgstr "غير قابل للتوصيل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non Settled"
-msgstr "غير مسوى "
+msgstr "غير مسوى"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non Syndicated"
-msgstr "غير مشتركة "
+msgstr "غير مشتركة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non Taxable commissions"
-msgstr "العمولات غير الخاضعة للضريبة "
+msgstr "العمولات غير الخاضعة للضريبة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Non-Presented Circular Cheque"
-msgstr ""
+msgstr "شيك دائري"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -995,12 +998,12 @@ msgstr "إيداعات الإخطار"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Notice Loans"
-msgstr ""
+msgstr "القروض التي تتطلب إخطاراً"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC"
-msgstr "التداول خارج البورصة "
+msgstr "التداول خارج البورصة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1010,77 +1013,77 @@ msgstr "OTC CCP"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Bonds"
-msgstr "مشتقات التداول خارج البورصة - الصكوك "
+msgstr "مشتقات التداول خارج البورصة - الصكوك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Credit Derivatives"
-msgstr "الصكوك الاشتقاقية الخارجة عن البورصة – المشتقات الائتمانية "
+msgstr "الصكوك الاشتقاقية الخارجة عن البورصة – المشتقات الائتمانية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Equity"
-msgstr "مشتقات التداول خارج البورصة - رأس المال "
+msgstr "مشتقات التداول خارج البورصة - رأس المال"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Interest Rates"
-msgstr "الصكوك الاشتقاقية الخارجة عن البورصة – نسبة الفوائد "
+msgstr "الصكوك الاشتقاقية الخارجة عن البورصة – نسبة الفوائد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Structured Exotic Derivatives"
-msgstr ""
+msgstr "الصكوك الاشتقاقية الخارجة عن البورصة – المشتقات الغريبة المنظمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Derivatives – Swaps"
-msgstr ""
+msgstr "مشتقات التداول خارج البورصة - السواب"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "OTC Non-CCP"
-msgstr ""
+msgstr "التداول خارج البورصة للطرف المقابل غير المركزي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Odd Lot Sale/Purchase"
-msgstr ""
+msgstr "مجموعة بيع/شراء شاذة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "One-Off Direct Debit"
-msgstr ""
+msgstr "الخصم المباشر على دفعة واحدة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Open Cheque"
-msgstr "شيك مفتوح "
+msgstr "شيك مفتوح"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Opening & Closing"
-msgstr "الفتح والإقفال "
+msgstr "الفتح والإقفال"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Option broker owned collateral"
-msgstr ""
+msgstr "ضمانات العقود الآجلة المملوكة لوسيط الخيارات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Option client owned collateral"
-msgstr ""
+msgstr "ضمانات العقود الآجلة المملوكة لعميل الخيارات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Options"
-msgstr "خيارات"
+msgstr "الخيارات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Order Cheque"
-msgstr "شيك الطلب "
+msgstr "شيك الطلب"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1090,42 +1093,42 @@ msgstr "غير ذلك"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Overdraft"
-msgstr "السحب الزائد "
+msgstr "السحب الزائد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Overdraft Charge"
-msgstr "رسوم السحب الزائد "
+msgstr "رسوم السحب الزائد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Pair-Off"
-msgstr "إقران "
+msgstr "إقران"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Partial Payment"
-msgstr "الدفع الجزئي "
+msgstr "الدفع الجزئي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Partial Redemption Without Reduction of Nominal Value"
-msgstr "الاسترداد الجزئي دون تخفيض القيمة الاسمية "
+msgstr "الاسترداد الجزئي دون تخفيض القيمة الاسمية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Partial Redemption with reduction of nominal value"
-msgstr "الاسترداد الجزئي مع تخفيض القيمة الاسمية "
+msgstr "الاسترداد الجزئي مع تخفيض القيمة الاسمية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Payments"
-msgstr "المدفوعات"
+msgstr "الدفعات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Payroll/Salary Payment"
-msgstr "كشوف المرتبات/دفع المرتبات "
+msgstr "كشوف المرتبات/دفع المرتبات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1139,7 +1142,7 @@ msgid ""
 "No statements in currency %s were found in this CAMT file."
 msgstr ""
 "يرجى التحقق من العملة في دفتر يومية بنكك. \n"
-"لم يتم العثور على كشوفات حساب بالعملة %s في ملف CAMT هذا. "
+"لم يتم العثور على كشوفات حساب بالعملة %s في ملف CAMT هذا."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
@@ -1150,32 +1153,32 @@ msgid ""
 msgstr ""
 "يرجى تعيين حساب IBAN في دفتر يومية بنكك. \n"
 "\n"
-"يستهدف ملف CAMT عدة حسابات IBAN ولكن لا يطابق أي منها دفتر اليومية الحالي. "
+"يستهدف ملف CAMT عدة حسابات IBAN ولكن لا يطابق أي منها دفتر اليومية الحالي."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment"
-msgstr "مدفوعات نقطة البيع (POS) "
+msgstr "مدفوعات نقطة البيع (POS)"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Point-of-Sale (POS) Payment - Debit Card"
-msgstr "مدفوعات نقطة البيع (POS) - بطاقة الخصم "
+msgstr "مدفوعات نقطة البيع (POS) - بطاقة الخصم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Portfolio Move"
-msgstr "حركة المحفظة "
+msgstr "حركة المحفظة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Posting Error"
-msgstr "خطأ في الترحيل "
+msgstr "خطأ في الترحيل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Pre-Authorised Direct Debit"
-msgstr "الخصم المباشر المصرح له مسبقاً "
+msgstr "الخصم المباشر المصرح له مسبقاً"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1185,72 +1188,72 @@ msgstr "المعادن الثمينة"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Principal Pay-down/pay-up"
-msgstr ""
+msgstr "Principal Pay-down/pay-up"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Principal Payment"
-msgstr "مدفوعات أصل الدين "
+msgstr "مدفوعات أصل الدين"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Priority Credit Transfer"
-msgstr ""
+msgstr "تحويل رصيد ذو أولوية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Priority Issue"
-msgstr "مشكلة في الأولوية "
+msgstr "مشكلة في الأولوية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Put Redemption"
-msgstr "الاستبدال "
+msgstr "الاستبدال"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Cash Concentration Transactions"
-msgstr ""
+msgstr "معاملات التركيز النقدي التي تم استلامها"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Cheques"
-msgstr "الشيكات المستلمة "
+msgstr "الشيكات المستلمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Credit Transfers"
-msgstr ""
+msgstr "تحويلات الرصيد المستلمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Direct Debits"
-msgstr ""
+msgstr "الخصم المباشر الذي تم استلامه"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Received Real Time Credit Transfer"
-msgstr ""
+msgstr "عملية تحويل الرصيد في الوقت الفعلي التي تم استلامها"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Redemption"
-msgstr "استبدال "
+msgstr "استبدال"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Redemption Asset Allocation"
-msgstr ""
+msgstr "Redemption Asset Allocation"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Redemption Withdrawing Plan"
-msgstr ""
+msgstr "Redemption Withdrawing Plan"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reimbursements"
-msgstr "إعادة الأموال "
+msgstr "إعادة الأموال"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1260,17 +1263,17 @@ msgstr "التجديد"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Repayment"
-msgstr "إعادة الدفع "
+msgstr "إعادة الدفع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Repo"
-msgstr ""
+msgstr "تقرير"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Repurchase offer/Issuer Bid/Reverse Rights."
-msgstr ""
+msgstr "عرض إعادة الشراء/عطاء المُصدِر/ الحقوق المعكوسة."
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1280,57 +1283,57 @@ msgstr "إعادة الدفع"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Payment Cancellation Request"
-msgstr ""
+msgstr "العكس نظراً لطلب إلغاء الدفع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Payment Return/reimbursement of a Credit Transfer"
-msgstr ""
+msgstr "العكس بسبب إرجاع المدفوعات/تعويض الأموال لتحويل الرصيد"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Payment Reversal"
-msgstr ""
+msgstr "العكس بسبب عكس الدفع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Return/Unpaid Direct Debit"
-msgstr ""
+msgstr "العكس بسبب الإرجاع/الخصم المباشر غير المدفوع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to a Payment Cancellation Request"
-msgstr "العكس نظراً لطلب إلغاء الدفع "
+msgstr "العكس نظراً لطلب إلغاء الدفع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reverse Repo"
-msgstr ""
+msgstr "عكس التقرير"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Rights Issue/Subscription Rights/Rights Offer"
-msgstr ""
+msgstr "إصدار الحقوق/حقوق الاشتراك/عرض الحقوق"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "SEPA B2B Direct Debit"
-msgstr "خصم SEPA المباشر بين الشركات "
+msgstr "خصم SEPA المباشر بين الشركات"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "SEPA Core Direct Debit"
-msgstr ""
+msgstr "خصم SEPA المباشر الأساسي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "SEPA Credit Transfer"
-msgstr "تحويل الرصيد من خلال SEPA "
+msgstr "تحويل الرصيد من خلال SEPA"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Same Day Value Credit Transfer"
-msgstr ""
+msgstr "تحويل الرصيد بقيمة نفس اليوم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1340,57 +1343,57 @@ msgstr "ضمانات"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Securities Borrowing"
-msgstr "اقتراض الأوراق المالية "
+msgstr "اقتراض الأوراق المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Securities Lending"
-msgstr "إقراض الأوراق المالية "
+msgstr "إقراض الأوراق المالية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sell Buy Back"
-msgstr ""
+msgstr "بيع الشراء مجدداً"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement"
-msgstr "التسوية "
+msgstr "التسوية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement after collection"
-msgstr "التسوية بعد التحصيل "
+msgstr "التسوية بعد التحصيل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement against bank guarantee"
-msgstr ""
+msgstr "التسوية مقابل ضمان البنك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement at Maturity"
-msgstr "التسوية عند الوصول لتاريخ الاستحقاق "
+msgstr "التسوية عند الوصول لتاريخ الاستحقاق"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement of Sight Export document"
-msgstr ""
+msgstr "تسوية وثيقة التصدير فورياً"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement of Sight Import document"
-msgstr ""
+msgstr "تسوية وثيقة الاستيراد فورياً"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Settlement under reserve"
-msgstr ""
+msgstr "التسوية تحت الحجز"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Smart-Card Payment"
-msgstr "الدفع عن طريق البطاقة الذكية "
+msgstr "الدفع عن طريق البطاقة الذكية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1400,17 +1403,17 @@ msgstr "Spots"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Stamp duty"
-msgstr ""
+msgstr "رسوم الطابع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Stand-By Letter Of Credit"
-msgstr ""
+msgstr "رسالة الاعتماد الاحتياطية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Standing Order"
-msgstr "أمر دائم "
+msgstr "أمر دائم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1420,62 +1423,62 @@ msgstr "الاشتراك"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Subscription Asset Allocation"
-msgstr "تخصيص أصول الاشتراك "
+msgstr "تخصيص أصول الاشتراك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Subscription Savings Plan"
-msgstr ""
+msgstr "خطة التوفير في الاشتراك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Swap Payment"
-msgstr ""
+msgstr "الدفع عن طريق Swap"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Swap broker owned collateral"
-msgstr ""
+msgstr "ضمانات Swap المملوكة للسمسار"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Swaps"
-msgstr ""
+msgstr "Swaps"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sweep"
-msgstr "مسح "
+msgstr "مسح"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Sweeping"
-msgstr "المسح "
+msgstr "المسح"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Switch"
-msgstr "تبديل "
+msgstr "تبديل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Syndicated"
-msgstr "قرض مشترك "
+msgstr "قرض مشترك"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Syndications"
-msgstr "القروض المشتركة "
+msgstr "القروض المشتركة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "TBA closing"
-msgstr ""
+msgstr "إغلاق TBA"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Tax Reclaim"
-msgstr "استرداد الضريبة "
+msgstr "استرداد الضريبة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1485,22 +1488,22 @@ msgstr "الضرائب"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Tender"
-msgstr "مناقصة "
+msgstr "مناقصة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Topping"
-msgstr ""
+msgstr "Topping"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Trade"
-msgstr ""
+msgstr "تداول"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Trade Services"
-msgstr ""
+msgstr "الخدمات التجارية"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
@@ -1510,104 +1513,104 @@ msgstr "التجارة والمقاصة والتسوية"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Transaction Fees"
-msgstr "رسوم المعاملة "
+msgstr "رسوم المعاملة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
 msgid "Transaction ID: %s"
-msgstr "معرف المعاملة: %s "
+msgstr "معرف المعاملة: %s"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Transfer In"
-msgstr ""
+msgstr "التحويل إلى الداخل"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Transfer Out"
-msgstr ""
+msgstr "التحويل إلى الخارج"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Travellers Cheques Deposit"
-msgstr "إيداع شيكات المسافرين "
+msgstr "إيداع شيكات المسافرين"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Travellers Cheques Withdrawal"
-msgstr "سحب شيكات المسافرين "
+msgstr "سحب شيكات المسافرين"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Treasury Tax And Loan Service"
-msgstr "ضريبة الخزينة وخدمات القروض "
+msgstr "ضريبة الخزينة وخدمات القروض"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Triparty Repo"
-msgstr ""
+msgstr "تقرير ثلاثي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Triparty Reverse Repo"
-msgstr "تقرير ثلاثي عكسي "
+msgstr "تقرير ثلاثي عكسي"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Turnaround"
-msgstr ""
+msgstr "تحول"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Underwriting Commission"
-msgstr ""
+msgstr "عمولة الاكتتاب"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Unpaid Card Transaction"
-msgstr "معاملة البطاقة غير المدفوعة "
+msgstr "معاملة البطاقة غير المدفوعة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Unpaid Cheque"
-msgstr "شيك غير مدفوع "
+msgstr "شيك غير مدفوع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Unpaid Foreign Cheque"
-msgstr "شيك أجنبي غير مدفوع "
+msgstr "شيك أجنبي غير مدفوع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Upfront Payment"
-msgstr "دفع مقدم "
+msgstr "دفع مقدم"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Value Date"
-msgstr "تاريخ القيمة "
+msgstr "تاريخ القيمة"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Warrant Exercise/Warrant Conversion"
-msgstr ""
+msgstr "Warrant Exercise/Warrant Conversion"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Withdrawal/distribution"
-msgstr "السحب/التوزيع "
+msgstr "السحب/التوزيع"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Withholding Tax"
-msgstr "ضريبة الاحتجاز "
+msgstr "ضريبة الاحتجاز"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "YTD Adjustment"
-msgstr "تعديل العام حتى تاريخه "
+msgstr "تعديل العام حتى تاريخه"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Zero Balancing"
-msgstr ""
+msgstr "Zero Balancing"

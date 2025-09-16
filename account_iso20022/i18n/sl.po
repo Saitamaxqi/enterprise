@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa
+# * account_sepa
 #
 # Translators:
 # Boris Kodelja <boris@hbs.si>, 2022
@@ -9,26 +9,29 @@
 # Matjaz Mozetic <m.mozetic@matmoz.si>, 2022
 # Martin Trigaux, 2022
 # Tadej Lupšina <tadej@hbs.si>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Tadej Lupšina <tadej@hbs.si>, 2022\n"
-"Language-Team: Slovenian (https://app.transifex.com/odoo/teams/41243/sl/)\n"
+"PO-Revision-Date: 2025-09-16 21:22+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"account_iso20022/sl/>\n"
 "Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "A bank account is not defined."
-msgstr ""
+msgstr "Bančni račun ni opredeljen."
 
 #. module: account_sepa
 #. odoo-python
@@ -39,7 +42,7 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
 msgid "Austrian"
-msgstr ""
+msgstr "avstrijski"
 
 #. module: account_sepa
 #. odoo-python
@@ -71,6 +74,7 @@ msgstr "Uredi nastavitve"
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen IV)."
 msgstr ""
+"Subjekt, ki dodeli identifikacijo (npr. KBE-BCO ali Finanzamt Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03
@@ -80,12 +84,12 @@ msgstr "Splošno"
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03_de
 msgid "German"
-msgstr ""
+msgstr "Nemščina"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__has_sepa_ct_payment_method
 msgid "Has Sepa Ct Payment Method"
-msgstr ""
+msgstr "Ima način plačila Sepa Ct"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_id
@@ -97,7 +101,7 @@ msgstr "Identifikacija"
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_id
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_id
 msgid "Identification assigned by an institution (eg. VAT number)."
-msgstr ""
+msgstr "Identifikacija, ki jo dodeli institucija (npr. številka za DDV)."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_orgid_issr
@@ -119,19 +123,19 @@ msgstr ""
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_initiating_party_name
 msgid "Name of the Creditor Reference Party. Usage Rule: Limited to 70 characters in length."
-msgstr ""
+msgstr "Ime referenčne stranke upnika. Pravilo uporabe: Omejeno na 70 znakov."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has no country code defined."
-msgstr ""
+msgstr "Partner %s nima določene kode države."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Partner %s has not bank account defined."
-msgstr ""
+msgstr "Partner %s nima opredeljenega bančnega računa."
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment_method
@@ -141,7 +145,7 @@ msgstr "Načini plačila"
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payment to send via SEPA"
-msgstr ""
+msgstr "Plačilo za pošiljanje prek SEPA"
 
 #. module: account_sepa
 #: model:ir.model,name:account_sepa.model_account_payment
@@ -151,7 +155,7 @@ msgstr "Plačila"
 #. module: account_sepa
 #: model_terms:ir.ui.view,arch_db:account_sepa.account_journal_dashboard_kanban_view_inherited
 msgid "Payments to send via SEPA"
-msgstr ""
+msgstr "Plačila za pošiljanje prek SEPA"
 
 #. module: account_sepa
 #. odoo-python
@@ -183,7 +187,7 @@ msgstr "SEPA nakazilo"
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal_dashboard.py:0
 msgid "SEPA Credit Transfers to Send"
-msgstr ""
+msgstr "Kreditna nakazila SEPA za pošiljanje"
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_account_journal__sepa_pain_version
@@ -205,7 +209,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments are above the maximum amount allowed."
-msgstr ""
+msgstr "Nekatera plačila presegajo najvišji dovoljeni znesek."
 
 #. module: account_sepa
 #. odoo-python
@@ -217,7 +221,7 @@ msgstr "Nekatera plačila niso pripravljena na račun prejemnika IBAN. Nekatere 
 #. odoo-python
 #: code:addons/account_sepa/models/account_batch_payment.py:0
 msgid "Some payments have no recipient bank account set."
-msgstr ""
+msgstr "Pri nekaterih plačilih ni nastavljen bančni račun prejemnika."
 
 #. module: account_sepa
 #. odoo-python
@@ -285,18 +289,22 @@ msgstr ""
 #: code:addons/account_sepa/models/account_payment.py:0
 msgid "The journal '%s' requires a proper IBAN account to pay via SEPA. Please configure it first."
 msgstr ""
+"Dnevnik '%s' za plačilo prek SEPA potrebuje pravilen IBAN račun. Najprej ga "
+"konfigurirajte."
 
 #. module: account_sepa
 #. odoo-python
 #: code:addons/account_sepa/models/account_journal.py:0
 msgid "Too many transactions for a single file."
-msgstr ""
+msgstr "Preveč transakcij za eno samo datoteko."
 
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Will appear in SEPA payments as the name of the party initiating the payment. Limited to 70 characters."
 msgstr ""
+"V plačilih SEPA se bo prikazalo kot ime stranke, ki je sprožila plačilo. "
+"Omejeno na 70 znakov."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name

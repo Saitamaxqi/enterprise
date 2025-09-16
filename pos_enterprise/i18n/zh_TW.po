@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_enterprise
-# 
+# * pos_enterprise
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-05-23 18:45+0000\n"
-"PO-Revision-Date: 2025-05-06 11:00+0000\n"
-"Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
+"projects/odoo-19/pos_enterprise/zh_Hant/>\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
@@ -77,7 +80,7 @@ msgstr "所有類別"
 msgid ""
 "Archive all preparation display's orders for a fresh start. This will not "
 "affect the PoS order history."
-msgstr "封存所有準備工作顯示的訂單，以重新開始。這不會影響 PoS 訂單歷史記錄。"
+msgstr "封存所有準備工作顯示的訂單，以重新開始。這不會影響 POS 訂單歷史記錄。"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__auto_clear
@@ -260,7 +263,7 @@ msgstr "篩選"
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Food Delivery Connector"
-msgstr "外賣配送服務連接器"
+msgstr "連接外賣配送服務"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__pdis_general_customer_note
@@ -328,7 +331,7 @@ msgstr "間隔（分鐘）"
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_config__module_pos_iot
 msgid "IoT Box"
-msgstr "IoT 盒子"
+msgstr "IoT Box"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__contains_bar_restaurant
@@ -387,7 +390,7 @@ msgstr "載入中⋯"
 #: model:ir.model.fields,help:pos_enterprise.field_res_config_settings__pos_module_pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Manage your online orders with Urban Piper."
-msgstr "使用 UrbanPiper 管理線上訂單。"
+msgstr "使用 UrbanPiper 管理線上訂單"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__name
@@ -510,7 +513,7 @@ msgstr "銷售點訂單資料行唯一識別碼"
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_display
 msgid "Pos Preparation Display"
-msgstr "Pos 準備工作顯示屏"
+msgstr "POS 準備工作顯示屏"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_line
@@ -670,7 +673,7 @@ msgstr "重設所有訂單"
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Save this page and come back here to set up the feature."
-msgstr "儲存這個頁面並返回來設定這個特性。"
+msgstr "請儲存變更，然後返回此處，進一步設定功能。"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__attribute_value_ids

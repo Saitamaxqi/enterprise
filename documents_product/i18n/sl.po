@@ -1,34 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* documents_product
+# * documents_product
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:30+0000\n"
-"PO-Revision-Date: 2025-09-11 14:30+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:32+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"documents_product/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
 msgid "Centralize files attached to products"
-msgstr ""
+msgstr "Centralizirajte datoteke, priložene izdelkom"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Podjetja"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Uredi nastavitve"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_documents_document__display_name
@@ -37,22 +42,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_product.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_company__documents_product_settings
 msgid "Documents Product Settings"
-msgstr ""
+msgstr "Nastavitve izdelka Dokumenti"
 
 #. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
 msgid "Folder"
-msgstr ""
+msgstr "Mapa"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_documents_document__id
@@ -61,76 +66,76 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_product.field_res_company__id
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_product_template
 #: model:ir.model.fields,field_description:documents_product.field_documents_document__product_template_id
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__documents_product_settings
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_sheet_tag
 msgid "Product > DataSheets"
-msgstr ""
+msgstr "Izdelek > Podatkovni listi"
 
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_msds_tag
 msgid "Product > MSDS"
-msgstr ""
+msgstr "Izdelek  > MSDS-Varnostni list materiala"
 
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_new_tag
 msgid "Product > New"
-msgstr ""
+msgstr "Izdelek > Novo"
 
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_plans_tag
 msgid "Product > Plans"
-msgstr ""
+msgstr "Izdelek > Paketi"
 
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_specs_tag
 msgid "Product > Specs"
-msgstr ""
+msgstr "Izdelek > Specifikacije"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_company__product_folder_id
 msgid "Product Folder"
-msgstr ""
+msgstr "Mapa izdelkov"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_company__product_tag_ids
 msgid "Product Tag"
-msgstr ""
+msgstr "Oznaka izdelka"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_tag_ids
 msgid "Product Tags"
-msgstr ""
+msgstr "Oznake izdelka"
 
 #. module: documents_product
 #: model:ir.model,name:documents_product.model_product_product
 #: model:ir.model.fields,field_description:documents_product.field_documents_document__product_id
 msgid "Product Variant"
-msgstr ""
+msgstr "Različica proizvoda"
 
 #. module: documents_product
 #. odoo-python
 #: code:addons/documents_product/models/document.py:0
 msgid "Product created from Documents"
-msgstr ""
+msgstr "Izdelek, ustvarjen iz dokumentov"
 
 #. module: documents_product
 #: model:documents.document,name:documents_product.document_product_folder
 msgid "Products"
-msgstr ""
+msgstr "Proizvodi"
 
 #. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form
 msgid "Tags"
-msgstr ""
+msgstr "Ključne besede"
 
 #. module: documents_product
 #: model:ir.model.fields,field_description:documents_product.field_res_config_settings__product_folder_id

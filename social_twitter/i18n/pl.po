@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social_twitter
+# * social_twitter
 #
 # Translators:
 # Wojciech Warczakowski <w.warczakowski@gmail.com>, 2022
@@ -17,20 +17,24 @@
 # Piotr Cierkosz <piotr.w.cierkosz@gmail.com>, 2022
 # Maksym <ms@myodoo.pl>, 2022
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-17 10:16+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023\n"
-"Language-Team: Polish (https://app.transifex.com/odoo/teams/41243/pl/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
+"social_twitter/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_twitter
 #. odoo-python
@@ -41,7 +45,7 @@ msgstr ""
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.twitter_preview
 msgid "11m"
-msgstr ""
+msgstr "11 m"
 
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.twitter_preview
@@ -167,7 +171,7 @@ msgstr "Błąd"
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/js/stream_post_twitter_quote.js:0
 msgid "Error while sending the data to the server."
-msgstr ""
+msgstr "Błąd podczas wysyłania danych do serwera."
 
 #. module: social_twitter
 #: model:social.stream.type,name:social_twitter.stream_type_twitter_likes
@@ -222,6 +226,8 @@ msgstr ""
 #: code:addons/social_twitter/models/social_stream.py:0
 msgid "Looks like you've made too many requests. Please wait a few minutes before giving it another try."
 msgstr ""
+"Wygląda na to, że wysłano zbyt wiele zapytań. Odczekaj kilka minut, zanim "
+"spróbujesz ponownie."
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_media__media_type
@@ -259,7 +265,7 @@ msgstr "Opublikuj obraz"
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/js/stream_post_kanban_record.js:0
 msgid "Quote a Tweet"
-msgstr ""
+msgstr "Cytuj tweeta"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_stream_post__twitter_quoted_tweet_author_link
@@ -367,6 +373,8 @@ msgstr "Konto społecznościowe Twitter"
 #: code:addons/social_twitter/models/social_stream.py:0
 msgid "The keyword you've typed in does not look valid. Please try again with other words."
 msgstr ""
+"Wpisane słowo kluczowe nie jest prawidłowe. Spróbuj ponownie z innymi "
+"słowami."
 
 #. module: social_twitter
 #. odoo-python
@@ -555,7 +563,7 @@ msgstr "Nie można przesłać twojego obrazu, spróbuj zmniejszyć jego rozmiar 
 #. odoo-python
 #: code:addons/social_twitter/models/social_stream_post.py:0
 msgid "You are not authenticated"
-msgstr ""
+msgstr "Nie jesteś uwierzytelniony"
 
 #. module: social_twitter
 #. odoo-javascript

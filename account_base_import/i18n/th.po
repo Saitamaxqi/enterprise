@@ -1,96 +1,100 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_base_import
+# * account_base_import
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:24+0000\n"
-"PO-Revision-Date: 2025-09-11 14:24+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 22:57+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"account_base_import/th/>\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "<span class=\"text-muted\">(end of year balances)</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">(ยอดคงเหลือสิ้นปี)</span>"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "<span class=\"text-muted\">(for full history)</span>"
-msgstr ""
+msgstr "<span class=\"text-muted\">(เพื่อประวัติที่สมบูรณ์)</span>"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_account
 msgid "Account"
-msgstr ""
+msgstr "บัญชี"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Account Winbooks Import module"
-msgstr ""
+msgstr "โมดูลนำเข้าบัญชี Winbooks"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_import_summary
 msgid "Account import summary view"
-msgstr ""
+msgstr "มุมมองสรุปการนำเข้าบัญชี"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Accounting Import"
-msgstr ""
+msgstr "การนำเข้าบัญชี"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_guide.js:0
 #: model:ir.actions.client,name:account_base_import.action_open_import_guide
 msgid "Accounting Import Guide"
-msgstr ""
+msgstr "คู่มือการนำเข้าบัญชี"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Accounting Import Options"
-msgstr ""
+msgstr "ตัวเลือกการนำเข้าทางบัญชี"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_base_import_import
 msgid "Base Import"
-msgstr ""
+msgstr "การนำเข้าฐาน"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 #: model:ir.actions.act_window,name:account_base_import.action_open_coa_setup
 msgid "Chart of Accounts"
-msgstr ""
+msgstr "ผังบัญชี"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Choose how you want to setup your CoA"
-msgstr ""
+msgstr "เลือกวิธีที่คุณต้องการตั้งค่า CoA"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "สร้างโดย"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__create_date
 msgid "Created on"
-msgstr ""
+msgstr "สร้างเมื่อ"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 msgid "Customers"
-msgstr ""
+msgstr "ลูกค้า"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_account__display_name
@@ -98,31 +102,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_base_import.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:account_base_import.field_base_import_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "แสดงชื่อ"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Download"
-msgstr ""
+msgstr "ดาวน์โหลด"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Excel Import"
-msgstr ""
+msgstr "การนำเข้า Excel"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "FEC"
-msgstr ""
+msgstr "FEC"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "FEC Import module"
-msgstr ""
+msgstr "โมดูลนำเข้า FEC"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_account__id
@@ -130,14 +134,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_base_import.field_account_move_line__id
 #: model:ir.model.fields,field_description:account_base_import.field_base_import_import__id
 msgid "ID"
-msgstr ""
+msgstr "ไอดี"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 #: model_terms:ir.ui.view,arch_db:account_base_import.view_account_base_import_list
 #: model_terms:ir.ui.view,arch_db:account_base_import.view_account_setup_base_import_list
 msgid "Import"
-msgstr ""
+msgstr "นำเข้า"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -151,85 +155,85 @@ msgstr ""
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model:ir.actions.client,name:account_base_import.action_account_import
 msgid "Import Chart of Accounts"
-msgstr ""
+msgstr "นำเข้าผังบัญชี"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import CoA"
-msgstr ""
+msgstr "นำเข้า CoA"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import Contacts"
-msgstr ""
+msgstr "นำเข้ารายชื่อผู้ติดต่อ"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model:ir.actions.client,name:account_base_import.action_account_move_line_import
 msgid "Import Journal Items"
-msgstr ""
+msgstr "นำเข้ารายการสมุดรายวัน"
 
 #. module: account_base_import
 #: model:ir.actions.client,name:account_base_import.action_partner_import
 msgid "Import Partners"
-msgstr ""
+msgstr "นำเข้าพาร์ทเนอร์"
 
 #. module: account_base_import
 #. odoo-python
 #: code:addons/account_base_import/wizard/account_import_summary.py:0
 msgid "Import Summary"
-msgstr ""
+msgstr "สรุปการนำเข้า"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_account_ids
 msgid "Import Summary Account"
-msgstr ""
+msgstr "นำเข้าบัญชีสรุป"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_journal_ids
 msgid "Import Summary Journal"
-msgstr ""
+msgstr "นำเข้าสมุดรายวันสรุป"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_move_ids
 msgid "Import Summary Move"
-msgstr ""
+msgstr "นำเข้าข้อมูลสรุปการย้าย"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_name
 msgid "Import Summary Name"
-msgstr ""
+msgstr "นำเข้าข้อมูลสรุปชื่อ"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_partner_ids
 msgid "Import Summary Partner"
-msgstr ""
+msgstr "นำเข้าข้อมูลสรุปพาร์ทเนอร์"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_tax_ids
 msgid "Import Summary Tax"
-msgstr ""
+msgstr "นำเข้าข้อมูลสรุปภาษี"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import contacts"
-msgstr ""
+msgstr "นำเข้ารายชื่อผู้ที่ติดต่อ"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import customers or suppliers (partners) and their contacts using a"
-msgstr ""
+msgstr "นำเข้าลูกค้าหรือซัพพลายเออร์ (พาร์ทเนอร์) และผู้ติดต่อโดยใช้"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import the Chart of Accounts and initial balances using a"
-msgstr ""
+msgstr "นำเข้าผังบัญชีและยอดคงเหลือเริ่มต้นโดยใช้"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -240,39 +244,39 @@ msgstr ""
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "Imported Data"
-msgstr ""
+msgstr "ข้อมูลที่นำเข้า"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Initial Setup"
-msgstr ""
+msgstr "ตั้งค่าเริ่มต้น"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_guide.js:0
 msgid "Install a module"
-msgstr ""
+msgstr "ติดตั้งโมดูล"
 
 #. module: account_base_import
 #: model:ir.model,name:account_base_import.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "รายการสมุดรายวัน"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/js/account_import_action.js:0
 msgid "Journal Items"
-msgstr ""
+msgstr "รายการสมุดรายวัน"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "อัปเดตครั้งล่าสุดโดย"
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "อัปเดตครั้งล่าสุดเมื่อ"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -281,6 +285,8 @@ msgid ""
 "Most accounting software in Europe support exporting SAF-T file for audit purposes.\n"
 "                            Use the"
 msgstr ""
+"ซอฟต์แวร์การบัญชีส่วนใหญ่ในยุโรปรองรับการส่งออกไฟล์ SAF-T เพื่อวัตถุประสงค์ในการตรวจสอบ\n"
+"                            โปรดใช้"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -289,36 +295,38 @@ msgid ""
 "Most accounting software in France support exporting FEC file for audit purposes.\n"
 "                            Use the"
 msgstr ""
+"ซอฟต์แวร์การบัญชีส่วนใหญ่ในฝรั่งเศสรองรับการส่งออกไฟล์ FEC เพื่อวัตถุประสงค์ในการตรวจสอบ\n"
+"โดยใช้"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "No data was imported."
-msgstr ""
+msgstr "ไม่มีการนำเข้าข้อมูล"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Optional, but useful to import open receivables & payables using a"
-msgstr ""
+msgstr "เป็นทางเลือก แต่มีประโยชน์ในการนำเข้าลูกหนี้และเจ้าหนี้คงค้างโดยใช้"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model_terms:ir.ui.view,arch_db:account_base_import.res_config_settings_import_view_form
 msgid "Review Manually"
-msgstr ""
+msgstr "ตรวจสอบด้วยตนเอง"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SAF-T"
-msgstr ""
+msgstr "SAF-T"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "SAF-T Import module"
-msgstr ""
+msgstr "โมดูลนำเข้า SAF-T"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -345,12 +353,16 @@ msgid ""
 "The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data\n"
 "                            from and to other accounting applications. Odoo support importing data from both type 4 and 5 of SIE."
 msgstr ""
+"ไฟล์มาตรฐาน SIE เป็นรูปแบบที่ใช้กันอย่างแพร่หลายในประเทศสวีเดน สำหรับวัตถุประสงค์ต่าง ๆ เช่น "
+"การตรวจสอบบัญชี การนำเข้าหรือส่งออกข้อมูล\n"
+"                                                                 "
+"ระหว่างแอปพลิเคชันบัญชีต่างๆ Odoo รองรับการนำเข้าข้อมูลจากไฟล์ SIE ทั้งประเภทที่ 4 และ 5"
 
 #. module: account_base_import
 #. odoo-python
 #: code:addons/account_base_import/models/account_move_line.py:0
 msgid "The import file is missing the following required columns: %s"
-msgstr ""
+msgstr "ไฟล์นำเข้าไม่มีคอลัมน์ที่จำเป็นต่อไปนี้: %s"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -360,18 +372,21 @@ msgid ""
 " import. Only use the Journal Items import for unreconciled entries in your "
 "Payable and Receivable Accounts."
 msgstr ""
+"เคล็ดลับ: เราขอแนะนำให้นำเข้ายอดคงเหลือเริ่มต้นของคุณโดยใช้การนำเข้าผังบัญชี "
+"ใช้การนำเข้ารายการสมุดรายวันสำหรับรายการที่ยังไม่ได้กระทบยอดในบัญชีเจ้าหนี้และบัญชีลูกหนี้ของคุณเท่"
+"านั้น"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use predefined format to import your data faster."
-msgstr ""
+msgstr "ใช้รูปแบบที่กำหนดไว้ล่วงหน้าเพื่อนำเข้าข้อมูลของคุณได้รวดเร็วขึ้น"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use templates to import CSV or Excel for your accounting setup."
-msgstr ""
+msgstr "ใช้เทมเพลตเพื่อนำเข้า CSV หรือ Excel สำหรับการตั้งค่าบัญชีของคุณ"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -380,12 +395,13 @@ msgid ""
 "We will setup your charts of accounts and the history of journal entries, "
 "that will stay in draft."
 msgstr ""
+"เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวันซึ่งจะยังคงอยู่ในแบบร่าง"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Winbooks"
-msgstr ""
+msgstr "Winbooks"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -394,6 +410,8 @@ msgid ""
 "Winbooks is an old school Belgian accounting software acquired by Exact.\n"
 "                            Use the"
 msgstr ""
+"Winbooks เป็นซอฟต์แวร์บัญชีรุ่นเก่าของเบลเยียมที่ Exact ได้มา\n"
+"                            โดยใช้"
 
 #. module: account_base_import
 #. odoo-python
@@ -402,11 +420,12 @@ msgid ""
 "You must provide both the `code_mapping_ids/company_id` and the "
 "`code_mapping_ids/code` columns."
 msgstr ""
+"คุณต้องระบุทั้งคอลัมน์ `code_mapping_ids/company_id` และ `code_mapping_ids/code`"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "accounts imported"
-msgstr ""
+msgstr "บัญชีที่นำเข้า"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -416,6 +435,10 @@ msgid ""
 "                                    By design, it's also backward compatible with previous SIE versions (version 1 up to 3).\n"
 "                                    This import will not validate the correctness of the file."
 msgstr ""
+"จำเป็นต้องใช้ในการนำเข้าไฟล์ SIE 4\n"
+"                          โดยการออกแบบ ระบบนี้ยังสามารถใช้งานร่วมกับไฟล์ SIE "
+"เวอร์ชันก่อนหน้า (ตั้งแต่เวอร์ชัน 1 ถึง 3) ได้ด้วย\n"
+"                          การนำเข้านี้จะไม่ตรวจสอบความถูกต้องของไฟล์"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -426,32 +449,38 @@ msgid ""
 "                                    (journals data must be present in the file).\n"
 "                                    For the SIE 5 entry, only entries and partners will be created, the rest must already be present in the system."
 msgstr ""
+"จำเป็นสำหรับการนำเข้าไฟล์รายการ SIE 5 และ SIE 5\n"
+"                              สำหรับ SIE 5 ทั่วไป เราจะตั้งค่าแผนภูมิบัญชี ยอดคงเหลือ "
+"สมุดรายวัน คู่ค้า และประวัติรายการสมุดรายวัน\n"
+"                              (ต้องมีข้อมูลสมุดรายวันอยู่ในไฟล์)\n"
+"                              สำหรับรายการ SIE 5 "
+"จะมีการสร้างเฉพาะรายการและคู่ค้าเท่านั้น ส่วนที่เหลือต้องมีอยู่ในระบบแล้ว"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "journals imported"
-msgstr ""
+msgstr "สมุดรายวันนำเข้า"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "moves imported"
-msgstr ""
+msgstr "นำเข้าการย้ายแล้ว"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "or"
-msgstr ""
+msgstr "หรือ"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "partners imported"
-msgstr ""
+msgstr "นำเข้าพาร์ทเนอร์แล้ว"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
 msgid "taxes imported"
-msgstr ""
+msgstr "นำเข้าภาษีแล้ว"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -463,7 +492,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "template."
-msgstr ""
+msgstr "เทมเพลต"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -472,6 +501,9 @@ msgid ""
 "to import a Winbooks full back-up (Maintenance > Backup) to get the chart of accounts, contacts, taxes, history of journal entries, and documents.\n"
 "                            Support versions: Winbooks Desktop 5.50, 6, 7, 8."
 msgstr ""
+"เพื่อนำเข้าการสำรองข้อมูลแบบเต็มของ Winbooks (การซ่อมบำรุง > การสำรองข้อมูล) เพื่อรับผังบัญชี"
+" ผู้ติดต่อ ภาษี ประวัติรายการสมุดรายวัน และเอกสาร\n"
+"                            เวอร์ชันที่รองรับ: Winbooks Desktop 5.50, 6, 7, 8"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -480,9 +512,10 @@ msgid ""
 "to import the FEC file. We will setup your charts of accounts and the "
 "history of journal entries."
 msgstr ""
+"เพื่อนำเข้าไฟล์ FEC เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวัน"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "to import the SAF-T file."
-msgstr ""
+msgstr "เพื่อนำเข้าไฟล์ SAF-T"

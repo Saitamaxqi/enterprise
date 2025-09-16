@@ -1,35 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_iot
+# * delivery_iot
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:29+0000\n"
-"PO-Revision-Date: 2025-09-11 14:29+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 22:58+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
+"delivery_iot/th/>\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_iot
 #: model:ir.actions.report,print_report_name:delivery_iot.action_report_shipping_docs
 #: model:ir.actions.report,print_report_name:delivery_iot.action_report_shipping_labels
 msgid "'Empty Report - Used for assigning IoT printer'"
-msgstr ""
+msgstr "'รายงานว่างเปล่า - ใช้สำหรับกำหนดเครื่องพิมพ์ IoT'"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__auto_print_carrier_labels
 msgid "Auto Print Carrier Labels"
-msgstr ""
+msgstr "พิมพ์ฉลากผู้ให้บริการอัตโนมัติ"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__auto_print_export_documents
 msgid "Auto Print Export Documents"
-msgstr ""
+msgstr "พิมพ์เอกสารส่งออกอัตโนมัติ"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__available_scale_ids
@@ -39,7 +43,7 @@ msgstr ""
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Carrier Labels"
-msgstr ""
+msgstr "ฉลากผู้ให้บริการ"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_picking_type__iot_scale_ids
@@ -47,11 +51,13 @@ msgid ""
 "Choose the scales you want to use for this operation type. Those scales can "
 "be used to weigh the packages created."
 msgstr ""
+"เลือกเครื่องชั่งที่คุณต้องการใช้สำหรับปฏิบัติการประเภทนี้ "
+"เครื่องชั่งเหล่านั้นสามารถใช้ชั่งน้ำหนักบรรจุภัณฑ์ที่สร้างขึ้นได้"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Connect Scale"
-msgstr ""
+msgstr "เชื่อมต่อเครื่องชั่ง"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__display_name
@@ -59,22 +65,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__display_name
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "แสดงชื่อ"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_ip
 msgid "Domain Address"
-msgstr ""
+msgstr "ที่อยู่โดเมน"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Export Documents"
-msgstr ""
+msgstr "เอกสารส่งออก"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "How to connect scales?"
-msgstr ""
+msgstr "สามารถเชื่อมต่อเครื่องชั่งได้อย่างไร?"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__id
@@ -82,17 +88,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__id
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__id
 msgid "ID"
-msgstr ""
+msgstr "ไอดี"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "อุปกรณ์ไอโอที"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_identifier
 msgid "Identifier"
-msgstr ""
+msgstr "ตัวระบุ"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_picking_type__auto_print_carrier_labels
@@ -101,6 +107,8 @@ msgid ""
 " of the picking when they are created. Note this requires a printer to be "
 "assigned to this report."
 msgstr ""
+"หากทำเครื่องหมายในช่องนี้ Odoo จะพิมพ์ป้ายกำกับผู้ให้บริการของการรับสินค้าโดยอัตโนมัติเมื่อสร้างขึ้น "
+"โปรดทราบว่าจำเป็นต้องกำหนดเครื่องพิมพ์ให้กับรายงานนี้"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_picking_type__auto_print_export_documents
@@ -110,6 +118,9 @@ msgid ""
 "documents depends on the carrier and the destination. Note this requires a "
 "printer to be assigned to this report. "
 msgstr ""
+"หากทำเครื่องหมายในช่องนี้ Odoo จะพิมพ์เอกสารส่งออกของการเลือกโดยอัตโนมัติเมื่อสร้างขึ้น "
+"ความพร้อมใช้งานของเอกสารส่งออกขึ้นอยู่กับผู้ให้บริการขนส่งและปลายทาง "
+"โปรดทราบว่าจำเป็นต้องกำหนดเครื่องพิมพ์ให้กับรายงานนี้ "
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -119,31 +130,35 @@ msgid ""
 "                            you do a \"Put in Pack\" operation.\n"
 "                            <br/>"
 msgstr ""
+"หากคุณเชื่อมต่อเครื่องชั่งผ่านแอป IoT\n"
+"                            น้ำหนักของบรรจุภัณฑ์จะถูกตั้งค่าโดยอัตโนมัติเมื่อ\n"
+"                            คุณดำเนินการ \"ใส่ในแพ็ค\"\n"
+"                            <br/>"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.iot_device_view_form_inherit
 msgid "Linked Operation Types"
-msgstr ""
+msgstr "ประเภทปฏิบัติการที่เชื่อมโยง"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manual Measurement"
-msgstr ""
+msgstr "การวัดด้วยตัวเอง"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manually read the measurement from the device"
-msgstr ""
+msgstr "อ่านค่าการวัดจากตัวเครื่องด้วยตนเอง"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__picking_type_ids
 msgid "Operation Types"
-msgstr ""
+msgstr "ประเภทการปฏิบัติการ"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "ประเภทการรับ"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_put_in_pack
@@ -154,30 +169,30 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/delivery_iot/static/src/field_many2one_iot_scale.xml:0
 msgid "Read weight"
-msgstr ""
+msgstr "อ่านน้ำหนัก"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_id
 msgid "Scale"
-msgstr ""
+msgstr "เครื่องชั่ง"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__iot_scale_ids
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Scales"
-msgstr ""
+msgstr "เครื่องชั่ง"
 
 #. module: delivery_iot
 #: model:ir.actions.report,name:delivery_iot.action_report_shipping_docs
 msgid "Shipping Documents"
-msgstr ""
+msgstr "เอกสารการจัดส่ง"
 
 #. module: delivery_iot
 #: model:ir.actions.report,name:delivery_iot.action_report_shipping_labels
 msgid "Shipping Labels"
-msgstr ""
+msgstr "ฉลากการจัดส่ง"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "โอน"

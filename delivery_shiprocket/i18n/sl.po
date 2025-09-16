@@ -1,24 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_shiprocket
+# * delivery_shiprocket
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:20+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"delivery_shiprocket/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>Click on Add a New Channel</b>"
-msgstr ""
+msgstr "<b>Kliknite na Dodaj nov kanal</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -26,6 +31,8 @@ msgid ""
 "<b>Copy your API User's Email and Password and paste into Shipping method's "
 "configuration.</b>"
 msgstr ""
+"<b>Kopirajte e-poštni naslov in geslo uporabnika API-ja ter ju prilepite v "
+"konfiguracijo načina pošiljanja.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -33,6 +40,7 @@ msgid ""
 "<b>Fill the details and Click on Save Channel &amp; Test Connection "
 "button.</b>"
 msgstr ""
+"<b>Izpolnite podatke in kliknite gumb Shrani kanal in preizkusi povezavo.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -40,11 +48,13 @@ msgid ""
 "<b>In Odoo configuration click on <i class=\"fa fa-refresh oe_inline\"/> "
 "icon near Shiprocket Channel to sync newly created channels.</b>"
 msgstr ""
+"<b>V konfiguraciji Odoo kliknite na <i class=\"fa fa-refresh oe_inline\"/> "
+"ikono blizu kanala Shiprocket za sinhronizacijo novo ustvarjenih kanalov.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>Now click on Add for MANUAL</b>"
-msgstr ""
+msgstr "<b>Zdaj kliknite Dodaj za ROČNO</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -53,11 +63,16 @@ msgid ""
 "                                <b>You can add new API User from the right side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>Ko je vaš račun ustvarjen, pojdite v Nastavitve &gt; API &gt; "
+"Konfiguriraj. </b>\n"
+"                                <b>Novega uporabnika API-ja lahko dodate na "
+"desni strani.</b>\n"
+"                                <br/>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>To Create a channel, Go to Shiprocket Channels</b>"
-msgstr ""
+msgstr "<b>Če želite ustvariti kanal, pojdite na Shiprocket Channels</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -67,6 +82,10 @@ msgid ""
 "creation. The amount of cancelled shipment will be returned in next 3-4 "
 "days."
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> V testnem okolju se vaše pošiljke "
+"samodejno obračunajo, da se izognete stroškom.<b>preklicano\n"
+"</b> po izdelavi nalepke. Znesek preklicane pošiljke bo vrnjen v naslednjih "
+"3–4 dneh."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
@@ -75,105 +94,108 @@ msgid ""
 " pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
 msgstr ""
+"Manifest je dokument, ki ga nekateri prevozniki zahtevajo za poenostavitev "
+"postopka prevzema, zlasti pri pošiljanju velikega števila naročil v "
+"e-trgovini."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "API User"
-msgstr ""
+msgstr "Uporabnik API-ja"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "AWB assignment was unsuccessful: %s"
-msgstr ""
+msgstr "Dodelitev AWB ni bila uspešna: %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "AWB number(s) not found to cancel the shipment!"
-msgstr ""
+msgstr "Številka(-e) AWB ni bila najdena za preklic pošiljke!"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Access token is generated successfully!"
-msgstr ""
+msgstr "Dostopni žeton je bil uspešno ustvarjen!"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Add Manual Channel"
-msgstr ""
+msgstr "Dodaj ročni kanal"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Add New Channel"
-msgstr ""
+msgstr "Dodaj nov kanal"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Authentication failed! Please check your credentials."
-msgstr ""
+msgstr "Preverjanje pristnosti ni uspelo! Preverite svoje poverilnice."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Prevoznik"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__channel_code
 msgid "Channel Code"
-msgstr ""
+msgstr "Koda kanala"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__name
 msgid "Channel Name"
-msgstr ""
+msgstr "Ime kanala"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Uredi nastavitve"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Configure Shiprocket channel in shipping method"
-msgstr ""
+msgstr "Konfigurirajte kanal Shiprocket v načinu pošiljanja"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Country is required!"
-msgstr ""
+msgstr "Država je obvezna!"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier (%(recommender)s): %(courier)s"
-msgstr ""
+msgstr "Kurir (%(recommender)s): %(courier)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__courier_code
 msgid "Courier Code"
-msgstr ""
+msgstr "Kurirska koda"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier is not available for delivery!"
-msgstr ""
+msgstr "Kurirska služba ni na voljo za dostavo!"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier: %s"
-msgstr ""
+msgstr "Kurir: %s"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Create API User"
-msgstr ""
+msgstr "Ustvari uporabnika API-ja"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
@@ -181,18 +203,19 @@ msgid ""
 "Create a pickup request for your order shipment using Validate button of the"
 " Delivery Order."
 msgstr ""
+"Z gumbom Potrdi v naročilu za dostavo ustvarite zahtevo za prevzem pošiljke."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__create_uid
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__create_date
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__display_name
@@ -203,28 +226,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__display_name
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__eway_bill_number
 msgid "EWay Bill"
-msgstr ""
+msgstr "Račun za e-poštni naslov"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Email is required!"
-msgstr ""
+msgstr "E-pošta je obvezna!"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_password
 msgid "Enter your Password from Shiprocket account (API)."
-msgstr ""
+msgstr "Vnesite svoje geslo iz računa Shiprocket (API)."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_email
 msgid "Enter your Username from Shiprocket account (API)."
-msgstr ""
+msgstr "Vnesite svoje uporabniško ime iz računa Shiprocket (API)."
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -233,28 +256,30 @@ msgid ""
 "Eway Bill number is required to ship an order if order amount is more than "
 "50,000 INR."
 msgstr ""
+"Številka elektronskega računa je potrebna za pošiljanje naročila, če je "
+"znesek naročila večji od 50.000 INR."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Failed to fetch Shiprocket Channel(s), Please try again later."
-msgstr ""
+msgstr "Pridobivanje kanala(-ov) Shiprocket ni uspelo. Poskusite znova pozneje."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Failed to fetch Shiprocket Couriers(s), Please try again later."
-msgstr ""
+msgstr "Pridobitev Shiprocket Couriers(s) ni uspela. Poskusite znova pozneje."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid "Generate Manifest"
-msgstr ""
+msgstr "Ustvari manifest"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_access_token
 msgid "Generate access token using Shiprocket credentials"
-msgstr ""
+msgstr "Ustvari žeton za dostop z uporabo poverilnic Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_courier_ids
@@ -262,6 +287,8 @@ msgid ""
 "Get all the integrated Couriers from your Shiprocket account.Based on the "
 "courier selections the rate will be fetched from the Shiprocket."
 msgstr ""
+"Pridobite vse integrirane kurirske službe iz svojega računa Shiprocket. Na "
+"podlagi izbire kurirja bo cena pridobljena iz Shiprocketa."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
@@ -270,23 +297,26 @@ msgid ""
 " is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
 msgstr ""
+"Pridobite vse integrirane kanale iz svojega računa Shiprocket. Ta ID kanala "
+"se uporablja za izbiro ali določitev kanala po meri ob ustvarjanju naročila "
+"Shiprocket."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Go to"
-msgstr ""
+msgstr "Pojdi na prve slike v zanki"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Go to Shipping Method"
-msgstr ""
+msgstr "Pojdi na način dostave"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Go to Shipping Methods"
-msgstr ""
+msgstr "Pojdi na Načini pošiljanja"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__id
@@ -297,93 +327,93 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__id
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Label generated for %(courier)s with Tracking Number: %(tracking_ref)s"
-msgstr ""
+msgstr "Oznaka ustvarjena za%(courier)s s sledilno številko:%(tracking_ref)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_uid
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_date
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/stock_package_type.py:0
 msgid "Length, Width and Height is necessary for Shiprocket Package."
-msgstr ""
+msgstr "Za paket Shiprocket so potrebne dolžina, širina in višina."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Manifest generated of %s"
-msgstr ""
+msgstr "Manifest, ustvarjen iz %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Order cancelled successfully!"
-msgstr ""
+msgstr "Naročilo je bilo uspešno preklicano!"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_default_package_type_id
 msgid "Package Type"
-msgstr ""
+msgstr "Tip paketa"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "Ponudnik plačil"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Phone is required!"
-msgstr ""
+msgstr "Telefon je potreben!"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid "Pickup Request"
-msgstr ""
+msgstr "Zahteva za prevzem"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Pincode is required!"
-msgstr ""
+msgstr "Poštna številka je obvezna!"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Please configure Shiprocket credentials in the shipping method"
-msgstr ""
+msgstr "Prosimo, konfigurirajte poverilnice Shiprocket v načinu pošiljanja"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Ponudnik"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "SKU is missing!"
-msgstr ""
+msgstr "Manjka SKU!"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Sale Order or Picking is required to get rate."
-msgstr ""
+msgstr "Za pridobitev cene je potrebno prodajno naročilo ali komisioniranje."
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -392,125 +422,127 @@ msgid ""
 "Same order is available in Shiprocket so label provided is the copy of "
 "existing one."
 msgstr ""
+"Isto naročilo je na voljo v Shiprocketu, zato je priložena nalepka kopija "
+"obstoječe."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Save Manual Channel"
-msgstr ""
+msgstr "Shrani ročni kanal"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__name
 msgid "Service Name"
-msgstr ""
+msgstr "Ime storitve"
 
 #. module: delivery_shiprocket
 #: model:product.template,name:delivery_shiprocket.product_product_delivery_shiprocket_product_template
 msgid "ShipRocket"
-msgstr ""
+msgstr "ShipRocket"
 
 #. module: delivery_shiprocket
 #: model:delivery.carrier,name:delivery_shiprocket.delivery_carrier_shiprocket
 msgid "ShipRocket Domestic"
-msgstr ""
+msgstr "ShipRocket Domače"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Metode odpreme"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields.selection,name:delivery_shiprocket.selection__delivery_carrier__delivery_type__shiprocket
 #: model:ir.model.fields.selection,name:delivery_shiprocket.selection__stock_package_type__package_carrier_type__shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.stock_picking_form_inherit_shiprocket
 msgid "Shiprocket"
-msgstr ""
+msgstr "Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_access_token
 msgid "Shiprocket Access Token"
-msgstr ""
+msgstr "Shiprocket Žeton za dostop"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_shiprocket_channel
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid "Shiprocket Channel"
-msgstr ""
+msgstr "Shiprocket Kanal"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Configuration"
-msgstr ""
+msgstr "Shiprocket Konfiguracija"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_res_config_settings__module_delivery_shiprocket
 msgid "Shiprocket Connector"
-msgstr ""
+msgstr "Shiprocket Priključek"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_shiprocket_courier
 msgid "Shiprocket Courier"
-msgstr ""
+msgstr "Shiprocket Kurir"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_courier_ids
 msgid "Shiprocket Couriers"
-msgstr ""
+msgstr "Shiprocket Kurirji"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_email
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__shiprocket_email
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__shiprocket_email
 msgid "Shiprocket Email"
-msgstr ""
+msgstr "Shiprocket E-pošta"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Shiprocket Error: %s"
-msgstr ""
+msgstr "Shiprocket Napaka: %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Shiprocket Notification"
-msgstr ""
+msgstr "Shiprocket Obvestilo"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__shiprocket_orders
 msgid "Shiprocket Order(s)"
-msgstr ""
+msgstr "Shiprocket Naročilo(-a)"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_password
 msgid "Shiprocket Password"
-msgstr ""
+msgstr "Shiprocket Geslo"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.res_config_settings_view_form_sale_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.res_config_settings_view_form_stock_shiprocket
 msgid "Shiprocket Shipping Methods"
-msgstr ""
+msgstr "Shiprocket Načini pošiljanja"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Tutorial"
-msgstr ""
+msgstr "Shiprocket Navodila"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Tutorial for add channel"
-msgstr ""
+msgstr "Shiprocket Navodila za dodajanje kanala"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Website"
-msgstr ""
+msgstr "Shiprocket Spletna stran"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Shiprocket order(s) not found to cancel the shipment!"
-msgstr ""
+msgstr "Naročila Shipprocket za preklic pošiljke niso bila najdena!"
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -524,6 +556,8 @@ msgid ""
 "Shiprocket requires package dimensions for getting accurate rate, you can "
 "define these in a package type that you set as default"
 msgstr ""
+"Shiprocket za natančno ceno zahteva dimenzije paketa, ki jih lahko določite "
+"v vrsti paketa, ki jo nastavite kot privzeto."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto
@@ -531,16 +565,18 @@ msgid ""
 "Shiprocket token expires in 10 days. Token will be auto generate based on "
 "this token expiry date."
 msgstr ""
+"Žeton Shiprocket poteče čez 10 dni. Žeton bo samodejno ustvarjen na podlagi "
+"datuma poteka veljavnosti tega žetona."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sign up"
-msgstr ""
+msgstr "Prijavi"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Tip paketa zaloge"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_stock_picking__shiprocket_orders
@@ -548,45 +584,47 @@ msgid ""
 "Store shiprocket order(s) in a (+) separated string, used in cancelling the "
 "order."
 msgstr ""
+"Naročila za shiprocket shranite v nizu, ločenem z znakom (+), ki se "
+"uporablja za preklic naročila."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Street is required!"
-msgstr ""
+msgstr "Ulica je obvezna!"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sync Channel from Shiprocket"
-msgstr ""
+msgstr "Sinhronizacija kanala iz Shiprocketa"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sync Couriers from Shiprocket"
-msgstr ""
+msgstr "Sinhronizacija kurirjev iz Shiprocketa"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Test Connection"
-msgstr ""
+msgstr "Preizkusi povezavo"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto
 msgid "Token Expiry"
-msgstr ""
+msgstr "Potek veljavnosti žetona"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Prenos"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Weight is missing!"
-msgstr ""
+msgstr "Teža manjka!"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "to create a new account:"
-msgstr ""
+msgstr "za ustvarjanje novega računa:"

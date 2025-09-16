@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment
+# * website_appointment
 #
 # Translators:
 # UAB "Draugiški sprendimai" <transifex@draugiskisprendimai.lt>, 2022
@@ -9,22 +9,24 @@
 # Monika Raciunaite <monika.raciunaite@gmail.com>, 2022
 # Linas Versada <linaskrisiukenas@gmail.com>, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:50+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Lithuanian (https://app.transifex.com/odoo/teams/41243/lt/)\n"
+"PO-Revision-Date: 2025-09-16 18:36+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Lithuanian <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment/lt/>\n"
 "Language: lt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
-"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
-"1 : n % 1 != 0 ? 2: 3);\n"
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
+" n % 1 != 0 ? 2: 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_top
@@ -37,7 +39,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_validated
 msgid "<i class=\"fa fa-long-arrow-left me-2\"/>All Appointments"
-msgstr ""
+msgstr "<i class=\"fa fa-long-arrow-left me-2\"/>Visos registracijos"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
@@ -182,7 +184,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
 msgid "Add an intro message here..."
-msgstr ""
+msgstr "Čia pridėkite įžanginį pranešimą..."
 
 #. module: website_appointment
 #. odoo-javascript
@@ -301,7 +303,7 @@ msgstr ""
 #: model:ir.model,name:website_appointment.model_calendar_event
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__calendar_event_ids
 msgid "Calendar Event"
-msgstr ""
+msgstr "Įvykis kalendoriuje"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__can_publish
@@ -346,7 +348,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Choose your appointment"
-msgstr ""
+msgstr "Pasirinkite savo vizitą"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -365,13 +367,13 @@ msgstr "Susisiekite su mumis"
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
-msgstr ""
+msgstr "Dantų priežiūra"
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/searchbar_option_plugin.js:0
 msgid "Description"
-msgstr ""
+msgstr "Aprašymas"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
@@ -393,7 +395,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__display_name
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Rodomas pavadinimas"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
@@ -420,7 +422,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__id
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__is_published
@@ -432,7 +434,7 @@ msgstr "Paskelbta"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
 msgid "Meeting"
-msgstr ""
+msgstr "Susitikimas"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -498,7 +500,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
-msgstr ""
+msgstr "Ištekliai"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_id
@@ -516,7 +518,7 @@ msgstr "SEO optimizuotas"
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid "Sample"
-msgstr ""
+msgstr "Pavyzdis"
 
 #. module: website_appointment
 #. odoo-python
@@ -534,7 +536,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Search..."
-msgstr ""
+msgstr "Ieškoti..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -597,7 +599,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Table"
-msgstr ""
+msgstr "Lentelė"
 
 #. module: website_appointment
 #. odoo-python
@@ -656,7 +658,7 @@ msgstr "Matomas dabartinėje svetainėje"
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_calendar_event__visitor_id
 msgid "Visitor"
-msgstr ""
+msgstr "Lankytojas"
 
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website
@@ -686,7 +688,7 @@ msgstr "Svetainės nuoroda"
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_visitor
 msgid "Website Visitor"
-msgstr ""
+msgstr "Svetainės lankytojas"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_meta_description

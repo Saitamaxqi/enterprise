@@ -1,24 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_bpost
+# * delivery_bpost
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2022\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:21+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/delivery_bpost/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_label_stock_type__a4
@@ -187,7 +189,7 @@ msgstr "开发者令牌"
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr "请至少提供一个发货项目"
+msgstr "请提供至少一件要运送的物品。"
 
 #. module: delivery_bpost
 #: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__delivery_type
@@ -198,13 +200,13 @@ msgstr "物流商"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return labels created into bpost"
-msgstr ""
+msgstr "在 bpost 中创建退货标签"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Return shipment created into bpost"
-msgstr ""
+msgstr "向 bpost 创建退件"
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_parcel_return_instructions__rta
@@ -231,7 +233,7 @@ msgstr "运输#%s已取消"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Shipment created into bpost"
-msgstr ""
+msgstr "在 bpost 中创建快件"
 
 #. module: delivery_bpost
 #: model:ir.model,name:delivery_bpost.model_delivery_carrier
@@ -287,19 +289,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Links"
-msgstr ""
+msgstr "追踪链接"
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Number:"
-msgstr ""
+msgstr "追踪号码："
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "追踪号码："
 
 #. module: delivery_bpost
 #. odoo-python
@@ -381,4 +383,4 @@ msgstr "比利时邮政运输方式"
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid "bpost did not return prices for this destination country."
-msgstr "Bpost未能返回此目标国家的价格"
+msgstr "bpost 没有返回该目的地国家的价格。"

@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_followup
+# * account_followup
 #
 # Translators:
 # Miku Laitinen <miku.laitinen@gmail.com>, 2022
@@ -16,20 +16,22 @@
 # Jarmo Kortetjärvi <jarmo.kortetjarvi@gmail.com>, 2022
 # Konsta Aavaranta, 2023
 # Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Ossi Mantylahti <ossi.mantylahti@obs-solutions.fi>, 2023\n"
-"Language-Team: Finnish (https://app.transifex.com/odoo/teams/41243/fi/)\n"
+"PO-Revision-Date: 2025-09-16 15:19+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
+"account_followup/fi/>\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_followup
 #. odoo-python
@@ -46,7 +48,7 @@ msgstr "%sMaksuhuomautus - %s"
 #. module: account_followup
 #: model:ir.actions.report,print_report_name:account_followup.action_report_followup
 msgid "'Follow-up ' + object.display_name"
-msgstr "'Maksuhuomautus ' + object.display_name"
+msgstr "'Seurantatoimenpide ' + object.display_name"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_res_partner__type
@@ -221,12 +223,12 @@ msgstr "Seurantatoimen nimen on oltava yksilöllinen. Tämä nimi on jo asetettu
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__account_manager
 msgid "Account Manager"
-msgstr "Tilinhallintaesimies"
+msgstr "Asiakasvastaava"
 
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.ir_cron_auto_post_draft_entry_ir_actions_server
 msgid "Account Report Followup; Execute followup"
-msgstr "Tiliraportin seuranta; Aja seuranta"
+msgstr "Tiliraportin seuranta; Suorita seuranta"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -243,7 +245,7 @@ msgstr "Toimenpide"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
 msgid "Activity Notes"
-msgstr "Toimenpiteen muistiinpanot"
+msgstr "Toimenpiteen merkinnät"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_type_id
@@ -253,12 +255,12 @@ msgstr "Toimenpidetyyppi"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
 msgid "Add a note"
-msgstr "Lisää tekstirivi"
+msgstr "Lisää merkintä"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Add contacts to notify..."
-msgstr "Lisää kontaktit, joille ilmoitetaan..."
+msgstr "Lisää yhteystiedot, joille ilmoitetaan..."
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__type
@@ -298,7 +300,7 @@ msgstr ""
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__can_edit_body
 msgid "Can Edit Body"
-msgstr "Voi muokata runkoa"
+msgstr "Voi muokata tekstiä"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -324,7 +326,7 @@ msgstr "Yritys"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_res_partner
 msgid "Contact"
-msgstr "Kontakti"
+msgstr "Ota yhteyttä"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -403,9 +405,13 @@ msgstr ""
 "Hyvä %s,\n"
 "\n"
 "\n"
-"Kirjanpitomme mukaan teillä on avoimia laskuja meille. Pyydämme teitä ryhtymään tarvittaviin toimenpiteisiin, jotta nämä maksut voidaan suorittaa seuraavien päivien aikana.\n"
+"Ellemme ole tehneet virhettä, seuraava summa näyttää edelleen olevan "
+"maksamatta. Pyydämme teitä ryhtymään tarvittaviin toimenpiteisiin, jotta "
+"maksu(t) voidaan suorittaa seuraavan 8 päivän aikana.\n"
 "\n"
-"Jos maksunne olisi suoritettu tämän viestin lähettämisen jälkeen, jättäkää tämä viesti huomiotta. Älkää epäröikö ottaa yhteyttä kirjanpito-osastoomme.\n"
+"Jos maksu on suoritettu tämän viestin lähettämisen jälkeen, voitte jättää "
+"tämä viestin huomiotta. Ottakaa rohkeasti yhteyttä Kirjanpito-osastoomme, "
+"jos teillä on kysymyksiä.\n"
 "\n"
 "Ystävällisin terveisin,\n"
 "\n"
@@ -414,12 +420,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Dear client, we kindly remind you that you still have unpaid invoices. Please check them and take appropriate action. %s"
-msgstr "Hyvä asiakas, muistutamme teitä siitä, että teillä on edelleen maksamattomia laskuja. Olkaa hyvä, tarkistakaa niiden tilanne ja ryhtykää asianmukaisiin toimenpiteisiin. %s"
+msgstr ""
+"Hyvä asiakas, muistutamme, että teillä on edelleen maksamattomia laskuja. "
+"Olkaa hyvä ja tarkistakaa niiden tila ja ryhtykää asianmukaisiin toimiin. %s"
 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
 msgid "Define follow-up levels and their related actions"
-msgstr "Määritellään seurantatasot ja niihin liittyvät toimet"
+msgstr "Määritä seurantatasot ja niihin liittyvät toimet"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__name
@@ -434,10 +442,10 @@ msgid ""
 "- Salesperson: Sales Person defined on the invoice\n"
 "- Account Manager: Sales Person defined on the customer"
 msgstr ""
-"Määrittele, kenelle toiminta osoitetaan:\n"
-"- Seuranta Vastuussa (oletus)\n"
-"- Myyjä: Myyntihenkilö, joka on määritelty laskussa\n"
-"- Asiakkuuspäällikkö: Asiakkaan yhteydessä määritelty myyntihenkilö"
+"Määrittele, kenelle toiminta määrätään:\n"
+"- Vastuussa seurannasta (oletus)\n"
+"- Myyjä: Myyjä, joka on määritelty laskussa\n"
+"- Asiakkuuspäällikkö: Asiakkaan profiilissä määritelty myyjä"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__display_name
@@ -469,7 +477,7 @@ msgstr "Sähköpostin vastaanottajat"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Email Subject"
-msgstr "Sähköpostin otsikko"
+msgstr "Sähköpostin aihe"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_form_view
@@ -500,25 +508,25 @@ msgstr "Maksuhuomautuksen osoite"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr "Maksuhuomautuksen kriteerit"
+msgstr "Seurantatoimenpide, kriteerit"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_move_line__followup_line_id
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_line_id
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_line_id
 msgid "Follow-up Level"
-msgstr "Maksuhuomautuksen taso"
+msgstr "Seurantatoimenpide, taso"
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.action_account_followup_line_definition_form
 #: model:ir.ui.menu,name:account_followup.account_followup_menu
 msgid "Follow-up Levels"
-msgstr "Maksuhuomautustasot"
+msgstr "Seurantatoimenpide, tasot"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_report
 msgid "Follow-up Report"
-msgstr "Maksuhuomatusraportti"
+msgstr "Seurantatoimenpide, raportti"
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.action_view_list_customer_statements
@@ -534,25 +542,25 @@ msgstr "Seurantaraporttien puunäkymä"
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__followup
 msgid "Follow-up Responsible"
-msgstr "Jälkikäsittelyn vastuullinen"
+msgstr "Seurantatoimenpide, vastuuhenkilö"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__followup_status
 #: model:ir.model.fields,field_description:account_followup.field_res_users__followup_status
 msgid "Follow-up Status"
-msgstr "Seurannan tila"
+msgstr "Seurantatoimenpide, tila"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_tree
 msgid "Follow-up Steps"
-msgstr "Seurantatoimenpiteiden askeleet"
+msgstr "Seurantatoimenpide, vaiheet"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Follow-up letter generated"
-msgstr "Seurantakirje laadittu"
+msgstr "Seurantakirje luotu"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.account_followup_journal_dashboard_kanban_view
@@ -566,14 +574,16 @@ msgid ""
 "            possible to use print and e-mail templates to send specific messages to\n"
 "            the customer."
 msgstr ""
-"Määritä kunkin vaiheen osalta toteutettavat toimet ja viive päivinä. \n"
-"            on mahdollista käyttää tulostus- ja sähköpostimalleja tiettyjen viestien lähettämiseksi e\n"
-"            asiakkaalle."
+"Määritä kunkin vaiheen osalta toteutettavat toimet ja viive päivinä. "
+"Tulostus-\n"
+"            ja sähköpostimallien käyttäminen tiettyjen viestien "
+"lähettämiseksi asiakkaalle\n"
+"            on mahdollista."
 
 #. module: account_followup
 #: model:mail.template,name:account_followup.demo_followup_email_template_4
 msgid "Fourth reminder followup"
-msgstr "Neljäs muistutusseuranta"
+msgstr "Neljäs muistutus seurannasta"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_search_view
@@ -616,7 +626,7 @@ msgstr "On muokkaaja"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_move_line
 msgid "Journal Item"
-msgstr "Päiväkirjatapahtuma"
+msgstr "Päiväkirjamerkintä"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -693,7 +703,7 @@ msgstr "Ei seurantaa lähetettäväksi!"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_note
 msgid "Note"
-msgstr "Muistiinpano"
+msgstr "Merkintä"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -703,7 +713,11 @@ msgstr "Ilmoitus"
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_followup_manual_reminder__lang
 msgid "Optional translation language (ISO code) to select when sending out an email. If not set, the english version will be used. This should usually be a placeholder expression that provides the appropriate language, e.g. {{ object.partner_id.lang }}."
-msgstr "Valinnainen käännöskieli (ISO-koodi), joka valitaan sähköpostia lähetettäessä. Jos sitä ei ole asetettu, käytetään englanninkielistä versiota. Tämän pitäisi yleensä olla sijoitusilmaus, joka antaa sopivan kielen, esim. {{ object.partner_id.lang }}."
+msgstr ""
+"Valinnainen käännöskieli (ISO-koodi), joka valitaan sähköpostia "
+"lähetettäessä. Jos sitä ei ole asetettu, käytetään englanninkielistä "
+"versiota. Tämän pitäisi yleensä olla paikanmerkki, joka säätää sopivan "
+"kielen, esim. {{ object.partner_id.lang }}."
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -749,7 +763,7 @@ msgstr "Tulosta"
 #. module: account_followup
 #: model:ir.actions.report,name:account_followup.action_report_followup
 msgid "Print Follow-up Letter"
-msgstr "Tulosta maksuhuomautuskirje"
+msgstr "Tulosta seurantakirje"
 
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.action_account_reports_customer_statements_do_followup
@@ -792,7 +806,7 @@ msgstr "Vastuuhenkilö"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "SMS"
-msgstr "SMS"
+msgstr "Tekstiviesti"
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__account_followup_followup_line__activity_default_responsible_type__salesperson
@@ -808,12 +822,12 @@ msgstr "Aikatauluta toimenpide"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_line_filter
 msgid "Search Follow-up"
-msgstr "Etsi maksuhuomautus"
+msgstr "Etsi seurantatoimenpidettä"
 
 #. module: account_followup
 #: model:mail.template,name:account_followup.demo_followup_email_template_2
 msgid "Second reminder followup"
-msgstr "Toinen muistutuksen seuranta"
+msgstr "Toinen muistutus seurannasta"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -843,23 +857,23 @@ msgstr "Lähetä ja tulosta"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms
 msgid "Sms"
-msgstr "SMS"
+msgstr "Tekstiviesti"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms_body
 msgid "Sms Body"
-msgstr "Tekstiviestin runko"
+msgstr "Tekstiviestin teksti"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
 msgid "Sms Content"
-msgstr "SMS sisältö"
+msgstr "Tekstiviestin sisältö"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__sms_template_id
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms_template_id
 msgid "Sms Template"
-msgstr "SMS-malli"
+msgstr "Tekstiviestimalli"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -892,18 +906,22 @@ msgstr ""
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_move_line__invoice_origin
 msgid "The document(s) that generated the invoice."
-msgstr "Laskun luoneet dokumentit."
+msgstr "Asiakirjat, joiden pohjalta lasku luotiin."
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_followup_followup_line__delay
 msgid "The number of days after the due date of the invoice to wait before sending the reminder. Can be negative if you want to send the reminder before the invoice due date."
-msgstr "Päivien määrä laskun eräpäivän jälkeen, jonka kuluessa muistutuksen lähettämistä on odotettava. Voi olla negatiivinen, jos haluat lähettää muistutuksen ennen laskun eräpäivää."
+msgstr ""
+"Päivien määrä laskun eräpäivän jälkeen, jotka tulee odottaa ennen "
+"muistutuksen lähettämistä. Voi olla negatiivinen, jos haluat lähettää "
+"muistutuksen ennen laskun eräpäivää."
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_res_partner__followup_responsible_id
 #: model:ir.model.fields,help:account_followup.field_res_users__followup_responsible_id
 msgid "The responsible assigned to manual followup activities, if defined in the level."
 msgstr ""
+"Manuaalisten seurantatoimien vastuuhenkilö, jos se on määritelty tasossa."
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -926,7 +944,7 @@ msgstr "Yhteensä"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_due
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_due
 msgid "Total Due"
-msgstr "Jäljellä yhteensä"
+msgstr "Maksettavaa yhteensä"
 
 #. module: account_followup
 #. odoo-python
@@ -934,7 +952,7 @@ msgstr "Jäljellä yhteensä"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_overdue
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_overdue
 msgid "Total Overdue"
-msgstr "Yhteensä erääntynyt"
+msgstr "Erääntynyt yhteensä"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__unpaid_invoice_ids
@@ -952,7 +970,7 @@ msgstr "Maksamattomien laskujen määrä"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__unreconciled_aml_ids
 #: model:ir.model.fields,field_description:account_followup.field_res_users__unreconciled_aml_ids
 msgid "Unreconciled Aml"
-msgstr "Sovittamaton Aml"
+msgstr "Täsmäyttämätön rahanpesun torjunta"
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__with_overdue_invoices
@@ -963,7 +981,7 @@ msgstr "Erääntyneitä laskuja"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_manual_reminder
 msgid "Wizard for sending manual reminders to clients"
-msgstr "Muistutusten lähettäminen asiakkaille, ohjattu toiminto"
+msgstr "Ohjattu muistutusten lähettäminen asiakkaille"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.manual_reminder_view_form
@@ -975,12 +993,16 @@ msgstr "Kirjoita viestisi tähän..."
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an Email, but no follow-up contact has any email address set for customer '%s'"
 msgstr ""
+"Yrität lähettää sähköpostia, mutta yhdelläkään seurannassa olevalla "
+"yhteyshenkilöllä ei ole sähköpostiosoitetta asiakkaalle '%s'"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "You are trying to send an SMS, but no follow-up contact has any mobile/phone number set for customer '%s'"
 msgstr ""
+"Yrität lähettää tekstiviestiä, mutta asiakkaalle '%s' ei ole asetettu "
+"matkapuhelinta/puhelinnumeroa"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -1006,7 +1028,7 @@ msgstr "esim. Ensimmäinen muistutussähköposti"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "payment reminder"
-msgstr "maksuhuomautus"
+msgstr "maksumuistutus"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
@@ -1023,4 +1045,6 @@ msgstr ""
 #: model:mail.template,subject:account_followup.demo_followup_email_template_4
 #: model:mail.template,subject:account_followup.email_template_followup_1
 msgid "{{ (object.company_id or object._get_followup_responsible().company_id).name }} Payment Reminder - {{ object.commercial_company_name }}"
-msgstr "{{ (object.company_id tai object._get_followup_responsible().company_id).name }} Maksumuistutus - {{ object.commercial_company_name }}"
+msgstr ""
+"{{ (object.company_id or object._get_followup_responsible().company_id).name "
+"}} Maksumuistutus - {{ object.commercial_company_name }}"

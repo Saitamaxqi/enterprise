@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment
+# * website_appointment
 #
 # Translators:
 # DanielDemedziuk <daniel.demedziuk@gmail.com>, 2022
@@ -15,22 +15,24 @@
 # Martin Trigaux, 2022
 # Łukasz Grzenkowicz <lukasz.grzenkowicz@gmail.com>, 2022
 # Paweł Wodyński <pw@myodoo.pl>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:50+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Paweł Wodyński <pw@myodoo.pl>, 2023\n"
-"Language-Team: Polish (https://app.transifex.com/odoo/teams/41243/pl/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment/pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
-"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_top
@@ -178,7 +180,7 @@ msgstr "Dodaj tutaj funkcję..."
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 msgid "Add a resource description here..."
-msgstr ""
+msgstr "Dodaj tutaj opis zasobu..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -194,7 +196,7 @@ msgstr "Dodaj tutaj wiadomość wprowadzającą..."
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "All Types"
-msgstr ""
+msgstr "Wszystkie typy"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -205,13 +207,13 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_invite_view_form
 msgid "All websites"
-msgstr ""
+msgstr "Wszystkie witryny"
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointment_type_option.xml:0
 msgid "Allow Guests"
-msgstr ""
+msgstr "Pozwól na gości"
 
 #. module: website_appointment
 #. odoo-python
@@ -228,7 +230,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Zaproszenie na spotkanie"
 
 #. module: website_appointment
 #: model:ir.actions.act_window,name:website_appointment.action_appointment_pages_list
@@ -293,7 +295,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Book now"
-msgstr ""
+msgstr "Zarezerwuj teraz"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
@@ -307,7 +309,7 @@ msgstr ""
 #: model:ir.model,name:website_appointment.model_calendar_event
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__calendar_event_ids
 msgid "Calendar Event"
-msgstr ""
+msgstr "Wydarzenie w kalendarzu"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__can_publish
@@ -337,7 +339,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Choose a user..."
-msgstr ""
+msgstr "Wybierz użytkownika..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -352,7 +354,7 @@ msgstr "Wybierz z kim chcesz się spotkać"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Choose your appointment"
-msgstr ""
+msgstr "Wybierz swoje spotkanie"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -371,13 +373,13 @@ msgstr "Skontaktuj się z nami"
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Dental Care"
-msgstr ""
+msgstr "Opieka stomatologiczna"
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/searchbar_option_plugin.js:0
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
@@ -390,6 +392,8 @@ msgid ""
 "Discover the secrets kept in high-end kitchens with one of our starred "
 "chefs, from the comfort of your own home."
 msgstr ""
+"Odkryj sekrety wysokiej klasy kuchni z jednym z naszych gwiazdkowych szefów "
+"kuchni, w zaciszu własnego domu."
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__display_name
@@ -399,18 +403,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__display_name
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nazwa wyświetlana"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Easily reserve tennis courts for your next match, anytime and anywhere."
-msgstr ""
+msgstr "Z łatwością rezerwuj korty tenisowe na swój następny mecz."
 
 #. module: website_appointment
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Filter On"
-msgstr ""
+msgstr "Filtr włączony"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -426,7 +430,7 @@ msgstr "Wróć do spotkania"
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__id
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__is_published
@@ -438,7 +442,7 @@ msgstr "Opublikowane"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
 msgid "Meeting"
-msgstr ""
+msgstr "Spotkanie"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -469,7 +473,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
-msgstr ""
+msgstr "Lekcja gotowania online"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
@@ -504,13 +508,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
-msgstr ""
+msgstr "Zasoby"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_id
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_id
 msgid "Restrict to a specific website."
-msgstr ""
+msgstr "Ogranicz do określonej strony."
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_seo_optimized
@@ -522,7 +526,7 @@ msgstr "Zoptymalizowane SEO"
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid "Sample"
-msgstr ""
+msgstr "Próbka"
 
 #. module: website_appointment
 #. odoo-python
@@ -536,11 +540,12 @@ msgid ""
 "Schedule your visit today and experience expert dental care brought right to "
 "your doorstep."
 msgstr ""
+"Zaplanuj swoją wizytę już dziś i poddaj się eksperckiej opiece dentystycznej."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Search..."
-msgstr ""
+msgstr "Szukaj..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -574,7 +579,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Resources"
-msgstr ""
+msgstr "Konkretne zasoby"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -586,7 +591,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Specific Users"
-msgstr ""
+msgstr "Konkretni użytkownicy"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -603,7 +608,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Table"
-msgstr ""
+msgstr "Stół"
 
 #. module: website_appointment
 #. odoo-python
@@ -612,7 +617,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Tennis Court"
-msgstr ""
+msgstr "Kort tenisowy"
 
 #. module: website_appointment
 #. odoo-python
@@ -626,18 +631,20 @@ msgstr ""
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_absolute_url
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_absolute_url
 msgid "The full absolute URL to access the document through the website."
-msgstr ""
+msgstr "Pełen adres URL dostępu do dokumentu przez stronę internetową."
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_url
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_url
 msgid "The full relative URL to access the document through the website."
 msgstr ""
+"Pełny względny adres URL umożliwiający dostęp do dokumentu przez stronę "
+"internetową."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
 msgid "There is currently no appointment available"
-msgstr ""
+msgstr "Nie ma obecnie żadnych dostępnych spotań."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -662,7 +669,7 @@ msgstr "Widoczne na obecnej stronie"
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_calendar_event__visitor_id
 msgid "Visitor"
-msgstr ""
+msgstr "Osoba odwiedzająca"
 
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website
@@ -670,18 +677,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_id
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_search
 msgid "Website"
-msgstr "Strona WWW"
+msgstr "Strona internetowa"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_absolute_url
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_absolute_url
 msgid "Website Absolute URL"
-msgstr ""
+msgstr "Pełny adres URL strony"
 
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_snippet_filter
 msgid "Website Snippet Filter"
-msgstr ""
+msgstr "Wyszukiwarka szablonów"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_url
@@ -692,7 +699,7 @@ msgstr "Adres strony internetowej"
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_visitor
 msgid "Website Visitor"
-msgstr ""
+msgstr "Odwiedzający stronę"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_meta_description

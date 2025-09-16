@@ -1,24 +1,26 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups
+# * delivery_ups
 #
 # Translators:
 # Martin Trigaux, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Jeffery CHEN <jeffery9@gmail.com>, 2022\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:23+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/delivery_ups/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups
 #. odoo-python
@@ -188,7 +190,7 @@ msgstr "包裹%s没有正面的运输重量。"
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Packages:"
-msgstr ""
+msgstr "包裹："
 
 #. module: delivery_ups
 #. odoo-python
@@ -338,7 +340,7 @@ msgstr "请至少提供一个要装运的项目"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr "请至少提供一个发货项目"
+msgstr "请提供至少一件要运送的物品。"
 
 #. module: delivery_ups
 #. odoo-python
@@ -401,7 +403,7 @@ msgstr "收件人电话分机只能包含数字。"
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Return label generated"
-msgstr ""
+msgstr "已生成退货标签"
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__ups_label_file_type__spl
@@ -433,7 +435,7 @@ msgstr "运输#%s已取消"
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Shipment created into UPS"
-msgstr ""
+msgstr "在 UPS 中创建快件"
 
 #. module: delivery_ups
 #. odoo-python
@@ -497,7 +499,7 @@ msgstr "公司仓库的地址缺失或者错误（缺失字段：%s)"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The delivery cannot be done because the weight of your product is missing."
-msgstr "因为产品重量缺失所以无法完成交货"
+msgstr "由于您的产品重量不足，因此无法送货。"
 
 #. module: delivery_ups
 #. odoo-python
@@ -519,7 +521,7 @@ msgstr "已超出用户访问尝试的最大次数。所以请稍后再试"
 #. odoo-python
 #: code:addons/delivery_ups/models/ups_request.py:0
 msgid "The name of the customer should be no more than 35 characters."
-msgstr ""
+msgstr "客户名称不应超过 35 个字符。"
 
 #. module: delivery_ups
 #. odoo-python
@@ -587,7 +589,7 @@ msgstr "这种增值服务使您也可以在星期六运送包裹。"
 #. odoo-python
 #: code:addons/delivery_ups/models/delivery_ups.py:0
 msgid "Tracking Numbers:"
-msgstr ""
+msgstr "追踪号码："
 
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups

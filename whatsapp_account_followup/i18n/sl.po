@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* whatsapp_account_followup
+# * whatsapp_account_followup
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:34+0000\n"
-"PO-Revision-Date: 2025-02-20 10:34+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:20+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
+"whatsapp_account_followup/sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: whatsapp_account_followup
 #. odoo-python
@@ -40,22 +45,22 @@ msgstr ""
 #. module: whatsapp_account_followup
 #: model:ir.model,name:whatsapp_account_followup.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Stik"
 
 #. module: whatsapp_account_followup
 #: model:ir.model,website_form_label:whatsapp_account_followup.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Ustvari stranko"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_followup_line__display_name
@@ -63,27 +68,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_report__display_name
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Prikazani naziv"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__res_ids
 msgid "Document IDs"
-msgstr ""
+msgstr "ID-ji dokumentov"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__res_model
 msgid "Document Model Name"
-msgstr ""
+msgstr "Naziv modela dokumenta"
 
 #. module: whatsapp_account_followup
 #: model:ir.model,name:whatsapp_account_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
-msgstr ""
+msgstr "Kriteriji opomina"
 
 #. module: whatsapp_account_followup
 #: model:ir.model,name:whatsapp_account_followup.model_account_followup_report
 msgid "Follow-up Report"
-msgstr ""
+msgstr "Poročilo o opominih"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__free_text_1
@@ -146,7 +151,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_report__id
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__invalid_phone_number_count
@@ -171,12 +176,12 @@ msgstr ""
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zadnji posodobil"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zadnjič posodobljeno"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__preview_whatsapp
@@ -196,23 +201,23 @@ msgstr ""
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__phone
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__wa_template_id
 msgid "Template"
-msgstr ""
+msgstr "Predloga"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_followup_line__send_whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp_account_followup.manual_reminder_view_form_inherit_whatsapp_followup
 msgid "WhatsApp"
-msgstr ""
+msgstr "WhatsApp"
 
 #. module: whatsapp_account_followup
 #: model_terms:ir.ui.view,arch_db:whatsapp_account_followup.view_account_followup_followup_line_form_inherit_whatsapp
 msgid "WhatsApp Template"
-msgstr ""
+msgstr "Predloga za WhatsApp"
 
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_manual_reminder__attachment_id
@@ -227,12 +232,12 @@ msgstr ""
 #. module: whatsapp_account_followup
 #: model:ir.model.fields,field_description:whatsapp_account_followup.field_account_followup_followup_line__whatsapp_template_id
 msgid "Whatsapp Template"
-msgstr ""
+msgstr "Predloga za Whatsapp"
 
 #. module: whatsapp_account_followup
 #: model:ir.model,name:whatsapp_account_followup.model_account_followup_manual_reminder
 msgid "Wizard for sending manual reminders to clients"
-msgstr ""
+msgstr "Čarovnik za pošiljanje ročnih opomnikov strankam"
 
 #. module: whatsapp_account_followup
 #. odoo-python

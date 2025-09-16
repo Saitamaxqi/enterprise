@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment
+# * website_appointment
 #
 # Translators:
 # Christelle Wehbe <libanon_cristelle@hotmail.com>, 2022
@@ -9,20 +9,22 @@
 # Chrille Hedberg <hedberg.chrille@gmail.com>, 2022
 # Anders Wallenquist <anders.wallenquist@vertel.se>, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:50+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Swedish (https://app.transifex.com/odoo/teams/41243/sv/)\n"
+"PO-Revision-Date: 2025-09-16 21:23+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"website_appointment/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_top
@@ -35,7 +37,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_validated
 msgid "<i class=\"fa fa-long-arrow-left me-2\"/>All Appointments"
-msgstr ""
+msgstr "<i class=\"fa fa-long-arrow-left me-2\"/>Alla bokningar"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
@@ -186,7 +188,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/online_appointment_option.xml:0
 msgid "All Types"
-msgstr ""
+msgstr "Alla typer"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -197,7 +199,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_invite_view_form
 msgid "All websites"
-msgstr ""
+msgstr "Alla webbplatser"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -210,7 +212,7 @@ msgstr ""
 #: code:addons/website_appointment/models/website.py:0
 #: model:website.menu,name:website_appointment.menu_appointment
 msgid "Appointment"
-msgstr ""
+msgstr "Bokning"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_online_appointment_snippet
@@ -220,7 +222,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Bokningsinbjudan"
 
 #. module: website_appointment
 #: model:ir.actions.act_window,name:website_appointment.action_appointment_pages_list
@@ -285,7 +287,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Book now"
-msgstr ""
+msgstr "Boka nu"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_card_body
@@ -299,7 +301,7 @@ msgstr ""
 #: model:ir.model,name:website_appointment.model_calendar_event
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__calendar_event_ids
 msgid "Calendar Event"
-msgstr ""
+msgstr "Kalenderhändelse"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__can_publish
@@ -329,7 +331,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Choose a user..."
-msgstr ""
+msgstr "Välj en användare..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -369,7 +371,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/searchbar_option_plugin.js:0
 msgid "Description"
-msgstr ""
+msgstr "Beskrivning"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
@@ -391,7 +393,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__display_name
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
@@ -402,7 +404,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Filter On"
-msgstr ""
+msgstr "Filter på"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -418,7 +420,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment.field_website_snippet_filter__id
 #: model:ir.model.fields,field_description:website_appointment.field_website_visitor__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__is_published
@@ -430,7 +432,7 @@ msgstr "Är publicerad"
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_progress_bar
 msgid "Meeting"
-msgstr ""
+msgstr "Möte"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -496,13 +498,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_appointment/static/src/plugins/appointments_option.xml:0
 msgid "Resources"
-msgstr ""
+msgstr "Resurser"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_id
 #: model:ir.model.fields,help:website_appointment.field_appointment_type__website_id
 msgid "Restrict to a specific website."
-msgstr ""
+msgstr "Begränsa till en viss webbplats."
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__is_seo_optimized
@@ -514,7 +516,7 @@ msgstr "SEO optimerad"
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_list
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
 msgid "Sample"
-msgstr ""
+msgstr "Prov"
 
 #. module: website_appointment
 #. odoo-python
@@ -532,7 +534,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.website_calendar_index_topbar
 msgid "Search..."
-msgstr ""
+msgstr "Sök..."
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
@@ -595,7 +597,7 @@ msgstr ""
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Table"
-msgstr ""
+msgstr "Tabell"
 
 #. module: website_appointment
 #. odoo-python
@@ -649,12 +651,12 @@ msgstr "Användare"
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_published
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_published
 msgid "Visible on current website"
-msgstr "Synlig på vald webbplats"
+msgstr "Synlig på nuvarande webbplats"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_calendar_event__visitor_id
 msgid "Visitor"
-msgstr ""
+msgstr "Besökare"
 
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website
@@ -673,7 +675,7 @@ msgstr ""
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_snippet_filter
 msgid "Website Snippet Filter"
-msgstr ""
+msgstr "Filter för Webplatssnippet"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__website_url
@@ -684,7 +686,7 @@ msgstr "Webbplatsens URL"
 #. module: website_appointment
 #: model:ir.model,name:website_appointment.model_website_visitor
 msgid "Website Visitor"
-msgstr ""
+msgstr "Besökare"
 
 #. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_type__website_meta_description

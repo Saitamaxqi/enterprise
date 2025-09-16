@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_enterprise
+# * web_enterprise
 #
 # Translators:
 # Jakob Krabbe <jakob.krabbe@vertel.se>, 2022
@@ -8,32 +8,34 @@
 # Kim Asplund <kim.asplund@gmail.com>, 2022
 # Simon S, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Swedish (https://app.transifex.com/odoo/teams/41243/sv/)\n"
+"PO-Revision-Date: 2025-09-16 21:10+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"web_enterprise/sv/>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "%s days"
-msgstr ""
+msgstr "%s dagar"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
 msgid "(Enterprise Edition)"
-msgstr ""
+msgstr "(Enterprise Edition)"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -45,14 +47,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "1 month"
-msgstr ""
+msgstr "1 månad"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/views/list/list_renderer_desktop.xml:0
 msgid "Add Custom Field"
-msgstr ""
+msgstr "Lägg till eget fält"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -95,6 +97,8 @@ msgstr "Kontakt"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Contact your sales representative to help you to unlink your previous database"
 msgstr ""
+"Kontakta din försäljningsrepresentant så hjälper vi dig att ta bort "
+"kopplingen till din tidigare databas"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -106,13 +110,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
 msgid "Dark Mode"
-msgstr ""
+msgstr "Mörkt läge"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
 msgid "Database expiration:"
-msgstr ""
+msgstr "Databasen har löpt ut:"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -129,7 +133,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Error reason:"
-msgstr ""
+msgstr "Fel orsak:"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -140,13 +144,13 @@ msgstr ""
 #. module: web_enterprise
 #: model:ir.model,name:web_enterprise.model_ir_http
 msgid "HTTP Routing"
-msgstr "HTTP-rutt"
+msgstr "HTTP-routing"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Home menu"
-msgstr ""
+msgstr "Startmeny"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -159,7 +163,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Log in as an administrator to correct the issue."
-msgstr ""
+msgstr "Logga in som administratör för att åtgärda problemet."
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -176,7 +180,7 @@ msgstr "Meny"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "No result"
-msgstr ""
+msgstr "Inget resultat"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -189,14 +193,14 @@ msgstr "Odoo"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/settings_form_view/res_config_edition.xml:0
 msgid "Odoo Enterprise Edition License V1.0"
-msgstr ""
+msgstr "Odoo Enterprise Edition Licens V1.0"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/legacy/xml/promote_studio.xml:0
 #: code:addons/web_enterprise/static/src/webclient/promote_studio_dialog/promote_studio_dialog.xml:0
 msgid "Odoo Studio"
-msgstr ""
+msgstr "Odoo Studio"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -208,13 +212,13 @@ msgstr "Odoo-stöd"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Paste code here"
-msgstr ""
+msgstr "Klistra in koden här"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/navbar/navbar.js:0
 msgid "Previous view"
-msgstr ""
+msgstr "Föregående vy"
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -231,7 +235,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Register your subscription"
-msgstr ""
+msgstr "Registrera din prenumeration"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -255,61 +259,65 @@ msgstr "Skanna streckkod"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Sending the instructions by email ..."
-msgstr ""
+msgstr "Skicka instruktionerna via e-post ..."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Something went wrong while registering your database. You can try again or contact"
 msgstr ""
+"Något gick fel när du registrerade din databas. Du kan försöka igen eller "
+"kontakta"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Subscription Code:"
-msgstr ""
+msgstr "Prenumerationskod:"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "TIP"
-msgstr ""
+msgstr "TIP"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Thank you, your registration was successful! Your database is valid until"
-msgstr ""
+msgstr "Tack, din registrering lyckades! Din databas är giltig fram till"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid "Thank you, your registration was successful! Your database is valid until %s."
-msgstr ""
+msgstr "Tack, din registrering lyckades! Din databas är giltig fram till %s."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "The instructions to unlink your subscription from the previous database(s) have been sent"
 msgstr ""
+"Instruktionerna för att koppla bort din prenumeration från den/de tidigare "
+"databasen/databaserna har skickats"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database has expired. "
-msgstr ""
+msgstr "Denna databas har upphört att gälla. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This database will expire in %s. "
-msgstr ""
+msgstr "Denna databas upphör att gälla om %s. "
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
 msgid "This demo database will expire in %s. "
-msgstr ""
+msgstr "Denna demodatabas kommer att upphöra att gälla om %s. "
 
 #. module: web_enterprise
 #: model_terms:ir.ui.view,arch_db:web_enterprise.res_config_settings_view_form
@@ -332,13 +340,13 @@ msgstr "Idag"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Unable to send the instructions by email, please contact the"
-msgstr ""
+msgstr "Om du inte kan skicka instruktionerna via e-post, vänligen kontakta"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Upgrade your subscription"
-msgstr ""
+msgstr "Uppgradera din prenumeration"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -356,36 +364,38 @@ msgstr ""
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "You have more users or more apps installed than your subscription allows."
 msgstr ""
+"Du har fler användare eller fler appar installerade än vad din prenumeration "
+"tillåter."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "You will be able to register your database once you have installed your first app."
-msgstr ""
+msgstr "Du kan registrera din databas när du har installerat din första app."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription code"
-msgstr ""
+msgstr "Din prenumerationskod"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription is already linked to a database."
-msgstr ""
+msgstr "Din prenumeration är redan kopplad till en databas."
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription was updated and is valid until"
-msgstr ""
+msgstr "Din prenumeration har uppdaterats och är giltig fram till"
 
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "buy a subscription"
-msgstr ""
+msgstr "köp en prenumeration"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -403,4 +413,4 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
-msgstr ""
+msgstr "- öppna mig var som helst med"

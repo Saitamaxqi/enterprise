@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_cohort
+# * web_cohort
 #
 # Translators:
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Malaz Abuidris <msea@odoo.com>, 2022\n"
-"Language-Team: Arabic (https://app.transifex.com/odoo/teams/41243/ar/)\n"
+"PO-Revision-Date: 2025-09-16 13:39+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"web_cohort/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_cohort
 #. odoo-python
@@ -48,19 +51,19 @@ msgstr "متوسط"
 #. module: web_cohort
 #: model:ir.model,name:web_cohort.model_base
 msgid "Base"
-msgstr "أساس"
+msgstr "قاعدة"
 
 #. module: web_cohort
 #: model:ir.model.fields.selection,name:web_cohort.selection__ir_actions_act_window_view__view_mode__cohort
 #: model:ir.model.fields.selection,name:web_cohort.selection__ir_ui_view__type__cohort
 msgid "Cohort"
-msgstr "جماعي "
+msgstr "جماعي"
 
 #. module: web_cohort
 #. odoo-python
 #: code:addons/web_cohort/controllers/main.py:0
 msgid "Cohort %(title)s (%(model_name)s)"
-msgstr "جماعي %(title)s (%(model_name)s) "
+msgstr "جماعي %(title)s (%(model_name)s)"
 
 #. module: web_cohort
 #. odoo-javascript
@@ -84,13 +87,13 @@ msgstr "اليوم"
 #. odoo-javascript
 #: code:addons/web_cohort/static/src/cohort_renderer.xml:0
 msgid "Download as Excel file"
-msgstr "التنزيل كملف Excel "
+msgstr "التنزيل كملف Excel"
 
 #. module: web_cohort
 #. odoo-javascript
 #: code:addons/web_cohort/static/src/cohort_renderer.xml:0
 msgid "Main actions"
-msgstr "الإجراءات الرئيسية "
+msgstr "الإجراءات الرئيسية"
 
 #. module: web_cohort
 #. odoo-javascript
@@ -102,7 +105,7 @@ msgstr "الشهر"
 #. odoo-javascript
 #: code:addons/web_cohort/static/src/cohort_renderer.xml:0
 msgid "No data available."
-msgstr "لا توجد بيانات متاحة. "
+msgstr "لا توجد بيانات متاحة."
 
 #. module: web_cohort
 #. odoo-javascript
@@ -111,11 +114,13 @@ msgid ""
 "Period: %(period)s\n"
 "%(measure)s: %(count)s"
 msgstr ""
+"الفترة: %(period)s\n"
+"%(measure)s: %(count)s"
 
 #. module: web_cohort
 #: model:ir.model,name:web_cohort.model_ir_ui_view
 msgid "View"
-msgstr "عرض "
+msgstr "أداة العرض"
 
 #. module: web_cohort
 #: model:ir.model.fields,field_description:web_cohort.field_ir_actions_act_window_view__view_mode

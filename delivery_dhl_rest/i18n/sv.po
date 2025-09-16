@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_dhl_rest
+# * delivery_dhl_rest
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:28+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_dhl_rest/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__0
@@ -58,7 +62,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_pdf
 msgid "6X4_PDF"
-msgstr ""
+msgstr "6X4_PDF"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_template__6x4_thermal
@@ -123,12 +127,12 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__am
 msgid "America"
-msgstr ""
+msgstr "Amerika"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__ap
 msgid "Asia Pacific"
-msgstr ""
+msgstr "Asien, stilla havet"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__b
@@ -143,12 +147,12 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Bärare"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,help:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Check this if your package is dutiable."
-msgstr ""
+msgstr "Kryssa i om ditt paket är tullpliktigt."
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -164,13 +168,13 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__d
 msgid "D - Express Worldwide"
-msgstr ""
+msgstr "D - Express Worldwide"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__delivery_type__dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__stock_package_type__package_carrier_type__dhl_rest
 msgid "DHL"
-msgstr ""
+msgstr "DHL"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_api_key
@@ -198,7 +202,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_account_number
 msgid "DHL Account Number"
-msgstr ""
+msgstr "DHL-kontonummer"
 
 #. module: delivery_dhl_rest
 #: model:delivery.carrier,name:delivery_dhl_rest.delivery_carrier_dhl_be_dom
@@ -209,7 +213,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "DHL Configuration"
-msgstr ""
+msgstr "DHL-konfiguration"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -228,6 +232,7 @@ msgstr ""
 msgid ""
 "DHL account number is missing, please modify your delivery method settings."
 msgstr ""
+"DHL kontonummer saknas, vänligen  ändra inställningarna för leveransmetod"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_default_package_type_id
@@ -243,12 +248,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_dutiable
 msgid "Dutiable Material"
-msgstr ""
+msgstr "Tullpliktig vara"
 
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
@@ -268,7 +273,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_region_code__eu
 msgid "Europe"
-msgstr ""
+msgstr "Europa"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_rate_request
@@ -325,7 +330,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_unit_system__imperial
@@ -346,7 +351,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__k
 msgid "K - Express 9:00"
-msgstr ""
+msgstr "K - Express 9:00"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__l
@@ -381,7 +386,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__n
 msgid "N - Domestic Express"
-msgstr ""
+msgstr "N - Inrikes Express"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__o
@@ -391,7 +396,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model_terms:ir.ui.view,arch_db:delivery_dhl_rest.view_delivery_carrier_form_with_provider_dhl
 msgid "Options"
-msgstr ""
+msgstr "Alternativ"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__p
@@ -401,18 +406,18 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_label_image_format__pdf
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Vänligen ange minst ett objekt att frakta"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Leverantör"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__q
@@ -427,12 +432,12 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__r
 msgid "Recipient"
-msgstr ""
+msgstr "Mottagare"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_region_code
 msgid "Region"
-msgstr ""
+msgstr "Region"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__s
@@ -442,7 +447,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_duty_payment__s
 msgid "Sender"
-msgstr ""
+msgstr "Sändare"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -453,7 +458,7 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Leveranssätt"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -464,12 +469,12 @@ msgstr ""
 #. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Lager Emballagetyp"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__t
 msgid "T - Express 12:00"
-msgstr ""
+msgstr "T - Express 12:00"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -486,6 +491,8 @@ msgid ""
 "The address of your company warehouse is missing or wrong (Missing field(s) :\n"
 " %s)"
 msgstr ""
+"Adressen för ditt företagslager saknas eller är fel. (saknade fält) : \n"
+"%s)"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -502,6 +509,8 @@ msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
 msgstr ""
+"Paketet kan inte skapas eftersom den totala vikten för produkterna i "
+"plockningen är 0.0 %s"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -557,7 +566,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
 msgid "You can't cancel DHL shipping without pickup date."
-msgstr ""
+msgstr "Det går inte att avbryta DHL-frakt utan hämtningsdatum."
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__z

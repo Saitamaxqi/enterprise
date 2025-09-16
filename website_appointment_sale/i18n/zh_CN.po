@@ -1,29 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_appointment_sale
+# * website_appointment_sale
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 15:27+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/website_appointment_sale/zh_Hans/>\n"
+"Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-check me-1\" role=\"img\"/>Booked"
-msgstr ""
+msgstr "<i class=\"fa fa-check me-1\" role=\"img\"/>已预订"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-clock-o me-1\" role=\"img\"/>Awaiting Payment"
-msgstr ""
+msgstr "<i class=\"fa fa-clock-o me-1\" role=\"img\"/>等待付款"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
@@ -31,21 +35,23 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle me-1\" role=\"img\"/>\n"
 "                            Please Contact Us"
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle me-1\" role=\"img\"/>\n"
+"                            请联系我们"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "<i class=\"fa fa-thumbs-up me-1\"/>Reserved"
-msgstr ""
+msgstr "<i class=\"fa fa-thumbs-up me-1\"/>已预留"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__calendar_booking_ids
 msgid "Bookings"
-msgstr ""
+msgstr "预订"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_calendar_event
 msgid "Calendar Event"
-msgstr ""
+msgstr "日历事件"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__display_name
@@ -54,7 +60,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "显示名称"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__id
@@ -63,63 +69,63 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_product_product__is_booking_fee
 msgid "Is Booking Fee"
-msgstr ""
+msgstr "是预订费用"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order_line__calendar_event_id
 msgid "Meeting"
-msgstr ""
+msgstr "会议"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_calendar_booking
 msgid "Meeting Booking"
-msgstr ""
+msgstr "会议预订"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_sale_order__calendar_event_count
 msgid "Meetings"
-msgstr ""
+msgstr "会议"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.website_sale_confirmation_appointment
 msgid "Oops, it looks like the following Meeting(s) were not booked smoothly:"
-msgstr ""
+msgstr "哎呀，看来以下会议未能顺利预订："
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "产品变体"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.calendar_event_view_form
 msgid "Sale Order"
-msgstr ""
+msgstr "销售订单"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_booking__order_line_id
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_event__sale_order_line_ids
 msgid "Sale Order Line"
-msgstr ""
+msgstr "销售订单明细"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "销售订单"
 
 #. module: website_appointment_sale
 #: model:ir.model.fields,field_description:website_appointment_sale.field_calendar_event__sale_order_count
 msgid "Sales Order Count"
-msgstr ""
+msgstr "销售订单数量"
 
 #. module: website_appointment_sale
 #: model:ir.model,name:website_appointment_sale.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "销售订单明细"
 
 #. module: website_appointment_sale
 #. odoo-python
@@ -129,6 +135,10 @@ msgid ""
 "\n"
 "%(bookings)s"
 msgstr ""
+"以下预订在所选时段内不再可用，您的购物车必须更新。对于给您带来的不便，我们深"
+"表歉意。\n"
+"\n"
+"%(bookings)s"
 
 #. module: website_appointment_sale
 #. odoo-python
@@ -136,14 +146,14 @@ msgstr ""
 msgid ""
 "The following bookings were not confirmed due to insufficient availability "
 "or configuration changes: %s"
-msgstr ""
+msgstr "由于可用性不足或配置更改，以下预订未得到确认：%s"
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "Timezone:"
-msgstr ""
+msgstr "时区："
 
 #. module: website_appointment_sale
 #: model_terms:ir.ui.view,arch_db:website_appointment_sale.appointment_sale_confirmation_cards
 msgid "View Details"
-msgstr ""
+msgstr "查看详情"

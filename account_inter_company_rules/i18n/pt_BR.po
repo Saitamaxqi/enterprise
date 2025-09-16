@@ -1,23 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_inter_company_rules
+# * account_inter_company_rules
 #
 # Translators:
 # Martin Trigaux, 2022
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Portuguese (Brazil) (https://app.transifex.com/odoo/teams/41243/pt_BR/)\n"
+"PO-Revision-Date: 2025-09-16 12:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
+"odoo-19/account_inter_company_rules/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
+"1000000 == 0) ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_inter_company_rules
 #. odoo-python
@@ -30,13 +34,13 @@ msgstr "%s Fatura: %s"
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_move__auto_generated
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_payment__auto_generated
 msgid "Auto Generated Document"
-msgstr "Documento Gerado Automaticamente"
+msgstr "Documento gerado automaticamente"
 
 #. module: account_inter_company_rules
 #. odoo-python
 #: code:addons/account_inter_company_rules/models/account_move.py:0
 msgid "Automatically generated from %(origin)s of company %(company)s."
-msgstr ""
+msgstr "Gerado automaticamente a partir de %(origin)s da empresa %(company)s."
 
 #. module: account_inter_company_rules
 #: model:ir.model,name:account_inter_company_rules.model_res_company
@@ -69,7 +73,7 @@ msgstr ""
 #. module: account_inter_company_rules
 #: model_terms:ir.ui.view,arch_db:account_inter_company_rules.view_company_inter_change_inherit_form
 msgid "Inter-Company Transactions"
-msgstr "Transações interempresariais"
+msgstr "Transações entre empresas"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__intercompany_transaction_message
@@ -80,18 +84,20 @@ msgstr "Mensagem de transação interempresarial"
 #. module: account_inter_company_rules
 #: model:ir.model,name:account_inter_company_rules.model_account_move
 msgid "Journal Entry"
-msgstr "Lançamento de Diário"
+msgstr "Lançamento de diário"
 
 #. module: account_inter_company_rules
 #: model:ir.model,name:account_inter_company_rules.model_account_move_line
 msgid "Journal Item"
-msgstr "Item de Diário"
+msgstr "Item de diário"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,help:account_inter_company_rules.field_res_company__intercompany_user_id
 #: model:ir.model.fields,help:account_inter_company_rules.field_res_config_settings__intercompany_user_id
 msgid "Responsible user for creation of documents triggered by intercompany rules."
-msgstr "Utilizador responsável pela criação de documentos desencadeados por regras intercompanhias."
+msgstr ""
+"Usuário responsável pela criação de documentos desencadeados por regras "
+"interempresariais."
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__rule_type
@@ -115,7 +121,7 @@ msgstr "Selecione o tipo para configurar as regras da empresa na empresa selecio
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_move__auto_invoice_id
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_payment__auto_invoice_id
 msgid "Source Invoice"
-msgstr "Fonte da Fatura"
+msgstr "Fatura de origem"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields.selection,name:account_inter_company_rules.selection__res_company__rule_type__invoice_and_refund

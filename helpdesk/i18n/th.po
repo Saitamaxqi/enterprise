@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* helpdesk
+# * helpdesk
 #
 # Translators:
 # monchai7 <montchye@gmail.com>, 2022
@@ -9,25 +9,27 @@
 # Khwunchai Jaengsawang <khwunchai.j@ku.th>, 2022
 # Wichanon Jamwutthipreecha, 2022
 # Martin Trigaux, 2022
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Martin Trigaux, 2022\n"
-"Language-Team: Thai (https://app.transifex.com/odoo/teams/41243/th/)\n"
+"PO-Revision-Date: 2025-09-16 22:56+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/helpdesk/th/"
+">\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__answered_customer_message_count
 msgid "# Exchanges"
-msgstr ""
+msgstr "# การแลกเปลี่ยน"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__open_ticket_count
@@ -47,7 +49,7 @@ msgstr "# นโยบาย SLA"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__urgent_ticket
 msgid "# Urgent Ticket"
-msgstr ""
+msgstr "# ทิกเก็ตเร่งด่วน"
 
 #. module: helpdesk
 #. odoo-python
@@ -60,7 +62,7 @@ msgstr "%s (สำเนา)"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "(any of these tags)"
-msgstr ""
+msgstr "(แท็กเหล่านี้)"
 
 #. module: helpdesk
 #: model:helpdesk.sla,name:helpdesk.helpdesk_sla_1
@@ -75,7 +77,7 @@ msgstr "อีก 7 วันจะเสร็จ"
 #. module: helpdesk
 #: model:helpdesk.sla,name:helpdesk.helpdesk_sla_3
 msgid "8 hours to finish"
-msgstr ""
+msgstr "อีก 8 ชั่วโมงจะเสร็จ"
 
 #. module: helpdesk
 #: model_terms:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
@@ -238,6 +240,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "<i class=\"fa fa-lg fa-clock-o me-2 mt-1\" aria-label=\"Sla Deadline\" title=\"Sla Deadline\"/>"
 msgstr ""
+"<i class=\"fa fa-lg fa-clock-o me-2 mt-1\" aria-label=\"วันครบกำหนด Sla\" "
+"title=\"วันครบกำหนด Sla\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -258,12 +262,12 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-lightbulb-o\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-lightbulb-o\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<i class=\"fa fa-warning\"/>&amp;nbsp;"
-msgstr ""
+msgstr "<i class=\"fa fa-warning\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
@@ -288,12 +292,12 @@ msgstr "<span class=\"o_field_widget o_readonly_modifier\">ชั่วโมง
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "<span class=\"o_stat_text order-2\">Open</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text order-2\">เปิด</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "<span class=\"o_stat_text order-2\">Tickets</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text order-2\">ทิกเก็ต</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -302,6 +306,9 @@ msgid ""
 "                                    Avg. Rating\n"
 "                                </span>"
 msgstr ""
+"<span class=\"o_stat_text\">\n"
+"                                    คะแนน เฉลี่ย\n"
+"                                </span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_partner_form_inherit_helpdesk
@@ -316,7 +323,7 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid "<span class=\"o_stat_text\">Rating</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">คะแนน</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -341,12 +348,12 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "<span><b>Followers </b></span>"
-msgstr ""
+msgstr "<span><b>ผู้ติดตาม </b></span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>Average Rating</span>"
-msgstr ""
+msgstr "<span>คะแนนเฉลี่ย</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -356,12 +363,12 @@ msgstr "<span>รายงาน</span>"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>SLA Success Rate</span>"
-msgstr ""
+msgstr "<span>อัตราความสำเร็จของ SLA</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<span>Tickets Closed</span>"
-msgstr ""
+msgstr "<span>ทิกเก็ตที่ปิดแล้ว</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -372,6 +379,7 @@ msgstr "<span>มุมมอง</span>"
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "<span>Your ticket has successfully been closed. Thank you for your collaboration.</span>"
 msgstr ""
+"<span>ทิกเก็ตของคุณถูกปิดเรียบร้อยแล้ว ขอบคุณสำหรับความร่วมมือของคุณ</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -421,7 +429,7 @@ msgstr "พจนานุกรม Python ที่จะถูกประเ�
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_tag_name_uniq
 msgid "A tag with the same name already exists."
-msgstr ""
+msgstr "มีแท็กที่มีชื่อเดียวกันนี้อยู่แล้ว"
 
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_ticket_type_name_uniq
@@ -436,7 +444,7 @@ msgstr "เกี่ยวกับทีม"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Accept Emails From"
-msgstr ""
+msgstr "ยอมรับฟอร์มอีเมล"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__access_instruction_message
@@ -520,6 +528,7 @@ msgstr "เพิ่มคำอธิบาย..."
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Add your stage and place it at the right step of your workflow by dragging & dropping it."
 msgstr ""
+"เพิ่มขั้นตอนของคุณและวางไว้ในขั้นตอนที่ถูกต้องของเวิร์กโฟลว์ของคุณโดยการลากและวาง"
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_helpdesk_manager
@@ -554,7 +563,7 @@ msgstr "นามแฝง"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_status
 msgid "Alias Status"
-msgstr ""
+msgstr "สถานะนามแฝง"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_domain
@@ -569,7 +578,7 @@ msgstr "อีเมงนามแฝง"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_status
 msgid "Alias status assessed on the last message received."
-msgstr ""
+msgstr "ประเมินสถานะนามแฝงตามข้อความล่าสุดที่ได้รับ"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_model_id
@@ -590,7 +599,7 @@ msgstr "ทิกเก็ตทั้งหมด"
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__privacy_visibility__internal
 msgid "All internal users (company)"
-msgstr ""
+msgstr "ผู้ใช้ภายในทั้งหมด (บริษัท)"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -600,7 +609,7 @@ msgstr "ให้ลูกค้าของคุณปิดทิกเก็
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 msgid "Archive Stages"
-msgstr ""
+msgstr "ขั้นตอนการเก็บถาวร"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
@@ -621,12 +630,12 @@ msgstr "เก็บถาวรแล้ว"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_confirmation_wizard
 msgid "Are you sure you want to continue?"
-msgstr ""
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการดำเนินการต่อ?"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 msgid "Are you sure you want to delete these stages?"
-msgstr ""
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการลบขั้นตอนเหล่านี้"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -689,12 +698,14 @@ msgstr "จำนวนสิ่งที่แนบมา"
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_auto_assignment
 msgid "Auto Assigment"
-msgstr ""
+msgstr "การมอบหมายอัตโนมัติ"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Automate the assignment of new tickets to the right people, and make sure all tickets are being handled"
 msgstr ""
+"กำหนดทิกเก็ตใหม่ให้กับบุคคลที่เหมาะสมโดยอัตโนมัติ "
+"และตรวจสอบให้แน่ใจว่าทิกเก็ตทั้งหมดได้รับการจัดการแล้ว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__auto_assignment
@@ -715,7 +726,7 @@ msgstr "เฉลี่ย"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__avg_response_hours
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__avg_response_hours
 msgid "Average Hours to Respond"
-msgstr ""
+msgstr "ชั่วโมงในการตอบกลับเฉลี่ย"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -724,12 +735,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_avg
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Average Rating"
-msgstr ""
+msgstr "คะแนนเฉลี่ย"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__rating_avg_percentage
 msgid "Average Rating (%)"
-msgstr ""
+msgstr "คะแนนเฉลี่ย (%)"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -752,7 +763,7 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Average rating for the last 7 days"
-msgstr ""
+msgstr "คะแนนเฉลี่ยในช่วง 7 วันที่ผ่านมา"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -764,7 +775,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_dashboard/helpdesk_team_dashboard.xml:0
 msgid "Avg Last 7 days"
-msgstr ""
+msgstr "เฉลี่ย 7 วันที่ผ่านมา"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -832,7 +843,7 @@ msgstr "ปิด"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "Close Ticket"
-msgstr ""
+msgstr "ปิดทิกเก็ต"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__close_date
@@ -928,7 +939,7 @@ msgstr "ฟอรั่มชุมชน"
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_company
 msgid "Companies"
-msgstr "หลายบริษัท"
+msgstr "บริษัท"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__company_id
@@ -942,7 +953,7 @@ msgstr "หลายบริษัท"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_report_analysis_view_search
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
 msgid "Company"
-msgstr "บริษัทเดียว"
+msgstr "บริษัท"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_menu_config
@@ -993,6 +1004,8 @@ msgstr "สร้างเทมเพลตใหม่"
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_dashboard_action_main
 msgid "Create teams to organize your tickets by expertise or geographical region, and define a different workflow for each team."
 msgstr ""
+"สร้างทีมเพื่อจัดระเบียบทิกเก็ตของคุณตามความเชี่ยวชาญหรือพื้นที่ "
+"และกำหนดขั้นตอนการทำงานที่แตกต่างกันสำหรับแต่ละทีม"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1120,7 +1133,7 @@ msgstr "ลูกค้า"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid "Customers will be added to the followers of their tickets."
-msgstr ""
+msgstr "ลูกค้าจะถูกเพิ่มเข้าไปในผู้ติดตามทิกเก็ตของพวกเขา"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -1168,12 +1181,12 @@ msgstr "ลบ"
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_unarchive_wizard
 msgid "Delete Stage"
-msgstr ""
+msgstr "ลบขั้นตอน"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Describe your team to your colleagues and customers..."
-msgstr ""
+msgstr "อธิบายทีมของคุณให้กับเพื่อนร่วมงานและลูกค้าของคุณ..."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__description
@@ -1239,12 +1252,12 @@ msgstr "ผู้ใช้โดเมน"
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__assign_method__balanced
 msgid "Each user has an equal number of open tickets"
-msgstr ""
+msgstr "ผู้ใช้แต่ละคนมีจำนวนทิกเก็ตที่เปิดเท่ากัน"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__assign_method__randomly
 msgid "Each user is assigned an equal number of tickets"
-msgstr ""
+msgstr "ผู้ใช้แต่ละคนจะได้รับทิกเก็ตจำนวนเท่ากัน"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_kanban
@@ -1269,6 +1282,9 @@ msgid ""
 "By default, the email will be sent from the email alias of the helpdesk team.\n"
 "Otherwise it will be sent from the company's email address, or from the catchall (as defined in the System Parameters)."
 msgstr ""
+"อีเมลจะถูกส่งไปยังลูกค้าโดยอัตโนมัติเมื่อทิกเก็ตมาถึงขั้นตอนนี้\n"
+"ตามค่าเริ่มต้น อีเมลจะถูกส่งจากอีเมลแทนของทีม Helpdesk\n"
+"ไม่เช่นนั้น จะถูกส่งจากที่อยู่อีเมลของบริษัท หรือจาก catchall (ตามที่กำหนดไว้ในระบบพารามิเตอร์)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__email_cc
@@ -1288,7 +1304,7 @@ msgstr "อีเมลที่ส่งไปยังนามแฝงขอ
 #. module: helpdesk
 #: model:mail.template,description:helpdesk.rating_ticket_request_email_template
 msgid "Enable \"customer ratings\" feature on the helpdesk team"
-msgstr ""
+msgstr "เปิดใช้งานฟีเจอร์ \"การให้คะแนนลูกค้า\" ในทีม Helpdesk"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_slides
@@ -1304,7 +1320,7 @@ msgstr "ป้อน<b>หัวเรื่อง</b> ทิกเก็ตข�
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__exceeded_hours
 msgid "Exceeded Working Hours"
-msgstr ""
+msgstr "เกินชั่วโมงทำงาน"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__exclude_stage_ids
@@ -1325,13 +1341,13 @@ msgstr "นโยบาย SLA ล้มเหลว"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__sla_failed
 msgid "Failed SLA Ticket"
-msgstr ""
+msgstr "ทิกเก็ต SLA ล้มเหลว"
 
 #. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_dashboard/helpdesk_team_dashboard.xml:0
 msgid "Failed Tickets"
-msgstr ""
+msgstr "ทิกเก็ตที่ล้มเหลว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_fsm
@@ -1358,7 +1374,7 @@ msgstr "พับในคัมบัง"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Follow All Team's Tickets"
-msgstr ""
+msgstr "ติดตามทิกเก็ตของทีมทั้งหมด"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
@@ -1404,7 +1420,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_analysis_action
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_analysis_dashboard_action
 msgid "Get statistics on your tickets and how long it takes to assign and resolve them."
-msgstr ""
+msgstr "รับสถิติทิกเก็ตของคุณ ที่รวมถึงระยะเวลาที่ใช้ในการมอบหมายและแก้ไขปัญหา"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1421,12 +1437,16 @@ msgstr "มอบส่วนลดหรือสินค้าฟรี"
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid "Grant employees access to your helpdesk team or tickets by adding them as followers. Employees automatically get access to the tickets they are assigned to."
 msgstr ""
+"ให้สิทธิ์พนักงานในการเข้าถึงทีม Helpdesk หรือทิกเก็ตของคุณโดยเพิ่มพวกเขาเป็นผู้ติดตาม "
+"พนักงานจะสามารถเข้าถึงทิกเก็ตที่พวกเขาได้รับมอบหมายโดยอัตโนมัติ"
 
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid "Grant portal users access to your helpdesk team or tickets by adding them as followers. Customers automatically get access to their tickets in their portal."
 msgstr ""
+"ให้สิทธิ์ผู้ใช้พอร์ทัลในการเข้าถึงทีม Helpdesk หรือทิกเก็ตของคุณโดยเพิ่มพวกเขาเป็นผู้ติดตาม "
+"ลูกค้าจะสามารถเข้าถึงทิกเก็ตในพอร์ทัลได้โดยอัตโนมัติ"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_ticket__kanban_state__done
@@ -1491,7 +1511,7 @@ msgstr "มีข้อความ"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_reached
 msgid "Has SLA reached"
-msgstr ""
+msgstr "SLA ได้มาถึงแล้ว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_reached_late
@@ -1501,7 +1521,7 @@ msgstr "SLA มาถึงล่าช้าหรือไม่?"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Help Center"
-msgstr ""
+msgstr "ศูนย์ช่วยเหลือ"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.menu_helpdesk_root
@@ -1527,7 +1547,7 @@ msgstr "ขั้นตอนการดูแลช่วยเหลือ"
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_stage_delete_wizard
 msgid "Helpdesk Stage Delete Wizard"
-msgstr ""
+msgstr "โปรแกรมการลบขั้นตอน Helpdesk"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_tag
@@ -1542,7 +1562,7 @@ msgstr "แท็การดูแลช่วยเหลือ"
 #: model_terms:ir.ui.view,arch_db:helpdesk.rating_rating_view_search_inherit_helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.rating_rating_view_tree_inherit_helpdesk
 msgid "Helpdesk Team"
-msgstr "ทีมดูแลช่วยเหลือ"
+msgstr "ทีม Helpdesk"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_helpdesk_ticket
@@ -1574,12 +1594,12 @@ msgstr ""
 #. module: helpdesk
 #: model:mail.template,name:helpdesk.solved_ticket_request_email_template
 msgid "Helpdesk: Ticket Closed"
-msgstr ""
+msgstr "Helpdesk: ปิดทิกเก็ตแล้ว"
 
 #. module: helpdesk
 #: model:mail.template,name:helpdesk.rating_ticket_request_email_template
 msgid "Helpdesk: Ticket Rating Request"
-msgstr ""
+msgstr "Helpdesk: คำขอจัดอันดับทิกเก็ต"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -1629,7 +1649,7 @@ msgstr "ชั่วโมงที่ปิด"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__first_response_hours
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__first_response_hours
 msgid "Hours to First Response"
-msgstr ""
+msgstr "ชั่วโมงในการตอบกลับครั้งแรก"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_deadline_hours
@@ -1655,7 +1675,8 @@ msgstr "ไอดี"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_parent_thread_id
 msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ไอดีของบันทึกหลักที่มีนามแฝง (ตัวอย่าง: โปรเจกต์ที่มีนามแฝงในการสร้างงาน)"
+msgstr ""
+"ไอดีของบันทึกหลักที่มีนามแฝง (ตัวอย่าง: โปรเจ็กต์ที่มีนามแฝงในการสร้างงาน)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__activity_exception_icon
@@ -1730,12 +1751,12 @@ msgstr "ระยะเวลาที่ไม่ใช้งาน(วัน)"
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__privacy_visibility__invited_internal
 msgid "Invited internal users (private)"
-msgstr ""
+msgstr "ผู้ใช้ภายในที่ได้รับเชิญ (ส่วนตัว)"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_team__privacy_visibility__portal
 msgid "Invited portal users and all internal users (public)"
-msgstr ""
+msgstr "ผู้ใช้พอร์ทัลที่ได้รับเชิญและผู้ใช้ภายในทั้งหมด (สาธารณะ)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_is_follower
@@ -1797,13 +1818,13 @@ msgstr "ค่าปิดของทิกเก็ตดูแลช่วย
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Last 3 months"
-msgstr "3 เดือนล่าสุด "
+msgstr "3 เดือนล่าสุด"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
 #: model_terms:ir.ui.view,arch_db:helpdesk.rating_rating_view_search_inherit_helpdesk
 msgid "Last 30 Days"
-msgstr ""
+msgstr "30 วันที่ผ่านมา"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_report_analysis_view_search
@@ -1861,7 +1882,7 @@ msgstr "กิจกรรมล่าสุด"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_data
 msgid "Latest Ratings"
-msgstr ""
+msgstr "การให้คะแนนล่าสุด"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1878,7 +1899,7 @@ msgstr "มาสร้าง<b>ทิกเก็ต</b>แรกของค�
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Let's go back to the <b>kanban view</b> to get an overview of your next tickets."
-msgstr ""
+msgstr "กลับไปที่ <b>มุมมองคัมบัง</b> เพื่อดูภาพรวมของทิกเก็ตใบต่อไปของคุณ"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -1926,16 +1947,18 @@ msgstr "ตรวจสอบให้แน่ใจว่าทิกเก็
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__time
 msgid "Maximum number of working hours a ticket should take to reach the target stage, starting from the date it was created."
 msgstr ""
+"จำนวนชั่วโมงทำงานสูงสุดที่ทิกเก็ตควรใช้เพื่อไปยังขั้นตอนเป้าหมาย โดยเริ่มจากวันที่สร้างขึ้น"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.rating_rating_action_helpdesk
 msgid "Measure your customer satisfaction by sending rating requests when your tickets are solved."
 msgstr ""
+"สอบถามความพึงพอใจของลูกค้าโดยส่งคำขอคะแนนเมื่อทิกเก็ตของคุณได้รับการแก้ไขเรียบร้อยแล้ว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__medium_id
 msgid "Medium"
-msgstr "สื่อกลาง"
+msgstr "ปานกลาง"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
@@ -1951,7 +1974,7 @@ msgstr "ความสำคัญปานกลาง"
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_ticket__priority__1
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_ticket_report_analysis__priority__1
 msgid "Medium priority"
-msgstr ""
+msgstr "ลำดับความสำคัญระดับปานกลาง"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_ir_ui_menu
@@ -2005,7 +2028,7 @@ msgstr "วันครบกำหนดกิจกรรมของฉัน
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_tree
 msgid "My Deadline"
-msgstr ""
+msgstr "วันครบกำหนดของฉัน"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -2060,6 +2083,7 @@ msgstr "ใหม่"
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__assign_method
 msgid "New tickets will automatically be assigned to the team members that are available, according to their working hours and their time off."
 msgstr ""
+"ทิกเก็ตใหม่จะถูกมอบหมายให้กับสมาชิกในทีมที่ว่างโดยอัตโนมัติ ตามเวลาทำงานและเวลาพักของพวกเขา"
 
 #. module: helpdesk
 #. odoo-python
@@ -2101,7 +2125,7 @@ msgstr "ไม่พบนโยบาย SLA มาสร้างมันก�
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.mail_activity_type_action_config_helpdesk
 msgid "No activity types found. Let's create one!"
-msgstr ""
+msgstr "ไม่พบประเภทกิจกรรม มาสร้างกันเถอะ!"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_report_analysis_action
@@ -2136,7 +2160,7 @@ msgstr "ไม่พบทีม"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_team_action
 msgid "No teams found. Let's create one!"
-msgstr ""
+msgstr "ไม่พบทีม มาสร้างกันเถอะ!"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_my_ticket_action_no_create
@@ -2186,7 +2210,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_delete_wizard__ticket_count
 msgid "Number of Tickets"
-msgstr ""
+msgstr "จำนวนทิกเก็ต"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_has_error_counter
@@ -2209,12 +2233,12 @@ msgstr "จํานวนข้อความที่มีข้อผิด
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Number of open tickets with at least one SLA failed."
-msgstr ""
+msgstr "จำนวนทิกเก็ตที่เปิดอยู่มี SLA อย่างน้อยหนึ่งรายการที่ล้มเหลว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__partner_open_ticket_count
 msgid "Number of other open tickets from the same partner"
-msgstr ""
+msgstr "จำนวนทิกเก็ตที่เปิดอยู่จากพาร์ทเนอร์เดียวกัน"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__partner_ticket_count
@@ -2224,7 +2248,7 @@ msgstr "จำนวนของทิกเก็ตอื่น ๆ จาก�
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Number of tickets closed in the past 7 days."
-msgstr ""
+msgstr "จำนวนทิกเก็ตที่ถูกปิดใน 7 วันที่ผ่านมา"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
@@ -2240,12 +2264,12 @@ msgstr ""
 #. module: helpdesk
 #: model:helpdesk.stage,name:helpdesk.stage_on_hold
 msgid "On Hold"
-msgstr ""
+msgstr "ระงับไว้"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_sla_status__status__ongoing
 msgid "Ongoing"
-msgstr "ต่อเนื่อง"
+msgstr "กำลังดำเนินการ"
 
 #. module: helpdesk
 #. odoo-python
@@ -2336,11 +2360,24 @@ msgid ""
 "- Invited portal users and all internal users: all internal users can access the team and all of its tickets without distinction.\n"
 "Portal users can only access the tickets they are following. This access can be modified on each ticket individually by adding or removing the portal user as follower."
 msgstr ""
+"ผู้คนที่จะสามารถมองเห็นทีม Helpdesk และทิกเก็ตของทีมนี้ได้\n"
+"\n"
+"- ผู้ใช้ภายในที่ได้รับเชิญ: ผู้ใช้ภายในสามารถเข้าถึงทีมและทิกเก็ตที่พวกเขาติดตาม "
+"การเข้าถึงนี้สามารถแก้ไขได้บนทิกเก็ตแต่ละใบแยกกันโดยการเพิ่มหรือลบผู้ใช้ที่เป็นผู้ติดตาม\n"
+"ผู้ใช้ที่มีสิทธิ์การเข้าถึงของผู้ดูแลระบบ > สามารถเข้าถึงทีมนี้และทิกเก็ตได้ "
+"แม้ว่าพวกเขาจะไม่ได้เป็นส่วนหนึ่งของผู้ติดตามอย่างชัดเจนก็ตาม\n"
+"\n"
+"- ผู้ใช้ภายในทั้งหมด: ผู้ใช้ภายในทุกคนสามารถเข้าถึงทีมและทิกเก็ตทั้งหมดโดยไม่มีความแตกต่าง\n"
+"\n"
+"- ผู้ใช้พอร์ทัลที่ได้รับเชิญและผู้ใช้ภายในทั้งหมด: "
+"ผู้ใช้ภายในทุกคนสามารถเข้าถึงทีมและทิกเก็ตทั้งหมดโดยไม่มีความแตกต่าง\n"
+"ผู้ใช้พอร์ทัลสามารถเข้าถึงเฉพาะทิกเก็ตที่พวกเขาติดตามได้เท่านั้น "
+"การเข้าถึงนี้สามารถแก้ไขได้บนทิกเก็ตแต่ละใบแยกกันโดยการเพิ่มหรือลบผู้ใช้พอร์ทัลที่เป็นผู้ติดตาม"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "People to whom this team and its tickets will be visible"
-msgstr ""
+msgstr "ผู้คนที่จะสามารถมองเห็นทีม Helpdesk และทิกเก็ตของทีมนี้ได้"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__rating_percentage_satisfaction
@@ -2357,6 +2394,8 @@ msgstr "เปอร์เซ็นต์ของทิกเก็ตที่
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "Percentage of tickets whose SLAs have successfully been reached on time over the total number of tickets closed within the past 7 days."
 msgstr ""
+"เปอร์เซ็นต์ของทิกเก็ตที่เสร็จ SLA ได้ตรงเวลามากกว่าจำนวนทิกเก็ตทั้งหมดที่ถูกปิดแล้วภายใน 7 "
+"วันที่ผ่านมา"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2389,19 +2428,19 @@ msgstr "วางแผนการแทรกแซงในสถานที
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_target/helpdesk_team_target.js:0
 msgid "Please enter a number."
-msgstr ""
+msgstr "กรุณากรอกตัวเลข"
 
 #. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_target/helpdesk_team_target.js:0
 msgid "Please enter a percentage below 100."
-msgstr ""
+msgstr "โปรดกรอกเปอร์เซ็นต์ที่ต่ำกว่า 100"
 
 #. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_target/helpdesk_team_target.js:0
 msgid "Please enter a positive value."
-msgstr ""
+msgstr "กรุณากรอกจำนวนที่มีค่าเป็นบวก"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_contact
@@ -2425,7 +2464,7 @@ msgstr "พอทัลสำหรับเข้าถึง URL"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid "Portal users will be removed from the followers of the team and its tickets."
-msgstr ""
+msgstr "ผู้ใช้พอร์ทัลจะถูกลบออกจากผู้ติดตามของทีมและทิกเก็ตของทีม"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__priority
@@ -2479,7 +2518,7 @@ msgstr "การให้คะแนน (/5)"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_avg_text
 msgid "Rating Avg Text"
-msgstr ""
+msgstr "ข้อความเฉลี่ยการให้คะแนน"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_feedback
@@ -2505,7 +2544,7 @@ msgstr "การให้คะแนนความพึงพอใจ"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_last_text
 msgid "Rating Text"
-msgstr ""
+msgstr "ข้อความการให้คะแนน"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rating_count
@@ -2555,6 +2594,7 @@ msgstr "พร้อม"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Receive notifications whenever tickets are created, rated or discussed on in this team"
 msgstr ""
+"รับการแจ้งเตือนทุกครั้งที่มีการสร้าง จัดอันดับ หรือแชทเกี่ยวกับทิกเก็ตในทีมนี้"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_force_thread_id
@@ -2624,7 +2664,7 @@ msgstr "ซ่อมแซม"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
 msgid "Reported on"
-msgstr ""
+msgstr "รายงานเมื่อ"
 
 #. module: helpdesk
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_main
@@ -2677,7 +2717,7 @@ msgstr "SLA"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_report_analysis_view_search
 msgid "SLA Deadline"
-msgstr "วันสิ้นสุด SLA "
+msgstr "วันสิ้นสุด SLA"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_sla_report_analysis__sla_status__failed
@@ -2706,7 +2746,7 @@ msgstr "นโยบาย SLA"
 #: model:ir.model.fields,help:helpdesk.field_res_partner__sla_ids
 #: model:ir.model.fields,help:helpdesk.field_res_users__sla_ids
 msgid "SLA Policies that will automatically apply to the tickets submitted by this customer."
-msgstr ""
+msgstr "นโยบาย SLA ที่จะนำไปใช้กับทิกเก็ตที่ลูกค้ารายนี้ส่งมาโดยอัตโนมัติ"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
@@ -2732,7 +2772,7 @@ msgstr "ขั้นตอน SLA"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__sla_status_ids
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_report_analysis_view_search
 msgid "SLA Status"
-msgstr "สถานะ SLA "
+msgstr "สถานะ SLA"
 
 #. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.helpdesk_sla_report_analysis_action
@@ -2765,7 +2805,7 @@ msgstr "ความสำเร็จของ SLA"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/components/helpdesk_team_dashboard/helpdesk_team_dashboard.xml:0
 msgid "SLA Success Rate"
-msgstr ""
+msgstr "อัตราความสำเร็จของ SLA"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_sla_report_analysis__sla_status__ongoing
@@ -2810,13 +2850,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Save this ticket and the modifications you've made to it."
-msgstr ""
+msgstr "บันทึกทิกเก็ตนี้และการแก้ไขที่คุณได้ทำไว้"
 
 #. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Schedule your <b>activity</b>."
-msgstr ""
+msgstr "กำหนดเวลา<b>กิจกรรม</b>ของคุณ"
 
 #. module: helpdesk
 #. odoo-python
@@ -2833,7 +2873,7 @@ msgstr "ค้นหานโยบาย SLA"
 #. odoo-python
 #: code:addons/helpdesk/controllers/portal.py:0
 msgid "Search in Assigned to"
-msgstr ""
+msgstr "ค้นหาใน มอบหมายให้"
 
 #. module: helpdesk
 #. odoo-python
@@ -2906,6 +2946,7 @@ msgstr "ตั้งค่าเทมเพลตอีเมลบนขั้
 #: model:mail.template,description:helpdesk.solved_ticket_request_email_template
 msgid "Set this template on a project's stage to automate email when tasks reach stages"
 msgstr ""
+"ตั้งค่าเทมเพลตนี้บนขั้นตอนของโปรเจ็กต์ เพื่อส่งอีเมลอัตโนมัติเมื่องานถึงขั้นตอนนั้น"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
@@ -2925,7 +2966,7 @@ msgstr ""
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_rating
 msgid "Show Customer Ratings"
-msgstr ""
+msgstr "แสดงการให้คะแนนของลูกค้า"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__show_knowledge_base
@@ -3000,7 +3041,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage_delete_wizard__stage_ids
 msgid "Stages To Delete"
-msgstr ""
+msgstr "ขั้นตอนในการลบ"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__stage_ids
@@ -3153,7 +3194,9 @@ msgstr "เทมเพลต"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_model_id
 msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "โมเดล (ชนิดเอกสาร Odoo) ซึ่งสอดคล้องกับนามแฝงนี้ อีเมลขาเข้าใดๆ ที่ไม่ตอบกลับบันทึกที่มีอยู่จะทำให้เกิดการสร้างบันทึกใหม่ของโมเดลนี้ (เช่น โปรเจกต์งาน)"
+msgstr ""
+"โมเดล (ชนิดเอกสาร Odoo) ซึ่งสอดคล้องกับนามแฝงนี้ อีเมลขาเข้าใดๆ "
+"ที่ไม่ตอบกลับบันทึกที่มีอยู่จะทำให้เกิดการสร้างบันทึกใหม่ของโมเดลนี้ (เช่น โปรเจ็กต์งาน)"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
@@ -3174,7 +3217,7 @@ msgstr "ทีมไม่อนุญาตให้ปิดทิกเก็
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__exclude_stage_ids
 msgid "The time spent in these stages won't be taken into account in the calculation of the SLA."
-msgstr ""
+msgstr "เวลาที่ใช้ในขั้นตอนเหล่านี้จะไม่ถูกนำมาพิจารณาในการคำนวณ SLA"
 
 #. module: helpdesk
 #. odoo-python
@@ -3200,7 +3243,7 @@ msgstr "This"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid "This SLA Policy will apply to tickets matching ALL of the following criteria:"
-msgstr ""
+msgstr "นโยบาย SLA นี้จะใช้กับทิกเก็ตที่ตรงกับเกณฑ์ต่อไปนี้ทั้งหมด:"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__campaign_id
@@ -3210,7 +3253,7 @@ msgstr "ชื่อนี้ช่วยให้คุณติดตามค
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__medium_id
 msgid "This is the method of delivery, e.g. Postcard, Email, or Banner Ad"
-msgstr "นี้เป็นวิธีการจัดส่งเช่น โปสการ์ด อีเมล หรือโฆษณาแบนเนอร์"
+msgstr "นี่เป็นวิธีการจัดส่งเช่น โปสการ์ด อีเมล หรือโฆษณาแบนเนอร์"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__source_id
@@ -3225,12 +3268,13 @@ msgstr "ขั้นตอนนี้เสร็จสิ้น คลิก�
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_confirmation_wizard
 msgid "This will archive the stages and all of the tickets they contain from the following teams:"
-msgstr ""
+msgstr "ขั้นตอนนี้จะเก็บถาวรขั้นตอนและทิกเก็ตทั้งหมดที่มีจากทีมต่อไปนี้:"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.mail_activity_type_action_config_helpdesk
 msgid "Those represent the different categories of things you have to do (e.g. \"Call\" or \"Send email\")."
 msgstr ""
+"สิ่งเหล่านี้แสดงถึงหมวดหมู่ต่างๆ ของสิ่งที่คุณต้องทำ (เช่น \"โทร\" หรือ \"ส่งอีเมล\")"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -3294,12 +3338,12 @@ msgstr "วันสิ้นสุดทิกเก็ต"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__ticket_ref
 msgid "Ticket IDs Sequence"
-msgstr ""
+msgstr "ลำดับรหัสของทิกเก็ต"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__ticket_properties
 msgid "Ticket Properties"
-msgstr ""
+msgstr "คุณสมบัติของทิกเก็ต"
 
 #. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_team_ticket_rated
@@ -3326,7 +3370,7 @@ msgstr "เปลี่ยนแปลงขั้นตอนทิกเก็
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.quick_create_ticket_form
 msgid "Ticket Title"
-msgstr ""
+msgstr "ชื่อทิกเก็ต"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__ticket_type_id
@@ -3402,7 +3446,7 @@ msgstr "ค้นหาทิกเก็ต"
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__fold
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__fold
 msgid "Tickets in a folded stage are considered as closed."
-msgstr ""
+msgstr "ทิกเก็ตที่อยู่ในขั้นตอนปิดจะถือว่าปิดแล้ว"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_helpdesk_sale_timesheet
@@ -3439,6 +3483,8 @@ msgid ""
 "To get things done, plan activities and use the ticket status.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
+"เพื่อให้งานเสร็จสิ้น ให้วางแผนกิจกรรมและใช้สถานะทิกเก็ต<br>\n"
+"                ทำงานร่วมกันอย่างมีประสิทธิภาพด้วยการแชทแบบเรียลไทม์หรือทางอีเมล"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -3460,7 +3506,7 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__total_response_hours
 msgid "Total Exchange Time in Hours"
-msgstr ""
+msgstr "เวลาแลกเปลี่ยนทั้งหมดเป็นชั่วโมง"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3477,6 +3523,8 @@ msgstr "ติดตามความพึงพอใจของลูกค
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_report_analysis_dashboard_action
 msgid "Track the performance of your teams, the success rate of your tickets, and how quickly you reach your service level agreements (SLAs)."
 msgstr ""
+"ติดตามประสิทธิภาพของทีม อัตราความสำเร็จของทิกเก็ต "
+"และความรวดเร็วในการบรรลุข้อตกลงระดับการให้บริการ (SLA)"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3523,7 +3571,7 @@ msgstr "ประเภทที่เหมาะสำหรับการจ
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_stage.py:0
 msgid "Unarchive Tickets"
-msgstr ""
+msgstr "ยกเลิกการเก็บถาวรทิกเก็ต"
 
 #. module: helpdesk
 #. odoo-python
@@ -3621,7 +3669,7 @@ msgstr "การมองเห็น"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Visibility &amp; Assignment"
-msgstr ""
+msgstr "การมองเห็น &amp; งานที่มอบหมาย"
 
 #. module: helpdesk
 #. odoo-javascript
@@ -3633,6 +3681,8 @@ msgstr "ต้องการ <b>เพิ่มความพึงพอใ�
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "We hope to have addressed your request satisfactorily. If you no longer need our assistance, please close this ticket. Thank you for your collaboration."
 msgstr ""
+"เราหวังว่าจะได้ตอบคำถามของคุณอย่างน่าพอใจ หากคุณไม่ต้องการความช่วยเหลือจากเราอีกต่อไป "
+"โปรดปิดทิกเก็ตนี้ ขอบคุณสำหรับความร่วมมือของคุณ"
 
 #. module: helpdesk
 #: model_terms:helpdesk.team,description:helpdesk.helpdesk_team1
@@ -3641,6 +3691,10 @@ msgid ""
 "We provide 24/7 support, Monday through Friday. Ticket responses are usually provided within 2 working days.<br>\n"
 "            Support is mainly provided in English. We can also assist in Spanish, French, and Dutch."
 msgstr ""
+"เราให้การสนับสนุนทุกวันตลอด 24 ชั่วโมง วันจันทร์ถึงวันศุกร์ โดยทั่วไปการตอบกลับทิกเก็ตจะดำเนิ"
+"นการภายใน 2 วันทำการ<br>\n"
+"            การสนับสนุนส่วนใหญ่จะให้บริการเป็นภาษาอังกฤษ เรายังให้ความช่วยเหลือเป็"
+"นภาษาสเปน ฝรั่งเศส และดัตช์ได้อีกด้วย"
 
 #. module: helpdesk
 #: model:helpdesk.tag,name:helpdesk.tag_website
@@ -3672,12 +3726,12 @@ msgstr "ชั่วโมงทำงาน"
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__ticket_assignation_hours
 msgid "Working Hours to Assign"
-msgstr ""
+msgstr "ชั่วโมงการทำงานที่จะกำหนด"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__ticket_close_hours
 msgid "Working Hours to Close"
-msgstr ""
+msgstr "ชั่วโมงการทำงานเพื่อปิด"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__sla_exceeded_hours
@@ -3688,6 +3742,8 @@ msgstr ""
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_status__exceeded_hours
 msgid "Working hours exceeded for reached SLAs compared with deadline. Positive number means the SLA was reached after the deadline."
 msgstr ""
+"ชั่วโมงการทำงานเกินสำหรับ SLA ที่เสร็จแล้วเมื่อเปรียบเทียบกับเวลาที่กำหนด จำนวนบวกหมายถึง "
+"SLA ได้เกินกำหนดเวลาแล้ว"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__resource_calendar_id
@@ -3698,16 +3754,18 @@ msgstr "ชั่วโมงการทำงานที่ใช้ในก
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_unarchive_wizard
 msgid "Would you like to unarchive all of the tickets contained in these stages as well?"
 msgstr ""
+"คุณต้องการยกเลิกการเก็บถาวรทิกเก็ตทั้งหมดที่อยู่ในขั้นตอนเหล่านี้ด้วยหรือไม่"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 msgid "You cannot delete stages containing tickets. You can either archive them or first delete all of their tickets."
 msgstr ""
+"คุณไม่สามารถลบขั้นตอนที่มีทิกเก็ตได้ คุณควรเก็บถาวรหรือลบทิกเก็ตทั้งหมดก่อน"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
 msgid "You cannot delete stages containing tickets. You should first delete all of their tickets."
-msgstr ""
+msgstr "คุณไม่สามารถลบขั้นตอนที่มีทิกเก็ตได้ คุณควรลบทิกเก็ตทั้งหมดออกก่อน"
 
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_res_users_target_closed_not_zero
@@ -3735,7 +3793,7 @@ msgstr "เช่น การดูแลลูกค้า"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 #: model_terms:ir.ui.view,arch_db:helpdesk.quick_create_ticket_form
 msgid "e.g. Product arrived damaged"
-msgstr ""
+msgstr "เช่น สินค้ามาถึงมีความเสียหาย"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_type_view_tree
@@ -3755,7 +3813,7 @@ msgstr "ถูกสร้างขึ้นจากทิกเก็ต:"
 #. module: helpdesk
 #: model:ir.actions.server,name:helpdesk.helpdesk_ratings_server_action
 msgid "helpdesk view rating"
-msgstr ""
+msgstr "คะแนนการดูของ Helpdesk"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3766,7 +3824,7 @@ msgstr "ค้นหาทีม"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
 msgid "tickets"
-msgstr ""
+msgstr "ทิกเก็ต"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.rating_ticket_request_email_template

@@ -1,26 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social
+# * social
 #
 # Translators:
 # Martin Trigaux, 2022
 # digitalliuzg8888, 2022
 # Jeffery CHEN <jeffery9@gmail.com>, 2022
 # Emily Jia <eji@odoo.com>, 2023
-#
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Emily Jia <eji@odoo.com>, 2023\n"
-"Language-Team: Chinese (China) (https://app.transifex.com/odoo/teams/41243/zh_CN/)\n"
+"PO-Revision-Date: 2025-09-16 15:25+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
+"projects/odoo-19/social/zh_Hans/>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__accounts_count
@@ -52,7 +54,7 @@ msgstr "<i class=\"fa fa-globe\" title=\"See the post\"/>"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
 msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
-msgstr ""
+msgstr "<i class=\"oi oi-arrow-left\"/> 返回 Odoo"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
@@ -69,12 +71,12 @@ msgstr "<strong>恭喜！几分钟后回来检查您的统计数据。</strong>"
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
 #: model:ir.model.fields,field_description:social.field_social_post__message_needaction
 msgid "Action Needed"
-msgstr "需要采取动作"
+msgstr "所需操作"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__active
 msgid "Active"
-msgstr "启用"
+msgstr "有效"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_ids
@@ -84,7 +86,7 @@ msgstr "活动"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr "活动异常勋章"
+msgstr "活动异常标示"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_state
@@ -145,7 +147,7 @@ msgstr "允许的账户"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_search
 msgid "Archived"
-msgstr "已存档"
+msgstr "已归档"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__has_active_accounts
@@ -163,7 +165,7 @@ msgstr "附加图像"
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
 #: model:ir.model.fields,field_description:social.field_social_post__message_attachment_count
 msgid "Attachment Count"
-msgstr "附件计数"
+msgstr "附件数量"
 
 #. module: social
 #. odoo-javascript
@@ -219,23 +221,23 @@ msgstr "日历日期"
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form_quick_create_social
 msgid "Campaign"
-msgstr "营销"
+msgstr "活动"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_view_utm_campaigns
 #: model:ir.ui.menu,name:social.menu_social_campaign
 msgid "Campaigns"
-msgstr "营销"
+msgstr "活动"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
 msgid "Campaigns are used to centralize your marketing efforts and track their results."
-msgstr "营销学的概念：营销，通俗点说，就是搞事情。"
+msgstr "营销营销是用来集中您的营销努力并跟踪其结果。"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
 msgid "Can link accounts?"
-msgstr ""
+msgstr "可以链接账户吗？"
 
 #. module: social
 #. odoo-javascript
@@ -355,7 +357,7 @@ msgstr "创建人"
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__create_date
 #: model:ir.model.fields,field_description:social.field_social_stream_type__create_date
 msgid "Created on"
-msgstr "创建时间"
+msgstr "创建日期"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__has_account_stats
@@ -386,7 +388,7 @@ msgstr "演示模式"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__media_description
 msgid "Description"
-msgstr "说明"
+msgstr "描述"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -463,7 +465,7 @@ msgstr "签约趋势"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid "Every time an account is created, a utm.medium is also created and linked to the account"
-msgstr "每次创建账户时，也会创建一个utm.medium，并与账户相连。"
+msgstr "每次创建帐户时，都会创建一个 utm.medium 并与帐户链接"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__failed
@@ -504,12 +506,12 @@ msgstr "关注者"
 #: model:ir.model.fields,field_description:social.field_social_media__message_partner_ids
 #: model:ir.model.fields,field_description:social.field_social_post__message_partner_ids
 msgid "Followers (Partners)"
-msgstr "关注者(业务伙伴)"
+msgstr "关注者（合作伙伴）"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr "完美的图标，例如FA任务"
+msgstr "Font Awesome图标，例如：fa-tasks"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__formatted_published_date
@@ -532,7 +534,7 @@ msgstr "去"
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
 msgid "Group By"
-msgstr "分组"
+msgstr "分组方式"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
@@ -554,12 +556,12 @@ msgstr "拥有账户统计信息"
 #: model:ir.model.fields,field_description:social.field_social_media__has_message
 #: model:ir.model.fields,field_description:social.field_social_post__has_message
 msgid "Has Message"
-msgstr "有信息"
+msgstr "有消息"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__has_trends
 msgid "Has Trends?"
-msgstr "最新趋势"
+msgstr "有趋势吗？"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__is_hatched
@@ -587,13 +589,13 @@ msgstr "图标"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr "表示异常活动的图标。"
+msgstr "指示异常活动的图标。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction
 #: model:ir.model.fields,help:social.field_social_post__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "确认后, 出现提示消息."
+msgstr "如果勾选此项，则需要查看新消息。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error
@@ -601,7 +603,7 @@ msgstr "确认后, 出现提示消息."
 #: model:ir.model.fields,help:social.field_social_post__message_has_error
 #: model:ir.model.fields,help:social.field_social_post__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr "如果勾选此项， 某些消息将会产生传递错误。"
+msgstr "如果勾选此项， 某些消息将出现发送错误。"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__image
@@ -641,7 +643,7 @@ msgstr "分析"
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
 #: model:ir.model.fields,field_description:social.field_social_post__message_is_follower
 msgid "Is Follower"
-msgstr "关注者"
+msgstr "是关注者"
 
 #. module: social
 #. odoo-javascript
@@ -679,7 +681,7 @@ msgstr "最后更新人"
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__write_date
 #: model:ir.model.fields,field_description:social.field_social_stream_type__write_date
 msgid "Last Updated on"
-msgstr "最后更新时间"
+msgstr "上次更新日期"
 
 #. module: social
 #. odoo-javascript
@@ -807,7 +809,7 @@ msgstr "最大柱子长度"
 #: model:ir.model.fields,field_description:social.field_social_post__media_ids
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Media"
-msgstr "媒介"
+msgstr "媒体"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
@@ -827,7 +829,7 @@ msgstr "消息"
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_error
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_error
 msgid "Message Delivery error"
-msgstr "消息传递错误"
+msgstr "消息发送错误"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__message_length
@@ -845,7 +847,7 @@ msgstr "消息已发布"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted partially. These are the ones that couldn't be posted:%s"
-msgstr ""
+msgstr "部分信息已发布。这些是无法发布的信息：%s"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_ids
@@ -898,7 +900,7 @@ msgstr "最新帖子"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New content available"
-msgstr "有新的内容。"
+msgstr "新增内容"
 
 #. module: social
 #. odoo-javascript
@@ -909,7 +911,7 @@ msgstr "下一页"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr "下一个活动日历事件"
+msgstr "下一活动日历事件"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_date_deadline
@@ -957,7 +959,7 @@ msgstr "没有配置社交账户，请联系你的管理员。"
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,field_description:social.field_social_post__message_needaction_counter
 msgid "Number of Actions"
-msgstr "动作数量"
+msgstr "操作数量"
 
 #. module: social
 #. odoo-javascript
@@ -974,7 +976,7 @@ msgstr "点击数"
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_error_counter
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_error_counter
 msgid "Number of errors"
-msgstr "错误数"
+msgstr "错误数量"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
@@ -991,7 +993,7 @@ msgstr "需要采取动作消息数量"
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
 #: model:ir.model.fields,help:social.field_social_post__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr "发送错误的消息数量"
+msgstr "发送错误的消息的数量"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__engagement
@@ -1053,7 +1055,7 @@ msgstr "请至少指定一个账户来发布信息（用于发布ID(s) %s）。"
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post"
-msgstr "发布"
+msgstr "过账"
 
 #. module: social
 #. odoo-javascript
@@ -1132,7 +1134,7 @@ msgstr "按账户发帖"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Press Enter to post. Press Shift+Enter to insert a Line Break."
-msgstr "按回车键来发布。按Shift+Enter插入换行符。"
+msgstr "按Enter键来发布。按Shift+Enter插入换行符。"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1169,7 +1171,7 @@ msgstr "发布日期"
 #: model:ir.model.fields,field_description:social.field_social_media__rating_ids
 #: model:ir.model.fields,field_description:social.field_social_post__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "点评"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__ready
@@ -1200,7 +1202,7 @@ msgstr "回复"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_user_id
 msgid "Responsible User"
-msgstr "负责用户"
+msgstr "责任用户"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_live_post_view_form
@@ -1212,12 +1214,12 @@ msgstr "重试"
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_sms_error
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr "短信息发送错误"
+msgstr "短信发送错误"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Schedule"
-msgstr "计划"
+msgstr "安排"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__scheduled
@@ -1248,7 +1250,7 @@ msgstr "立即发送"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__sequence
 msgid "Sequence"
-msgstr "单号规则"
+msgstr "序列"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream__sequence
@@ -1297,7 +1299,7 @@ msgstr "社交管理员"
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_global
 msgid "Social Marketing"
-msgstr "社交媒体营销"
+msgstr "社交营销"
 
 #. module: social
 #. odoo-javascript
@@ -1413,10 +1415,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
-"基于活动的状态 \n"
-" 逾期：已经超过截止日期 \n"
-" 现今：活动日期是当天 \n"
-" 计划：未来活动。"
+"基于活动的状态\n"
+"逾期：超出到期日期\n"
+"今天：活动日期是今天\n"
+"计划：未来活动。"
 
 #. module: social
 #. odoo-javascript
@@ -1533,7 +1535,7 @@ msgstr "该令牌可用于验证来自社会供应商的传入请求是否是伪
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__name
 msgid "Title"
-msgstr "称谓"
+msgstr "标题"
 
 #. module: social
 #. odoo-javascript
@@ -1549,7 +1551,7 @@ msgstr "类型"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr "记录的异常活动类型。"
+msgstr "记录中异常活动的类型。"
 
 #. module: social
 #: model:ir.model,name:social.model_utm_campaign
@@ -1607,7 +1609,7 @@ msgstr "网站消息"
 #: model:ir.model.fields,help:social.field_social_media__website_message_ids
 #: model:ir.model.fields,help:social.field_social_post__website_message_ids
 msgid "Website communication history"
-msgstr "网上沟通记录"
+msgstr "网站沟通记录"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__post_method

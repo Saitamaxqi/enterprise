@@ -1,41 +1,45 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social
+# * social
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:43+0000\n"
-"PO-Revision-Date: 2025-09-11 14:43+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 22:57+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/social/th/>"
+"\n"
+"Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__accounts_count
 msgid "# Accounts"
-msgstr ""
+msgstr "# บัญชี"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "%(media_name)s (max %(max_chars)s chars)"
-msgstr ""
+msgstr "%(media_name)s (สูงสุด %(max_chars)s ตัวอักษร)"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid ", you must first link a social media."
-msgstr ""
+msgstr "คุณต้องเชื่อมโยงโซเชียลมีเดียก่อน"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
 msgid "<b>An error occurred while trying to link your account</b>"
-msgstr ""
+msgstr "<b>เกิดข้อผิดพลาดขณะพยายามเชื่อมโยงบัญชีของคุณ</b>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
@@ -50,12 +54,12 @@ msgstr ""
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-globe ms-1\" title=\"ดูโพสต์\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
 msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
-msgstr ""
+msgstr "<i class=\"oi oi-arrow-left\"/> กลับไปที่ Odoo"
 
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
@@ -63,105 +67,106 @@ msgid ""
 "<strong>Congrats! Come back in a few minutes to check your "
 "statistics.</strong>"
 msgstr ""
+"<strong>ยินดีด้วย! กลับมาตรวจสอบสถิติของคุณอีกครั้งในไม่กี่นาที</strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
 #: model:ir.model.fields,field_description:social.field_social_post__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "จำเป็นต้องดำเนินการ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__active
 msgid "Active"
-msgstr ""
+msgstr "เปิดใช้งาน"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "กิจกรรม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "การตกแต่งข้อยกเว้นกิจกรรม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "สถานะกิจกรรม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "ไอคอนประเภทกิจกรรม"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add"
-msgstr ""
+msgstr "เพิ่ม"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Add Post"
-msgstr ""
+msgstr "เพิ่มโพสต์"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add Stream"
-msgstr ""
+msgstr "เพิ่มสตรีม"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/add_stream_modal.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "Add a Stream"
-msgstr ""
+msgstr "เพิ่มสตรีม"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
 msgid "Add a stream"
-msgstr ""
+msgstr "เพิ่มสตรีม"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add an image"
-msgstr ""
+msgstr "เพิ่มรูปภาพ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "All Companies"
-msgstr ""
+msgstr "บริษัททั้งหมด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_post_ids
 msgid "All related social media posts"
-msgstr ""
+msgstr "โพสต์โซเชียลมีเดียที่เกี่ยวข้องทั้งหมด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__account_allowed_ids
 msgid "Allowed Accounts"
-msgstr ""
+msgstr "บัญชีที่อนุญาต"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_search
 msgid "Archived"
-msgstr ""
+msgstr "เก็บถาวรแล้ว"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__has_active_accounts
 #: model:ir.model.fields,field_description:social.field_social_post_template__has_active_accounts
 msgid "Are Accounts Available?"
-msgstr ""
+msgstr "มีบัญชีหรือไม่?"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__image_ids
 #: model:ir.model.fields,field_description:social.field_social_post_template__image_ids
 msgid "Attach Images"
-msgstr ""
+msgstr "แนบรูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__image_ids
@@ -172,55 +177,55 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
 #: model:ir.model.fields,field_description:social.field_social_post__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "จำนวนสิ่งที่แนบมา"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model:ir.model.fields,field_description:social.field_social_account__audience
 msgid "Audience"
-msgstr ""
+msgstr "ผู้ชม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__audience_trend
 msgid "Audience Trend"
-msgstr ""
+msgstr "เทรนด์ของผู้ชม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__author_link
 msgid "Author Link"
-msgstr ""
+msgstr "ลิงก์ผู้ฟัง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__author_name
 msgid "Author Name"
-msgstr ""
+msgstr "ชื่อผู้เขียน"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_link
 msgid "Author link to the external social.media (ex: link to the X Account)."
-msgstr ""
+msgstr "ลิงก์ผู้เขียนไปยังโซเชียลมีเดียภายนอก (เช่น ลิงก์ไปยังบัญชี X)"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Before posting, links will be converted to be trackable."
-msgstr ""
+msgstr "ก่อนโพสต์ ลิงก์จะถูกแปลงให้ติดตามได้"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
 msgid "By Stream"
-msgstr ""
+msgstr "โดยสตรีม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__csrf_token
 msgid "CSRF Token"
-msgstr ""
+msgstr "โทเค็น CSRF"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__calendar_date
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 msgid "Calendar Date"
-msgstr ""
+msgstr "วันที่ในปฏิทิน"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__utm_campaign_id
@@ -228,58 +233,58 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form_quick_create_social
 msgid "Campaign"
-msgstr ""
+msgstr "แคมเปญ"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_view_utm_campaigns
 #: model:ir.ui.menu,name:social.menu_social_campaign
 msgid "Campaigns"
-msgstr ""
+msgstr "แคมเปญ"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
 msgid ""
 "Campaigns are used to centralize your marketing efforts and track their "
 "results."
-msgstr ""
+msgstr "แคมเปญใช้เพื่อรวมศูนย์การตลาดของคุณและติดตามผลลัพธ์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
 msgid "Can link accounts?"
-msgstr ""
+msgstr "เชื่อมโยงบัญชีได้หรือไม่?"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "ยกเลิก"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Choose which <b>account</b> you would like to link first."
-msgstr ""
+msgstr "เลือก<b>บัญชี </b> คุณต้องการเชื่อมโยงก่อน"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Click to refresh."
-msgstr ""
+msgstr "คลิกเพื่อรีเฟรช"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Clicks"
-msgstr ""
+msgstr "คลิก"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Clicks:"
-msgstr ""
+msgstr "คลิก:"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Comment Image"
-msgstr ""
+msgstr "แสดงความคิดเห็นรูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__company_id
@@ -291,23 +296,23 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
 msgid "Company"
-msgstr ""
+msgstr "บริษัท"
 
 #. module: social
 #: model:ir.model,name:social.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "ตั้งค่าการกำหนดค่า"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "การกำหนดค่า"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Connecting Problem"
-msgstr ""
+msgstr "ปัญหาการเชื่อมต่อ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__social_account_handle
@@ -315,6 +320,8 @@ msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
 msgstr ""
+"ประกอบด้วยตัวจัดการโซเชียลมีเดียของบุคคลที่สร้างบัญชีนี้ เช่น '@odoo.official' สำหรับบัญชี "
+"'Odoo' X"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
@@ -322,26 +329,27 @@ msgid ""
 "Content of the social post message that is post-processed (links are "
 "shortened, UTMs, ...)"
 msgstr ""
+"เนื้อหาของข้อความที่โพสต์บนโซเชียลซึ่งมีการประมวลผลภายหลัง (ลิงก์สั้นลง, UTM, ...)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__has_streams
 msgid "Controls if social streams are handled on this social media."
-msgstr ""
+msgstr "ควบคุมว่าสตรีมโซเชียลจะได้รับการจัดการบนโซเชียลมีเดียนี้หรือไม่"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__can_link_accounts
 msgid "Controls if we can link accounts or not."
-msgstr ""
+msgstr "ควบคุมว่าเราสามารถเชื่อมโยงบัญชีได้หรือไม่"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
 msgid "Create a Campaign"
-msgstr ""
+msgstr "สร้างแคมเปญ"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_post
 msgid "Create a Post"
-msgstr ""
+msgstr "สร้างโพสต์"
 
 #. module: social
 #. odoo-python
@@ -350,6 +358,8 @@ msgid ""
 "Create other accounts for %(media_names)s for this company or ask "
 "%(company_names)s to share their accounts"
 msgstr ""
+"สร้างบัญชีอื่นสำหรับ%(media_names)s สำหรับบริษัทนี้หรือสอบถาม %(company_names)s "
+"เพื่อแชร์บัญชีของพวกเขา"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -362,7 +372,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__create_uid
 #: model:ir.model.fields,field_description:social.field_social_stream_type__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "สร้างโดย"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_date
@@ -375,7 +385,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__create_date
 #: model:ir.model.fields,field_description:social.field_social_stream_type__create_date
 msgid "Created on"
-msgstr ""
+msgstr "สร้างเมื่อ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__has_account_stats
@@ -383,11 +393,13 @@ msgid ""
 "Defines whether this account has Audience/Engagements/Stories stats.\n"
 "        Account with stats are displayed on the dashboard."
 msgstr ""
+"กำหนดว่าบัญชีนี้มีสถิติผู้ชม/การมีส่วนร่วม/สตอรี่\n"
+"        บัญชีที่มีสถิติจะแสดงบนแดชบอร์ด"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__has_trends
 msgid "Defines whether this account has statistics tends or not."
-msgstr ""
+msgstr "กำหนดว่าบัญชีนี้มีแนวโน้มสถิติหรือไม่"
 
 #. module: social
 #. odoo-javascript
@@ -395,13 +407,13 @@ msgstr ""
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Delete"
-msgstr ""
+msgstr "ลบ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Delete Comment"
-msgstr ""
+msgstr "ลบความคิดเห็น"
 
 #. module: social
 #. odoo-javascript
@@ -412,23 +424,23 @@ msgstr ""
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Demo Mode"
-msgstr ""
+msgstr "โหมดสาธิต"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__media_description
 msgid "Description"
-msgstr ""
+msgstr "คำอธิบาย"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Developer Accounts"
-msgstr ""
+msgstr "บัญชีนักพัฒนา"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "ละทิ้ง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__display_message
@@ -451,24 +463,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_utm_medium__display_name
 #: model:ir.model.fields,field_description:social.field_utm_source__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "แสดงชื่อ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Do you really want to delete this %s?"
-msgstr ""
+msgstr "คุณต้องการลบ %s ใช่หรือไม่?"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 msgid "Do you really want to delete this Post ?"
-msgstr ""
+msgstr "คุณต้องการลบโพสต์นี้หรือไม่?"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "ร่าง"
 
 #. module: social
 #. odoo-python
@@ -477,23 +489,25 @@ msgid ""
 "Due to length restrictions, the following posts cannot be posted:\n"
 " %s"
 msgstr ""
+"เนื่องจากข้อจำกัดด้านความยาว จึงไม่สามารถโพสต์โพสต์ต่อไปนี้ได้:\n"
+" %s"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "แก้ไข"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Edit Your Post"
-msgstr ""
+msgstr "แก้ไขโพสต์ของคุณ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__module_social_demo
 msgid "Enable Demo Mode"
-msgstr ""
+msgstr "เปิดใช้งานโหมดสาธิต"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -501,6 +515,8 @@ msgid ""
 "Enable this option and load demo data to test the social module. This must "
 "never be used on a production database!"
 msgstr ""
+"เปิดใช้งานตัวเลือกนี้และโหลดข้อมูลสาธิตเพื่อทดสอบโมดูลโซเชียล "
+"สิ่งนี้จะต้องไม่ถูกนำไปใช้กับฐานข้อมูลการผลิต!"
 
 #. module: social
 #. odoo-javascript
@@ -511,118 +527,118 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Engagement"
-msgstr ""
+msgstr "การมีส่วนร่วม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__engagement_trend
 msgid "Engagement Trend"
-msgstr ""
+msgstr "เทรนด์การมีส่วนร่วม"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Engagement:"
-msgstr ""
+msgstr "การมีส่วนร่วม:"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
 "Every time an account is created, a utm.medium is also created and linked to"
 " the account"
-msgstr ""
+msgstr "ทุกครั้งที่สร้างบัญชี จะมีการสร้าง utm.medium และเชื่อมโยงกับบัญชี"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__failed
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Failed"
-msgstr ""
+msgstr "ล้มเหลว"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__failure_reason
 msgid "Failure Reason"
-msgstr ""
+msgstr "เหตุผลความล้มเหลว"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_stream_post
 #: model:ir.ui.menu,name:social.menu_social_stream_post
 msgid "Feed"
-msgstr ""
+msgstr "ฟีด"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Feed Posts"
-msgstr ""
+msgstr "โพสต์ฟีด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__stream_posts_count
 msgid "Feed Posts Count"
-msgstr ""
+msgstr "จำนวนโพสต์ฟีด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_follower_ids
 #: model:ir.model.fields,field_description:social.field_social_post__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "ผู้ติดตาม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_partner_ids
 #: model:ir.model.fields,field_description:social.field_social_post__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "ผู้ติดตาม (พาร์ทเนอร์)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "ไอคอนแบบฟอนต์ที่ยอดเยี่ยมเช่น fa-tasks"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__formatted_published_date
 msgid "Formatted Published Date"
-msgstr ""
+msgstr "จัดรูปแบบวันที่เผยแพร่"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience
 msgid ""
 "General audience of the Social Account (Page Likes, Account Follows, ...)."
-msgstr ""
+msgstr "ผู้ชมทั่วไปของบัญชีโซเชียล (การถูกใจเพจ การติดตามบัญชี ...)"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "Go to the"
-msgstr ""
+msgstr "ไปที่"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
 msgid "Handle / Short Name"
-msgstr ""
+msgstr "จัดการ / ชื่อย่อ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Happy with the result? Let's post it!"
-msgstr ""
+msgstr "พอใจกับผลลัพธ์หรือไม่? มาโพสต์กัน!"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__has_account_stats
 msgid "Has Account Stats"
-msgstr ""
+msgstr "มีสถิติบัญชี"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__has_message
 #: model:ir.model.fields,field_description:social.field_social_post__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "มีข้อความ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__has_trends
 msgid "Has Trends?"
-msgstr ""
+msgstr "มีเทรนด์?"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__is_hatched
 msgid "Hatched"
-msgstr ""
+msgstr "ฟัก"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__id
@@ -639,23 +655,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_utm_medium__id
 #: model:ir.model.fields,field_description:social.field_utm_source__id
 msgid "ID"
-msgstr ""
+msgstr "ไอดี"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "ไอคอน"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "ไอคอนเพื่อระบุการยกเว้นกิจกรรม"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction
 #: model:ir.model.fields,help:social.field_social_post__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "ถ้าเลือก ข้อความใหม่จะต้องการความสนใจจากคุณ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error
@@ -663,52 +679,52 @@ msgstr ""
 #: model:ir.model.fields,help:social.field_social_post__message_has_error
 #: model:ir.model.fields,help:social.field_social_post__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "ถ้าเลือก ข้อความบางข้อความมีข้อผิดพลาดในการส่ง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__image
 #: model:ir.model.fields,field_description:social.field_social_media__image
 msgid "Image"
-msgstr ""
+msgstr "รูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__image_url
 msgid "Image URL"
-msgstr ""
+msgstr "URL รูปภาพ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Image Url"
-msgstr ""
+msgstr "รูปภาพ Url"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__image_urls
 #: model:ir.model.fields,field_description:social.field_social_post_template__image_urls
 msgid "Images URLs"
-msgstr ""
+msgstr "รูปภาพ URLs"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__stream_post_image_ids
 msgid "Images that were shared with this post."
-msgstr ""
+msgstr "ภาพที่แชร์กับโพสต์นี้"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Insights"
-msgstr ""
+msgstr "ข้อมูลเชิงลึก"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__is_author
 msgid "Is Author"
-msgstr ""
+msgstr "เป็นผู้เขียน"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
 #: model:ir.model.fields,field_description:social.field_social_post__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "เป็นผู้ติดตาม"
 
 #. module: social
 #. odoo-javascript
@@ -717,12 +733,13 @@ msgid ""
 "It appears there is an issue with the Social Media link, click here to link "
 "the account again"
 msgstr ""
+"ดูเหมือนว่าจะมีปัญหากับลิงก์โซเชียลมีเดีย คลิกที่นี่เพื่อเชื่อมโยงบัญชีอีกครั้ง"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "It will appear in the Feed once it has posts to display."
-msgstr ""
+msgstr "จะปรากฏในฟีดเมื่อมีโพสต์ที่จะแสดง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__write_uid
@@ -735,7 +752,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__write_uid
 #: model:ir.model.fields,field_description:social.field_social_stream_type__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "อัปเดตครั้งล่าสุดโดย"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__write_date
@@ -748,80 +765,80 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__write_date
 #: model:ir.model.fields,field_description:social.field_social_stream_type__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "อัปเดตครั้งล่าสุดเมื่อ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
-msgstr ""
+msgstr "มา<b>เชื่อมต่อ</b>กับ Facebook, LinkedIn หรือ X กันเถอะ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Let's create your own <b>social media</b> dashboard."
-msgstr ""
+msgstr "มาสร้างแดชบอร์ด <b>โซเชียลมีเดีย</b> ของคุณเอง"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Let's start posting."
-msgstr ""
+msgstr "มาเริ่มโพสต์กันเลย"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Like"
-msgstr ""
+msgstr "ถูกใจ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Likes"
-msgstr ""
+msgstr "ถูกใจ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__link_description
 msgid "Link Description"
-msgstr ""
+msgstr "ลิงก์คำอธิบาย"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_kanban
 msgid "Link Image"
-msgstr ""
+msgstr "ลิงก์รูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__link_image_url
 msgid "Link Image URL"
-msgstr ""
+msgstr "ลิงค์รูปภาพ URL"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__link_title
 msgid "Link Title"
-msgstr ""
+msgstr "ชื่อลิงก์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__link_url
 msgid "Link URL"
-msgstr ""
+msgstr "ลิงก์ URL"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Link a new account"
-msgstr ""
+msgstr "เชื่อมโยงบัญชีใหม่"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 msgid "Link account"
-msgstr ""
+msgstr "ลิงก์บัญชี"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "Link an Account"
-msgstr ""
+msgstr "เชื่อมโยงบัญชี"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__company_id
@@ -832,54 +849,55 @@ msgid ""
 "Link an account to a company to restrict its usage or keep empty to let all "
 "companies use it."
 msgstr ""
+"เชื่อมโยงบัญชีกับบริษัทเพื่อจำกัดการใช้งานหรือเว้นว่างไว้เพื่อให้ทุกบริษัทใช้งานได้"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__live_post_link
 msgid "Link of the live post on the target media."
-msgstr ""
+msgstr "ลิงค์โพสต์สดบนสื่อเป้าหมาย"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Link social accounts"
-msgstr ""
+msgstr "เชื่อมโยงบัญชีโซเชียล"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stats_link
 msgid "Link to the external Social Account statistics"
-msgstr ""
+msgstr "ลิงก์ไปยังสถิติบัญชีโซเชียลภายนอก"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__is_media_disconnected
 msgid "Link with external Social Media is broken"
-msgstr ""
+msgstr "ลิงก์กับโซเชียลมีเดียภายนอกใช้งานไม่ได้"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__account_allowed_ids
 msgid "List of the accounts which can be selected for this post."
-msgstr ""
+msgstr "รายการบัญชีที่สามารถเลือกได้สำหรับโพสต์นี้"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__live_posts_by_media
 msgid "Live Posts by Social Media"
-msgstr ""
+msgstr "ไลฟ์โพสต์โดยโซเชียลมีเดีย"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Load more comments..."
-msgstr ""
+msgstr "โหลดความคิดเห็นเพิ่มเติม..."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__max_post_length
 msgid "Max Post Length"
-msgstr ""
+msgstr "ความยาวโพสต์สูงสุด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__media_type
 #: model:ir.model.fields,field_description:social.field_social_post__media_ids
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Media"
-msgstr ""
+msgstr "มีเดีย"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__media_count
@@ -891,7 +909,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
 #: model:ir.model.fields,field_description:social.field_social_media__media_type
 msgid "Media Type"
-msgstr ""
+msgstr "ประเภทมีเดีย"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__message
@@ -899,32 +917,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_post_template__message
 #: model:ir.model.fields,field_description:social.field_social_stream_post__message
 msgid "Message"
-msgstr ""
+msgstr "ข้อความ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_error
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "เกิดข้อผิดพลาดในการส่งข้อความ"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted"
-msgstr ""
+msgstr "โพสต์ข้อความ"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
 "Message posted partially. These are the ones that couldn't be posted:%s"
-msgstr ""
+msgstr "ข้อความถูกโพสต์บางส่วน นี่คือรายการที่ไม่สามารถโพสต์ได้: %s"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_ids
 #: model:ir.model.fields,field_description:social.field_social_post__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "ข้อความ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
@@ -932,21 +950,24 @@ msgid ""
 "Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
 "        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
 msgstr ""
+"social.live.posts ส่วนใหญ่เปลี่ยนจาก พร้อมที่จะโพสต์/ล้มเหลว เนื่องจากเป็นผลจากการเรียก "
+"API ของบุคคลที่สามเพียงครั้งเดียว\n"
+"       สถานะ 'การโพสต์' ยังมีให้สำหรับผู้ที่ส่งผ่านการแบทช์ (เช่น การแจ้งเตือนแบบพุช)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "วันครบกำหนดกิจกรรมของฉัน"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 msgid "My Posts"
-msgstr ""
+msgstr "โพสต์ของฉัน"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
 msgid "My Streams"
-msgstr ""
+msgstr "สตรีมของฉัน"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__name
@@ -956,14 +977,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_search
 msgid "Name"
-msgstr ""
+msgstr "ชื่อ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New Post"
-msgstr ""
+msgstr "โพสต์ใหม่"
 
 #. module: social
 #. odoo-javascript
@@ -975,117 +996,117 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New content available"
-msgstr ""
+msgstr "มีเนื้อหาใหม่"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Next"
-msgstr ""
+msgstr "ถัดไป"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "ปฏิทินอีเวนต์กิจกรรมถัดไป"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "วันครบกำหนดกิจกรรมถัดไป"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "สรุปกิจกรรมถัดไป"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "ประเภทกิจกรรมถัดไป"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "No Social Account yet!"
-msgstr ""
+msgstr "ยังไม่มีบัญชีโซเชียล!"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "No Social Streams yet!"
-msgstr ""
+msgstr "ยังไม่มีสตรีมโซเชียล!"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
 msgid "No Stream added yet!"
-msgstr ""
+msgstr "ยังไม่ได้เพิ่มสตรีม!"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "No comments yet."
-msgstr ""
+msgstr "ยังไม่มีความคิดเห็น"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "No social accounts configured, please contact your administrator."
-msgstr ""
+msgstr "ไม่มีการกำหนดค่าบัญชีโซเชียล โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,field_description:social.field_social_post__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "จํานวนการดําเนินการ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Number of Followers of your channel"
-msgstr ""
+msgstr "จำนวนผู้ติดตามช่องของคุณ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__click_count
 msgid "Number of clicks"
-msgstr ""
+msgstr "จำนวนคลิก"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_error_counter
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "จํานวนข้อผิดพลาด"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
 msgid ""
 "Number of interactions (likes, shares, comments ...) with the social posts"
-msgstr ""
+msgstr "จำนวนการโต้ตอบ (ไลค์ แชร์ ความคิดเห็น ...) กับโพสต์โซเชียล"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,help:social.field_social_post__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "จำนวนข้อความที่ต้องดำเนินการ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
 #: model:ir.model.fields,help:social.field_social_post__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "จํานวนข้อความที่มีข้อผิดพลาดในการส่ง"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__engagement
 #: model:ir.model.fields,help:social.field_social_post__engagement
 msgid "Number of people engagements with the post (Likes, comments...)"
-msgstr ""
+msgstr "จำนวนคนที่มีส่วนร่วมกับโพสต์ (ถูกใจ แสดงความคิดเห็น...)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement
 msgid "Number of people engagements with your posts (Likes, Comments, ...)."
-msgstr ""
+msgstr "จำนวนคนที่มีส่วนร่วมกับโพสต์ของคุณ (ถูกใจ ความคิดเห็น, ...)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
 msgid "Number of stories created from your posts (Shares, Reposts, ...)."
-msgstr ""
+msgstr "จำนวนเรื่องราวที่สร้างจากโพสต์ของคุณ (การแชร์ รีโพสต์ ...)"
 
 #. module: social
 #. odoo-javascript
@@ -1094,6 +1115,7 @@ msgid ""
 "Number of times people have engaged with your posts (likes, comments, "
 "shares,...)"
 msgstr ""
+"จำนวนครั้งที่ผู้คนมีส่วนร่วมกับโพสต์ของคุณ (ถูกใจ แสดงความคิดเห็น แชร์...)"
 
 #. module: social
 #. odoo-javascript
@@ -1102,47 +1124,48 @@ msgid ""
 "Number of times people who have engaged with your channel have created "
 "stories on their friends' or followers' feed (Shares, Reposts...)"
 msgstr ""
+"จำนวนครั้งที่ผู้คนมีส่วนร่วมกับช่องของคุณสร้างเรื่องราวบนฟีดของเพื่อนหรือผู้ติดตาม (แชร์ รีโพสต์...)"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Or add"
-msgstr ""
+msgstr "หรือเพิ่ม"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience_trend
 msgid "Percentage of increase/decrease of the audience over a defined period."
-msgstr ""
+msgstr "เปอร์เซ็นต์การเพิ่มขึ้น/ลดลงของผู้ชมในช่วงเวลาที่กำหนด"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement_trend
 msgid ""
 "Percentage of increase/decrease of the engagement over a defined period."
-msgstr ""
+msgstr "เปอร์เซ็นต์ของการเพิ่มขึ้น/ลดลงของงานในช่วงเวลาที่กำหนด"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories_trend
 msgid "Percentage of increase/decrease of the stories over a defined period."
-msgstr ""
+msgstr "เปอร์เซ็นต์การเพิ่มขึ้น/ลดลงของสตอรี่ในช่วงเวลาที่กำหนด"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Please specify at least one account to post into (for post ID(s) %s)."
-msgstr ""
+msgstr "โปรดระบุอย่างน้อยหนึ่งบัญชีที่จะโพสต์ลง (สำหรับ ID ของโพสต์ %s)"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post_template.py:0
 msgid "Please specify either a message or upload some images."
-msgstr ""
+msgstr "โปรดระบุข้อความหรืออัปโหลดรูปภาพบางส่วน"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post"
-msgstr ""
+msgstr "โพสต์"
 
 #. module: social
 #. odoo-javascript
@@ -1151,7 +1174,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_kanban
 msgid "Post Image"
-msgstr ""
+msgstr "โพสต์รูปภาพ"
 
 #. module: social
 #. odoo-javascript
@@ -1160,48 +1183,48 @@ msgstr ""
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_renderer.js:0
 msgid "Post Images"
-msgstr ""
+msgstr "โพสต์รูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__live_post_link
 #: model:ir.model.fields,field_description:social.field_social_stream_post__post_link
 msgid "Post Link"
-msgstr ""
+msgstr "โพสต์ลิงก์"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
 msgid "Post Message"
-msgstr ""
+msgstr "โพสต์ข้อความ"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post Now"
-msgstr ""
+msgstr "โพสต์ตอนนี้"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
 msgid ""
 "Post link to the external social.media (ex: link to the actual Facebook "
 "Post)."
-msgstr ""
+msgstr "โพสต์ลิงก์ไปยังโซเชียลมีเดียภายนอก (เช่น ลิงก์ไปยังโพสต์ Facebook จริง)"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Post on"
-msgstr ""
+msgstr "โพสต์บน"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__posted
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__posted
 msgid "Posted"
-msgstr ""
+msgstr "โพสต์"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__posting
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__posting
 msgid "Posting"
-msgstr ""
+msgstr "การโพสต์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_post_ids
@@ -1210,12 +1233,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_kanban
 msgid "Posts"
-msgstr ""
+msgstr "โพสต์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__live_post_ids
 msgid "Posts By Account"
-msgstr ""
+msgstr "โพสต์โดยบัญชี"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1226,113 +1249,113 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
-msgstr ""
+msgstr "กด Enter เพื่อแก้ไข กด Shift+Enter เพื่อแทรกตัวแบ่งบรรทัด"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Press Enter to post. Press Shift+Enter to insert a Line Break."
-msgstr ""
+msgstr "กด Enter เพื่อโพสต์ กด Shift+Enter เพื่อแทรกตัวแบ่งบรรทัด"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Preview your post"
-msgstr ""
+msgstr "ดูตัวอย่างโพสต์ของคุณ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Previous"
-msgstr ""
+msgstr "ก่อนหน้า"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__post_method
 msgid "Publish your post immediately or schedule it at a later time."
-msgstr ""
+msgstr "เผยแพร่โพสต์ของคุณทันทีหรือกำหนดเวลาในภายหลัง"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
 msgid "Published By"
-msgstr ""
+msgstr "เผยแพร่โดย"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__published_date
 msgid "Published Date"
-msgstr ""
+msgstr "วันที่เผยแพร่"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__published_date
 msgid "Published date"
-msgstr ""
+msgstr "วันที่เผยแพร่"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__rating_ids
 #: model:ir.model.fields,field_description:social.field_social_post__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "การให้คะแนน"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__ready
 msgid "Ready"
-msgstr ""
+msgstr "พร้อม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__media_type
 msgid "Related Social Media"
-msgstr ""
+msgstr "โซเชียลมีเดียที่เกี่ยวข้อง"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
 msgid "Related Social Media (Facebook, X, ...)."
-msgstr ""
+msgstr "โซเชียลมีเดียที่เกี่ยวข้อง (Facebook, X, ...)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__account_id
 msgid "Related social Account"
-msgstr ""
+msgstr "บัญชีโซเชียลที่เกี่ยวข้อง"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Reply"
-msgstr ""
+msgstr "ตอบกลับ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "ผู้ใช้ที่รับผิดชอบ"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_live_post_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Retry"
-msgstr ""
+msgstr "ลองใหม่"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_has_sms_error
 #: model:ir.model.fields,field_description:social.field_social_post__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "ข้อผิดพลาดในการส่ง SMS"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Schedule"
-msgstr ""
+msgstr "กำหนดเวลา"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__scheduled
 msgid "Schedule later"
-msgstr ""
+msgstr "กำหนดการภายหลัง"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__scheduled
 msgid "Scheduled"
-msgstr ""
+msgstr "กำหนดการแล้ว"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__scheduled_date
 msgid "Scheduled Date"
-msgstr ""
+msgstr "วันที่ตามกำหนดการ"
 
 #. module: social
 #. odoo-python
@@ -1340,34 +1363,35 @@ msgstr ""
 msgid ""
 "Selected accounts (%(account_list)s) do not match the selected company "
 "(%(company)s)"
-msgstr ""
+msgstr "บัญชีที่เลือก (%(account_list)s) ไม่ตรงกับบริษัทที่เลือก (%(company)s)"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
 msgid "Send now"
-msgstr ""
+msgstr "ส่งตอนนี้"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "ลำดับ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream__sequence
 msgid "Sequence used to order streams (mainly for the 'Feed' kanban view)"
-msgstr ""
+msgstr "ลำดับที่ใช้ในคำสั่งสตรีม (ส่วนใหญ่สำหรับมุมมองคัมบัง 'ฟีด')"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
 msgid ""
 "Set a maximum number of characters can be posted in post. 0 for no limit."
 msgstr ""
+"กำหนดจำนวนตัวอักษรสูงสุดที่สามารถโพสต์ได้ในโพสต์ หากกำหนดเป็น 0 จะถือว่าไม่จำกัด"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_global_settings
 #: model:ir.ui.menu,name:social.menu_social_global_settings
 msgid "Settings"
-msgstr ""
+msgstr "การตั้งค่า"
 
 #. module: social
 #: model:ir.model,name:social.model_social_account
@@ -1375,7 +1399,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream__account_id
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_form
 msgid "Social Account"
-msgstr ""
+msgstr "บัญชีโซเชียล"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_account
@@ -1385,24 +1409,24 @@ msgstr ""
 #: model:ir.ui.menu,name:social.menu_social_account
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_list
 msgid "Social Accounts"
-msgstr ""
+msgstr "บัญชีโซเชียล"
 
 #. module: social
 #: model:ir.model,name:social.model_social_live_post
 msgid "Social Live Post"
-msgstr ""
+msgstr "โพสต์โซเชียลไลฟ์"
 
 #. module: social
 #: model:res.groups,name:social.group_social_manager
 msgid "Social Manager"
-msgstr ""
+msgstr "ผู้จัดการโซเชียล"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_global
 #: model:res.groups.privilege,name:social.res_groups_privilege_social_marketing
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Social Marketing"
-msgstr ""
+msgstr "การตลาดโซเชียล"
 
 #. module: social
 #. odoo-javascript
@@ -1416,71 +1440,71 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Social Media"
-msgstr ""
+msgstr "สื่อสังคมออนไลน์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_posts_count
 msgid "Social Media Posts"
-msgstr ""
+msgstr "โพสต์โซเชียลมีเดีย"
 
 #. module: social
 #: model:ir.model,name:social.model_social_post
 #: model:ir.model.fields,field_description:social.field_social_live_post__post_id
 #: model_terms:ir.ui.view,arch_db:social.social_live_post_view_form
 msgid "Social Post"
-msgstr ""
+msgstr "โพสต์โซเชียล"
 
 #. module: social
 #: model:ir.model,name:social.model_social_post_template
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Social Post Template"
-msgstr ""
+msgstr "เทมเพลตโพสต์โซเชียล"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.social_post_template_action
 msgid "Social Post Templates"
-msgstr ""
+msgstr "เทมเพลตโพสต์โซเชียล"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_post
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_calendar
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_pivot
 msgid "Social Posts"
-msgstr ""
+msgstr "โพสต์โซเชียล"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream
 #: model:ir.model.fields,field_description:social.field_social_stream_post__stream_id
 #: model_terms:ir.ui.view,arch_db:social.social_stream_view_form
 msgid "Social Stream"
-msgstr ""
+msgstr "สตรีมโซเชียล"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream_post
 #: model:ir.model,name:social.model_social_stream_type
 msgid "Social Stream Post"
-msgstr ""
+msgstr "โพสต์สตรีมโซเชียล"
 
 #. module: social
 #: model:ir.model,name:social.model_social_stream_post_image
 msgid "Social Stream Post Image Attachment"
-msgstr ""
+msgstr "แนบรูปภาพโพสต์สตรีมโซเชียล"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_stream
 #: model:ir.ui.menu,name:social.menu_social_stream
 msgid "Social Streams"
-msgstr ""
+msgstr "สตรีมโซเชียล"
 
 #. module: social
 #: model:res.groups,name:social.group_social_user
 msgid "Social User"
-msgstr ""
+msgstr "ผู้ใช้โซเชียล"
 
 #. module: social
 #: model:ir.actions.server,name:social.ir_cron_post_scheduled_ir_actions_server
 msgid "Social: Publish Scheduled Posts"
-msgstr ""
+msgstr "โซเชียล: เผยแพร่โพสต์ตามกำหนดเวลา"
 
 #. module: social
 #. odoo-javascript
@@ -1489,11 +1513,12 @@ msgid ""
 "Sorry, you're not allowed to re-link this account, please contact your "
 "administrator."
 msgstr ""
+"ขออภัย คุณไม่ได้รับอนุญาตให้เชื่อมโยงบัญชีนี้อีกครั้ง โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__source_id
 msgid "Source"
-msgstr ""
+msgstr "แหล่งที่มา"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
@@ -1501,6 +1526,7 @@ msgid ""
 "Special technical field that holds a dict containing the live posts names by"
 " media ids (used for kanban view)."
 msgstr ""
+"ฟิลด์เทคนิคพิเศษที่ถือ dict ที่มีชื่อไลฟ์โพสต์ตามไอดีมีเดีย (ใช้สำหรับมุมมองคัมบัง)"
 
 #. module: social
 #. odoo-javascript
@@ -1517,13 +1543,13 @@ msgstr ""
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
 msgid "Stats Link"
-msgstr ""
+msgstr "ลิงก์สถิติ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__state
 #: model:ir.model.fields,field_description:social.field_social_post__state
 msgid "Status"
-msgstr ""
+msgstr "สถานะ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_state
@@ -1533,78 +1559,82 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"สถานะตามกิจกรรม\n"
+"เกินกำหนด: วันที่ครบกำหนดผ่านไปแล้ว\n"
+"วันนี้: วันที่จัดกิจกรรมคือวันนี้\n"
+"วางแผน: กิจกรรมในอนาคต"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model:ir.model.fields,field_description:social.field_social_account__stories
 msgid "Stories"
-msgstr ""
+msgstr "สตอรี่"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stories_trend
 msgid "Stories Trend"
-msgstr ""
+msgstr "สตอรี่เทรนด์"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "Stream Added (%s)"
-msgstr ""
+msgstr "เพิ่มสตรีม (%s)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__stream_post_id
 msgid "Stream Post"
-msgstr ""
+msgstr "สตรีมโพสต์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__stream_post_image_ids
 msgid "Stream Post Images"
-msgstr ""
+msgstr "สตรีมโพสต์รูปภาพ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__stream_post_image_urls
 msgid "Stream Post Images URLs"
-msgstr ""
+msgstr "สตรีมโพสต์รูปภาพ URLs"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__stream_type_ids
 msgid "Stream Types"
-msgstr ""
+msgstr "ประเภทสตรีม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_type_type
 #: model:ir.model.fields,field_description:social.field_social_stream_type__stream_type
 msgid "Stream type name (technical)"
-msgstr ""
+msgstr "ชื่อประเภทสตรีม (ทางเทคนิค)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__has_streams
 msgid "Streams Enabled"
-msgstr ""
+msgstr "เปิดใช้งานสตรีม"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_post_ids
 msgid "Sub-posts that will be published on each selected social accounts."
-msgstr ""
+msgstr "โพสต์ย่อยที่จะเผยแพร่ในแต่ละบัญชีโซเชียลที่เลือก"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Sync"
-msgstr ""
+msgstr "ซิงค์"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__account_ids
 #: model:ir.model.fields,help:social.field_social_post_template__account_ids
 msgid "The accounts on which this post will be published."
-msgstr ""
+msgstr "บัญชีที่จะเผยแพร่โพสต์นี้"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
 msgid ""
 "The post author name based on third party information (ex: 'John Doe')."
-msgstr ""
+msgstr "ชื่อผู้เขียนโพสต์ตามข้อมูลบุคคลที่สาม (เช่น \"John Doe\")"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
@@ -1612,11 +1642,13 @@ msgid ""
 "The post is considered as 'Posted' when all its sub-posts (one per social "
 "account) are either 'Failed' or 'Posted'"
 msgstr ""
+"โพสต์จะถือเป็น 'โพสต์' เมื่อโพสต์ย่อยทั้งหมด (หนึ่งโพสต์ต่อบัญชีโซเชียล) นั้น 'ล้มเหลว' หรือ "
+"'โพสต์'"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
 msgid "The post published date based on third party information."
-msgstr ""
+msgstr "วันที่เผยแพร่โพสต์ตามข้อมูลของบุคคลที่สาม"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__failure_reason
@@ -1624,21 +1656,22 @@ msgid ""
 "The reason why a post is not successfully posted on the Social Media (eg: "
 "connection error, duplicated post, ...)."
 msgstr ""
+"สาเหตุที่โพสต์ไม่สำเร็จบนโซเชียลมีเดีย (เช่น: ข้อผิดพลาดในการเชื่อมต่อ โพสต์ซ้ำ ...)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
 msgid "The related Social Media's image"
-msgstr ""
+msgstr "รูปภาพของโซเชียลมีเดียที่เกี่ยวข้อง"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__media_ids
 msgid "The social medias linked to the selected social accounts."
-msgstr ""
+msgstr "โซเชียลมีเดียที่เชื่อมโยงกับบัญชีโซเชียลที่เลือก"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__has_post_errors
 msgid "There are post errors on sub-posts"
-msgstr ""
+msgstr "มีข้อผิดพลาดในการโพสต์บนโพสต์ย่อย"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__csrf_token
@@ -1646,61 +1679,62 @@ msgid ""
 "This token can be used to verify that an incoming request from a social "
 "provider has not been forged."
 msgstr ""
+"โทเค็นนี้สามารถใช้เพื่อตรวจสอบว่าคำขอขาเข้าจากผู้ให้บริการโซเชียลไม่ถูกปลอมแปลง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__name
 msgid "Title"
-msgstr ""
+msgstr "คำนำหน้าชื่อ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "To add a stream"
-msgstr ""
+msgstr "เพื่อเพิ่มสตรีม"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_type_id
 msgid "Type"
-msgstr ""
+msgstr "ประเภท"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "ประเภทกิจกรรมข้อยกเว้นบนบันทึก"
 
 #. module: social
 #: model:ir.model,name:social.model_utm_campaign
 msgid "UTM Campaign"
-msgstr ""
+msgstr "แคมเปญ UTM"
 
 #. module: social
 #: model:ir.model,name:social.model_utm_medium
 #: model:ir.model.fields,field_description:social.field_social_account__utm_medium_id
 msgid "UTM Medium"
-msgstr ""
+msgstr "วิธีที่เข้ามา UTM"
 
 #. module: social
 #: model:ir.model,name:social.model_utm_source
 msgid "UTM Source"
-msgstr ""
+msgstr "แหล่งที่มา UTM"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/controllers/main.py:0
 msgid "Uh-oh! It looks like this message has been deleted from X."
-msgstr ""
+msgstr "อ้าว! ดูเหมือนว่าข้อความนี้จะถูกลบจาก X แล้ว"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Unknown error"
-msgstr ""
+msgstr "ข้อผิดพลาดที่ไม่รู้จัก"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post_template.py:0
 msgid "Uploaded file does not seem to be a valid image."
-msgstr ""
+msgstr "ไฟล์ที่อัปโหลดดูเหมือนจะไม่ใช่รูปภาพที่ถูกต้อง"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -1708,6 +1742,8 @@ msgid ""
 "Use your own Developer Accounts on our Social app. Those credentials are "
 "provided in the developer section of your professional social media account."
 msgstr ""
+"ใช้บัญชีนักพัฒนาของคุณเองในแอปโซเชียลของเรา "
+"ข้อมูลประจำตัวเหล่านั้นมีให้ไว้ในส่วนนักพัฒนาของบัญชีโซเชียลมีเดียมืออาชีพของคุณ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
@@ -1718,35 +1754,37 @@ msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
 msgstr ""
+"ใช้ในการเปรียบเทียบเมื่อเราต้องการจำกัดฟีเจอร์บางอย่างสำหรับสื่อเฉพาะ ('facebook', 'x', "
+"...)"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "View"
-msgstr ""
+msgstr "ดู"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "มองเห็นได้ทุกคน"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__website_message_ids
 #: model:ir.model.fields,field_description:social.field_social_post__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "ข้อความเว็บไซต์"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__website_message_ids
 #: model:ir.model.fields,help:social.field_social_post__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "ประวัติการสื่อสารของเว็บไซต์"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__post_method
 msgid "When"
-msgstr ""
+msgstr "จาก"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
@@ -1754,35 +1792,36 @@ msgid ""
 "When the global post was published. The actual sub-posts published dates may"
 " be different depending on the media."
 msgstr ""
+"เมื่อโพสต์ทั่วโลกถูกเผยแพร่ วันที่เผยแพร่โพสต์ย่อยจริงอาจแตกต่างขึ้นอยู่กับสื่อ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__image_ids
 #: model:ir.model.fields,help:social.field_social_post_template__image_ids
 msgid "Will attach images to your posts (if the social media supports it)."
-msgstr ""
+msgstr "จะแนบรูปภาพในโพสต์ของคุณ (หากโซเชียลมีเดียรองรับ)"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Write a comment..."
-msgstr ""
+msgstr "เขียนความเห็น..."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Write a message or upload an image"
-msgstr ""
+msgstr "เขียนข้อความหรืออัปโหลดรูปภาพ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Write a message to get a preview of your post."
-msgstr ""
+msgstr "เขียนข้อความเพื่อดูตัวอย่างโพสต์ของคุณ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Write a reply..."
-msgstr ""
+msgstr "เขียนตอบกลับ..."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_post
@@ -1790,6 +1829,7 @@ msgid ""
 "Write an enticing post, add images and schedule it to be posted later on "
 "multiple platforms at once."
 msgstr ""
+"เขียนโพสต์ที่ดึงดูดใจ เพิ่มรูปภาพ และกำหนดเวลาสำหรับการโพสต์ในภายหลังบนหลายแพลตฟอร์มพร้อมกัน"
 
 #. module: social
 #. odoo-python
@@ -1798,6 +1838,8 @@ msgid ""
 "You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
+"คุณไม่สามารถลบวิธีที่เข้ามา UTM เหล่านี้ได้เนื่องจากเชื่อมโยงกับบัญชีโซเชียลต่อไปนี้ในโซเชียล:\n"
+"%(social_accounts)s"
 
 #. module: social
 #. odoo-python
@@ -1806,69 +1848,71 @@ msgid ""
 "You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
 "%(utm_sources)s"
 msgstr ""
+"คุณไม่สามารถลบแหล่งที่มา UTM เหล่านี้ได้ เนื่องจากลิงก์ไปยังโพสต์โซเชียลในโซเชียล:\n"
+"%(utm_sources)s"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "You cannot reschedule a post that has already been posted."
-msgstr ""
+msgstr "คุณไม่สามารถกำหนดเวลาโพสต์ที่โพสต์ไปแล้วได้"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "You cannot schedule a post in the past."
-msgstr ""
+msgstr "คุณไม่สามารถกำหนดเวลาการโพสต์ในอดีตได้"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Your Post"
-msgstr ""
+msgstr "โพสต์ของคุณ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "a Stream from an existing account"
-msgstr ""
+msgstr "สตรีมจากบัญชีที่มีอยู่"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "before posting."
-msgstr ""
+msgstr "ก่อนโพสต์"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "comment/reply"
-msgstr ""
+msgstr "แสดงความคิดเห็น/ตอบกลับ"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "dashboard"
-msgstr ""
+msgstr "แดชบอร์ด"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "for"
-msgstr ""
+msgstr "สำหรับ"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "replies..."
-msgstr ""
+msgstr "ตอบกลับ..."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
 msgid "to keep an eye on your own posts and monitor all social activities."
-msgstr ""
+msgstr "เพื่อติดตามโพสต์ของคุณเองและติดตามกิจกรรมทางสังคมทั้งหมด"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "to link your accounts and start posting."
-msgstr ""
+msgstr "เพื่อเชื่อมโยงบัญชีของคุณและเริ่มโพสต์"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "to start posting from Odoo."
-msgstr ""
+msgstr "เพื่อเริ่มโพสต์จาก Odoo"

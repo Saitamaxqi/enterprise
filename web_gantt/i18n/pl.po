@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_gantt
+# * web_gantt
 #
 # Translators:
 # Piotr Strębski <strebski@gmail.com>, 2022
@@ -11,20 +11,24 @@
 # Judyta Kaźmierczak <judyta.kazmierczak@openglobe.pl>, 2022
 # Martin Trigaux, 2022
 # Wojciech Warczakowski <w.warczakowski@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Wojciech Warczakowski <w.warczakowski@gmail.com>, 2023\n"
-"Language-Team: Polish (https://app.transifex.com/odoo/teams/41243/pl/)\n"
+"PO-Revision-Date: 2025-09-16 12:12+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/web_gantt/"
+"pl/>\n"
 "Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && (n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
+"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -41,7 +45,7 @@ msgstr "Baza"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.xml:0
 msgid "Collapse rows"
-msgstr ""
+msgstr "Zwiń wiersze"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -60,13 +64,13 @@ msgstr "Dzień"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Edit"
-msgstr ""
+msgstr "Edytuj"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.xml:0
 msgid "Expand rows"
-msgstr ""
+msgstr "Rozwiń wiersze"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -84,31 +88,33 @@ msgstr "Widok Gantta"
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt child can only be field or template, got %s"
-msgstr ""
+msgstr "Dziecko Gantt może być tylko polem lub szablonem, mam %s"
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_start' attribute"
-msgstr ""
+msgstr "Gantt musi mieć atrybut \"date_start\"."
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'date_stop' attribute"
-msgstr ""
+msgstr "Gantt musi mieć atrybut \"date_stop\"."
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt must have a 'dependency_inverted_field' attribute once the 'dependency_field' is specified"
 msgstr ""
+"Gantt musi mieć atrybut \"dependency_inverted_field\" po określeniu "
+"\"dependency_field\"."
 
 #. module: web_gantt
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Gantt view can contain only one templates tag"
-msgstr ""
+msgstr "Widok Gantta może zawierać tylko jeden tag szablonu"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -120,7 +126,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_gantt/models/models.py:0
 msgid "Insufficient fields for Gantt View!"
-msgstr ""
+msgstr "Niewystarczająca liczba pól dla widoku Gantta!"
 
 #. module: web_gantt
 #. odoo-python
@@ -132,7 +138,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_gantt/models/ir_ui_view.py:0
 msgid "Invalid default_scale '%s' in gantt"
-msgstr ""
+msgstr "Nieprawidłowy default_scale '%s' w gantt"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -210,13 +216,13 @@ msgstr "Na dzisiaj"
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_renderer.js:0
 msgid "Total"
-msgstr ""
+msgstr "Suma"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_model.js:0
 msgid "Undefined %s"
-msgstr ""
+msgstr "Niezdefiniowany %s"
 
 #. module: web_gantt
 #. odoo-javascript
@@ -253,16 +259,16 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "hours"
-msgstr ""
+msgstr "godziny"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "minutes"
-msgstr ""
+msgstr "minut"
 
 #. module: web_gantt
 #. odoo-javascript
 #: code:addons/web_gantt/static/src/gantt_arch_parser.js:0
 msgid "months"
-msgstr ""
+msgstr "miesiące"

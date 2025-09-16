@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social_youtube
+# * social_youtube
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 21:35+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Swedish <https://translate.odoo.com/projects/odoo-19/"
+"social_youtube/sv/>\n"
+"Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_upload_playlist_id
@@ -58,14 +62,14 @@ msgstr ""
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__account_id
 msgid "Account"
-msgstr ""
+msgstr "Konto"
 
 #. module: social_youtube
 #. odoo-python
 #: code:addons/social_youtube/models/social_live_post.py:0
 #: code:addons/social_youtube/models/social_stream_post.py:0
 msgid "An error occurred."
-msgstr ""
+msgstr "Ett fel uppstod."
 
 #. module: social_youtube
 #. odoo-python
@@ -78,41 +82,41 @@ msgstr ""
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_stream_post_view_kanban
 msgid "Author Image"
-msgstr ""
+msgstr "Författarbild"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_revoke_youtube_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Avbryt"
 
 #. module: social_youtube
 #: model:social.stream.type,name:social_youtube.stream_type_youtube_channel_videos
 msgid "Channel"
-msgstr ""
+msgstr "Kanal"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "Rensa"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_stream_post_view_kanban
 msgid "Comments"
-msgstr ""
+msgstr "Kommentarer"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Inställningar"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/js/social_youtube_upload_field.js:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Bekräftelse"
 
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_live_post__youtube_video_id
@@ -136,12 +140,12 @@ msgstr ""
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Skapad av"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Skapad den"
 
 #. module: social_youtube
 #. odoo-python
@@ -166,7 +170,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_youtube.field_social_stream__display_name
 #: model:ir.model.fields,field_description:social_youtube.field_social_stream_post__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Visningsnamn"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -207,34 +211,34 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_youtube.field_social_stream__id
 #: model:ir.model.fields,field_description:social_youtube.field_social_stream_post__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Senast uppdaterad av"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Senast uppdaterad den"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 msgid "Likes"
-msgstr ""
+msgstr "Gillar"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_media__media_type
 msgid "Media Type"
-msgstr ""
+msgstr "Medietyp"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/js/social_youtube_upload_field.js:0
 msgid "No"
-msgstr ""
+msgstr "Nej"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.res_config_settings_view_form
@@ -284,18 +288,18 @@ msgstr ""
 #. module: social_youtube
 #: model:ir.model.fields.selection,name:social_youtube.selection__social_post__youtube_video_privacy__private
 msgid "Private"
-msgstr ""
+msgstr "Privat"
 
 #. module: social_youtube
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/js/social_youtube_upload_field.js:0
 msgid "Processing..."
-msgstr ""
+msgstr "Bearbetar..."
 
 #. module: social_youtube
 #: model:ir.model.fields.selection,name:social_youtube.selection__social_post__youtube_video_privacy__public
 msgid "Public"
-msgstr ""
+msgstr "Allmänheten"
 
 #. module: social_youtube
 #. odoo-python
@@ -307,7 +311,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_youtube/controllers/main.py:0
 msgid "Reason:"
-msgstr ""
+msgstr "Anledning:"
 
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
@@ -319,7 +323,7 @@ msgstr ""
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid "Revoke"
-msgstr ""
+msgstr "Återkalla"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_revoke_youtube_view_form
@@ -349,7 +353,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 msgid "Select"
-msgstr ""
+msgstr "Välj"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_post__youtube_accounts_other_count
@@ -371,37 +375,37 @@ msgstr ""
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_account
 msgid "Social Account"
-msgstr ""
+msgstr "Socialt konto"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_live_post
 msgid "Social Live Post"
-msgstr ""
+msgstr "Social Live Post"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_media
 msgid "Social Media"
-msgstr ""
+msgstr "Sociala medier"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_post
 msgid "Social Post"
-msgstr ""
+msgstr "Social postning"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_post_template
 msgid "Social Post Template"
-msgstr ""
+msgstr "Mall för sociala inlägg"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_stream
 msgid "Social Stream"
-msgstr ""
+msgstr "Sociala flöde"
 
 #. module: social_youtube
 #: model:ir.model,name:social_youtube.model_social_stream_post
 msgid "Social Stream Post"
-msgstr ""
+msgstr "Inlägg om socialaflöden"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -416,6 +420,8 @@ msgid ""
 "The url that this service requested returned an error. Please contact the "
 "author of the app."
 msgstr ""
+"Den webbadress som den här tjänsten begärde returnerade ett fel. Vänligen "
+"kontakta appens upphovsman."
 
 #. module: social_youtube
 #. odoo-python
@@ -457,18 +463,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_youtube/controllers/main.py:0
 msgid "Unauthorized. Please contact your administrator."
-msgstr ""
+msgstr "Obehörig. Vänligen kontakta din administratör."
 
 #. module: social_youtube
 #. odoo-python
 #: code:addons/social_youtube/wizard/social_account_revoke_youtube.py:0
 msgid "Unknown"
-msgstr ""
+msgstr "Okänd"
 
 #. module: social_youtube
 #: model:ir.model.fields.selection,name:social_youtube.selection__social_post__youtube_video_privacy__unlisted
 msgid "Unlisted"
-msgstr ""
+msgstr "Olistad"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -510,7 +516,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_youtube/models/social_post.py:0
 msgid "Video"
-msgstr ""
+msgstr "Video"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
@@ -545,7 +551,7 @@ msgstr ""
 #: code:addons/social_youtube/static/src/xml/social_youtube_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_stream_post_view_kanban
 msgid "Views"
-msgstr ""
+msgstr "Vyer"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -582,7 +588,7 @@ msgstr ""
 #: model:social.media,name:social_youtube.social_media_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid "YouTube"
-msgstr ""
+msgstr "YouTube"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_post__youtube_access_token
@@ -682,7 +688,7 @@ msgstr ""
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_post__youtube_video
 msgid "YouTube Video"
-msgstr ""
+msgstr "YouTube-video"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_live_post__youtube_description

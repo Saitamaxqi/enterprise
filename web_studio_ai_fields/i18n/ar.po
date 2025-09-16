@@ -1,251 +1,256 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_studio_ai_fields
+# * web_studio_ai_fields
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:13+0000\n"
-"PO-Revision-Date: 2025-07-01 12:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-16 13:43+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
+"web_studio_ai_fields/ar/>\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "AI"
-msgstr ""
+msgstr "الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/interactive_editor.js:0
 msgid "AI Field"
-msgstr ""
+msgstr "حقل يعمل بالذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Field"
-msgstr ""
+msgstr "إضافة حقل"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add Values"
-msgstr ""
+msgstr "أضف القيم"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Add an AI Field"
-msgstr ""
+msgstr "إضافة حقل للذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Checkbox"
-msgstr ""
+msgstr "صندوق الاختيار"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Date"
-msgstr ""
+msgstr "التاريخ"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Datetime"
-msgstr ""
+msgstr "التاريخ والوقت"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Decimal"
-msgstr ""
+msgstr "عشري"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "إهمال"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Edit Values"
-msgstr ""
+msgstr "تحرير القيم"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Field Type"
-msgstr ""
+msgstr "نوع الحقل"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Integer"
-msgstr ""
+msgstr "عدد صحيح"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Many2one"
-msgstr ""
+msgstr "علاقة متعدد لواحد"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Monetary"
-msgstr ""
+msgstr "نقدي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Multiline Text"
-msgstr ""
+msgstr "نص متعدد الأسطر"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI CheckBox"
-msgstr ""
+msgstr "صندوق اختيار جديد باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Date"
-msgstr ""
+msgstr "تاريخ الذكاء الاصطناعي الجديد"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Datetime"
-msgstr ""
+msgstr "القيمة الجديدة للتاريخ والوقت في الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Decimal"
-msgstr ""
+msgstr "وحدة عشرية جديدة باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI HTML"
-msgstr ""
+msgstr "HTML الجديد للذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Integer"
-msgstr ""
+msgstr "قيمة جديدة للعدد الصحيح باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Many2One"
-msgstr ""
+msgstr "حقل Many2One جديد باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Monetary"
-msgstr ""
+msgstr "حقل مالي جديد يستخدم الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Multiline Text"
-msgstr ""
+msgstr "نص جديد متعدد الأسطرباستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Selection"
-msgstr ""
+msgstr "التحديد الجديد باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Tags"
-msgstr ""
+msgstr "علامة تصنيف جديدة باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "New AI Text"
-msgstr ""
+msgstr "خاصية إنشاء النص الجديدة باستخدام الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "Prompt"
-msgstr ""
+msgstr "توجيه"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Relation"
-msgstr ""
+msgstr "العلاقة"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Selection"
-msgstr ""
+msgstr "قائمة خيارات"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Selection Values"
-msgstr ""
+msgstr "قيم الاختيار"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Tags"
-msgstr ""
+msgstr "علامات التصنيف"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.js:0
 msgid "Text"
-msgstr ""
+msgstr "النص"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "Write a prompt, use '/field' to insert dynamic values"
-msgstr ""
+msgstr "قم بكتابة المدخلات. استخدم '/field' لإدراج قيم ديناميكية"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "ai icon"
-msgstr ""
+msgstr "أيقونة الذكاء الاصطناعي"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "button to run your prompt."
-msgstr ""
+msgstr "زر لإرسال معطياتك"
 
 #. module: web_studio_ai_fields
 #. odoo-javascript
 #: code:addons/web_studio_ai_fields/static/src/client_action/view_editor/interactive_editor/field_configuration/ai_field_configuration_dialog.xml:0
 msgid "fields won't update automatically - Click the"
-msgstr ""
+msgstr "لن يتم تحديث الحقول تلقائياً - اضغط على"

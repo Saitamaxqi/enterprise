@@ -1,31 +1,33 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* documents_spreadsheet
+# * documents_spreadsheet
 #
 # Translators:
 # Tony Ng, 2025
 # Wil Odoo, 2025
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:44+0000\n"
-"PO-Revision-Date: 2025-05-06 11:00+0000\n"
-"Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
-"zh_TW/)\n"
+"PO-Revision-Date: 2025-09-16 12:11+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
+"projects/odoo-19/documents_spreadsheet/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/documents_view/documents_spreadsheet_controller_mixin.js:0
 msgid " file preview"
-msgstr "檔案預覽"
+msgstr " 檔案預覽"
 
 #. module: documents_spreadsheet
 #. odoo-python
@@ -350,7 +352,7 @@ msgstr ""
 #. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_pipeline
 msgid "Pipeline dashboard"
-msgstr ""
+msgstr "管道Dashboard"
 
 #. module: documents_spreadsheet
 #. odoo-python
@@ -379,7 +381,7 @@ msgstr "還原檔案？"
 #. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_sales_commission
 msgid "Sales Commissions"
-msgstr ""
+msgstr "銷售佣金"
 
 #. module: documents_spreadsheet
 #: model:ir.actions.act_window,name:documents_spreadsheet.save_spreadsheet_template_action
