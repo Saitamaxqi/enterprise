@@ -4,7 +4,7 @@
     'countries': ['be'],
     'version': '1.0',
     'author': 'Odoo',
-    'website': 'https://www.odoo.com/documentation/master/applications/finance/fiscal_localizations/belgium.html#codabox',
+    'website': 'https://www.odoo.com/documentation/latest/applications/finance/fiscal_localizations/belgium.html#codabox',
     'category': 'Accounting/Localizations',
     'description': '''This module allows connection to CodaBox
 and automatically imports CODA and SODA statements in Odoo.

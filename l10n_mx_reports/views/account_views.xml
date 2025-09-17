@@ -9,7 +9,7 @@
                 <field name="l10n_mx_is_sat_invalid" invisible="1"/>
                 <div class="alert alert-warning mb-0" role="alert" invisible="l10n_mx_is_sat_invalid == False">
                     Warning: this account doesn't follow Odoo's account guidelines.
-                    Check <a href="https://www.odoo.com/documentation/19.0/applications/finance/fiscal_localizations/mexico.html#chart-of-accounts">
+                    Check <a href="https://www.odoo.com/documentation/latest/applications/finance/fiscal_localizations/mexico.html#chart-of-accounts">
                     the documentation</a> for more details.
                 </div>
             </xpath>

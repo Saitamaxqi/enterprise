@@ -7,7 +7,7 @@
     'description': """
 E-invoice implementation for Guatemala
     """,
-    'website': 'https://www.odoo.com/documentation/master/applications/finance/fiscal_localizations.html',
+    'website': 'https://www.odoo.com/documentation/latest/applications/finance/fiscal_localizations.html',
     'depends': [
         'account_debit_note',
         'account_tax_python',

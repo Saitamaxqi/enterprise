@@ -25,7 +25,7 @@
                                 </li>
                                 <li>Accounts in sandbox and production are independent. Create a new account in each environment when needed. It is not recommended to use sandbox credentials on a production database.</li>
                                 <li>Finish the Avalara setup before using Odoo.</li>
-                                <li>See <a target="_blank" href="https://www.odoo.com/documentation/master/applications/finance/fiscal_localizations/brazil.html">the Odoo documentation</a> for detailed setup instructions and the onboarding process.</li>
+                                <li>See <a target="_blank" href="https://www.odoo.com/documentation/latest/applications/finance/fiscal_localizations/brazil.html">the Odoo documentation</a> for detailed setup instructions and the onboarding process.</li>
                             </ul>
                         </div>
                     </setting>

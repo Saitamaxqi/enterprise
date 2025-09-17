@@ -127,7 +127,7 @@ class AddIotBox(models.TransientModel):
     def open_documentation_url(self):
         return {
             'type': 'ir.actions.act_url',
-            'url': 'https://www.odoo.com/documentation/master/applications/general/iot/iot_box.html',
+            'url': 'https://www.odoo.com/documentation/latest/applications/general/iot/iot_box.html',
             'target': 'new',
         }
 
