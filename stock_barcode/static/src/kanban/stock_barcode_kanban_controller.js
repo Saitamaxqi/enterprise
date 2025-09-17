@@ -1,6 +1,6 @@
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { useBus, useService } from "@web/core/utils/hooks";
-import { onMounted } from "@odoo/owl";
+import { markup, onMounted } from "@odoo/owl";
 
 export class StockBarcodeKanbanController extends KanbanController {
     setup() {
@@ -42,8 +42,10 @@ export class StockBarcodeKanbanController extends KanbanController {
     async _onBarcodeScannedHandler(barcode) {
         const kwargs = { barcode, context: this.props.context };
         const res = await this.model.orm.call(this.props.resModel, "filter_on_barcode", [], kwargs);
-        if (res.action) {
-            this.actionService.doAction(res.action);
+        const action = res.action;
+        if (action?.help) {
+            action.help = markup(action.help);
+            this.actionService.doAction(action);
         } else if (res.warning) {
             const params = { title: res.warning.title, type: "danger" };
             this.model.notification.add(res.warning.message, params);
