@@ -29,7 +29,7 @@
         <field name="arch" type="xml">
             <form string="No IoT Box found">
                 First, connect the IoT Box to internet, using an ethernet cable. Or, checkout the
-                <a href="https://www.odoo.com/documentation/18.0/applications/general/iot.html" target="_blank" class="link fw-bold">documentation</a>
+                <a href="https://www.odoo.com/documentation/19.0/applications/general/iot.html" target="_blank" class="link fw-bold">documentation</a>
                 for Wi-Fi.<br/>
                 Then, connect the IoT Box to a printer (via USB cable) or a screen (via micro HDMI cable) to get the pairing code.<br/>
                 <br/>

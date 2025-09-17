@@ -696,7 +696,7 @@ class AccountOnlineLink(models.Model):
                             message_post = Markup('%s<br>%s <a href="%s" >%s</a>') % (message, _("You can contact Odoo support"), url, _("Here"))
                             button_label = _('Report issue')
                         else:
-                            url = "https://www.odoo.com/documentation/18.0/applications/finance/accounting/bank/bank_synchronization.html#faq"
+                            url = "https://www.odoo.com/documentation/19.0/applications/finance/accounting/bank/bank_synchronization.html#faq"
                             message_post = Markup('%s<br>%s <a href="%s" >%s</a>') % (message_post, _("Check the documentation"), url, _("Here"))
                             button_label = _('Check the documentation')
                     self.message_post(body=message_post, subject=subject)
