@@ -1788,6 +1788,17 @@ msgstr "Personne physique"
 
 #. module: l10n_be_reports
 #. odoo-python
+#: code:addons/l10n_be_reports/models/account_325_form.py:0
+#, python-format
+msgid ""
+"No 281.50 lines found to generate a PDF. Please record a transaction with a "
+"281.50 tag first."
+msgstr ""
+"Aucune ligne 281.50 trouvée pour générer un PDF. Veuillez enregistrer une transaction avec un "
+"281.50 tag en premier."
+
+#. module: l10n_be_reports
+#. odoo-python
 #: code:addons/l10n_be_reports/models/account_sales_report.py:0
 #: code:addons/l10n_be_reports/models/partner_vat_listing.py:0
 msgid "No VAT number associated with your company."

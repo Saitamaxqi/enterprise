@@ -1830,6 +1830,17 @@ msgstr "Übertrag des negativen Bankguthabens auf Verbindlichkeiten"
 
 #. module: l10n_be_reports
 #. odoo-python
+#: code:addons/l10n_be_reports/models/account_325_form.py:0
+#, python-format
+msgid ""
+"No 281.50 lines found to generate a PDF. Please record a transaction with a "
+"281.50 tag first."
+msgstr ""
+"Keine 281.50 Zeilen zum Generieren eines PDF gefunden. Bitte erfassen Sie eine Transaktion mit einem "
+"281.50 Tag zuerst."
+
+#. module: l10n_be_reports
+#. odoo-python
 #: code:addons/l10n_be_reports/models/account_sales_report.py:0
 #: code:addons/l10n_be_reports/models/partner_vat_listing.py:0
 msgid "No VAT number associated with your company."

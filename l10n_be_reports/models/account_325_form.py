@@ -504,7 +504,9 @@ class L10n_BeForm325(models.Model):
             for form_281_50 in self.form_281_50_ids:
                 attachments.append((form_281_50._get_pdf_file_name(), form_281_50._generate_281_50_form_pdf()))
 
-        if len(attachments) > 1:  # If there are more than one file, we zip all these files.
+        if not attachments:
+            raise UserError(_("No 281.50 lines found to generate a PDF. Please record a transaction with a 281.50 tag first."))
+        elif len(attachments) > 1:  # If there are more than one file, we zip all these files.
             downloaded_filename = f"281_50_forms_{self.reference_year}.zip"
             with tempfile.SpooledTemporaryFile() as tmp_file:  # We store the zip into a temporary file.
                 with zipfile.ZipFile(tmp_file, 'w', zipfile.ZIP_DEFLATED) as archive:  # We create the zip archive.
