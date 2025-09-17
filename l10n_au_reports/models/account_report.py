@@ -137,7 +137,7 @@ class L10n_AuReportHandler(models.AbstractModel):
                 -- • any tax withheld where an ABN was not quoted, and
                 -- • the market value of any non-cash benefits
                 COALESCE(SUM(
-                    CASE WHEN journal.type IN ('bank', 'cash') THEN account_move_line.credit ELSE 0 END
+                    CASE WHEN journal.type IN ('bank', 'cash') AND account.account_type in ('asset_current', 'liability_current') THEN account_move_line.credit ELSE 0 END
                 ), 0) AS gross_paid,
                 -- # 6.62
                 -- if tax is withheld from payments where an ABN was not quoted, this can be reported
@@ -161,6 +161,7 @@ class L10n_AuReportHandler(models.AbstractModel):
             LEFT JOIN res_partner_bank payee_bank ON payee_bank.partner_id = payee.id
             LEFT JOIN account_journal journal ON account_move_line.journal_id = journal.id
             LEFT JOIN account_account_tag_account_move_line_rel aml_tag ON account_move_line.id = aml_tag.account_move_line_id
+            LEFT JOIN account_account account ON account_move_line.account_id = account.id
             WHERE %(search_condition)s
             GROUP BY payee.id, payee.vat, payee.name, payee.name, payee.street, payee.street2, payee.city, payee_state.name, payee_state.code, payee.zip, payee_country.name, payee.phone, payee_bank.sanitized_acc_number, payee.email
             HAVING BOOL_OR(aml_tag.account_account_tag_id IN (%(tag_withheld_id)s, %(tag_tpar_id)s))

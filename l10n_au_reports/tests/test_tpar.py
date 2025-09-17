@@ -62,6 +62,14 @@ class TestAustraliaTparReport(TestAccountReportsCommon):
             else:
                 self.assertEqual(bill.payment_state, 'paid')
 
+        # Customer payments shouldn't affect the report
+        self.env['account.payment'].create({
+            'amount': 1000.0,
+            'payment_type': 'inbound',
+            'partner_id': self.partner_a.id,
+            'date': date_invoice,
+        }).action_post()
+
         tpar_report = self.env.ref('l10n_au_reports.tpar_report')
 
         options = self._generate_options(tpar_report, fields.Date.from_string('2023-01-01'), fields.Date.from_string('2023-12-31'))
