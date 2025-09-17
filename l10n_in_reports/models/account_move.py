@@ -122,6 +122,15 @@ class AccountMove(models.Model):
                 invoice.l10n_in_gstr2b_reconciliation_status = "pending"
         return super(AccountMove, self)._post(soft=soft)
 
+    def button_draft(self):
+        res = super().button_draft()
+        self.write({
+            "l10n_in_exception": False,
+            "l10n_in_gstr2b_reconciliation_status": "pending",
+            "l10n_in_account_return_id": False,
+        })
+        return res
+
     def l10n_in_update_move_using_irn(self):
         """ Fetch the attachment from IRN and use it to update the invoice.
 

@@ -186,3 +186,19 @@ class TestReports(L10nInTestAccountReportsCommon):
 
         new_bill = matched_invoices - bill_with_partner_b - bill_with_partner_c
         self.assertEqual(new_bill.l10n_in_gstr2b_reconciliation_status, "gstr2_bills_not_in_odoo")
+
+    def test_bill_status_and_exception_reset_on_draft(self):
+        gstr2b_draft_bill_response = self._read_mock_json('gstr2b_draft_bill_response.json')
+        self.report.l10n_in_gstr2b_json_ids = self.env['ir.attachment'].create({
+            'name': 'gstr2b.json',
+            'mimetype': 'application/json',
+            'raw': json.dumps(gstr2b_draft_bill_response),
+        })
+        self.report.gstr2b_match_data()
+        self.assertEqual(self.fully_matched_bill.l10n_in_gstr2b_reconciliation_status, "partially_matched")
+        self.assertEqual(bool(self.fully_matched_bill.l10n_in_exception), True)
+
+        self.fully_matched_bill.button_draft()
+        self.assertEqual(self.fully_matched_bill.l10n_in_gstr2b_reconciliation_status, "pending")
+        self.assertEqual(self.fully_matched_bill.l10n_in_account_return_id.id, False)
+        self.assertEqual(self.fully_matched_bill.l10n_in_exception, False)
