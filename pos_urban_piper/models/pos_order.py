@@ -1,4 +1,5 @@
-from odoo import fields, models, api
+from odoo import fields, models, api, _
+from odoo.exceptions import UserError
 
 
 class PosOrder(models.Model):
@@ -23,6 +24,11 @@ class PosOrder(models.Model):
         string='Food Preparation Time',
         help='Preparation time for the food as provided by UrbanPiper.'
     )
+
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_online_order(self):
+        if (self.filtered(lambda o: o.delivery_identifier)):
+            raise UserError(_('Online orders cannot be deleted. If needed, reject the order instead or contact the food delivery provider.'))
 
     @api.model
     def _load_pos_preparation_data_fields(self):

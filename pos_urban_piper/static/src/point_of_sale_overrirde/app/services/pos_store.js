@@ -1,5 +1,6 @@
 import { patch } from "@web/core/utils/patch";
 import { PosStore } from "@point_of_sale/app/services/pos_store";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 
 patch(PosStore.prototype, {
@@ -214,5 +215,17 @@ patch(PosStore.prototype, {
             };
         }
         return orderData;
+    },
+    async onDeleteOrder(order) {
+        if (!order?.delivery_identifier) {
+            return super.onDeleteOrder(...arguments);
+        }
+        this.dialog.add(AlertDialog, {
+            title: _t("Online Order"),
+            body: _t(
+                "Online orders cannot be deleted. If needed, reject the order instead or contact the food delivery provider."
+            ),
+        });
+        return false;
     },
 });

@@ -30,7 +30,7 @@ This module integrates with UrbanPiper to receive and manage orders from various
             'pos_urban_piper/static/tests/tours/**/*',
         ],
         'web.assets_unit_tests': [
-            'pos_urban_piper/static/tests/unit/data/**/*'
+            'pos_urban_piper/static/tests/unit/**/*'
         ],
     },
     'author': 'Odoo S.A.',
