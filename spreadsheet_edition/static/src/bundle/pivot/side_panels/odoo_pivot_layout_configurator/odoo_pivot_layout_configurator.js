@@ -55,11 +55,6 @@ export class OdooPivotLayoutConfigurator extends PivotLayoutConfigurator {
 
     filterGroupableFields(field, path) {
         const fullField = path ? `${path}.${field.name}` : field.name;
-        // Skip test for many2one and one2many fields, as we always want them
-        // to drill down
-        if (field.type === "many2one" || field.type === "one2many") {
-            return true;
-        }
         if (this.allDimensions.some((f) => f.fieldName === fullField)) {
             return false;
         }
