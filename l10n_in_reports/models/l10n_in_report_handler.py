@@ -75,30 +75,6 @@ class L10n_InReportHandler(models.AbstractModel):
         return 'l10n_in_reports.missing_hsn_warning', missing_hsn
 
     @api.model
-    def _get_invalid_service_hsn_products(self, aml_domain):
-        invalid_type_service_for_hsn = self.env['account.move.line'].search(
-            aml_domain +
-            [
-                ('l10n_in_hsn_code', '!=', False),
-                ('l10n_in_hsn_code', '=like', '99%'),
-                ('product_id.type', '!=', 'service'),
-            ]
-        )
-        return 'l10n_in_reports.invalid_type_service_for_hsn_warning', invalid_type_service_for_hsn
-
-    @api.model
-    def _get_invalid_goods_hsn_products(self, aml_domain):
-        invalid_hsn_for_service = self.env['account.move.line'].search(
-            aml_domain +
-            [
-                ('l10n_in_hsn_code', '!=', False),
-                ('product_id.type', '=', 'service'),
-                '!', ('l10n_in_hsn_code', '=like', '99%'),
-            ]
-        )
-        return 'l10n_in_reports.invalid_hsn_for_service_warning', invalid_hsn_for_service
-
-    @api.model
     def _get_invalid_uqc_codes(self, aml_domain):
         uqc_codes = [
             'BAG-BAGS',
@@ -148,11 +124,13 @@ class L10n_InReportHandler(models.AbstractModel):
             'OTH-OTHERS',
         ]
         invalid_uqc_codes = self.env['account.move.line'].search(
-            aml_domain +
-            [
-                ('product_id.type', '!=', 'service'),
-                ('product_id.uom_id.l10n_in_code', 'not in', uqc_codes),
-            ]
+            Domain.AND([
+                aml_domain,
+                [
+                    ('product_id.l10n_in_hsn_code', 'not =ilike', '99%'),
+                    ('product_id.uom_id.l10n_in_code', 'not in', uqc_codes),
+                ],
+            ])
         ).product_id.uom_id
         return 'l10n_in_reports.invalid_uqc_code_warning', invalid_uqc_codes
 
@@ -229,8 +207,6 @@ class L10n_InReportHandler(models.AbstractModel):
                     self._get_invalid_intra_state_tax_on_lines(aml_domain),
                     self._get_invalid_inter_state_tax_on_lines(aml_domain),
                     self._get_invalid_no_hsn_products(aml_domain),
-                    self._get_invalid_service_hsn_products(aml_domain),
-                    self._get_invalid_goods_hsn_products(aml_domain),
                     self._get_invalid_uqc_codes(aml_domain),
                     self._get_out_of_fiscal_year_reversed_moves(options),
                     self._get_unlinked_unregistered_inter_state_reversed_moves(options),
@@ -274,14 +250,6 @@ class L10n_InReportHandler(models.AbstractModel):
     @api.model
     def open_missing_hsn_products(self, options, params):
         return self._l10n_in_open_action(_('Missing HSN for Journal Items'), 'account.move.line', [(False, 'list'), (False, 'form')], params)
-
-    @api.model
-    def open_invalid_type_service_for_hsn_products(self, options, params):
-        return self._l10n_in_open_action(_('Invalid Product Type'), 'account.move.line', [(False, 'list'), (False, 'form')], params)
-
-    @api.model
-    def open_invalid_hsn_for_service_products(self, options, params):
-        return self._l10n_in_open_action(_('Invalid HSN Code'), 'account.move.line', [(False, 'list'), (False, 'form')], params)
 
     @api.model
     def open_invalid_uqc_codes(self, options, params):

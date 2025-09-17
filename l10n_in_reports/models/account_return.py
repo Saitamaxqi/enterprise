@@ -398,7 +398,7 @@ class AccountReturn(models.Model):
                     tax_rate = int(tax_rate)
                 uqc = uoms.browse(line.product_uom_id.id).l10n_in_code and uoms.browse(line.product_uom_id.id).l10n_in_code.split("-")[0] or "OTH"
                 hsn_code = line.l10n_in_hsn_code
-                is_service_line = hsn_code and hsn_code.startswith('99')
+                is_service_line = self.env["account.move"]._l10n_in_is_service_hsn(hsn_code)
                 if is_service_line:
                     # If product is service then UQC is Not Applicable (NA)
                     uqc = "NA"
@@ -2412,40 +2412,6 @@ class AccountReturn(models.Model):
                     name=_("Missing HSN for Journal Items"),
                     views=[(False, 'list'), (False, 'form')]
                 )
-            })
-
-        # Invalid HSN for Goods products
-        if 'invalid_hsn_code_goods' not in check_codes_to_ignore:
-            _template, line_ids = self.env['l10n_in.report.handler']._get_invalid_goods_hsn_products(aml_domain)
-            line_count = len(line_ids)
-            checks.append({
-                'code': 'invalid_hsn_code_goods',
-                'name': _("Invalid HSN Codes"),
-                'message': _("HSN for other than Service type product shall not start with 99, Certain Product Lines do not comply."),
-                'records_model': self.env['ir.model']._get('account.move.line').id,
-                'records_count': line_count,
-                'result': 'anomaly' if line_ids else 'reviewed',
-                'action': line_ids._get_records_action(
-                    name=_("Invalid HSN Code"),
-                    views=[(False, 'list'), (False, 'form')]
-                ),
-            })
-
-        # Invalid HSN Code for service products
-        if 'invalid_hsn_code_service' not in check_codes_to_ignore:
-            _template, line_ids = self.env['l10n_in.report.handler']._get_invalid_service_hsn_products(aml_domain)
-            line_count = len(line_ids)
-            checks.append({
-                'code': 'invalid_hsn_code_service',
-                'name': _("Invalid HSN Codes"),
-                'message': _("HSN for Service type product shall start with 99, Certain Product Lines do not comply."),
-                'records_model': self.env['ir.model']._get('account.move.line').id,
-                'records_count': line_count,
-                'result': 'anomaly' if line_ids else 'reviewed',
-                'action': line_ids._get_records_action(
-                    name=_("Invalid HSN Code"),
-                    views=[(False, 'list'), (False, 'form')]
-                ),
             })
 
         # Invalue UQC code

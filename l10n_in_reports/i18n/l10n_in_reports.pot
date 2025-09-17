@@ -1468,34 +1468,6 @@ msgid "HSN B2C"
 msgstr ""
 
 #. module: l10n_in_reports
-#. odoo-javascript
-#: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
-msgid "HSN for Service type product shall start with 99,"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/account_return.py:0
-msgid ""
-"HSN for Service type product shall start with 99, Certain Product Lines do "
-"not comply."
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-javascript
-#: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
-msgid "HSN for other than Service type product shall not start with 99,"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/account_return.py:0
-msgid ""
-"HSN for other than Service type product shall not start with 99, Certain "
-"Product Lines do not comply."
-msgstr ""
-
-#. module: l10n_in_reports
 #: model:account.report.line,name:l10n_in_reports.account_report_gstr2b_hsn
 msgid "HSN summary of inward supplies"
 msgstr ""
@@ -1720,19 +1692,6 @@ msgstr ""
 #: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_a_2
 #: model:account.report.line,name:l10n_in_reports.account_report_gstr3b_5_b_2
 msgid "Intra-State supplies"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/account_return.py:0
-#: code:addons/l10n_in_reports/models/l10n_in_report_handler.py:0
-msgid "Invalid HSN Code"
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-python
-#: code:addons/l10n_in_reports/models/account_return.py:0
-msgid "Invalid HSN Codes"
 msgstr ""
 
 #. module: l10n_in_reports
@@ -2914,12 +2873,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_in_reports/models/res_config_settings.py:0
 msgid "You have been successfully logged out from the GST portal."
-msgstr ""
-
-#. module: l10n_in_reports
-#. odoo-javascript
-#: code:addons/l10n_in_reports/static/src/components/tax_report/warnings.xml:0
-msgid "do not comply with"
 msgstr ""
 
 #. module: l10n_in_reports
