@@ -1,34 +1,38 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* documents_sign
+# * documents_sign
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-17 09:37+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19/documents_sign/es_419/>\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.sign_import_from_documents_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_import_documents__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_import_documents__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_documents_document__display_name
@@ -38,12 +42,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_sign.field_sign_request_item__display_name
 #: model:ir.model.fields,field_description:documents_sign.field_sign_template__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre en pantalla"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.documents_sign_template_form_inherit
@@ -58,12 +62,12 @@ msgstr ""
 #. module: documents_sign
 #: model:documents.document,name:documents_sign.documents_sign_employment
 msgid "Employment Contract.pdf"
-msgstr ""
+msgstr "Employment Contract.pdf"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.res_config_settings_view_form_inherit_documents_sign
 msgid "Go to Sign Document Templates"
-msgstr ""
+msgstr "Ir a Plantillas de documentos para firmar"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_documents_document__id
@@ -73,45 +77,45 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_sign.field_sign_request_item__id
 #: model:ir.model.fields,field_description:documents_sign.field_sign_template__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.sign_import_from_documents_view_form
 msgid "Import and Sign"
-msgstr ""
+msgstr "Importar y firmar"
 
 #. module: documents_sign
 #. odoo-javascript
 #: code:addons/documents_sign/static/src/backend_components/cog_menu/sign_import_documents_cog_menu.js:0
 #: code:addons/documents_sign/static/src/backend_components/cog_menu/sign_import_documents_cog_menu.xml:0
 msgid "Import from Documents"
-msgstr ""
+msgstr "Importar desde Documentos"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_import_documents__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_import_documents__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.res_config_settings_view_form_inherit_documents_sign
 msgid "Link Sign Templates to directories"
-msgstr ""
+msgstr "Vincular plantillas de firma a directorios"
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/wizard/sign_import_documents.py:0
 msgid "No document selected to import and sign."
-msgstr ""
+msgstr "No hay ningún documento seleccionado para importar y firmar."
 
 #. module: documents_sign
 #: model:documents.document,name:documents_sign.documents_sign_cla
 msgid "Odoo CLA.pdf"
-msgstr ""
+msgstr "Odoo CLA.pdf"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.document_sign_send_request_view_form
@@ -121,17 +125,17 @@ msgstr ""
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.sign_import_from_documents_view_form
 msgid "Select a Document"
-msgstr ""
+msgstr "Selecciona un documento"
 
 #. module: documents_sign
 #: model_terms:ir.ui.view,arch_db:documents_sign.sign_import_from_documents_view_form
 msgid "Select a Document to Import and Sign"
-msgstr ""
+msgstr "Selecciona un docmento para importarlo y firmarlo"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_import_documents__selected_document
 msgid "Selected Document"
-msgstr ""
+msgstr "Documento seleccionado"
 
 #. module: documents_sign
 #: model:documents.document,name:documents_sign.document_sign_folder
@@ -139,37 +143,37 @@ msgstr ""
 #: model:ir.actions.server,name:documents_sign.ir_actions_server_create_sign_template_direct_code
 #: model_terms:ir.ui.view,arch_db:documents_sign.res_config_settings_view_form_inherit_documents_sign
 msgid "Sign"
-msgstr ""
+msgstr "Firma"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_document
 msgid "Signature Document"
-msgstr ""
+msgstr "Firma de documento"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_request
 msgid "Signature Request"
-msgstr ""
+msgstr "Solicitud de firma"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_request_item
 msgid "Signature Request Item"
-msgstr ""
+msgstr "Elemento de solicitud de firma"
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_template
 msgid "Signature Template"
-msgstr ""
+msgstr "Plantilla de firma"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_template__folder_id
 msgid "Signed Document Folder"
-msgstr ""
+msgstr "Carpeta de documentos de Firma electrónica"
 
 #. module: documents_sign
 #: model:ir.model.fields,field_description:documents_sign.field_sign_template__documents_tag_ids
 msgid "Signed Document Tags"
-msgstr ""
+msgstr "Etiquetas de documentos firmados"
 
 #. module: documents_sign
 #. odoo-python
@@ -182,26 +186,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "This action can only be applied on pdf document."
-msgstr ""
+msgstr "Esta acción solo se puede aplicar en un documento PDF."
 
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_import_documents
 msgid "Wizard to select PDF documents from the Documents app to sign"
-msgstr ""
+msgstr "Asistente para seleccionar archivos PDF desde Documentos para firmarlos"
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "You cannot archive the Sign folder (%s)."
-msgstr ""
+msgstr "No puede archivar la carpeta (%s) de Firma."
 
 #. module: documents_sign
 #. odoo-python
 #: code:addons/documents_sign/models/documents_document.py:0
 msgid "You cannot set a company on the %s folder."
-msgstr ""
+msgstr "No puede configurar una empresa en la carpeta %s."
 
 #. module: documents_sign
 #: model:documents.document,name:documents_sign.documents_attachment_video_studio_document
 msgid "sample-nda.pdf"
-msgstr ""
+msgstr "sample-nda.pdf"
