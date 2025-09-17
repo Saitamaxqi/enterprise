@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
+from odoo.tools import SQL, Query
 
 
 class BudgetLine(models.Model):
@@ -17,7 +18,7 @@ class BudgetLine(models.Model):
     budget_analytic_id = fields.Many2one('budget.analytic', 'Budget Analytic', ondelete='cascade', index=True, required=True)
     date_from = fields.Date('Start Date', related='budget_analytic_id.date_from', store=True)
     date_to = fields.Date('End Date', related='budget_analytic_id.date_to', store=True)
-    currency_id = fields.Many2one('res.currency', related='company_id.currency_id', readonly=True)
+    currency_id = fields.Many2one('res.currency', compute='_compute_currency_id', readonly=True)
     budget_amount = fields.Monetary(
         string='Budgeted')
     achieved_amount = fields.Monetary(
@@ -44,6 +45,11 @@ class BudgetLine(models.Model):
         for line in self:
             if line.date_from and line.date_to and line.date_to < line.date_from:
                 raise ValidationError(_("The 'End Date' must be greater than or equal to 'Start Date'."))
+
+    @api.depends('company_id')
+    def _compute_currency_id(self):
+        for budget in self:
+            budget.currency_id = (budget.company_id or self.env.company).currency_id
 
     @api.depends('achieved_amount', 'budget_amount')
     def _compute_above_budget(self):
@@ -75,6 +81,16 @@ class BudgetLine(models.Model):
             elapsed_timedelta = min(max(today, line.date_from), line.date_to) - line.date_from + timedelta(days=1)
             line.theoritical_amount = line_timedelta and (elapsed_timedelta.total_seconds() / line_timedelta.total_seconds()) * line.budget_amount
             line.theoritical_percentage = line.budget_amount and (line.theoritical_amount / line.budget_amount)
+
+    def _field_to_sql(self, alias: str, field_expr: str, query: (Query | None) = None) -> SQL:
+        if field_expr == 'currency_id':
+            company_alias = query.left_join(alias, 'company_id', 'res_company', 'id', 'company_id')
+            return SQL(
+                "COALESCE(%(company_alias)s.currency_id, %(env_currency_id)s)",
+                company_alias=company_alias,
+                env_currency_id=self.env.company.currency_id.id,
+            )
+        return super()._field_to_sql(alias, field_expr, query)
 
     def _read_group_select(self, aggregate_spec, query):
         # flag achieved_amount/theoritical_amount as aggregatable
