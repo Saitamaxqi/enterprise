@@ -43,7 +43,6 @@ class TestWhitelistFromTemplate(TransactionCase):
             'l10n_ch_sickness_insurance_line_ids': [],
             'l10n_ch_social_insurance_id': False,
             'l10n_ch_total_occupation_rate': 100.0,
-            'overtime_from_attendance': False,
         })
 
         contract = self.employee_ch.version_id
