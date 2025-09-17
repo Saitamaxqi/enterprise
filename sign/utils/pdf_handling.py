@@ -28,7 +28,7 @@ def flatten_pdf(base64_pdf):
         _logger.warning("Failed to parse PDF during flattening: %s", e)
         return base64_pdf
 
-    if not pdf_reader.getFields():
+    if not pdf_reader.getFormTextFields():
         return base64_pdf  # No fields to flatten
 
     for page_num in range(pdf_reader.getNumPages()):
