@@ -497,7 +497,7 @@ test("planning calendar view: print", async () => {
     });
     onRpc("action_print_plannings", () => {
         expect.step("action_print_plannings()");
-        return {};
+        return false;
     });
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
