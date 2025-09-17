@@ -1393,3 +1393,18 @@ class TestQualityCheck(TestQualityCommon):
         quality_point.active = False
         self.product.invalidate_recordset(fnames=['quality_control_point_qty'])
         self.assertEqual(self.product.quality_control_point_qty, 0)
+
+    def test_quality_point_stat_button_from_product_view(self):
+        """
+        Ensure that the smart button on the product form view opens the
+        quality points action with the some views configured.
+        """
+        quality_point = self.env['quality.point'].create({
+            'product_ids': [Command.link(self.product.id)],
+            'measure_on': 'product',
+            'product_category_ids': [Command.link(self.product_category_base.id)]
+        })
+        action = self.product.action_see_quality_control_points()
+        self.assertTrue(action['views'][0][0])
+        result = self.env['quality.point'].search(action['domain'])
+        self.assertEqual(result, quality_point)

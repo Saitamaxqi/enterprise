@@ -656,6 +656,7 @@ class ProductTemplate(models.Model):
         action = self.env["ir.actions.actions"]._for_xml_id("quality_control.quality_point_action")
         action['context'] = dict(self.env.context, default_product_ids=self.product_variant_ids.ids)
 
+        action['views'] = [(self.env.ref("quality.quality_point_view_tree").id, 'list'), (False, 'form'), (False, 'kanban')]
         domain_in_products_or_categs = ['|', ('product_ids', 'in', self.product_variant_ids.ids), ('product_category_ids', 'parent_of', self.categ_id.ids)]
         domain_no_products_and_categs = [('product_ids', '=', False), ('product_category_ids', '=', False)]
         action['domain'] = Domain.OR([domain_in_products_or_categs, domain_no_products_and_categs])
