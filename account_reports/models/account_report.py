@@ -2771,8 +2771,15 @@ class AccountReport(models.Model):
 
         return lines
 
+    # Deprecated, removed in master.
     @api.model
     def format_column_values(self, options, lines):
+        self._format_column_values(options, lines, force_format=True)
+
+        return lines
+
+    def format_column_values_from_client(self, options, lines):
+        """ Format column values for display. Called via dispatch_report_action when rounding unit changes on client side."""
         self._format_column_values(options, lines, force_format=True)
 
         return lines

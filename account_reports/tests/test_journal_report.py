@@ -229,7 +229,9 @@ class TestJournalReport(TestAccountReportsCommon):
                 'balance': '$\xa0150.00',
                 'balance_no_format': 150.0,
                 '+': '$\xa0150.00',
+                '+_no_format': 150.0,
                 '-': '$\xa00.00',
+                '-_no_format': 0.0,
                 'impact': '$\xa0150.00',
             }}}
         )
@@ -241,7 +243,9 @@ class TestJournalReport(TestAccountReportsCommon):
                 'balance': '$\xa0150.00',
                 'balance_no_format': 150.0,
                 '+': '$\xa0150.00',
+                '+_no_format': 150.0,
                 '-': '$\xa00.00',
+                '-_no_format': 0.0,
                 'impact': '$\xa0150.00',
             }}}
         )
@@ -270,7 +274,9 @@ class TestJournalReport(TestAccountReportsCommon):
                 'balance': '$\xa0150.00',
                 'balance_no_format': 150.0,
                 '+': '$\xa0150.00',
+                '+_no_format': 150.0,
                 '-': '$\xa00.00',
+                '-_no_format': 0.0,
                 'impact': '$\xa0150.00',
             }}}
         )
@@ -282,7 +288,9 @@ class TestJournalReport(TestAccountReportsCommon):
                 'balance': '$\xa0150.00',
                 'balance_no_format': 150.0,
                 '+': '$\xa0150.00',
+                '+_no_format': 150.0,
                 '-': '$\xa00.00',
+                '-_no_format': 0.0,
                 'impact': '$\xa0150.00',
             }}}
         )
@@ -520,3 +528,23 @@ class TestJournalReport(TestAccountReportsCommon):
                 },
             ],
         )
+
+    def test_global_tax_summary_rounding_unit(self):
+        """ Test that Global Tax Summary applies rounding filter correctly. """
+        report = self.env.ref('account_reports.journal_report')
+        options = self._generate_options(report, '2017-01-01', '2017-01-31')
+        options['unfold_all'] = True
+
+        # Get tax summary lines with default formatting
+        lines = report._get_lines(options)
+        tax_lines = list(filter(lambda line: line.get('is_tax_section_line'), lines))
+
+        default_balance = tax_lines[0]['tax_grid_summary_lines']['United States']['c10']['+']
+        self.assertEqual(default_balance, '$\xa0150.00')  # Default: $150.00
+
+        # Test with thousands rounding unit, call via dispatch_report_action like the frontend does
+        options['rounding_unit'] = 'thousands'
+        report.dispatch_report_action(options, 'format_column_values_from_client', lines)
+
+        thousands_balance = tax_lines[0]['tax_grid_summary_lines']['United States']['c10']['+']
+        self.assertEqual(thousands_balance, '$\xa00')  # Thousands: $0 (150/1000 = 0.15 rounded to 0)

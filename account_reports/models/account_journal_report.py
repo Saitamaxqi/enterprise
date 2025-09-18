@@ -2,6 +2,7 @@
 import io
 import datetime
 from collections import defaultdict
+from itertools import chain
 
 from markupsafe import Markup
 from PIL import ImageFont
@@ -205,6 +206,44 @@ class AccountJournalReportHandler(models.AbstractModel):
                 new_lines.append(summary_line)
 
         return new_lines
+
+    def format_column_values_from_client(self, options, lines):
+        """
+        Format column values for journal reports, including tax summary sections.
+        Called via dispatch_report_action when rounding unit changes on client side.
+        """
+        report = self.env['account.report'].browse(options['report_id'])
+        for line_dict in lines:
+            if line_dict.get('is_tax_section_line'):
+                self._format_tax_summary_line(report, options, line_dict)
+
+        return report.format_column_values_from_client(options, lines)
+
+    def _format_tax_summary_line(self, report, options, line_dict):
+        """ Apply formatting to tax summary monetary values based on current options. """
+        # Format tax_report_lines (individual tax details)
+        tax_report_lines = line_dict.get('tax_report_lines')
+        if tax_report_lines:
+            monetary_fields = ['base_amount', 'tax_amount', 'tax_non_deductible', 'tax_deductible', 'tax_due']
+            for tax_line in chain.from_iterable(tax_report_lines.values()):
+                for field in monetary_fields:
+                    no_format_field = f'{field}_no_format'
+                    no_format_value = tax_line.get(no_format_field)
+                    if no_format_value is not None:
+                        tax_line[field] = report.format_value(options, no_format_value, figure_type='monetary')
+
+        # Format tax_grid_summary_lines (tax grid summaries)
+        tax_grid_lines = line_dict.get('tax_grid_summary_lines')
+        if tax_grid_lines:
+            for country_grids in tax_grid_lines.values():
+                for grid_line in country_grids.values():
+                    debit = grid_line.get('+_no_format', 0)
+                    credit = grid_line.get('-_no_format', 0)
+                    balance = grid_line.get('balance_no_format', 0)
+                    grid_line['+'] = report.format_value(options, debit, figure_type='monetary')
+                    grid_line['-'] = report.format_value(options, credit, figure_type='monetary')
+                    grid_line['balance'] = report.format_value(options, balance, figure_type='monetary')
+                    grid_line['impact'] = report.format_value(options, balance, figure_type='monetary')
 
     ##########################################################################
     # PDF Export
@@ -1161,7 +1200,9 @@ class AccountJournalReportHandler(models.AbstractModel):
             res[country_name][name]['balance'] = report._format_value(options, balance, 'monetary')
             res[country_name][name]['balance_no_format'] = balance
             res[country_name][name]['+'] = report._format_value(options, debit, 'monetary')
+            res[country_name][name]['+_no_format'] = debit
             res[country_name][name]['-'] = report._format_value(options, credit, 'monetary')
+            res[country_name][name]['-_no_format'] = credit
             res[country_name][name]['impact'] = report._format_value(options, balance, 'monetary')
 
         return res
@@ -1174,15 +1215,15 @@ class AccountJournalReportHandler(models.AbstractModel):
         Returns a dictionary with the following structure:
         {
             Country : [
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
                 ...
             ],
             Country : [
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
-                {name, base_amount, tax_amount, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
+                {name, base_amount{_no_format}, tax_amount{_no_format}, tax_non_deductible{_no_format}, tax_deductible{_no_format}, tax_due{_no_format}},
                 ...
             ],
             ...
@@ -1212,7 +1253,9 @@ class AccountJournalReportHandler(models.AbstractModel):
         for tax in taxes:
             res.setdefault(tax.country_id.name, []).append({
                 'base_amount': report._format_value(options, tax_values[tax.id]['base_amount'], 'monetary'),
+                'base_amount_no_format': tax_values[tax.id]['base_amount'],
                 'tax_amount': report._format_value(options, tax_values[tax.id]['tax_amount'], 'monetary'),
+                'tax_amount_no_format': tax_values[tax.id]['tax_amount'],
                 'tax_non_deductible': report._format_value(options, tax_values[tax.id]['tax_non_deductible'], 'monetary'),
                 'tax_non_deductible_no_format': tax_values[tax.id]['tax_non_deductible'],
                 'tax_deductible': report._format_value(options, tax_values[tax.id]['tax_deductible'], 'monetary'),
