@@ -1108,6 +1108,24 @@
              ]
             }</field>
     </record>
+    <record id="rule_parameter_study_loan_coefficients_2025_sept" model="hr.rule.parameter.value">
+        <field name="rule_parameter_id" ref="rule_parameter_study_loan_coefficients"/>
+        <field name="date_from" eval="datetime(2025, 9, 24).date()"/>
+        <field name="parameter_value">{
+             "no-tax-free": [
+                (938, 0.0000, 0.0000),
+                (2053, 0.1500, 140.7692),
+                (2597, 0.1700, 181.8462),
+                ("inf", 0.1000, 0.0000),
+             ],
+             "tax-free": [
+                (1288, 0.0000, 0.0000),
+                (2403, 0.1500, 193.2692),
+                (3447, 0.1700, 241.3462),
+                ("inf", 0.1000, 0.0000),
+             ]
+            }</field>
+    </record>
 
     <record id="rule_parameter_whm_tax_rate" model="hr.rule.parameter">
         <field name="name">Working holiday makers tax rates</field>

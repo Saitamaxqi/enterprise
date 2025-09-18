@@ -305,6 +305,40 @@ class TestRegularPayslip(TestPayrollCommon):
             payslip_date_to=date(2024, 7, 31),
         )
 
+        # Post Sept 2025 loan withhold
+        self._test_payslip(
+            employee,
+            contract,
+            expected_worked_days=[
+                # (work_entry_type_id.id, number_of_day, number_of_hours, amount)
+                (self.work_entry_types['WORK100'].id, 22, 167.2, 5000),
+            ],
+            expected_lines=[
+                # (code, total)
+                ('BASIC', 5000),
+                ('OTE', 6050),
+                ('EXTRA', 200),
+                ('SALARY.SACRIFICE.TOTAL', -350),
+                ('ALW', 550),
+                ('ALW.TAXFREE', 0),
+                ('RTW', 300),
+                ('SALARY.SACRIFICE.OTHER', -150),
+                ('WORKPLACE.GIVING', -50),
+                ('GROSS', 5650),
+                ('WITHHOLD', -945),
+                ('RTW.WITHHOLD', -96),
+                ('WITHHOLD.STUDY', 0),
+                ('MEDICARE', 0),
+                ('WITHHOLD.TOTAL', -1041),
+                ('NET', 4609),
+                ('SUPER.CONTRIBUTION', 200),
+                ('SUPER', 726),
+            ],
+            input_lines=self.default_input_lines,
+            payslip_date_from=date(2025, 9, 1),
+            payslip_date_to=date(2025, 9, 30),
+        )
+
     def test_regular_payslip_8(self):
         employee, contract = self._create_employee(contract_info={
             'employee': 'Test Employee',
@@ -402,4 +436,38 @@ class TestRegularPayslip(TestPayrollCommon):
             input_lines=self.default_input_lines,
             payslip_date_from=date(2024, 7, 1),
             payslip_date_to=date(2024, 7, 31),
+        )
+
+    def test_regular_10_loan_stsl(self):
+        # Weekly Loan STSL from 24 Sept 2025 onwards
+        employee, contract = self._create_employee(contract_info={
+            'employee': 'Test Employee',
+            'employment_basis_code': 'F',
+            'wage_type': 'monthly',
+            'schedule_pay': 'weekly',
+            'wage': 2608.36,
+            'l10n_au_training_loan': True,
+            'l10n_au_tax_free_threshold': True})
+
+        self._test_payslip(
+            employee,
+            contract,
+            expected_worked_days=[
+                # (work_entry_type_id.id, number_of_day, number_of_hours, amount)
+                (self.work_entry_types['WORK100'].id, 5, 38, 2608.36),
+            ],
+            expected_lines=[
+                # (code, total)
+                ('BASIC', 2608.36),
+                ('OTE', 2608.36),
+                ('GROSS', 2608.36),
+                ('WITHHOLD', -659),
+                ('WITHHOLD.STUDY', -202),
+                ('MEDICARE', 0),
+                ('WITHHOLD.TOTAL', -861),
+                ('NET', 1747.32),
+                ('SUPER', 313),
+            ],
+            payslip_date_from=date(2025, 9, 29),
+            payslip_date_to=date(2025, 10, 3)
         )

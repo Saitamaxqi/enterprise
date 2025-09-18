@@ -615,6 +615,11 @@ class HrPayslip(models.Model):
 
     def _l10n_au_compute_loan_withhold(self, period_earning, period, coefficients):
         self.ensure_one()
+        # STSL withholding from 24 sept 2025 onwards to use schedule 1 formula
+        # https://softwaredevelopers.ato.gov.au/2025-pay-you-go-payg-withholding-tax-tables
+        if self.date_from >= date(2025, 9, 24):
+            return self._l10n_au_compute_withholding_amount(period_earning, period, coefficients)
+
         weekly_earning = self._l10n_au_compute_weekly_earning(period_earning, period)
         weekly_withhold = 0.0
         if weekly_earning <= coefficients[0][1]:
