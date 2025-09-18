@@ -1,24 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_shiprocket
+# * delivery_shiprocket
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:41+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"delivery_shiprocket/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>Click on Add a New Channel</b>"
-msgstr ""
+msgstr "<b>Cliquer sur Ajouter un nouveau canal</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -26,6 +30,8 @@ msgid ""
 "<b>Copy your API User's Email and Password and paste into Shipping method's "
 "configuration.</b>"
 msgstr ""
+"<b>Copiez l'adresse e-mail et le mot de passe de votre API d'utilisateur "
+"dans la configuration du mode d'expédition.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -33,6 +39,8 @@ msgid ""
 "<b>Fill the details and Click on Save Channel &amp; Test Connection "
 "button.</b>"
 msgstr ""
+"<b>Remplissez les détails et cliquez sur le bouton Enregistrer canal &amp; "
+"Tester la connexion.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -40,11 +48,14 @@ msgid ""
 "<b>In Odoo configuration click on <i class=\"fa fa-refresh oe_inline\"/> "
 "icon near Shiprocket Channel to sync newly created channels.</b>"
 msgstr ""
+"<b>Dans la configuration d'Odoo, cliquez sur l'icône <i class="
+"\"fa fa-refresh oe_inline\"/> à côté du Canal Shiprocket pour synchroniser "
+"les canaux nouvellement créés.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>Now click on Add for MANUAL</b>"
-msgstr ""
+msgstr "<b>Cliquez à présent sur Ajouter pour MANUEL</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -53,11 +64,16 @@ msgid ""
 "                                <b>You can add new API User from the right side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
+"<b>Une fois que votre compte est créé, allez aux Paramètres &gt; API &gt; "
+"Configurer. </b>\n"
+"                                <b>Vous pouvez ajouter un nouvel Utilisateur "
+"API à partir du côté droit de la page.</b>\n"
+"                                <br/>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>To Create a channel, Go to Shiprocket Channels</b>"
-msgstr ""
+msgstr "<b>Pour créer un canal, allez aux Canaux Shiprocket</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -67,6 +83,10 @@ msgid ""
 "creation. The amount of cancelled shipment will be returned in next 3-4 "
 "days."
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> En environnement de test, pour "
+"éviter des frais, vos envois sont automatiquement <b>annulés</b> après la "
+"création de l'étiquette. Le montant de l'envoi annulé sera remboursé dans "
+"les 3-4 jours suivants."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
@@ -75,105 +95,108 @@ msgid ""
 " pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
 msgstr ""
+"Le manifeste est un document exigé par certains transporteurs pour "
+"rationaliser le processus d'enlèvement, en particulier lors de l'expédition "
+"d'un grand nombre de commandes d'eCommerce."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "API User"
-msgstr ""
+msgstr "Utilisateur API"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "AWB assignment was unsuccessful: %s"
-msgstr ""
+msgstr "Échec de l'assignation de la LTA : %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "AWB number(s) not found to cancel the shipment!"
-msgstr ""
+msgstr "Numéro(s) LTA non trouvé(s) pour annuler l'envoi !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Access token is generated successfully!"
-msgstr ""
+msgstr "Le jeton d'accès est généré avec succès !"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Add Manual Channel"
-msgstr ""
+msgstr "Ajouter un canal manuel"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Add New Channel"
-msgstr ""
+msgstr "Ajouter un nouveau canal"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Authentication failed! Please check your credentials."
-msgstr ""
+msgstr "Échec de l'authentification ! Veuillez vérifier vos identifiants."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Transporteur"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__channel_code
 msgid "Channel Code"
-msgstr ""
+msgstr "Code du canal"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__name
 msgid "Channel Name"
-msgstr ""
+msgstr "Nom du canal"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de config"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Configure Shiprocket channel in shipping method"
-msgstr ""
+msgstr "Configurer le canal Shiprocket dans le mode d'expédition"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Country is required!"
-msgstr ""
+msgstr "Le pays est requis !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier (%(recommender)s): %(courier)s"
-msgstr ""
+msgstr "Courrier (%(recommender)s) : %(courier)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__courier_code
 msgid "Courier Code"
-msgstr ""
+msgstr "Code de courrier"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier is not available for delivery!"
-msgstr ""
+msgstr "Le courrier n'est pas disponible pour la livraison !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Courier: %s"
-msgstr ""
+msgstr "Courrier : %s"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Create API User"
-msgstr ""
+msgstr "Créer l'utilisateur API"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
@@ -181,18 +204,20 @@ msgid ""
 "Create a pickup request for your order shipment using Validate button of the"
 " Delivery Order."
 msgstr ""
+"Créer une demande d'enlèvement pour l'envoi de votre commande en cliquant "
+"sur le bouton Valider du bon de livraison."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__create_uid
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__create_date
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__display_name
@@ -203,28 +228,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__display_name
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__eway_bill_number
 msgid "EWay Bill"
-msgstr ""
+msgstr "E-Way Bill"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Email is required!"
-msgstr ""
+msgstr "L'e-mail est requis !"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_password
 msgid "Enter your Password from Shiprocket account (API)."
-msgstr ""
+msgstr "Saisissez le mot de passe de votre compte Shiprocket (API)."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_email
 msgid "Enter your Username from Shiprocket account (API)."
-msgstr ""
+msgstr "Saisissez le nom d'utilisateur de votre compte Shiprocket (API)."
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -233,28 +258,34 @@ msgid ""
 "Eway Bill number is required to ship an order if order amount is more than "
 "50,000 INR."
 msgstr ""
+"Le numéro d'E-way bill est requis pour envoyer une commande si le montant "
+"est supérieur à 50.000 INR."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Failed to fetch Shiprocket Channel(s), Please try again later."
 msgstr ""
+"Impossible de récupérer le(s) Canal (Canaux) Shiprocket. Veuillez réessayer "
+"ultérieurement."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Failed to fetch Shiprocket Couriers(s), Please try again later."
 msgstr ""
+"Impossible de récupérer le(s) Courrier(s) Shiprocket. Veuillez réessayer "
+"ultérieurement."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid "Generate Manifest"
-msgstr ""
+msgstr "Générer le manifeste"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_access_token
 msgid "Generate access token using Shiprocket credentials"
-msgstr ""
+msgstr "Générer un jeton d'accès en utilisant les identifiants Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_courier_ids
@@ -262,6 +293,8 @@ msgid ""
 "Get all the integrated Couriers from your Shiprocket account.Based on the "
 "courier selections the rate will be fetched from the Shiprocket."
 msgstr ""
+"Obtenir tous les courriers intégrés à votre compte Shiprocket. En fonction "
+"de la sélection des courriers, le tarif sera récupéré à partir de Shiprocket."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
@@ -270,23 +303,26 @@ msgid ""
 " is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
 msgstr ""
+"Obtenir tous les canaux intégrés à votre compte Shiprocket. L'identifiant de "
+"ce canal est utilisé pour sélectionner ou préciser un canal personnalisé au "
+"moment de la création de la commande Shiprocket."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Go to"
-msgstr ""
+msgstr "Aller au"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Go to Shipping Method"
-msgstr ""
+msgstr "Aller au mode d'expédition"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Go to Shipping Methods"
-msgstr ""
+msgstr "Aller aux modes d'expédition"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__id
@@ -297,93 +333,96 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_package_type__id
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Label generated for %(courier)s with Tracking Number: %(tracking_ref)s"
-msgstr ""
+msgstr "Libellé généré pour %(courier)s vec numéro de suivi  : %(tracking_ref)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_uid
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Mis à jour par"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_date
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Mis à jour le"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/stock_package_type.py:0
 msgid "Length, Width and Height is necessary for Shiprocket Package."
 msgstr ""
+"La longueur, la largeur et la hauteur sont nécessaires pour le colis "
+"Shiprocket."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Manifest generated of %s"
-msgstr ""
+msgstr "Manifeste généré par %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Order cancelled successfully!"
-msgstr ""
+msgstr "Commande annulée avec succès !"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_default_package_type_id
 msgid "Package Type"
-msgstr ""
+msgstr "Type de colis"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "Fournisseur de paiement"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Phone is required!"
-msgstr ""
+msgstr "Le téléphone est requis !"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid "Pickup Request"
-msgstr ""
+msgstr "Demande d'enlèvement"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Pincode is required!"
-msgstr ""
+msgstr "Le code pin est requis !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Please configure Shiprocket credentials in the shipping method"
 msgstr ""
+"Veuillez configurer les identifiants Shiprocket dans le mode d'expédition"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Fournisseur"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "SKU is missing!"
-msgstr ""
+msgstr "Le SKU est manquant !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Sale Order or Picking is required to get rate."
-msgstr ""
+msgstr "La commande ou le transfert est requis pour obtenir le tarif."
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -392,131 +431,135 @@ msgid ""
 "Same order is available in Shiprocket so label provided is the copy of "
 "existing one."
 msgstr ""
+"La même commande est disponible dans Shiprocket, l'étiquette fournie est "
+"donc une copie de l'étiquette existante."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Save Manual Channel"
-msgstr ""
+msgstr "Enregistrer canal manuel"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__name
 msgid "Service Name"
-msgstr ""
+msgstr "Nom du service"
 
 #. module: delivery_shiprocket
 #: model:product.template,name:delivery_shiprocket.product_product_delivery_shiprocket_product_template
 msgid "ShipRocket"
-msgstr ""
+msgstr "ShipRocket"
 
 #. module: delivery_shiprocket
 #: model:delivery.carrier,name:delivery_shiprocket.delivery_carrier_shiprocket
 msgid "ShipRocket Domestic"
-msgstr ""
+msgstr "ShipRocket Domestic"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Modes d'expédition"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields.selection,name:delivery_shiprocket.selection__delivery_carrier__delivery_type__shiprocket
 #: model:ir.model.fields.selection,name:delivery_shiprocket.selection__stock_package_type__package_carrier_type__shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.stock_picking_form_inherit_shiprocket
 msgid "Shiprocket"
-msgstr ""
+msgstr "Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_access_token
 msgid "Shiprocket Access Token"
-msgstr ""
+msgstr "Jeton d'accès Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_shiprocket_channel
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid "Shiprocket Channel"
-msgstr ""
+msgstr "Canal Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Configuration"
-msgstr ""
+msgstr "Configuration de Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_res_config_settings__module_delivery_shiprocket
 msgid "Shiprocket Connector"
-msgstr ""
+msgstr "Connecteur Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_shiprocket_courier
 msgid "Shiprocket Courier"
-msgstr ""
+msgstr "Courrier Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_courier_ids
 msgid "Shiprocket Couriers"
-msgstr ""
+msgstr "Courriers Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_email
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__shiprocket_email
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_courier__shiprocket_email
 msgid "Shiprocket Email"
-msgstr ""
+msgstr "E-mail Shiprocket"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Shiprocket Error: %s"
-msgstr ""
+msgstr "Erreur Shiprocket : %s"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Shiprocket Notification"
-msgstr ""
+msgstr "Notification Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_stock_picking__shiprocket_orders
 msgid "Shiprocket Order(s)"
-msgstr ""
+msgstr "Commande(s) Shiprocket"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_password
 msgid "Shiprocket Password"
-msgstr ""
+msgstr "Mot de passe Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.res_config_settings_view_form_sale_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.res_config_settings_view_form_stock_shiprocket
 msgid "Shiprocket Shipping Methods"
-msgstr ""
+msgstr "Modes d'expédition Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Tutorial"
-msgstr ""
+msgstr "Tutoriel Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Tutorial for add channel"
-msgstr ""
+msgstr "Tutoriel Shiprocket pour ajouter un canal"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Shiprocket Website"
-msgstr ""
+msgstr "site web de Shiprocket"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Shiprocket order(s) not found to cancel the shipment!"
-msgstr ""
+msgstr "Commande(s) Shiprocket introuvable(s) pour annuler l'envoi !"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/payment_provider.py:0
 msgid "Shiprocket provider is configured to use only Collect on Delivery."
 msgstr ""
+"Le prestataire Shiprocket est configuré pour utiliser uniquement le paiement "
+"à la livraison."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_default_package_type_id
@@ -524,6 +567,8 @@ msgid ""
 "Shiprocket requires package dimensions for getting accurate rate, you can "
 "define these in a package type that you set as default"
 msgstr ""
+"Shiprocket exige les dimensions du colis pour obtenir un tarif exact. Vous "
+"pouvez les définir dans le type de colis que vous définissez par défaut"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto
@@ -531,16 +576,18 @@ msgid ""
 "Shiprocket token expires in 10 days. Token will be auto generate based on "
 "this token expiry date."
 msgstr ""
+"Le jeton Shiprocket expire dans 10 jours. Le jeton sera généré "
+"automatiquement en fonction de la date d'expiration de ce jeton."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sign up"
-msgstr ""
+msgstr "S'inscrire"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Type de colis de stock"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_stock_picking__shiprocket_orders
@@ -548,45 +595,47 @@ msgid ""
 "Store shiprocket order(s) in a (+) separated string, used in cancelling the "
 "order."
 msgstr ""
+"Stocker les commandes Shiprocket dans une chaîne séparée (+), utilisée pour "
+"annuler la commande."
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Street is required!"
-msgstr ""
+msgstr "La rue est obligatoire !"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sync Channel from Shiprocket"
-msgstr ""
+msgstr "Synchroniser Canal depuis Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Sync Couriers from Shiprocket"
-msgstr ""
+msgstr "Synchroniser Courriers depuis Shiprocket"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "Test Connection"
-msgstr ""
+msgstr "Test de connexion"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto
 msgid "Token Expiry"
-msgstr ""
+msgstr "Expiration du jeton"
 
 #. module: delivery_shiprocket
 #: model:ir.model,name:delivery_shiprocket.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Transfert"
 
 #. module: delivery_shiprocket
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/shiprocket_request.py:0
 msgid "Weight is missing!"
-msgstr ""
+msgstr "Le poids est manquant !"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "to create a new account:"
-msgstr ""
+msgstr "pour créer un nouveau compte :"

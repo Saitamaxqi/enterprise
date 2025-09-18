@@ -8,13 +8,14 @@
 # Nancy Momoland <thanhnguyen.icsc@gmail.com>, 2023
 # Thi Huong Nguyen, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-15 23:02+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 02:41+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "stock_barcode/vi/>\n"
 "Language: vi\n"
@@ -543,7 +544,7 @@ msgid ""
 "Display reserved lots/serial numbers. When not active, the picker can pick "
 "lots/serials as they want."
 msgstr ""
-"Hiển thị lô/số sê-ri đã được dự trữ. Khi không được kích hoạt, người lấy "
+"Hiển thị lô/số sê-ri đã được đặt trước. Khi không được kích hoạt, người lấy "
 "hàng có thể lấy lô/sê-ri theo ý muốn."
 
 #. module: stock_barcode
@@ -652,8 +653,8 @@ msgid ""
 "Field '%(field_name)s' is a reserved field, you can't manually update its "
 "value with this method"
 msgstr ""
-"Trường '%(field_name)s' là một trường đã được dự trữ, bạn không thể cập nhật "
-"giá trị của nó theo cách này."
+"Trường '%(field_name)s' là một trường đã được đặt trước, bạn không thể cập "
+"nhật giá trị của nó theo cách này."
 
 #. module: stock_barcode
 #. odoo-python
@@ -682,8 +683,8 @@ msgstr "Các đơn hàng tách kiện sau đã được tạo:"
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__barcode_allow_extra_product
 msgid "For planned transfers, allow adding non-reserved products"
 msgstr ""
-"Đối với lệnh chuyển hàng theo kế hoạch, cho phép thêm sản phẩm không được dự "
-"trữ"
+"Đối với lệnh chuyển hàng theo kế hoạch, cho phép thêm sản phẩm không được "
+"đặt trước"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
@@ -1710,8 +1711,8 @@ msgid ""
 "Scanned product %s is not reserved for this transfer. Are you sure you want "
 "to add it?"
 msgstr ""
-"Sản phẩm đã quét %s không được dự trữ cho lệnh chuyển hàng này. Bạn có chắc "
-"chắn muốn thêm sản phẩm?"
+"Sản phẩm đã quét %s không được đặt trước cho lệnh chuyển hàng này. Bạn có "
+"chắc chắn muốn thêm sản phẩm?"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1767,7 +1768,7 @@ msgstr "Hiển thị xác nhận mã vạch"
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_stock_picking_type__show_reserved_sns
 msgid "Show reserved lots/SN"
-msgstr "Hiện số lô/sê-ri đã dự trữ"
+msgstr "Hiện số lô/sê-ri đặt trước"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2058,7 +2059,7 @@ msgid ""
 "Scan the current location to confirm that."
 msgstr ""
 "Bạn sắp lấy sản phẩm %(productName)s từ vị trí %(locationName)s nhưng sản "
-"phẩm này không được dự trữ ở vị trí đó.\n"
+"phẩm này không được đặt trước ở vị trí đó.\n"
 "Hãy quét vị trí hiện tại để xác nhận."
 
 #. module: stock_barcode

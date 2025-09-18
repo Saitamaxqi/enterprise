@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_starshipit
+# * delivery_starshipit
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-03 12:21+0000\n"
-"PO-Revision-Date: 2025-07-03 12:21+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:45+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_starshipit/es/>\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
@@ -21,6 +25,8 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> Do not forget to select a service "
 "for a valid configuration."
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> No olvide seleccionar un servicio "
+"para una configuración válida."
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
@@ -28,6 +34,12 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your shippings are automatically <b>archived</b> after the label creation. <br/>\n"
 "                        Please note that charges can still occur for label creations and some shipping carriers may automatically validate the shipment when printing labels."
 msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> En el <b>entorno de prueba</b>, "
+"sus envíos se <b>archivan</b> automáticamente después de crear las "
+"etiquetas. <br/>\n"
+"                        Tenga en cuenta que aún se pueden realizar cargos al "
+"crear etiquetas y que algunos transportistas pueden validar automáticamente "
+"el envío al imprimir las etiquetas."
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
@@ -35,32 +47,34 @@ msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping services depend on "
 "enabled carriers in your Starshipit account."
 msgstr ""
+"<i class=\"fa fa-info-circle\"/> Los servicios de envío disponibles dependen "
+"de los transportistas habilitados en su cuenta de Starshipit."
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Transportista"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Choose Starshipit Shipping Service"
-msgstr ""
+msgstr "Elegir un servicio de envío de Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_starshipit_shipping_wizard
 msgid "Choose from the available starshipit shipping methods"
-msgstr ""
+msgstr "Elija uno de los métodos de envío de Starshipit disponibles"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_starshipit_shipping_wizard__available_services
@@ -68,36 +82,38 @@ msgid ""
 "Contains the list of available services for the starshipit account to select"
 " from."
 msgstr ""
+"Incluye la lista de servicios disponibles para seleccionar con la cuenta de "
+"Starshipit."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid "Default Package Type"
-msgstr ""
+msgstr "Tipo de paquete por defecto"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_default_package_type_id
 msgid "Default Package Type for Starshipit"
-msgstr ""
+msgstr "Tipo de paquete por defecto para Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__carrier_id
 msgid "Delivery"
-msgstr ""
+msgstr "Entrega"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
 msgid "Delivery Service"
-msgstr ""
+msgstr "Servicio de entrega"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__display_name
@@ -106,7 +122,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_picking__display_name
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_return_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nombre para mostrar"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -114,12 +130,14 @@ msgstr ""
 msgid ""
 "Error: %(file_name)s file could not be obtained for order %(order_name)s."
 msgstr ""
+"Error: el archivo No se ha podido obtener el archivo %(file_name)s para el "
+"pedido %(order_name)s."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Error: this delivery method is not available for this order."
-msgstr ""
+msgstr "Error: este método de envío no está disponible para este pedido."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__id
@@ -128,39 +146,39 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_picking__id
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_return_picking__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid "Integration"
-msgstr ""
+msgstr "Integración"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/starshipit_service.py:0
 msgid "Invalid Starshipit credentials."
-msgstr ""
+msgstr "Credenciales de Starshipit no válidas."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Labels were generated for the order %s"
-msgstr ""
+msgstr "Se generaron etiquetas para la orden %s"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid "Options"
-msgstr ""
+msgstr "Opciones"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -169,6 +187,8 @@ msgid ""
 "Order %(order)s was already sent to the carrier during label creation.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
+"Ya se ha enviado el pedido %(order)s al transportista al crear la etiqueta.\n"
+"Número de manifiesto de carga: %(manifest_number)s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -177,23 +197,27 @@ msgid ""
 "Order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
+"Se ha enviado el pedido %(order)s al transportista al crear la etiqueta. "
+"Asegúrese de cancelar el pedido con el transportista, ya que se encuentra en "
+"un entorno de prueba.\n"
+"Número de manifiesto de carga: %(manifest_number)s"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Order %s was archived."
-msgstr ""
+msgstr "Se archivó la orden %s."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Order %s was sent to the carrier."
-msgstr ""
+msgstr "La orden %s se envió al transportista."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_origin_address
 msgid "Origin Address"
-msgstr ""
+msgstr "Dirección de origen"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_default_package_type_id
@@ -201,34 +225,36 @@ msgid ""
 "Package dimensions are required to get more accurate rates. You can define "
 "these in a package type that you set as default"
 msgstr ""
+"Las dimensiones del paquete son necesarias para obtener las tarifas "
+"correctas. Defínalas en el tipo de paquete que estableció como por defecto."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Please delete the order on Starshipit then try again."
-msgstr ""
+msgstr "Elimine la orden en Starshipit e inténtelo de nuevo."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/starshipit_service.py:0
 msgid "Please fill in the field %(field)s on the %(partner)s partner."
-msgstr ""
+msgstr "Complete el campo %(field)s en el contacto %(partner)s."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Proveedor"
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_stock_return_picking
 msgid "Return Picking"
-msgstr ""
+msgstr "Albarán de devolución"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Return labels were generated for the order %s"
-msgstr ""
+msgstr "Se generaron etiquetas de devolución para la orden %s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -237,6 +263,9 @@ msgid ""
 "Return order %(order)s was already sent to the carrier during label creation.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
+"La orden de devolución %(order)s ya se envió al transportista al crear la "
+"etiqueta.\n"
+"Número de manifiesto de carga: %(manifest_number)s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -245,38 +274,42 @@ msgid ""
 "Return order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
+"Se ha enviado la orden de devolución %(order)s al transportista al crear la "
+"etiqueta. Asegúrese de cancelar la orden con el transportista, ya que se "
+"encuentra en un entorno de prueba.\n"
+"Número de manifiesto de carga: %(manifest_number)s"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Return order %s was archived."
-msgstr ""
+msgstr "Se archivó la orden de devolución %s."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Return order %s was sent to the carrier."
-msgstr ""
+msgstr "La orden de devolución %s se envió al transportista."
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid "Select a service linked to your starshipit account"
-msgstr ""
+msgstr "Seleccione un servicio vinculado a su cuenta de Starshipit."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_starshipit_shipping_wizard__selected_service_code
 msgid "Selected Service"
-msgstr ""
+msgstr "Servicio seleccionado"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_service_code
 msgid "Service Code"
-msgstr ""
+msgstr "Código del servicio"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_service_name
 msgid "Service Name"
-msgstr ""
+msgstr "Nombre del servicio"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -285,81 +318,86 @@ msgid ""
 "Shipping Cost has been updated from Starshipit. The Sales Order can now be "
 "invoiced."
 msgstr ""
+"Se ha actualizado el coste de envío de Starshipit. Ahora se puede facturar "
+"el pedido de venta."
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Métodos de envío"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
 msgid "Shipping Product"
-msgstr ""
+msgstr "Producto de envío"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/starshipit_service.py:0
 msgid "Something went wrong, please try again later: %s"
-msgstr ""
+msgstr "Algo salió mal, vuelva a intentarlo más tarde: %s"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields.selection,name:delivery_starshipit.selection__delivery_carrier__delivery_type__starshipit
 #: model:ir.model.fields.selection,name:delivery_starshipit.selection__stock_package_type__package_carrier_type__starshipit
 msgid "Starshipit"
-msgstr ""
+msgstr "Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_api_key
 msgid "Starshipit API Integration key"
-msgstr ""
+msgstr "Clave de integración de la API de Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_subscription_key
 msgid "Starshipit API Subscription key"
-msgstr ""
+msgstr "Clave de suscripción de la API de Starshipit"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/starshipit_service.py:0
 msgid "Starshipit API rate exceeded. Please try again later."
 msgstr ""
+"Llegó al límite de la tasa API de Starshipit, inténtelo de nuevo más tarde."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_api_key
 msgid "Starshipit Api Key"
-msgstr ""
+msgstr "Clave API de Starshipit"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid "Starshipit Configuration"
-msgstr ""
+msgstr "Configuración de Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_picking__starshipit_parcel_reference
 msgid "Starshipit Parcel Reference"
-msgstr ""
+msgstr "Referencia del paquete de Starshipit"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Starshipit Price Update Cron: System Error fetching price: %s"
 msgstr ""
+"Cron de actualización de precios de Starshipit: error del sistema al obtener "
+"el precio: %s"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_stock_picking__starshipit_return_parcel_reference
 msgid "Starshipit Return Parcel Reference"
-msgstr ""
+msgstr "Referencia del paquete de devolución de Starshipit"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.res_config_settings_view_form_sale_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.res_config_settings_view_form_stock_starshipit
 msgid "Starshipit Shipping Methods"
-msgstr ""
+msgstr "Métodos de envío de Starshipit"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,field_description:delivery_starshipit.field_delivery_carrier__starshipit_subscription_key
 msgid "Starshipit Subscription Key"
-msgstr ""
+msgstr "Clave de suscripción de Starshipit"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -368,12 +406,14 @@ msgid ""
 "Starshipit cannot generate returns for the carrier %s. Please handle this "
 "return with the carrier directly."
 msgstr ""
+"Starshipit no puede generar devoluciones para %s. Gestione esta devolución "
+"directo con el transportista."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/starshipit_service.py:0
 msgid "Starshipit returned an error: %(message)s"
-msgstr ""
+msgstr "Ocurrió un error en Starshipit: %(message)s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -382,6 +422,8 @@ msgid ""
 "Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact"
 " price (%(final_carrier_price)s) from transfer %(picking_name)s."
 msgstr ""
+"Starshipit: Coste de envío reevaluado en el pedido de venta según el precio "
+"exacto actualizado (%(final_carrier_price)s) del traslado %(picking_name)s."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -391,6 +433,9 @@ msgid ""
 "%(final_carrier_price)s, but automatic sale order delivery cost re-"
 "evaluation failed: %(e_so)s"
 msgstr ""
+"Starshipit: El coste de envío exacto para la entrega %(picking_name)s ahora "
+"es de %(final_carrier_price)s, pero se ha producido un error con la "
+"reevaluación automática del coste de entrega del pedido de venta: %(e_so)s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -400,27 +445,30 @@ msgid ""
 "%(final_carrier_price)s. This sale order is already invoiced, please review "
 "if a manual adjustment to the invoice is needed."
 msgstr ""
+"Starshipit: El coste de envío exacto para la entrega %(picking_name)s ahora "
+"es de %(final_carrier_price)s. Este pedido de venta ya está facturado, "
+"revise si es necesario realizar un ajuste manual en la factura."
 
 #. module: delivery_starshipit
 #: model:ir.actions.server,name:delivery_starshipit.ir_cron_starshipit_fetch_pending_prices_ir_actions_server
 msgid "Starshipit: Fetch Pending Shipping Prices"
-msgstr ""
+msgstr "Starshipit: obtener los costes de envío pendientes"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Starshipit: Shipping Cost updated"
-msgstr ""
+msgstr "Starshipit: coste de envío actualizado"
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Tipo de paquete de stock"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_picking_form_inherit_stock
 msgid "The Shipping Cost is being fetched in the background."
-msgstr ""
+msgstr "El coste de envío se está calculando en segundo plano."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_carrier_code
@@ -428,6 +476,8 @@ msgid ""
 "The carrier on starshipit used by this carrier. The service code belongs to "
 "it."
 msgstr ""
+"El transportista en Starshipit utilizado por este transportista. El código "
+"de servicio le pertenece."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -436,6 +486,8 @@ msgid ""
 "The exact price could not be retrieved. It will be updated by a scheduled "
 "action."
 msgstr ""
+"No fue posible obtener el precio exacto y será actualizado por una acción "
+"programada."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -444,12 +496,15 @@ msgid ""
 "The picking %(picking_name)s sequence is too long for Starshipit. Please "
 "update your pickings sequence in order to use at most 50 characters."
 msgstr ""
+"La secuencia del albarán %(picking_name)s es demasiado larga para "
+"Starshipit. Por favor, actualice su secuencia del albarán para utilizar como "
+"máximo 50 caracteres."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "The return label creation failed."
-msgstr ""
+msgstr "Falló la creación de la etiqueta de devolución."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -459,6 +514,10 @@ msgid ""
 "the code inside starshipit to be at most 100 characters, then update your "
 "shipping carrier %(shipping_carrier)s to the new code."
 msgstr ""
+"El código de servicio %(service_code)s es demasiado largo para Starshipit. "
+"Por favor, actualice el código dentro de Starshipit para que tenga como "
+"máximo 100 caracteres, después actualice su transportista %(shipping_carrier)"
+"s para el nuevo código."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_service_code
@@ -467,6 +526,8 @@ msgid ""
 "The service that will be used for this carrier. This is set when you select "
 "a carrier from the wizard."
 msgstr ""
+"El servicio que se utilizará para este transportista. Se establece cuando se "
+"selecciona un transportista en el asistente."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -475,6 +536,8 @@ msgid ""
 "The shipping label creation failed with the following error:\n"
 "%(error)s"
 msgstr ""
+"La creación de la etiqueta de envío falló con el siguiente error:\n"
+"%(error)s"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -483,12 +546,14 @@ msgid ""
 "There are no shipping services available, please verify the shipping address"
 " or activate suitable carriers in your starshipit account."
 msgstr ""
+"No hay servicios de envío disponibles. Verifique la dirección de envío o "
+"active transportistas adecuados en su cuenta de Starshipit."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "This action requires a Starshipit carrier."
-msgstr ""
+msgstr "Esta acción requiere un transportista Starshipit."
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_origin_address
@@ -496,8 +561,10 @@ msgid ""
 "This address will be used when fetching the available services from "
 "starshipit."
 msgstr ""
+"Esta dirección se utilizará cuando se obtengan los servicios disponibles de "
+"Starshipit."
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Traslado"

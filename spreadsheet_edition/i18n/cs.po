@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_edition
+# * spreadsheet_edition
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:45+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:46+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_edition/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -38,7 +42,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/pivot_init_callback.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_odoo_insertion.js:0
 msgid "%(pivot_name)s (Pivot #%(pivot_id)s)"
-msgstr ""
+msgstr "%(pivot_name)s (Pivot #%(pivot_id)s)"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -56,7 +60,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (kopie)"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -90,12 +94,12 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Vyžadována akce"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__active
 msgid "Active"
-msgstr ""
+msgstr "Aktivní"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -108,19 +112,19 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/components/cell_thread.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/components/cell_thread_popover.xml:0
 msgid "Add a comment..."
-msgstr ""
+msgstr "Přidat komentář..."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/index.js:0
 msgid "All Comments"
-msgstr ""
+msgstr "Všechny komentáře"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/side_panel/comment_threads_side_panel.xml:0
 msgid "All sheets"
-msgstr ""
+msgstr "Všechny tabulky"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -132,7 +136,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/edit_list_sorting_section/edit_list_sorting_section.xml:0
 msgid "Ascending"
-msgstr ""
+msgstr "Vzestupně"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -145,12 +149,12 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Počet příloh"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__author_id
 msgid "Author"
-msgstr ""
+msgstr "Autor"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -162,14 +166,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_side_panel.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Zpět"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_panel.js:0
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_grid/spreadsheet_selector_grid.js:0
 msgid "Blank spreadsheet"
-msgstr ""
+msgstr "Prázdná tabulka"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -179,7 +183,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/new_pivot_side_panel/new_pivot_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/restore_version_dialog/restore_version_dialog.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Zrušit"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -193,66 +197,66 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/pivot_missing_cell_dialog/pivot_missing_cell_dialog.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Zavřít"
 
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_spreadsheet_revision
 msgid "Collaborative spreadsheet revision"
-msgstr ""
+msgstr "Revize kolaborativní tabulky"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.xml:0
 msgid "Columns"
-msgstr ""
+msgstr "Sloupce"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__commands
 msgid "Commands"
-msgstr ""
+msgstr "Příkazy"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/comments/index.js:0
 msgid "Comments"
-msgstr ""
+msgstr "Komentáře"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/input_dialog/input_dialog.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/ir_menu_selector/ir_menu_selector.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "Potvrdit"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
 msgid "Create filter"
-msgstr ""
+msgstr "Vytvoř filtr"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__create_uid
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořeno uživatelem"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__create_date
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno dne"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/hooks.js:0
 msgid "Currency"
-msgstr ""
+msgstr "Měna"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_item.xml:0
 msgid "Current"
-msgstr ""
+msgstr "Aktuální"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard__current_revision_uuid
@@ -265,19 +269,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Day"
-msgstr ""
+msgstr "Den"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Day of Month"
-msgstr ""
+msgstr "Den v měsíci"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -288,7 +292,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
 msgid "Default value"
-msgstr ""
+msgstr "Výchozí hodnota"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -306,7 +310,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/edit_list_sorting_section/edit_list_sorting_section.xml:0
 msgid "Descending"
-msgstr ""
+msgstr "Klesající"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -329,7 +333,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__display_name
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard__display_thumbnail
@@ -343,19 +347,19 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/components/side_panel_domain/side_panel_domain.xml:0
 msgid "Domain"
-msgstr ""
+msgstr "Doména"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Download"
-msgstr ""
+msgstr "Stáhnout"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Download as JSON"
-msgstr ""
+msgstr "Stáhnout jako JSON"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -368,7 +372,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/components/side_panel_domain/side_panel_domain.xml:0
 msgid "Edit domain"
-msgstr ""
+msgstr "Upravit doménu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -376,7 +380,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters/related_filters.xml:0
 msgid "Field"
-msgstr ""
+msgstr "Pole"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -387,7 +391,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
 msgid "Field matching"
-msgstr ""
+msgstr "Odpovídající pole"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -399,7 +403,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/index.js:0
 msgid "Filter properties"
-msgstr ""
+msgstr "Vlastnosti filtru"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -413,17 +417,17 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/filter_component.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/index.js:0
 msgid "Filters"
-msgstr ""
+msgstr "Filtry"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Odběratelé"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Odběratelé (partneři)"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -452,7 +456,7 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Má zprávu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -467,18 +471,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__id
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Pokud zaškrtnuto, nové zprávy vyžadují vaši pozornost."
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_error
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Pokud zaškrtnuto, některé zprávy mají chybu při doručení."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -518,7 +522,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/assets/graph_view/graph_view.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/pivot.xml:0
 msgid "Insert in Spreadsheet"
-msgstr ""
+msgstr "Vložit do tabulky"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -531,12 +535,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/list_view/insert_list_spreadsheet_menu.xml:0
 msgid "Insert list in spreadsheet"
-msgstr ""
+msgstr "Vložit buňky do tabulky"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je odběratel"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -547,7 +551,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/text_filter_editor_side_panel.xml:0
 msgid "Label"
-msgstr ""
+msgstr "Popis"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -559,13 +563,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__write_uid
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__write_date
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upraveno dne"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -573,13 +577,13 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.xml:0
 msgid "Last updated at"
-msgstr ""
+msgstr "Naposledy aktualizováno v"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/ir_ui_menu/index.js:0
 msgid "Link an Odoo menu"
-msgstr ""
+msgstr "Propojit Odoo menu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -593,7 +597,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/insert_action_link_menu/insert_action_link_menu.xml:0
 msgid "Link menu in spreadsheet"
-msgstr ""
+msgstr "Menu odkazů v tabulce"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -605,7 +609,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/odoo_menu/chart_panel.xml:0
 msgid "Link to Odoo menu"
-msgstr ""
+msgstr "Odkaz na Odoo menu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -623,7 +627,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.xml:0
 msgid "List Name"
-msgstr ""
+msgstr "Seznam názvů"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -649,14 +653,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_side_panel.xml:0
 msgid "Load More"
-msgstr ""
+msgstr "Načíst další"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/side_panel/version_history_item.js:0
 msgid "Make a copy"
-msgstr ""
+msgstr "Udělat kopii"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -668,7 +672,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/filter_editor_side_panel.xml:0
 msgid "Match this filter to a field for each data source"
-msgstr ""
+msgstr "Přiřadit tento filtr k poli pro každý zdroj dat"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -680,35 +684,35 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/ir_menu_selector/ir_menu_selector.js:0
 msgid "Menu Items"
-msgstr ""
+msgstr "Menu položky"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Chyba při doručování zprávy"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Zprávy"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/plugins/list_autofill_plugin.js:0
 msgid "Missing list #%s"
-msgstr ""
+msgstr "Chybí seznam #%s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
 msgid "Missing pivot"
-msgstr ""
+msgstr "Chybí pivot"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
 msgid "Missing pivot #%s"
-msgstr ""
+msgstr "Chybí pivot #%s"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -719,18 +723,18 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.xml:0
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__res_model
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_ir_model
 msgid "Models"
-msgstr ""
+msgstr "Modely"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Month"
-msgstr ""
+msgstr "Měsíc"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -742,13 +746,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "New"
-msgstr ""
+msgstr "Nové"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/filter_editor_store.js:0
 msgid "New %s filter"
-msgstr ""
+msgstr "Nový %s filtr"
 
 #. module: spreadsheet_edition
 #. odoo-python
@@ -766,7 +770,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
 msgid "Next"
-msgstr ""
+msgstr "Další"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -778,27 +782,27 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_grid/spreadsheet_selector_grid.xml:0
 msgid "No preview"
-msgstr ""
+msgstr "Žádný náhled"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Počet akcí"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Počet chyb"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Počet zpráv vyžadujících akci"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Počet zpráv s chybou při doručení"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -829,7 +833,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/edit_list_sorting_section/edit_list_sorting_section.xml:0
 msgid "Order"
-msgstr ""
+msgstr "Objednávka"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -840,19 +844,19 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__parent_revision_id
 msgid "Parent Revision"
-msgstr ""
+msgstr "Nadřazená revize"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
 msgid "Period offset"
-msgstr ""
+msgstr "Posun období"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.js:0
 msgid "Period offset applied to this source"
-msgstr ""
+msgstr "Posun období uplatňovaný na tento zdroj"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -864,7 +868,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Pivot contains duplicate groupbys"
-msgstr ""
+msgstr "Kontingenční tabulka obsahuje duplicitní agregace"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -895,19 +899,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.xml:0
 msgid "Previous"
-msgstr ""
+msgstr "Předchozí"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Print"
-msgstr ""
+msgstr "Tisk"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Quarter"
-msgstr ""
+msgstr "Kvartál"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -918,7 +922,7 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Hodnocení"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -931,7 +935,7 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/abstract_spreadsheet_action.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Re-insert list"
-msgstr ""
+msgstr "Vložte seznam znovu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -960,7 +964,7 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__res_id
 msgid "Record id"
-msgstr ""
+msgstr "Id záznamu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -972,37 +976,37 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Refresh all data"
-msgstr ""
+msgstr "Obnovit všechna data"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/relation_filter_editor_side_panel.xml:0
 msgid "Related model"
-msgstr ""
+msgstr "Související model"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
 msgid "Relation"
-msgstr ""
+msgstr "Vztah"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/global_filter_footer/global_filter_footer.xml:0
 msgid "Remove"
-msgstr ""
+msgstr "Odebrat"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/control_panel/spreadsheet_name.xml:0
 msgid "Rename"
-msgstr ""
+msgstr "Přejmenovat"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_field_offset.js:0
 msgid "Requires a selected field"
-msgstr ""
+msgstr "Vyžaduje vybrané pole"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1053,49 +1057,49 @@ msgstr ""
 #: model:ir.actions.act_window,name:spreadsheet_edition.spreadsheet_revision_action
 #: model:ir.ui.menu,name:spreadsheet_edition.menu_technical_spreadsheet_revision
 msgid "Revisions"
-msgstr ""
+msgstr "Revize"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Chyba doručení SMS"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/global_filter_footer/global_filter_footer.xml:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/new_pivot_side_panel/new_pivot_side_panel.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Uložit"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/o_spreadsheet/menu_item_registry.js:0
 msgid "Save as template"
-msgstr ""
+msgstr "Uložit jako šablonu"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/spreadsheet_navbar/spreadsheet_navbar.xml:0
 msgid "Saved"
-msgstr ""
+msgstr "Uloženo"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/spreadsheet_navbar/spreadsheet_navbar.xml:0
 msgid "Saving"
-msgstr ""
+msgstr "Ukládání"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_panel.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Hledat..."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/index.js:0
 msgid "See list properties"
-msgstr ""
+msgstr "Zobrazit seznam vlastností"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1107,19 +1111,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/ir_menu_selector/ir_menu_selector.js:0
 msgid "Select a menu..."
-msgstr ""
+msgstr "Vyberte menu..."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/ir_menu_selector/ir_menu_selector.xml:0
 msgid "Select an Odoo menu to link in your spreadsheet"
-msgstr ""
+msgstr "Vyberte Odoo menu, které chcete propojit k tabulce"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/actions/abstract_spreadsheet_action.js:0
 msgid "Select the number of records to insert"
-msgstr ""
+msgstr "Vyberte počet záznamů, které chcete vložit"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1137,7 +1141,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/index.js:0
 msgid "Set as filter"
-msgstr ""
+msgstr "Nastavit jako filtr"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1149,7 +1153,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/edit_list_sorting_section/edit_list_sorting_section.xml:0
 msgid "Sorting"
-msgstr ""
+msgstr "Řazení"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1157,21 +1161,21 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/components/spreadsheet_navbar/spreadsheet_navbar.xml:0
 #: model:ir.ui.menu,name:spreadsheet_edition.menu_technical_spreadsheet
 msgid "Spreadsheet"
-msgstr ""
+msgstr "Tabulka"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard__spreadsheet_revision_ids
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard_share__spreadsheet_revision_ids
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__spreadsheet_revision_ids
 msgid "Spreadsheet Revision"
-msgstr ""
+msgstr "Revize tabulek"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard__spreadsheet_snapshot
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_dashboard_share__spreadsheet_snapshot
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_mixin__spreadsheet_snapshot
 msgid "Spreadsheet Snapshot"
-msgstr ""
+msgstr "Snímek tabulek"
 
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_spreadsheet_cell_thread
@@ -1181,19 +1185,19 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_spreadsheet_mixin
 msgid "Spreadsheet mixin"
-msgstr ""
+msgstr "Spreadsheet mixin"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_suggestions/global_filter_suggestions.xml:0
 msgid "Suggestions"
-msgstr ""
+msgstr "Návrhy"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1278,7 +1282,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/plugins/pivot_autofill_plugin.js:0
 msgid "Total"
-msgstr ""
+msgstr "Celkem"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1301,18 +1305,18 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Webové zprávy"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,help:spreadsheet_edition.field_spreadsheet_cell_thread__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Webová historie komunikace"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Week"
-msgstr ""
+msgstr "Týden"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1324,7 +1328,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/pivot_view/pivot_view.js:0
 msgid "Year"
-msgstr ""
+msgstr "Rok"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1341,7 +1345,7 @@ msgstr ""
 #. module: spreadsheet_edition
 #: model_terms:ir.ui.view,arch_db:spreadsheet_edition.mail_notification_layout
 msgid "mentioned you in a comment:"
-msgstr ""
+msgstr "vás zmínil/a v komentáři:"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1349,9 +1353,9 @@ msgstr ""
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
 msgid "never"
-msgstr ""
+msgstr "nikdy"
 
 #. module: spreadsheet_edition
 #: model:ir.model,name:spreadsheet_edition.model_ir_websocket
 msgid "websocket message handling"
-msgstr ""
+msgstr "zpráva zpracování websocketu"

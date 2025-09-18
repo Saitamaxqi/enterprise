@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_generator
+# * website_generator
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:48+0000\n"
-"PO-Revision-Date: 2025-09-11 14:48+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:46+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"website_generator/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_generator
 #: model:mail.template,body_html:website_generator.email_template_website_scrapped
@@ -38,7 +42,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "An error occurred"
-msgstr ""
+msgstr "Vyskytla se chyba"
 
 #. module: website_generator
 #. odoo-python
@@ -71,12 +75,12 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořeno uživatelem"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno dne"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_ir_http__display_name
@@ -84,7 +88,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__display_name
 #: model:ir.model.fields,field_description:website_generator.field_website_page__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: website_generator
 #. odoo-python
@@ -95,7 +99,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_ir_http__id
@@ -103,7 +107,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__id
 #: model:ir.model.fields,field_description:website_generator.field_website_page__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_generator
 #. odoo-javascript
@@ -174,12 +178,12 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upraveno dne"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__notified
@@ -201,7 +205,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__page_count
 msgid "Number of pages"
-msgstr ""
+msgstr "Počet stránek"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__uuid
@@ -211,25 +215,25 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_website_page
 msgid "Page"
-msgstr ""
+msgstr "Stránka"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Pages"
-msgstr ""
+msgstr "Stránky"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Processing"
-msgstr ""
+msgstr "Zpracovává se"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Products"
-msgstr ""
+msgstr "Produkty"
 
 #. module: website_generator
 #. odoo-python
@@ -241,13 +245,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Server is currently under maintenance. Please retry later"
-msgstr ""
+msgstr "Server je v současné době v údržbě. Zkuste to prosím později"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
 msgid "Something went wrong"
-msgstr ""
+msgstr "Něco se pokazilo"
 
 #. module: website_generator
 #. odoo-javascript
@@ -258,7 +262,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status_message
@@ -269,7 +273,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Success"
-msgstr ""
+msgstr "Úspěch"
 
 #. module: website_generator
 #. odoo-javascript
@@ -323,7 +327,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/page.py:0
 msgid "Top Menu for Website %s"
-msgstr ""
+msgstr "Nejlepší nabídka pro web%s"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__target_url
@@ -333,7 +337,7 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__version
 msgid "Version"
-msgstr ""
+msgstr "Verze"
 
 #. module: website_generator
 #. odoo-python
@@ -363,12 +367,12 @@ msgstr ""
 #: model:ir.model,name:website_generator.model_website
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__website_id
 msgid "Website"
-msgstr ""
+msgstr "Webová stránka"
 
 #. module: website_generator
 #: model:ir.actions.client,name:website_generator.website_generator_screen
 msgid "Website Generator"
-msgstr ""
+msgstr "Generátor webových stránek"
 
 #. module: website_generator
 #: model:ir.actions.server,name:website_generator.action_convert_scraping_request_ICP
@@ -394,19 +398,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "Website URL"
-msgstr ""
+msgstr "URL webové stránky"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Website blocked or unreachable"
-msgstr ""
+msgstr "Webová stránka je zablokovaná nebo nedostupná"
 
 #. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Website not supported"
-msgstr ""
+msgstr "Webová stránka není podporována"
 
 #. module: website_generator
 #. odoo-javascript
@@ -423,13 +427,13 @@ msgstr ""
 #. module: website_generator
 #: model:mail.template,subject:website_generator.email_template_website_scrapped
 msgid "Your Odoo Website is Ready!"
-msgstr ""
+msgstr "Vaše Odoo webové stránky jsou připraveny!"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
 msgid "and"
-msgstr ""
+msgstr "and"
 
 #. module: website_generator
 #. odoo-javascript

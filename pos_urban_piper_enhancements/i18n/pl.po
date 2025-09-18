@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* pos_urban_piper_enhancements
+# * pos_urban_piper_enhancements
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:44+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
+"pos_urban_piper_enhancements/pl/>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.actions.act_window,help:pos_urban_piper_enhancements.action_pos_store_timing
@@ -23,7 +28,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_product_template_attribute_value__urbanpiper_pos_config_ids
 msgid "Available on Food Delivery"
-msgstr ""
+msgstr "Dostępne przy dostawie jedzenia"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,help:pos_urban_piper_enhancements.field_product_template_attribute_value__urbanpiper_pos_config_ids
@@ -33,27 +38,27 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ustawienia konfiguracji"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,website_form_label:pos_urban_piper_enhancements.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Utwórz klienta"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Utworzono przez"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Data utworzenia"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_order__delivery_datetime
@@ -72,18 +77,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nazwa wyświetlana"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__end_hour
 msgid "Ending Hour"
-msgstr ""
+msgstr "Godzina zakończenia"
 
 #. module: pos_urban_piper_enhancements
 #. odoo-javascript
 #: code:addons/pos_urban_piper_enhancements/static/src/point_of_sale_override/store/pos_store.js:0
 msgid "Error to send delivery order in preparation display."
-msgstr ""
+msgstr "Błąd podczas wysyłania zamówienia dostawy w ekranie przygotowawczym."
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,help:pos_urban_piper_enhancements.field_pos_order__is_notified
@@ -93,7 +98,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__friday
 msgid "Friday"
-msgstr ""
+msgstr "Piątek"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_config__id
@@ -106,7 +111,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_order__is_notified
@@ -116,12 +121,12 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ostatnio aktualizowane przez"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Data ostatniej aktualizacji"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.actions.act_window,help:pos_urban_piper_enhancements.action_pos_store_timing
@@ -137,7 +142,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__monday
 msgid "Monday"
-msgstr ""
+msgstr "Poniedziałek"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.view_pos_order_form_inherit_pos_urban_piper
@@ -147,17 +152,17 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_pos_config
 msgid "Point of Sale Configuration"
-msgstr ""
+msgstr "Konfiguracja punktu sprzedaży"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "Zamówienia Punktu Sprzedaży"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "Sesja punktu sprzedaży"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__config_ids
@@ -182,22 +187,22 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_product_template_attribute_value
 msgid "Product Template Attribute Value"
-msgstr ""
+msgstr "Wartość atrybutu szablonu produktu"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.report_invoice_document_pos_urban_piper_enhancements
 msgid "Reference"
-msgstr ""
+msgstr "Odnośnik"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__saturday
 msgid "Saturday"
-msgstr ""
+msgstr "Sobota"
 
 #. module: pos_urban_piper_enhancements
 #. odoo-javascript
@@ -219,7 +224,7 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__start_hour
 msgid "Starting Hour"
-msgstr ""
+msgstr "Godzina rozpoczęcia"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.actions.act_window,name:pos_urban_piper_enhancements.action_pos_store_timing
@@ -231,12 +236,12 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__sunday
 msgid "Sunday"
-msgstr ""
+msgstr "Niedziela"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.constraint,message:pos_urban_piper_enhancements.constraint_pos_store_timing_check_start_and_end_hour
 msgid "The end time must be later than the start time."
-msgstr ""
+msgstr "Czas zakończenia musi być późniejszy niż czas rozpoczęcia."
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,help:pos_urban_piper_enhancements.field_pos_config__urbanpiper_minimum_preparation_time
@@ -255,17 +260,17 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__thursday
 msgid "Thursday"
-msgstr ""
+msgstr "Czwartek"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__tuesday
 msgid "Tuesday"
-msgstr ""
+msgstr "Wtorek"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.view_pos_order_form_inherit_pos_urban_piper
 msgid "Urban Piper"
-msgstr ""
+msgstr "Urban Piper"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.ui.menu,name:pos_urban_piper_enhancements.pos_menu_urban_piper_configuration
@@ -280,14 +285,14 @@ msgstr ""
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields.selection,name:pos_urban_piper_enhancements.selection__pos_store_timing__weekday__wednesday
 msgid "Wednesday"
-msgstr ""
+msgstr "Środa"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model.fields,field_description:pos_urban_piper_enhancements.field_pos_store_timing__weekday
 msgid "Week Day"
-msgstr ""
+msgstr "Dzień tygodnia"
 
 #. module: pos_urban_piper_enhancements
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper_enhancements.res_config_settings_view_form_pos_urban_piper_enhancements
 msgid "minutes"
-msgstr ""
+msgstr "minut"

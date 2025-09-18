@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* room
+# * room
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:41+0000\n"
-"PO-Revision-Date: 2025-09-11 14:41+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:42+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/room/tr/>"
+"\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: room
 #. odoo-javascript
@@ -71,24 +75,24 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Erişim Anahtarı"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Aksiyon Gerekiyor"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__active
 msgid "Active"
-msgstr ""
+msgstr "Etkin"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Ekle"
 
 #. module: room
 #. odoo-javascript
@@ -105,13 +109,13 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Appearance"
-msgstr ""
+msgstr "Görünüm"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Arşivlendi"
 
 #. module: room
 #. odoo-javascript
@@ -129,7 +133,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_attachment_count
 #: model:ir.model.fields,field_description:room.field_room_room__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Ek Sayısı"
 
 #. module: room
 #. odoo-javascript
@@ -137,7 +141,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Available"
-msgstr ""
+msgstr "Uygun"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__bookable_background_color
@@ -147,13 +151,13 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_background_image
 msgid "Background Image"
-msgstr ""
+msgstr "Arkaplan Resmi"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Booked"
-msgstr ""
+msgstr "Rezerve edildi"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__booked_background_color
@@ -163,7 +167,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "Booking"
-msgstr ""
+msgstr "Rezervasyon"
 
 #. module: room
 #. odoo-javascript
@@ -193,7 +197,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Busy"
-msgstr ""
+msgstr "Meşgul"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
@@ -205,7 +209,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__company_id
 #: model:ir.model.fields,field_description:room.field_room_room__company_id
 msgid "Company"
-msgstr ""
+msgstr "Firma"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
@@ -216,39 +220,39 @@ msgstr ""
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
 msgid "Create a Room"
-msgstr ""
+msgstr "Oda Oluştur"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_uid
 #: model:ir.model.fields,field_description:room.field_room_office__create_uid
 #: model:ir.model.fields,field_description:room.field_room_room__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tarafından oluşturuldu"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_date
 #: model:ir.model.fields,field_description:room.field_room_office__create_date
 #: model:ir.model.fields,field_description:room.field_room_room__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "Date"
-msgstr ""
+msgstr "Tarih"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Sil"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Sil"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__display_name
@@ -256,7 +260,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__display_name
 #: model:ir.model.fields,field_description:room.field_room_room__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: room
 #: model:res.groups,comment:room.group_room_manager
@@ -279,24 +283,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_follower_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Takipçiler"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_partner_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Takipçiler (İş ortakları)"
 
 #. module: room
 #: model:ir.model,name:room.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Yönlendirme"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__has_message
 #: model:ir.model.fields,field_description:room.field_room_room__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Mesaj Var"
 
 #. module: room
 #: model:room.office,name:room.room_office_head_office
@@ -309,25 +313,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__id
 #: model:ir.model.fields,field_description:room.field_room_room__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "İşaretliyse, yeni mesajlar dikkatinize sunulacak."
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
 #: model:ir.model.fields,help:room.field_room_room__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "İşaretliyse, bazı mesajlar gönderi hatası içermektedir."
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Install Application"
-msgstr ""
+msgstr "Uygulama Yükle"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
@@ -338,7 +342,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_is_follower
 #: model:ir.model.fields,field_description:room.field_room_room__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Takipçi mi"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__is_available
@@ -350,14 +354,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__write_uid
 #: model:ir.model.fields,field_description:room.field_room_room__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__write_date
 #: model:ir.model.fields,field_description:room.field_room_office__write_date
 #: model:ir.model.fields,field_description:room.field_room_room__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: room
 #: model:room.office,name:room.room_office_main_office
@@ -378,7 +382,7 @@ msgstr ""
 #. module: room
 #: model:ir.ui.menu,name:room.room_menu_root
 msgid "Meeting Rooms"
-msgstr ""
+msgstr "Toplantı Odaları"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
@@ -389,23 +393,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Mesaj Teslim hatası"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mesajlar"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "My Meetings"
-msgstr ""
+msgstr "Toplantılarım"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_list
 msgid "Name"
-msgstr ""
+msgstr "Adı"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__next_booking_start
@@ -416,7 +420,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Next Week"
-msgstr ""
+msgstr "Sonraki Hafta"
 
 #. module: room
 #. odoo-javascript
@@ -439,31 +443,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Aksiyon Sayısı"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Hata adedi"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,help:room.field_room_room__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "İşlem gerektiren mesaj sayısı"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,help:room.field_room_room__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Teslimat hatası olan mesaj adedi"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__office_id
 #: model:ir.model.fields,field_description:room.field_room_room__office_id
 msgid "Office"
-msgstr ""
+msgstr "Ofis"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__name
@@ -474,29 +478,29 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Open"
-msgstr ""
+msgstr "Açık"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Or"
-msgstr ""
+msgstr "Veya"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__organizer_id
 msgid "Organizer"
-msgstr ""
+msgstr "Düzenleyen"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Previous Week"
-msgstr ""
+msgstr "Geçen Hafta"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_2
 msgid "Projector"
-msgstr ""
+msgstr "Projektör"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_1
@@ -507,7 +511,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_room__room_properties
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Properties"
-msgstr ""
+msgstr "Özellikler"
 
 #. module: room
 #. odoo-javascript
@@ -519,7 +523,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__rating_ids
 #: model:ir.model.fields,field_description:room.field_room_room__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Değerlendirmeler"
 
 #. module: room
 #: model:ir.actions.act_window,name:room.room_room_action
@@ -528,7 +532,7 @@ msgstr ""
 #: model:res.groups.privilege,name:room.res_groups_privilege_room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Room"
-msgstr ""
+msgstr "Oda"
 
 #. module: room
 #. odoo-python
@@ -549,7 +553,7 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__name
 msgid "Room Name"
-msgstr ""
+msgstr "Oda Adı"
 
 #. module: room
 #: model:ir.model,name:room.model_room_office
@@ -564,7 +568,7 @@ msgstr ""
 #. module: room
 #: model:ir.ui.menu,name:room.room_room_menu
 msgid "Rooms"
-msgstr ""
+msgstr "Odalar"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
@@ -574,7 +578,7 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "Kısa Kod"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__start_datetime
@@ -585,7 +589,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Start now"
-msgstr ""
+msgstr "Şimdi başla"
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_access_token
@@ -629,7 +633,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Until"
-msgstr ""
+msgstr "Bitiş"
 
 #. module: room
 #. odoo-javascript

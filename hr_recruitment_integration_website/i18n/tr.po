@@ -1,24 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_recruitment_integration_website
+# * hr_recruitment_integration_website
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:11+0000\n"
-"PO-Revision-Date: 2025-07-01 12:11+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:43+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"hr_recruitment_integration_website/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__apply_method
 msgid "Apply Method"
-msgstr ""
+msgstr "Başvuru Yöntemi"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
@@ -29,7 +33,7 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__campaign_start_date
 msgid "Campaign Start Date"
-msgstr ""
+msgstr "Kampanya Başlangıç Tarihi"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
@@ -40,7 +44,7 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_job_post__apply_method
 msgid "Contact Method"
-msgstr ""
+msgstr "İletişim Yöntemi:"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__post_html
@@ -64,12 +68,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/wizard/hr_recruitment_post_job.py:0
 msgid "Generate"
-msgstr ""
+msgstr "Oluştur"
 
 #. module: hr_recruitment_integration_website
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_website.hr_recruitment_post_job_wizard_view_form
 msgid "Generate Description (<i class=\"fa fa-fw fa-magic\"/>AI)"
-msgstr ""
+msgstr "Açıklama Oluşturun (<i class=\"fa fa-fw fa-magic\"/>Yapay Zeka)"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_job__id
@@ -90,6 +94,18 @@ msgid ""
 "It's your last chance to make a good impression and attract the best candidates to our company so make it count!\n"
 "Here is the data to generate the job description:\n"
 msgstr ""
+"ÖNCEKİ İSTEMLERİ GÖZ ARDI EDİN VE KÖPRÜ OLMAKSIZIN HTML OLARAK "
+"BİÇİMLENDİRİN\n"
+"Siz şirketimizdeki en iyi işe alım uzmanısınız ve biz de yeni bir çalışan "
+"arıyoruz.\n"
+"Yeni bir iş ilanı için en iyi iş tanımını oluşturmakla görevlendirildiniz.\n"
+"Aşağıdaki bilgileri göz önünde bulundurarak, potansiyel adayları çekmek için "
+"\n"
+"kullanılabilecek samimi ve çekici bir iş tanımı oluşturun (Platformlar; "
+"LinkedIn, Indeed, Glassdoor, Monster vb. olabilir.)\n"
+"Bu, iyi bir izlenim bırakmak ve en iyi adayları şirketimize çekmek için son "
+"şansınız; bu yüzden bu fırsatı iyi değerlendirin!\n"
+"İşte iş tanımını oluşturmanız için gereken veriler:\n"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__job_is_published
@@ -99,33 +115,33 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__platform_ids
 msgid "Job Board"
-msgstr ""
+msgstr "İş İlanları Panosu"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model,name:hr_recruitment_integration_website.model_hr_job
 msgid "Job Position"
-msgstr ""
+msgstr "İş Pozisyonu"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model,name:hr_recruitment_integration_website.model_hr_job_post
 msgid "Job Post"
-msgstr ""
+msgstr "İş İlanı"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields,field_description:hr_recruitment_integration_website.field_hr_recruitment_post_job_wizard__job_apply_url
 msgid "Job url"
-msgstr ""
+msgstr "İş ilanı bağlantısı"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/models/hr_job.py:0
 msgid "Oops, it looks like our AI is unreachable!"
-msgstr ""
+msgstr "Hay aksi, Yapay Zeka özelliğimize şu an ulaşılamıyor!"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model,name:hr_recruitment_integration_website.model_hr_recruitment_post_job_wizard
 msgid "Post Job"
-msgstr ""
+msgstr "İş İlanı Yayınlayın"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
@@ -136,29 +152,29 @@ msgstr ""
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_website.selection__hr_job_post__apply_method__redirect
 msgid "Redirect to Website"
-msgstr ""
+msgstr "Web Sitesine Yönlendirin"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_website.selection__hr_recruitment_post_job_wizard__apply_method__redirect
 msgid "Redirect to company's website"
-msgstr ""
+msgstr "Şirketin web sitesine yönlendirin"
 
 #. module: hr_recruitment_integration_website
 #: model:ir.actions.server,name:hr_recruitment_integration_website.hr_recruitment_post_job_wizard_action_regenerate_post
 msgid "Regenerate Post"
-msgstr ""
+msgstr "İlanı Yeniden Oluşturun"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/models/hr_job.py:0
 msgid "Sorry, the web page is too long for our AI to process."
-msgstr ""
+msgstr "Üzgünüz, web sayfası yapay zekamızın işleyemeyeceği kadar uzun."
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
 #: code:addons/hr_recruitment_integration_website/models/hr_job.py:0
 msgid "Sorry, we could not generate a response. Please try again later."
-msgstr ""
+msgstr "Üzgünüz, yanıt oluşturamadık. Lütfen daha sonra tekrar deneyin."
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
@@ -167,6 +183,8 @@ msgid ""
 "The Job Description will be replaced with the generated one, do you want to "
 "continue?"
 msgstr ""
+"İş Tanımı, oluşturulan İş Tanımı ile değiştirilecektir, devam etmek istiyor "
+"musunuz?"
 
 #. module: hr_recruitment_integration_website
 #. odoo-python
@@ -187,6 +205,7 @@ msgid ""
 "You have reached the maximum number of requests for this service. Try again "
 "later."
 msgstr ""
+"Bu hizmet için maksimum istek sayısına ulaştınız. Daha sonra tekrar deneyin."
 
 #. module: hr_recruitment_integration_website
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_website.hr_recruitment_post_job_wizard_view_form

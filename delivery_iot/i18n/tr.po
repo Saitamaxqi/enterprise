@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_iot
+# * delivery_iot
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:29+0000\n"
-"PO-Revision-Date: 2025-09-11 14:29+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:41+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"delivery_iot/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_iot
 #: model:ir.actions.report,print_report_name:delivery_iot.action_report_shipping_docs
@@ -29,7 +33,7 @@ msgstr ""
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__auto_print_export_documents
 msgid "Auto Print Export Documents"
-msgstr ""
+msgstr "Dışa Aktarılan Belgeleri Otomatik Yazdır"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__available_scale_ids
@@ -47,6 +51,8 @@ msgid ""
 "Choose the scales you want to use for this operation type. Those scales can "
 "be used to weigh the packages created."
 msgstr ""
+"Bu işlem türü için kullanmak istediğiniz terazileri seçin. Bu teraziler, "
+"oluşturulan paketleri tartmak için kullanılabilir."
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -64,7 +70,7 @@ msgstr ""
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_ip
 msgid "Domain Address"
-msgstr ""
+msgstr "Alan Adresi"
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -87,12 +93,12 @@ msgstr ""
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "IOT Cihazı"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_identifier
 msgid "Identifier"
-msgstr ""
+msgstr "Tanımlayıcı"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_picking_type__auto_print_carrier_labels
@@ -110,6 +116,10 @@ msgid ""
 "documents depends on the carrier and the destination. Note this requires a "
 "printer to be assigned to this report. "
 msgstr ""
+"Bu onay kutusu işaretlenirse, Odoo, oluşturuldukları zaman toplama işleminin "
+"ihracat belgelerini otomatik olarak yazdıracaktır. İhracat belgelerinin "
+"kullanılabilirliği taşıyıcıya ve varış yerine bağlıdır. Bunun için bu rapora "
+"bir yazıcı atanması gerektiğini unutmayın. "
 
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
@@ -123,27 +133,27 @@ msgstr ""
 #. module: delivery_iot
 #: model_terms:ir.ui.view,arch_db:delivery_iot.iot_device_view_form_inherit
 msgid "Linked Operation Types"
-msgstr ""
+msgstr "Bağlantılı İşlem Türleri"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manual Measurement"
-msgstr ""
+msgstr "Manual Measurement"
 
 #. module: delivery_iot
 #: model:ir.model.fields,help:delivery_iot.field_stock_put_in_pack__manual_measurement
 msgid "Manually read the measurement from the device"
-msgstr ""
+msgstr "Ölçümü cihazdan manuel olarak okuyun"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_iot_device__picking_type_ids
 msgid "Operation Types"
-msgstr ""
+msgstr "Operasyon Türü"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Toplama Türü"
 
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_put_in_pack
@@ -154,18 +164,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/delivery_iot/static/src/field_many2one_iot_scale.xml:0
 msgid "Read weight"
-msgstr ""
+msgstr "Read weight"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_put_in_pack__iot_device_id
 msgid "Scale"
-msgstr ""
+msgstr "Tartı"
 
 #. module: delivery_iot
 #: model:ir.model.fields,field_description:delivery_iot.field_stock_picking_type__iot_scale_ids
 #: model_terms:ir.ui.view,arch_db:delivery_iot.view_picking_type_form_inherit
 msgid "Scales"
-msgstr ""
+msgstr "Scales"
 
 #. module: delivery_iot
 #: model:ir.actions.report,name:delivery_iot.action_report_shipping_docs
@@ -180,4 +190,4 @@ msgstr ""
 #. module: delivery_iot
 #: model:ir.model,name:delivery_iot.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Aktarım"

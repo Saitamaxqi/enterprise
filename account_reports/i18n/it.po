@@ -7,13 +7,14 @@
 # Martin Trigaux, 2023
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 02:44+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/it/>\n"
 "Language: it\n"
@@ -3348,8 +3349,9 @@ msgstr "In %s"
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_return_dashboard_list.js:0
+#, fuzzy
 msgid "In %s days"
-msgstr ""
+msgstr "Tra %s giorni"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_search
@@ -6002,10 +6004,14 @@ msgstr "La società principale di un'unità fiscale deve farne parte."
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
+#, fuzzy
 msgid ""
 "The operation is refused as it would impact an already issued tax statement. "
 "Please change the following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
+"L'operazione è stata rifiutata perché avrebbe un impatto su una "
+"dichiarazione fiscale già generata. Modifica le seguenti date di blocco per "
+"proseguire: %(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6260,8 +6266,9 @@ msgstr "Attività odierne"
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_return_dashboard_list.js:0
+#, fuzzy
 msgid "Tomorrow"
-msgstr ""
+msgstr "Domani"
 
 #. module: account_reports
 #. odoo-python
@@ -6719,8 +6726,9 @@ msgstr "Sì"
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_return_dashboard_list.js:0
+#, fuzzy
 msgid "Yesterday"
-msgstr ""
+msgstr "Ieri"
 
 #. module: account_reports
 #. odoo-python
@@ -6793,11 +6801,16 @@ msgstr ""
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
+#, fuzzy
 msgid ""
 "You cannot reset this closing entry to draft, as it would delete carryover "
 "values impacting the tax report of a locked period. Please change the "
 "following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
+"Non è possibile riportare questa registrazione di chiusura allo stato di "
+"bozza in quanto andrebbe a rimuovere i valori di riporto che impattano il "
+"resoconto fiscale di un periodo bloccato. Modifica le seguenti date di "
+"blocco per procedere: %(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python

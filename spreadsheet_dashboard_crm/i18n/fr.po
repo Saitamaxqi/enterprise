@@ -1,112 +1,116 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_crm
+# * spreadsheet_dashboard_crm
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:43+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_crm/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid " days"
-msgstr ""
+msgstr " jours"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "# Leads"
-msgstr ""
+msgstr "# Pistes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "4 days"
-msgstr ""
+msgstr "4 jours"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "8.5 days"
-msgstr ""
+msgstr "8,5 jours"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Average Deal Size"
-msgstr ""
+msgstr "Taille moyenne des transactions"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Average deal size"
-msgstr ""
+msgstr "Taille moyenne des transactions"
 
 #. module: spreadsheet_dashboard_crm
 #: model:spreadsheet.dashboard.group,name:spreadsheet_dashboard_crm.spreadsheet_dashboard_group_crm
 msgid "CRM"
-msgstr ""
+msgstr "CRM"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Campaign"
-msgstr ""
+msgstr "Campagne"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "City"
-msgstr ""
+msgstr "Ville"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Close Rate"
-msgstr ""
+msgstr "Taux de clôture"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Close rate"
-msgstr ""
+msgstr "Taux de clôture"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Closed"
-msgstr ""
+msgstr "Fermé"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Closed count"
-msgstr ""
+msgstr "Nombre fermé"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Closed revenue"
-msgstr ""
+msgstr "Revenus clôturés"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -115,77 +119,77 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Actuel"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Current period"
-msgstr ""
+msgstr "Période actuelle"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Days to Assign"
-msgstr ""
+msgstr "Jours pour assigner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Days to Win"
-msgstr ""
+msgstr "Jours pour gagner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Days to assign"
-msgstr ""
+msgstr "Jours pour assigner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Days to win"
-msgstr ""
+msgstr "Jours pour gagner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected"
-msgstr ""
+msgstr "Prévu"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected Closing"
-msgstr ""
+msgstr "Date de clôture prévue"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected count"
-msgstr ""
+msgstr "Nombre attendu"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Expected revenue"
-msgstr ""
+msgstr "Revenus attendus"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -194,28 +198,28 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_crm.dashboard_leads
 msgid "Leads"
-msgstr ""
+msgstr "Pistes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Leads by Month"
-msgstr ""
+msgstr "Pistes par mois"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Lost Reason"
-msgstr ""
+msgstr "Motif de perte"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -224,83 +228,83 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Medium"
-msgstr ""
+msgstr "Médium"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "New"
-msgstr ""
+msgstr "Nouveau"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Open opportunities"
-msgstr ""
+msgstr "Opportunités ouvertes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Opportunity"
-msgstr ""
+msgstr "Opportunité"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Percentage closed"
-msgstr ""
+msgstr "Pourcentage de clôture"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Période"
 
 #. module: spreadsheet_dashboard_crm
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_crm.dashboard_pipeline
 msgid "Pipeline"
-msgstr ""
+msgstr "Pipeline"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Pipeline Stages"
-msgstr ""
+msgstr "Étapes du pipeline"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Pre-Sales"
-msgstr ""
+msgstr "Préventes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Précédent"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Previous period"
-msgstr ""
+msgstr "Période précédente"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Proposition"
-msgstr ""
+msgstr "Proposition"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Qualified"
-msgstr ""
+msgstr "Qualifié"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -309,13 +313,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Revenue"
-msgstr ""
+msgstr "Revenu"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Sales"
-msgstr ""
+msgstr "Ventes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -324,7 +328,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Sales Team"
-msgstr ""
+msgstr "Équipe commerciale"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -333,7 +337,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Salesperson"
-msgstr ""
+msgstr "Vendeur"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -342,68 +346,68 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Source"
-msgstr ""
+msgstr "Source"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Stage"
-msgstr ""
+msgstr "Étape"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Success (%)"
-msgstr ""
+msgstr "Succès (%)"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Tag"
-msgstr ""
+msgstr "Étiquette"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 msgid "Tags"
-msgstr ""
+msgstr "Étiquettes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "To close"
-msgstr ""
+msgstr "À clôturer"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Top Campaigns"
-msgstr ""
+msgstr "Meilleures campagnes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Cities"
-msgstr ""
+msgstr "Meilleures villes"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Countries"
-msgstr ""
+msgstr "Meilleurs pays"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Top Lost Reasons"
-msgstr ""
+msgstr "Principaux motifs de perte"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -412,13 +416,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Mediums"
-msgstr ""
+msgstr "Meilleurs médiums"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Opportunities"
-msgstr ""
+msgstr "Meilleures opportunités"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -427,7 +431,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Sales Teams"
-msgstr ""
+msgstr "Meilleures équipes commerciales"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -436,7 +440,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Salespeople"
-msgstr ""
+msgstr "Meilleur vendeur"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -444,55 +448,55 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Sources"
-msgstr ""
+msgstr "Meilleures sources"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Top Tags"
-msgstr ""
+msgstr "Meilleures étiquette"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Total days to assign"
-msgstr ""
+msgstr "Jours totaux pour assigner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Total days to win"
-msgstr ""
+msgstr "Jours totaux pour gagner"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Total leads"
-msgstr ""
+msgstr "Pistes totales"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Won"
-msgstr ""
+msgstr "Gagné"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Won leads"
-msgstr ""
+msgstr "Pistes gagnées"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "last period"
-msgstr ""
+msgstr "période précédente"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
@@ -501,11 +505,11 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "since last period"
-msgstr ""
+msgstr "depuis la période précédente"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "to close"
-msgstr ""
+msgstr "à clôturer"

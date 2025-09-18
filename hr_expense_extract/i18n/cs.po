@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_expense_extract
+# * hr_expense_extract
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:32+0000\n"
-"PO-Revision-Date: 2025-02-20 10:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:45+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"hr_expense_extract/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_expense_extract
 #. odoo-javascript
@@ -31,59 +35,59 @@ msgstr ""
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Vyžadována akce"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Počet příloh"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_can_show_send_button
 msgid "Can show the ocr send button"
-msgstr ""
+msgstr "Může zobrazit tlačítko OCR Odeslat"
 
 #. module: hr_expense_extract
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "Choose a receipt."
-msgstr ""
+msgstr "Vyberte potvrzení."
 
 #. module: hr_expense_extract
 #: model:ir.model,name:hr_expense_extract.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Společnosti"
 
 #. module: hr_expense_extract
 #: model:ir.model,name:hr_expense_extract.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurační nastavení"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořeno uživatelem"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno dne"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields.selection,name:hr_expense_extract.selection__res_company__expense_extract_show_ocr_option_selection__auto_send
 msgid "Digitize automatically"
-msgstr ""
+msgstr "Digitalizovat automaticky"
 
 #. module: hr_expense_extract
 #: model:ir.actions.server,name:hr_expense_extract.hr_expense_parse_action_server
 #: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
 msgid "Digitize document"
-msgstr ""
+msgstr "Digitalizovat dokument"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields.selection,name:hr_expense_extract.selection__res_company__expense_extract_show_ocr_option_selection__manual_send
 msgid "Digitize on demand only"
-msgstr ""
+msgstr "Digitalizovat pouze na vyžádání"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__display_name
@@ -91,27 +95,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_company__display_name
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields.selection,name:hr_expense_extract.selection__res_company__expense_extract_show_ocr_option_selection__no_send
 msgid "Do not digitize"
-msgstr ""
+msgstr "Nedigitalizovat"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_error_message
 msgid "Error message"
-msgstr ""
+msgstr "Chybové hlášení"
 
 #. module: hr_expense_extract
 #: model:ir.model,name:hr_expense_extract.model_hr_expense
 msgid "Expense"
-msgstr ""
+msgstr "Výdaj"
 
 #. module: hr_expense_extract
 #: model:ir.actions.server,name:hr_expense_extract.ir_cron_update_ocr_status_ir_actions_server
 msgid "Expense OCR: Update All Status"
-msgstr ""
+msgstr "OCR výdajů: Aktualizujte veškerý stav"
 
 #. module: hr_expense_extract
 #: model:ir.actions.server,name:hr_expense_extract.ir_cron_ocr_validate_ir_actions_server
@@ -121,13 +125,13 @@ msgstr ""
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_config_settings__expense_extract_show_ocr_option_selection
 msgid "Expense processing option"
-msgstr ""
+msgstr "Možnost zpracování výdajů"
 
 #. module: hr_expense_extract
 #. odoo-python
 #: code:addons/hr_expense_extract/wizard/expense_sample_receipt.py:0
 msgid "Expenses"
-msgstr ""
+msgstr "Náklady"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__sample
@@ -137,32 +141,32 @@ msgstr ""
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_state_processed
 msgid "Extract State Processed"
-msgstr ""
+msgstr "Vytěžování - stav procesu"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_state
 msgid "Extract state"
-msgstr ""
+msgstr "Stav extraktu"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_status
 msgid "Extract status"
-msgstr ""
+msgstr "Status vytěžování"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Odběratelé"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Odběratelé (partneři)"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Má zprávu"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__id
@@ -170,116 +174,116 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_company__id
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__extract_document_uuid
 msgid "ID of the request to IAP-OCR"
-msgstr ""
+msgstr "ID požadavku na IAP-OCR"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Pokud zaškrtnuto, nové zprávy vyžadují vaši pozornost."
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__message_has_error
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Pokud zaškrtnuto, některé zprávy mají chybu při doručení."
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je odběratel"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__is_in_extractable_state
 msgid "Is In Extractable State"
-msgstr ""
+msgstr "Je ve stavu umožňujícím vytěžení"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_expense_sample_receipt__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upraveno dne"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_main_attachment_id
 msgid "Main Attachment"
-msgstr ""
+msgstr "Hlavní příloha"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Chyba při doručování zprávy"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Zprávy"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Počet akcí"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Počet chyb"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Počet zpráv vyžadujících akci"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Počet zpráv s chybou při doručení"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Hodnocení"
 
 #. module: hr_expense_extract
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "Report this expense to your manager for validation."
-msgstr ""
+msgstr "Nahlaste tento výdaj svému manažerovi k ověření."
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Chyba doručení SMS"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__sample
 msgid "Sample"
-msgstr ""
+msgstr "Vzorek"
 
 #. module: hr_expense_extract
 #. odoo-python
 #: code:addons/hr_expense_extract/wizard/expense_sample_receipt.py:0
 msgid "Sample Employee"
-msgstr ""
+msgstr "Ukázkový zaměstnanec"
 
 #. module: hr_expense_extract
 #. odoo-python
 #: code:addons/hr_expense_extract/wizard/expense_sample_receipt.py:0
 msgid "Sample Receipt: %s"
-msgstr ""
+msgstr "Ukázkový příjem: %s"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_res_company__expense_extract_show_ocr_option_selection
 msgid "Send mode on expense attachments"
-msgstr ""
+msgstr "Režim odesílání na přílohách výdajů"
 
 #. module: hr_expense_extract
 #: model_terms:ir.ui.view,arch_db:hr_expense_extract.expense_sample_receipt_view_form
@@ -289,18 +293,18 @@ msgstr ""
 #. module: hr_expense_extract
 #: model:ir.actions.act_window,name:hr_expense_extract.action_expense_sample_receipt
 msgid "Try Sample Receipt"
-msgstr ""
+msgstr "Vyzkoušejte vzorový příjem"
 
 #. module: hr_expense_extract
 #: model:ir.model,name:hr_expense_extract.model_expense_sample_receipt
 msgid "Try Sample Receipts"
-msgstr ""
+msgstr "Vyzkoušet vzorové účtenky"
 
 #. module: hr_expense_extract
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "Try the AI with a sample receipt."
-msgstr ""
+msgstr "Vyzkoušejte AI se vzorovým potvrzením."
 
 #. module: hr_expense_extract
 #. odoo-python
@@ -311,24 +315,25 @@ msgstr ""
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Webové zprávy"
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,help:hr_expense_extract.field_hr_expense__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Webová historie komunikace"
 
 #. module: hr_expense_extract
 #. odoo-python
 #: code:addons/hr_expense_extract/models/hr_expense.py:0
 msgid "You cannot send a expense that is not in draft state!"
-msgstr ""
+msgstr "Nelze odeslat výdaj, který není ve stavu konceptu!"
 
 #. module: hr_expense_extract
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "Your manager will have to approve (or refuse) your expense reports."
 msgstr ""
+"Váš nadřízený bude muset schválit (nebo zamítnout) vaše zprávy o výdajích."
 
 #. module: hr_expense_extract
 #. odoo-python

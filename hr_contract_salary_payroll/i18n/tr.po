@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_contract_salary_payroll
+# * hr_contract_salary_payroll
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-18 02:46+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"hr_contract_salary_payroll/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_employee_view_form
@@ -77,6 +80,13 @@ msgid ""
 "                <option value=\"40\">2/5</option>\n"
 "                <option value=\"20\">1/5</option>"
 msgstr ""
+"<option value=\"100\" selected=\"1\">Tam Zamanlı</option>\n"
+"                <option value=\"90\">9/10</option>\n"
+"                <option value=\"80\">4/5</option>\n"
+"                <option value=\"60\">3/5</option>\n"
+"                <option value=\"50\">Yarı Zamanlı</option>\n"
+"                <option value=\"40\">2/5</option>\n"
+"                <option value=\"20\">1/5</option>"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_applicant
@@ -112,7 +122,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_resume__code
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -128,7 +138,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_configuration_contract
 msgid "Contracts"
-msgstr ""
+msgstr "Sözleşmeler"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -170,12 +180,12 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payroll_headcount_line__employer_cost
 msgid "Employer Cost"
-msgstr ""
+msgstr "İş Veren Maliyeti"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.hr_payroll_menu_contract_type
 msgid "Employment Types"
-msgstr ""
+msgstr "İstihdam Türleri"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -202,7 +212,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_payroll_headcount_line
 msgid "Headcount Line"
-msgstr ""
+msgstr "Kadrolu Çalışan Satırı"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_applicant__id
@@ -219,7 +229,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_resume_view_search_inherit
 msgid "Impacts Monthly Total"
-msgstr ""
+msgstr "Aylık Toplamı Etkiler"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__is_full_time
@@ -278,12 +288,12 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_resume__value_type__payslip
 msgid "Payslip Value"
-msgstr ""
+msgstr "Ödeme  Makbuzu Değeri"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_payslip_worked_days
 msgid "Payslip Worked Days"
-msgstr ""
+msgstr "Ücret Bordrosu Çalışılan Günler"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_resume__value_type
@@ -305,6 +315,8 @@ msgid ""
 "Please note that this information may be inaccurate and should be used for "
 "reference only."
 msgstr ""
+"Lütfen bu bilginin yanlış olabileceğini ve bu sebeple yalnızca referans "
+"olarak kullanılması gerektiğini unutmayın."
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
@@ -347,7 +359,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_contract_salary_resume
 msgid "Salary Package Resume"
-msgstr ""
+msgstr "Maaş Paketi Devam Ettir"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
@@ -369,7 +381,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_contract_salary_payroll/static/src/js/tours/hr_payroll.js:0
 msgid "Select an <strong>HR Responsible</strong> for the contract."
-msgstr ""
+msgstr "Sözleşme için bir <strong>İK Yetkilisi</strong> seçin."
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,help:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
@@ -389,13 +401,13 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.hr_payroll_menu_contract_templates
 msgid "Templates"
-msgstr ""
+msgstr "Şablonlar"
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
 #: code:addons/hr_contract_salary_payroll/static/src/xml/brut2net_modal.xml:0
 msgid "The amounts are calculated  based on a full time permanent contract."
-msgstr ""
+msgstr "Tutarlar tam zamanlı daimi sözleşmeye dayalı hesaplanmaktadır."
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
@@ -404,13 +416,15 @@ msgid ""
 "There is no defined payroll structure for your contract. Please contact a "
 "responsible for more information."
 msgstr ""
+"Sözleşmeniz için belirlenmiş bir maaş yapısı bulunmamaktadır. Daha fazla "
+"bilgi için lütfen sorumlu kişi ile iletişime geçiniz."
 
 #. module: hr_contract_salary_payroll
 #. odoo-python
 #: code:addons/hr_contract_salary_payroll/controllers/main.py:0
 msgid ""
 "This is the gross calculated for the current month with a total of %s hours."
-msgstr ""
+msgstr "Bu, toplam %s saatlik mevcut ay için hesaplanan brüt tutardır."
 
 #. module: hr_contract_salary_payroll
 #. odoo-python
@@ -433,7 +447,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_resume__value_type
 msgid "Value Type"
-msgstr ""
+msgstr "Değer Türü"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__wage_on_signature
@@ -451,7 +465,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__resource_calendar_id
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.salary_package_sidebar_payroll
 msgid "Working Schedule"
-msgstr ""
+msgstr "Çalışma Saatleri"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__yearly_benefits

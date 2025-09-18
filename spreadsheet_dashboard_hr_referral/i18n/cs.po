@@ -1,25 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_hr_referral
+# * spreadsheet_dashboard_hr_referral
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-20 10:33+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:42+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_hr_referral/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 msgid " days"
-msgstr ""
+msgstr " dnů"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -52,7 +56,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Applications"
-msgstr ""
+msgstr "Žádosti o práci"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -65,39 +69,39 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 msgid "Company"
-msgstr ""
+msgstr "Společnost"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Consultant"
-msgstr ""
+msgstr "Konzultant"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Contract Proposal"
-msgstr ""
+msgstr "Návrh smlouvy"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Contract Signed"
-msgstr ""
+msgstr "Podepsaná smlouva"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Creation date"
-msgstr ""
+msgstr "Datum vytvoření"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Aktuální"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -115,26 +119,26 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Experienced Developer"
-msgstr ""
+msgstr "Zkušený vývojář"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "First Interview"
-msgstr ""
+msgstr "První pohovor"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Hired"
-msgstr ""
+msgstr "Najatý"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -159,20 +163,20 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Human Resources Manager"
-msgstr ""
+msgstr "manažer lidských zdrojů"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Initial Qualification"
-msgstr ""
+msgstr "Počáteční kvalifikace"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Job Position"
-msgstr ""
+msgstr "Pracovní pozice"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -184,14 +188,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Marketing and Community Manager"
-msgstr ""
+msgstr "Marketingový a komunitní manažer"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Medium"
-msgstr ""
+msgstr "Médium"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -205,7 +209,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "New Applications"
-msgstr ""
+msgstr "Nové žádosti o zaměstnání"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -226,14 +230,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Předchozí"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Process Duration"
-msgstr ""
+msgstr "Trvání procesu"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -246,14 +250,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Rate"
-msgstr ""
+msgstr "Kurz"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Reason"
-msgstr ""
+msgstr "Důvod"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -267,12 +271,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Recruiter"
-msgstr ""
+msgstr "Náborář"
 
 #. module: spreadsheet_dashboard_hr_referral
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_hr_referral.spreadsheet_dashboard_recruitment
 msgid "Recruitment"
-msgstr ""
+msgstr "Nábor"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -290,14 +294,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Second Interview"
-msgstr ""
+msgstr "Druhý pohovor"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Source"
-msgstr ""
+msgstr "Zdroj"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript
@@ -352,7 +356,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_referral/data/files/recruitment_sample_dashboard.json:0
 msgid "Trainee"
-msgstr ""
+msgstr "Praktikant"
 
 #. module: spreadsheet_dashboard_hr_referral
 #. odoo-javascript

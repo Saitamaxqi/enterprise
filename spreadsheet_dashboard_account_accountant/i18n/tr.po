@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_account_accountant
+# * spreadsheet_dashboard_account_accountant
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:44+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_account_accountant/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -179,20 +183,20 @@ msgstr ""
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_accounting
 msgid "Accounting"
-msgstr ""
+msgstr "Muhasebe"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Accounts"
-msgstr ""
+msgstr "Hesaplar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Aggregate"
-msgstr ""
+msgstr "Toplam"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -200,7 +204,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Average creditors days"
-msgstr ""
+msgstr "Ortalama Alacak Vadesi (Gün)"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -213,7 +217,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Average debtors days"
-msgstr ""
+msgstr "Ortalama Borç Vadesi (Gün)"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -227,14 +231,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Balance sheet"
-msgstr ""
+msgstr "Bilanço"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Bank and Cash"
-msgstr ""
+msgstr "Banka ve Kasa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_account_accountant.dashboard_benchmark
@@ -260,13 +264,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Cash"
-msgstr ""
+msgstr "Kasa"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash asset ratio"
-msgstr ""
+msgstr "Nakit varlık oranı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -293,65 +297,65 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash received"
-msgstr ""
+msgstr "Nakit Girişi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash spent"
-msgstr ""
+msgstr "Nakit Çıkışı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cash surplus"
-msgstr ""
+msgstr "Nakit İşlem Farkı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Closing bank balance"
-msgstr ""
+msgstr "Kullanılabilir Nakit"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Code"
-msgstr ""
+msgstr "Kod"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Cost of Revenue"
-msgstr ""
+msgstr "Gelir Maliyeti"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Cost of revenue"
-msgstr ""
+msgstr "Gelir maliyeti"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Credit Card"
-msgstr ""
+msgstr "Kredi Kartı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current Assets"
-msgstr ""
+msgstr "Dönen Varlıklar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Current Liabilities"
-msgstr ""
+msgstr "Kısa Vadeli Borçlar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -364,7 +368,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Current assets to liabilities"
-msgstr ""
+msgstr "Cari Oran (Dönen Varlıklar / Kısa Vadeli Yabancı Kaynaklar)"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -378,14 +382,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Current expense"
-msgstr ""
+msgstr "Cari gider"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Current income"
-msgstr ""
+msgstr "Cari gelir"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -398,13 +402,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Debt ratio"
-msgstr ""
+msgstr "Borç oranı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Debt to Equity"
-msgstr ""
+msgstr "Borç/Özsermaye oranı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -418,7 +422,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Depreciation"
-msgstr ""
+msgstr "Amortisman"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -432,7 +436,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Equity"
-msgstr ""
+msgstr "Özsermaye"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -440,33 +444,33 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Expenses"
-msgstr ""
+msgstr "Masraflar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Financial balance"
-msgstr ""
+msgstr "Finansal bağımsızlık"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Financial independence"
-msgstr ""
+msgstr "Net kar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Duran Varlıklar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Formula"
-msgstr ""
+msgstr "Formül"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -474,7 +478,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Gross profit"
-msgstr ""
+msgstr "Brüt Kar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -482,7 +486,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Gross profit margin"
-msgstr ""
+msgstr "Brüt kar marjı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -490,48 +494,48 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Income"
-msgstr ""
+msgstr "Gelir"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Invoiced"
-msgstr ""
+msgstr "Faturalanan"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "Temel Performans Göstergesi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "KPIS"
-msgstr ""
+msgstr "Temel Performans Göstergeleri"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Liquidity"
-msgstr ""
+msgstr "Likidite"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Long term working capital"
-msgstr ""
+msgstr "Uzun vadeli işletme sermayesi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Month"
-msgstr ""
+msgstr "Ay"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -551,7 +555,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Net assets"
-msgstr ""
+msgstr "Net Varlıklar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -566,7 +570,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net profit"
-msgstr ""
+msgstr "Net kar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -574,7 +578,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Net profit margin"
-msgstr ""
+msgstr "Net kar marjı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -588,21 +592,21 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Non-current Assets"
-msgstr ""
+msgstr "Cari Olmayan Varlıklar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Non-current Liabilities"
-msgstr ""
+msgstr "Uzun Vadeli Yükümlülükler"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Off-Balance Sheet"
-msgstr ""
+msgstr "Bilanço Dışı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -672,20 +676,20 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Other Income"
-msgstr ""
+msgstr "Diğer Gelirler"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Other variables"
-msgstr ""
+msgstr "Diğer değişkenler"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Payable"
-msgstr ""
+msgstr "Borç"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -694,7 +698,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Payables"
-msgstr ""
+msgstr "Borçlar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -708,48 +712,48 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Performance"
-msgstr ""
+msgstr "Performans"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Permanence"
-msgstr ""
+msgstr "Süreklilik"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Position"
-msgstr ""
+msgstr "Pozisyon"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Prepayments"
-msgstr ""
+msgstr "Avans Ödemeleri"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Previous expense"
-msgstr ""
+msgstr "Önceki gider"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Previous income"
-msgstr ""
+msgstr "Önceki gelir"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Profitability"
-msgstr ""
+msgstr "Karlılık"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -771,7 +775,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Quick ratio"
-msgstr ""
+msgstr "Likidite oranı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -779,7 +783,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Receivable"
-msgstr ""
+msgstr "Alacak"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -788,7 +792,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Receivables"
-msgstr ""
+msgstr "Alacaklar"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -801,13 +805,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Return on equity"
-msgstr ""
+msgstr "Özsermaye karlılığı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Return on investments"
-msgstr ""
+msgstr "Yatırım getirisi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -820,28 +824,28 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 msgid "Short term cash forecast"
-msgstr ""
+msgstr "Kısa Vadeli Nakit Tahmini"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "Solvency"
-msgstr ""
+msgstr "Borç ödeme gücü"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Start date"
-msgstr ""
+msgstr "Başlama tarihi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Technical name"
-msgstr ""
+msgstr "Teknik adı"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -904,7 +908,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Value"
-msgstr ""
+msgstr "Değer"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -919,7 +923,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Working capital"
-msgstr ""
+msgstr "İşletme sermayesi"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -927,7 +931,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "Year"
-msgstr ""
+msgstr "Yıl"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -975,7 +979,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "last period"
-msgstr ""
+msgstr "son dönem"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1106,14 +1110,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "to pay"
-msgstr ""
+msgstr "ödenecek"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_sample_dashboard.json:0
 msgid "to receive"
-msgstr ""
+msgstr "alacak"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript

@@ -1,24 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social_linkedin
+# * social_linkedin
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:46+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"social_linkedin/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.linkedin_preview
 msgid "<b>LinkedIn Post</b>"
-msgstr ""
+msgstr "<b>LinkedIn přípěvek</b>"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.social_stream_post_view_kanban
@@ -33,7 +37,7 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_live_post__linkedin_post_id
 msgid "Actual LinkedIn ID of the post"
-msgstr ""
+msgstr "Aktuální ID příspěvku na LinkedInu"
 
 #. module: social_linkedin
 #. odoo-python
@@ -50,19 +54,19 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__linkedin_app_id
 msgid "App ID"
-msgstr ""
+msgstr "App ID"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__linkedin_client_secret
 msgid "App Secret"
-msgstr ""
+msgstr "Tajný klíč aplikace"
 
 #. module: social_linkedin
 #. odoo-javascript
 #: code:addons/social_linkedin/static/src/xml/social_linkedin_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social_linkedin.social_stream_post_view_kanban
 msgid "Author Image"
-msgstr ""
+msgstr "Autor obrázku"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_res_config_settings__linkedin_use_own_account
@@ -70,11 +74,13 @@ msgid ""
 "Check this if you want to use your personal LinkedIn Developer Account "
 "instead of the provided one."
 msgstr ""
+"Toto zaškrtněte, pokud chcete místo poskytnutého účtu používat svůj osobní "
+"účet vývojáře LinkedIn."
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurační nastavení"
 
 #. module: social_linkedin
 #. odoo-python
@@ -98,7 +104,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__display_linkedin_preview
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__display_linkedin_preview
 msgid "Display LinkedIn Preview"
-msgstr ""
+msgstr "Zobrazit náhled příspěvku na LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__display_name
@@ -110,7 +116,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream__display_name
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: social_linkedin
 #. odoo-python
@@ -142,43 +148,43 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream__id
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
 msgid "Images"
-msgstr ""
+msgstr "Obrázky"
 
 #. module: social_linkedin
 #. odoo-javascript
 #: code:addons/social_linkedin/static/src/xml/social_linkedin_templates.xml:0
 msgid "Likes"
-msgstr ""
+msgstr "Lajky"
 
 #. module: social_linkedin
 #: model:ir.model.fields.selection,name:social_linkedin.selection__social_media__media_type__linkedin
 #: model:social.media,name:social_linkedin.social_media_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
 msgid "LinkedIn"
-msgstr ""
+msgstr "LinkedIn"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_account__linkedin_account_id
 msgid "LinkedIn Account ID"
-msgstr ""
+msgstr "ID účtu LinkedIn"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_account__linkedin_account_urn
 #: model:ir.model.fields,help:social_linkedin.field_social_account__linkedin_account_urn
 msgid "LinkedIn Account URN"
-msgstr ""
+msgstr "URN účtu LinkedIn"
 
 #. module: social_linkedin
 #. odoo-javascript
 #: code:addons/social_linkedin/static/src/js/stream_post_kanban_record.js:0
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_comments_count
 msgid "LinkedIn Comments"
-msgstr ""
+msgstr "Komentáře na LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_image_ids
@@ -189,7 +195,7 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_likes_count
 msgid "LinkedIn Likes"
-msgstr ""
+msgstr "Lajky na LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_message
@@ -201,43 +207,43 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_preview
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__linkedin_preview
 msgid "LinkedIn Preview"
-msgstr ""
+msgstr "Náhled LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_author_vanity_name
 msgid "LinkedIn Vanity Name"
-msgstr ""
+msgstr "Název LinkedIn"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_account__linkedin_access_token
 msgid "LinkedIn access token"
-msgstr ""
+msgstr "Přístupový token na LinkedIn"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_author_id
 msgid "LinkedIn author ID"
-msgstr ""
+msgstr "ID autora na LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_author_urn
 msgid "LinkedIn author URN"
-msgstr ""
+msgstr "URN autora na LinkedInu"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_author_image_url
 msgid "LinkedIn author image URL"
-msgstr ""
+msgstr "URL obrázku autora na LinkedInu"
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/controllers/main.py:0
 msgid "LinkedIn did not provide a valid access token."
-msgstr ""
+msgstr "LinkedIn neposkytl žádný přístupový token."
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_post_urn
 msgid "LinkedIn post URN"
-msgstr ""
+msgstr "URN příspěvku na LinkedInu"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.res_config_settings_view_form
@@ -247,12 +253,12 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_media__media_type
 msgid "Media Type"
-msgstr ""
+msgstr "Typ media"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
 msgid "Message"
-msgstr ""
+msgstr "Zpráva"
 
 #. module: social_linkedin
 #. odoo-python
@@ -272,12 +278,12 @@ msgstr ""
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.linkedin_preview
 msgid "Post Image"
-msgstr ""
+msgstr "Obrázek příspěvku"
 
 #. module: social_linkedin
 #: model:social.stream.type,name:social_linkedin.stream_type_linkedin_company_post
 msgid "Posts"
-msgstr ""
+msgstr "Příspěvky"
 
 #. module: social_linkedin
 #. odoo-python
@@ -288,42 +294,42 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_account
 msgid "Social Account"
-msgstr ""
+msgstr "Účet sociální sítě"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_live_post
 msgid "Social Live Post"
-msgstr ""
+msgstr "Zveřejněný příspěvek na sociální sítě"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_media
 msgid "Social Media"
-msgstr ""
+msgstr "Sociální sítě"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_post
 msgid "Social Post"
-msgstr ""
+msgstr "Příspěvek"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_post_template
 msgid "Social Post Template"
-msgstr ""
+msgstr "Šablona příspěvku"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_stream
 msgid "Social Stream"
-msgstr ""
+msgstr "Stream sociální sítě"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_social_stream_post
 msgid "Social Stream Post"
-msgstr ""
+msgstr "Stream příspěvku sociální sítě"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_account__linkedin_access_token
 msgid "The access token is used to perform request to the REST API"
-msgstr ""
+msgstr "Přístupový token se používá k provedení požadavku na REST API"
 
 #. module: social_linkedin
 #. odoo-python
@@ -332,30 +338,32 @@ msgid ""
 "The url that this service requested returned an error. Please contact the "
 "author of the app."
 msgstr ""
+"Adresa URL, kterou tato služba požadovala, vrátila chybu. Obraťte se na "
+"autora aplikace."
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/controllers/main.py:0
 msgid "There was a authentication issue during your request."
-msgstr ""
+msgstr "Během vašeho požadavku došlo k problému s ověřením."
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/controllers/main.py:0
 msgid "Unauthorized. Please contact your administrator."
-msgstr ""
+msgstr "Neoprávněno. Obraťte se na svého správce."
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/models/social_stream.py:0
 #: code:addons/social_linkedin/models/social_stream_post.py:0
 msgid "Unknown"
-msgstr ""
+msgstr "Neznámá"
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__linkedin_use_own_account
 msgid "Use your own LinkedIn Account"
-msgstr ""
+msgstr "Použijte svůj vlastní účet LinkedIn"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_media__media_type
@@ -367,7 +375,7 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_stream_post__linkedin_author_vanity_name
 msgid "Vanity name, used to generate a link to the author"
-msgstr ""
+msgstr "Vanity name, který se používá k vytvoření odkazu na autora."
 
 #. module: social_linkedin
 #. odoo-python
@@ -376,6 +384,8 @@ msgid ""
 "We could not upload your image, try reducing its size and posting it again "
 "(error: Failed during upload registering)."
 msgstr ""
+"Nepodařilo se nám nahrát váš obrázek, zkuste zmenšit jeho velikost a odeslat "
+"jej znovu (chyba: Při registraci nahrávání se nezdařilo)."
 
 #. module: social_linkedin
 #. odoo-python
@@ -383,6 +393,8 @@ msgstr ""
 msgid ""
 "We could not upload your image, try reducing its size and posting it again."
 msgstr ""
+"Nepodařilo se nám nahrát váš obrázek, zkuste zmenšit jeho velikost a odeslat "
+"jej znovu."
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_post__linkedin_image_ids
@@ -394,7 +406,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_linkedin/models/social_stream.py:0
 msgid "Wrong stream type for \"%s\""
-msgstr ""
+msgstr "Nesprávný typ streamu pro \"%s\""
 
 #. module: social_linkedin
 #. odoo-python
@@ -408,4 +420,4 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_linkedin/models/social_live_post.py:0
 msgid "unknown"
-msgstr ""
+msgstr "neznámé"

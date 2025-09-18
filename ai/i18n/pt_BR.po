@@ -1,20 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* ai
+# * ai
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-11 14:26+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-18 12:10+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
+"odoo-19/ai/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_read_group
@@ -26,6 +30,12 @@ msgid ""
 "must be in valid JSON format.\n"
 "        "
 msgstr ""
+"\n"
+"            **Nome da ferramenta: Ler grupo\n"
+"\n"
+"Pesquisa um modelo específico usando um domínio. O domínio fornecido deve "
+"estar no formato JSON válido.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_search
@@ -79,6 +89,41 @@ msgid ""
 "Make 3 parallel calls.\n"
 "        "
 msgstr ""
+"\n"
+"            Lista APENAS campos pesquisáveis para um único modelo que podem "
+"ser usados em filtros de domínio e agrupamento.\n"
+"Essencial para a criação de domínios válidos - se um campo não estiver "
+"listado aqui, ele NÃO PODE ser usado.\n"
+"\n"
+"Formato de retorno:\n"
+"```\n"
+"field_name|display_name|type|sortable|groupable|description\n"
+"partner_id|Customer|many2one(res.partner)|true|true|Cliente para este "
+"pedido\n"
+"date_order|Order Date|datetime|true|true|Data em que o pedido foi feito\n"
+"order_line|Order Lines|one2many(sale.order.line)|false|false|Linhas neste "
+"pedido\n"
+"state|Status|selection|true|true|Status do pedido\n"
+"```\n"
+"\n"
+"            Pontos importantes:\n"
+"- ⚠️ Retorna apenas campos PESQUISÁVEIS - outros não podem ser usados em "
+"domínios\n"
+"- Para relações: mostra o modelo relacionado entre parênteses (many2one, "
+"one2many, many2many)\n"
+"- Apenas campos de relação podem ser usados para percorrer outros modelos\n"
+"- Campos literais, como char/text/float, NÃO PODEM ser usados para "
+"percorrer\n"
+"            - 'sortable' indica se o campo pode ser usado no parâmetro "
+"order_by\n"
+"- 'groupable' indica se o campo pode ser usado para agrupamento quando não "
+"está disponível na visualização de pesquisa\n"
+"\n"
+"💡 Dica de desempenho: ao explorar vários modelos, chame esta ferramenta "
+"várias vezes em UMA mensagem\n"
+"Exemplo: explorando sale.order, product.product e res.partner? Faça três "
+"chamadas paralelas.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_compute_report_measures
@@ -322,6 +367,8 @@ msgid ""
 "A topic includes instructions and tools that guide Odoo AI in helping the "
 "user complete their tasks."
 msgstr ""
+"Um tópico inclui instruções e ferramentas que orientam a IA do Odoo para "
+"ajudar o usuário a concluir suas tarefas."
 
 #. module: ai
 #. odoo-javascript
@@ -330,7 +377,7 @@ msgstr ""
 #: code:addons/ai/static/src/web/systray_action.xml:0
 #: model:ir.model.fields.selection,name:ai.selection__ir_actions_server__state__ai
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
@@ -341,7 +388,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
 msgid "AI Agent"
-msgstr ""
+msgstr "IA: Agente"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
@@ -361,7 +408,7 @@ msgstr ""
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
 msgid "AI Embedding: Generate Embeddings"
-msgstr ""
+msgstr "Incorporação de IA: Gerar incorporação"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__name
@@ -391,12 +438,12 @@ msgstr ""
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 #: model:ir.model.fields,field_description:ai.field_ai_topic__tool_ids
 msgid "AI Tools"
-msgstr ""
+msgstr "Ferramentas de IA"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__discuss_channel__channel_type__ai_chat
 msgid "AI chat"
-msgstr ""
+msgstr "Chat com IA"
 
 #. module: ai
 #. odoo-javascript
@@ -414,7 +461,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_ai_composer
 msgid "AI model configurations (system prompts) for text drafting."
-msgstr ""
+msgstr "AI model configurations (system prompts) for text drafting."
 
 #. module: ai
 #. odoo-python
@@ -426,7 +473,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/discuss_channel.py:0
 msgid "AI: %(name)s"
-msgstr ""
+msgstr "IA: %(name)s"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_adjust_search
@@ -556,12 +603,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_partner__agent_ids
 #: model:ir.model.fields,field_description:ai.field_res_users__agent_ids
 msgid "Agent"
-msgstr ""
+msgstr "Agente"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__name
 msgid "Agent Name"
-msgstr ""
+msgstr "Nome do agente"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_agent_id
@@ -607,7 +654,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
 msgid "Analytical"
-msgstr ""
+msgstr "Analítico"
 
 #. module: ai
 #. odoo-javascript
@@ -616,7 +663,7 @@ msgstr ""
 #: code:addons/ai/static/src/mail_composer_chatgpt.xml:0
 #: code:addons/ai/static/src/web/systray_action.xml:0
 msgid "Ask AI"
-msgstr ""
+msgstr "Pergunte à IA"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
@@ -628,12 +675,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__attachment_id
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "Anexo"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_embedding
 msgid "Attachment Chunks Embedding"
-msgstr ""
+msgstr "Incorporação de partes de anexos"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
@@ -648,22 +695,22 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__balanced
 msgid "Balanced"
-msgstr ""
+msgstr "Balanceado"
 
 #. module: ai
 #: model:ir.model,name:ai.model_base
 msgid "Base"
-msgstr ""
+msgstr "Base"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_template__body_html
 msgid "Body"
-msgstr ""
+msgstr "Conteúdo"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__channel_type
 msgid "Channel Type"
-msgstr ""
+msgstr "Tipo de canal"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_discuss_channel__channel_type
@@ -671,6 +718,9 @@ msgid ""
 "Chat is private and unique between 2 persons. Group is private among invited "
 "persons. Channel can be freely joined (depending on its configuration)."
 msgstr ""
+"O chat é privado e exclusivo entre 2 pessoas. O grupo é privado entre as "
+"pessoas convidadas. Usuários podem entrar no canal livremente (dependendo de "
+"sua configuração)."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
@@ -680,7 +730,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__content
 msgid "Chunk Content"
-msgstr ""
+msgstr "Conteúdo em partes"
 
 #. module: ai
 #. odoo-javascript
@@ -692,28 +742,28 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__composer_id
 msgid "Composer"
-msgstr ""
+msgstr "Compositor"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Configurações"
 
 #. module: ai
 #: model:ir.model,name:ai.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contato"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_mail_compose_message__body
 #: model:ir.model.fields,field_description:ai.field_mail_composer_mixin__body
 msgid "Contents"
-msgstr ""
+msgstr "Conteúdo"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_env_context
 msgid "Context for AI agent"
-msgstr ""
+msgstr "Contexto para o agente de IA"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_prompt_shortcut
@@ -731,7 +781,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,website_form_label:ai.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Criar um cliente"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_topic
@@ -739,6 +789,8 @@ msgid ""
 "Create a topic that leverages instructions and tools to direct Odoo AI in "
 "assisting the user with their tasks."
 msgstr ""
+"Crie um tópico que utilize instruções e ferramentas para direcionar a IA do "
+"Odoo para auxiliar o usuário em suas tarefas."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_uid
@@ -748,7 +800,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Criado por"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_date
@@ -758,17 +810,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__create_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Criado em"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__creative
 msgid "Creative"
-msgstr ""
+msgstr "Criativo"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__system_prompt
 msgid "Customize to control relevance and formatting."
-msgstr ""
+msgstr "Personalize para controlar a relevância e a formatação."
 
 #. module: ai
 #. odoo-javascript
@@ -776,7 +828,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent__subtitle
 #: model:ir.model.fields,field_description:ai.field_ai_topic__description
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #. module: ai
 #. odoo-javascript
@@ -796,7 +848,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model,name:ai.model_discuss_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Canal de discussão"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__display_name
@@ -816,7 +868,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:ai.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome exibido"
 
 #. module: ai
 #. odoo-javascript
@@ -834,12 +886,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Editor"
-msgstr ""
+msgstr "Editor"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_template
 msgid "Email Templates"
-msgstr ""
+msgstr "Modelos de e-mail"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_thread
@@ -854,7 +906,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__embedding_vector
 msgid "Embedding Vector"
-msgstr ""
+msgstr "Vetor de incorporação"
 
 #. module: ai
 #. odoo-python
@@ -865,12 +917,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key_enabled
 msgid "Enable custom Google API key"
-msgstr ""
+msgstr "Ativar a chave personalizada da API do Google"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key_enabled
 msgid "Enable custom OpenAI API key"
-msgstr ""
+msgstr "Ativar chave de API OpenAI personalizada"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__error_details
@@ -908,7 +960,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Generate or transform content with AI"
-msgstr ""
+msgstr "Gerar ou transformar conteúdo com IA"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__chatter_ai_button
@@ -918,12 +970,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__gemini-embedding-001
 msgid "Google"
-msgstr ""
+msgstr "Google"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__google_key
 msgid "Google AI API key"
-msgstr ""
+msgstr "Chave da API de IA do Google"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_http
@@ -939,7 +991,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/thread_patch.js:0
 msgid "Hello, what can I help you with?"
-msgstr ""
+msgstr "Olá, em que posso ajudá-lo?"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__id
@@ -959,12 +1011,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__id
 #: model:ir.model.fields,field_description:ai.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__restrict_to_sources
 msgid "If checked, the agent will only respond based on the provided sources."
-msgstr ""
+msgstr "Se marcada, o agente responderá apenas com base nas fontes fornecidas."
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent_source__is_active
@@ -974,7 +1026,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__image_128
 msgid "Image"
-msgstr ""
+msgstr "Imagem"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__indexed
@@ -998,7 +1050,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 msgid "Insert an AI prompt"
-msgstr ""
+msgstr "Inserir um prompt de IA"
 
 #. module: ai
 #. odoo-javascript
@@ -1016,7 +1068,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_composer__default_prompt
 #: model:ir.model.fields,field_description:ai.field_ai_topic__instructions
 msgid "Instructions"
-msgstr ""
+msgstr "Instruções"
 
 #. module: ai
 #. odoo-python
@@ -1075,7 +1127,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__llm_model
 msgid "LLM Model"
-msgstr ""
+msgstr "LLM Model"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_uid
@@ -1085,7 +1137,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_uid
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última atualização por"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__write_date
@@ -1095,29 +1147,29 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__write_date
 #: model:ir.model.fields,field_description:ai.field_ai_topic__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última atualização em"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Log Note"
-msgstr ""
+msgstr "Registrar nota"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Log as Note"
-msgstr ""
+msgstr "Registro como nota"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_composer_mixin
 msgid "Mail Composer Mixin"
-msgstr ""
+msgstr "Mixin de composição de e-mail"
 
 #. module: ai
 #: model:ir.model,name:ai.model_mail_render_mixin
 msgid "Mail Render Mixin"
-msgstr ""
+msgstr "Mixin da renderização de e-mail"
 
 #. module: ai
 #. odoo-javascript
@@ -1146,13 +1198,13 @@ msgstr ""
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__name
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/llm_api_service.py:0
 msgid "No API key set for provider '%s'"
-msgstr ""
+msgstr "Nenhuma chave de API definida para o provedor '%s'"
 
 #. module: ai
 #. odoo-python
@@ -1176,7 +1228,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No provider found for the selected model"
-msgstr ""
+msgstr "Nenhum fornecedor foi encontrado para o modelo selecionado"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -1208,7 +1260,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "Online"
-msgstr ""
+msgstr "Online"
 
 #. module: ai
 #. odoo-python
@@ -1219,17 +1271,17 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
 msgid "OpenAI"
-msgstr ""
+msgstr "OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_res_config_settings__openai_key
 msgid "OpenAI API key"
-msgstr ""
+msgstr "Chave de API OpenAI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Usuário"
 
 #. module: ai
 #. odoo-javascript
@@ -1260,7 +1312,7 @@ msgstr ""
 #: code:addons/ai/static/src/core/html_editor/prompt_plugin.js:0
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "Prompt"
-msgstr ""
+msgstr "Questão"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_prompt_button
@@ -1300,12 +1352,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__response_style
 msgid "Response Style"
-msgstr ""
+msgstr "Estilo de resposta"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__restrict_to_sources
 msgid "Restrict to Sources"
-msgstr ""
+msgstr "Restringir a fontes"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_text_select
@@ -1339,24 +1391,24 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/web/systray_action.js:0
 msgid "Send Message"
-msgstr ""
+msgstr "Enviar mensagem"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Send as Message"
-msgstr ""
+msgstr "Enviar a mensagem"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__sequence
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sequência"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Ação de servidor"
 
 #. module: ai
 #. odoo-javascript
@@ -1400,7 +1452,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_ids
 msgid "Sources"
-msgstr ""
+msgstr "Origens"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_fully_processed
@@ -1450,7 +1502,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
 msgid "System Prompt"
-msgstr ""
+msgstr "Prompt do sistema"
 
 #. module: ai
 #. odoo-python
@@ -1550,7 +1602,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_topic__name
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1566,7 +1618,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
 msgid "Topics"
-msgstr ""
+msgstr "Tópicos"
 
 #. module: ai
 #. odoo-javascript
@@ -1654,7 +1706,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/message_actions_patch.js:0
 msgid "Use this"
-msgstr ""
+msgstr "Use isso"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
@@ -1681,7 +1733,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/im_status_patch.xml:0
 msgid "User is online"
-msgstr ""
+msgstr "O usuário está online"
 
 #. module: ai
 #. odoo-javascript

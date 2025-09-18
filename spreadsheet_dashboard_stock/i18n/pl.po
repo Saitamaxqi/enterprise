@@ -1,19 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_stock
+# * spreadsheet_dashboard_stock
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 15:32+0000\n"
-"PO-Revision-Date: 2025-09-12 15:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:44+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_stock/pl/>\n"
+"Language: pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
+"|| n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -43,7 +48,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Apple Pie"
-msgstr ""
+msgstr "Szarlotka"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -68,7 +73,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Bagel"
-msgstr ""
+msgstr "Bajgiel"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -80,19 +85,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Cabinet with Doors"
-msgstr ""
+msgstr "Szafka z drzwiami"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Contact"
-msgstr ""
+msgstr "Kontakt"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -106,13 +111,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Bieżące"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Current period"
-msgstr ""
+msgstr "Bieżący okres"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -125,14 +130,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Customer"
-msgstr ""
+msgstr "Klient"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Cycle Time (Days)"
-msgstr ""
+msgstr "Czas cyklu (dni)"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -145,7 +150,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Delay (Days)"
-msgstr ""
+msgstr "Opóźnienie (dni)"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -159,14 +164,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Delivery Orders"
-msgstr ""
+msgstr "Wydania"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Demand"
-msgstr ""
+msgstr "Zapotrzebowanie"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -184,7 +189,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Drawer"
-msgstr ""
+msgstr "Szuflada"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -209,7 +214,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Internal Transfers"
-msgstr ""
+msgstr "Przesunięcia wewnątrzmagazynowe"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -236,7 +241,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -275,7 +280,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Manufacturing"
-msgstr ""
+msgstr "Produkcja"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -287,7 +292,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Multigrain Bread"
-msgstr ""
+msgstr "Chleb wieloziarnisty"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -305,7 +310,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Office Chair Black"
-msgstr ""
+msgstr "Krzesło biurowe czarne"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -385,19 +390,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "OpenAI"
-msgstr ""
+msgstr "OpenAI"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Operation"
-msgstr ""
+msgstr "Operacja"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Operation Type"
-msgstr ""
+msgstr "Typ operacji"
 
 #. module: spreadsheet_dashboard_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_stock.spreadsheet_dashboard_inventory_flow
@@ -414,7 +419,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Operations"
-msgstr ""
+msgstr "Operacje"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -426,7 +431,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Pack"
-msgstr ""
+msgstr "Paczka"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -438,32 +443,32 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Okres"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Pick"
-msgstr ""
+msgstr "Pobranie"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "PoS Orders"
-msgstr ""
+msgstr "Zamówienia PS"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Poprzedni"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Previous period"
-msgstr ""
+msgstr "Poprzedni okres"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -476,13 +481,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Product Category"
-msgstr ""
+msgstr "Kategoria produktu"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -496,7 +501,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Quantity"
-msgstr ""
+msgstr "Ilość"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -510,7 +515,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Receipts"
-msgstr ""
+msgstr "Przyjęcia"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -523,14 +528,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Repairs"
-msgstr ""
+msgstr "Naprawy"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Responsible"
-msgstr ""
+msgstr "Odpowiedzialny"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -543,7 +548,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Scheduled on"
-msgstr ""
+msgstr "Zaplanowane na"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -561,7 +566,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Storage"
-msgstr ""
+msgstr "Magazynowanie"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -574,14 +579,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Total orders"
-msgstr ""
+msgstr "Całkowita liczba zamówień"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Transfer"
-msgstr ""
+msgstr "Przekaz"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -602,13 +607,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Vendor"
-msgstr ""
+msgstr "Dostawca"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Warehouse"
-msgstr ""
+msgstr "Magazyn"
 
 #. module: spreadsheet_dashboard_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_stock.spreadsheet_dashboard_warehouse_operations
@@ -651,4 +656,4 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "last period"
-msgstr ""
+msgstr "ostatni okres"

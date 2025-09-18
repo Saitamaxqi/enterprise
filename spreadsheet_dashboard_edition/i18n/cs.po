@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_edition
+# * spreadsheet_dashboard_edition
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:44+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_edition/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_edition
 #: model_terms:ir.ui.view,arch_db:spreadsheet_dashboard_edition.spreadsheet_dashboard_creation_dialog_view_form
@@ -45,20 +49,20 @@ msgstr ""
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_cell_thread__dashboard_id
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #. module: spreadsheet_dashboard_edition
 #. odoo-python
 #: code:addons/spreadsheet_dashboard_edition/models/spreadsheet_dashboard.py:0
 msgid "Dashboards"
-msgstr ""
+msgstr "Dashboardy"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_ir_http__display_name
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_cell_thread__display_name
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__display_thumbnail
@@ -73,7 +77,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:spreadsheet_dashboard_edition.spreadsheet_dashboard_kanban_view_inherit
 #: model_terms:ir.ui.view,arch_db:spreadsheet_dashboard_edition.spreadsheet_dashboard_view_list
 msgid "Edit"
-msgstr ""
+msgstr "Upravit"
 
 #. module: spreadsheet_dashboard_edition
 #: model_terms:ir.ui.view,arch_db:spreadsheet_dashboard_edition.spreadsheet_dashboard_view_list
@@ -93,25 +97,25 @@ msgstr ""
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model,name:spreadsheet_dashboard_edition.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_ir_http__id
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_cell_thread__id
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: spreadsheet_dashboard_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_edition/static/src/bundle/components/dashboard_publish/dashboard_publish.xml:0
 msgid "Published"
-msgstr ""
+msgstr "Publikováno"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model,name:spreadsheet_dashboard_edition.model_spreadsheet_dashboard
 msgid "Spreadsheet Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__spreadsheet_data
@@ -126,12 +130,12 @@ msgstr ""
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__spreadsheet_revision_ids
 msgid "Spreadsheet Revision"
-msgstr ""
+msgstr "Revize tabulek"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__spreadsheet_snapshot
 msgid "Spreadsheet Snapshot"
-msgstr ""
+msgstr "Snímek tabulek"
 
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model,name:spreadsheet_dashboard_edition.model_spreadsheet_cell_thread
@@ -146,10 +150,10 @@ msgstr ""
 #. module: spreadsheet_dashboard_edition
 #: model:ir.model.fields,field_description:spreadsheet_dashboard_edition.field_spreadsheet_dashboard__thumbnail
 msgid "Thumbnail"
-msgstr ""
+msgstr "Náhled"
 
 #. module: spreadsheet_dashboard_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_edition/static/src/bundle/components/dashboard_publish/dashboard_publish.xml:0
 msgid "Unpublished"
-msgstr ""
+msgstr "Nepublikovaný"

@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* website_sale_renting
+# * website_sale_renting
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:49+0000\n"
-"PO-Revision-Date: 2025-09-11 14:49+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:41+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
+"website_sale_renting/fr/>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: website_sale_renting
 #. odoo-python
@@ -24,6 +28,11 @@ msgid ""
 "                rentals that last less than %(duration)s %(unit)s.\n"
 "            "
 msgstr ""
+"\n"
+"                Votre durée de location était trop courte. Malheureusement, "
+"nous ne donnons pas suite aux\n"
+"                périodes de location inférieures à %(duration)s %(unit)s.\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
@@ -34,6 +43,12 @@ msgid ""
 "                Unfortunately, we do not process pickups on that weekday.\n"
 "            "
 msgstr ""
+"\n"
+"                Votre produit de location a une date d'enlèvement invalide "
+"(%(start_date)s).\n"
+"                Malheureusement, nous ne traitons pas d'enlèvements ce "
+"jour-là.\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
@@ -44,6 +59,12 @@ msgid ""
 "                Unfortunately, we do not process returns on that weekday.\n"
 "            "
 msgstr ""
+"\n"
+"                Votre produit de location a une date de retour invalide "
+"(%(end_date)s).\n"
+"                Malheureusement, nous ne traitons pas de retours ce jour-là."
+"\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
@@ -55,6 +76,14 @@ msgid ""
 "                returns on those weekdays.\n"
 "            "
 msgstr ""
+"\n"
+"                Votre produit de location a des dates d'enlèvement "
+"(%(start_date)s) et \n"
+"                de retour (%(end_date)s) invalides. Malheureusement, nous ne "
+"traitons pas d'enlèvements ou \n"
+"\n"
+"                de retours ces jours-là.\n"
+"            "
 
 #. module: website_sale_renting
 #. odoo-python
@@ -66,37 +95,44 @@ msgid ""
 "            inconvenience.\n"
 "        "
 msgstr ""
+"\n"
+"            Certains de vos produits loués (%(product)s) ne peuvent pas être "
+"loués pendant la\n"
+"            période sélectionnée et votre panier doit être mis à jour. Nous "
+"sommes désolés pour le\n"
+"            désagrément.\n"
+"        "
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "(%s days)."
-msgstr ""
+msgstr "(%s jours)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "(%s hours)."
-msgstr ""
+msgstr "(%s heures)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "(%s months)."
-msgstr ""
+msgstr "(%s mois)."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "(%s weeks)."
-msgstr ""
+msgstr "(%s semaines)."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_collapsible
 msgid "<b>Rental Period</b>"
-msgstr ""
+msgstr "<b>Période de location</b>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
@@ -104,6 +140,8 @@ msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                            <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Avertissement\"/>\n"
+"                            <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
@@ -111,6 +149,8 @@ msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                        <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Avertissement\"/>\n"
+"                        <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
@@ -118,6 +158,8 @@ msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                    <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Avertissement\"/>\n"
+"                    <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.datepicker
@@ -125,6 +167,8 @@ msgid ""
 "<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Warning\"/>\n"
 "                <span name=\"renting_warning_message\"/>"
 msgstr ""
+"<i class=\"fa fa-warning\" role=\"img\" aria-label=\"Avertissement\"/>\n"
+"                <span name=\"renting_warning_message\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
@@ -133,16 +177,18 @@ msgid ""
 "<small class=\"mx-auto\"><b>Clear Rental Period</b></small>\n"
 "                                <i class=\"oi oi-close\" role=\"img\"/>"
 msgstr ""
+"<small class=\"mx-auto\"><b>Libérer la période de location</b></small>\n"
+"                                <i class=\"oi oi-close\" role=\"img\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_search_result_price
 msgid "<small>from</small>"
-msgstr ""
+msgstr "<small>à partir de</small>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_search_result_price
 msgid "<small>per</small>"
-msgstr ""
+msgstr "<small>par</small>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
@@ -154,24 +200,24 @@ msgstr ""
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list
 msgid "<span class=\"ps-1\">per</span>"
-msgstr ""
+msgstr "<span class=\"ps-1\">par</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.price_dynamic_filter_template_product_product
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
 msgid "<span>/</span>"
-msgstr ""
+msgstr "<span>/</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_products_price
 msgid "<span>per</span>"
-msgstr ""
+msgstr "<span>par</span>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
 msgid "<strong class=\"attribute_name\">Pricing</strong>"
-msgstr ""
+msgstr "<strong class=\"attribute_name\">Prix</strong>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
@@ -182,39 +228,39 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option_plugin.js:0
 msgid "All"
-msgstr ""
+msgstr "Tous"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 msgid "Attribute Filter"
-msgstr ""
+msgstr "Filtre des attributs"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Sociétés"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Paramètres de configuration"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 msgid "Day"
-msgstr ""
+msgstr "Jour"
 
 #. module: website_sale_renting
 #: model:ir.model.fields.selection,name:website_sale_renting.selection__res_company__renting_minimal_time_unit__day
 msgid "Days"
-msgstr ""
+msgstr "Jours"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
 msgid "Days during which pickup and return are not possible."
-msgstr ""
+msgstr "Jours pendant lesquels l'enlèvement et le retour sont impossibles."
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_pricelist__display_name
@@ -226,7 +272,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_sale_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:website_sale_renting.field_website__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
@@ -234,34 +280,34 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
 msgid "End date"
-msgstr ""
+msgstr "Date de fin"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_fri
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_fri
 msgid "Friday"
-msgstr ""
+msgstr "Vendredi"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.price_dynamic_filter_template_product_product
 msgid "From"
-msgstr ""
+msgstr "Du"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 msgid "Go to your cart"
-msgstr ""
+msgstr "Aller au panier"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 msgid "Hour"
-msgstr ""
+msgstr "Heure"
 
 #. module: website_sale_renting
 #: model:ir.model.fields.selection,name:website_sale_renting.selection__res_company__renting_minimal_time_unit__hour
 msgid "Hours"
-msgstr ""
+msgstr "Heures"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_product_pricelist__id
@@ -273,62 +319,63 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_sale_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:website_sale_renting.field_website__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_minimal_time_duration
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_minimal_time_duration
 msgid "Minimal Rental Duration"
-msgstr ""
+msgstr "Durée de location minimale"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_minimal_time_unit
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_minimal_time_unit
 msgid "Minimal Rental Duration Unit"
-msgstr ""
+msgstr "Unité de la durée de location minimale"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
 msgid "Minimal duration between pickup and return."
-msgstr ""
+msgstr "Durée minimale entre l'enlèvement et le retour."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
 msgid "Minimal time of rental"
-msgstr ""
+msgstr "Durée minimale de la location"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_mon
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_mon
 msgid "Monday"
-msgstr ""
+msgstr "Lundi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields.selection,name:website_sale_renting.selection__res_company__renting_minimal_time_unit__month
 msgid "Months"
-msgstr ""
+msgstr "Mois"
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/product_template.py:0
 msgid "Please choose a return date that is after the pickup date."
 msgstr ""
+"Veuillez choisir une date de retour postérieure à la date de l'enlèvement."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "Please select a rental period."
-msgstr ""
+msgstr "Veuillez sélectionner une période de location."
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_product_pricelist
 msgid "Pricelist"
-msgstr ""
+msgstr "Liste de prix"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_product_template
 msgid "Product"
-msgstr ""
+msgstr "Produit"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_product_product
@@ -338,55 +385,55 @@ msgstr ""
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
 msgid "Rent Online"
-msgstr ""
+msgstr "Louer en ligne"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/product_page_list_option.xml:0
 msgid "Rental Date"
-msgstr ""
+msgstr "Date de location"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart_summary_total
 msgid "Rental Period"
-msgstr ""
+msgstr "Période de location"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.accordion_rental_item
 msgid "Rental Pricing"
-msgstr ""
+msgstr "Prix de location"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.snippets
 msgid "Rental Search"
-msgstr ""
+msgstr "Recherche de location"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
 msgid "Rental period"
-msgstr ""
+msgstr "Période de location"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Commande client"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Ligne de commande"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_sat
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_sat
 msgid "Saturday"
-msgstr ""
+msgstr "Samedi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,help:website_sale_renting.field_res_config_settings__tz
 #: model:ir.model.fields,help:website_sale_renting.field_website__tz
 msgid "Select your website timezone here."
-msgstr ""
+msgstr "Sélectionnez le fuseau horaire de votre site internet ici."
 
 #. module: website_sale_renting
 #. odoo-python
@@ -395,6 +442,9 @@ msgid ""
 "Some of your rental products cannot be rented during the selected period and"
 " your cart must be updated. We're sorry for the inconvenience."
 msgstr ""
+"Certains de vos produits de location ne peuvent pas être loués pendant la "
+"période sélectionnée et votre panier doit être mis à jour. Veuillez nous "
+"excuser pour le désagrément."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart
@@ -402,13 +452,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.s_rental_search
 msgid "Start date"
-msgstr ""
+msgstr "Date de début"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_sun
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_sun
 msgid "Sunday"
-msgstr ""
+msgstr "Dimanche"
 
 #. module: website_sale_renting
 #. odoo-python
@@ -417,11 +467,13 @@ msgid ""
 "The new period is not valid for some products of your cart. Your changes on "
 "the rental period are not taken into account."
 msgstr ""
+"La nouvelle période n’est pas valide pour certains produits de votre panier. "
+"Vos modifications sur la période de location n’ont pas été prises en compte."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 msgid "The period must be the same for all the products in your cart."
-msgstr ""
+msgstr "La période doit être la même pour tous les produits de votre panier."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
@@ -430,102 +482,109 @@ msgid ""
 "The period must be the same for all the products in your cart. Go to your "
 "cart to change it or create different orders."
 msgstr ""
+"La période doit être la même pour tous les produits de votre panier. Accédez "
+"à votre panier pour le modifier ou créer d'autres commandes."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "The pickup date cannot be in the past."
-msgstr ""
+msgstr "La date d'enlèvement ne peut pas se situer dans le passé."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "The rental lasts less than the minimal rental duration %s"
 msgstr ""
+"La durée de la location est inférieure à la durée de location minimale %s"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "The return date should be after the pickup date."
-msgstr ""
+msgstr "La date de retour devrait se situer après la date d'enlèvement."
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_thu
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_thu
 msgid "Thursday"
-msgstr ""
+msgstr "Jeudi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__tz
 #: model:ir.model.fields,field_description:website_sale_renting.field_website__tz
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form_inherit_website
 msgid "Timezone"
-msgstr ""
+msgstr "Fuseau horaire"
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/plugins/rental_search_option.xml:0
 msgid "Timing"
-msgstr ""
+msgstr "Timing"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_tue
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_tue
 msgid "Tuesday"
-msgstr ""
+msgstr "Mardi"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.res_config_settings_view_form
 msgid "Unavailability days"
-msgstr ""
+msgstr "Jours d'indisponibilité"
 
 #. module: website_sale_renting
 #: model:ir.model,name:website_sale_renting.model_website
 msgid "Website"
-msgstr ""
+msgstr "Site Web"
 
 #. module: website_sale_renting
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_company__renting_forbidden_wed
 #: model:ir.model.fields,field_description:website_sale_renting.field_res_config_settings__renting_forbidden_wed
 msgid "Wednesday"
-msgstr ""
+msgstr "Mercredi"
 
 #. module: website_sale_renting
 #: model:ir.model.fields.selection,name:website_sale_renting.selection__res_company__renting_minimal_time_unit__week
 msgid "Weeks"
-msgstr ""
+msgstr "Semaines"
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
 msgid "You cannot mix different rental periods in the same order."
 msgstr ""
+"Vous ne pouvez pas mélanger différentes périodes de location dans une même "
+"commande."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "You cannot pick up your rental on that day of the week."
-msgstr ""
+msgstr "Vous ne pouvez pas enlever vos produits loués ce jour de la semaine."
 
 #. module: website_sale_renting
 #. odoo-javascript
 #: code:addons/website_sale_renting/static/src/js/renting_mixin.js:0
 msgid "You cannot return your rental on that day of the week."
-msgstr ""
+msgstr "Vous ne pouvez pas retourner vos produits loués ce jour de la semaine."
 
 #. module: website_sale_renting
 #. odoo-python
 #: code:addons/website_sale_renting/models/sale_order.py:0
 msgid "Your rental product cannot be pickedup in the past."
 msgstr ""
+"Votre produit de location ne peut pas être enlevé à une date située dans le "
+"passé."
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products_item
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list
 msgid "from"
-msgstr ""
+msgstr "de"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 msgid "to change it or create different orders."
-msgstr ""
+msgstr "pour le modifier ou créer d'autres ordres."

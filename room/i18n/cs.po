@@ -1,19 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* room
+# * room
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:41+0000\n"
-"PO-Revision-Date: 2025-09-11 14:41+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:41+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/room/cs/>\n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: room
 #. odoo-javascript
@@ -71,24 +74,24 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Přístupový token"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Vyžadována akce"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__active
 msgid "Active"
-msgstr ""
+msgstr "Aktivní"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Přidat"
 
 #. module: room
 #. odoo-javascript
@@ -105,13 +108,13 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Appearance"
-msgstr ""
+msgstr "vzhled"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Archivováno"
 
 #. module: room
 #. odoo-javascript
@@ -129,7 +132,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_attachment_count
 #: model:ir.model.fields,field_description:room.field_room_room__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Počet příloh"
 
 #. module: room
 #. odoo-javascript
@@ -137,7 +140,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Available"
-msgstr ""
+msgstr "Dostupný"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__bookable_background_color
@@ -147,13 +150,13 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_background_image
 msgid "Background Image"
-msgstr ""
+msgstr "Obrázek pozadí"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Booked"
-msgstr ""
+msgstr "Rezervováno"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__booked_background_color
@@ -163,7 +166,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "Booking"
-msgstr ""
+msgstr "Rezervace"
 
 #. module: room
 #. odoo-javascript
@@ -171,7 +174,7 @@ msgstr ""
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 #: model:ir.model.fields,field_description:room.field_room_booking__name
 msgid "Booking Name"
-msgstr ""
+msgstr "Název rezervace"
 
 #. module: room
 #. odoo-javascript
@@ -187,13 +190,13 @@ msgstr ""
 #: model:ir.ui.menu,name:room.room_booking_menu
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_gantt
 msgid "Bookings"
-msgstr ""
+msgstr "Rezervace"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Busy"
-msgstr ""
+msgstr "Zaneprázdněn"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
@@ -205,7 +208,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__company_id
 #: model:ir.model.fields,field_description:room.field_room_room__company_id
 msgid "Company"
-msgstr ""
+msgstr "Společnost"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
@@ -216,39 +219,39 @@ msgstr ""
 #. odoo-python
 #: code:addons/room/models/room_booking.py:0
 msgid "Create a Room"
-msgstr ""
+msgstr "Vytvořit místnost"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_uid
 #: model:ir.model.fields,field_description:room.field_room_office__create_uid
 #: model:ir.model.fields,field_description:room.field_room_room__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Vytvořeno uživatelem"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_date
 #: model:ir.model.fields,field_description:room.field_room_office__create_date
 #: model:ir.model.fields,field_description:room.field_room_room__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Vytvořeno dne"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Smazat"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Zrušit"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__display_name
@@ -256,12 +259,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__display_name
 #: model:ir.model.fields,field_description:room.field_room_room__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Zobrazovací název"
 
 #. module: room
 #: model:res.groups,comment:room.group_room_manager
 msgid "Enable the user to manage meeting rooms available for booking"
-msgstr ""
+msgstr "Povolte uživatelům spravovat rezervace dostupných zasedacích místností"
 
 #. module: room
 #. odoo-javascript
@@ -273,30 +276,30 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__stop_datetime
 msgid "End Datetime"
-msgstr ""
+msgstr "Datum a čas do"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_follower_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Odběratelé"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_partner_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Odběratelé (partneři)"
 
 #. module: room
 #: model:ir.model,name:room.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__has_message
 #: model:ir.model.fields,field_description:room.field_room_room__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Má zprávu"
 
 #. module: room
 #: model:room.office,name:room.room_office_head_office
@@ -309,25 +312,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__id
 #: model:ir.model.fields,field_description:room.field_room_room__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Pokud zaškrtnuto, nové zprávy vyžadují vaši pozornost."
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
 #: model:ir.model.fields,help:room.field_room_room__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Pokud zaškrtnuto, některé zprávy mají chybu při doručení."
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Install Application"
-msgstr ""
+msgstr "Nainstalovat aplikaci"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
@@ -338,7 +341,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_is_follower
 #: model:ir.model.fields,field_description:room.field_room_room__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Je odběratel"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__is_available
@@ -350,14 +353,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__write_uid
 #: model:ir.model.fields,field_description:room.field_room_room__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Naposledy upraveno uživatelem"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__write_date
 #: model:ir.model.fields,field_description:room.field_room_office__write_date
 #: model:ir.model.fields,field_description:room.field_room_room__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Naposledy upraveno dne"
 
 #. module: room
 #: model:room.office,name:room.room_office_main_office
@@ -378,7 +381,7 @@ msgstr ""
 #. module: room
 #: model:ir.ui.menu,name:room.room_menu_root
 msgid "Meeting Rooms"
-msgstr ""
+msgstr "Zasedací místnosti"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
@@ -389,23 +392,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Chyba při doručování zprávy"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Zprávy"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "My Meetings"
-msgstr ""
+msgstr "Moje schůzky"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_list
 msgid "Name"
-msgstr ""
+msgstr "Název"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__next_booking_start
@@ -416,7 +419,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Next Week"
-msgstr ""
+msgstr "Příští týden"
 
 #. module: room
 #. odoo-javascript
@@ -439,31 +442,31 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Počet akcí"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Počet chyb"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,help:room.field_room_room__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Počet zpráv vyžadujících akci"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,help:room.field_room_room__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Počet zpráv s chybou při doručení"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__office_id
 #: model:ir.model.fields,field_description:room.field_room_room__office_id
 msgid "Office"
-msgstr ""
+msgstr "Kancelář"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_office__name
@@ -474,29 +477,29 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Open"
-msgstr ""
+msgstr "Volný"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Or"
-msgstr ""
+msgstr "Nebo"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__organizer_id
 msgid "Organizer"
-msgstr ""
+msgstr "Organizátor"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Previous Week"
-msgstr ""
+msgstr "Minulý týden"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_2
 msgid "Projector"
-msgstr ""
+msgstr "Projektor"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_1
@@ -507,7 +510,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_room__room_properties
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Properties"
-msgstr ""
+msgstr "Vlastnosti"
 
 #. module: room
 #. odoo-javascript
@@ -519,7 +522,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__rating_ids
 #: model:ir.model.fields,field_description:room.field_room_room__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Hodnocení"
 
 #. module: room
 #: model:ir.actions.act_window,name:room.room_room_action
@@ -528,7 +531,7 @@ msgstr ""
 #: model:res.groups.privilege,name:room.res_groups_privilege_room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Room"
-msgstr ""
+msgstr "Pokoj"
 
 #. module: room
 #. odoo-python
@@ -549,7 +552,7 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__name
 msgid "Room Name"
-msgstr ""
+msgstr "Název místnosti"
 
 #. module: room
 #: model:ir.model,name:room.model_room_office
@@ -564,7 +567,7 @@ msgstr ""
 #. module: room
 #: model:ir.ui.menu,name:room.room_room_menu
 msgid "Rooms"
-msgstr ""
+msgstr "Místnosti"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
@@ -574,18 +577,18 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "Krátký kód"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__start_datetime
 msgid "Start Datetime"
-msgstr ""
+msgstr "Počátační datum a čas"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Start now"
-msgstr ""
+msgstr "Začít"
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_access_token
@@ -629,7 +632,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Until"
-msgstr ""
+msgstr "Konec"
 
 #. module: room
 #. odoo-javascript
@@ -661,4 +664,4 @@ msgstr ""
 #. odoo-python
 #: code:addons/room/models/room_room.py:0
 msgid "room_id"
-msgstr ""
+msgstr "room_id"

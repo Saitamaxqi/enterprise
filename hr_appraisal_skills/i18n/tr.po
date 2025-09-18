@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_appraisal_skills
+# * hr_appraisal_skills
 #
+# "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:32+0000\n"
-"PO-Revision-Date: 2025-09-11 14:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 02:42+0000\n"
+"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
+"hr_appraisal_skills/tr/>\n"
+"Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_template_view_hierarchy
@@ -25,12 +29,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "Add new skills"
-msgstr ""
+msgstr "Yeni yetenek ekle"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__appraisal_id
 msgid "Appraisal"
-msgstr ""
+msgstr "Değerlendirme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_goal
@@ -46,7 +50,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:hr_appraisal_skills.hr_appraisal_skill_report_action
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_skill_report
 msgid "Appraisal Skills Report"
-msgstr ""
+msgstr "Değerlendirme Yetenek Raporu"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_skill_view_form
@@ -68,25 +72,25 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__company_id
 msgid "Company"
-msgstr ""
+msgstr "Firma"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__create_date
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Create Date"
-msgstr ""
+msgstr "Oluşturma Tarihi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__create_uid
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Tarafından oluşturuldu"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__create_date
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Oluşturuldu"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
@@ -111,23 +115,23 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__current_skill_level_id
 msgid "Current Level"
-msgstr ""
+msgstr "Mevcut Seviye"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__current_level_progress
 msgid "Current Progress"
-msgstr ""
+msgstr "Mevcut İlerleme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__decline
 msgid "Decline"
-msgstr ""
+msgstr "Reddet"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__department_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Department"
-msgstr ""
+msgstr "Departman"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal__display_name
@@ -136,7 +140,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__display_name
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "İsim Göster"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__display_warning_message
@@ -149,23 +153,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__employee_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Employee"
-msgstr ""
+msgstr "Çalışan"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal
 msgid "Employee Appraisal"
-msgstr ""
+msgstr "Personel Değerlendirme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__evolution
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Evolution"
-msgstr ""
+msgstr "Gelişim"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__evolution_sequence
 msgid "Evolution Sequence"
-msgstr ""
+msgstr "Gelişim Sıralaması"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_goal_template_view_form
@@ -185,19 +189,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_appraisal_skills
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "If skills are missing, they can be created by an HR officer."
-msgstr ""
+msgstr "Eğer beceriler eksikse bir İK görevlisi tarafından oluşturulabilir."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__improvement
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Improvement"
-msgstr ""
+msgstr "İlerleme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__target_job_skill_progress
@@ -212,25 +216,25 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__just_added
 msgid "Just added"
-msgstr ""
+msgstr "Yeni eklendi:"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__justification
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__justification
 msgid "Justification"
-msgstr ""
+msgstr "Gerekçe"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__write_uid
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Son Güncelleyen"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__write_date
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Son Güncelleme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__levels_count
@@ -241,12 +245,12 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__manager_ids
 msgid "Manager"
-msgstr ""
+msgstr "Yönetici"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "No Change"
-msgstr ""
+msgstr "Değişiklik Yok"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__number_of_recommended_goals
@@ -262,34 +266,34 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__previous_skill_level_id
 msgid "Previous Level"
-msgstr ""
+msgstr "Önceki Seviye"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__previous_level_progress
 msgid "Previous Progress"
-msgstr ""
+msgstr "Önceki İlerleme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__previous_skill_level_id
 msgid "Previous Skill Level"
-msgstr ""
+msgstr "Önceki Yetenek Seviyesi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__level_progress
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__level_progress
 msgid "Progress"
-msgstr ""
+msgstr "İlerleme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__progress_evolution
 msgid "Progress Evolution"
-msgstr ""
+msgstr "İlerleme Gelişimi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal_skill__level_progress
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_skill__level_progress
 msgid "Progress from zero knowledge (0%) to fully mastered (100%)."
-msgstr ""
+msgstr "Sıfır bilgiden (% 0) tam uzmanlığa (% 100) kadar ilerleme."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.constraint,message:hr_appraisal_skills.constraint_hr_appraisal_skill_check_goals_completion_percentage
@@ -309,31 +313,31 @@ msgstr ""
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Regression"
-msgstr ""
+msgstr "Gerileme"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields.selection,name:hr_appraisal_skills.selection__hr_appraisal_skill_report__evolution__same
 msgid "Same"
-msgstr ""
+msgstr "Aynı"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__skill_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__skill_id
 msgid "Skill"
-msgstr ""
+msgstr "Yetenek"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_graph
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_pivot
 msgid "Skill Analysis"
-msgstr ""
+msgstr "Beceri Analizi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_level_id
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill__skill_level_id
 msgid "Skill Level"
-msgstr ""
+msgstr "Yetenek Seviyesi"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_goal_skill__skill_type_id
@@ -341,7 +345,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal_skill_report__skill_type_id
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skill_report_view_search
 msgid "Skill Type"
-msgstr ""
+msgstr "Yetenek Türü"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,field_description:hr_appraisal_skills.field_hr_appraisal__appraisal_skill_ids
@@ -354,18 +358,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.hr_appraisal_skills_view_form
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.view_hr_appraisal_form
 msgid "Skills"
-msgstr ""
+msgstr "Yetenekler"
 
 #. module: hr_appraisal_skills
 #: model:ir.ui.menu,name:hr_appraisal_skills.menu_appraisal_skills_report
 #: model_terms:ir.actions.act_window,help:hr_appraisal_skills.hr_appraisal_skill_report_action
 msgid "Skills Evolution"
-msgstr ""
+msgstr "Beceri Gelişimi"
 
 #. module: hr_appraisal_skills
 #: model:ir.actions.act_window,name:hr_appraisal_skills.hr_skill_type_action_appraisal
 msgid "Skills Type"
-msgstr ""
+msgstr "Beceri Türü"
 
 #. module: hr_appraisal_skills
 #: model:ir.model,name:hr_appraisal_skills.model_hr_appraisal_goal_skill
@@ -427,22 +431,23 @@ msgstr ""
 msgid ""
 "View the evolution of employee's skill between the two latest appraisals."
 msgstr ""
+"Son iki değerlendirme arasında çalışanın becerilerindeki gelişimi görün."
 
 #. module: hr_appraisal_skills
 #. odoo-javascript
 #: code:addons/hr_appraisal_skills/static/src/js/appraisal_skills_one2many.xml:0
 msgid "You can add skills from our library to the employee profile."
-msgstr ""
+msgstr "Çalışan profiline kütüphanemizden beceriler ekleyebilirsiniz."
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been added."
-msgstr ""
+msgstr "Eklendi"
 
 #. module: hr_appraisal_skills
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_skills.appraisal_skills_update_template
 msgid "has been deleted."
-msgstr ""
+msgstr "silindi."
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal_skill__is_certification

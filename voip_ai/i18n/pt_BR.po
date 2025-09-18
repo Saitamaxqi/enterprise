@@ -1,25 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* voip_ai
+# * voip_ai
 #
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:46+0000\n"
-"PO-Revision-Date: 2025-09-11 14:46+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-18 12:10+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
+"Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
+"odoo-19/voip_ai/pt_BR/>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: voip_ai
 #. odoo-javascript
 #: code:addons/voip_ai/static/src/session_patch.js:0
 msgid "Call successfully scheduled for transcription."
-msgstr ""
+msgstr "Chamada agendada com sucesso para transcrição."
 
 #. module: voip_ai
 #: model_terms:ir.ui.view,arch_db:voip_ai.voip_call_view_form_transcript
@@ -30,7 +34,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip_ai/static/src/session_patch.js:0
 msgid "Can't transcribe the call: Upload failed."
-msgstr ""
+msgstr "Não é possível transcrever a chamada: falha no upload."
 
 #. module: voip_ai
 #: model:ir.model.fields.selection,name:voip_ai.selection__voip_provider__transcription_policy__disabled
