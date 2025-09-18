@@ -756,3 +756,56 @@ class TestBudgetReport(TestAccountReportsCommon):
                 {'level': 3, 'name': '400000 Product Sales'},
             ]
         )
+
+    def test_budget_report_edit_items_with_date(self):
+        """
+        Ensure budget items are created or updated correctly
+        when editing across varying date ranges
+        """
+        def set_budget_item(value, account_id, date_from, date_to):
+            budget._create_or_update_budget_items(
+                value_to_set=value,
+                account_id=account_id,
+                rounding=self.env.company.currency_id.decimal_places,
+                date_from=date_from,
+                date_to=date_to,
+            )
+
+        budget = self.env['account.report.budget'].create({'name': "Budget"})
+        set_budget_item(1200, self.account_1.id, '2025-01-01', '2025-12-01')
+        expected_items = [
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-01-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-02-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-03-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-04-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-05-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-06-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-07-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-08-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-09-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-10-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-11-01')},
+            {'amount': 100.0, 'date': fields.Date.to_date('2025-12-01')},
+        ]
+        self.assertRecordValues(budget.item_ids, expected_items)
+
+        # Update the second and third months to total of 900 (450 per month)
+        set_budget_item(900, self.account_1.id, '2025-01-10', '2025-3-10')
+        # Now the second and third months each have an amount of 450
+
+        set_budget_item(1000, self.account_1.id, '2025-01-01', '2025-12-01')
+        expected_items = [
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-01-01')},
+            {'amount': 450.0 - 75.00, 'date': fields.Date.to_date('2025-02-01')},
+            {'amount': 450.0 - 75.00, 'date': fields.Date.to_date('2025-03-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-04-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-05-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-06-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-07-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-08-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-09-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-10-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-11-01')},
+            {'amount': 100.0 - 75.00, 'date': fields.Date.to_date('2025-12-01')},
+        ]
+        self.assertRecordValues(budget.item_ids, expected_items)

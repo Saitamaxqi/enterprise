@@ -1,4 +1,5 @@
 from itertools import zip_longest
+from dateutil.relativedelta import relativedelta
 
 from odoo import api, Command, fields, models, _
 from odoo.exceptions import ValidationError
@@ -41,12 +42,15 @@ class AccountReportBudget(models.Model):
         self.ensure_one()
 
         date_from, date_to = fields.Date.to_date(date_from), fields.Date.to_date(date_to)
+        if date_from != date_utils.start_of(date_from, 'month'):
+            date_from = (date_from.replace(day=1) + relativedelta(months=1))
         existing_budget_items = self.env['account.report.budget.item'].search_fetch([
             ('budget_id', '=', self.id),
             ('account_id', '=', account_id),
             ('date', '<=', date_to),
             ('date', '>=', date_from),
         ], ['id', 'amount'])
+        existing_budget_items_by_date = {item.date: item for item in existing_budget_items}
         total_amount = sum(existing_budget_items.mapped('amount'))
 
         value_to_compute = value_to_set - total_amount
@@ -66,7 +70,8 @@ class AccountReportBudget(models.Model):
         amounts[-1] += float_round(value_to_compute - sum(amounts), precision_digits=rounding)
 
         budget_items_commands = []
-        for existing_budget_item, start_month_date, amount in zip_longest(existing_budget_items, start_month_dates, amounts):
+        for start_month_date, amount in zip_longest(start_month_dates, amounts):
+            existing_budget_item = existing_budget_items_by_date.get(start_month_date)
             if existing_budget_item:
                 budget_items_commands.append(Command.update(existing_budget_item.id, {
                     'amount': existing_budget_item.amount + amount,
