@@ -191,13 +191,14 @@ class PosOrder(models.Model):
         AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
         AccountTax._add_accounting_data_in_base_lines_tax_details(base_lines, self.company_id)
 
-        operation_type = self.env.ref("l10n_br_avatax.operation_type_1")
+        default_operation_type = self.env.ref("l10n_br_avatax.operation_type_1")
         res = []
         for line in base_lines:
+            product = line['record'].product_id
             res.append({
                 'base_line': line,
-                'description': line['record'].product_id.name,
-                'operation_type': operation_type,
+                'description': product.name,
+                'operation_type': product.l10n_br_operation_type_pos_id or default_operation_type,
             })
 
         return res
