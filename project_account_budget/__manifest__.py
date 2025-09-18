@@ -13,7 +13,6 @@
     ],
     'demo': [
         'data/budget_analytic_demo.xml',
-        'data/purchase_order_demo.xml',
     ],
     'assets': {
         'web.assets_backend': [
