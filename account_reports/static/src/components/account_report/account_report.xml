@@ -89,7 +89,7 @@
                                     >
                                         <t t-component="env.component('AccountReportHeader')"/>
                                         <tbody>
-                                            <t t-foreach="controller.lines" t-as="line" t-key="line.id">
+                                            <t t-foreach="controller.lines" t-as="line" t-key="line_index">
                                                 <t t-if="!splitSide || splitSide === (line.horizontal_split_side || 'left')">
                                                     <!--
                                                         We filter lines directly in the template so that the indices passed to AccountReportLine component
