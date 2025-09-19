@@ -3,13 +3,14 @@
 # * spreadsheet_edition
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-17 09:38+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 19:00+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_edition/es_419/>\n"
 "Language: es_419\n"
@@ -512,7 +513,7 @@ msgstr "Incluir datos históricos"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.xml:0
 msgid "Insert"
-msgstr ""
+msgstr "Insertar"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -982,7 +983,7 @@ msgstr "ID de registro"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.xml:0
 msgid "Records"
-msgstr ""
+msgstr "Registros"
 
 #. module: spreadsheet_edition
 #. odoo-javascript

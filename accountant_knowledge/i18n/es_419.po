@@ -1,34 +1,39 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* accountant_knowledge
+# * accountant_knowledge
 #
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 14:56+0000\n"
-"PO-Revision-Date: 2025-09-12 14:56+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-19 02:41+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19/accountant_knowledge/es_419/>\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "(description and of the issue, uncertainty, or limitation)"
-msgstr ""
+msgstr "(descripción del problema, incertidumbre o limitación)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "0,00<br>"
-msgstr ""
+msgstr "0,00<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "0.0<br>"
-msgstr ""
+msgstr "0.0<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -424,17 +429,17 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Consistency of accounting methods from one period to another;"
-msgstr ""
+msgstr "Coherencia de los métodos contables de un periodo a otro."
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_contextual_information
 msgid "Contextual Information"
-msgstr ""
+msgstr "Información contextual"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "Correction of Errors"
-msgstr ""
+msgstr "Corrección de errores"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -445,59 +450,61 @@ msgstr ""
 #: model:ir.actions.act_window,name:accountant_knowledge.action_audit_report_quick_create
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Create an Audit Report"
-msgstr ""
+msgstr "Crear un reporte de auditoría"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/backend/account_report/account_report.xml:0
 msgid "Customize"
-msgstr ""
+msgstr "Personalizar"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Customize all of its content.<br>Add sections, pages, or attachments"
 msgstr ""
+"Personaliza todo su contenido. <br>Agrega secciones, páginas o archivos "
+"adjuntos"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "Dates"
-msgstr ""
+msgstr "Fechas"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Deferred Expenses"
-msgstr ""
+msgstr "Gastos diferidos"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "Deferred Revenues"
-msgstr ""
+msgstr "Ingresos diferidos"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Depreciation Period"
-msgstr ""
+msgstr "Periodo de depreciación"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Depreciation Schedule"
-msgstr ""
+msgstr "Programa de depreciación"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -568,7 +575,7 @@ msgstr ""
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__display_name
@@ -595,7 +602,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/export_audit_report_to_pdf_dialog/export_audit_report_to_pdf_dialog.xml:0
 msgid "Download PDF"
-msgstr ""
+msgstr "Descargar PDF"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields.selection,name:accountant_knowledge.selection__audit_report__status__draft
@@ -641,7 +648,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Employees<br>"
-msgstr ""
+msgstr "Empleados<br>"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__end_date
@@ -662,7 +669,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Equipment: 10 years"
-msgstr ""
+msgstr "Equipo: 10 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -737,12 +744,12 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Financial Resources"
-msgstr ""
+msgstr "Recursos financieros"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "First In, First Out (FIFO)"
-msgstr ""
+msgstr "Primeras entradas, primeras salidas (PEPS)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -1002,7 +1009,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Justification:"
-msgstr ""
+msgstr "Justificación:"
 
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_knowledge_article
@@ -1033,7 +1040,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Load a Template"
-msgstr ""
+msgstr "Cargar una plantilla"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1063,7 +1070,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Managers<br>"
-msgstr ""
+msgstr "Gerentes<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1081,7 +1088,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_search
 msgid "My Reports"
-msgstr ""
+msgstr "Mis reportes"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1126,7 +1133,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Offices: 25 years"
-msgstr ""
+msgstr "Oficinas: 25 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
@@ -1234,7 +1241,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_kanban
 msgid "Print"
-msgstr ""
+msgstr "Imprimir"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
@@ -1338,7 +1345,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Renovations: 10 years"
-msgstr ""
+msgstr "Renovaciones: 10 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1448,7 +1455,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Software: 3 years"
-msgstr ""
+msgstr "Software: 3 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1467,22 +1474,22 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Standard Cost"
-msgstr ""
+msgstr "Costo estándar"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Fecha de inicio"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,help:accountant_knowledge.field_audit_report__start_date
 msgid "Start Date, included in the fiscal year."
-msgstr ""
+msgstr "Fecha de inicio, incluida en el ejercicio fiscal."
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Start from our ready-to-use templates"
-msgstr ""
+msgstr "Usa una de nuestras plantillas listas para usar y empieza de inmediato"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1492,7 +1499,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__status
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information

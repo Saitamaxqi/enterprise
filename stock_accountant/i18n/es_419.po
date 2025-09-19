@@ -3,13 +3,14 @@
 # * stock_accountant
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-17 09:36+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 19:00+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/stock_accountant/es_419/>\n"
 "Language: es_419\n"
@@ -30,6 +31,8 @@ msgid ""
 "Default accounts, valuation and cost method for the company. These option "
 "can be overridden on each product category"
 msgstr ""
+"Cuentas predeterminadas, valuación y método de costo para la empresa. Estas "
+"opciones se pueden sobreescribir en cada categoría de producto"
 
 #. module: stock_accountant
 #: model:ir.model.fields,field_description:stock_accountant.field_res_config_settings__display_name

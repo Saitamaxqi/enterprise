@@ -3,13 +3,14 @@
 # * voip
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-17 09:36+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/voip/es_419/>\n"
 "Language: es_419\n"
@@ -476,7 +477,7 @@ msgstr "Contacto"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "Contact Avatar"
-msgstr ""
+msgstr "Avatar del contacto"
 
 #. module: voip
 #. odoo-javascript
@@ -494,7 +495,7 @@ msgstr "Los contactos con un número de teléfono aparecerán aquí."
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__country_id
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_country_code_mixin
@@ -539,7 +540,7 @@ msgstr "Credenciales"
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Date"
-msgstr ""
+msgstr "Fecha"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users_settings__how_to_call_on_mobile
@@ -561,19 +562,19 @@ msgstr "Demostración"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/softphone.xml:0
 msgid "Demo Mode"
-msgstr ""
+msgstr "Modo de demostración"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "Demo call"
-msgstr ""
+msgstr "Llamada de demostración"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/transfer_confirmation.xml:0
 msgid "Direct transfer"
-msgstr ""
+msgstr "Transferencia directa"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__direction
@@ -654,7 +655,7 @@ msgstr "Programado para: Ayer"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__duration
 msgid "Duration"
-msgstr ""
+msgstr "Duración"
 
 #. module: voip
 #. odoo-javascript
@@ -693,12 +694,14 @@ msgid ""
 "Error message:\n"
 "%s"
 msgstr ""
+"Mensaje de error:\n"
+"%s"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/core/session.js:0
 msgid "Error putting the call on hold:"
-msgstr ""
+msgstr "Ocurrió un error al poner la llamada en espera:"
 
 #. module: voip
 #. odoo-javascript
@@ -742,12 +745,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (contactos)"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__always
@@ -820,7 +823,7 @@ msgstr "ID"
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si está seleccionado, hay nuevos mensajes que requieren tu atención."
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error
@@ -836,7 +839,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Imagen"
 
 #. module: voip
 #. odoo-javascript
@@ -862,7 +865,7 @@ msgstr "Llamada entrante"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Incoming call (%(duration)s)"
-msgstr ""
+msgstr "Llamada entrante (%(duration)s)"
 
 #. module: voip
 #. odoo-javascript
@@ -879,12 +882,12 @@ msgstr "Selección del dispositivo de entrada"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Internal"
-msgstr ""
+msgstr "Interna"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Es un seguidor"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__is_within_same_company
@@ -917,7 +920,7 @@ msgstr "Teclado"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Last 7 Days"
-msgstr ""
+msgstr "Últimos 7 días"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_res_users__last_seen_phone_call
@@ -972,7 +975,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: voip
 #. odoo-javascript
@@ -990,7 +993,7 @@ msgstr "Perdida"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Missed Call"
-msgstr ""
+msgstr "Llamada perdida"
 
 #. module: voip
 #. odoo-javascript
@@ -1013,7 +1016,7 @@ msgstr "Silenciar"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "My Calls"
-msgstr ""
+msgstr "Mis llamadas"
 
 #. module: voip
 #. odoo-javascript
@@ -1082,7 +1085,7 @@ msgstr "Esta pestaña está vacía. 😔"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Número de acciones"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__message_has_error_counter
@@ -1092,7 +1095,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Número de mensajes que requieren una acción"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__message_has_error_counter
@@ -1102,7 +1105,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users_settings__how_to_call_on_mobile__voip
 msgid "Odoo Phone"
-msgstr ""
+msgstr "Teléfono de Odoo"
 
 #. module: voip
 #: model:res.groups,name:voip.group_voip_officer
@@ -1162,7 +1165,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Outgoing call (%(duration)s)"
-msgstr ""
+msgstr "Llamada saliente (%(duration)s)"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__pbx_ip
@@ -1189,7 +1192,7 @@ msgstr "Número de teléfono"
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
 msgid "Phone call"
-msgstr ""
+msgstr "Llamada telefónica"
 
 #. module: voip
 #. odoo-javascript
@@ -1284,7 +1287,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/in_call_view.js:0
 msgid "Record"
-msgstr ""
+msgstr "Registro"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_provider_view_form
@@ -1331,7 +1334,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/history.js:0
 msgid "Rejected call"
-msgstr ""
+msgstr "Llamada rechazada"
 
 #. module: voip
 #. odoo-python
@@ -1398,7 +1401,7 @@ msgstr "Buscar…"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Secret"
-msgstr ""
+msgstr "Secreto"
 
 #. module: voip
 #. odoo-javascript
@@ -1483,7 +1486,7 @@ msgstr "Estado"
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_calendar
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: voip
 #. odoo-javascript
@@ -1640,7 +1643,7 @@ msgstr "Hoy"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/simple_datetime_field.js:0
 msgid "Today, %(time)s"
-msgstr ""
+msgstr "Hoy, %(time)s"
 
 #. module: voip
 #. odoo-javascript
@@ -1660,13 +1663,13 @@ msgstr "Transferir"
 #: code:addons/voip/static/src/softphone/history.js:0
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Trying to call"
-msgstr ""
+msgstr "Intentando llamar"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/call_status_badge_field.js:0
 msgid "Unknown"
-msgstr ""
+msgstr "Desconocido"
 
 #. module: voip
 #. odoo-javascript
@@ -1689,13 +1692,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Use Odoo Phone"
-msgstr ""
+msgstr "Usar el teléfono de Odoo"
 
 #. module: voip
 #. odoo-javascript
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 msgid "Use phone's default app"
-msgstr ""
+msgstr "Usar la aplicación predeterminada del teléfono"
 
 #. module: voip
 #: model:ir.model,name:voip.model_res_users
@@ -1714,7 +1717,7 @@ msgstr "Ajustes de usuario"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Username"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_queue_mixin
@@ -1724,7 +1727,7 @@ msgstr "Soporte para la cola de VoIP"
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_res_users_settings_view_form
 msgid "View call history"
-msgstr ""
+msgstr "Ver el historial de llamadas"
 
 #. module: voip
 #. odoo-javascript
@@ -1815,12 +1818,12 @@ msgstr "WebSocket"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Mensajes del sitio web"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_voip_call__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Historial de comunicación del sitio web"
 
 #. module: voip
 #. odoo-javascript
@@ -1839,7 +1842,7 @@ msgstr "Ayer"
 #. odoo-javascript
 #: code:addons/voip/static/src/widgets/simple_datetime_field.js:0
 msgid "Yesterday, %(time)s"
-msgstr ""
+msgstr "Ayer, %(time)s"
 
 #. module: voip
 #. odoo-javascript
@@ -1880,4 +1883,4 @@ msgstr ""
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 msgid "e.g. Brandon Freeman"
-msgstr ""
+msgstr "Por ejemplo, Francisco Pérez"

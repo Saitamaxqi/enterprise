@@ -3,13 +3,14 @@
 # * knowledge
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/knowledge/es_419/>\n"
 "Language: es_419\n"
@@ -2251,13 +2252,13 @@ msgstr "Agregue personas o correos electrónicos"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Add people..."
-msgstr ""
+msgstr "Agregar personas..."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Agregar a favoritos"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3489,7 +3490,7 @@ msgstr "Eliminar plantilla"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index_list.xml:0
 msgid "Delete article"
-msgstr ""
+msgstr "Eliminar artículo"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3548,7 +3549,7 @@ msgstr "Descartar"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
 msgid "Discard all changes"
-msgstr ""
+msgstr "Descartar todos los cambios"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_ir_attachment__display_name
@@ -3607,7 +3608,7 @@ msgstr "Listo"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Download PDF"
-msgstr ""
+msgstr "Descargar PDF"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3778,7 +3779,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Foldable Section"
-msgstr ""
+msgstr "Sección plegable"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
@@ -3841,7 +3842,7 @@ msgstr "Género: mujer"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "General Access"
-msgstr ""
+msgstr "Acceso general"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_hr_faq
@@ -3944,25 +3945,25 @@ msgstr "Oculto"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Chatter"
-msgstr ""
+msgstr "Ocultar el chatter"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Comments"
-msgstr ""
+msgstr "Ocultar comentarios"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Properties"
-msgstr ""
+msgstr "Ocultar propiedades"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Hide sub-articles"
-msgstr ""
+msgstr "Ocultar artículos secundarios"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4807,7 +4808,7 @@ msgstr "Información de miembros"
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__none
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__internal_permission__none
 msgid "Members only"
-msgstr ""
+msgstr "Solo miembros"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__root_article_id

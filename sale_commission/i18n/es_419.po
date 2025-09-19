@@ -3,13 +3,14 @@
 # * sale_commission
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:41+0000\n"
-"PO-Revision-Date: 2025-09-17 09:38+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 19:00+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sale_commission/es_419/>\n"
 "Language: es_419\n"
@@ -704,7 +705,7 @@ msgstr "Nota"
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_target_forecast__notes
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_report__notes
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan__message_needaction_counter
@@ -759,7 +760,7 @@ msgstr "Otros planes"
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_target__payment_amount
 msgid "Payment Amount"
-msgstr ""
+msgstr "Importe de pago"
 
 #. module: sale_commission
 #: model:ir.model.fields,field_description:sale_commission.field_sale_commission_plan_target__payment_date

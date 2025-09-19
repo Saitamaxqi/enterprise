@@ -3,13 +3,14 @@
 # * hr_appraisal
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:32+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_appraisal/es_419/>\n"
 "Language: es_419\n"
@@ -937,7 +938,7 @@ msgstr "Todos los empleados"
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_note_view_tree
 msgid "All companies"
-msgstr ""
+msgstr "Todas las empresas"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,help:hr_appraisal.field_hr_appraisal_campaign_wizard__mode
@@ -1502,7 +1503,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_template__department_ids
 msgid "Departments"
-msgstr ""
+msgstr "Departamentos"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_hr_departure_wizard
@@ -1556,7 +1557,7 @@ msgstr "Hecha"
 #. module: hr_appraisal
 #: model:ir.model.fields.selection,name:hr_appraisal.selection__hr_appraisal__state__1_new
 msgid "Draft"
-msgstr ""
+msgstr "Borrador"
 
 #. module: hr_appraisal
 #: model:ir.model,name:hr_appraisal.model_mail_template
@@ -1717,12 +1718,12 @@ msgstr "Etiquetas del objetivo"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__template_goal_id
 msgid "Goal Template"
-msgstr ""
+msgstr "Plantilla del objetivo"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_search
 msgid "Goal or Employee"
-msgstr ""
+msgstr "Objetivo o empleado"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -1743,12 +1744,12 @@ msgstr "Número de objetivos"
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_hr_appraisal_goal_template
 msgid "Goals Template"
-msgstr ""
+msgstr "Plantilla de objetivos"
 
 #. module: hr_appraisal
 #: model:ir.actions.act_window,name:hr_appraisal.action_hr_appraisal_goal_template_library
 msgid "Goals Template Library"
-msgstr ""
+msgstr "Biblioteca de plantillas de objetivos"
 
 #. module: hr_appraisal
 #: model:mail.template,name:hr_appraisal.mail_template_appraisal_request_from_employee
@@ -1773,7 +1774,7 @@ msgstr "Habilidades técnicas"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__has_edit_right
 msgid "Has Edit Right"
-msgstr ""
+msgstr "Tiene permisos de edición"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal__has_message
@@ -2663,17 +2664,17 @@ msgstr "Supera con creces las expectativas"
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_hr_appraisal_goal__child_ids
 msgid "Sub Goal Template"
-msgstr ""
+msgstr "Plantilla de objetivo secundario"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_list
 msgid "Sub Goals"
-msgstr ""
+msgstr "Objetivos secundarios"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
 msgid "Sub-Goals"
-msgstr ""
+msgstr "Objetivos secundarios"
 
 #. module: hr_appraisal
 #: model:ir.model.fields,field_description:hr_appraisal.field_request_appraisal__subject
@@ -2697,7 +2698,7 @@ msgstr "Etiquetas"
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.view_hr_appraisal_form
 msgid "Template"
-msgstr ""
+msgstr "Plantilla"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2948,7 +2949,7 @@ msgstr "Historial de comunicación del sitio web"
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
 msgid "What are my most important achievements since my last appraisal?"
-msgstr ""
+msgstr "¿Cuáles son mis logros más importantes desde mi última evaluación?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
@@ -2956,11 +2957,13 @@ msgid ""
 "What are my short- and long-term goals within the company and for my\n"
 "                    career?"
 msgstr ""
+"¿Cuáles son mis metas a corto y largo plazo dentro de la empresa y para mi \n"
+"                    carrera?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
 msgid "What do I need to improve my work?"
-msgstr ""
+msgstr "¿Qué necesito para mejorar mi trabajo?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
@@ -2968,17 +2971,19 @@ msgid ""
 "What has been the most challenging aspect of my work this past year,\n"
 "                  and why?"
 msgstr ""
+"¿Cuál ha sido el aspecto más retador de mi trabajo durante el último año\n"
+"                  y por qué?"
 
 #. module: hr_appraisal
 #: model_terms:hr.appraisal.template,appraisal_employee_feedback_template:hr_appraisal.hr_appraisal_default_template
 msgid "Which parts of my job do I enjoy the most? Which do I enjoy the least?"
-msgstr ""
+msgstr "¿Qué partes de mi trabajo disfruto más y cuáles disfruto menos?"
 
 #. module: hr_appraisal
 #. odoo-javascript
 #: code:addons/hr_appraisal/static/src/views/helper/appraisal_helper_view/appraisal_helper_view.xml:0
 msgid "Would you like to test with sample data or create your own employees?"
-msgstr ""
+msgstr "¿Quieres probar con datos de muestra o crear tus propios empleados?"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -2992,7 +2997,7 @@ msgstr ""
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
 msgid "You can define this goal to be part of another one"
-msgstr ""
+msgstr "Puedes definir este objetivo como parte de otro"
 
 #. module: hr_appraisal
 #. odoo-python
@@ -3040,7 +3045,7 @@ msgstr "por ejemplo, Evaluación anual"
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_template_view_form
 msgid "e.g. Improve English"
-msgstr ""
+msgstr "Por ejemplo, Mejorar el nivel de inglés"
 
 #. module: hr_appraisal
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_view_form

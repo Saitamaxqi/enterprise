@@ -3,13 +3,15 @@
 # * account_reports
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-17 09:36+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_reports/es_419/>\n"
 "Language: es_419\n"
@@ -33,6 +35,10 @@ msgid ""
 "- Has a payment plan been negotiated?\n"
 "- Is a provision recorded if recovery is doubtful?\""
 msgstr ""
+"\"Para cada entregable de alto riesgo (>60 días), verifica lo siguiente:\n"
+"- ¿Hay un seguimiento documentado?\n"
+"- ¿Se negoció un plan de pago?\n"
+"- ¿Se registró alguna disposición si la recuperación no es segura?\""
 
 #. module: account_reports
 #. odoo-python
@@ -627,7 +633,7 @@ msgstr "Se requiere una acción"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__action_id
 msgid "Action on Click"
-msgstr ""
+msgstr "Acción al hacer clic"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__actionable_errors
@@ -649,7 +655,7 @@ msgstr "Actividades"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_mail_activity
 msgid "Activity"
-msgstr ""
+msgstr "Actividad"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__activity_exception_decoration
@@ -1527,7 +1533,7 @@ msgstr "Superávit de efectivo"
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
-msgstr ""
+msgstr "Categoría"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_change_lock_date
@@ -2221,7 +2227,7 @@ msgstr "Gestor personalizado del reporte de gastos diferidos"
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_deferred_expense
 msgid "Deferred Expenses"
-msgstr ""
+msgstr "Gastos diferidos"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_deferred_revenue
@@ -2898,7 +2904,7 @@ msgstr "Gestor personalizado de reportes de seguimiento"
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_followup
 msgid "Follow-up Report"
-msgstr ""
+msgstr "Reporte de seguimiento"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__message_follower_ids
@@ -3020,17 +3026,17 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_only_pay
 msgid "Generic State Only Pay"
-msgstr ""
+msgstr "Estado genérico, solo pago"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_review
 msgid "Generic State Review"
-msgstr ""
+msgstr "Revisión de estado genérico"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__generic_state_review_submit
 msgid "Generic State Review Submit"
-msgstr ""
+msgstr "Revisión de estado genérico: Enviar"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_generic_tax_report_handler
@@ -3074,7 +3080,7 @@ msgstr "Clasificación de bienes y servicios"
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__government
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__cycle__state
 msgid "Government"
-msgstr ""
+msgstr "Gobierno"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4122,7 +4128,7 @@ msgstr "Margen neto de ganancias (ganancias netas/ingresos)"
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return__generic_state_review_submit__new
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return__generic_state_tax_report__new
 msgid "New"
-msgstr ""
+msgstr "Nuevo"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__activity_calendar_event_id
@@ -4147,7 +4153,7 @@ msgstr "Siguiente tipo de actividad"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__next_state
 msgid "Next State"
-msgstr ""
+msgstr "Siguiente estado"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4314,7 +4320,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_obtain_signed_inventory_valuation
 msgid "Obtain signed inventory valuation"
-msgstr ""
+msgstr "Consigue una valuación de inventario firmada"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4346,7 +4352,7 @@ msgstr "Antiguos"
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_audit_balance_clickable_char_field.js:0
 msgid "OnClick Handler"
-msgstr ""
+msgstr "Controlador al hacer clic"
 
 #. module: account_reports
 #. odoo-python

@@ -3,13 +3,14 @@
 # * documents
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/documents/es_419/>\n"
 "Language: es_419\n"
@@ -1326,7 +1327,7 @@ msgstr "Agregar una etiqueta de seudónimo..."
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__add
 msgid "Add attachment to Documents"
-msgstr ""
+msgstr "Agregar archivo adjunto a Documentos"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_request_page
@@ -1339,13 +1340,13 @@ msgstr "Agregar archivo"
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.xml:0
 #: code:addons/documents/static/src/web/mail_composer_document_selector/mail_composer_document_selector.xml:0
 msgid "Add from Documents"
-msgstr ""
+msgstr "Agregar de Documentos"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Add in %(folder_name)s"
-msgstr ""
+msgstr "Agregar a %(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
@@ -1546,6 +1547,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Are you sure you want to permanently erase the selected documents?"
 msgstr ""
+"¿De verdad quieres eliminar de forma permanente los documentos seleccionados?"
 
 #. module: documents
 #. odoo-javascript
@@ -1809,7 +1811,7 @@ msgstr "Configuración"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Confirm"
-msgstr ""
+msgstr "Confirmar"
 
 #. module: documents
 #. odoo-python
@@ -1867,7 +1869,7 @@ msgstr "Crear un documento de planeación de actividad"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_new_folder.js:0
 msgid "Create a folder in %(folder)s"
-msgstr ""
+msgstr "Crear una carpeta en %(folder)s"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__create_activity_option
@@ -1884,13 +1886,13 @@ msgstr "Cree un nuevo documento para la página restante."
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Create a shortcut in %(folder_name)s"
-msgstr ""
+msgstr "Crear un acceso directo en %(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/core/document_service.js:0
 msgid "Create shortcut to: %(documentName)s"
-msgstr ""
+msgstr "Crear acceso directo a: %(documentName)s"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__shortcut
@@ -2274,7 +2276,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Documents created in %(folder_name)s!"
-msgstr ""
+msgstr "Documentos creados en %(folder_name)s"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_mixin
@@ -2909,7 +2911,7 @@ msgstr "Permisos para usuarios internos"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__access_internal
 msgid "Internal users"
-msgstr ""
+msgstr "Usuarios internos"
 
 #. module: documents
 #. odoo-python
@@ -3173,7 +3175,7 @@ msgstr ""
 #. module: documents
 #: model:documents.document,name:documents.document_loans_folder
 msgid "Loans"
-msgstr ""
+msgstr "Préstamos"
 
 #. module: documents
 #. odoo-javascript
@@ -3239,7 +3241,7 @@ msgstr "Marketing"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Member added."
-msgstr ""
+msgstr "Miembro agregado."
 
 #. module: documents
 #. odoo-javascript
@@ -3282,13 +3284,13 @@ msgstr "Referencia de los documentos faltantes."
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Mixed rights"
-msgstr ""
+msgstr "Permisos mixtos"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Mixed values"
-msgstr ""
+msgstr "Valores mixtos"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_link_to_record_wizard__model_id
@@ -3304,7 +3306,7 @@ msgstr "Modelos"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_access_modified
 msgid "Modified"
-msgstr ""
+msgstr "Modificado"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__create_activity_date_deadline_range_type__months
@@ -3324,7 +3326,7 @@ msgstr "Más"
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__operation__move
 msgid "Move"
-msgstr ""
+msgstr "Mover"
 
 #. module: documents
 #. odoo-javascript
@@ -3336,7 +3338,7 @@ msgstr "Mover esta página a la papelera"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/widget/documents_operation_confirmation.js:0
 msgid "Move to %(folder_name)s"
-msgstr ""
+msgstr "Mover a %(folder_name)s"
 
 #. module: documents
 #. odoo-javascript
@@ -3486,7 +3488,7 @@ msgstr "Tipo de la siguiente actividad"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #. module: documents
 #. odoo-javascript
@@ -3705,7 +3707,7 @@ msgstr "Abrir {{0}}"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_operation__operation
 msgid "Operation"
-msgstr ""
+msgstr "Operación"
 
 #. module: documents
 #. odoo-python
@@ -3735,7 +3737,7 @@ msgstr "O enviar correos electrónicos a"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__original_expiration_date
 msgid "Original Expiration"
-msgstr ""
+msgstr "Vencimiento original"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__owner_id
@@ -3748,7 +3750,7 @@ msgstr "Propietario"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__owner_id
 msgid "Owner of all documents"
-msgstr ""
+msgstr "Propietario de todos los documentos"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -3758,12 +3760,12 @@ msgstr "Propietario: {{0}}"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "PDF/Documents"
-msgstr ""
+msgstr "PDF/Documentos"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_folder_id
 msgid "Parent"
-msgstr ""
+msgstr "Principal"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__parent_path
@@ -3780,7 +3782,7 @@ msgstr "Contacto"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/view_dialogs/select_add_document_create_dialog.xml:0
 msgid "Paste Link(s)"
-msgstr ""
+msgstr "Copiar enlace(s)"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -3791,7 +3793,7 @@ msgstr "Personas con acceso"
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Please fill in the missing email addresses."
-msgstr ""
+msgstr "Completa las direcciones de correo que faltan."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.not_available
@@ -3827,7 +3829,7 @@ msgstr "Calificaciones"
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_readonly
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__is_readonly
 msgid "Readonly"
-msgstr ""
+msgstr "Solo lectura"
 
 #. module: documents
 #. odoo-python
@@ -3855,7 +3857,7 @@ msgstr "Registro"
 #. module: documents
 #: model:documents.document,name:documents.document_registrations_folder
 msgid "Registrations"
-msgstr ""
+msgstr "Registros"
 
 #. module: documents
 #. odoo-javascript
@@ -4875,7 +4877,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "Yes"
-msgstr ""
+msgstr "Sí"
 
 #. module: documents
 #. odoo-javascript

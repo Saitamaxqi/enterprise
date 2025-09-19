@@ -3,13 +3,15 @@
 # * appointment
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/appointment/es_419/>\n"
 "Language: es_419\n"
@@ -22,7 +24,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "\" is already in use. Please pick another one."
-msgstr ""
+msgstr "\" ya se está usando. Selecciona otro recurso."
 
 #. module: appointment
 #. odoo-javascript
@@ -905,7 +907,7 @@ msgstr "Agregar una función aquí..."
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Add a line"
-msgstr ""
+msgstr "Agregar una línea"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_user
@@ -1415,7 +1417,7 @@ msgstr "Citas agendadas"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Booked Capacity"
-msgstr ""
+msgstr "Capacidad reservada"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
@@ -1491,7 +1493,7 @@ msgstr "Evento del calendario"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__anytime
 msgid "Calendar Link"
-msgstr ""
+msgstr "Enlace del calendario"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
@@ -1863,12 +1865,12 @@ msgstr "Rechazado"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Default Questions"
-msgstr ""
+msgstr "Preguntas predeterminadas"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_default
 msgid "Default question"
-msgstr ""
+msgstr "Pregunta predeterminada"
 
 #. module: appointment
 #. odoo-python
@@ -1976,7 +1978,7 @@ msgstr "Nombre en pantalla"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__show_avatars
 msgid "Display pictures"
-msgstr ""
+msgstr "Mostrar imágenes"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__show_avatars
@@ -2066,7 +2068,7 @@ msgstr "Cada"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__extra_comment
 msgid "Extra Comment"
-msgstr ""
+msgstr "Comentario adicional"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
@@ -2076,7 +2078,7 @@ msgstr "Mensaje adicional al confirmar"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Extra comments..."
-msgstr ""
+msgstr "Comentarios adicionales..."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_confirmation
@@ -2086,13 +2088,13 @@ msgstr "Información adicional que se muestra una vez que se agenda la cita."
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__flexible
 msgid "Flexible"
-msgstr ""
+msgstr "Flexible"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__custom
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Flexible Schedule"
-msgstr ""
+msgstr "Horario flexible"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_home_appointment
@@ -2833,7 +2835,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Oops! The extension \""
-msgstr ""
+msgstr "¡Uy! La extensión \""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -2892,12 +2894,12 @@ msgstr "Persona que agenda la cita"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__phone
 msgid "Phone Number"
-msgstr ""
+msgstr "Teléfono"
 
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_question_phone
 msgid "Phone number"
-msgstr ""
+msgstr "Teléfono"
 
 #. module: appointment
 #. odoo-javascript
@@ -2954,7 +2956,7 @@ msgstr "Preguntas"
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Questions & Answers"
-msgstr ""
+msgstr "Preguntas y respuestas"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__radio
@@ -3145,7 +3147,7 @@ msgstr "Horario basado en"
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid ""
 "Schedule a video meeting in a virtual room with one or more participants"
-msgstr ""
+msgstr "Agenda una videollamada en una sala virtual con uno o más participantes"
 
 #. module: appointment
 #. odoo-javascript
@@ -3230,7 +3232,7 @@ msgstr "Selecciona una hora"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_date_first
 msgid "Select date and time first"
-msgstr ""
+msgstr "Seleccionar la fecha y la hora primero"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_answer_id
@@ -4052,7 +4054,7 @@ msgstr "Su elección"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "appointments"
-msgstr ""
+msgstr "citas"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -4072,7 +4074,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "days,"
-msgstr ""
+msgstr "días,"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form

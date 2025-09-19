@@ -1,30 +1,34 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_transfer
+# * account_transfer
 #
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-11 14:25+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19/account_transfer/es_419/>\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "<span> to </span>"
-msgstr ""
+msgstr "<span> a </span>"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model_line.py:0
 msgid "A destination account must be set on each line."
-msgstr ""
+msgstr "Se debe establecer una cuenta destino en cada línea."
 
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model__conditions
@@ -32,6 +36,8 @@ msgid ""
 "A domain to filter the accounts from which the resulting entry will transfer"
 " amounts."
 msgstr ""
+"Un dominio para filtrar las cuentas de las que el asiento resultante "
+"transferirá las cantidades."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form

@@ -1,25 +1,30 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_expense_stripe
+# * hr_expense_stripe
 #
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-09-11 14:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
+"odoo-19/hr_expense_stripe/es_419/>\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
 msgid "(Fetching...)"
-msgstr ""
+msgstr "(Obteniendo...)"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_kanban
@@ -28,11 +33,15 @@ msgid ""
 "                                                        ****\n"
 "                                                    </span>"
 msgstr ""
+"<span class=\"card_cvc w-50 text-end stripe_card_text_sm\" invisible="
+"\"state in ('draft', 'pending')\">\n"
+"                                                        ****\n"
+"                                                    </span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_form_inherit_expense_stripe
 msgid "<span class=\"o_stat_text\">Cards</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Tarjetas</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -637,7 +646,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.book_stores
 msgid "Book Stores"
-msgstr ""
+msgstr "Librerías"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.books_periodicals_and_newspapers
@@ -647,7 +656,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bowling_alleys
 msgid "Bowling Alleys"
-msgstr ""
+msgstr "Pistas de bolos"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bus_lines
@@ -657,7 +666,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.business_secretarial_schools
 msgid "Business Secretarial Schools"
-msgstr ""
+msgstr "Escuelas de administración de empresas"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
@@ -673,7 +682,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
 msgid "By ticking the box, you agree:"
-msgstr ""
+msgstr "Al seleccionar la casilla aceptas lo siguiente:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cable_satellite_and_other_pay_television_and_radio
@@ -689,17 +698,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_block_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_cardholder_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__shipping_status__canceled
 msgid "Canceled"
-msgstr ""
+msgstr "Cancelado"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__cancellation_reason
 msgid "Cancellation Reason"
-msgstr ""
+msgstr "Motivo de la cancelación"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.candy_nut_and_confectionery_stores
@@ -747,17 +756,17 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval_amount
 msgid "Card Limit"
-msgstr ""
+msgstr "Límite de la tarjeta"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_name
 msgid "Card Name"
-msgstr ""
+msgstr "Nombre de la tarjeta"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__card_number_public
 msgid "Card Number"
-msgstr ""
+msgstr "Número de la tarjeta"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -867,7 +876,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "Categories"
-msgstr ""
+msgstr "Categorías"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.caterers
@@ -917,7 +926,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_city
 msgid "City"
-msgstr ""
+msgstr "Ciudad"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.civic_social_fraternal_associations
@@ -927,7 +936,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cleaning_and_maintenance
 msgid "Cleaning and Maintenance"
-msgstr ""
+msgstr "Limpieza y mantenimiento"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -936,7 +945,7 @@ msgstr ""
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_topup_wizard_form
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.clothing_rental
@@ -952,7 +961,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__code
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Code"
-msgstr ""
+msgstr "Código"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.colleges_universities
@@ -967,7 +976,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_equipment
 msgid "Commercial Equipment"
-msgstr ""
+msgstr "Equipo comercial"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.commercial_footwear
@@ -987,7 +996,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Empresas"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__company_id
@@ -995,7 +1004,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__company_id
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__company_country_id
@@ -1057,12 +1066,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Confirmación"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
 msgid "Connect"
-msgstr ""
+msgstr "Conectar"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.construction_materials
@@ -1077,7 +1086,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Contracted services"
-msgstr ""
+msgstr "Servicios contratados"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.correspondence_schools
@@ -1097,12 +1106,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_country_tag_ids
 msgid "Countries"
-msgstr ""
+msgstr "Países"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_country_id
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.country_clubs
@@ -1147,7 +1156,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__create_uid
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__create_date
@@ -1172,7 +1181,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Moneda"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -1218,12 +1227,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__other_reason_text
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__design_rejected
 msgid "Design Rejected"
-msgstr ""
+msgstr "Diseño rechazado"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.detective_agencies
@@ -1478,13 +1487,13 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.equipment_rental
 msgid "Equipment Rental"
-msgstr ""
+msgstr "Alquiler de equipos"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
 msgid "Error"
-msgstr ""
+msgstr "Error"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_estimated_delivery
@@ -1496,7 +1505,7 @@ msgstr ""
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense
 msgid "Expense"
-msgstr ""
+msgstr "Gasto"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_payment_method_line__card_id
@@ -1548,7 +1557,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expense_ids
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "Expenses"
-msgstr ""
+msgstr "Gastos"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expenses_count
@@ -1563,7 +1572,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expiration
 msgid "Expiration Date"
-msgstr ""
+msgstr "Fecha de vencimiento"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.exterminating_services
@@ -1596,12 +1605,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fast_food_restaurants
 msgid "Fast Food Restaurants"
-msgstr ""
+msgstr "Restaurantes de comida rápida"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.financial_institutions
 msgid "Financial Institutions"
-msgstr ""
+msgstr "Instituciones financieras"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fines_government_administrative_entities
@@ -1616,7 +1625,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__firstname
 msgid "First Name"
-msgstr ""
+msgstr "Nombre"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.floor_covering_stores
@@ -1637,13 +1646,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_follower_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Seguidores"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_partner_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (contactos)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_product_product__stripe_mcc_ids
@@ -1696,7 +1705,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.general_services
 msgid "General Services"
-msgstr ""
+msgstr "Servicios generales"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.gift_card_novelty_and_souvenir_shops
@@ -1741,12 +1750,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_services
 msgid "Government Services"
-msgstr ""
+msgstr "Servicios gubernamentales"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Government services"
-msgstr ""
+msgstr "Servicios gubernamentales"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.grocery_stores_supermarkets
@@ -2087,7 +2096,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
 msgid "Lost or Stolen Cards"
-msgstr ""
+msgstr "Tarjetas extraviadas o robadas"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.luggage_and_leather_goods_stores
@@ -2426,7 +2435,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_has_error_counter
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Número de errores"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
@@ -2438,7 +2447,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__message_has_error_counter
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Número de mensajes con error de envío"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nurseries_lawn_and_garden_supply_stores
@@ -2526,7 +2535,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__original_phone_number
 msgid "Original Phone Number"
-msgstr ""
+msgstr "Teléfono original"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.orthopedic_goods_prosthetic_devices
@@ -2548,7 +2557,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
 msgid "PIN Number:"
-msgstr ""
+msgstr "Número NIP:"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.package_stores_beer_wine_and_liquor
@@ -2605,7 +2614,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_payment_register
 msgid "Pay"
-msgstr ""
+msgstr "Pagar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__payment_method_line_id
@@ -2615,7 +2624,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_payment_method_line
 msgid "Payment Methods"
-msgstr ""
+msgstr "Métodos de pago"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_payment
@@ -2642,7 +2651,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Teléfono"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.photo_developing
@@ -2717,27 +2726,27 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__product_name
 msgid "Product Name"
-msgstr ""
+msgstr "Nombre del producto"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Variante del producto"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.professional_services
 msgid "Professional Services"
-msgstr ""
+msgstr "Servicios profesionales"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Professional services and membership organisations"
-msgstr ""
+msgstr "Servicios profesionales y organizaciones de membresía"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.public_warehousing_and_storage
 msgid "Public Warehousing and Storage"
-msgstr ""
+msgstr "Almacenaje y depósitos públicos"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__pull_push_funds
@@ -2747,12 +2756,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_topup_wizard__pull_push_funds__push
 msgid "Push Funds to a Funding Instruction"
-msgstr ""
+msgstr "Enviar fondos a una instrucción de financiación"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__qr_code
 msgid "QR Code URL"
-msgstr ""
+msgstr "URL del código QR"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.quick_copy_repro_and_blueprint
@@ -2762,13 +2771,13 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.railroads
 msgid "Railroads"
-msgstr ""
+msgstr "Ferrocarriles"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__rating_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Valoraciones"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.real_estate_agents_and_managers_rentals
@@ -2778,37 +2787,37 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__cancellation_reason
 msgid "Reason"
-msgstr ""
+msgstr "Motivo"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.record_stores
 msgid "Record Stores"
-msgstr ""
+msgstr "Tiendas de discos"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.recreational_vehicle_rentals
 msgid "Recreational Vehicle Rentals"
-msgstr ""
+msgstr "Alquiler de vehículos recreativos"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
 msgid "Refresh"
-msgstr ""
+msgstr "Actualizar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__user_id
 msgid "Related user name for the resource to manage its access."
-msgstr ""
+msgstr "Nombre de usuario relacionado con el recurso para gestionar su acceso."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.religious_goods_stores
 msgid "Religious Goods Stores"
-msgstr ""
+msgstr "Tiendas de artículos religiosos"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.religious_organizations
 msgid "Religious Organizations"
-msgstr ""
+msgstr "Organizaciones religiosas"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2826,12 +2835,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
 msgid "Resend"
-msgstr ""
+msgstr "Reenviar"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__res_company__stripe_account_issuing_status__restricted
 msgid "Restricted"
-msgstr ""
+msgstr "Restringido"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
@@ -2862,7 +2871,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_cardholder_wizard_form
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2890,7 +2899,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.service_stations
 msgid "Service Stations"
-msgstr ""
+msgstr "Estaciones de servicio"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.sewing_needlework_fabric_and_piece_goods_stores
@@ -2900,12 +2909,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__shipping_status__shipped
 msgid "Shipped"
-msgstr ""
+msgstr "Enviada"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_status
 msgid "Shipping Status"
-msgstr ""
+msgstr "Estado del envío"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.shoe_repair_hat_cleaning
@@ -3694,7 +3703,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "Transaction accepted"
-msgstr ""
+msgstr "Transacción aceptada"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3808,7 +3817,7 @@ msgstr ""
 #: model:ir.model,name:hr_expense_stripe.model_res_users
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__user_id
 msgid "User"
-msgstr ""
+msgstr "Usuario"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.utilities
@@ -3833,27 +3842,27 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.veterinary_services
 msgid "Veterinary Services"
-msgstr ""
+msgstr "Servicios veterinarios"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_amusement_game_supplies
 msgid "Video Amusement Game Supplies"
-msgstr ""
+msgstr "Suministros de videojuegos recreativos"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_game_arcades
 msgid "Video Game Arcades"
-msgstr ""
+msgstr "Arcades de videojuegos"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.video_tape_rental_stores
 msgid "Video Tape Rental Stores"
-msgstr ""
+msgstr "Tiendas de alquiler de cintas de video"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "View Details"
-msgstr ""
+msgstr "Ver detalles"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__phone_number
@@ -3861,13 +3870,15 @@ msgid ""
 "Viewing confidential card details requires 2FA authentication. Make sure the"
 " cardholder mobile number is correct."
 msgstr ""
+"Ver los detalles confidenciales de la tarjeta requiere de la autenticación "
+"de dos factores. Asegúrate de que el celular del titular sea correcto."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.js:0
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__card_type__virtual
 msgid "Virtual"
-msgstr ""
+msgstr "Virtual"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.vocational_trade_schools
@@ -3877,7 +3888,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_limit_higher_than_stripe_warning
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__has_limit_higher_than_stripe_warning

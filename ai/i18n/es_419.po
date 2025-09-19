@@ -3,13 +3,15 @@
 # * ai
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai/es_419/>\n"
 "Language: es_419\n"
@@ -29,6 +31,12 @@ msgid ""
 "must be in valid JSON format.\n"
 "        "
 msgstr ""
+"\n"
+"            **Nombre de la herramienta: Leer grupo**\n"
+"\n"
+"            Busca un modelo particular usando un dominio. El dominio "
+"proporcionado debe estar en formato JSON válido.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_search
@@ -40,6 +48,12 @@ msgid ""
 "must be in valid JSON format.\n"
 "        "
 msgstr ""
+"\n"
+"            **Nombre de la herramienta: buscar**\n"
+"\n"
+"            Para buscar un modelo particular con un dominio. El dominio "
+"brindado debe estar en formato JSON válido.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_get_fields
@@ -82,6 +96,43 @@ msgid ""
 "Make 3 parallel calls.\n"
 "        "
 msgstr ""
+"\n"
+"            Muestra SOLO los campos que se pueden buscar para un modelo "
+"único que se pueden usar en filtros de dominio y agrupamiento.\n"
+"            Es esencial para crear dominios válidos. Si un campo no aparece "
+"aquí, NO se puede usar.\n"
+"\n"
+"            Formato de devoluciones:\n"
+"            ```\n"
+"            field_name|display_name|type|sortable|groupable|descripción\n"
+"            partner_id|Cliente|many2one(res.partner)|true|true|Cliente de "
+"esta orden\n"
+"            date_order|Fecha de la orden|datetime|true|true|Fecha en la que "
+"se realizó la orden\n"
+"            order_line|Líneas de la "
+"orden|one2many(sale.order.line)|false|false|Líneas en esta orden\n"
+"            state|Estado|selection|true|true|Estado de la orden\n"
+"            ```\n"
+"\n"
+"            Puntos importantes:\n"
+"            - ⚠️ Solo muestra campos QUE SE PUEDAN BUSCAR, otros no se pueden "
+"usar en dominios\n"
+"            - Para relaciones: Muestra modelos relacionados en paréntesis ("
+"many2one, one2many, many2many).\n"
+"            - Solo se pueden usar los campos de relación para relacionar con "
+"otros modelos\n"
+"            - Los campos literales como char/text/float NO se pueden usar "
+"para esta relación\n"
+"            - 'sortable' indica si un campo se puede usar en el parámetro "
+"order_by\n"
+"            - 'groupable' indica si un campo se puede usar para agrupar "
+"cuando no está disponible en la vista de búsqueda\n"
+"\n"
+"            💡 Consejo de rendimiento: Al explorar diferentes modelos, llama "
+"a esta herramienta varias veces en UN mensaje\n"
+"            Por ejemplo: ¿Estás explorando sale.order, product.product y "
+"res.parter? Haz 3 llamadas en paralelo.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_compute_report_measures
@@ -685,7 +736,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
 msgid "Checksum/SHA1"
-msgstr ""
+msgstr "Suma de verificación/SHA1"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__content
@@ -728,7 +779,7 @@ msgstr "Contexto para el agente de IA"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_prompt_shortcut
 msgid "Convert a prompt in an email"
-msgstr ""
+msgstr "Convierte una instrucción en un correo"
 
 #. module: ai
 #. odoo-python
@@ -737,6 +788,8 @@ msgid ""
 "Could you please provide info about '%s' as it is required to process your "
 "request"
 msgstr ""
+"Proporciona información sobre %s, ya que es necesaria para procesar tu "
+"solicitud"
 
 #. module: ai
 #: model:ir.model,website_form_label:ai.model_res_partner
@@ -888,7 +941,7 @@ msgstr "Habilitar la clave API personalizada de OpenAI"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__error_details
 msgid "Error Details"
-msgstr ""
+msgstr "Detalles del error"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__failed
@@ -910,12 +963,12 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__binary
 msgid "File"
-msgstr ""
+msgstr "Archivo"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__file_size
 msgid "File Size"
-msgstr ""
+msgstr "Tamaño del archivo"
 
 #. module: ai
 #. odoo-javascript
@@ -941,7 +994,7 @@ msgstr "Clave API de Google AI"
 #. module: ai
 #: model:ir.model,name:ai.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "Enrutamiento HTTP"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__has_embedding_generation_failed
@@ -1154,7 +1207,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__focused_models
 msgid "Models"
-msgstr ""
+msgstr "Modelos"
 
 #. module: ai
 #. odoo-javascript
@@ -1217,7 +1270,7 @@ msgstr ""
 #: code:addons/ai/static/src/editor/embedded_components/core/readonly_voice_transcription.xml:0
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Notes"
-msgstr ""
+msgstr "Notas"
 
 #. module: ai
 #. odoo-javascript
@@ -1342,7 +1395,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt.xml:0
 msgid "Save & Generate"
-msgstr ""
+msgstr "Guardar y generar"
 
 #. module: ai
 #. odoo-javascript
@@ -1460,7 +1513,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__is_system_agent
 msgid "System Agent"
-msgstr ""
+msgstr "Agente del sistema"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
@@ -1506,7 +1559,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "The partner linked to an AI agent can't be changed"
-msgstr ""
+msgstr "No puedes cambiar el contacto vinculado a un agente de IA"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_prompt_button__name
@@ -1576,7 +1629,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_ids
 msgid "Tools"
-msgstr ""
+msgstr "Herramientas"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__topic_ids
@@ -1603,7 +1656,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:ai.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__state
@@ -1627,7 +1680,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__url
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__type__url
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. module: ai
 #. odoo-python
@@ -1657,13 +1710,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "Upload a File"
-msgstr ""
+msgstr "Subir un archivo"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__use_in_ai
 #: model:ir.model.fields,field_description:ai.field_ir_cron__use_in_ai
 msgid "Use in AI"
-msgstr ""
+msgstr "Uso en IA"
 
 #. module: ai
 #. odoo-javascript
@@ -1674,23 +1727,23 @@ msgstr "Usa este"
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own ChatGPT account"
-msgstr ""
+msgstr "Usa tu propia cuenta de ChatGPT"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Use your own Google Gemini account"
-msgstr ""
+msgstr "Usa tu propia cuenta de Google Gemini"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__user_has_access
 msgid "User Has Access"
-msgstr ""
+msgstr "El usuario tiene acceso"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "User error"
-msgstr ""
+msgstr "Error de usuario"
 
 #. module: ai
 #. odoo-javascript
@@ -1703,29 +1756,29 @@ msgstr "El usuario está conectado"
 #: code:addons/ai/static/src/editor/embedded_components/core/readonly_voice_transcription.xml:0
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Voice Recording"
-msgstr ""
+msgstr "Grabación de voz"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "Voice Transcript"
-msgstr ""
+msgstr "Transcripción de voz"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__mail_composer
 msgid "Write an email"
-msgstr ""
+msgstr "Escribe un correo electrónico"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_record
 msgid "Write in an HTML field"
-msgstr ""
+msgstr "Escribe en un campo HTML"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/tools_schema/validators.py:0
 msgid "Wrong value %(value)s, should be in: %(enum)s"
-msgstr ""
+msgstr "Valor %(value)s erróneo, debería ser: %(enum)s"
 
 #. module: ai
 #. odoo-javascript
@@ -1734,38 +1787,40 @@ msgid ""
 "You must allow the access to your microphone to start the recording. Try "
 "refreshing the page and start again."
 msgstr ""
+"Debes otorgar acceso a tu micrófono para iniciar la grabación. Intenta "
+"actualizar la página e inicia de nuevo."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "eg: New name to write"
-msgstr ""
+msgstr "Por ejemplo: Nuevo nombre a escribir"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "eg: ^(\\\\([0-9]{3}\\\\))?[0-9]{3}-[0-9]{4}$"
-msgstr ""
+msgstr "Por ejemplo: ^(\\\\([0-9]{3}\\\\))?[0-9]{3}-[0-9]{4}$"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "eg: name"
-msgstr ""
+msgstr "Por ejemplo: Nombre"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "eg: red, blue, green"
-msgstr ""
+msgstr "Por ejemplo: Rojo, azul, verde"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "executed."
-msgstr ""
+msgstr "ejecutado."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "fa-hashtag"
-msgstr ""
+msgstr "fa-hashtag"

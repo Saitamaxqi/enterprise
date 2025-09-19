@@ -3,13 +3,14 @@
 # * esg
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-18 19:00+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/esg/es_419/>\n"
 "Language: es_419\n"
@@ -923,12 +924,12 @@ msgstr "El Potencial de calentamiento global (GWP) no puede ser igual a 0."
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_125
 msgid "HFC-125"
-msgstr ""
+msgstr "HFC-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134
 msgid "HFC-134"
-msgstr ""
+msgstr "HFC-134"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134a
@@ -943,17 +944,17 @@ msgstr "HFC-134a (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143
 msgid "HFC-143"
-msgstr ""
+msgstr "HFC-143"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_143a
 msgid "HFC-143a"
-msgstr ""
+msgstr "HFC-143a"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152
 msgid "HFC-152"
-msgstr ""
+msgstr "HFC-152"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
@@ -968,12 +969,12 @@ msgstr "HFC-152a (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_161
 msgid "HFC-161"
-msgstr ""
+msgstr "HFC-161"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_227ea
 msgid "HFC-227ea"
-msgstr ""
+msgstr "HFC-227ea"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_23
@@ -988,17 +989,17 @@ msgstr "HFC-23 (t)"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_236cb
 msgid "HFC-236cb"
-msgstr ""
+msgstr "HFC-236cb"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_32
 msgid "HFC-32"
-msgstr ""
+msgstr "HFC-32"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_41
 msgid "HFC-41"
-msgstr ""
+msgstr "HFC-41"
 
 #. module: esg
 #. odoo-javascript
@@ -1009,22 +1010,22 @@ msgstr "HFC"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3ochf2
 msgid "HFE-125"
-msgstr ""
+msgstr "HFE-125"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2ch2ocf3
 msgid "HFE-245fa1"
-msgstr ""
+msgstr "HFE-245fa1"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_cf3cf2ch2och3
 msgid "HFE-365mcf3"
-msgstr ""
+msgstr "HFE-365mcf3"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_chf2_c4f9och3
 msgid "HFE-7100"
-msgstr ""
+msgstr "HFE-7100"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
@@ -1440,17 +1441,17 @@ msgstr "Otras emisiones indirectas"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c3f8
 msgid "PFC-218"
-msgstr ""
+msgstr "PFC-218"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c-c4f8
 msgid "PFC-318"
-msgstr ""
+msgstr "PFC-318"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_pfc_c6f14
 msgid "PFC-51-14"
-msgstr ""
+msgstr "PFC-51-14"
 
 #. module: esg
 #. odoo-javascript
@@ -1706,7 +1707,7 @@ msgstr "Combustión estacionaria"
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_so2
 msgid "Sulfur Dioxide (SO2+SO3)"
-msgstr ""
+msgstr "Dióxido de azufre (SO2+SO3)"
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_sf6
@@ -1724,6 +1725,7 @@ msgstr "Hexafluoruro de azufre (SF₆) (t)"
 #: code:addons/esg/models/esg_database.py:0
 msgid "The IPCC server did not return any file to import the data."
 msgstr ""
+"El servidor del IPCC no devolvió ningún archivo para importar los datos."
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
