@@ -6,13 +6,14 @@
 # Marcel Savegnago <marcel.savegnago@gmail.com>, 2022
 # Martin Trigaux, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-16 12:12+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-19 12:11+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/website_helpdesk_forum/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -49,11 +50,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "<span style=\"font-size: 18px;\">Ask questions and discuss tips with fellow members in a forum</span>"
 msgstr ""
+"<span style=\"font-size: 18px;\">Faça perguntas e discuta dicas com outros "
+"membros em um fórum</span>"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
+#, fuzzy
 msgid "<span style=\"font-weight: bolder; font-size: 18px;\">Community</span>"
-msgstr ""
+msgstr "<span style=\"font-weight: bolder; font-size: 18px;\">Community</span>"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result

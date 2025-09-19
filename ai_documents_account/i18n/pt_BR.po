@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-18 12:10+0000\n"
+"PO-Revision-Date: 2025-09-19 12:11+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents_account/pt_BR/>\n"
@@ -46,13 +46,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid "Company > Email"
-msgstr ""
+msgstr "Empresa &gt; E-mail"
 
 #. module: ai_documents_account
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid "Company > Name"
-msgstr ""
+msgstr "Empresa &gt; Nome"
 
 #. module: ai_documents_account
 #: model:ir.model.fields,field_description:ai_documents_account.field_ai_documents_sort__display_name
