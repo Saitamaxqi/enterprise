@@ -7,8 +7,8 @@ patch(OrderPaymentValidation.prototype, {
     async isOrderValid(isForceValidate) {
         if (this.pos.isEcuadorianCompany()) {
             if (
-                this.currentOrder.isRefund &&
-                this.currentOrder.getPartner().id === this.pos.config._final_consumer_id
+                this.order.isRefund &&
+                this.order.getPartner().id === this.pos.config._final_consumer_id
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("Refund not possible"),
