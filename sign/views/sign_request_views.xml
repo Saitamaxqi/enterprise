@@ -64,7 +64,7 @@
         <field name="name">sign.request.list</field>
         <field name="model">sign.request</field>
         <field name="arch" type="xml">
-            <list multi_edit="1" sample="1" js_class="sign_list" decoration-muted="state == 'canceled'" action="go_to_document" type="object">
+            <list multi_edit="1" sample="1" js_class="sign_list" decoration-muted="state == 'canceled'" action="go_to_document" type="object" default_order="create_date desc">
                 <header>
                     <button type="object" name="send_signature_accesses" class="btn btn-secondary" string="Resend"/>
                     <button type="object" name="get_sign_request_documents" class="btn btn-secondary" string="Download"/>
