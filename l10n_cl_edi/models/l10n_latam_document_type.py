@@ -44,9 +44,7 @@ class L10n_LatamDocumentType(models.Model):
 
     def _get_start_number(self):
         caf = self.sudo().l10n_cl_dte_caf_ids.filtered(lambda x: x.status == 'in_use' and
-                                                                 x.l10n_latam_document_type_id == self.id)
-        if not caf:
-            raise UserError(_('There are no CAFs available. Please upload a CAF file or ask for a new one at www.sii.cl website'))
+                                                                 x.l10n_latam_document_type_id == self)
         return caf.start_nb
 
     def create_demo_caf_file(self):
