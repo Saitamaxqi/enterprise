@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from dateutil.relativedelta import relativedelta
+from datetime import timedelta
 from pytz import UTC, timezone
 
 from odoo import _, api, fields, models
@@ -248,12 +248,12 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
 
         self = self.with_company(self.company_id)
-        duration = (
-            fields.Datetime.now()
-            - self.return_date
-            - relativedelta(hours=self.company_id.min_extra_hour)
-        )
+        now = fields.Datetime.now()
 
+        if self.return_date + timedelta(hours=self.company_id.min_extra_hour) >= now:
+            return
+
+        duration = now - self.return_date
         delay_price = self.product_id._compute_delay_price(duration)
         if delay_price <= 0.0:
             return
