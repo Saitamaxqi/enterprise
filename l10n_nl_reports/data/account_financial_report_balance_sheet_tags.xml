@@ -41,7 +41,7 @@
                                 <record id="account_financial_report_bs_tags_mat" model="account.report.line">
                                     <field name="name">Property, plant and equipment</field>
                                     <field name="name@nl">Materiële vaste activa</field>
-                                    <field name="name@nl">Sachanlagen</field>
+                                    <field name="name@de">Sachanlagen</field>
                                     <field name="code">NL_MAT</field>
                                     <field name="groupby">account_id</field>
                                     <field name="foldable" eval="True"/>
