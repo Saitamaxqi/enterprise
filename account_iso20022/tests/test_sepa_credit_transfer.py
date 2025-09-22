@@ -5,7 +5,7 @@ from odoo import Command
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 from odoo.tests.common import test_xsd
-from odoo.tests import tagged
+from odoo.tests import tagged, Form
 
 
 class TestSEPACreditTransferCommon(AccountTestInvoicingCommon):
@@ -215,6 +215,28 @@ class TestSEPACreditTransfer(TestSEPACreditTransferCommon):
         self.partner_a.country_id = self.env.ref('base.no')
         payment = self.createPayment(self.partner_a, 500, '1234567897')
         self._check_structured_reference('no', payment)
+
+    def test_sepa_trust_check_partner_bank_selection(self):
+        """Test untrusted partner bank account warning mechanism in the payment registration wizard."""
+        vendor_bill = self.init_invoice('in_invoice', partner=self.partner_a, post=True, amounts=[1000], products=[self.product_a])
+        untrusted_bank = self.env['res.partner.bank'].create({
+            'acc_type': 'iban',
+            'partner_id': self.partner_a.id,
+            'acc_number': 'BE12345678901234',
+            'allow_out_payment': False,
+            'bank_id': self.bank_bnp.id,
+        })
+
+        with Form(self.env['account.payment.register'].with_context(
+            active_model='account.move', active_ids=vendor_bill.id
+        )) as wizard_form:
+            wizard_form.payment_method_line_id = self.sepa_ct
+            # Selected trusted account - no warnings
+            wizard_form.partner_bank_id = self.partner_a.bank_ids.filtered('allow_out_payment')[:1]
+            self.assertEqual(wizard_form.untrusted_payments_count, 0)
+            # Selected untrusted account - show warnings
+            wizard_form.partner_bank_id = untrusted_bank
+            self.assertEqual(wizard_form.untrusted_payments_count, 1)
 
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard')
