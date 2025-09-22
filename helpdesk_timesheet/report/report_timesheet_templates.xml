@@ -28,9 +28,9 @@
                 <span t-else="" t-set="timesheet_record_info" t-value="line.helpdesk_ticket_id.sudo().name">Issue with new portal system</span>
             </t>
         </xpath>
-        <td t-if="show_task or show_project" class="align-middle" position="attributes">
+        <xpath expr="//td[@t-if='show_task or show_project']" position="attributes">
             <attribute name="t-if">show_task or show_project or show_ticket</attribute>
-        </td>
+        </xpath>
     </template>
 
     <!-- Helpdesk Ticket Timesheet Report for given timesheets -->
