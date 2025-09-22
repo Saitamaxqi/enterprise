@@ -7579,7 +7579,7 @@ class AccountReportExternalValue(models.Model):
             )
             if violated_lock_dates:
                 lock_date_names = [company_id._fields[lock_date[1]].get_description(self.env)['string'] for lock_date in violated_lock_dates]
-                lock_dates = "\n- " + "\n -".join(lock_date_names)
+                lock_dates = "\n- " + "\n- ".join(lock_date_names)
                 raise ValidationError(_("You cannot update this value as it's locked by: %s", lock_dates))
 
 
