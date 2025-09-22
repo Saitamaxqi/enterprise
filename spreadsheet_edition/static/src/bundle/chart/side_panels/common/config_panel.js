@@ -108,13 +108,12 @@ export class CommonOdooChartConfigPanel extends Component {
                     },
                 };
                 const figureId = this.env.model.getters.getFigureIdFromChartId(this.props.chartId);
-                const result = this.env.model.dispatch("UPDATE_CHART", {
+                this.env.model.dispatch("UPDATE_CHART", {
                     chartId: this.props.chartId,
                     figureId,
                     sheetId: this.env.model.getters.getFigureSheetId(figureId),
                     definition: updatedDefinition,
                 });
-                console.log("Update chart result", result);
             },
         });
     }
