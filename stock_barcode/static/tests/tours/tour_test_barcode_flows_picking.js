@@ -3498,7 +3498,9 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         {
             trigger: ".o_notification",
             run: function () {
-                helper.assertErrorMessage("Not the expected scan. You must scan a package or put in pack");
+                helper.assertErrorMessage(
+                    "Not the expected scan. You must scan a package or put in pack"
+                );
             },
         },
         {
@@ -3536,7 +3538,9 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
         {
             trigger: ".o_notification",
             run: function () {
-                helper.assertErrorMessage("Not the expected scan. You must scan a package or put in pack");
+                helper.assertErrorMessage(
+                    "Not the expected scan. You must scan a package or put in pack"
+                );
             },
         },
         {
@@ -4574,7 +4578,7 @@ registry.category("web_tour.tours").add("test_put_packs_in_existing_pack", {
             run: "scan MXB-0000001",
         },
         {
-            trigger: ".o_barcode_line:first-child:not(.o_selected.o_line_completed)",
+            trigger: ".o_barcode_line:nth-child(2):not(.o_selected)",
             run: "scan MNB-0000003",
         },
         {
