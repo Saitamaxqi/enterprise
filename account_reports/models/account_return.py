@@ -61,6 +61,7 @@ class AccountReturnType(models.Model):
 
     name = fields.Char(string="Name", required=True, translate=True, tracking=True)
     category = fields.Selection(
+        string="Type",
         selection=[
             ('account_return', "Tax Return"),
             ('audit', "Audit"),
@@ -79,10 +80,10 @@ class AccountReturnType(models.Model):
     payment_partner_id = fields.Many2one(comodel_name='res.partner', string="Payment Partner", related='payment_partner_bank_id.partner_id', tracking=True)
     states_workflow = fields.Selection(
         selection=[
-            ('generic_state_review', 'Review'),
-            ('generic_state_review_submit', 'Review, Submit'),
-            ('generic_state_tax_report', 'Review, Submit, Pay'),
-            ('generic_state_only_pay', 'Pay'),
+            ('generic_state_review', "Review"),
+            ('generic_state_review_submit', "Review, Submit"),
+            ('generic_state_tax_report', "Review, Submit, Pay"),
+            ('generic_state_only_pay', "Pay"),
         ],
         string="States",
         help="Determines the workflow of the return.",
