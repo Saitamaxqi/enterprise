@@ -393,6 +393,7 @@ class HrPayslipRun(models.Model):
             }
             payslips_vals.append(values)
         self.slip_ids |= Payslip.with_context(tracking_disable=True).create(payslips_vals)
+        self.slip_ids._compute_name()
         self.slip_ids.compute_sheet()
         self.state = '01_ready'
 
