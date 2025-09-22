@@ -22,6 +22,7 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
     setup() {
         super.setup();
         this.orm = useService("orm");
+        this.ui = useService("ui");
         this.state.remainingAmount = this.suspenseAccountLine.amount_currency;
         this.state.hideRemainingAmount = false;
 
@@ -32,7 +33,7 @@ export class BankRecSelectCreateDialog extends SelectCreateDialog {
     }
 
     async changeInSelectedMoveLine(selectedLines) {
-        if (!selectedLines.length) {
+        if (!selectedLines?.length) {
             this.state.remainingAmount = this.suspenseAccountLine.amount_currency;
             return;
         }
