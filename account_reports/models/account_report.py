@@ -180,15 +180,18 @@ class AccountReport(models.Model):
             send_and_print_vals = report.send_and_print_values
             report_partner_ids = send_and_print_vals.get('report_options', {}).get('partner_ids', [])
             need_retrigger = processed_count + len(report_partner_ids) > job_count
-            for _id in report_partner_ids[:job_count - processed_count]:
-                options = {
-                    **send_and_print_vals['report_options'],
-                    'partner_ids': [_id],
-                }
-                company = self.env['res.company'].browse(options['companies'][0]['id'])
-                self.env['account.report.send']._process_send_and_print(report=report.with_company(company), options=options)
-                processed_count += 1
-                report_partner_ids.remove(_id)
+            partner_ids = report_partner_ids[:job_count - processed_count]
+            company = self.env['res.company'].browse(send_and_print_vals['report_options']['companies'][0]['id'])
+            existing_partner_ids = set(self.env['res.partner'].browse(partner_ids).exists().ids)
+            for partner_id in partner_ids:
+                if partner_id in existing_partner_ids:
+                    options = {
+                        **send_and_print_vals['report_options'],
+                        'partner_ids': [partner_id],
+                    }
+                    self.env['account.report.send']._process_send_and_print(report=report.with_company(company), options=options)
+                    processed_count += 1
+                report_partner_ids.remove(partner_id)
             if report_partner_ids:
                 send_and_print_vals['report_options']['partner_ids'] = report_partner_ids
                 report.send_and_print_values = send_and_print_vals
