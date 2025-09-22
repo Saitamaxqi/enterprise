@@ -734,3 +734,18 @@ class TestMrpPlm(TestPlmCommon):
             0,
             "Admin should have 0 approval waiting",
         )
+
+    def test_compute_component_upd_product_qty(self):
+        """Test the correct computation of BoM component quantity changes when
+        using high-precision units of measure. We ensure that the updated
+        quantity respects the UoM decimal digits instead of the default precision.
+        """
+        self.env['decimal.precision'].search([('name', '=', 'Product Unit')]).digits = 4
+        self.bom_table.product_uom_id.rounding = 0.0001
+        bom_eco = self._create_eco('bom_eco', self.bom_table, self.eco_type.id, self.eco_stage.id)
+        bom_eco.action_new_revision()
+        self.assertFalse(bom_eco.bom_change_ids)
+        self.assertEqual(bom_eco.bom_id.bom_line_ids[0].product_qty, 1.0)
+        bom_eco.new_bom_id.bom_line_ids[0].product_qty = 1.0003
+        self.assertEqual(bom_eco.new_bom_id.bom_line_ids[0].product_qty, 1.0003)
+        self.assertEqual(bom_eco.bom_change_ids.upd_product_qty, 0.0003)

@@ -891,7 +891,7 @@ class MrpEcoBomChange(models.Model):
     new_product_qty = fields.Float('New revision quantity', default=0)
     old_operation_id = fields.Many2one('mrp.routing.workcenter', 'Previous Consumed in Operation')
     new_operation_id = fields.Many2one('mrp.routing.workcenter', 'New Consumed in Operation')
-    upd_product_qty = fields.Float('Quantity', compute='_compute_upd_product_qty', store=True)
+    upd_product_qty = fields.Float('Quantity', compute='_compute_upd_product_qty', store=True, digits='Product Unit')
     uom_change = fields.Char('Unit', compute='_compute_change', compute_sudo=True)
     operation_change = fields.Char(compute='_compute_change', string='Consumed in Operation', compute_sudo=True)
     conflict = fields.Boolean()
