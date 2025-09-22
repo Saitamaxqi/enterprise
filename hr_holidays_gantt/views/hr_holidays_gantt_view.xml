@@ -7,7 +7,7 @@
             <field name="model">hr.leave</field>
             <field name="arch" type="xml">
                 <gantt
-                       js_class="hr_holidays_gantt_manager"
+                       js_class="hr_holidays_gantt_manager_hr_leave"
                        date_start="date_from"
                        date_stop="date_to"
                        string="Days"

@@ -4,6 +4,7 @@ import { hrGanttView } from "@hr_gantt/hr_gantt_view";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { onWillStart } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
 import { GanttController } from "@web_gantt/gantt_controller";
 
 export class HrHolidaysGanttRenderer extends HrGanttRenderer {
@@ -39,9 +40,29 @@ export class HrHolidaysGanttController extends GanttController {
     }
 }
 
+export class HrHolidaysGanttManagerHrLeaveController extends HrHolidaysGanttController {
+    setup() {
+        super.setup();
+        this.actionService = useService("action");
+        onWillStart(async () => {
+            this.canCreateGroupTimeOff = await user.hasGroup("hr_holidays.group_hr_holidays_responsible");
+        });
+    }
+
+    async onNewGroupTimeOff() {
+        await this.actionService.doAction("hr_holidays.action_hr_leave_generate_multi_wizard");
+    }
+}
+
 export const hrHolidaysGanttManagerView = {
     ...hrGanttView,
     Renderer: HrHolidaysGanttRenderer,
+};
+
+export const hrHolidaysGanttManagerHrLeaveView = {
+    ...hrHolidaysGanttManagerView,
+    Controller: HrHolidaysGanttManagerHrLeaveController,
+    buttonTemplate: "hr_holidays_gantt.GanttView.Buttons",
 };
 
 export const hrHolidaysGanttView = {
@@ -51,4 +72,5 @@ export const hrHolidaysGanttView = {
 };
 
 registry.category("views").add("hr_holidays_gantt_manager", hrHolidaysGanttManagerView);
+registry.category("views").add("hr_holidays_gantt_manager_hr_leave", hrHolidaysGanttManagerHrLeaveView);
 registry.category("views").add("hr_holidays_gantt", hrHolidaysGanttView);
