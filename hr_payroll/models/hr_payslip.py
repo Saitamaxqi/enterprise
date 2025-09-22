@@ -75,7 +75,7 @@ class HrPayslip(models.Model):
                 \n* When the user cancels a payslip, the status is \'Canceled\'.""")
     state_display = fields.Selection([
             ('draft', 'Draft'),
-            ('validated', 'Validated'),
+            ('validated', 'Done'),
             ('paid', 'Paid'),
             ('cancel', 'Canceled'),
             ('warning', 'Warning'),
