@@ -43,6 +43,7 @@
 
         <record id="l10n_in_default_contract_template" model="hr.version">
             <field name="name">Default Contract</field>
+            <field name="hr_responsible_id" ref="base.user_admin"/>
             <field name="contract_type_id" ref="hr.contract_type_permanent"/>
             <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
             <field name="wage">50000</field>
