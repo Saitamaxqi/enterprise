@@ -15,7 +15,7 @@ from odoo.tools.zeep import Client, Transport
 from pytz import timezone
 from werkzeug.urls import url_quote_plus
 
-from odoo import _, api, models, modules, fields, tools
+from odoo import _, api, models, modules, fields, tools, SUPERUSER_ID
 from odoo.fields import Domain
 from odoo.tools import frozendict, remove_accents
 from odoo.tools.float_utils import float_is_zero, float_round
@@ -1876,7 +1876,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :return                     The newly created or updated document.
         """
         def create_attachment(attachment_values):
-            return self.env['ir.attachment'].create({
+            return self.env['ir.attachment'].with_user(SUPERUSER_ID).create({
                 **attachment_values,
                 'res_model': records._name,
                 'res_id': records.id if len(records) == 1 else None,
