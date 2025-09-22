@@ -2079,3 +2079,8 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
         new_invoice = self.env['account.move'].browse(action_results['res_id'])
         self.assertEqual(new_invoice.line_ids[0].name, 'section')
         self.assertEqual(new_invoice.line_ids[1].name, 'note')
+
+    def test_legal_name_sanitization(self):
+        unsanitized_name = "Dinora Ñúñez Ávila"
+        sanitized_name = self.env['l10n_mx_edi.document']._cfdi_sanitize_to_legal_name(unsanitized_name)
+        self.assertEqual(sanitized_name, 'DINORA ÑUÑEZ AVILA')

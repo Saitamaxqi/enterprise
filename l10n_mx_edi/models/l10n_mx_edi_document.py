@@ -16,7 +16,7 @@ from werkzeug.urls import url_quote_plus
 
 from odoo import _, api, models, modules, fields, tools
 from odoo.fields import Domain
-from odoo.tools import frozendict
+from odoo.tools import frozendict, remove_accents
 from odoo.tools.float_utils import float_is_zero, float_round
 from odoo.addons.base.models.ir_qweb import keep_query
 
@@ -494,13 +494,15 @@ class L10n_Mx_EdiDocument(models.Model):
 
     @api.model
     def _cfdi_sanitize_to_legal_name(self, name):
-        """ We remove the SA de CV / SL de CV / S de RL de CV as they are never in the official name in the XML.
+        """ We remove the SA de CV / SL de CV / S de RL de CV and accents as they are never in the official name in the XML.
 
         :param name: The name to clean.
         :return: The formatted name.
         """
         regex = r"(?i:\s+(s\.?\s?(a\.?)( de c\.?v\.?|)|(s\.?\s?(a\.?s\.?)|s\.? en c\.?( por a\.?)?|s\.?\s?c\.?\s?(l\.?(\s?\(?limitada)?\)?|s\.?(\s?\(?suplementada\)?)?)|s\.? de r\.?l\.?)))\s*$"
-        return re.sub(regex, "", name or '').upper()
+        unaccented = remove_accents(re.sub(regex, "", name or ''))
+        # ñ character should stay as-is because unlike accents, the mexican government saves this letter that way...
+        return ''.join(c if name[i] not in 'ñÑ' else name[i] for i, c in enumerate(unaccented)).upper()
 
     @api.model
     def _add_base_cfdi_values(self, cfdi_values):
