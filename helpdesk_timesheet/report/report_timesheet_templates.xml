@@ -23,7 +23,7 @@
             </t>
         </xpath>
         <xpath expr="//t[@t-elif='show_task']" position="after">
-            <t t-if="show_ticket and line.helpdesk_ticket_id" class="align-middle">
+            <t t-if="line.helpdesk_ticket_id" class="align-middle">
                 <span t-if="show_project" t-set="timesheet_record_info" t-value="'%s / %s' % (timesheet_record_info, line.helpdesk_ticket_id.sudo().name)">Issue with new portal system</span>
                 <span t-else="" t-set="timesheet_record_info" t-value="line.helpdesk_ticket_id.sudo().name">Issue with new portal system</span>
             </t>
