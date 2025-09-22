@@ -4586,6 +4586,92 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         }
         self._validate_payslip(payslip, payslip_results)
 
+    def test_public_holiday_right_sick_leaves(self):
+        # Note: The public holidays are paid the first 30 days of sick leaves, ...
+
+        self.contract.ip = False
+
+        # Public time offs
+        self.env['resource.calendar.leaves'].create([{
+            'name': "Absence",
+            'calendar_id': self.resource_calendar_38_hours_per_week.id,
+            'company_id': self.env.company.id,
+            'date_from': datetime.datetime(2021, 5, 12, 4, 0, 0),
+            'date_to': datetime.datetime(2021, 5, 12, 21, 0, 0),
+            'resource_id': False,
+            'time_type': "leave",
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
+        }, {
+            'name': "Absence",
+            'calendar_id': self.resource_calendar_38_hours_per_week.id,
+            'company_id': self.env.company.id,
+            'date_from': datetime.datetime(2021, 5, 17, 4, 0, 0),
+            'date_to': datetime.datetime(2021, 5, 17, 21, 0, 0),
+            'resource_id': False,
+            'time_type': "leave",
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
+        }])
+
+        sick_leaves = self.env['hr.leave'].create({
+            'name': 'Sick Leaves',
+            'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
+            'request_date_from': datetime.date(2021, 4, 17),
+            'request_date_to': datetime.date(2021, 5, 31),
+            'employee_id': self.employee.id,
+        })
+        sick_leaves.action_approve()
+
+        self.contract.generate_work_entries(datetime.date(2021, 4, 1), datetime.date(2021, 5, 31))
+
+        payslip = self.env['hr.payslip'].create({
+            'name': "Test Payslip",
+            'employee_id': self.employee.id,
+            'version_id': self.contract.id,
+            'company_id': self.env.company.id,
+            'vehicle_id': self.car.id,
+            'struct_id': self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary').id,
+            'date_from': datetime.date(2021, 5, 1),
+            'date_to': datetime.date(2021, 5, 31)
+        })
+        payslip.compute_sheet()
+
+        self._validate_worked_days(payslip, {
+            'LEAVE110': (9.0, 68.4, 1182.31),
+            'LEAVE214': (11.0, 83.6, 0.0),
+            'LEAVE500': (1.0, 7.6, 122.31),
+        })
+
+        payslip_results = {
+            'BASIC': 1304.62,
+            'ATN.INT': 5.0,
+            'ATN.MOB': 4.0,
+            'SALARY': 1313.62,
+            'ONSS': -171.69,
+            'EmpBonus.1': 0.0,
+            'ONSSTOTAL': 171.69,
+            'ATN.CAR': 150.53,
+            'GROSS': 1292.46,
+            'P.P': -65.44,
+            'PPTOTAL': 65.44,
+            'ATN.CAR.2': -150.53,
+            'ATN.INT.2': -5.0,
+            'ATN.MOB.2': -4.0,
+            'M.ONSS': 0.0,
+            'MEAL_V_EMP': 0.0,
+            'REP.FEES': 0.0,
+            'NET': 1067.49,
+            'REMUNERATION': 1304.62,
+            'ONSSEMPLOYERBASIC': 328.67,
+            'ONSSEMPLOYERFFE': 1.71,
+            'ONSSEMPLOYERMFFE': 1.31,
+            'ONSSEMPLOYERCPAE': 3.02,
+            'ONSSEMPLOYERRESTREINT': 22.2,
+            'ONSSEMPLOYERUNEMP': 1.31,
+            'ONSSEMPLOYER': 358.22,
+            'CO2FEE': 21.16,
+        }
+        self._validate_payslip(payslip, payslip_results)
+
     def test_public_holiday_right_maternity_full_time_credit_time(self):
         # Note: Always unpaid
         self.contract.write({
