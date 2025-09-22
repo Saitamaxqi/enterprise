@@ -30,7 +30,6 @@ class WorksheetValidationController extends FormController {
     }
 
     async discard() {
-        await this.saveButtonClicked({ closable:false });
         await super.discard();
         const record = this.model.root.data;
         const context = this.model.root.context;
