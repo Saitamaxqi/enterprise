@@ -903,18 +903,11 @@ class AccountBankStatementLine(models.Model):
         account = self.env['account.account'].browse(account_id)
 
         return {
-            'name': self._get_reconciliation_model_name(account),
+            'name': account.display_name,
             'common_substring': common_substring,
             'account': account,
             'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
         }
-
-    @api.model
-    def _get_reconciliation_model_name(self, account):
-        copied_count = self.env['account.reconcile.model'].search_count([
-            ('name', '=like', f"{account.display_name}%%"),
-        ])
-        return account.display_name if not copied_count else f"{account.display_name} ({copied_count})"
 
     def _create_reconciliation_rule(self, rule_data):
         """Creates and returns a  new reconciliation rule based on prepared data."""

@@ -1327,7 +1327,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         st_line_4.set_account_bank_statement_line(st_line_4.line_ids[-1].id, account_a.id)
         st_line_5.set_account_bank_statement_line(st_line_5.line_ids[-1].id, account_a.id)
         # Check that a reco model has been created with the right name
-        self.assertEqual(st_line_6.line_ids[-1].reconcile_model_id.name, "010101 Custom Account A (1)")
+        self.assertEqual(st_line_6.line_ids[-1].reconcile_model_id.name, "010101 Custom Account A")
 
     def test_matching_outstanding_accounts(self):
         another_journal_id = self.env['account.journal'].create({'name': 'another journal', 'type': 'bank', 'code': 'BNKX'}).id
