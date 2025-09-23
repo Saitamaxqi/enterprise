@@ -15,6 +15,7 @@
                     t-on-dblclick="this.props.onSpreadsheetDblClicked"
                     t-att-class="{'o-spreadsheet-grid-image': true, 'o-spreadsheet-grid-selected': this.props.selectedSpreadsheetId === spreadsheet.id}"
                     t-att-data-id="spreadsheet.id"
+                    t-ref="{{spreadsheet.id === null ? 'autofocus' : spreadsheet.id}}"
                 >
 					<t t-set="thumbnail" t-value="spreadsheet.id === null ? this.blankThumbnailPlaceholder : props.getThumbnailURL(spreadsheet)" />
                     <img

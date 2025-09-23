@@ -1,6 +1,7 @@
 import { Component } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
+import { useAutofocus } from "@web/core/utils/hooks";
 
 const DEFAULT_LIMIT = 9;
 
@@ -23,6 +24,7 @@ export class SpreadsheetSelectorGrid extends Component {
     blankThumbnailPlaceholder = "/spreadsheet/static/img/spreadsheet.svg";
 
     setup() {
+        useAutofocus();
         useHotkey("ArrowRight", () => this._onArrowKey("right"), {
             allowRepeat: true,
         });
