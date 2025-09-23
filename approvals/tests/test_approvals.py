@@ -330,3 +330,40 @@ class TestRequest(common.TransactionCase):
             approver3.with_user(user1).unlink()
         approver3.with_user(user3).unlink()
         self.assertEqual(approval.approver_ids.user_id.id, user2.id)
+
+    def test_user_access_to_admin_approval(self):
+        user = new_test_user(self.env, login='user1', groups='base.group_user')
+        admin = new_test_user(self.env, login='admin1', groups='approvals.group_approval_manager')
+        admin_env = self.env(user=admin)
+
+        category1 = self.env['approval.category'].create({
+            'name': 'Test category 1',
+            'approver_ids': [
+                Command.create({'user_id': admin.id}),
+            ]
+        })
+
+        private_approval = admin_env['approval.request'].create({
+            'name': 'Test request (admin)',
+            'request_owner_id': admin.id,
+            'category_id': category1.id,
+            'date_start': fields.Datetime.now(),
+            'date_end': fields.Datetime.now(),
+            'location': 'testland'
+        })
+
+        approval = admin_env['approval.request'].create({
+            'name': 'Test request',
+            'request_owner_id': admin.id,
+            'category_id': category1.id,
+            'date_start': fields.Datetime.now(),
+            'date_end': fields.Datetime.now(),
+            'location': 'testland'
+        })
+        user_approver = admin_env['approval.approver'].create({
+            'user_id': user.id,
+            'request_id': approval.id,
+        })
+
+        with self.assertRaises(AccessError):
+            user_approver.with_user(user).request_id = private_approval

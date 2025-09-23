@@ -38,6 +38,11 @@ class ApprovalApprover(models.Model):
     can_edit = fields.Boolean(compute='_compute_can_edit')
     can_edit_user_id = fields.Boolean(compute='_compute_can_edit', help="Simple users should not be able to remove themselves as approvers because they will lose access to the record if they misclick.")
 
+    def write(self, vals):
+        if 'request_id' in vals:
+            self.env['approval.request'].browse(vals['request_id']).check_access('write')
+        return super().write(vals)
+
     def action_approve(self):
         self.request_id.action_approve(self)
 
