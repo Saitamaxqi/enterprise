@@ -1448,6 +1448,9 @@ class AccountBankStatementLine(models.Model):
             limit=1,
         )
         invoices = purchase_journal_id.with_context(default_move_type="in_invoice")._create_document_from_attachment(attachment_ids)
+        # This will work only for xml file, since when it's a pdf the ocr has not yet digitize the document and we have an empty move
+        if lines := invoices.line_ids.filtered(lambda l: l.account_id.account_type in {'asset_receivable', 'liability_payable'}):
+            statement_line.set_line_bank_statement_line(lines.ids)
         return invoices._get_records_action()
 
     def action_unreconcile_entry(self):
