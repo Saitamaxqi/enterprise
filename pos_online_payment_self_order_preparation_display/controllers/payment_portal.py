@@ -5,7 +5,6 @@ from odoo.addons.pos_online_payment.controllers.payment_portal import PaymentPor
 
 class PosSelfOrderPaymentPortal(PaymentPortal):
 
-    def _render_pay_confirmation(self, rendering_context):
-        if rendering_context.get('state') == 'success':
-            request.env['pos.prep.order'].sudo().process_order(rendering_context.get('pos_order_id'))
-        return super()._render_pay_confirmation(rendering_context)
+    def _on_payment_successful(self, order):
+        request.env['pos.prep.order'].sudo().process_order(order.id)
+        return super()._on_payment_successful(order)

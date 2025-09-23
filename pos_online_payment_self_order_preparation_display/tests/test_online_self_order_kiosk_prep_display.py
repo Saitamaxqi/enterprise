@@ -21,20 +21,14 @@ class TestOnlinePaymentPosSelfOrderPrepDisplay(TestSelfOrderMobile):
         self.assertEqual(order.state, "draft")
         self.assertEqual(prep_order_count, 0)
 
-        payment_context = {"active_ids": order.ids, "active_id": order.id}
-        order_payment = self.env['pos.make.payment'].with_context(**payment_context).sudo().create({
-            'amount': order.amount_total,
-            'payment_method_id': self.bank_payment_method.id
-        })
-        order_payment.with_context(**payment_context).check()
+        self._fake_online_payment(order.id, order.access_token, self.payment_provider.id, exit_route="/")
 
         prep_order_count = self.env['pos.prep.order'].search_count([('pos_order_id', '=', order.id)])
         self.assertEqual(order.state, "paid")
         self.assertEqual(prep_order_count, 1)
 
-    def test_ensure_online_self_order_prep_display(self):
-        """ This test ensures if online payment is configured, then only paid kiosk/self order is sent to the prep display """
-
+    def test_ensure_online_kiosk_order_prep_display(self):
+        """ This test ensures if online payment is configured, then only paid kiosk order is sent to the prep display """
         self.pos_config.write({
             'use_presets': False,
             'self_ordering_mode': 'kiosk',
@@ -42,7 +36,6 @@ class TestOnlinePaymentPosSelfOrderPrepDisplay(TestSelfOrderMobile):
             'payment_method_ids': [(4, self.online_payment_method.id)]
         })
 
-        # Kiosk mode
         self.pos_config.with_user(self.pos_user).open_ui()
         self.pos_config.current_session_id.set_opening_control(0, "")
         self_route = self.pos_config._get_self_order_route()
@@ -52,24 +45,23 @@ class TestOnlinePaymentPosSelfOrderPrepDisplay(TestSelfOrderMobile):
         order1 = self.pos_config.current_session_id.order_ids[0]
         self._assert_prep_order_count_before_and_after_payment(order1)
 
-        # Mobile Mode
-        self.pos_config.write({
-            'self_ordering_mode': 'mobile',
-            'self_order_online_payment_method_id': self.online_payment_method.id
-        })
-        self.start_tour(self_route, 'test_ensure_online_self_order_prep_display')
-
-        order2 = self.pos_config.current_session_id.order_ids[0]
-        self._assert_prep_order_count_before_and_after_payment(order2)
-
-    def test_without_online_self_order_prep_display(self):
-        # Kiosk mode
+    def test_ensure_online_self_order_prep_display(self):
+        """ This test ensures if online payment is configured, then only paid self order is sent to the prep display """
         self.pos_config.write({
             'use_presets': False,
-            'self_ordering_mode': 'kiosk',
+            'self_ordering_mode': 'mobile',
             'self_ordering_pay_after': 'each',
+            'self_order_online_payment_method_id': self.online_payment_method.id
         })
+        self.pos_config.with_user(self.pos_user).open_ui()
+        self.pos_config.current_session_id.set_opening_control(0, "")
+        self_route = self.pos_config._get_self_order_route()
+        self.start_tour(self_route, 'test_ensure_online_self_order_prep_display')
 
+        order1 = self.pos_config.current_session_id.order_ids[0]
+        self._assert_prep_order_count_before_and_after_payment(order1)
+
+    def _assert_prep_order_count_without_payment(self):
         self.pos_config.with_user(self.pos_user).open_ui()
         self.pos_config.current_session_id.set_opening_control(0, "")
         self_route = self.pos_config._get_self_order_route()
@@ -80,3 +72,21 @@ class TestOnlinePaymentPosSelfOrderPrepDisplay(TestSelfOrderMobile):
         prep_order_count = self.env['pos.prep.order'].search_count([('pos_order_id', '=', order1.id)])
         self.assertEqual(order1.state, "draft")
         self.assertEqual(prep_order_count, 1)
+
+    def test_without_online_kiosk_order_prep_display(self):
+        self.pos_config.write({
+            'use_presets': False,
+            'self_ordering_mode': 'kiosk',
+            'self_ordering_pay_after': 'each',
+        })
+
+        self._assert_prep_order_count_without_payment()
+
+    def test_without_online_self_order_prep_display(self):
+        self.pos_config.write({
+            'use_presets': False,
+            'self_ordering_mode': 'mobile',
+            'self_ordering_pay_after': 'each',
+        })
+
+        self._assert_prep_order_count_without_payment()
