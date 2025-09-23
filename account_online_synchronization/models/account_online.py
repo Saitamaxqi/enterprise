@@ -321,6 +321,8 @@ class AccountOnlineAccount(models.Model):
         transaction_sign = -1 if self.inverse_transaction_sign else 1
         currencies = self.env['res.currency'].with_context(active_test=False).search([])
         currency_code_mapping = {currency.name: currency for currency in currencies}
+        # field end_to_end_uuid only exists in account_iso20022 but is always given by odoofin
+        is_iso20022_installed = self.env['ir.module.module']._get('account_iso20022').state == 'installed'
 
         formatted_transactions = []
         for transaction in new_transactions:
@@ -330,6 +332,9 @@ class AccountOnlineAccount(models.Model):
                     transaction.update({'foreign_currency_id': currency.id})
                     if not currency.active:
                         currency.active = True
+
+            if not is_iso20022_installed:
+                transaction.pop('end_to_end_uuid', False)
 
             formatted_transactions.append({
                 **transaction,
