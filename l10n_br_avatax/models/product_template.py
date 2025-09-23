@@ -24,7 +24,7 @@ class ProductTemplate(models.Model):
              'It helps determine the applicable tax treatment and procedures for specific items.'
              'Check if your product is subject or not to this in https://www.codigocest.com.br/.'
     )
-    l10n_br_ncm_code_id = fields.Many2one('l10n_br.ncm.code', string='Mercosul NCM Code', help='Brazil: NCM (Nomenclatura Comun do Mercosul) Code from the Mercosur List')
+    l10n_br_ncm_code_id = fields.Many2one('l10n_br.ncm.code', string="Mercosul NCM Code", help="Brazil: Use this field to specify the classification code of the item, either the NCM (Nomenclatura Comum do Mercosul) for goods or the LC116 for services.")
     l10n_br_property_service_code_origin_id = fields.Many2one(
         "l10n_br.service.code",
         domain=_l10n_br_property_service_code_origin_id_domain,

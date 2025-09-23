@@ -282,7 +282,9 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_ncm_code_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_ncm_code_id
 msgid ""
-"Brazil: NCM (Nomenclatura Comun do Mercosul) Code from the Mercosur List"
+"Brazil: Use this field to specify the classification code of the item, "
+"either the NCM (Nomenclatura Comum do Mercosul) for goods or the LC116 for "
+"services."
 msgstr ""
 
 #. module: l10n_br_avatax
