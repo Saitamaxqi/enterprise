@@ -8,7 +8,7 @@ from itertools import product
 from odoo import Command, _, api, fields, models, modules, SUPERUSER_ID
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
-from odoo.tools import SQL
+from odoo.tools import SQL, float_is_zero
 from odoo.addons.account.tools.structured_reference import is_valid_structured_reference
 
 _logger = logging.getLogger(__name__)
@@ -1005,10 +1005,12 @@ class AccountBankStatementLine(models.Model):
                     })]
                 },
             }])
+
+        tolerance = self._get_payment_tolerance()
         if (
             self.currency_id.compare_amounts(self.amount, 0) < 0
             or self.currency_id.compare_amounts(self.amount_residual, 0) < 0
-            or self.currency_id.compare_amounts(abs(self.amount_residual), 0.03 * (self.amount_currency if self.foreign_currency_id else self.amount)) > 0
+            or (not float_is_zero(tolerance, 6) and self.currency_id.compare_amounts(abs(self.amount_residual), tolerance * (self.amount_currency if self.foreign_currency_id else self.amount)) > 0)
         ):
             return
 
@@ -1154,11 +1156,12 @@ class AccountBankStatementLine(models.Model):
         has_enough_curr_debit = has_enough(move_line.currency_id, open_amount_currency, current_amount_currency)
         has_enough_curr_credit = has_enough(move_line.currency_id, -open_amount_currency, -current_amount_currency)
 
+        tolerance = self._get_payment_tolerance()
         if move_line.currency_id == transaction_currency and (has_enough_curr_debit or has_enough_curr_credit):
             new_amount_currency = (
                 current_amount_currency
                 # If the open amount is small, fully reconcile the move_line and not the transaction
-                if move_line.currency_id.compare_amounts(abs(open_amount_currency), 0.03 * abs(current_amount_currency)) < 0
+                if not float_is_zero(tolerance, 6) and move_line.currency_id.compare_amounts(abs(open_amount_currency), tolerance * abs(current_amount_currency)) < 0
                 else current_amount_currency - open_amount_currency
             )
             rate = abs(company_amount / transaction_amount) if transaction_amount else 0.0
@@ -1174,7 +1177,7 @@ class AccountBankStatementLine(models.Model):
             balance_after_partial = (
                 current_balance
                 # If the open amount is small, fully reconcile the move_line and not the transaction
-                if move_line.currency_id.compare_amounts(abs(open_balance), 0.03 * abs(current_balance)) < 0
+                if not float_is_zero(tolerance, 6) and move_line.currency_id.compare_amounts(abs(open_balance), tolerance * abs(current_balance)) < 0
                 else current_balance - open_balance
             )
             # Get the rate of the original journal item.
@@ -1194,6 +1197,14 @@ class AccountBankStatementLine(models.Model):
                 'partial_amount_currency': new_amount_currency,
             }
         return None
+
+    def _get_payment_tolerance(self):
+        try:
+            payment_tolerance = float(self.env['ir.config_parameter'].sudo().get_param('account_accountant.bank_rec_payment_tolerance', 0))
+        # In case the payment tolerance is not a float
+        except ValueError:
+            payment_tolerance = 0
+        return payment_tolerance
 
     def _lines_get_account_balance_exchange_diff(self, currency_id, amount, amount_currency):
         # Compute the balance of the line using the rate/currency coming from the bank transaction.

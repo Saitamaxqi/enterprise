@@ -19,6 +19,7 @@ It gives the Administrator user access to important invoicing features such as b
         'data/ir_cron.xml',
         'data/digest_data.xml',
         'data/account_accountant_tour.xml',
+        'data/ir_config_parameters.xml',
 
         'security/ir.model.access.csv',
         'security/account_accountant_security.xml',
