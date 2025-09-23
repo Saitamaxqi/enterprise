@@ -7,13 +7,14 @@
 # Ryoko Tsuda <ryoko@quartile.co>, 2023
 # Andy Yiu, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-15 12:01+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 12:11+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "web_studio/ja/>\n"
 "Language: ja\n"
@@ -694,7 +695,7 @@ msgstr "添付"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/search/search_editor.xml:0
 msgid "Autocompletion Fields"
-msgstr "オートコンプリートフィールド"
+msgstr "自動入力フィールド"
 
 #. module: web_studio
 #: model_terms:ir.actions.act_window,help:web_studio.webhook_automation_act
