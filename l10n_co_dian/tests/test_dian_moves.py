@@ -63,6 +63,24 @@ class TestDianMoves(TestCoDianCommon):
             default_code='BEER1',
         )
 
+        # Plastic Bag Taxes (INC Bolsas)
+        cls.plastic_bag_tax = cls.env['account.tax'].create({
+            'name': "INC Plastic Bags",
+            'amount_type': 'fixed',
+            'amount': 70,  # Fixed rate per bag
+            'type_tax_use': 'sale',
+            'invoice_label': 'INC Plastic Bags',
+            'description': 'INC Plastic Bags',
+            'tax_group_id': cls.env['account.chart.template'].ref('l10n_co_tax_group_inc_bolsas').id,  # INC Bolsas
+            'l10n_co_edi_type': cls.env.ref('l10n_co_edi.tax_type_9').id,  # INC Bolsas
+        })
+
+        # Plastic Bag Product
+        cls.product_plastic_bag = cls._create_product(
+            name="Bolsa Plastica",
+            default_code='BOLSA1',
+        )
+
         # 1 USD ~= 3919 COP
         usd = cls.env.ref('base.USD')
         cls.env['res.currency.rate'].create({
@@ -171,6 +189,28 @@ class TestDianMoves(TestCoDianCommon):
 
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_aiu.xml")
+
+    def test_invoice_plastic_bags(self):
+        invoice = self._create_move(invoice_line_ids=[
+            Command.create({
+                'product_id': self.product_plastic_bag.id,
+                'quantity': 2,
+                'price_unit': 100,
+                'tax_ids': [Command.set([self.tax_iva_19.id, self.plastic_bag_tax.id])],
+            }),
+            Command.create({
+                'product_id': self.product_a.id,
+                'quantity': 5,
+                'price_unit': 100,
+                'tax_ids': [Command.set([self.plastic_bag_tax.id])],
+            }),
+        ])
+        xml = self._generate_xml(invoice)
+        self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/invoice_plastic_bags.xml")
+
+    def test_invoice_plastic_bags_new(self):
+        self.env['ir.config_parameter'].sudo().set_param('account_edi_ubl_cii.use_new_dict_to_xml_helpers', True)
+        self.test_invoice_plastic_bags()
 
     def test_multicurrency(self):
         """
