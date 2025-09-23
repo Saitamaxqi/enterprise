@@ -39,7 +39,7 @@ class HrWorkEntryExportMixin(models.AbstractModel):
     def _get_company_domain(self):
         domain = Domain('id', 'in', self.env.companies.ids)
         if restriction := self._country_restriction():
-            domain &= Domain('country_id.code', '=', restriction)
+            domain &= Domain('partner_id.country_id.code', '=', restriction)
         return domain
 
     create_uid = fields.Many2one('res.users', index=True)

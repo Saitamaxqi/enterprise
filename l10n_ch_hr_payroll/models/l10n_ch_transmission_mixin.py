@@ -40,7 +40,7 @@ class L10nCHSwissdecTransmitter(models.AbstractModel):
         ('11', 'November'),
         ('12', 'December'),
     ], required=True, default=lambda self: str((fields.Date.today()).month))
-    company_id = fields.Many2one('res.company', default=lambda self: self.env.company, domain=lambda self: [('country_id', '=', self.env.ref('base.ch'))])
+    company_id = fields.Many2one('res.company', default=lambda self: self.env.company, domain="[('partner_id.country_id.code', '=', 'CH')]")
 
     l10n_ch_declare_salary_data = fields.Json()
     actionable_warnings = fields.Json(compute="_compute_actionable_warnings", store=True)
