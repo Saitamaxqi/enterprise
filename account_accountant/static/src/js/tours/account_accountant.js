@@ -85,7 +85,7 @@
                 run: "click",
             }, {
                 isActive: ["auto"],
-                trigger: '.o_kanban_renderer:not(:has(.o_bank_rec_quick_create))',
+                trigger: '.o_kanban_renderer:not(:has(.o_bank_reconciliation_quick_create))',
             }, {
                 isActive: ["auto"],
                 trigger: ".o_bank_reconciliation_container",
