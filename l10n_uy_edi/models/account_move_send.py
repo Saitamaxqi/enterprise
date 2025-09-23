@@ -58,7 +58,7 @@ class AccountMoveSend(models.AbstractModel):
     # SENDING METHODS
     # -------------------------------------------------------------------------
 
-    def _hook_if_success(self, moves_data):
+    def _hook_if_success(self, moves_data, from_cron=False):
         # EXTENDS "account"
         for move, move_data in moves_data.items():
             if 'email' in move_data['sending_methods'] and move.l10n_uy_edi_cfe_state in ("received", "accepted"):
@@ -68,7 +68,7 @@ class AccountMoveSend(models.AbstractModel):
                     "mail_body": self._get_default_mail_body(move, mail_template, mail_lang),
                     "mail_subject": self._get_default_mail_subject(move, mail_template, mail_lang),
                 })
-        return super()._hook_if_success(moves_data)
+        return super()._hook_if_success(moves_data, from_cron)
 
     def _hook_invoice_document_before_pdf_report_render(self, invoice, invoice_data):
         # EXTENDS "account"
