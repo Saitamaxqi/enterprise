@@ -97,7 +97,7 @@ export class Softphone extends Component {
         }
         if (this.pendingCall.state === "ongoing") {
             return _t("%(status)s - %(timer)s", {
-                status: this.userAgent.inCallStatusText,
+                status: this.userAgent.activeSession.statusText,
                 timer: this.pendingCall.timerText,
             });
         }

@@ -1,10 +1,29 @@
 /* global SIP */
 
+import { toRaw } from "@odoo/owl";
+
 import { SessionRecorder } from "@voip/core/session_recorder";
 
 import { _t } from "@web/core/l10n/translation";
 
 export class Session {
+    /** @type {WeakSet<Session>} */
+    static allSessions = new WeakSet();
+    static get mediaConstraints() {
+        const constraints = { audio: true, video: false };
+        if (Session.preferredInputDevice) {
+            constraints.audio = { deviceId: { exact: Session.preferredInputDevice } };
+        }
+        return constraints;
+    }
+    /**
+     * The ID of the device the user wants to use to capture the voice.
+     * Mobile only ⚠
+     *
+     * @type {string};
+     */
+    static preferredInputDevice = "";
+
     /** @type {import("@voip/core/call_service").CallService} */
     callService;
     /**
@@ -13,8 +32,6 @@ export class Session {
      * @type {"trying"|"ringing"|"ok"|undefined}
      */
     inviteState;
-    /** @type {boolean} */
-    isMute = false;
     /** @type {SessionRecorder} */
     recorder;
     /**
@@ -30,26 +47,36 @@ export class Session {
     _call;
     /** @type {boolean} */
     _isOnHold = false;
+    /** @type {boolean} */
+    _isMuted = false;
     /**
      * The equivalent object from the SIP.js library.
-     * Initially null for outbound calls.
      * null in demo mode.
      *
      * @type {SIP.Session|null}
      */
-    _sipSession;
+    _sipSession = null;
 
     constructor(call, sipSession = null) {
         if (!call) {
             throw new Error("Required argument 'call' is missing.");
         }
-        this.callService = call.store.env.services["voip.call"];
+        Session.allSessions.add(this);
+        this._call = call;
         if (call.direction === "outgoing") {
             this.inviteState = "trying";
         }
-        this._call = call;
-        this.sipSession = sipSession;
-        this.voip = call.store.env.services.voip;
+        const services = call.store.env.services;
+        this.callService = services["voip.call"];
+        this.ringtones = services["voip.ringtone"];
+        this.userAgent = services["voip.user_agent"];
+        this.voip = services.voip;
+        if (!sipSession) {
+            return this;
+        }
+        sipSession.delegate = { onBye: () => this.callService.end(this.call) };
+        sipSession.stateChange.addListener((state) => this._onSessionStateChange(state));
+        this._sipSession = sipSession;
     }
 
     /** @type {import("@voip/core/call_model").Call} */
@@ -57,38 +84,109 @@ export class Session {
         return this._call;
     }
 
-    set call(_) {
-        throw new Error("Redefining the call associated with a session is not allowed.");
+    get inviteRequestDelegate() {
+        return {
+            onAccept: (response) => this._onOutgoingInviteAccepted(response),
+            onProgress: (response) => this._onOutgoingInviteProgress(response),
+            onReject: (response) => this._onOutgoingInviteRejected(response),
+        };
     }
 
+    /**
+     * Determines whether the session is the one currently displayed in the
+     * Softphone.
+     *
+     * @returns {boolean}
+     */
+    get isActiveSession() {
+        return toRaw(this.userAgent.activeSession) === toRaw(this);
+    }
+
+    /** @returns {boolean} */
     get isOnHold() {
         return this._isOnHold;
     }
 
+    /** @param {boolean} state */
     set isOnHold(state) {
+        this._isOnHold = state;
         if (this.sipSession) {
             this._requestHold(state);
-        } else {
-            this._isOnHold = state;
+            this.updateTracks();
         }
     }
 
+    /** @returns {boolean} */
+    get isMuted() {
+        return this._isMuted;
+    }
+
+    /** @param {boolean} state */
+    set isMuted(state) {
+        this._isMuted = state;
+        this.updateTracks();
+    }
+
+    /** @returns {SIP.Session|null} */
     get sipSession() {
         return this._sipSession;
     }
 
-    set sipSession(sipSession) {
-        if (this.sipSession) {
-            throw new Error("Redefining sipSession is not allowed.");
+    /** @returns {ReturnType<_t>|""} */
+    get statusText() {
+        if (this.isOnHold) {
+            return _t("On hold");
         }
-        this._sipSession = sipSession;
-        if (!this._sipSession) {
+        if (this.voip.mode === "demo") {
+            return _t("Demo call");
+        }
+        return _t("In call");
+    }
+
+    /**
+     * Switches the device from which the voice is captured.
+     * Might prompt the user for permission.
+     * Future calls will use the selected device.
+     *
+     * @param {string} deviceId
+     */
+    static async switchInputDevice(deviceId) {
+        Session.preferredInputDevice = deviceId;
+        const stream = await navigator.mediaDevices.getUserMedia(Session.mediaConstraints);
+        for (const session of Session.allSessions) {
+            const peerConnection = session.sipSession?.sessionDescriptionHandler.peerConnection;
+            if (!peerConnection) {
+                continue;
+            }
+            for (const sender of peerConnection.getSenders()) {
+                if (sender.track) {
+                    await sender.replaceTrack(stream.getAudioTracks()[0]);
+                }
+            }
+            session.updateTracks();
+        }
+    }
+
+    /**
+     * Performs a "blind transfer", i.e., instructs the remote party to connect
+     * to the given "transferTarget" by sending a REFER request. It is called
+     * "blind" because, once the REFER request has been accepted, the call is
+     * immediately terminated regardless of whether the transfer succeeded.
+     *
+     * @param {string} transferTarget
+     */
+    blindTransfer(transferTarget) {
+        if (!this.sipSession) {
+            this.userAgent.hangup({ session: this });
             return;
         }
-        this._sipSession.delegate = {
-            onBye: (bye) => this._onBye(bye),
-        };
-        this._sipSession.stateChange.addListener((state) => this._onSessionStateChange(state));
+        this.sipSession.refer(this.userAgent.makeUri(transferTarget), {
+            requestDelegate: {
+                onAccept: (response) => {
+                    this.userAgent.hangup({ session: this });
+                },
+            },
+        });
     }
 
     /**
@@ -110,6 +208,15 @@ export class Session {
         );
     }
 
+    updateTracks() {
+        const sessionDescriptionHandler = this.sipSession?.sessionDescriptionHandler;
+        if (!sessionDescriptionHandler?.peerConnection) {
+            return;
+        }
+        sessionDescriptionHandler.enableReceiverTracks(!this.isOnHold);
+        sessionDescriptionHandler.enableSenderTracks(!this.isOnHold && !this.isMuted);
+    }
+
     /**
      * Explicitly resets the source and stops playback of the remote audio to
      * ensure that it can be garbage-collected.
@@ -126,16 +233,92 @@ export class Session {
     }
 
     /**
-     * Triggered when receiving a BYE request. Useful to detect when the callee
-     * of an outgoing call hangs up.
+     * Triggered when receiving CANCEL request.
+     * Useful to handle missed phone calls.
      *
-     * @param {SIP.IncomingByeRequest} bye
+     * @param {SIP.IncomingRequestMessage} message
      */
-    _onBye({ incomingByeRequest: bye }) {
-        if (!this.callService) {
-            throw new Error("callService is not set.");
+    _onIncomingInviteCanceled() {
+        if (this.isActiveSession) {
+            this.ringtones.stopPlaying();
+            this.voip.softphone.activeTab = "recent";
         }
-        this.callService.end(this.call);
+        this.sipSession.reject({ statusCode: 487 /* Request Terminated */ });
+        this.callService.miss(this.call);
+    }
+
+    /**
+     * Triggered when receiving a 2xx final response to the INVITE request.
+     *
+     * @param {SIP.IncomingResponse} response
+     */
+    _onOutgoingInviteAccepted(response) {
+        this.inviteState = "ok";
+        if (this.isActiveSession) {
+            this.ringtones.stopPlaying();
+        }
+        if (this.voip.willCallFromAnotherDevice) {
+            this.blindTransfer(this.transferTarget);
+            return;
+        }
+        this.callService.start(this.call);
+    }
+
+    /**
+     * Triggered when receiving a 1xx provisional response to the INVITE request
+     * (excepted code 100 responses).
+     *
+     * NOTE: Relying on provisional responses to implement behaviors seems like
+     * a bad idea, as they may or may not be sent depending on the SIP server
+     * implementation.
+     *
+     * @param {SIP.IncomingResponse} response
+     */
+    _onOutgoingInviteProgress(response) {
+        const { statusCode } = response.message;
+        if (statusCode === 183 /* Session Progress */ || statusCode === 180 /* Ringing */) {
+            if (this.isActiveSession) {
+                this.ringtones.ringback.play();
+            }
+            this.inviteState = "ringing";
+        }
+    }
+
+    /**
+     * Triggered when receiving a 4xx, 5xx, or 6xx final response to the
+     * INVITE request.
+     *
+     * @param {SIP.IncomingResponse} response
+     */
+    _onOutgoingInviteRejected(response) {
+        if (this.isActiveSession) {
+            this.ringtones.stopPlaying();
+        }
+        if (response.message.statusCode === 487 /* Request Terminated */) {
+            // invitation has been canceled by the user, the session has
+            // already been terminated
+            return;
+        }
+        const errorMessage = (() => {
+            switch (response.message.statusCode) {
+                case 404: // Not Found
+                case 488: // Not Acceptable Here
+                case 603: // Decline
+                    return _t(
+                        "The number is incorrect, the user credentials could be wrong or the connection cannot be made. Please check your configuration.\n(Reason received: %(reasonPhrase)s)",
+                        { reasonPhrase: response.message.reasonPhrase }
+                    );
+                case 486: // Busy Here
+                case 600: // Busy Everywhere
+                    return _t("The person you try to contact is currently unavailable.");
+                default:
+                    return _t("Call rejected (reason: “%(reasonPhrase)s”)", {
+                        reasonPhrase: response.message.reasonPhrase,
+                    });
+            }
+        })();
+        this.voip.triggerError(errorMessage, { isNonBlocking: true });
+        this.callService.reject(this.call);
     }
 
     /**
@@ -218,6 +401,7 @@ export class Session {
                 remoteStream.addTrack(track);
             }
         }
+        this.updateTracks();
         remoteAudio.srcObject = remoteStream;
         this._cleanUpRemoteAudio();
         this.remoteAudio = remoteAudio;

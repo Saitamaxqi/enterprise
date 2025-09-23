@@ -19,8 +19,8 @@ export class TransferConfirmation extends Component {
         this.softphone = useService("voip").softphone;
     }
 
-    async onClickDirectTransfer() {
-        await this.userAgent.transfer(this.props.targetPhoneNumber);
+    onClickDirectTransfer() {
+        this.userAgent.activeSession.blindTransfer(this.props.targetPhoneNumber);
     }
 
     async onClickAskFirst() {

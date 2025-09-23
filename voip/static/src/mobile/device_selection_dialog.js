@@ -1,5 +1,7 @@
 import { Component, onWillStart, useRef } from "@odoo/owl";
 
+import { Session } from "@voip/core/session";
+
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
@@ -17,7 +19,7 @@ export class DeviceSelectionDialog extends Component {
     }
 
     get currentDeviceId() {
-        return this.userAgent.preferredInputDevice;
+        return Session.preferredInputDevice;
     }
 
     get dialogProps() {
@@ -45,7 +47,7 @@ export class DeviceSelectionDialog extends Component {
 
     /** @param {MouseEvent} ev */
     onClickConfirm(ev) {
-        this.userAgent.switchInputStream(this.selectRef.el.value);
+        Session.switchInputDevice(this.selectRef.el.value);
         this.props.close();
     }
 }

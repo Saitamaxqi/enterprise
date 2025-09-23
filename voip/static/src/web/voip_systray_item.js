@@ -71,12 +71,12 @@ export class VoipSystrayItem extends Component {
         return "";
     }
 
-    /** @returns {ReturnType<_t>} */
+    /** @returns {ReturnType<_t>|""} */
     get systrayButtonText() {
         if (SessionRecorder.pendingUploads.size !== 0) {
             return _t("Processing…");
         }
-        return this.userAgent.inCallStatusText;
+        return this.userAgent.activeSession?.statusText ?? "";
     }
 
     /** @param {MouseEvent} ev */

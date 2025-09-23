@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from "@odoo/owl";
+import { Component, useState } from "@odoo/owl";
 
 import { Call } from "@voip/core/call_model";
 import { ActionButton } from "@voip/softphone/action_button";
@@ -25,12 +25,6 @@ export class InCallView extends Component {
             targetContact: false,
             targetPhoneNumber: "",
         });
-        useEffect(
-            // Pair the state of the UI with the state of the tracks, so if it
-            // says you're muted, you can be confident you're muted.
-            () => this.userAgent.updateTracks(),
-            () => [this.isMuted, this.isOnHold]
-        );
     }
 
     /** @returns {string} */
@@ -40,7 +34,11 @@ export class InCallView extends Component {
 
     /** @returns {boolean} */
     get hasPendingTransfer() {
-        return this.userAgent.mainSession && this.userAgent.transferSession && this.userAgent.activeSession.call?.state === "ongoing";
+        return (
+            this.userAgent.mainSession &&
+            this.userAgent.transferSession &&
+            this.userAgent.activeSession.call.state === "ongoing"
+        );
     }
 
     /** @returns {boolean} */
@@ -50,17 +48,17 @@ export class InCallView extends Component {
 
     /** @returns {boolean} */
     get isOnHold() {
-        return this.userAgent.activeSession?.isOnHold ?? false;
+        return this.userAgent.activeSession.isOnHold;
     }
 
     /** @returns {boolean} */
     get isMuted() {
-        return this.userAgent.activeSession?.isMute ?? false;
+        return this.userAgent.activeSession.isMuted;
     }
 
     /** @returns {boolean} */
     get isRecording() {
-        const recorder = this.userAgent.activeSession?.recorder;
+        const recorder = this.userAgent.activeSession.recorder;
         if (!recorder) {
             return false;
         }
@@ -109,14 +107,14 @@ export class InCallView extends Component {
     }
 
     onClickMute() {
-        this.userAgent.activeSession.isMute = !this.userAgent.activeSession.isMute;
+        this.userAgent.activeSession.isMuted = !this.userAgent.activeSession.isMuted;
     }
 
     onClickTransfer() {
         this.softphone.inCallView.activeView = "transfer";
     }
 
-    async onClickConfirmTransfer() {
+    onClickConfirmTransfer() {
         this.userAgent.performAttendedTransfer();
     }
 

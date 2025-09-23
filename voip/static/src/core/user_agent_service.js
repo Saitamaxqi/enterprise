@@ -23,7 +23,6 @@ export class UserAgent extends Reactive {
     demoTimeout;
     /** @type {Session} */
     mainSession;
-    preferredInputDevice;
     registerer;
     /**
      * The Audio element used to play the audio stream received from the remote
@@ -55,29 +54,6 @@ export class UserAgent extends Reactive {
             return false;
         }
         return call.state === "calling" && call.direction === "incoming";
-    }
-
-    /** @returns {ReturnType<_t>|""} */
-    get inCallStatusText() {
-        if (this.activeSession?.call.state !== "ongoing") {
-            return ""; // not in call
-        }
-        if (this.activeSession.isOnHold) {
-            return _t("On hold");
-        }
-        if (this.voip.mode === "demo") {
-            return _t("Demo call");
-        }
-        return _t("In call");
-    }
-
-    /** @returns {Object} */
-    get mediaConstraints() {
-        const constraints = { audio: true, video: false };
-        if (this.preferredInputDevice) {
-            constraints.audio = { deviceId: { exact: this.preferredInputDevice } };
-        }
-        return constraints;
     }
 
     /**
@@ -145,7 +121,7 @@ export class UserAgent extends Reactive {
         const hasDtlsAttributes = this._hasDtlsAttributes(this.activeSession.sipSession.body);
         try {
             await this.activeSession.sipSession.accept({
-                sessionDescriptionHandlerOptions: { constraints: this.mediaConstraints },
+                sessionDescriptionHandlerOptions: { constraints: Session.mediaConstraints },
             });
         } catch (error) {
             console.error(error);
@@ -283,33 +259,23 @@ export class UserAgent extends Reactive {
         this.registerer.register();
     }
 
-    invite(phoneNumber) {
-        let calleeUri;
-        if (this.voip.willCallFromAnotherDevice) {
-            calleeUri = this.makeUri(this.voip.store.settings.external_device_number);
-            this.activeSession.transferTarget = phoneNumber;
-        } else {
-            calleeUri = this.makeUri(phoneNumber);
+    /**
+     * @param {import("@voip/core/call_model").Call} call 
+     * @returns {Session}
+     */
+    invite(call) {
+        if (this.voip.mode === "demo") {
+            const session = new Session(call);
+            this.demoTimeout = setTimeout(() => {
+                session._onOutgoingInviteAccepted();
+            }, 3000);
+            return session;
         }
+        const phoneNumber = this.voip.willCallFromAnotherDevice
+            ? this.voip.store.settings.external_device_number
+            : call.phone_number;
         try {
-            const inviter = new SIP.Inviter(this.__sipJsUserAgent, calleeUri);
-            this.activeSession.sipSession = inviter;
-            this.activeSession.sipSession
-                .invite({
-                    requestDelegate: {
-                        onAccept: (response) => this._onOutgoingInvitationAccepted(response),
-                        onProgress: (response) => this._onOutgoingInvitationProgress(response),
-                        onReject: (response) => this._onOutgoingInvitationRejected(response),
-                    },
-                    sessionDescriptionHandlerOptions: {
-                        constraints: this.mediaConstraints,
-                    },
-                })
-                .catch((error) => {
-                    if (error.name !== "NotAllowedError") {
-                        throw error;
-                    }
-                });
+            var inviter = new SIP.Inviter(this.__sipJsUserAgent, this.makeUri(phoneNumber));
         } catch (error) {
             console.error(error);
             this.voip.triggerError(
@@ -318,7 +284,24 @@ export class UserAgent extends Reactive {
                     { phoneNumber, error: error.message }
                 )
             );
+            throw error;
         }
+        const session = new Session(call, inviter);
+        if (this.voip.willCallFromAnotherDevice) {
+            session.transferTarget = call.phone_number;
+        }
+        const sessionDescriptionHandlerOptions = { constraints: Session.mediaConstraints };
+        inviter
+            .invite({
+                requestDelegate: session.inviteRequestDelegate,
+                sessionDescriptionHandlerOptions,
+            })
+            .catch((error) => {
+                if (error.name !== "NotAllowedError") {
+                    throw error;
+                }
+            });
+        return session;
     }
 
     /**
@@ -332,22 +315,19 @@ export class UserAgent extends Reactive {
             return;
         }
         const call = await this.callService.create(data);
-        this.softphone.show();
+        try {
+            var session = this.invite(call);
+        } catch {
+            this.callService.abort(call);
+            return;
+        }
         if (type === "transfer") {
-            this.transferSession = new Session(call);
-            this.activeSession = this.transferSession;
+            this.activeSession = this.transferSession = session;
         } else {
-            this.mainSession = new Session(call);
-            this.activeSession = this.mainSession;
+            this.activeSession = this.mainSession = session;
         }
+        this.softphone.show();
         this.ringtoneService.ringback.play();
-        if (this.voip.mode === "prod") {
-            this.invite(call.phone_number);
-        } else {
-            this.demoTimeout = setTimeout(() => {
-                this._onOutgoingInvitationAccepted();
-            }, 3000);
-        }
     }
 
     /**
@@ -365,38 +345,6 @@ export class UserAgent extends Reactive {
         await this.callService.reject(this.activeSession.call);
     }
 
-    /** @param {string} deviceId */
-    async switchInputStream(deviceId) {
-        if (!this.activeSession.sipSession?.sessionDescriptionHandler.peerConnection) {
-            return;
-        }
-        this.preferredInputDevice = deviceId;
-        const stream = await navigator.mediaDevices.getUserMedia(this.mediaConstraints);
-        for (const sender of this.activeSession.sipSession.sessionDescriptionHandler.peerConnection.getSenders()) {
-            if (sender.track) {
-                await sender.replaceTrack(stream.getAudioTracks()[0]);
-            }
-        }
-    }
-
-    /**
-     * Transfers the call to the given number.
-     *
-     * @param {string} number
-     */
-    transfer(number) {
-        if (this.voip.mode === "demo") {
-            this.hangup();
-            return;
-        }
-        const transferTarget = this.makeUri(number);
-        this.activeSession.sipSession.refer(transferTarget, {
-            requestDelegate: {
-                onAccept: (response) => this._onReferAccepted(response),
-            },
-        });
-    }
-
     performAttendedTransfer() {
         if (this.voip.mode === "demo") {
             this.hangup({ session: this.mainSession });
@@ -404,27 +352,15 @@ export class UserAgent extends Reactive {
             return;
         }
         if (this.mainSession && this.transferSession) {
-            this.mainSession.sipSession.refer(this.transferSession.sipSession, {
-                requestDelegate: {
-                    onAccept: (response) => this._onReferAccepted(response),
+            const mainSession = this.mainSession;
+            mainSession.sipSession.refer(this.transferSession.sipSession, {
+                onNotify: ({ incomingNotifyRequest }) => {
+                    if (incomingNotifyRequest.message.body.includes("200 OK")) {
+                        this.hangup({ session: mainSession });
+                    }
                 },
             });
         }
-    }
-
-    updateTracks() {
-        if (
-            !this.activeSession?.sipSession?.sessionDescriptionHandler ||
-            this.activeSession.sipSession.state === SIP.SessionState.Terminated ||
-            this.activeSession.sipSession.state === SIP.SessionState.Terminating
-        ) {
-            return;
-        }
-        const { sessionDescriptionHandler } = this.activeSession.sipSession;
-        sessionDescriptionHandler.enableReceiverTracks(!this.activeSession.isOnHold);
-        sessionDescriptionHandler.enableSenderTracks(
-            !this.activeSession.isOnHold && !this.activeSession.isMute
-        );
     }
 
     /**
@@ -518,129 +454,14 @@ export class UserAgent extends Reactive {
             direction: "incoming",
             phone_number: phoneNumber,
         });
+        const session = new Session(call, inviteSession);
         inviteSession.incomingInviteRequest.delegate = {
-            onCancel: (message) => this._onIncomingInvitationCanceled(message),
+            onCancel: (message) => session._onIncomingInviteCanceled(message),
         };
-        this.mainSession = new Session(call, inviteSession);
-        this.activeSession = this.mainSession;
+        this.activeSession = this.mainSession = session;
         this.softphone.show();
         if (await this.shouldPlayIncomingCallRingtone()) {
             this.ringtoneService.incoming.play();
-        }
-    }
-
-    setMute() {
-        if (!this.activeSession?.sipSession) {
-            return;
-        }
-        this.updateTracks();
-    }
-
-    /**
-     * Triggered when receiving CANCEL request.
-     * Useful to handle missed phone calls.
-     *
-     * @param {SIP.IncomingRequestMessage} message
-     */
-    _onIncomingInvitationCanceled(message) {
-        this.ringtoneService.stopPlaying();
-        this.activeSession.sipSession.reject({ statusCode: 487 /* Request Terminated */ });
-        this.callService.miss(this.activeSession.call);
-        this.softphone.activeTab = "recent";
-    }
-
-    /**
-     * Triggered when receiving a 2xx final response to the INVITE request.
-     *
-     * @param {SIP.IncomingResponse} response
-     * @param {function} response.ack
-     * @param {SIP.IncomingResponseMessage} response.message
-     * @param {SIP.SessionDialog} response.session
-     */
-    _onOutgoingInvitationAccepted(response) {
-        this.ringtoneService.stopPlaying();
-        this.activeSession.inviteState = "ok";
-        if (this.voip.willCallFromAnotherDevice) {
-            this.transfer(this.activeSession.transferTarget);
-            return;
-        }
-        this.callService.start(this.activeSession.call);
-    }
-
-    /**
-     * Triggered when receiving a 1xx provisional response to the INVITE request
-     * (excepted code 100 responses).
-     *
-     * NOTE: Relying on provisional responses to implement behaviors seems like
-     * a bad idea, as they may or may not be sent depending on the SIP server
-     * implementation.
-     *
-     * @param {SIP.IncomingResponse} response
-     * @param {SIP.IncomingResponseMessage} response.message
-     * @param {function} response.prack
-     * @param {SIP.SessionDialog} response.session
-     */
-    _onOutgoingInvitationProgress(response) {
-        const { statusCode } = response.message;
-        if (statusCode === 183 /* Session Progress */ || statusCode === 180 /* Ringing */) {
-            this.ringtoneService.ringback.play();
-            this.activeSession.inviteState = "ringing";
-        }
-    }
-
-    /**
-     * Triggered when receiving a 4xx, 5xx, or 6xx final response to the
-     * INVITE request.
-     *
-     * @param {SIP.IncomingResponse} response
-     * @param {SIP.IncomingResponseMessage} response.message
-     * @param {number} response.message.statusCode
-     * @param {string} response.message.reasonPhrase
-     */
-    _onOutgoingInvitationRejected(response) {
-        this.ringtoneService.stopPlaying();
-        if (response.message.statusCode === 487 /* Request Terminated */) {
-            // invitation has been cancelled by the user, the session has
-            // already been terminated
-            return;
-        }
-        const errorMessage = (() => {
-            switch (response.message.statusCode) {
-                case 404: // Not Found
-                case 488: // Not Acceptable Here
-                case 603: // Decline
-                    return _t(
-                        "The number is incorrect, the user credentials could be wrong or the connection cannot be made. Please check your configuration.\n(Reason received: %(reasonPhrase)s)",
-                        { reasonPhrase: response.message.reasonPhrase }
-                    );
-                case 486: // Busy Here
-                case 600: // Busy Everywhere
-                    return _t("The person you try to contact is currently unavailable.");
-                default:
-                    return _t("Call rejected (reason: “%(reasonPhrase)s”)", {
-                        reasonPhrase: response.message.reasonPhrase,
-                    });
-            }
-        })();
-        this.voip.triggerError(errorMessage, { isNonBlocking: true });
-        this.callService.reject(this.activeSession.call);
-    }
-
-    /**
-     * Triggered when receiving a response with status code 2xx to the REFER
-     * request.
-     *
-     * @param {SIP.IncomingResponse} response The server final response to the
-     * REFER request.
-     */
-    async _onReferAccepted(response) {
-        if (this.transferSession) {
-            this.transferSession.sipSession.bye();
-            this.hangup({ session: this.transferSession });
-        }
-        if (this.mainSession) {
-            this.mainSession.sipSession.bye();
-            this.hangup({ session: this.mainSession });
         }
     }
 
