@@ -47,6 +47,14 @@ class SaleCommissionReport(models.Model):
         return super().formatted_read_group(domain, groupby, aggregates, having, limit, offset, order)
     formatted_read_group._readonly = False
 
+    @api.model
+    def formatted_read_grouping_sets(self, domain, grouping_sets, aggregates=(), *, order=None):
+        # In the pivot view, we don't want the hierarchical naming of department_id (hr.department)
+        return super().formatted_read_grouping_sets(
+            domain, grouping_sets, aggregates, order=order,
+        )
+    formatted_read_grouping_sets._readonly = False
+
     ################################################################################
 
     def fetch(self, field_names=None):
