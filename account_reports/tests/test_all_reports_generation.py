@@ -44,10 +44,11 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
         l10n_bd_corporate_tax_liability = self.env['account.account'].search([('account_type', '=', 'liability_current')], limit=1)
         l10n_ae_liability_account = self.env['account.account'].search([('account_type', '=', 'liability_current')], limit=1)
         l10n_cz_reports_tax_office = self.env.ref('l10n_cz.tax_office_1', raise_if_not_found=False)
+        l10n_ar_activity_default = self.env.ref('l10n_ar_reports_simple.activity_620100', raise_if_not_found=False)
         company_test_values = {
             'LU': {'vat': 'LU12345613'},
             'BR': {'vat': '01234567891251'},
-            'AR': {'vat': '30714295698'},
+            'AR': {'vat': '30714295698', 'l10n_ar_arca_activity_id': l10n_ar_activity_default and l10n_ar_activity_default.id},
             'AU': {'vat': '11225459588', 'street': 'Arrow Street', 'zip': '1348', 'city': 'Starling City', 'state_id': self.env.ref('base.state_au_1').id},
             'DE': {'vat': 'DE123456788', 'l10n_de_stnr': '151/815/08156', 'state_id': self.env.ref('base.state_de_th').id},
             'NO': {'vat': 'NO123456785', 'l10n_no_bronnoysund_number': '987654325'},
