@@ -230,8 +230,8 @@ class L10n_MxReportHandler(models.AbstractModel):
         data[43] += float(values.get('paid_16_imp_int_nc_tax', 0))  # 16% non tangible imports NC paid
         # Additional data
         data[47] += float(values.get('withheld', 0))  # DIOT:Retention base
-        data[48] += float(values.get('exempt', 0))  # DIOT:Exempt base
-        data[49] += float(values.get('exempt_imp', 0))  # DIOT:Import Exempt base
+        data[48] += float(values.get('exempt_imp', 0))  # DIOT:Import Exempt base
+        data[49] += float(values.get('exempt', 0))  # DIOT:Exempt base
         data[50] += float(values.get('paid_0', 0))  # 0% payments
         data[51] += float(values.get('no_obj', 0))  # No tax object
         # Declaration
