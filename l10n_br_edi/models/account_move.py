@@ -285,7 +285,7 @@ class AccountMove(models.Model):
             move.l10n_br_avatax_warnings = {
                 **(move.l10n_br_avatax_warnings or {}),
                 **move._l10n_br_edi_check_calculated_tax(),
-                **move._l10n_br_edi_check_partners(self.partner_id | self.company_id.partner_id | self._l10n_br_get_transporter()),
+                **move._l10n_br_edi_check_partners(move.partner_id | move.company_id.partner_id | move._l10n_br_get_transporter()),
                 **move._l10n_br_check_origin_access_key(move._get_l10n_br_avatax_service_params()),
             }
 
