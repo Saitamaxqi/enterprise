@@ -153,11 +153,14 @@
     // Line
     //------------------------------------------------------------------------------------------------------------------
     .line_name {
+        vertical-align: middle;
         > .wrapper {
             display: flex;
+            align-items: center;
 
             > .content {
                 display: flex;
+                align-items: center;
                 sup { top: auto }
             }
         }
@@ -168,11 +171,15 @@
     }
 
     .line_cell {
+        vertical-align: middle;
         > .wrapper {
             display: flex;
             align-items: center;
 
-            > .content { display: flex }
+            > .content {
+                display: flex;
+                align-items: center;
+            }
         }
 
         &.date > .wrapper { justify-content: center }
