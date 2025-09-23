@@ -116,6 +116,7 @@ export class BankRecKanbanController extends KanbanController {
                 matched_debit_ids: { name: "matched_debit_ids", type: "one2many" },
                 matched_credit_ids: { name: "matched_credit_ids", type: "one2many" },
                 reconcile_model_id: { name: "reconcile_model_id", type: "many2one" },
+                has_invalid_analytics: { name: "has_invalid_analytics", type: "boolean" },
             },
             activeFields: {
                 id: makeActiveField(),
@@ -136,6 +137,7 @@ export class BankRecKanbanController extends KanbanController {
                 matched_debit_ids: makeActiveField(),
                 matched_credit_ids: makeActiveField(),
                 reconcile_model_id: makeActiveField(),
+                has_invalid_analytics: makeActiveField(),
             },
         };
         params.config.activeFields.line_ids.related.activeFields.move_attachment_ids.related = {

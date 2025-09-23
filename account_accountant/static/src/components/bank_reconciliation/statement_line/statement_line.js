@@ -122,6 +122,10 @@ export class BankRecStatementLine extends KanbanRecord {
         this.bankReconciliation.openChatter();
     }
 
+    get hasInvalidAnalytics() {
+        return this.linesToReconcile.some((line) => line.has_invalid_analytics);
+    }
+
     get isUnfolded() {
         return this.state.isUnfolded;
     }

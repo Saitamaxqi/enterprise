@@ -26,7 +26,10 @@
                 </span>
             </div>
             <div class="o_line_to_reconcile_button d-none d-md-flex justify-content-end gap-2">
-                <button class="btn btn-link p-0 text-600" t-on-click.stop="toggleEditLine">
+                <button t-if="lineData.has_invalid_analytics" class="btn btn-link p-0 text-600" t-on-click.stop="toggleEditLine">
+                    <i class="fa fa-exclamation-triangle text-warning" data-tooltip="This line has invalid analytic distribution"/>
+                </button>
+                <button t-if="!lineData.has_invalid_analytics" class="btn btn-link p-0 text-600" t-on-click.stop="toggleEditLine">
                     <i class="fa fa-pencil"/>
                 </button>
                 <button class="btn btn-link p-0 text-600" t-on-click.stop="deleteLine">
