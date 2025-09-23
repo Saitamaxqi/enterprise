@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:45+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_contract_salary/es_419/>\n"
@@ -107,6 +107,24 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <h2>¡Felicidades!</h2>\n"
+"                Haz clic en el siguiente enlace para configurar tu paquete "
+"salarial.<br/>\n"
+"                <t t-if=\"ctx.get('validity_end')\">\n"
+"                    El enlace vencerá el <t t-out=\"ctx.get('validity_end')\""
+"/>.\n"
+"                </t>\n"
+"                <div style=\"padding: 16px 0px 16px 0px;\">\n"
+"                    <a t-attf-href=\"/salary_package/simulation/offer/"
+"{{ctx.get('offer_id')}}?token={{ctx.get('access_token')}}\" target=\"_blank\""
+" t-attf-style=\"background-color: {{object.company_id.email_secondary_color "
+"or '#875A7B'}}; text-decoration: none; color: {{"
+"object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px "
+"16px; border-radius: 5px;\">Configura tu paquete</a>\n"
+"                </div>\n"
+"            </div>\n"
+"        "
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.salary_package_sidebar
@@ -326,7 +344,7 @@ msgstr "Agregar una sección"
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info.type,name:hr_contract_salary.hr_contract_salary_personal_info_type_address
 msgid "Address"
-msgstr ""
+msgstr "Dirección"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__benefit_type_id

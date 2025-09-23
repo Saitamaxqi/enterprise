@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents_source/es_419/>\n"
 "Language: es_419\n"
@@ -41,28 +41,28 @@ msgstr "Nombre en pantalla"
 #: model:ir.model,name:ai_documents_source.model_documents_document
 #: model:ir.model.fields.selection,name:ai_documents_source.selection__ai_agent_source__type__document
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #. module: ai_documents_source
 #: model:ir.model.fields,field_description:ai_documents_source.field_ai_agent_source__id
 #: model:ir.model.fields,field_description:ai_documents_source.field_documents_document__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai_documents_source
 #. odoo-python
 #: code:addons/ai_documents_source/models/ai_agent_source.py:0
 #: model:ir.model.fields,field_description:ai_documents_source.field_ai_agent_source__document_id
 msgid "Source Document"
-msgstr ""
+msgstr "Documento origen"
 
 #. module: ai_documents_source
 #: model:ir.model.fields,field_description:ai_documents_source.field_ai_agent_source__type
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #. module: ai_documents_source
 #. odoo-python
 #: code:addons/ai_documents_source/models/ai_agent_source.py:0
 msgid "id"
-msgstr ""
+msgstr "id"

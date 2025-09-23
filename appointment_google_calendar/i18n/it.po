@@ -3,13 +3,14 @@
 # * appointment_google_calendar
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-18 02:42+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-22 14:29+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_calendar/it/>\n"
 "Language: it\n"
@@ -92,4 +93,4 @@ msgstr "Utenti privi di sincronizzazione Calendario Google"
 #. module: appointment_google_calendar
 #: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__event_videocall_source
 msgid "Video Link"
-msgstr ""
+msgstr "Link video"

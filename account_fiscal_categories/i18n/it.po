@@ -3,13 +3,14 @@
 # * account_fiscal_categories
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:24+0000\n"
-"PO-Revision-Date: 2025-09-15 17:30+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-22 14:28+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_fiscal_categories/it/>\n"
 "Language: it\n"
@@ -29,7 +30,7 @@ msgstr "Conto"
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_fiscal_category
 msgid "Account Fiscal Category"
-msgstr ""
+msgstr "Categoria fiscale conto"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__active
@@ -39,7 +40,7 @@ msgstr "Attivo"
 #. module: account_fiscal_categories
 #: model_terms:ir.actions.act_window,help:account_fiscal_categories.action_account_fiscal_category_list
 msgid "Add a Fiscal Category"
-msgstr ""
+msgstr "Aggiungi una categoria fiscale"
 
 #. module: account_fiscal_categories
 #: model:account.report.column,name:account_fiscal_categories.fiscal_report_total_amount
@@ -98,12 +99,12 @@ msgstr "Categorie fiscali"
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__fiscal_category_id
 #: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
 msgid "Fiscal Category"
-msgstr ""
+msgstr "Categoria fiscale"
 
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_account_fiscal_rate
 msgid "Fiscal Rate"
-msgstr ""
+msgstr "Aliquota fiscale"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__rate
@@ -113,7 +114,7 @@ msgstr "Aliquota fiscale (%)"
 #. module: account_fiscal_categories
 #: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
 msgid "Fiscal Rates"
-msgstr ""
+msgstr "Aliquote fiscali"
 
 #. module: account_fiscal_categories
 #: model:account.report,name:account_fiscal_categories.fiscal_report
@@ -125,12 +126,12 @@ msgstr "Resoconto fiscale"
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_fiscal_report_handler
 msgid "Fiscal Report Custom Handler"
-msgstr ""
+msgstr "Gestore personalizzato dei resoconti fiscali"
 
 #. module: account_fiscal_categories
 #: model:ir.model.constraint,message:account_fiscal_categories.constraint_account_fiscal_category_unique_code
 msgid "Fiscal category code should be unique."
-msgstr ""
+msgstr "Il codice della categoria fiscale deve essere unico."
 
 #. module: account_fiscal_categories
 #. odoo-python
@@ -144,6 +145,8 @@ msgid ""
 "General: Make sure the deduction for business meals is under the legal "
 "limit."
 msgstr ""
+"Generale: assicurati che la detrazione per i pasti aziendali sia inferiore "
+"al limite legale."
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__id
@@ -174,7 +177,7 @@ msgstr "Ultimo aggiornamento il"
 #. module: account_fiscal_categories
 #: model:account.return.check.template,name:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
 msgid "Meal expense adjustments"
-msgstr ""
+msgstr "Rettifiche spese pasti"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__name
@@ -207,7 +210,7 @@ msgstr "Data inizio"
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
 msgid "There are multiple fiscal rates in this period"
-msgstr ""
+msgstr "In questo periodo sono in vigore diverse aliquote fiscali."
 
 #. module: account_fiscal_categories
 #. odoo-python

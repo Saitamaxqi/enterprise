@@ -7,13 +7,14 @@
 # Andy Yiu, 2022
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-09 14:09+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-22 12:46+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import_camt/ja/>\n"
 "Language: ja\n"
@@ -1453,7 +1454,7 @@ msgstr "スウィーピング"
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Switch"
-msgstr "スイッチ"
+msgstr "切り替え"
 
 #. module: account_bank_statement_import_camt
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0

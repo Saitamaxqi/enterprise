@@ -3,13 +3,14 @@
 # * ai_app
 #
 # "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_app/es_419/>\n"
 "Language: es_419\n"
@@ -51,18 +52,18 @@ msgstr ""
 #: model:ir.ui.menu,name:ai_app.ai_menu_root
 #: model_terms:ir.ui.view,arch_db:ai_app.res_config_settings_view_form
 msgid "AI"
-msgstr ""
+msgstr "IA"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
 msgid "Add a source"
-msgstr ""
+msgstr "Agregar una fuente"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_kanban
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_search
 msgid "Agent"
-msgstr ""
+msgstr "Agente"
 
 #. module: ai_app
 #. odoo-javascript
@@ -71,17 +72,17 @@ msgstr ""
 #: model:ir.ui.menu,name:ai_app.ai_agent_menu_action
 #: model:ir.ui.menu,name:ai_app.ai_menu
 msgid "Agents"
-msgstr ""
+msgstr "Agentes"
 
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_agent_action
 msgid "Agents help you manage and organize your AI operations."
-msgstr ""
+msgstr "Los agentes te ayudan a gestionar y organizar tus operaciones de IA."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "All Models"
-msgstr ""
+msgstr "Todos los modelos"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -265,12 +266,12 @@ msgstr ""
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
 msgid "Write your prompt..."
-msgstr ""
+msgstr "Escribe tu instrucción..."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_topic_view_form
 msgid "e.g. Chat with customers"
-msgstr ""
+msgstr "Por ejemplo, Chatea con tus clientes"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form

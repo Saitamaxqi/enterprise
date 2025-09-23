@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_expense_stripe/es_419/>\n"
@@ -46,12 +46,12 @@ msgstr "<span class=\"o_stat_text\">Tarjetas</span>"
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "<span class=\"o_stat_text\">Employee</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Empleado</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_view_form_inherits_stripe
 msgid "<span class=\"ps-2\">Cards</span>"
-msgstr ""
+msgstr "<span class=\"ps-2\">Tarjetas</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
@@ -60,16 +60,19 @@ msgid ""
 "triangle text-danger pb-2\" title=\"Entered digits don't match the last 4 "
 "digits of the card.\"/>"
 msgstr ""
+"<span invisible=\"not show_warning_wrong_last_4\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title=\"Los dígitos que "
+"escribiste no coinciden con los últimos 4 dígitos de la tarjeta.\"/>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_dashboard_kanban_view_inherit_expense_stripe
 msgid "<span>Available</span>"
-msgstr ""
+msgstr "<span>Disponible</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "<span>and</span>"
-msgstr ""
+msgstr "<span>y</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -557,7 +560,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__bic
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bail_and_bond_payments
@@ -612,7 +615,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__birthday
 msgid "Birthday"
-msgstr ""
+msgstr "Cumpleaños"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_block_wizard_form
@@ -729,7 +732,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__card_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__card_id
 msgid "Card"
-msgstr ""
+msgstr "Tarjeta"
 
 #. module: hr_expense_stripe
 #. odoo-python

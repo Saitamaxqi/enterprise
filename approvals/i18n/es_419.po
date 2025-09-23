@@ -3,13 +3,14 @@
 # * approvals
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:28+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/approvals/es_419/>\n"
 "Language: es_419\n"
@@ -48,12 +49,12 @@ msgstr "1200"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-check text-success me-1\"/>Approve"
-msgstr ""
+msgstr "<i class=\"fa fa-check text-success me-1\"/>Aprobar"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
-msgstr ""
+msgstr "<i class=\"fa fa-times text-danger me-1\"/>Rechazar"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form

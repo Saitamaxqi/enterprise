@@ -4,12 +4,13 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 15:13+0000\n"
-"PO-Revision-Date: 2025-09-18 19:00+0000\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sale_renting/es_419/>\n"
@@ -333,7 +334,7 @@ msgstr "Órdenes confirmadas"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_create_rental_order
@@ -554,7 +555,7 @@ msgstr ""
 #: model:ir.model.fields,help:sale_renting.field_product_product__extra_hourly
 #: model:ir.model.fields,help:sale_renting.field_product_template__extra_hourly
 msgid "Fine per hour late"
-msgstr ""
+msgstr "Multa por hora tarde"
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_product__display_price

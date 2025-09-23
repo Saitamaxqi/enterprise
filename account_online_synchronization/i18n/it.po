@@ -3,13 +3,14 @@
 # * account_online_synchronization
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 14:55+0000\n"
-"PO-Revision-Date: 2025-09-18 02:41+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-22 14:28+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_online_synchronization/it/>\n"
 "Language: it\n"
@@ -392,7 +393,7 @@ msgstr "Scegli una data e un registro da cui recuperare le transazioni"
 #. module: account_online_synchronization
 #: model_terms:ir.ui.view,arch_db:account_online_synchronization.account_duplicate_transaction_wizard_view_form
 msgid "Choose a date from which you want to check the transactions."
-msgstr ""
+msgstr "Scegli una data a partire dalla quale vuoi controllare le transazioni."
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__client_id
@@ -802,12 +803,12 @@ msgstr ""
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_link__last_refresh
 msgid "Last Synchronization"
-msgstr ""
+msgstr "Ultima sincronizzazione"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_online_account__last_sync
 msgid "Last Transaction Synchronized on"
-msgstr ""
+msgstr "Ultima transazione sincronizzata il"
 
 #. module: account_online_synchronization
 #: model:ir.model.fields,field_description:account_online_synchronization.field_account_bank_selection__write_uid
@@ -984,7 +985,6 @@ msgstr "Identificativo di operazioni online"
 #. module: account_online_synchronization
 #. odoo-python
 #: code:addons/account_online_synchronization/models/account_bank_statement.py:0
-#, fuzzy
 msgid "Opening Statement: First Synchronization"
 msgstr "Apertura estratto conto: prima sincronizzazione"
 
@@ -1267,7 +1267,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
 msgid "There are cancelled"
-msgstr ""
+msgstr "Ci sono cancellazioni"
 
 #. module: account_online_synchronization
 #. odoo-python
@@ -1503,9 +1503,11 @@ msgstr "transazioni recuperate"
 msgid ""
 "within this period that were not created using the online synchronization."
 msgstr ""
+"entro questo periodo che non sono stati creati utilizzando la "
+"sincronizzazione online."
 
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
 msgid "within this period."
-msgstr ""
+msgstr "in questo periodo."

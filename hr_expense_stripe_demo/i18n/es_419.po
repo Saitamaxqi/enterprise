@@ -3,13 +3,14 @@
 # * hr_expense_stripe_demo
 #
 # "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-09-19 02:41+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_expense_stripe_demo/es_419/>\n"
 "Language: es_419\n"
@@ -37,7 +38,7 @@ msgstr "Método de autorización"
 #. module: hr_expense_stripe_demo
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe_demo.hr_expense_stripe_test_shipping_wizard_form
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__capture_surcharge
@@ -244,7 +245,7 @@ msgstr ""
 #. module: hr_expense_stripe_demo
 #: model:ir.model.fields,field_description:hr_expense_stripe_demo.field_hr_expense_stripe_test_purchase_wizard__card_currency_id
 msgid "Stripe Currency"
-msgstr ""
+msgstr "Moneda de Stripe"
 
 #. module: hr_expense_stripe_demo
 #: model:ir.model,name:hr_expense_stripe_demo.model_hr_expense_stripe_topup_wizard

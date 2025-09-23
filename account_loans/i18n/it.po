@@ -3,13 +3,14 @@
 # * account_loans
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-18 02:43+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-22 14:28+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_loans/it/>\n"
 "Language: it\n"
@@ -242,6 +243,8 @@ msgid ""
 "Confirm that all loans recorded in the accounts actually exist and match the"
 " loan agreements."
 msgstr ""
+"Verifica che tutti i prestiti registrati nei conti esistano effettivamente e "
+"corrispondano ai contratti di prestito."
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__count_linked_assets
@@ -354,6 +357,10 @@ msgid ""
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
+"Assicurati che i prestiti siano propriamente classificati come attuali o non "
+"attuali e concessi secondo i principi contabili belgi. \n"
+"Prestiti estinguibili in 1 anno → Conto 42\n"
+"Prestiti > 1 anno → Conto 17"
 
 #. module: account_loans
 #: model:ir.model.fields,help:account_loans.field_account_loan_line__generated_move_ids
@@ -629,12 +636,12 @@ msgstr "Analisi prestiti"
 #. module: account_loans
 #: model:account.return.check.template,name:account_loans.account_return_check_template_loans_classification
 msgid "Loans classification"
-msgstr ""
+msgstr "Classificazione prestiti"
 
 #. module: account_loans
 #: model:account.return.check.template,name:account_loans.account_return_check_template_loans_recording
 msgid "Loans recording"
-msgstr ""
+msgstr "Registrazione prestiti"
 
 #. module: account_loans
 #: model:ir.model.fields,field_description:account_loans.field_account_loan__long_term_account_id

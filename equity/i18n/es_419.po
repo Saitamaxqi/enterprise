@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/equity/es_419/>\n"
@@ -42,12 +42,12 @@ msgstr "Transacciones de %(partner_name)s"
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
 msgid "(Completed through portal Form)"
-msgstr ""
+msgstr "(Completado mediante el formulario del portal)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "(ID"
-msgstr ""
+msgstr "(ID"
 
 #. module: equity
 #. odoo-python
@@ -59,12 +59,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "(expired)"
-msgstr ""
+msgstr "(vencido)"
 
 #. module: equity
 #: model:ir.actions.report,print_report_name:equity.action_equity_ubo_report
 msgid "(object._get_ubo_report_filename())"
-msgstr ""
+msgstr "(object._get_ubo_report_filename())"
 
 #. module: equity
 #. odoo-javascript
@@ -338,7 +338,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Buyer"
-msgstr ""
+msgstr "Comprador"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__ceo
@@ -404,7 +404,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Company"
-msgstr ""
+msgstr "Empresa"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_1
@@ -611,7 +611,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_kanban_dashboard_graph
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_kanban_dashboard_graph
 msgid "Equity Kanban Dashboard Graph"
-msgstr ""
+msgstr "Gráfica en el tablero kanban de Patrimonio"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_last_valuation

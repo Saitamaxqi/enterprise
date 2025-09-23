@@ -1,24 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_auto_transfer
+# * account_auto_transfer
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2022
-#
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2022\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-22 14:28+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"account_transfer/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_auto_transfer.view_transfer_model_form
@@ -28,7 +31,7 @@ msgstr "<span> fino al </span>"
 #. module: account_auto_transfer
 #: model:ir.model,name:account_auto_transfer.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "Modello piano dei conti"
 
 #. module: account_auto_transfer
 #: model:ir.model,name:account_auto_transfer.model_account_transfer_model
@@ -43,7 +46,7 @@ msgstr "Riga modello trasferimento conto"
 #. module: account_auto_transfer
 #: model:ir.actions.server,name:account_auto_transfer.ir_cron_auto_transfer_ir_actions_server
 msgid "Account automatic transfers: Perform transfers"
-msgstr ""
+msgstr "Trasferimento automatico conto: esegui trasferimenti"
 
 #. module: account_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_auto_transfer.view_transfer_model_form
@@ -218,7 +221,7 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/account_auto_transfer/demo/account_demo.py:0
 msgid "IFRS Automatic Transfers"
-msgstr ""
+msgstr "Trasferimenti automatici IFRS"
 
 #. module: account_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_auto_transfer.view_transfer_model_form
@@ -251,7 +254,7 @@ msgstr "Mensile"
 #. odoo-python
 #: code:addons/account_auto_transfer/demo/account_demo.py:0
 msgid "Monthly IFRS rent expense transfer"
-msgstr ""
+msgstr "Trasferimento mensile spese di leasing IFRS"
 
 #. module: account_auto_transfer
 #: model:ir.model.fields,field_description:account_auto_transfer.field_account_transfer_model__move_ids_count
@@ -309,7 +312,7 @@ msgstr "Percentuale (%)"
 #. module: account_auto_transfer
 #: model:ir.model.fields,field_description:account_auto_transfer.field_account_transfer_model_line__percent_is_readonly
 msgid "Percent Is Readonly"
-msgstr ""
+msgstr "Percento in sola lettura"
 
 #. module: account_auto_transfer
 #: model:ir.model.fields,help:account_auto_transfer.field_account_transfer_model_line__percent
@@ -373,7 +376,7 @@ msgstr "Il filtro partner %s è duplicato"
 #. odoo-python
 #: code:addons/account_auto_transfer/models/transfer_model.py:0
 msgid "The total percentage (%s) should be less or equal to 100!"
-msgstr ""
+msgstr "La percentuale totale (%s) deve essere inferiore o uguale a 100!"
 
 #. module: account_auto_transfer
 #: model:ir.model.fields,field_description:account_auto_transfer.field_account_transfer_model__total_percent
@@ -399,7 +402,7 @@ msgstr "Annuale"
 #. odoo-python
 #: code:addons/account_auto_transfer/demo/account_demo.py:0
 msgid "Yearly liabilites auto transfers"
-msgstr ""
+msgstr "Trasferimenti automatici passività annuali"
 
 #. module: account_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_auto_transfer.view_transfer_model_form

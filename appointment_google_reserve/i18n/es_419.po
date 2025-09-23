@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/appointment_google_reserve/es_419/>\n"
 "Language: es_419\n"
@@ -54,6 +54,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 msgstr ""
+"<i class=\"ms-2 fa fa-info-circle\" title="
+"\"Necesario para Reserva con Google\"/>"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -61,6 +63,8 @@ msgid ""
 "<span class=\"fa fa-check fa-fw me-1\"/>Your Google Reserve Synchronization "
 "is active."
 msgstr ""
+"<span class=\"fa fa-check fa-fw me-1\"/>La sincronización de Reserva con "
+"Google está activa."
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -72,12 +76,12 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Se requiere una acción"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__location_id
 msgid "Address"
-msgstr ""
+msgstr "Dirección"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_appointment_resource
@@ -304,7 +308,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Mensajes"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -319,7 +323,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Número de errores"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction_counter
@@ -423,7 +427,7 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__website_url
 msgid "Website URL"
-msgstr ""
+msgstr "URL del sitio web"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__website_message_ids
