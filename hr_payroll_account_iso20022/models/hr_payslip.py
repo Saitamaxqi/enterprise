@@ -42,7 +42,7 @@ class HrPayslip(models.Model):
                 # The "High" priority level is a payment attribute that we should specify for salary payments :
                 # https://www.febelfin.be/sites/default/files/2019-04/standard-credit_transfer-xml-v32-en_0.pdf
                 # section 2.6
-                'iso20022_priority': 'HIGH',
+                'iso20022_priority': 'HIGH' if journal_id.company_id.account_fiscal_country_id.code == "BE" else 'NORM',
             }
             if iso20022_uetr:
                 payment['iso20022_uetr'] = iso20022_uetr
