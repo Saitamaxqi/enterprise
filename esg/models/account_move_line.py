@@ -32,13 +32,22 @@ class AccountMoveLine(models.Model):
             elif line.esg_emission_factor_id.compute_method == 'monetary':
                 aml_currency = line.currency_id or line.company_id.currency_id
                 if aml_currency and line.esg_emission_factor_id.currency_id:
-                    line.esg_emission_multiplicator = line.price_subtotal * line.esg_emission_factor_id.currency_id._convert(1, aml_currency, date=line.date)
+                    line.esg_emission_multiplicator = aml_currency._convert(
+                        from_amount=line.price_subtotal,
+                        to_currency=line.esg_emission_factor_id.currency_id,
+                        date=line.date,
+                        round=False,
+                    )
                 else:
                     line.esg_emission_multiplicator = 0
             else:
                 aml_uom = line.product_uom_id or line.esg_emission_factor_id.uom_id
                 if aml_uom and line.esg_emission_factor_id.uom_id:
-                    line.esg_emission_multiplicator = line.quantity * line.esg_emission_factor_id.uom_id._compute_quantity(1, aml_uom)
+                    line.esg_emission_multiplicator = aml_uom._compute_quantity(
+                        qty=line.quantity,
+                        to_unit=line.esg_emission_factor_id.uom_id,
+                        round=False,
+                    )
                 else:
                     line.esg_emission_multiplicator = 0
 

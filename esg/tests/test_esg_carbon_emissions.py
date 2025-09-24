@@ -58,6 +58,30 @@ class TestEsgCarbonEmission(TestEsgCommon):
         self.assertEqual(bill_line.esg_emissions_value, 9296.0)  # 100 (aml quantity) * 92.96 (factor value) * 1.0 (unit->unit conversion) = 9296.0 kgCO2e
         self.assertEqual(float_compare(bill_line.esg_uncertainty_absolute_value, 1394.39, precision_rounding=2), 0)  # 9327 (emission value) * 0.15 (factor uncertainty) = 1394.39 kgCO2e
 
+    def test_physical_method_account_move_line_emission_value_with_relative_uom(self):
+        self.assertEqual(self.emission_factor_phones_production.uom_id, self.env.ref('uom.product_uom_unit'))
+        bill_line_values = {
+            'move_id': self.bill_1.id,
+            'name': 'Computer',
+            'quantity': 50,
+            'esg_emission_factor_id': self.emission_factor_phones_production.id,
+        }
+        bill_line_1 = self.env['account.move.line'].create({
+            **bill_line_values,
+            'product_uom_id': self.env.ref('uom.product_uom_dozen').id,
+        })
+        self.assertEqual(bill_line_1.esg_emissions_value, 45000)  # 50 (aml quantity) * 75 (factor value) * 12.0 (pack of 12 units->unit conversion) = 45000 kgCO2e
+        self.assertEqual(bill_line_1.esg_uncertainty_absolute_value, 11250)  # 45000 (emission value) * 0.25 (factor uncertainty) = 11250 kgCO2e
+
+        # Inverse both uoms
+        self.emission_factor_phones_production.uom_id = self.env.ref('uom.product_uom_dozen')
+        bill_line_2 = self.env['account.move.line'].create({
+            **bill_line_values,
+            'product_uom_id': self.env.ref('uom.product_uom_unit').id,
+        })
+        self.assertEqual(bill_line_2.esg_emissions_value, 312.5)  # 50 (aml quantity) * 75 (factor value) * 1/12.0 (unit->pack of 12 units conversion) = 312.5 kgCO2e
+        self.assertEqual(bill_line_2.esg_uncertainty_absolute_value, 78.125)  # 312.5 (emission value) * 0.25 (factor uncertainty) = 78.125 kgCO2e
+
     def test_monetary_method_account_move_line_emission_value(self):
         for account, esg_usable in self.accounts_to_esg_usable.items():
             # Test with all usable account types and a non-usable one.
