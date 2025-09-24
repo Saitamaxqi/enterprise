@@ -61,11 +61,8 @@
             <xpath expr="//field[@name='invoice_source_email']" position="after">
                 <field name="l10n_in_gstr2b_reconciliation_status" readonly="1" invisible="not l10n_in_gst_efiling_feature_enabled or move_type not in ('in_invoice', 'in_receipt', 'in_refund') or country_code != 'IN'"/>
             </xpath>
-            <xpath expr="//div[hasclass('oe_title')]" position="inside">
-                <div class="fs-6 d-flex gap-2" invisible="country_code != 'IN' or not l10n_in_irn_number">
-                    <label class="fs-6" for="l10n_in_irn_number" string="IRN"/>
-                    <field name="l10n_in_irn_number" class="oe_inline"/>
-                </div>
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name="l10n_in_irn_number" invisible="country_code != 'IN' or not l10n_in_irn_number" class="text-break"/>
             </xpath>
             <xpath expr="//header" position='after'>
                 <div role="status" class="alert alert-warning"
