@@ -295,6 +295,41 @@ class TestEditView(TestStudioController):
             """
         )
 
+    def test_edit_view_remove_attribute(self):
+        op = {
+            'type': 'attributes',
+            'target': {
+                'tag': 'calendar',
+                'attrs': {},
+                'xpath_info': [
+                    {'tag': 'calendar', 'indice': 1},
+                ],
+            },
+            'position': 'attributes',
+            'new_attrs': {'date_stop': None}
+        }
+
+        base_view = self.env['ir.ui.view'].create({
+            'name': 'TestKanban',
+            'type': 'calendar',
+            'model': 'res.partner',
+            'arch': """
+                <calendar date_start="create_date" date_stop="write_date">
+                    <field name="display_name" />
+                </calendar>
+            """
+        })
+        self.edit_view(base_view, operations=[op])
+
+        self.assertViewArchEqual(
+            base_view.get_combined_arch(),
+            """
+                <calendar date_start="create_date">
+                    <field name="display_name" />
+                </calendar>
+            """
+        )
+
     def test_edit_view_add_binary_field_inside_group(self):
         arch = """<form>
             <sheet>
