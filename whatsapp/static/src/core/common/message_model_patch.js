@@ -18,7 +18,7 @@ const messagePatch = {
             super.isTranslatable(thread) ||
             (this.store.hasMessageTranslationFeature &&
                 thread?.channel_type === "whatsapp" &&
-                thread?.self_member_id?.partner_id?.main_user_id?.share === false)
+                this.store.self?.main_user_id?.share === false)
         );
     },
 };
