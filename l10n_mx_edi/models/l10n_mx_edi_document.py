@@ -931,6 +931,7 @@ class L10n_Mx_EdiDocument(models.Model):
             product = base_line['product_id']
             quantity = base_line['quantity']
             uom = base_line['uom_id']
+            discount_amount = base_line['raw_gross_price_subtotal'] - tax_details['raw_total_excluded_currency']
 
             base_line_cfdi_values = base_line['l10n_mx_cfdi_values'] = {
                 'document_name': base_line.get('document_name'),
@@ -940,8 +941,8 @@ class L10n_Mx_EdiDocument(models.Model):
                 'cuenta_predial': product.l10n_mx_edi_predial_account,
                 'cantidad': quantity,
                 'unidad': (uom.name or '').upper(),
-                'descuento': base_line['raw_gross_price_subtotal'] - tax_details['raw_total_excluded_currency'],
-                'importe': base_line['raw_gross_price_subtotal'],
+                'descuento': float_round(discount_amount, precision_digits=6),
+                'importe': float_round(base_line['raw_gross_price_subtotal'], precision_digits=6),
                 'traslados_list': [],
                 'retenciones_list': [],
             }
@@ -1038,7 +1039,7 @@ class L10n_Mx_EdiDocument(models.Model):
                 is_local_tax = grouping_key['local_tax_name']
 
                 tax_values = {
-                    'importe': values['raw_tax_amount_currency'] * (-1 if is_withholding else 1),
+                    'importe': float_round(values['raw_tax_amount_currency'] * (-1 if is_withholding else 1), precision_digits=6),
                     'impuesto': grouping_key['impuesto'],
                     'tipo_factor': grouping_key['tipo_factor'],
                     'tasa_o_cuota': grouping_key['tasa_o_cuota'],
@@ -1046,13 +1047,13 @@ class L10n_Mx_EdiDocument(models.Model):
 
                 if grouping_key['tipo_factor'] == 'Cuota':
                     if grouping_key['scale_from_quantity']:
-                        tax_values['base'] = base_line['quantity']
+                        tax_values['base'] = float_round(base_line['quantity'], precision_digits=6)
                     elif product[grouping_key['product_field']]:
-                        tax_values['base'] = product[grouping_key['product_field']]
+                        tax_values['base'] = float_round(product[grouping_key['product_field']], precision_digits=6)
                     else:
                         tax_values['base'] = 0.0
                 else:
-                    tax_values['base'] = values['raw_base_amount_currency']
+                    tax_values['base'] = float_round(values['raw_base_amount_currency'], precision_digits=6)
                     if float_is_zero(tax_values['base'], precision_digits=6):
                         tax_values['base'] = 0.000001
 
@@ -1067,7 +1068,7 @@ class L10n_Mx_EdiDocument(models.Model):
                     tax_details_amounts['base'] += tax_values['base']
                     tax_details_amounts['importe'] += tax_values['importe']
                 elif removal_needed:
-                    base_line_cfdi_values['importe'] += values['raw_tax_amount_currency']
+                    base_line_cfdi_values['importe'] += float_round(values['raw_tax_amount_currency'], precision_digits=6)
                 else:
                     target_list = 'retenciones_list' if is_withholding else 'traslados_list'
                     base_line_cfdi_values[target_list].append(tax_values)
