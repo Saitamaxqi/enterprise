@@ -34,8 +34,12 @@ class AccountJournal(models.Model):
         Othr = super()._get_DbtrAcctOthr(payment_method_code)
         if self._is_se_bban(payment_method_code):
             SchmeNm = etree.SubElement(Othr, "SchmeNm")
-            Cd = etree.SubElement(SchmeNm, "Cd")
-            Cd.text = 'BBAN'
+            if self.bank_account_id.acc_type == 'bankgiro':
+                Prtry = etree.SubElement(SchmeNm, "Prtry")
+                Prtry.text = 'BGNR'
+            else:
+                Cd = etree.SubElement(SchmeNm, "Cd")
+                Cd.text = 'BBAN'
         return Othr
 
     def _get_CdtrAcctIdOthr(self, bank_account, payment_method_code=None):

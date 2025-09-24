@@ -27,7 +27,7 @@ class TestSwedishIsoBBANCreditTransfer(TestSwedishIsoCreditTransfer):
 
     @freeze_time('2024-03-04')
     def test_plusgiro(self):
-        self.company_data['default_journal_bank'].bank_acc_number = '6543-2106'
+        self.company_data['default_journal_bank'].bank_acc_number = '654321-9'
         self.swedish_partner_bank.lock_trust_fields = False
         self.swedish_partner_bank.acc_number = '543210-9'
         self.assertEqual(self.swedish_partner_bank.acc_type, 'plusgiro')
