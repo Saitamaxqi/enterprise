@@ -5,6 +5,7 @@ import { TaskGanttArchParserCommon } from "@project_enterprise/views/project_tas
 import { TaskSharingGanttController } from "./task_sharing_gantt_controller";
 import { TaskSharingGanttRenderer } from "./task_sharing_gantt_renderer";
 import { TaskGanttModelCommon } from "@project_enterprise/views/project_task_common/task_gantt_model_common";
+import { ProjectTaskControlPanel } from "@project/views/project_task_control_panel/project_task_control_panel";
 
 
 const viewRegistry = registry.category("views");
@@ -12,6 +13,7 @@ const viewRegistry = registry.category("views");
 export const taskSharingGanttView = {
     ...ganttView,
     Controller: TaskSharingGanttController,
+    ControlPanel: ProjectTaskControlPanel,
     ArchParser: TaskGanttArchParserCommon,
     Model: TaskGanttModelCommon,
     Renderer: TaskSharingGanttRenderer,
