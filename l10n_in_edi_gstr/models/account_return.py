@@ -33,31 +33,26 @@ class AccountReturn(models.Model):
             check_codes_to_ignore.add('missing_einvoice')
             self.check_ids.filtered(lambda check: check.code == 'missing_einvoice').unlink()
 
-        # Get the eligible invoices that are not e-invoiced
-        domain = [
-            ("date", ">=", options["date"]["date_from"]),
-            ("date", "<=", options["date"]["date_to"]),
-            ("journal_id.type", "=", "sale"),
-            ("state", "=", "posted"),
-            ("l10n_in_edi_status", "not in", ["sent", "cancelled"]),
-        ]
-
         # Check for all invoices should have been e-invoiced
         if 'missing_einvoice' not in check_codes_to_ignore:
-            sale_section_exceptions = {
+            # Get the eligible invoices that are not e-invoiced
+            sale_section_exceptions = [
                 "sale_b2cl", "sale_b2cs",
                 "sale_cdnur_b2cl", "sale_nil_rated",
                 "sale_exempt", "sale_non_gst_supplies",
                 "sale_eco_9_5", "sale_out_of_scope",
-            }
-            eligible_move = self.env['account.move'].search(domain)
-            moves = eligible_move.filtered(lambda move: any(
-                line.display_type == 'product'
-                and line.l10n_in_gstr_section
-                and line.l10n_in_gstr_section.startswith('sale_')
-                and line.l10n_in_gstr_section not in sale_section_exceptions
-                for line in move.line_ids
-            ))
+            ]
+            domain = [
+                ("date", ">=", options["date"]["date_from"]),
+                ("date", "<=", options["date"]["date_to"]),
+                ("journal_id.type", "=", "sale"),
+                ("state", "=", "posted"),
+                ("l10n_in_edi_status", "not in", ["sent", "cancelled"]),
+                ("line_ids.display_type", "=", 'product'),
+                ("line_ids.l10n_in_gstr_section", "like", 'sale_'),
+                ("line_ids.l10n_in_gstr_section", "not in", sale_section_exceptions + [False]),
+            ]
+            moves = self.env['account.move'].search(domain)
             checks.append({
                 'code': 'missing_einvoice',
                 'name': _("Missing E-Invoice"),
