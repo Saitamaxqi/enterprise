@@ -658,6 +658,25 @@ class IrModelFields(models.Model):
             ])
         return result
 
+    @api.model
+    def _get_related_field(self, model_name, related_chain_string):
+        return next(reversed(self._get_related_field_chain(model_name, related_chain_string)), None)
+
+    @api.model
+    def _get_related_field_chain(self, model_name, related_chain_string):
+        fields = []
+        for part in related_chain_string.split("."):
+            model = self.env.get(model_name)
+            field = None
+            if model is not None:
+                field = model._fields.get(part)
+                if field:
+                    fields.append(field)
+                    model_name = field.comodel_name
+            if field is None:
+                return []
+        return fields
+
 
 class IrModelAccess(models.Model):
     _name = 'ir.model.access'

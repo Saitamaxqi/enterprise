@@ -2022,7 +2022,7 @@ registry.category("web_tour.tours").add("web_studio_related_monetary_creation", 
         },
         {
             // The currency is created
-            trigger: ".o_web_studio_view_renderer [data-field-name='x_studio_currency_id']",
+            trigger: ".o_web_studio_view_renderer [data-field-name='x_studio_x_test_x_studio_currency_test']",
         },
     ],
 });

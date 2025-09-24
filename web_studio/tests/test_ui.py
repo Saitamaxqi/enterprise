@@ -1221,9 +1221,15 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.assertEqual(len(currency_name_list), 1)
         self.assertEqual(len(monetary_name_list), 1)
         # The monetary has been created and is a related field
-        self.assertEqual(self.env['x_test_model']._fields[monetary_name_list[0]].related, "x_test.x_studio_monetary_test")
+        monetary_field = self.env['x_test_model']._fields[monetary_name_list[0]]
+        self.assertEqual(monetary_field.related, "x_test.x_studio_monetary_test")
+        self.assertEqual(monetary_field.get_currency_field(self.env["x_test_model"]), "x_studio_x_test_x_studio_currency_test")
+        self.assertEqual(monetary_field.get_description(self.env)["aggregator"], "sum")
         # A currency has been created because there was none in the model/view
-        self.assertEqual(currency_name_list[0], 'x_studio_currency_id')
+        currency_field = self.env['x_test_model']._fields['x_studio_x_test_x_studio_currency_test']
+        self.assertEqual(currency_field.get_description(self.env, "string")["string"], "Contact X Studio Currency Test")
+        self.assertEqual(currency_name_list[0], 'x_studio_x_test_x_studio_currency_test')
+        self.assertEqual(currency_field.related_field, self.env['res.partner']._fields['x_studio_currency_test'])
 
     def test_monetary_change_currency_field(self):
         self.create_empty_app()

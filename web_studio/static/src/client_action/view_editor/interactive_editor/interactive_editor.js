@@ -446,8 +446,7 @@ export class InteractiveEditor extends Component {
         }
 
         if (
-            fieldType === "monetary" ||
-            (fieldType === "related" && newNode.field_description?.type === "monetary")
+            fieldType === "monetary"
         ) {
             this.setCurrencyInfos(newNode.field_description);
         }

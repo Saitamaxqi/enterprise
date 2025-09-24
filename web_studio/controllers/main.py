@@ -5,6 +5,7 @@ import json
 from ast import literal_eval
 from copy import deepcopy
 from lxml import etree
+from itertools import chain
 
 from odoo import http, _
 from odoo.http import request
@@ -579,16 +580,12 @@ class WebStudioController(http.Controller):
             })
             node = op.get('node')
             if node and node.get('tag') == 'field' and node.get('field_description') and node['field_description'].get('related'):
+                model_name = node['field_description'].get("model_name") or model
                 related_filename = node['field_description']['related'] + '_filename'
-                related_field = related_filename.split('.')[-1]
-                related_chain = related_filename.split('.')[:-1]
-                related_model_name = model
-                for field_ref in related_chain:
-                    related_model_name = request.env[related_model_name]._fields[field_ref].comodel_name
-                if not request.env[related_model_name]._fields.get(related_field):
-                    # Add the filename field only if the field exists in the related model
+                related_filename = request.env["ir.model.fields"]._get_related_field(model_name, related_filename)
+                if not related_filename:
                     continue
-                char_op['node']['field_description'].update({'related': related_filename})
+                char_op['node']['field_description'].update({'related': related_filename.name})
             char_op['node']['attrs']['invisible'] = 'True'
 
             # put the filename field after the binary field
@@ -610,10 +607,12 @@ class WebStudioController(http.Controller):
             if not is_monetary(op):
                 _operations.append(op)
                 continue
+            new_field = op['node'].get('field_description')
             values = op['node'].get('field_description') or op['node']['attrs']
             currency_op = deepcopy(op)
 
-            if not values.get('currency_field'):
+            has_currency_field = new_field and new_field.get("currency_field")
+            if new_field and not has_currency_field:
                 # There is no currencies in the model, create one with the operation
                 currency_op['node']['field_description'].update({
                     'name': 'x_studio_currency_id',
@@ -621,13 +620,39 @@ class WebStudioController(http.Controller):
                     'relation': 'res.currency',
                     'field_description': 'Currency',
                 })
-                # delete the 'related' attribute from currency if it comes from a related monetary
-                currency_op['node']['field_description'].pop('related', None)
-                values['currency_field'] = 'x_studio_currency_id'
-                op['target']['attrs'] = {'name': 'x_studio_currency_id'}
+                currency_op['node']['field_description'].pop("string", None)
+
+                if related := new_field.get("related"):
+                    model_name = new_field.get("model_name") or model
+                    related_monetary = request.env["ir.model.fields"]._get_related_field(model_name, related)
+                    related_model_path = related.split(".")[:-1]
+                    related_currency = related_monetary and related_monetary.get_currency_field(request.env[related_monetary.model_name])
+                    if related_currency:
+                        if not related_model_path:
+                            # The monetary is related to the current model (no dots, no following links)
+                            # The currency on current model should exist and we just have to add it to the view
+                            new_field['currency_field'] = related_currency.name
+                            currency_op["node"] = {"tag": "field", "attrs": {"name": related_currency.name}}
+                        else:
+                            to_model = request.env[related_monetary.model_name]
+                            related_currency = to_model._fields[related_currency]
+                            path = ".".join(chain(related_model_path, [related_currency.name]))
+                            currency_op['node']['field_description']["related"] = path
+                            currency_op['node']['field_description']["store"] = False
+                            new_related_field_name = path.replace(".", "_")
+                            currency_op['node']['field_description']["name"] = f"x_studio_{new_related_field_name}"
+                            currency_op['node']['field_description']['field_description'] = f"{request.env['ir.model']._get(to_model._name).name} {related_currency.get_description(self.env, 'string')['string']}"
+                        has_currency_field = True
+
+                if not has_currency_field:
+                    # delete the 'related' attribute from currency if it comes from a related monetary
+                    currency_op['node']['field_description']["store"] = True
+                    currency_op['node']['field_description'].pop("related", None)
+
+                new_field['currency_field'] = currency_op['node']['field_description']["name"]
             else:
                 # There is a currency in the model, set it up to eventually add it to the arch
-                currency_op['node'].pop('field_description', {})
+                currency_op['node'].pop('field_description', None)
                 currency_op['node']['attrs'] = {'name': values['currency_field']}
 
             if not values.get('currency_in_view'):
