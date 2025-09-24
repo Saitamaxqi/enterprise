@@ -219,91 +219,79 @@
                 </div>
             </xpath>
             <page name="payroll_information" position="after">
-                <page string="Holiday Attests" invisible="company_country_code != 'BE'">
+                <page string="Holiday Attests" invisible="company_country_code != 'BE'" groups="hr_payroll.group_hr_payroll_user">
                     <group>
                         <group>
-                            <strong class="o_horizontal_separator o_row mb-2" colspan="2" id="previous_employer_title" style="width: 100% !important;">
-                                Holiday Attest <span style="width: 2rem !important;"><field name="first_contract_year_n1"/></span> - Simple Holiday Pay to recover in <span style="width: 2rem !important;"><field name="first_contract_year_n"/></span>
-                            </strong>
-                            <group invisible="company_country_code != 'BE'" groups="hr_payroll.group_hr_payroll_user" colspan="2">
-                                <label for="l10n_be_holiday_pay_to_recover_n1" string="Amount to recover"/>
-                                <div class="o_row" style="width: 20% !important;">
-                                    <field name="l10n_be_holiday_pay_to_recover_n1" nolabel="1"/>
-                                    <span>€</span>
-                                </div>
-                                <label for="l10n_be_holiday_pay_number_of_days_n1" string="Number of days"/>
-                                <div class="o_row" style="width: 20% !important;">
-                                    <field name="l10n_be_holiday_pay_number_of_days_n1" nolabel="1"/>
-                                    <span>days</span>
-                                </div>
-                                <label for="l10n_be_holiday_pay_recovered_n1" string="Recovered Amount"/>
-                                <div class="o_row" style="width: 20% !important;">
-                                    <field name="l10n_be_holiday_pay_recovered_n1" nolabel="1"/>
-                                    <span>€</span>
-                                </div>
-                            </group>
+                            <div colspan="2" class="col-lg-6 w-100 mt-4 mb-3 o_horizontal_separator text-uppercase fw-bolder small d-flex gap-1">
+                                <span>Holiday Attest</span>
+                                <field name="first_contract_year_n1" class="w-auto m-0"/>
+                                <span>- Simple Holiday Pay to recover in</span>
+                                <field name="first_contract_year_n" class="w-auto m-0"/>
+                            </div>
+                            <field name="l10n_be_holiday_pay_to_recover_n1" string="Amount to recover"
+                                widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
+                            <label for="l10n_be_holiday_pay_number_of_days_n1" string="Number of days"/>
+                            <div class="o_row">
+                                <field name="l10n_be_holiday_pay_number_of_days_n1" class="o_hr_narrow_field"/>
+                                <span>days</span>
+                            </div>
+                            <field name="l10n_be_holiday_pay_recovered_n1" string="Recovered Amount"
+                                widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
                             <field name="first_contract_year" invisible="1"/>
                             <field name="double_pay_line_ids" invisible="1"/>
-                            <group id="recovery_pay_lines_n1" class="mt-3" colspan="2">
-                                <strong class="o_row" colspan="2">
-                                        Holiday Attest <span style="width: 2rem !important;"><field name="first_contract_year_n1"/></span>
-                                        <button type="object"
-                                            name="action_open_attest_wizard"
-                                            class="btn btn-info btn-sm d-flex align-items-center justify-content-center ms-auto"
-                                            invisible="company_country_code != 'BE'"
-                                            groups="hr_payroll.group_hr_payroll_user"
-                                            context="{'default_year': first_contract_year_n1}">
-                                            <span title="Add">Add</span>
-                                        </button>
-                                </strong>
-                                <field name="double_pay_line_n1_ids"
-                                    widget="many2many_tags"
-                                    options="{'edit_tags': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"
-                                    domain="[('year', '=', first_contract_year_n1)]"
-                                    nolabel="1"
-                                    colspan="2"/>
-                            </group>
+                            <div class="d-flex mt-3 gap-1 o_row" colspan="2">
+                                <span class="fw-bold">Holiday Attest</span>
+                                <field name="first_contract_year_n1" class="fw-bold w-auto"/>
+                                <button type="object"
+                                    name="action_open_attest_wizard"
+                                    class="btn btn-primary btn-sm d-flex align-items-center justify-content-center ms-auto py-0"
+                                    invisible="company_country_code != 'BE'"
+                                    groups="hr_payroll.group_hr_payroll_user"
+                                    context="{'default_year': first_contract_year_n1}">
+                                    <span title="Add">Add</span>
+                                </button>
+                            </div>
+                            <field name="double_pay_line_n1_ids"
+                                widget="many2many_tags"
+                                options="{'edit_tags': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"
+                                domain="[('year', '=', first_contract_year_n1)]"
+                                nolabel="1"
+                                colspan="2"/>
                         </group>
                         <group>
-                            <strong class="o_horizontal_separator o_row mb-2" colspan="2" id="previous_employer_title" style="width: 100% !important;">
-                                Holiday Attest <span style="width: 2rem !important;"><field name="first_contract_year_n"/></span> - Simple Holiday Pay to recover in <span style="width: 2rem !important;"><field name="first_contract_year_n_plus_1"/></span>
-                            </strong>
-                            <group invisible="company_country_code != 'BE'">
-                                <label for="l10n_be_holiday_pay_to_recover_n" string="Amount to recover"/>
-                                <div class="o_row" style="width: 20% !important;" colspan="1">
-                                    <field name="l10n_be_holiday_pay_to_recover_n" colspan="1" nolabel="1"/>
-                                    <span>€</span>
-                                </div>
-                                <label for="l10n_be_holiday_pay_number_of_days_n" string="Number of days"/>
-                                <div class="o_row" style="width: 20% !important;">
-                                    <field name="l10n_be_holiday_pay_number_of_days_n" nolabel="1"/>
-                                    <span>days</span>
-                                </div>
-                                <label for="l10n_be_holiday_pay_recovered_n" string="Recovered Amount"/>
-                                <div class="o_row" style="width: 20% !important;">
-                                    <field name="l10n_be_holiday_pay_recovered_n" nolabel="1"/>
-                                    <span>€</span>
-                                </div>
-                            </group>
-                            <group id="recovery_pay_lines_n" class="mt-3" colspan="2">
-                                <strong class="o_row" colspan="2">
-                                    Holiday Attest <span style="width: 2rem !important;"><field name="first_contract_year_n"/></span>
-                                    <button type="object"
-                                            name="action_open_attest_wizard"
-                                            class="btn btn-info btn-sm d-flex align-items-center justify-content-center ms-auto"
-                                            invisible="company_country_code != 'BE'"
-                                            groups="hr_payroll.group_hr_payroll_user"
-                                            context="{'default_year': first_contract_year_n}">
-                                        <span title="Add">Add</span>
-                                    </button>
-                                </strong>
-                                <field name="double_pay_line_n_ids"
-                                    widget="many2many_tags"
-                                    options="{'edit_tags': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"
-                                    domain="[('year', '=', first_contract_year)]"
-                                    nolabel="1"
-                                    colspan="2"/>
-                            </group>
+                            <div colspan="2" class="col-lg-6 w-100 mt-4 mb-3 o_horizontal_separator text-uppercase fw-bolder small d-flex gap-1">
+                                <span>Holiday Attest</span>
+                                <field name="first_contract_year_n" class="w-auto m-0"/>
+                                <span>- Simple Holiday Pay to recover in</span>
+                                <field name="first_contract_year_n_plus_1" class="w-auto m-0"/>
+                            </div>
+                            <field name="l10n_be_holiday_pay_to_recover_n" string="Amount to recover"
+                                widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
+                            <label for="l10n_be_holiday_pay_number_of_days_n" string="Number of days"/>
+                            <div class="o_row">
+                                <field name="l10n_be_holiday_pay_number_of_days_n" class="o_hr_narrow_field"/>
+                                <span>days</span>
+                            </div>
+                            <field name="l10n_be_holiday_pay_recovered_n" string="Recovered Amount"
+                                widget="monetary" options="{'currency_field': 'currency_id'}" class="o_hr_narrow_field"/>
+                            <div class="d-flex mt-3 gap-1 o_row" colspan="2">
+                                <span class="fw-bold">Holiday Attest</span>
+                                <field name="first_contract_year_n" class="fw-bold w-auto"/>
+                                <button type="object"
+                                    name="action_open_attest_wizard"
+                                    class="btn btn-primary btn-sm d-flex align-items-center justify-content-center ms-auto py-0"
+                                    invisible="company_country_code != 'BE'"
+                                    groups="hr_payroll.group_hr_payroll_user"
+                                    context="{'default_year': first_contract_year_n}">
+                                    <span title="Add">Add</span>
+                                </button>
+                            </div>
+                            <field name="double_pay_line_n_ids"
+                                widget="many2many_tags"
+                                options="{'edit_tags': True, 'no_create': True, 'no_quick_create': True, 'no_create_edit': True}"
+                                domain="[('year', '=', first_contract_year)]"
+                                nolabel="1"
+                                colspan="2"/>
                         </group>
                     </group>
                 </page>
