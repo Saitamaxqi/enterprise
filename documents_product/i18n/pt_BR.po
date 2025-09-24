@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-01-17 10:16+0000\n"
-"PO-Revision-Date: 2025-09-19 12:10+0000\n"
+"PO-Revision-Date: 2025-09-23 15:02+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_product/pt_BR/>\n"
@@ -119,7 +119,7 @@ msgstr "Produtos"
 #. module: documents_product
 #: model:documents.tag,name:documents_product.documents_product_specs_tag
 msgid "Specs"
-msgstr ""
+msgstr "Especificações"
 
 #. module: documents_product
 #: model_terms:ir.ui.view,arch_db:documents_product.res_config_settings_view_form

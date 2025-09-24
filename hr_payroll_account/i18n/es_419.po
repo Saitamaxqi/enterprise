@@ -3,13 +3,14 @@
 # * hr_payroll_account
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 22:38+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_payroll_account/es_419/>\n"
 "Language: es_419\n"
@@ -74,7 +75,7 @@ msgstr "Plantilla de plan de cuentas"
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payslip.py:0
 msgid "Account Journal not configured on Structure"
-msgstr ""
+msgstr "El diario de la cuenta no está configurado en la estructura"
 
 #. module: hr_payroll_account
 #. odoo-python
@@ -109,14 +110,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__analytic_distribution
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Distribución analítica"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_employee__analytic_precision
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__analytic_precision
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__analytic_precision
 msgid "Analytic Precision"
-msgstr ""
+msgstr "Precisión analítica"
 
 #. module: hr_payroll_account
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_kanban
@@ -479,7 +480,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payslip.py:0
 msgid "Structure"
-msgstr ""
+msgstr "Estructura"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,help:hr_payroll_account.field_hr_payslip_line__credit_tag_ids

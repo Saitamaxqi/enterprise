@@ -3,13 +3,14 @@
 # * documents_fleet
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:30+0000\n"
-"PO-Revision-Date: 2025-09-17 09:36+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 18:57+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/documents_fleet/es_419/>\n"
 "Language: es_419\n"
@@ -65,7 +66,7 @@ msgstr "Etiquetas de documentos de la flota"
 #. module: documents_fleet
 #: model:documents.document,name:documents_fleet.document_driver_folder
 msgid "Drivers"
-msgstr ""
+msgstr "Conductores"
 
 #. module: documents_fleet
 #: model:documents.document,name:documents_fleet.document_fleet_folder
@@ -115,7 +116,7 @@ msgstr "Vincular a un vehículo"
 #. module: documents_fleet
 #: model:documents.document,name:documents_fleet.document_maintenance_repair_folder
 msgid "Maintenance & Repairs"
-msgstr ""
+msgstr "Mantenimiento y reparaciones"
 
 #. module: documents_fleet
 #: model_terms:ir.ui.view,arch_db:documents_fleet.res_config_settings_view_form_inherit_documents_fleet

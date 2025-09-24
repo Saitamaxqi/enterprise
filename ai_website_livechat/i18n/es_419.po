@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"PO-Revision-Date: 2025-09-23 20:52+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_website_livechat/es_419/>\n"
@@ -85,41 +85,41 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/plugins/ai_livechat_option.xml:0
 msgid "Fullscreen"
-msgstr ""
+msgstr "Pantalla completa"
 
 #. module: ai_website_livechat
 #: model:ir.model.fields,field_description:ai_website_livechat.field_ai_agent__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai_website_livechat
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/plugins/ai_livechat_option.xml:0
 msgid "Livechat Channel"
-msgstr ""
+msgstr "Canal de chat en vivo"
 
 #. module: ai_website_livechat
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/components/ai_livechat_component/ai_livechat.xml:0
 msgid "Loading..."
-msgstr ""
+msgstr "Cargando..."
 
 #. module: ai_website_livechat
 #: model_terms:ir.ui.view,arch_db:ai_website_livechat.s_ai_livechat
 msgid "Need help?"
-msgstr ""
+msgstr "¿Necesitas ayuda?"
 
 #. module: ai_website_livechat
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/components/ai_livechat_component/ai_livechat.js:0
 msgid "Oops, the Agent linked to this block is archived!"
-msgstr ""
+msgstr "Ups, el agente vinculado a este bloque está archivado."
 
 #. module: ai_website_livechat
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/components/ai_livechat_component/ai_livechat.js:0
 msgid "Oops, there is no Agent linked to this block!"
-msgstr ""
+msgstr "Uy, no hay ningún agente vinculado a este bloque."
 
 #. module: ai_website_livechat
 #. odoo-javascript
@@ -160,13 +160,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_website_livechat/controllers/main.py:0
 msgid "Visitor"
-msgstr ""
+msgstr "Visitante"
 
 #. module: ai_website_livechat
 #. odoo-javascript
 #: code:addons/ai_website_livechat/static/src/website/plugins/ai_livechat_option.xml:0
 msgid "e.g. /contactus"
-msgstr ""
+msgstr "Por ejemplo, /contactus"
 
 #. module: ai_website_livechat
 #. odoo-javascript
@@ -185,4 +185,4 @@ msgstr ""
 #: code:addons/ai_website_livechat/static/src/website/components/ai_livechat_component/ai_livechat.xml:0
 #: code:addons/ai_website_livechat/static/src/website/interactions/edit/ai_livechat.edit.xml:0
 msgid "or"
-msgstr ""
+msgstr "o"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"PO-Revision-Date: 2025-09-23 20:52+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_online_payment/es_419/>\n"
@@ -312,7 +312,7 @@ msgstr "Activar pagos en línea en Odoo"
 #. module: account_online_payment
 #: model_terms:ir.ui.view,arch_db:account_online_payment.account_online_link_view_form_inherit
 msgid "Activate Payments"
-msgstr ""
+msgstr "Activar pagos"
 
 #. module: account_online_payment
 #: model:ir.model,name:account_online_payment.model_account_online_link
@@ -400,13 +400,13 @@ msgstr "Pagos"
 #. odoo-python
 #: code:addons/account_online_payment/models/account_online_link.py:0
 msgid "Payments are already activated."
-msgstr ""
+msgstr "Los pagos ya están activados."
 
 #. module: account_online_payment
 #: model:mail.template,name:account_online_payment.mail_template_account_payment_activation_success
 #: model:mail.template,subject:account_online_payment.mail_template_account_payment_activation_success
 msgid "Payments successfully activated"
-msgstr ""
+msgstr "Pagos activados con éxito"
 
 #. module: account_online_payment
 #: model:ir.model.fields.selection,name:account_online_payment.selection__account_batch_payment__payment_online_status__pending

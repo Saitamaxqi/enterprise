@@ -3,13 +3,14 @@
 # * ai_documents
 #
 # "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-19 02:40+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-24 00:25+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/es_419/>\n"
 "Language: es_419\n"
@@ -50,49 +51,49 @@ msgstr ""
 #: model:ir.actions.act_window,name:ai_documents.ai_documents_sort_action
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "AI Sort"
-msgstr ""
+msgstr "Ordenado con IA"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_sortable
 msgid "AI Sortable"
-msgstr ""
+msgstr "A ordenar por la IA"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_to_sort
 #: model_terms:ir.ui.view,arch_db:ai_documents.documents_document_view_kanban
 msgid "AI To Sort"
-msgstr ""
+msgstr "IA para ordenar"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_add_tags
 msgid "AI: Add Tags"
-msgstr ""
+msgstr "IA: Agregar etiquetas"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/ir_actions_server.py:0
 msgid "AI: An error occurred: %s"
-msgstr ""
+msgstr "IA: Ocurrió un error: %s"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_move_in_folder
 msgid "AI: Move To Folder"
-msgstr ""
+msgstr "IA: Mover a carpeta"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_rename_documents
 msgid "AI: Rename Document"
-msgstr ""
+msgstr "IA: Renombrar documento"
 
 #. module: ai_documents
 #: model:ir.actions.server,ai_tool_description:ai_documents.ir_actions_server_add_tags
 msgid "Add the tags on the document"
-msgstr ""
+msgstr "Agregar etiquetas al documento"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__ai_tool_ids
 msgid "Additional Tools"
-msgstr ""
+msgstr "Herramientas adicionales"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_ai_documents_sort
@@ -102,7 +103,7 @@ msgstr ""
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__allowed_tools_ids
 msgid "Allowed Tools"
-msgstr ""
+msgstr "Herramientas permitidas"
 
 #. module: ai_documents
 #. odoo-python
@@ -114,13 +115,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_documents/static/src/cog_menu/documents_cog_menu_item_ai_auto_sort.xml:0
 msgid "Auto-sort"
-msgstr ""
+msgstr "Ordenado automático"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Auto-sort documents in %s"
-msgstr ""
+msgstr "Ordenar documentos en automático en %s"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_base_automation
@@ -151,12 +152,12 @@ msgstr ""
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Delete"
-msgstr ""
+msgstr "Eliminar"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__display_name

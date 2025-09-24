@@ -3,13 +3,14 @@
 # * account_bank_statement_extract
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:23+0000\n"
-"PO-Revision-Date: 2025-09-18 02:43+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 15:04+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_bank_statement_extract/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -105,12 +106,12 @@ msgstr "Status da extração"
 #. module: account_bank_statement_extract
 #: model:ir.model.fields,field_description:account_bank_statement_extract.field_account_bank_statement__extracted_dates
 msgid "Extracted Dates"
-msgstr ""
+msgstr "Datas extraídas"
 
 #. module: account_bank_statement_extract
 #: model:ir.model.fields,field_description:account_bank_statement_extract.field_account_bank_statement__extracted_numbers
 msgid "Extracted Numbers"
-msgstr ""
+msgstr "Números extraídos"
 
 #. module: account_bank_statement_extract
 #: model:ir.model.fields,field_description:account_bank_statement_extract.field_account_bank_statement__extracted_words

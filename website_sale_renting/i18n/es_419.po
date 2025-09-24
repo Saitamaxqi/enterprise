@@ -3,13 +3,14 @@
 # * website_sale_renting
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:49+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-23 18:58+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/website_sale_renting/es_419/>\n"
 "Language: es_419\n"
@@ -193,6 +194,8 @@ msgid ""
 "<span class=\"d-md-none me-2\">Search period</span>\n"
 "                                <i class=\"oi oi-search\" role=\"img\"/>"
 msgstr ""
+"<span class=\"d-md-none me-2\">Buscar periodo</span>\n"
+"                                <i class=\"oi oi-search\" role=\"img\"/>"
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.suggested_products_list

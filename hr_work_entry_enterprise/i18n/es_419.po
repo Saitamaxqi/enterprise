@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:35+0000\n"
-"PO-Revision-Date: 2025-09-22 17:01+0000\n"
+"PO-Revision-Date: 2025-09-24 00:25+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_work_entry_enterprise/es_419/>\n"
@@ -62,12 +62,12 @@ msgstr ""
 #. module: hr_work_entry_enterprise
 #: model:ir.model,name:hr_work_entry_enterprise.model_hr_work_entry
 msgid "HR Work Entry"
-msgstr ""
+msgstr "Entrada de trabajo de RR. HH."
 
 #. module: hr_work_entry_enterprise
 #: model:ir.model.fields,field_description:hr_work_entry_enterprise.field_hr_work_entry__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_work_entry_enterprise
 #: model:ir.ui.menu,name:hr_work_entry_enterprise.menu_hr_payroll_root
@@ -78,19 +78,19 @@ msgstr "Nómina"
 #. odoo-javascript
 #: code:addons/hr_work_entry_enterprise/static/src/work_entries_multi_selection_buttons.xml:0
 msgid "Plan"
-msgstr ""
+msgstr "Planificar"
 
 #. module: hr_work_entry_enterprise
 #. odoo-javascript
 #: code:addons/hr_work_entry_enterprise/static/src/work_entries_gantt_controller.xml:0
 msgid "Reset"
-msgstr ""
+msgstr "Restablecer"
 
 #. module: hr_work_entry_enterprise
 #. odoo-javascript
 #: code:addons/hr_work_entry_enterprise/static/src/work_entries_gantt_renderer.js:0
 msgid "Split"
-msgstr ""
+msgstr "Dividir"
 
 #. module: hr_work_entry_enterprise
 #. odoo-javascript

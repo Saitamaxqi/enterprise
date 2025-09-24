@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-23 12:11+0000\n"
+"PO-Revision-Date: 2025-09-23 15:03+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/pt_BR/>\n"
@@ -111,18 +111,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_documents/static/src/cog_menu/documents_cog_menu_item_ai_auto_sort.xml:0
 msgid "Auto-sort"
-msgstr ""
+msgstr "Classificação automática"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Auto-sort documents in %s"
-msgstr ""
+msgstr "Classificação automática de documentos em %s"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_base_automation
 msgid "Automation Rule"
-msgstr ""
+msgstr "Regra de automação"
 
 #. module: ai_documents
 #. odoo-python
