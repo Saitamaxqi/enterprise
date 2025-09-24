@@ -868,6 +868,8 @@ class HrContractSalary(http.Controller):
             elif isinstance(field_value, float):
                 field_value = round(field_value, 2)
             version_info[benefit.benefit_type_id.name].append((field_names['hr.version'][field_name], field_value))
+            self._append_additional_benefit_info(version_info[benefit.benefit_type_id.name], version, field_names, field_name)
+
         # Add wage information
         version_info[_('Wage')] = [
             (_('Monthly Gross Salary'), wage_to_apply),
@@ -894,6 +896,9 @@ class HrContractSalary(http.Controller):
             personal_infos[info.info_type_id.name].append((field_label, field_value))
         result[_('Personal Information')] = personal_infos
         return {'mapped_data': result}
+
+    def _append_additional_benefit_info(self, benefit_info, version, field_names, field_name):
+        return
 
     def _send_mail_message(self, offer, template, kw, values, new_version_id=None):
         model = 'hr.version' if new_version_id else 'hr.contract.salary.offer'

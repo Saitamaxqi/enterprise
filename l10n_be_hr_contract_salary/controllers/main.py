@@ -160,6 +160,19 @@ class HrContractSalary(main.HrContractSalary):
             sp.rollback()
         return res
 
+    def _append_additional_benefit_info(self, benefit_info, version, field_names, field_name):
+        super()._append_additional_benefit_info(benefit_info, version, field_names, field_name)
+        if field_name == 'company_car_total_depreciated_cost':
+            benefit_info.append(
+                (field_names['hr.version']['car_id'], version['car_id'].display_name))
+        elif field_name == 'wishlist_car_total_depreciated_cost':
+            benefit_info.append(
+                (field_names['hr.version']['new_car_model_id'], version['new_car_model_id'].display_name))
+        elif field_name == 'company_bike_depreciated_cost':
+            bike_field_name = 'new_bike_model_id' if version.new_bike else 'bike_id'
+            benefit_info.append(
+                (field_names['hr.version'][bike_field_name], version[bike_field_name].display_name))
+
     def _get_default_template_values(self, version, offer):
         values = super()._get_default_template_values(version, offer)
         values['l10n_be_canteen_cost'] = version.l10n_be_canteen_cost
