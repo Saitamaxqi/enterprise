@@ -157,7 +157,6 @@ class TestWhitelistFromTemplate(TransactionCase):
         })
 
         expected_action_texts = [
-            'Structure',
             'Employee Reference',
             'Gender',
             'Birthday',
@@ -182,7 +181,6 @@ class TestWhitelistFromTemplate(TransactionCase):
             {'registration_number': '1', "l10n_ch_job_type": "lowerCadre", 'structure_type_id': self.env.ref('l10n_ch_hr_payroll.structure_type_employee_ch').id, 'contract_date_start': date(2022, 1, 1), 'contract_date_end': date(2022, 3, 31), 'wage_type': "hourly", 'l10n_ch_has_hourly': True, "l10n_ch_contractual_13th_month_rate": 8.33, 'wage': 0, 'hourly_wage': 50.0, 'l10n_ch_lesson_wage': 50.0, 'l10n_ch_has_lesson': True, 'l10n_ch_location_unit_id': self.location_unit_1.id, 'l10n_ch_social_insurance_id': self.avs_1.id, 'l10n_ch_laa_group': self.laa_group_A, 'laa_solution_number': '1', 'l10n_ch_lpp_insurance_id': self.lpp_0.id, 'l10n_ch_compensation_fund_id': self.caf_lu_1.id, 'l10n_ch_thirteen_month': True, 'l10n_ch_yearly_holidays': 0, 'certificate': 'higherVocEducation', 'name': "Herz Monica", 'sex': 'female', 'company_id': self.company_ch.id, 'country_id': self.env.ref('base.ch').id, 'l10n_ch_sv_as_number': False, 'birthday': date(1976, 6, 30), 'marital': 'married', 'l10n_ch_marital_from': date(2001, 5, 25), 'private_street': 'Bahnhofstrasse 1', 'private_zip': '6020', 'private_city': 'Emmenbrücke', 'private_country_id': self.env.ref('base.ch').id, 'l10n_ch_municipality': 1024, 'l10n_ch_residence_category': False, 'l10n_ch_canton': 'LU', 'lang': 'en_US'},
         )
         expected_action_texts_2 = [
-            'Structure',
             'Job',
         ]
 

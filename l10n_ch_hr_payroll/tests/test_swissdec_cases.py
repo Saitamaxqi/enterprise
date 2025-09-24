@@ -1,12 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.l10n_ch_hr_payroll.tests.swissdec_common import TestSwissdecCommon
+from odoo.addons.l10n_ch_hr_payroll.tests.swissdec_5_0 import TestSwissdec5Common
 from odoo.tests.common import tagged
 from freezegun import freeze_time
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'swissdec_payroll')
-class TestSwissdecTestCases(TestSwissdecCommon):
+class TestSwissdecTestCases(TestSwissdec5Common):
     @freeze_time("2024-01-01")
     def test_yearly_retrospective_2021_11(self):
         identifier = "yearly_retrospective_2021_11"

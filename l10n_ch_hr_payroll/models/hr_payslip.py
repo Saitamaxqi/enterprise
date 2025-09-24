@@ -272,7 +272,10 @@ class HrPayslip(models.Model):
         lesson_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_lesson_wt', raise_if_not_found=False)
         overtime_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_overtime_wt', raise_if_not_found=False)
         overtime_125_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_overtime_125_wt', raise_if_not_found=False)
-
+        overtime_150_work_entry = self.env.ref('l10n_ch_hr_payroll.l10n_ch_swissdec_overtime_150_wt', raise_if_not_found=False)
+        on_call_duty_125_work_entry = self.env.ref('l10n_ch_hr_payroll.l10n_ch_swissdec_oncall_125_wt', raise_if_not_found=False)
+        night_shift_110_work_entry = self.env.ref('l10n_ch_hr_payroll.l10n_ch_swissdec_night_110_wt', raise_if_not_found=False)
+        
         mapped_hourly_absence = {
             "CH_ACCIDENT": self.env.ref('hr_work_entry.l10n_ch_swissdec_accident_wt_hourly', raise_if_not_found=False),
             "CH_ILLNESS": self.env.ref('hr_work_entry.l10n_ch_swissdec_illness_wt_hourly', raise_if_not_found=False),
@@ -430,6 +433,57 @@ class HrPayslip(models.Model):
                     'work_entry_type_id': overtime_125_work_entry.id,
                     'salary_base': hourly_wage * 1.25,
                     'rate': sum(grouped_one_time_by_input_wage_types.get("WT_Overtime_125").mapped('amount')),
+                })]
+
+            if grouped_recurring_by_input_wage_types.get("WT_Overtime_150", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': overtime_150_work_entry.id,
+                    'salary_base': hourly_wage * 1.5,
+                    'rate': sum(grouped_recurring_by_input_wage_types.get("WT_Overtime_150").mapped(
+                        'amount')) * base_days / total_days,
+                })]
+
+            if grouped_one_time_by_input_wage_types.get("WT_Overtime_150", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': overtime_150_work_entry.id,
+                    'salary_base': hourly_wage * 1.5,
+                    'rate': sum(grouped_one_time_by_input_wage_types.get("WT_Overtime_150").mapped('amount')),
+                })]
+
+            if grouped_recurring_by_input_wage_types.get("WT_on_call_125", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': on_call_duty_125_work_entry.id,
+                    'salary_base': hourly_wage * 1.25,
+                    'rate': sum(grouped_recurring_by_input_wage_types.get("WT_on_call_125").mapped(
+                        'amount')) * base_days / total_days,
+                })]
+
+            if grouped_one_time_by_input_wage_types.get("WT_on_call_125", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': on_call_duty_125_work_entry.id,
+                    'salary_base': hourly_wage * 1.25,
+                    'rate': sum(grouped_one_time_by_input_wage_types.get("WT_on_call_125").mapped('amount')),
+                })]
+
+            if grouped_recurring_by_input_wage_types.get("WT_night_110", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': night_shift_110_work_entry.id,
+                    'salary_base': hourly_wage * 1.1,
+                    'rate': sum(grouped_recurring_by_input_wage_types.get("WT_night_110").mapped(
+                        'amount')) * base_days / total_days,
+                })]
+
+            if grouped_one_time_by_input_wage_types.get("WT_night_110", False):
+                worked_day_vals += [(0, 0, {
+                    'sequence': 15,
+                    'work_entry_type_id': night_shift_110_work_entry.id,
+                    'salary_base': hourly_wage * 1.1,
+                    'rate': sum(grouped_one_time_by_input_wage_types.get("WT_night_110").mapped('amount')),
                 })]
 
             if grouped_recurring_by_input_wage_types.get("WT_Lesson_input", False):
@@ -699,10 +753,15 @@ class HrPayslip(models.Model):
                         'amount': wage_type.amount,
                         'input_type_id': wage_type.input_type_id.id,
                     }))
-
+            input_line_vals += slip._get_additional_input_line_vals()
             slip.update({'input_line_ids': input_line_vals})
 
         super(HrPayslip, self - swiss_slips)._compute_input_line_ids()
+
+
+    def _get_additional_input_line_vals(self):
+        # To be overriden in additional Swiss modules
+        return []
 
     def _reverse_log_lines(self, payslip_to_reverse, manual_correction=None):
         # Reversal, this requires heavy logic since one payslip could be corrected multiple times through various payslips

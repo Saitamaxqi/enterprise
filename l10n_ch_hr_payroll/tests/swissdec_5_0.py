@@ -2,26 +2,27 @@
 
 import logging
 
-from dateutil.relativedelta import relativedelta
-
-from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.tests.common import tagged, TransactionCase
 from odoo.tools import file_open
 from odoo import Command
 from odoo.tests import HttpCase, tagged, TransactionCase
-
-import json
 from datetime import datetime, date
 from freezegun import freeze_time
 from collections import defaultdict
 from unittest.mock import patch
+import json
 
+from .common import TestSwissdecCommon
 
 _logger = logging.getLogger(__name__)
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'swissdec_payroll')
-class TestSwissdecCommon(AccountTestInvoicingCommon):
+class TestSwissdec5Common(TestSwissdecCommon):
+
+    def _get_truth_base_path(self):
+        return "l10n_ch_hr_payroll/tests/data/declaration_truth_base/"
+
     @classmethod
     def _l10n_ch_generate_swissdec_demo_data(cls, company):
         mapped_declarations = {}
@@ -2544,97 +2545,13 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
         return mapped_declarations
 
     @classmethod
-    def _l10n_ch_generate_swissdec_demo_payslip(cls, contract, date_from, date_to, company, after_payment=False):
-        batch = cls.env['hr.payslip.run'].search(
-            [('date_start', '=', date_from), ('company_id', '=', company)])
-
-        vals = {
-            'name': f"Monthly Pay Batch - {date_from.year}-{date_from.month}",
-            'employee_id': contract.employee_id.id,
-            'version_id': contract.id,
-            'company_id': company,
-            'struct_id': cls.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').id,
-            'date_from': date_from,
-            'date_to': date_to,
-            'l10n_ch_after_departure_payment': after_payment,
-            'payslip_run_id': batch.id,
-        }
-        payslip = cls.env['hr.payslip'].with_context(tracking_disable=True).create(vals)
-        cls.env.flush_all()
-        payslip.compute_sheet()
-        payslip.action_payslip_done()
-        return payslip
-
-    @classmethod
-    def _l10n_ch_compute_swissdec_demo_paylips(cls, company, date_from):
-        _logger.info('Created payslips for period %s-%s', date_from.year, date_from.month)
-        batch = cls._l10n_ch_create_batch(company, date_from.month, pay_13th=date_from.month == 12)
-        _logger.info('Computed payslips for period %s-%s', date_from.year, date_from.month)
-        return batch
-
-    @classmethod
-    def _l10n_ch_create_batch(cls, company, month, pay_13th=False):
-        cls.env.flush_all()
-        first_of_month = date.today().replace(day=1)
-        end_of_month = first_of_month + relativedelta(months=1, days=-1)
-        batch = cls.env['hr.payslip.run'].create({
-            "company_id": company.id,
-            "structure_id": cls.env.ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm').id,
-            "l10n_ch_pay_13th_month": pay_13th,
-            "date_start": str(first_of_month),
-            "date_end": str(end_of_month)
-        })
-        batch.sudo().generate_payslips(batch.sudo()._get_valid_version_ids())
-        batch.sudo().action_validate()
-        cls.env.flush_all()
-        return batch
-
-    @classmethod
-    @AccountTestInvoicingCommon.setup_country('ch')
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.group_ids |= cls.env.ref('hr_payroll.group_hr_payroll_manager')
-
-        cls.maxDiff = None
-        cls.env['res.company'].search([('name', '=', 'Muster AG')]).write({'name': 'Muster AG (Old)'})
-        cls.muster_ag_company = cls.env['res.company'].create({
-            'name': 'Muster AG',
-            'street': 'Bahnhofstrasse 1',
-            'zip': '6003',
-            'city': 'Luzern',
-            'country_id': cls.env.ref('base.ch').id,
-            'l10n_ch_uid': 'CHE-999.999.996',
-            'phone': '0412186532',
-            'l10n_ch_30_day_method': True
-        })
-
-        cls.env.user.company_ids |= cls.muster_ag_company
-        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.muster_ag_company.ids))
 
         with patch.object(cls.env.registry['l10n.ch.employee.yearly.values'], '_generate_certificate_uuid', lambda self: "#DOC-ID"):
-            mapped_declarations = cls._l10n_ch_generate_swissdec_demo_data(cls.muster_ag_company)
+            with patch.object(cls.env.registry['l10n.ch.employee.monthly.values'], '_get_additional_txb_values', lambda self: {}):
+                with patch.object(cls.env.registry['l10n.ch.employee.monthly.values'], '_get_additional_avs_values', lambda self, avs_base, avs_status: {}):
+                    mapped_declarations = cls._l10n_ch_generate_swissdec_demo_data(cls.muster_ag_company)
         for indentifier, declaration in mapped_declarations.items():
             assert isinstance(indentifier, str)
             setattr(cls, indentifier, declaration)
-
-    def _normalize_data(self, data):
-        """
-        Recursively transform data so that the order of lists no longer matters.
-        """
-        if isinstance(data, dict):
-            return {k: self._normalize_data(v) for k, v in sorted(data.items(), key=str)}
-        elif isinstance(data, list):
-            return sorted([self._normalize_data(item) for item in data], key=str)
-        else:
-            return data
-
-    def _compare_with_truth_base(self, declaration_type, identifier, generated_dict):
-        truth_base = json.load(file_open(f'l10n_ch_hr_payroll/tests/data/declaration_truth_base/{declaration_type}.json'))
-        truth_dict = truth_base.get(identifier)
-
-        json_formated = json.loads(json.dumps(generated_dict))
-        self.assertDictEqual(
-            self._normalize_data(json_formated),
-            self._normalize_data(truth_dict),
-            f"Mismatch in declaration '{identifier}'."
-        )

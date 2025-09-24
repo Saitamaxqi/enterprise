@@ -24,6 +24,27 @@
         <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
     </record>
 
+    <record id="l10n_ch_elm_input_WT_on_call_125" model="hr.payslip.input.type">
+        <field name="name">Paid On-call duty hours (125%)</field>
+        <field name="code">WT_on_call_125</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_night_110" model="hr.payslip.input.type">
+        <field name="name">Paid Nigh-Shift hours (110%)</field>
+        <field name="code">WT_night_110</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
+    <record id="l10n_ch_elm_input_WT_hours_150" model="hr.payslip.input.type">
+        <field name="name">Paid Overtime Hours (150%)</field>
+        <field name="code">WT_Overtime_150</field>
+        <field name="country_id" ref="base.ch"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_ch_hr_payroll.hr_payroll_structure_ch_elm'))]"/>
+    </record>
+
     <record id="l10n_ch_elm_input_WT_lessons" model="hr.payslip.input.type">
         <field name="name">Paid Lessons</field>
         <field name="code">WT_Lesson_input</field>

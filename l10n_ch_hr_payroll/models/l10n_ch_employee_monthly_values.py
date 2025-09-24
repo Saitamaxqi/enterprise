@@ -78,6 +78,33 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
     def _amount2str(amount):
         return f"{amount:.2f}"
 
+    def _get_additional_meta_data(self):
+        if 'l10n_ch_telework_percentage' not in self.employee_id:
+            return {}
+        return {
+            "TeleWorkPercentage": self._amount2str(self.employee_id.l10n_ch_telework_percentage * 100)
+        }
+
+    def _get_additional_txb_values(self):
+        values = {}
+
+        telework_percentage = "0.00"
+        if self.employee_meta_data and self.employee_meta_data.get('TeleWorkPercentage', False):
+            telework_percentage = self.employee_meta_data.get('TeleWorkPercentage')
+        values["TeleWorkPercentage"] = telework_percentage
+
+        return values
+
+    def _get_additional_avs_values(self, avs_base, avs_status):
+        values = {
+            'AHV-AVS-BaseSalary': self._amount2str(avs_base)
+        }
+        if avs_status == 'retired_wave_deduct':
+            values["WaiveOfPensionDeduct"] = XSD_SKIP_VALUE
+
+        return values
+
+
     @api.depends('yearly_values_id', 'month')
     def _compute_employee_meta_data(self):
         swissdec_helper = SwissdecDeclaration()
@@ -99,6 +126,7 @@ class L10nCHEmployeeMonthlySnapshot(models.Model):
                 "AdditionalParticulars": snapshot.additional_particular if snapshot.additional_particular else {},
                 "ContractValues": {},
                 "EmployeeValues": {},
+                **snapshot._get_additional_meta_data()
             }
 
             self._fill_xml_scheme(meta_data['Statistic'], "Position", version.l10n_ch_job_type, True, res_model='hr.version', employee_id=snapshot.employee_id.id, res_id=version.id, res_field="l10n_ch_job_type")
