@@ -6,8 +6,7 @@ export class BlackboxError extends Error {
         this.name = "BLACKBOX_ERROR";
         this.type = "blackbox";
         this.code = code;
-        this.message =
-            FDM_MESSAGES[code?.toString()?.substring(0, 3)] || message || "Unknown blackbox error";
+        this.message = FDM_MESSAGES[code?.toString()?.substring(0, 3)] || message;
         this.retry = retry;
     }
 }
