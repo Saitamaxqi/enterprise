@@ -8,20 +8,21 @@
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
 # Martin Trigaux, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2019-01-16 08:41+0000\n"
-"Last-Translator: Martin Trigaux, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 12:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/sign/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sign
 #. odoo-python
@@ -288,7 +289,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_terms_conditions_setting_banner
 msgid "<i class=\"oi oi-arrow-right me-1\"/>Back to settings"
-msgstr ""
+msgstr "<i class=\"oi oi-arrow-right me-1\"/>Πίσω στις ρυθμίσεις"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -398,7 +399,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_terms_conditions_setting_banner
 msgid "<span>This is a preview of your Terms &amp; Conditions.</span>"
-msgstr ""
+msgstr "<span>Προεπισκόπιση των Όρων &amp; Προδιαγραφών</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -493,7 +494,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__access_warning
 msgid "Access warning"
-msgstr ""
+msgstr "Προειδοποίηση πρόσβασης"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.portal_my_home_sign
@@ -509,7 +510,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_mail_activity_type__category
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "Action"
-msgstr ""
+msgstr "Ενέργεια"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction
@@ -527,6 +528,9 @@ msgid ""
 "Actions may trigger specific behavior like opening calendar view or "
 "automatically mark as done when a document is uploaded"
 msgstr ""
+"Οι ενέργειες μπορεί να προκαλέσουν συγκεκριμένη συμπεριφορά, όπως άνοιγμα "
+"της προβολής ημερολογίου ή αυτόματη ένδειξη ως ολοκληρωμένο όταν ανεβαίνει "
+"ένα έγγραφο."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__active
@@ -543,7 +547,7 @@ msgstr "Δραστηριότητες"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Δραστηριότητα Εξαίρεσης Διακόσμησης"
 
 #. module: sign
 #: model:ir.actions.report,name:sign.action_sign_request_print_logs
@@ -559,12 +563,12 @@ msgstr "Κατάσταση Δραστηριότητας"
 #. module: sign
 #: model:ir.model,name:sign.model_mail_activity_type
 msgid "Activity Type"
-msgstr ""
+msgstr "Τύπος Δραστηριότητας"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Εικονίδιο Τύπου Δραστηριότητας"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__sign_log_ids
@@ -603,7 +607,7 @@ msgstr ""
 #. module: sign
 #: model:res.groups,name:sign.group_sign_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: sign
 #. odoo-javascript
@@ -627,7 +631,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/controllers/portal.py:0
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #. module: sign
 #: model:ir.actions.act_window,name:sign.sign_all_request_action
@@ -720,7 +724,7 @@ msgstr "Συνημμένο"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: sign
 #. odoo-python
@@ -732,7 +736,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_request__attachment_ids
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "Συνημμένα"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -790,7 +794,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "Based on"
-msgstr ""
+msgstr "Βασισμένο στο"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -811,7 +815,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "By"
-msgstr ""
+msgstr "από"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_role_view_form
@@ -873,7 +877,7 @@ msgstr "Ακυρώθηκε"
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
 #: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: sign
 #. odoo-python
@@ -891,7 +895,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.js:0
 msgid "Center"
-msgstr ""
+msgstr "Κέντρο"
 
 #. module: sign
 #. odoo-javascript
@@ -992,12 +996,12 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
 msgid "Communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας"
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Εταιρίες"
 
 #. module: sign
 #: model:sign.item.type,name:sign.sign_item_type_company
@@ -1048,7 +1052,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model,name:sign.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: sign
 #. odoo-javascript
@@ -1085,7 +1089,7 @@ msgstr "Επαφή"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Contacts"
-msgstr ""
+msgstr "Επαφές"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
@@ -1177,7 +1181,7 @@ msgstr "Δημιουργήθηκε στις"
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__action__create
 msgid "Creation"
-msgstr ""
+msgstr "Δημιουργία"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -1193,7 +1197,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request_item__access_url
 msgid "Customer Portal URL"
-msgstr ""
+msgstr "Διεύθυνση URL Πύλης Πελατών"
 
 #. module: sign
 #. odoo-javascript
@@ -1231,7 +1235,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__default
 msgid "Default"
-msgstr ""
+msgstr "Προεπιλογή"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__default_height
@@ -1437,7 +1441,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_request__reference
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__reference
 msgid "Document Name"
-msgstr ""
+msgstr "Όνομα Εγγράφου"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__page
@@ -1487,7 +1491,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_graph
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_pivot
 msgid "Documents"
-msgstr ""
+msgstr "Έγγραφα"
 
 #. module: sign
 #. odoo-python
@@ -1503,7 +1507,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Download"
-msgstr ""
+msgstr "Λήψη"
 
 #. module: sign
 #. odoo-javascript
@@ -1665,7 +1669,7 @@ msgstr ""
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_item_type_menu
 msgid "Fields"
-msgstr ""
+msgstr "Πεδία"
 
 #. module: sign
 #: model:ir.model,name:sign.model_sign_item
@@ -1706,7 +1710,7 @@ msgstr ""
 #: code:addons/sign/static/src/dialogs/public_signer_dialog.js:0
 #: code:addons/sign/static/src/dialogs/sms_signer_dialog.js:0
 msgid "Final Validation"
-msgstr ""
+msgstr "Τελική Επικύρωση"
 
 #. module: sign
 #. odoo-javascript
@@ -1727,7 +1731,7 @@ msgstr "Ακόλουθοι (Συνεργάτες)"
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Γραμματοσειρά awesome  π.χ. fa-tasks"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -1776,7 +1780,7 @@ msgstr "Μελλοντικές Δραστηριότητες"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "Geolocation"
-msgstr ""
+msgstr "Γεωγραφική τοποθεσία"
 
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_report_green_savings
@@ -1806,7 +1810,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model,name:sign.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__has_default_template
@@ -1816,7 +1820,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__has_sign_requests
@@ -1844,7 +1848,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.doc_sign
 msgid "Home"
-msgstr ""
+msgstr "Αρχική"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
@@ -1897,7 +1901,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "IP Address"
-msgstr ""
+msgstr "Διεύθυνση IP"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__ip
@@ -1908,12 +1912,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__icon
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Εικονίδιο που υποδεικνύει μια δραστηριότητα εξαίρεσης."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_config_settings__module_sign_itsme
@@ -1938,7 +1942,7 @@ msgstr ""
 #: model:ir.model.fields,help:sign.field_sign_request__message_has_error
 #: model:ir.model.fields,help:sign.field_sign_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__certificate_reference
@@ -2017,7 +2021,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid "Insert your terms & conditions here..."
-msgstr ""
+msgstr "Εισαγάγετε εδώ τους όρους και τις προϋποθέσεις σας..."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__integrity
@@ -2071,7 +2075,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "John Doe"
-msgstr ""
+msgstr "John Doe"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -2156,7 +2160,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.js:0
 msgid "Left"
-msgstr ""
+msgstr "Αριστερά"
 
 #. module: sign
 #. odoo-javascript
@@ -2173,7 +2177,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__redirect_url_text
 msgid "Link Label"
-msgstr ""
+msgstr "Ετικέτα συνδέσμου"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__activity_id
@@ -2222,7 +2226,7 @@ msgstr "Λογότυπο"
 #: model:ir.model.fields,field_description:sign.field_sign_request__sign_log_ids
 #: model_terms:ir.ui.view,arch_db:sign.sign_log_view_tree
 msgid "Logs"
-msgstr ""
+msgstr "Αρχεία καταγραφής"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__field_size__long_text
@@ -2276,7 +2280,7 @@ msgstr "Μήνυμα"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_send_request__message_cc
@@ -2342,7 +2346,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Η Προθεσμία της Δραστηριότητάς Μου"
 
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_request_my_documents
@@ -2420,12 +2424,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/controllers/portal.py:0
 msgid "Newest"
-msgstr ""
+msgstr "Νεότερα"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Επόμενο Γεγονός Δραστηριότητας στο Ημερολόγιο"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_date_deadline
@@ -2483,7 +2487,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/controllers/portal.py:0
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction_counter
@@ -2509,17 +2513,17 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__num_pages
@@ -2662,7 +2666,7 @@ msgstr "Τηλέφωνο"
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/sms_signer_dialog.xml:0
 msgid "Phone Number"
-msgstr ""
+msgstr "Αριθμός τηλεφώνου"
 
 #. module: sign
 #. odoo-javascript
@@ -2686,7 +2690,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__access_url
 msgid "Portal Access URL"
-msgstr ""
+msgstr "Διεύθυνση URL πρόσβασης στην Πύλη"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__posX
@@ -2719,7 +2723,7 @@ msgstr "Εξέλιξη"
 #. odoo-python
 #: code:addons/sign/models/sign_request_item.py:0
 msgid "Public User"
-msgstr ""
+msgstr "Δημόσιος Χρήστης"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__item_type__radio
@@ -2745,7 +2749,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: sign
 #. odoo-javascript
@@ -2782,7 +2786,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__action__refuse
 msgid "Refuse"
-msgstr ""
+msgstr "Άρνηση"
 
 #. module: sign
 #. odoo-javascript
@@ -2815,7 +2819,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__reminder
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "Reminder"
-msgstr ""
+msgstr "Υπενθύμιση"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reminder_enabled
@@ -2842,7 +2846,7 @@ msgstr ""
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_reports
 msgid "Reports"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__request_item_infos
@@ -2924,7 +2928,7 @@ msgstr "Επαναφορά"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.js:0
 msgid "Right"
-msgstr ""
+msgstr "Δεξιά"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__role_id
@@ -2941,7 +2945,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: sign
 #. odoo-javascript
@@ -2957,7 +2961,7 @@ msgstr ""
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_3
 msgid "Sales"
-msgstr ""
+msgstr "Πωλήσεις"
 
 #. module: sign
 #. odoo-python
@@ -2972,7 +2976,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__action__save
 #: model_terms:ir.ui.view,arch_db:sign.res_company_view_form_sign_terms
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #. module: sign
 #. odoo-javascript
@@ -3093,7 +3097,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
 msgid "Sent"
-msgstr ""
+msgstr "Εστάλη"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__nb_wait
@@ -3127,7 +3131,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sign.sign_settings_action
 #: model:ir.ui.menu,name:sign.sign_item_settings_menu
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #. module: sign
 #. odoo-javascript
@@ -3166,7 +3170,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__shared
 #: model:ir.model.fields.selection,name:sign.selection__sign_request__state__shared
 msgid "Shared"
-msgstr ""
+msgstr "Κοινόχρηστο"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__field_size__short_text
@@ -3192,7 +3196,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 msgid "Sign"
-msgstr ""
+msgstr "Υπογραφή"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_activity
@@ -3745,7 +3749,7 @@ msgstr ""
 #. module: sign
 #: model:sign.item.role,name:sign.sign_item_role_default
 msgid "Standard"
-msgstr ""
+msgstr "Τυπικό"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__state
@@ -3766,7 +3770,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_state
@@ -3813,7 +3817,7 @@ msgstr "Θέμα"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
 msgid "Summary"
-msgstr ""
+msgstr "Περίληψη"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_tag__name
@@ -3823,7 +3827,7 @@ msgstr "Όνομα Ετικέτας"
 #. module: sign
 #: model:ir.model.constraint,message:sign.constraint_sign_template_tag_name_uniq
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "Το όνομα ετικέτας υπάρχει ήδη!"
 
 #. module: sign
 #: model:ir.actions.act_window,name:sign.sign_template_tag_action
@@ -3902,7 +3906,7 @@ msgstr "Πρότυπα"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_request
 msgid "Terms &amp; Conditions"
-msgstr ""
+msgstr "Όροι &amp; Προϋποθέσεις"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__res_company__sign_terms_type__html
@@ -4250,7 +4254,7 @@ msgstr "Σημερινές Δραστηριότητες"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__transaction_id
 msgid "Transaction"
-msgstr ""
+msgstr "Συναλλαγή"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.deleted_sign_request
@@ -4291,7 +4295,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Τύπος της καταγεγραμμένης δραστηριότητας εξαίρεσης."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_tag_view_form
@@ -4330,7 +4334,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__action__update
 msgid "Update"
-msgstr ""
+msgstr "Ενημέρωση"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -4347,7 +4351,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/views/helper/sign_action_helper.xml:0
 msgid "Upload"
-msgstr ""
+msgstr "Μεταφόρτωση"
 
 #. module: sign
 #. odoo-javascript
@@ -4403,12 +4407,12 @@ msgstr ""
 #: model:ir.model,name:sign.model_res_users
 #: model:ir.model.fields,field_description:sign.field_sign_log__user_id
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__token
 msgid "User token"
-msgstr ""
+msgstr "Διακριτικό Χρήστη"
 
 #. module: sign
 #: model:res.groups,name:sign.group_sign_user
@@ -4420,7 +4424,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_request_share__validity
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__validity
 msgid "Valid Until"
-msgstr ""
+msgstr "Ισχύει Ως"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
@@ -4511,7 +4515,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
 msgid "Water"
-msgstr ""
+msgstr "Νερό"
 
 #. module: sign
 #. odoo-python
@@ -4582,7 +4586,7 @@ msgstr "Πλάτος"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "Wood"
-msgstr ""
+msgstr "Ξύλο"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -4726,7 +4730,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_completed
 msgid "and"
-msgstr ""
+msgstr "και"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4923,13 +4927,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/thank_you_dialog.xml:0
 msgid "on"
-msgstr ""
+msgstr "στις"
 
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/views/helper/sign_action_helper.xml:0
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container

@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* social_twitter
+# * social_twitter
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-07-01 12:12+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"social_twitter/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: social_twitter
 #. odoo-python
@@ -84,7 +88,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/xml/social_twitter_templates.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: social_twitter
 #: model:ir.model.fields,help:social_twitter.field_res_config_settings__twitter_use_own_account
@@ -96,7 +100,7 @@ msgstr ""
 #. module: social_twitter
 #: model:ir.model,name:social_twitter.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.res_config_settings_view_form
@@ -111,17 +115,17 @@ msgstr ""
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__description
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_res_config_settings__display_name
@@ -134,7 +138,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_twitter.field_social_stream_post__display_name
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_post__display_twitter_preview
@@ -159,7 +163,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/js/stream_post_kanban_record.js:0
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #. module: social_twitter
 #. odoo-javascript
@@ -211,38 +215,38 @@ msgstr ""
 #: model:ir.model.fields,field_description:social_twitter.field_social_stream_post__id
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__image
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.social_post_template_view_form
 msgid "Images"
-msgstr ""
+msgstr "Εικόνες"
 
 #. module: social_twitter
 #: model:social.stream.type,name:social_twitter.stream_type_twitter_keyword
 msgid "Keyword"
-msgstr ""
+msgstr "Λέξη-Κλειδί"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: social_twitter
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/xml/social_twitter_templates.xml:0
 msgid "Likes"
-msgstr ""
+msgstr "Αρέσει"
 
 #. module: social_twitter
 #. odoo-python
@@ -265,12 +269,12 @@ msgstr ""
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.social_post_template_view_form
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: social_twitter
 #. odoo-python
@@ -296,7 +300,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/xml/social_twitter_templates.xml:0
 msgid "Post"
-msgstr ""
+msgstr "Καταχωρηση"
 
 #. module: social_twitter
 #: model_terms:ir.ui.view,arch_db:social_twitter.twitter_preview
@@ -392,7 +396,7 @@ msgstr ""
 #. module: social_twitter
 #: model:ir.model,name:social_twitter.model_social_media
 msgid "Social Media"
-msgstr ""
+msgstr "Κοινωνικά Δίκτυα"
 
 #. module: social_twitter
 #: model:ir.model,name:social_twitter.model_social_post
@@ -491,7 +495,7 @@ msgstr ""
 #: code:addons/social_twitter/models/social_stream.py:0
 #: code:addons/social_twitter/static/src/xml/social_twitter_templates.xml:0
 msgid "Unknown"
-msgstr ""
+msgstr "Άγνωστο"
 
 #. module: social_twitter
 #. odoo-python

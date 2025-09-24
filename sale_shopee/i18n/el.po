@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_shopee
+# * sale_shopee
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 12:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"sale_shopee/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_shopee
 #: model:mail.template,body_html:sale_shopee.order_sync_failure
@@ -176,7 +180,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Διακριτικό Πρόσβασης"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__access_token_expiration_date
@@ -198,19 +202,19 @@ msgstr ""
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_account_view_form
 msgid "Account Name"
-msgstr ""
+msgstr "Όνομα Λογαριασμού"
 
 #. module: sale_shopee
 #: model:ir.ui.menu,name:sale_shopee.accounts_menu
 msgid "Accounts"
-msgstr ""
+msgstr "Λογαριασμοί"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__active
 #: model:ir.model.fields.selection,name:sale_shopee.selection__shopee_shop__status__active
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_search
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: sale_shopee
 #. odoo-python
@@ -232,7 +236,7 @@ msgstr ""
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_form
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: sale_shopee
 #. odoo-python
@@ -284,12 +288,12 @@ msgstr ""
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.quick_create_account_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__sale_order__shopee_delivery_status__cancelled
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.picking_view_form
@@ -312,12 +316,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__company_id
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: sale_shopee
 #: model:ir.model,name:sale_shopee.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Επαφή"
 
 #. module: sale_shopee
 #. odoo-python
@@ -340,24 +344,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__create_uid
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__create_date
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__create_date
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_account_view_form
 msgid "Credentials"
-msgstr ""
+msgstr "Διαπιστευτήρια"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_form
 msgid "Days"
-msgstr ""
+msgstr "Ημέρες"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__team_id
@@ -367,7 +371,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__user_id
 msgid "Default Salesperson"
-msgstr ""
+msgstr "Προεπιλεγμένος Πωλητής"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_product_product__display_name
@@ -379,12 +383,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_move__display_name
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_picking__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφανιζόμενο Όνομα"
 
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__shopee_shop__status__error
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #. module: sale_shopee
 #: model:ir.model.fields,help:sale_shopee.field_shopee_shop__authorization_expiration_date
@@ -402,7 +406,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__stock_picking__shopee_label_status__failed
 msgid "Failed"
-msgstr ""
+msgstr "Αποτυχία"
 
 #. module: sale_shopee
 #. odoo-python
@@ -475,7 +479,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_move__id
 #: model:ir.model.fields,field_description:sale_shopee.field_stock_picking__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: sale_shopee
 #: model:ir.model.fields,help:sale_shopee.field_shopee_shop__active
@@ -489,6 +493,8 @@ msgid ""
 "If the sale is locked, you can not modify it anymore. However, you will "
 "still be able to invoice or deliver."
 msgstr ""
+"Εάν η πώληση είναι κλειδωμένη, δεν μπορείτε να την τροποποιήσετε. Ωστόσο, θα "
+"μπορείτε να τιμολογήσετε ή να παραδώσετε τα προϊόντα."
 
 #. module: sale_shopee
 #: model:ir.model.fields,help:sale_shopee.field_shopee_account__company_ids
@@ -499,7 +505,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sale_shopee.selection__shopee_shop__status__inactive
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_search
 msgid "Inactive"
-msgstr ""
+msgstr "Ανενεργή"
 
 #. module: sale_shopee
 #: model:ir.model.constraint,message:sale_shopee.constraint_shopee_item_unique_shopee_item_and_model_identifiers
@@ -536,25 +542,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__write_uid
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__write_date
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__write_date
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.view_order_form
 msgid "Lock"
-msgstr ""
+msgstr "Κλείδωμα"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__name
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.picking_view_form
@@ -564,12 +570,12 @@ msgstr ""
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_account_view_list
 msgid "New"
-msgstr ""
+msgstr "Νέα"
 
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__stock_picking__shopee_label_status__not_available
 msgid "Not Available"
-msgstr ""
+msgstr "Μη Διαθέσιμη"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__order_count
@@ -579,7 +585,7 @@ msgstr ""
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_form
 msgid "Orders"
-msgstr ""
+msgstr "Ταξινομήσεις"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__partner_identifier
@@ -605,7 +611,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__product_id
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_item_view_search
 msgid "Product"
-msgstr ""
+msgstr "Είδος"
 
 #. module: sale_shopee
 #. odoo-python
@@ -616,12 +622,12 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model,name:sale_shopee.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Παραλλαγή Είδους"
 
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__stock_picking__shopee_label_status__ready
 msgid "Ready"
-msgstr ""
+msgstr "Έτοιμη"
 
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__sale_order__shopee_delivery_status__draft
@@ -636,7 +642,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__refresh_token
 msgid "Refresh Token"
-msgstr ""
+msgstr "Ανανέωση Διακριτικού"
 
 #. module: sale_shopee
 #: model:ir.model.fields,help:sale_shopee.field_shopee_shop__refresh_token
@@ -667,12 +673,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_shopee/models/shopee_shop.py:0
 msgid "Sale Orders"
-msgstr ""
+msgstr "Παραγγελία Πώλησης"
 
 #. module: sale_shopee
 #: model:ir.model,name:sale_shopee.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Παραγγελία"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.quick_create_account_form
@@ -709,7 +715,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_item__shop_id
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_search
 msgid "Shop"
-msgstr ""
+msgstr "Κατάστημα"
 
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_account__shop_count
@@ -991,7 +997,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields,field_description:sale_shopee.field_shopee_shop__status
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: sale_shopee
 #: model:ir.model,name:sale_shopee.model_stock_move
@@ -1001,7 +1007,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model.fields.selection,name:sale_shopee.selection__stock_picking__shopee_label_status__stored
 msgid "Stored"
-msgstr ""
+msgstr "Αποθηκευμένο"
 
 #. module: sale_shopee
 #: model_terms:ir.ui.view,arch_db:sale_shopee.shopee_shop_view_form
@@ -1154,7 +1160,7 @@ msgstr ""
 #. module: sale_shopee
 #: model:ir.model,name:sale_shopee.model_stock_picking
 msgid "Transfer"
-msgstr ""
+msgstr "Κίνηση"
 
 #. module: sale_shopee
 #. odoo-python
@@ -1171,7 +1177,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_shopee/models/shopee_account.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Προσοχή"
 
 #. module: sale_shopee
 #: model:ir.model.fields,help:sale_shopee.field_shopee_shop__synchronize_inventory

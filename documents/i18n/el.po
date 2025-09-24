@@ -7,20 +7,22 @@
 # Martin Trigaux, 2019
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2019-01-16 08:38+0000\n"
-"Last-Translator: George Tarasidis <george_tarasidis@yahoo.com>, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/documents/"
+"el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: documents
 #. odoo-python
@@ -32,7 +34,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (αντίγραφο)"
 
 #. module: documents
 #. odoo-javascript
@@ -136,7 +138,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
 msgid "<i class=\"fa fa-download fa-fw\"/> Download file"
-msgstr ""
+msgstr "<i class=\"fa fa-download fa-fw\"/> Λήψη αρχείου"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_kanban
@@ -913,12 +915,12 @@ msgstr "Δραστηριότητα"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Δραστηριότητα Εξαίρεσης Διακόσμησης"
 
 #. module: documents
 #: model:ir.ui.menu,name:documents.mail_activity_plan_menu
 msgid "Activity Plans"
-msgstr ""
+msgstr "Προγράμματα Δραστηριοτήτων"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_state
@@ -933,13 +935,13 @@ msgstr "Τύπος Δραστηριότητας"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Εικονίδιο Τύπου Δραστηριότητας"
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.mail_activity_type_action_document
 #: model:ir.ui.menu,name:documents.mail_activity_type_menu
 msgid "Activity Types"
-msgstr ""
+msgstr "Τύποι Δραστηριότητας"
 
 #. module: documents
 #. odoo-javascript
@@ -1081,7 +1083,7 @@ msgstr ""
 #. module: documents
 #: model:res.groups,name:documents.group_documents_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__alias_id
@@ -1091,12 +1093,12 @@ msgstr "Ψευδώνυμο"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__alias_domain_id
 msgid "Alias Domain"
-msgstr ""
+msgstr "Ψευδώνυμο Τομέα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__alias_domain
 msgid "Alias Domain Name"
-msgstr ""
+msgstr "Όνομα Τομέα Ψευδονύμου"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__alias_name
@@ -1112,7 +1114,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/js/tours/documents.js:0
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #. module: documents
 #. odoo-javascript
@@ -1241,7 +1243,7 @@ msgstr "Συνημμένο"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__description
@@ -1349,7 +1351,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__children_ids
 msgid "Children"
-msgstr ""
+msgstr "Υποκατηγορίες"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
@@ -1410,7 +1412,7 @@ msgstr ""
 #: code:addons/documents/static/src/components/documents_manage_versions_panel/documents_manage_versions_panel.xml:0
 #: code:addons/documents/static/src/owl/components/pdf_manager/pdf_manager.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: documents
 #. odoo-javascript
@@ -1427,7 +1429,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_tag__color
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #. module: documents
 #: model:documents.document,name:documents.documents_data_comercial_tenancy_agreement
@@ -1443,7 +1445,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,name:documents.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Εταιρείες"
 
 #. module: documents
 #. odoo-javascript
@@ -1458,7 +1460,7 @@ msgstr "Εταιρία"
 #. module: documents
 #: model:ir.model,name:documents.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: documents
 #: model:ir.ui.menu,name:documents.Config
@@ -1706,7 +1708,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:documents.folder_deletion_form
 #: model_terms:ir.ui.view,arch_db:documents.tag_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: documents
 #. odoo-javascript
@@ -1773,12 +1775,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_res_partner__document_count
 #: model:ir.model.fields,field_description:documents.field_res_users__document_count
 msgid "Document Count"
-msgstr ""
+msgstr "Καταμέτρηση Εγγράφων"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_request_form_view
 msgid "Document Name"
-msgstr ""
+msgstr "Όνομα Εγγράφου"
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.mail_activity_plan_action_document
@@ -1788,7 +1790,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model,name:documents.model_documents_redirect
 msgid "Document Redirect"
-msgstr ""
+msgstr "Ανακατεύθυνση Εγγράφου"
 
 #. module: documents
 #: model:ir.model,name:documents.model_documents_request_wizard
@@ -1981,7 +1983,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 msgid "Done"
-msgstr ""
+msgstr "Ολοκληρωμένη"
 
 #. module: documents
 #. odoo-javascript
@@ -2000,7 +2002,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
 msgid "Download file"
-msgstr ""
+msgstr "Λήψη αρχείου"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -2040,7 +2042,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: code:addons/documents/static/src/views/form/folder_form_controller.js:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Δημιουργία Αντίγραφου"
 
 #. module: documents
 #. odoo-javascript
@@ -2077,7 +2079,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/fields/documents_datetime/documents_datetime_field.xml:0
 #: code:addons/documents/static/src/views/search/documents_search_panel.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #. module: documents
 #. odoo-javascript
@@ -2097,17 +2099,17 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__alias_email
 msgid "Email Alias"
-msgstr ""
+msgstr "Ψευδώνυμο Email"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__email_cc
 msgid "Email cc"
-msgstr ""
+msgstr "Email προώθησης"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "Email τομέα π.χ. 'example.com' στο 'odoo@example.com'"
 
 #. module: documents
 #: model:ir.actions.act_window,name:documents.mail_alias_action
@@ -2127,7 +2129,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__error
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #. module: documents
 #. odoo-javascript
@@ -2228,7 +2230,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/kanban/documents_kanban_renderer.xml:0
 msgid "Files"
-msgstr ""
+msgstr "Αρχεία"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.res_config_settings_view_form
@@ -2312,7 +2314,7 @@ msgstr "Ακόλουθοι (Συνεργάτες)"
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Γραμματοσειρά awesome  π.χ. fa-tasks"
 
 #. module: documents
 #. odoo-javascript
@@ -2349,7 +2351,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__has_user
@@ -2379,7 +2381,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__previous_attachment_ids
 msgid "History"
-msgstr ""
+msgstr "Ιστορικό"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access__id
@@ -2412,12 +2414,12 @@ msgstr "Κωδικός"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Εικονίδιο που υποδεικνύει μια δραστηριότητα εξαίρεσης."
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__is_access_via_link_hidden
@@ -2436,7 +2438,7 @@ msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζοντ�
 #: model:ir.model.fields,help:documents.field_documents_document__message_has_error
 #: model:ir.model.fields,help:documents.field_documents_document__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -2457,7 +2459,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_kanban
 msgid "In"
-msgstr ""
+msgstr "Σε"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -2542,7 +2544,7 @@ msgstr "Εσωτερικές"
 #. odoo-javascript
 #: code:addons/documents/static/src/owl/components/access_update_confirmation_dialog/access_update_confirmation_dialog.xml:0
 msgid "Internal Users"
-msgstr ""
+msgstr "Εσωτερικοί Χρήστες"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__access_internal
@@ -2759,7 +2761,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/fields/documents_type_icon/documents_type_icon.xml:0
 #: model_terms:ir.ui.view,arch_db:documents.documents_link_to_record_form_view
 msgid "Link"
-msgstr ""
+msgstr "Σύνδεσμος"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__is_access_via_link_hidden
@@ -2820,7 +2822,7 @@ msgstr "Κλείδωμα"
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
 msgid "Locked"
-msgstr ""
+msgstr "Κλειδώθηκε"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__lock_uid
@@ -2885,12 +2887,12 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_request_wizard__activity_note
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_ids
@@ -2934,7 +2936,7 @@ msgstr "Μοντέλο"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_link_to_record_wizard__accessible_model_ids
 msgid "Models"
-msgstr ""
+msgstr "Μοντέλα"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_access_modified
@@ -2951,7 +2953,7 @@ msgstr "Μήνες"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/action/documents_actions.xml:0
 msgid "More"
-msgstr ""
+msgstr "Περισσότερα"
 
 #. module: documents
 #. odoo-javascript
@@ -3037,7 +3039,7 @@ msgstr "Οι Δραστηριότητες μου"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Η Προθεσμία της Δραστηριότητάς Μου"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
@@ -3077,7 +3079,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_controller_mixin.xml:0
 msgid "New"
-msgstr ""
+msgstr "Νέα"
 
 #. module: documents
 #. odoo-javascript
@@ -3100,7 +3102,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Επόμενο Γεγονός Δραστηριότητας στο Ημερολόγιο"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__activity_date_deadline
@@ -3127,7 +3129,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
 msgid "No activity"
-msgstr ""
+msgstr "Καμία δραστηριότητα"
 
 #. module: documents
 #. odoo-javascript
@@ -3229,7 +3231,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__user_permission__none
 #: model:ir.model.fields.selection,name:documents.selection__documents_operation__user_permission__none
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: documents
 #. odoo-javascript
@@ -3260,17 +3262,17 @@ msgstr "Πλήθος ενεργειών"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_page_layout
@@ -3291,7 +3293,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__0_older
 msgid "Older"
-msgstr ""
+msgstr "Παλαιότερος"
 
 #. module: documents
 #. odoo-python
@@ -3397,13 +3399,13 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Μητρική διαδρομή"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access__partner_id
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "Συναλλασόμενος"
 
 #. module: documents
 #. odoo-javascript
@@ -3432,7 +3434,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__thumbnail_status__present
 msgid "Present"
-msgstr ""
+msgstr "Παρών/ούσα"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
@@ -3448,7 +3450,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__is_readonly
@@ -3477,7 +3479,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_link_to_record_wizard__resource_ref
 msgid "Record"
-msgstr ""
+msgstr "Εγγραφή"
 
 #. module: documents
 #: model:documents.document,name:documents.document_registrations_folder
@@ -3631,18 +3633,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents.field_documents_sharing__invite_role
 #: model:ir.model.fields,field_description:documents.field_documents_sharing_access__role
 msgid "Role"
-msgstr ""
+msgstr "Ρόλος"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
 #: model_terms:ir.ui.view,arch_db:documents.tag_view_form
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -3766,13 +3768,13 @@ msgstr "Ακολουθία"
 #. module: documents
 #: model:ir.model,name:documents.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Server Action"
 
 #. module: documents
 #. odoo-python
 #: code:addons/documents/models/ir_actions_server.py:0
 msgid "Server Actions"
-msgstr ""
+msgstr "Ενέργειες Διακομιστή"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
@@ -3848,7 +3850,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__shortcut_ids
 msgid "Shortcut"
-msgstr ""
+msgstr "Συντόμευση"
 
 #. module: documents
 #. odoo-javascript
@@ -3881,7 +3883,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.share_file
 msgid "Size:"
-msgstr ""
+msgstr "Μέγεθος:"
 
 #. module: documents
 #: model:documents.document,name:documents.document_finance_social_folder
@@ -3908,7 +3910,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__shortcut_document_id
 msgid "Source Document"
-msgstr ""
+msgstr "Έγγραφο Πηγή"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__shortcut_document_owner_id
@@ -3944,7 +3946,7 @@ msgstr ""
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_search
 msgid "Starred"
-msgstr ""
+msgstr "Με αστέρι"
 
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__activity_state
@@ -3968,7 +3970,7 @@ msgstr ""
 #. module: documents
 #: model:ir.ui.menu,name:documents.structure
 msgid "Structure"
-msgstr ""
+msgstr "Δομή"
 
 #. module: documents
 #. odoo-python
@@ -4002,7 +4004,7 @@ msgstr "Εικέτα"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.tag_view_form
 msgid "Tag Name"
-msgstr ""
+msgstr "Όνομα Ετικέτας"
 
 #. module: documents
 #: model:ir.model.constraint,message:documents.constraint_documents_tag_tag_name_unique
@@ -4135,12 +4137,12 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__1_month
 msgid "This Month"
-msgstr ""
+msgstr "Αυτόν τον μήνα"
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__2_week
 msgid "This Week"
-msgstr ""
+msgstr "Της Εβδομάδας"
 
 #. module: documents
 #. odoo-python
@@ -4255,7 +4257,7 @@ msgstr ""
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__last_access_date_group__3_day
 msgid "Today"
-msgstr ""
+msgstr "Σήμερα"
 
 #. module: documents
 #. odoo-javascript
@@ -4294,7 +4296,7 @@ msgstr "Τύπος"
 #. module: documents
 #: model:ir.model.fields,help:documents.field_documents_document__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Τύπος της καταγεγραμμένης δραστηριότητας εξαίρεσης."
 
 #. module: documents
 #: model:ir.model.fields.selection,name:documents.selection__documents_document__type__url
@@ -4338,7 +4340,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/documents_controller_mixin.js:0
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "Unlock"
-msgstr ""
+msgstr "Ξεκλείδωμα"
 
 #. module: documents
 #. odoo-python
@@ -4351,7 +4353,7 @@ msgstr ""
 #: code:addons/documents/static/src/views/documents_controller_mixin.xml:0
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
 msgid "Upload"
-msgstr ""
+msgstr "Μεταφόρτωση"
 
 #. module: documents
 #: model_terms:ir.actions.act_window,help:documents.document_action
@@ -4424,7 +4426,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:documents.selection__documents_sharing__invite_role__view
 #: model_terms:ir.ui.view,arch_db:documents.tracking_access_members_change
 msgid "Viewer"
-msgstr ""
+msgstr "Προβολή"
 
 #. module: documents
 #. odoo-javascript
@@ -4703,7 +4705,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/editor/plugins/add_documents_attachment_plugin.js:0
 msgid "document"
-msgstr ""
+msgstr "εγγραφή"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -4740,7 +4742,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents/static/src/components/documents_details_panel/documents_details_panel.xml:0
 msgid "e.g. mycompany.com"
-msgstr ""
+msgstr "π.χ. mycompany.com"
 
 #. module: documents
 #. odoo-python

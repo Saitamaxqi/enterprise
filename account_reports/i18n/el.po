@@ -8,26 +8,28 @@
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
 # Martin Trigaux, 2019
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2016-08-05 13:28+0000\n"
-"Last-Translator: Kostas Goutoudis <goutoudis@gmail.com>, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"account_reports/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
-msgstr ""
+msgstr "\" Το υπόλοιπο του λογαριασμού επηρεάζεται από"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
@@ -66,19 +68,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (αντίγραφο)"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "%s is not a numeric value"
-msgstr ""
+msgstr "%s δεν είναι αριθμητική τιμή"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "%s selected"
-msgstr ""
+msgstr "%s επιλεγμένο"
 
 #. module: account_reports
 #. odoo-python
@@ -111,6 +113,8 @@ msgid ""
 "'View Bank Statement' caret option is only available for report lines "
 "targeting bank statements."
 msgstr ""
+"Η επιλογή \"Προβολή τραπεζικών καταστάσεων\" είναι διαθέσιμη μόνο για "
+"γραμμές αναφοράς που στοχεύουν σε τραπεζικές καταστάσεις."
 
 #. module: account_reports
 #. odoo-python
@@ -122,23 +126,23 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "(%s lines)"
-msgstr ""
+msgstr "(%s γραμμές)"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.outstanding_receipts
 msgid "(+) Outstanding Receipts"
-msgstr ""
+msgstr "(+) Εκκρεμούσες εισπράξεις"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.outstanding_payments
 msgid "(-) Outstanding Payments"
-msgstr ""
+msgstr "(-) Ανεξόφλητες πληρωμές"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "(1 line)"
-msgstr ""
+msgstr "(1 γραμμή)"
 
 #. module: account_reports
 #. odoo-python
@@ -150,7 +154,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "(No Group)"
-msgstr ""
+msgstr "(Κανένα γκρουπ)"
 
 #. module: account_reports
 #. odoo-javascript
@@ -274,6 +278,8 @@ msgid ""
 "<i>Errors marked with <i class=\"fa fa-warning\"/> are critical and prevent "
 "the file generation.</i>"
 msgstr ""
+"<i>Σφάλματα σημειωμένα με <i class=\"fa fa-warning\"/>είναι κρίσιμα και "
+"εμποδίζουν τη δημιουργία αρχείων. </i>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -323,17 +329,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
 msgid "<span>One or more error(s) occurred during file generation:</span>"
 msgstr ""
+"<span>Ένα ή περισσότερα σφάλματα παρουσιάστηκαν κατά τη δημιουργία του "
+"αρχείου:</span>"
 
 #. module: account_reports
 #: model:ir.model.constraint,message:account_reports.constraint_account_report_horizontal_group_name_uniq
 msgid "A horizontal group with the same name already exists."
-msgstr ""
+msgstr "Υπάρχει ήδη μια οριζόντια ομάδα με το ίδιο όνομα."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/widgets/account_report_x2many/account_report_x2many.js:0
 msgid "A line with a 'Group By' value cannot have children."
-msgstr ""
+msgstr "Μια γραμμή με 'Ομαδοποίηση Κατά' δεν μπορεί να έχει παιδιά."
 
 #. module: account_reports
 #. odoo-python
@@ -348,6 +356,8 @@ msgid ""
 "A tax unit can only be created between companies sharing the same main "
 "currency."
 msgstr ""
+"Μια φορολογική μονάδα μπορεί να δημιουργηθεί μόνο μεταξύ εταιρειών που έχουν "
+"το ίδιο κύριοσυνάλλαγμα."
 
 #. module: account_reports
 #. odoo-python
@@ -397,7 +407,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Account Code / Tag"
-msgstr ""
+msgstr "Κωδικός Λογαριασμού / Ετικέτα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_display_representative_field
@@ -425,7 +435,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Account Name"
-msgstr ""
+msgstr "Όνομα Λογαριασμού"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_annotation
@@ -466,7 +476,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_revaluation_journal_id
 msgid "Account Revaluation Journal"
-msgstr ""
+msgstr "Ημερολόγιο αναπροσαρμογής λογαριασμού"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__account_status
@@ -488,12 +498,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_account_type.xml:0
 msgid "Account:"
-msgstr ""
+msgstr "Λογαριασμός:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_representative_id
 msgid "Accounting Firm"
-msgstr ""
+msgstr "Λογιστική εταιρεία"
 
 #. module: account_reports
 #. odoo-python
@@ -509,7 +519,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "Λογιστική αναφορά"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_budget
@@ -524,19 +534,19 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
-msgstr ""
+msgstr "Έκφραση Λογιστικής Αναφοράς"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
 msgid "Accounting Report Line"
-msgstr ""
+msgstr "Γραμμή Λογιστικής Αναφοράς"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_tree
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_tree
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_search
 msgid "Accounting Reports"
-msgstr ""
+msgstr "Αναφορές Λογιστικής"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_return
@@ -614,7 +624,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_mail_activity
 msgid "Activity"
-msgstr ""
+msgstr "Δραστηριότητα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__activity_exception_decoration
@@ -635,18 +645,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/widgets/account_report_x2many/account_report_x2many.xml:0
 msgid "Add a line"
-msgstr ""
+msgstr "Προσθήκη γραμμής"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
 msgid "Add contacts to notify..."
-msgstr ""
+msgstr "Προσθήκη επαφών για ενημέρωση..."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__totals_below_sections
 #: model:ir.model.fields,field_description:account_reports.field_res_config_settings__totals_below_sections
 msgid "Add totals below sections"
-msgstr ""
+msgstr "Πρόσθεσε σύνολα κάτω από τις ενότητες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__additional_action_context
@@ -666,7 +676,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.column,name:account_reports.multicurrency_revaluation_report_adjustment
 msgid "Adjustment"
-msgstr ""
+msgstr "Προσαρμογή"
 
 #. module: account_reports
 #. odoo-python
@@ -678,18 +688,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_cash_flow_report.py:0
 msgid "Advance Payments received from customers"
-msgstr ""
+msgstr "Προκαταβολές που ελήφθησαν από πελάτες"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_cash_flow_report.py:0
 msgid "Advance payments made to suppliers"
-msgstr ""
+msgstr "Προκαταβολές που έγιναν στους προμηθευτές"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Advanced"
-msgstr ""
+msgstr "Για προχωρημένους"
 
 #. module: account_reports
 #. odoo-python
@@ -775,19 +785,19 @@ msgstr "Όλα"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "All Journals"
-msgstr ""
+msgstr "Όλα τα Ημερολόγια"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "All Payable"
-msgstr ""
+msgstr "Όλα τα πληρωτέα"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "All Receivable"
-msgstr ""
+msgstr "Όλα τα Εισπρακτέα"
 
 #. module: account_reports
 #. odoo-python
@@ -891,7 +901,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_analytic.xml:0
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_analytic_groupby.xml:0
 msgid "Analytic"
-msgstr ""
+msgstr "Αναλυτικοί"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report__filter_analytic_groupby
@@ -1005,7 +1015,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "As of %s"
-msgstr ""
+msgstr "Από τις %s"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1022,12 +1032,12 @@ msgstr ""
 #: model:account.report.column,name:account_reports.aged_payable_report_period0
 #: model:account.report.column,name:account_reports.aged_receivable_report_period0
 msgid "At Date"
-msgstr ""
+msgstr "Σε Ημερομηνία"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
 msgid "Attach a file"
-msgstr ""
+msgstr "Επισύναψη αρχείου"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__attachment_ids
@@ -1056,7 +1066,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Audit"
-msgstr ""
+msgstr "Έλεγχος"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
@@ -1107,12 +1117,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_avgcre0
 msgid "Average creditors days"
-msgstr ""
+msgstr "Μέσος όρος ημερών πιστωτών"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_avdebt0
 msgid "Average debtors days"
-msgstr ""
+msgstr "Μέσος όρος ημερών χρεωστών"
 
 #. module: account_reports
 #. odoo-python
@@ -1170,18 +1180,18 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.column,name:account_reports.multicurrency_revaluation_report_balance_currency
 msgid "Balance in Foreign Currency"
-msgstr ""
+msgstr "Υπόλοιπο σε ξένο νόμισμα"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/bank_reconciliation_report.py:0
 msgid "Balance of '%s'"
-msgstr ""
+msgstr "Υπόλοιπο των '%s'"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.balance_bank
 msgid "Balance of Bank"
-msgstr ""
+msgstr "Υπόλοιπο Τράπεζας"
 
 #. module: account_reports
 #. odoo-python
@@ -1223,7 +1233,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Bank Reconciliation"
-msgstr ""
+msgstr "Συμφιλίωση Τράπεζας"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.bank_reconciliation_report
@@ -1270,13 +1280,13 @@ msgstr "Βασικό Ποσό"
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/aged_partner_balance/filter_aging.xml:0
 msgid "Based on"
-msgstr ""
+msgstr "Βασισμένο στο"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Before"
-msgstr ""
+msgstr "Πριν"
 
 #. module: account_reports
 #. odoo-python
@@ -1295,7 +1305,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_budgets.xml:0
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__budget_id
 msgid "Budget"
-msgstr ""
+msgstr "Προϋπολογισμός"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__budget_item_ids
@@ -1305,14 +1315,14 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_budget_form
 msgid "Budget Items"
-msgstr ""
+msgstr "Αντικείμενα Προϋπολογισμού"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_budgets.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_budget_form
 msgid "Budget Name"
-msgstr ""
+msgstr "Όνομα Προϋπολογισμού"
 
 #. module: account_reports
 #. odoo-python
@@ -1345,36 +1355,37 @@ msgstr "Ακύρωση"
 #: code:addons/account_reports/models/account_generic_tax_report.py:0
 msgid "Cannot audit tax from another model than account.tax."
 msgstr ""
+"Δεν είναι δυνατός ο έλεγχος φόρου από άλλο μοντέλο εκτός από το account.tax."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/carryover_popover.xml:0
 msgid "Carryover"
-msgstr ""
+msgstr "Μεταφορά"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Carryover adjustment for tax unit"
-msgstr ""
+msgstr "Προσαρμογή μεταφοράς για φορολογική μονάδα"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Carryover can only be generated for a single column group."
-msgstr ""
+msgstr "Η μεταφορά μπορεί να δημιουργηθεί μόνο για μια ομάδα στήλης."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Carryover from %(date_from)s to %(date_to)s"
-msgstr ""
+msgstr "Μεταφορά από %(date_from)s σε %(date_to)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Carryover lines for: %s"
-msgstr ""
+msgstr "Γραμμές μεταφοράς για: %s"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_cash0
@@ -1444,18 +1455,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_cash_flow_report.py:0
 msgid "Cash out"
-msgstr ""
+msgstr "Εξαργύρωση"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_cash_flow_report.py:0
 msgid "Cash paid for operating activities"
-msgstr ""
+msgstr "Μετρητά που καταβάλλονται για λειτουργικές δραστηριότητες"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_cash_received0
 msgid "Cash received"
-msgstr ""
+msgstr "μετρητά που λήφθηκαν"
 
 #. module: account_reports
 #. odoo-python
@@ -1466,7 +1477,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_cash_spent0
 msgid "Cash spent"
-msgstr ""
+msgstr "Μετρητά που δαπανήθηκαν"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_cash_surplus0
@@ -1484,7 +1495,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_change_lock_date
 msgid "Change Lock Date"
-msgstr ""
+msgstr "Αλλαγή Ημερομηνίας Κλειδώματος"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1532,7 +1543,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/tax_report/warnings.xml:0
 msgid "Check them"
-msgstr ""
+msgstr "Ελέγξτε τα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__check_ids
@@ -1560,7 +1571,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: account_reports
 #. odoo-python
@@ -1572,7 +1583,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Closing Entry"
-msgstr ""
+msgstr "Κλείσιμο καταχώρισης"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__closing_move_ids
@@ -1588,7 +1599,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_closing_bank_balance0
 msgid "Closing bank balance"
-msgstr ""
+msgstr "Κλείσιμο τραπεζικού υπολοίπου"
 
 #. module: account_reports
 #. odoo-python
@@ -1614,13 +1625,13 @@ msgstr ""
 #: model:account.report.column,name:account_reports.journal_report_code
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__code
 msgid "Code"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/sales_report/filters/filter_code.xml:0
 msgid "Codes:"
-msgstr ""
+msgstr "Κωδικοί:"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_bank_statements
@@ -1632,7 +1643,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Columns"
-msgstr ""
+msgstr "Στήλες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_payment_wizard__communication
@@ -1668,25 +1679,27 @@ msgid ""
 "Company %(company)s already belongs to a tax unit in %(country)s. A company "
 "can at most be part of one tax unit per country."
 msgstr ""
+"Η εταιρεία %(company)s ανήκει ήδη σε φορολογική μονάδα στο%(country)s. Μια "
+"εταιρεία μπορεί το πολύ να είναι μέρος μιας φορολογικής μονάδας ανά χώρα."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Company Currency"
-msgstr ""
+msgstr "Νόμισμα Εταιρίας"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_tax_unit.xml:0
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Company Only"
-msgstr ""
+msgstr "Μόνο εταιρεία"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Company Settings"
-msgstr ""
+msgstr "Ρυθμίσεις εταιρείας"
 
 #. module: account_reports
 #. odoo-python
@@ -1712,7 +1725,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 msgid "Comparison"
-msgstr ""
+msgstr "Σύγκριση"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_review_of_guaranteed
@@ -1756,7 +1769,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: account_reports
 #. odoo-python
@@ -1767,7 +1780,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Configure your tax accounts"
-msgstr ""
+msgstr "Διαμορφώστε τους φορολογικούς λογαριασμούς σας"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_marketable_securities_review
@@ -1784,12 +1797,12 @@ msgstr "Επαφή"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.duplicated_vat_partner_tree_view
 msgid "Contacts"
-msgstr ""
+msgstr "Επαφές"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mail_body
 msgid "Contents"
-msgstr ""
+msgstr "Περιεχόμενα"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_direct_costs0
@@ -1816,18 +1829,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_search
 msgid "Country"
-msgstr ""
+msgstr "Χώρα"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.account_financial_report_ec_sales_country
 msgid "Country Code"
-msgstr ""
+msgstr "Κωδικός Χώρας"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_budgets.xml:0
 msgid "Create"
-msgstr ""
+msgstr "Δημιουργία"
 
 #. module: account_reports
 #: model:ir.actions.server,name:account_reports.action_create_composite_report_list
@@ -1837,12 +1850,12 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_multicurrency_revaluation_wizard
 msgid "Create Entry"
-msgstr ""
+msgstr "Δημιουργία Καταχώρισης"
 
 #. module: account_reports
 #: model:ir.actions.server,name:account_reports.action_create_report_menu
 msgid "Create Menu Item"
-msgstr ""
+msgstr "Δημιουργία στοιχείου μενού"
 
 #. module: account_reports
 #: model:ir.model,website_form_label:account_reports.model_res_partner
@@ -1939,18 +1952,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_multicurrency_revaluation_report.py:0
 msgid "Currency Rates (%s)"
-msgstr ""
+msgstr "Τιμές νομισμάτων(%s)"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Currency:"
-msgstr ""
+msgstr "Νόμισμα:"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.deferred_expense_current
 #: model:account.report.column,name:account_reports.deferred_revenue_current
 msgid "Current"
-msgstr ""
+msgstr "Τρέχων"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_current_assets0
@@ -1972,7 +1985,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_current_year_earnings0
 msgid "Current Year Unallocated Earnings"
-msgstr ""
+msgstr "Μη κατανεμημένα κέρδη τρέχοντος έτους"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_ca_to_l0
@@ -2003,6 +2016,9 @@ msgid ""
 "Custom engine _report_custom_engine_last_statement_balance_amount does not "
 "support groupby"
 msgstr ""
+"Ο προσαρμοσμένος μηχανισμός "
+"_report_custom_engine_last_statement_balance_amount δεν υποστηρίζει την "
+"ομαδοποίηση"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.customer_statement_report
@@ -2057,7 +2073,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Date cannot be empty"
-msgstr ""
+msgstr "Η ημερομηνία δεν μπορεί να είναι κενή"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_report_annotation__date
@@ -2073,7 +2089,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/aged_partner_balance/filter_aging.xml:0
 msgid "Days"
-msgstr ""
+msgstr "Ημέρες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__days_to_deadline
@@ -2107,7 +2123,7 @@ msgstr "Χρέωση"
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Deductible"
-msgstr ""
+msgstr "Εκπιπτόμενο"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__default_deadline_days_delay
@@ -2142,22 +2158,22 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Deferred Entries"
-msgstr ""
+msgstr "Αναβαλλόμενες Εγγραφές"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_deferred_expense
 msgid "Deferred Expense"
-msgstr ""
+msgstr "Αναβαλλόμενο Έξοδο"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_deferred_expense_report_handler
 msgid "Deferred Expense Custom Handler"
-msgstr ""
+msgstr "Προσαρμοσμένος Διαχειριστής Αναβαλλόμενης Δαπάνης"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.deferred_expense_report
 msgid "Deferred Expense Report"
-msgstr ""
+msgstr "Αναφορά Αναβαλλόμενης Δαπάνης"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_deferred_report_handler
@@ -2172,7 +2188,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_deferred_revenue
 msgid "Deferred Revenue"
-msgstr ""
+msgstr "Αναβαλλόμενο Έσοδο"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_deferred_revenue_report_handler
@@ -2192,12 +2208,12 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_expression_form
 msgid "Definition"
-msgstr ""
+msgstr "Ορισμός"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_return_periodicity
 msgid "Delay units"
-msgstr ""
+msgstr "Μονάδες καθυστέρησης"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
@@ -2227,7 +2243,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Difference from rounding taxes"
-msgstr ""
+msgstr "Διαφορά από στρογγυλοποίηση φόρων"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -2325,7 +2341,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
@@ -2340,7 +2356,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard__doc_name
 msgid "Documents Name"
-msgstr ""
+msgstr "Όνομα Εγγράφων"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__domain
@@ -2358,7 +2374,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__checkbox_download
 msgid "Download"
-msgstr ""
+msgstr "Λήψη"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -2390,7 +2406,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Due"
-msgstr ""
+msgstr "Οφειλή"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2456,11 +2472,13 @@ msgid ""
 "Editing a manual report line is not allowed when multiple companies are "
 "selected."
 msgstr ""
+"Η επεξεργασία μιας γραμμής μη αυτόματης αναφοράς δεν επιτρέπεται όταν "
+"επιλέγονται πολλές εταιρείες."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__checkbox_send_mail
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_mail_compose_message
@@ -2486,7 +2504,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Enable Sections"
-msgstr ""
+msgstr "Ενεργοποίηση Ενοτήτων"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__enable_send_mail
@@ -2497,13 +2515,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_variant.xml:0
 msgid "Enable more ..."
-msgstr ""
+msgstr "Ενεργοποίηση περισσότερων ..."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_trial_balance_report.py:0
 msgid "End Balance"
-msgstr ""
+msgstr "Τελικό υπόλοιπο"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2568,7 +2586,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Entries with partners with no VAT"
-msgstr ""
+msgstr "Εγγραφές με συνεργάτες χωρίς ΦΠΑ"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__equity
@@ -2580,7 +2598,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Error message"
-msgstr ""
+msgstr "Μήνυμα σφάλματος"
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_type__deadline_periodicity__2_months
@@ -2600,7 +2618,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/filters/filter_exchange_rate.xml:0
 msgid "Exchange Rates"
-msgstr ""
+msgstr "Συναλλαγματικές ισοτιμίες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_move_line__exclude_bank_lines
@@ -2615,7 +2633,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__exclude_provision_currency_ids
 msgid "Exclude Provision Currency"
-msgstr ""
+msgstr "Εξαίρεση του νομίσματος παροχής"
 
 #. module: account_reports
 #. odoo-python
@@ -2632,7 +2650,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.multicurrency_revaluation_excluded
 msgid "Excluded Accounts"
-msgstr ""
+msgstr "Εξαιρούμενοι Λογαριασμοί"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.executive_summary
@@ -2644,12 +2662,12 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__expense_provision_account_id
 msgid "Expense Account"
-msgstr ""
+msgstr "Λογαριασμός Εξόδων"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_revaluation_expense_provision_account_id
 msgid "Expense Provision Account"
-msgstr ""
+msgstr "Λογαριασμός Παροχής Εξόδων"
 
 #. module: account_reports
 #. odoo-python
@@ -2671,12 +2689,12 @@ msgstr "Εξαγωγή"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_reports_export_wizard_format
 msgid "Export format for accounting's reports"
-msgstr ""
+msgstr "Μορφή εξαγωγής για τις λογιστικές αναφορές"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard__export_format_ids
 msgid "Export to"
-msgstr ""
+msgstr "Εξαγωγή σε"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_reports_export_wizard
@@ -2686,7 +2704,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_expression_form
 msgid "Expression"
-msgstr ""
+msgstr "Έκφραση"
 
 #. module: account_reports
 #. odoo-python
@@ -2696,11 +2714,15 @@ msgid ""
 "computing the current report. Make sure the cross-report aggregations of "
 "this report only reference terms belonging to other reports."
 msgstr ""
+"Η έκφραση με την ένδειξη   '%(label)s' of line '%(line)s' αντικαθίσταται "
+"κατά τον υπολογισμό της τρέχουσας αναφοράς. Βεβαιωθείτε ότι οι συγκεντρώσεις "
+"διασταυρούμενων αναφορών αυτής της αναφοράς αναφέρονται μόνο σε όρους που "
+"ανήκουν σε άλλες αναφορές."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__field_name
 msgid "Field"
-msgstr ""
+msgstr "Πεδίο"
 
 #. module: account_reports
 #. odoo-python
@@ -2714,7 +2736,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Field %s does not exist on account.move.line."
-msgstr ""
+msgstr "Το πεδίο  %s δεν υπάρχει στο account.move.line."
 
 #. module: account_reports
 #. odoo-python
@@ -2736,35 +2758,37 @@ msgstr ""
 msgid ""
 "Field 'Custom Handler Model' can only reference records inheriting from [%s]."
 msgstr ""
+"Το πεδίο \"Προσαρμοσμένο μοντέλο χειριστή\" μπορεί να αναφέρεται μόνο σε "
+"εγγραφές που κληρονομούνται από το [%s]."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__file_content
 msgid "File Content"
-msgstr ""
+msgstr "Περιεχόμενο αρχείου"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
 msgid "File Download Errors"
-msgstr ""
+msgstr "Σφάλματα λήψης αρχείου"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__file_name
 msgid "File Name"
-msgstr ""
+msgstr "Όνομα Αρχείου"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Filters"
-msgstr ""
+msgstr "Φίλτρα"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_aml_ir_filters.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Filters:"
-msgstr ""
+msgstr "Φίλτρα:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
@@ -2779,12 +2803,12 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_fiscal_position
 msgid "Fiscal Position"
-msgstr ""
+msgstr "Φορολογική Θέση"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_tax_unit__fpos_synced
 msgid "Fiscal Positions Synchronised"
-msgstr ""
+msgstr "Συγχρονισμένες δημοσιονομικές θέσεις"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_tax_unit_form
@@ -2792,6 +2816,8 @@ msgid ""
 "Fiscal Positions should apply to all companies of the tax unit. You may want "
 "to"
 msgstr ""
+"Οι δημοσιονομικές θέσεις θα πρέπει να ισχύουν για όλες τις εταιρείες της "
+"φορολογικής μονάδας. Μπορεί να θέλετε"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_fixed_assets_review
@@ -2861,7 +2887,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line/popover/debug_popover.xml:0
 msgid "Formula"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: account_reports
 #. odoo-python
@@ -2870,11 +2896,13 @@ msgid ""
 "From %(date_from)s\n"
 "to  %(date_to)s"
 msgstr ""
+"Από %(date_from)s\n"
+"έως  %(date_to)s"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard_format__fun_param
 msgid "Function Parameter"
-msgstr ""
+msgstr "Παράμετρος συνάρτησης"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard_format__fun_to_call
@@ -2916,7 +2944,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Generate entry"
-msgstr ""
+msgstr "Δημιουργία καταχώρησης"
 
 #. module: account_reports
 #: model:ir.actions.server,name:account_reports.ir_cron_generate_account_return_ir_actions_server
@@ -2927,7 +2955,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/wizard/report_export_wizard.py:0
 msgid "Generated Documents"
-msgstr ""
+msgstr "Δημιουργήθηκαν Έγγραφα"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_qr_code_payment_wizard
@@ -2974,13 +3002,13 @@ msgstr ""
 #: code:addons/account_reports/models/account_journal_report.py:0
 #: model_terms:ir.ui.view,arch_db:account_reports.journal_report_pdf_export_main
 msgid "Global Tax Summary"
-msgstr ""
+msgstr "Καθολική σύνοψη φόρου"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Goods"
-msgstr ""
+msgstr "Εμπορεύματα"
 
 #. module: account_reports
 #. odoo-python
@@ -3001,7 +3029,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Grid"
-msgstr ""
+msgstr "Πλέγμα"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_gross_profit0
@@ -3016,29 +3044,29 @@ msgstr "Μικτό Κέρδος"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_gpmargin0
 msgid "Gross profit margin (gross profit / operating income)"
-msgstr ""
+msgstr "Μικτό περιθώριο κέρδους (μικτό κέρδος / λειτουργικά έσοδα)"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
 msgid "Group By"
-msgstr ""
+msgstr "Ομαδοποίηση κατά"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_horizontal_group_form
 msgid "Group Name"
-msgstr ""
+msgstr "Όνομα Ομάδας"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/deferred_reports/groupby.xml:0
 msgid "Group by"
-msgstr ""
+msgstr "Ομαδοποίηση κατά"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Grouped Deferral Entry of %s"
-msgstr ""
+msgstr "Ομαδοποιημένη καταχώριση αναβολής του %s"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__has_message
@@ -3060,53 +3088,53 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Hide lines at 0"
-msgstr ""
+msgstr "Απόκρυψη γραμμών στο 0"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Hierarchy and Subtotals"
-msgstr ""
+msgstr "Ιεραρχία και Υποσύνολα"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__horizontal_group_id
 msgid "Horizontal Group"
-msgstr ""
+msgstr "Οριζόντια Ομάδα"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_horizontal_groups.xml:0
 msgid "Horizontal Group:"
-msgstr ""
+msgstr "Οριζόντια Ομάδα:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_horizontal_groups
 #: model:ir.model.fields,field_description:account_reports.field_account_report__horizontal_group_ids
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_horizontal_groups
 msgid "Horizontal Groups"
-msgstr ""
+msgstr "Οριζόντιες Ομάδες"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_horizontal_group
 msgid "Horizontal group for reports"
-msgstr ""
+msgstr "Οριζόντια ομάδα για αναφορές"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_horizontal_group_rule
 msgid "Horizontal group rule for reports"
-msgstr ""
+msgstr "Κανόνας οριζόντιας ομάδας για αναφορές"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Horizontal:"
-msgstr ""
+msgstr "Οριζόντια:"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "How often tax returns have to be made"
-msgstr ""
+msgstr "Πόσο συχνά πρέπει να γίνονται φορολογικές δηλώσεις"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_payment_wizard__acc_number
@@ -3244,14 +3272,14 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Impact On Grid"
-msgstr ""
+msgstr "Επιπτώσεις στο πλέγμα"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/journal_report/line/line.xml:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_journal_report_taxes_summary
 msgid "Impacted Tax Grids"
-msgstr ""
+msgstr "Επηρεαζόμενα φορολογικά πλέγματα"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3268,7 +3296,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_search
 msgid "Inactive"
-msgstr ""
+msgstr "Ανενεργή"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
@@ -3279,7 +3307,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/journal_report/filters.js:0
 msgid "Include Payments"
-msgstr ""
+msgstr "Συμπεριλάβετε πληρωμές"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3288,7 +3316,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filter_extra_options_template
 msgid "Including Analytic Simulations"
-msgstr ""
+msgstr "Συμπεριλαμβανομένων αναλυτικών προσομοιώσεων"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.no_statement_unreconciled_payments
@@ -3305,7 +3333,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__income_provision_account_id
 msgid "Income Account"
-msgstr ""
+msgstr "Λογαριασμός Εσόδων"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_revaluation_income_provision_account_id
@@ -3357,7 +3385,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Integer Rounding"
-msgstr ""
+msgstr "Στρογγυλοποίηση ακέραιου αριθμού"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3431,7 +3459,7 @@ msgstr ""
 #: model:account.report.column,name:account_reports.followup_report_invoicing_date
 #: model:account.report.column,name:account_reports.partner_ledger_report_invoicing_date
 msgid "Invoice Date"
-msgstr ""
+msgstr "Ημερ. Τιμολογίου"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_search
@@ -3447,7 +3475,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report__is_account_coverage_report_available
 msgid "Is Account Coverage Report Available"
-msgstr ""
+msgstr "Είναι διαθέσιμη η αναφορά κάλυψης λογαριασμού"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__is_completed
@@ -3496,7 +3524,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget__item_ids
 msgid "Items"
-msgstr ""
+msgstr "Είδη"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.partner_ledger_report_journal_code
@@ -3507,7 +3535,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_res_config_settings__account_tax_return_journal_id
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Journal"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_ja
@@ -3519,7 +3547,7 @@ msgstr ""
 #: model:ir.model,name:account_reports.model_account_move
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__model__account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Εγγραφή Ημερολογίου"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_move_line
@@ -3547,29 +3575,29 @@ msgstr "Εγγραφές Ημερολογίων"
 #: code:addons/account_reports/models/account_generic_tax_report.py:0
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "Journal Items for Tax Audit"
-msgstr ""
+msgstr "Στοιχεία Ημερολογίου για Φορολογικό Έλεγχο"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.journal_report
 msgid "Journal Report"
-msgstr ""
+msgstr "Αναφορά Ημερολογίου"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_journal_report_handler
 msgid "Journal Report Custom Handler"
-msgstr ""
+msgstr "Προσαρμοσμένος Διαχειριστής Αναφοράς Ημερολογίου"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_generic_tax_report.py:0
 msgid "Journal items with archived tax tags"
-msgstr ""
+msgstr "Στοιχεία Ημερολογίου με αρχειοθετημένες φορολογικές ετικέτες"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Journals"
-msgstr ""
+msgstr "Ημερολόγια"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
@@ -3584,12 +3612,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_liabilities_view0
 msgid "LIABILITIES"
-msgstr ""
+msgstr "ΥΠΟΧΡΕΩΣΕΙΣ"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_liabilities_and_equity_view0
 msgid "LIABILITIES + EQUITY"
-msgstr ""
+msgstr "ΥΠΟΧΡΕΩΣΕΙΣ + ΙΣΟΤΗΤΑ"
 
 #. module: account_reports
 #. odoo-javascript
@@ -3598,7 +3626,7 @@ msgstr ""
 #: code:addons/account_reports/wizard/multicurrency_revaluation.py:0
 #: model:account.report.column,name:account_reports.bank_reconciliation_report_label
 msgid "Label"
-msgstr ""
+msgstr "Ετικέτα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mail_lang
@@ -3666,7 +3694,7 @@ msgstr "Τελευταία Ενημέρωση στις"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.last_statement_balance
 msgid "Last statement balance"
-msgstr ""
+msgstr "Υπόλοιπο τελευταίας κατάστασης"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_search_view
@@ -3678,7 +3706,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Later"
-msgstr ""
+msgstr "Αργότερα"
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_reports_audit_menu
@@ -3717,7 +3745,7 @@ msgstr "Γραμμές"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Load more..."
-msgstr ""
+msgstr "Φόρτωσε περισσότερα..."
 
 #. module: account_reports
 #. odoo-javascript
@@ -3753,13 +3781,15 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_tax_unit__main_company_id
 msgid "Main Company"
-msgstr ""
+msgstr "Κύρια Εταιρεία"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_tax_unit__main_company_id
 msgid ""
 "Main company of this unit; the one actually reporting and paying the taxes."
 msgstr ""
+"Κύρια εταιρεία αυτής της μονάδας: αυτός που πράγματι αναφέρει και πληρώνει "
+"τους φόρους."
 
 #. module: account_reports
 #. odoo-python
@@ -3777,7 +3807,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_file_download_error_wizard
 msgid "Manage the file generation errors from report exports."
-msgstr ""
+msgstr "Διαχείριση των σφαλμάτων δημιουργίας αρχείων από τις εξαγωγές αναφορών."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
@@ -3794,13 +3824,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Manual value"
-msgstr ""
+msgstr "Χειροκίνητη τιμή"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Manual values"
-msgstr ""
+msgstr "Χειροκίνητες τιμές"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__manually_created
@@ -3831,12 +3861,12 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.column,name:account_reports.partner_ledger_report_matching_number
 msgid "Matching"
-msgstr ""
+msgstr "Aντιστοίχιση"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_tax_unit__company_ids
 msgid "Members of this unit"
-msgstr ""
+msgstr "Μέλη αυτής της μονάδας"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_ir_ui_menu
@@ -3866,6 +3896,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Method '%(method_name)s' must start with the '%(prefix)s' prefix."
 msgstr ""
+"Η μέθοδος '%(method_name)s' πρέπει να ξεκινά με το '%(prefix)s' πρόθεμα."
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.misc_operations
@@ -3891,20 +3922,20 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mode
 msgid "Mode"
-msgstr ""
+msgstr "Είδος"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__res_model_name
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__records_model
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__model
 msgid "Model"
-msgstr ""
+msgstr "Μοντέλο"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_type__deadline_periodicity__monthly
@@ -3916,7 +3947,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_budget_form
 msgid "Months"
-msgstr ""
+msgstr "Μήνες"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
@@ -3992,7 +4023,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_reports_export_wizard__doc_name
 msgid "Name to give to the generated documents."
-msgstr ""
+msgstr "Όνομα που να δοθεί στα παραγόμενα έγγραφα."
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_profit0
@@ -4055,13 +4086,13 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/edit_popover.xml:0
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 msgid "No Comparison"
-msgstr ""
+msgstr "Καμία Σύγκριση"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4095,13 +4126,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/wizard/multicurrency_revaluation.py:0
 msgid "No adjustment needed"
-msgstr ""
+msgstr "Δεν απαιτείται προσαρμογή"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/account_report.xml:0
 msgid "No data to display !"
-msgstr ""
+msgstr "Δεν υπάρχουν δεδομένα προς εμφάνιση!"
 
 #. module: account_reports
 #. odoo-python
@@ -4113,19 +4144,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "No entry to generate."
-msgstr ""
+msgstr "Δεν υπάρχει καταχώρηση για δημιουργία"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/wizard/multicurrency_revaluation.py:0
 msgid "No provision needed was found."
-msgstr ""
+msgstr "Δεν βρέθηκε καμία απαίτηση για πρόβλεψη"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Non Trade Partners"
-msgstr ""
+msgstr "Μη Εμπορικοί Συνεργάτες"
 
 #. module: account_reports
 #. odoo-python
@@ -4161,13 +4192,13 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/sales_report/filters/filters.js:0
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Not Started"
-msgstr ""
+msgstr "Δεν Έχει Ξεκινήσει"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__message_needaction_counter
@@ -4197,12 +4228,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Number of periods cannot be smaller than 1"
-msgstr ""
+msgstr "Ο αριθμός των περιόδων δεν μπορεί να είναι μικρότερος από 1"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_off_sheet
 msgid "OFF BALANCE SHEET ACCOUNTS"
-msgstr ""
+msgstr "ΛΟΓΑΡΙΑΣΜΟΙ ΕΚΤΟΣ ΙΣΟΛΟΓΙΣΜΟΥ"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_obtain_signed_inventory_valuation
@@ -4221,7 +4252,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 #: code:addons/account_reports/static/src/components/aged_partner_balance/filters.js:0
 msgid "Odoo Warning"
-msgstr ""
+msgstr "Προειδοποίηση Odoo"
 
 #. module: account_reports
 #. odoo-python
@@ -4236,7 +4267,7 @@ msgstr ""
 #: model:account.report.column,name:account_reports.aged_payable_report_period5
 #: model:account.report.column,name:account_reports.aged_receivable_report_period5
 msgid "Older"
-msgstr ""
+msgstr "Παλαιότερος"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4311,7 +4342,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_financial_year_op
 msgid "Opening Balance of Financial Year"
-msgstr ""
+msgstr "Ισοζύγιο έναρξης οικονομικού έτους"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_operating_expenses_review
@@ -4337,12 +4368,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_expression_form
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filter_extra_options_template
 msgid "Options:"
-msgstr ""
+msgstr "Επιλογές:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__other
@@ -4353,7 +4384,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.outstanding
 msgid "Outstanding Receipts/Payments"
-msgstr ""
+msgstr "Εκκρεμείς Εισπράξεις/Πληρωμές"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_outstanding_checks
@@ -4364,7 +4395,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_followup_report.py:0
 msgid "Overdue"
-msgstr ""
+msgstr "Εκπρόθεσμο"
 
 #. module: account_reports
 #. odoo-python
@@ -4392,12 +4423,12 @@ msgstr "PDF"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard__report_id
 msgid "Parent Report Id"
-msgstr ""
+msgstr "Αναγνωριστικό αναφοράς γονέα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_reports_export_wizard_format__export_wizard_id
 msgid "Parent Wizard"
-msgstr ""
+msgstr "Οδηγός Γονέα"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4418,7 +4449,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Partner Categories"
-msgstr ""
+msgstr "Κατηγορίες Συνεργατών"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.partner_ledger_report
@@ -4437,14 +4468,14 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/aged_partner_balance/line_name/line_name.xml:0
 #: code:addons/account_reports/static/src/components/partner_ledger/line_name.xml:0
 msgid "Partner is bad"
-msgstr ""
+msgstr "Ο συνεργάτης είναι κακός"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/aged_partner_balance/line_name/line_name.xml:0
 #: code:addons/account_reports/static/src/components/partner_ledger/line_name.xml:0
 msgid "Partner is good"
-msgstr ""
+msgstr "Ο συνεργάτης είναι καλός"
 
 #. module: account_reports
 #. odoo-python
@@ -4463,7 +4494,7 @@ msgstr "Συνεργάτες"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Partners Categories:"
-msgstr ""
+msgstr "Κατηγορίες συνεργατών:"
 
 #. module: account_reports
 #. odoo-python
@@ -4486,7 +4517,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filters
 msgid "Partners:"
-msgstr ""
+msgstr "Συνεργάτες:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__resolved_check_count
@@ -4519,7 +4550,7 @@ msgstr "Πληρωτέα"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Payable tax amount"
-msgstr ""
+msgstr "Καταβλητέο ποσό φόρου"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_current_liabilities_payable
@@ -4568,7 +4599,7 @@ msgstr "Επίδοση"
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Period"
-msgstr ""
+msgstr "Περίοδος"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_period1
@@ -4626,12 +4657,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:account_reports.setup_financial_year_opening_form
 msgid "Periodicity"
-msgstr ""
+msgstr "Περιοδικότητα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_financial_year_op__account_return_periodicity
 msgid "Periodicity in month"
-msgstr ""
+msgstr "Περιοδικότητα σε μήνα"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4643,7 +4674,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_analytic_groupby.xml:0
 msgid "Plans"
-msgstr ""
+msgstr "Σχέδια"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4678,12 +4709,13 @@ msgstr ""
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Please set the deferred accounts in the accounting settings."
 msgstr ""
+"Παρακαλώ ορίστε τους αναβαλλόμενους λογαριασμούς στις λογιστικές ρυθμίσεις."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Please set the deferred journal in the accounting settings."
-msgstr ""
+msgstr "Παρακαλώ ορίστε τα αναβαλλόμενα ημερολόγια στις λογιστικές ρυθμίσεις."
 
 #. module: account_reports
 #. odoo-python
@@ -4720,13 +4752,13 @@ msgstr "Θέση"
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/edit_popover.xml:0
 msgid "Post"
-msgstr ""
+msgstr "Καταχωρηση"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Posted Entries"
-msgstr ""
+msgstr "Καταχωρημένες Εγγραφές"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_subsidaries_and_investments_summary
@@ -4743,13 +4775,13 @@ msgstr "Προκαταβολές"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__preview_data
 msgid "Preview Data"
-msgstr ""
+msgstr "Προεπισκόπηση δεδομένων"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 msgid "Previous Period"
-msgstr ""
+msgstr "Προηγούμενη Περίοδος"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4761,7 +4793,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 msgid "Previous Year"
-msgstr ""
+msgstr "Προηγούμενο Έτος"
 
 #. module: account_reports
 #. odoo-javascript
@@ -4796,6 +4828,8 @@ msgid ""
 "Proceed with caution as there might be an existing adjustment for this "
 "period ("
 msgstr ""
+"Συνεχίστε με προσοχή καθώς μπορεί να υπάρξει μια υπάρχουσα προσαρμογή για "
+"αυτήν την περίοδο ("
 
 #. module: account_reports
 #. odoo-javascript
@@ -4803,13 +4837,13 @@ msgstr ""
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 #: code:addons/account_reports/static/src/components/deferred_reports/groupby.xml:0
 msgid "Product"
-msgstr ""
+msgstr "Είδος"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/deferred_reports/groupby.xml:0
 msgid "Product Category"
-msgstr ""
+msgstr "Κατηγορία Είδους"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.profit_and_loss
@@ -4821,13 +4855,13 @@ msgstr "Κέρδη και Ζημίες"
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_profitability0
 msgid "Profitability"
-msgstr ""
+msgstr "Κερδοφορία"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/wizard/multicurrency_revaluation.py:0
 msgid "Provision for %(for_cur)s (1 %(comp_cur)s = %(rate)s %(for_cur)s)"
-msgstr ""
+msgstr "Πρόβλεψη για %(for_cur)s (1 %(comp_cur)s = %(rate)s %(for_cur)s)"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_provision_for_impairment
@@ -4849,7 +4883,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Quarter"
-msgstr ""
+msgstr "Τρίμηνο"
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_type__deadline_periodicity__trimester
@@ -4862,7 +4896,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/line_name.xml:0
 msgid "Rates"
-msgstr ""
+msgstr "Ισοτιμίες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__rating_ids
@@ -4881,7 +4915,7 @@ msgstr "Εισπρακτέα"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Receivable tax amount"
-msgstr ""
+msgstr "Ποσό Φόρου Προς Είσπραξη"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_debtors0
@@ -4893,7 +4927,7 @@ msgstr "Εισπρακτέα"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mail_partner_ids
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
 msgid "Recipients"
-msgstr ""
+msgstr "Αποδέκτες"
 
 #. module: account_reports
 #. odoo-python
@@ -4944,25 +4978,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_res_config_settings__account_return_reminder_day
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Reminder"
-msgstr ""
+msgstr "Υπενθύμιση"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__account_report_id
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__report_id
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Report"
-msgstr ""
+msgstr "Αναφορά"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
 msgid "Report Line"
-msgstr ""
+msgstr "Γραμμή αναφοράς"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__report_name
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Report Name"
-msgstr ""
+msgstr "Όνομα Αναφοράς"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__report_opened_once
@@ -4978,18 +5012,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Report lines mentioning the account code"
-msgstr ""
+msgstr "Γραμμές αναφοράς που αναφέρουν τον κωδικό λογαριασμού"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_variant.xml:0
 msgid "Report:"
-msgstr ""
+msgstr "Εκθεση:"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__report_ids
 msgid "Reports"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
@@ -5000,7 +5034,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
 msgid "Reset to Standard"
-msgstr ""
+msgstr "Επαναφορά στο Standard"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__activity_user_id
@@ -5107,7 +5141,7 @@ msgstr ""
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_income0
 #: model:account.report.line,name:account_reports.account_financial_report_revenue0
 msgid "Revenue"
-msgstr ""
+msgstr "Έσοδα"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_revenue_receivables_review
@@ -5117,19 +5151,19 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_multicurrency_revaluation_wizard__reversal_date
 msgid "Reversal Date"
-msgstr ""
+msgstr "Ημερομηνία αναστροφής"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Reversal of Grouped Deferral Entry of %s"
-msgstr ""
+msgstr "Αντιστροφή ομαδοποιημένης αναβολής καταχώρισης του%s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/wizard/multicurrency_revaluation.py:0
 msgid "Reversal of: %s"
-msgstr ""
+msgstr "Αντιστροφή του: %s"
 
 #. module: account_reports
 #. odoo-python
@@ -5256,7 +5290,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__rule_ids
 msgid "Rules"
-msgstr ""
+msgstr "Κανόνες"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__message_has_sms_error
@@ -5274,7 +5308,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 msgid "Same Period Last Year"
-msgstr ""
+msgstr "Την ίδια περίοδο πέρυσι"
 
 #. module: account_reports
 #. odoo-python
@@ -5291,12 +5325,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/search_bar/search_bar.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Αναζήτηση..."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "Sections"
-msgstr ""
+msgstr "Ενότητες"
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_type__deadline_periodicity__semester
@@ -5311,7 +5345,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_followup_report.py:0
 #: model_terms:ir.ui.view,arch_db:account_reports.return_generic_payment_wizard_form
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #. module: account_reports
 #. odoo-python
@@ -5361,13 +5395,13 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Services"
-msgstr ""
+msgstr "Υπηρεσίες"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_tree
@@ -5393,7 +5427,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_executivesummary_st_cash_forecast0
 msgid "Short term cash forecast"
-msgstr ""
+msgstr "Βραχυπρόθεσμη πρόβλεψη μετρητών"
 
 #. module: account_reports
 #. odoo-javascript
@@ -5453,7 +5487,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/deferred_reports/warnings.xml:0
 msgid "Show already generated deferrals."
-msgstr ""
+msgstr "Εμφάνιση αναβολών που έχουν ήδη δημιουργηθεί."
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_report_send__mode__single
@@ -5503,6 +5537,8 @@ msgid ""
 "Specify an Accounting Firm that will act as a representative when exporting "
 "reports."
 msgstr ""
+"Καθορίστε μια λογιστική εταιρεία που θα ενεργεί ως αντιπρόσωπος κατά την "
+"εξαγωγή αναφορών."
 
 #. module: account_reports
 #. odoo-javascript
@@ -5513,7 +5549,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__deadline_start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_create_account_audit
@@ -5523,13 +5559,13 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_return_reminder_day
 msgid "Start from"
-msgstr ""
+msgstr "Ξεκινήστε από"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "Starting Balance"
-msgstr ""
+msgstr "Υπόλοιπο Έναρξης"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__state
@@ -5540,7 +5576,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/aged_partner_balance/line_name/line_name.xml:0
 msgid "Statement"
-msgstr ""
+msgstr "Δήλωση"
 
 #. module: account_reports
 #. odoo-python
@@ -5577,12 +5613,12 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__mail_subject
 msgid "Subject"
-msgstr ""
+msgstr "Θέμα"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
 msgid "Subject..."
-msgstr ""
+msgstr "Θέμα..."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__date_submission
@@ -5657,17 +5693,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "Tax Grids"
-msgstr ""
+msgstr "Φορολογικά Πλέγματα"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_tax_unit__vat
 msgid "Tax ID"
-msgstr ""
+msgstr "Α.Φ.Μ."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.company_information
 msgid "Tax ID:"
-msgstr ""
+msgstr "ΑΦΜ:"
 
 #. module: account_reports
 #. odoo-python
@@ -5731,20 +5767,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_return__tax_unit_id
 #: model_terms:ir.ui.view,arch_db:account_reports.view_tax_unit_form
 msgid "Tax Unit"
-msgstr ""
+msgstr "Φορολογική Μονάδα"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_tax_unit.xml:0
 msgid "Tax Unit:"
-msgstr ""
+msgstr "Φορολογική Μονάδα:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_view_tax_units
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_tax_unit_ids
 #: model:ir.ui.menu,name:account_reports.menu_view_tax_units
 msgid "Tax Units"
-msgstr ""
+msgstr "Φορολογικές Μονάδες"
 
 #. module: account_reports
 #: model:mail.template,name:account_reports.email_template_generic_tax_instructions
@@ -5760,7 +5796,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_journal_report.py:0
 msgid "Taxes"
-msgstr ""
+msgstr "Φόροι"
 
 #. module: account_reports
 #. odoo-javascript
@@ -5782,11 +5818,13 @@ msgid ""
 "Technical field indicating whether Fiscal Positions exist for all companies "
 "in the unit"
 msgstr ""
+"Τεχνικό πεδίο που υποδεικνύει εάν υπάρχουν Δημοσιονομικές Θέσεις για όλες "
+"τις εταιρείες της μονάδας"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_ir_actions_account_report_download
 msgid "Technical model for accounting report downloads"
-msgstr ""
+msgstr "Τεχνικό μοντέλο για λήψεις λογιστικών αναφορών"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__template_id
@@ -5797,7 +5835,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/ellipsis/ellipsis.js:0
 msgid "Text copied"
-msgstr ""
+msgstr "Το κείμενο αντιγράφηκε"
 
 #. module: account_reports
 #. odoo-python
@@ -5818,6 +5856,8 @@ msgid ""
 "The country detected for this VAT number does not match the one set on this "
 "Tax Unit."
 msgstr ""
+"Η χώρα που εντοπίστηκε για αυτόν τον αριθμό ΑΦΜ δεν ταιριάζει με τη χώρα που "
+"έχει οριστεί σε αυτήν τη φορολογική μονάδα."
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_tax_unit__country_id
@@ -5825,18 +5865,20 @@ msgid ""
 "The country in which this tax unit is used to group your companies' tax "
 "reports declaration."
 msgstr ""
+"Η χώρα στην οποία χρησιμοποιείται αυτή η φορολογική μονάδα για την "
+"ομαδοποίηση της δήλωσης φορολογικών εκθέσεων των εταιρειών σας."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_multicurrency_revaluation_report.py:0
 msgid "The currency rate cannot be equal to zero"
-msgstr ""
+msgstr "Η ισοτιμία του νομίσματος δεν μπορεί να είναι ίση με μηδέν"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "The current balance in the"
-msgstr ""
+msgstr "Το τρέχον υπόλοιπο στο"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return__generic_state_review
@@ -5847,6 +5889,8 @@ msgstr ""
 #: model:ir.model.fields,help:account_reports.field_account_tax_unit__vat
 msgid "The identifier to be used when submitting a report for this unit."
 msgstr ""
+"Το αναγνωριστικό που θα χρησιμοποιηθεί κατά την υποβολή αναφοράς για αυτήν "
+"τη μονάδα."
 
 #. module: account_reports
 #. odoo-python
@@ -5894,7 +5938,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_res_company__account_tax_unit_ids
 msgid "The tax units this company belongs to."
-msgstr ""
+msgstr "Οι φορολογικές μονάδες στις οποίες ανήκει αυτή η εταιρεία."
 
 #. module: account_reports
 #. odoo-python
@@ -5906,7 +5950,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/warnings.xml:0
 msgid "There are"
-msgstr ""
+msgstr "Υπάρχουν"
 
 #. module: account_reports
 #. odoo-python
@@ -5924,7 +5968,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/account_report.xml:0
 msgid "There is no data to display for the given filters."
-msgstr ""
+msgstr "Δεν υπάρχουν δεδομένα προς εμφάνιση για τα δεδομένα φίλτρα."
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_empty_suspense_accounts
@@ -5940,6 +5984,8 @@ msgid ""
 "This account exists in the Chart of Accounts but is not mentioned in any "
 "line of the report"
 msgstr ""
+"Αυτός ο λογαριασμός υπάρχει στο Λογιστικό Σχέδιο αλλά δεν αναφέρεται σε "
+"καμία γραμμή της αναφοράς"
 
 #. module: account_reports
 #. odoo-python
@@ -5948,24 +5994,29 @@ msgid ""
 "This account is reported in a line of the report but does not exist in the "
 "Chart of Accounts"
 msgstr ""
+"Αυτός ο λογαριασμός αναφέρεται σε μια γραμμή της αναφοράς, αλλά δεν υπάρχει "
+"στο Λογιστικό Σχέδιο"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "This account is reported in multiple lines of the report"
-msgstr ""
+msgstr "Αυτός ο λογαριασμός αναφέρεται σε πολλές γραμμές της αναφοράς"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "This account is reported multiple times on the same line of the report"
 msgstr ""
+"Αυτός ο λογαριασμός αναφέρεται πολλές φορές στην ίδια γραμμή της αναφοράς"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid ""
 "This allows you to choose the position of totals in your financial reports."
 msgstr ""
+"Αυτό σας επιτρέπει να επιλέξετε τη θέση των συνόλων στις οικονομικές σας "
+"αναφορές."
 
 #. module: account_reports
 #. odoo-javascript
@@ -5974,6 +6025,8 @@ msgid ""
 "This company is part of a tax unit. You're currently not viewing the whole "
 "unit."
 msgstr ""
+"Αυτή η εταιρεία είναι μέρος μιας φορολογικής μονάδας. Αυτή τη στιγμή δεν "
+"βλέπετε όλη τη μονάδα."
 
 #. module: account_reports
 #. odoo-javascript
@@ -5982,12 +6035,14 @@ msgid ""
 "This line and all its children will be deleted. Are you sure you want to "
 "proceed?"
 msgstr ""
+"Αυτή η γραμμή και όλα τα υποκείμενά της θα διαγραφούν. Είστε σίγουροι ότι "
+"θέλετε να συνεχίσετε;"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/widgets/account_report_x2many/account_report_x2many.xml:0
 msgid "This line is out of sequence."
-msgstr ""
+msgstr "Αυτή η γραμμή είναι εκτός ακολουθίας"
 
 #. module: account_reports
 #. odoo-javascript
@@ -5996,22 +6051,26 @@ msgid ""
 "This line is placed before its parent, which is not allowed. You can fix it "
 "by dragging it to the proper position."
 msgstr ""
+"Αυτή η γραμμή είναι τοποθετημένη πριν από τον γονέα της, κάτι που δεν "
+"επιτρέπεται. Μπορείτε να το διορθώσετε μεταφέροντάς την στη σωστή θέση."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
 msgid "This line uses a custom user-defined 'Group By' value."
 msgstr ""
+"Αυτή η γραμμή χρησιμοποιεί μια προσαρμοσμένη τιμή \"Ομαδοποίηση κατά\" που "
+"ορίζεται από τον χρήστη."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
 msgid "This option hides lines with a value of 0"
-msgstr ""
+msgstr "Αυτή η επιλογή κρύβει τις γραμμές με τιμή 0"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "This report already has a menuitem."
-msgstr ""
+msgstr "Αυτή η αναφορά έχει ήδη ένα στοιχείο μενού."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6025,7 +6084,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "This report only displays the data of the active company."
-msgstr ""
+msgstr "Αυτή η αναφορά εμφανίζει μόνο τα δεδομένα της ενεργής εταιρείας."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -6057,6 +6116,8 @@ msgid ""
 "This tag is reported in a line of the report but is not linked to any "
 "account of the Chart of Accounts"
 msgstr ""
+"Αυτή η ετικέτα αναφέρεται σε μια γραμμή της αναφοράς, αλλά δεν συνδέεται με "
+"κανέναν λογαριασμό του Λογιστικού Σχεδίου"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__name
@@ -6112,7 +6173,7 @@ msgstr "Σύνολο"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Total %s"
-msgstr ""
+msgstr "Σύνολο %s"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__total_amount_to_pay
@@ -6176,7 +6237,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Triangular"
-msgstr ""
+msgstr "Τριγωνικός"
 
 #. module: account_reports
 #. odoo-python
@@ -6185,6 +6246,8 @@ msgid ""
 "Trying to dispatch an action on a report not compatible with the provided "
 "options."
 msgstr ""
+"Προσπάθεια αποστολής μιας ενέργειας σε μια αναφορά που δεν είναι συμβατή με "
+"τις παρεχόμενες επιλογές."
 
 #. module: account_reports
 #. odoo-python
@@ -6193,18 +6256,21 @@ msgid ""
 "Trying to expand a group for a line which was not generated by a report "
 "line: %s"
 msgstr ""
+"Προσπάθεια επέκτασης μιας ομάδας για μια γραμμή που δεν δημιουργήθηκε από "
+"μια γραμμή αναφοράς: %s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Trying to expand a line without an expansion function."
-msgstr ""
+msgstr "Προσπάθεια επέκτασης μιας γραμμής χωρίς την λειτουργία επέκτασης."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr ""
+"Προσπάθεια επέκτασης των αποτελεσμάτων groupby σε γραμμές χωρίς τιμή groupby."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
@@ -6227,7 +6293,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_unaffected_earnings0
 msgid "Unallocated Earnings"
-msgstr ""
+msgstr "Μη κατανεμημένα Κέρδη"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
@@ -6239,26 +6305,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Undefined"
-msgstr ""
+msgstr "Μη ορισμένο"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Unfold All"
-msgstr ""
+msgstr "Άνοιγμα Όλων"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Unknown"
-msgstr ""
+msgstr "Άγνωστο"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_partner_ledger.py:0
 #: code:addons/account_reports/models/account_sales_report.py:0
 msgid "Unknown Partner"
-msgstr ""
+msgstr "Άγνωστος Συνεργάτης"
 
 #. module: account_reports
 #. odoo-python
@@ -6270,7 +6336,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Unknown date scope: %s"
-msgstr ""
+msgstr "Άγνωστο εύρος ημερομηνίας: %s"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.multicurrency_revaluation_report
@@ -6312,7 +6378,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.report.column,name:account_reports.account_financial_report_ec_sales_vat
 msgid "VAT Number"
-msgstr ""
+msgstr "ΑΦΜ"
 
 #. module: account_reports
 #. odoo-python
@@ -6342,7 +6408,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line/popover/debug_popover.xml:0
 msgid "Value"
-msgstr ""
+msgstr "Τιμή"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_var_percentage
@@ -6392,13 +6458,13 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_tree
 msgid "View"
-msgstr ""
+msgstr "Προβολή"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "View Bank Statement"
-msgstr ""
+msgstr "Προβολή Τραπεζικής Κατάστασης"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6416,7 +6482,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_general_ledger.py:0
 #: code:addons/account_reports/models/account_report.py:0
 msgid "View Journal Entry"
-msgstr ""
+msgstr "Προβολή Καταχώρισης Ημερολογίου"
 
 #. module: account_reports
 #. odoo-python
@@ -6424,7 +6490,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_sales_report.py:0
 #: model_terms:ir.ui.view,arch_db:account_reports.view_journal_report_audit_move_line_tree
 msgid "View Partner"
-msgstr ""
+msgstr "Προβολή Συνεργάτη"
 
 #. module: account_reports
 #. odoo-python
@@ -6446,7 +6512,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_send__warnings
 msgid "Warnings"
-msgstr ""
+msgstr "Προειδοποιήσεις"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__website_message_ids
@@ -6465,6 +6531,8 @@ msgstr ""
 msgid ""
 "When ticked, totals and subtotals appear below the sections of the report"
 msgstr ""
+"Όταν επιλεγχθεί, τα σύνολα και οι υποσύνολα εμφανίζονται κάτω από τα τμήματα "
+"της αναφοράς."
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_res_company__totals_below_sections
@@ -6472,6 +6540,8 @@ msgstr ""
 msgid ""
 "When ticked, totals and subtotals appear below the sections of the report."
 msgstr ""
+"Όταν επιλεγχθεί, τα σύνολα και οι υποσύνολα εμφανίζονται κάτω από τα τμήματα "
+"της αναφοράς."
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_account__exclude_provision_currency_ids
@@ -6479,6 +6549,7 @@ msgid ""
 "Whether or not we have to make provisions for the selected foreign "
 "currencies."
 msgstr ""
+"Είτε ναί είτε όχι πρέπει να προβλέψουμε για τα επιλεγμένα ξένα νομίσματα."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6487,7 +6558,7 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_filter_extra_options_template
 msgid "With Draft Entries"
-msgstr ""
+msgstr "Με Πρόχειρες Καταχωρήσεις"
 
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.menu_action_working_files
@@ -6504,7 +6575,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Wrong format for if_other_expr_above/if_other_expr_below formula: %s"
-msgstr ""
+msgstr "Λανθασμένη μορφή if_other_expr_above/if_other_expr_below τύπος: %s"
 
 #. module: account_reports
 #. odoo-python
@@ -6516,7 +6587,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filters.js:0
 msgid "Year"
-msgstr ""
+msgstr "Έτος"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_year_end_revenue_cutoff_analysis
@@ -6529,7 +6600,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_report.py:0
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/edit_popover.xml:0
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6549,7 +6620,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "You are using custom exchange rates."
-msgstr ""
+msgstr "Χρησιμοποιείτε προσαρμοσμένες συναλλαγματικές ισοτιμίες."
 
 #. module: account_reports
 #. odoo-python
@@ -6574,6 +6645,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_move_line.py:0
 msgid "You cannot add taxes on a tax closing move line."
 msgstr ""
+"Δεν μπορείτε να προσθέσετε φόρους σε μια γραμμή κίνησης κλεισίματος φόρου."
 
 #. module: account_reports
 #. odoo-python
@@ -6582,12 +6654,16 @@ msgid ""
 "You cannot generate entries for a period that does not end at the end of the "
 "month."
 msgstr ""
+"Δεν μπορείτε να δημιουργήσετε καταχωρίσεις για μια περίοδο που δεν λήγει στο "
+"τέλος του μήνα."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "You cannot generate entries for a period that is locked."
 msgstr ""
+"Δεν μπορείτε να δημιουργήσετε καταχωρήσεις για μια περίοδο που είναι "
+"κλειδωμένη."
 
 #. module: account_reports
 #. odoo-python
@@ -6627,6 +6703,8 @@ msgstr ""
 #: code:addons/account_reports/models/account_multicurrency_revaluation_report.py:0
 msgid "You need to activate more than one currency to access this report."
 msgstr ""
+"Πρέπει να ενεργοποιήσετε περισσότερα από ένα νόμισμα για να αποκτήσετε "
+"πρόσβαση σε αυτήν την αναφορά."
 
 #. module: account_reports
 #. odoo-python
@@ -6640,19 +6718,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.journal_report_pdf_export_main
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_main
 msgid "[Draft]"
-msgstr ""
+msgstr "[Πρόχειρο]"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/sales_report/warnings.xml:0
 msgid "addressed to"
-msgstr ""
+msgstr "που απευθύνεται σε"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/tax_report/warnings.xml:0
 msgid "and correct their tax tags if necessary."
-msgstr ""
+msgstr "και διορθώστε τις φορολογικές τους ετικέτες εάν είναι απαραίτητο."
 
 #. module: account_reports
 #. odoo-python
@@ -6663,7 +6741,7 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "days after period"
-msgstr ""
+msgstr "ημέρες μετά την περίοδο"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_form_view
@@ -6679,13 +6757,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "doesn't match the balance of your"
-msgstr ""
+msgstr "δεν αντιστοιχεί με το υπόλοιπο του δικού σας"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "have a starting balance different from the previous ending balance."
 msgstr ""
+"έχουν ένα αρχικό υπόλοιπο διαφορετικό από το προηγούμενο τελικό υπόλοιπο."
 
 #. module: account_reports
 #. odoo-python
@@ -6698,25 +6777,25 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/carryover_popover.xml:0
 msgid "in the next period."
-msgstr ""
+msgstr "στο επόμενο διάστημα."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/sales_report/warnings.xml:0
 msgid "invoices"
-msgstr ""
+msgstr "Τιμολόγια"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "journal items"
-msgstr ""
+msgstr "ημερολογιακά στοιχεία"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "last bank statement"
-msgstr ""
+msgstr "τελευταία τραπεζική κατάσταση"
 
 #. module: account_reports
 #. odoo-python
@@ -6740,13 +6819,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/sales_report/warnings.xml:0
 msgid "partners"
-msgstr ""
+msgstr "συνεργάτες"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/warnings.xml:0
 msgid "prior or included in this period."
-msgstr ""
+msgstr "προγενέστερη ή περιλαμβάνονται σε αυτήν την περίοδο."
 
 #. module: account_reports
 #. odoo-python
@@ -6781,38 +6860,38 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_tax.py:0
 msgid "tax unit [%s]"
-msgstr ""
+msgstr "φορολογική μονάδα [%s]"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/sales_report/warnings.xml:0
 msgid "that are not established abroad."
-msgstr ""
+msgstr "που δεν είναι εγκατεστημένα στο εξωτερικό."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_comparison.xml:0
 #: code:addons/account_reports/static/src/components/account_report/filters/filter_date.xml:0
 msgid "to"
-msgstr ""
+msgstr "σε"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/warnings.xml:0
 msgid "unposted Journal Entries"
-msgstr ""
+msgstr "μη αναρτημένες εγγραφές ημερολογίου"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/carryover_popover.xml:0
 msgid "were carried over to this line from previous period."
-msgstr ""
+msgstr "μεταφέρθηκαν στη γραμμή αυτή από την προηγούμενη περίοδο."
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "which don't originate from a bank statement nor payment."
-msgstr ""
+msgstr "που δεν προέρχονται από τραπεζικό αντίγραφο ή πληρωμή."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6824,13 +6903,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/carryover_popover.xml:0
 msgid "will be carried over to"
-msgstr ""
+msgstr "θα μεταφερθεί σε"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_report/line_cell/popover/carryover_popover.xml:0
 msgid "will be carried over to this line in the next period."
-msgstr ""
+msgstr "θα μεταφερθεί σε αυτή τη γραμμή την επόμενη περίοδο."
 
 #. module: account_reports
 #. odoo-javascript

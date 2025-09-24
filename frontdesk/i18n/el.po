@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* frontdesk
+# * frontdesk
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/frontdesk/"
+"el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: frontdesk
 #. odoo-python
@@ -110,7 +114,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__active
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: frontdesk
 #: model:ir.actions.client,name:frontdesk.frontdesk_visitor_action_configure_properties_field
@@ -120,7 +124,7 @@ msgstr ""
 #. module: frontdesk
 #: model:res.groups,name:frontdesk.frontdesk_group_administrator
 msgid "Administrator"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -157,7 +161,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_form
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -180,7 +184,7 @@ msgstr ""
 #: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
 #: code:addons/frontdesk/static/src/navbar/navbar.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Πίσω"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
@@ -201,12 +205,12 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: frontdesk
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_visitor__state__canceled
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -282,13 +286,13 @@ msgstr ""
 #: code:addons/frontdesk/static/src/register_page/register_page.xml:0
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_check_out
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__company_id
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -301,7 +305,7 @@ msgstr ""
 #: model:ir.ui.menu,name:frontdesk.frontdesk_menu_config
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_kanban
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
@@ -319,14 +323,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__create_uid
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__create_date
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__create_date
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: frontdesk
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__theme__dark
@@ -336,7 +340,7 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
@@ -352,14 +356,14 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__description
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__display_name
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__display_name
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -423,7 +427,7 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__duration
 msgid "Duration"
-msgstr ""
+msgstr "Διάρκεια"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_form
@@ -434,7 +438,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__ask_email
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__email
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -445,7 +449,7 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_search
 msgid "Favorite"
-msgstr ""
+msgstr "Αγαπημένη"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__message_follower_ids
@@ -565,7 +569,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__id
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: frontdesk
 #: model:ir.model.fields,help:frontdesk.field_frontdesk_visitor__message_needaction
@@ -581,12 +585,12 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__image
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_kanban
 msgid "Install"
-msgstr ""
+msgstr "Εγκατάσταση"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__is_favorite
@@ -630,14 +634,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__write_uid
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__write_date
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__write_date
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__latest_check_in
@@ -672,7 +676,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__message
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_form
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__message_has_error
@@ -693,7 +697,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__name
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: frontdesk
 #: model_terms:ir.actions.act_window,help:frontdesk.action_frontdesk_drink
@@ -726,7 +730,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_email__none
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_phone__none
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -818,12 +822,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_email__optional
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_phone__optional
 msgid "Optional"
-msgstr ""
+msgstr "Προαιρετικό"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__ask_company
@@ -833,7 +837,7 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__pending
 msgid "Pending"
-msgstr ""
+msgstr "Εκρεμμής"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__notify_user_ids
@@ -844,7 +848,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__ask_phone
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__phone
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: frontdesk
 #: model:ir.actions.act_window,name:frontdesk.action_open_planned_visitor
@@ -852,7 +856,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_kanban
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 msgid "Planned"
-msgstr ""
+msgstr "Προγραμματισμένη"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -881,7 +885,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_tree
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -908,7 +912,7 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.ui.menu,name:frontdesk.frontdesk_menu_report
 msgid "Reporting"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
@@ -920,12 +924,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_email__required
 #: model:ir.model.fields.selection,name:frontdesk.selection__frontdesk_frontdesk__ask_phone__required
 msgid "Required"
-msgstr ""
+msgstr "Απαραίτητα"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_search
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνοι"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__responsible_ids
@@ -969,7 +973,7 @@ msgstr ""
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__access_token
 msgid "Security Token"
-msgstr ""
+msgstr "Διακριτικό Ασφαλείας"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -1008,7 +1012,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__sequence
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_drink_view_form
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_form
@@ -1065,13 +1069,13 @@ msgstr ""
 #: model:ir.actions.act_window,name:frontdesk.action_frontdesk_station_report
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_kanban
 msgid "Statistics"
-msgstr ""
+msgstr "Στατιστικά"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__state
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -1093,18 +1097,18 @@ msgstr ""
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 msgid "Today"
-msgstr ""
+msgstr "Σήμερα"
 
 #. module: frontdesk
 #: model:res.groups,name:frontdesk.frontdesk_group_user
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
 #: model_terms:ir.ui.view,arch_db:frontdesk.print_visitor_badge
 msgid "Visitor"
-msgstr ""
+msgstr "Επισκέπτης"
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__company
@@ -1154,7 +1158,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/welcome_page/welcome_page.xml:0
 msgid "Welcome to"
-msgstr ""
+msgstr "Καλώς Ήρθατε στο"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -1203,13 +1207,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/visitor_form/visitor_form.xml:0
 msgid "Your Email"
-msgstr ""
+msgstr "Το email σας"
 
 #. module: frontdesk
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/visitor_form/visitor_form.xml:0
 msgid "Your Name"
-msgstr ""
+msgstr "Το Όνομά σας"
 
 #. module: frontdesk
 #. odoo-javascript
@@ -1251,7 +1255,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/visitor_form/visitor_form.xml:0
 msgid "e.g. John Doe"
-msgstr ""
+msgstr "π.χ. John Doe"
 
 #. module: frontdesk
 #. odoo-javascript

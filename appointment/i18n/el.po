@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* appointment
+# * appointment
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-11 14:27+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"appointment/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -36,7 +40,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__appointment_count
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_count
 msgid "# Appointments"
-msgstr ""
+msgstr "# Appointments"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_count_request
@@ -101,7 +105,7 @@ msgstr ""
 #: code:addons/appointment/models/appointment_resource.py:0
 #: code:addons/appointment/models/appointment_type.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (αντίγραφο)"
 
 #. module: appointment
 #. odoo-python
@@ -712,7 +716,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "<span> hours</span>"
-msgstr ""
+msgstr "<span> ώρες</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -727,7 +731,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "<span>Online</span>"
-msgstr ""
+msgstr "<span>Online</span>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -804,12 +808,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Διακριτικό Πρόσβασης"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__active
@@ -817,27 +821,27 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__active
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Δραστηριότητες"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Δραστηριότητα Εξαίρεσης Διακόσμησης"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Κατάσταση Δραστηριότητας"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Εικονίδιο Τύπου Δραστηριότητας"
 
 #. module: appointment
 #. odoo-javascript
@@ -889,13 +893,13 @@ msgstr ""
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_manager
 msgid "Administrator"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "All"
-msgstr ""
+msgstr "Όλα"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.calendar_event_action_report_all
@@ -907,7 +911,7 @@ msgstr ""
 #: code:addons/appointment/models/appointment_type.py:0
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__allday
 msgid "All day"
-msgstr ""
+msgstr "Ολοήμερη"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -950,7 +954,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__name
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_view_form
 msgid "Answer"
-msgstr ""
+msgstr "Απάντηση"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_answer_input_action
@@ -978,7 +982,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Answers"
-msgstr ""
+msgstr "Απαντήσεις"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_invite__resources_resource_choice__all_assigned_resources
@@ -998,17 +1002,17 @@ msgstr ""
 #: model:res.groups.privilege,name:appointment.res_groups_privilege_appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Appointment"
-msgstr ""
+msgstr "Ραντεβού"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_answer_input
 msgid "Appointment Answer Inputs"
-msgstr ""
+msgstr "Πληροφορίες Απαντήσεων Ραντεβού"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_answer_input_ids
 msgid "Appointment Answers"
-msgstr ""
+msgstr "Απαντήσεις Ραντεβού"
 
 #. module: appointment
 #: model:mail.message.subtype,description:appointment.mt_calendar_event_booked
@@ -1063,7 +1067,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_appointment_invite
 msgid "Appointment Invite"
-msgstr ""
+msgstr "Πρόσκληση Ραντεβού"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__meeting_ids
@@ -1130,7 +1134,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_tree
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search
 msgid "Appointment Type"
-msgstr ""
+msgstr "Τύπος ραντεβού"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__appointment_type_ids
@@ -1215,7 +1219,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_question_action
@@ -1248,12 +1252,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__partner_ids
 msgid "Attendees"
-msgstr ""
+msgstr "Συμμετέχοντες"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__auto_confirm
@@ -1277,7 +1281,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__slot_ids
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Availabilities"
-msgstr ""
+msgstr "Διαθεσιμότητες"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__answer_ids
@@ -1297,7 +1301,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__avatar_1920
 msgid "Avatar"
-msgstr ""
+msgstr "Άβαταρ"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__avatar_1024
@@ -1322,7 +1326,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__image_1920
 msgid "Background Image"
-msgstr ""
+msgstr "Εικόνα φόντου"
 
 #. module: appointment
 #. odoo-javascript
@@ -1374,7 +1378,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__calendar_event_id
 msgid "Booking"
-msgstr ""
+msgstr "Κράτηση"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__booked_mail_template_id
@@ -1389,7 +1393,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__booking_line_ids
 msgid "Booking Lines"
-msgstr ""
+msgstr "Γραμμές Κράτησης"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__event_start
@@ -1429,13 +1433,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_attendee
 msgid "Calendar Attendee Information"
-msgstr ""
+msgstr "Πληροφορίες Ημερολογίου Συμμετέχοντα"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_calendar_event
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__calendar_event_id
 msgid "Calendar Event"
-msgstr ""
+msgstr "Συμβάν Ημερολογίου"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__anytime
@@ -1452,7 +1456,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__min_cancellation_hours
@@ -1479,12 +1483,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__capacity
 msgid "Capacity"
-msgstr ""
+msgstr "Χωρητικότητα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__manual_confirmation_percentage
@@ -1494,12 +1498,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__capacity_reserved
 msgid "Capacity Reserved"
-msgstr ""
+msgstr "Κρατημένη Χωρητικότητα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_booking_line__capacity_used
 msgid "Capacity Used"
-msgstr ""
+msgstr "Χρησιμοποιημένη Χωρητικότητα"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__capacity_reserved
@@ -1521,7 +1525,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__category
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
@@ -1563,14 +1567,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/calendar_event.py:0
 msgid "Click here"
-msgstr ""
+msgstr "Κλικ εδώ"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_template_picker_dialog/appointment_template_picker_dialog.xml:0
 #: code:addons/appointment/static/src/xml/appointment_no_slot.xml:0
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -1580,7 +1584,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__disable_save_button
@@ -1590,7 +1594,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.appointment_menu_config
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: appointment
 #. odoo-javascript
@@ -1598,7 +1602,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
 msgid "Configure"
-msgstr ""
+msgstr "Παραμετροποίηση"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_invite_action
@@ -1613,12 +1617,12 @@ msgstr ""
 #: code:addons/appointment/static/src/xml/appointment_resources.xml:0
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "Confirm Appointment"
-msgstr ""
+msgstr "Επιβεβαίωση Ραντεβού"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_confirmation
@@ -1633,13 +1637,13 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Confirmed"
-msgstr ""
+msgstr "Επιβεβαιώθηκε"
 
 #. module: appointment
 #. odoo-javascript
 #: code:addons/appointment/static/src/components/appointment_sync_button/appointment_sync_button.xml:0
 msgid "Connect"
-msgstr ""
+msgstr "Σύνδεση"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__connectors_displayed
@@ -1649,13 +1653,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model,name:appointment.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Επαφή"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Contact Details"
-msgstr ""
+msgstr "Λεπτομέρειες Επαφής"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointments_list_layout
@@ -1740,7 +1744,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__create_uid
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__create_date
@@ -1753,7 +1757,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__create_date
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: appointment
 #. odoo-javascript
@@ -1765,7 +1769,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__partner_id
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 msgid "Customer"
-msgstr ""
+msgstr "Πελάτης"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -1779,7 +1783,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__date
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_progress_bar
@@ -1795,12 +1799,12 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
 msgid "Dates"
-msgstr ""
+msgstr "Ημερομηνίες"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Declined"
-msgstr ""
+msgstr "Απορρίφθηκε"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
@@ -1850,7 +1854,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_resource_view_form
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__destination_resource_ids
@@ -1878,7 +1882,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form_insert_link
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__display_name
@@ -1896,7 +1900,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_ir_http__display_name
 #: model:ir.model.fields,field_description:appointment.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__show_avatars
@@ -1938,7 +1942,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__duration
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_duration
 msgid "Duration"
-msgstr ""
+msgstr "Διάρκεια"
 
 #. module: appointment
 #: model_terms:appointment.type,message_intro:appointment.appointment_type_tennis_court
@@ -1959,7 +1963,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_end_dt
 msgid "End Date"
-msgstr ""
+msgstr "Ημερ. Λήξης"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__end_datetime
@@ -2025,7 +2029,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_partner_ids
@@ -2035,23 +2039,23 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Γραμματοσειρά awesome  π.χ. fa-tasks"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
 msgid "For"
-msgstr ""
+msgstr "Για"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__5
 msgid "Friday"
-msgstr ""
+msgstr "Παρασκευή"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__start_datetime
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "From"
-msgstr ""
+msgstr "Από"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
@@ -2062,7 +2066,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 msgid "Get Share Link"
-msgstr ""
+msgstr "Λήψη Share Link"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_invite__suggested_staff_user_ids
@@ -2085,17 +2089,17 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "Guests"
-msgstr ""
+msgstr "Επισκέπτες"
 
 #. module: appointment
 #: model:ir.model,name:appointment.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__hide_duration
@@ -2130,17 +2134,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_ir_http__id
 #: model:ir.model.fields,field_description:appointment.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Εικονίδιο που υποδεικνύει μια δραστηριότητα εξαίρεσης."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__identical_config_id
@@ -2150,13 +2154,13 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_error
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -2203,6 +2207,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the resource "
 "record without removing it."
 msgstr ""
+"Αν το ενεργό πεδίο έχει οριστεί σε Ψευδές, θα σας επιτρέψει να αποκρύψετε "
+"την εγγραφή πόρου χωρίς να την καταργήσετε."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__active
@@ -2210,11 +2216,13 @@ msgid ""
 "If the active field is set to false, it will allow you to hide the event "
 "alarm information without removing it."
 msgstr ""
+"Εάν το ενεργό πεδίο έχει οριστεί ως ψευδές, θα σας επιτρέψει να αποκρύψετε "
+"τις πληροφορίες ειδοποίησης συμβάντος χωρίς να την καταργήσετε."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__image_1024
@@ -2303,7 +2311,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_published
@@ -2338,7 +2346,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__write_uid
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__write_date
@@ -2351,7 +2359,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__write_date
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__allow_guests
@@ -2428,7 +2436,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__location_id
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__location
@@ -2505,22 +2513,22 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
 msgid "Meetings"
-msgstr ""
+msgstr "Συναντήσεις"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__1
 msgid "Monday"
-msgstr ""
+msgstr "Δευτέρα"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__text
@@ -2530,7 +2538,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Η Προθεσμία της Δραστηριότητάς Μου"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
@@ -2558,7 +2566,7 @@ msgstr ""
 #: code:addons/appointment/controllers/portal.py:0
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: appointment
 #. odoo-python
@@ -2574,22 +2582,22 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Επόμενο Γεγονός Δραστηριότητας στο Ημερολόγιο"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Επόμενη Προθεσμία Δραστηριότητας"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Σύνοψη Επόμενης Δραστηριότητας"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Επόμενος Τύπος Δραστηριότητας"
 
 #. module: appointment
 #: model_terms:ir.actions.act_window,help:appointment.appointment_answer_input_action
@@ -2631,7 +2639,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:appointment.calendar_event_action_appointment_reporting
 #: model_terms:ir.actions.act_window,help:appointment.calendar_event_action_report_all
 msgid "No data yet!"
-msgstr ""
+msgstr "Δεν υπάρχουν δεδομένα ακόμη!"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
@@ -2644,7 +2652,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
@@ -2659,22 +2667,22 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -2701,7 +2709,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
 msgid "Online Meeting"
-msgstr ""
+msgstr "Διαδικτυακή συνάντηση"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -2748,17 +2756,17 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_user
 msgid "Operator"
-msgstr ""
+msgstr "Χειριστής"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__user_id
 msgid "Organizer"
-msgstr ""
+msgstr "Ατζέντα"
 
 #. module: appointment
 #. odoo-javascript
@@ -2769,13 +2777,13 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Outlook"
-msgstr ""
+msgstr "Outlook"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Past"
-msgstr ""
+msgstr "Περασμένα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__appointment_booker_id
@@ -2821,7 +2829,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Preview"
-msgstr ""
+msgstr "Προεπισκόπηση"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__question_id
@@ -2830,7 +2838,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_answer_input_view_search
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Question"
-msgstr ""
+msgstr "Ερώτηση"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_question_action
@@ -2841,7 +2849,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Questions"
-msgstr ""
+msgstr "Ερωτήσεις"
 
 #. module: appointment
 #. odoo-python
@@ -2852,12 +2860,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__radio
 msgid "Radio (one answer)"
-msgstr ""
+msgstr "Κουμπί Επιλογής (μία απάντηση)"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: appointment
 #. odoo-javascript
@@ -2868,7 +2876,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__reason
 msgid "Reason"
-msgstr ""
+msgstr "Αιτία"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__redirect_url
@@ -2878,36 +2886,36 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__slot_type__recurring
 msgid "Regular"
-msgstr ""
+msgstr "Σύνηθες"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__reminder_ids
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__alarm_ids
 #: model:ir.ui.menu,name:appointment.menu_appointment_reminders
 msgid "Reminders"
-msgstr ""
+msgstr "Υπενθυμίσεις"
 
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.menu_appointment_reporting
 #: model:ir.ui.menu,name:appointment.reporting_menu_calendar
 msgid "Reporting"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__calendar_event__appointment_status__request
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Request"
-msgstr ""
+msgstr "Αίτηση"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 msgid "Requests"
-msgstr ""
+msgstr "Αιτήματα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_id
 msgid "Resource"
-msgstr ""
+msgstr "Πόρος"
 
 #. module: appointment
 #. odoo-python
@@ -2941,7 +2949,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_gantt_booking_resource
 msgid "Resources"
-msgstr ""
+msgstr "Πόροι"
 
 #. module: appointment
 #: model:ir.ui.menu,name:appointment.menu_appointment_schedule_resource_booking
@@ -2962,12 +2970,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνοι"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Υπεύθυνος Χρήστης"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_tree
@@ -3003,12 +3011,12 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__6
 msgid "Saturday"
-msgstr ""
+msgstr "Σάββατο"
 
 #. module: appointment
 #. odoo-javascript
@@ -3026,7 +3034,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__category_slot_scheduling
 #: model:ir.ui.menu,name:appointment.menu_appointment_schedule_resources
 msgid "Schedule"
-msgstr ""
+msgstr "Προγραμματισμός"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__schedule_based_on
@@ -3067,7 +3075,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/controllers/portal.py:0
 msgid "Search in All"
-msgstr ""
+msgstr "Αναζήτηση σε Όλα"
 
 #. module: appointment
 #. odoo-python
@@ -3154,7 +3162,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__sequence
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: appointment
 #. odoo-javascript
@@ -3164,7 +3172,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_tree
 msgid "Share"
-msgstr ""
+msgstr "Κοινοποίηση"
 
 #. module: appointment
 #. odoo-javascript
@@ -3189,7 +3197,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.js:0
 msgid "Share Link"
-msgstr ""
+msgstr "Σύνδεσμος κοινής χρήσης"
 
 #. module: appointment
 #: model:ir.actions.act_window,name:appointment.appointment_invite_action
@@ -3218,7 +3226,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "Σύντομος Κωδικός"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__short_code_format_warning
@@ -3233,7 +3241,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_form
 msgid "Sign in"
-msgstr ""
+msgstr "Σύνδεση"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__char
@@ -3322,7 +3330,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_start_dt
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__start_datetime
@@ -3333,6 +3341,8 @@ msgstr ""
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__event_start
 msgid "Start date of an event, without time for full days events"
 msgstr ""
+"Ημερομηνία έναρξης ενός συμβάντος. Εάν δεν ορισθεί η ώρα το συμβάν θα είναι "
+"για ολόκληρη την ημέρα."
 
 #. module: appointment
 #. odoo-python
@@ -3367,7 +3377,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_search_booking
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_state
@@ -3377,16 +3387,22 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Κατάσταση βασισμένη σε δραστηριότητες\n"
+"Καθυστερημένη: Η ημερομηνία λήξης έχει ήδη περάσει\n"
+"Σήμερα: Η ημερομηνία δραστηριότητας είναι σήμερα\n"
+"Προγραμματισμένες: Μελλοντικές δραστηριότητες."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_booking_line__event_stop
 msgid "Stop date of an event, without time for full days events"
 msgstr ""
+"Ημερομηνία λήξης ενός συμβάντος. Εάν δεν ορισθεί η ώρα το συμβάν θα είναι "
+"για ολόκληρη την ημέρα"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_tree_booking
 msgid "Subject"
-msgstr ""
+msgstr "Θέμα"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__answer_input_ids
@@ -3396,7 +3412,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__7
 msgid "Sunday"
-msgstr ""
+msgstr "Κυριακή"
 
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_type_dental_care_question_1
@@ -3412,7 +3428,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Table"
-msgstr ""
+msgstr "Πίνακας"
 
 #. module: appointment
 #. odoo-python
@@ -3601,6 +3617,8 @@ msgid ""
 "This field is used in order to define in which timezone the resources will "
 "work."
 msgstr ""
+"Αυτό το πεδίο χρησιμοποιείται για τον καθορισμό της ζώνης ώρας στην οποία θα "
+"εργάζονται οι πόροι."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_edit_in_backend
@@ -3620,14 +3638,14 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__4
 msgid "Thursday"
-msgstr ""
+msgstr "Πέμπτη"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__tz
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__appointment_tz
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Timezone"
-msgstr ""
+msgstr "Ζώνη Ώρας"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__appointment_tz
@@ -3643,7 +3661,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__end_datetime
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "To"
-msgstr ""
+msgstr "Σε"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3689,27 +3707,27 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "Total:"
-msgstr ""
+msgstr "Σύνολο:"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__2
 msgid "Tuesday"
-msgstr ""
+msgstr "Τρίτη"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Τύπος της καταγεγραμμένης δραστηριότητας εξαίρεσης."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "Uncertain"
-msgstr ""
+msgstr "Αβέβαιη"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -3765,7 +3783,7 @@ msgstr ""
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_user
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__user_resource
@@ -3782,7 +3800,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__staff_user_ids
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__schedule_based_on__users
 msgid "Users"
-msgstr ""
+msgstr "Χρήστες"
 
 #. module: appointment
 #. odoo-python
@@ -3808,22 +3826,22 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__3
 msgid "Wednesday"
-msgstr ""
+msgstr "Τετάρτη"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_slot__weekday
 msgid "Week Day"
-msgstr ""
+msgstr "Ημέρα"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__weekly
@@ -3866,7 +3884,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "Ώρες Εργασίας"
 
 #. module: appointment
 #. odoo-javascript
@@ -3910,7 +3928,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "at"
-msgstr ""
+msgstr "στις"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4032,14 +4050,14 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_details
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
 msgid "people"
-msgstr ""
+msgstr "άνθρωποι"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4075,7 +4093,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/appointment/static/src/xml/appointment_slots.xml:0
 msgid "to"
-msgstr ""
+msgstr "σε"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4085,7 +4103,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
 msgid "with"
-msgstr ""
+msgstr "με"
 
 #. module: appointment
 #: model:mail.template,subject:appointment.appointment_booked_mail_template

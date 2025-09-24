@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_renting
+# * sale_renting
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 15:13+0000\n"
-"PO-Revision-Date: 2025-09-12 15:13+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"sale_renting/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_renting
 #. odoo-python
@@ -136,6 +140,7 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
+"<span><b>Εξαιρετικά!</b> You went through all steps of this tour.</span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -160,7 +165,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "<strong>Salesperson:</strong>"
-msgstr ""
+msgstr "<strong>Πωλητής:</strong>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
@@ -176,7 +181,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -223,13 +228,13 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__cancel
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__cancel
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__pickup_time
@@ -273,7 +278,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Εταιρίες"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__company_id
@@ -281,17 +286,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_config
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -309,7 +314,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Confirmed Orders"
-msgstr ""
+msgstr "Επιβεβαιωμένες Παραγγελίες"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
@@ -364,7 +369,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_uid
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__create_date
@@ -372,13 +377,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_date
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__currency_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Νόμισμα"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__product_pricing_ids
@@ -392,7 +397,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Customer"
-msgstr ""
+msgstr "Πελάτης"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
@@ -402,12 +407,12 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_orders_customers
 msgid "Customers"
-msgstr ""
+msgstr "Πελάτες"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_daily
 msgid "Daily"
-msgstr ""
+msgstr "Καθημερινά"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__price
@@ -440,19 +445,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. module: sale_renting
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Day"
-msgstr ""
+msgstr "Ημέρα"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__day
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__day
 msgid "Days"
-msgstr ""
+msgstr "Ημέρες"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
@@ -468,7 +473,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__description
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__display_name
@@ -484,7 +489,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__displayed_unit
@@ -495,7 +500,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Duration"
-msgstr ""
+msgstr "Διάρκεια"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__name
@@ -590,7 +595,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__hour
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__hour
 msgid "Hours"
-msgstr ""
+msgstr "Ώρες"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__id
@@ -606,17 +611,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Invoicing Address:"
-msgstr ""
+msgstr "Διεύθυνση Τιμολόγησης:"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Invoicing and Shipping Address:"
-msgstr ""
+msgstr "Διεύθυνση Τιμολόγησης και Αποστολής:"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__is_late
@@ -642,7 +647,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "John Doe"
-msgstr ""
+msgstr "John Doe"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__write_uid
@@ -650,7 +655,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_uid
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__write_date
@@ -658,13 +663,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_date
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Late"
-msgstr ""
+msgstr "Καθυστερημένα"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -711,34 +716,34 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Month"
-msgstr ""
+msgstr "Μήνας"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_monthly
 msgid "Monthly"
-msgstr ""
+msgstr "Μηνιαία"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__month
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__month
 msgid "Months"
-msgstr ""
+msgstr "Μήνες"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "My Orders"
-msgstr ""
+msgstr "Οι παραγγελίες μου"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__next_action_date
 msgid "Next Action"
-msgstr ""
+msgstr "Επόμενη Ενέργεια"
 
 #. module: sale_renting
 #. odoo-python
@@ -759,12 +764,12 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.action_rental_report
 msgid "No data yet!"
-msgstr ""
+msgstr "Δεν υπάρχουν δεδομένα ακόμη!"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_form_schedule
 msgid "Ok"
-msgstr ""
+msgstr "ΟΚ"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_action
@@ -783,23 +788,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__order_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Order"
-msgstr ""
+msgstr "Παραγγελία"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__order_id
 msgid "Order #"
-msgstr ""
+msgstr "Παραγγελία #"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__order_line_id
 msgid "Order Line"
-msgstr ""
+msgstr "Γραμμή Παραγγελίας"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.rental_order_menu
 #: model:ir.ui.menu,name:sale_renting.rental_orders_all
 msgid "Orders"
-msgstr ""
+msgstr "Ταξινομήσεις"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__overnight
@@ -822,13 +827,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Period"
-msgstr ""
+msgstr "Περίοδος"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_tree
 msgid "Periodicity"
-msgstr ""
+msgstr "Περιοδικότητα"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.sale_temporal_recurrence_action
@@ -896,13 +901,13 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__price
 msgid "Price"
-msgstr ""
+msgstr "ΤΙΜΗ"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_pricelist
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__pricelist_id
 msgid "Pricelist"
-msgstr ""
+msgstr "Τιμοκατάλογος"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.product_pricing_action
@@ -913,7 +918,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Pricing"
-msgstr ""
+msgstr "Τιμολόγηση"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_pricing
@@ -923,7 +928,7 @@ msgstr ""
 #. module: sale_renting
 #: model:product.template,name:sale_renting.rental_product_3_template
 msgid "Printer"
-msgstr ""
+msgstr "Εκτυπωτής"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_template
@@ -935,12 +940,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product"
-msgstr ""
+msgstr "Είδος"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Product A"
-msgstr ""
+msgstr "Είδος A"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__categ_id
@@ -948,19 +953,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product Category"
-msgstr ""
+msgstr "Κατηγορία Είδους"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_template_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_tmpl_id
 msgid "Product Template"
-msgstr ""
+msgstr "Πρότυπο Είδους"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_product
 #: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_variant_ids
 msgid "Product Variant"
-msgstr ""
+msgstr "Μεταβλητή Είδους"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
@@ -972,7 +977,7 @@ msgstr ""
 #: model:ir.ui.menu,name:sale_renting.menu_rental_products
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 msgid "Products"
-msgstr ""
+msgstr "Είδη"
 
 #. module: sale_renting
 #: model:product.template,name:sale_renting.rental_product_1_template
@@ -988,26 +993,26 @@ msgstr ""
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_quarterly
 msgid "Quarterly"
-msgstr ""
+msgstr "Τριμηνιαίος"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__draft
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__draft
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Quotation"
-msgstr ""
+msgstr "Προσφορά"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__sent
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sent
 msgid "Quotation Sent"
-msgstr ""
+msgstr "Η Προσφορά Εστάλη"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Quotations"
-msgstr ""
+msgstr "Προσφορές"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -1145,25 +1150,25 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "Αναφορές"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Reservations"
-msgstr ""
+msgstr "Δεσμεύσεις"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__qty_reserved
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__pickup
 msgid "Reserved"
-msgstr ""
+msgstr "Κρατημένη"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__rental_order_wizard__status__return
 #: model:ir.ui.menu,name:sale_renting.rental_orders_return
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Return"
-msgstr ""
+msgstr "Επιστροφή"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
@@ -1185,7 +1190,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Returned"
-msgstr ""
+msgstr "Επιστράφηκαν"
 
 #. module: sale_renting
 #. odoo-python
@@ -1202,31 +1207,31 @@ msgstr ""
 #: model:ir.model,name:sale_renting.model_sale_order
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sale
 msgid "Sales Order"
-msgstr ""
+msgstr "Παραγγελία"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_sale_order_line
 msgid "Sales Order Line"
-msgstr ""
+msgstr "Γραμμή Παραγγελίας"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__team_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Sales Team"
-msgstr ""
+msgstr "Ομάδα Πώλησης"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__user_id
 msgid "Salesman"
-msgstr ""
+msgstr "Πωλητής"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Salesperson"
-msgstr ""
+msgstr "Πωλητής"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -1242,7 +1247,7 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_schedule
 msgid "Schedule"
-msgstr ""
+msgstr "Προγραμματισμός"
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_rental_order_schedule
@@ -1277,7 +1282,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_renting.action_rental_config_settings
 #: model:ir.ui.menu,name:sale_renting.menu_rental_settings
 msgid "Settings"
-msgstr ""
+msgstr "Ρυθμίσεις"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
@@ -1287,7 +1292,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 msgid "State"
-msgstr ""
+msgstr "Νομός/Πολιτεία"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__status
@@ -1295,7 +1300,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__state
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_rental_report_view_tree
@@ -1438,14 +1443,14 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_tree
 msgid "Total Tax Included"
-msgstr ""
+msgstr "Συνολικός Φόρος που εμπεριέχεται"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__unit
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
 msgid "Unit"
-msgstr ""
+msgstr "Μονάδα"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
@@ -1455,7 +1460,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
 msgid "Validate"
-msgstr ""
+msgstr "Επικύρωση"
 
 #. module: sale_renting
 #. odoo-python
@@ -1478,7 +1483,7 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 msgid "Variants"
-msgstr ""
+msgstr "Παραλλαγές"
 
 #. module: sale_renting
 #. odoo-javascript
@@ -1492,35 +1497,35 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Week"
-msgstr ""
+msgstr "Εβδομάδα"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_weekly
 msgid "Weekly"
-msgstr ""
+msgstr "Εβδομαδιαία"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__week
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__week
 msgid "Weeks"
-msgstr ""
+msgstr "Εβδομάδες"
 
 #. module: sale_renting
 #. odoo-python
 #: code:addons/sale_renting/models/sale_order_recurrence.py:0
 msgid "Year"
-msgstr ""
+msgstr "Έτος"
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_yearly
 msgid "Yearly"
-msgstr ""
+msgstr "Ετήσιο"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__year
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__year
 msgid "Years"
-msgstr ""
+msgstr "Έτη"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
@@ -1578,4 +1583,4 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
-msgstr ""
+msgstr "ώρες"

@@ -7,62 +7,64 @@
 # Stefanos Nikou <stefanos.nikou@gmail.com>, 2019
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
 # Martin Trigaux, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2016-08-05 13:29+0000\n"
-"Last-Translator: Martin Trigaux, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"mrp_workorder/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "%(user_name)s suggests to delete this instruction"
-msgstr ""
+msgstr "%(user_name)s προτείνει να διαγράψετε αυτή την οδηγία"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "%(user_name)s suggests to use this document as instruction"
-msgstr ""
+msgstr "%(user_name)s προτείνει να χρησιμοποιήσετε αυτό το αρχείο για οδηγίες"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print barcode commands"
-msgstr ""
+msgstr "<i class=\"fa fa-print\"/> Εκτύπωση barcode εντολών"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_operation_form_view
 msgid "<span class=\"o_stat_text\">Instructions</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Οδηγίες</span>"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Δραστηριότητες"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Δραστηριότητα Εξαίρεσης Διακόσμησης"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Κατάσταση Δραστηριότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Εικονίδιο Τύπου Δραστηριότητας"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -75,7 +77,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Add By-product"
-msgstr ""
+msgstr "Προσθήκη Υποπροϊόντος"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -84,7 +86,7 @@ msgstr ""
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
 msgid "Add Component"
-msgstr ""
+msgstr "Προσθήκη Συστατικού"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -92,7 +94,7 @@ msgstr ""
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Add a Step"
-msgstr ""
+msgstr "Προσθήκη Βήματος"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
@@ -107,17 +109,17 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__allow_producing_quantity_change
 msgid "Allow Changes to Producing Quantity"
-msgstr ""
+msgstr "Επιτρέπει Αλλαγές στην Παραγόμενη Ποσότητα"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point_test_type__allow_registration
 msgid "Allow Registration"
-msgstr ""
+msgstr "Επιτρέπεται η εγγραφή"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_routing_steps_search
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
@@ -127,12 +129,12 @@ msgstr "Διαθεσιμότητα"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_report_mrp_report_bom_structure
 msgid "BOM Overview Report"
-msgstr ""
+msgstr "Αναφορά Επισκόπησης Συνταγών Παραγωγής"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder___barcode_scanned
 msgid "Barcode Scanned"
-msgstr ""
+msgstr "Barcode Σαρώθηκε"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -144,7 +146,7 @@ msgstr ""
 #: model:ir.model,name:mrp_workorder.model_mrp_bom
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_id
 msgid "Bill of Material"
-msgstr ""
+msgstr "Συνταγή Παραγωγής"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -162,7 +164,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_product_ids
 msgid "Bom Product"
-msgstr ""
+msgstr "Συνταγή Παραγωγής Προϊόντων"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__mrp_workorder_additional_product__type__byproduct
@@ -172,7 +174,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "CONTINUE"
-msgstr ""
+msgstr "ΣΥΝΕΧΕΙΑ"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
@@ -183,7 +185,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_uom_category_id
@@ -193,7 +195,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_change_production_qty
 msgid "Change Production Qty"
-msgstr ""
+msgstr "Αλλαγή Ποσότητας Παραγωγής"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__check_ids
@@ -209,17 +211,17 @@ msgstr "Με Επιταγές"
 #. module: mrp_workorder
 #: model:product.attribute,name:mrp_workorder.product_attribute_color_radio
 msgid "Color"
-msgstr ""
+msgstr "Χρώμα"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__comment
 msgid "Comment"
-msgstr ""
+msgstr "Σχόλιο"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -232,22 +234,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__component_ids
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__mrp_workorder_additional_product__type__component
 msgid "Component"
-msgstr ""
+msgstr "Συστατικό"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_qty_to_do
 msgid "Component Qty To Do"
-msgstr ""
+msgstr "Ποσότητα Συστατικού προς Εκτέλεση"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Ρυθμίσεις διαμόρφωσης"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__consumption
 msgid "Consumption"
-msgstr ""
+msgstr "Ανάλωση"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder_additional_product__product_uom_category_id
@@ -258,28 +260,28 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__create_uid
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__create_date
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Creates a new serial/lot number"
-msgstr ""
+msgstr "Δημιουργεί νέα παρτίδα/σειριακό αριθμό"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__current_quality_check_id
 msgid "Current Quality Check"
-msgstr ""
+msgstr "Τρέχων Έλεγχος Ποιότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__quality_point__source_document__step
 msgid "Custom"
-msgstr ""
+msgstr "Προσωποποιημένο"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -289,7 +291,7 @@ msgstr "Ημερομηνία"
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
 msgid "Defines the type of the quality control point."
-msgstr ""
+msgstr "Ορίζει τον τύπο του σημείου ελέγχου."
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -300,25 +302,25 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__is_deleted
 msgid "Deleted in production"
-msgstr ""
+msgstr "Διαγράφηκε στην παραγωγή"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_workorder_additional_product_wizard
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_propose_change_wizard
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__qty_done
@@ -331,26 +333,27 @@ msgstr "Ολοκληρωμένη"
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
 msgstr ""
+"Διασφαλίστε την ιχνηλασιμότητα ενός αποθηκεύσιμου προϊόντος στην αποθήκη σας."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__finished_lot_id
 msgid "Finished Lot/Serial"
-msgstr ""
+msgstr "Παρτίδα/Σειριακός Αριθμός Τελικού Προϊόντος"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
 msgid "Finished Lot/Serial Number"
-msgstr ""
+msgstr "Ολοκληρωμένες Παρτίδες/Σειριακοί Αριθμοί"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__finished_product_check_ids
 msgid "Finished Product Check"
-msgstr ""
+msgstr "Έλεγχος Τελικού Προϊόντος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__finished_product_sequence
 msgid "Finished Product Sequence Number"
-msgstr ""
+msgstr "Αριθμός Ακολουθίας Τελικού Προϊόντος"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -360,7 +363,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Γραμματοσειρά awesome  π.χ. fa-tasks"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -371,103 +374,107 @@ msgstr ""
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 msgid "Google Slide Link"
-msgstr ""
+msgstr "Σύνδεσμος Διαφάνειας Google"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__worksheet_url
 msgid "Google doc URL"
-msgstr ""
+msgstr "Σύνδεσμος αρχείου Google"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Εικονίδιο που υποδεικνύει μια δραστηριότητα εξαίρεσης."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__worksheet_document
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__worksheet_document
 msgid "Image/PDF"
-msgstr ""
+msgstr "Εικόνα/PDF"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_id
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__move_line_id
 msgid "In case of Quality Check by Quantity, Move Line on which the Quality Check applies"
 msgstr ""
+"Σε περίπτωση Ελέγχου Ποιότητας κατά Ποσότητα, η Γραμμή Μετακίνησης στην "
+"οποία εφαρμόζεται ο Έλεγχος Ποιότητας"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 msgid "Instruction"
-msgstr ""
+msgstr "Οδηγίες"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "Instruction:"
-msgstr ""
+msgstr "Οδηγία:"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__quality_point_count
 msgid "Instructions"
-msgstr ""
+msgstr "Οδηγίες"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_ids
 msgid "Inventory moves for which you must scan a lot number at this work order"
 msgstr ""
+"Κινήσεις αποθέματος για τις οποίες πρέπει να σαρώσετε αριθμό παρτίδας σε "
+"αυτήν την εντολή εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_tracking
 msgid "Is Component Tracked"
-msgstr ""
+msgstr "Παρακολουθείται το Συστατικό"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__is_last_unfinished_wo
 msgid "Is Last Work Order To Process"
-msgstr ""
+msgstr "Είναι η Τελευταία Εντολή Εργασίας προς Εκτέλεση"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__is_last_lot
 msgid "Is Last lot"
-msgstr ""
+msgstr "Είναι η Τελευταία παρτίδα"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__is_first_started_wo
 msgid "Is The first Work Order"
-msgstr ""
+msgstr "Είναι η πρώτη Εντολή Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__is_workorder_step
 msgid "Is Workorder Step"
-msgstr ""
+msgstr "Είναι Βήμα Εντολής Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__is_user_working
 msgid "Is the Current User Working"
-msgstr ""
+msgstr "Εργάζεται ο Τρέχων Χρήστης"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__write_uid
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__write_date
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -478,7 +485,7 @@ msgstr "Παρτίδα"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__lot_id
 msgid "Lot/Serial"
-msgstr ""
+msgstr "Παρτίδα/Σειριακός"
 
 #. module: mrp_workorder
 #: model:res.groups,name:mrp_workorder.group_mrp_wo_tablet_timer
@@ -498,7 +505,7 @@ msgstr "Σήμανση ως Ολοκληρωμένη"
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Mark as Done and Close MO"
-msgstr ""
+msgstr "Σήμανση ως Ολοκληρωμένη και Κλείσιμο Εντολής Παραγωγής"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -509,35 +516,35 @@ msgstr "Μενού"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_line_ids
 msgid "Moves to Track"
-msgstr ""
+msgstr "Μετακινήσεις προς Παρακολούθηση"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Η Προθεσμία της Δραστηριότητάς Μου"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__note
 msgid "New Instruction"
-msgstr ""
+msgstr "Νέα Οδηγία"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "New Instruction suggested by %(user_name)s"
-msgstr ""
+msgstr "Νέα Οδηγία προτάθηκε από %(user_name)s"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "New Step suggested by %(user_name)s"
-msgstr ""
+msgstr "Νέο Βήμα προτάθηκε από %(user_name)s"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "New Title suggested:"
-msgstr ""
+msgstr "Νέος Τίτλος προτάθηκε:"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
@@ -547,37 +554,37 @@ msgstr "Επόμενο"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Επόμενο Γεγονός Δραστηριότητας στο Ημερολόγιο"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Επόμενη Προθεσμία Δραστηριότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Σύνοψη Επόμενης Δραστηριότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Επόμενος Τύπος Δραστηριότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__next_check_id
 msgid "Next Check"
-msgstr ""
+msgstr "Επόμενος Έλεγχος"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
 msgid "No manufacturing steps defined yet!"
-msgstr ""
+msgstr "Δεν έχουν οριστεί ακόμη βήματα παραγωγής!"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
 msgid "No work orders to do!"
-msgstr ""
+msgstr "Δεν υπάρχουν εντολές εργασίας προς εκτέλεση!"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_workorder_tree_editable_view_inherit_workorder
@@ -588,7 +595,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_alert__workorder_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__workorder_id
 msgid "Operation"
-msgstr "Λειτουργία"
+msgstr "Εργασία"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -598,12 +605,12 @@ msgstr "Χειριστής"
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_dashboard
 msgid "Overview"
-msgstr ""
+msgstr "Επισκόπηση"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "PAUSE"
-msgstr ""
+msgstr "ΠΑΥΣΗ"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__quality_point__test_report_type__pdf
@@ -619,12 +626,12 @@ msgstr "Εικόνα"
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_production
 msgid "Planning by Production"
-msgstr ""
+msgstr "Προγραμματισμός βάσει Παραγωγής"
 
 #. module: mrp_workorder
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_workcenter
 msgid "Planning by Workcenter"
-msgstr ""
+msgstr "Πρόγραμματισμός βάσει Κέντρου Εργασίας"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -636,35 +643,37 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "Please enter a Lot/SN."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε Παρτίδα/Σειριακό Αριθμό."
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "Please enter a positive quantity."
-msgstr ""
+msgstr "Παρακαλώ εισάγετε θετική ποσότητα."
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "Please set the quantity you are currently producing. It should be different from zero."
 msgstr ""
+"Παρακαλώ εισάγετε την ποσότητα που παράγετε αυτή την στιγμή. Πρέπει να είναι "
+"διαφορετική από το μηδέν."
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "Please upload a picture."
-msgstr ""
+msgstr "Παρακαλώ φορτώστε εικόνα."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__previous_check_id
 msgid "Previous Check"
-msgstr ""
+msgstr "Προηγούμενος Έλεγχος"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Print Labels"
-msgstr ""
+msgstr "Εκτύπωση Ετικετών"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_id
@@ -674,12 +683,12 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Κινήσεις Ειδών (Γραμμή Κίνησης Αποθέματος)"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__component_id
 msgid "Product To Register"
-msgstr ""
+msgstr "Είδος προς Εγγραφή"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_uom_id
@@ -701,18 +710,18 @@ msgstr "Κέντρο Εργασίας Παραγωγής"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__product_ids
 msgid "Products"
-msgstr ""
+msgstr "Είδη"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.add_quality_check_from_tablet
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_propose_change_wizard
 msgid "Propose Change"
-msgstr ""
+msgstr "Πρόταση Αλλαγής"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_propose_change
 msgid "Propose a change in the production"
-msgstr ""
+msgstr "Πρόταση αλλαγής στην παραγωγή"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -724,58 +733,58 @@ msgstr ""
 #: model:ir.model,name:mrp_workorder.model_quality_alert
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_alert_ids
 msgid "Quality Alert"
-msgstr ""
+msgstr "Ειδοποίηση Ποιότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_alert_count
 msgid "Quality Alert Count"
-msgstr ""
+msgstr "Αριθμός Ειδοποιήσεων Ποιότητας"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_check
 msgid "Quality Check"
-msgstr ""
+msgstr "Ποιοτικός Έλεγχος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_check_fail
 msgid "Quality Check Fail"
-msgstr ""
+msgstr "Ο Ποιοτικός Έλεγχος Απέτυχε"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_check_todo
 msgid "Quality Check Todo"
-msgstr ""
+msgstr "Ποιοτικός Έλεγχος Προς Εκτέλεση"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_point
 msgid "Quality Control Point"
-msgstr ""
+msgstr "Σημείο Ποιοτικού Ελέγχου"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_quality_point_test_type
 msgid "Quality Control Test Type"
-msgstr ""
+msgstr "Τύπος Δοκιμής Ελέγχου Ποιότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__quality_point_ids
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_point_ids
 msgid "Quality Point"
-msgstr ""
+msgstr "Σημείο Ελέγχου Ποιότητας"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_routing_steps_search
 msgid "Quality Point Steps"
-msgstr ""
+msgstr "Βήματα Σημείων Ελέγχου Ποιότητας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__product_ids
 msgid "Quality Point will apply to every selected Products."
-msgstr ""
+msgstr "Το Σημείο Ποιοτικού Ελέγχου θα εφαρμόζεται σε όλα τα επιλεγμένα Είδη."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_state
 msgid "Quality State"
-msgstr ""
+msgstr "Στάδιο Ποιοτικού Ελέγχου"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_qty
@@ -789,33 +798,33 @@ msgstr "Ποσότητα"
 #. odoo-python
 #: code:addons/mrp_workorder/wizard/propose_change.py:0
 msgid "Reason:"
-msgstr ""
+msgstr "Αιτία:"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "Record production"
-msgstr ""
+msgstr "Καταγραφή παραγωγής"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__additional
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__additional
 msgid "Register additional product"
-msgstr ""
+msgstr "Εγγραφή επιπλέον προϊόντων"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__bom_active
 msgid "Related Bill of Material Active"
-msgstr ""
+msgstr "Σχετική Ενεργή Συνταγή Παραγωγής"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_remaining_qty
 msgid "Remaining Quantity for Component"
-msgstr ""
+msgstr "Υπόλοιπη Ποσότητα για το Συστατικό"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__propose_change__change_type__remove_step
 msgid "Remove Current Step"
-msgstr ""
+msgstr "Αφαίρεση Τρέχοντος Βήματος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__test_report_type
@@ -830,12 +839,12 @@ msgstr "Υπεύθυνοι"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Υπεύθυνος Χρήστης"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__result
 msgid "Result"
-msgstr ""
+msgstr "Αποτέλεσμα"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -847,38 +856,38 @@ msgstr "Άχρηστα"
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
 msgid "Serial"
-msgstr ""
+msgstr "Σειρακός"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__propose_change__change_type__set_picture
 msgid "Set Picture"
-msgstr ""
+msgstr "Επιλογή Εικόνας"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Set a New picture"
-msgstr ""
+msgstr "Επιλογή Νέας εικόνας"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_routing_workcenter_tree_view_inherited
 msgid "Show Instructions"
-msgstr ""
+msgstr "Εμφάνιση Οδηγιών"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
 msgid "Show the timer on the work order screen"
-msgstr ""
+msgstr "Εμφάνιση του χρονομέτρου στην οθόνη της εντολής εργασίας"
 
 #. module: mrp_workorder
 #: model:product.template,description_sale:mrp_workorder.product_template_stool
 msgid "Small wooden stool"
-msgstr ""
+msgstr "Μικρό ξύλινο σκαμπό"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__quality_point__source_document__operation
 msgid "Specific Page of Operation Worksheet"
-msgstr ""
+msgstr "Συγκεκριμένη Σελίδα του Φύλλου Εργασίας των Εργασιών"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_state
@@ -888,6 +897,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Κατάσταση βασισμένη σε δραστηριότητες\n"
+"Καθυστερημένη: Η ημερομηνία λήξης έχει ήδη περάσει\n"
+"Σήμερα: Η ημερομηνία δραστηριότητας είναι σήμερα\n"
+"Προγραμματισμένες: Μελλοντικές δραστηριότητες."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__operation_id
@@ -897,46 +910,46 @@ msgstr "Βήμα"
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__source_document
 msgid "Step Document"
-msgstr ""
+msgstr "Έγγραφο Βήματος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__step_id
 msgid "Step to change"
-msgstr ""
+msgstr "Βήμα προς αλλαγή"
 
 #. module: mrp_workorder
 #: model:ir.actions.act_window,name:mrp_workorder.action_mrp_workorder_show_steps
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_point_count
 msgid "Steps"
-msgstr ""
+msgstr "Βήματα"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_move
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_id
 msgid "Stock Move"
-msgstr ""
+msgstr "Κίνηση Αποθέματος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__move_line_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_line_id
 msgid "Stock Move Line"
-msgstr ""
+msgstr "Γραμμή Κίνησης Αποθέματος"
 
 #. module: mrp_workorder
 #: model:product.template,name:mrp_workorder.product_template_stool
 msgid "Stool"
-msgstr ""
+msgstr "Σκαμπό"
 
 #. module: mrp_workorder
 #: model:product.template,name:mrp_workorder.product_template_stool_foot
 msgid "Stool Foot"
-msgstr ""
+msgstr "Πόδι Σκαμπό"
 
 #. module: mrp_workorder
 #: model:product.template,name:mrp_workorder.product_template_stool_top
 msgid "Stool Top"
-msgstr ""
+msgstr "Επάνω Μέρος Σκαμπό"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -947,29 +960,31 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.actions.client,name:mrp_workorder.tablet_client_action
 msgid "Tablet Client Action"
-msgstr ""
+msgstr "Ενέργεια Χρήστη Τάμπλετ"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__test_type
 msgid "Technical name"
-msgstr ""
+msgstr "Τεχνική ονομασία"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__test_type_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__test_type_id
 msgid "Test Type"
-msgstr ""
+msgstr "Τύπος δοκιμής"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "This workcenter isn't expected to have open workorders during this period. Work hours :"
 msgstr ""
+"Αυτό το Κέντρο Εργασίας δεν αναμένεται να έχει ανοιχτές εντολές εργασίας "
+"κατά την τρέχουσα περίοδο. Ώρες εργασίας:"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__group_mrp_wo_tablet_timer
 msgid "Timer"
-msgstr ""
+msgstr "Χρονομετρήτης"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__title
@@ -985,23 +1000,23 @@ msgstr "Σύνολο Ποσ."
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__product_tracking
 msgid "Tracking"
-msgstr ""
+msgstr "Παρακολούθηση"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__type
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_workorder_form
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__change_type
 msgid "Type of Change"
-msgstr ""
+msgstr "Τύπος Αλλαγής"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Τύπος της καταγεγραμμένης δραστηριότητας εξαίρεσης."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -1016,33 +1031,36 @@ msgstr "Μονάδα Μέτρησης"
 #. module: mrp_workorder
 #: model:ir.actions.server,name:mrp_workorder.production_order_unplan_server_action
 msgid "Unplan orders"
-msgstr ""
+msgstr "Αποπρογραμματισμός εντολών"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__component_uom_id
 msgid "UoM"
-msgstr ""
+msgstr "ΜΜ"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__propose_change__change_type__update_step
 msgid "Update Current Step"
-msgstr ""
+msgstr "Ενημέρωση Τρέχοντος Βήματος"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/components/menuPopup.xml:0
 msgid "Update Instructions"
-msgstr ""
+msgstr "Ενημέρωση Οδηγιών"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 msgid "Upload your PDF file."
-msgstr ""
+msgstr "Φορτώστε το αρχείο PDF."
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
 msgid "Use steps to show instructions on a worksheet to operators, or trigger quality checks at specific steps of the work order."
 msgstr ""
+"Χρησιμοποιήστε βήματα για να εμφανίζετε οδηγίες στους χειριστές μέσω του "
+"φύλλου εργασίας ή για να ενεργοποιείτε ελέγχους ποιότητας σε συγκεκριμένα "
+"στάδια της εντολής εργασίας."
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
@@ -1051,6 +1069,12 @@ msgid ""
 "            The tablet provides worksheets for your workers and allow them to scrap products, track time,\n"
 "            launch a maintenance request, perform quality tests, etc."
 msgstr ""
+"Χρησιμοποιήστε τον πίνακα ελέγχου του Κέντρου Εργασίας για να καταγράφετε "
+"εργασία απευθείας από τον χώρο παραγωγής.\n"
+"            Το tablet παρέχει φύλλα εργασίας στους εργαζομένους και τους "
+"επιτρέπει να απορρίπτουν προϊόντα, να παρακολουθούν χρόνο,\n"
+"            να ξεκινούν αιτήματα συντήρησης, να εκτελούν ποιοτικούς ελέγχους "
+"κ.λπ."
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_view_form_tablet
@@ -1060,7 +1084,7 @@ msgstr ""
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder___barcode_scanned
 msgid "Value of the last barcode scanned."
-msgstr ""
+msgstr "Τιμή του τελευταίου barcode που σαρώθηκε."
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1079,7 +1103,7 @@ msgstr "Κέντρο Εργασίας"
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_routing_workcenter
 msgid "Work Center Usage"
-msgstr ""
+msgstr "Χρήση Κέντρο Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_workorder
@@ -1090,7 +1114,7 @@ msgstr "Εντολή εργασίας"
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_tree
 msgid "Work Order Operation"
-msgstr ""
+msgstr "Εργασία Εντολής Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.actions.act_window,name:mrp_workorder.mrp_workorder_action_tablet
@@ -1101,12 +1125,12 @@ msgstr "Εντολές Εργασίας"
 #. module: mrp_workorder
 #: model:ir.actions.server,name:mrp_workorder.action_mrp_workorder_dependencies_workcenter
 msgid "Work Orders Planning"
-msgstr ""
+msgstr "Προγραμματισμός Εντολών Εργασίας"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workcenter_view_kanban_inherit_workorder
 msgid "Work orders"
-msgstr ""
+msgstr "Εντολές Εργασίας"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
@@ -1114,28 +1138,32 @@ msgid ""
 "Work orders are operations to do as part of a manufacturing order.\n"
 "            Operations are defined in the bill of materials or added in the manufacturing order directly."
 msgstr ""
+"Οι εντολές εργασίας είναι εργασίες που πρέπει να εκτελεστούν στο πλαίσιο "
+"μιας εντολής παραγωγής.\n"
+"            Οι εργασίες αυτές ορίζονται στη συνταγή παραγωγής ή προστίθενται "
+"απευθείας στην εντολή παραγωγής."
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__working_state
 msgid "Workcenter Status"
-msgstr ""
+msgstr "Κατάσταση Κέντρου Ελέγχου"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder_additional_product__workorder_id
 #: model:ir.model.fields,field_description:mrp_workorder.field_propose_change__workorder_id
 msgid "Workorder"
-msgstr ""
+msgstr "Εντολή Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__worksheet_page
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_point__worksheet_page
 msgid "Worksheet Page"
-msgstr ""
+msgstr "Σελίδα Φύλλου Εργασίας"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__worksheet_page
 msgid "Worksheet page"
-msgstr ""
+msgstr "Σελίδα Φύλλου Εργασίας"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1148,12 +1176,15 @@ msgstr ""
 #: code:addons/mrp_workorder/wizard/change_production_qty.py:0
 msgid "You cannot update the quantity to do of an ongoing manufacturing order for which quality checks have been performed."
 msgstr ""
+"Δεν μπορείτε να ενημερώσετε την ποσότητα προς εκτέλεση σε εντολή παραγωγής "
+"που βρίσκεται σε εξέλιξη, για την οποία έχουν πραγματοποιηθεί έλεγχοι "
+"ποιότητας."
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/quality.py:0
 msgid "You did not set a lot/serial number for the final product"
-msgstr ""
+msgstr "Δεν ορίσατε αριθμό παρτίδας/σειριακό αριθμό για το τελικό προϊόν"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1165,22 +1196,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "You still need to do the quality checks!"
-msgstr ""
+msgstr "Ακόμη χρειάζεται να εκτελέσετε τους ποιοτικούς ελέγχους!"
 
 #. module: mrp_workorder
 #: model:ir.model.fields.selection,name:mrp_workorder.selection__quality_point__test_report_type__zpl
 msgid "ZPL"
-msgstr ""
+msgstr "ZPL"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "back"
-msgstr ""
+msgstr "πίσω"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
 msgid "menu"
-msgstr ""
+msgstr "μενού"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -1196,9 +1227,9 @@ msgstr ""
 #. module: mrp_workorder
 #: model:product.template,description_sale:mrp_workorder.product_template_stool_foot
 msgid "wooden stool foot"
-msgstr ""
+msgstr "πόδι ξύλινου σκαμπό"
 
 #. module: mrp_workorder
 #: model:product.template,description_sale:mrp_workorder.product_template_stool_top
 msgid "wooden stool top"
-msgstr ""
+msgstr "πάνω επιφάνεια ξύλινου σκαμπό"

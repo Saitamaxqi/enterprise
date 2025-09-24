@@ -7,20 +7,22 @@
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
 # Martin Trigaux, 2019
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2017-02-15 11:46+0000\n"
-"Last-Translator: Kostas Goutoudis <goutoudis@gmail.com>, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/web_studio/"
+"el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio
 #. odoo-python
@@ -155,6 +157,7 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:web_studio.web_studio_new_app_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
+"<span><b>Εξαιρετικά!</b> You went through all steps of this tour.</span>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -219,12 +222,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_search_view
 msgid "Action"
-msgstr ""
+msgstr "Ενέργεια"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_act_window
@@ -259,7 +262,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: model:ir.model,name:web_studio.model_ir_actions_actions
 msgid "Actions"
-msgstr ""
+msgstr "Ενέργειες"
 
 #. module: web_studio
 #. odoo-python
@@ -281,7 +284,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__active
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_search_view
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: web_studio
 #. odoo-javascript
@@ -289,7 +292,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/studio_service.js:0
 #: model:ir.model,name:web_studio.model_mail_activity
 msgid "Activity"
-msgstr ""
+msgstr "Δραστηριότητα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -436,13 +439,13 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Apply"
-msgstr ""
+msgstr "Εφαρμογή"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/approval/approval_infos.xml:0
 msgid "Approval"
-msgstr ""
+msgstr "Έγκριση"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
@@ -510,13 +513,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/approval/approval_infos.xml:0
 msgid "Approve"
-msgstr ""
+msgstr "Έγκριση"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__approved
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
 msgid "Approved"
-msgstr ""
+msgstr "Εγκρίθηκε"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.notify_approval
@@ -552,7 +555,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__approver_ids
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Approvers"
-msgstr ""
+msgstr "Εγκρίνοντες"
 
 #. module: web_studio
 #. odoo-javascript
@@ -566,7 +569,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_button_configuration_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_form_view
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -635,12 +638,12 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__include_attachment
 msgid "Attachments"
-msgstr ""
+msgstr "Συνημμένα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -668,7 +671,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties.js:0
 msgid "Average"
-msgstr ""
+msgstr "Μέσος όρος"
 
 #. module: web_studio
 #. odoo-javascript
@@ -692,7 +695,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/graph/graph_editor.js:0
 msgid "Bar"
-msgstr ""
+msgstr "Μπάρα"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_base
@@ -709,7 +712,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Blocked"
-msgstr ""
+msgstr "Μπλοκαρισμένο"
 
 #. module: web_studio
 #. odoo-javascript
@@ -727,7 +730,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/button_properties.js:0
 msgid "Button"
-msgstr ""
+msgstr "Πλήκτρο"
 
 #. module: web_studio
 #. odoo-javascript
@@ -742,7 +745,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Calendar"
-msgstr ""
+msgstr "Ημερολόγιο"
 
 #. module: web_studio
 #. odoo-javascript
@@ -946,7 +949,7 @@ msgstr "Εταιρίες"
 #: code:addons/web_studio/models/ir_model.py:0
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: web_studio
 #. odoo-javascript
@@ -971,7 +974,7 @@ msgstr ""
 #: code:addons/web_studio/controllers/main.py:0
 #: code:addons/web_studio/models/ir_ui_menu.py:0
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1013,13 +1016,13 @@ msgstr "Επιβεβαίωση"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/navbar/home_menu_customizer/home_menu_customizer.js:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Contact"
-msgstr ""
+msgstr "Επαφή"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1063,7 +1066,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/menu_creator/menu_creator.js:0
 msgid "Create Menu"
-msgstr ""
+msgstr "Δημιουργήστε μενού"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1118,7 +1121,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__create_uid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__create_date
@@ -1130,7 +1133,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__create_date
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1231,7 +1234,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__date_to
 msgid "Date To"
-msgstr ""
+msgstr "Έως Ημερομηνία"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1393,7 +1396,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/button_properties.xml:0
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1412,7 +1415,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_snackbar.xml:0
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1496,7 +1499,7 @@ msgstr "Τομέας"
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Done"
-msgstr ""
+msgstr "Ολοκληρωμένη"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1532,7 +1535,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1600,7 +1603,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_template
@@ -1610,7 +1613,7 @@ msgstr "Πρότυπα Email"
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_thread
 msgid "Email Thread"
-msgstr ""
+msgstr "Νήμα Email"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1635,13 +1638,13 @@ msgstr ""
 #: code:addons/web_studio/models/ir_model.py:0
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "End Date"
-msgstr ""
+msgstr "Ημερ. Λήξης"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__entry_ids
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_form_view
 msgid "Entries"
-msgstr ""
+msgstr "Καταχωρήσεις"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1704,7 +1707,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__action_xmlid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__xmlid
 msgid "External ID"
-msgstr ""
+msgstr "Εξωτερικό Αναγνωριστικό"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1817,18 +1820,18 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.js:0
 msgid "Footer"
-msgstr ""
+msgstr "Υποσέλιδο"
 
 #. module: web_studio
 #. odoo-python
@@ -1847,20 +1850,20 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Forever"
-msgstr ""
+msgstr "Επ' αόριστον"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Form"
-msgstr ""
+msgstr "Φόρμα"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/xml_resource_editor/xml_resource_editor.xml:0
 msgid "Format"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1873,7 +1876,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Gantt"
-msgstr ""
+msgstr "Gantt"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1922,7 +1925,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Graph"
-msgstr ""
+msgstr "Γράφημα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1934,13 +1937,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_renderer.xml:0
 msgid "Group"
-msgstr ""
+msgstr "Ομάδα"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Group By"
-msgstr ""
+msgstr "Ομαδοποίηση κατά"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1958,12 +1961,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1980,7 +1983,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2119,13 +2122,13 @@ msgstr "Εικονίδιο"
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2195,7 +2198,7 @@ msgstr "Εισαγωγή"
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "In Progress"
-msgstr ""
+msgstr "Σε εξέλιξη"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__include_additional_data
@@ -2260,7 +2263,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Integer"
-msgstr ""
+msgstr "Ακέραιος"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2294,7 +2297,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_module_uninstall__is_studio
@@ -2312,7 +2315,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Kanban"
-msgstr ""
+msgstr "Kanban"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__kanban_color
@@ -2323,7 +2326,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Kanban State"
-msgstr ""
+msgstr "Κατάσταση Kanban"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2349,7 +2352,7 @@ msgstr "Ετικέτα"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__write_uid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__write_date
@@ -2361,7 +2364,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__write_date
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2393,14 +2396,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/graph/graph_editor.js:0
 msgid "Line"
-msgstr ""
+msgstr "Γραμμή"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Lines"
-msgstr ""
+msgstr "Γραμμές"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_request__mail_activity_id
@@ -2412,7 +2415,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "List"
-msgstr ""
+msgstr "Λίστα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2430,7 +2433,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Many2One"
-msgstr ""
+msgstr "ΠολλάΠροςΈνα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2451,7 +2454,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/graph/graph_editor_sidebar.xml:0
 msgid "Measure"
-msgstr ""
+msgstr "Μέτρηση"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2463,7 +2466,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/pivot/pivot_editor_sidebar.xml:0
 msgid "Measures"
-msgstr ""
+msgstr "Μετρήσεις"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2487,12 +2490,12 @@ msgstr "Μήνυμα"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2502,7 +2505,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_search_view
 msgid "Method"
-msgstr ""
+msgstr "Μέθοδος"
 
 #. module: web_studio
 #. odoo-python
@@ -2554,20 +2557,20 @@ msgstr "Μοντέλο Δεδομένων"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__model_name
 msgid "Model Description"
-msgstr ""
+msgstr "Περιγραφή Μοντέλου"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__model
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__model_name
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__model_name
 msgid "Model Name"
-msgstr ""
+msgstr "Όνομα Υποδείγματος"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/editor/new_model_item/new_model_item.xml:0
 msgid "Model name"
-msgstr ""
+msgstr "Μοντέλο"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_model
@@ -2658,7 +2661,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "N/A"
-msgstr ""
+msgstr "Μ/Δ"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2674,7 +2677,7 @@ msgstr "Περιγραφή"
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "New"
-msgstr ""
+msgstr "Νέα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2729,13 +2732,13 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/new_model_item/new_model_item.xml:0
 #: code:addons/web_studio/static/src/client_action/menu_creator/menu_creator.js:0
 msgid "New Model"
-msgstr ""
+msgstr "Νέο Μοντέλο"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer_components.js:0
 msgid "New Page"
-msgstr ""
+msgstr "Νέα Σελίδα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2786,7 +2789,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/rainbow_effect.js:0
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2816,27 +2819,27 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__entries_count
 msgid "Number of Entries"
-msgstr ""
+msgstr "Αριθμός Καταχωρήσεων"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2893,19 +2896,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/field_properties/field_properties.xml:0
 msgid "Optional"
-msgstr ""
+msgstr "Προαιρετικό"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.xml:0
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/list/list_editor_sidebar/list_editor_sidebar.xml:0
 msgid "Order"
-msgstr ""
+msgstr "Παραγγελία"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.act_report_xml_view_kanban
 msgid "PDF file"
-msgstr ""
+msgstr "Αρχείο PDF"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_report_paperformat
@@ -2922,7 +2925,7 @@ msgstr "Μορφή χαρτιού"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/menu_creator/menu_creator.js:0
 msgid "Parent Menu"
-msgstr ""
+msgstr "Υπερκείμενο Μενού"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2934,19 +2937,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Partner"
-msgstr ""
+msgstr "Συναλλασόμενος"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 msgid "Picture"
-msgstr ""
+msgstr "Εικόνα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2971,7 +2974,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Pivot"
-msgstr ""
+msgstr "Συγκεντρωτικό"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2982,7 +2985,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__post
 msgid "Post"
-msgstr ""
+msgstr "Καταχωρηση"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__pre
@@ -3080,30 +3083,30 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/modifiers/modifiers_properties.xml:0
 msgid "Readonly"
-msgstr ""
+msgstr "Readonly"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Ready"
-msgstr ""
+msgstr "Έτοιμη"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_form_view
 msgid "Record"
-msgstr ""
+msgstr "Εγγραφή"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__res_id
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_request__res_id
 msgid "Record ID"
-msgstr ""
+msgstr "ID Εγγραφής"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__name
@@ -3125,18 +3128,18 @@ msgstr "Ακύρωση αναίρεσης"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__reference
 msgid "Reference"
-msgstr ""
+msgstr "Σχετικό"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/approval/approval_infos.xml:0
 msgid "Reject"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
 msgid "Rejected"
-msgstr ""
+msgstr "Απορίφθηκε"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.notify_approval
@@ -3182,7 +3185,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Αναφορά δράσης"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3271,7 +3274,7 @@ msgstr ""
 #: code:addons/web_studio/models/ir_model.py:0
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Responsible"
-msgstr ""
+msgstr "Υπεύθυνοι"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3347,14 +3350,14 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_snackbar.xml:0
 #: code:addons/web_studio/static/src/client_action/xml_resource_editor/xml_resource_editor.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3391,13 +3394,13 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: code:addons/web_studio/static/src/studio_service.js:0
 msgid "Search"
-msgstr ""
+msgstr "Αναζήτηση"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.xml:0
 msgid "Search..."
-msgstr ""
+msgstr "Αναζήτηση..."
 
 #. module: web_studio
 #. odoo-javascript
@@ -3501,7 +3504,7 @@ msgstr "Διαχωριστής"
 #: code:addons/web_studio/models/ir_model.py:0
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_server
@@ -3560,7 +3563,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Signature"
-msgstr ""
+msgstr "Υπογραφή"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3595,7 +3598,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/map/map_editor_sidebar.xml:0
 msgid "Sort by"
-msgstr ""
+msgstr "Ταξινόμηση κατά"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3632,7 +3635,7 @@ msgstr "Στάδιο"
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Stage Name"
-msgstr ""
+msgstr "Όνομα Σταδίου"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3645,7 +3648,7 @@ msgstr ""
 #: code:addons/web_studio/models/ir_model.py:0
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3661,7 +3664,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_button_configuration_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_kanban_view
 msgid "Step"
-msgstr ""
+msgstr "Βήμα"
 
 #. module: web_studio
 #: model:ir.model.fields.selection,name:web_studio.selection__studio_approval_rule__notification_order__1
@@ -3824,7 +3827,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties.js:0
 msgid "Sum"
-msgstr ""
+msgstr "Άθροισμα"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4109,13 +4112,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "Total"
-msgstr ""
+msgstr "Σύνολο"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/graph/graph_editor_sidebar.xml:0
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: web_studio
 #. odoo-python
@@ -4133,7 +4136,7 @@ msgstr "Αναίρεση"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__date_to
 msgid "Until"
-msgstr ""
+msgstr "Μέχρι"
 
 #. module: web_studio
 #. odoo-python
@@ -4144,7 +4147,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__updatable
 msgid "Updatable"
-msgstr ""
+msgstr "Αναβαθμίσιμο"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4163,7 +4166,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__user_id
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4253,12 +4256,12 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: web_studio
 #. odoo-javascript

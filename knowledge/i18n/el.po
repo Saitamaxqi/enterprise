@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* knowledge
+# * knowledge
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-11 14:36+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/knowledge/"
+"el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: knowledge
 #. odoo-javascript
@@ -77,7 +81,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "%(article_name)s (copy)"
-msgstr ""
+msgstr "%(article_name)s (αντίγραφο)"
 
 #. module: knowledge
 #. odoo-python
@@ -1520,7 +1524,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 msgid "Access Denied"
-msgstr ""
+msgstr "Μη επιτρεπτή πρόσβαση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1542,7 +1546,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1552,27 +1556,27 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Δραστηριότητες"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Δραστηριότητα Εξαίρεσης Διακόσμησης"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Κατάσταση Δραστηριότητας"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Εικονίδιο Τύπου Δραστηριότητας"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1845,7 +1849,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2101,18 +2105,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "Επισυνάψτε"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_ir_attachment
 msgid "Attachment"
-msgstr ""
+msgstr "Συνημμένο"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_attachment_count
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_child_default_create
@@ -2154,7 +2158,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Based on"
-msgstr ""
+msgstr "Βασισμένο στο"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2169,7 +2173,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__body
 msgid "Body"
-msgstr ""
+msgstr "Κυρίως θέμα"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2343,7 +2347,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: knowledge
 #. odoo-python
@@ -2369,7 +2373,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.js:0
 msgid "Categories"
-msgstr ""
+msgstr "Κατηγορίες"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__sequence
@@ -2466,7 +2470,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2484,7 +2488,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/plugins/comments_plugin/comments_plugin.js:0
 msgid "Comment"
-msgstr ""
+msgstr "Σχόλιο"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2536,23 +2540,23 @@ msgstr ""
 #. module: knowledge
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_view.js:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Επαφή"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid "Contact Us"
-msgstr ""
+msgstr "Επικοινωνήστε μαζί μας"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_contact_our_lawyer
@@ -2587,7 +2591,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.xml:0
 msgid "Copy"
-msgstr ""
+msgstr "Αντιγραφή"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2710,7 +2714,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_date
@@ -2724,7 +2728,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -2763,7 +2767,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
 msgid "Dear"
-msgstr ""
+msgstr "Αγαπητέ/η"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -2863,7 +2867,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2884,7 +2888,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__display_name
 #: model:ir.model.fields,field_description:knowledge.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_brand_assets
@@ -2916,7 +2920,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_done
 msgid "Done"
-msgstr ""
+msgstr "Ολοκληρωμένη"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2934,7 +2938,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/list_view.js:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Δημιουργία Αντίγραφου"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
@@ -2945,7 +2949,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3017,7 +3021,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -3034,7 +3038,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Everyone"
-msgstr ""
+msgstr "Όλοι"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3055,7 +3059,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Favorite"
-msgstr ""
+msgstr "Αγαπημένη"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_favorite
@@ -3074,7 +3078,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_favorite_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_tree
 msgid "Favorites"
-msgstr ""
+msgstr "Αγαπημένα"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
@@ -3102,18 +3106,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_follower_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_partner_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Γραμματοσειρά awesome  π.χ. fa-tasks"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -3171,7 +3175,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__has_message
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_write_access
@@ -3237,7 +3241,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Hidden"
-msgstr ""
+msgstr "Κρυφό"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3284,7 +3288,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_home
 msgid "Home"
-msgstr ""
+msgstr "Αρχική"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3382,17 +3386,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__id
 #: model:ir.model.fields,field_description:knowledge.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Εικονίδιο"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Εικονίδιο που υποδεικνύει μια δραστηριότητα εξαίρεσης."
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3403,7 +3407,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error
@@ -3411,7 +3415,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_error
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__is_listed_in_templates_gallery
@@ -3487,7 +3491,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Index"
-msgstr ""
+msgstr "Δείκτης"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -3636,12 +3640,12 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Invite"
-msgstr ""
+msgstr "Προσκαλέστε"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_invite_action_from_article
 msgid "Invite people"
-msgstr ""
+msgstr "Πρόσκληση ατόμων"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__is_article_active
@@ -3657,7 +3661,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_is_follower
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_article_item
@@ -3752,7 +3756,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_calendar_items
 msgid "Items"
-msgstr ""
+msgstr "Είδη"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3762,7 +3766,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Join"
-msgstr ""
+msgstr "Συμμετοχή"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3813,7 +3817,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_technical
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
 msgid "Knowledge"
-msgstr ""
+msgstr "Γνωσιακή Βάση"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article
@@ -3873,7 +3877,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_uid
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_date
@@ -3885,13 +3889,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_date
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Leave"
-msgstr ""
+msgstr "Αποχώρηση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3919,7 +3923,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Link"
-msgstr ""
+msgstr "Σύνδεσμος"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3967,7 +3971,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_locked
 msgid "Locked"
-msgstr ""
+msgstr "Κλειδώθηκε"
 
 #. module: knowledge
 #. odoo-python
@@ -3980,7 +3984,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Logo"
-msgstr ""
+msgstr "Λογότυπο"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -4014,7 +4018,7 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_marketing
 msgid "Marketing"
-msgstr ""
+msgstr "Marketing"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_marketing_campaign_brief
@@ -4032,7 +4036,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_meeting
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_meeting
 msgid "Meeting"
-msgstr ""
+msgstr "Συνάντηση"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_meeting_example_branding
@@ -4055,7 +4059,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_form
 msgid "Member"
-msgstr ""
+msgstr "Μέλος"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4064,7 +4068,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_member_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_tree
 msgid "Members"
-msgstr ""
+msgstr "Μέλη"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_member_ids
@@ -4087,13 +4091,13 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__message
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4111,7 +4115,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4196,12 +4200,12 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Η Προθεσμία της Δραστηριότητάς Μου"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "My Favorites"
-msgstr ""
+msgstr "Τα Αγαπημένα μου"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -4227,7 +4231,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -4247,7 +4251,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_new
 msgid "New"
-msgstr ""
+msgstr "Νέα"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4275,22 +4279,22 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Επόμενο Γεγονός Δραστηριότητας στο Ημερολόγιο"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Επόμενη Προθεσμία Δραστηριότητας"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Σύνοψη Επόμενης Δραστηριότητας"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Επόμενος Τύπος Δραστηριότητας"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -4395,25 +4399,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -4491,7 +4495,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 msgid "Open"
-msgstr ""
+msgstr "Ανοιχτό"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4576,7 +4580,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Μητρική διαδρομή"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_form
@@ -4587,7 +4591,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__partner_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 msgid "Partner"
-msgstr ""
+msgstr "Συναλλασόμενος"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_pay_the_electricity_bill
@@ -4630,7 +4634,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Phone:"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_shared_todos
@@ -4690,7 +4694,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Preview"
-msgstr ""
+msgstr "Προεπισκόπηση"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -4737,7 +4741,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Primary"
-msgstr ""
+msgstr "Πρωτεύων"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4746,7 +4750,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__private
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Private"
-msgstr ""
+msgstr "Προσωπικό"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_product_management
@@ -4756,12 +4760,12 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_productivity
 msgid "Productivity"
-msgstr ""
+msgstr "Παραγωγικότητα"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_properties
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4797,7 +4801,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 msgid "Public Holidays"
-msgstr ""
+msgstr "Επίσημες Αργίες"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -4818,7 +4822,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__rating_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4835,7 +4839,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__partner_ids
 msgid "Recipients"
-msgstr ""
+msgstr "Αποδέκτες"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -4863,7 +4867,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4961,7 +4965,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Υπεύθυνος Χρήστης"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4969,7 +4973,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Restore"
-msgstr ""
+msgstr "Επαναφορά"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5019,17 +5023,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_sms_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_sales
 msgid "Sales"
-msgstr ""
+msgstr "Πωλήσεις"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Sales Details"
-msgstr ""
+msgstr "Λεπτομέρειες Πώλησης"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sales_playbook
@@ -5042,7 +5046,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5116,7 +5120,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__category
 msgid "Section"
-msgstr ""
+msgstr "Τομέας"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -5139,7 +5143,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5166,13 +5170,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__sequence
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Share"
-msgstr ""
+msgstr "Κοινοποίηση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5187,7 +5191,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__shared
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Shared"
-msgstr ""
+msgstr "Κοινόχρηστο"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5259,7 +5263,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Size:"
-msgstr ""
+msgstr "Μέγεθος:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -5377,14 +5381,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Stage"
-msgstr ""
+msgstr "Στάδιο"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_stage_action
 #: model:ir.ui.menu,name:knowledge.knowledge_article_stage_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_tree
 msgid "Stages"
-msgstr ""
+msgstr "Στάδια"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_stage__parent_id
@@ -5400,7 +5404,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5435,12 +5439,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Κατάσταση βασισμένη σε δραστηριότητες\n"
+"Καθυστερημένη: Η ημερομηνία λήξης έχει ήδη περάσει\n"
+"Σήμερα: Η ημερομηνία δραστηριότητας είναι σήμερα\n"
+"Προγραμματισμένες: Μελλοντικές δραστηριότητες."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Stop Date"
-msgstr ""
+msgstr "Ημερομηνία διακοπής"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5458,7 +5466,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_search
 msgid "Template"
-msgstr ""
+msgstr "Πρότυπο"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_body
@@ -5494,7 +5502,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_preview
 msgid "Template Preview"
-msgstr ""
+msgstr "Προεπισκόπηση προτύπου"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_sequence
@@ -5521,7 +5529,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_template_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Templates"
-msgstr ""
+msgstr "Πρότυπα"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_template_name_required
@@ -5757,7 +5765,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__name
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -5793,12 +5801,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Τύπος της καταγεγραμμένης δραστηριότητας εξαίρεσης."
 
 #. module: knowledge
 #. odoo-javascript
@@ -5817,13 +5825,13 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Unarchive"
-msgstr ""
+msgstr "Μη αρχειοθετημένο"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Unlock"
-msgstr ""
+msgstr "Ξεκλείδωμα"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5847,12 +5855,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Update"
-msgstr ""
+msgstr "Ενημέρωση"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Usage"
-msgstr ""
+msgstr "Χρήση"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5898,7 +5906,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__user_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_favorite_sequence
@@ -5946,13 +5954,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: knowledge
 #. odoo-python
@@ -6079,7 +6087,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__workspace
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Workspace"
-msgstr ""
+msgstr "Χώρος Εργασίας"
 
 #. module: knowledge
 #. odoo-python
@@ -6390,7 +6398,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "or"
-msgstr ""
+msgstr "ή"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__user_permission__read

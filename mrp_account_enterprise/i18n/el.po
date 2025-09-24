@@ -8,20 +8,22 @@
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
 # Stefanos Nikou <stefanos.nikou@gmail.com>, 2019
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2016-08-05 13:29+0000\n"
-"Last-Translator: George Tarasidis <george_tarasidis@yahoo.com>, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"mrp_account_enterprise/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_account_enterprise
 #: model:ir.actions.report,print_report_name:mrp_account_enterprise.action_cost_struct_mrp_production
@@ -83,7 +85,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
 msgid "<span>Quantity</span>"
-msgstr "Ποσότητα"
+msgstr "<span>Ποσότητα</span>"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
@@ -163,7 +165,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__unit_component_cost
@@ -193,7 +195,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
 msgid "Cost Breakdown of Products"
-msgstr ""
+msgstr "Ανάλυση Κόστους Προϊόντων"
 
 #. module: mrp_account_enterprise
 #: model:ir.actions.report,name:mrp_account_enterprise.action_cost_struct_product_template
@@ -243,7 +245,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Νόμισμα"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__display_name
@@ -259,12 +261,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__date_finished
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_search_view
 msgid "End Date"
-msgstr ""
+msgstr "Ημερ. Λήξης"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_search_view
 msgid "Group by"
-msgstr ""
+msgstr "Ομαδοποίηση κατά"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__id
@@ -280,7 +282,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__production_id
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_search_view
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Εντολή Παραγωγής"
 
 #. module: mrp_account_enterprise
 #: model:ir.model,name:mrp_account_enterprise.model_mrp_report
@@ -290,7 +292,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model_terms:ir.actions.act_window,help:mrp_account_enterprise.mrp_report_dashboard_action
 msgid "No data yet!"
-msgstr ""
+msgstr "Δεν υπάρχουν δεδομένα ακόμη!"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__unit_operation_cost
@@ -322,7 +324,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model:ir.model,name:mrp_account_enterprise.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Μεταβλητή Είδους"
 
 #. module: mrp_account_enterprise
 #: model:ir.actions.act_window,name:mrp_account_enterprise.mrp_report_dashboard_action
@@ -334,7 +336,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__qty_produced
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_pivot_view
 msgid "Quantity Produced"
-msgstr ""
+msgstr "Παραγόμενη Ποσότητα"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
@@ -349,7 +351,7 @@ msgstr ""
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__total_cost
 msgid "Total Cost"
-msgstr ""
+msgstr "Σύνολο Κόστους"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure

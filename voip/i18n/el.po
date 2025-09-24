@@ -6,20 +6,21 @@
 # Kostas Goutoudis <goutoudis@gmail.com>, 2019
 # George Tarasidis <george_tarasidis@yahoo.com>, 2019
 # Martin Trigaux, 2019
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2016-08-05 13:32+0000\n"
-"Last-Translator: Martin Trigaux, 2019\n"
-"Language-Team: Greek (https://www.transifex.com/odoo/teams/41243/el/)\n"
+"PO-Revision-Date: 2025-09-24 12:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/voip/el/>\n"
 "Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: voip
 #. odoo-javascript
@@ -396,7 +397,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_provider__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_mail_activity__country_code_from_phone
@@ -420,7 +421,7 @@ msgstr ""
 #: code:addons/voip/static/src/mobile/call_method_selection_dialog.xml:0
 #: code:addons/voip/static/src/mobile/devise_selection_dialog.xml:0
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: voip
 #. odoo-javascript
@@ -465,7 +466,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "Contacts"
-msgstr ""
+msgstr "Επαφές"
 
 #. module: voip
 #. odoo-javascript
@@ -515,7 +516,7 @@ msgstr "Δημιουργήθηκε στις"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Credentials"
-msgstr ""
+msgstr "Διαπιστευτήρια"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -560,7 +561,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__direction
 msgid "Direction"
-msgstr ""
+msgstr "Κατεύθυνση"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_provider__recording_policy__disabled
@@ -642,7 +643,7 @@ msgstr "Διάρκεια"
 #. odoo-javascript
 #: code:addons/voip/static/src/softphone/agenda.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Επεξεργασία"
 
 #. module: voip
 #. odoo-javascript
@@ -653,7 +654,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__end_date
 msgid "End Date"
-msgstr ""
+msgstr "Ημερ. Λήξης"
 
 #. module: voip
 #. odoo-javascript
@@ -999,7 +1000,7 @@ msgstr ""
 #: code:addons/voip/static/src/softphone/keypad.js:0
 #: model:ir.model.fields,field_description:voip.field_voip_provider__name
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: voip
 #: model_terms:ir.actions.act_window,help:voip.voip_call_view
@@ -1161,7 +1162,7 @@ msgstr "Τηλέφωνο"
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Αριθμός τηλεφώνου"
 
 #. module: voip
 #: model:ir.model,name:voip.model_voip_call
@@ -1197,7 +1198,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Preferences"
-msgstr ""
+msgstr "Προτιμήσεις"
 
 #. module: voip
 #. odoo-javascript
@@ -1294,7 +1295,7 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__rejected
 msgid "Rejected"
-msgstr ""
+msgstr "Απορίφθηκε"
 
 #. module: voip
 #. odoo-javascript
@@ -1443,12 +1444,12 @@ msgstr ""
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Ημερομηνία Έναρξης"
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__state
 msgid "State"
-msgstr ""
+msgstr "Νομός/Πολιτεία"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_tree_view
@@ -1658,12 +1659,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_form
 #: model_terms:ir.ui.view,arch_db:voip.voip_call_view_search
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #. module: voip
 #: model:ir.model,name:voip.model_res_users_settings
 msgid "User Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Χρήστη"
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form

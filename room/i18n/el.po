@@ -1,19 +1,22 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* room
+# * room
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:41+0000\n"
-"PO-Revision-Date: 2025-09-11 14:41+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/room/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: room
 #. odoo-javascript
@@ -71,24 +74,24 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "Διακριτικό Πρόσβασης"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #. module: room
 #. odoo-javascript
@@ -111,7 +114,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: room
 #. odoo-javascript
@@ -129,7 +132,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_attachment_count
 #: model:ir.model.fields,field_description:room.field_room_room__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: room
 #. odoo-javascript
@@ -137,7 +140,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Available"
-msgstr ""
+msgstr "Διαθέσιμη"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__bookable_background_color
@@ -147,7 +150,7 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_background_image
 msgid "Background Image"
-msgstr ""
+msgstr "Εικόνα φόντου"
 
 #. module: room
 #. odoo-javascript
@@ -163,7 +166,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "Booking"
-msgstr ""
+msgstr "Κράτηση"
 
 #. module: room
 #. odoo-javascript
@@ -193,7 +196,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Busy"
-msgstr ""
+msgstr "Απασχολημένος/η"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
@@ -205,7 +208,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__company_id
 #: model:ir.model.fields,field_description:room.field_room_room__company_id
 msgid "Company"
-msgstr ""
+msgstr "Εταιρία"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
@@ -223,32 +226,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__create_uid
 #: model:ir.model.fields,field_description:room.field_room_room__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_date
 #: model:ir.model.fields,field_description:room.field_room_office__create_date
 #: model:ir.model.fields,field_description:room.field_room_room__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
 msgid "Date"
-msgstr ""
+msgstr "Ημερομηνία"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Διαγραφή"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__display_name
@@ -256,7 +259,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__display_name
 #: model:ir.model.fields,field_description:room.field_room_room__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: room
 #: model:res.groups,comment:room.group_room_manager
@@ -279,24 +282,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_follower_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_partner_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: room
 #: model:ir.model,name:room.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP Routing"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__has_message
 #: model:ir.model.fields,field_description:room.field_room_room__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: room
 #: model:room.office,name:room.room_office_head_office
@@ -309,25 +312,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__id
 #: model:ir.model.fields,field_description:room.field_room_room__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
 #: model:ir.model.fields,help:room.field_room_room__message_has_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "Install Application"
-msgstr ""
+msgstr "Εγκατάσταση Εφαρμογής"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
@@ -338,7 +341,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_is_follower
 #: model:ir.model.fields,field_description:room.field_room_room__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__is_available
@@ -350,14 +353,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_office__write_uid
 #: model:ir.model.fields,field_description:room.field_room_room__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__write_date
 #: model:ir.model.fields,field_description:room.field_room_office__write_date
 #: model:ir.model.fields,field_description:room.field_room_room__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: room
 #: model:room.office,name:room.room_office_main_office
@@ -389,23 +392,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_ids
 #: model:ir.model.fields,field_description:room.field_room_room__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_search
 msgid "My Meetings"
-msgstr ""
+msgstr "Οι Συναντήσεις Μου"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_list
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__next_booking_start
@@ -439,25 +442,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,field_description:room.field_room_room__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction_counter
 #: model:ir.model.fields,help:room.field_room_room__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error_counter
 #: model:ir.model.fields,help:room.field_room_room__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__office_id
@@ -474,7 +477,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Open"
-msgstr ""
+msgstr "Ανοιχτό"
 
 #. module: room
 #. odoo-javascript
@@ -485,13 +488,13 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__organizer_id
 msgid "Organizer"
-msgstr ""
+msgstr "Ατζέντα"
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Previous Week"
-msgstr ""
+msgstr "Προηγ. Εβδομάδα"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_2
@@ -507,7 +510,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_room__room_properties
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Properties"
-msgstr ""
+msgstr "Ιδιότητες"
 
 #. module: room
 #. odoo-javascript
@@ -519,7 +522,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:room.field_room_booking__rating_ids
 #: model:ir.model.fields,field_description:room.field_room_room__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: room
 #: model:ir.actions.act_window,name:room.room_room_action
@@ -574,7 +577,7 @@ msgstr ""
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__short_code
 msgid "Short Code"
-msgstr ""
+msgstr "Σύντομος Κωδικός"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__start_datetime
@@ -629,7 +632,7 @@ msgstr ""
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Until"
-msgstr ""
+msgstr "Μέχρι"
 
 #. module: room
 #. odoo-javascript

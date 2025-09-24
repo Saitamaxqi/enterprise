@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* whatsapp
+# * whatsapp
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:49+0000\n"
-"PO-Revision-Date: 2025-09-11 14:49+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 12:10+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/whatsapp/"
+"el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: whatsapp
 #. odoo-python
@@ -25,7 +29,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
 msgid "%(original_name)s (copy)"
-msgstr ""
+msgstr "%(original_name)s (αντίγραφο)"
 
 #. module: whatsapp
 #. odoo-python
@@ -126,7 +130,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__token
 msgid "Access Token"
-msgstr ""
+msgstr "Διακριτικό Πρόσβασης"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
@@ -137,7 +141,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__wa_account_id
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Account"
-msgstr ""
+msgstr "Λογαριασμός"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__account
@@ -153,18 +157,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_needaction
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Απαιτείται ενέργεια"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__active
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__active
 msgid "Active"
-msgstr ""
+msgstr "Σε Ισχύ"
 
 #. module: whatsapp
 #: model:res.groups,name:whatsapp.group_whatsapp_admin
 msgid "Administrator"
-msgstr ""
+msgstr "Διαχειριστής"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__af
@@ -216,13 +220,13 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__model_id
 msgid "Applies to"
-msgstr ""
+msgstr "Εφαρμογή σε"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__approved
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Approved"
-msgstr ""
+msgstr "Εγκρίθηκε"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar
@@ -260,18 +264,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Archived"
-msgstr ""
+msgstr "Αρχειοθετημένα"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__attachment_id
 msgid "Attachment"
-msgstr ""
+msgstr "Συνημμένο"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_attachment_count
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Αριθμός Συνημμένων"
 
 #. module: whatsapp
 #. odoo-python
@@ -300,7 +304,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_base
 msgid "Base"
-msgstr ""
+msgstr "Βάση"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__be_by
@@ -327,7 +331,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__line_type__body
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Body"
-msgstr ""
+msgstr "Κυρίως θέμα"
 
 #. module: whatsapp
 #. odoo-python
@@ -338,7 +342,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__bounced
 msgid "Bounced"
-msgstr ""
+msgstr "Προωθήθηκε"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__bg
@@ -349,7 +353,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__button_id
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__line_type__button
 msgid "Button"
-msgstr ""
+msgstr "Πλήκτρο"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__name
@@ -402,7 +406,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_tree
@@ -412,7 +416,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__cancel
 msgid "Cancelled"
-msgstr ""
+msgstr "Ακυρώθηκε"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ca
@@ -422,7 +426,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__template_type
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_discuss_channel_member
@@ -432,7 +436,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_discuss_channel__channel_type
 msgid "Channel Type"
-msgstr ""
+msgstr "Τύπος Καναλιού"
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_discuss_channel__channel_type
@@ -465,12 +469,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_composer_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_preview_view_form
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #. module: whatsapp
 #: model:ir.ui.menu,name:whatsapp.whatsapp_configuration_menu
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.res_config_settings_view_form
@@ -492,7 +496,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Επαφή"
 
 #. module: whatsapp
 #. odoo-javascript
@@ -503,7 +507,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "Create Date"
-msgstr ""
+msgstr "Ημερομηνία Δημιουργίας"
 
 #. module: whatsapp
 #: model:ir.model,website_form_label:whatsapp.model_res_partner
@@ -529,7 +533,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__create_uid
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Δημιουργήθηκε από"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__create_date
@@ -540,7 +544,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__create_date
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Δημιουργήθηκε στις"
 
 #. module: whatsapp
 #. odoo-python
@@ -586,7 +590,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__delivered
 msgid "Delivered"
-msgstr ""
+msgstr "Παραδόθηκαν"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
@@ -606,7 +610,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_discuss_channel
 msgid "Discussion Channel"
-msgstr ""
+msgstr "Κανάλι συζήτησης"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_discuss_channel__display_name
@@ -624,12 +628,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__display_name
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Εμφάνιση Ονόματος"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__document
 msgid "Document"
-msgstr ""
+msgstr "Έγγραφο"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__res_ids
@@ -639,7 +643,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__res_model
 msgid "Document Model Name"
-msgstr ""
+msgstr "Όνομα Μοντέλου Εγγράφου"
 
 #. module: whatsapp
 #. odoo-python
@@ -657,7 +661,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__draft
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Draft"
-msgstr ""
+msgstr "Προσχέδιο"
 
 #. module: whatsapp
 #: model:ir.model.constraint,message:whatsapp.constraint_whatsapp_template_unique_name_account_template
@@ -695,7 +699,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_mail_thread
 msgid "Email Thread"
-msgstr ""
+msgstr "Νήμα Email"
 
 #. module: whatsapp
 #. odoo-javascript
@@ -794,7 +798,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__error_msg
 msgid "Error Message"
-msgstr ""
+msgstr "Μήνυμα σφάλματος"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__et
@@ -804,7 +808,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__error
 msgid "Failed"
-msgstr ""
+msgstr "Αποτυχία"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
@@ -814,7 +818,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_message__failure_reason
 msgid "Failure Reason"
-msgstr ""
+msgstr "Αιτιολογία Αποτυχίας"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_message__failure_type
@@ -824,7 +828,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__field_name
 msgid "Field"
-msgstr ""
+msgstr "Πεδίο"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__field_type__field
@@ -858,13 +862,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_follower_ids
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Ακόλουθοι"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_partner_ids
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Ακόλουθοι (Συνεργάτες)"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__footer_text
@@ -1001,7 +1005,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__quality__green
 msgid "Green"
-msgstr ""
+msgstr "Πράσινο"
 
 #. module: whatsapp
 #: model:ir.model.constraint,message:whatsapp.constraint_discuss_channel_group_public_id_check
@@ -1029,7 +1033,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__has_message
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Έχει Μήνυμα"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ha
@@ -1039,7 +1043,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__line_type__header
 msgid "Header"
-msgstr ""
+msgstr "Επικεφαλίδα"
 
 #. module: whatsapp
 #. odoo-python
@@ -1105,7 +1109,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__id
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__id
 msgid "ID"
-msgstr ""
+msgstr "Κωδικός"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__whatsapp_recoverable
@@ -1116,7 +1120,7 @@ msgstr ""
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__message_needaction
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Εάν επιλεγεί τα νέα μηνύματα χρειάζονται την προσοχή σας."
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__message_has_error
@@ -1124,7 +1128,7 @@ msgstr ""
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__message_has_error
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Αν επιλεγεί, κάποια μηνύματα έχουν σφάλμα παράδοσης."
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_res_users_settings__is_discuss_sidebar_category_whatsapp_open
@@ -1139,7 +1143,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__image
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__in_appeal
@@ -1154,7 +1158,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__message_type__inbound
 msgid "Inbound"
-msgstr ""
+msgstr "Εισερχόμενο"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__id
@@ -1186,7 +1190,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_is_follower
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Είναι Ακόλουθος"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__is_header_free_text
@@ -1241,7 +1245,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__lang_code
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__lo
@@ -1251,7 +1255,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "Last Month"
-msgstr ""
+msgstr "Τελευταίος Μήνας"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__write_uid
@@ -1262,7 +1266,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__write_uid
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση από"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__write_date
@@ -1273,7 +1277,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__write_date
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Τελευταία Ενημέρωση στις"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_discuss_channel__last_wa_mail_message_id
@@ -1283,12 +1287,12 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "Last Week"
-msgstr ""
+msgstr "Προηγ. Εβδομάδα"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "Last Year"
-msgstr ""
+msgstr "Τελευταίο Έτος"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__lv
@@ -1311,7 +1315,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__location
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_variable__line_type__location
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 #. module: whatsapp
 #. odoo-python
@@ -1369,7 +1373,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__template_type__marketing
 msgid "Marketing"
-msgstr ""
+msgstr "Marketing"
 
 #. module: whatsapp
 #. odoo-python
@@ -1392,12 +1396,12 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.discuss_channel_view_list_whatsapp
 msgid "Members"
-msgstr ""
+msgstr "Μέλη"
 
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_mail_message
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__templates_count
@@ -1408,7 +1412,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_has_error
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης μηνύματος"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__preview_whatsapp
@@ -1425,7 +1429,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_message__message_type
 msgid "Message Type"
-msgstr ""
+msgstr "Τύπος μηνύματος"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_ids
@@ -1433,7 +1437,7 @@ msgstr ""
 #: model:ir.ui.menu,name:whatsapp.whatsapp_message_menu
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
 msgid "Messages"
-msgstr ""
+msgstr "Μηνύματα"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__messages_count
@@ -1453,12 +1457,12 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Model"
-msgstr ""
+msgstr "Μοντέλο"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__model
 msgid "Model Name"
-msgstr ""
+msgstr "Όνομα Υποδείγματος"
 
 #. module: whatsapp
 #: model_terms:ir.actions.act_window,help:whatsapp.whatsapp_message_action
@@ -1476,7 +1480,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
 msgid "Name"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__network
@@ -1514,7 +1518,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__none
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__quality__none
 msgid "None"
-msgstr ""
+msgstr "Κανένα"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__nb
@@ -1524,7 +1528,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
 msgid "Notifications"
-msgstr ""
+msgstr "Ειδοποιήσεις"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__notify_user_ids
@@ -1535,13 +1539,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_needaction_counter
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Πλήθος ενεργειών"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_has_error_counter
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Αριθμός σφαλμάτων"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__number_of_free_text
@@ -1557,13 +1561,13 @@ msgstr ""
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__message_needaction_counter
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων που απαιτούν ενέργεια"
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__message_has_error_counter
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Αριθμός μηνυμάτων με σφάλμα παράδοσης"
 
 #. module: whatsapp
 #. odoo-python
@@ -1597,7 +1601,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__message_type__outbound
 msgid "Outbound"
-msgstr ""
+msgstr "Εξερχόμενη Κλήση"
 
 #. module: whatsapp
 #. odoo-python
@@ -1613,13 +1617,13 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__paused
 msgid "Paused"
-msgstr ""
+msgstr "Σε παύση"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__pending
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Pending"
-msgstr ""
+msgstr "Εκρεμμής"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__pending_deletion
@@ -1634,7 +1638,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__phone
 msgid "Phone"
-msgstr ""
+msgstr "Τηλέφωνο"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__phone_field
@@ -1645,7 +1649,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_discuss_channel__whatsapp_number
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__phone_number
 msgid "Phone Number"
-msgstr ""
+msgstr "Αριθμός τηλεφώνου"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__phone_uid
@@ -1696,7 +1700,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
 msgid "Preview"
-msgstr ""
+msgstr "Προεπισκόπηση"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_preview_view_form
@@ -1716,7 +1720,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__quality
 msgid "Quality"
-msgstr ""
+msgstr "Ποιότητα"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_button__button_type__quick_reply
@@ -1727,7 +1731,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__rating_ids
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Αξιολογήσεις"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__read
@@ -1748,7 +1752,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__received
 msgid "Received"
-msgstr ""
+msgstr "Παραλήφθηκε"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
@@ -1758,12 +1762,12 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__quality__red
 msgid "Red"
-msgstr ""
+msgstr "Κόκκινο"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__rejected
 msgid "Rejected"
-msgstr ""
+msgstr "Απορίφθηκε"
 
 #. module: whatsapp
 #. odoo-python
@@ -1774,7 +1778,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__model
 msgid "Related Document Model"
-msgstr ""
+msgstr "Μοντέλο Σχετικού Εγγράφου"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_mail_mail__wa_message_ids
@@ -1785,12 +1789,12 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__replied
 msgid "Replied"
-msgstr ""
+msgstr "Απαντημένη"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__report_id
 msgid "Report"
-msgstr ""
+msgstr "Αναφορά"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
@@ -1805,7 +1809,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_tree
 msgid "Retry"
-msgstr ""
+msgstr "Επανάληψη"
 
 #. module: whatsapp
 #. odoo-javascript
@@ -1827,7 +1831,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__message_has_sms_error
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "Σφάλμα παράδοσης SMS"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__demo_value
@@ -1854,7 +1858,7 @@ msgstr ""
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_composer_view_form
 msgid "Send Message"
-msgstr ""
+msgstr "Αποστολή μηνύματος"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__ir_actions_server__state__whatsapp
@@ -1888,7 +1892,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__sent
 msgid "Sent"
-msgstr ""
+msgstr "Εστάλη"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
@@ -1910,7 +1914,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__sequence
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Ακολουθία"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__sr
@@ -1920,7 +1924,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Server Action"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__si_lk
@@ -2014,7 +2018,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_message__state
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "State"
-msgstr ""
+msgstr "Νομός/Πολιτεία"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_button__url_type__static
@@ -2025,7 +2029,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__status
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
@@ -2066,7 +2070,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_composer__wa_template_id
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
 msgid "Template"
-msgstr ""
+msgstr "Πρότυπο"
 
 #. module: whatsapp
 #. odoo-python
@@ -2095,12 +2099,12 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__template_name
 msgid "Template Name"
-msgstr ""
+msgstr "Όνομα Προτύπου"
 
 #. module: whatsapp
 #: model:ir.actions.act_window,name:whatsapp.whatsapp_preview_action_from_template
 msgid "Template Preview"
-msgstr ""
+msgstr "Προεπισκόπηση προτύπου"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__template
@@ -2142,7 +2146,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
 msgid "Templates"
-msgstr ""
+msgstr "Πρότυπα"
 
 #. module: whatsapp
 #. odoo-python
@@ -2169,7 +2173,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__text
 msgid "Text"
-msgstr ""
+msgstr "Κείμενο"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__th
@@ -2308,7 +2312,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__button_type
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__field_type
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_ir_actions_server__state
@@ -2333,7 +2337,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__unknown
 msgid "Unknown Error"
-msgstr ""
+msgstr "Άγνωστο Σφάλμα"
 
 #. module: whatsapp
 #. odoo-python
@@ -2377,7 +2381,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_res_users_settings
 msgid "User Settings"
-msgstr ""
+msgstr "Ρυθμίσεις Χρήστη"
 
 #. module: whatsapp
 #. odoo-python
@@ -2401,7 +2405,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__allowed_user_ids
 msgid "Users"
-msgstr ""
+msgstr "Χρήστες"
 
 #. module: whatsapp
 #. odoo-python
@@ -2434,7 +2438,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__variable_ids
 msgid "Variable"
-msgstr ""
+msgstr "Μεταβλητή"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__line_type
@@ -2457,7 +2461,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__video
 msgid "Video"
-msgstr ""
+msgstr "Βίντεο"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__vi
@@ -2502,18 +2506,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__website_message_ids
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Μηνύματα Ιστότοπου"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_button__website_url
 msgid "Website URL"
-msgstr ""
+msgstr "Διεύθυνση URL Ιστότοπου"
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_account__website_message_ids
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Ιστορικό επικοινωνίας ιστότοπου"
 
 #. module: whatsapp
 #. odoo-javascript
@@ -2624,7 +2628,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_tree
 msgid "WhatsApp Template"
-msgstr ""
+msgstr "Πρότυπο WhatsApp"
 
 #. module: whatsapp
 #: model:ir.model,name:whatsapp.model_whatsapp_template_button
@@ -2676,7 +2680,7 @@ msgstr ""
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__quality__yellow
 msgid "Yellow"
-msgstr ""
+msgstr "Κίτρινο"
 
 #. module: whatsapp
 #. odoo-python

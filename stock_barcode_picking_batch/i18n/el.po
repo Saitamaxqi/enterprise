@@ -1,34 +1,40 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* stock_barcode_picking_batch
+# * stock_barcode_picking_batch
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-11 14:45+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
+"stock_barcode_picking_batch/el/>\n"
+"Language: el\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_move_line_product_selector_inherit
 msgid "<i class=\"fa fa-lg fa-truck\" title=\"Transfer\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-lg fa-truck\" title=\"Transfer\"/>"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_picking_view_kanban
 msgid "<span class=\"fa fa-external-link-square ms-1\" title=\"Open Batch Picking\"/>"
 msgstr ""
+"<span class=\"fa fa-external-link-square ms-1\" title=\"Open Batch Picking\""
+"/>"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Allocation"
-msgstr ""
+msgstr "Επιμερισμός"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_picking_batch_form
@@ -38,66 +44,66 @@ msgstr ""
 #. module: stock_barcode_picking_batch
 #: model:ir.actions.client,name:stock_barcode_picking_batch.stock_barcode_picking_batch_client_action
 msgid "Barcode Batch Picking Client Action"
-msgstr ""
+msgstr "Ενέργεια Σάρωσης Παρτίδας Μεταφοράς"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model,name:stock_barcode_picking_batch.model_stock_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__batch_id
 msgid "Batch Transfer"
-msgstr ""
+msgstr "Ομαδική Μεταφορά"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__batch_name
 msgid "Batch Transfer Name"
-msgstr ""
+msgstr "Όνομα Παρτίδας Μεταφοράς"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.actions.act_window,name:stock_barcode_picking_batch.stock_barcode_batch_picking_action_kanban
 msgid "Batch Transfers"
-msgstr ""
+msgstr "Μεταφορές Παρτίδων"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/kanban/stock_barcode_kanban_renderer.xml:0
 msgid "Batches"
-msgstr ""
+msgstr "Παρτίδες"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "Cancel Batch Transfer"
-msgstr ""
+msgstr "Ακύρωση Μεταφοράς Παρτίδας"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model,name:stock_barcode_picking_batch.model_stock_barcode_cancel_operation
 msgid "Cancel Operation"
-msgstr ""
+msgstr "Ακυρώστε την λειτουργία"
 
 #. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking_batch.py:0
 msgid "Cancel this batch transfer?"
-msgstr ""
+msgstr "Ακύρωση αυτής της μεταφοράς παρτίδας;"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Confirm"
-msgstr ""
+msgstr "Επιβεβαίωση"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Discard"
-msgstr ""
+msgstr "Απόρριψη"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking__display_batch_button
 msgid "Display Batch Button"
-msgstr ""
+msgstr "Κουμπί Εμφάνισης Παρτίδας"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__display_name
@@ -111,7 +117,7 @@ msgstr ""
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_type__group_lines_by_product
 msgid "Group batch lines"
-msgstr ""
+msgstr "Ομαδοποίηση γραμμών παρτίδας"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_barcode_cancel_operation__id
@@ -125,7 +131,7 @@ msgstr ""
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_kanban
 msgid "Lines"
-msgstr ""
+msgstr "Γραμμές"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,help:stock_barcode_picking_batch.field_stock_picking_type__group_lines_by_product
@@ -133,57 +139,59 @@ msgid ""
 "Lines of same product at same location appear grouped. Not to use for "
 "cluster picking"
 msgstr ""
+"Οι γραμμές του ίδιου προϊόντος στην ίδια τοποθεσία εμφανίζονται "
+"ομαδοποιημένες. Δεν προορίζεται για χρήση σε συλλογή κατά ομάδες"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.actions.act_window,help:stock_barcode_picking_batch.stock_barcode_batch_picking_action_kanban
 msgid "No batch transfer found"
-msgstr ""
+msgstr "Δεν βρέθηκε μεταφορά παρτίδας"
 
 #. module: stock_barcode_picking_batch
 #. odoo-python
 #: code:addons/stock_barcode_picking_batch/models/stock_picking_batch.py:0
 msgid "Open picking batch form"
-msgstr ""
+msgstr "Άνοιγμα φόρμας παρτίδας συλλογής"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model,name:stock_barcode_picking_batch.model_stock_picking_type
 msgid "Picking Type"
-msgstr ""
+msgstr "Τύπος Διαλογής"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "Print Batch Transfer"
-msgstr ""
+msgstr "Εκτύπωση Μεταφοράς Παρτίδας"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "Print Product Labels"
-msgstr ""
+msgstr "Εκτύπωση Ετικετών Προϊόντων"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model,name:stock_barcode_picking_batch.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
-msgstr ""
+msgstr "Κινήσεις Ειδών (Γραμμή Κίνησης Αποθέματος)"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "Scan the package %s"
-msgstr ""
+msgstr "Σαρώστε τον περιέκτη %s"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "The Batch Transfer has been validated"
-msgstr ""
+msgstr "Η Μεταφορά Παρτίδας έχει επικυρωθεί"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/models/barcode_picking_batch_model.js:0
 msgid "The batch picking has been cancelled"
-msgstr ""
+msgstr "Η συλλογή παρτίδας έχει ακυρωθεί"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.actions.act_window,help:stock_barcode_picking_batch.stock_barcode_batch_picking_action_kanban
@@ -193,34 +201,41 @@ msgid ""
 "            It may also be useful to assign jobs (one person = one batch) or\n"
 "            help the timing management of operations (tasks to be done at 1pm)."
 msgstr ""
+"Ο στόχος της παρτίδας μεταφοράς είναι η ομαδοποίηση ενεργειών που μπορούν\n"
+"            (ή πρέπει) να εκτελεστούν μαζί, ώστε να αυξηθεί η αποδοτικότητά "
+"τους.\n"
+"            Μπορεί επίσης να φανεί χρήσιμη για την ανάθεση εργασιών (ένα "
+"άτομο = μία παρτίδα) ή\n"
+"            για τη διαχείριση του χρονικού προγραμματισμού των ενεργειών ("
+"εργασίες που πρέπει να γίνουν στη 1 μ.μ.)."
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,help:stock_barcode_picking_batch.field_stock_move_line__picking_id
 msgid "The stock operation where the packing has been made"
-msgstr ""
+msgstr "Η λειτουργία αποθέματος όπου η συσκευασία έχει πραγματοποιηθεί"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model,name:stock_barcode_picking_batch.model_stock_picking
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_move_line__picking_id
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_move_line_product_selector_inherit
 msgid "Transfer"
-msgstr ""
+msgstr "Μεταφορά"
 
 #. module: stock_barcode_picking_batch
 #. odoo-javascript
 #: code:addons/stock_barcode_picking_batch/static/src/kanban/stock_barcode_kanban_renderer.xml:0
 msgid "Transfers"
-msgstr ""
+msgstr "Μετακινήσεις"
 
 #. module: stock_barcode_picking_batch
 #: model:ir.model.fields,field_description:stock_barcode_picking_batch.field_stock_picking_batch__picking_type_code
 msgid "Type of Operation"
-msgstr ""
+msgstr "Τύπος της Λειτουργίας"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Unbatch Transfer"
-msgstr ""
+msgstr "Αποσύνδεση Παρτίδας Μεταφοράς"
 
 #. module: stock_barcode_picking_batch
 #. odoo-python
@@ -230,3 +245,7 @@ msgid ""
 "can use the info button on the top right corner of your screen to remove the"
 " transfer in question from the batch."
 msgstr ""
+"Δεν μπορείτε να επικυρώσετε μια μεταφορά αν δεν έχουν δεσμευτεί ούτε "
+"ολοκληρωθεί ποσότητες. Μπορείτε να χρησιμοποιήσετε το κουμπί πληροφοριών "
+"επάνω δεξιά στην οθόνη σας για να αφαιρέσετε τη συγκεκριμένη μεταφορά από "
+"την παρτίδα."

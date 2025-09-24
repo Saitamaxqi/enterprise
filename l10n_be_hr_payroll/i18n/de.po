@@ -1,25 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_be_hr_payroll
-# 
+# * l10n_be_hr_payroll
+#
 # Translators:
 # Tiffany Chang, 2025
 # Wil Odoo, 2025
 # Larissa Manderfeld, 2025
-# 
+#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-02-11 09:54+0000\n"
-"PO-Revision-Date: 2025-02-07 17:07+0000\n"
-"Last-Translator: Larissa Manderfeld, 2025\n"
-"Language-Team: German (https://app.transifex.com/odoo/teams/41243/de/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_be_hr_payroll/de/>\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: de\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.dmfa_pdf_report
@@ -2791,12 +2794,12 @@ msgstr "Sachleistungen und Boni"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Benefits in kind submitted to ONSS"
-msgstr "Beim LASS eingereichte Sachleistungen"
+msgstr "Beim LSS eingereichte Sachleistungen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Benefits in kind without ONSS"
-msgstr "Sachleistungen ohne LASS"
+msgstr "Sachleistungen ohne LSS"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_contract__has_bicycle
@@ -3204,7 +3207,7 @@ msgstr "Berechnung des Urlaubsgeldes für Dezember"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_payslip_view_form_inherit_double_pay
 msgid "Compute Double Pay Recovery"
-msgstr "Rückzahlung doppelter Gehaltszahlungen berechnen"
+msgstr "Rückforderung des doppelten Urlaubsgelds berechnen"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_res_config_settings
@@ -3529,7 +3532,7 @@ msgstr "Dmfa"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_company__dmfa_employer_class
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_config_settings__dmfa_employer_class
 msgid "DMFA Employer Class"
-msgstr "DMFA Arbeitgeberklasse"
+msgstr "DmfA-Arbeitgeberklasse"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_dmfa_view_tree
@@ -3549,7 +3552,7 @@ msgstr "DMFA-XML-Bericht"
 #. module: l10n_be_hr_payroll
 #: model:ir.ui.menu,name:l10n_be_hr_payroll.menu_l10n_be_dmfa_location_unit
 msgid "DMFA: Work Locations"
-msgstr "DMFA: Arbeitsorte"
+msgstr "DmfA: Arbeitsorte"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
@@ -4002,7 +4005,7 @@ msgstr "Berechnung Rückforderung doppelter Löhne"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_double_pay_recovery_wizard__double_pay_to_recover
 msgid "Double Pay To Recover"
-msgstr "Zurückzuzahlendes doppeltes Gehalt"
+msgstr "Zurückzufordernde doppelte Urlaubsgeld"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_273S_view_form
@@ -4881,7 +4884,7 @@ msgstr "Bruttogehalt"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "Gross Salary Before ONSS"
-msgstr "Bruttogehalt vor LASS"
+msgstr "Bruttogehalt vor LSS"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_basic_12_92
@@ -4914,7 +4917,7 @@ msgstr "Bruttoreferenzierungsvergütung"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Gross salary before ONSS"
-msgstr "Bruttogehalt vor LASS"
+msgstr "Bruttogehalt vor LSS"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
@@ -6025,7 +6028,7 @@ msgstr "Keine Zertifikatsdefinition in der Gehaltslistenkonfiguration"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_contract__no_onss
 msgid "No ONSS"
-msgstr "Keine LASS"
+msgstr "Keine LSS"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -6034,7 +6037,7 @@ msgid ""
 "No ONSS registration number nor company ID was found for company %s. Please "
 "provide at least one."
 msgstr ""
-"Es wurde keine LASS-Registrierungsnummer oder Unternehmens-ID für das "
+"Es wurde keine LSS-Registrierungsnummer oder Unternehmens-ID für das "
 "Unternehmen %s gefunden. Bitte geben Sie mindestens eine an."
 
 #. module: l10n_be_hr_payroll
@@ -6359,29 +6362,29 @@ msgstr "LSS-Unternehmens-ID:"
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Cotisation"
-msgstr "LASS-Beitrag"
+msgstr "LSS-Beitrag"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "ONSS Cotisation Termination Fees"
-msgstr "LASS-Beitrag für Kündigungsgebühren"
+msgstr "LSS-Beitrag für Kündigungsgebühren"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Cotisation on termination fees"
-msgstr "LASS-Beitrag für Kündigungsgebühren"
+msgstr "LSS-Beitrag für Kündigungsgebühren"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "ONSS Cotisation: Charges Redistribution"
-msgstr "LASS-Beitrag: Gebührenumverteilung"
+msgstr "LSS-Beitrag: Gebührenumverteilung"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Cotisation: Charges redistribution"
-msgstr "LASS-Beitrag: Gebührenumverteilung"
+msgstr "LSS-Beitrag: Gebührenumverteilung"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule.category,name:l10n_be_hr_payroll.hr_salary_rule_category_onss_employer_detail
@@ -6393,7 +6396,7 @@ msgstr "LSS-Details (Arbeitgeber)"
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Double Holiday"
-msgstr "LASS: Urlaubsgeld"
+msgstr "LSS: Urlaubsgeld"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_balance
@@ -6404,7 +6407,7 @@ msgstr "LSS Arbeitgeber"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_company__onss_expeditor_number
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_config_settings__onss_expeditor_number
 msgid "ONSS Expeditor Number"
-msgstr "LASS-Absendernummer"
+msgstr "LSS-Absendernummer"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_res_company__onss_expeditor_number
@@ -6413,7 +6416,7 @@ msgid ""
 "ONSS Expeditor Number provided when registering service on the technical "
 "user"
 msgstr ""
-"LASS-Absendernummer, die bei der Registrierung des Dienstes auf dem "
+"LSS-Absendernummer, die bei der Registrierung des Dienstes auf dem "
 "technischen Benutzer angegeben wird"
 
 #. module: l10n_be_hr_payroll
@@ -6422,18 +6425,18 @@ msgstr ""
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
 msgid "ONSS Number"
-msgstr "LASS-Nummer"
+msgstr "LSS-Nummer"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_balance
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Number:"
-msgstr "LASS-Nummer:"
+msgstr "LSS-Nummer:"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_view_form
 msgid "ONSS Reduction"
-msgstr "LASS-Minderung"
+msgstr "LSS-Minderung"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_company__onss_registration_number
@@ -6457,24 +6460,24 @@ msgstr "LSS: Umstrukturierung der Ermäßigung"
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Student"
-msgstr "LASS: Student"
+msgstr "LSS: Student"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS Thirteen Month"
-msgstr "LASS: dreizehnter Monat"
+msgstr "LSS: dreizehnter Monat"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS cotisation"
-msgstr "LASS-Beitrag"
+msgstr "LSS-Beitrag"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "ONSS termination fees cotisation"
-msgstr "LASS-Beitrag für Kündigungsgebühren"
+msgstr "LSS-Beitrag für Kündigungsgebühren"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_double_pay_recovery_wizard__line_ids
@@ -6563,7 +6566,7 @@ msgstr "Andere abhängige Personen"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "Other Exempted Amount From ONSS"
-msgstr "Andere vom LASS ausgenommene Beträge"
+msgstr "Andere vom LSS ausgenommene Beträge"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -6575,7 +6578,7 @@ msgstr "Andere Arbeitgeberbeiträge"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Other exempted amount from ONSS"
-msgstr "Andere Freibeträge vom LASS"
+msgstr "Andere Freibeträge vom LSS"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_other_annual
@@ -6640,7 +6643,7 @@ msgstr "PFI"
 #: model:ir.ui.menu,name:l10n_be_hr_payroll.menu_hr_allocating_paid_time_off_view
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_payroll_allocating_paid_time_off_view_form
 msgid "Paid Time Off Allocation"
-msgstr "Bezahlte Abwesenheitszuweisung"
+msgstr "Anspruch auf bezahlten Urlaub"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payroll_alloc_employee__paid_time_off
@@ -6897,8 +6900,8 @@ msgid ""
 " by the ONSS and should be encoded in the Payroll setting."
 msgstr ""
 "Bitte geben Sie eine Arbeitgeberklasse für das Unternehmen %s an. Die "
-"Arbeitgeberklasse wird vom LASS vergeben und sollte in den Einstellungen für"
-" die Personalabrechnung kodiert werden."
+"Arbeitgeberklasse wird vom LSS vergeben und sollte in den Einstellungen für "
+"die Personalabrechnung kodiert werden."
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_281_10_form_wizard
@@ -8449,7 +8452,7 @@ msgstr "Gesamt (Vollzeitäquivalent)"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Total Basic before ONSS"
-msgstr "Basisgesamtbetrag vor LASS"
+msgstr "Basisgesamtbetrag vor LSS"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8827,7 +8830,7 @@ msgstr "Gesamtes Unternehmen"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__hr_employee__spouse_fiscal_status__high_pension
 msgid "With High Pensions"
-msgstr "Mit hohen Pensionen"
+msgstr "Mit hohen Renten"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__hr_employee__spouse_fiscal_status__high_income

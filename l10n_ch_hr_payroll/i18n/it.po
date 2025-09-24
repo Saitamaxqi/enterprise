@@ -1,26 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_ch_hr_payroll
+# * l10n_ch_hr_payroll
 #
 # Translators:
 # Tiffany Chang, 2025
 # Wil Odoo, 2025
 # Marianna Ciofani, 2025
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-03-24 12:13+0000\n"
-"PO-Revision-Date: 2025-02-07 17:07+0000\n"
-"Last-Translator: Marianna Ciofani, 2025\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-09-24 11:34+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_ch_hr_payroll/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,help:l10n_ch_hr_payroll.field_l10n_ch_accident_insurance_line__solution_number
@@ -468,7 +471,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.action_l10n_ch_social_insurance
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_social_insurance
 msgid "AVS/AC Insurances"
-msgstr ""
+msgstr "Assicurazioni AVS/AC"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_avs_franchise_non_imp
@@ -500,12 +503,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_view_tree
 msgid "Accident Insurances"
-msgstr ""
+msgstr "Assicurazioni incidenti"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_line_view_form
 msgid "Accident Insurances Solutions"
-msgstr ""
+msgstr "Soluzioni assicurative infortuni"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_action_collab
@@ -523,12 +526,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_additional_accident_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_additional_accident_insurance_view_tree
 msgid "Additional Accident Insurances"
-msgstr ""
+msgstr "Assicurazioni infortuni aggiuntive"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_additional_accident_insurance_line_view_form
 msgid "Additional Accident Insurances Solutions"
-msgstr ""
+msgstr "Soluzioni assicurative infortuni aggiuntive"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:hr.salary.rule,note:l10n_ch_hr_payroll.l10n_ch_employees_compl_ac
@@ -1010,7 +1013,7 @@ msgstr "Dati azienda"
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_compensation_fund_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
 msgid "Company Information"
-msgstr ""
+msgstr "Informazioni azienda"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_social_insurance__laa_insurance_id
@@ -1047,7 +1050,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_compensation_fund
 msgid "Compensation Funds"
-msgstr ""
+msgstr "Fondi di indennizzo"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_employer_lpp_compensation
@@ -1765,7 +1768,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip__l10n_ch_sickness_insurance_line_ids
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_sickness_insurance
 msgid "IJM Insurances"
-msgstr ""
+msgstr "Assicurazioni IJM"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -1987,7 +1990,7 @@ msgstr ""
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_tax_rate_import_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_tax_rate_import_wizard_view_form
 msgid "Import Tax Rates"
-msgstr ""
+msgstr "Aliquote fiscali importazioni"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_perfecting
@@ -2099,7 +2102,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_contract_view_form
 msgid "Insurances"
-msgstr ""
+msgstr "Assicurazioni sociali"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_view_form
@@ -2262,7 +2265,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.action_l10n_ch_accident_insurance
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_accident_insurance
 msgid "LAA Insurances"
-msgstr ""
+msgstr "Assicurazioni LAINF"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -2322,7 +2325,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip__l10n_ch_additional_accident_insurance_line_ids
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_additional_accident_insurance
 msgid "LAAC Insurances"
-msgstr ""
+msgstr "Assicurazione LAAC"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -2429,7 +2432,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_lpp_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_lpp_insurance_view_tree
 msgid "LPP Insurances"
-msgstr ""
+msgstr "Assicurazione cassa pensione (LPP)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_salary_rule__l10n_ch_lpp_retroactive
@@ -3043,12 +3046,12 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_overtime_100
 msgid "Overtime 100%"
-msgstr ""
+msgstr "Straordinari 100%"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_overtime_125
 msgid "Overtime 125%"
-msgstr ""
+msgstr "Straordinari 125%"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_overtime_after_departure
@@ -3466,12 +3469,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_sickness_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_sickness_insurance_view_tree
 msgid "Sickness Insurances"
-msgstr ""
+msgstr "Assicurazione malattia"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_sickness_insurance_line_view_form
 msgid "Sickness Insurances Solutions"
-msgstr ""
+msgstr "Soluzioni assicurazione malattia"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_hr_payroll_employee_lang_wizard__slip_ids
@@ -3488,7 +3491,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_tree
 msgid "Social Insurances"
-msgstr ""
+msgstr "Assicurazioni sociali"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee__l10n_ch_canton__so
@@ -3531,12 +3534,12 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_is_report
 msgid "Source-Tax"
-msgstr ""
+msgstr "Imposta alla fonte"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_employee_is_line
 msgid "Source-Tax Corrections"
-msgstr ""
+msgstr "Correzioni imposta alla fonte"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_special_indemnity
@@ -3595,7 +3598,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_payslip_view_form_inherit
 msgid "Swiss Insurances"
-msgstr ""
+msgstr "Assicurazioni svizzere"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
@@ -4084,7 +4087,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.action_hr_salary_rule_l10n_ch_wage_types
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_wage_types
 msgid "Wage Types"
-msgstr ""
+msgstr "Tipi di retribuzione"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_location_unit__weekly_hours
