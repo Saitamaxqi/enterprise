@@ -187,7 +187,7 @@ class L10nBeHrPayrollExportGroupS(models.Model):
         """
         duration = work_entry_dict.duration
         work_entry = work_entry_dict.work_entries[0]
-        return '009' + work_entry.date_start.strftime('%Y%m%d') + work_entry.work_entry_type_id.group_s_code + ' ' \
+        return '009' + work_entry.date.strftime('%Y%m%d') + work_entry.work_entry_type_id.group_s_code + ' ' \
             + '+' + str(int(duration // 3600)).zfill(2) + str(ceil((duration % 3600) / 60)).zfill(2) + '00000' * 3 \
             + '00000000000' + '00000' + '\n'
 

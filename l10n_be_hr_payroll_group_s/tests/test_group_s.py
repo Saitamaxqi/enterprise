@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from datetime import datetime
 
 from odoo.tests.common import TransactionCase
 from odoo.tests import tagged
@@ -26,6 +27,12 @@ class TestHrContractGroupSCode(TransactionCase):
             'country_code': 'BE',
         })
 
+        cls.work_entry_type = cls.env['hr.work.entry.type'].create({
+            'name': 'Test Work Entry Type',
+            'code': 'WORKTEST',
+            'group_s_code': '321',
+        })
+
         cls.contract = cls.employee.version_id
 
     def test_invalid_group_s_code_length(self):
@@ -38,7 +45,7 @@ class TestHrContractGroupSCode(TransactionCase):
         with self.assertRaises(ValidationError):
             self.env['hr.version'].create({
                 'name': 'Duplicate Group S Code Contract',
-            'date_version': '2020-01-01',
+                'date_version': '2020-01-01',
                 'employee_id': self.employee.id,
                 'company_id': self.company.id,
                 'wage': 3000,
@@ -68,3 +75,36 @@ class TestHrContractGroupSCode(TransactionCase):
         with self.assertRaises(RedirectWarning):
             self.env['l10n.be.hr.payroll.export.group.s'].with_company(
                 self.company.id).create({}).action_export_file()
+
+    def test_full_group_s_export_flow(self):
+        """Test creating a Group S export, populating, and generating the export file without errors"""
+        self.company.group_s_code = '654321'
+
+        work_entry = self.env['hr.work.entry'].create({
+            'name': 'Extra',
+            'employee_id': self.employee.id,
+            'version_id': self.employee.version_id.id,
+            'work_entry_type_id': self.work_entry_type.id,
+            'date': datetime(2024, 10, 1, 0, 0, 0),
+            'duration': 7,
+        })
+        work_entry.action_validate()
+
+        self.employee.update({
+            'contract_date_start': datetime(2024, 10, 1, 0, 0, 0),
+            'group_s_code': '654320',
+            'schedule_pay': 'monthly',
+        })
+
+        export = self.env['l10n.be.hr.payroll.export.group.s'].with_company(self.company.id).create({
+            'company_id': self.company.id,
+            'reference_month': '10',
+            'reference_year': '2024',
+        })
+        export.action_populate()
+
+        self.assertTrue(export.eligible_employee_line_ids)
+        self.assertIn(self.employee, export.eligible_employee_line_ids.employee_id)
+
+        export.action_export_file()
+        self.assertTrue(export.export_file)
