@@ -118,12 +118,17 @@ class StripeIssuingController(Controller):
                 # There will be no capture, we need to create a refused expense to log the refusal reason
                 technical_reason = request_history['reason']
                 if technical_reason == 'webhook_declined':
-                    reason = auth_object['metadata'].get('message', STRIPE_REQUEST_REFUSED_REASONS[request_history['reason']])
+                    refusal_reason = auth_object['metadata'].get('message', STRIPE_REQUEST_REFUSED_REASONS[request_history['reason']])
                 else:
-                    reason = STRIPE_REQUEST_REFUSED_REASONS[request_history['reason']]
-                env['hr.expense']._create_from_stripe_authorization(auth_object, reason)
+                    refusal_reason = STRIPE_REQUEST_REFUSED_REASONS[request_history['reason']]
+                env['hr.expense']._create_from_stripe_authorization(auth_object, refusal_reason)
                 return {'message': 'Refused expense created'}
-            return {'message': 'Event ignored, not a refused expense'}
+
+            elif auth_object['status'] == 'pending':
+                env['hr.expense']._create_from_stripe_authorization(auth_object)
+                return {'message': 'Draft expense created'}
+
+            return {'message': 'Event ignored, not a refused or draft expense'}
         raise ValidationError(env._("Invalid event type '%(invalid_event)s'", invalid_event=event['type']))
 
     @api.model
@@ -195,6 +200,8 @@ class StripeIssuingController(Controller):
 
         if tr_object['type'] == 'capture' and not existing_expenses:
             env['hr.expense']._create_from_stripe_transaction(tr_object, split_id=split_id)
+        elif tr_object['type'] == 'capture' and existing_expenses:
+            existing_expenses._update_from_stripe_transaction(tr_object)
         elif tr_object['type'] == 'refund' and existing_expenses:
             existing_expenses._stripe_cancel_expense_or_reverse_move(tr_object)
         if event['type'] == 'issuing_transaction.created':
