@@ -5295,7 +5295,8 @@ class AccountReport(models.Model):
             dates_domain = self._adjust_domain_for_unjoined_comparison(options, dates_domain)
             domain &= dates_domain
 
-        annotations = self.env['account.report.annotation'].search(domain)
+        order = 'create_date DESC' if options['export_mode'] else ''
+        annotations = self.env['account.report.annotation'].search(domain, order=order)
         for annotation in annotations:
             message = annotation.message_id
             for line_id in line_dict_ids_by_record[message.model, message.res_id]:
@@ -5305,7 +5306,6 @@ class AccountReport(models.Model):
                     'res_id': message.res_id,
                     'date': annotation.date,
                     'body': message.body,
-                    'create_date': annotation.create_date,
                     'line_id': line_id,
                 })
         return annotations_by_line
@@ -5347,8 +5347,8 @@ class AccountReport(models.Model):
     def _get_last_comments_by_line(self, options, lines):
         annotations_by_line = self.get_annotations(options, lines)
         for line, annotations in annotations_by_line.items():
-            last_annotation = max(annotations, key=lambda annotation: annotation['create_date'], default={})
-            annotations_by_line[line] = markupsafe.Markup('<br/>').join(html2plaintext(last_annotation['body']).split("\n"))
+            last_annotation = annotations[0]['body'] if annotations else ''
+            annotations_by_line[line] = markupsafe.Markup('<br/>').join(html2plaintext(last_annotation).split("\n"))
         return annotations_by_line
 
     def get_report_information(self, options):
@@ -6026,25 +6026,24 @@ class AccountReport(models.Model):
         annotations_to_render = []
         record_to_number_map = {}
         for line in lines:
-            if line_annotations := annotations_per_line_id.get(line['id']):
-                line['annotations'] = []
-                for annotation in sorted(line_annotations, key=lambda a: a['create_date']):
-                    report_period_date_from = datetime.datetime.strptime(date_options['date_from'], '%Y-%m-%d').date()
-                    report_period_date_to = datetime.datetime.strptime(date_options['date_to'], '%Y-%m-%d').date()
-                    if not annotation['date'] or report_period_date_from <= annotation['date'] <= report_period_date_to:
-                        if (number := record_to_number_map.get((annotation['model'], annotation['id']))):
-                            line['annotations'].append(str(number))
-                            continue
-                        number = len(record_to_number_map) + 1
-                        record_to_number_map[annotation['model'], annotation['id']] = number
+            line['annotations'] = []
+            for annotation in annotations_per_line_id.get(line['id'], []):
+                report_period_date_from = datetime.datetime.strptime(date_options['date_from'], '%Y-%m-%d').date()
+                report_period_date_to = datetime.datetime.strptime(date_options['date_to'], '%Y-%m-%d').date()
+                if not annotation['date'] or report_period_date_from <= annotation['date'] <= report_period_date_to:
+                    if (number := record_to_number_map.get((annotation['model'], annotation['id']))):
                         line['annotations'].append(str(number))
-                        annotations_to_render.append({
-                            'number': str(number),
-                            # wkhtmltopdf adds a <br> before tags such as p and div. This makes the first line of the body go down one line.
-                            # we are losing some formatting here, but annotations shouldn't have complicated tags in them.
-                            'body': markupsafe.Markup('<br/>').join(html2plaintext(annotation['body']).split("\n")),
-                            'date': format_date(self.env, annotation['date']) if annotation['date'] else None,
-                        })
+                        continue
+                    number = len(record_to_number_map) + 1
+                    record_to_number_map[annotation['model'], annotation['id']] = number
+                    line['annotations'].append(str(number))
+                    annotations_to_render.append({
+                        'number': str(number),
+                        # wkhtmltopdf adds a <br> before tags such as p and div. This makes the first line of the body go down one line.
+                        # we are losing some formatting here, but annotations shouldn't have complicated tags in them.
+                        'body': markupsafe.Markup('<br/>').join(html2plaintext(annotation['body']).split("\n")),
+                        'date': format_date(self.env, annotation['date']) if annotation['date'] else None,
+                    })
         return annotations_to_render
 
     def _filter_out_folded_children(self, lines):

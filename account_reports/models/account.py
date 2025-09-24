@@ -276,9 +276,9 @@ class AccountAccount(models.Model):
             SELECT DISTINCT ON (message.res_id) message.res_id, message.body
             FROM mail_message message
             JOIN account_report_annotation annotation ON annotation.message_id = message.id
-            WHERE message.model = 'account.account' AND message.res_id = ANY(%s)
+            WHERE message.model = 'account.account' AND message.res_id = ANY(%s) AND annotation.date >= %s AND annotation.date <= %s
             ORDER BY message.res_id, message.create_date DESC
-        """, (self.ids,))
+        """, (self.ids, working_file.date_from, working_file.date_to))
         last_message_by_account = {
             row[0]: html2plaintext(row[1])
             for row in self.env.cr.fetchall()
