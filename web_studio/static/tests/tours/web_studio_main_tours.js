@@ -241,9 +241,8 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
         },
         {
             // verify that the field name has changed and change it
-            trigger: '.o_web_studio_sidebar input[name="technical_name"]',
+            trigger: '.o_web_studio_sidebar input[name="technical_name"]:value(my_coucou_field)',
             async run(helper) {
-                assertEqual(this.anchor.value, "my_coucou_field");
                 await helper.edit("coucou");
                 await helper.click(".o_web_studio_sidebar");
             },
