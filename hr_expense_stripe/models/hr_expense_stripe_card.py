@@ -361,6 +361,9 @@ class HrExpenseStripeCard(models.Model):
             # It's possible through the stripe dashboard but shouldn't happen through Odoo.
             elif self.card_type == 'virtual' or self.state != 'pending' or stripe_object['status'] != 'inactive':
                 new_vals['state'] = stripe_object['status']
+                if self.state == 'draft':
+                    # Only possible for virtual cards as physical cards are set to pending when draft
+                    emails_to_send.append('assigned')
         if not self.cancellation_reason:
             new_vals['cancellation_reason'] = stripe_object['cancellation_reason']
         if not self.last_4:
@@ -394,8 +397,8 @@ class HrExpenseStripeCard(models.Model):
         :param str email_type: ordered | shipped, type of the mail to send
         """
         self.ensure_one()
-        if email_type not in {'canceled', 'ordered', 'shipped'}:
-            raise UserError(self.env._("Invalid email type, must be 'canceled', 'ordered' or 'shipped'."))
+        if email_type not in {'canceled', 'ordered', 'assigned', 'shipped'}:
+            raise UserError(self.env._("Invalid email type, must be 'canceled', 'ordered', 'assigned' or 'shipped'."))
         template_ref = f'hr_expense_stripe.email_template_hr_expense_stripe_card_{email_type}'
 
         template_context = {
@@ -406,11 +409,19 @@ class HrExpenseStripeCard(models.Model):
             ),
         }
         delivery_address = self.delivery_address_id
-        if delivery_address and (delivery_address.is_company or delivery_address.parent_id.is_company or delivery_address.company_name):
+        if (
+            email_type in {'canceled', 'shipped'}
+            and delivery_address
+            and (delivery_address.is_company or delivery_address.parent_id.is_company or delivery_address.company_name)
+        ):
             # If we're delivering to a company building
             email_to = self.ordered_by.email_formatted
             email_cc = None
             template_context['recipient_name'] = self.ordered_by.name
+        elif email_type == 'assigned':
+            email_to = self.employee_id.work_email
+            email_cc = None
+            template_context['recipient_name'] = self.employee_id.name
         else:
             email_to = self.employee_id.work_email
             email_cc = self.ordered_by.email_formatted
