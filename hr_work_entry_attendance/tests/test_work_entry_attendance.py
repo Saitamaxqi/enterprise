@@ -217,7 +217,8 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
             'contract_date_end': datetime(2024, 9, 30),
             'wage': 5000.0,
             'work_entry_source': 'attendance',
-            'resource_calendar_id': False
+            'resource_calendar_id': False,
+            'ruleset_id': False,
         })
 
         self.env['resource.calendar.leaves'].sudo().create({
