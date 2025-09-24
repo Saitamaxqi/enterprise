@@ -23,7 +23,7 @@ class AccountMove(models.Model):
             customs_numbers = record._l10n_mx_edi_get_custom_numbers()
             formatted_dates = ",".join(
                 customs_date for customs in customs_numbers
-                if (customs_date := customs_dates[customs])
+                if (customs_date := customs_dates.get(customs))
             )
             if formatted_dates:
                 base_line_cfdi_values['description'] += _("\nCustoms Number Date: %s", formatted_dates)
