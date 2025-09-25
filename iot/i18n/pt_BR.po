@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-23 15:03+0000\n"
+"PO-Revision-Date: 2025-09-25 02:41+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/iot/pt_BR/>\n"
@@ -44,7 +44,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "<span class=\"badge text-bg-secondary\">Disconnected</span>"
-msgstr ""
+msgstr "<span class=\"badge text-bg-secondary\">Desconectado</span>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
@@ -61,6 +61,16 @@ msgid ""
 "                    4. You will be redirected to the IoT Box Homepage<br/>\n"
 "                    5. Paste the token in token field and follow the steps described on the IoT Box Homepage<br/>"
 msgstr ""
+"<strong>B. Conexão WiFi (ou conexão Ethernet não funciona)</strong><br/>\n"
+"                    1. Certifique-se de que nenhum cabo Ethernet esteja "
+"conectado à IoT Box<br/>\n"
+"                    2. Copie o token abaixo<br/>\n"
+"                    3. Conecte-se à rede WiFi da IoT Box (você deve vê-la "
+"nas redes WiFi disponíveis)<br/>\n"
+"                    4. Você será redirecionado para a página inicial da IoT "
+"Box<br/>\n"
+"                    5. Cole o token no campo do token e siga as etapas "
+"descritas na página inicial da IoT Box<br/>"
 
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box

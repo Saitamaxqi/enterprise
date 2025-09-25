@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-23 15:03+0000\n"
+"PO-Revision-Date: 2025-09-25 02:41+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/appointment_google_reserve/pt_BR/>\n"
@@ -36,6 +36,8 @@ msgid ""
 "%(appointment_type_name)s: Please configure your Google Reserve Merchant for"
 " Google Reserve."
 msgstr ""
+"%(appointment_type_name)s: Configure o Google Reserve Merchant do Google "
+"Reserve."
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -49,8 +51,10 @@ msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
+#, fuzzy
 msgid "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 msgstr ""
+"<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form

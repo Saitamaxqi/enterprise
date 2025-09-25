@@ -3,13 +3,14 @@
 # * pos_iot
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:38+0000\n"
-"PO-Revision-Date: 2025-09-17 09:37+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/pos_iot/es_419/>\n"
 "Language: es_419\n"
@@ -378,13 +379,13 @@ msgstr "Imprimir vía proxy"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing failed"
-msgstr ""
+msgstr "Error en la impresión"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing warning"
-msgstr ""
+msgstr "Advertencia de impresión"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
@@ -438,6 +439,13 @@ msgid ""
 "1/ for USB printers, check the cable between the IoT Box and the receipt printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
+"La caja IoT está conectada, pero la impresora de recibos no. Para continuar, "
+"asegúrate de que la impresora esté conectada:\n"
+"\n"
+"1/ Para impresoras USB, revisa el cable entre la caja IoT y la impresora de "
+"recibos.\n"
+"2/ Para impresoras inalámbricas, verifica que la impresora esté conectada a "
+"internet."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico

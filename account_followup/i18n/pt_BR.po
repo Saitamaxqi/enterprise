@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-23 12:11+0000\n"
+"PO-Revision-Date: 2025-09-25 02:41+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_followup/pt_BR/>\n"
@@ -36,7 +36,7 @@ msgstr "%s (cópia)"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "%s Payment Reminder - %s"
-msgstr ""
+msgstr "%s Lembrete de pagamento - %s"
 
 #. module: account_followup
 #: model:ir.actions.report,print_report_name:account_followup.action_report_followup
@@ -54,6 +54,18 @@ msgid ""
 "- Follow-up Address: Preferred address for follow-up reports. Selected by default when you send reminders about overdue invoices.\n"
 "- Other: Other address for the company (e.g. subsidiary, ...)"
 msgstr ""
+"- Contato: use esta opção para organizar os detalhes de contato dos "
+"funcionários de uma determinada empresa (ex.: CEO, CFO, etc.).\n"
+"- Endereço de faturamento: endereço preferencial para todas as faturas. "
+"Selecionado por padrão ao faturar um pedido que pertence a esta empresa.\n"
+"- Endereço de entrega: endereço preferencial para todas as entregas. "
+"Selecionado por padrão ao entregar um pedido que pertence a esta empresa.\n"
+"- Privado: os endereços privados só são visíveis para usuários autorizados e "
+"contêm dados confidenciais (endereços residenciais dos funcionários, etc.).\n"
+"- Endereço de acompanhamento: endereço preferencial para relatórios de "
+"acompanhamento. Selecionado por padrão quando você envia lembretes sobre "
+"faturas vencidas.\n"
+"- Outro: outro endereço da empresa (ex.: subsidiária, etc.)."
 
 #. module: account_followup
 #: model:account_followup.followup.line,name:account_followup.demo_followup_line1

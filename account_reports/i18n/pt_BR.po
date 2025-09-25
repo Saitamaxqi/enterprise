@@ -9,13 +9,14 @@
 # Martin Trigaux, 2023
 # Layna Nascimento, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-16 12:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_reports/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -40,6 +41,10 @@ msgid ""
 "- Has a payment plan been negotiated?\n"
 "- Is a provision recorded if recovery is doubtful?\""
 msgstr ""
+"\"Em cada crédito de alto risco (>60 dias), verifique o seguinte:\n"
+"- Há acompanhamento documentado?\n"
+"- Foi negociado um plano de pagamento?\n"
+"- Há provisão registrada, caso a recuperação seja duvidosa?"
 
 #. module: account_reports
 #. odoo-python
