@@ -20,6 +20,7 @@
         'pos_appointment.html_editor': [
             ('include', 'html_editor.assets_editor'),
             'html_editor/static/src/others/dynamic_placeholder_plugin.js',
+            'html_editor/static/src/main/placeholder_plugin.js',
             'html_editor/static/src/backend/**/*',
             ("remove", "html_editor/static/src/utils/regex.js"),
             'html_editor/static/src/fields/html_field*',
