@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
         """Adapt availability message for rental products."""
         self.ensure_one()
         if not self.is_rental:
-            super()._set_shop_warning_stock(desired_qty, new_qty, save=save)
+            return super()._set_shop_warning_stock(desired_qty, new_qty, save=save)
 
         warning = _(
             "You asked for %(desired_qty)s %(product_name)s but only %(new_qty)s are available from"
