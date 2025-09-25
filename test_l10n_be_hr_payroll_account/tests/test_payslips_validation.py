@@ -6767,3 +6767,16 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(datetime.date(2025, 1, 1), datetime.date(2025, 1, 31))
         payslip_results = {'BASIC': 2000.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2009.0, 'ONSS': -262.58, 'EmpBonus.A': 118.22, 'EmpBonus.B': 144.36, 'EmpBonus.1': 262.58, 'ONSSTOTAL': 0.0, 'ATN.CAR': 159.6, 'GROSSIP': 2168.6, 'IP.PART': -500.0, 'GROSS': 1668.6, 'P.P': -71.18, 'P.P.DED': 71.18, 'PPTOTAL': 0.0, 'ATN.CAR.2': -159.6, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -2.3, 'MEAL_V_EMP': -25.07, 'REP.FEES': 150.0, 'IP': 500.0, 'IP.DED': -37.5, 'NET': 2085.13, 'REMUNERATION': 1500.0, 'ONSSEMPLOYERBASIC': 502.25, 'ONSSEMPLOYERFFE': 0.04, 'ONSSEMPLOYERMFFE': 3.42, 'ONSSEMPLOYERCPAE': 4.62, 'ONSSEMPLOYERRESTREINT': 33.95, 'ONSSEMPLOYERUNEMP': 2.01, 'ONSSEMPLOYER': 546.28, 'CO2FEE': 33.22}
         self._validate_payslip(payslip, payslip_results)
+
+    def test_min_withholding_tax(self):
+        payslip = self._generate_payslip(
+            datetime.date(2025, 1, 1),
+            datetime.date(2025, 1, 31),
+            input_line_ids=[
+                (0, 0, {
+                    'input_type_id': self.env.ref('l10n_be_hr_payroll.cp200_other_input_min_withholding_tax').id, 'amount': 400
+                })
+            ]
+        )
+        payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'EmpBonus.A': 118.22, 'EmpBonus.B': 17.35, 'EmpBonus.1': 135.57, 'ONSSTOTAL': 211.96, 'ATN.CAR': 159.6, 'GROSSIP': 2606.64, 'IP.PART': -662.5, 'GROSS': 1944.14, 'P.P': -159.46, 'P.P.DED': 48.29, 'P.P.ADJ': -288.83, 'PPTOTAL': 400.0, 'ATN.CAR.2': -159.6, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -15.39, 'MEAL_V_EMP': -25.07, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2097.9, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 664.75, 'ONSSEMPLOYERFFE': 0.05, 'ONSSEMPLOYERMFFE': 4.52, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 723.03, 'CO2FEE': 33.22}
+        self._validate_payslip(payslip, payslip_results)

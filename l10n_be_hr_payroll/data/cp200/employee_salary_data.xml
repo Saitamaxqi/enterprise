@@ -440,7 +440,7 @@ result = categories['BASIC'] + categories['ALW']
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 min_withholding_tax = inputs['WT_MIN'].amount
-total_withholding_tax = -(categories['PP'] + result_rules['FISC_VOL']['total'] - result_rules['P.P.DED']['total'])
+total_withholding_tax = abs(categories['PP']) + abs(result_rules['FISC_VOL']['total']) - abs(result_rules['P.P.DED']['total'])
 result = -max(0, min_withholding_tax - total_withholding_tax)
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
