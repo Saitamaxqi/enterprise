@@ -624,7 +624,7 @@ class AccountMoveLine(models.Model):
             display_name_html = markupsafe.Markup("""
                     <a name='action_redirect_to_move' type='object' class="btn btn-link p-0 align-baseline fst-italic">%(display_name)s</a>
                 """) % {
-                'display_name': reconciled_lines.move_id.display_name,
+                'display_name': reconciled_lines.move_id._get_move_display_name(show_ref=False),
             }
 
             extra_text = markupsafe.Markup("<br/>").join(lines) % {
