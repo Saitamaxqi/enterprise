@@ -677,14 +677,14 @@ export class AccountReportController {
     }
 
     async loadAnnotations(lineStartIndex = 0, lineEndIndex = this.lines.length) {
-        this.annotations = {
-            ...this.annotations,
-            ...(await this.orm.call("account.report", "get_annotations", [
-                this.action.context.report_id,
-                this.options,
-                this.lines.slice(lineStartIndex, lineEndIndex),
-            ])),
-        };
+        const new_annotations = await this.orm.call("account.report", "get_annotations", [
+            this.action.context.report_id,
+            this.options,
+            this.lines.slice(lineStartIndex, lineEndIndex),
+        ]);
+        for (const [key, value] of Object.entries(new_annotations)) {
+            this.annotations[key] = value;
+        }
 
         this.refreshVisibleAnnotations(lineStartIndex, lineEndIndex);
     }

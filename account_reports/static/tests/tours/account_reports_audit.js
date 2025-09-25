@@ -25,28 +25,13 @@ registry.category("web_tour.tours").add("account_reports_audit", {
             run: "click",
         },
         {
-            trigger: ".o_kanban_record:nth-child(1)",
-            content: "Open the Audit",
+            trigger: "a[data-tooltip='Back to \"Audit\"']",
+            content: "Back to the Audit Kanban",
             run: "click",
         },
         {
-            trigger: "button[name='embedded_actions']",
-            content: "Open the Embedded Actions Menu",
-            run: "click",
-        },
-        {
-            trigger: ".o_embedded_actions button.o-dropdown",
-            content: "Open the Actions Dropdown",
-            run: "click",
-        },
-        {
-            trigger: ".o_popover .o-dropdown-item:contains('Balances')",
-            content: "Select the Balances Action",
-            run: "click",
-        },
-        {
-            trigger: ".o_embedded_actions button:contains('Balances')",
-            content: "Open the Balances Menu",
+            trigger: ".o_kanban_record:nth-child(1) a[name='action_open_audit_balances']",
+            content: "Open the Balances Part of the Audit",
             run: "click",
         },
         {
