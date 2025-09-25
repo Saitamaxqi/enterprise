@@ -2291,6 +2291,7 @@ such as using the wrong VAT rate, wrongly exempting transactions.
     def _check_suite_eu_vat_report(self, check_codes_to_ignore):
         checks = []
         self._generic_vies_vat_check(check_codes_to_ignore, checks)
+        check_codes_to_ignore.add('check_partner_vies')
         return checks
 
     def _generic_vies_vat_check(self, check_codes_to_ignore, checks):
