@@ -248,7 +248,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'debit': 0,
             'credit': 0,
             'balance': 0,
-            'has_sublines': False,
+            'has_sublines': True,
         })
 
         for row in result:
