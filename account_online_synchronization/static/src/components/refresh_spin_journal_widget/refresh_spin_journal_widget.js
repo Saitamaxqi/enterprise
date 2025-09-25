@@ -1,7 +1,7 @@
 import { registry } from "@web/core/registry";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { useService } from "@web/core/utils/hooks";
-import { Component, useState, onWillStart } from "@odoo/owl";
+import { Component, useState, onWillStart, markup } from "@odoo/owl";
 
 class RefreshSpin extends Component {
     static template = "account_online_synchronization.RefreshSpin";
@@ -68,6 +68,7 @@ class RefreshSpin extends Component {
         this.state.connectionStateDetails = { status: "fetching" };
         const action = await this.orm.call("account.journal", "manual_sync", [this.recordId]);
         if (action) {
+            action.help = markup(action.help);
             this.actionService.doAction(action);
         }
     }
