@@ -30,11 +30,11 @@ export class KnowledgeCommentsPlugin extends Plugin {
     static dependencies = [
         "history",
         "dom",
+        "feff",
         "protectedNode",
         "selection",
         "position",
         "localOverlay",
-        "linkSelection",
         "format",
         "delete",
     ];
@@ -118,6 +118,9 @@ export class KnowledgeCommentsPlugin extends Plugin {
         delete_forward_overrides: withSequence(1, this.handleDeleteForward.bind(this)),
         delete_backward_overrides: withSequence(1, this.handleDeleteBackward.bind(this)),
 
+        feff_providers: this.addFeffToBeacon.bind(this),
+        selectors_for_feff_providers: () => ".oe_thread_beacon",
+
         intangible_char_for_keyboard_navigation_predicates: this.arrowShouldSkip.bind(this),
     };
 
@@ -183,6 +186,18 @@ export class KnowledgeCommentsPlugin extends Plugin {
             },
             { force: true }
         );
+    }
+
+    addFeffToBeacon(root) {
+        const feffs = [];
+        for (const beacon of root.querySelectorAll(".oe_thread_beacon")) {
+            if (nodeSize(beacon) !== 1 || !isZwnbsp(beacon.firstChild)) {
+                beacon.replaceChildren();
+                this.dependencies.feff.addFeff(beacon, "prepend");
+            }
+            feffs.push(beacon.firstChild);
+        }
+        return feffs;
     }
 
     arrowShouldSkip(ev, char, lastSkipped) {
@@ -393,7 +408,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 this.removeBeacon(beacon);
                 continue;
             }
-            this.dependencies.linkSelection.padLinkWithZwnbsp(beacon);
             this.dependencies.protectedNode.setProtectingNode(beacon, true);
         }
     }
