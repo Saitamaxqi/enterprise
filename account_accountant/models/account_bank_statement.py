@@ -1451,6 +1451,8 @@ class AccountBankStatementLine(models.Model):
         # This will work only for xml file, since when it's a pdf the ocr has not yet digitize the document and we have an empty move
         if lines := invoices.line_ids.filtered(lambda l: l.account_id.account_type in {'asset_receivable', 'liability_payable'}):
             statement_line.set_line_bank_statement_line(lines.ids)
+            invoices.action_activate_currency()
+
         return invoices._get_records_action()
 
     def action_unreconcile_entry(self):

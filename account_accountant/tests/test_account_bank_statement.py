@@ -2340,3 +2340,141 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'account_id': self.company_data['default_journal_bank'].default_account_id.id, 'balance': -100.0, 'reconciled': False},
             {'account_id': self.company_data['default_account_payable'].id, 'balance': 100.0, 'reconciled': True},
         ])
+
+    def test_auto_activate_currency_with_xml_file(self):
+        xml = b"""<?xml version='1.0' encoding='UTF-8'?>
+        <Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+            <cbc:CustomizationID>urn:cen.eu:en16931:2017#compliant#urn:fdc:peppol.eu:2017:poacc:billing:3.0</cbc:CustomizationID>
+            <cbc:ProfileID>urn:fdc:peppol.eu:2017:poacc:billing:01:1.0</cbc:ProfileID>
+            <cbc:ID>INV/2023/00009</cbc:ID>
+            <cbc:IssueDate>2023-06-20</cbc:IssueDate>
+            <cbc:DueDate>2023-06-20</cbc:DueDate>
+            <cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+            <cbc:Note>Terms and condition</cbc:Note>
+            <cbc:DocumentCurrencyCode>INR</cbc:DocumentCurrencyCode>
+            <cac:OrderReference>
+                <cbc:ID>DOEO</cbc:ID>
+            </cac:OrderReference>
+            <cac:AdditionalDocumentReference>
+                <cbc:ID>INV_2023_00009.pdf</cbc:ID>
+            </cac:AdditionalDocumentReference>
+            <cac:AccountingSupplierParty>
+            <cac:Party>
+                <cbc:EndpointID schemeID="9925">BE0246697724</cbc:EndpointID>
+                <cac:PartyName>
+                    <cbc:Name>BE Company CoA</cbc:Name>
+                </cac:PartyName>
+                <cac:PostalAddress>
+                    <cbc:StreetName>1021 Sint-Bernardsesteenweg</cbc:StreetName>
+                    <cbc:CityName>Antwerpen</cbc:CityName>
+                    <cbc:PostalZone>2660</cbc:PostalZone>
+                    <cac:Country>
+                    <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+                    </cac:Country>
+                </cac:PostalAddress>
+                <cac:PartyTaxScheme>
+                    <cbc:CompanyID>BE0246697724</cbc:CompanyID>
+                    <cac:TaxScheme>
+                        <cbc:ID>VAT</cbc:ID>
+                    </cac:TaxScheme>
+                </cac:PartyTaxScheme>
+                <cac:PartyLegalEntity>
+                    <cbc:RegistrationName>BE Company CoA</cbc:RegistrationName>
+                    <cbc:CompanyID>BE0246697724</cbc:CompanyID>
+                </cac:PartyLegalEntity>
+                <cac:Contact>
+                    <cbc:Name>BE Company CoA</cbc:Name>
+                    <cbc:Telephone>+32 470 12 34 56</cbc:Telephone>
+                    <cbc:ElectronicMail>info@company.beexample.com</cbc:ElectronicMail>
+                  </cac:Contact>
+                </cac:Party>
+            </cac:AccountingSupplierParty>
+            <cac:AccountingCustomerParty>
+                <cac:Party>
+                    <cbc:EndpointID schemeID="9925">BE0665978937</cbc:EndpointID>
+                    <cac:PartyName>
+                        <cbc:Name>Proximus</cbc:Name>
+                    </cac:PartyName>
+                    <cac:PostalAddress>
+                        <cac:Country>
+                            <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+                        </cac:Country>
+                    </cac:PostalAddress>
+                    <cac:PartyTaxScheme>
+                        <cbc:CompanyID>BE0665978937</cbc:CompanyID>
+                        <cac:TaxScheme>
+                            <cbc:ID>VAT</cbc:ID>
+                        </cac:TaxScheme>
+                    </cac:PartyTaxScheme>
+                    <cac:PartyLegalEntity>
+                        <cbc:RegistrationName>Proximus</cbc:RegistrationName>
+                        <cbc:CompanyID>BE0665978937</cbc:CompanyID>
+                    </cac:PartyLegalEntity>
+                    <cac:Contact>
+                        <cbc:Name>Proximus</cbc:Name>
+                    </cac:Contact>
+                </cac:Party>
+            </cac:AccountingCustomerParty>
+            <cac:Delivery>
+                <cac:DeliveryLocation>
+                    <cac:Address>
+                        <cac:Country>
+                            <cbc:IdentificationCode>BE</cbc:IdentificationCode>
+                        </cac:Country>
+                    </cac:Address>
+                </cac:DeliveryLocation>
+            </cac:Delivery>
+            <cac:PaymentMeans>
+                <cbc:PaymentMeansCode name="credit transfer">30</cbc:PaymentMeansCode>
+                <cbc:PaymentID>+++000/0000/22329+++</cbc:PaymentID>
+                <cac:PayeeFinancialAccount>
+                    <cbc:ID>BE83957821438115</cbc:ID>
+                </cac:PayeeFinancialAccount>
+            </cac:PaymentMeans>
+            <cac:LegalMonetaryTotal>
+                <cbc:LineExtensionAmount currencyID="INR">100.00</cbc:LineExtensionAmount>
+                <cbc:TaxExclusiveAmount currencyID="INR">100.00</cbc:TaxExclusiveAmount>
+                <cbc:TaxInclusiveAmount currencyID="INR">100.00</cbc:TaxInclusiveAmount>
+                <cbc:PrepaidAmount currencyID="INR">0.00</cbc:PrepaidAmount>
+                <cbc:PayableAmount currencyID="INR">100.00</cbc:PayableAmount>
+            </cac:LegalMonetaryTotal>
+            <cac:InvoiceLine>
+                <cbc:ID>984</cbc:ID>
+                <cbc:InvoicedQuantity unitCode="C62">1.0</cbc:InvoicedQuantity>
+                <cbc:LineExtensionAmount currencyID="INR">100.00</cbc:LineExtensionAmount>
+                <cac:Item>
+                    <cbc:Description>[FURN_6666] Acoustic Bloc Screens</cbc:Description>
+                    <cbc:Name>Acoustic Bloc Screens</cbc:Name>
+                    <cac:SellersItemIdentification>
+                        <cbc:ID>FURN_6666</cbc:ID>
+                    </cac:SellersItemIdentification>
+                    <cac:ClassifiedTaxCategory>
+                        <cbc:ID>S</cbc:ID>
+                        <cbc:Percent>21.0</cbc:Percent>
+                        <cac:TaxScheme>
+                            <cbc:ID>VAT</cbc:ID>
+                        </cac:TaxScheme>
+                    </cac:ClassifiedTaxCategory>
+                </cac:Item>
+                <cac:Price>
+                    <cbc:PriceAmount currencyID="INR">100.00</cbc:PriceAmount>
+                </cac:Price>
+            </cac:InvoiceLine>
+        </Invoice>
+        """
+        statement_line = self._create_st_line(amount=-100, update_create_date=False)
+        attachment = self.env['ir.attachment'].create({
+            'name': 'test_file',
+            'mimetype': 'text/xml',
+            'datas': base64.b64encode(xml),
+        })
+        test_currency = self.setup_other_currency('INR', rates=[('2025-01-01', 1.00)], active=False)
+        self.assertFalse(test_currency.active)
+        self.env['account.bank.statement.line'].with_context(
+            statement_line_id=statement_line.id,
+        ).create_document_from_attachment(attachment.ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': self.company_data['default_journal_bank'].default_account_id.id, 'balance': -100.0, 'reconciled': False},
+            {'account_id': self.company_data['default_account_payable'].id, 'balance': 100.0, 'reconciled': True},
+        ])
+        self.assertTrue(test_currency.active)
