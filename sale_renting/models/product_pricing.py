@@ -49,15 +49,12 @@ class ProductPricing(models.Model):
 
     @api.constrains('recurrence_id')
     def _check_unique_night_period(self):
-        """Night period cannot be selected with other periods"""
         for pricing in self:
-            pricings = pricing.product_template_id.product_pricing_ids
-            night_pricings = pricings.filtered(lambda p: p.recurrence_id.displayed_unit == 'night')
-            other_pricings = pricings - night_pricings
-            unit_night = pricing.recurrence_id.displayed_unit == 'night'
-
-            if (night_pricings and not unit_night) or (other_pricings and unit_night):
-                raise ValidationError(_("Night period cannot be mixed with other rental periods."))
+            all_pricings = pricing.product_template_id.product_pricing_ids
+            overnight_count = sum(p.recurrence_id.overnight for p in all_pricings)
+            if overnight_count and overnight_count != len(all_pricings):
+                raise ValidationError(
+                    _("Nightly periods cannot be mixed with other rental periods."))
 
     @api.constrains('product_template_id', 'pricelist_id', 'recurrence_id', 'product_variant_ids')
     def _check_unique_parameters(self):

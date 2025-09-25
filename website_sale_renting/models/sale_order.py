@@ -79,19 +79,37 @@ class SaleOrder(models.Model):
     def _cart_add(self, product_id, *args, start_date=None, end_date=None, **kwargs):
         product = self.env['product.product'].browse(product_id)
         if product.rent_ok:
-            if start_date and end_date:
-                if self.rental_start_date and self.rental_return_date:
-                    if self.rental_start_date != start_date or self.rental_return_date != end_date:
-                        raise UserError(self.env._(
-                            "You cannot mix different rental periods in the same order."
-                        ))
+            if not start_date or not end_date:
+                # Compute default dates based on the first suitable pricing (rental prices)
+                first_pricing = self.env['product.pricing']._get_first_suitable_pricing(
+                    product, pricelist=self.pricelist_id
+                )
+                if first_pricing:
+                    rec = first_pricing.recurrence_id
+                    start_date, end_date = product.product_tmpl_id._get_default_renting_dates(
+                        start_date, end_date, rec.duration, rec.unit, rec.pickup_time, rec.return_time
+                    )
+                # Fallback to the next 24 hours (_rental_set_dates default)
                 else:
-                    self.update({
-                        'rental_start_date': start_date,
-                        'rental_return_date': end_date,
-                    })
-            if not self.has_rented_products:
-                self._rental_set_dates()
+                    start_date = fields.Datetime.now().replace(minute=0, second=0) \
+                        + timedelta(hours=1)
+                    end_date = start_date + timedelta(days=1)
+
+            if (
+                self.rental_start_date and self.rental_return_date
+                and (
+                    self.rental_start_date != start_date
+                    or self.rental_return_date != end_date
+                )
+            ):
+                raise UserError(self.env._(
+                    "You cannot mix different rental periods in the same order."
+                ))
+            else:
+                self.update({
+                    'rental_start_date': start_date.replace(tzinfo=None),
+                    'rental_return_date': end_date.replace(tzinfo=None),
+                })
 
         return super()._cart_add(
             product_id, *args, start_date=start_date, end_date=end_date, **kwargs

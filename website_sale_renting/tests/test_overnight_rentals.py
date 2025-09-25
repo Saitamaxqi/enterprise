@@ -59,8 +59,6 @@ class TestOvernightRental(HttpCase, TestWebsiteSaleRentingCommon):
                     "Overnight product should be addable to empty cart",
                 )
                 ro._cart_add(product_id=self.hotel_room_early_check_in.id, quantity=1)
-                # self.assertEqual(ro.rental_start_date, "2025-01-01 14:00:00") TODO-PDA
-                # self.assertEqual(ro.rental_return_date, "2025-01-02 09:00:00")
                 self.assertFalse(
                     self.hotel_room_late_check_in._is_add_to_cart_allowed(),
                     "Overnight product with different period should not be addable to cart",
