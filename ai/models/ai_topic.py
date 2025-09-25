@@ -10,4 +10,4 @@ class AITopic(models.Model):
     name = fields.Char(string="Title", required=True)
     description = fields.Text(string="Description")
     instructions = fields.Text(string="Instructions")
-    tool_ids = fields.Many2many('ir.actions.server', string="AI Tools", domain=[('use_in_ai', '=', True)])
+    tool_ids = fields.Many2many('ir.actions.server', string="AI Tools", domain=[('use_in_ai', '=', True)], groups='base.group_system')
