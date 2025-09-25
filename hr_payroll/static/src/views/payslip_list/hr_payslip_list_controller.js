@@ -84,6 +84,9 @@ export class PayslipListController extends ListController {
     }
 
     displayButton(button) {
+        if (!Object.values(this.displayHeaderButtonsTransitions).includes(button.clickParams.name)) {
+            return true;
+        }
         if (
             !this.state.selectionStates
                 ?.map((s) => s.state)

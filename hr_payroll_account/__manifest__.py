@@ -30,6 +30,9 @@ Generic Payroll system Integrated with Accounting.
         'web.assets_backend': [
             'hr_payroll_account/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'hr_payroll_account/static/tests/tours/**/*'
+        ],
     },
     'pre_init_hook': '_salaries_account_journal_pre_init',
     'auto_install':  ['hr_payroll', 'accountant'],
