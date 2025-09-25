@@ -229,12 +229,8 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
 
         # Extract all account.move.line IDs from the report
         report = self.env['account.report'].browse(options['report_id'])
-        move_line_ids = []
-        for line_data in report._get_lines({**options, 'unfold_all': True}):
-            model, record_id = report._get_model_info_from_id(line_data['id'])
-            if model == 'account.move.line':
-                move_line_ids.append(record_id)
-        move_lines = self.env['account.move.line'].search([('id', 'in', move_line_ids)])
+        domain = report._get_options_domain(options, 'strict_range')
+        move_lines = self.env['account.move.line'].search(domain)
 
         zip_buffer = io.BytesIO()
         file_name = self._l10n_tr_reports_format_file_name(options['date'])
