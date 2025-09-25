@@ -4,7 +4,7 @@ import { stepUtils } from "@web_tour/tour_utils";
 
 import { endKnowledgeTour } from "./knowledge_tour_utils.js";
 import { boundariesIn } from "@html_editor/utils/position";
-import { setSelection } from "@html_editor/../tests/_helpers/selection";
+import { setSelection } from "@html_editor/../tests/tours/helpers/editor";
 
 const addAnswerComment = (commentText) => [{
     trigger: '.o-mail-Composer-input',

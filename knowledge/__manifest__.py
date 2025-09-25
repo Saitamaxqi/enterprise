@@ -91,7 +91,6 @@
             ('remove', 'knowledge/static/tests/tours/**/*'),
         ],
         'web.assets_tests': [
-            'html_editor/static/tests/_helpers/selection.js',
             'knowledge/static/tests/tours/**/*',
         ],
         'knowledge.webclient': [
