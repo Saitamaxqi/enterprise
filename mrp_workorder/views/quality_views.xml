@@ -48,6 +48,7 @@
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <list>
+                <field name="sequence" widget="handle"/>
                 <field name="title"/>
                 <field name="test_type_id" string="Type"/>
                 <field name="name"/>
