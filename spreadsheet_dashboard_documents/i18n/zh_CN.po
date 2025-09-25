@@ -3,13 +3,14 @@
 # * spreadsheet_dashboard_documents
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Chloe Wang (chwa)" <chwa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-16 15:28+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 12:11+0000\n"
+"Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
 "projects/odoo-19/spreadsheet_dashboard_documents/zh_Hans/>\n"
 "Language: zh_CN\n"
@@ -33,7 +34,7 @@ msgstr "添加电子表格"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_documents/static/src/bundle/documents_spreadsheet_action.js:0
 msgid "Add to Dashboard"
-msgstr ""
+msgstr "添加至仪表板"
 
 #. module: spreadsheet_dashboard_documents
 #. odoo-javascript
