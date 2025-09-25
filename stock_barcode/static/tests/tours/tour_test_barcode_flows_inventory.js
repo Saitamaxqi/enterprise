@@ -1069,12 +1069,12 @@ registry.category("web_tour.tours").add("test_inventory_packaging_location", {
         {
             content: "Check that the first location contains our product.",
             trigger:
-                ".o_data_row > .o_data_cell[name='product_id']:contains('product1') ~ .o_data_cell[name='location_id']:contains('Section 1') ~ .o_data_cell[name='quantity']:contains('40')",
+                ".o_kanban_record:not(.o_kanban_ghost) > span:contains('Section 1') ~ div > div > span:contains('40.00')",
         },
         {
             content: "Check that the second location contains our product.",
             trigger:
-                ".o_data_row > .o_data_cell[name='product_id']:contains('product1') ~ .o_data_cell[name='location_id']:contains('Section 2') ~ .o_data_cell[name='quantity']:contains('80')",
+                ".o_kanban_record:not(.o_kanban_ghost) > span:contains('Section 2') ~ div > div > span:contains('80.00')",
         },
     ],
 });

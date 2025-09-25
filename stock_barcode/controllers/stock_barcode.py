@@ -296,7 +296,7 @@ class StockBarcodeController(http.Controller):
                 'action': {
                     'name': product_display_name,
                     'res_model': 'stock.quant',
-                    'views': [(tree_view_id, 'list'), (kanban_view_id, 'kanban')],
+                    'views': [(kanban_view_id, 'kanban'), (tree_view_id, 'list')],
                     'type': 'ir.actions.act_window',
                     'domain': [('product_id', '=', product_id)],
                     'context': {
