@@ -28,12 +28,21 @@ export class BankRecStatementLine extends KanbanRecord {
             isUnfolded: false,
         });
         this.statementLineRootRef = useRef("root");
-        if (this.env.model.config.context?.default_st_line_id) {
+        if (this.env.model.config.context?.default_st_line_id === this.props.record.resId) {
             this.state.isUnfolded = true;
+            this.bankReconciliation.selectStatementLine(this.props.record);
         }
         onWillStart(async () => {
             this.userCanReview = await user.hasGroup("account.group_account_user");
         });
+    }
+
+    getRecordClasses() {
+        let classes = super.getRecordClasses();
+        if (this.hasStatementLine === 1) {
+            classes += " mt-3";
+        }
+        return classes;
     }
 
     // -----------------------------------------------------------------------------
@@ -122,6 +131,10 @@ export class BankRecStatementLine extends KanbanRecord {
 
     get isUnfolded() {
         return this.state.isUnfolded;
+    }
+
+    get hasStatementLine() {
+        return this.env.model.root.count;
     }
 
     get formattedAmount() {

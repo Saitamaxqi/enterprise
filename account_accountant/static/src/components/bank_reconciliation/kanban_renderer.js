@@ -129,8 +129,9 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         };
     }
 
+    // TODO: remove in master
     get hideCurrentBalance() {
-        return this.env.searchModel.context?.hide_current_balance;
+        return false;
     }
 
     get hasStatementLine() {
