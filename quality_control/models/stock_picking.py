@@ -18,7 +18,10 @@ class StockPicking(models.Model):
         for picking in self:
             todo = False
             fail = False
-            for check in picking.check_ids:
+            # Only prefetch needed QC fields to avoid to bloat the cache by fetching other QC data.
+            checks = picking.check_ids
+            checks.fetch(['quality_state'])
+            for check in checks:
                 if check.quality_state == 'none':
                     todo = True
                 elif check.quality_state == 'fail':
