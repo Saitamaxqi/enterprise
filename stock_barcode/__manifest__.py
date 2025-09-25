@@ -48,7 +48,6 @@ This module enables the barcode scanning feature for the warehouse management sy
             'stock_barcode/static/tests/units/*.test.js',
         ],
         'web.assets_tests': [
-            'web_tour/static/src/js/tour_automatic/tour_helpers.js',
             'stock_barcode/static/tests/tours/**/*',
         ],
     }
