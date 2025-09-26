@@ -40,17 +40,18 @@ VariantMixin._onChangeCombination = function (ev, parent, combination) {
     const rentingDetails = parent.querySelector('.o_renting_details');
     const duration = rentingDetails?.querySelector('.o_renting_duration');
     const unit = rentingDetails?.querySelector('.o_renting_unit');
+    const precision = combination.currency_precision;
     if (unitListPrice) {
-        unitListPrice.textContent = this._priceToStr(combination.list_price);
+        unitListPrice.textContent = this._priceToStr(combination.list_price, precision);
     }
     if (unitPrice) {
-        unitPrice.textContent = this._priceToStr(combination.price);
+        unitPrice.textContent = this._priceToStr(combination.price, precision);
     }
     if (price) {
-        price.textContent = this._priceToStr(combination.current_rental_price_per_unit);
+        price.textContent = this._priceToStr(combination.current_rental_price_per_unit, precision);
     }
     if (totalPrice) {
-        totalPrice.textContent = this._priceToStr(combination.current_rental_price);
+        totalPrice.textContent = this._priceToStr(combination.current_rental_price, precision);
     }
     if (duration) {
         duration.textContent = combination.current_rental_duration;
