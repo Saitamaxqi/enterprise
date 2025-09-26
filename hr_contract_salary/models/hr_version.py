@@ -254,8 +254,8 @@ class HrVersion(models.Model):
         if not benefits:
             return 0
         monthly_benefits = benefits.filtered(lambda a: a.benefit_type_id.periodicity == 'monthly')
-        monthly_cost = sum(self[benefit.cost_field] or 0 for benefit in monthly_benefits)
-        yearly_cost = sum(self[benefit.cost_field] or 0 for benefit in benefits - monthly_benefits)
+        monthly_cost = sum(self[benefit.cost_field] or 0 for benefit in monthly_benefits if benefit.cost_field in self)
+        yearly_cost = sum(self[benefit.cost_field] or 0 for benefit in benefits - monthly_benefits if benefit.cost_field in self)
         return monthly_cost * 12 + yearly_cost
 
     def _get_gross_from_employer_costs(self, yearly_cost):
