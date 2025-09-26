@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { FileUploader } from "@web/views/fields/file_handler";
 import { useAutofocus, useService } from "@web/core/utils/hooks";
 import { useEmojiPicker } from "@web/core/emoji_picker/emoji_picker";
-import { Component, useState, useRef, markup } from "@odoo/owl";
+import { Component, useState, useRef, markup, onMounted } from "@odoo/owl";
 
 export class StreamPostCommentsReply extends Component {
     static template = "social.StreamPostCommentsReply";
@@ -39,6 +39,9 @@ export class StreamPostCommentsReply extends Component {
         useEmojiPicker(useRef("emoji-picker"), {
             onSelect: (str) => this._onAddEmoji(str),
             onClose: () => this.state.autofocus++,
+        });
+        onMounted(() => {
+            this.inputRef.el.value = this.initialValue || "";
         });
     }
 

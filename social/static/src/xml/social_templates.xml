@@ -159,8 +159,7 @@
                         t-att-placeholder="isCommentReply ? write_reply_text : write_comment_text"
                         t-att-disabled="state.disabled"
                         t-on-keydown="_onAddComment"
-                        t-att-value="initialValue || ''">
-                    </textarea>
+                    />
                     <div class="o_social_comment_controls mt-2">
                         <div t-if="canAddImage" class="o_social_comment_add_image o_social_subtle_btn px-3 py-1">
                             <FileUploader
@@ -181,7 +180,7 @@
                 <div t-if="state.attachmentSrc" class="o_social_comment_image_preview py-4">
                     <div class="d-inline-block position-relative">
                         <img class="border shadow" style="max-height: 150px" t-att-src="state.attachmentSrc"/>
-                        <span class="o_social_comment_remove_image position-absolute btn btn-dark rounded-circle mt-2 me-2" style="right: 0"
+                        <span t-if="!state.disabled" class="o_social_comment_remove_image position-absolute btn btn-dark rounded-circle mt-2 me-2" style="right: 0"
                               t-on-click="_onImageRemove">
                             <i class="fa fa-times"/>
                         </span>
