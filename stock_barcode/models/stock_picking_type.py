@@ -93,6 +93,12 @@ class StockPickingType(models.Model):
                 and self.barcode_validation_all_product_packed
             )
         )
+        lines_need_destination_location = locations_enable and (
+            self.restrict_scan_dest_location == 'mandatory' or (
+                self.restrict_scan_dest_location == 'optional'
+                and self.barcode_validation_after_dest_location
+            )
+        )
         config = {
             # Boolean fields.
             'barcode_allow_extra_product': self.barcode_allow_extra_product,
@@ -109,6 +115,7 @@ class StockPickingType(models.Model):
             'restrict_scan_dest_location': self.restrict_scan_dest_location if locations_enable else 'no',
             # Additional parameters.
             'lines_need_to_be_packed': lines_need_to_be_packed,
+            'lines_need_destination_location': lines_need_destination_location,
         }
         return config
 

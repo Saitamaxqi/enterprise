@@ -806,7 +806,7 @@ export default class BarcodePickingModel extends BarcodeModel {
             return false;
         }
         if (
-            this.config.restrict_scan_dest_location == "mandatory" &&
+            this.config.lines_need_destination_location &&
             !this.lastScanned.destLocation &&
             (this.selectedLine || this.lastScanned.packageId)
         ) {
@@ -1012,7 +1012,7 @@ export default class BarcodePickingModel extends BarcodeModel {
 
     async validate() {
         if (
-            this.config.restrict_scan_dest_location == "mandatory" &&
+            this.config.lines_need_destination_location &&
             !this.lastScanned.destLocation &&
             (this.selectedLine || this.lastScanned.packageId)
         ) {
