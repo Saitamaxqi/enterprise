@@ -4,7 +4,7 @@
         <field name="name">esg.database.kanban</field>
         <field name="model">esg.database</field>
         <field name="arch" type="xml">
-            <kanban class="o_hr_employee_kanban" sample="1" highlight_color="color">
+            <kanban class="o_hr_employee_kanban" create="0" sample="1" highlight_color="color">
                 <templates>
                     <t t-name="card" class="flex-row">
                         <main class="d-flex flex-column justify-content-between">
@@ -35,7 +35,7 @@
         <field name="name">esg.database.form</field>
         <field name="model">esg.database</field>
         <field name="arch" type="xml">
-            <form>
+            <form create="0">
                 <header>
                     <button name="action_load_data" string="Update" class="btn btn-primary mt-2"
                         type="object" invisible="not latest_version and not last_update or not can_be_downloaded"/>
