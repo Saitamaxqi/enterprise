@@ -598,6 +598,18 @@ class QualityCheck(models.Model):
         domain.append(('technical_name', '=', 'passfail'))
         return domain
 
+    def _is_to_do(self, checkable_products, check_picked=False):
+        self.ensure_one()
+        if self.quality_state != 'none':
+            return False
+        if self.measure_on != 'operation':
+            if self.product_id not in checkable_products:
+                return False
+            if self.move_line_id:
+                if not self.move_line_id._is_checkable(check_picked):
+                    return False
+        return True
+
 
 class QualityAlert(models.Model):
     _inherit = "quality.alert"
