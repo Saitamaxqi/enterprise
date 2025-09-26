@@ -1149,6 +1149,8 @@ class AccountReturn(models.Model):
         self.date_lock = fields.Date.context_today(self)
 
         self.state = 'reviewed'
+        if self.type_id.states_workflow == 'generic_state_review':
+            return self._mark_completed()
 
         if self.is_tax_return:
             return {
@@ -1223,10 +1225,10 @@ class AccountReturn(models.Model):
         return self._on_post_submission_event()
 
     def _on_post_submission_event(self):
-        if self.type_external_id == 'account_reports.annual_corporate_tax_return_type':
+        if self.type_id.states_workflow == 'generic_state_review_submit':
             return self._mark_completed()
 
-        if self.is_tax_return:
+        if self.type_id.states_workflow in ('generic_state_only_pay', 'generic_state_tax_report'):
             return self.action_pay()
 
     def action_pay(self):
@@ -1240,7 +1242,8 @@ class AccountReturn(models.Model):
     def _action_finalize_payment(self):
         self.ensure_one()
         self.state = 'paid'
-        return self._mark_completed()
+        if self.type_id.states_workflow in ('generic_state_only_pay', 'generic_state_tax_report'):
+            return self._mark_completed()
 
     ####################################################################################################
     ####  Revert Actions

@@ -74,6 +74,10 @@ class TestAccountReturn(TestAccountReportsCommon):
     def _patch_returns_generation(cls):
         return patch.object(cls.registry['account.return.type'], '_generate_all_returns', patched_generate_all_returns)
 
+    @classmethod
+    def _patch_generate_locking_attachments(cls):
+        return patch.object(cls.registry['account.return'], '_generate_locking_attachments', lambda self, options: None)
+
     def assert_return_dates_equal(self, returns, dates_list):
         self.assertEqual(len(returns), len(dates_list), "Return count mismatch")
 
@@ -1558,3 +1562,127 @@ class TestAccountReturn(TestAccountReportsCommon):
         self.init_invoice('out_invoice', amounts=[10], post=True, invoice_date='2023-02-01')
         self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_balance, -30)
         self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_previous_balance, -10)
+
+    def test_state_progression(self):
+        return_types = [
+            self.env['account.return.type'].create([{
+                'category': 'account_return',
+                'default_deadline_periodicity': 'monthly',
+                'default_deadline_start_date': '2024-01-01',
+                'name': name,
+                'report_id': self.env.ref('account.generic_tax_report').id,
+                'states_workflow': states_workflow,
+            }]) for name, states_workflow in [
+                ("Only Pay", 'generic_state_only_pay'),
+                ("Only Review", 'generic_state_review'),
+                ("Review and Submit", 'generic_state_review_submit'),
+                ("Review, Submit and Pay", 'generic_state_tax_report'),
+            ]
+        ]
+
+        audit_return_type = self.env['account.return.type'].create([{
+            'category': 'audit',
+            'default_deadline_periodicity': 'monthly',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Audit",
+        }])
+
+        for return_type in return_types + [audit_return_type]:
+            with self.subTest(return_type=return_type):
+
+                account_return = return_type.with_context(
+                    forced_date_from=fields.Date.from_string('2024-01-01'),
+                    forced_date_to=fields.Date.from_string('2024-01-31'),
+                )._try_create_returns_for_fiscal_year(self.env.company, False)
+                self.assertEqual(account_return.state, 'new')
+                self.assertEqual(account_return.is_completed, False)
+
+                if return_type.states_workflow in ('generic_state_review', 'generic_state_review_submit'):
+                    with self._patch_generate_locking_attachments():
+                        account_return.action_validate()
+                    self.assertEqual(account_return.state, 'reviewed')
+
+                if return_type.states_workflow == 'generic_state_review':
+                    self.assertEqual(account_return.is_completed, True)
+                    continue
+                self.assertEqual(account_return.is_completed, False)
+
+                if return_type.states_workflow in ('generic_state_review_submit', 'generic_state_tax_report'):
+                    account_return.action_submit()
+                    if return_type.states_workflow == 'generic_state_tax_report':
+                        # no submitted step for generic_state_tax_report as there's nothing to pay
+                        # (see test_account_return_state_review_submit_pay for a case with something to pay)
+                        self.assertEqual(account_return.state, 'paid')
+                    else:
+                        self.assertEqual(account_return.state, 'submitted')
+
+                if return_type.states_workflow in ('generic_state_review_submit', 'generic_state_tax_report'):
+                    self.assertEqual(account_return.is_completed, True)
+                    continue
+                self.assertEqual(account_return.is_completed, False)
+
+                payment_wizard_info = account_return.action_pay()
+                payment_wizard = self.env[payment_wizard_info['res_model']].browse(payment_wizard_info['res_id'])
+                payment_wizard.action_mark_as_paid()
+                self.assertEqual(account_return.state, 'paid')
+                self.assertEqual(account_return.is_completed, True)
+
+    def test_account_return_state_review_submit_pay(self):
+        review_submit_pay_return_type = self.env['account.return.type'].create([{
+            'category': 'account_return',
+            'default_deadline_periodicity': 'monthly',
+            'default_deadline_start_date': '2024-01-01',
+            'name': "Only Pay",
+            'report_id': self.env.ref('account.generic_tax_report').id,
+            'states_workflow': 'generic_state_tax_report',
+        }])
+
+        review_submit_pay_return = review_submit_pay_return_type.with_context(
+            forced_date_from=fields.Date.from_string('2024-02-01'),
+            forced_date_to=fields.Date.from_string('2024-02-29'),
+        )._try_create_returns_for_fiscal_year(self.env.company, False)
+        self.assertEqual(review_submit_pay_return.state, 'new')
+
+        tax_account = self.env['account.account'].create({
+            'name': 'Tax Account',
+            'code': 'test.tax.account',
+            'account_type': 'liability_current',
+        })
+        sale_tax = self.env['account.tax'].create({
+            'name': 'sale tax',
+            'amount': 21,
+            'amount_type': 'percent',
+            'type_tax_use': 'sale',
+            'company_id': self.env.company.id,
+            'invoice_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+            'refund_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 100,
+                    'repartition_type': 'tax',
+                    'account_id': tax_account.id,
+                }),
+            ],
+        })
+        self.init_invoice('out_invoice', amounts=[320], invoice_date='2024-02-10', taxes=[sale_tax], post=True)
+
+        with self._patch_generate_locking_attachments():
+            review_submit_pay_return.action_validate()
+        self.assertEqual(review_submit_pay_return.state, 'reviewed')
+        self.assertEqual(review_submit_pay_return.is_completed, False)
+
+        payment_wizard_info = review_submit_pay_return.action_submit()
+        self.assertEqual(review_submit_pay_return.state, 'submitted')
+        self.assertEqual(review_submit_pay_return.is_completed, False)
+
+        payment_wizard = self.env[payment_wizard_info['res_model']].browse(payment_wizard_info['res_id'])
+        payment_wizard.action_mark_as_paid()
+        self.assertEqual(review_submit_pay_return.state, 'paid')
+        self.assertEqual(review_submit_pay_return.is_completed, True)
