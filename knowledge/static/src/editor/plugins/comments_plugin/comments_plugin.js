@@ -62,6 +62,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 description: _t("Add a comment to selection"),
                 text: _t("Comment"),
                 namespaces: ["expanded"],
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
             {
                 id: "comments_small",
@@ -69,6 +70,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 commandId: "addComments",
                 description: _t("Add a comment to selection"),
                 namespaces: ["compact"],
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
             {
                 id: "comments_image",
@@ -76,6 +78,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 commandId: "addComments",
                 description: _t("Add a comment to an image"),
                 text: _t("Comment"),
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
         ],
 
@@ -300,10 +303,11 @@ export class KnowledgeCommentsPlugin extends Plugin {
 
     isAllowedBeaconPosition(node) {
         return (
-            isPhrasingContent(node) ||
-            isParagraphRelatedElement(node) ||
-            isListItemElement(node) ||
-            this.dependencies.baseContainer.isCandidateForBaseContainer(node)
+            closestElement(node).nodeName !== "PRE" &&
+            (isPhrasingContent(node) ||
+                isParagraphRelatedElement(node) ||
+                isListItemElement(node) ||
+                this.dependencies.baseContainer.isCandidateForBaseContainer(node))
         );
     }
 
@@ -340,14 +344,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
     addCommentToSelection() {
         const { startContainer, startOffset, endContainer, endOffset } =
             this.dependencies.selection.getEditableSelection({ deep: true });
-        const isCollapsed = startContainer === endContainer && startOffset === endOffset;
-        if (
-            isCollapsed ||
-            !this.isAllowedBeaconPosition(startContainer) ||
-            !this.isAllowedBeaconPosition(endContainer) ||
-            !isContentEditable(startContainer) ||
-            !isContentEditable(endContainer)
-        ) {
+        if (!this.canAddCommentToSelection()) {
             return;
         }
         const previousUndefinedBeacons = [
@@ -393,6 +390,18 @@ export class KnowledgeCommentsPlugin extends Plugin {
         this.commentsService.createVirtualThread();
         this.commentsState.activeThreadId = "undefined";
         this.dependencies.history.addStep();
+    }
+
+    canAddCommentToSelection() {
+        const { startContainer, endContainer, isCollapsed } =
+            this.dependencies.selection.getEditableSelection({ deep: true });
+        return (
+            !isCollapsed &&
+            this.isAllowedBeaconPosition(startContainer) &&
+            this.isAllowedBeaconPosition(endContainer) &&
+            isContentEditable(startContainer) &&
+            isContentEditable(endContainer)
+        );
     }
 
     onWindowClick(ev) {
