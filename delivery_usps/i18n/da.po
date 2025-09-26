@@ -11,13 +11,14 @@
 # Joe Hansen <joedalton2@yahoo.dk>, 2022
 # Mads Søndergaard, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:31+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "delivery_usps/da/>\n"
 "Language: da\n"
@@ -46,7 +47,9 @@ msgstr "Tjek dette felt af hvis din konto er bekræftet af USPS"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Company phone number is invalid. Please insert a US phone number."
-msgstr "Virksomheds telefonnummeret er ikke gyldigt. Indtast venligst et Amerikansk telefonnummer."
+msgstr ""
+"Virksomheds telefonnummeret er ikke gyldigt. Indtast venligst et Amerikansk "
+"telefonnummer."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
@@ -232,13 +235,16 @@ msgstr "Parcel"
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Please check on USPS website to ensure that your package is machinable."
-msgstr "Tjek venligst USPS hjemmeside for at sikre dig at din pakke er maskinbearbejdelig."
+msgstr ""
+"Tjek venligst USPS hjemmeside for at sikre dig at din pakke er "
+"maskinbearbejdelig."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr "Vælg venligst en anden tjeneste (maksimal vægt for denne tjeneste er 4 pund)"
+msgstr ""
+"Vælg venligst en anden tjeneste (maksimal vægt for denne tjeneste er 4 pund)"
 
 #. module: delivery_usps
 #. odoo-python
@@ -262,7 +268,9 @@ msgstr "Vælg venligst et produkt at sende."
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
-msgstr "Angiv venligst landet U.S.A. i din firmadresse, tjenesten er kun tilgængelig for U.S.A."
+msgstr ""
+"Angiv venligst landet U.S.A. i din firmadresse, tjenesten er kun tilgængelig "
+"for U.S.A."
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__postcard
@@ -289,7 +297,8 @@ msgstr "Kvantitet for hver bevægelses linjer skal være mindre end 1000."
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Recipient address cannot be found. Please check the address exists."
-msgstr "Modtageradresse kan ikke findes. Kontroller venligst at adresserne findes."
+msgstr ""
+"Modtageradresse kan ikke findes. Kontroller venligst at adresserne findes."
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__rectangular
@@ -397,7 +406,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
-msgstr "Den valgte USPS-tjeneste (%s) kan ikke bruges til at levere denne pakke."
+msgstr ""
+"Den valgte USPS-tjeneste (%s) kan ikke bruges til at levere denne pakke."
 
 #. module: delivery_usps
 #. odoo-python

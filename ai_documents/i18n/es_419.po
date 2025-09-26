@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/es_419/>\n"
@@ -126,28 +126,28 @@ msgstr "Ordenar documentos en automático en %s"
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_base_automation
 msgid "Automation Rule"
-msgstr ""
+msgstr "Regla de automatización"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Cannot move in a non-folder."
-msgstr ""
+msgstr "No es posible moverlo a una ubicación que no es una carpeta."
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Close"
-msgstr ""
+msgstr "Cerrar"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
@@ -165,28 +165,28 @@ msgstr "Descartar"
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__display_name
 #: model:ir.model.fields,field_description:ai_documents.field_ir_actions_server__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar nombre"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Document Content"
-msgstr ""
+msgstr "Contenido del documento"
 
 #. module: ai_documents
 #: model:ir.model.fields,help:ai_documents.field_documents_document__ai_to_sort
 msgid "Flag to mark the files as to be sorted with AI"
-msgstr ""
+msgstr "Indicador para marcar los archivos como ordenados con IA"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__folder_id
 msgid "Folder"
-msgstr ""
+msgstr "Carpeta"
 
 #. module: ai_documents
 #. odoo-python
@@ -195,6 +195,8 @@ msgid ""
 "Here is a document called %(document_name)s and whose content is %(content)s"
 " and tags are %(tags)s. The mimetype of the document is %(mimetype)s."
 msgstr ""
+"Este es un documento llamado %(document_name)s, su contenido es %(content)s "
+"y sus etiquetas son %(tags)s. El tipo MIME del documento es %(mimetype)s."
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__id

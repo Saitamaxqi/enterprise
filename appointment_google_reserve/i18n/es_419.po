@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/appointment_google_reserve/es_419/>\n"
@@ -142,22 +142,22 @@ msgstr "Configura los datos de tu empresa para Reserva con Google"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creado por"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creado el"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Disable Google Reserve"
-msgstr ""
+msgstr "Desactivar Reserva con Google"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__display_name
@@ -166,7 +166,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__display_name
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_resource_calendar_leaves__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Mostrar nombre"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_enable
@@ -190,7 +190,7 @@ msgstr "Seguidores"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Seguidores (contactos)"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_calendar_event__is_google_reserve
@@ -205,12 +205,12 @@ msgstr "Sincronización pendiente con Reserva con Google"
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "Google Bookings"
-msgstr ""
+msgstr "Reservaciones de Google"
 
 #. module: appointment_google_reserve
 #: model:ir.ui.menu,name:appointment_google_reserve.menu_appointment_google_reserve_merchants
 msgid "Google Reserve"
-msgstr ""
+msgstr "Reserva con Google"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_access_token

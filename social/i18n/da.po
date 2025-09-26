@@ -10,13 +10,14 @@
 # Martin Trigaux, 2022
 # Mads Søndergaard, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:53+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/social/da/"
 ">\n"
 "Language: da\n"
@@ -234,7 +235,8 @@ msgstr "Kampagner"
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
 msgid "Campaigns are used to centralize your marketing efforts and track their results."
-msgstr "Kampagner bruges til at centralisere dit marketing og spore resultaterne."
+msgstr ""
+"Kampagner bruges til at centralisere dit marketing og spore resultaterne."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
@@ -465,7 +467,9 @@ msgstr "Engagement tendens"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid "Every time an account is created, a utm.medium is also created and linked to the account"
-msgstr "Hver gang en konto oprettes, oprettes der samtidig et utm.medium som forbindes til kontoen"
+msgstr ""
+"Hver gang en konto oprettes, oprettes der samtidig et utm.medium som "
+"forbindes til kontoen"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__failed
@@ -521,7 +525,8 @@ msgstr "Formateret udgivelsesdato"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience
 msgid "General audience of the Social Account (Page Likes, Account Follows, ...)."
-msgstr "Generel publikum for den sociale konto (side synes-om, konto følgere, ...)."
+msgstr ""
+"Generel publikum for den sociale konto (side synes-om, konto følgere, ...)."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
@@ -650,7 +655,9 @@ msgstr "Er følger"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "It appears there is an issue with the Social Media link, click here to link the account again"
-msgstr "Det virker til at der er et problem med linket til det sociale medie, klik her for at linke kontoen igen"
+msgstr ""
+"Det virker til at der er et problem med linket til det sociale medie, klik "
+"her for at linke kontoen igen"
 
 #. module: social
 #. odoo-javascript
@@ -862,8 +869,10 @@ msgid ""
 "Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
 "        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
 msgstr ""
-"De fleste social.live.posts går direkte fra Klar til Posteret/Fejlet siden de er resultatet af et enkelt kald i tredjeparts API'en.\n"
-"       Et \"Posterer\" stadie er også tilgængelig for dem der er sendt som partier (så som push notifikationer)."
+"De fleste social.live.posts går direkte fra Klar til Posteret/Fejlet siden "
+"de er resultatet af et enkelt kald i tredjeparts API'en.\n"
+"       Et \"Posterer\" stadie er også tilgængelig for dem der er sendt som "
+"partier (så som push notifikationer)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__my_activity_date_deadline
@@ -954,7 +963,8 @@ msgstr "Ingen kommentarer endnu."
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "No social accounts configured, please contact your administrator."
-msgstr "Ingen sociale konti konfigureret, vær venlig at kontakte din administrator."
+msgstr ""
+"Ingen sociale konti konfigureret, vær venlig at kontakte din administrator."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction_counter
@@ -982,7 +992,9 @@ msgstr "Antal fejl"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
 msgid "Number of interactions (likes, shares, comments ...) with the social posts"
-msgstr "Antal interaktioner (synes om, delinger, kommentarer ...) med de sociale indlæg"
+msgstr ""
+"Antal interaktioner (synes om, delinger, kommentarer ...) med de sociale "
+"indlæg"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
@@ -1005,7 +1017,8 @@ msgstr "Antal af folk engageret med indlægget (synes om, kommentarer...)"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement
 msgid "Number of people engagements with your posts (Likes, Comments, ...)."
-msgstr "Antallet af folk engageret med dine indlæg (synes om, kommentarer, ...)."
+msgstr ""
+"Antallet af folk engageret med dine indlæg (synes om, kommentarer, ...)."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
@@ -1016,7 +1029,9 @@ msgstr "Antal historier oprettet fra dine indlæg (delinger, re-tweets, ...)."
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Number of times people have engaged with your posts (likes, comments, shares,...)"
-msgstr "Antallet af gange folk har interageret med dine indlæg (synes om, kommentarer, delinger, ...)"
+msgstr ""
+"Antallet af gange folk har interageret med dine indlæg (synes om, "
+"kommentarer, delinger, ...)"
 
 #. module: social
 #. odoo-javascript
@@ -1038,12 +1053,14 @@ msgstr "Procentvis forøgelse/forringelse af publikum over en defineret periode.
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement_trend
 msgid "Percentage of increase/decrease of the engagement over a defined period."
-msgstr "Procentvis forøgelse/forringelse af engagement over en defineret periode."
+msgstr ""
+"Procentvis forøgelse/forringelse af engagement over en defineret periode."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories_trend
 msgid "Percentage of increase/decrease of the stories over a defined period."
-msgstr "Procentvis forøgelse/forringelse af historier defineret over en periode."
+msgstr ""
+"Procentvis forøgelse/forringelse af historier defineret over en periode."
 
 #. module: social
 #. odoo-python
@@ -1094,7 +1111,9 @@ msgstr "Postér nu"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
 msgid "Post link to the external social.media (ex: link to the actual Facebook Post)."
-msgstr "Postér link til det eksterne social.media (f.eks. link til det faktiske Facebook indlæg)."
+msgstr ""
+"Postér link til det eksterne social.media (f.eks. link til det faktiske "
+"Facebook indlæg)."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1151,7 +1170,8 @@ msgstr "Forrige"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__post_method
 msgid "Publish your post immediately or schedule it at a later time."
-msgstr "Udgiv dit indlæg øjeblikkeligt, eller planlæg det til et senere tidspunkt."
+msgstr ""
+"Udgiv dit indlæg øjeblikkeligt, eller planlæg det til et senere tidspunkt."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_search
@@ -1256,7 +1276,9 @@ msgstr "Sekvens"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream__sequence
 msgid "Sequence used to order streams (mainly for the 'Feed' kanban view)"
-msgstr "Sekvens brugt til at ordne strømme (primært for 'Feed' opslagstavle visningen)"
+msgstr ""
+"Sekvens brugt til at ordne strømme (primært for 'Feed' opslagstavle "
+"visningen)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
@@ -1385,7 +1407,9 @@ msgstr "Social: Udgiv planlagte posteringer"
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_dashboard.js:0
 msgid "Sorry, you're not allowed to re-link this account, please contact your administrator."
-msgstr "Desværre, du har ikke adgang til at genforbinde denne konto. Kontakt venligst din administrator."
+msgstr ""
+"Desværre, du har ikke adgang til at genforbinde denne konto. Kontakt "
+"venligst din administrator."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__source_id
@@ -1395,7 +1419,9 @@ msgstr "Kilde"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid "Special technical field that holds a dict containing the live posts names by media ids (used for kanban view)."
-msgstr "Særligt teknisk felt der indeholder en dict indeholdende live posterings navne ift medie ID'er (brugt til kanban visning)."
+msgstr ""
+"Særligt teknisk felt der indeholder en dict indeholdende live posterings "
+"navne ift medie ID'er (brugt til kanban visning)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
@@ -1496,12 +1522,16 @@ msgstr "Kontiene hvor indlægget vil blive udgivet."
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
 msgid "The post author name based on third party information (ex: 'John Doe')."
-msgstr "Indlægget forfatternavn baseret på tredjeparts informationer (f.eks. 'Nomen Nescio')."
+msgstr ""
+"Indlægget forfatternavn baseret på tredjeparts informationer (f.eks. 'Nomen "
+"Nescio')."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
 msgid "The post is considered as 'Posted' when all its sub-posts (one per social account) are either 'Failed' or 'Posted'"
-msgstr "Indlægget opfattes som 'Posteret' når alle dets under-indlæg (en per social konto) er enten 'Fejlet' eller 'Posteret'"
+msgstr ""
+"Indlægget opfattes som 'Posteret' når alle dets under-indlæg (en per social "
+"konto) er enten 'Fejlet' eller 'Posteret'"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1511,7 +1541,9 @@ msgstr "Indlæggets udgivelsesdato baseret på tredjeparts informationer."
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__failure_reason
 msgid "The reason why a post is not successfully posted on the Social Media (eg: connection error, duplicated post, ...)."
-msgstr "Grunden til et indlæg ikke blev posteret vellykket på et social medie (f.eks. forbindelses fejl, kopi af indlæg, ...)."
+msgstr ""
+"Grunden til et indlæg ikke blev posteret vellykket på et social medie ("
+"f.eks. forbindelses fejl, kopi af indlæg, ...)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
@@ -1620,13 +1652,17 @@ msgstr "Tidspunkt"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid "When the global post was published. The actual sub-posts published dates may be different depending on the media."
-msgstr "Når det globale indlæg blev udgivet. De faktiske udgivelsesdatoer for under-indlæg kan være forskellige, afhængige af mediet."
+msgstr ""
+"Når det globale indlæg blev udgivet. De faktiske udgivelsesdatoer for under-"
+"indlæg kan være forskellige, afhængige af mediet."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__image_ids
 #: model:ir.model.fields,help:social.field_social_post_template__image_ids
 msgid "Will attach images to your posts (if the social media supports it)."
-msgstr "Vi vil vedhæfte billeder til dine indlæg (hvis det sociale medie understøtter det)."
+msgstr ""
+"Vi vil vedhæfte billeder til dine indlæg (hvis det sociale medie "
+"understøtter det)."
 
 #. module: social
 #. odoo-javascript

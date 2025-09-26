@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:24+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_fiscal_categories/pt_BR/>\n"
@@ -104,7 +104,7 @@ msgstr "Categoria fiscal"
 #. module: account_fiscal_categories
 #: model:ir.model,name:account_fiscal_categories.model_account_account_fiscal_rate
 msgid "Fiscal Rate"
-msgstr ""
+msgstr "Taxa fiscal"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__rate
@@ -175,7 +175,7 @@ msgstr "Última atualização em"
 #. module: account_fiscal_categories
 #: model:account.return.check.template,name:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
 msgid "Meal expense adjustments"
-msgstr ""
+msgstr "Ajustes nas despesas com refeições"
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__name

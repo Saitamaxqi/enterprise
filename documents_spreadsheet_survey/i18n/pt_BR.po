@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 17:34+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_spreadsheet_survey/pt_BR/>\n"
@@ -57,7 +57,7 @@ msgstr "Questionário aprovado"
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_functions.js:0
 msgid "Return the results of a survey."
-msgstr ""
+msgstr "Devolva os resultados de uma pesquisa."
 
 #. module: documents_spreadsheet_survey
 #. odoo-python
@@ -69,7 +69,7 @@ msgstr "Pontuação (%)"
 #. odoo-javascript
 #: code:addons/documents_spreadsheet_survey/static/src/spreadsheet/survey_menu_items.js:0
 msgid "See survey"
-msgstr ""
+msgstr "Ver pesquisa"
 
 #. module: documents_spreadsheet_survey
 #. odoo-javascript
@@ -80,7 +80,7 @@ msgstr "Ver a participação na pesquisa"
 #. module: documents_spreadsheet_survey
 #: model:ir.model.fields,field_description:documents_spreadsheet_survey.field_survey_survey__spreadsheet_document_id
 msgid "Spreadsheet Document"
-msgstr ""
+msgstr "Documento da planilha"
 
 #. module: documents_spreadsheet_survey
 #. odoo-python
@@ -105,7 +105,7 @@ msgstr "O ID da pesquisa"
 #. odoo-python
 #: code:addons/documents_spreadsheet_survey/models/survey_survey.py:0
 msgid "Timestamp"
-msgstr ""
+msgstr "Data/hora"
 
 #. module: documents_spreadsheet_survey
 #. odoo-python

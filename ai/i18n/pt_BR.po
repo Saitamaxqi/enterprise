@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai/pt_BR/>\n"
@@ -298,6 +298,25 @@ msgid ""
 "contain multiple search strings or be empty []\n"
 "        "
 msgstr ""
+"\n"
+"            Abre uma visualização de lista (tabela) usando elementos de "
+"visualização de pesquisa.\n"
+"Ideal para: “Mostrar”, “Listar tudo”, visualização detalhada de registros, "
+"classificação de dados.\n"
+"\n"
+"Principais recursos:\n"
+"- Aplicar vários filtros por nome (na visualização de pesquisa do menu)\n"
+"- Agrupar registros por campos disponíveis\n"
+"- Pesquisar texto em campos específicos\n"
+"- Exibir registros em formato de tabela organizável\n"
+" - Ideal para revisar, filtrar e exportar dados\n"
+"\n"
+"💡 Use o parâmetro de pesquisa para filtrar por qualquer campo pesquisável "
+"ANTES de considerar domínios personalizados\n"
+"⚠️ Use apenas nomes de filtro e campos de agrupamento dos dados do menu\n"
+"⚠️ Cada string de pesquisa deve usar o formato “campo=texto”. A matriz pode "
+"conter várias strings de pesquisa ou estar vazia []\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_open_menu_pivot
@@ -393,6 +412,31 @@ msgid ""
 "            ⚠️ Always validate the returned model matches your expectations\n"
 "        "
 msgstr ""
+"\n"
+"            Recupera informações detalhadas (contexto, domínio, search_view) "
+"para menus específicos.\n"
+"DEVE ser chamado antes de usar qualquer ferramenta open_menu_* para obter "
+"detalhes específicos do menu.\n"
+"\n"
+"            Retorna CSV com delimitador pipe (|):\n"
+"            ```\n"
+"            menu_id|model_name|context|domain|search_view\n"
+"            389|sale.order|{\"search_default_my_quotation\": "
+"1}|[]|<search><fields>...</fields></search>\n"
+"            172|account.move|{\"search_default_draft\": 1}|"
+"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            ```\n"
+"\n"
+"            Informações importantes:\n"
+"- Contexto: Filtros/agrupamentos padrão aplicados quando o menu é aberto\n"
+"- Domínio: Filtros permanentes que não podem ser removidos pelos usuários\n"
+"- Search_view: Estrutura XML completa com filtros disponíveis, agrupamentos "
+"e campos pesquisáveis\n"
+"\n"
+"💡 Dica de desempenho: solicite vários detalhes do menu em uma única chamada "
+"ao comparar opções.\n"
+"⚠️ Sempre valide se o modelo retornado corresponde às suas expectativas.\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_adjust_search
@@ -484,7 +528,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0 code:addons/ai/models/ai_composer.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (cópia)"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -497,7 +541,6 @@ msgstr ""
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
-#, fuzzy
 msgid ""
 "<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
@@ -576,13 +619,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_schema
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_schema
 msgid "AI Schema"
-msgstr ""
+msgstr "Esquema de IA"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_description
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_description
 msgid "AI Tool Description"
-msgstr ""
+msgstr "Descrição da ferramenta de IA"
 
 #. module: ai
 #. odoo-javascript
@@ -601,7 +644,7 @@ msgstr "Chat com IA"
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "AI is listening..."
-msgstr ""
+msgstr "A IA está ouvindo..."
 
 #. module: ai
 #. odoo-javascript

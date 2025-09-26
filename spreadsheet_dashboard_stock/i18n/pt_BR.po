@@ -3,13 +3,14 @@
 # * spreadsheet_dashboard_stock
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Maitê Dietze (madi)" <madi@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 15:32+0000\n"
-"PO-Revision-Date: 2025-09-18 02:45+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:54+0000\n"
+"Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_dashboard_stock/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -66,7 +67,7 @@ msgstr "Tempo médio de ciclo"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Avg Lead Time"
-msgstr ""
+msgstr "Prazo médio de entrega"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript

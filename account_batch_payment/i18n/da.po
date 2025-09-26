@@ -8,13 +8,14 @@
 # Mads Søndergaard, 2022
 # Martin Trigaux, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:53+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "account_batch_payment/da/>\n"
 "Language: da\n"
@@ -174,7 +175,10 @@ msgid ""
 "Batch payments allow you grouping different payments to ease\n"
 "                    reconciliation. They are also useful when depositing checks\n"
 "                    to the bank."
-msgstr "Parti betalinger gør det muligt for dig at gruppere betaling, for at gøre det lettere at afstemme. De er er også brugbare ved indbetaling af checks til banken."
+msgstr ""
+"Parti betalinger gør det muligt for dig at gruppere betaling, for at gøre "
+"det lettere at afstemme. De er er også brugbare ved indbetaling af checks "
+"til banken."
 
 #. module: account_batch_payment
 #: model:ir.model,name:account_batch_payment.model_account_batch_error_wizard
@@ -190,7 +194,9 @@ msgstr "Partibetalinger fejl rapportering guide linje"
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
 msgid "Cannot validate an empty batch. Please add some payments to it first."
-msgstr "Kan ikke validere et tomt parti. Vær venlig at tilføje nogle betalinger til den først."
+msgstr ""
+"Kan ikke validere et tomt parti. Vær venlig at tilføje nogle betalinger til "
+"den først."
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.batch_error_wizard_form
@@ -719,13 +725,15 @@ msgstr "Partiet skal have samme type som betalingerne den indeholder."
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_error_wizard__batch_payment_id
 msgid "The batch payment generating the errors and warnings displayed in this wizard."
-msgstr "Partibetalingen generere de fejl og advarsler som er vist i denne guide."
+msgstr ""
+"Partibetalingen generere de fejl og advarsler som er vist i denne guide."
 
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
 msgid "The journal of the batch payment and of the payments it contains must be the same."
-msgstr "Journalen på parti betalingen og på betalingerne den indeholde skal være ens."
+msgstr ""
+"Journalen på parti betalingen og på betalingerne den indeholde skal være ens."
 
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_payment__payment_method_id
@@ -740,7 +748,9 @@ msgstr "I alt"
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_error_wizard__show_remove_options
 msgid "True if and only if the options to remove the payments causing the errors or warnings from the batch should be shown"
-msgstr "Sandt hvis, og kun hvis, indstillingerne, for at fjerne betalingen forårsager fejlene eller advarslerne fra partiet, bør vises"
+msgstr ""
+"Sandt hvis, og kun hvis, indstillingerne, for at fjerne betalingen "
+"forårsager fejlene eller advarslerne fra partiet, bør vises"
 
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_payment__activity_exception_decoration
@@ -785,7 +795,9 @@ msgstr "Hjemmesidens kommunikationshistorik"
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_payment__file_generation_enabled
 msgid "Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view."
-msgstr "Hvorvidt dette parti skal vise 'Generer fil' knappen i stedet for 'Print' i formular visningen eller ej."
+msgstr ""
+"Hvorvidt dette parti skal vise 'Generer fil' knappen i stedet for 'Print' i "
+"formular visningen eller ej."
 
 #. module: account_batch_payment
 #. odoo-python

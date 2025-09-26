@@ -10,13 +10,14 @@
 # Mads Søndergaard, 2022
 # Martin Trigaux, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:52+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "hr_referral/da/>\n"
 "Language: da\n"
@@ -458,7 +459,9 @@ msgstr "Medarbejder henvisning analyse"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_alert__url
 msgid "External links must start with 'http://www.'. For an internal url, you don't need to put domain name, you can just insert the path."
-msgstr "Eksterne link skal starte med 'http://www.'. For en intern URL, behøver du ikke angive et domæne navn, her kan du bare indsætte stien."
+msgstr ""
+"Eksterne link skal starte med 'http://www.'. For en intern URL, behøver du "
+"ikke angive et domæne navn, her kan du bare indsætte stien."
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__facebook
@@ -1296,7 +1299,9 @@ msgstr ""
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
 msgid "This field holds the image used as image for the head's friend when the user must choose a new friend, limited to 1024x1024px."
-msgstr "Dette felt indeholder billedet brugt som billedet for hovedets ven når bruger skal vælge en ny ven, begrænset til 1024x1024px."
+msgstr ""
+"Dette felt indeholder billedet brugt som billedet for hovedets ven når "
+"bruger skal vælge en ny ven, begrænset til 1024x1024px."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__image
@@ -1306,7 +1311,9 @@ msgstr "Dette felt kan indeholde varens billede, begrænset til 1024x1024 pixel.
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid "This link contains a tracker so that people clicking on it will account to a referral for you, even if they apply on a position after a few days."
-msgstr "Dette link indeholder en tracker, så folk der klikker på den vil tælle som en henvisning fra dig, selv hvis de ansøger stillingen efter et par dage."
+msgstr ""
+"Dette link indeholder en tracker, så folk der klikker på den vil tælle som "
+"en henvisning fra dig, selv hvis de ansøger stillingen efter et par dage."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__use_in_referral
@@ -1437,7 +1444,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/models/hr_referral_reward.py:0
 msgid "You do not have enough points in this company to buy this product. In this company, you have %s points."
-msgstr "Du har ikke tilstrækkelig point i denne virksomhed til at købe dette produkt. I denne virksomhed skal du have %s point."
+msgstr ""
+"Du har ikke tilstrækkelig point i denne virksomhed til at købe dette "
+"produkt. I denne virksomhed skal du have %s point."
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban

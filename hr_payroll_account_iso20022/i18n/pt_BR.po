@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-23 15:03+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/hr_payroll_account_iso20022/pt_BR/>\n"
@@ -80,7 +80,7 @@ msgstr "Funcionários com contas bancárias inválidas"
 #. module: hr_payroll_account_sepa
 #: model:ir.model.fields,help:hr_payroll_account_sepa.field_hr_payslip__sepa_export
 msgid "Export file related to this payslip"
-msgstr ""
+msgstr "Exportar arquivo relacionado a este holerite"
 
 #. module: hr_payroll_account_sepa
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_sepa.hr_payslip_view_form
@@ -90,7 +90,7 @@ msgstr "Arquivo exportado"
 #. module: hr_payroll_account_sepa
 #: model:ir.model.fields,help:hr_payroll_account_sepa.field_hr_payslip_run__sepa_export
 msgid "Exported SEPA .xml file"
-msgstr ""
+msgstr "Arquivo .xml SEPA exportado"
 
 #. module: hr_payroll_account_sepa
 #: model:ir.model.fields,help:hr_payroll_account_sepa.field_hr_payslip_run__sepa_export_filename
@@ -169,25 +169,26 @@ msgstr "Lotes holerite"
 #: model:ir.model.fields,field_description:hr_payroll_account_sepa.field_hr_payslip__sepa_export
 #: model:ir.model.fields,field_description:hr_payroll_account_sepa.field_hr_payslip_run__sepa_export
 msgid "SEPA File"
-msgstr ""
+msgstr "Arquivo SEPA"
 
 #. module: hr_payroll_account_sepa
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_sepa.hr_payslip_run_sepa_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_sepa.hr_payslip_sepa_view_form
 msgid "Select a bank journal."
-msgstr ""
+msgstr "Selecione um diário bancário."
 
 #. module: hr_payroll_account_sepa
 #. odoo-python
 #: code:addons/hr_payroll_account_sepa/models/hr_payslip.py:0
+#, fuzzy
 msgid "Some employees (%s) don't have a bank account."
-msgstr ""
+msgstr "Alguns funcionários (%s) não têm conta bancária."
 
 #. module: hr_payroll_account_sepa
 #. odoo-python
 #: code:addons/hr_payroll_account_sepa/models/hr_payslip.py:0
 msgid "Some employees (%s) don't have a private address."
-msgstr ""
+msgstr "Alguns funcionários (%s) não têm endereço particular."
 
 #. module: hr_payroll_account_sepa
 #. odoo-python

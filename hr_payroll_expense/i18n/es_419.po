@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:34+0000\n"
-"PO-Revision-Date: 2025-09-23 20:52+0000\n"
+"PO-Revision-Date: 2025-09-25 17:35+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_payroll_expense/es_419/>\n"
@@ -132,7 +132,7 @@ msgstr "Asiento contable"
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_payslip.py:0
 msgid "No debit account for EXPENSES rules"
-msgstr ""
+msgstr "No hay cuenta de débito para las reglas de GASTOS"
 
 #. module: hr_payroll_expense
 #. odoo-python
@@ -151,7 +151,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_payslip.py:0
 msgid "No rule to handle expenses"
-msgstr ""
+msgstr "No hay reglas para gestionar los gastos"
 
 #. module: hr_payroll_expense
 #. odoo-python

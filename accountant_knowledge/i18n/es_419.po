@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 14:56+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 23:36+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/accountant_knowledge/es_419/>\n"
 "Language: es_419\n"
@@ -126,27 +126,27 @@ msgstr "<strong>Equipo y herramientas</strong>"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "<strong>Intangible Assets</strong>"
-msgstr ""
+msgstr "<strong>Activos intangibles</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "<strong>International</strong><br>"
-msgstr ""
+msgstr "<strong>Internacional</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "<strong>Items</strong><br>"
-msgstr ""
+msgstr "<strong>Apuntes</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "<strong>Men</strong><br>"
-msgstr ""
+msgstr "<strong>Hombres</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "<strong>Name</strong><br>"
-msgstr ""
+msgstr "<strong>Nombre</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
@@ -156,7 +156,7 @@ msgstr ""
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
 msgid "<strong>Net Exceptional Result</strong><br>"
-msgstr ""
+msgstr "<strong>Resultado neto excepcional</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -166,7 +166,7 @@ msgstr "<strong>Valor neto</strong><br>"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Nominal Value per Share</strong><br>"
-msgstr ""
+msgstr "<strong>Valor nominal por acción</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -175,11 +175,14 @@ msgid ""
 "measures, the company has chosen to maintain the existing useful life "
 "periods for the depreciation of non-componentized assets."
 msgstr ""
+"<strong>Activos no componentes</strong>: La empresa aprovechó las medidas de "
+"tolerancia y ha optado por mantener los periodos de vida útil existentes "
+"para la depreciación de activos no componentes."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "<strong>Number of Shares</strong><br>"
-msgstr ""
+msgstr "<strong>Número de acciones</strong><br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -766,12 +769,12 @@ msgstr "Activos fiscales y seguridades mercantiles"
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Financial Commitments and Guarantees"
-msgstr ""
+msgstr "Compromisos financieros y garantías"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_position
 msgid "Financial Position"
-msgstr ""
+msgstr "Posición financiera"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -787,17 +790,17 @@ msgstr "Primeras entradas, primeras salidas (PEPS)"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Fiscal Year N - 1<br>"
-msgstr ""
+msgstr "Ejercicio fiscal N - 1 <br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Fiscal Year N<br>"
-msgstr ""
+msgstr "Ejercicio fiscal N<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Fixtures and fittings: 10 years"
-msgstr ""
+msgstr "Accesorios y equipo: 10 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -807,6 +810,11 @@ msgid ""
 "end. Any resulting exchange differences are recognized immediately in the "
 "income statement as foreign exchange gains or losses."
 msgstr ""
+"Para efectivo que tengas en moneda extranjera, las cantidades se convierten "
+"a euros en la tasa de cambio que afecte el último día laboral antes del "
+"final del ejercicio fiscal. Cualquier diferencia cambiaria resultante se "
+"reconoce de inmediato en el estado de resultados como una ganancia o pérdida "
+"cambiaria."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -814,6 +822,8 @@ msgid ""
 "For each member, indicate the retirement commitments and similar benefits "
 "granted to them."
 msgstr ""
+"Para cada miembro, indica los compromisos de jubilación y beneficios "
+"similares que se les de."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -822,6 +832,9 @@ msgid ""
 "the terms agreed upon and repayments made during the period, as well as the "
 "amount of commitments made on their behalf."
 msgstr ""
+"Por cada miembro, especifica las ventajas y los préstamos que se les dieron, "
+"incluye los términos que acordaron y reembolsos que se hicieron durante el "
+"periodo, así como la cantidad de compromisos que se hicieron en su nombre."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
@@ -829,6 +842,9 @@ msgid ""
 "For tax-consolidated entities, explain the tax allocation method, tax "
 "differences, loss carryforwards, and related accounting specifics."
 msgstr ""
+"Para las entidades consolidadas para efectos fiscales, explica el método de "
+"asignación de impuestos, las diferencias fiscales, las pérdidas trasladables "
+"y cosas específicas de contabilidad relacionadas."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -836,11 +852,13 @@ msgid ""
 "From the Equity app, print the Capitalization Table and insert it <strong "
 "class=\"o-upload-link\">here</strong>"
 msgstr ""
+"Para la aplicación Patrimonio, imprime la tabla de capitalización e "
+"insértala <strong class=\"o-upload-link\">aquí</strong>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Furniture: 10 years"
-msgstr ""
+msgstr "Muebles: 10 años"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
@@ -848,11 +866,14 @@ msgid ""
 "General accounting principles have been applied with due regard to the "
 "prudence principle, based on the following assumptions:"
 msgstr ""
+"Se aplicaron principios de contabilidad generales teniendo en cuenta el "
+"principio de los principios de prudencia valorativa, según las suposiciones "
+"a continuación:"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Get a complete PDF file, ready to be shared"
-msgstr ""
+msgstr "Obtén un archivo PDF completo, listo para compartir"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_research_and_development_costs
@@ -861,23 +882,26 @@ msgid ""
 "portion of its expenses pertains to development costs as defined by "
 "applicable accounting standards"
 msgstr ""
+"Tomando la naturaleza innovadora de las actividades de la empresa, una gran "
+"porción de sus gastos tienen que ver con los costos de desarrollo, como se "
+"definió con los estándares contables aplicables"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_account_principles_and_methods
 msgid "Going concern;"
-msgstr ""
+msgstr "Preocupación principal"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__id
 #: model:ir.model.fields,field_description:accountant_knowledge.field_ir_actions_report__id
 #: model:ir.model.fields,field_description:accountant_knowledge.field_knowledge_article__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Identification Number:"
-msgstr ""
+msgstr "Número de identificación:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -886,6 +910,9 @@ msgid ""
 "determined at the opening of the period, including which financial statement"
 " items are affected."
 msgstr ""
+"Si aplica, especifica el impacto de la nueva regulación de contabilidad como "
+"se determinó al inicio del periodo, incluyendo los asientos del estado "
+"financiero a los que afecta."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -894,6 +921,9 @@ msgid ""
 "prospective application and indicate the impact on key items for the period,"
 " unless impracticable to determine."
 msgstr ""
+"Si el cambio se aplicó de manera potencial, explica los motivos por esta "
+"aplicación e indica el impacto en elementos clave para el periodo, a no ser "
+"que sea imposible de determinar."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies

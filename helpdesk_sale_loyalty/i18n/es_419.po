@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:32+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:36+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/helpdesk_sale_loyalty/es_419/>\n"
@@ -131,7 +131,7 @@ msgstr "Generar y enviar tarjeta de regalo"
 #. module: helpdesk_sale_loyalty
 #: model:ir.model,name:helpdesk_sale_loyalty.model_loyalty_generate_wizard
 msgid "Generate Gift Card Wizard"
-msgstr ""
+msgstr "Asistente para generar tarjetas de regalo"
 
 #. module: helpdesk_sale_loyalty
 #: model:ir.model,name:helpdesk_sale_loyalty.model_helpdesk_sale_coupon_generate
@@ -192,13 +192,13 @@ msgstr "Última actualización el"
 #. odoo-python
 #: code:addons/helpdesk_sale_loyalty/models/helpdesk_ticket.py:0
 msgid "No Coupon found"
-msgstr ""
+msgstr "No encontramos ningún cupón"
 
 #. module: helpdesk_sale_loyalty
 #. odoo-python
 #: code:addons/helpdesk_sale_loyalty/models/helpdesk_ticket.py:0
 msgid "No gift cards found"
-msgstr ""
+msgstr "No encontramos ninguna tarjeta de regalo"
 
 #. module: helpdesk_sale_loyalty
 #. odoo-python

@@ -15,13 +15,14 @@
 # Lucas Holm, 2023
 # Sanne Kristensen <sanne@vkdata.dk>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:55+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/helpdesk/"
 "da/>\n"
 "Language: da\n"
@@ -227,7 +228,9 @@ msgstr ""
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid "<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-label=\"Domain alias\"/>&amp;nbsp;"
-msgstr "<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-label=\"Domain alias\"/>&amp;nbsp;"
+msgstr ""
+"<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-label="
+"\"Domain alias\"/>&amp;nbsp;"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -425,7 +428,9 @@ msgstr "<strong>Besked- og kommunikationshistorik</strong>"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_defaults
 msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
-msgstr "En Python-ordbog, der vil blive evalueret for at angive standardværdier, når du opretter nye poster til dette alias."
+msgstr ""
+"En Python-ordbog, der vil blive evalueret for at angive standardværdier, når "
+"du opretter nye poster til dette alias."
 
 #. module: helpdesk
 #: model:ir.model.constraint,message:helpdesk.constraint_helpdesk_tag_name_uniq
@@ -1682,7 +1687,9 @@ msgstr "ID"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_parent_thread_id
 msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ID for overordnet record indeholdende aliaset (eksempel: projekt, der indeholder opgaveoprettelses aliaset)"
+msgstr ""
+"ID for overordnet record indeholdende aliaset (eksempel: projekt, der "
+"indeholder opgaveoprettelses aliaset)"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__activity_exception_icon
@@ -1719,7 +1726,9 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_bounced_content
 msgid "If set, this content will automatically be sent out to unauthorized users instead of the default message."
-msgstr "Hvis angivet vil dette indhold automatisk blive sendt ud til uautoriserede brugere, i stedet for standard beskeden."
+msgstr ""
+"Hvis angivet vil dette indhold automatisk blive sendt ud til uautoriserede "
+"brugere, i stedet for standard beskeden."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__time
@@ -1940,7 +1949,9 @@ msgstr "Lav prioritet"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action
 msgid "Make sure tickets are handled in a timely manner by using SLA Policies.<br>"
-msgstr "Vær sikker på at sager håndteres indenfor en rimelig tid ved at anvende SLA Policer.<br>"
+msgstr ""
+"Vær sikker på at sager håndteres indenfor en rimelig tid ved at anvende SLA "
+"Policer.<br>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1950,7 +1961,9 @@ msgstr "Sørg for, at sagerne bliver håndteret til tiden"
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_sla_action_main
 msgid "Make sure tickets are handled on time by using SLA Policies.<br>"
-msgstr "Sørg for, at sagerne bliver håndteret til tiden ved at bruge SLA-politikker.<br>"
+msgstr ""
+"Sørg for, at sagerne bliver håndteret til tiden ved at bruge SLA-"
+"politikker.<br>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla__time
@@ -2306,7 +2319,10 @@ msgstr "Åbningstid (timer)"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_force_thread_id
 msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "Valgfri ID for en tråd (record), som alle indgående meddelelser vil blive vedhæftet, selvom de ikke svarede på det. Hvis opsat, vil dette fuldstændigt deaktivere oprettelsen af nye poster."
+msgstr ""
+"Valgfri ID for en tråd (record), som alle indgående meddelelser vil blive "
+"vedhæftet, selvom de ikke svarede på det. Hvis opsat, vil dette fuldstændigt "
+"deaktivere oprettelsen af nye poster."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.team_rating_page
@@ -2470,7 +2486,8 @@ msgstr ""
 "Politik til at oprette en besked på dokumentet ved hjælp af mailgatewayen.\n"
 "- alle: alle kan skrive\n"
 "- partnere: kun godkendte partnere\n"
-"- følgere: kun følgere af det relaterede dokument eller medlemmer af følgende kanaler\n"
+"- følgere: kun følgere af det relaterede dokument eller medlemmer af "
+"følgende kanaler\n"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__access_url
@@ -2610,7 +2627,9 @@ msgstr "Klar"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Receive notifications whenever tickets are created, rated or discussed on in this team"
-msgstr "Modtag meddelelser, hver gang sager oprettes, vurderes eller diskuteres i dette team"
+msgstr ""
+"Modtag meddelelser, hver gang sager oprettes, vurderes eller diskuteres i "
+"dette team"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_force_thread_id
@@ -3065,7 +3084,8 @@ msgstr "Stadier Til Slettelse"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__stage_ids
 msgid "Stages the team will use. This team's tickets will only be able to be in these stages."
-msgstr "Stadier, teamet vil bruge. Dette teams sager vil kun være i disse faser."
+msgstr ""
+"Stadier, teamet vil bruge. Dette teams sager vil kun være i disse faser."
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__sla_status
@@ -3221,7 +3241,9 @@ msgstr ""
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
 msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "Navnet på e-mail aliaset, f.eks. 'jobs', hvis du vil fange e-mails til <jobs@example.odoo.com>"
+msgstr ""
+"Navnet på e-mail aliaset, f.eks. 'jobs', hvis du vil fange e-mails til "
+"<jobs@example.odoo.com>"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_user_id
@@ -3269,7 +3291,9 @@ msgstr "Denne SLA-politik gælder for sager, der matcher ALLE følgende kriterie
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__campaign_id
 msgid "This is a name that helps you keep track of your different campaign efforts, e.g. Fall_Drive, Christmas_Special"
-msgstr "Dette er et navn, der hjælper dig med at holde styr på dine forskellige kampagneindsatser"
+msgstr ""
+"Dette er et navn, der hjælper dig med at holde styr på dine forskellige "
+"kampagneindsatser"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__medium_id
@@ -3699,7 +3723,9 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid "Want to <b>boost your customer satisfaction</b>?<br/><i>Click Helpdesk to start.</i>"
-msgstr "Vil du <b>øge din kundetilfredshed</b>?<br/><i>Klik på Helpdesk for at komme i gang."
+msgstr ""
+"Vil du <b>øge din kundetilfredshed</b>?<br/><i>Klik på Helpdesk for at komme "
+"i gang."
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup

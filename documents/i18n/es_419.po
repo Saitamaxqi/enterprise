@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 23:36+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/documents/es_419/>\n"
 "Language: es_419\n"
@@ -182,6 +182,8 @@ msgid ""
 "<i class=\"fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4\" "
 "title=\"Invite people\"/>"
 msgstr ""
+"<i class=\"fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4\" title="
+"\"Invitar personas\"/>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_document_res_partner_view
@@ -197,6 +199,11 @@ msgid ""
 "access to this folder/document or its parent will have edit permissions.</"
 "span>"
 msgstr ""
+"<span invisible=\"is_single\">Todos los usuarios con acceso a estas carpetas/"
+"documentos o sus elementos principales tendrán permiso de edición.</span>\n"
+"                        <span invisible=\"not is_single\">Todos los usuarios "
+"con acceso a estas carpetas/documentos o sus elementos principales tendrán "
+"permiso de edición.</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page
@@ -1857,7 +1864,7 @@ msgstr "Pueden modificar, eliminar y renombrar."
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__user_can_move
 msgid "Can move it"
-msgstr ""
+msgstr "Se puede mover"
 
 #. module: documents
 #. odoo-javascript
@@ -1891,7 +1898,7 @@ msgstr "Cambio"
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_access_tracking__changes
 msgid "Changes need to be tracked"
-msgstr ""
+msgstr "Se deben rastrear los cambios"
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__checksum
@@ -1906,7 +1913,7 @@ msgstr "Hijos"
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_operation_view_form
 msgid "Choose a destination"
-msgstr ""
+msgstr "Seleccionar un destino"
 
 #. module: documents
 #. odoo-python
@@ -1918,7 +1925,7 @@ msgstr "Elija un registro para vincular"
 #. odoo-javascript
 #: code:addons/documents/static/src/views/fields/documents_datetime/documents_datetime_field.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "Autorizar"
 
 #. module: documents
 #. odoo-javascript

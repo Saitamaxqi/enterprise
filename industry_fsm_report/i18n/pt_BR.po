@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-18 12:10+0000\n"
+"PO-Revision-Date: 2025-09-25 17:33+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/industry_fsm_report/pt_BR/>\n"
@@ -71,7 +71,7 @@ msgstr "Comentários"
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.project_project_form_inherit_industry_fsm_report
 msgid "Create reports to be signed off by your customers"
-msgstr ""
+msgstr "Crie relatórios para serem assinados por seus clientes"
 
 #. module: industry_fsm_report
 #: model:ir.model.fields,help:industry_fsm_report.field_project_task__worksheet_template_id
@@ -89,7 +89,7 @@ msgstr "Criado em"
 #. module: industry_fsm_report
 #: model_terms:ir.actions.act_window,help:industry_fsm_report.fsm_worksheets_action_settings
 msgid "Customize worksheet templates for each type of intervention.<br>"
-msgstr ""
+msgstr "Personalize modelos de planilhas para cada tipo de intervenção.<br>"
 
 #. module: industry_fsm_report
 #: model_terms:ir.ui.view,arch_db:industry_fsm_report.report_custom_x_project_task_worksheet_template_3

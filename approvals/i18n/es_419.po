@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:28+0000\n"
-"PO-Revision-Date: 2025-09-23 17:07+0000\n"
+"PO-Revision-Date: 2025-09-25 17:35+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/approvals/es_419/>\n"
@@ -165,7 +165,7 @@ msgstr "Una referencia adicional que debe especificarse en la solicitud."
 #. module: approvals
 #: model:ir.model.constraint,message:approvals.constraint_approval_approver_unique_request_user
 msgid "An approver with the same user already exists for this request."
-msgstr ""
+msgstr "Ya existe un aprobador con el mismo usuario para esta solicitud."
 
 #. module: approvals
 #. odoo-python

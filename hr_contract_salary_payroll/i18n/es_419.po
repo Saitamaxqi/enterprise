@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:45+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:36+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_contract_salary_payroll/es_419/>\n"
@@ -130,12 +130,12 @@ msgstr "Código"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Company cost"
-msgstr ""
+msgstr "Costo de la empresa"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Configure Benefits"
-msgstr ""
+msgstr "Configurar prestaciones"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_configuration_contract
@@ -145,12 +145,12 @@ msgstr "Contratos"
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Copy Link"
-msgstr ""
+msgstr "Copiar enlace"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__country_id
 msgid "Country"
-msgstr ""
+msgstr "País"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_applicant__display_name
@@ -177,7 +177,7 @@ msgstr "Contrato de empleado"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__final_yearly_costs
 msgid "Employer Budget"
-msgstr ""
+msgstr "Presupuesto del empleador"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payroll_headcount_line__employer_cost
@@ -193,12 +193,12 @@ msgstr "Tipos de empleo"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Gross <span invisible=\"is_full_time\">(Part Time)</span>"
-msgstr ""
+msgstr "Bruto <span invisible=\"is_full_time\">(medio tiempo)</span>"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_offer__budget_type__monthly_gross
 msgid "Gross Per Month"
-msgstr ""
+msgstr "Brutos mensuales"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__gross_wage

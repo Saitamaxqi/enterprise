@@ -12,13 +12,14 @@
 # Martin Trigaux, 2022
 # Sanne Kristensen <sanne@vkdata.dk>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:54+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/da/>\n"
 "Language: da\n"
@@ -3538,7 +3539,8 @@ msgstr "Salgsordrens næste faktureringsdato bør ligge efter dens startdato."
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_sale_order__next_invoice_date
 msgid "The next invoice will be created on this date then the period will be extended."
-msgstr "Den næste faktura vil blive oprettet på denne dato, så perioden forlænges."
+msgstr ""
+"Den næste faktura vil blive oprettet på denne dato, så perioden forlænges."
 
 #. module: sale_subscription
 #. odoo-python

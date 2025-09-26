@@ -9,13 +9,14 @@
 # Morten Schou <ms@msteknik.dk>, 2022
 # Mads Søndergaard, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:28+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "currency_rate_live/da/>\n"
 "Language: da\n"
@@ -28,7 +29,9 @@ msgstr ""
 #. module: currency_rate_live
 #: model_terms:ir.ui.view,arch_db:currency_rate_live.res_config_settings_view_form
 msgid "<i title=\"Update now\" role=\"img\" aria-label=\"Update now\" class=\"fa fa-fw fa-refresh\"/>"
-msgstr "<i title=\"Opdater nu\" role=\"img\" aria-label=\"Opdater nu\" class=\"fa fa-fw fa-refresh\"/>"
+msgstr ""
+"<i title=\"Opdater nu\" role=\"img\" aria-label=\"Opdater nu\" class="
+"\"fa fa-fw fa-refresh\"/>"
 
 #. module: currency_rate_live
 #: model:ir.model.fields.selection,name:currency_rate_live.selection__res_company__currency_provider__boc
@@ -163,7 +166,9 @@ msgstr "Ugentlig"
 #. odoo-python
 #: code:addons/currency_rate_live/models/res_config_settings.py:0
 msgid "Your main currency (%s) is not supported by this exchange rate provider. Please choose another one."
-msgstr "Din primære valuta (%s) understøttes ikke af denne valutakurs udbyder. Vælg venligst en anden."
+msgstr ""
+"Din primære valuta (%s) understøttes ikke af denne valutakurs udbyder. Vælg "
+"venligst en anden."
 
 #. module: currency_rate_live
 #: model:ir.model.fields.selection,name:currency_rate_live.selection__res_company__currency_provider__xe_com

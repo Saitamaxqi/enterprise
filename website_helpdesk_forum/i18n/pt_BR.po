@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/website_helpdesk_forum/pt_BR/>\n"
@@ -31,7 +31,6 @@ msgstr ", por"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
-#, fuzzy
 msgid "<i class=\"fa fa-3x rounded bg-secondary m-3 fa-comments fa-3x rounded bg-secondary m-3\">​</i>"
 msgstr ""
 "<i class=\"fa fa-3x rounded bg-secondary m-3 fa-comments fa-3x rounded bg-"
@@ -77,7 +76,7 @@ msgstr "Pergunte à comunidade"
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_ticket__can_share_forum
 msgid "Can Share Forum"
-msgstr ""
+msgstr "Pode compartilhar fórum"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.helpdesk_ticket_select_forum_wizard_view_form
@@ -178,6 +177,8 @@ msgstr "ID"
 #: model:ir.model.fields,help:website_helpdesk_forum.field_helpdesk_team__website_forum_ids
 msgid "In the help center, customers will only be able to see posts from the selected forums."
 msgstr ""
+"Na central de ajuda, os clientes só poderão ver as publicações dos fóruns "
+"selecionados."
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_ticket_select_forum_wizard__write_uid

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/project_timesheet_forecast/pt_BR/>\n"
@@ -68,7 +68,7 @@ msgstr "Atribuído a"
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__can_open_timesheets
 msgid "Can Open Timesheets"
-msgstr ""
+msgstr "Pode abrir planilhas de horas"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__company_id
@@ -169,11 +169,15 @@ msgstr "Nenhum turno encontrado. Vamos criá-los!"
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_analysis_report__effective_hours
 msgid "Number of hours on the employee's Timesheets for this task (and its sub-tasks) during the timeframe of the shift."
 msgstr ""
+"Número de horas nas planilhas de horas do funcionário para essa tarefa (e "
+"suas subtarefas) durante o período do turno."
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_slot__effective_hours
 msgid "Number of hours the employee recorded on their Timesheetes for this task (and its sub-tasks) for the period of this shift."
 msgstr ""
+"Número de horas que o funcionário registrou em suas planilhas de horas para "
+"essa tarefa (e suas subtarefas) durante o período desse turno."
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__planned_costs

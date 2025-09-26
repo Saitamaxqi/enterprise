@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/pt_BR/>\n"
@@ -61,18 +61,18 @@ msgstr "Classificável por IA"
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__ai_to_sort
 #: model_terms:ir.ui.view,arch_db:ai_documents.documents_document_view_kanban
 msgid "AI To Sort"
-msgstr ""
+msgstr "IA para organizar"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_add_tags
 msgid "AI: Add Tags"
-msgstr ""
+msgstr "IA: Adicionar marcadores"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/ir_actions_server.py:0
 msgid "AI: An error occurred: %s"
-msgstr ""
+msgstr "IA: Ocorreu um erro: %s"
 
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_move_in_folder
@@ -82,7 +82,7 @@ msgstr "IA: Mover para a pasta"
 #. module: ai_documents
 #: model:ir.actions.server,name:ai_documents.ir_actions_server_rename_documents
 msgid "AI: Rename Document"
-msgstr ""
+msgstr "IA: Renomear documento"
 
 #. module: ai_documents
 #: model:ir.actions.server,ai_tool_description:ai_documents.ir_actions_server_add_tags
@@ -102,7 +102,7 @@ msgstr "Classificação de documentos Ai"
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__allowed_tools_ids
 msgid "Allowed Tools"
-msgstr ""
+msgstr "Ferramentas permitidas"
 
 #. module: ai_documents
 #. odoo-python
@@ -156,7 +156,7 @@ msgstr ""
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Cancelar"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__display_name
@@ -164,23 +164,23 @@ msgstr ""
 #: model:ir.model.fields,field_description:ai_documents.field_documents_document__display_name
 #: model:ir.model.fields,field_description:ai_documents.field_ir_actions_server__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Exibir nome"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Documento"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Document Content"
-msgstr ""
+msgstr "Conteúdo do documento"
 
 #. module: ai_documents
 #: model:ir.model.fields,help:ai_documents.field_documents_document__ai_to_sort
 msgid "Flag to mark the files as to be sorted with AI"
-msgstr ""
+msgstr "Sinalizador para marcar os arquivos a organizar com IA"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__folder_id

@@ -10,13 +10,14 @@
 # Martin Trigaux, 2022
 # Sanne Kristensen <sanne@vkdata.dk>, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:55+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/mrp_plm/"
 "da/>\n"
 "Language: da\n"
@@ -67,9 +68,11 @@ msgid ""
 "                    </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
-"                        Upload filer til dit ECO, som vil blive anvendt på produktet senere\n"
+"                        Upload filer til dit ECO, som vil blive anvendt på "
+"produktet senere\n"
 "                    </p><p>\n"
-"                        Brug denne funktion til at lagre enhver fil, så som tegninger eller specifikationer.\n"
+"                        Brug denne funktion til at lagre enhver fil, så som "
+"tegninger eller specifikationer.\n"
 "                    </p>"
 
 #. module: mrp_plm
@@ -90,7 +93,9 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
 msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
-msgstr "En Python-ordbog, der vil blive evalueret for at angive standardværdier, når du opretter nye poster til dette alias."
+msgstr ""
+"En Python-ordbog, der vil blive evalueret for at angive standardværdier, når "
+"du opretter nye poster til dette alias."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -352,7 +357,8 @@ msgid ""
 "              used to make a finished product; through a manufacturing\n"
 "              order or a pack of products."
 msgstr ""
-"Stykliste gør det muligt for dig at definere listen over nødvendige komponenter\n"
+"Stykliste gør det muligt for dig at definere listen over nødvendige "
+"komponenter\n"
 "               for at lave et færdigt produkt; via en produktionsordre\n"
 "               eller samling af produkter."
 
@@ -878,7 +884,9 @@ msgstr "ID"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_thread_id
 msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ID for overordnet record indeholdende aliaset (eksempel: projekt, der indeholder opgaveoprettelses aliaset)"
+msgstr ""
+"ID for overordnet record indeholdende aliaset (eksempel: projekt, der "
+"indeholder opgaveoprettelses aliaset)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_exception_icon
@@ -908,12 +916,16 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_bounced_content
 msgid "If set, this content will automatically be sent out to unauthorized users instead of the default message."
-msgstr "Hvis angivet vil dette indhold automatisk blive sendt ud til uautoriserede brugere, i stedet for standard beskeden."
+msgstr ""
+"Hvis angivet vil dette indhold automatisk blive sendt ud til uautoriserede "
+"brugere, i stedet for standard beskeden."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
 msgid "If the active field is set to False, it will allow you to hide the engineering change order without removing it."
-msgstr "Hvis det aktive felt er angivet til Falsk, vil det gøre dig i stand til at skjule den tekniske ændringsordre, uden at fjerne den."
+msgstr ""
+"Hvis det aktive felt er angivet til Falsk, vil det gøre dig i stand til at "
+"skjule den tekniske ændringsordre, uden at fjerne den."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -1039,7 +1051,8 @@ msgid ""
 "              before applying your changes."
 msgstr ""
 "Administrer dine produkt- og stykliste ændringer med ECO'er.\n"
-"            Indhent den relaterede dokumentation og modtag nødvendige godkendelser\n"
+"            Indhent den relaterede dokumentation og modtag nødvendige "
+"godkendelser\n"
 "            før du anvender dine ændringer."
 
 #. module: mrp_plm
@@ -1240,7 +1253,10 @@ msgstr "Operation ikke understøttet"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
 msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "Valgfri ID for en tråd (record), som alle indgående meddelelser vil blive vedhæftet, selvom de ikke svarede på det. Hvis opsat, vil dette fuldstændigt deaktivere oprettelsen af nye poster."
+msgstr ""
+"Valgfri ID for en tråd (record), som alle indgående meddelelser vil blive "
+"vedhæftet, selvom de ikke svarede på det. Hvis opsat, vil dette fuldstændigt "
+"deaktivere oprettelsen af nye poster."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_document__origin_attachment_id
@@ -1315,7 +1331,8 @@ msgstr ""
 "Politik til at oprette en besked på dokumentet ved hjælp af mailgatewayen.\n"
 "- alle: alle kan skrive\n"
 "- partnere: kun godkendte partnere\n"
-"- følgere: kun følgere af det relaterede dokument eller medlemmer af følgende kanaler\n"
+"- følgere: kun følgere af det relaterede dokument eller medlemmer af "
+"følgende kanaler\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__previous_bom_id
@@ -1418,7 +1435,9 @@ msgstr "Rebasér"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
-msgstr "Rebasér ny revision af stykliste med forrige ECO stykliste og gamle stykliste ændringer."
+msgstr ""
+"Rebasér ny revision af stykliste med forrige ECO stykliste og gamle "
+"stykliste ændringer."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1576,7 +1595,8 @@ msgstr ""
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "System will automatically resolved the conflict(s) and apply changes. Do you agree?"
-msgstr "Systemet vil automatisk løse konflikter(ne) og anvende ændringer. Er du enig?"
+msgstr ""
+"Systemet vil automatisk løse konflikter(ne) og anvende ændringer. Er du enig?"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag__name
@@ -1602,7 +1622,8 @@ msgstr "Opgave igang. Klik for at blokere eller markere som udført."
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "Task is blocked. Click to unblock or set as done."
-msgstr "Opgave er blokeret. Klik for at ophæve blokeringen eller markere som udført."
+msgstr ""
+"Opgave er blokeret. Klik for at ophæve blokeringen eller markere som udført."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_approve
@@ -1646,7 +1667,9 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
 msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "Navnet på e-mail aliaset, f.eks. 'jobs', hvis du vil fange e-mails til <jobs@example.odoo.com>"
+msgstr ""
+"Navnet på e-mail aliaset, f.eks. 'jobs', hvis du vil fange e-mails til "
+"<jobs@example.odoo.com>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_user_id
@@ -1772,7 +1795,9 @@ msgstr "Arbejdscentre"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
-msgstr "Du kan også tilføje en beskrivelse for at hjælpe dine kolleger med at forstå meningen og formålet med dette stadie."
+msgstr ""
+"Du kan også tilføje en beskrivelse for at hjælpe dine kolleger med at forstå "
+"meningen og formålet med dette stadie."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1785,7 +1810,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "You cannot change the stage, as approvals are required in the process."
-msgstr "Du kan ikke ændre stadiet, eftersom godkendelser er påkrævet i behandlingen."
+msgstr ""
+"Du kan ikke ændre stadiet, eftersom godkendelser er påkrævet i behandlingen."
 
 #. module: mrp_plm
 #. odoo-python

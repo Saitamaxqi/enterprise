@@ -13,13 +13,14 @@
 # Martin Trigaux, 2022
 # Mads Søndergaard, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:52+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/da/>\n"
 "Language: da\n"
@@ -1745,7 +1746,9 @@ msgstr "Hvis modtager bor i udlandet"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__active
 msgid "If the active field is set to false, it will allow you to hide the salary rule without removing it."
-msgstr "Hvis det aktive felt er sat til falsk, vil det lade dig skjule lønnen uden at fjerne den."
+msgstr ""
+"Hvis det aktive felt er sat til falsk, vil det lade dig skjule lønnen uden "
+"at fjerne den."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__image_1920

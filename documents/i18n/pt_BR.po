@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"PO-Revision-Date: 2025-09-25 23:35+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents/pt_BR/>\n"
@@ -67,7 +67,7 @@ msgstr "%s documentos/pastas foram movidos para a raiz da empresa."
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "%s members added."
-msgstr ""
+msgstr "%s membros adicionados."
 
 #. module: documents
 #. odoo-javascript
@@ -183,10 +183,13 @@ msgstr "<i class=\"fa fa-upload\"/> Substituir arquivo"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_sharing_view_form
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4\" "
 "title=\"Invite people\"/>"
 msgstr ""
+"<i class=\"fa fa-w fa-user-plus col-form-label ps-1 pe-4 fs-4\" title="
+"\"Invite people\"/>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.documents_document_res_partner_view
@@ -202,6 +205,11 @@ msgid ""
 "access to this folder/document or its parent will have edit permissions.</"
 "span>"
 msgstr ""
+"<span invisible=\"is_single\">Todos os usuários com acesso a essas pastas/"
+"documentos ou seus superiores terão permissões de edição.</span>\n"
+"                        <span invisible=\"not is_single\">Todos os usuários "
+"com acesso a esta pasta/documento ou ao principal terão permissões de "
+"edição.</span>"
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.public_folder_page

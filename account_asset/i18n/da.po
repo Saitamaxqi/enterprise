@@ -12,13 +12,14 @@
 # Mads Søndergaard, 2022
 # Sanne Kristensen <sanne@vkdata.dk>, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:51+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/da/>\n"
 "Language: da\n"
@@ -158,17 +159,23 @@ msgstr "Konto"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_type
 msgid "Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to close a fiscal year and generate opening entries."
-msgstr "Konto type bliver brugt til informations brug, for at generere landsspecifikke juridiske rapporter, og laver regler for at lukke et regnskabsår samt oprette startposter."
+msgstr ""
+"Konto type bliver brugt til informations brug, for at generere "
+"landsspecifikke juridiske rapporter, og laver regler for at lukke et "
+"regnskabsår samt oprette startposter."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_depreciation_id
 msgid "Account used in the depreciation entries, to decrease the asset value."
-msgstr "Konto, der anvendes i afskrivningsposterne, for at reducere aktivværdien."
+msgstr ""
+"Konto, der anvendes i afskrivningsposterne, for at reducere aktivværdien."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_depreciation_expense_id
 msgid "Account used in the periodical entries, to record a part of the asset as expense."
-msgstr "Konto, der anvendes i periodiske poster, til registrering af en del af anlægsaktiv som omkostning."
+msgstr ""
+"Konto, der anvendes i periodiske poster, til registrering af en del af "
+"anlægsaktiv som omkostning."
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_expense_form
@@ -193,7 +200,8 @@ msgstr "Konto der bruges til at registrere den udskudte indtægt"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_asset_id
 msgid "Account used to record the purchase of the asset at its original price."
-msgstr "Konto bruges til at registrere køb af anlægsaktiv til dets oprindelige pris."
+msgstr ""
+"Konto bruges til at registrere køb af anlægsaktiv til dets oprindelige pris."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__gain_account_id
@@ -203,7 +211,9 @@ msgstr "Konto der bruges til at postere journal aktivet, i tilfælde af gevinst"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_res_company__gain_account_id
 msgid "Account used to write the journal item in case of gain while selling an asset"
-msgstr "Konto som bruges til at postere journal aktivet, i tilfælde af gevinst ved salg af et aktiv"
+msgstr ""
+"Konto som bruges til at postere journal aktivet, i tilfælde af gevinst ved "
+"salg af et aktiv"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__loss_account_id
@@ -213,7 +223,9 @@ msgstr "Konto der bruges til at postere et journal aktiv, i tilfælde af tab"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_res_company__loss_account_id
 msgid "Account used to write the journal item in case of loss while selling an asset"
-msgstr "Konto der bruges til at postere et journal aktiv, i tilfælde af tab ved salg af et aktiv"
+msgstr ""
+"Konto der bruges til at postere et journal aktiv, i tilfælde af tab ved salg "
+"af et aktiv"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -1278,7 +1290,10 @@ msgstr "Hvis dette er valgt, vil en udgift/indtægt blive oprettet automatisk n�
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
 msgid "In case of an import from another software, you might need to use this field to have the right depreciation table report. This is the value that was already depreciated with entries not computed from this model"
-msgstr "I tilfælde af en import fra anden software, skal du muligvis bruge dette felt til at få den korrekte forældelses tabel rapport. Dette er den værdi der allerede var forældet med posteringer ikke udregnet fra denne model"
+msgstr ""
+"I tilfælde af en import fra anden software, skal du muligvis bruge dette "
+"felt til at få den korrekte forældelses tabel rapport. Dette er den værdi "
+"der allerede var forældet med posteringer ikke udregnet fra denne model"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__informational_text
@@ -1442,7 +1457,9 @@ msgstr "Flere Aktiver per Linje"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_account__multiple_assets_per_line
 msgid "Multiple asset items will be generated depending on the bill line quantity instead of 1 global asset."
-msgstr "Flere aktiver vil blive generet afhængig af regningslinje mængden i stedet for 1 global aktiv."
+msgstr ""
+"Flere aktiver vil blive generet afhængig af regningslinje mængden i stedet "
+"for 1 global aktiv."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__my_activity_date_deadline
@@ -1743,7 +1760,9 @@ msgstr "Metode til indtægtsføring"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "Reverse the depreciation entries posted in the future in order to modify the depreciation"
-msgstr "Tilbagefør afskrivelses posteringer posteret i fremtiden, for at modificerer afskrivningen"
+msgstr ""
+"Tilbagefør afskrivelses posteringer posteret i fremtiden, for at modificerer "
+"afskrivningen"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__open
@@ -1842,7 +1861,9 @@ msgstr "Lige Linje"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__book_value
 msgid "Sum of the depreciable value, the salvage value and the book value of all value increase items"
-msgstr "Summen af afskrivelses værdien, bjærgnings værdien, og bog værdien for alle værdi forøgende aktiver"
+msgstr ""
+"Summen af afskrivelses værdien, bjærgnings værdien, og bog værdien for alle "
+"værdi forøgende aktiver"
 
 #. module: account_asset
 #. odoo-python
@@ -1875,7 +1896,9 @@ msgstr "Nedarvingerne er forøgelsen i værdi for dette aktiv"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_ids
 msgid "The disposal invoice is needed in order to generate the closing journal entry."
-msgstr "Bortskaffelses fakturaen skal bruges, for at oprette en afsluttende journal postering."
+msgstr ""
+"Bortskaffelses fakturaen skal bruges, for at oprette en afsluttende journal "
+"postering."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_number
@@ -2015,13 +2038,17 @@ msgstr "Du kan ikke arkivere et datasæt der ikke er lukket"
 #: code:addons/account_asset/models/account_asset.py:0
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot automate the journal entry for an asset that has a running gross increase. Please use 'Dispose' on the increase(s)."
-msgstr "Du kan ikke automatisere journalføringen for et aktiv, der har en løbende bruttostigning. Brug 'Bortskaf' i stigningen."
+msgstr ""
+"Du kan ikke automatisere journalføringen for et aktiv, der har en løbende "
+"bruttostigning. Brug 'Bortskaf' i stigningen."
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot create an asset from lines containing credit and debit on the account or with a null amount"
-msgstr "Du kan ikke oprette et aktiv fra linjer der indeholder kredit eller debit på kontoen, eller med en nul-mængde."
+msgstr ""
+"Du kan ikke oprette et aktiv fra linjer der indeholder kredit eller debit på "
+"kontoen, eller med en nul-mængde."
 
 #. module: account_asset
 #. odoo-python
@@ -2037,7 +2064,8 @@ msgid ""
 "You should either confirm the asset, then, sell or dispose of it, or cancel the linked journal entries."
 msgstr ""
 "Du kan ikke slette et aktiv som er forbundet til posteringer.\n"
-"Du bør enten bekræfte aktivet, og derefter sælge eller bortskaffe den, eller annullere de forbundne journalpostering."
+"Du bør enten bekræfte aktivet, og derefter sælge eller bortskaffe den, eller "
+"annullere de forbundne journalpostering."
 
 #. module: account_asset
 #. odoo-python

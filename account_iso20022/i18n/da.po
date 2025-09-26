@@ -11,13 +11,14 @@
 # JonathanStein <jstein@image.dk>, 2022
 # Mads Søndergaard, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:50+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "account_iso20022/da/>\n"
 "Language: da\n"
@@ -73,7 +74,9 @@ msgstr "Konfigurationsindstillinger"
 #. module: account_sepa
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_orgid_issr
 msgid "Entity that assigns the identification (eg. KBE-BCO or Finanzamt Muenchen IV)."
-msgstr "Vedkommende der tilskriver identifikationen (f.eks. KBE-BCO eller Finanzamt Muenchen IV)."
+msgstr ""
+"Vedkommende der tilskriver identifikationen (f.eks. KBE-BCO eller Finanzamt "
+"Muenchen IV)."
 
 #. module: account_sepa
 #: model:ir.model.fields.selection,name:account_sepa.selection__account_journal__sepa_pain_version__pain_001_001_03
@@ -291,7 +294,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa/models/account_payment.py:0
 msgid "The journal '%s' requires a proper IBAN account to pay via SEPA. Please configure it first."
-msgstr "Journalen '%s' kræver en gyldig IBAN konto for at betale via SEPA. Opsæt den venligst først."
+msgstr ""
+"Journalen '%s' kræver en gyldig IBAN konto for at betale via SEPA. Opsæt den "
+"venligst først."
 
 #. module: account_sepa
 #. odoo-python
@@ -303,7 +308,9 @@ msgstr "For mange transaktioner til en enkelt fil."
 #: model:ir.model.fields,help:account_sepa.field_res_company__sepa_initiating_party_name
 #: model:ir.model.fields,help:account_sepa.field_res_config_settings__sepa_orgid_issr
 msgid "Will appear in SEPA payments as the name of the party initiating the payment. Limited to 70 characters."
-msgstr "Vil blive vist i SEPA betalinger som navnet på vedkommende der startede betalingen. Begrænset til 70 anslag."
+msgstr ""
+"Vil blive vist i SEPA betalinger som navnet på vedkommende der startede "
+"betalingen. Begrænset til 70 anslag."
 
 #. module: account_sepa
 #: model:ir.model.fields,field_description:account_sepa.field_res_company__sepa_initiating_party_name

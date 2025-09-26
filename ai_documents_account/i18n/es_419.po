@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-09-25 17:35+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents_account/es_419/>\n"
@@ -155,6 +155,8 @@ msgid ""
 "If the document is %(b_open)snot an invoice%(b_close)s, move it to the "
 "correct folder:"
 msgstr ""
+"Si el documento %(b_open)sno es una factura%(b_close)s, muévelo a la carpeta "
+"correcta:"
 
 #. module: ai_documents_account
 #. odoo-python
@@ -163,23 +165,25 @@ msgid ""
 "If the document is an %(b_open)sinvoice%(b_close)s, move it to the "
 "%(finance)s folder then trigger the relevant action:"
 msgstr ""
+"Si el documento es una %(b_open)sfactura%(b_close)s, muévelo a la carpeta de "
+"%(finance)s y luego activa la acción correspondiente:"
 
 #. module: ai_documents_account
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid "Is considered multipage"
-msgstr ""
+msgstr "Se considera de varias páginas"
 
 #. module: ai_documents_account
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid "Otherwise, %s"
-msgstr ""
+msgstr "De lo contrario, %s"
 
 #. module: ai_documents_account
 #: model:ir.model,name:ai_documents_account.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Acción del servidor"
 
 #. module: ai_documents_account
 #: model:documents.tag,name:ai_documents_account.documents_tag_to_split

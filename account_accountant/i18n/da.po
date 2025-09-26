@@ -13,13 +13,14 @@
 # Martin Trigaux, 2023
 # lhmflexerp <lhm@flexerp.dk>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:56+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/da/>\n"
 "Language: da\n"
@@ -68,7 +69,9 @@ msgstr "</b>Tip: Masse-opdatér posteringslinjer</b>"
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "<b class=\"tip_title\">Tip: Find an Accountant or register your Accounting Firm</b>"
-msgstr "<b class=\"tip_title\">Tip: Find en Revisor eller registrer dit Revisionsfirma </b>"
+msgstr ""
+"<b class=\"tip_title\">Tip: Find en Revisor eller registrer dit "
+"Revisionsfirma </b>"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -380,7 +383,9 @@ msgstr "Klik her for at oprette et nyt regnskabsår."
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "Click here to find an accountant or if you want to list out your accounting services on Odoo"
-msgstr "Klik her for at finde en revisor, eller hvis du ønsker en liste over dine regnskabstjenester på Odoo"
+msgstr ""
+"Klik her for at finde en revisor, eller hvis du ønsker en liste over dine "
+"regnskabstjenester på Odoo"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_company
@@ -429,7 +434,9 @@ msgstr "Opret en ny kontogruppe"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "Create your first vendor bill.<br/><br/><i>Tip: If you don’t have one on hand, use our sample bill.</i>"
-msgstr "Opret din første leverandørfaktura.<br/><br/><i>Råd: Hvis du ikke har en ved hånden, kan du bruge vores test faktura.</i>"
+msgstr ""
+"Opret din første leverandørfaktura.<br/><br/><i>Råd: Hvis du ikke har en ved "
+"hånden, kan du bruge vores test faktura.</i>"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__create_uid
@@ -558,7 +565,11 @@ msgstr "Slut dato, inkluderet i regnskabsåret."
 #: model:ir.model.fields,help:account_accountant.field_res_company__invoicing_switch_threshold
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__invoicing_switch_threshold
 msgid "Every payment and invoice before this date will receive the 'From Invoicing' status, hiding all the accounting entries related to it. Use this option after installing Accounting if you were using only Invoicing before, before importing all your actual accounting data in to Odoo."
-msgstr "Alle betalinger og faktura før denne dato vil få \"Fra Fakturering\" statussen, som skjuler alle regnskabsposteringer relateret til den. Brug denne mulighed efter installering af Regnskab, hvis du før kun brugte Fakturering, inden du importere alle dine aktuelle konto data til Odoo."
+msgstr ""
+"Alle betalinger og faktura før denne dato vil få \"Fra Fakturering\" "
+"statussen, som skjuler alle regnskabsposteringer relateret til den. Brug "
+"denne mulighed efter installering af Regnskab, hvis du før kun brugte "
+"Fakturering, inden du importere alle dine aktuelle konto data til Odoo."
 
 #. module: account_accountant
 #. odoo-python
@@ -723,7 +734,11 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_0
 msgid "From any list view, select multiple records and the list becomes editable. If you update a cell, selected records are updated all at once. Use this feature to update multiple journal entries from the General Ledger, or any Journal view."
-msgstr "Fra enhver listevisning kan du vælge flere datasæt, hvorpå listen blive redigerbar. Hvis du opdatere en celle, bliver valgte datasæt alle opdateret samtidigt. Brug denne funktion til at opdatere flere journalposteringer fra Hovedbogen, eller enhver Journalvisning."
+msgstr ""
+"Fra enhver listevisning kan du vælge flere datasæt, hvorpå listen blive "
+"redigerbar. Hvis du opdatere en celle, bliver valgte datasæt alle opdateret "
+"samtidigt. Brug denne funktion til at opdatere flere journalposteringer fra "
+"Hovedbogen, eller enhver Journalvisning."
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1060,7 +1075,8 @@ msgstr "Notater"
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_change_lock_date.py:0
 msgid "Only Billing Administrators are allowed to change lock dates!"
-msgstr "Kun Fakturerings Administratorer har tilladelse til at ændre låse datoer!"
+msgstr ""
+"Kun Fakturerings Administratorer har tilladelse til at ændre låse datoer!"
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_res_config_settings__period_lock_date
@@ -1550,7 +1566,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "You can not have an overlap between two fiscal years, please correct the start and/or end dates of your fiscal years."
-msgstr "Du kan ikke have et overlap mellem to regnskabsår, ret venligst start og/eller slut datoer for dine regnskabsår."
+msgstr ""
+"Du kan ikke have et overlap mellem to regnskabsår, ret venligst start og/"
+"eller slut datoer for dine regnskabsår."
 
 #. module: account_accountant
 #. odoo-python

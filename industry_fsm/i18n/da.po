@@ -11,13 +11,14 @@
 # Mads Søndergaard, 2022
 # JonathanStein <jstein@image.dk>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kira Petersen François (peti)" <peti@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-25 13:25+0000\n"
+"Last-Translator: \"Kira Petersen François (peti)\" <peti@odoo.com>\n"
 "Language-Team: Danish <https://translate.odoo.com/projects/odoo-19/"
 "industry_fsm/da/>\n"
 "Language: da\n"
@@ -425,7 +426,8 @@ msgstr "Vis Underskriv Rapport Sekundær"
 #: model:ir.model.fields,help:industry_fsm.field_project_project__is_fsm
 #: model:ir.model.fields,help:industry_fsm.field_project_task__is_fsm
 msgid "Display tasks in the Field Service module and allow planning with start/end dates."
-msgstr "Vis sager i felt service modulet, og tillad planlægning med start/slutdatoer."
+msgstr ""
+"Vis sager i felt service modulet, og tillad planlægning med start/slutdatoer."
 
 #. module: industry_fsm
 #. odoo-python
@@ -583,7 +585,9 @@ msgstr "Er arbejdsseddel afsendt"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.res_config_settings_view_form
 msgid "Keep track of the products used for your tasks, and invoice your time and material to your customers"
-msgstr "Hold styr på produkterne, der er anvendt på dine opgaver, og fakturér din tid og materialer til dine kunder"
+msgstr ""
+"Hold styr på produkterne, der er anvendt på dine opgaver, og fakturér din "
+"tid og materialer til dine kunder"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__date_last_stage_update
