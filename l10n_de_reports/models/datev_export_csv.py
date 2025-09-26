@@ -197,13 +197,14 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 move_types = ('in_refund', 'in_invoice', 'in_receipt')
             select = """SELECT distinct(aml.partner_id)
                         FROM account_move_line aml
-                        LEFT JOIN account_move m
+                        JOIN account_move m
                         ON aml.move_id = m.id
                         WHERE aml.id IN %s
                             AND aml.tax_line_id IS NULL
                             AND aml.debit != aml.credit
                             AND m.move_type IN %s
-                            AND aml.account_id != m.l10n_de_datev_main_account_id"""
+                            AND aml.account_id != m.l10n_de_datev_main_account_id
+                            AND aml.partner_id IS NOT NULL"""
             self.env.cr.execute(select, (tuple(move_line_ids), move_types))
         partners = self.env['res.partner'].browse([p.get('partner_id') for p in self.env.cr.dictfetchall()])
         for partner in partners:

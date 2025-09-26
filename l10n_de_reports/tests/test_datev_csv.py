@@ -92,6 +92,52 @@ class TestDatevCSV(AccountTestInvoicingCommon):
         self.assertIn(['119,00', 'S', 'EUR', '49800000', str(move.partner_id.id + 700000000),
                        self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[2].name], data)
 
+    def test_datev_in_receipt(self):
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        options['date'].update({
+            'date_from': '2020-01-01',
+            'date_to': '2020-12-31',
+        })
+
+        move = self.env['account.move'].create([{
+            'move_type': 'in_receipt',
+            'invoice_date': fields.Date.to_date('2020-12-01'),
+            'date': fields.Date.to_date('2020-12-01'),
+            'ref': 'Brocken123',
+            'invoice_line_ids': [Command.create({
+                    'name': 'Line Number 1',
+                    'price_unit': 100,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [Command.set(self.tax_19.ids)],
+                }),
+                Command.create({
+                    'name': 'Line Number 2',
+                    'price_unit': 100,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [Command.set(self.tax_19.ids)],
+                }),
+                Command.create({
+                    'name': 'Line Number 3',
+                    'price_unit': 100,
+                    'account_id': self.account_4980.id,
+                    'tax_ids': [Command.set(self.tax_19.ids)],
+                }),
+            ]
+        }])
+        move.action_post()
+        move.line_ids.flush_recordset()
+
+        account = move.l10n_de_datev_main_account_id
+        with zipfile.ZipFile(BytesIO(self.env[report.custom_handler_model_name].l10n_de_datev_export_to_zip(options)['file_content']), 'r') as zf:
+            reader = csv.reader(TextIOWrapper(zf.open('EXTF_accounting_entries.csv'), "utf-8"), delimiter=';', quotechar='"', quoting=2)
+        data = [[x[0], x[1], x[2], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:][::-1]
+        self.assertCountEqual([
+            ['119,00', 'S', 'EUR', '34000000', str(account.code).ljust(8, '0'), self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[0].name],
+            ['119,00', 'S', 'EUR', '34000000', str(account.code).ljust(8, '0'), self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[1].name],
+            ['119,00', 'S', 'EUR', '49800000', str(account.code).ljust(8, '0'), self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[2].name],
+        ], data)
+
     def test_datev_out_invoice(self):
         report = self.env.ref('account_reports.general_ledger_report')
         options = report.get_options({})
