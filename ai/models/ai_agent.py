@@ -449,7 +449,7 @@ class AIAgent(models.Model):
         if not ask_ai_agent:
             raise UserError(_('No configured Ask AI agent. Please contact your administrator.'))
 
-        channel = ask_ai_agent._get_or_create_ai_chat()
+        channel = ask_ai_agent._create_ai_chat_channel()
         return {
             'type': 'ir.actions.client',
             'tag': 'agent_chat_action',
@@ -687,7 +687,7 @@ class AIAgent(models.Model):
             ('is_member', '=', True),
             ('channel_type', '=', 'ai_chat'),
         ]))
-        return channels.filtered(lambda channel: channel.sudo().ai_agent_id == self)
+        return channels.filtered(lambda channel: channel.sudo().ai_agent_id == self)[:1]
 
     def _create_ai_chat_channel(self, channel_name=None):
         # The method is called in three safe scenarios:

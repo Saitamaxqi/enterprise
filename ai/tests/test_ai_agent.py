@@ -86,3 +86,38 @@ class TestAIAgent(TransactionCase):
             second_question_count = sum(1 for msg in user_messages if msg.get('content') == 'second question')
 
             self.assertEqual(second_question_count, 1, "User prompt 'second question' should appear only once in messages")
+
+    def test_get_or_create_ai_chat_returns_single_channel(self):
+        """Ensure _get_or_create_ai_chat always returns a single channel even if multiple exist."""
+        agent = self.env["ai.agent"].create({
+            "name": "Test Agent",
+        })
+        # create the first AI chat channel
+        agent._get_or_create_ai_chat()
+
+        # manually create a second AI chat channel for the same agent
+        self.env["discuss.channel"].create({
+            "channel_member_ids": [
+                Command.create({"partner_id": self.env.user.partner_id.id}),
+            ],
+            "channel_type": "ai_chat",
+            "ai_agent_id": agent.id,
+            "name": "Extra AI chat",
+        })
+
+        # call again: should return a single record
+        channel = agent._get_or_create_ai_chat()
+        self.assertEqual(len(channel), 1, "Should always return exactly one AI chat channel")
+
+    def test_action_ask_ai_always_opens_a_new_channel(self):
+        """Ensure action_ask_ai always opens a new ai chat channel."""
+        agent = self.env["ai.agent"].create({"name": "Odoo AI"})
+
+        action_1 = agent.action_ask_ai("Hello, AI!")
+        action_2 = agent.action_ask_ai("Hello, AI, again!")
+
+        self.assertLess(
+            action_1["params"]["channelId"],
+            action_2["params"]["channelId"],
+            "Each call to 'action_ask_ai' should open a new ai chat channel."
+        )
