@@ -22,6 +22,10 @@ class TestAIDraftUI(HttpCase):
             'name': 'Test task',
             'project_id': project.id,
             'stage_id': stage.id,
+            'partner_id': cls.env['res.partner'].create({
+                'name': 'Freddy',
+                'email': 'freddy@example.com',
+            }).id,
         })
         cls.env.ref('base.user_admin').write({
             'email': 'mitchell.admin@example.com'

@@ -97,6 +97,10 @@ registry.category("web_tour.tours").add("test_ai_draft_chatter_button", {
             trigger: ".odoo-editor-editable:eq(1):has(p:contains('This is dummy ai response'))",
         },
         {
+            content: "The default recipients should be set in the composer dialog",
+            trigger: ".o_mail_composer_form_view div[name='partner_ids'] .badge[title='Freddy']",
+        },
+        {
             content: "Close the composer dialog",
             trigger: ".btn-close",
             run: "click",

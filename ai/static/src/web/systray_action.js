@@ -2,6 +2,7 @@ import { Component } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
+import { rpc } from "@web/core/network/rpc";
 
 export default class SystrayAction extends Component {
     static props = {};
@@ -54,10 +55,41 @@ export default class SystrayAction extends Component {
                 originalRecordFields: model.root.fields,
                 aiChatSourceId: model.root.resId,
                 aiSpecialActions: {
-                    sendMessage: (content) => {
+                    sendMessage: async (content) => {
                         composerAction["name"] = _t("Send Message");
                         composerAction["context"]["default_subtype_xmlid"] = "mail.mt_comment";
                         composerAction["context"]["default_body"] = content;
+                        const allRecipients = [
+                            ...thread.suggestedRecipients,
+                            ...thread.additionalRecipients,
+                        ];
+                        // auto-create partner
+                        const newPartners = allRecipients.filter(
+                            (recipient) => !recipient.partner_id,
+                        );
+                        if (newPartners.length !== 0) {
+                            const recipientEmails = [];
+                            newPartners.forEach((recipient) => {
+                                recipientEmails.push(recipient.email);
+                            });
+                            const partners = await rpc("/mail/partner/from_email", {
+                                thread_model: thread.model,
+                                thread_id: thread.id,
+                                emails: recipientEmails,
+                            });
+                            for (const index in partners) {
+                                const partnerData = partners[index];
+                                const partner = this.mailStore["res.partner"].insert(partnerData);
+                                const email = recipientEmails[index];
+                                const recipient = allRecipients.find(
+                                    (recipient) => recipient.email === email,
+                                );
+                                recipient.partner_id = partner.id;
+                            }
+                        }
+                        composerAction["context"]["default_partner_ids"] = allRecipients
+                            .filter((recipient) => recipient.partner_id)
+                            .map((recipient) => recipient.partner_id);
                         this.actionService.doAction(composerAction, {
                             onClose: () => thread?.fetchNewMessages(),
                         });
