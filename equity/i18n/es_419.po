@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-25 23:36+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/equity/es_419/>\n"
@@ -234,6 +234,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "<span>Missing supporting documents! Attach them in the chatter.</span>"
 msgstr ""
+"<span>¡Faltan los documentos de respaldo! Adjúntalos en el chatter.</span>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
@@ -258,7 +259,7 @@ msgstr "<strong>O</strong>"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Tax ID Number:</strong>"
-msgstr ""
+msgstr "<strong>Número de identificación fiscal:</strong>"
 
 #. module: equity
 #. odoo-javascript
@@ -276,6 +277,11 @@ msgid ""
 "A credit or financial institution located in a country listed by the Royal Decree of 19 July 2013 drawing up a third\n"
 "                            country equivalence list for a simplified due diligence (article 37(2), subparagraph 1(2 and 5), of the AML law);"
 msgstr ""
+"Una institución crediticia o financiera ubicada en un país indicado por el "
+"Real Decreto del 19 de julio de 2013 que establece una lista de "
+"equivalencias de terceros \n"
+"                            países para una debida diligencia simplificada ("
+"Artículo 37(2), Párrafo 1(2 y 5) de la Ley AML)."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -283,6 +289,9 @@ msgid ""
 "A listed company: a company whose shares are traded on a regulated market a Member States of the European\n"
 "                            Economic Area; or"
 msgstr ""
+"Una empresa cotizada: una empresa cuyas acciones se negocian en un mercado "
+"regulado de un Estado miembro del Área\n"
+"                            Económica Europea; o"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -290,71 +299,73 @@ msgid ""
 "According to laws related to anti money laundering, the notary must identify"
 " the beneficial owners of their customer."
 msgstr ""
+"De acuerdo con las leyes contra el lavado de dinero, el notario debe "
+"identificar a los beneficiarios finales de su cliente."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_needaction
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_needaction
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Se requiere una acción"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Add Beneficial Owner"
-msgstr ""
+msgstr "Agregar beneficiario final"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/valuation_chart_action/valuation_chart_action.js:0
 msgid "Add some valuations over the past year to see some data here."
-msgstr ""
+msgstr "Agrega algunas valuaciones del último año para ver datos aquí."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_attachment_count
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_attachment_count
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Número de archivos adjuntos"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_number
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_number
 msgid "Attachment Number"
-msgstr ""
+msgstr "Número de archivos adjuntos"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__attachment_ids
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__attachment_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "Archivos adjuntos"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_valuation__event__audit
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Audit"
-msgstr ""
+msgstr "Auditoría"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__auditor
 msgid "Auditor"
-msgstr ""
+msgstr "Auditor"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model:ir.model.fields,help:equity.field_equity_ubo__auth_rep_role
 msgid "Authorized Representative Role"
-msgstr ""
+msgstr "Función de representante autorizado"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_ubo
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_list
 msgid "Beneficial Owners"
-msgstr ""
+msgstr "Propietarios beneficiarios"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form

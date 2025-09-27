@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-25 23:35+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_transfer/es_419/>\n"
@@ -197,18 +197,18 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "IFRS Transfers"
-msgstr ""
+msgstr "Transferencias NIIF"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "IFRS rent expense transfer"
-msgstr ""
+msgstr "Transferencia NIIF de gastos de renta"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__state__in_progress
 msgid "In Progress"
-msgstr ""
+msgstr "En progreso"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_journal
@@ -219,44 +219,44 @@ msgstr "Diario"
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Asiento contable"
 
 #. module: account_transfer
 #: model:ir.model,name:account_transfer.model_account_move_line
 msgid "Journal Item"
-msgstr ""
+msgstr "Apunte contable"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Keep Original"
-msgstr ""
+msgstr "Mantener el original"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_uid
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Última actualización por"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__write_date
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Última actualización el"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__month
 msgid "Monthly"
-msgstr ""
+msgstr "Mensual"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__move_ids_count
 msgid "Move Ids Count"
-msgstr ""
+msgstr "Número de ID de movimiento"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Move Model"
-msgstr ""
+msgstr "Modelo de movimiento"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_tree

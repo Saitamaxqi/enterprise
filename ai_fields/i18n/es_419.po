@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-25 23:36+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_fields/es_419/>\n"
@@ -140,7 +140,7 @@ msgstr "Mostrar nombre"
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "Felt like a riddle I couldn’t solve"
-msgstr ""
+msgstr "Se sintió como un acertijo que no pude resolver"
 
 #. module: ai_fields
 #: model:ir.model,name:ai_fields.model_ir_model_fields
@@ -151,25 +151,25 @@ msgstr "Campos"
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "Hmm... that was a bit fuzzy for me"
-msgstr ""
+msgstr "Mmmh... eso estuvo un poco confuso para mí"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "I couldn't connect the dots"
-msgstr ""
+msgstr "No logré conectar las piezas"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "I couldn't quite make sense of that"
-msgstr ""
+msgstr "No pude entenderlo del todo"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "I gave it a shot, but came up empty"
-msgstr ""
+msgstr "Lo intenté, pero no encontré nada"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__id
@@ -186,13 +186,13 @@ msgstr "Mensaje"
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "Missing a few pieces of the puzzle"
-msgstr ""
+msgstr "Faltaron algunas piezas del rompecabezas"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "My circuits didn't quite get it"
-msgstr ""
+msgstr "Mis circuitos no lo entendieron del todo"
 
 #. module: ai_fields
 #. odoo-python
@@ -204,25 +204,25 @@ msgstr "La instrucción no contiene ningún valor permitido."
 #. odoo-python
 #: code:addons/ai_fields/tools.py:0
 msgid "Oops, an unexpected error occurred."
-msgstr ""
+msgstr "Uy, ocurrió un error inesperado."
 
 #. module: ai_fields
 #. odoo-python
 #: code:addons/ai_fields/tools.py:0
 msgid "Oops, the connection failed."
-msgstr ""
+msgstr "Uy, la conexión falló."
 
 #. module: ai_fields
 #. odoo-python
 #: code:addons/ai_fields/tools.py:0
 msgid "Oops, the request timed out."
-msgstr ""
+msgstr "Uy, la solicitud superó el tiempo de espera."
 
 #. module: ai_fields
 #. odoo-python
 #: code:addons/ai_fields/tools.py:0
 msgid "Oops, the response could not be processed."
-msgstr ""
+msgstr "Uy, no pudimos procesar la respuesta."
 
 #. module: ai_fields
 #. odoo-javascript
@@ -246,7 +246,7 @@ msgstr "Actualizar valor"
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/model/relational_model/record.js:0
 msgid "That was a bit over my head"
-msgstr ""
+msgstr "Eso estuvo un poco complejo para mí"
 
 #. module: ai_fields
 #. odoo-javascript
@@ -260,7 +260,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_fields/models/models.py:0
 msgid "You can not use the field %(field)s in a prompt."
-msgstr ""
+msgstr "No puedes usar el campo %(field)s en una instrucción."
 
 #. module: ai_fields
 #. odoo-javascript

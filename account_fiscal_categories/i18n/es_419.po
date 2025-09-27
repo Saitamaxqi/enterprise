@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:24+0000\n"
-"PO-Revision-Date: 2025-09-25 17:34+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_fiscal_categories/es_419/>\n"
@@ -146,6 +146,8 @@ msgid ""
 "General: Make sure the deduction for business meals is under the legal "
 "limit."
 msgstr ""
+"General: Asegúrate de que la deducción por comidas de trabajo esté dentro "
+"del límite legal."
 
 #. module: account_fiscal_categories
 #: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__id
@@ -209,7 +211,7 @@ msgstr "Fecha de inicio"
 #. odoo-javascript
 #: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
 msgid "There are multiple fiscal rates in this period"
-msgstr ""
+msgstr "Hay varias tasas fiscales en este periodo"
 
 #. module: account_fiscal_categories
 #. odoo-python

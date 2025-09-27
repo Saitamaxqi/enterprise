@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:27+0000\n"
-"PO-Revision-Date: 2025-09-25 23:35+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/appointment_google_reserve/es_419/>\n"
@@ -215,18 +215,18 @@ msgstr "Reserva con Google"
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_access_token
 msgid "Google Reserve Access Token"
-msgstr ""
+msgstr "Token de acceso de Reserva con Google"
 
 #. module: appointment_google_reserve
 #: model:ir.model,name:appointment_google_reserve.model_google_reserve_merchant
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_type__google_reserve_merchant_id
 msgid "Google Reserve Merchant"
-msgstr ""
+msgstr "Comerciante de Reserva con Google"
 
 #. module: appointment_google_reserve
 #: model:ir.actions.act_window,name:appointment_google_reserve.google_reserve_merchant_action
 msgid "Google Reserve Merchants"
-msgstr ""
+msgstr "Comerciantes de Reserva con Google"
 
 #. module: appointment_google_reserve
 #. odoo-python
@@ -235,11 +235,13 @@ msgid ""
 "Google Reserve requires a complete address.Including a Country, a City, a "
 "Postal Code and a Street"
 msgstr ""
+"Reserva con Google requiere una dirección completa, incluyendo país, ciudad, "
+"código postal y calle"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Tiene un mensaje"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
@@ -247,11 +249,13 @@ msgid ""
 "Hold a second — are you sure you want to stop showing on Google Reserve? "
 "Changes can take up to 24 hours to take effect."
 msgstr ""
+"¿De verdad quieres detener tu visibilidad en Reserva con Google? Los cambios "
+"pueden tardar hasta 24 horas en aplicarse."
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid "I'm ready, synchronize!"
-msgstr ""
+msgstr "Todo listo, ¡sincroniza!"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_appointment_resource__id
@@ -260,18 +264,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__id
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_resource_calendar_leaves__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Si está seleccionado, hay nuevos mensajes que requieren tu atención."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_error
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Si se encuentra seleccionado, no se pudieron enviar algunos mensajes."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
@@ -279,6 +283,8 @@ msgid ""
 "If the sanitized phone number is on the blacklist, the contact won't receive"
 " mass mailing sms anymore, from any list"
 msgstr ""
+"El contacto ya no recibirá SMS de envío masivo de ninguna lista si el "
+"teléfono depurado está en la lista de exclusión."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_blacklisted
@@ -287,6 +293,9 @@ msgid ""
 "distinguish which number is blacklisted             when there is both a "
 "mobile and phone field in a model."
 msgstr ""
+"Indica si el número de teléfono es un número fijo. Sirve para distinguir qué "
+"número está en la lista de exclusión cuando hay un campo de celular y otro "
+"de teléfono fijo en un modelo."
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__message_is_follower

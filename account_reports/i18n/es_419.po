@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-25 23:35+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_reports/es_419/>\n"
 "Language: es_419\n"
@@ -394,6 +394,9 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
+"<span invisible="
+"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
+"\"oe_stat_text ps-0 text-danger\">Pendiente</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -402,6 +405,9 @@ msgid ""
 "                                                    <span invisible=\"not "
 "records_count\"> </span>"
 msgstr ""
+"<span invisible=\"not records_count or records_count &lt; 21\">+20</span>\n"
+"                                                    <span invisible="
+"\"not records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -413,6 +419,13 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
+"<span invisible=\"not show_warning_wrong_dates\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title="
+"\"El rango seleccionado no coincide con ningún ejercicio fiscal.\"/>\n"
+"                            <span invisible="
+"\"not show_warning_existing_return\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title="
+"\"Ya existe una declaración para el periodo seleccionado.\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -480,7 +493,7 @@ msgstr "Cuenta"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_audit_account_status
 msgid "Account Audit Account Status"
-msgstr ""
+msgstr "Estado de las cuentas de la auditoría"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-23 02:40+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_iso20022/es_419/>\n"
@@ -33,8 +33,8 @@ msgid ""
 "Ask the bank to group the bank transactions corresponding to these payments "
 "into a single transaction."
 msgstr ""
-"Pedirle al banco que agrupe las transacciones bancarias que correspondan a "
-"estos pagos en una sola transacción."
+"Pide al banco que agrupe las transacciones bancarias correspondientes a "
+"estos pagos en una sola."
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
@@ -131,7 +131,7 @@ msgstr "El empleado %s no tiene un país definido en su dirección."
 #: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__end_to_end_uuid
 msgid "End to End ID"
-msgstr ""
+msgstr "ID de extremo a extremo"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_company__iso20022_orgid_issr

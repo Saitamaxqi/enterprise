@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 18:45+0000\n"
-"PO-Revision-Date: 2025-09-25 23:36+0000\n"
+"PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_contract_salary_payroll/es_419/>\n"
@@ -203,13 +203,13 @@ msgstr "Brutos mensuales"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__gross_wage
 msgid "Gross Wage"
-msgstr ""
+msgstr "Salario bruto"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.actions.act_window,name:hr_contract_salary_payroll.action_hr_salary_simulator
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Gross-Net Salary Calculator"
-msgstr ""
+msgstr "Calculadora de sueldo bruto-neto"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_payroll_headcount_line
@@ -236,17 +236,17 @@ msgstr "Influye en el total mensual"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__is_full_time
 msgid "Is Full Time"
-msgstr ""
+msgstr "Es de tiempo completo"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__is_simulation_offer
 msgid "Is Simulation Offer"
-msgstr ""
+msgstr "Es una oferta de simulación"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_benefits
 msgid "Monthly Benefits"
-msgstr ""
+msgstr "Beneficios mensuales"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__monthly_yearly_costs
@@ -257,12 +257,12 @@ msgstr "Costo mensual"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_employer_cost
 msgid "Monthly Employer Cost"
-msgstr ""
+msgstr "Costo mensual del empleador"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_wage
 msgid "Monthly Wage"
-msgstr ""
+msgstr "Salario mensual"
 
 #. module: hr_contract_salary_payroll
 #: model:hr.contract.salary.resume,name:hr_contract_salary_payroll.hr_contract_salary_resume_net_employee
@@ -270,7 +270,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Net"
-msgstr ""
+msgstr "Neto"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__net_wage
@@ -319,7 +319,7 @@ msgstr ""
 "Valor de la suma de prestaciones: Puedes seleccionar todas las prestaciones "
 "y calcular su suma.\n"
 "Total mensual: La información será el total de toda la información en la "
-"categoría Prestaciones mensuales."
+"categoría Beneficios mensuales."
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
