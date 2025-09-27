@@ -294,10 +294,21 @@ export class SignTemplate extends Component {
         });
     }
 
+    _getTemplateFields() {
+        return [
+            "id",
+            "has_sign_requests",
+            "responsible_count",
+            "display_name",
+            "active",
+            "model_name",
+        ];
+    }
+
     async fetchTemplateData() {
         const template = await this.orm.call("sign.template", "read", [
             [this.templateID],
-            ["id", "has_sign_requests", "responsible_count", "display_name", "active", "model_name"],
+            this._getTemplateFields(),
         ]);
 
         if (!template.length) {
