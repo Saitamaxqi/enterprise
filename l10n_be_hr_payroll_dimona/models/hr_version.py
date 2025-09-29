@@ -84,7 +84,7 @@ class HrVersion(models.Model):
             raise UserError(_('No expeditor number defined on the payroll settings.'))
         certificate_sudo = company.sudo().onss_certificate_id
         if not certificate_sudo:
-            raise UserError(_('No Certificate definer on the Payroll Configuration'))
+            raise UserError(_('No Certificate defined on the Payroll Configuration'))
         unique_id = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(20))
         now = int(time.time())
         payload = {
@@ -190,11 +190,13 @@ class HrVersion(models.Model):
             raise UserError(_('The employee name is incomplete'))
 
         if foreigner and not all(self.employee_id[field] for field in ['birthday', 'place_of_birth', 'country_of_birth', 'country_id', 'sex']):
-            raise UserError(_("Foreigner employees should provide their name, birthdate, birth place, birth country, nationality and the sex"))
+            raise UserError(_("Foreigner employees should provide their name, birthdate, birth place, birth country, nationality and sex"))
         if foreigner and not all(self.employee_id[f'private_{field}'] for field in ['street', 'zip', 'city', 'country_id']):
-            raise UserError(_("Foreigner employees should provide a complete address (street, number, zip, city, country"))
+            raise UserError(_("Foreigner employees should provide a complete address (street, number, zip, city, country)"))
         if not foreigner and self.employee_id.private_zip not in API_DATA['data']['municipality_by_postal_code']:
             raise UserError(_("The employee zip does not exist."))
+        if not self.employee_id.sex:
+            raise UserError(_("The employee sex is not specified."))
 
         if self.employee_id.private_street:
             street_digits = re.findall(r"[0-9]+", self.employee_id.private_street)
