@@ -3,13 +3,14 @@
 # * hr_payroll_holidays
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:34+0000\n"
-"PO-Revision-Date: 2025-09-16 12:13+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-29 12:10+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_holidays/ko/>\n"
 "Language: ko\n"
@@ -87,7 +88,7 @@ msgstr "표시명"
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_employee
 msgid "Employee"
-msgstr ""
+msgstr "직원"
 
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_version
@@ -121,7 +122,7 @@ msgstr "ID"
 #. module: hr_payroll_holidays
 #: model:ir.model.fields,field_description:hr_payroll_holidays.field_hr_employee__leave_ids
 msgid "Leave"
-msgstr ""
+msgstr "휴가"
 
 #. module: hr_payroll_holidays
 #: model:mail.activity.type,name:hr_payroll_holidays.mail_activity_data_hr_leave_to_defer

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-25 23:35+0000\n"
+"PO-Revision-Date: 2025-09-29 12:10+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/pt_BR/>\n"
@@ -108,7 +108,7 @@ msgstr "Ferramentas permitidas"
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Auto sorting has been scheduled"
-msgstr ""
+msgstr "A classificação automática foi agendada"
 
 #. module: ai_documents
 #. odoo-javascript
