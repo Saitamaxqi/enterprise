@@ -75,7 +75,7 @@ class DiscussChannel(models.Model):
         ]
 
         if record_model:
-            original_record = self.env[record_model].browse(record_id)
+            original_record = self.env[record_model].search([('id', '=', record_id)])
             # Add extra info that are relevant to the where we call the AI from (record info, chatter info, pre-prompts, etc.)
             model_context += original_record._ai_initialise_context(
                 caller_component, text_selection, front_end_info
