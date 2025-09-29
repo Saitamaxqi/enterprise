@@ -9,7 +9,7 @@
     },
     "jwt": {
         "audiance": "https://services.socialsecurity.be/REST/oauth/v5/token",
-        "expires_in": 5000,
+        "expires_in": 50000,
         "user": "self_service_expeditor_%s"
     },
     "routes": {
