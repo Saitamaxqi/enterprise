@@ -2011,6 +2011,12 @@
                 "language_regex": "^(de|fr|nl)$"
             },
             {
+                "name": "l10n_be_hr_payroll_dimona_auto",
+                "filemask": "l10n_be_hr_payroll_dimona_auto/i18n/*.po",
+                "new_base": "l10n_be_hr_payroll_dimona_auto/i18n/l10n_be_hr_payroll_dimona_auto.pot",
+                "language_regex": "^(de|fr|nl)$"
+            },
+            {
                 "name": "l10n_be_hr_payroll_fleet",
                 "filemask": "l10n_be_hr_payroll_fleet/i18n/*.po",
                 "new_base": "l10n_be_hr_payroll_fleet/i18n/l10n_be_hr_payroll_fleet.pot",
