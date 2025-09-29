@@ -78,11 +78,11 @@ class HrVersion(models.Model):
                 raise UserError(_(' The API response have an unexpected type. Please contact an administrator.'))
         return response_json
 
-    def _get_jwt(self):
-        expeditor_number = self.company_id.onss_expeditor_number
+    def _get_jwt(self, company):
+        expeditor_number = company.onss_expeditor_number
         if not expeditor_number:
             raise UserError(_('No expeditor number defined on the payroll settings.'))
-        certificate_sudo = self.company_id.sudo().onss_certificate_id
+        certificate_sudo = company.sudo().onss_certificate_id
         if not certificate_sudo:
             raise UserError(_('No Certificate definer on the Payroll Configuration'))
         unique_id = ''.join(secrets.choice(string.ascii_letters + string.digits) for _ in range(20))
@@ -91,9 +91,9 @@ class HrVersion(models.Model):
             # Unique jwt indentifier
             "jti": unique_id,
             # App supplying the jwt
-            "iss": API_DATA['jwt']['user'] % (self.company_id.onss_expeditor_number),
+            "iss": API_DATA['jwt']['user'] % (company.onss_expeditor_number),
             # Main jwt subject
-            "sub": API_DATA['jwt']['user'] % (self.company_id.onss_expeditor_number),
+            "sub": API_DATA['jwt']['user'] % (company.onss_expeditor_number),
             # jwt receiver (audience)
             "aud": API_DATA['jwt']['audiance'],
             # Expiration
@@ -118,8 +118,8 @@ class HrVersion(models.Model):
             raise UserError(_('Error on authentication. Please contact an administrator. (%s)', e))
         return bearer_token
 
-    def _dimona_authenticate(self, declare=True):
-        bearer = self._get_jwt()
+    def _dimona_authenticate(self, company, declare=True):
+        bearer = self._get_jwt(company)
         data = {
             'grant_type': 'client_credentials',
             'client_assertion_type': 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer',
@@ -144,7 +144,7 @@ class HrVersion(models.Model):
 
     def _dimona_declaration(self, data):
         self.ensure_one()
-        access_token = self._dimona_authenticate()
+        access_token = self._dimona_authenticate(self.company_id)
         headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer %s' % access_token,
@@ -294,7 +294,7 @@ class HrVersion(models.Model):
         if not self.l10n_be_dimona_last_declaration_number:
             raise UserError(_("No DIMONA declaration is linked to this contract"))
 
-        access_token = self._dimona_authenticate(declare=False)
+        access_token = self._dimona_authenticate(self.company_id, declare=False)
         headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer %s' % access_token,
