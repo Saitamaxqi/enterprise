@@ -245,7 +245,7 @@ class HrVersion(models.Model):
             data['dimonaIn']["plannedHoursNumber"] = self.l10n_be_dimona_planned_hours
         # Drop empty worker informations (The ONSS doesn't like it)
         data['worker']['address'] = {key: value for key, value in data['worker']['address'].items() if value}
-        data['worker'] = {key: value for key, value in data['worker'].items() if value}
+        data['worker'] = {key: value for key, value in data['worker'].items() if value or key == 'gender'}
 
         self._dimona_declaration(data)
 
