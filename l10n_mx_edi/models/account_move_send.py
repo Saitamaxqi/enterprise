@@ -49,8 +49,8 @@ class AccountMoveSend(models.AbstractModel):
         return alerts
 
     @api.model
-    def _check_move_constrains(self, moves):
-        super()._check_move_constrains(moves)
+    def _check_move_constraints(self, moves):
+        super()._check_move_constraints(moves)
         if any(move.company_id.country_id.code == 'MX' and not move.l10n_mx_edi_cfdi_to_public and (not move.commercial_partner_id.country_id or not move.commercial_partner_id.zip) for move in moves):
             raise UserError(_("CFDI not set to Public: The partner specified does not have recognized country and/or ZIP code set."))
 
