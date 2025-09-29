@@ -90,7 +90,7 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
                 # line is a tax line
                 tax = self.env['account.tax'].browse(model_id)
                 # TODO: handle taxes shared by the fiscal positions of multiple countries
-                tax_oss_country = tax.fiscal_position_ids.country_id
+                tax_oss_country = tax.fiscal_position_ids.country_id or tax.fiscal_position_ids.country_group_id.country_ids
 
                 if not tax_oss_country:
                     raise UserError(_("Tax %s is used on some OSS-tagged journal items in the period, but is not mapped by any fiscal position with a country set.", tax.display_name))
