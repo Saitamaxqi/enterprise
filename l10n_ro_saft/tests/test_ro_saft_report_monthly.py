@@ -96,85 +96,81 @@ class TestRoSaftReport(TestSaftReport):
             ],
         })
 
-        # Create invoices
-
-        cls.invoices = cls.env['account.move'].create([
+    def test_saft_report_monthly(self):
+        invoices = self.env['account.move'].create([
             {
                 'move_type': 'out_invoice',
                 'invoice_date': '2023-10-01',
                 'date': '2023-10-01',
-                'partner_id': cls.partner_a.id,
-                'currency_id': cls.env.ref('base.EUR').id,
+                'partner_id': self.partner_a.id,
+                'currency_id': self.env.ref('base.EUR').id,
                 'invoice_line_ids': [Command.create({
-                    'product_id': cls.product_a.id,
+                    'product_id': self.product_a.id,
                     'quantity': 5.0,
                     'price_unit': 400.0,
-                    'tax_ids': [Command.set(cls.company_data['default_tax_sale'].ids)],
+                    'tax_ids': [Command.set(self.company_data['default_tax_sale'].ids)],
                 })],
             },
             {
                 'move_type': 'out_refund',
                 'invoice_date': '2023-10-11',
                 'date': '2023-10-11',
-                'partner_id': cls.partner_a.id,
+                'partner_id': self.partner_a.id,
                 'invoice_line_ids': [Command.create({
-                    'product_id': cls.product_a.id,
+                    'product_id': self.product_a.id,
                     'quantity': 3.0,
                     'price_unit': 1000.0,
-                    'tax_ids': [Command.set(cls.company_data['default_tax_sale'].ids)],
+                    'tax_ids': [Command.set(self.company_data['default_tax_sale'].ids)],
                 })],
             },
             {
                 'move_type': 'in_invoice',
                 'invoice_date': '2023-10-21',
                 'date': '2023-10-21',
-                'partner_id': cls.partner_b.id,
+                'partner_id': self.partner_b.id,
                 'invoice_line_ids': [Command.create({
-                    'product_id': cls.product_b.id,
+                    'product_id': self.product_b.id,
                     'quantity': 10.0,
                     'price_unit': 800.0,
-                    'tax_ids': [Command.set(cls.company_data['default_tax_purchase'].ids)],
+                    'tax_ids': [Command.set(self.company_data['default_tax_purchase'].ids)],
                 })],
             },
             {
                 'move_type': 'in_invoice',
                 'invoice_date': '2023-10-26',
                 'date': '2023-10-26',
-                'partner_id': cls.partner_b.id,
+                'partner_id': self.partner_b.id,
                 'l10n_ro_is_self_invoice': True,  # This is a self-invoice
                 'invoice_line_ids': [Command.create({
-                    'product_id': cls.product_b.id,
+                    'product_id': self.product_b.id,
                     'quantity': 2.0,
                     'price_unit': 600.0,
-                    'tax_ids': [Command.set(cls.company_data['default_tax_purchase'].ids)],
+                    'tax_ids': [Command.set(self.company_data['default_tax_purchase'].ids)],
                 })]
             }
         ])
-        cls.invoices.action_post()
+        invoices.action_post()
 
-        cls.statement = cls.env['account.bank.statement'].create({
+        self.statement = self.env['account.bank.statement'].create({
             'name': 'test_statement',
             'line_ids': [
                 Command.create({
                     'date': '2023-10-15',
                     'payment_ref': 'Payment Ref',
-                    'partner_id': cls.partner_a.id,
-                    'journal_id': cls.company_data['default_journal_bank'].id,
-                    'foreign_currency_id': cls.env.ref('base.EUR').id,
+                    'partner_id': self.partner_a.id,
+                    'journal_id': self.company_data['default_journal_bank'].id,
+                    'foreign_currency_id': self.env.ref('base.EUR').id,
                     'amount': 1250.0,
                     'amount_currency': 250.0,
                 }),
             ],
         })
-
-    def test_saft_report_monthly(self):
         self._report_compare_with_test_file(
             self.report_handler.l10n_ro_export_saft_to_xml_monthly(self._generate_options()),
             'saft_report_monthly.xml'
         )
 
     def test_saft_report_errors_01(self):
-        self.invoices._unlink_or_reverse()  # to be able to disable the bank
         self.company_data['company'].write({
             'l10n_ro_saft_tax_accounting_basis': False,
             'phone': False,
@@ -189,6 +185,17 @@ class TestRoSaftReport(TestSaftReport):
         })
 
     def test_saft_report_errors_02(self):
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2023-10-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_b.id,
+                    'tax_ids': [Command.set(self.company_data['default_tax_sale'].ids)],
+                }),
+            ],
+        }).action_post()
         intrastat_installed = 'intrastat_code_id' in self.product_b
         self.partner_a.write({
             'city': False,
@@ -213,6 +220,21 @@ class TestRoSaftReport(TestSaftReport):
         self.assertEqual(set(cm.exception.errors), expected)
 
     def test_saft_report_errors_03(self):
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2023-10-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'tax_ids': [Command.set(self.company_data['default_tax_sale'].ids)],
+                }),
+                Command.create({
+                    'product_id': self.product_b.id,
+                    'tax_ids': [Command.set(self.company_data['default_tax_sale'].ids)],
+                }),
+            ],
+        }).action_post()
         self.company_data['default_tax_sale'].l10n_ro_saft_tax_type_id = False
         (self.company_data['company'].partner_id + self.partner_a).write({
             "vat": False,
@@ -230,6 +252,16 @@ class TestRoSaftReport(TestSaftReport):
         })
 
     def test_saft_report_errors_04(self):
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'invoice_date': '2023-10-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                }),
+            ],
+        }).action_post()
         self.company_data['company'].write({
             'vat': False,
             'company_registry': False,
@@ -241,3 +273,34 @@ class TestRoSaftReport(TestSaftReport):
             'company_vat_registry_number_missing',
             'partner_vat_doesnt_match_country',
         })
+
+    def test_saft_zero_balance_partner(self):
+        self.env['account.move'].create([
+            {
+                'move_type': 'out_invoice',
+                'invoice_date': '2023-10-01',
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'product',
+                        'price_unit': 100,
+                    }),
+                ],
+            },
+            {
+                'move_type': 'out_refund',
+                'invoice_date': '2023-10-01',
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'product',
+                        'price_unit': 100,
+                    }),
+                ],
+            },
+        ]).action_post()
+
+        self._report_compare_with_test_file(
+            self.report_handler.l10n_ro_export_saft_to_xml_monthly(self._generate_options()),
+            'saft_report_zero_balance_partner.xml'
+        )

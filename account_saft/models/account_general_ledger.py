@@ -284,71 +284,32 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             }),
         }
 
-        all_partners = self.env['res.partner']
-
         # Fill 'customer_vals_list' and 'supplier_vals_list'
-        report = self.env.ref('account_reports.partner_ledger_report')
-        new_options = report.get_options(options)
-        new_options['account_type'] = [
-            {'id': 'trade_receivable', 'selected': True},
-            {'id': 'non_trade_receivable', 'selected': True},
-            {'id': 'trade_payable', 'selected': True},
-            {'id': 'non_trade_payable', 'selected': True},
-        ]
-        handler = self.env['account.partner.ledger.report.handler']
-        partners_results = handler._query_partners(report, new_options)
-        partner_vals_list = []
-        rslts_array = tuple((partner, res_col_gr[options['single_column_group']]) for partner, res_col_gr in partners_results)
-        init_bal_res = handler._get_initial_balance_values(tuple(partner.id for partner, results in rslts_array if partner), options)
-
-        initial_balances_map = {}
-        initial_balance_gen = ((partner_id, init_bal_dict.get(options['single_column_group'])) for partner_id, init_bal_dict in init_bal_res.items())
-
-        for partner_id, initial_balance in initial_balance_gen:
-            initial_balances_map[partner_id] = initial_balance
-        for partner, results in rslts_array:
-            # Ignore Falsy partner.
-            if not partner:
-                continue
-
-            all_partners |= partner
-            partner_init_bal = initial_balances_map[partner.id]
-
-            opening_balance = partner_init_bal.get('balance', 0.0)
-            closing_balance = results.get('balance', 0.0)
-            partner_vals_list.append({
+        query = report._get_report_query(options, 'from_beginning', domain=[
+            ('account_id.account_type', 'in', ('asset_receivable', 'liability_payable')),
+        ])
+        query.groupby = SQL.identifier(query.table, "partner_id")
+        query.having = SQL(
+            "MIN(date) FILTER (WHERE date >= %(date_from)s AND date <= %(date_to)s) IS NOT NULL",
+            date_from=options['date']['date_from'],
+            date_to=options['date']['date_to'],
+        )
+        balance_result = self.env.execute_query(query.select(
+            SQL.identifier(query.table, "partner_id"),
+            SQL("COALESCE(SUM(balance) FILTER (WHERE date < %s), 0) AS opening_balance", options['date']['date_from']),
+            SQL("COALESCE(SUM(balance), 0) AS closing_balance"),
+        ))
+        all_partners = self.env['res.partner'].browse([partner_id for partner_id, *__ in balance_result])
+        for partner_id, opening_balance, closing_balance in balance_result:
+            partner = self.env['res.partner'].browse(partner_id).with_prefetch(all_partners._prefetch_ids)
+            balance = closing_balance - opening_balance
+            partner_type = 'customer' if balance >= 0.0 else 'supplier'
+            res['partner_detail_map'][partner_id]['type'] = partner_type
+            res[partner_type + '_vals_list'].append({
                 'partner': partner,
                 'opening_balance': opening_balance,
                 'closing_balance': closing_balance,
             })
-
-        if all_partners:
-            domain = [('partner_id', 'in', tuple(all_partners.ids))]
-            query = report._get_report_query(new_options, 'strict_range', domain=domain)
-            self.env.cr.execute(SQL(
-                '''
-                SELECT
-                    account_move_line.partner_id,
-                    SUM(account_move_line.balance)
-                FROM %(table_references)s
-                JOIN account_account account ON account.id = account_move_line.account_id
-                WHERE %(search_condition)s
-                AND account.account_type IN ('asset_receivable', 'liability_payable')
-                GROUP BY account_move_line.partner_id
-                ''',
-                table_references=query.from_clause,
-                search_condition=query.where_clause,
-            ))
-
-            for partner_id, balance in self.env.cr.fetchall():
-                res['partner_detail_map'][partner_id]['type'] = 'customer' if balance >= 0.0 else 'supplier'
-
-        for partner_vals in partner_vals_list:
-            partner_id = partner_vals['partner'].id
-            if res['partner_detail_map'][partner_id]['type'] == 'customer':
-                res['customer_vals_list'].append(partner_vals)
-            elif res['partner_detail_map'][partner_id]['type'] == 'supplier':
-                res['supplier_vals_list'].append(partner_vals)
 
         # Fill 'partner_detail_map'.
         all_partners |= values['company'].partner_id

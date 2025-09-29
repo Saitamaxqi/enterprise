@@ -32,6 +32,74 @@ class TestRoSaftReportAssets(TestRoSaftReport):
             return new_truck
 
         super().setUpClass()
+        cls.invoices = cls.env['account.move'].create([
+            {
+                'move_type': 'out_invoice',
+                'invoice_date': '2023-10-01',
+                'date': '2023-10-01',
+                'partner_id': cls.partner_a.id,
+                'currency_id': cls.env.ref('base.EUR').id,
+                'invoice_line_ids': [Command.create({
+                    'product_id': cls.product_a.id,
+                    'quantity': 5.0,
+                    'price_unit': 400.0,
+                    'tax_ids': [Command.set(cls.company_data['default_tax_sale'].ids)],
+                })],
+            },
+            {
+                'move_type': 'out_refund',
+                'invoice_date': '2023-10-11',
+                'date': '2023-10-11',
+                'partner_id': cls.partner_a.id,
+                'invoice_line_ids': [Command.create({
+                    'product_id': cls.product_a.id,
+                    'quantity': 3.0,
+                    'price_unit': 1000.0,
+                    'tax_ids': [Command.set(cls.company_data['default_tax_sale'].ids)],
+                })],
+            },
+            {
+                'move_type': 'in_invoice',
+                'invoice_date': '2023-10-21',
+                'date': '2023-10-21',
+                'partner_id': cls.partner_b.id,
+                'invoice_line_ids': [Command.create({
+                    'product_id': cls.product_b.id,
+                    'quantity': 10.0,
+                    'price_unit': 800.0,
+                    'tax_ids': [Command.set(cls.company_data['default_tax_purchase'].ids)],
+                })],
+            },
+            {
+                'move_type': 'in_invoice',
+                'invoice_date': '2023-10-26',
+                'date': '2023-10-26',
+                'partner_id': cls.partner_b.id,
+                'l10n_ro_is_self_invoice': True,  # This is a cls-invoice
+                'invoice_line_ids': [Command.create({
+                    'product_id': cls.product_b.id,
+                    'quantity': 2.0,
+                    'price_unit': 600.0,
+                    'tax_ids': [Command.set(cls.company_data['default_tax_purchase'].ids)],
+                })]
+            }
+        ])
+        cls.invoices.action_post()
+
+        cls.statement = cls.env['account.bank.statement'].create({
+            'name': 'test_statement',
+            'line_ids': [
+                Command.create({
+                    'date': '2023-10-15',
+                    'payment_ref': 'Payment Ref',
+                    'partner_id': cls.partner_a.id,
+                    'journal_id': cls.company_data['default_journal_bank'].id,
+                    'foreign_currency_id': cls.env.ref('base.EUR').id,
+                    'amount': 1250.0,
+                    'amount_currency': 250.0,
+                }),
+            ],
+        })
 
         asset_account_id = cls.company_data['default_account_assets'].id
         loss_account_id = cls.company_data['default_account_expense'].id
