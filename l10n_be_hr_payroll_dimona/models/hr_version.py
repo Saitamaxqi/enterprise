@@ -8,10 +8,11 @@ import secrets
 import string
 import time
 
+from cryptography.hazmat.primitives import serialization
 from datetime import timedelta
-from werkzeug.urls import url_quote
 from requests import request
 from requests.exceptions import HTTPError
+from werkzeug.urls import url_quote
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
@@ -27,6 +28,7 @@ DIMONA_TIMEOUT = 30
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
+    # YTI TODO: Drop those 3 fields in master
     l10n_be_dimona_in_declaration_number = fields.Char(
         string="Dimona Declaration Number", groups="hr_payroll.group_hr_payroll_user"
     )
@@ -44,6 +46,7 @@ class HrVersion(models.Model):
             ('waiting_sigedis', 'Declared and waiting Sigedis'),
             ('error', "Invalid declaration or restricted access"),
         ], default='none', groups="hr_payroll.group_hr_payroll_user")
+
     l10n_be_dimona_planned_hours = fields.Integer("Student Planned Hours", groups="hr_payroll.group_hr_payroll_user")
     l10n_be_is_student = fields.Boolean(compute='_compute_l10n_be_is_student', groups="hr_payroll.group_hr_payroll_user")
 
@@ -93,7 +96,16 @@ class HrVersion(models.Model):
             "iat": now,
         }
         try:
-            bearer_token = jwt.encode(payload, base64.b64decode(certificate_sudo.private_key_id.pem_key), algorithm="RS256")
+            pem_key = certificate_sudo.private_key_id.pem_key
+            password = certificate_sudo.private_key_id.password
+
+            private_key = serialization.load_pem_private_key(
+                base64.b64decode(pem_key),
+                password=password.encode() if password else None,
+            )
+
+            bearer_token = jwt.encode(payload, private_key, algorithm="RS256")
+
         except ValueError as e:
             raise UserError(_('Error on authentication. Please contact an administrator. (%s)', e))
         return bearer_token
