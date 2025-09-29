@@ -5,6 +5,7 @@ import {
     IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY,
     setReportIdInBrowserLocalStorage,
 } from "./client_action/delete_local_storage";
+import { uuid } from "@web/core/utils/strings";
 
 /**
  * Method to print the report with the selected devices
@@ -80,7 +81,7 @@ export async function getSelectedPrintersForReport(reportId, env) {
 async function iotReportActionHandler(action, options, env) {
     if (action.device_ids && action.device_ids.length) {
         action.data ??= {};
-        const args = [action.id, action.context.active_ids, action.data, uuid()];
+        const args = [action.id, action.context.active_ids, action.data];
         const reportId = action.id;
         const printerIds = await getSelectedPrintersForReport(reportId, env);
 
