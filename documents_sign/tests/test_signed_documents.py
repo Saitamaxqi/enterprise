@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 from freezegun import freeze_time
 from psycopg2.errors import ForeignKeyViolation
 
@@ -53,7 +53,7 @@ class TestSignedDocument(TestCaseDocumentsBridgeSign):
         self.assertFalse(self.sign_doc.active)
         self.assertFalse(self.signed_document_pdf.active)
         self.assertFalse(self.trash_doc.active)
-        documents_deletion_date = datetime.today() + timedelta(self.signed_document_pdf.get_deletion_delay())
+        documents_deletion_date = self.signed_document_pdf.write_date + timedelta(days=self.signed_document_pdf.get_deletion_delay(), seconds=30)
         with freeze_time(documents_deletion_date):
             self.env["documents.document"]._gc_clear_bin()
 
