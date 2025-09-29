@@ -1,8 +1,10 @@
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { browser } from "@web/core/browser/browser"
-import { IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY } from "@iot/client_action/delete_local_storage";
-import { uuid } from "@web/core/utils/strings";
+import {
+    IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY,
+    setReportIdInBrowserLocalStorage,
+} from "./client_action/delete_local_storage";
 
 /**
  * Method to print the report with the selected devices
@@ -37,44 +39,62 @@ export async function printReport(env, args, selected_device_ids) {
     }
 }
 
+export async function getSelectedPrintersForReport(reportId, env) {
+    const { orm, action, ui } = env.services;
+    const deviceSettingsByReportId = JSON.parse(browser.localStorage.getItem(IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY));
+    const deviceSettings = deviceSettingsByReportId?.[reportId];
+
+    if (deviceSettings && deviceSettings.skipDialog) {
+        return deviceSettings.selectedDevices;
+    }
+
+    // Open IoT devices selection wizard
+    const openDeviceSelectionWizard = await orm.call("ir.actions.report", "get_action_wizard", [reportId, deviceSettings?.selectedDevices]);
+    await action.doAction(openDeviceSelectionWizard);
+
+    // If the UI is currently blocked, we need to temporarily unblock it or the user won't be able to select the printer
+    const uiWasBlocked = ui.isBlocked;
+    if (uiWasBlocked) {
+        ui.unblock();
+    }
+
+    // Wait for the popup to be closed and a printer selected
+    return new Promise((resolve) => {
+        const onPrinterSelected = (event) => {
+            if (event.detail.reportId === reportId) {
+                const newDeviceSettings = event.detail.deviceSettings;
+                if (newDeviceSettings) {
+                    setReportIdInBrowserLocalStorage(reportId, newDeviceSettings);
+                }
+                resolve(newDeviceSettings ? newDeviceSettings.selectedDevices : null);
+                env.bus.removeEventListener("printer-selected", onPrinterSelected);
+                if (uiWasBlocked) {
+                    ui.block();
+                }
+            }
+        };
+        env.bus.addEventListener("printer-selected", onPrinterSelected);
+    });
+}
+
 async function iotReportActionHandler(action, options, env) {
     if (action.device_ids && action.device_ids.length) {
-        const orm = env.services.orm;
-
         action.data ??= {};
-        action.data["device_ids"] = action.device_ids;
+        const args = [action.id, action.context.active_ids, action.data, uuid()];
         const reportId = action.id;
-        const deviceSettingsByReport = JSON.parse(browser.localStorage.getItem(IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY));
-        const onClose = options.onClose;
-        const deviceSettings = deviceSettingsByReport?.[reportId];
-        const args = [action.id, action.context.active_ids, action.data, uuid(), deviceSettings?.selectedDevices];
-        if (!deviceSettings || !deviceSettings.skipDialog) {
-            // Open IoT devices selection wizard
-            const actionWizard = await orm.call("ir.actions.report", "get_action_wizard", args);
-            await env.services.action.doAction(actionWizard);
+        const printerIds = await getSelectedPrintersForReport(reportId, env);
 
-            // We do this to ensure the handler only returns once the printer
-            // has been selected and is printing. Otherwise, if multiple reports
-            // try to print in a row you cannot select the printer as the popup disappears.
-            await new Promise((resolve) => {
-                const onPrinterSelected = (event) => {
-                    if (event.detail === args[3]) {
-                        env.bus.removeEventListener("printer-selected", onPrinterSelected);
-                        resolve();
-                    }
-                };
-                env.bus.addEventListener("printer-selected", onPrinterSelected);
-            });
-        } else {
-            env.services.ui.block();
-            await printReport(env, args, deviceSettings.selectedDevices);
-            env.services.ui.unblock();
-
-            // We close here to prevent premature closure if the device selection modal is displayed.
-            env.services.action.doAction({ type: "ir.actions.act_window_close" }, { onClose });
+        if (!printerIds) {
+            // If the user does not select any printer, fall back to normal printing
+            return false;
         }
 
-        onClose?.();
+        env.services.ui.block();
+        // Try longpolling then websocket
+        await printReport(env, args, printerIds);
+        env.services.ui.unblock();
+
+        options.onClose?.();
         return true;
     }
 }

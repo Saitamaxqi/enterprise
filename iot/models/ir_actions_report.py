@@ -56,23 +56,20 @@ class IrActionsReport(models.Model):
             "device_ids",
         }
 
-    def get_action_wizard(self, res_ids, data=None, print_id=0, selected_device_ids=None):
+    def get_action_wizard(self, selected_device_ids=None):
+        self.ensure_one()
         wizard = self.env['select.printers.wizard'].create({
             'display_device_ids': self.device_ids,
             'device_ids': selected_device_ids
         })
         return {
-                'name': "Select printers",
+                'name': _("Select Printers"),
                 'res_id': wizard.id,
                 'type': 'ir.actions.act_window',
                 'res_model': 'select.printers.wizard',
                 'target': 'new',
                 'views': [[False, 'form']],
                 'context': {
-                    'res_ids': res_ids,
-                    'data': data,
-                    'report_id': self._ids[0],
-                    'print_id': print_id,
-                    'default_report_id': self._ids[0]
+                    'report_id': self.id,
                 },
         }
