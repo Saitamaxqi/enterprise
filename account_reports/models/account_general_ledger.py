@@ -237,8 +237,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             offset_clause=SQL("OFFSET %s", offset) if offset else SQL(),
             limit=None if not limit else limit + 1  # Initial balance query line
         )
-        self.env.cr.execute(query)
-        result = self.env.cr.dictfetchall()
 
         rows_by_key = defaultdict(lambda: {
             'date': None,
@@ -251,7 +249,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'has_sublines': True,
         })
 
-        for row in result:
+        for row in self.env.execute_query_dict(query):
             aml_key = get_grouping_key(row, current_groupby)
 
             if aml_key not in rows_by_key:
