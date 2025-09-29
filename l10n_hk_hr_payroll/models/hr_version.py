@@ -31,6 +31,7 @@ class HrVersion(models.Model):
         string='Current Rental',
         groups="hr_payroll.group_hr_payroll_user",
         copy=False,
+        tracking=True,
     )
 
     def _get_bypassing_work_entry_type_codes(self):

@@ -91,7 +91,7 @@ class HrVersion(models.Model):
                                                                 ], groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_open_tax_scale = fields.Char(string="Open Tax Scale", groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_tax_specially_approved = fields.Boolean(string="Specially Approved by the ACI", groups="hr_payroll.group_hr_payroll_user", tracking=True)
-    l10n_ch_tax_code = fields.Char(string="Source Tax Code", compute="_compute_l10n_ch_tax_code", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_tax_code = fields.Char(string="Source Tax Code", compute="_compute_l10n_ch_tax_code", groups="hr_payroll.group_hr_payroll_user")
     l10n_ch_source_tax_canton = fields.Char(string="Source Tax Canton", compute="_compute_l10n_ch_source_tax_canton", groups="hr_payroll.group_hr_payroll_user")
     l10n_ch_source_tax_municipality = fields.Char(string="Source Tax Municipality", compute="_compute_l10n_ch_source_tax_municipality", groups="hr_payroll.group_hr_payroll_user")
     l10n_ch_concubinage = fields.Selection(string="Concubinage", selection=[("NoConcubinage", "No"),
@@ -108,7 +108,7 @@ class HrVersion(models.Model):
     l10n_ch_spouse_revenues = fields.Boolean(string="Spouse Has Income", groups="hr.group_hr_user", tracking=True)
     l10n_ch_spouse_work_end_date = fields.Date(groups="hr.group_hr_user", tracking=True)
     l10n_ch_spouse_residence_canton = fields.Selection(string="Spouse Residence Canton", selection=CANTONS_WITH_EX, groups="hr.group_hr_user", tracking=True)
-    l10n_ch_cross_border_commuter = fields.Boolean(string="Cross Border Commuter", groups="hr.group_hr_user")
+    l10n_ch_cross_border_commuter = fields.Boolean(string="Cross Border Commuter", groups="hr.group_hr_user", tracking=True)
     l10n_ch_foreign_tax_id = fields.Char(string="Foreign Tax-ID", groups="hr.group_hr_user", tracking=True)
     l10n_ch_cross_border_start = fields.Date(string="Cross Border Commuter Start Date", groups="hr.group_hr_user", tracking=True)
     l10n_ch_agricole_company = fields.Boolean(related="company_id.l10n_ch_agricole_company", tracking=True, groups="hr.group_hr_user")
@@ -212,80 +212,80 @@ class HrVersion(models.Model):
         ('lowerCadre', 'Lower Management'),
         ('lowestCadre', 'Responsible for carrying out the work'),
         ('noCadre', 'Without management function'),
-    ], default='noCadre', string="Job Type", groups="hr.group_hr_user")
+    ], default='noCadre', string="Job Type", groups="hr.group_hr_user", tracking=True)
     wage_type = fields.Selection(selection_add=[("NoTimeConstraint", "No Time Constraint")],
                                  ondelete={"NoTimeConstraint": 'cascade'}, default="monthly")
-    l10n_ch_laa_group = fields.Many2one("l10n.ch.accident.group", string="LAA Code", groups="hr.group_hr_user")
+    l10n_ch_laa_group = fields.Many2one("l10n.ch.accident.group", string="LAA Code", groups="hr.group_hr_user", tracking=True)
     laa_solution_number = fields.Selection(selection=[
         ('0', '0 - Not insured'),
         ('1', '1 - Occupational and Non-Occupational Insured, with deductions'),
         ('2', '2 - Occupational and Non-Occupational Insured, without deductions'),
-        ('3', '3 - Only Occupational Insured')], default='1', groups="hr.group_hr_user")
+        ('3', '3 - Only Occupational Insured')], default='1', groups="hr.group_hr_user", tracking=True)
     l10n_ch_lpp_withdrawal_reason = fields.Selection(selection=[('withdrawalCompany', "Withdrawal From Company"),
                                                                 ('interruptionOfEmployment', 'Interruption Of Work'),
                                                                 ('retirement', "Retirement"),
-                                                                ('others', 'Others')], default="withdrawalCompany", string="Withdrawal Reason", help="""Specify here the entry in LPP reason.""", groups="hr.group_hr_user")
+                                                                ('others', 'Others')], default="withdrawalCompany", string="Withdrawal Reason", help="""Specify here the entry in LPP reason.""", groups="hr.group_hr_user", tracking=True)
     l10n_ch_lpp_entry_reason = fields.Selection(selection=[('interruptionOfEmployment', 'Resuming Work After an Interruption'),
                                                            ('entryCompany', 'Entry In Company'),
-                                                           ('others', 'Others')], string="Entry Reason", default="entryCompany", help="""Specify here the withdrawal from LPP reason.""", groups="hr.group_hr_user")
+                                                           ('others', 'Others')], string="Entry Reason", default="entryCompany", help="""Specify here the withdrawal from LPP reason.""", groups="hr.group_hr_user", tracking=True)
     l10n_ch_lpp_entry_valid_as_of = fields.Date("Entry Valid As Of", compute="_compute_l10n_ch_lpp_entry_valid_as_of", store=True, readonly=False, help="Please Provide the validity date of the last LPP Entry", groups="hr.group_hr_user")
     l10n_ch_lpp_withdrawal_valid_as_of = fields.Date("Withdrawal Valid As Of", compute="_compute_l10n_ch_lpp_withdrawal_valid_as_of", store=True, readonly=False, help="Please Provide the validity date of the last LPP Withdrawal", groups="hr.group_hr_user")
-    l10n_ch_lpp_solutions = fields.Many2many('l10n.ch.lpp.insurance.line', string="LPP Codes", groups="hr.group_hr_user")
-    l10n_ch_lpp_mutations = fields.One2many('l10n.ch.lpp.mutation', 'version_id', groups="hr.group_hr_user")
-    lpp_employee_amount = fields.Float(string="LPP Employee Contributions", groups="hr.group_hr_user")
-    lpp_company_amount = fields.Float(string="LPP Company Contributions", groups="hr.group_hr_user")
-    l10n_ch_14th_month = fields.Boolean(string="14th Month", groups="hr.group_hr_user")
-    irregular_working_time = fields.Boolean(string="Irregular Working Time", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ch_lpp_solutions = fields.Many2many('l10n.ch.lpp.insurance.line', string="LPP Codes", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_lpp_mutations = fields.One2many('l10n.ch.lpp.mutation', 'version_id', groups="hr.group_hr_user", tracking=True)
+    lpp_employee_amount = fields.Float(string="LPP Employee Contributions", groups="hr.group_hr_user", tracking=True)
+    lpp_company_amount = fields.Float(string="LPP Company Contributions", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_14th_month = fields.Boolean(string="14th Month", groups="hr.group_hr_user", tracking=True)
+    irregular_working_time = fields.Boolean(string="Irregular Working Time", groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_weekly_hours = fields.Float(string="Weekly Hours", compute="_compute_l10n_ch_weekly_hours", store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_weekly_lessons = fields.Float(string="Weekly Lessons", groups="hr.group_hr_user")
+    l10n_ch_weekly_lessons = fields.Float(string="Weekly Lessons", groups="hr.group_hr_user", tracking=True)
 
     l10n_ch_thirteen_month = fields.Boolean(
-        string="Has 13th Month", groups="hr_payroll.group_hr_payroll_user")
+        string="Has 13th Month", groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_social_insurance_id = fields.Many2one(
-        'l10n.ch.social.insurance', string="AVS/AC Insurance", groups="hr.group_hr_user")
+        'l10n.ch.social.insurance', string="AVS/AC Insurance", groups="hr.group_hr_user", tracking=True)
     l10n_ch_lpp_insurance_id = fields.Many2one(
-        'l10n.ch.lpp.insurance', string="LPP Insurance", groups="hr.group_hr_user")
+        'l10n.ch.lpp.insurance', string="LPP Insurance", groups="hr.group_hr_user", tracking=True)
     l10n_ch_accident_insurance_line_id = fields.Many2one(
-        'l10n.ch.accident.insurance.line', string="LAA Insurance", groups="hr.group_hr_user")
+        'l10n.ch.accident.insurance.line', string="LAA Insurance", groups="hr.group_hr_user", tracking=True)
     l10n_ch_additional_accident_insurance_line_ids = fields.Many2many(
-        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr.group_hr_user")
+        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr.group_hr_user", tracking=True)
     l10n_ch_sickness_insurance_line_ids = fields.Many2many(
-        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr.group_hr_user")
+        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr.group_hr_user", tracking=True)
     l10n_ch_compensation_fund_id = fields.Many2one(
-        'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user")
+        'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user", tracking=True)
     l10n_ch_lesson_wage = fields.Float('Lesson Wage', tracking=True, help="Employee's gross wage by lesson.", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.3333, groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Workplace", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.3333, groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Workplace", groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_avs_status = fields.Selection([
         ('youth', 'Youth'),
         ('exempted', 'Exempted'),
         ('retired', 'Retired'),
-    ], string="AVS Special Status", groups="hr.group_hr_user")
-    l10n_ch_yearly_holidays = fields.Integer(string="Yearly Holidays Count", default=20, groups="hr.group_hr_user")
-    l10n_ch_yearly_paid_public_holidays = fields.Integer(default=10, string="Yearly Paid Public Holidays Count", groups="hr.group_hr_user")
-    l10n_ch_lpp_not_insured = fields.Boolean(string="Not LPP Insured", groups="hr.group_hr_user")
-    l10n_ch_other_employers = fields.Boolean(groups="hr.group_hr_user")
-    l10n_ch_current_occupation_rate = fields.Float(string="Current Occupation rate", compute='_compute_l10n_ch_current_occupation_rate', inverse="_inverse_l10n_ch_current_occupation_rate", store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_other_employers_occupation_rate = fields.Float(compute="_compute_l10n_ch_other_employers_occupation_rate", store=True, groups="hr_payroll.group_hr_payroll_user")
+    ], string="AVS Special Status", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_yearly_holidays = fields.Integer(string="Yearly Holidays Count", default=20, groups="hr.group_hr_user", tracking=True)
+    l10n_ch_yearly_paid_public_holidays = fields.Integer(default=10, string="Yearly Paid Public Holidays Count", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_lpp_not_insured = fields.Boolean(string="Not LPP Insured", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_other_employers = fields.Boolean(groups="hr.group_hr_user", tracking=True)
+    l10n_ch_current_occupation_rate = fields.Float(string="Current Occupation rate", compute='_compute_l10n_ch_current_occupation_rate', inverse="_inverse_l10n_ch_current_occupation_rate", store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_other_employers_occupation_rate = fields.Float(compute="_compute_l10n_ch_other_employers_occupation_rate", store=True, groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_total_occupation_rate = fields.Float(string="Total occupation rate", compute="_compute_total_occupation_rate", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_is_model = fields.Selection(string="IS Model", selection=[('monthly', 'Monthly'), ('yearly', 'Yearly')], default='monthly', groups="hr.group_hr_user")
-    l10n_ch_is_predefined_category = fields.Char(string="IS Predefined Category", groups="hr.group_hr_user", help="Des barèmes fixes sont appliqués pour l'impôt à la source retenu sur les honoraires des administrateurs (art. 93 LIFD) et certaines participations de collaborateur (art. 97a LIFD). Pour ces impôts, aucun enfant n'est pris en compte et un seul taux en %% est appliqué. À cela s'ajoutent des catégories prédéfinies pour les annonces rectificatives et pour l'annonce des salaires bruts des frontaliers français pour lesquels l'accord spécial entre les cantons BE, BS, BL, JU, NE, SO, VD et VS et la France s'applique.")
-    l10n_ch_monthly_effective_days = fields.Float(string="Monthly Effective Working Days", default=20, groups="hr.group_hr_user")
+    l10n_ch_is_model = fields.Selection(string="IS Model", selection=[('monthly', 'Monthly'), ('yearly', 'Yearly')], default='monthly', groups="hr.group_hr_user", tracking=True)
+    l10n_ch_is_predefined_category = fields.Char(string="IS Predefined Category", groups="hr.group_hr_user", help="Des barèmes fixes sont appliqués pour l'impôt à la source retenu sur les honoraires des administrateurs (art. 93 LIFD) et certaines participations de collaborateur (art. 97a LIFD). Pour ces impôts, aucun enfant n'est pris en compte et un seul taux en %% est appliqué. À cela s'ajoutent des catégories prédéfinies pour les annonces rectificatives et pour l'annonce des salaires bruts des frontaliers français pour lesquels l'accord spécial entre les cantons BE, BS, BL, JU, NE, SO, VD et VS et la France s'applique.", tracking=True)
+    l10n_ch_monthly_effective_days = fields.Float(string="Monthly Effective Working Days", default=20, groups="hr.group_hr_user", tracking=True)
     l10n_ch_contractual_holidays_rate = fields.Float(string="Holiday Compensation", compute="_compute_l10n_ch_contractual_holidays_rate", store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
     l10n_ch_contractual_public_holidays_rate = fields.Float(string="Public Holiday Compensation", compute="_compute_l10n_ch_contractual_public_holidays_rate", store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_contractual_vacation_pay = fields.Boolean(string="Pay Holiday Compensation each month", default=True, groups="hr_payroll.group_hr_payroll_user", help="""If unselected, vacation pay should be paid manually the moment the employee takes his vacation.""")
-    l10n_ch_contractual_annual_wage = fields.Monetary(string="Contractual Annual Wage", default=0, groups="hr_payroll.group_hr_payroll_user")
+    l10n_ch_contractual_vacation_pay = fields.Boolean(string="Pay Holiday Compensation each month", default=True, groups="hr_payroll.group_hr_payroll_user", help="""If unselected, vacation pay should be paid manually the moment the employee takes his vacation.""", tracking=True)
+    l10n_ch_contractual_annual_wage = fields.Monetary(string="Contractual Annual Wage", default=0, groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_permanent_staff_public_admin = fields.Boolean("Permanent Staff for Public Administrations", groups="hr.group_hr_user", help="""
     A flag that allows for the clear identification of core personnel within public administrations.
     This flag will only be used by public administrations (municipalities, cities, districts, cantons, the Confederation, etc.) and churches.
     It will enable the distinction between core staff and various external mandates (such as exam experts, interpreters, etc.) and other engagements that are not part of the permanent workforce.
-    """)
-    l10n_ch_interim_worker = fields.Boolean(string="Interim Worker", groups="hr.group_hr_user")
-    l10n_ch_contract_wage_ids = fields.One2many("l10n.ch.hr.contract.wage", "version_id", domain=[('date_start', '=', False)], copy=True, groups="hr_payroll.group_hr_payroll_user")
+    """, tracking=True)
+    l10n_ch_interim_worker = fields.Boolean(string="Interim Worker", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_contract_wage_ids = fields.One2many("l10n.ch.hr.contract.wage", "version_id", domain=[('date_start', '=', False)], copy=True, groups="hr_payroll.group_hr_payroll_user", tracking=True)
     one_time_wage_count = fields.Integer(compute="_compute_one_time_wage_count", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_has_monthly = fields.Boolean("Has Monthly Wage", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_has_hourly = fields.Boolean("Has Hourly Wage", groups="hr_payroll.group_hr_payroll_user")
-    l10n_ch_has_lesson = fields.Boolean("Has Lesson Wage", groups="hr_payroll.group_hr_payroll_user")
+    l10n_ch_has_monthly = fields.Boolean("Has Monthly Wage", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_has_hourly = fields.Boolean("Has Hourly Wage", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_has_lesson = fields.Boolean("Has Lesson Wage", groups="hr_payroll.group_hr_payroll_user", tracking=True)
 
     @api.constrains('l10n_ch_municipality', 'l10n_ch_weekly_residence_municipality', 'private_country_id')
     def _check_swiss_address(self):

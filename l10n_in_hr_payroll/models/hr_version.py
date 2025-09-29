@@ -25,13 +25,13 @@ class HrVersion(models.Model):
         tracking=True)
     l10n_in_hra_percentage = fields.Float(string="House Rent Allowance Percentage",
         compute="_compute_l10n_in_hra_percentage", store=True, readonly=False,
-        help='House Rent Allowance computed as percentage(%)', groups="hr_payroll.group_hr_payroll_user")
+        help='House Rent Allowance computed as percentage(%)', groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_in_hra = fields.Monetary(string="House Rent Allowance", compute="_compute_l10n_in_hra", store=True,
         groups="hr_payroll.group_hr_payroll_user", readonly=False, tracking=True,
         help='HRA allowance is provided to employees for rental and accommodation benefits 50% of the basic salary for\
         metro cities and 40% for non-metro cities.')
     l10n_in_leave_travel_percentage = fields.Float(string="Leave Travel Allowance Percentage",
-        compute="_compute_l10n_in_leave_travel_percentage", store=True, readonly=False,
+        compute="_compute_l10n_in_leave_travel_percentage", store=True, readonly=False, tracking=True,
         groups="hr_payroll.group_hr_payroll_user", help='Percentage(%) to calculate leave travel allowance amount.')
     l10n_in_leave_travel_allowance = fields.Monetary(string='Leave Travel Allowance', tracking=True,
         compute="_compute_l10n_in_leave_travel_allowance", store=True, readonly=False,
@@ -42,24 +42,24 @@ class HrVersion(models.Model):
         readonly=False, store=True, groups="hr_payroll.group_hr_payroll_user", tracking=True,
         help="Define Basic salary from company cost compute it based on Wages (Including DA)")
     l10n_in_basic_percentage = fields.Float(string="Basic Salary Percentage", groups="hr_payroll.group_hr_payroll_user",
-        compute="_compute_l10n_in_basic_percentage", store=True, readonly=False)
+        compute="_compute_l10n_in_basic_percentage", store=True, readonly=False, tracking=True)
     l10n_in_standard_allowance = fields.Monetary(string="Standard Allowance", tracking=True,
         compute="_compute_l10n_in_standard_allowance", store=True, readonly=False,
         groups="hr_payroll.group_hr_payroll_user",
         help='A standard allowance is a predetermined, fixed amount provided to employees as part of their salary\
         package, irrespective of actual expenses incurred')
     l10n_in_standard_allowance_percentage = fields.Float(string="Standard Allowance Percentage",
-        compute="_compute_l10n_in_standard_allowance_percentage", store=True, readonly=False,
+        compute="_compute_l10n_in_standard_allowance_percentage", store=True, readonly=False, tracking=True,
         groups="hr_payroll.group_hr_payroll_user", help='Standard Allowance computed as percentage(%)')
     l10n_in_performance_bonus_percentage = fields.Float(string="Performance Bonus Percentage",
-        compute="_compute_l10n_in_performance_bonus_percentage", store=True, readonly=False,
+        compute="_compute_l10n_in_performance_bonus_percentage", store=True, readonly=False, tracking=True,
         groups="hr_payroll.group_hr_payroll_user", help='Performance Bonus computed as percentage(%)')
     l10n_in_performance_bonus = fields.Monetary(string="Performance Bonus", compute="_compute_l10n_in_performance_bonus",
         store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user", tracking=True,
         help='Performance bonus is a variable amount given to employees. The value defined by the company and\
         calculated as a % of the basic salary')
     l10n_in_fixed_allowance_percentage = fields.Float(string='Fixed Allowance Percentage',
-        compute="_compute_l10n_in_fixed_allowance_percentage", store=True, readonly=False,
+        compute="_compute_l10n_in_fixed_allowance_percentage", store=True, readonly=False, tracking=True,
         groups="hr_payroll.group_hr_payroll_user", help='Fixed Allowance computed as percentage(%)')
     l10n_in_fixed_allowance = fields.Monetary(string='Fixed Allowance', tracking=True,
         compute="_compute_l10n_in_fixed_allowance", store=True, groups="hr_payroll.group_hr_payroll_user",

@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    group_s_code = fields.Char("Group S code", groups="hr_payroll.group_hr_payroll_user", copy=False)
+    group_s_code = fields.Char("Group S code", groups="hr_payroll.group_hr_payroll_user", copy=False, tracking=True)
 
     @api.constrains('group_s_code')
     def _check_group_s_code(self):

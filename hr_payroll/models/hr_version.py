@@ -42,7 +42,7 @@ class HrVersion(models.Model):
     wage_type = fields.Selection([
         ('monthly', 'Fixed Wage'),
         ('hourly', 'Hourly Wage')
-    ], compute='_compute_wage_type', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user")
+    ], compute='_compute_wage_type', store=True, readonly=False, groups="hr_payroll.group_hr_payroll_user", tracking=True)
     hourly_wage = fields.Monetary('Hourly Wage', tracking=True, help="Employee's hourly gross wage.", groups="hr_payroll.group_hr_payroll_user")
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")
     work_time_rate = fields.Float(
@@ -50,8 +50,8 @@ class HrVersion(models.Model):
         string='Work time rate', help='Work time rate versus full time working schedule.', groups="hr_payroll.group_hr_payroll_user")
     standard_calendar_id = fields.Many2one(
         'resource.calendar', default=lambda self: self.env.company.resource_calendar_id, readonly=True,
-        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", groups="hr.group_hr_user")
-    is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user")
+        domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", groups="hr.group_hr_user", tracking=True)
+    is_non_resident = fields.Boolean(string='Non-resident', help='If the employee is not a legal resident of the country where they are employed', groups="hr.group_hr_user", tracking=True)
     disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr_payroll.group_hr_payroll_user", tracking=True)
 
     structure_id = fields.Many2one(related='structure_type_id.default_struct_id', groups="hr.group_hr_user")

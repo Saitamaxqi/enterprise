@@ -8,16 +8,16 @@ from odoo import api, fields, models, _
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    image_1920_filename = fields.Char()
-    id_card_filename = fields.Char(groups="hr.group_hr_user")
+    image_1920_filename = fields.Char(tracking=True)
+    id_card_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     id_card = fields.Binary(related='employee_id.id_card', groups="hr.group_hr_manager", readonly=False)
-    driving_license_filename = fields.Char(groups="hr.group_hr_user")
+    driving_license_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     driving_license = fields.Binary(related='employee_id.driving_license', groups="hr.group_hr_manager", readonly=False)
-    mobile_invoice_filename = fields.Char(groups="hr.group_hr_user")
+    mobile_invoice_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     mobile_invoice = fields.Binary(related='employee_id.mobile_invoice', groups="hr.group_hr_manager", readonly=False)
-    sim_card_filename = fields.Char(groups="hr.group_hr_user")
+    sim_card_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     sim_card = fields.Binary(related='employee_id.sim_card', groups="hr.group_hr_manager", readonly=False)
-    internet_invoice_filename = fields.Char(groups="hr.group_hr_user")
+    internet_invoice_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     internet_invoice = fields.Binary(related="employee_id.internet_invoice", groups="hr.group_hr_manager", readonly=False)
     double_holiday_wage = fields.Monetary(compute='_compute_double_holiday_wage', groups="hr_payroll.group_hr_payroll_user")
     contract_type_id = fields.Many2one('hr.contract.type', "Contract Type",

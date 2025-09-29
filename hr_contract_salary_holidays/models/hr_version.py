@@ -4,7 +4,7 @@ from odoo import fields, models, _
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    leave_allocation_id = fields.Many2one('hr.leave.allocation', 'Allocation', readonly=True, groups="hr.group_hr_user")
+    leave_allocation_id = fields.Many2one('hr.leave.allocation', 'Allocation', readonly=True, groups="hr.group_hr_user", tracking=True)
 
     def write(self, vals):
         res = super().write(vals)

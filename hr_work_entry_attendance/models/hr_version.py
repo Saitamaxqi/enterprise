@@ -18,7 +18,7 @@ class HrVersion(models.Model):
         ondelete={'attendance': 'set default'},
     )
     overtime_from_attendance = fields.Boolean(
-        "Extra hours", help="Add extra hours from attendances to the working entries", groups="hr.group_hr_manager")
+        "Extra hours", help="Add extra hours from attendances to the working entries", groups="hr.group_hr_manager", tracking=True)
 
     def _get_overtime_intervals(self, start_dt, end_dt):
         start_naive = start_dt.replace(tzinfo=None)

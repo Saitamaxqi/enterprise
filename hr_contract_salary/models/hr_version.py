@@ -21,13 +21,13 @@ class HrVersion(models.Model):
 
     origin_version_id = fields.Many2one(
         'hr.version', string="Origin Contract", domain="[('company_id', '=', company_id)]",
-        groups="hr.group_hr_user", help="The contract from which this contract has been duplicated.")
+        groups="hr.group_hr_user", help="The contract from which this contract has been duplicated.", tracking=True)
     is_origin_contract_template = fields.Boolean(
         compute='_compute_is_origin_contract_template', string='Is origin contract a contract template?',
         groups="hr.group_hr_user", readonly=True)
-    hash_token = fields.Char('Created From Token', copy=False, groups="hr.group_hr_user")
+    hash_token = fields.Char('Created From Token', copy=False, groups="hr.group_hr_user", tracking=True)
     applicant_id = fields.Many2one('hr.applicant', groups="hr.group_hr_user",
-                                   domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]")
+                                   domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=True)
     contract_reviews_count = fields.Integer(compute="_compute_contract_reviews_count",
                                             string="Proposed Contracts Count")
     contract_template_id = fields.Many2one(default=lambda self: self.job_id.contract_template_id or False)
@@ -47,18 +47,18 @@ class HrVersion(models.Model):
                                                       readonly=False, groups="hr.group_hr_user")
     signatures_count = fields.Integer(compute='_compute_signatures_count', string='# Signatures',
         help="The number of signatures on the pdf contract with the most signatures.", groups="hr.group_hr_user")
-    image_1920_filename = fields.Char(groups="hr.group_hr_user")
+    image_1920_filename = fields.Char(groups="hr.group_hr_user", tracking=True)
     image_1920 = fields.Image(related='employee_id.image_1920', groups="hr.group_hr_manager", readonly=False)
     # YTI FIXME: holidays and wage_with_holidays are defined twice...
     holidays = fields.Float(string='Extra Time Off', groups="hr.group_hr_user",
-        help="Number of days of paid leaves the employee gets per year.")
+        help="Number of days of paid leaves the employee gets per year.", tracking=True)
     wage_with_holidays = fields.Monetary(compute='_compute_wage_with_holidays', inverse='_inverse_wage_with_holidays',
         tracking=True, string="Wage with Holidays", groups="hr.group_hr_manager")
     wage_on_signature = fields.Monetary(string="Wage on Signature", tracking=True, aggregator="avg",
                                         groups="hr.group_hr_manager")
-    salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'employee_version_id', groups="hr.group_hr_user")
+    salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'employee_version_id', groups="hr.group_hr_user", tracking=True)
     originated_offer_id = fields.Many2one('hr.contract.salary.offer', help="The original offer",
-                                          groups="hr.group_hr_user")
+                                          groups="hr.group_hr_user", tracking=True)
     salary_offers_count = fields.Integer(compute='_compute_salary_offers_count', compute_sudo=True)
     template_warning = fields.Char(default=_default_get_template_warning, store=False, groups="hr.group_hr_user")
 

@@ -80,14 +80,14 @@ class HrVersion(models.Model):
         string='Number of available cars',
         groups="hr.group_hr_user",
         compute_sudo=True)
-    new_car = fields.Boolean('Requested a new car', groups="hr.group_hr_user")
+    new_car = fields.Boolean('Requested a new car', groups="hr.group_hr_user", tracking=True)
     ordered_car_id = fields.Many2one('fleet.vehicle', string='Ordered New Car',
         tracking=True, store=True, readonly=False,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), ('vehicle_type', '=', 'car')]",
         groups='fleet.fleet_group_manager')
     new_car_model_id = fields.Many2one(
         'fleet.vehicle.model', string="New Company Car", domain=lambda self: self._get_possible_model_domain(),
-        groups='hr.group_hr_user')
+        groups='hr.group_hr_user', tracking=True)
     # Useful on sign to use only one box to sign the contract instead of 2
     car_model_name = fields.Char(compute='_compute_car_model_name', compute_sudo=True,
                                  groups='hr.group_hr_user')
@@ -101,8 +101,8 @@ class HrVersion(models.Model):
     recurring_cost_amount_depreciated = fields.Float(
         groups="fleet.fleet_group_manager",
         compute='_compute_recurring_cost_amount_depreciated',
-        inverse="_inverse_recurring_cost_amount_depreciated")
-    transport_mode_bike = fields.Boolean('Uses Bike', groups='hr.group_hr_user')
+        inverse="_inverse_recurring_cost_amount_depreciated", tracking=True)
+    transport_mode_bike = fields.Boolean('Uses Bike', groups='hr.group_hr_user', tracking=True)
     bike_id = fields.Many2one(
         'fleet.vehicle', string="Company Bike",
         tracking=True,

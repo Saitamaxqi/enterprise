@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 class HrVersion(models.Model):
     _inherit = 'hr.version'
 
-    sign_request_ids = fields.Many2many('sign.request', string='Requested Signatures')
+    sign_request_ids = fields.Many2many('sign.request', string='Requested Signatures', tracking=True)
     sign_request_count = fields.Integer(compute='_compute_sign_request_count')
 
     @api.depends('sign_request_ids')
