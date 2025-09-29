@@ -1233,6 +1233,7 @@ class TestPlanning(TestCommonPlanning, MockEmail):
 
         flexEmployee.resource_id.calendar_id = self.flex_40h_calendar
         standardEmployee.resource_id.calendar_id = self.company_calendar
+        slots_count = self.env['planning.slot'].search_count([])
 
         # the diff between start and end is exactly 6 days
         self.env.user.tz = 'UTC'
@@ -1251,8 +1252,8 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         }])
 
         slots = slot1 | slot2 | slot3
-        created_slots = self.env['planning.slot'].search([])
-        self.assertEqual(len(created_slots), len(slots) + 2, "2 slots created in the setUpClass")
+        current_slots_count = self.env['planning.slot'].search_count([])
+        self.assertEqual(current_slots_count, len(slots) + slots_count, "3 slots should be created")
 
         field_involved_in_fake_pill_creating_and_updating = slots._print_planning_get_fields_to_copy()
 
@@ -1276,8 +1277,8 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         )
 
         # make sure fake slots are not created in db
-        all_slots = self.env['planning.slot'].search([])
-        self.assertEqual(len(all_slots), len(slots) + 2)
+        self.assertEqual(current_slots_count, self.env['planning.slot'].search_count([]), "no additional slots should be created")
+        all_slots = self.env['planning.slot'].search([['start_datetime', '<', '2025-05-25 00:00:00'], ['end_datetime', '>', '2025-05-18 00:00:00']])
 
         # make sure existing slots are not updated when manipulating fake slots
         slots_after_printing = all_slots & slots
