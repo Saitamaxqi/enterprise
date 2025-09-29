@@ -132,10 +132,24 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
             trigger: ".o-mail-Message:last-child .btn[data-type='save']",
             run: "click",
         },
+        {
+            content: "Close Chatter",
+            trigger: ".o_control_panel .btn-secondary[data-tooltip='Chatter']",
+            run: "click",
+        },
         // Test that we dont show there is an annotation if we delete the only annotation of a line
         {
+            content: "Open Third annotated line annotation popover",
+            trigger: "tr:nth-child(12) .btn_annotation",
+            run: "click",
+        },
+        {
+            content: "Wait for the messages to load",
+            trigger: ".o-mail-Message",
+        },
+        {
             content: "Expand the options of the message",
-            trigger: ".o-mail-Message:last-child button:has(i.oi-ellipsis-v)",
+            trigger: ".o-mail-Message:last-child button:has(i.oi-ellipsis-v):not(:visible)",
             run: "click",
         },
         {
@@ -159,7 +173,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Check there are now only two lines annotated",
-            trigger: "tr:nth-child(8):not(:has(.fa-commenting))",
+            trigger: "tr:nth-child(12):not(:has(.fa-commenting))",
             run: () => {
                 const annotations = document.querySelectorAll(
                     ".btn_annotation.o_account_report_chatter_annoted"

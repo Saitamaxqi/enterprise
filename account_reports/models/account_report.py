@@ -5296,11 +5296,8 @@ class AccountReport(models.Model):
             domain &= dates_domain
 
         annotations = self.env['account.report.annotation'].search(domain)
-        to_remove_message_ids = set(annotations.message_id.sudo()._filter_empty().ids)
         for annotation in annotations:
             message = annotation.message_id
-            if message.id in to_remove_message_ids:
-                continue
             for line_id in line_dict_ids_by_record[message.model, message.res_id]:
                 annotations_by_line[line_id].append({
                     'id': message.id,

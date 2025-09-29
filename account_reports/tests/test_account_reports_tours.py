@@ -71,7 +71,7 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
     def test_account_reports_annotations_tours(self):
         # Create annotations
         date = fields.Date.today().strftime('%Y-%m-%d')
-        message = self.env['mail.message'].create({
+        message_101401 = self.env['mail.message'].create({
             'model': 'account.account',
             'res_id': self.account_101401.id,
             'body': 'Annotation 101401',
@@ -80,11 +80,11 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
             'message_type': 'comment',
             'subtype_id': self.env.ref('mail.mt_note').id,
         })
-        self.env['account.report.annotation'].create({
+        annotation_101401 = self.env['account.report.annotation'].create({
             'date': date,
-            'message_id': message.id,
+            'message_id': message_101401.id,
         })
-        message = self.env['mail.message'].create({
+        message_101404 = self.env['mail.message'].create({
             'model': 'account.account',
             'res_id': self.account_101404.id,
             'body': 'Annotation 101404',
@@ -93,12 +93,23 @@ class TestAccountReportsTours(AccountTestInvoicingHttpCommon):
             'message_type': 'comment',
             'subtype_id': self.env.ref('mail.mt_note').id,
         })
-        self.env['account.report.annotation'].create({
+        annotation_101404 = self.env['account.report.annotation'].create({
             'date': date,
-            'message_id': message.id,
+            'message_id': message_101404.id,
         })
 
         self.start_tour("/odoo", 'account_reports_annotations', login=self.env.user.login)
+
+        annotations = self.env['account.report.annotation'].search([])
+
+        self.assertEqual(len(annotations), 2, "There should be two annotations")
+
+        self.assertTrue(annotation_101401 in annotations, "The annotation on account 101401 should still exist")
+        self.assertTrue(annotation_101404 not in annotations, "The annotation on account 101404 should have been deleted")
+
+        new_message = (annotations - annotation_101401).message_id
+        self.assertEqual(new_message.model, "account.account", "The new message should be linked to an account")
+        self.assertEqual(new_message.res_id, self.account_121000.id, "The new message should be linked to account 121000")
 
     def test_account_reports_audit_tours(self):
         self.start_tour("/odoo/action-account_reports.action_view_account_audit", 'account_reports_audit', login=self.env.user.login)
