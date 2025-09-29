@@ -558,12 +558,12 @@ class ProjectTask(models.Model):
             return additional_users
         start_date = self.env.context.get('gantt_start_date')
         scale = self.env.context.get('gantt_scale')
-        if not (start_date and scale) or any(elem.field_expr == 'user_ids' for elem in Domain(domain).iter_conditions()):
+        if not (start_date and scale):
             return additional_users
         domain = filter_domain_leaf(domain, lambda field: field not in ['planned_date_begin', 'date_deadline', 'state'])
         search_on_comodel = self._search_on_comodel(domain, "user_ids", "res.users")
         if search_on_comodel:
-            return search_on_comodel | self.env.user
+            return search_on_comodel
         start_date = fields.Datetime.from_string(start_date)
         delta = get_timedelta(1, scale)
         domain_expand = (
