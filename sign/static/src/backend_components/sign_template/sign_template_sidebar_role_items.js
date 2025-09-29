@@ -131,6 +131,8 @@ export class SignTemplateSidebarRoleItems extends Component {
             if (avatar) {
                 this.state.profilePic = this.getImageSrc(avatar);
             }
+        } else {
+            this.state.profilePic = "";
         }
     }
 
