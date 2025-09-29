@@ -212,13 +212,13 @@ class HrVersion(models.Model):
             },
             "worker": {
                 "ssin": niss if not foreigner else False,
-                'lastName': last_name,
-                'firstName': first_name,
+                'familyName': last_name,
+                'givenName': first_name,
                 'birthDate': (self.employee_id.birthday or fields.Date.today()).strftime("%Y-%m-%d"),
                 'placeOfBirth': (self.employee_id.place_of_birth or '').upper(),
                 'countryOfBirth': API_DATA['data']['country_code_by_alpha2'].get(self.employee_id.country_of_birth.code),
                 'nationality': API_DATA['data']['country_code_by_alpha2'].get(self.employee_id.country_id.code),
-                'sex': API_DATA['data']['code_by_sex'].get(self.employee_id.sex, 'male'),
+                'gender': API_DATA['data']['code_by_sex'].get(self.employee_id.sex, 0),
                 'address': {
                     'street': self.employee_id.private_street,
                     'houseNumber': house_number,
