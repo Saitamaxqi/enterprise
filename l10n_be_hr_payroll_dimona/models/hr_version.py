@@ -232,15 +232,15 @@ class HrVersion(models.Model):
                 },
             },
             "dimonaIn": {
-                "startDate": self.date_start.strftime("%Y-%m-%d"),
+                "startDate": self.contract_date_start.strftime("%Y-%m-%d"),
                 "features": {
                     "jointCommissionNumber": "XXX",
                     "workerType": "OTH" if not self.l10n_be_is_student else "STU"
                 }
             }
         }
-        if self.date_end:
-            data['dimonaIn']["endDate"] = self.date_end.strftime("%Y-%m-%d")
+        if self.contract_date_end:
+            data['dimonaIn']["endDate"] = self.contract_date_end.strftime("%Y-%m-%d")
         if self.l10n_be_dimona_planned_hours:
             data['dimonaIn']["plannedHoursNumber"] = self.l10n_be_dimona_planned_hours
         # Drop empty worker informations (The ONSS doesn't like it)
@@ -255,7 +255,7 @@ class HrVersion(models.Model):
         data = {
             "dimonaOut": {
                 "periodId": int(self.l10n_be_dimona_in_declaration_number),
-                "endDate": self.date_end.strftime("%Y-%m-%d"),
+                "endDate": self.contract_date_end.strftime("%Y-%m-%d"),
             }
         }
 
@@ -267,11 +267,11 @@ class HrVersion(models.Model):
         data = {
             "dimonaUpdate": {
                 "periodId": int(self.l10n_be_dimona_in_declaration_number),
-                "startDate": self.date_start.strftime("%Y-%m-%d")
+                "startDate": self.contract_date_start.strftime("%Y-%m-%d")
             }
         }
-        if self.date_end:
-            data["dimonaUpdate"]["endDate"] = self.date_end.strftime("%Y-%m-%d")
+        if self.contract_date_end:
+            data["dimonaUpdate"]["endDate"] = self.contract_date_end.strftime("%Y-%m-%d")
         if self.l10n_be_dimona_planned_hours:
             data['dimonaUpdate']["plannedHoursNumber"] = self.l10n_be_dimona_planned_hours
 
