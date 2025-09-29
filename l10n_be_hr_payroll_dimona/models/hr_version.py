@@ -59,6 +59,14 @@ class HrVersion(models.Model):
     def _validate_response(self, key, response):
         response_json = response.json()
         expected_format = API_DATA['response_validation'][key]['response']
+        TYPE_MAP = {
+            "str": str,
+            "int": int,
+            "list": list,
+            "dict": dict,
+            "float": float,
+            "bool": bool,
+        }
         if response.status_code != API_DATA['response_validation'][key]['status']:
             return response_json
         if len(response_json) != len(expected_format):
@@ -66,7 +74,7 @@ class HrVersion(models.Model):
         for field, field_type in expected_format.items():
             if field not in response_json:
                 raise UserError(_(' The API response is not containing the required fields. Please contact an administrator.'))
-            if not isinstance(response_json[field], field_type):
+            if not isinstance(response_json[field], TYPE_MAP[field_type]):
                 raise UserError(_(' The API response have an unexpected type. Please contact an administrator.'))
         return response_json
 
