@@ -21,8 +21,13 @@ patch(OrderPaymentValidation.prototype, {
     //@override
     async finalizeValidation() {
         if (this.pos.isCountryGermanyAndFiskaly() && !this.pos.data.network.offline) {
-            if (this.order.isTransactionInactive()) {
+            if (
+                this.order.isTransactionInactive() &&
+                !this.order.uiState.networkError &&
+                !this.order.uiState.fiskalyServerError
+            ) {
                 try {
+                    this.pos.ui.block();
                     await this.pos.createTransaction(this.order);
                 } catch (error) {
                     if (error.status === 0) {
@@ -33,10 +38,17 @@ patch(OrderPaymentValidation.prototype, {
                         };
                         this.pos.fiskalyError(error, message);
                     }
+                } finally {
+                    this.pos.ui.unblock();
                 }
             }
-            if (this.order.isTransactionStarted()) {
+            if (
+                this.order.isTransactionStarted() &&
+                !this.order.uiState.fiskalyServerError &&
+                !this.order.uiState.networkError
+            ) {
                 try {
+                    this.pos.ui.block();
                     await this.pos.finishShortTransaction(this.order);
                     await super.finalizeValidation(...arguments);
                 } catch (error) {
@@ -48,8 +60,13 @@ patch(OrderPaymentValidation.prototype, {
                         };
                         this.pos.fiskalyError(error, message);
                     }
+                } finally {
+                    this.pos.ui.unblock();
                 }
-            } else if (this.order.isTransactionFinished()) {
+            } else if (
+                this.order.isTransactionFinished() ||
+                this.order.uiState.fiskalyServerError
+            ) {
                 await super.finalizeValidation(...arguments);
             }
         } else {
