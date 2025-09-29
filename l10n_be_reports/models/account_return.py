@@ -68,7 +68,7 @@ class AccountReturn(models.Model):
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
         months_per_period = return_type._get_periodicity_months_delay(company)
-        if return_type.deadline_days_delay:
+        if return_type.with_company(company).deadline_days_delay:
             pass
 
         elif return_type_external_id in ('l10n_be_reports.be_vat_return_type', 'l10n_be_reports.be_ec_sales_list_return_type') and months_per_period in (1, 3):

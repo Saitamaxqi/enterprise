@@ -1686,3 +1686,49 @@ class TestAccountReturn(TestAccountReportsCommon):
         payment_wizard.action_mark_as_paid()
         self.assertEqual(review_submit_pay_return.state, 'paid')
         self.assertEqual(review_submit_pay_return.is_completed, True)
+
+    def test_deadline_by_company(self):
+        with self._patch_returns_generation():
+            self.company_data_2['company'].account_opening_date = '2023-01-01'
+
+        first_company_completed_return = self.env['account.return'].search([
+            ('type_id', '=', self.basic_return_type.id),
+            ('company_id', '=', self.company_data['company'].id),
+            ('date_from', '=', '2024-01-01'),
+        ])
+        second_company_completed_return = self.env['account.return'].search([
+            ('type_id', '=', self.basic_return_type.id),
+            ('company_id', '=', self.company_data_2['company'].id),
+            ('date_from', '=', '2024-01-01'),
+        ])
+
+        first_company_completed_return._mark_completed()
+        second_company_completed_return._mark_completed()
+
+        first_company_return = self.env['account.return'].search([
+            ('type_id', '=', self.basic_return_type.id),
+            ('company_id', '=', self.company_data['company'].id),
+            ('date_from', '=', '2024-02-01'),
+        ])
+        second_company_return = self.env['account.return'].search([
+            ('type_id', '=', self.basic_return_type.id),
+            ('company_id', '=', self.company_data_2['company'].id),
+            ('date_from', '=', '2024-02-01'),
+        ])
+
+        self.assertEqual(first_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(second_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(first_company_return.date_deadline, date(2024, 3, 7))
+        self.assertEqual(second_company_return.date_deadline, date(2024, 3, 7))
+
+        self.basic_return_type.with_company(self.company_data['company']).deadline_days_delay = 10
+        self.assertEqual(first_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(second_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(first_company_return.date_deadline, date(2024, 3, 10))
+        self.assertEqual(second_company_return.date_deadline, date(2024, 3, 7))
+
+        self.basic_return_type.with_company(self.company_data_2['company']).deadline_days_delay = 15
+        self.assertEqual(first_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(second_company_completed_return.date_deadline, date(2024, 2, 7))
+        self.assertEqual(first_company_return.date_deadline, date(2024, 3, 10))
+        self.assertEqual(second_company_return.date_deadline, date(2024, 3, 15))

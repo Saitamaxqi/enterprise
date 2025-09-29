@@ -10,7 +10,7 @@ class AccountReturn(models.Model):
 
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        if return_type_external_id == 'l10n_nl_reports.nl_tax_return_type' and not return_type.deadline_days_delay:
+        if return_type_external_id == 'l10n_nl_reports.nl_tax_return_type' and not return_type.with_company(company).deadline_days_delay:
             return date_to + relativedelta(months=1)
 
         return super()._evaluate_deadline(company, return_type, return_type_external_id, date_from, date_to)

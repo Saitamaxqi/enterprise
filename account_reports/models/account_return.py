@@ -111,7 +111,6 @@ class AccountReturnType(models.Model):
         help="By default, Odoo applies its own deadline for returns (shown as 0). Entering a value here will override it and be used as the new deadline.",
         tracking=True,
         company_dependent=True,
-        inverse="_inverse_deadline_days_delay",
     )
     default_deadline_days_delay = fields.Integer(string="Default Deadline")
 
@@ -167,14 +166,6 @@ class AccountReturnType(models.Model):
                 return_type.states_workflow = 'generic_state_tax_report'
             else:
                 return_type.states_workflow = 'generic_state_review'
-
-    def _inverse_deadline_days_delay(self):
-        # When the deadline_days_delay is changed we need to recompute all the deadlines of the linked returns
-        # but only those that are not yet completed
-        self.env['account.return'].search([
-            ('type_id', 'in', self.ids),
-            ('is_completed', '=', False),
-        ])._compute_deadline()
 
     def copy_data(self, default=None):
         default = dict(default or {})
@@ -762,12 +753,16 @@ class AccountReturn(models.Model):
 
     @api.model
     def _evaluate_deadline(self, company, return_type, return_type_external_id, date_from, date_to):
-        delay = company.account_return_reminder_day if not return_type.deadline_days_delay else return_type.deadline_days_delay
+        return_type_delay = return_type.with_company(company).deadline_days_delay
+        delay = return_type_delay if return_type_delay else company.account_return_reminder_day
         return date_to + relativedelta(days=delay)
 
-    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_id')
+    @api.depends('date_to', 'company_id.account_return_reminder_day', 'type_id.deadline_days_delay')
     def _compute_deadline(self):
         for account_return in self:
+            if account_return.is_completed:
+                continue
+
             account_return.date_deadline = account_return._evaluate_deadline(
                 account_return.company_id,
                 account_return.type_id,
