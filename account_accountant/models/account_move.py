@@ -499,7 +499,7 @@ class AccountMove(models.Model):
         super().js_assign_outstanding_line(line_id)
         line = self.env['account.move.line'].browse(line_id)
         if line.account_id.account_type == 'asset_cash' and line.statement_line_id:
-            return line.statement_line_id.set_line_bank_statement_line(self.line_ids.filtered(lambda line: line.account_id.account_type in ['asset_receivable', 'liability_payable']).ids)
+            return line.statement_line_id.with_context(skip_payment_tolerance=True).set_line_bank_statement_line(self.line_ids.filtered(lambda line: line.account_id.account_type in {'asset_receivable', 'liability_payable'}).ids)
 
     def js_remove_outstanding_partial(self, partial_id):
         # EXTENDS

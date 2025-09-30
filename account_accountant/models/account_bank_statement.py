@@ -1269,6 +1269,8 @@ class AccountBankStatementLine(models.Model):
         return None
 
     def _get_payment_tolerance(self):
+        if self.env.context.get('skip_payment_tolerance'):
+            return 0
         try:
             payment_tolerance = float(self.env['ir.config_parameter'].sudo().get_param('account_accountant.bank_rec_payment_tolerance', 0))
         # In case the payment tolerance is not a float

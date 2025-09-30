@@ -1634,6 +1634,41 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         reco_model = self.env.ref(f'account.account_reco_model_fee_{st_line.journal_id.id}', raise_if_not_found=False)
         self.assertTrue(reco_model, "A new reco model for fees should have been created")
 
+    def test_do_not_tolerate_if_rec_from_invoice(self):
+        self.env['ir.config_parameter'].set_param('account_accountant.bank_rec_payment_tolerance', '0.03')
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_date='2020-01-01',
+            invoice_line_ids=[{'price_unit': 500.0}],
+        )
+        move = inv_line.move_id
+        st_line = self._create_st_line(
+            490.0,
+            date='2020-01-05',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        move.js_assign_outstanding_line(st_line.line_ids[0].id)
+        self.assertEqual(move.status_in_payment, 'partial')
+        # Since we don't have the payment tolerance, we have a residual amount on the line and can be added to the statement
+        self.assertEqual(10, inv_line.amount_residual)
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_date='2020-01-01',
+            invoice_line_ids=[{'price_unit': 500.0}],
+        )
+        move = inv_line.move_id
+        st_line = self._create_st_line(
+            490.0,
+            date='2020-01-05',
+            partner_id=self.partner_a.id,
+            update_create_date=False,
+        )
+        st_line.set_line_bank_statement_line(inv_line.id)
+        self.assertEqual(move.status_in_payment, 'paid')
+
     def test_exchange_diff_single_currency(self):
         """
         This test will create a new journal with another currencies as the one from the company with a rounding of 1. Then do a
