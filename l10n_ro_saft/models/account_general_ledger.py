@@ -116,6 +116,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         self._l10n_ro_saft_fill_report_assets_values(options, values)
         self._l10n_ro_saft_fill_asset_transactions_values(options, values)
         self._l10n_ro_saft_clean_customer_suppliers_vals_list(options, values)
+        self._l10n_ro_saft_clean_move_vals_list(values)
         self._l10n_ro_saft_check_report_values(values, options)
 
         return values
@@ -875,6 +876,16 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
         if not options['l10n_ro_saft_required_sections']['master_files']['suppliers']:
             values['supplier_vals_list'] = []
+
+    def _l10n_ro_saft_clean_move_vals_list(self, values):
+        for journal_vals in values['journal_vals_list']:
+            for move_vals in journal_vals['move_vals_list']:
+                move_vals['line_vals_list'] = [vals for vals in move_vals['line_vals_list'] if vals['balance']]
+            journal_vals['move_vals_list'] = [vals for vals in journal_vals['move_vals_list'] if vals['line_vals_list']]
+
+        for move_vals in values['move_vals_list']:
+            move_vals['line_vals_list'] = [vals for vals in move_vals['line_vals_list'] if vals['balance']]
+        values['move_vals_list'] = [vals for vals in values['move_vals_list'] if vals['line_vals_list']]
 
     @api.model
     def _saft_fill_report_tax_details_values(self, report, options, values):

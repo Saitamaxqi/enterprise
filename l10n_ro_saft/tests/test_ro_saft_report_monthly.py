@@ -304,3 +304,34 @@ class TestRoSaftReport(TestSaftReport):
             self.report_handler.l10n_ro_export_saft_to_xml_monthly(self._generate_options()),
             'saft_report_zero_balance_partner.xml'
         )
+
+    def test_saft_zero_line(self):
+        self.env['account.move'].create([
+            {
+                'move_type': 'out_invoice',
+                'invoice_date': '2023-10-01',
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'product',
+                        'price_unit': 100,
+                    }),
+                ],
+            },
+            {
+                'move_type': 'out_invoice',
+                'invoice_date': '2023-10-01',
+                'partner_id': self.partner_a.id,
+                'invoice_line_ids': [
+                    Command.create({
+                        'name': 'product',
+                        'price_unit': 0,
+                    }),
+                ],
+            },
+        ]).action_post()
+
+        self._report_compare_with_test_file(
+            self.report_handler.l10n_ro_export_saft_to_xml_monthly(self._generate_options()),
+            'saft_report_zero_line.xml'
+        )
