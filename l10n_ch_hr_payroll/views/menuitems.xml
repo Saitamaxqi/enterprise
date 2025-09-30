@@ -228,6 +228,23 @@
     />
 
     <menuitem
+        id="menu_l10n_ch_monthly_summary"
+        name="Monthly Summary"
+        parent="l10n_ch_hr_payroll.menu_reporting_l10n_ch"
+        action="l10n_ch_monthly_summary_action"
+        sequence="200"
+    />
+
+    <menuitem
+        id="menu_l10n_ch_individual_account"
+        name="Individual Accounts"
+        parent="l10n_ch_hr_payroll.menu_reporting_l10n_ch"
+        action="l10n_ch_individual_account_action"
+        sequence="201"
+    />
+
+
+    <menuitem
         id="menu_l10n_ch_avs_split"
         name="OASI Splitting"
         parent="l10n_ch_hr_payroll_elm_payroll_reporting"

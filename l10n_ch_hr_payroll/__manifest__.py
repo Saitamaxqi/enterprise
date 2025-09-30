@@ -60,6 +60,7 @@ Switzerland Payroll Rules.
         'views/l10n_ch_declaration_views.xml',
         'views/l10n_ch_declaration_yearly_retrospective_views.xml',
         'views/l10n_ch_hr_payroll_reports.xml',
+        'views/hr_payroll_report.xml',
         'views/l10n_ch_hr_payroll_wage_types_views.xml',
         'views/l10n_ch_monthly_wage_types_view.xml',
         'views/l10n_ch_res_company_views.xml',
