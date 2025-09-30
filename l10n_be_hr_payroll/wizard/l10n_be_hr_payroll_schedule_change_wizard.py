@@ -192,7 +192,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             contract_date_end -= timedelta(days=1)
         self.with_context(close_contract=False).version_id.contract_date_end = contract_date_end
 
-        new_contracts = self.version_id.employee_id.create_version({
+        new_version = self.version_id.employee_id.create_version({
             'date_version': self.date_start,
             'contract_date_start': self.date_start,
             'contract_date_end': self.date_end,
@@ -200,6 +200,7 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             'resource_calendar_id': self.resource_calendar_id.id,
             'standard_calendar_id': self.full_resource_calendar_id.id,
         })
+        new_contracts = new_version
         # Since _get_contract_wage_field is not always 'wage' we also want to change the original wage
         if new_contracts._get_contract_wage_field() != 'wage':
             new_contracts.wage = self.wage
@@ -243,10 +244,12 @@ class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
             return True
         else:
             return {
-                'name': _('Credit time contract'),
-                'domain': [('id', 'in', (new_contracts | self.version_id).ids)],
-                'res_model': 'hr.version',
+                'res_model': 'hr.employee',
+                'res_id': new_version.employee_id.id,
                 'view_id': False,
-                'view_mode': 'list,form',
+                'view_mode': 'form',
                 'type': 'ir.actions.act_window',
+                'context': {
+                    'version_id': new_version.id
+                }
             }
