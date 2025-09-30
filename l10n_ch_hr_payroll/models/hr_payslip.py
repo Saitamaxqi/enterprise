@@ -8,6 +8,7 @@ from odoo import api, fields, models, Command, _
 from odoo.tools.float_utils import float_round
 from dateutil.relativedelta import relativedelta
 from odoo.tools import date_utils
+from odoo.exceptions import ValidationError
 
 SWISS_LANGUAGES = ["it_IT", "de_DE", "de_CH", "fr_FR", "fr_CH", "en_EN", "en_US"]
 
@@ -1035,3 +1036,10 @@ class HrPayslip(models.Model):
         if finish and finish < payslip.date_from:
             return 0
         return 30
+
+    def action_adjust_payslip(self):
+        self.ensure_one()
+        if self.struct_id.code == "CHMONTHLYELM":
+            raise ValidationError(self.env._("This feature is not available for payslips in Switzerland. If you wish to correct amounts please cancel the payslip or report corrections to the next month."))
+        else:
+            return super().action_adjust_payslip()
