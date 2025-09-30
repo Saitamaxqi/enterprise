@@ -206,7 +206,18 @@ class AccountJournal(models.Model):
         CtgyPurp = self._get_CtgyPurp(payment_method_code)
         if CtgyPurp is not None:  # avoid FutureWarning
             PmtTpInf.append(CtgyPurp)
+
+        LclInstrm = self._get_LclInstrm(payment_method_code)
+        if LclInstrm is not None:
+            PmtTpInf.append(LclInstrm)
         return PmtTpInf
+
+    def _get_LclInstrm(self, payment_method_code):
+        if payment_method_code == 'iso20022' and (local_instrument_code := self.env['ir.config_parameter'].get_param('account_iso20022.local_instrument_code')):
+            LclInstrm = etree.Element("LclInstrm")
+            Cd = etree.SubElement(LclInstrm, 'Cd')
+            Cd.text = local_instrument_code
+            return LclInstrm
 
     def _get_CtgyPurp(self, payment_method_code):
         if self.env.context.get('sepa_payroll_sala'):
