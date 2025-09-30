@@ -101,6 +101,10 @@ class TestSignRequest(SignRequestCommon, MockEmail):
         with self.assertRaises(UserError, msg='A document cannot be signed twice'):
             sign_request_item.sign(self.signature_fake)
 
+        # unlink
+        with self.assertRaises(UserError, msg='A signed sign request cannot be unlinked'):
+            sign_request_no_item.unlink()
+
         # cancel
         sign_request_item_token = sign_request_item.access_token
         sign_request_no_item_token = sign_request_no_item.access_token
