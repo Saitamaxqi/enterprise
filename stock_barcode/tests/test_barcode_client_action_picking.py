@@ -4502,3 +4502,28 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
         receipt.action_confirm()
         self.start_tour('/odoo/barcode', 'test_qty_after_uom_update_picking_tour', login='admin')
+
+    def test_stock_quant_ids_computed_by_product_update(self):
+        """
+        Verify that the computed field `product_stock_quant_ids` on `move_line_ids`
+        is correctly updated when product_id is set
+        """
+        self.env['stock.quant'].create({
+            'product_id': self.product1.id,
+            'location_id': self.stock_location.id,
+            'quantity': 10
+        })
+        internal_picking = self.env['stock.picking'].create({
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.stock_location.id,
+            'picking_type_id': self.picking_type_internal.id,
+            'move_ids': [Command.create({
+                'location_id': self.stock_location.id,
+                'product_id': self.product1.id,
+                'location_dest_id': self.stock_location.id,
+                'product_uom': self.uom_unit.id,
+                'product_uom_qty': 1,
+            })]
+        })
+        internal_picking.action_confirm()
+        self.assertEqual(internal_picking.move_ids.move_line_ids.product_stock_quant_ids.quantity, 10.0)
