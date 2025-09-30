@@ -7,6 +7,7 @@ import re
 import requests
 
 from io import BytesIO
+from lxml import html
 from openpyxl import load_workbook
 from requests.exceptions import HTTPError, RequestException
 
@@ -364,6 +365,7 @@ class EsgDatabase(models.Model):
             'Accept-Encoding': 'gzip, deflate, br, zstd',
             'Content-Type': 'application/x-www-form-urlencoded',
         }
+        table_name = 'tmp_e63ckbntq05n963ul2451jk2sp'
         if reset:
             request_response = requests.request(
                 'GET',
@@ -379,6 +381,10 @@ class EsgDatabase(models.Model):
                 timeout=(30, 30),
             )
             request_response.raise_for_status()
+            root_node = html.fromstring(request_response.content)
+            if elements := root_node.xpath('//input[@name="tableName"]'):
+                if len(elements) == 1:
+                    table_name = elements[0].value
             cookie = request_response.headers.get('Set-Cookie', '')
             cookie_parts = [part.split('=', 1) for part in cookie.split(';') if '=' in part]
             for cookie_name, cookie_value in cookie_parts:
@@ -389,7 +395,7 @@ class EsgDatabase(models.Model):
             'POST',
             'https://www.ipcc-nggip.iges.or.jp/EFDB/find_ef_xls.php',
             headers=request_headers,
-            data={'lang_id': 1, 'tableName': 'tmp_e63ckbntq05n963ul2451jk2sp', 'mi_show_fuel': True, 'mi_show_cpool': True},
+            data={'lang_id': 1, 'tableName': table_name, 'mi_show_fuel': True, 'mi_show_cpool': True},
             timeout=(30, 30),
         )
         request_response.raise_for_status()
