@@ -256,6 +256,6 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         ]
         return {
             'file_name': f'odoo_sie4_{fields.Date.context_today(self).strftime(DATEFORMAT_SIE4)}.se',
-            'file_content': '\n'.join(content_lines).encode('ISO-8859-1'),
+            'file_content': '\n'.join(content_lines).encode('437'),
             'file_type': 'txt',
         }
