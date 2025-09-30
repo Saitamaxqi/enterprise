@@ -272,8 +272,8 @@ class HrPayslip(models.Model):
                         not line.salary_rule_id.analytic_distribution and
                         not line.slip_id.version_id.analytic_distribution
                     )
-                    or line_id['analytic_distribution'] and line.salary_rule_id.analytic_distribution in line_id['analytic_distribution']
-                    or line_id['analytic_distribution'] and line.slip_id.version_id.analytic_distribution in line_id['analytic_distribution']
+                    or line_id['analytic_distribution'] and any(acc_id in line_id['analytic_distribution'] for acc_id in line.salary_rule_id.distribution_analytic_account_ids)
+                    or line_id['analytic_distribution'] and any(acc_id in line_id['analytic_distribution'] for acc_id in line.slip_id.version_id.distribution_analytic_account_ids)
 
                 )
             and self._check_debit_credit_tags(line_id, line, account_id)
