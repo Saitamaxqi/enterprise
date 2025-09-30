@@ -18,6 +18,7 @@ class TestRequest(common.TransactionCase):
             'date_end': fields.Datetime.now(),
             'location': 'testland'
         })
+        record.write({'approver_ids': [(5, 0, 0)]})
         first_approver = self.env['approval.approver'].create({
             'user_id': 1,
             'request_id': record.id,
@@ -86,6 +87,7 @@ class TestRequest(common.TransactionCase):
             'date_end': fields.Datetime.now(),
             'location': 'testland'
         })
+        record.write({'approver_ids': [(5, 0, 0)]})
         first_approver = self.env['approval.approver'].create({
             'user_id': 1,
             'request_id': record.id,
