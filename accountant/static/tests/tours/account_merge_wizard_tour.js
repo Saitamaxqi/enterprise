@@ -53,7 +53,7 @@ registry.category("web_tour.tours").add("account_merge_wizard_tour", {
         },
         {
             content: "Check that there are now exactly 2 accounts",
-            trigger: "tr.o_data_row:contains(2)",
+            trigger: ".o_pager_limit:contains(2)",
         },
     ],
 });
