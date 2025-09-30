@@ -573,6 +573,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
         )
 
     def test_demo_certificate_serial_number(self):
-        cert = self.env.ref('l10n_cl_edi.l10n_cl_demo_certificate').sudo()
-        self.assertIsNotNone(cert, "Demo certificate not found")
-        self.assertEqual(cert.subject_serial_number, "23841194-7")
+        cert = self.env.ref('l10n_cl_edi.l10n_cl_demo_certificate', raise_if_not_found=False)
+        if not cert:
+            self.skipTest("Demo data not installed: l10n_cl_edi.l10n_cl_demo_certificate")
+        self.assertEqual(cert.sudo().subject_serial_number, "23841194-7")
