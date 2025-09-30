@@ -595,7 +595,7 @@ class EsgDatabase(models.Model):
                     value *= 1.11 * (10 ** -5)
                 elif unit.lower().startswith('gg'):
                     value *= 10 ** 9
-                elif unit.lower().startswith('ton') or uom in ['(kg PFC/tAl)/(AE-Minutes/cellday)', '(kg PFC/tAl)/(mV/day)', 'kg SF6/tonnes magnesium produced or smelted']:
+                elif unit.lower().startswith('ton') or unit in ['(kg PFC/tAl)/(AE-Minutes/cellday)', '(kg PFC/tAl)/(mV/day)', 'kg SF6/tonnes magnesium produced or smelted']:
                     uom = uom_tonne
                 elif unit == 'm3/m3 beer':
                     value *= 1.020
