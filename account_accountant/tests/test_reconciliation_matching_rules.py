@@ -909,6 +909,18 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': self.account_rec.id, 'balance': -95.0},
         ], reconciled_amls=[invoice_line_2])
 
+    def test_early_payment_discount_partial_payment(self):
+        invoice = self.init_invoice(move_type='out_invoice', partner=self.partner_a, invoice_date='2019-09-01', amounts=[100])
+        invoice.invoice_payment_term_id = self.env.ref('account.account_payment_term_30days_early_discount')
+        invoice.action_post()
+        st_line = self._create_st_line(amount=50, payment_ref=invoice.name)
+        st_line._try_auto_reconcile_statement_lines()
+        self.assertEqual(invoice.payment_state, 'partial')
+        self._check_st_line_matching(st_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'balance': 50.0},
+            {'account_id': self.account_rec.id, 'balance': -50.0}
+        ])
+
     def test_no_partner_ambiguity(self):
         _invoice_line_1 = self._create_invoice_line(600, self.partner_1, 'out_invoice', ref="RF12 3456")
         _invoice_line_2 = self._create_invoice_line(600, self.partner_2, 'out_invoice', ref="RF12 3456")

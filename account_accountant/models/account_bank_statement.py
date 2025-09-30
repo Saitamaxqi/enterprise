@@ -1075,6 +1075,7 @@ class AccountBankStatementLine(models.Model):
         open_amount_currency = transaction_amount
         total_early_payment_discount = 0.0
         early_pay_aml_values_list = []
+        early_pay_amls = self.env['account.move.line']
 
         for line in other_lines + move_lines:
             # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
@@ -1098,6 +1099,7 @@ class AccountBankStatementLine(models.Model):
                     'amount_currency': -line.amount_currency,
                     'balance': -amount,
                 })
+                early_pay_amls += line
 
             exchange_diff_balance = self._lines_get_account_balance_exchange_diff(line.currency_id, amount, amount_currency)
             line_balance = amount + exchange_diff_balance
@@ -1111,7 +1113,7 @@ class AccountBankStatementLine(models.Model):
                 open_amount_currency += transaction_currency.round(line_balance * company_transaction_rate) * sign
 
         new_lines = []
-        is_early_payment_discount = False
+        is_early_payment_discount = self._qualifies_for_early_payment(transaction_currency, open_amount_currency, total_early_payment_discount)
         has_exchange_diff = False
         residual_amount = company_amount + sum(line.balance for line in other_lines)
         for index, move_line in enumerate(move_lines):
@@ -1134,7 +1136,7 @@ class AccountBankStatementLine(models.Model):
                     new_line_balance = partial_amounts['partial_balance']
                     new_amount_currency = partial_amounts['partial_amount_currency']
 
-            if is_early_payment_discount := move_line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
+            if is_early_payment_discount and move_line in early_pay_amls:
                 new_line_balance = -move_line.amount_residual
                 new_amount_currency = -move_line.amount_residual_currency
 
@@ -1146,7 +1148,7 @@ class AccountBankStatementLine(models.Model):
             ))
             self.move_id._compute_checked()  # to add to compute dependencies
 
-        if is_early_payment_discount and open_amount_currency and self._qualifies_for_early_payment(transaction_currency, open_amount_currency, total_early_payment_discount):
+        if is_early_payment_discount:
             new_lines.extend(self._set_early_payment_discount_lines(early_pay_aml_values_list, open_balance))
 
         self.with_context(no_exchange_difference_no_recursive=not has_exchange_diff)._add_move_line_to_statement_line_move(new_lines)
@@ -1241,7 +1243,7 @@ class AccountBankStatementLine(models.Model):
 
     @api.model
     def _qualifies_for_early_payment(self, transaction_currency, open_amount_currency, total_early_payment_discount):
-        return transaction_currency.is_zero(open_amount_currency + total_early_payment_discount)
+        return open_amount_currency and total_early_payment_discount and transaction_currency.is_zero(open_amount_currency + total_early_payment_discount)
 
     def _set_early_payment_discount_lines(self, early_pay_aml_values_list, open_balance):
         early_payment_values = self.env['account.move']._get_invoice_counterpart_amls_for_early_payment_discount(
