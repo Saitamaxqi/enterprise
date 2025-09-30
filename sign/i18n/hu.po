@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sign
+# * sign
 #
 # Translators:
 # Gergő Kertész <gergo.kertesz@maxflow.hu>, 2022
@@ -15,20 +15,22 @@
 # Ákos Nagy <akos.nagy@oregional.hu>, 2022
 # gezza <geza.nagy@oregional.hu>, 2023
 # Szabolcs Rádi, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Szabolcs Rádi, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/sign/"
+"hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sign
 #. odoo-python
@@ -68,6 +70,8 @@ msgid ""
 "%(partner)s validated the signature by SMS with the phone number %"
 "(phone_number)s."
 msgstr ""
+"%(partner)s validálta az aláírást SMS-ben a következő telefonszámról: "
+"%(phone_number)s."
 
 #. module: sign
 #. odoo-python
@@ -295,7 +299,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_terms_conditions_setting_banner
 msgid "<i class=\"oi oi-arrow-right me-1\"/>Back to settings"
-msgstr ""
+msgstr "<i class=\"oi oi-arrow-right me-1\"/>Vissza a beállításokhoz"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -405,7 +409,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_terms_conditions_setting_banner
 msgid "<span>This is a preview of your Terms &amp; Conditions.</span>"
-msgstr ""
+msgstr "<span>Ez az előnézete a Te Általános Szerződési Feltételeidnek.</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
@@ -518,12 +522,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_mail_activity_type__category
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "Action"
-msgstr "Művelet"
+msgstr "Akció"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction
 msgid "Action Needed"
-msgstr "Művelet szükséges"
+msgstr "Akció szükséges"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__action
@@ -563,7 +567,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_state
 msgid "Activity State"
-msgstr "Tevékenység állapota"
+msgstr "Tevékenység állapot"
 
 #. module: sign
 #: model:ir.model,name:sign.model_mail_activity_type
@@ -860,7 +864,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_kanban
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Visszavonás"
 
 #. module: sign
 #. odoo-javascript
@@ -882,7 +886,7 @@ msgstr "Visszavonva"
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
 #: model_terms:ir.ui.view,arch_db:sign.signer_status_wrapper
 msgid "Cancelled"
-msgstr ""
+msgstr "Visszavont"
 
 #. module: sign
 #. odoo-python
@@ -991,7 +995,7 @@ msgstr "Szín"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_tag__color
 msgid "Color Index"
-msgstr "Színjegyzék"
+msgstr "Szín index"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
@@ -1001,7 +1005,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
 msgid "Communication history"
-msgstr ""
+msgstr "Kommunikációs előzmények"
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_company
@@ -1052,12 +1056,12 @@ msgstr "Elkészült aláírások"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__completion_date
 msgid "Completion Date"
-msgstr ""
+msgstr "Elkészülés dátuma"
 
 #. module: sign
 #: model:ir.model,name:sign.model_res_config_settings
 msgid "Config Settings"
-msgstr "Beállítások módosítása"
+msgstr "Beállítások"
 
 #. module: sign
 #. odoo-javascript
@@ -1587,7 +1591,7 @@ msgstr ""
 #: model:sign.item.type,placeholder:sign.sign_item_type_email
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "Email"
-msgstr "E-mail"
+msgstr "Email"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__subject
@@ -1638,7 +1642,7 @@ msgstr "404-es hiba"
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__expired
 #: model:ir.model.fields.selection,name:sign.selection__sign_request__state__expired
 msgid "Expired"
-msgstr ""
+msgstr "Lejárt"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
@@ -1896,7 +1900,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_template_preview__id
 #: model:ir.model.fields,field_description:sign.field_sign_template_tag__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -1906,7 +1910,7 @@ msgstr "IP"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "IP Address"
-msgstr ""
+msgstr "IP cím"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__ip
@@ -1993,7 +1997,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__log_hash
 msgid "Inalterability Hash"
-msgstr ""
+msgstr "Változtathatatlansági hash"
 
 #. module: sign
 #. odoo-javascript
@@ -2138,7 +2142,7 @@ msgstr "Frissítette"
 #: model:ir.model.fields,field_description:sign.field_sign_template_preview__write_date
 #: model:ir.model.fields,field_description:sign.field_sign_template_tag__write_date
 msgid "Last Updated on"
-msgstr "Frissítve ekkor"
+msgstr "Frissítve"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__last_reminder
@@ -2444,7 +2448,7 @@ msgstr "Következő tevékenység határideje"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_summary
 msgid "Next Activity Summary"
-msgstr "Következő tevékenység összegzés"
+msgstr "Következő tevékenység összegzése"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__activity_type_id
@@ -2497,7 +2501,7 @@ msgstr "Nincs"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Műveletek száma"
+msgstr "Akciók száma"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__num_options
@@ -2523,7 +2527,7 @@ msgstr "Hibák száma"
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Üzenetek száma, melyek akciót igényelnek"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__message_has_error_counter
@@ -2584,7 +2588,7 @@ msgstr ""
 #: code:addons/sign/controllers/main.py:0
 #: code:addons/sign/controllers/terms.py:0
 msgid "Oops"
-msgstr ""
+msgstr "Hoppá"
 
 #. module: sign
 #. odoo-python
@@ -2625,7 +2629,7 @@ msgstr ""
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.xml:0
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "Options"
-msgstr "Beállítások"
+msgstr "Opciók"
 
 #. module: sign
 #. odoo-python
@@ -2754,7 +2758,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: sign
 #. odoo-javascript
@@ -2824,7 +2828,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__reminder
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
 msgid "Reminder"
-msgstr ""
+msgstr "Emlékeztető"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__reminder_enabled
@@ -2966,7 +2970,7 @@ msgstr "SMS token"
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_3
 msgid "Sales"
-msgstr "Értékesítések"
+msgstr "Értékesítés"
 
 #. module: sign
 #. odoo-python
@@ -2993,7 +2997,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/cog_menu/sign_template_custom_cog_menu.xml:0
 msgid "Save as Template"
-msgstr ""
+msgstr "Mentés sablonként"
 
 #. module: sign
 #. odoo-javascript
@@ -3114,7 +3118,7 @@ msgstr "Elküldött kérések"
 #: code:addons/sign/static/src/dialogs/thank_you_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 msgid "Sent by"
-msgstr ""
+msgstr "Küldte"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
@@ -3481,7 +3485,7 @@ msgstr "Aláírási kérés"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Signature Request - %(file_name)s"
-msgstr ""
+msgstr "Aláírási kérés - %(file_name)s"
 
 #. module: sign
 #. odoo-python
@@ -3762,7 +3766,7 @@ msgstr "Általános"
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
 msgid "State"
-msgstr "Állam"
+msgstr "Állam/megye"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_log__request_state
@@ -3775,7 +3779,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_tree
 msgid "Status"
-msgstr "Állapot"
+msgstr "Státusz"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__activity_state
@@ -3822,7 +3826,7 @@ msgstr "Tárgy"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
 msgid "Summary"
-msgstr ""
+msgstr "Összefoglaló"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template_tag__name
@@ -3832,7 +3836,7 @@ msgstr "Címke neve"
 #. module: sign
 #: model:ir.model.constraint,message:sign.constraint_sign_template_tag_name_uniq
 msgid "Tag name already exists!"
-msgstr ""
+msgstr "A címke név már létezik!"
 
 #. module: sign
 #: model:ir.actions.act_window,name:sign.sign_template_tag_action
@@ -3851,7 +3855,7 @@ msgstr "Címkék"
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_header_tags.xml:0
 msgid "Tags:"
-msgstr ""
+msgstr "Címkék:"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_item_type__auto_field
@@ -3946,7 +3950,7 @@ msgstr "Szöveg"
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/next_direct_sign_dialog.js:0
 msgid "Thank You!"
-msgstr ""
+msgstr "Köszönöm!"
 
 #. module: sign
 #. odoo-javascript
@@ -4052,7 +4056,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/sign/controllers/terms.py:0
 msgid "The requested page is invalid, or doesn't exist anymore."
-msgstr ""
+msgstr "A kért oldal érvénytelen, vagy már nem létezik."
 
 #. module: sign
 #. odoo-python
@@ -4358,7 +4362,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sign/static/src/views/helper/sign_action_helper.xml:0
 msgid "Upload"
-msgstr ""
+msgstr "Feltöltés"
 
 #. module: sign
 #. odoo-javascript
@@ -4431,7 +4435,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sign.field_sign_request_share__validity
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__validity
 msgid "Valid Until"
-msgstr ""
+msgstr "Érvényesség vége"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
@@ -4522,7 +4526,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
 msgid "Water"
-msgstr ""
+msgstr "Víz"
 
 #. module: sign
 #. odoo-python
@@ -4564,12 +4568,12 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__website_message_ids
 msgid "Website Messages"
-msgstr "Honlap üzenetek"
+msgstr "Weboldal üzenetek"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__website_message_ids
 msgid "Website communication history"
-msgstr "Weboldali kommunikációs előzmények"
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: sign
 #. odoo-javascript
@@ -4593,7 +4597,7 @@ msgstr "Szélesség"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container_pdf
 msgid "Wood"
-msgstr ""
+msgstr "Fa"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -4934,13 +4938,13 @@ msgstr "következő"
 #. odoo-javascript
 #: code:addons/sign/static/src/dialogs/thank_you_dialog.xml:0
 msgid "on"
-msgstr ""
+msgstr "adóalap:"
 
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/views/helper/sign_action_helper.xml:0
 msgid "or"
-msgstr ""
+msgstr "vagy"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_report_container

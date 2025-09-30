@@ -1,37 +1,41 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* knowledge
+# * knowledge
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-11 14:36+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"knowledge/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "\" (Selection)"
-msgstr ""
+msgstr "\" (kiválasztás)"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "\" (date and time)"
-msgstr ""
+msgstr "\" (dátum és idő)"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "\" (date)"
-msgstr ""
+msgstr "\" (dátum)"
 
 #. module: knowledge
 #. odoo-python
@@ -61,7 +65,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "\"About Us\" Template"
-msgstr ""
+msgstr "\"Rólunk\" sablon"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -71,19 +75,19 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__favorite_count
 msgid "#Is Favorite"
-msgstr ""
+msgstr "#kedvenc"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "%(article_name)s (copy)"
-msgstr ""
+msgstr "%(article_name)s (másolat)"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "%s has been sent to Trash"
-msgstr ""
+msgstr "%s kukába helyezve"
 
 #. module: knowledge
 #. odoo-javascript
@@ -100,7 +104,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
 msgid ".<br/>"
-msgstr ""
+msgstr ".<br/>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -723,6 +727,11 @@ msgid ""
 "                    to convert a text into a title\n"
 "                </span>"
 msgstr ""
+"<span style=\"font-size: 14px;\">\n"
+"                    Használja a\n"
+"                    /<span style=\"font-style: italic;\">címsor</span>\n"
+"                    parancsot a szöveg címmé történő átalakításához\n"
+"                </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1175,6 +1184,9 @@ msgid ""
 "            <font class=\"text-o-color-1\">YouTube</font>\n"
 "        </span>"
 msgstr ""
+"<span style=\"font-weight: bolder;\">\n"
+"            <font class=\"text-o-color-1\">YouTube</font>\n"
+"        </span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1182,6 +1194,8 @@ msgid ""
 "<span style=\"font-weight: bolder;\"><font class=\"text-o-"
 "color-1\">Facebook</font></span>"
 msgstr ""
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\""
+">Facebook</font></span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1520,7 +1534,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 msgid "Access Denied"
-msgstr ""
+msgstr "Hozzáférés megtagadva"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1542,7 +1556,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Akció szükséges"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1552,33 +1566,33 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__active
 msgid "Active"
-msgstr ""
+msgstr "Aktív"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Tevékenységek"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Tevékenység kivétel dekoráció"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Tevékenység állapot"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Tevékenység típus ikon"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add Cover"
-msgstr ""
+msgstr "Borítókép hozzáadása"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1590,7 +1604,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add Properties"
-msgstr ""
+msgstr "Tulajdonságok hozzáadása"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1707,7 +1721,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "Advanced Search"
-msgstr ""
+msgstr "Haladó keresés"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -1845,7 +1859,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Archived"
-msgstr ""
+msgstr "Archivált"
 
 #. module: knowledge
 #. odoo-javascript
@@ -1980,7 +1994,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_search
 msgid "Article"
-msgstr ""
+msgstr "Cikk"
 
 #. module: knowledge
 #. odoo-python
@@ -2077,7 +2091,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_article
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Articles"
-msgstr ""
+msgstr "Cikkek"
 
 #. module: knowledge
 #. odoo-python
@@ -2101,18 +2115,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Attach"
-msgstr ""
+msgstr "Csatolás"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_ir_attachment
 msgid "Attachment"
-msgstr ""
+msgstr "Melléklet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_attachment_count
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Mellékletek száma"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_child_default_create
@@ -2142,7 +2156,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid "Backlog"
-msgstr ""
+msgstr "Elmaradás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2154,7 +2168,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Based on"
-msgstr ""
+msgstr "Alapján"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2169,7 +2183,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__body
 msgid "Body"
-msgstr ""
+msgstr "Törzs"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2227,7 +2241,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 msgid "Browse Templates"
-msgstr ""
+msgstr "Sablonok böngészése"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
@@ -2286,14 +2300,14 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_can_write
 msgid "Can Edit"
-msgstr ""
+msgstr "Szerkesztheti"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_can_read
 msgid "Can Read"
-msgstr ""
+msgstr "Olvashatja"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__write
@@ -2326,7 +2340,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article_member__permission__read
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_invite__permission__read
 msgid "Can read"
-msgstr ""
+msgstr "Olvashatja"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_access_parent_path
@@ -2343,7 +2357,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.xml:0
 msgid "Cancel"
-msgstr ""
+msgstr "Visszavonás"
 
 #. module: knowledge
 #. odoo-python
@@ -2369,7 +2383,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.js:0
 msgid "Categories"
-msgstr ""
+msgstr "Kategóriák"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__sequence
@@ -2458,7 +2472,7 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Clipboard"
-msgstr ""
+msgstr "Vágólap"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2466,7 +2480,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/js/knowledge_controller.js:0
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Close"
-msgstr ""
+msgstr "Bezárás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2484,42 +2498,42 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/plugins/comments_plugin/comments_plugin.js:0
 msgid "Comment"
-msgstr ""
+msgstr "Megjegyzés"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Company Abbreviations"
-msgstr ""
+msgstr "Vállalati rövidítések"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Details"
-msgstr ""
+msgstr "Vállalat részletei"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Location:"
-msgstr ""
+msgstr "Vállalat lokáció:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Name:"
-msgstr ""
+msgstr "Vállalat neve:"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_company_newsletter
 msgid "Company Newsletter"
-msgstr ""
+msgstr "Vállalati hírlevél"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_company_organization
 msgid "Company Organization"
-msgstr ""
+msgstr "Vállalat szervezete"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Company Structure:"
-msgstr ""
+msgstr "Vállalati struktúra:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -2531,40 +2545,40 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Complicated buying process"
-msgstr ""
+msgstr "Bonyolult beszerzési folyamat"
 
 #. module: knowledge
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "Konfiguráció"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_view.js:0
 msgid "Confirmation"
-msgstr ""
+msgstr "Megerősítés"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kapcsolat"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid "Contact Us"
-msgstr ""
+msgstr "Kapcsolatfelvétel"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_contact_our_lawyer
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_shared_todos_contact_our_lawyer
 msgid "Contact our Lawyer"
-msgstr ""
+msgstr "Lépjen kapcsolatba az ügyvédünkkel"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.js:0
 msgid "Content copied to clipboard."
-msgstr ""
+msgstr "Tartalom átmásolva a vágólapra"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -2575,36 +2589,36 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Convert into Article"
-msgstr ""
+msgstr "Átalakítás cikkre"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Convert into Article Item"
-msgstr ""
+msgstr "Átalakítás cikk tételre"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.xml:0
 msgid "Copy"
-msgstr ""
+msgstr "Másolás"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Copy Link"
-msgstr ""
+msgstr "Link másolása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/clipboard/embedded_clipboard.xml:0
 msgid "Copy to Clipboard"
-msgstr ""
+msgstr "Másolás a vágólapra"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Costing too much money"
-msgstr ""
+msgstr "Túl sokba kerül"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2625,22 +2639,22 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__attachment_url
 msgid "Cover URL"
-msgstr ""
+msgstr "Borító URL"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__attachment_id
 msgid "Cover attachment"
-msgstr ""
+msgstr "Borító melléklet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__cover_image_url
 msgid "Cover url"
-msgstr ""
+msgstr "Borító URL"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__cover_image_position
 msgid "Cover vertical offset"
-msgstr ""
+msgstr "Borító vertikális eltolás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2648,13 +2662,13 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Create \""
-msgstr ""
+msgstr "Létrehozás: \""
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Create a Copy"
-msgstr ""
+msgstr "Másolat létrehozása"
 
 #. module: knowledge
 #: model:ir.model,website_form_label:knowledge.model_res_partner
@@ -2665,7 +2679,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "Create a new article in workspace"
-msgstr ""
+msgstr "Új cikk létrehozása a munkaterületben"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2684,7 +2698,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action_stages
 msgid "Create an Article Item"
-msgstr ""
+msgstr "Cikk tétel létrehozása"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2696,7 +2710,7 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Create an article"
-msgstr ""
+msgstr "Cikk létrehozása"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_uid
@@ -2710,7 +2724,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created by"
-msgstr ""
+msgstr "Létrehozta"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_date
@@ -2724,17 +2738,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 msgid "Created on"
-msgstr ""
+msgstr "Létrehozva"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Current Contract:"
-msgstr ""
+msgstr "Jelenlegi szerződés:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Current Satisfaction:"
-msgstr ""
+msgstr "Jelenlegi elégedettség:"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_marketing_customer_personas
@@ -2752,38 +2766,38 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.js:0
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Date Properties"
-msgstr ""
+msgstr "Dátum tulajdonságok"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.js:0
 msgid "Date and Time Properties"
-msgstr ""
+msgstr "Dátum és idő tulajdonságok"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
 msgid "Dear"
-msgstr ""
+msgstr "Kedves"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Decision 1"
-msgstr ""
+msgstr "Döntés 1"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Decision 2"
-msgstr ""
+msgstr "Döntés 2"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Decision 3"
-msgstr ""
+msgstr "Döntés 3"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Decision 4"
-msgstr ""
+msgstr "Döntés 4"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2834,7 +2848,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__deletion_date
 msgid "Deletion Date"
-msgstr ""
+msgstr "Törlés dátuma"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_permission_on_desync
@@ -2863,7 +2877,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Elvetés"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2884,7 +2898,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__display_name
 #: model:ir.model.fields,field_description:knowledge.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Megjelenített név"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_brand_assets
@@ -2916,7 +2930,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_done
 msgid "Done"
-msgstr ""
+msgstr "Kész"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2934,30 +2948,30 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/views/list_view.js:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikálás"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
 msgid "EDIT"
-msgstr ""
+msgstr "SZERKESZTÉS"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Szerkesztés"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Edit Link"
-msgstr ""
+msgstr "Link szerkesztése"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid "Education:"
-msgstr ""
+msgstr "Tanulmányok:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -2987,18 +3001,18 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Email:"
-msgstr ""
+msgstr "Email:"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.js:0
 msgid "Embed a View"
-msgstr ""
+msgstr "Nézet beágyazása"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__icon
 msgid "Emoji"
-msgstr ""
+msgstr "Emoji"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3017,7 +3031,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/macros/abstract_macro.js:0
 msgid "Error"
-msgstr ""
+msgstr "Hiba"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -3028,13 +3042,13 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid "Events 🌍"
-msgstr ""
+msgstr "Események 🌍"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Everyone"
-msgstr ""
+msgstr "Mindenki"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3044,7 +3058,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Extra Comment"
-msgstr ""
+msgstr "További megjegyzés"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -3055,17 +3069,17 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Favorite"
-msgstr ""
+msgstr "Kedvenc"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_favorite
 msgid "Favorite Article"
-msgstr ""
+msgstr "Kedvenc cikk"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__favorite_ids
 msgid "Favorite Articles"
-msgstr ""
+msgstr "Kedvenc cikkek"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3074,7 +3088,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_favorite_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_tree
 msgid "Favorites"
-msgstr ""
+msgstr "Kedvencek"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
@@ -3096,24 +3110,24 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
 msgid "Folded in kanban view"
-msgstr ""
+msgstr "Kanban nézetben összecsukott"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_follower_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Követők"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_partner_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Követők (Partnerek)"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font awesome ikon pld: fa-tasks"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -3126,12 +3140,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Full Width"
-msgstr ""
+msgstr "Teljes szélesség"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__full_width
 msgid "Full width"
-msgstr ""
+msgstr "Teljes szélesség"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -3160,23 +3174,23 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_hr_faq
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
 msgid "HR FAQ"
-msgstr ""
+msgstr "HR GYIK"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_access
 msgid "Has Access"
-msgstr ""
+msgstr "Van hozzáférése"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__has_message
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Van üzenet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_has_write_access
 msgid "Has Write Access"
-msgstr ""
+msgstr "Írási hozzáférése van"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__has_item_children
@@ -3237,7 +3251,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Hidden"
-msgstr ""
+msgstr "Rejtett"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3272,19 +3286,19 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__html_field_history
 msgid "History data"
-msgstr ""
+msgstr "Előzmény adatok"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__html_field_history_metadata
 msgid "History metadata"
-msgstr ""
+msgstr "Előzmény metaadat"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_home
 msgid "Home"
-msgstr ""
+msgstr "Kezdőlap"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3382,17 +3396,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_res_partner__id
 #: model:ir.model.fields,field_description:knowledge.field_res_users__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Ikon"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Kivétel tevékenységet jelző ikon"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3403,7 +3417,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Ha be van jelölve, akkor az új üzenetek figyelmet igényelnek."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error
@@ -3411,7 +3425,7 @@ msgstr ""
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_error
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Ha be van jelölve, akkor néhány üzenetnél kézbesítési hiba lépett fel."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__is_listed_in_templates_gallery
@@ -3487,7 +3501,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Index"
-msgstr ""
+msgstr "Index"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -3497,7 +3511,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Industry:"
-msgstr ""
+msgstr "Iparág:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3513,7 +3527,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__inherited_permission
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_permission
 msgid "Inherited Permission"
-msgstr ""
+msgstr "Örökölt jogosultságok"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__inherited_permission_parent_id
@@ -3525,67 +3539,67 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.xml:0
 msgid "Insert"
-msgstr ""
+msgstr "Beszúrás"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Insert a Calendar View"
-msgstr ""
+msgstr "Naptár nézet beszúrása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a Calendar view of article items"
-msgstr ""
+msgstr "Cikk tételek beszúrása naptár nézetben"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a Card view of article items"
-msgstr ""
+msgstr "Cikk tételek beszúrása kártya nézetben"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.js:0
 msgid "Insert a Kanban View"
-msgstr ""
+msgstr "Kanban nézet beszúrása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a Kanban view of article items"
-msgstr ""
+msgstr "Cikk tételek beszúrása kanban nézetben"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.js:0
 msgid "Insert a List View"
-msgstr ""
+msgstr "Lista nézet beszúrása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_plugin/embedded_view_plugin.js:0
 msgid "Insert a List view of article items"
-msgstr ""
+msgstr "Cikk tételek beszúrása lista nézetben"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/plugins/article_plugin/article_plugin.js:0
 msgid "Insert an Article shortcut"
-msgstr ""
+msgstr "Cikk gyorshivatkozás beszúrása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/insert_embedded_view.xml:0
 msgid "Insert link in article"
-msgstr ""
+msgstr "Link beszúrása cikkbe"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/insert_embedded_view.xml:0
 msgid "Insert view in article"
-msgstr ""
+msgstr "Nézet beszúrása cikkbe"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -3598,7 +3612,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid "Interests:"
-msgstr ""
+msgstr "Érdeklődések:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
@@ -3636,12 +3650,12 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Invite"
-msgstr ""
+msgstr "Meghívás"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_invite_action_from_article
 msgid "Invite people"
-msgstr ""
+msgstr "Emberek meghívása"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__is_article_active
@@ -3651,13 +3665,13 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_user_favorite
 msgid "Is Favorited"
-msgstr ""
+msgstr "Kedvelt"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_is_follower
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Követő"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_article_item
@@ -3703,12 +3717,12 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Item 1"
-msgstr ""
+msgstr "1. tétel"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
 msgid "Item 2"
-msgstr ""
+msgstr "2. tétel"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -3752,17 +3766,17 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_calendar_items
 msgid "Items"
-msgstr ""
+msgstr "Tételek"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Job Position:"
-msgstr ""
+msgstr "Munkakör:"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Join"
-msgstr ""
+msgstr "Csatlakozás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3813,12 +3827,12 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_menu_technical
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
 msgid "Knowledge"
-msgstr ""
+msgstr "Tudás"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article
 msgid "Knowledge Article"
-msgstr ""
+msgstr "Tudásbázis cikk"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_cover
@@ -3840,7 +3854,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Last Edit Date"
-msgstr ""
+msgstr "Utolsó modosítás dátuma"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_uid
@@ -3850,7 +3864,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_date
 msgid "Last Edited on"
-msgstr ""
+msgstr "Szerkesztve"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3873,7 +3887,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_uid
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Frissítette"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_date
@@ -3885,13 +3899,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_cover__write_date
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Frissítve"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Leave"
-msgstr ""
+msgstr "Elhagyás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3919,13 +3933,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/embedded_view_link_plugin/embedded_view_link_plugin.js:0
 msgid "Link copied to clipboard."
-msgstr ""
+msgstr "A link a vágólapra másolva."
 
 #. module: knowledge
 #. odoo-javascript
@@ -3962,12 +3976,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Lock Content"
-msgstr ""
+msgstr "Tartalom zárolása"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__is_locked
 msgid "Locked"
-msgstr ""
+msgstr "Zárolt"
 
 #. module: knowledge
 #. odoo-python
@@ -3980,7 +3994,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Logo"
-msgstr ""
+msgstr "Logó"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -4014,7 +4028,7 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_marketing
 msgid "Marketing"
-msgstr ""
+msgstr "Marketing"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_marketing_campaign_brief
@@ -4032,7 +4046,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_meeting
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_meeting
 msgid "Meeting"
-msgstr ""
+msgstr "Találkozó"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_meeting_example_branding
@@ -4055,7 +4069,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_form
 msgid "Member"
-msgstr ""
+msgstr "Tag"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4064,7 +4078,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_member_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_tree
 msgid "Members"
-msgstr ""
+msgstr "Tagok"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_member_ids
@@ -4087,31 +4101,31 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__message
 msgid "Message"
-msgstr ""
+msgstr "Üzenet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Üzenetkézbesítési hiba"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/message/message_model_patch.js:0
 msgid "Message Link Copied!"
-msgstr ""
+msgstr "Üzenet link másolva!"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/message/message_model_patch.js:0
 msgid "Message Link Copy Failed (Permission denied?)!"
-msgstr ""
+msgstr "Üzenet link másolás sikertelen (jogosultság megtagadva?)!"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Üzenetek"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4185,7 +4199,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid "Move to Trash"
-msgstr ""
+msgstr "Áthelyezés a kukába"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4196,12 +4210,12 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Tevékenységeim határideje"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "My Favorites"
-msgstr ""
+msgstr "Kedvenceim"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -4227,7 +4241,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_items
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Name"
-msgstr ""
+msgstr "Név"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -4247,7 +4261,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_new
 msgid "New"
-msgstr ""
+msgstr "Új"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4275,22 +4289,22 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Következő tevékenység naptár esemény"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Következő tevékenység határideje"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Következő tevékenység összegzése"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Következő tevékenység típusa"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_minutes_template
@@ -4312,7 +4326,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "No Article found."
-msgstr ""
+msgstr "Nincsenek cikkek."
 
 #. module: knowledge
 #. odoo-javascript
@@ -4324,23 +4338,23 @@ msgstr ""
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "No Article in Trash"
-msgstr ""
+msgstr "Nincs cikk a kukában"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_favorite_action
 msgid "No Favorites yet!"
-msgstr ""
+msgstr "Még nincsenek kedvencek!"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_member_action
 msgid "No Members yet!"
-msgstr ""
+msgstr "Még nincsenek tagok!"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article_member__permission__none
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_invite__permission__none
 msgid "No access"
-msgstr ""
+msgstr "Nincs hozzáférés"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4353,7 +4367,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/article_search_dialog/article_search_dialog.xml:0
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "No article found."
-msgstr ""
+msgstr "Nincsenek cikkek."
 
 #. module: knowledge
 #. odoo-javascript
@@ -4365,7 +4379,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "No article yet."
-msgstr ""
+msgstr "Még nincsenek cikkek."
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
@@ -4395,25 +4409,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Akciók száma"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Hibák száma"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_needaction_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Akciót igénylő üzenetek száma"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__message_has_error_counter
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Kézbesítési hibával rendelkező üzenetek száma"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -4440,7 +4454,7 @@ msgstr ""
 #: code:addons/knowledge/models/knowledge_article.py:0
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_ongoing
 msgid "Ongoing"
-msgstr ""
+msgstr "Folyamatban lévő"
 
 #. module: knowledge
 #. odoo-python
@@ -4484,20 +4498,20 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "Oops, there's nothing here. Try another search."
-msgstr ""
+msgstr "Ajjaj, nincs itt semmi. Próbáljon más keresést megadni."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/embedded_view_actions_menu/embedded_view_actions_menu.xml:0
 #: code:addons/knowledge/static/src/views/item_calendar/item_calendar_views.xml:0
 msgid "Open"
-msgstr ""
+msgstr "Megnyitás"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/comments/comments_panel/comments_panel.xml:0
 msgid "Open Discussions"
-msgstr ""
+msgstr "Megbeszélések megnyitása"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4515,18 +4529,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.js:0
 msgid "Open comments panel"
-msgstr ""
+msgstr "Megjegyzések panel megnyitása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 msgid "Open the Trash"
-msgstr ""
+msgstr "Kuka megnyitása"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
 msgid "OpenERP becomes Odoo"
-msgstr ""
+msgstr "Az OpenERP új neve: Odoo"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4571,23 +4585,23 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__parent_id
 msgid "Parent Article"
-msgstr ""
+msgstr "Szülő cikk"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__parent_path
 msgid "Parent Path"
-msgstr ""
+msgstr "Szülő útvonal"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_form
 msgid "Parent Template"
-msgstr ""
+msgstr "Szülő sablon"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__partner_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 msgid "Partner"
-msgstr ""
+msgstr "Partner"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_pay_the_electricity_bill
@@ -4630,7 +4644,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Phone:"
-msgstr ""
+msgstr "Telefon:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_shared_todos
@@ -4690,7 +4704,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Preview"
-msgstr ""
+msgstr "Előnézet"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -4737,7 +4751,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Primary"
-msgstr ""
+msgstr "Elsődleges"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4746,7 +4760,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__private
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Private"
-msgstr ""
+msgstr "Privát"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_product_management
@@ -4756,12 +4770,12 @@ msgstr ""
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_productivity
 msgid "Productivity"
-msgstr ""
+msgstr "Termelékenység"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_properties
 msgid "Properties"
-msgstr ""
+msgstr "Tulajdonságok"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4797,7 +4811,7 @@ msgstr ""
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sprint_calendar_public_holiday
 msgid "Public Holidays"
-msgstr ""
+msgstr "Ünnepnapok"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -4818,13 +4832,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__rating_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/message/message_actions.js:0
 msgid "Re-open the discussion"
-msgstr ""
+msgstr "Megbeszélés újranyitása"
 
 #. module: knowledge
 #. odoo-python
@@ -4835,7 +4849,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__partner_ids
 msgid "Recipients"
-msgstr ""
+msgstr "Címzettek"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -4846,7 +4860,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Refresh"
-msgstr ""
+msgstr "Frissítés"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_release_note
@@ -4863,7 +4877,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Remove"
-msgstr ""
+msgstr "Eltávolítás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4882,13 +4896,13 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 #: code:addons/knowledge/static/src/mail/emoji_picker/emoji_picker_patch.xml:0
 msgid "Remove Icon"
-msgstr ""
+msgstr "Ikon eltávolítása"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_popover.xml:0
 msgid "Remove Link"
-msgstr ""
+msgstr "Link eltávolítása"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4926,13 +4940,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/prompt_embedded_view_name_dialog/prompt_embedded_view_name_dialog.xml:0
 msgid "Rename"
-msgstr ""
+msgstr "Átnevezés"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 msgid "Replace"
-msgstr ""
+msgstr "Kicserél"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4961,7 +4975,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Felelős felhasználó"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4969,7 +4983,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_tree_trash
 msgid "Restore"
-msgstr ""
+msgstr "Visszaállítás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5019,17 +5033,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_has_sms_error
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS kézbesítési hiba"
 
 #. module: knowledge
 #: model:knowledge.article.template.category,name:knowledge.knowledge_article_template_category_sales
 msgid "Sales"
-msgstr ""
+msgstr "Értékesítés"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid "Sales Details"
-msgstr ""
+msgstr "Értékesítés részletei"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sales_playbook
@@ -5042,7 +5056,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5065,23 +5079,23 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
 msgid "Search Favorites"
-msgstr ""
+msgstr "Kedvencek keresése"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/xml/form_controller.xml:0
 msgid "Search Knowledge Articles"
-msgstr ""
+msgstr "Cikkek keresése"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
 msgid "Search Members"
-msgstr ""
+msgstr "Tagok keresése"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_search
 msgid "Search Stages"
-msgstr ""
+msgstr "Szakaszok keresése"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5100,23 +5114,23 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/webclient/commands/knowledge_providers.js:0
 msgid "Search hidden Articles..."
-msgstr ""
+msgstr "Rejtett cikkek keresése..."
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Search results"
-msgstr ""
+msgstr "Keresési eredmények"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/core/embedded_view_link/embedded_view_link_style.js:0
 msgid "Secondary"
-msgstr ""
+msgstr "Másodlagos"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__category
 msgid "Section"
-msgstr ""
+msgstr "Szakasz"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -5139,7 +5153,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/file/macros_file_mixin.xml:0
 msgid "Send"
-msgstr ""
+msgstr "Küldés"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5166,13 +5180,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__sequence
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Sorszám"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Share"
-msgstr ""
+msgstr "Megosztás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5187,7 +5201,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__shared
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Shared"
-msgstr ""
+msgstr "Megosztott"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5259,7 +5273,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Size:"
-msgstr ""
+msgstr "Méret:"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -5319,7 +5333,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/view/embedded_view.xml:0
 msgid "Something went wrong!"
-msgstr ""
+msgstr "Valami hiba történt!"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -5377,14 +5391,14 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_form
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
 msgid "Stage"
-msgstr ""
+msgstr "Szakasz"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_stage_action
 #: model:ir.ui.menu,name:knowledge.knowledge_article_stage_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_tree
 msgid "Stages"
-msgstr ""
+msgstr "Szakaszok"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_stage__parent_id
@@ -5400,7 +5414,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Start Date"
-msgstr ""
+msgstr "Kezdődátum"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5435,12 +5449,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Tevékenységeken alapuló állapot\n"
+"Lejárt: A tevékenység határideje lejárt\n"
+"Ma: A határidő ma van\n"
+"Tervezett: Jövőbeli határidő."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Stop Date"
-msgstr ""
+msgstr "Befejező dátum"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5458,7 +5476,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_search
 msgid "Template"
-msgstr ""
+msgstr "Sablon"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_body
@@ -5474,7 +5492,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_category_id
 msgid "Template Category"
-msgstr ""
+msgstr "Sablon kategória"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_category_sequence
@@ -5494,7 +5512,7 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_preview
 msgid "Template Preview"
-msgstr ""
+msgstr "Sablon előnézet"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_sequence
@@ -5521,7 +5539,7 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_template_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Templates"
-msgstr ""
+msgstr "Sablonok"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_template_name_required
@@ -5670,7 +5688,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "There are no Articles in your Workspace."
-msgstr ""
+msgstr "Nincsenek cikkek az Ön munkaterületén."
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
@@ -5691,7 +5709,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/hierarchy/hierarchy.xml:0
 msgid "This article is locked"
-msgstr ""
+msgstr "Ez a cikk zárolva van"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
@@ -5757,7 +5775,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_template_category__name
 msgid "Title"
-msgstr ""
+msgstr "Cím"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -5769,7 +5787,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Toggle aside menu"
-msgstr ""
+msgstr "Oldalsó menü mutatása"
 
 #. module: knowledge
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_action_trashed
@@ -5782,23 +5800,23 @@ msgstr ""
 #: model:ir.ui.menu,name:knowledge.knowledge_article_menu_trashed
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Trashed"
-msgstr ""
+msgstr "Kuka"
 
 #. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_check_trash
 msgid "Trashed articles must be archived."
-msgstr ""
+msgstr "A kukába került cikkeket archiválni kell."
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/embedded_view_link/embedded_view_link_edit_dialog.xml:0
 msgid "Type"
-msgstr ""
+msgstr "Típus"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Kivétel tevékenység típusa a rekordon."
 
 #. module: knowledge
 #. odoo-javascript
@@ -5817,13 +5835,13 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Unarchive"
-msgstr ""
+msgstr "Visszatöltés"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Unlock"
-msgstr ""
+msgstr "Feloldás"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5841,18 +5859,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_hierarchy
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
 msgid "Untitled"
-msgstr ""
+msgstr "Névtelen"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Update"
-msgstr ""
+msgstr "Frissítés"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Usage"
-msgstr ""
+msgstr "Használat"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5898,7 +5916,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__user_id
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
 msgid "User"
-msgstr ""
+msgstr "Felhasználó"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__user_favorite_sequence
@@ -5946,13 +5964,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Weboldal üzenetek"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__website_message_ids
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: knowledge
 #. odoo-python
@@ -5990,6 +6008,8 @@ msgid ""
 "When locked, users cannot write on the body or change the title, even if "
 "they have write access on the article."
 msgstr ""
+"Ha egy cikk zárolva van, a felhasználók akkor sem módosíthatják a címét és a "
+"tartalmát, ha van írási hozzáférésük a cikkhez."
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__to_delete
@@ -6079,7 +6099,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__workspace
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Workspace"
-msgstr ""
+msgstr "Munkaterület"
 
 #. module: knowledge
 #. odoo-python
@@ -6375,7 +6395,7 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
 #: code:addons/knowledge/static/src/components/with_lazy_loading/with_lazy_loading.xml:0
 msgid "loader"
-msgstr ""
+msgstr "betöltő"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_mail_notification_layout
@@ -6390,7 +6410,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "or"
-msgstr ""
+msgstr "vagy"
 
 #. module: knowledge
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__user_permission__read
@@ -6455,7 +6475,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid "❓ Open Questions"
-msgstr ""
+msgstr "❓ Nyitott kérdések"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -6505,7 +6525,7 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid "🔗 Links"
-msgstr ""
+msgstr "🔗 Linkek"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer

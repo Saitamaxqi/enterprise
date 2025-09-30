@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* helpdesk_stock
+# * helpdesk_stock
 #
 # Translators:
 # krnkris, 2022
@@ -8,20 +8,22 @@
 # Krisztián Juhász <juhasz.krisztian@josafar.hu>, 2022
 # Ákos Nagy <akos.nagy@oregional.hu>, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2022-09-22 05:46+0000\n"
-"Last-Translator: Tamás Németh <ntomasz81@gmail.com>, 2022\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:40+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"helpdesk_stock/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__partner_id
@@ -46,7 +48,7 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_ticket
 msgid "Helpdesk Ticket"
-msgstr "Ügyfélszolgálati hibajegy"
+msgstr "Ügyfélszolgálati jegy"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__lot_id
@@ -90,7 +92,7 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_return_picking
 msgid "Return Picking"
-msgstr "Visszáru"
+msgstr "Visszáru kigyűjtés"
 
 #. module: helpdesk_stock
 #: model_terms:ir.ui.view,arch_db:helpdesk_stock.helpdesk_ticket_view_form_inherit_helpdesk_stock
@@ -100,12 +102,12 @@ msgstr "Visszatérések"
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_sla_report_analysis
 msgid "SLA Status Analysis"
-msgstr ""
+msgstr "SLA állapot elemzés"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__sale_order_id
 msgid "Sales Order"
-msgstr "Vevői rendelések"
+msgstr "Vevői rendelés"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__suitable_picking_ids
@@ -125,12 +127,12 @@ msgstr ""
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_stock_return_picking__ticket_id
 msgid "Ticket"
-msgstr "Hibajegy"
+msgstr "Jegy"
 
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_helpdesk_ticket_report_analysis
 msgid "Ticket Analysis"
-msgstr "Hibajegyek elemzése"
+msgstr "Jegyek elemzése"
 
 #. module: helpdesk_stock
 #: model:ir.model.fields,field_description:helpdesk_stock.field_helpdesk_ticket__tracking
@@ -140,4 +142,4 @@ msgstr "Nyomon követés"
 #. module: helpdesk_stock
 #: model:ir.model,name:helpdesk_stock.model_stock_picking
 msgid "Transfer"
-msgstr "Szállítás"
+msgstr "Átmozgatás"

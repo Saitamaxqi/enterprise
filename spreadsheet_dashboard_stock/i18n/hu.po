@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_stock
+# * spreadsheet_dashboard_stock
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 15:32+0000\n"
-"PO-Revision-Date: 2025-09-12 15:32+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_stock/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -80,19 +84,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Cabinet with Doors"
-msgstr ""
+msgstr "Kabinet ajtókkal"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Categories"
-msgstr ""
+msgstr "Kategóriák"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Contact"
-msgstr ""
+msgstr "Kapcsolat"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -106,7 +110,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Current"
-msgstr ""
+msgstr "Jelenlegi"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -125,7 +129,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Customer"
-msgstr ""
+msgstr "Ügyfél"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -159,14 +163,14 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Delivery Orders"
-msgstr ""
+msgstr "Szállítólevelek"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Demand"
-msgstr ""
+msgstr "Igény"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -184,7 +188,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Drawer"
-msgstr ""
+msgstr "Fiók"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -209,7 +213,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Internal Transfers"
-msgstr ""
+msgstr "Belső átmozgatások"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -236,7 +240,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "KPI"
-msgstr ""
+msgstr "KPI"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -275,7 +279,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Manufacturing"
-msgstr ""
+msgstr "Gyártás"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -305,7 +309,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Office Chair Black"
-msgstr ""
+msgstr "Fekete irodai szék"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -391,13 +395,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Operation"
-msgstr ""
+msgstr "Művelet"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Operation Type"
-msgstr ""
+msgstr "Művelet típus"
 
 #. module: spreadsheet_dashboard_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_stock.spreadsheet_dashboard_inventory_flow
@@ -414,7 +418,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Operations"
-msgstr ""
+msgstr "Műveletek"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -426,7 +430,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Pack"
-msgstr ""
+msgstr "Csomag"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -438,26 +442,26 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Periódus"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Pick"
-msgstr ""
+msgstr "Kigyűjtés"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "PoS Orders"
-msgstr ""
+msgstr "Értékesítési pont rendelései"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Previous"
-msgstr ""
+msgstr "Előző"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -476,13 +480,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Product"
-msgstr ""
+msgstr "Termék"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Product Category"
-msgstr ""
+msgstr "Termék kategória"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -496,7 +500,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Quantity"
-msgstr ""
+msgstr "Mennyiség"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -510,7 +514,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Receipts"
-msgstr ""
+msgstr "Beszállítások"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -523,14 +527,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Repairs"
-msgstr ""
+msgstr "Javítások"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Responsible"
-msgstr ""
+msgstr "Felelős"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -581,7 +585,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Transfer"
-msgstr ""
+msgstr "Átmozgatás"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -602,13 +606,13 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Vendor"
-msgstr ""
+msgstr "Beszállító"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 msgid "Warehouse"
-msgstr ""
+msgstr "Raktár"
 
 #. module: spreadsheet_dashboard_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_stock.spreadsheet_dashboard_warehouse_operations
@@ -651,4 +655,4 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "last period"
-msgstr ""
+msgstr "utolsó időszak"

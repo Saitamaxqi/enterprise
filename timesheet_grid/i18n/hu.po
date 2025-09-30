@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* timesheet_grid
+# * timesheet_grid
 #
 # Translators:
 # Zsolt Godó <zsolttokio@gmail.com>, 2022
@@ -11,20 +11,22 @@
 # Martin Trigaux, 2022
 # krnkris, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2022
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Tamás Németh <ntomasz81@gmail.com>, 2022\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"timesheet_grid/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -35,17 +37,17 @@ msgstr ""
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_kanban
 msgid "<i class=\"fa fa-pause text-warning\" title=\"Timer is Paused\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-pause text-warning\" title=\"Timer is Paused\"/>"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_kanban
 msgid "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-play text-success\" title=\"Timer is Running\"/>"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "<span class=\"col-auto ms-2\">min</span>"
-msgstr ""
+msgstr "<span class=\"col-auto ms-2\">perc</span>"
 
 #. module: timesheet_grid
 #: model:mail.template,body_html:timesheet_grid.mail_template_timesheet_reminder_user
@@ -212,12 +214,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "A timer is running in another company."
-msgstr ""
+msgstr "Stopper fut egy másik vállalatban."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_all_timesheets
 msgid "All Timesheets"
-msgstr "Összes munkaidő-nyilvántartás"
+msgstr "Összes időkimutatás"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__amount
@@ -228,7 +230,7 @@ msgstr "Összeg"
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "An employee must be linked to your user to record time."
-msgstr ""
+msgstr "A munkavállalót egy felhasználóhoz kell kapcsolni az idő rögzítéséhez."
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
@@ -239,7 +241,7 @@ msgstr "Analitikus számla"
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
 msgid "Approver Reminder"
-msgstr ""
+msgstr "Jóváhagyás emlékeztető"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_delay
@@ -250,12 +252,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_interval
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_interval
 msgid "Approver Reminder Frequency"
-msgstr ""
+msgstr "Jóváhagyó emlékeztetés gyakorisága"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
 msgid "Check that your employees correctly filled in their timesheets and that their time is billable."
 msgstr ""
+"Ellenőrizze, hogy a munkavállalók helyesen töltötték ki az időkimutatásaikat "
+"és hogy az idejük számlázható."
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -267,7 +271,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Click on the cell to set the number of hours you spent on this project."
-msgstr ""
+msgstr "Kattintson a cellára a projekten eltöltött órák megadásához."
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_company
@@ -277,24 +281,26 @@ msgstr "Vállalatok"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_config_settings
 msgid "Config Settings"
-msgstr "Beállítások módosítása"
+msgstr "Beállítások"
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder
 msgid "Configure reminders in timesheet settings to remind approvers to validate timesheets"
 msgstr ""
+"Állítson be emlékeztetőket az időkimutatás beállításai között, hogy "
+"emlékeztesse a jóváhagyókat az időkimutások jóváhagyására"
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/task.py:0
 msgid "Confirm Time Spent"
-msgstr ""
+msgstr "Eltöltött idő megerősítése"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Congratulations, you are now a master of Timesheets."
-msgstr ""
+msgstr "Gratulálunk, az időkimutatások mestere lett!"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.action_timesheet_previous_month
@@ -307,7 +313,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_task_create_timesheet
 msgid "Create Timesheet from task"
-msgstr ""
+msgstr "Időkimutatás létrehozása feladatból"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_uid
@@ -325,7 +331,7 @@ msgstr "Létrehozva"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
 msgid "Daily overtime"
-msgstr ""
+msgstr "Napi túlóra"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__date
@@ -347,12 +353,12 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_delay
 msgid "Days to Remind Approver"
-msgstr ""
+msgstr "Nap a jóváhagyó emlékeztetésére"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_delay
 msgid "Days to Remind User"
-msgstr ""
+msgstr "Nap a felhasználó emlékeztetésére"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__employee_id
@@ -367,13 +373,14 @@ msgstr "Törlés"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
 msgid "Describe your activity"
-msgstr ""
+msgstr "Tevékenység leírása"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Describe your activity <i>(e.g. sent an e-mail, meeting with the customer...)</i>."
 msgstr ""
+"Írja le a tevékenységét <i>(pl.: email küldése, találkozó ügyféllel...)</i>."
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -405,13 +412,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/employee_overtime_indication/employee_overtime_indication.xml:0
 msgid "Difference between the number of hours recorded and the number of hours the employee was supposed to work according to his contract"
-msgstr ""
+msgstr "Különbség a rögzített és a szerződés szerint elvárt órák között"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_overtime_indication/timesheet_overtime_indication.js:0
 msgid "Difference between the time allocated and the time recorded"
-msgstr ""
+msgstr "Különbség a kiosztott és a rögzített idő között"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -477,7 +484,7 @@ msgstr "Piszkozat"
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__employee_id
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__employee_id
 msgid "Employee"
-msgstr "Alkalmazott"
+msgstr "Munkavállaló"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_interval
@@ -488,7 +495,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_allow
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_allow
 msgid "Employee Reminder"
-msgstr "Alkalmazott emlékeztető"
+msgstr "Munkavállaló emlékeztető"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_company__timesheet_mail_employee_delay
@@ -504,7 +511,7 @@ msgstr "Időegység me."
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Enter"
-msgstr ""
+msgstr "Enter"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -515,7 +522,7 @@ msgstr "Gyakoriság"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_search_model.js:0
 msgid "Grouping by date is not supported"
-msgstr ""
+msgstr "Dátumra történő csoportosítás nem támogatott"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_create_timesheet_view_form
@@ -531,7 +538,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__id
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__is_timer_running
@@ -555,12 +562,12 @@ msgstr "Frissítette"
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_date
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task_create_timesheet__write_date
 msgid "Last Updated on"
-msgstr "Frissítve ekkor"
+msgstr "Frissítve"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee__last_validated_timesheet_date
 msgid "Last Validated Timesheet Date"
-msgstr ""
+msgstr "Utolsó jóváhagyott időkimutatás dátuma"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
@@ -572,12 +579,16 @@ msgstr "Előző hét"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Launch the <b>timer</b> for this project by pressing the <b>[a] key</b>. Easily switch from one project to another by using those keys. <i>Tip: you can also directly add 15 minutes to this project by hitting the <b>shift + [A] keys</b>.</i>"
 msgstr ""
+"Indítsa el a <b>stoppert</b> a projekthez az <b>[a] billentyű</b> "
+"lenyomásával. Váltson könnyen projktek között a billentyűk segítségével. "
+"<i>Tipp: gyorsan hozzá tud adni 15 percet a <b>shift + [A] "
+"billentyűk</b>lenyomásával.</i>"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Launch the <b>timer</b> to start a new activity."
-msgstr ""
+msgstr "Indítsa el a <b>stoppert</b> új tevékenység elkezdéséhez."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -587,7 +598,7 @@ msgstr "Egyesítés"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
 msgid "Merge Timesheet"
-msgstr ""
+msgstr "Időkimutatás összevonása"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -595,12 +606,12 @@ msgstr ""
 #: model:ir.actions.server,name:timesheet_grid.merge_timesheet_action
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_merge_wizard
 msgid "Merge Timesheets"
-msgstr ""
+msgstr "Időkimutatások összevonása"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_min_duration
 msgid "Minimal Duration"
-msgstr ""
+msgstr "Minimális időtartam"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_ir_module_module
@@ -622,7 +633,7 @@ msgstr "Részlegem"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
 msgid "My Projects"
-msgstr "Projekt témáim"
+msgstr "Projektjeim"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -653,23 +664,31 @@ msgstr ""
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
 msgid "No timesheets to validate"
-msgstr ""
+msgstr "Nincs jóváhagyásra váró időkimutatás"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_delay
 msgid "Number of days after the end of the week/month after which an automatic email reminder will be sent to timesheet managers that still have timesheets to validate."
 msgstr ""
+"Napok száma a hét/hónap vége után, amikor az automatikus email emlékeztetők "
+"elküldésre kerülnek azoknak az időkimutatás menedzsereknek, akikhez még "
+"jóváhagyásra váró időkimutatás van rendelve."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_res_config_settings__reminder_user_delay
 msgid "Numbers of days after the end of the week/month after which an automatic email reminder will be sent to timesheet users that still have timesheets to encode (according to their working hours)."
 msgstr ""
+"Napok száma a hét/hónap vége után, amikor az automatikus email emlékeztetők "
+"kerülnek kiküldésre azon időkimutatás felhasználók számára, akik még nem "
+"rögzítettek időkimutatást a munkaóráiknak megfelelő mennyiségű időre."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "Only a Timesheets Approver or Manager is allowed to modify a validated entry."
 msgstr ""
+"Csak időkimutatás jóváhagyó vagy menedzser jogosult megváltoztatni egy "
+"jóváhagyott bejegyzést."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_form
@@ -680,13 +699,13 @@ msgstr "Szünet"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press"
-msgstr ""
+msgstr "Billentyű:"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Press Esc to discard"
-msgstr ""
+msgstr "ESC lenyomása elvetéshez"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_project
@@ -697,7 +716,7 @@ msgstr "Projekt"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_employee_public
 msgid "Public Employee"
-msgstr "Közalkalmazott"
+msgstr "Nyilvános munkavállaló"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__unit_amount
@@ -707,18 +726,18 @@ msgstr "Mennyiség"
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Reminder to log your timesheets"
-msgstr ""
+msgstr "Emlékeztető az időkimutatások rögzítésére"
 
 #. module: timesheet_grid
 #: model:mail.template,subject:timesheet_grid.mail_template_timesheet_reminder
 msgid "Reminder to validate your team's timesheets"
-msgstr ""
+msgstr "Emllékeztető a csapatok időkimutatásainak jóváhagyására"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.invalidate_timesheet_action
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_form_view
 msgid "Reset to draft"
-msgstr ""
+msgstr "Visszaállítás piszkozatra"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_view_form
@@ -728,12 +747,12 @@ msgstr "Folytatás"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
 msgid "Round up"
-msgstr ""
+msgstr "Felkerekítés"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Rounding applied when tracking your time using the timer"
-msgstr ""
+msgstr "Stopper használata során alkalmazott kerekítés"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_create_timesheet_view_form
@@ -743,13 +762,13 @@ msgstr "Mentés"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.project_task_create_timesheet_view_form
 msgid "Save time"
-msgstr ""
+msgstr "Idő mentése"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Select the <b>project</b> on which you are working."
-msgstr ""
+msgstr "Válassza ki a <b>projektet</b>, amin dolgozik."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee__timesheet_manager_id
@@ -758,28 +777,37 @@ msgid ""
 "Select the user responsible for approving \"Timesheet\" of this employee.\n"
 "If empty, the approval is done by a Timesheets > Administrator or a Timesheets > User: all timesheets (as determined in the users settings)."
 msgstr ""
+"Válassza ki, hogy ki felelős a munkavállaló időkimutatásainak jóváhagyásáért."
+"\n"
+"Ha üres, akkor a jóváhagyást elvégezheti bármely felhasználó, aki "
+"Időkimutatás > Adminisztrátor vagy Időkimutatás > Felhasználó: minden "
+"időkimutatás jogosultsággal rendelkezik."
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__is_timesheet
 msgid "Set if this analytic line represents a line of timesheet."
-msgstr ""
+msgstr "Állítsa be, ha ez az analitikus sor egy időkimutatás sora."
 
 #. module: timesheet_grid
 #: model:mail.template,description:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Set reminders in settings to notify employees who didn't record their timesheet"
 msgstr ""
+"Állítson be emlékeztetőt a beállítások között, hogy értesítse a "
+"munkavállalókat, akik még nem rögzítették az időkimutatásaikat"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Set the number of hours you spent on this project (e.g. 1:30 or 1.5). <i>Tip: use the tab keys to easily navigate from one cell to another.</i>"
 msgstr ""
+"Adja meg a projekt kapcsán eltöltött órákat (pl.: 1:30 vagy 1.5). <i>Tipp: "
+"használja a tabulátor billentyűt a cellák közti gyors ugráshoz.</i>"
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "Sorry, you cannot use a timer for a validated timesheet"
-msgstr ""
+msgstr "Nem használhatja a stoppert jóváhagyott időkimutatáson"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -802,6 +830,9 @@ msgstr "Leállítás"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Stop the <b>timer</b> when you are done. <i>Tip: hit <b>[Enter]</b> in the description to automatically log your activity.</i>"
 msgstr ""
+"Állítsa le a <b>stoppert</b> amikor elkészült a munkával. <i>Tipp: nyomja le "
+"az <b>[Enter]</b> billentyűt a leírás mezőben hogy automatikusan rögzítse a "
+"tevékenységet.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_project_task
@@ -813,7 +844,7 @@ msgstr "Feladat"
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_project_task_create_timesheet__task_id
 msgid "Task for which we are creating a sales order"
-msgstr ""
+msgstr "A feladat, melyhez a vevői rendelés létrehozásra kerül"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__display_timer
@@ -824,53 +855,61 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "The duration of timesheets encoded through the timer will automatically be rounded up to this number. For instance, if you stop your timer at 00:16:56, the duration of the timesheet entry will automatically be rounded up to 00:30 (assuming you have a round up of 15 min). We recommend having the same value for the minimal duration and for the round up."
 msgstr ""
+"A meghatározott értékre kerül felkerekítésre az időkimutatásra rögzített "
+"idő. Például ha leáll a stopperen az idő 00:16:56 értéknél, akkor az "
+"időkimutatás felkerekítésre kerül 00:30 értékre (ha a kerekítés 15 percre "
+"van állítva). Javasolt ugyanazon érték használata a minimális időtartamra és "
+"a felkerekítésre is."
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_controller.js:0
 msgid "The timesheet entry has successfully been created."
-msgstr ""
+msgstr "Az időkimutatás bejegyzés sikeresen létrehozásra került."
 
 #. module: timesheet_grid
 #: model:ir.model.constraint,message:timesheet_grid.constraint_project_task_create_timesheet_time_positive
 msgid "The timesheet's time must be positive"
-msgstr ""
+msgstr "Az időkimutatáson szereplő időnek pozitívnak kell lennie"
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/wizard/timesheet_merge_wizard.py:0
 msgid "The timesheets have successfully been merged."
-msgstr ""
+msgstr "Az időkimutatások sikeresen összevonásra kerültek."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "The timesheets have successfully been reset to draft."
 msgstr ""
+"Az időkimutatások sikeresen visszaállításra kerültek piszkozat állapotra."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "The timesheets have successfully been validated."
-msgstr ""
+msgstr "Az időkimutatások sikeresen jóváhagyásra kerültek."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/wizard/timesheet_merge_wizard.py:0
 msgid "The timesheets must have the same encoding unit"
-msgstr ""
+msgstr "Az időkimutatásoknak időegységének meg kell egyezniük"
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "There are no timesheets to merge."
-msgstr ""
+msgstr "Nincsenek összevonható időkimutatások."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "There are no timesheets to reset to draft or they have already been invoiced."
 msgstr ""
+"Nincsenek piszkozatra visszaállítható időkimutatások vagy már számlázásra "
+"kerültek."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -886,7 +925,7 @@ msgstr "Idő"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Time Rounding"
-msgstr ""
+msgstr "Idő kerekítés"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -910,17 +949,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_employee_public__timesheet_manager_id
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_users__timesheet_manager_id
 msgid "Timesheet"
-msgstr "Munkaidő-nyilvántartás"
+msgstr "Időkimutatás"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.view_employee_tree_inherit_timesheet
 msgid "Timesheet Approver"
-msgstr ""
+msgstr "Időkimutatás jóváhagyó"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheet_grid_mixin
 msgid "Timesheet Grid mixin"
-msgstr ""
+msgstr "Időkimutatás rács mixin"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__duration_unit_amount
@@ -931,7 +970,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__is_timesheet
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheets_analysis_report__is_timesheet
 msgid "Timesheet Line"
-msgstr "Munkaidő tétel"
+msgstr "Időkimutatás sor"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__unit_amount_validate
@@ -941,12 +980,12 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
 msgid "Timesheet: Approvers Email Reminder"
-msgstr ""
+msgstr "Időkimutatás: Jóváhagyó email emlékeztető"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_user_ir_actions_server
 msgid "Timesheet: Employees Email Reminder"
-msgstr ""
+msgstr "Időkimutatás: Munkavállaló email emlékeztető"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__timesheet_ids
@@ -954,12 +993,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_employee
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid_by_project
 msgid "Timesheets"
-msgstr "Munkaidő-nyilvántartások"
+msgstr "Időkimutatások"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_timesheets_analysis_report
 msgid "Timesheets Analysis Report"
-msgstr ""
+msgstr "Időkimutatás elemzés riport"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -971,23 +1010,28 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
 msgid "Timesheets encoded via the timer that do not meet the minimal duration will automatically be rounded up to the defined value. For instance, if you stop your timer at 00:04:36, the duration of the timesheet entry will automatically be rounded up to 00:15 (assuming you have a minimal duration of 15 min). We recommend having the same value for the minimal duration and for the round up."
 msgstr ""
+"A meghatározott értékre kerül felkerekítésre az időkimutatásra rögzített "
+"idő, ha az nem éri el a minimális időtartamot. Például ha leáll a stopperen "
+"az idő 00:04:36 értéknél, akkor az időkimutatás felkerekítésre kerül 00:15 "
+"értékre (ha a minimális időtartam 15 percre van állítva). Javasolt ugyanazon "
+"érték használata a minimális időtartamra és a felkerekítésre is."
 
 #. module: timesheet_grid
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_month
 #: model:ir.actions.act_window,name:timesheet_grid.action_timesheet_previous_week
 #: model:ir.actions.act_window,name:timesheet_grid.timesheet_grid_to_validate_action
 msgid "Timesheets to Validate"
-msgstr ""
+msgstr "Jóváhagyásra váró időkimutatások"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder
 msgid "Timesheets: Approver Reminder"
-msgstr ""
+msgstr "Időkimutatások: Jóváhagyó emlékeztető"
 
 #. module: timesheet_grid
 #: model:mail.template,name:timesheet_grid.mail_template_timesheet_reminder_user
 msgid "Timesheets: Employee Reminder"
-msgstr ""
+msgstr "Időkimutatások: Munkavállaló emlékeztető"
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate
@@ -999,6 +1043,8 @@ msgstr "Jóváhagyásra vár"
 #: code:addons/timesheet_grid/static/src/js/tours/timesheet_grid.js:0
 msgid "Track the <b>time spent</b> on your projects. <i>It starts here.</i>"
 msgstr ""
+"Kövesse nyomon az <b>eltöltött időt</b> az egyes projektek kapcsán. "
+"<i>Kezdje el itt.</i>"
 
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_res_users
@@ -1008,7 +1054,7 @@ msgstr "Felhasználó"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__user_can_validate
 msgid "User Can Validate"
-msgstr ""
+msgstr "Felhasználó jóváhagyhat"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_user_interval
@@ -1025,6 +1071,8 @@ msgstr ""
 #: model:ir.model.fields,help:timesheet_grid.field_hr_employee_public__timesheet_manager_id
 msgid "User responsible of timesheet validation. Should be Timesheet Manager."
 msgstr ""
+"Időkimutatások jóváhagyásáért felelős felhasználó. Időkimutatás menedzsernek "
+"kell lennie."
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1046,13 +1094,13 @@ msgstr "Jóváhagyott"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated_status
 msgid "Validated Status"
-msgstr ""
+msgstr "Jóváhagyott állapot"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_account_analytic_line__validated
 #: model:ir.model.fields,field_description:timesheet_grid.field_timesheets_analysis_report__validated
 msgid "Validated line"
-msgstr ""
+msgstr "Jóváhagyott sor"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_grid_all_timesheets_action_server
@@ -1080,36 +1128,43 @@ msgstr "Hét"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timer_timesheet_grid/timer_timesheet_grid_renderer.xml:0
 msgid "Weekly overtime"
-msgstr ""
+msgstr "Heti túlóra"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,help:timesheet_grid.field_account_analytic_line__user_can_validate
 msgid "Whether or not the current user can validate/reset to draft the record."
 msgstr ""
+"Az adott felhasználó jóváhagyhatja/visszaállíthatja piszkozatra a rekordot."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You can only reset to draft the timesheets of employees of whom you are the manager or the timesheet approver."
 msgstr ""
+"Csak olyan munkavállalók időkimutatásait állíthatja vissza, akik kapcsán "
+"menedzser vagy időkimutatás jóváhagyó szerepben van."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You can only validate the timesheets of employees of whom you are the manager or the timesheet approver."
 msgstr ""
+"Csak olyan munkavállalók időkimutatásait hagyhatja jóvá, akik kapcsán "
+"menedzser vagy időkimutatás jóváhagyó szerepben van."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You cannot access timesheets that are not yours."
-msgstr ""
+msgstr "Nem férhet hozzá más időkimutatásaihoz."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You cannot adjust the time of the timesheet for a project with timesheets disabled."
 msgstr ""
+"Nem lehet módosítani időkimutatás idejét olyan projektnél, ahol ki van "
+"kapcsolva az időkimutatás funkció."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1122,12 +1177,14 @@ msgstr ""
 #: code:addons/timesheet_grid/models/project.py:0
 msgid "You cannot start the timer for a project in a company encoding its timesheets in days."
 msgstr ""
+"Nem lehet elindítani a stoppert olyan projektnél, mely vállalatánál a nap az "
+"időkimutatások rögzítési egysége."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/analytic.py:0
 msgid "You cannot use the timer on validated timesheets."
-msgstr ""
+msgstr "Nem lehet elindítani a stoppert jóváhagyott időkimutatásokra."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1180,7 +1237,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "to add"
-msgstr ""
+msgstr "hozzáad ennyit:"
 
 #. module: timesheet_grid
 #. odoo-javascript

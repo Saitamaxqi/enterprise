@@ -3,13 +3,14 @@
 # * knowledge
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-15 21:14+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-09-30 10:53+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/knowledge/"
 "de/>\n"
 "Language: de\n"
@@ -100,13 +101,13 @@ msgstr "%s wurde in den Papierkorb verschoben"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "(Guest)"
-msgstr ""
+msgstr "(Gast)"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "(You)"
-msgstr ""
+msgstr "(Sie)"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
@@ -124,6 +125,13 @@ msgid ""
 "                        <br>\n"
 "                        info@yourcompany.com"
 msgstr ""
+"8000 Marina Blvd, Suite 300 94005\n"
+"                        <br>\n"
+"                        Brisbane California (US)\n"
+"                        <br>\n"
+"                        Vereinigte Staaten\n"
+"                        <br>\n"
+"                        info@ihrunternehmen.com"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
@@ -2213,7 +2221,7 @@ msgstr "Einen Kommentar hinzufügen ..."
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Add a foldable section."
-msgstr ""
+msgstr "Fügen Sie einen einklappbaren Abschnitt hinzu."
 
 #. module: knowledge
 #. odoo-javascript
@@ -2225,13 +2233,13 @@ msgstr "Ein beliebliges Symbol hinzufügen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Add a title to your section"
-msgstr ""
+msgstr "Titel zum Abschnitt hinzufügen"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Add an Article"
-msgstr ""
+msgstr "Artikel hinzufügen"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
@@ -2260,13 +2268,13 @@ msgstr "Personen oder E-Mail-Adresse hinzufügen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Add people..."
-msgstr ""
+msgstr "Personen hinzufügen …"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Add to Favorites"
-msgstr ""
+msgstr "Zu Favoriten hinzufügen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2411,7 +2419,7 @@ msgstr "Alle meine Aktivitäten werden immer in unserem CRM erfasst"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/article_annexe_picker_dialog/article_annexe_picker_no_content_helper.xml:0
 msgid "All pages have already been loaded."
-msgstr ""
+msgstr "Es wurden bereits alle Seiten geladen."
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2769,7 +2777,7 @@ msgstr "Anzahl Anhänge"
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_child_default_create
 msgid "Auto-Create Child Article"
-msgstr ""
+msgstr "Untergeordneten Artikel automatisch erstellen"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -2779,7 +2787,7 @@ msgstr "Verfügbare Modelle ✅"
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_member_avatar
 msgid "Avatar 128"
-msgstr ""
+msgstr "Avatar 128"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -3357,7 +3365,7 @@ msgstr "Einen neuen Artikel im Arbeitsbereich erstellen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "Create a new private article"
-msgstr ""
+msgstr "Einen neuen privaten Artikel erstellen"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_product_catalog
@@ -3506,7 +3514,7 @@ msgstr "Vorlage löschen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index_list.xml:0
 msgid "Delete article"
-msgstr ""
+msgstr "Artikel löschen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3566,7 +3574,7 @@ msgstr "Verwerfen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
 msgid "Discard all changes"
-msgstr ""
+msgstr "Alle Änderungen verwerfen"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_ir_attachment__display_name
@@ -3625,7 +3633,7 @@ msgstr "Erledigt"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Download PDF"
-msgstr ""
+msgstr "PDF herunterladen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3790,13 +3798,13 @@ msgstr "Finden Sie alle mit Ihnen geteilten Artikel"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "Fold/unfold the section"
-msgstr ""
+msgstr "Abschnitt ein-/ausklappen"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Foldable Section"
-msgstr ""
+msgstr "Einklappbarer Abschnitt"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
@@ -3861,7 +3869,7 @@ msgstr "Geschlecht(er): W"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "General Access"
-msgstr ""
+msgstr "Allgemeiner Zugriff"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_hr_faq
@@ -3964,25 +3972,25 @@ msgstr "Ausgeblendet"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Chatter"
-msgstr ""
+msgstr "Chatter ausblenden"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Comments"
-msgstr ""
+msgstr "Kommentare ausblenden"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Hide Properties"
-msgstr ""
+msgstr "Eigenschaften ausblenden"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Hide sub-articles"
-msgstr ""
+msgstr "Unterartikel ausblenden"
 
 #. module: knowledge
 #. odoo-javascript
@@ -4176,6 +4184,8 @@ msgid ""
 "If set, this will automatically create this child article when its parent "
 "template is used"
 msgstr ""
+"Wenn die Option aktiviert ist, wird dieser Unterartikel automatisch "
+"erstellt, wenn seine übergerordnete Vorlage verwendet wird"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -4603,12 +4613,12 @@ msgstr "Zuletzt bearbeitet am"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Last Edited ·"
-msgstr ""
+msgstr "Zuletzt bearbeitet ·"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_user_avatar
 msgid "Last Editor's Avatar"
-msgstr ""
+msgstr "Avatar des letzten Bearbeiters"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_uid
@@ -4829,7 +4839,7 @@ msgstr "Mitglieder-Informationen"
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__none
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__internal_permission__none
 msgid "Members only"
-msgstr ""
+msgstr "Nur Mitglieder"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__root_article_id
@@ -5103,7 +5113,7 @@ msgstr "Kein Zugriff"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/article_annexe_picker_dialog/article_annexe_picker_no_content_helper.xml:0
 msgid "No annex found!"
-msgstr ""
+msgstr "Kein Anhang gefunden!"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5436,7 +5446,7 @@ msgstr "Neuigkeiten zum Podcast 📻"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/mail/composer/composer_patch.js:0
 msgid "Post"
-msgstr ""
+msgstr "Veröffentlichen"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -5669,7 +5679,7 @@ msgstr "Titelbild entfernen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Remove From Favorites"
-msgstr ""
+msgstr "Aus Favoriten entfernen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5848,7 +5858,7 @@ msgstr "Position speichern"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
 msgid "Save manually"
-msgstr ""
+msgstr "Manuell speichern"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5999,13 +6009,13 @@ msgstr "Geteilte To-do-Liste"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Show Chatter"
-msgstr ""
+msgstr "Chatter anzeigen"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Show Comments"
-msgstr ""
+msgstr "Kommentare anzeigen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6036,7 +6046,7 @@ msgstr "Wochenenden anzeigen?"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Show in Workspace"
-msgstr ""
+msgstr "In Arbeitsbereich anzeigen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6048,7 +6058,7 @@ msgstr "Verschachtelten Artikel anzeigen"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Show sub-articles"
-msgstr ""
+msgstr "Unterartikel anzeigen"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -6351,7 +6361,7 @@ msgstr "Vorlagentitel"
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__origin_template_id
 msgid "Template used to generate the article"
-msgstr ""
+msgstr "Vorlage wird zur Generierung des Artikels verwendet"
 
 #. module: knowledge
 #: model:ir.ui.menu,name:knowledge.knowledge_article_template_menu
@@ -6681,13 +6691,16 @@ msgstr "Typ der Ausnahmeaktivität im Datensatz."
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
 msgid "Type something inside this section"
-msgstr ""
+msgstr "Geben Sie etwas in diesem Abschnitt ein"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
+#, fuzzy
 msgid "Unable to save. Correct the issue or discard all changes"
 msgstr ""
+"Speicherung nicht möglich. Korrigieren Sie den Fehler oder verwerfen Sie "
+"alle Änderungen"
 
 #. module: knowledge
 #. odoo-javascript
@@ -7135,7 +7148,7 @@ msgstr "Sie haben keinen Zugriff auf diesen Artikel"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 msgid "You have no private Article."
-msgstr ""
+msgstr "Sie haben keine privaten Artikel."
 
 #. module: knowledge
 #. odoo-python

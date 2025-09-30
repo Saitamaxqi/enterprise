@@ -1,24 +1,28 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_attendance_gantt
+# * hr_attendance_gantt
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-09-11 14:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 02:42+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"hr_attendance_gantt/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_attendance_gantt
 #: model:ir.model,name:hr_attendance_gantt.model_hr_attendance
 msgid "Attendance"
-msgstr ""
+msgstr "Jelenlét"
 
 #. module: hr_attendance_gantt
 #: model_terms:ir.ui.view,arch_db:hr_attendance_gantt.hr_attendance_gantt_create_view_form
@@ -28,22 +32,22 @@ msgstr ""
 #. module: hr_attendance_gantt
 #: model:ir.model.fields,field_description:hr_attendance_gantt.field_hr_attendance__color
 msgid "Color"
-msgstr ""
+msgstr "Szín"
 
 #. module: hr_attendance_gantt
 #: model_terms:ir.ui.view,arch_db:hr_attendance_gantt.hr_attendance_gantt_view
 msgid "Days"
-msgstr ""
+msgstr "nap"
 
 #. module: hr_attendance_gantt
 #: model_terms:ir.ui.view,arch_db:hr_attendance_gantt.hr_attendance_gantt_create_view_form
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 #. module: hr_attendance_gantt
 #: model_terms:ir.ui.view,arch_db:hr_attendance_gantt.hr_attendance_gantt_create_view_form
 msgid "Discard"
-msgstr ""
+msgstr "Elvetés"
 
 #. module: hr_attendance_gantt
 #: model:ir.model.fields,field_description:hr_attendance_gantt.field_hr_attendance__display_name
@@ -63,4 +67,4 @@ msgstr ""
 #. module: hr_attendance_gantt
 #: model_terms:ir.ui.view,arch_db:hr_attendance_gantt.hr_attendance_gantt_create_view_form
 msgid "Save & Close"
-msgstr ""
+msgstr "Mentés és bezárás"

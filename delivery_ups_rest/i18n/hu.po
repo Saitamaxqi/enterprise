@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* delivery_ups_rest
+# * delivery_ups_rest
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2025-07-01 12:09+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"delivery_ups_rest/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_bill_my_account
@@ -32,7 +35,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_stock_package_type__package_carrier_type
 msgid "Carrier"
-msgstr ""
+msgstr "Szállító"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_cod_funds_code__8
@@ -42,7 +45,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_dimension_unit__cm
 msgid "Centimeters"
-msgstr ""
+msgstr "Centiméter"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_cod_funds_code__0
@@ -52,13 +55,13 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Kapcsolat"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Could not decode response"
-msgstr ""
+msgstr "Nem sikerült dekódolni a választ"
 
 #. module: delivery_ups_rest
 #: model:ir.model,website_form_label:delivery_ups_rest.model_res_partner
@@ -87,12 +90,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Duties paid by"
-msgstr ""
+msgstr "A vámokat fizeti"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__epl
 msgid "EPL"
-msgstr ""
+msgstr "EPL"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -139,7 +142,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_dimension_unit__in
 msgid "Inches"
-msgstr ""
+msgstr "hüvelyk"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -152,12 +155,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_weight_unit__kgs
 msgid "Kilograms"
-msgstr ""
+msgstr "Kilogramm"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Label Format"
-msgstr ""
+msgstr "Címke formátum"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -186,12 +189,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Options"
-msgstr ""
+msgstr "Opciók"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__gif
 msgid "PDF"
-msgstr ""
+msgstr "PDF"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_package_dimension_unit
@@ -201,7 +204,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "Package Weight Unit"
-msgstr ""
+msgstr "Csomag súly mértékegység"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -218,22 +221,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Please provide at least one item to ship."
-msgstr ""
+msgstr "Kérem válasszon legalább egy szállítandó tételt."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_weight_unit__lbs
 msgid "Pounds"
-msgstr ""
+msgstr "Font"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__delivery_type
 msgid "Provider"
-msgstr ""
+msgstr "Szolgáltató"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_duty_payment__recipient
 msgid "Recipient"
-msgstr ""
+msgstr "Címzett"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -257,12 +260,12 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
 msgid "SPL"
-msgstr ""
+msgstr "SPL"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_sale_order
 msgid "Sales Order"
-msgstr ""
+msgstr "Vevői rendelés"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -277,7 +280,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_duty_payment__sender
 msgid "Sender"
-msgstr ""
+msgstr "Küldő"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -302,18 +305,18 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_delivery_carrier
 msgid "Shipping Methods"
-msgstr ""
+msgstr "Szállítási módok"
 
 #. module: delivery_ups_rest
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Something went wrong, please try again later!!"
-msgstr ""
+msgstr "Valami elromlott, kérjük, próbálja meg később újra!!!"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_stock_package_type
 msgid "Stock package type"
-msgstr ""
+msgstr "Készlet csomagolás típus"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -322,6 +325,8 @@ msgid ""
 "The address of your company is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"A vállalata címe hiányzik vagy rosszul kitöltött.\n"
+"(Hiányzó mező(k) : %s)"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -330,6 +335,8 @@ msgid ""
 "The address of your warehouse is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"A raktárépületének a címe hiányzik vagy rosszul kitöltött.\n"
+"(Hiányzó mező(k) : %s)"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -360,6 +367,8 @@ msgid ""
 "The recipient address is missing or wrong.\n"
 "(Missing field(s) : %s)"
 msgstr ""
+"A címzett hiányzik vagy rosszul kitöltött.\n"
+"(Hiányzó mező(k) : %s)"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -378,7 +387,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__delivery_type__ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__stock_package_type__package_carrier_type__ups_rest
 msgid "UPS"
-msgstr ""
+msgstr "UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__02
@@ -420,7 +429,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "UPS Configuration"
-msgstr ""
+msgstr "UPS beállítások"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__03
@@ -430,7 +439,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_label_file_type
 msgid "UPS Label File Type"
-msgstr ""
+msgstr "UPS  Felirat fájl típus"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__01
@@ -465,7 +474,7 @@ msgstr ""
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_default_service_type
 msgid "UPS Service Type"
-msgstr ""
+msgstr "UPS Szolgáltatástípus"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_default_service_type__11
@@ -538,11 +547,12 @@ msgstr ""
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "You must setup a client ID and secret on the carrier first"
 msgstr ""
+"Először be kell állítania egy ügyfél azonosítót és titkot kódot a szállítón."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__zpl
 msgid "ZPL"
-msgstr ""
+msgstr "ZPL"
 
 #. module: delivery_ups_rest
 #. odoo-python

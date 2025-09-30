@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:26+0000\n"
-"PO-Revision-Date: 2025-09-27 02:41+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai_documents/es_419/>\n"
 "Language: es_419\n"
@@ -272,69 +272,71 @@ msgstr ""
 #: model:ir.model.fields,help:ai_documents.field_documents_document__ai_sort_prompt
 msgid "Prompt used to automatically sort files moved in this folder"
 msgstr ""
+"Instrucción usada para ordenar, de forma automática, los archivos que se "
+"muevan a esta carpeta"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_ai_documents_sort__relation
 msgid "Relation"
-msgstr ""
+msgstr "Relación"
 
 #. module: ai_documents
 #: model:ir.actions.server,ai_tool_description:ai_documents.ir_actions_server_rename_documents
 msgid "Rename Document"
-msgstr ""
+msgstr "Cambiar el nombre del documento"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: ai_documents
 #: model:ir.model,name:ai_documents.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Acción de servidor"
 
 #. module: ai_documents
 #. odoo-javascript
 #: code:addons/ai_documents/static/src/views/documents_controller_mixin.js:0
 msgid "Sort With AI"
-msgstr ""
+msgstr "Organizar con IA"
 
 #. module: ai_documents
 #: model:ir.model.fields,field_description:ai_documents.field_base_automation__ai_autosort_folder_id
 #: model:ir.model.fields,field_description:ai_documents.field_ir_actions_server__ai_autosort_folder_id
 #: model:ir.model.fields,field_description:ai_documents.field_ir_cron__ai_autosort_folder_id
 msgid "Sorted Folder"
-msgstr ""
+msgstr "Carpeta organizada"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Tag(s) %s added"
-msgstr ""
+msgstr "%s Etiqueta(s) agregada(s)"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Tags > Name"
-msgstr ""
+msgstr "Etiquetas > Nombre"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "Tags not found: %s"
-msgstr ""
+msgstr "Etiquetas no encontradas: %s"
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "The AI Sort Prompt can only be set on folder."
-msgstr ""
+msgstr "La instrucción de IA Ordenar solo se puede establecer en una carpeta."
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid "This document cannot be auto-sorted."
-msgstr ""
+msgstr "Este documento no se puede ordenar de forma automática."
 
 #. module: ai_documents
 #. odoo-python
@@ -342,12 +344,14 @@ msgstr ""
 msgid ""
 "This folder isn't specified in the prompt and cannot be used as target."
 msgstr ""
+"Esta carpeta no está especificada en la instrucción y no puede usarse como "
+"objetivo."
 
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/ir_actions_server.py:0
 msgid "You can move the document in one of those folders:"
-msgstr ""
+msgstr "Puedes mover el documento en una de esas carpetas:"
 
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
@@ -357,9 +361,13 @@ msgid ""
 "it to Photos,                                     otherwise, create an "
 "activity 'Document to sort' for Admin"
 msgstr ""
+"p. ej.:                                     Si el documento es una factura, "
+"muévelo a Finanzas,                                     si es una imagen, "
+"muévelo a Fotos,                                     de lo contrario, crea "
+"una actividad llamada \"Documentos por ordenar\" para Admin"
 
 #. module: ai_documents
 #. odoo-javascript
 #: code:addons/ai_documents/static/src/ai_sort_documents_prompt.js:0
 msgid "⚠️ Tell the AI where to sort your documents with /record."
-msgstr ""
+msgstr "⚠️ Dile a la IA dónde ordenar tus documentos con /registro."

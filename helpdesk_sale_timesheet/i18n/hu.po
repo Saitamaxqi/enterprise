@@ -11,13 +11,14 @@
 # krnkris, 2022
 # Tamás Dombos, 2022
 # Nagy Géza <geza.nagy@oregional.hu>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-20 12:10+0000\n"
-"Last-Translator: Nagy Géza <geza.nagy@oregional.hu>\n"
+"PO-Revision-Date: 2025-09-30 02:40+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_sale_timesheet/hu/>\n"
 "Language: hu\n"
@@ -30,7 +31,7 @@ msgstr ""
 #. module: helpdesk_sale_timesheet
 #: model:helpdesk.sla,name:helpdesk_sale_timesheet.helpdesk_sla_4
 msgid "4 hours to finish"
-msgstr ""
+msgstr "4 óra a befejezésig"
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_account_analytic_line
@@ -40,12 +41,12 @@ msgstr "Analitikus számla"
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_helpdesk_ticket_convert_wizard
 msgid "Convert Helpdesk Tickets to Tasks"
-msgstr ""
+msgstr "Ügyfélszolgálati jegyek feladatokra konvertálása"
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_project_task_convert_wizard
 msgid "Convert Project Tasks to Tickets"
-msgstr ""
+msgstr "Projekt feladatok jegyre konvertálása"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.tickets_followup_timesheet
@@ -120,12 +121,12 @@ msgstr ""
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
 msgid "Non-billable"
-msgstr ""
+msgstr "Nem számlázható"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_sla_view_form_inherit_sale_timesheet
 msgid "OR"
-msgstr ""
+msgstr "VAGY"
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model,name:helpdesk_sale_timesheet.model_product_template
@@ -141,6 +142,8 @@ msgstr "Projekt"
 #: model:ir.model.fields,help:helpdesk_sale_timesheet.field_helpdesk_team__project_id
 msgid "Project to which the timesheets of this helpdesk team's tickets will be linked."
 msgstr ""
+"Az ügyfélszolgálati csapat időkimutatásai ehhez a projekthez lesznek "
+"hozzákötve."
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__project_sale_order_id
@@ -155,7 +158,7 @@ msgstr "Hiv. vevői rendelés"
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__use_helpdesk_sale_timesheet
 msgid "Reinvoicing Timesheet activated on Team"
-msgstr ""
+msgstr "Csapatra aktivált időkimutatások továbbszámlázása"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
@@ -176,7 +179,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_ticket__remaining_hours_so
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_sale_timesheet
 msgid "Remaining Hours on SO"
-msgstr ""
+msgstr "Vevői rendelés maradék óra"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.tickets_followup_timesheet
@@ -219,6 +222,14 @@ msgid ""
 "Remove the sales order item in order to make this ticket non-billable.\n"
 "You can also change or remove the sales order item of each timesheet entry individually."
 msgstr ""
+"Vevői rendelés tétel, melyhez a feladathoz rögzített idők hozzáadásra "
+"kerülnek a vevőnek történő számlázás céljából.\n"
+"Alapértelmezés szerint az a legutolsó előre fizetendő vevői rendelés tétel "
+"kerül kiválasztásra, melyen van még fel nem használt idő.\n"
+"Ha nem szeretné számlázni ezt a jegyet, akkor állítsa üresre a vevői "
+"rendelési tétel kapcsolatot.\n"
+"Az egyes időkimutatás bejegyzéseknél egyenként is módosíthatja/kiüríheti a "
+"vevői rendelés tétel kapcsolatot."
 
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_helpdesk_sla__sale_line_ids
@@ -238,7 +249,7 @@ msgstr ""
 #. module: helpdesk_sale_timesheet
 #: model:ir.model.fields,field_description:helpdesk_sale_timesheet.field_sale_order__ticket_count
 msgid "Ticket Count"
-msgstr ""
+msgstr "Jegyek száma"
 
 #. module: helpdesk_sale_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_sale_timesheet.sale_order_form_inherit_helpdesk_sale

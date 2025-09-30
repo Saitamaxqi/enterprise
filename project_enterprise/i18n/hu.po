@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* project_enterprise
+# * project_enterprise
 #
 # Translators:
 # gezza <geza.nagy@oregional.hu>, 2022
@@ -10,20 +10,22 @@
 # Martin Trigaux, 2022
 # krnkris, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:47+0000\n"
-"PO-Revision-Date: 2022-09-22 05:48+0000\n"
-"Last-Translator: Tamás Németh <ntomasz81@gmail.com>, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"project_enterprise/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: project_enterprise
 #. odoo-python
@@ -47,7 +49,7 @@ msgstr ""
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
 msgid "<strong>Deadline:</strong>"
-msgstr ""
+msgstr "<strong>Határidő:</strong>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
@@ -57,7 +59,7 @@ msgstr ""
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__allocated_hours
 msgid "Allocated Time"
-msgstr ""
+msgstr "Kiosztott idő"
 
 #. module: project_enterprise
 #: model:ir.model.fields,field_description:project_enterprise.field_project_task__user_ids
@@ -228,7 +230,7 @@ msgstr "Feladat"
 #. module: project_enterprise
 #: model:ir.model,name:project_enterprise.model_project_task_recurrence
 msgid "Task Recurrence"
-msgstr ""
+msgstr "Feladat ismétlődés"
 
 #. module: project_enterprise
 #. odoo-javascript
@@ -316,7 +318,7 @@ msgstr ""
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.res_config_settings_view_form
 msgid "Timesheets"
-msgstr "Munkaidő-nyilvántartások"
+msgstr "Időkimutatások"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_sharing_project_task_view_form_inherited_in_gantt

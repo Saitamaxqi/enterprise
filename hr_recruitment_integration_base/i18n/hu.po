@@ -1,25 +1,29 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_recruitment_integration_base
+# * hr_recruitment_integration_base
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:34+0000\n"
-"PO-Revision-Date: 2025-09-11 14:34+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"hr_recruitment_integration_base/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid "%(job)s on %(platform)s"
-msgstr ""
+msgstr "%(job)s %(platform)splatformon"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
@@ -59,27 +63,27 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Akció szükséges"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_ids
 msgid "Activities"
-msgstr ""
+msgstr "Tevékenységek"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_exception_decoration
 msgid "Activity Exception Decoration"
-msgstr ""
+msgstr "Tevékenység kivétel dekoráció"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_state
 msgid "Activity State"
-msgstr ""
+msgstr "Tevékenység állapot"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_type_icon
 msgid "Activity Type Icon"
-msgstr ""
+msgstr "Tevékenység típus ikon"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model,name:hr_recruitment_integration_base.model_hr_applicant
@@ -99,7 +103,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Mellékletek száma"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.actions.server,name:hr_recruitment_integration_base.job_board_campaign_manager_start_ir_actions_server
@@ -114,27 +118,27 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__avatar_1920
 msgid "Avatar"
-msgstr ""
+msgstr "Avatár"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__avatar_1024
 msgid "Avatar 1024"
-msgstr ""
+msgstr "Avatár 1024"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "Avatár 128"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__avatar_256
 msgid "Avatar 256"
-msgstr ""
+msgstr "Avatár 256"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__avatar_512
 msgid "Avatar 512"
-msgstr ""
+msgstr "Avatár 512"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__biweekly
@@ -191,19 +195,19 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "Cancel"
-msgstr ""
+msgstr "Visszavonás"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__company_id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__company_id
 msgid "Company"
-msgstr ""
+msgstr "Vállalat"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid "Company:"
-msgstr ""
+msgstr "Vállalat:"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__apply_method
@@ -233,24 +237,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__create_uid
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Létrehozta"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__create_date
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__create_date
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Létrehozva"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__currency_id
 msgid "Currency"
-msgstr ""
+msgstr "Pénznem"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__api_data
 msgid "Data"
-msgstr ""
+msgstr "Adat"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__date_from
@@ -265,13 +269,13 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__daily
 msgid "Day"
-msgstr ""
+msgstr "Nap"
 
 #. module: hr_recruitment_integration_base
 #. odoo-javascript
 #: code:addons/hr_recruitment_integration_base/static/src/views/form/job_post_no_save_controller.js:0
 msgid "Delete"
-msgstr ""
+msgstr "Törlés"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__deleted
@@ -284,7 +288,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "Description"
-msgstr ""
+msgstr "Leírás"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__display_name
@@ -293,7 +297,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Megjelenített név"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.actions.server,name:hr_recruitment_integration_base.hr_job_post_double_check_action
@@ -304,14 +308,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_recruitment_integration_base/static/src/views/form/job_post_no_save_controller.js:0
 msgid "Duplicate"
-msgstr ""
+msgstr "Duplikálás"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__job_apply_mail
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__apply_method__email
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
@@ -333,7 +337,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__expired
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Expired"
-msgstr ""
+msgstr "Lejárt"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__failure
@@ -343,17 +347,17 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Követők"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Követők (Partnerek)"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
-msgstr ""
+msgstr "Font awesome ikon pld: fa-tasks"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
@@ -363,12 +367,12 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Van üzenet"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__hourly
 msgid "Hour"
-msgstr ""
+msgstr "Óra"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__id
@@ -377,53 +381,53 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_exception_icon
 msgid "Icon"
-msgstr ""
+msgstr "Ikon"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__activity_exception_icon
 msgid "Icon to indicate an exception activity."
-msgstr ""
+msgstr "Kivétel tevékenységet jelző ikon"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Ha be van jelölve, akkor az új üzenetek figyelmet igényelnek."
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__message_has_error
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Ha be van jelölve, akkor néhány üzenetnél kézbesítési hiba lépett fel."
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__image_1920
 msgid "Image"
-msgstr ""
+msgstr "Kép"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__image_1024
 msgid "Image 1024"
-msgstr ""
+msgstr "1024-es kép"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__image_128
 msgid "Image 128"
-msgstr ""
+msgstr "Kép 128"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__image_256
 msgid "Image 256"
-msgstr ""
+msgstr "256-os kép"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__image_512
 msgid "Image 512"
-msgstr ""
+msgstr "512-es kép"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__industry_id
@@ -433,7 +437,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Követő"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job__date_from
@@ -444,14 +448,14 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Issue"
-msgstr ""
+msgstr "Probléma"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__job_id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__job_id
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Job"
-msgstr ""
+msgstr "Munka"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__platform_ids
@@ -478,7 +482,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model,name:hr_recruitment_integration_base.model_hr_job
 msgid "Job Position"
-msgstr ""
+msgstr "Munkakör"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model,name:hr_recruitment_integration_base.model_hr_job_post
@@ -516,14 +520,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__write_uid
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Frissítette"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__write_date
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__write_date
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Frissítve"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__salary_max
@@ -533,12 +537,12 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Üzenetkézbesítési hiba"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Üzenetek"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__salary_min
@@ -563,37 +567,37 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__monthly
 msgid "Month"
-msgstr ""
+msgstr "Hónap"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "Tevékenységeim határideje"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__name
 msgid "Name"
-msgstr ""
+msgstr "Név"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_calendar_event_id
 msgid "Next Activity Calendar Event"
-msgstr ""
+msgstr "Következő tevékenység naptár esemény"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_date_deadline
 msgid "Next Activity Deadline"
-msgstr ""
+msgstr "Következő tevékenység határideje"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_summary
 msgid "Next Activity Summary"
-msgstr ""
+msgstr "Következő tevékenység összegzése"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_type_id
 msgid "Next Activity Type"
-msgstr ""
+msgstr "Következő tevékenység típusa"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
@@ -607,12 +611,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "No Limit"
-msgstr ""
+msgstr "Nincs korlátozás"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Akciók száma"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__job_post_count
@@ -622,17 +626,17 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Hibák száma"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Üzenetek száma, melyek akciót igényelnek"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Kézbesítési hibával rendelkező üzenetek száma"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.actions.act_window,help:hr_recruitment_integration_base.action_open_hr_job_post
@@ -642,7 +646,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__pending
 msgid "Pending"
-msgstr ""
+msgstr "Függő"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__platform_id
@@ -653,7 +657,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
 msgid "Post"
-msgstr ""
+msgstr "Bejegyzés"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model,name:hr_recruitment_integration_base.model_hr_recruitment_post_job_wizard
@@ -665,7 +669,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
 msgid "Post Now"
-msgstr ""
+msgstr "Beküldés most"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
@@ -675,7 +679,7 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Posts"
-msgstr ""
+msgstr "Bejegyzések"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__price_to_delete
@@ -722,17 +726,17 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Published"
-msgstr ""
+msgstr "Közzétett"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid "Recruiter"
-msgstr ""
+msgstr "Toborzó"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model,name:hr_recruitment_integration_base.model_hr_recruitment_platform
@@ -742,12 +746,12 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__activity_user_id
 msgid "Responsible User"
-msgstr ""
+msgstr "Felelős felhasználó"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS kézbesítési hiba"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
@@ -768,13 +772,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Start Date"
-msgstr ""
+msgstr "Kezdődátum"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__status
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
 msgid "Status"
-msgstr ""
+msgstr "Státusz"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__status_message
@@ -795,12 +799,16 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"Tevékenységeken alapuló állapot\n"
+"Lejárt: A tevékenység határideje lejárt\n"
+"Ma: A határidő ma van\n"
+"Tervezett: Jövőbeli határidő."
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid "Status:"
-msgstr ""
+msgstr "Állapot:"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
@@ -810,12 +818,12 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
 msgid "Stop Date"
-msgstr ""
+msgstr "Befejező dátum"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__success
 msgid "Success"
-msgstr ""
+msgstr "Siker"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
@@ -861,49 +869,49 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__activity_exception_decoration
 msgid "Type of the exception activity on record."
-msgstr ""
+msgstr "Kivétel tevékenység típusa a rekordon."
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 msgid "Update"
-msgstr ""
+msgstr "Frissítés"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__warning
 msgid "Warning"
-msgstr ""
+msgstr "Figyelmeztetés"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__website
 msgid "Website"
-msgstr ""
+msgstr "Weboldal"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Weboldal üzenetek"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__weekly
 msgid "Week"
-msgstr ""
+msgstr "Hét"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__schedule_id
 msgid "Working Schedule"
-msgstr ""
+msgstr "Munkabeosztás"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__yearly
 msgid "Year"
-msgstr ""
+msgstr "Év"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python

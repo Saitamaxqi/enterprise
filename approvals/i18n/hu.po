@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* approvals
+# * approvals
 #
 # Translators:
 # Tibor Kőnig <konig.tibor@evitalit.hu>, 2022
@@ -11,20 +11,22 @@
 # Martin Trigaux, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2022
 # gezza <geza.nagy@oregional.hu>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: gezza <geza.nagy@oregional.hu>, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:40+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"approvals/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -44,7 +46,7 @@ msgstr "<span>eddig: </span>"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction
 msgid "Action Needed"
-msgstr "Művelet szükséges"
+msgstr "Akció szükséges"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__active
@@ -69,7 +71,7 @@ msgstr "Tevékenység kivétel dekoráció"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_state
 msgid "Activity State"
-msgstr "Tevékenység állapota"
+msgstr "Tevékenység állapot"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_icon
@@ -185,7 +187,7 @@ msgstr "Felülvizsgálandó jóváhagyások"
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Approve"
-msgstr "Jóváhagy"
+msgstr "Jóváhagyás"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__approved
@@ -274,7 +276,7 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit
 msgid "Can Edit"
-msgstr "Módosíthat"
+msgstr "Szerkeszthet"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__cancel
@@ -282,7 +284,7 @@ msgstr "Módosíthat"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__cancel
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Visszavonás"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_car_rental_application
@@ -333,7 +335,9 @@ msgstr "Szerződés jóváhagyó"
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_product_line__product_uom_category_id
 msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
-msgstr "A mértékegységek közötti átváltás csak akkor valósul meg, ha ugyanabba a kategóriába tartoznak. Az átváltás az arányszámok alapján történik."
+msgstr ""
+"A mértékegységek közötti átváltás csak akkor lehetséges, ha ugyanabba a "
+"kategóriába tartoznak. Az átváltás az arányszámok alapján történik."
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_uid
@@ -552,7 +556,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__id
 #: model:ir.model.fields,field_description:approvals.field_approval_request__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_exception_icon
@@ -638,7 +642,7 @@ msgstr "Frissítette"
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__write_date
 #: model:ir.model.fields,field_description:approvals.field_approval_request__write_date
 msgid "Last Updated on"
-msgstr "Frissítve ekkor"
+msgstr "Frissítve"
 
 #. module: approvals
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action
@@ -650,7 +654,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_request__location
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Location"
-msgstr "Helyszín"
+msgstr "Lokáció"
 
 #. module: approvals
 #. odoo-javascript
@@ -748,7 +752,7 @@ msgstr "Következő tevékenység határideje"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_summary
 msgid "Next Activity Summary"
-msgstr "Következő tevékenység összegzés"
+msgstr "Következő tevékenység összegzése"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_id
@@ -787,7 +791,7 @@ msgstr "Nincs"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction_counter
 msgid "Number of Actions"
-msgstr "Műveletek száma"
+msgstr "Akciók száma"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__attachment_number
@@ -836,7 +840,7 @@ msgstr "Választható"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Options"
-msgstr "Beállítások"
+msgstr "Opciók"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -852,7 +856,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Period"
-msgstr "Időszak"
+msgstr "Periódus"
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_procurement
@@ -896,7 +900,7 @@ msgstr "Mennyiség"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__reference
@@ -979,7 +983,7 @@ msgstr "Sorszám"
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__status
 msgid "Status"
-msgstr "Állapot"
+msgstr "Státusz"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_state
@@ -1049,7 +1053,7 @@ msgstr "Felülvizsgálandó:"
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__new
 msgid "To Submit"
-msgstr "Beküldendő"
+msgstr "Benyújtandó"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_exception_decoration

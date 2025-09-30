@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* equity
+# * equity
 #
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 10:53+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/equity/ko/"
+">\n"
+"Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities
@@ -42,7 +46,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "(ID"
-msgstr ""
+msgstr "(ID"
 
 #. module: equity
 #. odoo-python
@@ -54,12 +58,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "(expired)"
-msgstr ""
+msgstr "(만료됨)"
 
 #. module: equity
 #: model:ir.actions.report,print_report_name:equity.action_equity_ubo_report
 msgid "(object._get_ubo_report_filename())"
-msgstr ""
+msgstr "(object._get_ubo_report_filename())"
 
 #. module: equity
 #. odoo-javascript
@@ -189,7 +193,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Address:</strong>"
-msgstr ""
+msgstr "<strong>주소 : </strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -199,7 +203,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>OR</strong>"
-msgstr ""
+msgstr "<strong>OR</strong>"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -273,18 +277,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__attachment_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__attachment_ids
 msgid "Attachments"
-msgstr ""
+msgstr "첨부 파일"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_valuation__event__audit
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Audit"
-msgstr ""
+msgstr "감사"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__auditor
 msgid "Auditor"
-msgstr ""
+msgstr "감사인"
 
 #. module: equity
 #. odoo-javascript
@@ -333,12 +337,12 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Buyer"
-msgstr ""
+msgstr "구매자"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__ceo
 msgid "CEO"
-msgstr ""
+msgstr "CEO"
 
 #. module: equity
 #. odoo-python
@@ -350,7 +354,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__cancellation
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Cancellation"
-msgstr ""
+msgstr "취소"
 
 #. module: equity
 #. odoo-python
@@ -384,13 +388,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Class"
-msgstr ""
+msgstr "클래스"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Clear"
-msgstr ""
+msgstr "제거"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__partner_id
@@ -399,7 +403,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "Company"
-msgstr ""
+msgstr "회사"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_1
@@ -419,14 +423,14 @@ msgstr ""
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "환경설정"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.xml:0
 #: model:ir.model,name:equity.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "연락처"
 
 #. module: equity
 #. odoo-javascript
@@ -492,19 +496,19 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__equity_currency_id
 msgid "Currency"
-msgstr ""
+msgstr "통화"
 
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "현황판"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__date
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__date
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Date"
-msgstr ""
+msgstr "날짜"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -533,14 +537,14 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__dilution
 msgid "Dilution"
-msgstr ""
+msgstr "희석"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "작성 취소"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__display_name
@@ -587,7 +591,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_home_equity
 msgid "Equity"
-msgstr ""
+msgstr "자본"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token
@@ -652,7 +656,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__event
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Event"
-msgstr ""
+msgstr "행사"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -668,7 +672,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_date
 msgid "Expiration"
-msgstr ""
+msgstr "만료일"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
@@ -702,7 +706,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_follower_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "팔로워"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_partner_ids
@@ -780,12 +784,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
 msgid "Holder"
-msgstr ""
+msgstr "보유자"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "Holdings"
-msgstr ""
+msgstr "홀딩스"
 
 #. module: equity
 #. odoo-javascript
@@ -803,7 +807,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__id
 #: model:ir.model.fields,field_description:equity.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: equity
 #. odoo-javascript
@@ -894,7 +898,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__issuance
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Issuance"
-msgstr ""
+msgstr "발행"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -931,7 +935,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__liquidator
 msgid "Liquidator"
-msgstr ""
+msgstr "청산인"
 
 #. module: equity
 #. odoo-javascript
@@ -942,7 +946,7 @@ msgstr ""
 #. module: equity
 #: model:res.groups,name:equity.group_equity_manager
 msgid "Manager"
-msgstr ""
+msgstr "관리자"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__managing_director
@@ -961,7 +965,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__message_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "메시지"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
@@ -1017,13 +1021,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_list
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Nationality"
-msgstr ""
+msgstr "국적"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1052,7 +1056,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "No"
-msgstr ""
+msgstr "아니요"
 
 #. module: equity
 #. odoo-python
@@ -1080,7 +1084,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__notes
 msgid "Notes"
-msgstr ""
+msgstr "메모"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_needaction_counter
@@ -1163,7 +1167,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_security_class__class_type__options
 msgid "Options"
-msgstr ""
+msgstr "선택 사항"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
@@ -1180,13 +1184,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__ownership
 #: model:ir.ui.menu,name:equity.menu_equity_ownership
 msgid "Ownership"
-msgstr ""
+msgstr "소유권"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_pep
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_pep
 msgid "PEP"
-msgstr ""
+msgstr "PEP"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1196,7 +1200,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__partner_id
 msgid "Partner"
-msgstr ""
+msgstr "파트너"
 
 #. module: equity
 #. odoo-javascript
@@ -1210,12 +1214,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Position"
-msgstr ""
+msgstr "포지션"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Price"
-msgstr ""
+msgstr "가격"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
@@ -1248,7 +1252,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__rating_ids
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "평점"
 
 #. module: equity
 #: model:ir.model.fields,help:equity.field_equity_transaction__subscriber_id
@@ -1270,7 +1274,7 @@ msgstr ""
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "보고"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_request_ubo_form
@@ -1280,7 +1284,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__auth_rep_role
 msgid "Role"
-msgstr ""
+msgstr "역할"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_has_sms_error
@@ -1292,13 +1296,13 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__secretary
 msgid "Secretary"
-msgstr ""
+msgstr "비서"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__securities
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 msgid "Securities"
-msgstr ""
+msgstr "유가 증권"
 
 #. module: equity
 #. odoo-python
@@ -1333,7 +1337,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_id
 msgid "Seller"
-msgstr ""
+msgstr "매도인"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__seller_name
@@ -1356,7 +1360,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.xml:0
 msgid "Send"
-msgstr ""
+msgstr "보내기"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1371,7 +1375,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "순서"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1381,7 +1385,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_security_class__class_type__shares
 msgid "Shares"
-msgstr ""
+msgstr "지분"
 
 #. module: equity
 #. odoo-python
@@ -1403,7 +1407,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "Signature:"
-msgstr ""
+msgstr "서명:"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1413,7 +1417,7 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id
 msgid "Subscriber"
-msgstr ""
+msgstr "구독자"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id_placeholder
@@ -1506,7 +1510,7 @@ msgstr ""
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__transfer_amount
 msgid "Total"
-msgstr ""
+msgstr "합계"
 
 #. module: equity
 #. odoo-python
@@ -1521,7 +1525,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Transaction"
-msgstr ""
+msgstr "거래"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
@@ -1541,18 +1545,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_list
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
 msgid "Transactions"
-msgstr ""
+msgstr "거래"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_transaction__transaction_type__transfer
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_search
 msgid "Transfer"
-msgstr ""
+msgstr "전송"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__treasurer
 msgid "Treasurer"
-msgstr ""
+msgstr "재무 관리인"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__securities_type
@@ -1560,13 +1564,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities_type
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_list
 msgid "Type"
-msgstr ""
+msgstr "유형"
 
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_ubos
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "UBO"
-msgstr ""
+msgstr "UBO"
 
 #. module: equity
 #: model:mail.activity.type,name:equity.equity_ubo_form_mail_activity
@@ -1623,13 +1627,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Unassigned"
-msgstr ""
+msgstr "미지정"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Upload"
-msgstr ""
+msgstr "업로드"
 
 #. module: equity
 #. odoo-python
@@ -1649,13 +1653,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__valuation
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_valuation
 msgid "Valuation"
-msgstr ""
+msgstr "가치 평가"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_valuation
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_valuations
 msgid "Valuations"
-msgstr ""
+msgstr "가치 평가"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -1665,13 +1669,13 @@ msgstr ""
 #. module: equity
 #: model:res.groups,name:equity.group_equity_viewer
 msgid "Viewer"
-msgstr ""
+msgstr "뷰어"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__votes
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
 msgid "Votes"
-msgstr ""
+msgstr "투표"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__share_votes
@@ -1724,7 +1728,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "Yes"
-msgstr ""
+msgstr "예"
 
 #. module: equity
 #. odoo-javascript
@@ -1794,19 +1798,19 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "born"
-msgstr ""
+msgstr "출생"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "day"
-msgstr ""
+msgstr "일"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "days"
-msgstr ""
+msgstr "일"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1821,56 +1825,56 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "in"
-msgstr ""
+msgstr "-"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "month"
-msgstr ""
+msgstr "월"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "months"
-msgstr ""
+msgstr "월"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "on"
-msgstr ""
+msgstr "-"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "remaining"
-msgstr ""
+msgstr "잔여"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "seller"
-msgstr ""
+msgstr "매도인"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "subscriber"
-msgstr ""
+msgstr "구독자"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "to"
-msgstr ""
+msgstr "-"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "year"
-msgstr ""
+msgstr "년"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "years"
-msgstr ""
+msgstr "년"

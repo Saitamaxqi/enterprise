@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* web_studio
+# * web_studio
 #
 # Translators:
 # Gergő Kertész <gergo.kertesz@maxflow.hu>, 2022
@@ -15,20 +15,22 @@
 # krnkris, 2022
 # Martin Trigaux, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:41+0000\n"
-"PO-Revision-Date: 2022-09-22 05:49+0000\n"
-"Last-Translator: Tamás Németh <ntomasz81@gmail.com>, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"web_studio/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: web_studio
 #. odoo-python
@@ -163,6 +165,7 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:web_studio.web_studio_new_app_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
+"<span><b>Szép munka!</b> Végigmentél ennek a körútnak minden lépésén.</span>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -227,12 +230,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_search_view
 msgid "Action"
-msgstr "Művelet"
+msgstr "Akció"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "Akció szükséges"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_actions_act_window
@@ -267,7 +270,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/editor/editor_menu/editor_menu.js:0
 #: model:ir.model,name:web_studio.model_ir_actions_actions
 msgid "Actions"
-msgstr ""
+msgstr "Akciók"
 
 #. module: web_studio
 #. odoo-python
@@ -444,7 +447,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Apply"
-msgstr ""
+msgstr "Alkalmazás"
 
 #. module: web_studio
 #. odoo-javascript
@@ -518,7 +521,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/approval/approval_infos.xml:0
 msgid "Approve"
-msgstr "Jóváhagy"
+msgstr "Jóváhagyás"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__approved
@@ -560,7 +563,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__approver_ids
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Approvers"
-msgstr ""
+msgstr "Engedélyezők"
 
 #. module: web_studio
 #. odoo-javascript
@@ -643,12 +646,12 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "Mellékletek száma"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__include_attachment
 msgid "Attachments"
-msgstr ""
+msgstr "Mellékletek"
 
 #. module: web_studio
 #. odoo-javascript
@@ -735,7 +738,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/button_properties.js:0
 msgid "Button"
-msgstr ""
+msgstr "Gomb"
 
 #. module: web_studio
 #. odoo-javascript
@@ -787,7 +790,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/gantt/gantt_editor_sidebar.xml:0
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/list/list_editor_sidebar/list_editor_sidebar.xml:0
 msgid "Can Edit"
-msgstr "Módosíthat"
+msgstr "Szerkeszthet"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__can_validate
@@ -821,7 +824,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/new_button_box_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:web_studio.view_studio_export_wizard
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Visszavonás"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1239,7 +1242,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__date_to
 msgid "Date To"
-msgstr ""
+msgstr "Dátumig"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1251,7 +1254,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Datetime"
-msgstr ""
+msgstr "Dátum és idő"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1377,7 +1380,7 @@ msgstr "Törlés"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__is_demo_data
 msgid "Demo"
-msgstr ""
+msgstr "Minta"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1420,7 +1423,7 @@ msgstr ""
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_snackbar.xml:0
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Discard"
-msgstr ""
+msgstr "Elvetés"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1432,7 +1435,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/gantt/gantt_editor_sidebar.xml:0
 msgid "Display Mode"
-msgstr ""
+msgstr "Megjelenítés módja"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_automation__display_name
@@ -1597,6 +1600,8 @@ msgid ""
 "Editing a built-in file through this editor is not advised, as it will "
 "prevent it from being updated during future App upgrades."
 msgstr ""
+"Egy beépített fájl szerkesztsése ezen szerkesztő segítségével nem javasolt, "
+"mivel így nem frissül az alkalmazás egy későbbi frissítése során."
 
 #. module: web_studio
 #. odoo-javascript
@@ -1608,7 +1613,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Email"
-msgstr "E-mail"
+msgstr "Email"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_mail_template
@@ -1643,7 +1648,7 @@ msgstr ""
 #: code:addons/web_studio/models/ir_model.py:0
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "End Date"
-msgstr "Záródátum"
+msgstr "Befejező dátum"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__entry_ids
@@ -1712,7 +1717,7 @@ msgstr "Külső"
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__action_xmlid
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__xmlid
 msgid "External ID"
-msgstr ""
+msgstr "Külső azonosító"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1825,18 +1830,18 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_follower_ids
 msgid "Followers"
-msgstr ""
+msgstr "Követők"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "Követők (Partnerek)"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar.js:0
 msgid "Footer"
-msgstr ""
+msgstr "Lábléc"
 
 #. module: web_studio
 #. odoo-python
@@ -1855,7 +1860,7 @@ msgstr ""
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_delegate_approvers
 msgid "Forever"
-msgstr ""
+msgstr "Mindig"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1868,7 +1873,7 @@ msgstr "Űrlap"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/xml_resource_editor/xml_resource_editor.xml:0
 msgid "Format"
-msgstr ""
+msgstr "Formátum"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1905,7 +1910,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_wysiwyg/report_editor_wysiwyg.js:0
 msgid "Go back"
-msgstr ""
+msgstr "Menjen vissza"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1966,7 +1971,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "HTML"
-msgstr ""
+msgstr "HTML"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_http
@@ -1988,7 +1993,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "Van üzenet"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2110,7 +2115,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__id
 #: model:ir.model.fields,field_description:web_studio.field_studio_mixin__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2127,13 +2132,13 @@ msgstr "Ikon"
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr ""
+msgstr "Ha be van jelölve, akkor az új üzenetek figyelmet igényelnek."
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
-msgstr ""
+msgstr "Ha be van jelölve, akkor néhány üzenetnél kézbesítési hiba lépett fel."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2176,6 +2181,8 @@ msgid ""
 "If you discard the current edits, all unsaved changes will be lost. You can "
 "cancel to return to edit mode."
 msgstr ""
+"Ha elveti a jelenlegi módosításokat, az összes el nem mentett változás "
+"elveszik. Az elvetés gombra kattintva visszatérhet a szerkesztéshez."
 
 #. module: web_studio
 #. odoo-python
@@ -2302,7 +2309,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "Követő"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_base_module_uninstall__is_studio
@@ -2369,7 +2376,7 @@ msgstr "Frissítette"
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard__write_date
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__write_date
 msgid "Last Updated on"
-msgstr "Frissítve ekkor"
+msgstr "Frissítve"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2401,14 +2408,14 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/graph/graph_editor.js:0
 msgid "Line"
-msgstr "Tétel"
+msgstr "Sor"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/model_configurator/model_configurator.js:0
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Lines"
-msgstr "Tételek"
+msgstr "Sorok"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_request__mail_activity_id
@@ -2438,7 +2445,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/components/view_fields.js:0
 msgid "Many2One"
-msgstr ""
+msgstr "Many2One"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2477,7 +2484,7 @@ msgstr "Mérőszámok"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/rainbow_effect.js:0
 msgid "Medium"
-msgstr "Közepes"
+msgstr "Médium"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2495,12 +2502,12 @@ msgstr "Üzenet"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error
 msgid "Message Delivery error"
-msgstr ""
+msgstr "Üzenetkézbesítési hiba"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_ids
 msgid "Messages"
-msgstr ""
+msgstr "Üzenetek"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2562,7 +2569,7 @@ msgstr "Modell adat"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__model_name
 msgid "Model Description"
-msgstr ""
+msgstr "Modell leírás"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_entry__model
@@ -2575,7 +2582,7 @@ msgstr "Modell név"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/editor/new_model_item/new_model_item.xml:0
 msgid "Model name"
-msgstr ""
+msgstr "Modell"
 
 #. module: web_studio
 #: model:ir.model,name:web_studio.model_ir_model
@@ -2666,7 +2673,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.xml:0
 msgid "N/A"
-msgstr ""
+msgstr "Nem elérhető"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2688,7 +2695,7 @@ msgstr "Új"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/interactive_editor.js:0
 msgid "New %s"
-msgstr ""
+msgstr "Új %s"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2743,7 +2750,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer_components.js:0
 msgid "New Page"
-msgstr ""
+msgstr "Új oldal"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2794,7 +2801,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/button_properties/rainbow_effect.js:0
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2824,7 +2831,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of Actions"
-msgstr ""
+msgstr "Akciók száma"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__entries_count
@@ -2834,17 +2841,17 @@ msgstr "Bevitelek száma"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of errors"
-msgstr ""
+msgstr "Hibák száma"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Üzenetek száma, melyek akciót igényelnek"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__message_has_error_counter
 msgid "Number of messages with delivery error"
-msgstr ""
+msgstr "Kézbesítési hibával rendelkező üzenetek száma"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2990,7 +2997,7 @@ msgstr "Helykitöltő"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__post
 msgid "Post"
-msgstr ""
+msgstr "Bejegyzés"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_wizard_data__pre
@@ -3088,19 +3095,19 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/modifiers/modifiers_properties.xml:0
 msgid "Readonly"
-msgstr ""
+msgstr "Csak olvasható"
 
 #. module: web_studio
 #. odoo-python
 #: code:addons/web_studio/models/ir_model.py:0
 msgid "Ready"
-msgstr "Kész"
+msgstr "Előkészítve"
 
 #. module: web_studio
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_entry_form_view
@@ -3121,7 +3128,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__records_count
 msgid "Records"
-msgstr ""
+msgstr "Bejegyzések"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3304,7 +3311,7 @@ msgstr "bankkivonatok"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/approval/approval_infos.xml:0
 msgid "Revoke"
-msgstr ""
+msgstr "Visszavonás"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3355,14 +3362,14 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__message_has_sms_error
 msgid "SMS Delivery error"
-msgstr ""
+msgstr "SMS kézbesítési hiba"
 
 #. module: web_studio
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor_snackbar.xml:0
 #: code:addons/web_studio/static/src/client_action/xml_resource_editor/xml_resource_editor.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Mentés"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3374,7 +3381,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/view_editor_snackbar.xml:0
 msgid "Saved"
-msgstr ""
+msgstr "Mentve"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3669,7 +3676,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_button_configuration_search_view
 #: model_terms:ir.ui.view,arch_db:web_studio.studio_approval_rule_kanban_view
 msgid "Step"
-msgstr ""
+msgstr "Lépés"
 
 #. module: web_studio
 #: model:ir.model.fields.selection,name:web_studio.selection__studio_approval_rule__notification_order__1
@@ -4093,7 +4100,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/cohort/cohort_editor_sidebar.xml:0
 msgid "Timeline"
-msgstr "Idővonalas"
+msgstr "Idővonal"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4141,7 +4148,7 @@ msgstr "Visszavonás"
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_delegate__date_to
 msgid "Until"
-msgstr ""
+msgstr "Eddig"
 
 #. module: web_studio
 #. odoo-python
@@ -4152,7 +4159,7 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_export_model__updatable
 msgid "Updatable"
-msgstr ""
+msgstr "Frissíthető"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4261,12 +4268,12 @@ msgstr ""
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website Messages"
-msgstr ""
+msgstr "Weboldal üzenetek"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__website_message_ids
 msgid "Website communication history"
-msgstr ""
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4285,7 +4292,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/app_creator/app_creator.xml:0
 msgid "Welcome to"
-msgstr "Üdvözlöm"
+msgstr "Üdvözöljük itt:"
 
 #. module: web_studio
 #. odoo-javascript

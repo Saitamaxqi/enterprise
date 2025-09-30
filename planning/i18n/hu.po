@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* planning
+# * planning
 #
 # Translators:
 # Zsolt Godó <zsolttokio@gmail.com>, 2022
@@ -13,20 +13,22 @@
 # krnkris, 2022
 # gezza <geza.nagy@oregional.hu>, 2022
 # Tamás Németh <ntomasz81@gmail.com>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:47+0000\n"
-"Last-Translator: Tamás Németh <ntomasz81@gmail.com>, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"planning/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: planning
 #. odoo-python
@@ -495,7 +497,7 @@ msgstr "Kiosztott órák"
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allocated_hours
 #: model_terms:ir.ui.view,arch_db:planning.resource_planning
 msgid "Allocated Time"
-msgstr ""
+msgstr "Kiosztott idő"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot__allocated_percentage
@@ -578,7 +580,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.unwanted_slots_list_template
 msgid "Assignee"
-msgstr ""
+msgstr "Hozzárendelt személy"
 
 #. module: planning
 #. odoo-javascript
@@ -609,7 +611,7 @@ msgstr "Pultos"
 #. module: planning
 #: model:ir.model,name:planning.model_hr_employee_base
 msgid "Basic Employee"
-msgstr ""
+msgstr "Egyszerű munkavállaló"
 
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_schedule_by_resource
@@ -641,7 +643,7 @@ msgstr ""
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
 msgid "Chat"
-msgstr "Társalgás"
+msgstr "Csevegés"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_role__color
@@ -678,7 +680,7 @@ msgstr ""
 #. module: planning
 #: model:ir.model,name:planning.model_res_config_settings
 msgid "Config Settings"
-msgstr "Beállítások módosítása"
+msgstr "Beállítások"
 
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_settings
@@ -915,17 +917,17 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__employee_id
 #: model:ir.model.fields,field_description:planning.field_planning_slot__employee_id
 msgid "Employee"
-msgstr "Alkalmazott"
+msgstr "Munkavállaló"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
 msgid "Employee Name"
-msgstr "Alkalmazott neve"
+msgstr "Munkavállaló neve"
 
 #. module: planning
 #: model:ir.ui.menu,name:planning.planning_menu_settings_employee
 msgid "Employees"
-msgstr "Alkalmazottak"
+msgstr "Munkavállalók"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_send__employee_ids
@@ -953,7 +955,7 @@ msgstr "Vége"
 #: model_terms:ir.ui.view,arch_db:planning.planning_analysis_report_view_search
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_search
 msgid "End Date"
-msgstr "Záródátum"
+msgstr "Befejező dátum"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__end_time
@@ -1087,7 +1089,7 @@ msgstr "Nem vagyok elérhető"
 #: model:ir.model.fields,field_description:planning.field_planning_slot__id
 #: model:ir.model.fields,field_description:planning.field_planning_slot_template__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: planning
 #: model:ir.model.fields,help:planning.field_planning_analysis_report__publication_warning
@@ -1399,7 +1401,7 @@ msgstr "Elmúlt"
 #: model:ir.model.fields,field_description:planning.field_planning_send__start_datetime
 #: model_terms:ir.ui.view,arch_db:planning.planning_send_view_form
 msgid "Period"
-msgstr "Időszak"
+msgstr "Periódus"
 
 #. module: planning
 #. odoo-javascript
@@ -1439,7 +1441,7 @@ msgstr "Tervezés analízis"
 #. module: planning
 #: model:ir.model,name:planning.model_planning_analysis_report
 msgid "Planning Analysis Report"
-msgstr ""
+msgstr "Tervezés elemzés riport"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_recurrency
@@ -1625,7 +1627,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Reset to Draft"
-msgstr "Visszaállítás piszkozat állapotba"
+msgstr "Visszaállítás piszkozatra"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__resource_id
@@ -1723,13 +1725,15 @@ msgstr ""
 #. module: planning
 #: model:ir.actions.act_window,name:planning.planning_action_schedule_by_role
 msgid "Schedule by Role"
-msgstr ""
+msgstr "Ütemezés szerepkörönként"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_resource
 #: model_terms:ir.actions.act_window,help:planning.planning_action_schedule_by_role
 msgid "Schedule your human and material resources across roles, projects and sales orders."
 msgstr ""
+"Ütemezzen emberi és anyag erőforrásokat szerepkörök, projektek és vevői "
+"rendelések között."
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_hr_employee__employee_token
@@ -1869,7 +1873,7 @@ msgstr "Kezdő óra"
 #: model:ir.model.fields,field_description:planning.field_planning_analysis_report__state
 #: model:ir.model.fields,field_description:planning.field_planning_slot__state
 msgid "Status"
-msgstr "Állapot"
+msgstr "Státusz"
 
 #. module: planning
 #: model:ir.model.fields,field_description:planning.field_planning_planning__end_datetime
@@ -2314,7 +2318,7 @@ msgstr "pl.: daru"
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.hr_employee_view_form_simplified
 msgid "e.g. John Doe"
-msgstr "pl.: Szabó Géza"
+msgstr "pld: Gipsz Jakab"
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form

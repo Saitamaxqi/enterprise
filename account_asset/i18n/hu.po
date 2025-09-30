@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_asset
+# * account_asset
 #
 # Translators:
 # Tibor Kőnig <konig.tibor@evitalit.hu>, 2022
@@ -10,20 +10,22 @@
 # Ákos Nagy <akos.nagy@oregional.hu>, 2022
 # krnkris, 2022
 # gezza <geza.nagy@oregional.hu>, 2023
-#
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2022-09-22 05:44+0000\n"
-"Last-Translator: gezza <geza.nagy@oregional.hu>, 2023\n"
-"Language-Team: Hungarian (https://app.transifex.com/odoo/teams/41243/hu/)\n"
+"PO-Revision-Date: 2025-09-30 02:40+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"account_asset/hu/>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_asset
 #. odoo-python
@@ -257,7 +259,7 @@ msgstr "Tevékenység kivétel dekoráció"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__activity_state
 msgid "Activity State"
-msgstr "Tevékenység állapota"
+msgstr "Tevékenység állapot"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__activity_type_icon
@@ -308,7 +310,7 @@ msgstr "Eszköz kerül létrehozásra az eszköz értékének növekedésére. <
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Analitikus felosztás"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_distribution_search
@@ -318,7 +320,7 @@ msgstr ""
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__analytic_precision
 msgid "Analytic Precision"
-msgstr "Analitkiai pontosság"
+msgstr "Analitikus pontosság"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -462,7 +464,7 @@ msgstr "Eszköz folytatva. %s"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_move_form_asset_inherit
 msgid "Asset(s)"
-msgstr ""
+msgstr "Vagyontárgyak"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_asset
@@ -557,7 +559,7 @@ msgstr "Eszköz létrehozható"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
 msgid "Cancel"
-msgstr "Mégse"
+msgstr "Visszavonás"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -567,7 +569,7 @@ msgstr "Eszköz visszavonása"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__cancelled
 msgid "Cancelled"
-msgstr "Visszavonva"
+msgstr "Visszavont"
 
 #. module: account_asset
 #. odoo-python
@@ -1247,7 +1249,7 @@ msgstr "Van üzenet"
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__id
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__id
 msgid "ID"
-msgstr "Azonosító"
+msgstr "ID"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__activity_exception_icon
@@ -1635,7 +1637,7 @@ msgstr "Beszerzés: eszköz"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Értékelések"
 
 #. module: account_asset
 #. odoo-python
@@ -1792,7 +1794,7 @@ msgstr "Eladás"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Set to Draft"
-msgstr "Tervezetnek beállít"
+msgstr "Piszkozatra állít"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -1802,7 +1804,9 @@ msgstr "Folyamatban állapotra állítás"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Show all records which has next action date is before today"
-msgstr "Az összes olyan rekord megjelenítése, melynél a következő művelet dátuma a mai nap előtti"
+msgstr ""
+"Az összes olyan rekord megjelenítése, melynél a következő akció dátuma a mai "
+"nap előtti"
 
 #. module: account_asset
 #. odoo-python
@@ -1980,7 +1984,7 @@ msgstr "Weboldal üzenetek"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__website_message_ids
 msgid "Website communication history"
-msgstr "Weboldali kommunikációs előzmények"
+msgstr "Weboldal kommunikációs előzmények"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__state

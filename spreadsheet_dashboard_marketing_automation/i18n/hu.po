@@ -1,19 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* spreadsheet_dashboard_marketing_automation
+# * spreadsheet_dashboard_marketing_automation
 #
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:44+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"PO-Revision-Date: 2025-09-30 02:42+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
+"spreadsheet_dashboard_marketing_automation/hu/>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -52,7 +56,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Bounced"
-msgstr ""
+msgstr "Visszadobott"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -65,7 +69,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Cancelled"
-msgstr ""
+msgstr "Visszavont"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -99,25 +103,25 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Conversion Rate"
-msgstr ""
+msgstr "Átváltási árfolyam"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Count"
-msgstr ""
+msgstr "Darab"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Created on"
-msgstr ""
+msgstr "Létrehozva"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Delivered"
-msgstr ""
+msgstr "Kiszállítva"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -136,7 +140,7 @@ msgstr ""
 #. module: spreadsheet_dashboard_marketing_automation
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_marketing_automation.spreadsheet_dashboard_marketing_automation
 msgid "Email Marketing"
-msgstr ""
+msgstr "E-mail marketing"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -149,7 +153,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Exception"
-msgstr ""
+msgstr "Kivétel"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -182,13 +186,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Mass Mailing"
-msgstr ""
+msgstr "Tömeges email"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Medium"
-msgstr ""
+msgstr "Médium"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -207,13 +211,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "None"
-msgstr ""
+msgstr "Nincs"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Number of Clicks"
-msgstr ""
+msgstr "Kattintások száma"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -232,7 +236,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Opened"
-msgstr ""
+msgstr "Megnyitva"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -245,19 +249,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Page Title"
-msgstr ""
+msgstr "Oldalcím"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Period"
-msgstr ""
+msgstr "Periódus"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Reason"
-msgstr ""
+msgstr "Ok"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -270,13 +274,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Recipients Model"
-msgstr ""
+msgstr "Címzettek model-je"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Replied"
-msgstr ""
+msgstr "Megválaszolva"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -296,7 +300,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Responsible"
-msgstr ""
+msgstr "Felelős"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -314,31 +318,31 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Sent"
-msgstr ""
+msgstr "Elküldött"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Sent Date"
-msgstr ""
+msgstr "Küldés dátuma"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Source"
-msgstr ""
+msgstr "Forrás"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Status"
-msgstr ""
+msgstr "Státusz"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Subject"
-msgstr ""
+msgstr "Tárgy"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -350,7 +354,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Target URL"
-msgstr ""
+msgstr "Cél URL"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -382,7 +386,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Total"
-msgstr ""
+msgstr "Összesen"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -395,7 +399,7 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_sample_dashboard.json:0
 msgid "Unsubscribed"
-msgstr ""
+msgstr "Leiratkozva"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
@@ -408,7 +412,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_marketing_automation/data/files/marketing_automation_dashboard.json:0
 msgid "Visits"
-msgstr ""
+msgstr "Megtekintések"
 
 #. module: spreadsheet_dashboard_marketing_automation
 #. odoo-javascript
