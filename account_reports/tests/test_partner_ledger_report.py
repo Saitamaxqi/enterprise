@@ -416,6 +416,25 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
             options,
         )
 
+        # Unfold 'partner_a' to check the initial balance line is correct
+        options['unfolded_lines'] = [self.report._get_generic_line_id('res.partner', self.partner_a.id)]
+
+        self.assertLinesValues(
+            self.report._get_lines(options),
+            #   Name                                    Debit           Credit          Balance
+            [   0,                                      6,              7,              9],
+            [
+                ('partner_a',                           0.0,            1000.0,         19133.33),
+                ('Initial Balance',                     '',             1000.0,         19133.33),
+                ('Total partner_a',                     0.0,            1000.0,         19133.33),
+                ('partner_b',                           0.0,            0.0,            1200.0),
+                ('partner_c',                           0.0,            0.0,           -21333.33),
+                ('Unknown Partner',                     1000.0,         0.0,            0.0),
+                ('Total',                               1000.0,         1000.0,        -1000.0),
+            ],
+            options,
+        )
+
     def test_partner_ledger_prefix_groups(self):
         partner_names = [
             'A',

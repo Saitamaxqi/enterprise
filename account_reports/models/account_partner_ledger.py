@@ -7,6 +7,7 @@ from odoo.tools import SQL
 
 from datetime import timedelta
 from collections import defaultdict
+from copy import deepcopy
 
 
 class AccountPartnerLedgerReportHandler(models.AbstractModel):
@@ -242,31 +243,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             assign_sum(res)
 
         # Correct the sums per partner, for the lines without partner reconciled with a line having a partner
-        query = self._get_sums_without_partner(options)
-
-        self.env.cr.execute(query)
-        totals = {}
-        for total_field in ['debit', 'credit', 'amount', 'balance']:
-            totals[total_field] = {col_group_key: 0 for col_group_key in options['column_groups']}
-
-        for row in self.env.cr.dictfetchall():
-            totals['debit'][row['column_group_key']] += row['debit']
-            totals['credit'][row['column_group_key']] += row['credit']
-            totals['amount'][row['column_group_key']] += row['amount']
-            totals['balance'][row['column_group_key']] += row['balance']
-
-            if row['groupby'] not in groupby_partners:
-                continue
-
-            assign_sum(row)
-
-        if None in groupby_partners:
-            # Debit/credit are inverted for the unknown partner as the computation is made regarding the balance of the known partner
-            for column_group_key in options['column_groups']:
-                groupby_partners[None][column_group_key]['debit'] += totals['credit'][column_group_key]
-                groupby_partners[None][column_group_key]['credit'] += totals['debit'][column_group_key]
-                groupby_partners[None][column_group_key]['amount'] += totals['amount'][column_group_key]
-                groupby_partners[None][column_group_key]['balance'] -= totals['balance'][column_group_key]
+        self._add_sums_of_lines_without_partners(options, groupby_partners)
 
         # Retrieve the partners to browse.
         # groupby_partners.keys() contains all account ids affected by:
@@ -374,11 +351,15 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         self.env.cr.execute(SQL(" UNION ALL ").join(queries))
 
         init_balance_by_col_group = {
-            partner_id: {column_group_key: {} for column_group_key in options['column_groups']}
+            partner_id: {column_group_key: defaultdict(float) for column_group_key in options['column_groups']}
             for partner_id in partner_ids
         }
         for result in self.env.cr.dictfetchall():
             init_balance_by_col_group[result['partner_id']][result['column_group_key']] = result
+
+        # Correct the sums per partner, for the lines without partner reconciled with a line having a partner
+        new_options = self._get_options_initial_balance(options)
+        self._add_sums_of_lines_without_partners(new_options, init_balance_by_col_group)
 
         return init_balance_by_col_group
 
@@ -390,8 +371,30 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         :return:        A copy of the options, modified to match the dates to use to get the initial balances.
         """
         new_date_to = fields.Date.from_string(options['date']['date_from']) - timedelta(days=1)
-        new_date_options = dict(options['date'], date_from=False, date_to=fields.Date.to_string(new_date_to))
-        return dict(options, date=new_date_options)
+        new_options = deepcopy(options)
+        new_options['date']['date_from'] = False
+        new_options['date']['date_to'] = fields.Date.to_string(new_date_to)
+        for column_group in new_options['column_groups'].values():
+            column_group['forced_options']['date'] = new_options['date']
+        return new_options
+
+    def _add_sums_of_lines_without_partners(self, options, result_dict):
+        fields2inverse = {
+            'balance': ('balance', -1),
+            'debit': ('credit', 1),
+            'amount': ('amount', 1),
+            'credit': ('debit', 1),
+        }
+        query = self._get_sums_without_partner(options)
+        self.env.cr.execute(query)
+        rows = self.env.cr.dictfetchall()
+        for row in rows:
+            for field, (inverse_field, inverse_sign) in fields2inverse.items():
+                if partner_vals := result_dict.get(row['groupby']):
+                    partner_vals[row['column_group_key']][field] += row[field]
+                if no_partner_vals := result_dict.get(None):
+                    # Debit/credit are inverted for the unknown partner as the computation is made regarding the balance of the known partner
+                    no_partner_vals[row['column_group_key']][inverse_field] += inverse_sign * row[field]
 
     def _get_sums_without_partner(self, options):
         """ Get the sum of lines without partner reconciled with a line with a partner, grouped by partner. Those lines
