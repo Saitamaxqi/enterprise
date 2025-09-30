@@ -68,7 +68,7 @@ class IrActionsServer(models.Model):
         if not company_journals:
             self.documents_account_suitable_journal_ids = False
             return
-        bank_journals = company_journals.filtered(lambda journal: journal.type == 'bank')
+        bank_journals = company_journals.filtered(lambda journal: journal.type in ('bank', 'credit'))
         self.documents_account_suitable_journal_ids = False
         for action in self:
             if action.documents_account_move_type == 'statement':
