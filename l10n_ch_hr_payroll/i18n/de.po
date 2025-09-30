@@ -10883,6 +10883,15 @@ msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_payslip.py:0
+msgid ""
+"This feature is not available for payslips in Switzerland. If you wish to "
+"correct amounts please cancel the payslip or report corrections to the next "
+"month."
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/res_company.py:0
 msgid "This feature is only allowed in production environments."
 msgstr ""

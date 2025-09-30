@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 14:55+0000\n"
-"PO-Revision-Date: 2025-09-27 02:41+0000\n"
+"PO-Revision-Date: 2025-09-30 19:10+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_online_synchronization/es_419/>\n"
@@ -1268,7 +1268,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
 msgid "There are cancelled"
-msgstr ""
+msgstr "Hay cancelados"
 
 #. module: account_online_synchronization
 #. odoo-python
@@ -1505,9 +1505,10 @@ msgstr "transacciones recuperadas"
 msgid ""
 "within this period that were not created using the online synchronization."
 msgstr ""
+"dentro de este periodo que no fueron creados con la sincronización en línea."
 
 #. module: account_online_synchronization
 #. odoo-javascript
 #: code:addons/account_online_synchronization/static/src/components/transient_bank_statement_line_list_view/transient_bank_statement_line_list_view.xml:0
 msgid "within this period."
-msgstr ""
+msgstr "en este periodo."

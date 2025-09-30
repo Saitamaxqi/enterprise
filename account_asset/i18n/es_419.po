@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:23+0000\n"
-"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_asset/es_419/>\n"
@@ -504,7 +504,7 @@ msgstr "Activo eliminado. %s"
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_asset_movement_and_accounting_treatment
 msgid "Asset movement and accounting treatment"
-msgstr ""
+msgstr "Movimiento de activos y tratamiento contable"
 
 #. module: account_asset
 #. odoo-python
@@ -972,7 +972,7 @@ msgstr "Cuenta analítica de distribución"
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_server_download_asset_template
 msgid "Download Asset Import Template"
-msgstr ""
+msgstr "Descargar plantilla de importación de activos"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__draft
@@ -1007,6 +1007,8 @@ msgid ""
 "Either \"Months\" or \"Years\" (case-insensitive). Specifies the unit of "
 "duration."
 msgstr ""
+"Elige entre \"Meses\" o \"Años\" (no distingue mayúsculas y minúsculas). "
+"Especifica la unidad de duración."
 
 #. module: account_asset
 #. odoo-python
@@ -1154,6 +1156,8 @@ msgid ""
 "Identify acquisitions, disposals, write-offs, etc. Ensure correct accounting"
 " treatment, depreciation, and capital gains processing."
 msgstr ""
+"Identifica adquisiciones, bajas, cancelaciones, etc. Asegura el tratamiento "
+"contable correcto, depreciación y procesamiento de ganancias de capital."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_needaction
@@ -1172,6 +1176,8 @@ msgid ""
 "Import your fixed assets' original data and their already accumulated "
 "depreciation."
 msgstr ""
+"Importa los datos originales de tus activos fijos y su depreciación "
+"acumulada."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
@@ -1381,6 +1387,8 @@ msgid ""
 "Must match the selected company during import. Use the company's display "
 "name."
 msgstr ""
+"Debe coincidir con la empresa seleccionada durante la importación. Usa el "
+"nombre de visualización de la empresa."
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
@@ -1558,6 +1566,8 @@ msgid ""
 "Only applicable for Declining Balance method (e.g., 2 for double declining)."
 " Ignored for Straight Line."
 msgstr ""
+"Aplica solo al método de saldo decreciente (por ejemplo, 2 para doble "
+"decreciente). Se ignora en línea recta."
 
 #. module: account_asset
 #. odoo-python
@@ -1572,6 +1582,8 @@ msgid ""
 "Optional. The name or external ID of the asset group. Must exist in Odoo "
 "(e.g., Office Equipment, Vehicles, Machinery)."
 msgstr ""
+"Opcional. El nombre o ID externo del grupo de activos. Debe existir en Odoo ("
+"por ejemplo: Equipo de oficina, Vehículos, Máquinas)."
 
 #. module: account_asset
 #. odoo-python
@@ -1697,7 +1709,7 @@ msgstr ""
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_review_depreciation_periods_new_acquisitions
 msgid "Review depreciation periods for new acquisitions"
-msgstr ""
+msgstr "Revisa los periodos de depreciación para las nuevas adquisiciones"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__open
@@ -1771,6 +1783,8 @@ msgid ""
 "Start date of the depreciation period. Should be in MM-DD-YYYY format. If "
 "left blank, it defaults to the acquisition date."
 msgstr ""
+"Fecha de inicio del periodo de depreciación. Debe estar en formato MM-DD-"
+"AAAA. Si el campo está vacío, usará la fecha de adquisición."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__prorata_date
@@ -1841,6 +1855,8 @@ msgid ""
 "The accumulated depreciation account (contra-asset account). Must exist in "
 "Odoo and be of \"Fixed Asset\" or \"Non-current Assets\" type."
 msgstr ""
+"La cuenta de depreciación acumulada (cuenta contra activo). Debe existir en "
+"Odoo y ser de tipo \"Activo fijo\" o \"Activo no corriente\"."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_period
@@ -1852,7 +1868,7 @@ msgstr "La cantidad de tiempo entre dos depreciaciones"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "The amount will be considered in company currency."
-msgstr ""
+msgstr "El importe se considerará en la moneda de la empresa."
 
 #. module: account_asset
 #. odoo-python
@@ -1878,6 +1894,9 @@ msgid ""
 "Asset\"). Must exist in Odoo and be of \"Fixed Asset\" or \"Non-current "
 "Assets\" type."
 msgstr ""
+"La cuenta del balance general para el activo (por ejemplo, "
+"\"151000 Activo fijo\"). Debe existir en Odoo y ser de tipo \"Activo fijo\" "
+"o \"Activo no corriente\"."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__children_ids
@@ -1892,6 +1911,9 @@ msgid ""
 "(e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - "
 "Vendor Bills)."
 msgstr ""
+"El código o el nombre del diario en Odoo para los asientos de depreciación ("
+"por ejemplo: MISC - Operaciones misceláneas, INV - Facturas de clientes, "
+"BILL - Facturas de proveedores)."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_ids
@@ -1909,6 +1931,8 @@ msgid ""
 "The estimated residual value of the asset at the end of its useful life. "
 "This amount will not be depreciated. Considered in company currency."
 msgstr ""
+"El valor residual estimado del activo al final de su vida útil. Este no se "
+"deprecia y se considera en la moneda de la empresa."
 
 #. module: account_asset
 #. odoo-python
@@ -1918,6 +1942,9 @@ msgid ""
 "\"630000 Depreciation Expenses\"). Must exist in Odoo and be of "
 "\"Depreciation\" or \"Expense\" type."
 msgstr ""
+"La cuenta de gastos para registrar los asientos de depreciación periódica ("
+"por ejemplo, \"630000 Gastos por depreciación\"). Debe existir en Odoo y ser "
+"de tipo \"Depreciación\" o \"Gasto\"."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_number
@@ -1937,6 +1964,8 @@ msgid ""
 "The total amount of depreciation already recorded for the asset before "
 "import. This amount will be considered in company currency."
 msgstr ""
+"El importe total de la depreciación ya registrado para el activo antes de "
+"importar. Este se considera en la moneda de la empresa."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_line_ids
@@ -2054,7 +2083,7 @@ msgstr ""
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_form
 msgid "With our template"
-msgstr ""
+msgstr "Con nuestra plantilla"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__method_period__12
@@ -2174,7 +2203,7 @@ msgstr "account_asset_id"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_depreciation_expense_id"
-msgstr ""
+msgstr "account_depreciation_expense_id"
 
 #. module: account_asset
 #. odoo-python
@@ -2186,7 +2215,7 @@ msgstr "account_depreciation_id"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "acquisition_date"
-msgstr ""
+msgstr "acquisition_date"
 
 #. module: account_asset
 #. odoo-python
@@ -2198,7 +2227,7 @@ msgstr "already_depreciated_amount_import"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "asset_group_id"
-msgstr ""
+msgstr "asset_group_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_balance
@@ -2209,7 +2238,7 @@ msgstr "book_value"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "company_id"
-msgstr ""
+msgstr "company_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_date_from
@@ -2232,7 +2261,7 @@ msgstr "depreciable)"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "e.g. 01-27-2025 (format: MM-DD-YYYY)"
-msgstr ""
+msgstr "Por ejemplo, 01-27-2025 (formato: MM-DD-AAAA)"
 
 #. module: account_asset
 #. odoo-python
@@ -2241,6 +2270,8 @@ msgid ""
 "e.g. 3 for 3 years, or 12 for 12 months. It must be an integer representing "
 "the total number of periods."
 msgstr ""
+"Por ejemplo, 3 para 3 años o 12 para 12 meses. Debe ser un número entero que "
+"represente el número total de periodos."
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -2254,6 +2285,8 @@ msgid ""
 "e.g. No Prorata, Constant Periods, Based on days per period. This determines"
 " how the first depreciation entry is calculated."
 msgstr ""
+"Por ejemplo, Sin prorrata, Periodos constantes, Según días por periodo. Esto "
+"determina cómo se calcula el primer asiento de depreciación."
 
 #. module: account_asset
 #. odoo-python
@@ -2262,6 +2295,8 @@ msgid ""
 "e.g. Straight Line, Declining Balance. Determines how depreciation is "
 "calculated."
 msgstr ""
+"Por ejemplo, Línea recta, Saldo decreciente. Determina cómo calcular la "
+"depreciación."
 
 #. module: account_asset
 #. odoo-python
@@ -2291,7 +2326,7 @@ msgstr "ganancias y pérdidas"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "journal_id"
-msgstr ""
+msgstr "journal_id"
 
 #. module: account_asset
 #. odoo-python
@@ -2303,25 +2338,25 @@ msgstr "pérdida"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method"
-msgstr ""
+msgstr "método"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_number"
-msgstr ""
+msgstr "method_number"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_period"
-msgstr ""
+msgstr "method_period"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_progress_factor"
-msgstr ""
+msgstr "method_progress_factor"
 
 #. module: account_asset
 #. odoo-python
@@ -2333,7 +2368,7 @@ msgstr "modificar"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "original_value"
-msgstr ""
+msgstr "original_value"
 
 #. module: account_asset
 #. odoo-python
@@ -2345,19 +2380,19 @@ msgstr "pausa"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_computation_type"
-msgstr ""
+msgstr "prorata_computation_type"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_date"
-msgstr ""
+msgstr "prorata_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "salvage_value"
-msgstr ""
+msgstr "salvage_value"
 
 #. module: account_asset
 #. odoo-python

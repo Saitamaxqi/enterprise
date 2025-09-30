@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:42+0000\n"
-"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sale_subscription/es_419/>\n"
@@ -1926,6 +1926,8 @@ msgid ""
 "Define if price must be prorated or not for incomplete periods (upsell, "
 "calendar alignment, etc.)"
 msgstr ""
+"Define si el precio debe prorratearse o no en periodos incompletos (ventas "
+"adicionales, alineación de calendario, etc.)"
 
 #. module: sale_subscription
 #: model:ir.model.fields,help:sale_subscription.field_product_product__allow_one_time_sale
@@ -2130,7 +2132,7 @@ msgstr "Fecha de vencimiento:"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.subscription_portal_content
 msgid "Extend Until"
-msgstr ""
+msgstr "Extender hasta"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_order_log_report_search
@@ -2165,7 +2167,7 @@ msgstr "Fecha del primer contrato"
 #: model:ir.model.fields,field_description:sale_subscription.field_product_product__subscription_rule_ids_fixed
 #: model:ir.model.fields,field_description:sale_subscription.field_product_template__subscription_rule_ids_fixed
 msgid "Fixed Subscription Pricings"
-msgstr ""
+msgstr "Precios fijos de suscripción"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__message_follower_ids
@@ -2180,7 +2182,7 @@ msgstr "Seguidores (contactos)"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.report_saleorder_document
 msgid "From"
-msgstr ""
+msgstr "Desde"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_kanban
@@ -2348,6 +2350,8 @@ msgid ""
 "If you wish to reopen it, you can pay your invoice for the current invoicing"
 " period"
 msgstr ""
+"Si quieres volver a abrirla, puedes pagar tu factura del periodo de "
+"facturación actual"
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -2733,7 +2737,7 @@ msgstr "Ingreso mensual recurrente"
 #. module: sale_subscription
 #: model:product.template,description_sale:sale_subscription.product_car_leasing_product_template
 msgid "Monthly lease for city or business driving"
-msgstr ""
+msgstr "Alquiler mensual para conducción urbana o empresarial"
 
 #. module: sale_subscription
 #: model:ir.model.fields.selection,name:sale_subscription.selection__sale_order_template__duration_unit__month
@@ -2935,6 +2939,8 @@ msgid ""
 "Onboarding example showing how the app tracks customer subscriptions and "
 "visualizes MRR growth."
 msgstr ""
+"Ejemplo de capacitación que muestra cómo la aplicación monitorea las "
+"suscripciones de los clientes y visualiza el crecimiento del MRR."
 
 #. module: sale_subscription
 #. odoo-python
@@ -2953,7 +2959,7 @@ msgstr "Planes opcionales"
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.product_template_only_view_form_recurring
 msgid "Options"
-msgstr ""
+msgstr "Opciones"
 
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_subscription_report__order_reference
@@ -4114,6 +4120,9 @@ msgid ""
 "continuously,customer didn't pay, etc.) will be automatically closed after "
 "this period."
 msgstr ""
+"Las suscripciones con atrasos en la renovación (por ejemplo, el pago "
+"automático falla con frecuencia, el cliente no pagó, etc.) se cerrarán de "
+"forma automática después de este periodo."
 
 #. module: sale_subscription
 #: model_terms:ir.ui.view,arch_db:sale_subscription.sale_subscription_view_search
@@ -4385,6 +4394,8 @@ msgid ""
 "This subscription is overdue and exceeds the auto-close limit of the "
 "recurring plan. It will be closed soon by the system."
 msgstr ""
+"Esta suscripción está vencida y supera el límite de cierre automático del "
+"plan recurrente. El sistema la cerrará pronto."
 
 #. module: sale_subscription
 #. odoo-python
@@ -4626,7 +4637,7 @@ msgstr "Almacén"
 #. module: sale_subscription
 #: model:ir.model.fields,field_description:sale_subscription.field_sale_order__warn_system_closing
 msgid "Warn System Closing"
-msgstr ""
+msgstr "Advertencia del cierre del sistema"
 
 #. module: sale_subscription
 #. odoo-python

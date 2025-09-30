@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:25+0000\n"
-"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_transfer/es_419/>\n"
@@ -261,7 +261,7 @@ msgstr "Modelo de movimiento"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_tree
 msgid "Move Models"
-msgstr ""
+msgstr "Modelos de movimiento"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__name
@@ -271,23 +271,23 @@ msgstr "Nombre"
 #. module: account_transfer
 #: model:ir.model.constraint,message:account_transfer.constraint_account_transfer_model_line_unique_account_by_transfer_model
 msgid "Only one account occurrence by transfer model"
-msgstr ""
+msgstr "Solo una ocurrencia de cuenta por modelo de transferencia"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__account_ids
 msgid "Origin Accounts"
-msgstr ""
+msgstr "Cuentas de origen"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_bank_statement_line__transfer_model_id
 #: model:ir.model.fields,field_description:account_transfer.field_account_move__transfer_model_id
 msgid "Originating Model"
-msgstr ""
+msgstr "Modelo de origen"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__percent
 msgid "Percent"
-msgstr ""
+msgstr "Porcentaje"
 
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model_line__percent
@@ -295,11 +295,13 @@ msgid ""
 "Percentage of the sum of lines from the origin accounts will be transferred "
 "to the destination account"
 msgstr ""
+"El porcentaje de la suma de líneas de las cuentas de origen se transferirá a "
+"la cuenta de destino"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -307,6 +309,8 @@ msgid ""
 "Puts the transfer model in a state in which it will automatically recompute "
 "its draft entries' values every day."
 msgstr ""
+"Cambia el modelo de transferencia a un estado que recalculará los valores de "
+"sus asientos en borrador de forma automática a diario."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -314,71 +318,73 @@ msgid ""
 "Puts the transfer model in a state in which it will not automatically "
 "recompute its draft entries' values every day."
 msgstr ""
+"Cambia el modelo de transferencia a un estado que no recalculará los valores "
+"de sus asientos en borrador de forma automática a diario."
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__quarter
 msgid "Quarterly"
-msgstr ""
+msgstr "Trimestral"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Rate (%)"
-msgstr ""
+msgstr "Tasa (%)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Secuencia"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__date_start
 msgid "Start Date"
-msgstr ""
+msgstr "Fecha de inicio"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__state
 msgid "State"
-msgstr ""
+msgstr "Estado"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__date_stop
 msgid "Stop Date"
-msgstr ""
+msgstr "Fecha de finalización"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "The total percentage (%s) should be less or equal to 100!"
-msgstr ""
+msgstr "¡El porcentaje total (%s) debe ser menor o igual a 100!"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model__total_percent
 msgid "Total Percent"
-msgstr ""
+msgstr "Porcentaje total"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "Transfer (%(percent)s%% from %(account)s)"
-msgstr ""
+msgstr "Transferir (%(percent)s%% de %(account)s)"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "Transfer (-%(percent)s%% to %(account)s)"
-msgstr ""
+msgstr "Transferir (-%(percent)s%% a %(account)s)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__transfer_model_id
 msgid "Transfer Model"
-msgstr ""
+msgstr "Modelo de transferencia"
 
 #. module: account_transfer
 #: model:ir.actions.act_window,name:account_transfer.transfer_model_action
 #: model:ir.ui.menu,name:account_transfer.menu_auto_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Transfers"
-msgstr ""
+msgstr "Transferencias"
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__year
@@ -389,7 +395,7 @@ msgstr "Anual"
 #. odoo-python
 #: code:addons/account_transfer/demo/account_demo.py:0
 msgid "Yearly liabilites auto transfers"
-msgstr ""
+msgstr "Transferencias automáticas de pasivos anuales"
 
 #. module: account_transfer
 #. odoo-python
@@ -398,6 +404,8 @@ msgid ""
 "You cannot delete a transfer model that has draft moves attached ('%s'). "
 "Please delete them before deleting this transfer."
 msgstr ""
+"No puedes eliminar un modelo de transferencia que tenga movimientos en "
+"borrador adjuntos ('%s'). Elimínalos antes de eliminar esta transferencia."
 
 #. module: account_transfer
 #. odoo-python
@@ -405,6 +413,8 @@ msgstr ""
 msgid ""
 "You cannot delete a transfer model that has posted moves attached ('%s')."
 msgstr ""
+"No puedes eliminar un modelo de transferencia que tenga movimientos "
+"publicados adjuntos ('%s')."
 
 #. module: account_transfer
 #. odoo-python
@@ -415,9 +425,9 @@ msgstr ""
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "e.g. Monthly Expense Transfer"
-msgstr ""
+msgstr "Por ejemplo, transferencia mensual de gastos"
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "forever"
-msgstr ""
+msgstr "para siempre"

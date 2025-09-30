@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:35+0000\n"
-"PO-Revision-Date: 2025-09-25 17:34+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-09-30 19:10+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/industry_fsm/es_419/>\n"
 "Language: es_419\n"
@@ -994,7 +994,7 @@ msgstr "Planeación por acción del usuario"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.view_task_form2_inherit
 msgid "Preview"
-msgstr ""
+msgstr "Previsualizar"
 
 #. module: industry_fsm
 #: model:ir.model.fields,field_description:industry_fsm.field_report_project_task_user_fsm__priority
@@ -1027,7 +1027,7 @@ msgstr "Propiedades"
 #. module: industry_fsm
 #: model:ir.model,name:industry_fsm.model_rating_rating
 msgid "Rating"
-msgstr ""
+msgstr "Calificación"
 
 #. module: industry_fsm
 #. odoo-javascript
@@ -1059,7 +1059,7 @@ msgstr "Reportes"
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_to_schedule_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_action_to_schedule_fsm2
 msgid "Schedule your tasks and assign them to your technicians."
-msgstr ""
+msgstr "Programa tus tareas y asígnaselas a los técnicos."
 
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.report_project_task_user_fsm_view_search
@@ -1265,7 +1265,7 @@ msgstr "Análisis de las tareas"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.worksheet_custom_page
 msgid "Technician"
-msgstr ""
+msgstr "Técnico"
 
 #. module: industry_fsm
 #. odoo-python
@@ -1402,14 +1402,14 @@ msgstr "Actividades de hoy"
 #. module: industry_fsm
 #: model_terms:ir.ui.view,arch_db:industry_fsm.project_view_form_inherit
 msgid "Track technician location when running the timer"
-msgstr ""
+msgstr "Monitorea la ubicación del técnico cuando el temporizador está activo"
 
 #. module: industry_fsm
 #: model:ir.model.fields,help:industry_fsm.field_hr_timesheet_stop_timer_confirmation_wizard__allow_geolocation
 #: model:ir.model.fields,help:industry_fsm.field_project_project__allow_geolocation
 #: model:ir.model.fields,help:industry_fsm.field_project_task__allow_geolocation
 msgid "Track technician location when running the timer."
-msgstr ""
+msgstr "Monitorea la ubicación del técnico cuando el temporizador está activo."
 
 #. module: industry_fsm
 #: model_terms:ir.actions.act_window,help:industry_fsm.project_task_type_action_fsm

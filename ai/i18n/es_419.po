@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/ai/es_419/>\n"
@@ -750,61 +750,63 @@ msgstr "Acción"
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Action \"%(action)s\" done."
-msgstr ""
+msgstr "Acción \"%(action)s\" lista."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__active
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__is_active
 msgid "Active"
-msgstr ""
+msgstr "Activo"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Activity created for %(user)s."
-msgstr ""
+msgstr "Actividad creada para %(user)s."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Agregar"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add Links"
-msgstr ""
+msgstr "Agregar enlaces"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add Sources"
-msgstr ""
+msgstr "Agregar fuentes"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "Add a Link"
-msgstr ""
+msgstr "Agregar un enlace"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "Add notes about your upcoming meeting"
-msgstr ""
+msgstr "Agrega notas sobre tu próxima reunión"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add sources to your AI Agent to get answers based on specific content."
 msgstr ""
+"Agrega fuentes a tu agente de IA para obtener respuestas basadas en "
+"contenido específico."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Adding sources..."
-msgstr ""
+msgstr "Agregando fuentes..."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__agent_id
@@ -828,37 +830,37 @@ msgstr "Agente de IA"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_has_schema
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_has_schema
 msgid "Ai Tool Has Schema"
-msgstr ""
+msgstr "La herramienta de IA tiene esquema"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_is_candidate
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_is_candidate
 msgid "Ai Tool Is Candidate"
-msgstr ""
+msgstr "La herramienta de IA es candidata"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_show_warning
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_show_warning
 msgid "Ai Tool Show Warning"
-msgstr ""
+msgstr "La herramienta de IA muestra una advertencia"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_allow_end_message
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_allow_end_message
 msgid "Allow End Message"
-msgstr ""
+msgstr "Permitir mensaje final"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "An error occured"
-msgstr ""
+msgstr "Ocurrió un error"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
 msgid "An error occurred while generating the AI response."
-msgstr ""
+msgstr "Ocurrió un error al generar la respuesta de IA."
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
@@ -877,7 +879,7 @@ msgstr "Preguntar a la IA"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
 msgid "Ask AI for help"
-msgstr ""
+msgstr "Pedir ayuda a la IA"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_attachment
@@ -894,7 +896,7 @@ msgstr "Incrustación de segmentos adjuntos"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
 msgid "Available User Prompts"
-msgstr ""
+msgstr "Instrucciones de usuario disponibles"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__avatar_128
@@ -1394,18 +1396,18 @@ msgstr "Mixin de renderización de correo"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Max Length"
-msgstr ""
+msgstr "Longitud máxima"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__mimetype
 msgid "Mime Type"
-msgstr ""
+msgstr "Tipo MIME"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/tools_schema/validators.py:0
 msgid "Missing definition for %(name)s"
-msgstr ""
+msgstr "Falta la definición de %(name)s"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__focused_models
@@ -1430,18 +1432,20 @@ msgstr "No hay ninguna clave API configurada para el proveedor %s"
 #: code:addons/ai/models/ai_agent.py:0
 msgid "No configured Ask AI agent. Please contact your administrator."
 msgstr ""
+"No hay un agente de \"Preguntar a la IA\" configurado, contacta a tu "
+"administrador."
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "No embedding model found for the selected provider"
-msgstr ""
+msgstr "No encontramos un modelo de inserción para el proveedor seleccionado"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/llm_providers.py:0
 msgid "No provider found for the embedding model"
-msgstr ""
+msgstr "No encontramos un proveedor para el modelo de inserción"
 
 #. module: ai
 #. odoo-python
@@ -1452,13 +1456,13 @@ msgstr "No se encontró ningún proveedor para el modelo seleccionado"
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "No tool was executed."
-msgstr ""
+msgstr "No se ejecutó ninguna herramienta."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "No valid URLs found to process."
-msgstr ""
+msgstr "No se encontraron URL válidas para procesar."
 
 #. module: ai
 #. odoo-javascript
@@ -1467,6 +1471,8 @@ msgid ""
 "No valid files to upload. Only PDF, Word, PowerPoint, Excel, Text, and "
 "OpenDocument files are allowed."
 msgstr ""
+"No se encontraron archivos válidos para cargar. Solo los archivos PDF, Word, "
+"PowerPoint, Excel, de texto y OpenDocument son compatibles."
 
 #. module: ai
 #. odoo-javascript
@@ -1485,7 +1491,7 @@ msgstr "En línea"
 #. odoo-python
 #: code:addons/ai/models/ai_agent_source.py:0
 msgid "Only administrators can create sources from URLs."
-msgstr ""
+msgstr "Solo los administradores pueden crear fuentes con las URL."
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_embedding__embedding_model__text-embedding-3-small
@@ -1506,24 +1512,24 @@ msgstr "Contacto"
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Paste your links, one per line"
-msgstr ""
+msgstr "Pega tus enlaces, uno por línea"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Pretty Edit"
-msgstr ""
+msgstr "Edición avanzada"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent_source__status__processing
 msgid "Processing"
-msgstr ""
+msgstr "Procesando"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Processing..."
-msgstr ""
+msgstr "Procesando..."
 
 #. module: ai
 #. odoo-javascript
@@ -1538,35 +1544,37 @@ msgstr "Instrucción"
 msgid ""
 "Prompt that can be attached to AI UI rules for quick access by the user."
 msgstr ""
+"Instrucción que puede adjuntarse a las reglas de la interfaz de usuario de "
+"la IA para acceso rápido."
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__ai_action_prompt
 #: model:ir.model.fields,help:ai.field_ir_cron__ai_action_prompt
 msgid "Prompt used by \"AI\" action"
-msgstr ""
+msgstr "Instrucción utilizada por la acción de \"IA\""
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.res_config_settings_view_form
 msgid "Provide your API key to connect with your account"
-msgstr ""
+msgstr "Proporciona tu clave API para conectarte con tu cuenta"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/records_selector_popover/records_selector_popover.xml:0
 msgid "Record"
-msgstr ""
+msgstr "Registro"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_records_selector_plugin.js:0
 msgid "Records Selector"
-msgstr ""
+msgstr "Selector de registros"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Required"
-msgstr ""
+msgstr "Obligatorio"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__response_style
@@ -1581,18 +1589,18 @@ msgstr "Limitar a las fuentes"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__html_field_text_select
 msgid "Rewrite content"
-msgstr ""
+msgstr "Reescribir contenido"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__name
 msgid "Rule Name"
-msgstr ""
+msgstr "Nombre de la regla"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Save"
-msgstr ""
+msgstr "Guardar"
 
 #. module: ai
 #. odoo-javascript
@@ -1604,7 +1612,7 @@ msgstr "Guardar y generar"
 #. odoo-javascript
 #: code:addons/ai/static/src/records_selector_popover/records_selector_popover.xml:0
 msgid "Select a records"
-msgstr ""
+msgstr "Selecciona un registro"
 
 #. module: ai
 #. odoo-javascript
@@ -1633,18 +1641,18 @@ msgstr "Acción del servidor"
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Share by email"
-msgstr ""
+msgstr "Compartir por correo electrónico"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Share transcript summary"
-msgstr ""
+msgstr "Compartir resumen de la transcripción"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "Short explanation of what this does"
-msgstr ""
+msgstr "Breve explicación de lo que hace esto"
 
 #. module: ai
 #. odoo-javascript
@@ -1653,6 +1661,8 @@ msgid ""
 "Some URLs are invalid and were skipped. URLs must start with http://, "
 "https://, or ftp://"
 msgstr ""
+"Algunas URL no son válidas y se omitieron. Las URL deben comenzar con http://"
+", https:// o ftp://"
 
 #. module: ai
 #. odoo-javascript
@@ -1661,12 +1671,15 @@ msgid ""
 "Some files have invalid formats and were skipped: %s. Only PDF, Word, "
 "PowerPoint, Excel, Text, and OpenDocument files are allowed."
 msgstr ""
+"Algunos archivos están en un formato que no es válido y se omitieron: %s. "
+"Solo los archivos PDF, Word, PowerPoint, Excel, de texto y OpenDocument son "
+"compatibles."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/views/fields/source_size_field.js:0
 msgid "SourceSizeIntegerField"
-msgstr ""
+msgstr "SourceSizeIntegerField"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_ids
@@ -1676,42 +1689,44 @@ msgstr "Fuentes"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__sources_fully_processed
 msgid "Sources Fully Processed"
-msgstr ""
+msgstr "Fuentes completamente procesadas"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Start Recording"
-msgstr ""
+msgstr "Iniciar grabación"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "Start recording to get a real-time transcript of the conversation"
 msgstr ""
+"Inicia la grabación para obtener una transcripción en tiempo real de la "
+"conversación"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__status
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Stop Recording"
-msgstr ""
+msgstr "Detener grabación"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/readonly_voice_transcription.xml:0
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Summary"
-msgstr ""
+msgstr "Resumen"
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__voice_transcription_component
 msgid "Summary Buttons for Voice Transcription Component"
-msgstr ""
+msgstr "Botones de resumen para el componente de transcripción de voz"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__is_system_agent
@@ -1727,19 +1742,19 @@ msgstr "Instrucción del sistema"
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "System agents cannot be deleted."
-msgstr ""
+msgstr "No es posible eliminar los agentes del sistema."
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ai_composer.py:0
 msgid "System default prompts cannot be removed."
-msgstr ""
+msgstr "No es posible eliminar las instrucciones predeterminadas del sistema."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/plugins/chatgpt_plugin.js:0
 msgid "Text Selection"
-msgstr ""
+msgstr "Selección de texto"
 
 #. module: ai
 #. odoo-python
@@ -1751,12 +1766,13 @@ msgstr ""
 #: model:ir.model.fields,help:ai.field_ai_composer__name
 msgid "The identifier for the interface component to agent rule"
 msgstr ""
+"El identificador para el componente de la interfaz en la regla del agente"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.js:0
 msgid "The name should be unique"
-msgstr ""
+msgstr "El nombre debe ser único"
 
 #. module: ai
 #. odoo-python
@@ -1767,7 +1783,7 @@ msgstr "No puedes cambiar el contacto vinculado a un agente de IA"
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_prompt_button__name
 msgid "The prompt sent to the AI when clicked on"
-msgstr ""
+msgstr "La instrucción enviada a la IA al hacer clic"
 
 #. module: ai
 #. odoo-python
@@ -1776,6 +1792,8 @@ msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
 msgstr ""
+"El tipo del parámetro \"%(name)s\" es incorrecto. Debería ser "
+"\"%(expected_param_type)s\"."
 
 #. module: ai
 #. odoo-python
@@ -1784,12 +1802,14 @@ msgid ""
 "The value '%(value)s' of the parameter '%(name)s' doesn't match the expected "
 "pattern '%(expected_pattern)s'."
 msgstr ""
+"El valor \"%(value)s\" del parámetro \"%(name)s\" no coincide con "
+"\"%(expected_pattern)s\", que es el patrón esperado."
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "This action cannot be executed by an AI."
-msgstr ""
+msgstr "La IA no puede ejecutar esta acción."
 
 #. module: ai
 #. odoo-python
@@ -1804,12 +1824,14 @@ msgid ""
 "This tool is automatically provided with `__end_message` param which when "
 "provided, the LLM processing loop is terminated."
 msgstr ""
+"Esta herramienta cuenta con el parámetro `__end_message` de forma automática "
+"que termina el bucle de procesamiento de LLM."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Those parameters will be passed as global variables of the actions."
-msgstr ""
+msgstr "Esos parámetros se pasarán como las variables globales de las acciones."
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.mail_template_view_form
@@ -1817,6 +1839,8 @@ msgid ""
 "Tip: Write /field to insert values or /prompt to integrate AI-generated "
 "dynamic content!"
 msgstr ""
+"Consejo: Escribe /campo para insertar valores o /instrucción para integrar "
+"contenido dinámico generado por IA."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_topic__name
@@ -1827,6 +1851,8 @@ msgstr "Título"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
+"Para devolver un resultado al agente de IA, utiliza <code>ai['result'] = "
+"...</code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids
@@ -1844,13 +1870,14 @@ msgstr "Temas"
 #: code:addons/ai/static/src/editor/embedded_components/core/readonly_voice_transcription.xml:0
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.xml:0
 msgid "Transcript"
-msgstr ""
+msgstr "Transcripción"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_natural_language_service.js:0
 msgid "Tried to switch to %s but the app is no longer in an action window."
 msgstr ""
+"Intentó cambiar a %s, pero la aplicación ya no está en una ventana de acción."
 
 #. module: ai
 #. odoo-javascript
@@ -1878,6 +1905,20 @@ msgid ""
 "- 'Multi Actions': define an action that triggers several other server "
 "actions\n"
 msgstr ""
+"Tipo de acción del servidor. Los valores disponibles son:\n"
+"- \"Actualizar un registro\": actualiza los valores de un registro \n"
+"- \"Crear actividad\": crea una actividad (Conversaciones) \n"
+"- \"Enviar correo electrónico\"': registra un mensaje, una nota o envía un "
+"correo electrónico (Conversaciones) \n"
+"- \"Enviar SMS\": envía SMS y los registra en los documentos (SMS) - "
+"\"Agregar o eliminar seguidores\": agrega o elimina seguidores de un "
+"registro (Conversaciones) \n"
+"- \"Crear registro\": crea un nuevo registro con nuevos valores \n"
+"- \"Ejecutar código\": ejecuta un bloque de código Python \n"
+"- \"Enviar notificación webhook\": envía una solicitud POST a un sistema "
+"externo, también conocido como webhook \n"
+"- \"Varias acciones\": define una acción que activa otras acciones del "
+"servidor\n"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__url
@@ -1889,25 +1930,25 @@ msgstr "URL"
 #. odoo-python
 #: code:addons/ai/models/ai_agent_source.py:0
 msgid "URL content cannot be extracted."
-msgstr ""
+msgstr "No se puede extraer el contenido de la URL."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Unable to start the recording."
-msgstr ""
+msgstr "No es posible iniciar la grabación."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_natural_language_service.js:0
 msgid "Unable to switch view"
-msgstr ""
+msgstr "No es posible cambiar de vista"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/utils/llm_api_service.py:0
 msgid "Unsupported provider '%s'"
-msgstr ""
+msgstr "Proveedor \"%s\" incompatible"
 
 #. module: ai
 #. odoo-javascript
