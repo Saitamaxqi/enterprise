@@ -95,7 +95,7 @@
                                 required="l10n_mx_edi_transport_type == '01'"/>
                          <label for="l10n_mx_edi_extra_weight" string="Extra Weight" invisible="not l10n_mx_edi_is_delivery_guide_needed or l10n_mx_edi_transport_type != '01'"/>
                          <div invisible="not l10n_mx_edi_is_delivery_guide_needed or l10n_mx_edi_transport_type != '01'">
-                                <field name="l10n_mx_edi_extra_weight" class="oe_inline"/>
+                                <field name="l10n_mx_edi_extra_weight" class="oe_inline" readonly="l10n_mx_edi_cfdi_state == 'sent'"/>
                                 <field name="weight_uom_name" nolabel="1" class="oe_inline" style="margin-left:5px"/>
                          </div>
                          <label for="l10n_mx_edi_gross_vehicle_weight" string="Gross Vehicle Weight" invisible="not l10n_mx_edi_is_delivery_guide_needed or l10n_mx_edi_transport_type != '01'"/>
