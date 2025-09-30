@@ -72,3 +72,46 @@ class AccountJournal(models.Model):
             bank_code, _acc_num, _checksum = bank_account._se_get_acc_number_data(bank_account.acc_number)
             MmbId.text = bank_code[:4]
         return FinInstnId
+
+    def _get_cleaned_bic_code(self, bank_account, payment_method_code):
+        """
+        Return the cleaned or hardcoded BIC code for the given bank account.
+
+        This override handles Swedish-specific account types for SEPA payments:
+        - Bankgiro accounts return 'SE:Bankgiro'
+        - Plusgiro accounts return 'SE:Plusgiro'
+
+        For all other account types and countries, the method falls back to the
+        standard implementation.
+
+        :param bank_account: The bank account record to retrieve the BIC for.
+        :type bank_account: res.partner.bank
+        :param payment_method_code: The payment method code, e.g., 'iso20022_se'.
+        :type payment_method_code: str
+        :return: The cleaned BIC code or a hardcoded SE-specific BIC.
+        :rtype: str
+        """
+        if payment_method_code == 'iso20022_se' and bank_account.acc_type in ('plusgiro', 'bankgiro'):
+            return 'SE:Bankgiro' if bank_account.acc_type == 'bankgiro' else 'SE:Plusgiro'
+        return super()._get_cleaned_bic_code(bank_account, payment_method_code)
+
+    def _skip_CdtrAgt(self, partner_bank, payment_method_code):
+        """
+        Determine whether to skip the Creditor Agent (CdtrAgt) element in SEPA XML.
+
+        This override ensures that for Swedish Bankgiro and Plusgiro accounts,
+        the CdtrAgt element is always included, even if the BIC is missing.
+
+        For other accounts or payment methods, the standard behavior is preserved.
+
+        :param partner_bank: The partner's bank account record.
+        :type partner_bank: res.partner.bank
+        :param payment_method_code: The payment method code, e.g., 'iso20022_se'.
+        :type payment_method_code: str
+        :return: False to indicate that CdtrAgt should not be skipped, or the
+                 result of the standard implementation.
+        :rtype: bool
+        """
+        if payment_method_code == 'iso20022_se' and partner_bank.acc_type in ('bankgiro', 'plusgiro'):
+            return False
+        return super()._skip_CdtrAgt(partner_bank, payment_method_code)
