@@ -1343,10 +1343,15 @@ class AccountBankStatementLine(models.Model):
         # Update the base lines.
         for base_line, to_update in tax_results['base_lines_to_update']:
             line = base_line['record']
-            amount_currency = to_update['amount_currency']
-            balance = self._prepare_counterpart_amounts_using_st_line_rate(line.currency_id, line.amount_residual, amount_currency)['balance']
+            line_values = {
+                'amount_currency': to_update['amount_currency'],
+                'balance': self._prepare_counterpart_amounts_using_st_line_rate(line.currency_id, line.amount_residual, to_update['amount_currency'])['balance'],
+                'tax_tag_ids': to_update['tax_tag_ids'],
+            }
+            if line.reconciled_lines_ids:
+                line_values['reconciled_lines_ids'] = [Command.set(line.reconciled_lines_ids.ids)]
             lines_to_delete += line
-            lines_to_add_or_update.append(line._get_aml_values(balance=balance, amount_currency=amount_currency, tax_tag_ids=to_update['tax_tag_ids']))
+            lines_to_add_or_update.append(line._get_aml_values(**line_values))
 
         # Tax lines that are no longer needed.
         for tax_line_vals in tax_results['tax_lines_to_delete']:

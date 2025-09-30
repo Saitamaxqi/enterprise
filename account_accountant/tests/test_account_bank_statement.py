@@ -1982,6 +1982,45 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         statement_line.set_account_bank_statement_line(statement_line.line_ids[-1].id, self.company_data['default_account_revenue'].id)
         self.assertFalse(invoice.invoice_outstanding_credits_debits_widget, "Only statement lines with suspense account should be considered")
 
+    def test_reconcile_bill_with_account_default_tax(self):
+        """
+        Test reconciling a bill with the statement line, using the 'set account' button
+        to add an account with tax for the remaining balance.
+        This ensures we keep the bill matching after adding the account with tax.
+        """
+        tax = self.env['account.tax'].create({
+            'name': "10% tax",
+            'amount_type': 'percent',
+            'amount': 10.0,
+            'type_tax_use': 'purchase',
+        })
+        account = self.env['account.account'].create({
+            'name': 'account with default tax',
+            'code': '101010',
+            'tax_ids': [Command.link(tax.id)],
+        })
+
+        bill = self._create_invoice_line(
+            move_type='in_invoice',
+            invoice_date='2019-06-24',
+            invoice_line_ids=[{'price_unit': 2000.00, 'tax_ids': tax.ids}]
+        ).move_id
+        bill_rec_line = bill.line_ids.filtered(lambda x: x.account_id.account_type == 'liability_payable')
+        statement_line = self._create_st_line(amount=-2530, partner_id=self.partner_a.id)
+        statement_line.set_line_bank_statement_line(bill_rec_line.ids)
+        statement_line.with_context(account_default_taxes=True).set_account_bank_statement_line(statement_line.line_ids[-1].id, account.id)
+
+        # Statement line: 2530
+        # Invoice: 2200 (2000 + 10% tax)
+        # Writeoff base line: 300
+        # Writeoff tax line: 30 (10% tax)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'tax_ids': [], 'tax_line_id': False, 'balance': -2530.00, 'reconciled': False, 'reconciled_lines_ids': []},
+            {'account_id': bill_rec_line.account_id.id, 'tax_ids': [], 'tax_line_id': False, 'balance': 2200.00, 'reconciled': True, 'reconciled_lines_ids': bill_rec_line.ids},
+            {'account_id': account.id, 'tax_ids': tax.ids, 'tax_line_id': False, 'balance': 300.00, 'reconciled': False, 'reconciled_lines_ids': []},
+            {'account_id': account.id, 'tax_ids': [], 'tax_line_id': tax.id, 'balance': 30.00, 'reconciled': False, 'reconciled_lines_ids': []},
+        ])
+
     def test_reconcile_refund_with_bank_statement_line(self):
         """
         Test reconcile refund with bank statement line. with foreign currency on the refund.
