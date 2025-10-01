@@ -5,11 +5,14 @@
         <field name="model">project.project</field>
         <field name="inherit_id" ref="sale_timesheet.project_project_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//page[@name='settings']//field[@name='sale_line_id']" position="before">
+            <xpath expr="//page[@name='settings']//field[@name='reinvoiced_sale_order_id']" position="before">
                 <field name="pricing_type" invisible="1"/>
                 <field name="timesheet_product_id" string="Default Service" context="{'default_type': 'service', 'default_service_policy': 'delivered_timesheet', 'default_service_type': 'timesheet'}"
                     invisible="not allow_timesheets or not pricing_type or not is_fsm"
                     required="is_fsm and allow_billable and allow_timesheets"/>
+            </xpath>
+            <xpath expr="//page[@name='settings']//label[@for='sale_line_id']" position="attributes">
+                <attribute name="invisible">is_fsm</attribute>
             </xpath>
             <xpath expr="//page[@name='settings']//group/div/field[@name='sale_line_id']" position="attributes">
                 <attribute name="invisible">is_fsm or not allow_billable or not partner_id</attribute>
