@@ -3,6 +3,7 @@ import { BankRecQuickCreate } from "./quick_create/quick_create";
 import { BankRecKanbanController } from "./kanban_controller";
 import { BankRecStatementLine } from "./statement_line/statement_line";
 import { BankRecStatementSummary } from "./statement_summary/statement_summary";
+import { browser } from "@web/core/browser/browser";
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { _t } from "@web/core/l10n/translation";
@@ -46,16 +47,20 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
 
         onWillStart(async () => {
             this.getJournalTotalAmount();
-            await this.bankReconciliation.computeReconcileLineCountPerPartnerId(
-                this.env.model.root.records
-            );
-            await this.bankReconciliation.computeAvailableReconcileModels(
-                this.env.model.root.records
-            );
+            const records = this.env.model.root.records;
+            await this.bankReconciliation.computeReconcileLineCountPerPartnerId(records);
+            await this.bankReconciliation.computeAvailableReconcileModels(records);
+            const statementLineId = parseInt(browser.sessionStorage.getItem("bankReconciliationStatementLineId")) || records[0]?.data.id;
+            const statementLine = records.find(record => record.data.id === statementLineId);
+            this.bankReconciliation.selectStatementLine(statementLine);
         });
 
         onWillDestroy(() => {
             this.bankReconciliation.chatterState.visible = false;
+            browser.sessionStorage.setItem(
+                "bankReconciliationStatementLineId",
+                this.bankReconciliation.chatterState.statementLine?.data.id
+            );
             this.bankReconciliation.chatterState.statementLine = null;
         });
     }
