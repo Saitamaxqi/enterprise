@@ -238,7 +238,8 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
                 vouchers_data, aliquots_data = self._vat_book_get_txt_files(options, tax_type)
                 if vouchers_data:
                     zf.writestr(filenames.get(txt_type) + '.txt', vouchers_data)
-                if aliquots_data:
+                should_write_aliquots = aliquots_data or (not aliquots_data and txt_type == 'purchases')
+                if should_write_aliquots:
                     zf.writestr(filenames.get(f'{txt_type}_aliquots') + '.txt', aliquots_data)
         file_content = stream.getvalue()
         return {
