@@ -52,7 +52,7 @@ class SaleOrderLogReport(models.Model):
     log_currency_id = fields.Many2one('res.currency')
 
     def _with(self):
-        companies = self.env['res.company'].search([], order='id asc')
+        companies = self.env['res.company'].search([('active', '=', True)], order='id asc')
         main_company_id = companies[:1]
         return f"""
         rate_query AS(
