@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 15:13+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-27 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -121,24 +121,27 @@ msgstr "<span class=\"o_stat_text\">En alquiler</span>"
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"duration_days != 1\"> day </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> days </span>\n"
-"                    <span invisible=\"duration_days == 0 or remaining_hours == 0\">and </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> days </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">and </span>"
 msgstr ""
 "<span invisible=\"duration_days != 1\"> día </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> días </span>"
-"\n"
-"                    <span invisible="
-"\"duration_days == 0 or remaining_hours == 0\">y </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> días </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">y </span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"remaining_hours != 1\"> hour </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> hours </span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> hours </"
+"span>"
 msgstr ""
 "<span invisible=\"remaining_hours != 1\"> hora </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> horas "
-"</span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> horas </"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -154,8 +157,8 @@ msgstr "<span> por hora de atraso</span>"
 #: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
-"<span><b>¡Bien hecho!</b> Terminaste todos los pasos de este "
-"recorrido.</span>"
+"<span><b>¡Bien hecho!</b> Terminaste todos los pasos de este recorrido.</"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
@@ -768,7 +771,8 @@ msgstr "Siguiente acción"
 #. odoo-python
 #: code:addons/sale_renting/models/product_pricing.py:0
 msgid "Night period cannot be mixed with other rental periods."
-msgstr "El periodo nocturno no se puede mezclar con otros periodos de alquiler."
+msgstr ""
+"El periodo nocturno no se puede mezclar con otros periodos de alquiler."
 
 #. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_nightly
@@ -1418,8 +1422,8 @@ msgstr "No hay ninguna recolección o devolución programada."
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_day
 msgid ""
-"This is the default extra cost per day set on newly created products.You can"
-" change this value for existing products directly on the product itself."
+"This is the default extra cost per day set on newly created products.You can "
+"change this value for existing products directly on the product itself."
 msgstr ""
 "Este es el costo adicional predeterminado por día en los productos recién "
 "creados. Puede cambiar este valor para los productos existentes directamente "
@@ -1567,8 +1571,8 @@ msgstr "Años"
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
 msgid ""
-"You can also create additional products or services to sell by checking *Can"
-" be Sold* in the product form (e.g. insurance)."
+"You can also create additional products or services to sell by checking *Can "
+"be Sold* in the product form (e.g. insurance)."
 msgstr ""
 "Puede crear productos o servicios adicionales para vender al seleccionar *Se "
 "puede vender* en la información del producto (por ejemplo, seguros)."
@@ -1610,11 +1614,6 @@ msgstr ""
 "precios."
 
 #. module: sale_renting
-#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_line_rental_stock_coherence
-msgid "You cannot return more than what has been picked up."
-msgstr "No se puede devolver más de lo que se ha recolectado."
-
-#. module: sale_renting
 #. odoo-javascript
 #: code:addons/sale_renting/static/src/js/tours/rental.js:0
 msgid "You're done with your fist rental. Congratulations!"
@@ -1630,3 +1629,6 @@ msgstr "todas las variantes"
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
 msgstr "horas"
+
+#~ msgid "You cannot return more than what has been picked up."
+#~ msgstr "No se puede devolver más de lo que se ha recolectado."

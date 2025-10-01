@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 15:13+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -119,23 +119,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"duration_days != 1\"> day </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> days </span>\n"
-"                    <span invisible=\"duration_days == 0 or remaining_hours == 0\">and </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> days </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">and </span>"
 msgstr ""
 "<span invisible=\"duration_days != 1\"> 일 </span>\n"
 "                    <span invisible=\"duration_days in [0,1]\"> 일 </span>\n"
-"                    <span invisible="
-"\"duration_days == 0 or remaining_hours == 0\"> 및 </span>"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\"> 및 </span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"remaining_hours != 1\"> hour </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> hours </span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> hours </"
+"span>"
 msgstr ""
 "<span invisible=\"remaining_hours != 1\"> 시간 </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> 시간 "
-"</span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> 시간 </"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -720,8 +723,9 @@ msgstr "연체료를 적용하기 전에 최소 지연 시간."
 msgid ""
 "Minimum duration before this rule is applied. If set to 0, it represents a "
 "fixedrental price."
-msgstr "이 규칙이 적용되기 전까지의 최소 기간입니다. 0으로 설정하면, 고정 렌탈 "
-"가격을 나타냅니다."
+msgstr ""
+"이 규칙이 적용되기 전까지의 최소 기간입니다. 0으로 설정하면, 고정 렌탈 가격"
+"을 나타냅니다."
 
 #. module: sale_renting
 #. odoo-python
@@ -787,8 +791,9 @@ msgstr "확인"
 msgid ""
 "Once the quotation is confirmed, it becomes a rental order.<br> You will be "
 "able to create an invoice and collect the payment."
-msgstr "견적이 확정되면 임대 주문이 됩니다. <br>송장을 작성하여 결제를 받으실 수 "
-"있습니다."
+msgstr ""
+"견적이 확정되면 임대 주문이 됩니다. <br>송장을 작성하여 결제를 받으실 수 있습"
+"니다."
 
 #. module: sale_renting
 #. odoo-javascript
@@ -1271,8 +1276,9 @@ msgstr "예약된 임대"
 msgid ""
 "Select Variants of the Product for which this rule applies.Leave empty if "
 "this rule applies for any variant of this template."
-msgstr "이 규칙을 적용시킬 품목별 속성을 선택하세요. 비워둘 경우 서식 속성 전체에 "
-"적용됩니다."
+msgstr ""
+"이 규칙을 적용시킬 품목별 속성을 선택하세요. 비워둘 경우 서식 속성 전체에 적"
+"용됩니다."
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_pricing__product_template_id
@@ -1406,18 +1412,20 @@ msgstr "예약된 수령 또는 반납 항목이 없습니다."
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_day
 msgid ""
-"This is the default extra cost per day set on newly created products.You can"
-" change this value for existing products directly on the product itself."
-msgstr "새로 생성된 품목에 설정된 기본 일일 추가 비용입니다. 기존 품목에 대해 이 "
-"값을 품목 자체에서 직접 변경할 수 있습니다."
+"This is the default extra cost per day set on newly created products.You can "
+"change this value for existing products directly on the product itself."
+msgstr ""
+"새로 생성된 품목에 설정된 기본 일일 추가 비용입니다. 기존 품목에 대해 이 값"
+"을 품목 자체에서 직접 변경할 수 있습니다."
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_hour
 msgid ""
 "This is the default extra cost per hour set on newly created products.You "
 "can change this value for existing products directly on the product itself."
-msgstr "새로 생성된 품목에 설정된 기본 시간당 추가 비용입니다. 기존 품목에 대해 이 "
-"값을 품목 자체에서 직접 변경할 수 있습니다."
+msgstr ""
+"새로 생성된 품목에 설정된 기본 시간당 추가 비용입니다. 기존 품목에 대해 이 값"
+"을 품목 자체에서 직접 변경할 수 있습니다."
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_product
@@ -1547,9 +1555,10 @@ msgstr "년"
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
 msgid ""
-"You can also create additional products or services to sell by checking *Can"
-" be Sold* in the product form (e.g. insurance)."
-msgstr "또한 제품 양식(예: 보험)에서 *판매 가능*을 확인하도록 해서 추가 판매할 제품 "
+"You can also create additional products or services to sell by checking *Can "
+"be Sold* in the product form (e.g. insurance)."
+msgstr ""
+"또한 제품 양식(예: 보험)에서 *판매 가능*을 확인하도록 해서 추가 판매할 제품 "
 "또는 서비스를 생성할 수도 있습니다."
 
 #. module: sale_renting
@@ -1585,11 +1594,6 @@ msgid ""
 msgstr "동일한 속성과 반복, 가격표에 대해 가격을 다르게 책정할 수 없습니다."
 
 #. module: sale_renting
-#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_line_rental_stock_coherence
-msgid "You cannot return more than what has been picked up."
-msgstr "수령한 것 이상을 반납할 수 없습니다."
-
-#. module: sale_renting
 #. odoo-javascript
 #: code:addons/sale_renting/static/src/js/tours/rental.js:0
 msgid "You're done with your fist rental. Congratulations!"
@@ -1605,3 +1609,6 @@ msgstr "전체 세부선택 사항"
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
 msgstr "시간"
+
+#~ msgid "You cannot return more than what has been picked up."
+#~ msgstr "수령한 것 이상을 반납할 수 없습니다."

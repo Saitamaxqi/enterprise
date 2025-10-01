@@ -8,11 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-22 12:10+0000\n"
 "Last-Translator: Oakarmin Iron <oakarminiron@gmail.com>\n"
-"Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/esg/my/>"
-"\n"
+"Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/esg/my/"
+">\n"
 "Language: my\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -36,8 +36,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 
 #. module: esg
@@ -74,6 +76,7 @@ msgid ""
 msgstr ""
 
 #. module: esg
+#: model:ir.model,name:esg.model_account_account
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
@@ -138,8 +141,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
 
 #. module: esg
@@ -359,6 +362,18 @@ msgid "Category"
 msgstr ""
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
 msgid "Child"
 msgstr ""
@@ -573,6 +588,7 @@ msgid "Direct Emissions"
 msgstr ""
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__display_name
@@ -723,8 +739,10 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 
 #. module: esg
@@ -1027,6 +1045,7 @@ msgid "Hydrofluorocarbons (HFCs)"
 msgstr ""
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__id
 #: model:ir.model.fields,field_description:esg.field_account_move__id
 #: model:ir.model.fields,field_description:esg.field_account_move_line__id
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__id
@@ -1052,8 +1071,8 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
 msgstr ""
 
 #. module: esg
@@ -1534,8 +1553,7 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr ""
 
 #. module: esg
@@ -1684,6 +1702,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "The IPCC server did not return any file to import the data."
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_assignation_line.py:0
+msgid "The account type must be of type %(valid_account_type_names)s."
 msgstr ""
 
 #. module: esg
@@ -1882,6 +1906,12 @@ msgid "Very High Uncertainty (> 50%)"
 msgstr ""
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid "Warning"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
@@ -1903,6 +1933,14 @@ msgstr ""
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__website_message_ids
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
 msgstr ""
 
 #. module: esg

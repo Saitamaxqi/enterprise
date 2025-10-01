@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-09-30 10:52+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
+"PO-Revision-Date: 2025-10-01 12:11+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/fr/>\n"
@@ -36,15 +36,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" le solde du compte est affecté par"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -72,6 +63,7 @@ msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (copie)"
@@ -203,11 +195,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Bonjour <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Bonjour <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Bonjour <t t-out=\"object.name or ''\"/> "
+"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Bonjour <t t-out=\"object.name or ''\"/>,"
+"</t>\n"
 "                    <br/>\n"
 "                    Veuillez trouver ci-joint la liste de vos factures "
 "ouvertes.\n"
@@ -251,11 +243,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Bonjour <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Bonjour <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Bonjour <t t-out=\"object.name or ''\"/> "
+"(<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Bonjour <t t-out=\"object.name or ''\"/>,"
+"</t>\n"
 "                    <br/>\n"
 "                    Vous trouverez ci-joint votre relevé de compte.\n"
 "                    <br/>\n"
@@ -312,32 +304,33 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Bonjour <t t-out=\"object.company_id.name\""
-">YourCompany</t>,\n"
+"                    Bonjour <t t-out=\"object.company_id.name\">YourCompany</"
+"t>,\n"
 "                </p>\n"
 "                <p>\n"
 "                    Sur la base des documents et informations reçus, la "
 "déclaration de TVA de <t t-out=\"object.company_id.name\">YourCompany</t>\n"
-"                    pour la période <t t-out=\"object"
-".type_id._get_period_name(object.company_id, object.date_from, "
+"                    pour la période <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
 "object.date_to)\"/> a été soumise.\n"
 "                </p>\n"
 "                <p>\n"
-"                    Il ressort qu’un montant de <t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/> reste à "
-"payer.\n"
+"                    Il ressort qu’un montant de <t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/> reste à payer.\n"
 "                </p>\n"
 "                <table style=\"border:1px solid black; padding:20px; text-"
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Montant à payer</td>\n"
-"                        <td><t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>Échéance</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Cordialement,</p>\n"
@@ -363,8 +356,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
-"title=\"L'adresse mail du partenaire n'est pas connue\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"L'adresse mail du partenaire n'est pas connue\" invisible=\"not "
+"send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -631,6 +624,11 @@ msgstr "Poste budgetaire du rapport de comptabilité"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "Expression du rapport comptable"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -916,8 +914,8 @@ msgid ""
 "All customer VAT numbers are valid under <a href=\"https://ec.europa.eu/"
 "taxation_customs/vies\" target=\"_blank\">VIES</a>."
 msgstr ""
-"Tous les numéros de TVA des clients sont valides selon <a href="
-"\"https://ec.europa.eu/taxation_customs/vies\" target=\"_blank\">VIES</a>."
+"Tous les numéros de TVA des clients sont valides selon <a href=\"https://"
+"ec.europa.eu/taxation_customs/vies\" target=\"_blank\">VIES</a>."
 
 #. module: account_reports
 #. odoo-python
@@ -1597,9 +1595,7 @@ msgid "Cash surplus"
 msgstr "Excédant de liquidités"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -1791,8 +1787,9 @@ msgid ""
 "Company %(company)s already belongs to a tax unit in %(country)s. A company "
 "can at most be part of one tax unit per country."
 msgstr ""
-"L'entreprise %(company)s fait déjà partie d'une unité fiscale en %(country)"
-"s. Une entreprise peut au maximum faire partie d'une unité fiscale par pays."
+"L'entreprise %(company)s fait déjà partie d'une unité fiscale en %"
+"(country)s. Une entreprise peut au maximum faire partie d'une unité fiscale "
+"par pays."
 
 #. module: account_reports
 #. odoo-python
@@ -2412,6 +2409,7 @@ msgstr "Afficher le compositeur d'e-mails"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2914,6 +2912,7 @@ msgstr "Filtres :"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "Budgets financiers"
 
@@ -2988,6 +2987,15 @@ msgstr "Abonnés (Partenaires)"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icône Font Awesome par ex. fa-tasks"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3304,6 +3312,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3496,8 +3505,8 @@ msgid ""
 "Inconsistent report_id in options dictionary. Options says %"
 "(options_report)s; report is %(report)s."
 msgstr ""
-"Report_id incohérent dans le dictionnaire d'options. Option dit "
-"%(options_report)s; le rapport est %(report)s."
+"Report_id incohérent dans le dictionnaire d'options. Option dit %"
+"(options_report)s; le rapport est %(report)s."
 
 #. module: account_reports
 #. odoo-python
@@ -3559,8 +3568,8 @@ msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
 msgstr ""
-"Sous-formule invalide dans l'expression \"%(expression)s\" de la ligne "
-"\"%(line)s\" : %(subformula)s"
+"Sous-formule invalide dans l'expression \"%(expression)s\" de la ligne \"%"
+"(line)s\" : %(subformula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3775,6 +3784,11 @@ msgid "Last Comment"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
+msgstr ""
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Last Statement balance + Transactions since statement"
 msgstr "Solde du dernier relevé + Transactions depuis le relevé"
@@ -3871,8 +3885,8 @@ msgid ""
 "Line '%(child)s' is configured to appear before its parent '%(parent)s'. "
 "This is not allowed."
 msgstr ""
-"La ligne '%(child)s' est configurée pour apparaître avant son parent "
-"'%(parent)s'. Ceci n'est pas autorisé."
+"La ligne '%(child)s' est configurée pour apparaître avant son parent '%"
+"(parent)s'. Ceci n'est pas autorisé."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -6004,7 +6018,7 @@ msgstr "Modèle technique de téléchargement des rapports comptables"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__template_id
 msgid "Template"
-msgstr ""
+msgstr "Modèle"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6081,8 +6095,8 @@ msgid ""
 "Please change the following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
 "L’opération est refusée, car elle affecterait une déclaration fiscale déjà "
-"émise. Merci de modifier les dates de verrouillage suivantes pour poursuivre "
-": %(lock_date_info)s."
+"émise. Merci de modifier les dates de verrouillage suivantes pour "
+"poursuivre : %(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6462,8 +6476,10 @@ msgstr ""
 "valeur groupby."
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6895,6 +6911,12 @@ msgstr ""
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
 "You first need to define an opening date for your accounting. Please contact "
@@ -7134,8 +7156,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Statement - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Statement - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript

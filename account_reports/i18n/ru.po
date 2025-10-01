@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-15 21:08+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: account_reports
@@ -27,15 +27,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" баланс счета зависит от"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -63,6 +54,7 @@ msgstr ""
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (копия)"
@@ -214,11 +206,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Dear <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Здравствуйте, <t t-out=\"object.name or ''"
-"\"/>!</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Здравствуйте, <t t-out=\"object.name or "
+"''\"/>!</t>\n"
 "                    <br/>\n"
 "                    Прилагаем выписку по вашему счету.\n"
 "                    <br/>\n"
@@ -292,8 +284,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
-"title=\"The email address is unknown on the partner\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"The email address is unknown on the partner\" invisible=\"not "
+"send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -559,6 +551,11 @@ msgstr "Статья бюджета"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "Выражение бухгалтерского отчета"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -1511,9 +1508,7 @@ msgid "Cash surplus"
 msgstr "Избыточные денежные средства"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -1842,8 +1837,8 @@ msgid ""
 "Could not expand term %(term)s while evaluating formula %"
 "(unexpanded_formula)s"
 msgstr ""
-"Не удалось расширить термин %(term)s при оценке формулы "
-"%(unexpanded_formula)s"
+"Не удалось расширить термин %(term)s при оценке формулы %"
+"(unexpanded_formula)s"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2324,6 +2319,7 @@ msgstr "Display Mail Composer"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2822,6 +2818,7 @@ msgstr "Фильтры:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "Финансовые бюджеты"
 
@@ -2895,6 +2892,15 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
 msgstr ""
 
 #. module: account_reports
@@ -3207,6 +3213,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3399,8 +3406,8 @@ msgid ""
 "Inconsistent report_id in options dictionary. Options says %"
 "(options_report)s; report is %(report)s."
 msgstr ""
-"Несоответствующий report_id в словаре опций. В опциях указано "
-"%(options_report)s, в отчете - %(report)s."
+"Несоответствующий report_id в словаре опций. В опциях указано %"
+"(options_report)s, в отчете - %(report)s."
 
 #. module: account_reports
 #. odoo-python
@@ -3462,8 +3469,8 @@ msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
 msgstr ""
-"Недопустимая подформула в выражении «%(expression)s» строки «%(line)s»: "
-"%(subformula)s"
+"Недопустимая подформула в выражении «%(expression)s» строки «%(line)s»: %"
+"(subformula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3677,6 +3684,11 @@ msgid "Last Comment"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
+msgstr ""
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Last Statement balance + Transactions since statement"
 msgstr "Остаток по последнему отчету + операции, совершенные после отчета"
@@ -3773,8 +3785,8 @@ msgid ""
 "Line '%(child)s' is configured to appear before its parent '%(parent)s'. "
 "This is not allowed."
 msgstr ""
-"Строка «%(child)s» настроена на отображение перед родительской строкой "
-"«%(parent)s». Это недопустимо."
+"Строка «%(child)s» настроена на отображение перед родительской строкой «%"
+"(parent)s». Это недопустимо."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -6321,8 +6333,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr "Попытка расширить результаты groupby на строки без значения groupby."
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6742,6 +6756,12 @@ msgstr ""
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
 "You first need to define an opening date for your accounting. Please contact "
@@ -6981,8 +7001,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Выписка - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Выписка - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript

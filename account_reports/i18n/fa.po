@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-23 13:10+0000\n"
 "Last-Translator: ebrahim khorami <ebrahim@farasat.co>\n"
 "Language-Team: Persian <https://translate.odoo.com/projects/odoo-19/"
@@ -36,15 +36,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" موجودی حساب تحت تاثیر قرار می گیرد توسط"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -72,6 +63,7 @@ msgstr ""
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr ""
@@ -534,6 +526,11 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
 msgstr ""
 
 #. module: account_reports
@@ -1484,9 +1481,7 @@ msgid "Cash surplus"
 msgstr "مازاد نقدی"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -2291,6 +2286,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2778,6 +2774,7 @@ msgstr ""
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr ""
 
@@ -2849,6 +2846,15 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
+msgstr ""
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
 msgstr ""
 
 #. module: account_reports
@@ -3159,6 +3165,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3618,6 +3625,11 @@ msgstr ""
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_main_table_header
 msgid "Last Comment"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
 msgstr ""
 
 #. module: account_reports
@@ -6221,8 +6233,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6626,6 +6640,12 @@ msgstr ""
 msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
 msgstr ""
 
 #. module: account_reports

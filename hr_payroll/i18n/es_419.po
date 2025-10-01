@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:33+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -28,9 +28,12 @@ msgid ""
 "\n"
 "        Defines the source for work entries generation\n"
 "\n"
-"        Working Schedule: Work entries will be generated from the working hours below.\n"
-"        Attendances: Work entries will be generated from the employee's attendances. (requires Attendance app)\n"
-"        Planning: Work entries will be generated from the employee's planning. (requires Planning app)\n"
+"        Working Schedule: Work entries will be generated from the working "
+"hours below.\n"
+"        Attendances: Work entries will be generated from the employee's "
+"attendances. (requires Attendance app)\n"
+"        Planning: Work entries will be generated from the employee's "
+"planning. (requires Planning app)\n"
 "    "
 msgstr ""
 "\n"
@@ -217,8 +220,8 @@ msgstr "<br><b>Modificado en las versiones:</b><br>"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid ""
-"<code>categories</code>: dict containing the computed salary rule categories"
-" (sum of amount of all rules belonging to that category)."
+"<code>categories</code>: dict containing the computed salary rule categories "
+"(sum of amount of all rules belonging to that category)."
 msgstr ""
 "<code>categories</code>: Diccionario que contiene las categorías de reglas "
 "salariales calculadas (suma de los montos de todas las reglas que pertenecen "
@@ -388,11 +391,16 @@ msgstr "<span invisible=\"not is_refund\" class=\"me-1\">-</span>"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 msgid ""
 "<span invisible=\"schedule_pay != 'annually'\">/ year</span>\n"
-"                <span invisible=\"schedule_pay != 'semi-annually'\">/ half-year</span>\n"
-"                <span invisible=\"schedule_pay != 'quarterly'\">/ quarter</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ two months</span>\n"
-"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ half-month</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ two weeks</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ half-"
+"year</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ quarter</"
+"span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ two "
+"months</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ half-"
+"month</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ two weeks</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
@@ -411,8 +419,8 @@ msgstr "<span>/ hora</span>"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_edit_payslip_lines_form_wizard
 msgid ""
-"<span><strong>Tip:</strong> Each time you edit the quantity or the amount on"
-" a line, we recompute the following lines. We recommend that you edit from "
+"<span><strong>Tip:</strong> Each time you edit the quantity or the amount on "
+"a line, we recompute the following lines. We recommend that you edit from "
 "top to bottom to prevent your edition from being overwritten by the "
 "automatic recalculation. Be careful that reordering the lines doesn't "
 "recompute them.</span>"
@@ -565,9 +573,11 @@ msgstr "<strong>EHF</strong>"
 #. module: hr_payroll
 #: model:mail.template,body_html:hr_payroll.mail_template_new_payslip
 msgid ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"        Dear <t t-esc=\"object.employee_id.name\"/>, a new payslip is available for you.<br/><br/>\n"
+"        Dear <t t-esc=\"object.employee_id.name\"/>, a new payslip is "
+"available for you.<br/><br/>\n"
 "        Please find the PDF in your employee portal.<br/><br/>\n"
 "        Have a nice day,<br/>\n"
 "        The HR Team\n"
@@ -575,8 +585,8 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
-"\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
 "        Apreciable <t t-esc=\"object.employee_id.name\"/>, tiene un nuevo "
 "recibo de nómina disponible.<br/><br/>\n"
@@ -601,8 +611,10 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
 msgid ""
 "A Salary Adjustment is a recurring amount of money defined on the\n"
-"                employee and used in every payslip on an amount of time.<br>\n"
-"                Ex. Money recovery, Child support, Assessment of salary, ...<br><br>"
+"                employee and used in every payslip on an amount of time."
+"<br>\n"
+"                Ex. Money recovery, Child support, Assessment of salary, ..."
+"<br><br>"
 msgstr ""
 
 #. module: hr_payroll
@@ -910,8 +922,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid ""
-"Are you sure you want to revert this payslip? This will create a negative of"
-" this payslip."
+"Are you sure you want to revert this payslip? This will create a negative of "
+"this payslip."
 msgstr ""
 "¿Estás seguro de querer revertir este recibo de nómina? Se creará un "
 "negativo de este recibo de nómina."
@@ -1108,7 +1120,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Cannot mark payslip as paid if not confirmed."
-msgstr "No puede marcar un recibo de nómina como pagado si no se ha confirmado."
+msgstr ""
+"No puede marcar un recibo de nómina como pagado si no se ha confirmado."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_worked_days_line__code
@@ -1171,8 +1184,8 @@ msgstr "Seleccione un paquete de localización de nómina"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
 msgid ""
-"Choose whether to correct only the selected payslip or all payslips affected"
-" by the changes in this version."
+"Choose whether to correct only the selected payslip or all payslips affected "
+"by the changes in this version."
 msgstr ""
 
 #. module: hr_payroll
@@ -1731,8 +1744,10 @@ msgstr "Día en el que el \"Ejercicio hasta la fecha\" se reiniciará cada año.
 #: model:ir.model.fields,help:hr_payroll.field_res_company__ytd_reset_day
 #: model:ir.model.fields,help:hr_payroll.field_res_config_settings__ytd_reset_day
 msgid ""
-"Day where the YTD will be reset every year. If zero or negative, then the first day of the month will be selected instead.\n"
-"        If greater than the last day of a month, then the last day of the month will be selected instead."
+"Day where the YTD will be reset every year. If zero or negative, then the "
+"first day of the month will be selected instead.\n"
+"        If greater than the last day of a month, then the last day of the "
+"month will be selected instead."
 msgstr ""
 "Día en el que EHF se reiniciará cada año. Si es cero o negativo, entonces el "
 "primer día del mes se seleccionará.\n"
@@ -1883,6 +1898,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__note
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_category__note
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Description"
 msgstr "Descripción"
@@ -2152,8 +2168,8 @@ msgstr "Número de empleados"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid ""
-"Employee Count - How many contracts are running in the company at the moment"
-" ?"
+"Employee Count - How many contracts are running in the company at the "
+"moment ?"
 msgstr "Número de empleados - ¿Cuántos contratos están en curso en la empresa?"
 
 #. module: hr_payroll
@@ -2240,7 +2256,9 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__resource_calendar_id
 msgid ""
 "Employee's working schedule.\n"
-"        When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.\n"
+"        When left empty, the employee is considered to have a fully flexible "
+"schedule, allowing them to work without any time limit, anytime of the "
+"week.\n"
 "        "
 msgstr ""
 "Horario laboral del empleado.\n"
@@ -3041,14 +3059,14 @@ msgid ""
 msgstr ""
 "Se utiliza en el cálculo para el porcentaje y el importe fijo. Por ejemplo, "
 "una regla para un vale de comida que tiene un importe fijo de 1 euro por día "
-"trabajado puede tener su cantidad definida en una expresión como worked_days"
-"['WORK100'].number_of_days."
+"trabajado puede tener su cantidad definida en una expresión como "
+"worked_days['WORK100'].number_of_days."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
 msgid ""
-"It is used in computation. E.g. a rule for salesmen having 1%% commission of"
-" basic salary per product can defined in expression like: result = "
+"It is used in computation. E.g. a rule for salesmen having 1%% commission of "
+"basic salary per product can defined in expression like: result = "
 "inputs['SALEURO'].amount * version.wage * 0.01."
 msgstr ""
 "Se usa en los cálculos. Por ejemplo, puedes definir una regla para "
@@ -3527,7 +3545,8 @@ msgstr "No se encontraron conteos de la plantilla laboral previos."
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_payroll_hr_version_list_view_payrun
 msgid ""
-"No record fit your period and salary structure type, please go back to select another period and/or\n"
+"No record fit your period and salary structure type, please go back to "
+"select another period and/or\n"
 "                salary structure type."
 msgstr ""
 
@@ -3536,8 +3555,8 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_rule_parameter.py:0
 msgid "No rule parameter with code \"%(code)s\" was found for %(date)s"
 msgstr ""
-"No se encontró ningún parámetro de regla con el código \"%(code)s\" para el "
-"%(date)s"
+"No se encontró ningún parámetro de regla con el código \"%(code)s\" para el %"
+"(date)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3568,8 +3587,8 @@ msgstr "Nota"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid ""
-"Note - Create as many notes as you want, like this one, to keep track of all"
-" useful information !"
+"Note - Create as many notes as you want, like this one, to keep track of all "
+"useful information !"
 msgstr ""
 "Nota - Cree todas las notas que quiera, justo como esta, para poder llevar "
 "un registro de información util."
@@ -3633,8 +3652,7 @@ msgstr "Número de errores"
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__full_time_required_hours
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__full_time_required_hours
 msgid ""
-"Number of hours to work on the company schedule to be considered as "
-"fulltime."
+"Number of hours to work on the company schedule to be considered as fulltime."
 msgstr ""
 "Número de horas a trabajar en el horario de la empresa para considerarse "
 "como tiempo completo."
@@ -3934,8 +3952,8 @@ msgstr "Fecha de pago"
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
 msgid ""
-"Payment Entry Date: the banking day on which you intend the payslip batch to"
-" be settled."
+"Payment Entry Date: the banking day on which you intend the payslip batch to "
+"be settled."
 msgstr ""
 
 #. module: hr_payroll
@@ -4815,6 +4833,7 @@ msgstr ""
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
 msgid "Salary Rule"
 msgstr "Regla salarial"
 
@@ -4828,6 +4847,7 @@ msgstr "Categorías de reglas salariales"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule_category
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_filter
 msgid "Salary Rule Category"
 msgstr "Categoría de regla salarial"
@@ -5075,8 +5095,7 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
-msgid ""
-"Some work entries could not be validated. Time intervals to look for:%s"
+msgid "Some work entries could not be validated. Time intervals to look for:%s"
 msgstr ""
 "No fue posible validar algunas entradas de trabajo. Revisa estos intervalos: "
 "%s"
@@ -5156,9 +5175,8 @@ msgid ""
 "Still looking for more ? Here is a video to help you <i class=\"fa fa-video-"
 "camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\">​</i>"
 msgstr ""
-"¿Todavía quiere descubrir más? Vea el video a continuación <i class="
-"\"fa fa-video-camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\""
-"></i>"
+"¿Todavía quiere descubrir más? Vea el video a continuación <i class=\"fa fa-"
+"video-camera fa-2\" aria-hidden=\"true\" contenteditable=\"false\"></i>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -5264,8 +5282,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
 msgid ""
-"The Payslip is the computation of the pay based on a period of time for an employee.\n"
-"                        It computes the Net salary according to the Salary Rules you've defined in the configuration."
+"The Payslip is the computation of the pay based on a period of time for an "
+"employee.\n"
+"                        It computes the Net salary according to the Salary "
+"Rules you've defined in the configuration."
 msgstr ""
 "El recibo de nómina calcula el pago de un empleado basado en un periodo.\n"
 "                        Calcula el salario neto según las reglas salariales "
@@ -5284,8 +5304,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/res_company.py:0
 msgid ""
-"The YTD reset day must be a valid day of the month : since the current month"
-" is %(month)s, it should be between 1 and %(day)s."
+"The YTD reset day must be a valid day of the month : since the current month "
+"is %(month)s, it should be between 1 and %(day)s."
 msgstr ""
 "El día de de reinicio de EHF debe ser un día válido del mes: como el mes en "
 "curso es %(month)s, debe ser entre 1 y %(day)s."
@@ -5908,14 +5928,16 @@ msgstr ""
 msgid ""
 "Watch out for gaps in %(employee_name)s's calendar\n"
 "\n"
-"Please complete the missing work entries of %(employee_name)s:%(time_intervals_str)s \n"
+"Please complete the missing work entries of %(employee_name)s:%"
+"(time_intervals_str)s \n"
 "\n"
-"Missing work entries are like the Bermuda Triangle for paychecks. Let's keep your colleague's earnings from vanishing into thin air!"
+"Missing work entries are like the Bermuda Triangle for paychecks. Let's keep "
+"your colleague's earnings from vanishing into thin air!"
 msgstr ""
 "Hay algunos espacios vacíos en en el calendario de %(employee_name)s\n"
 "\n"
-"Complete las entradas de trabajo restantes de %(employee_name)s: "
-"%(time_intervals_str)s \n"
+"Complete las entradas de trabajo restantes de %(employee_name)s: %"
+"(time_intervals_str)s \n"
 "\n"
 "No se podrá realizar el pago si no hay entradas de trabajo registradas."
 
@@ -5971,8 +5993,8 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_index__description
 msgid ""
-"Will be used as the message specifying why the wage on the contract has been"
-" modified"
+"Will be used as the message specifying why the wage on the contract has been "
+"modified"
 msgstr ""
 "Se utilizará como mensaje para especificar por qué se modificó el salario "
 "del contrato"
@@ -6249,8 +6271,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_input_type.py:0
 msgid ""
-"You cannot archive an input type if there exists a running salary adjustment"
-" of this type."
+"You cannot archive an input type if there exists a running salary adjustment "
+"of this type."
 msgstr ""
 
 #. module: hr_payroll

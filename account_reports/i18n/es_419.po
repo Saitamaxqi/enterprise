@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -26,19 +26,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" el saldo de la cuenta se ve afectado por"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
-"\"Para cada entregable de alto riesgo (>60 días), verifica lo siguiente:\n"
-"- ¿Hay un seguimiento documentado?\n"
-"- ¿Se negoció un plan de pago?\n"
-"- ¿Se registró alguna disposición si la recuperación no es segura?\""
 
 #. module: account_reports
 #. odoo-python
@@ -66,6 +53,7 @@ msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (copia)"
@@ -196,11 +184,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Apreciable <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Apreciable <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Apreciable <t t-out=\"object.name or ''\"/"
+"> (<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Apreciable <t t-out=\"object.name or ''\"/"
+">,</t>\n"
 "                    <br/>\n"
 "                    A continuación podrás encontrar una lista con tus "
 "facturas abiertas.\n"
@@ -243,11 +231,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Apreciable <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Apreciable <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Apreciable <t t-out=\"object.name or ''\"/"
+"> (<t t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Apreciable <t t-out=\"object.name or ''\"/"
+">,</t>\n"
 "                    <br/>\n"
 "                    En este correo encontrarás adjunto tu estado de cuenta.\n"
 "                    <br/>\n"
@@ -303,33 +291,34 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Apreciable <t t-out=\"object.company_id.name\""
-">TuEmpresa</t>,\n"
+"                    Apreciable <t t-"
+"out=\"object.company_id.name\">TuEmpresa</t>,\n"
 "                </p>\n"
 "                <p>\n"
 "                    De acuerdo con los documentos y la información que "
-"recibimos, la declaración fiscal de <t t-out=\"object.company_id.name\""
-">TuEmpresa</t>\n"
-"                    para el periodo del <t t-out=\"object"
-".type_id._get_period_name(object.company_id, object.date_from, "
+"recibimos, la declaración fiscal de <t t-"
+"out=\"object.company_id.name\">TuEmpresa</t>\n"
+"                    para el periodo del <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
 "object.date_to)\"/> ha sido presentada.\n"
 "                </p>\n"
 "                <p>\n"
-"                    Determinamos que hay un importe de <t t-out="
-"\"format_amount(object.total_amount_to_pay, object.amount_to_pay_currency_id)"
-"\"/> que queda por pagar.\n"
+"                    Determinamos que hay un importe de <t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/> que queda por pagar.\n"
 "                </p>\n"
 "                <table style=\"border:1px solid black; padding:20px; text-"
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Importe pendiente de pago</td>\n"
-"                        <td><t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>A pagar antes de la siguiente fecha:</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Saludos,</p>\n"
@@ -354,9 +343,9 @@ msgid ""
 "title=\"The email address is unknown on the partner\" invisible=\"not "
 "send_mail_readonly\"/>"
 msgstr ""
-"<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label="
-"\"Advertencia\" title=\"El correo electrónico del contacto es desconocido\" "
-"invisible=\"not send_mail_readonly\"/>"
+"<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-"
+"label=\"Advertencia\" title=\"El correo electrónico del contacto es "
+"desconocido\" invisible=\"not send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -385,8 +374,8 @@ msgid ""
 "success\">Passed</span>"
 msgstr ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count != "
-"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-success\""
-">Aprobado</span>"
+"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
+"success\">Aprobado</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -394,9 +383,8 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
-"<span invisible="
-"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
-"\"oe_stat_text ps-0 text-danger\">Pendiente</span>"
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
+"&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pendiente</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -406,8 +394,8 @@ msgid ""
 "records_count\"> </span>"
 msgstr ""
 "<span invisible=\"not records_count or records_count &lt; 21\">+20</span>\n"
-"                                                    <span invisible="
-"\"not records_count\"> </span>"
+"                                                    <span invisible=\"not "
+"records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -419,13 +407,13 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
-"<span invisible=\"not show_warning_wrong_dates\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"El rango seleccionado no coincide con ningún ejercicio fiscal.\"/>\n"
-"                            <span invisible="
-"\"not show_warning_existing_return\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Ya existe una declaración para el periodo seleccionado.\"/>"
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"El rango seleccionado no coincide con "
+"ningún ejercicio fiscal.\"/>\n"
+"                            <span invisible=\"not "
+"show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
+"danger pb-2\" title=\"Ya existe una declaración para el periodo seleccionado."
+"\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -638,6 +626,11 @@ msgstr "Apunte contable del reporte de presupuesto"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "Expresión del reporte contable"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -924,8 +917,8 @@ msgid ""
 "taxation_customs/vies\" target=\"_blank\">VIES</a>."
 msgstr ""
 "Todos los números de identificación fiscal de los clientes son válidos con "
-"el <a href=\"https://ec.europa.eu/taxation_customs/vies\" target=\"_blank\""
-">VIES</a>."
+"el <a href=\"https://ec.europa.eu/taxation_customs/vies\" "
+"target=\"_blank\">VIES</a>."
 
 #. module: account_reports
 #. odoo-python
@@ -1607,9 +1600,7 @@ msgid "Cash surplus"
 msgstr "Superávit de efectivo"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr "Categoría"
@@ -1861,8 +1852,8 @@ msgid ""
 "Compile a complete list of all guarantees received or granted (pledges, "
 "mortgages, collateral)."
 msgstr ""
-"Compila una lista completa de todas las garantías recibidas o concedidas ("
-"prendas, hipotecas, colaterales)."
+"Compila una lista completa de todas las garantías recibidas o concedidas "
+"(prendas, hipotecas, colaterales)."
 
 #. module: account_reports
 #. odoo-python
@@ -1955,8 +1946,8 @@ msgid ""
 "Could not expand term %(term)s while evaluating formula %"
 "(unexpanded_formula)s"
 msgstr ""
-"No se pudo expandir el término %(term)s al evaluar la fórmula "
-"%(unexpanded_formula)s"
+"No se pudo expandir el término %(term)s al evaluar la fórmula %"
+"(unexpanded_formula)s"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2437,6 +2428,7 @@ msgstr "Mostrar redactor del correo"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2528,7 +2520,8 @@ msgstr "Descargar de todos modos"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "Download the Data Inalterability Check Report"
-msgstr "Descargar el reporte de comprobación de la inalterabilidad de los datos"
+msgstr ""
+"Descargar el reporte de comprobación de la inalterabilidad de los datos"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2958,6 +2951,7 @@ msgstr "Filtros:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "Presupuestos financieros"
 
@@ -3032,6 +3026,15 @@ msgstr "Seguidores (contactos)"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Icono de Font Awesome, por ejemplo, fa-tasks"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3347,6 +3350,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3611,14 +3615,15 @@ msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
 msgstr ""
-"Subfórmula inválida en la expresión \"%(expression)s\" de la línea "
-"\"%(line)s\": %(subformula)s"
+"Subfórmula inválida en la expresión \"%(expression)s\" de la línea \"%"
+"(line)s\": %(subformula)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Invalid token '%(token)s' in account_codes formula '%(formula)s'"
-msgstr "Token inválido '%(token)s' en la fórmula '%(formula)s' de account_codes"
+msgstr ""
+"Token inválido '%(token)s' en la fórmula '%(formula)s' de account_codes"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__inventory
@@ -3824,6 +3829,11 @@ msgstr "Idioma"
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_main_table_header
 msgid "Last Comment"
 msgstr "Último comentario"
+
+#. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
+msgstr ""
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
@@ -4504,7 +4514,8 @@ msgstr "Solo un administrador contable puede restablecer una declaración"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Only an Accounting Administrator can reset a tax return"
-msgstr "Solo un administrador contable puede restablecer una declaración fiscal"
+msgstr ""
+"Solo un administrador contable puede restablecer una declaración fiscal"
 
 #. module: account_reports
 #. odoo-python
@@ -6149,8 +6160,8 @@ msgid ""
 "Please change the following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
 "La operación fue rechazada porque afectaría a una declaración fiscal ya "
-"emitida. Cambia las siguientes fechas de bloqueo para continuar: "
-"%(lock_date_info)s."
+"emitida. Cambia las siguientes fechas de bloqueo para continuar: %"
+"(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6531,8 +6542,10 @@ msgstr ""
 "valor de agrupar por."
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6952,8 +6965,8 @@ msgid ""
 msgstr ""
 "No puedes restablecer este asiento de cierre a borrador, ya que eliminaría "
 "los valores de traslado que afectan el reporte fiscal de un periodo "
-"bloqueado. Cambia las siguientes fechas de bloqueo para continuar: "
-"%(lock_date_info)s."
+"bloqueado. Cambia las siguientes fechas de bloqueo para continuar: %"
+"(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6964,6 +6977,12 @@ msgid ""
 msgstr ""
 "No puedes restablecer esta declaración como nueva, ya que otra declaración "
 "posterior ya está bloqueada."
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
+msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -7201,8 +7220,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Follow Up - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Seguimiento - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Seguimiento - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #: model:mail.template,subject:account_reports.email_template_customer_statement
@@ -7211,11 +7231,23 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Estado - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Estado - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Restablecer a la tasa de Odoo"
+
+#~ msgid ""
+#~ "\"For each high risk receivables (>60 days), verify the following:\n"
+#~ "- Is there documented follow-up?\n"
+#~ "- Has a payment plan been negotiated?\n"
+#~ "- Is a provision recorded if recovery is doubtful?\""
+#~ msgstr ""
+#~ "\"Para cada entregable de alto riesgo (>60 días), verifica lo siguiente:\n"
+#~ "- ¿Hay un seguimiento documentado?\n"
+#~ "- ¿Se negoció un plan de pago?\n"
+#~ "- ¿Se registró alguna disposición si la recuperación no es segura?\""

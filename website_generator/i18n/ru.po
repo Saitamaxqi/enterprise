@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 10:57+0000\n"
+"POT-Creation-Date: 2025-09-30 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 21:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,32 +18,26 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: website_generator
 #: model:mail.template,body_html:website_generator.email_template_website_scrapped
 msgid ""
 "<div>\n"
-"            <p><b>Great news!</b> Your website conversion is complete and your new integrated Odoo website is now live.</p>\n"
-"            <p>Check out your new website here: <a t-att-href=\"ctx.get('website_url')\"><t t-out=\"ctx.get('website_url')\"></t></a></p>\n"
+"            <p><b>Great news!</b> Your website conversion is complete and "
+"your new integrated Odoo website is now live.</p>\n"
+"            <p>Check out your new website here: <a t-att-"
+"href=\"ctx.get('website_url')\"><t t-out=\"ctx.get('website_url')\"/></a></"
+"p>\n"
 "            <p>Thank you for choosing Odoo for your web integration!</p>\n"
 "            <p>Best regards,</p>\n"
-"            <br>\n"
+"            <br/>\n"
 "            <p>Odoo - The best open source website builder.</p>\n"
 "            </div>\n"
 "            "
 msgstr ""
-"<div>\n"
-"            <p><b>Отличные новости!</b> Преобразование вашего сайта завершено, и ваш новый интегрированный сайт Odoo уже работает.</p>\n"
-"            <p>Посмотрите на ваш новый сайт здесь: <a t-att-href=\"ctx.get('website_url')\"><t t-out=\"ctx.get('website_url')\"></t></a></p>\n"
-"            <p>Спасибо, что выбрали Odoo для веб-интеграции!</p>\n"
-"            <p>С наилучшими пожеланиями,</p>\n"
-"            <br>\n"
-"            <p>Odoo - лучший конструктор сайтов с открытым исходным кодом.</p>\n"
-"            </div>\n"
-"            "
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__additional_urls
@@ -69,6 +63,16 @@ msgid "Banned url"
 msgstr "Запрещенный url"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid ""
+"By clicking \"Import my website\", you confirm that you are the owner of the "
+"website and all associated components (such as images and other content), "
+"and you take full responsibility for their use and any potential legal "
+"implications."
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Could not fetch result, invalid output uuid or result expired"
@@ -87,7 +91,10 @@ msgid "Created on"
 msgstr "Дата создания:"
 
 #. module: website_generator
+#: model:ir.model.fields,field_description:website_generator.field_ir_http__display_name
+#: model:ir.model.fields,field_description:website_generator.field_website__display_name
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__display_name
+#: model:ir.model.fields,field_description:website_generator.field_website_page__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
@@ -103,9 +110,54 @@ msgid "HTTP Routing"
 msgstr "Маршрутизация HTTP"
 
 #. module: website_generator
+#: model:ir.model.fields,field_description:website_generator.field_ir_http__id
+#: model:ir.model.fields,field_description:website_generator.field_website__id
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__id
+#: model:ir.model.fields,field_description:website_generator.field_website_page__id
 msgid "ID"
 msgstr "ID"
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "If you require more, you can contact us at"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import Products"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import my website"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import your"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/builder/imported_footer_template_choice.xml:0
+msgid "Imported"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/builder/imported_footer_plugin.js:0
+msgid "Imported Footer"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.js:0
+msgid "Importing your website."
+msgstr ""
 
 #. module: website_generator
 #. odoo-python
@@ -130,12 +182,6 @@ msgstr "Неверный токен"
 #: code:addons/website_generator/models/generator.py:0
 msgid "Invalid url"
 msgstr "Неверный URL"
-
-#. module: website_generator
-#. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "It should be ready in a"
-msgstr "Он должен быть готов через"
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__write_uid
@@ -170,12 +216,6 @@ msgid "Number of pages"
 msgstr "Количество страниц"
 
 #. module: website_generator
-#. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "Once your website is ready, this page will reload automatically. You can also close this page, we will send you an email once your website has been converted."
-msgstr "Как только ваш сайт будет готов, эта страница автоматически перезагрузится. Вы также можете закрыть эту страницу, мы пришлем вам электронное письмо, когда ваш сайт будет преобразован."
-
-#. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__uuid
 msgid "Output UUID generated from Website Scraper Server"
 msgstr "Выходной UUID, сгенерированный сервером Website Scraper Server"
@@ -186,10 +226,22 @@ msgid "Page"
 msgstr "Страница"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Pages"
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Processing"
 msgstr "Обработка"
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Products"
+msgstr ""
 
 #. module: website_generator
 #. odoo-python
@@ -201,13 +253,21 @@ msgstr "Запрос еще обрабатывается, результат п�
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Server is currently under maintenance. Please retry later"
-msgstr "Сервер в настоящее время находится на техническом обслуживании. Пожалуйста, повторите попытку позже"
+msgstr ""
+"Сервер в настоящее время находится на техническом обслуживании. Пожалуйста, "
+"повторите попытку позже"
 
 #. module: website_generator
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
 msgid "Something went wrong"
 msgstr "Что-то пошло не так"
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
+msgid "Something went wrong while importing your website."
+msgstr ""
 
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status
@@ -226,10 +286,52 @@ msgid "Success"
 msgstr "Успех"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/systray_items/generator_request.js:0
+msgid "The import of your website has started!"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "The maximum number of pages is 200 by default."
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "The request asks for too many pages"
 msgstr "Запрос запрашивает слишком много страниц"
+
+#. module: website_generator
+#. odoo-python
+#: code:addons/website_generator/models/generator.py:0
+msgid ""
+"The requested url redirected to another url, try again with the redirected "
+"url"
+msgstr ""
+
+#. module: website_generator
+#. odoo-python
+#: code:addons/website_generator/models/generator.py:0
+msgid ""
+"The requested url took too long to load and is probably unreachable from the "
+"server"
+msgstr ""
+
+#. module: website_generator
+#. odoo-python
+#: code:addons/website_generator/models/generator.py:0
+msgid ""
+"The same request has just been made, please wait before sending another "
+"identical request"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
+msgid "This can take a few minutes."
+msgstr ""
 
 #. module: website_generator
 #. odoo-python
@@ -263,9 +365,17 @@ msgstr "Ожидание обработки запроса сервером"
 #. odoo-javascript
 #: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
 msgid "We could not convert your website, please try again later"
-msgstr "Мы не смогли преобразовать ваш сайт, пожалуйста, повторите попытку позже"
+msgstr ""
+"Мы не смогли преобразовать ваш сайт, пожалуйста, повторите попытку позже"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/systray_items/generator_request.js:0
+msgid "We will notify %(email)s when everything is ready."
+msgstr ""
+
+#. module: website_generator
+#: model:ir.model,name:website_generator.model_website
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__website_id
 msgid "Website"
 msgstr "Сайт"
@@ -296,6 +406,12 @@ msgid "Website Scraped"
 msgstr "Скрапированный сайт"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Website URL"
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Website blocked or unreachable"
@@ -308,18 +424,82 @@ msgid "Website not supported"
 msgstr "Веб-сайт не поддерживается"
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
+msgid "You will be redirected once your website is ready."
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "You'll be able to create additional pages later on."
+msgstr ""
+
+#. module: website_generator
 #: model:mail.template,subject:website_generator.email_template_website_scrapped
 msgid "Your Odoo Website is Ready!"
 msgstr "Ваш сайт Odoo готов!"
 
 #. module: website_generator
 #. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "Your website is being converted"
-msgstr "Ваш сайт преобразуется"
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "and"
+msgstr ""
 
 #. module: website_generator
 #. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "few minutes"
-msgstr "несколько минут"
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "https://www.odoo.com/"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "odoo.com/help"
+msgstr ""
+
+#~ msgid ""
+#~ "<div>\n"
+#~ "            <p><b>Great news!</b> Your website conversion is complete and "
+#~ "your new integrated Odoo website is now live.</p>\n"
+#~ "            <p>Check out your new website here: <a t-att-"
+#~ "href=\"ctx.get('website_url')\"><t t-out=\"ctx.get('website_url')\"></t></"
+#~ "a></p>\n"
+#~ "            <p>Thank you for choosing Odoo for your web integration!</p>\n"
+#~ "            <p>Best regards,</p>\n"
+#~ "            <br>\n"
+#~ "            <p>Odoo - The best open source website builder.</p>\n"
+#~ "            </div>\n"
+#~ "            "
+#~ msgstr ""
+#~ "<div>\n"
+#~ "            <p><b>Отличные новости!</b> Преобразование вашего сайта "
+#~ "завершено, и ваш новый интегрированный сайт Odoo уже работает.</p>\n"
+#~ "            <p>Посмотрите на ваш новый сайт здесь: <a t-att-"
+#~ "href=\"ctx.get('website_url')\"><t t-out=\"ctx.get('website_url')\"></t></"
+#~ "a></p>\n"
+#~ "            <p>Спасибо, что выбрали Odoo для веб-интеграции!</p>\n"
+#~ "            <p>С наилучшими пожеланиями,</p>\n"
+#~ "            <br>\n"
+#~ "            <p>Odoo - лучший конструктор сайтов с открытым исходным кодом."
+#~ "</p>\n"
+#~ "            </div>\n"
+#~ "            "
+
+#~ msgid "It should be ready in a"
+#~ msgstr "Он должен быть готов через"
+
+#~ msgid ""
+#~ "Once your website is ready, this page will reload automatically. You can "
+#~ "also close this page, we will send you an email once your website has "
+#~ "been converted."
+#~ msgstr ""
+#~ "Как только ваш сайт будет готов, эта страница автоматически "
+#~ "перезагрузится. Вы также можете закрыть эту страницу, мы пришлем вам "
+#~ "электронное письмо, когда ваш сайт будет преобразован."
+
+#~ msgid "Your website is being converted"
+#~ msgstr "Ваш сайт преобразуется"
+
+#~ msgid "few minutes"
+#~ msgstr "несколько минут"

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -29,15 +29,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" 賬戶結餘受以下影響："
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -65,6 +56,7 @@ msgstr "%(return_type_name)s%(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (副本)"
@@ -550,6 +542,11 @@ msgstr "會計報表預算項目"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "會計報表表達式"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -1501,9 +1498,7 @@ msgid "Cash surplus"
 msgstr "現金盈餘"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -2311,6 +2306,7 @@ msgstr "顯示郵件編輯器"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2802,6 +2798,7 @@ msgstr "篩選器："
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "財政預算"
 
@@ -2874,6 +2871,15 @@ msgstr "關注人（業務夥伴）"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesome 圖示，例如，fa-task"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3185,6 +3191,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3650,6 +3657,11 @@ msgstr "語言"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_main_table_header
 msgid "Last Comment"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
 msgstr ""
 
 #. module: account_reports
@@ -6265,8 +6277,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr "正嘗試在沒有分組依據值的資料行上，擴展分組結果。"
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6601,7 +6615,8 @@ msgstr ""
 msgid ""
 "You are trying to create returns for a company you don't have access to, "
 "please select it in the company selector"
-msgstr "你正在嘗試為一間你沒有權限存取的公司建立申報。請在公司選擇器中選擇適用公司"
+msgstr ""
+"你正在嘗試為一間你沒有權限存取的公司建立申報。請在公司選擇器中選擇適用公司"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6670,6 +6685,12 @@ msgstr ""
 msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
 msgstr ""
 
 #. module: account_reports

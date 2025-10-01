@@ -14,35 +14,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-30 02:41+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
-"Language-Team: German <https://translate.odoo.com/projects/odoo-19/sign/de/>"
-"\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/sign/de/"
+">\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
-"\n"
-"                    Mein US-Unternehmen\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio Vereinigte Staaten\n"
-"                    +1 555-555-5556\n"
-"                "
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -72,8 +54,8 @@ msgid ""
 "%(partner)s validated the signature by SMS with the phone number %"
 "(phone_number)s."
 msgstr ""
-"Die Unterschrift wurde von %(partner)s per SMS mit der Telefonnummer "
-"%(phone_number)s validiert."
+"Die Unterschrift wurde von %(partner)s per SMS mit der Telefonnummer %"
+"(phone_number)s validiert."
 
 #. module: sign
 #. odoo-python
@@ -237,10 +219,8 @@ msgstr "<b>Dokumente:</b>"
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
 msgstr ""
-"<b>Ziehen Sie „Signatur“ per Drag-and-drop</b> an den unteren Rand des "
-"Dokuments."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -265,7 +245,8 @@ msgstr "<b>Feststoffabfall:</b> 1290 Pfund = 1290*0,4536 = 585,14 kg"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "<b>Total Energy:</b> 27 Millions BTU = 27,000,000*0.0002931 = 7.91 kWh"
-msgstr "<b>Gesamtenergie</b> 27 Millionen BTU = 27.000.000*0,0002931 = 7,91 kWh"
+msgstr ""
+"<b>Gesamtenergie</b> 27 Millionen BTU = 27.000.000*0,0002931 = 7,91 kWh"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -370,8 +351,8 @@ msgid ""
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
-"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" title=\"Shared\""
-" invisible=\"state != 'shared'\">\n"
+"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" "
+"title=\"Shared\" invisible=\"state != 'shared'\">\n"
 "                                    Geteilt\n"
 "                                </span>"
 
@@ -394,8 +375,8 @@ msgid ""
 "<span class=\"fw-bold\">Cryptographic signature<i class=\"fa fa-building-o "
 "ms-1\"/></span>"
 msgstr ""
-"<span class=\"fw-bold\">Kryptografische Unterschrift<i class="
-"\"fa fa-building-o ms-1\"/></span>"
+"<span class=\"fw-bold\">Kryptografische Unterschrift<i class=\"fa fa-"
+"building-o ms-1\"/></span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -2490,6 +2471,16 @@ msgid "My Templates"
 msgstr "Meine Vorlagen"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "Vertraulichkeitsvereinbarung"
@@ -2510,6 +2501,12 @@ msgstr "Name"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "Name der Datei"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr "Bald geschafft, weiter so!"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2755,7 +2752,8 @@ msgstr "Optionen"
 #. odoo-python
 #: code:addons/sign/models/sign_template.py:0
 msgid "PDF File is corrupted. Please try with another file."
-msgstr "Die PDF-Datei ist beschädigt. Versuchen Sie es mit einer anderen Datei."
+msgstr ""
+"Die PDF-Datei ist beschädigt. Versuchen Sie es mit einer anderen Datei."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_view_tree
@@ -2901,9 +2899,9 @@ msgid ""
 "Read-only can only be applied to items of the following types: 'Text', "
 "'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"
 msgstr ""
-"Schreibgeschützt kann nur für Elemente der folgenden Typen angewendet werden:"
-" „Text“, „Name“, „E-Mail“, „Telefon“, „Unternehmen“, „Mehrzeilig“, „Datum“, "
-"„Durchgestrichen“"
+"Schreibgeschützt kann nur für Elemente der folgenden Typen angewendet "
+"werden: „Text“, „Name“, „E-Mail“, „Telefon“, „Unternehmen“, „Mehrzeilig“, "
+"„Datum“, „Durchgestrichen“"
 
 #. module: sign
 #. odoo-javascript
@@ -3169,9 +3167,9 @@ msgid ""
 "Select the contact who should sign, according to their role.<br>In this "
 "example, select your own contact to sign the document yourself."
 msgstr ""
-"Wählen Sie den Kontakt aus, der unterschreiben soll, je nach seiner "
-"Rolle.<br>In diesem Beispiel wählen Sie Ihren eigenen Kontakt aus, um das "
-"Dokument selbst zu unterschreiben."
+"Wählen Sie den Kontakt aus, der unterschreiben soll, je nach seiner Rolle."
+"<br>In diesem Beispiel wählen Sie Ihren eigenen Kontakt aus, um das Dokument "
+"selbst zu unterschreiben."
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_type__item_type__selection
@@ -4301,6 +4299,14 @@ msgid "The template doesn't exist anymore."
 msgstr "Die Vorlage existiert nicht mehr."
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
 "The total of sheets you saved is based on: the number of sent sign requests "
@@ -5278,6 +5284,26 @@ msgstr "Ihnen"
 msgid "{{0}} Summary"
 msgstr "Zusammenfassung von {{0}}"
 
+#~ msgid ""
+#~ "\n"
+#~ "                    My US Company\n"
+#~ "                    1034 Wildwood Street\n"
+#~ "                    44654 Millersburg Ohio United States\n"
+#~ "                    +1 555-555-5556\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "                    Mein US-Unternehmen\n"
+#~ "                    1034 Wildwood Street\n"
+#~ "                    44654 Millersburg Ohio Vereinigte Staaten\n"
+#~ "                    +1 555-555-5556\n"
+#~ "                "
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr ""
+#~ "<b>Ziehen Sie „Signatur“ per Drag-and-drop</b> an den unteren Rand des "
+#~ "Dokuments."
+
 #~ msgid "Warning"
 #~ msgstr "Warnung"
 
@@ -5512,9 +5538,6 @@ msgstr "Zusammenfassung von {{0}}"
 
 #~ msgid "Name or email..."
 #~ msgstr "Name oder E-Mail"
-
-#~ msgid "Nearly there, keep going!"
-#~ msgstr "Bald geschafft, weiter so!"
 
 #~ msgid "New Template Name"
 #~ msgstr "Name der neuen Vorlage"

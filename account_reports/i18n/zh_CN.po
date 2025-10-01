@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-22 12:10+0000\n"
 "Last-Translator: \"Chloe Wang (chwa)\" <chwa@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -31,15 +31,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "“账户余额受影响的因素"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -67,6 +58,7 @@ msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s（副本）"
@@ -188,11 +180,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">亲爱的 <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">亲爱的 <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != object.commercial_partner_id.id\">"
+"亲爱的 <t t-out=\"object.name or ''\"/> (<t t-"
+"out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">亲爱的 <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    请查收附件中的未结清发票清单。\n"
 "                    <br/>\n"
@@ -234,11 +226,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">亲爱的 <t t-out=\"object.name or ''\"/>（<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>），</t>\n"
-"                    <t t-else=\"\">亲爱的 <t t-out=\"object.name or ''\""
-"/>，</t>\n"
+"                    <t t-if=\"object.id != object.commercial_partner_id.id\">"
+"亲爱的 <t t-out=\"object.name or ''\"/>（<t t-"
+"out=\"object.commercial_partner_id.name or ''\"/>），</t>\n"
+"                    <t t-else=\"\">亲爱的 <t t-out=\"object.name or ''\"/>，"
+"</t>\n"
 "                    <br/>\n"
 "                    随函附上您的账户对账单。\n"
 "                    <br/>\n"
@@ -294,32 +286,33 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    亲爱的 <t t-out=\"object.company_id.name\""
-">YourCompany</t>，\n"
+"                    亲爱的 <t t-out=\"object.company_id.name\">YourCompany</"
+"t>，\n"
 "                </p>\n"
 "                <p>\n"
-"                    根据收到的文件和信息， <t t-out="
-"\"object.company_id.name\">YourCompany</t>\n"
-"                    在 <t t-out=\"object.type_id._get_period_name("
-"object.company_id, object.date_from, object.date_to)\"/> "
-"期间的增值税申报表已提交。\n"
+"                    根据收到的文件和信息， <t t-"
+"out=\"object.company_id.name\">YourCompany</t>\n"
+"                    在 <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
+"object.date_to)\"/> 期间的增值税申报表已提交。\n"
 "                </p>\n"
 "                <p>\n"
-"                    经确定，尚有<t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/> "
-"的金额应付。\n"
+"                    经确定，尚有<t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/> 的金额应付。\n"
 "                </p>\n"
 "                <table style=\"border:1px solid black; padding:20px; text-"
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>应付金额</td>\n"
-"                        <td><t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>截止日期</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>祝好，</p>\n"
@@ -345,8 +338,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
-"title=\"The email address is unknown on the partner\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"The email address is unknown on the partner\" invisible=\"not "
+"send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -607,6 +600,11 @@ msgstr "账户报表项目"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "会计报表表达式"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -1558,9 +1556,7 @@ msgid "Cash surplus"
 msgstr "现金盈余"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -1751,8 +1747,9 @@ msgstr "公司"
 msgid ""
 "Company %(company)s already belongs to a tax unit in %(country)s. A company "
 "can at most be part of one tax unit per country."
-msgstr "公司“%(company)s”已属于 %(country)s "
-"内的税务单位。一家公司最多可以在每个国家/地区属于一个税务单位。"
+msgstr ""
+"公司“%(company)s”已属于 %(country)s 内的税务单位。一家公司最多可以在每个国家/"
+"地区属于一个税务单位。"
 
 #. module: account_reports
 #. odoo-python
@@ -2087,7 +2084,8 @@ msgstr "自定义处理程序模型名称"
 msgid ""
 "Custom engine _report_custom_engine_last_statement_balance_amount does not "
 "support groupby"
-msgstr "自订引擎_report_custom_engine_last_statement_balance_amount 不支持分组方式"
+msgstr ""
+"自订引擎_report_custom_engine_last_statement_balance_amount 不支持分组方式"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.customer_statement_report
@@ -2366,6 +2364,7 @@ msgstr "显示邮件编写人"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2781,9 +2780,8 @@ msgid ""
 "computing the current report. Make sure the cross-report aggregations of "
 "this report only reference terms belonging to other reports."
 msgstr ""
-"计算目前报表时，会覆盖标记为 %(label)s "
-"的表达式（行数：%(line)s）。请确保此报表的跨报表汇总数据，仅引用属于其他报表"
-"的参考项。"
+"计算目前报表时，会覆盖标记为 %(label)s 的表达式（行数：%(line)s）。请确保此报"
+"表的跨报表汇总数据，仅引用属于其他报表的参考项。"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__field_name
@@ -2816,8 +2814,9 @@ msgstr "account.move.line 的字段 %s 不能在 groupby 分组依据表达式�
 msgid ""
 "Field %s of account.move.line is not searchable and can therefore not be "
 "used in a groupby expression."
-msgstr "account.move.line 字段 %s 的内容不可搜寻，因此无法在 groupby "
-"分组依据表达式中使用。"
+msgstr ""
+"account.move.line 字段 %s 的内容不可搜寻，因此无法在 groupby 分组依据表达式中"
+"使用。"
 
 #. module: account_reports
 #. odoo-python
@@ -2857,6 +2856,7 @@ msgstr "过滤器："
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "财政预算"
 
@@ -2929,6 +2929,15 @@ msgstr "关注者(合作伙伴)"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font Awesome图标，例如：fa-tasks"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3238,6 +3247,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3427,8 +3437,9 @@ msgstr "数据不一致：“most_recent”外部行有同一日期的多个外�
 msgid ""
 "Inconsistent report_id in options dictionary. Options says %"
 "(options_report)s; report is %(report)s."
-msgstr "选项参照表的 report_id 不一致。 选项显示为 %(options_report)s； 报表则是 "
-"%(report)s。"
+msgstr ""
+"选项参照表的 report_id 不一致。 选项显示为 %(options_report)s； 报表则是 %"
+"(report)s。"
 
 #. module: account_reports
 #. odoo-python
@@ -3473,8 +3484,9 @@ msgstr ""
 msgid ""
 "Invalid domain formula in expression \"%(expression)s\" of line \"%"
 "(line)s\": %(formula)s"
-msgstr "表达式中的域算式无效。表达式：%(expression)s，行数：%(line)s，算式：%(formula"
-")s"
+msgstr ""
+"表达式中的域算式无效。表达式：%(expression)s，行数：%(line)s，算式：%"
+"(formula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3488,8 +3500,9 @@ msgstr "无效方法“%s”"
 msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
-msgstr "表达式中的子算式无效。表达式：%(expression)s，行数：%(line)s，子算式%(subform"
-"ula)s"
+msgstr ""
+"表达式中的子算式无效。表达式：%(expression)s，行数：%(line)s，子算式%"
+"(subformula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3703,6 +3716,11 @@ msgid "Last Comment"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
+msgstr ""
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Last Statement balance + Transactions since statement"
 msgstr "上次对账单余额 + 对账单后的交易"
@@ -3798,7 +3816,8 @@ msgstr "减：其他开支"
 msgid ""
 "Line '%(child)s' is configured to appear before its parent '%(parent)s'. "
 "This is not allowed."
-msgstr "资料行 “%(child)s” 设为在其母项 “%(parent)s”之前出现。系统不允许这样设定。"
+msgstr ""
+"资料行 “%(child)s” 设为在其母项 “%(parent)s”之前出现。系统不允许这样设定。"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -4322,9 +4341,9 @@ msgid ""
 "Odoo manages your deferred entries automatically. No deferred entries were "
 "found for this period. Ensure your start and end dates are correctly set on "
 "your bills and invoices."
-msgstr "Odoo "
-"自动管理您的递延分录。本期未发现递延分录。请确保您的账单和发票上的起止日期设"
-"置正确。"
+msgstr ""
+"Odoo 自动管理您的递延分录。本期未发现递延分录。请确保您的账单和发票上的起止日"
+"期设置正确。"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_period5
@@ -5287,8 +5306,9 @@ msgid ""
 "Review overdue receivables aged over 60 days and assess the need for an "
 "allowance for doubtful accounts or expected credit loss provision, as per "
 "IFRS 9 guidelines."
-msgstr "审核逾期超过 60 天的应收账款，根据《国际财务报告准则第9号》（IFRS "
-"9）评估是否需要计提坏账准备或预期信用损失准备。"
+msgstr ""
+"审核逾期超过 60 天的应收账款，根据《国际财务报告准则第9号》（IFRS 9）评估是否"
+"需要计提坏账准备或预期信用损失准备。"
 
 #. module: account_reports
 #. odoo-python
@@ -6094,8 +6114,9 @@ msgstr "该行超出序列范围"
 msgid ""
 "This line is placed before its parent, which is not allowed. You can fix it "
 "by dragging it to the proper position."
-msgstr "此数据行放置在其母项数据行之前，但系统不允许这样设定。 "
-"您可将它拖放至适当位置，以修复此问题。"
+msgstr ""
+"此数据行放置在其母项数据行之前，但系统不允许这样设定。 您可将它拖放至适当位"
+"置，以修复此问题。"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
@@ -6135,8 +6156,8 @@ msgid ""
 "parameters used for its computation could lead to errors."
 msgstr ""
 "本报告使用特定的报告代码。\n"
-"                        "
-"您可以手动进行自定义，但对其计算参数的任何更改都可能导致错误。"
+"                        您可以手动进行自定义，但对其计算参数的任何更改都可能"
+"导致错误。"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6145,7 +6166,8 @@ msgid ""
 "This report uses the CTA conversion method to consolidate multiple companies "
 "using different currencies,\n"
 "        which can lead the report to be unbalanced."
-msgstr "本报告使用 CTA 转换法来合并使用不同货币的多家公司，这可能导致报告不平衡。"
+msgstr ""
+"本报告使用 CTA 转换法来合并使用不同货币的多家公司，这可能导致报告不平衡。"
 
 #. module: account_reports
 #. odoo-python
@@ -6310,8 +6332,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr "尝试为没有分组方式值的行扩展分组方式结果。"
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6646,7 +6670,8 @@ msgstr ""
 msgid ""
 "You are trying to create returns for a company you don't have access to, "
 "please select it in the company selector"
-msgstr "您正在尝试为一间你没有权限访问的公司建立申报。请在公司选择器中选择适用公司"
+msgstr ""
+"您正在尝试为一间你没有权限访问的公司建立申报。请在公司选择器中选择适用公司"
 
 #. module: account_reports
 #. odoo-javascript
@@ -6715,6 +6740,12 @@ msgstr ""
 msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
 msgstr ""
 
 #. module: account_reports
@@ -6956,8 +6987,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} 结单 - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} 结单 - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript

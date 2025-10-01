@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-23 12:11+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/sign/ja/"
@@ -24,18 +24,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -224,8 +212,8 @@ msgstr "<b>ドキュメント:</b>"
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
-msgstr "<b>“署名”をドラッグ&ドロップ</b>ドキュメント下方へ"
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -271,7 +259,8 @@ msgstr "<br/>(Eメールアクセスは送信されていません)"
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_expired
 msgid ""
 "<i class=\"fa fa-check\"/> A fresh link has just been sent to your inbox!"
-msgstr "<i class=\"fa fa-check\"/>新しいリンクがあなたの受信トレイに送信されました！"
+msgstr ""
+"<i class=\"fa fa-check\"/>新しいリンクがあなたの受信トレイに送信されました！"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -283,8 +272,9 @@ msgstr "<i class=\"fa fa-check\"/> ドキュメントの整合性は有効です
 msgid ""
 "<i class=\"fa fa-exclamation-circle\"/> The document's integrity could not "
 "be verified."
-msgstr "<i class=\"fa fa-exclamation-circle\""
-"/>ドキュメントの整合性が検証できませんでした。"
+msgstr ""
+"<i class=\"fa fa-exclamation-circle\"/>ドキュメントの整合性が検証できませんで"
+"した。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
@@ -297,9 +287,8 @@ msgid ""
 "<i class=\"fa fa-info-circle\"/> Links sent via email expire after a set "
 "delay to increase security."
 msgstr ""
-"<i class=\"fa fa-info-circle\""
-"/>Eメールで送信されたリンクは、セキュリティを高めるために設定された遅延時間後"
-"に失効します。"
+"<i class=\"fa fa-info-circle\"/>Eメールで送信されたリンクは、セキュリティを高"
+"めるために設定された遅延時間後に失効します。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_terms_conditions_setting_banner
@@ -330,18 +319,18 @@ msgstr "<small><i> 署名待ち </i></small>"
 msgid ""
 "<small>Email Verification: The signatory has confirmed control of their "
 "email inbox by clicking on a unique link</small>"
-msgstr "<small>電子メール認証： "
-"署名者は、ユニークなリンクをクリックすることで、電子メール受信トレイの制御を"
-"確認しました。</small>"
+msgstr ""
+"<small>電子メール認証： 署名者は、ユニークなリンクをクリックすることで、電子"
+"メール受信トレイの制御を確認しました。</small>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid ""
 "<small>SMS: The signatory has confirmed their control of the phone number "
 "using a unique code sent by SMS</small>"
-msgstr "<small>SMS: "
-"署名者は、SMSで送信された固有のコードを使用して、電話番号の管理を確認していま"
-"す</small>"
+msgstr ""
+"<small>SMS: 署名者は、SMSで送信された固有のコードを使用して、電話番号の管理を"
+"確認しています</small>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_kanban
@@ -351,8 +340,8 @@ msgid ""
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
-"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" title=\"Shared\""
-" invisible=\"state != 'shared'\">\n"
+"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" "
+"title=\"Shared\" invisible=\"state != 'shared'\">\n"
 "                                    共有済\n"
 "                                </span>"
 
@@ -699,7 +688,8 @@ msgstr "itsme® を使用して署名者の身元を提供できるようにし�
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid ""
 "Allow users to define the users or groups which have access to the template"
-msgstr "テンプレートにアクセスできるユーザまたはグループをユーザが定義できるようにし"
+msgstr ""
+"テンプレートにアクセスできるユーザまたはグループをユーザが定義できるようにし"
 "ます"
 
 #. module: sign
@@ -974,7 +964,8 @@ msgstr "チェックボックス"
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_template__is_sharing
 msgid "Checked if this template has created a shared document for you"
-msgstr "このテンプレートがあなたのために共有ドキュメントを作成したかどうかをチェック"
+msgstr ""
+"このテンプレートがあなたのために共有ドキュメントを作成したかどうかをチェック"
 "します。"
 
 #. module: sign
@@ -1136,8 +1127,9 @@ msgstr "CC連絡先"
 msgid ""
 "Contacts in copy will be notified by email once the document is either fully "
 "signed or refused."
-msgstr "CC連絡先には、ドキュメントが署名されるか拒否された時に、メールで通知されます"
-"。"
+msgstr ""
+"CC連絡先には、ドキュメントが署名されるか拒否された時に、メールで通知されま"
+"す。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_share_view_form
@@ -1328,7 +1320,8 @@ msgstr "署名者 \"%s\" を削除"
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
 msgid ""
 "Deliver one-time codes by SMS to identify signatories when signing a document"
-msgstr "ドキュメントに署名する際に署名者を特定するためのワンタイムコードをSMSで配信し"
+msgstr ""
+"ドキュメントに署名する際に署名者を特定するためのワンタイムコードをSMSで配信し"
 "ます"
 
 #. module: sign
@@ -1564,7 +1557,8 @@ msgstr "ドラッグ&ドロップ"
 msgid ""
 "Draw your most beautiful signature!<br>You can also create one automatically "
 "or load a signature from your computer."
-msgstr "あなたの最も美しい署名を描いて下さい！<br>また、自動的に署名を作成したり、コ"
+msgstr ""
+"あなたの最も美しい署名を描いて下さい！<br>また、自動的に署名を作成したり、コ"
 "ンピュータから署名を読み込むこともできます。"
 
 #. module: sign
@@ -1776,7 +1770,8 @@ msgstr "Font awesomeのアイコン 例. fa-tasks"
 msgid ""
 "For 1000kg of paper usage, with 10% of recycled paper, environmental savings "
 "are based on"
-msgstr "1000kgの紙を使用する場合、再生紙を10％使用すると、次のような環境資源の節約効"
+msgstr ""
+"1000kgの紙を使用する場合、再生紙を10％使用すると、次のような環境資源の節約効"
 "果"
 
 #. module: sign
@@ -1990,7 +1985,8 @@ msgstr "チェックした場合は、一部のメッセージに配信エラー
 msgid ""
 "If checked, the unique certificate reference will be added on the final "
 "signed document."
-msgstr "チェックを入れると、署名された最終ドキュメントに固有の証明書参照が追加されま"
+msgstr ""
+"チェックを入れると、署名された最終ドキュメントに固有の証明書参照が追加されま"
 "す。"
 
 #. module: sign
@@ -2007,8 +2003,8 @@ msgstr ""
 "                        <code>\n"
 "                            署名 &gt; 設定 &gt; 役割\n"
 "                        </code>\n"
-"                        "
-"メニューから追加認証ステップを無効にすることができます。"
+"                        メニューから追加認証ステップを無効にすることができま"
+"す。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_request
@@ -2020,7 +2016,8 @@ msgstr "もし今後このドキュメントについてのリマインダを受
 msgid ""
 "If you wish, you can request the document again after buying more credits "
 "for the operation."
-msgstr "ご希望であれば、操作に必要なクレジットを買い足した後、再度ドキュメントを依頼"
+msgstr ""
+"ご希望であれば、操作に必要なクレジットを買い足した後、再度ドキュメントを依頼"
 "することができます。"
 
 #. module: sign
@@ -2420,6 +2417,16 @@ msgid "My Templates"
 msgstr "自分のテンプレート"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "秘密保持契約(NDA)"
@@ -2440,6 +2447,12 @@ msgstr "名称"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "ファイル名"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2640,7 +2653,8 @@ msgstr "Oops"
 msgid ""
 "Oops! You can’t delete a template that has signature requests. It would be "
 "like asking your users to autograph air! How about archiving it instead?"
-msgstr "署名依頼が存在するテンプレートは削除できません。削除の代わりにアーカイブして"
+msgstr ""
+"署名依頼が存在するテンプレートは削除できません。削除の代わりにアーカイブして"
 "ください。"
 
 #. module: sign
@@ -2824,7 +2838,8 @@ msgstr "読取り専用"
 msgid ""
 "Read-only can only be applied to items of the following types: 'Text', "
 "'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"
-msgstr "読み取り専用は、次のタイプの項目にのみ適用できます:テキスト、氏名、メールアド"
+msgstr ""
+"読み取り専用は、次のタイプの項目にのみ適用できます:テキスト、氏名、メールアド"
 "レス、電話番号、会社、複数行、日付、取り消し線"
 
 #. module: sign
@@ -3106,7 +3121,8 @@ msgstr "選択"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_iframe.js:0
 msgid "Selection field cannot be empty. Please add at least one option."
-msgstr "選択フィールドを空にすることはできません。少なくとも1つの選択肢を追加してくだ"
+msgstr ""
+"選択フィールドを空にすることはできません。少なくとも1つの選択肢を追加してくだ"
 "さい"
 
 #. module: sign
@@ -3796,9 +3812,9 @@ msgid ""
 "signed the document.\n"
 "                                    "
 msgstr ""
-"各署名の順番を指定します。署名署名依頼項目が次の署名者に送られるのは、"
-"前のレベルの署名者が　　　　　　　　　　　　"
-"全てのドキュメントに署名したときのみです。\n"
+"各署名の順番を指定します。署名署名依頼項目が次の署名者に送られるのは、前のレ"
+"ベルの署名者が　　　　　　　　　　　　全てのドキュメントに署名したときのみで"
+"す。\n"
 "                                    "
 
 #. module: sign
@@ -3919,7 +3935,8 @@ msgstr "タグ:"
 msgid ""
 "Technical name of the field on the partner model to auto-complete this "
 "signature field at the time of signature."
-msgstr "署名時にこの署名欄を自動入力するための取引先モデル上のフィールドの技術名。"
+msgstr ""
+"署名時にこの署名欄を自動入力するための取引先モデル上のフィールドの技術名。"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__template_id
@@ -3997,9 +4014,8 @@ msgid ""
 msgstr ""
 "Eメールでの規約 - テキストは全ての署名依頼Eメールの下部に表示されます。\n"
 "\n"
-"ウェブページとしての規約 - "
-"署名依頼メールごとにその末尾に、あなたのコンテンツへのリンクが貼り付けられま"
-"す。\n"
+"ウェブページとしての規約 - 署名依頼メールごとにその末尾に、あなたのコンテンツ"
+"へのリンクが貼り付けられます。\n"
 "        "
 
 #. module: sign
@@ -4021,7 +4037,8 @@ msgstr "ありがとうございます!"
 msgid ""
 "That's it, all done!<br>The document is signed, and a copy has been sent by "
 "email to all participants, along with a traceability report."
-msgstr "これで完了です！<br>ドキュメントに署名し、そのコピーをトレーサビリティレポー"
+msgstr ""
+"これで完了です！<br>ドキュメントに署名し、そのコピーをトレーサビリティレポー"
 "トとともに参加者全員にEメールで送信しました。"
 
 #. module: sign
@@ -4029,7 +4046,8 @@ msgstr "これで完了です！<br>ドキュメントに署名し、そのコ�
 msgid ""
 "The Odoo Sign document you are trying to reach does not exist. The signature "
 "request might have been deleted or modified."
-msgstr "対象のOdoo署名ドキュメントが存在しません。署名依頼が削除されたか変更された可"
+msgstr ""
+"対象のOdoo署名ドキュメントが存在しません。署名依頼が削除されたか変更された可"
 "能性があります。"
 
 #. module: sign
@@ -4091,8 +4109,8 @@ msgid ""
 "that signature values or the underlying PDF document may have been modified "
 "after the fact."
 msgstr ""
-"ドキュメント履歴の整合性を検証できません。こ れは、署名値または基礎 "
-"となっているPDFドキュメントが事後に変更された可能性があることを意味します。"
+"ドキュメント履歴の整合性を検証できません。こ れは、署名値または基礎 となって"
+"いるPDFドキュメントが事後に変更された可能性があることを意味します。"
 
 #. module: sign
 #. odoo-python
@@ -4100,7 +4118,8 @@ msgstr ""
 msgid ""
 "The mail address of %(partner)s has been updated. The request will be "
 "automatically resent."
-msgstr "%(partner)sのメールアドレスが更新されました。依頼は自動的に再送信されます。"
+msgstr ""
+"%(partner)sのメールアドレスが更新されました。依頼は自動的に再送信されます。"
 
 #. module: sign
 #. odoo-python
@@ -4129,7 +4148,8 @@ msgstr "要求されたページは無効であるか、もう存在しません
 #. odoo-python
 #: code:addons/sign/models/sign_item_role.py:0
 msgid "The role %s is required by the Sign application and cannot be deleted."
-msgstr "役割%sは署名アプリケーションによって要求され、削除することはできません。"
+msgstr ""
+"役割%sは署名アプリケーションによって要求され、削除することはできません。"
 
 #. module: sign
 #. odoo-python
@@ -4188,6 +4208,14 @@ msgid "The template doesn't exist anymore."
 msgstr "テンプレートはもう存在しません。"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
 "The total of sheets you saved is based on: the number of sent sign requests "
@@ -4195,15 +4223,16 @@ msgid ""
 "number of contacts in copy if the sign request is signed) = total of pages. "
 "We assume that one page weights 0.005 kilograms."
 msgstr ""
-"保存したシート数の合計は、送信された署名依頼の数×ドキュメント内のシート数 "
-"×（署名が必要な連絡先の数＋署名依頼が署名された場合のコピーの連絡先の数）＝ペ"
-"ージの合計に基づいています。1ページの重さは0.005キログラムと仮定します。"
+"保存したシート数の合計は、送信された署名依頼の数×ドキュメント内のシート数 ×"
+"（署名が必要な連絡先の数＋署名依頼が署名された場合のコピーの連絡先の数）＝"
+"ページの合計に基づいています。1ページの重さは0.005キログラムと仮定します。"
 
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/backend_components/template_alert_dialog/template_alert_dialog.xml:0
 msgid "The uploaded files cannot be read, they may be corrupted or encrypted."
-msgstr "アップロードされたファイルを読み取れません。破損しているか暗号化されている可"
+msgstr ""
+"アップロードされたファイルを読み取れません。破損しているか暗号化されている可"
 "能性があります"
 
 #. module: sign
@@ -4304,7 +4333,8 @@ msgstr "この署名依頼項目は署名することはできません。"
 msgid ""
 "This will keep all the already completed signature of this request and "
 "disable every sent access, are you sure?"
-msgstr "これにより、この依頼の完了済署名は全て保持され、送信されたアクセスはすべて無"
+msgstr ""
+"これにより、この依頼の完了済署名は全て保持され、送信されたアクセスはすべて無"
 "効になります。本当に進めますか？"
 
 #. module: sign
@@ -4402,7 +4432,8 @@ msgstr "SMSを送信できません。ドキュメントの送信者にご連絡
 msgid ""
 "Unable to sign the document due to missing required data. Please contact an "
 "administrator."
-msgstr "必要なデータが不足しているため、ドキュメントに署名できません。管理者にご連絡"
+msgstr ""
+"必要なデータが不足しているため、ドキュメントに署名できません。管理者にご連絡"
 "下さい。"
 
 #. module: sign
@@ -4461,7 +4492,8 @@ msgstr "PDFファイルをアップロードまたは既存のテンプレート
 #. odoo-javascript
 #: code:addons/sign/static/src/views/helper/sign_action_helper.xml:0
 msgid "Upload a PDF file to create a reusable template."
-msgstr "再利用可能なテンプレートを作成するには、PDFファイルをアップロードします。"
+msgstr ""
+"再利用可能なテンプレートを作成するには、PDFファイルをアップロードします。"
 
 #. module: sign
 #: model_terms:ir.actions.act_window,help:sign.sign_template_action
@@ -4526,8 +4558,9 @@ msgstr "検証と送信"
 msgid ""
 "Validate <span class=\"o_sign_validate_text\"> &amp; Send Completed "
 "Document</span>"
-msgstr "検証して <span class=\"o_sign_validate_text\"> &amp; "
-"完成ドキュメントを送信</span>"
+msgstr ""
+"検証して <span class=\"o_sign_validate_text\"> &amp; 完成ドキュメントを送信</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -4658,7 +4691,8 @@ msgstr "ウェブサイト通信履歴"
 msgid ""
 "Well done, your document is ready!<br>Let's send it to get our first "
 "signature."
-msgstr "素晴らしい。ドキュメントの用意ができました！<br>送信して、初めての署名を手に"
+msgstr ""
+"素晴らしい。ドキュメントの用意ができました！<br>送信して、初めての署名を手に"
 "入れましょう。"
 
 #. module: sign
@@ -4705,7 +4739,8 @@ msgstr "署名要求者にメールで連絡することができます。"
 msgid ""
 "You can request a new link to access your document and sign it, it will  be "
 "delivered in your inbox right away."
-msgstr "ドキュメントにアクセスし、署名するための新しいリンクを依頼することができ、そ"
+msgstr ""
+"ドキュメントにアクセスし、署名するための新しいリンクを依頼することができ、そ"
 "れはあなたの受信トレイにすぐに配信されます。"
 
 #. module: sign
@@ -4720,7 +4755,8 @@ msgstr "この署名者を再指定することはできません。"
 msgid ""
 "You cannot share this document by link, because it has fields to be filled "
 "by different roles. Use Send button instead."
-msgstr "このドキュメントには異なる役割によって入力されるフィールドがあるため、リンク"
+msgstr ""
+"このドキュメントには異なる役割によって入力されるフィールドがあるため、リンク"
 "で共有することはできません。代わりに送信ボタンを使用して下さい。"
 
 #. module: sign
@@ -4729,7 +4765,8 @@ msgstr "このドキュメントには異なる役割によって入力される
 msgid ""
 "You do not have access to these documents, please contact a Sign "
 "Administrator."
-msgstr "これらのドキュメントにアクセスできない場合は、署名管理者に連絡して下さい。"
+msgstr ""
+"これらのドキュメントにアクセスできない場合は、署名管理者に連絡して下さい。"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_refused
@@ -4810,7 +4847,8 @@ msgstr "署名が保存されました。次の署名者は"
 #: code:addons/sign/static/src/components/sign_request/document_signable.js:0
 msgid ""
 "Your signature was not submitted. Ensure the SMS validation code is correct."
-msgstr "署名が送信されませんでした。SMS認証コードが正しいことを確認して下さい。"
+msgstr ""
+"署名が送信されませんでした。SMS認証コードが正しいことを確認して下さい。"
 
 #. module: sign
 #. odoo-javascript
@@ -4841,8 +4879,8 @@ msgid ""
 "asked to authenticate fully."
 msgstr ""
 "この操作に必要なクレジットが不足しているためです。\n"
-"                    "
-"署名者は署名を終えることができましたが、完全な認証は求められませんでした。"
+"                    署名者は署名を終えることができましたが、完全な認証は求め"
+"られませんでした。"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__body
@@ -5122,6 +5160,9 @@ msgstr "あなた"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} 概要"
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr "<b>“署名”をドラッグ&ドロップ</b>ドキュメント下方へ"
 
 #~ msgid "Warning"
 #~ msgstr "警告"

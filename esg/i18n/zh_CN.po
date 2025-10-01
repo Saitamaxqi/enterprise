@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 15:31+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -35,8 +35,10 @@ msgstr "%s（副本）"
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
 "                    您正在修改已经分配给排放的排放因素。\n"
@@ -73,10 +75,12 @@ msgstr "ADEME 数据已经更新。"
 msgid ""
 "Access to ESG features including viewing data, reporting, and mapping "
 "emissions with emissions factors, but without configuration rights."
-msgstr "可访问 ESG "
-"功能，包括查看数据、报告以及将排放量与排放因素进行映射，但无配置权限。"
+msgstr ""
+"可访问 ESG 功能，包括查看数据、报告以及将排放量与排放因素进行映射，但无配置权"
+"限。"
 
 #. module: esg
+#: model:ir.model,name:esg.model_account_account
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
@@ -141,11 +145,11 @@ msgstr "金额"
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
-"排放因子已有使用此规则的指派：%(account_id)s, %(partner_id)s, "
-"%(product_id)s。排放因子：“%(factor_name)s”。"
+"排放因子已有使用此规则的指派：%(account_id)s, %(partner_id)s, %"
+"(product_id)s。排放因子：“%(factor_name)s”。"
 
 #. module: esg
 #. odoo-javascript
@@ -364,6 +368,18 @@ msgid "Category"
 msgstr "类别"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
 msgid "Child"
 msgstr "子级"
@@ -578,6 +594,7 @@ msgid "Direct Emissions"
 msgstr "直接排放"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__display_name
@@ -728,8 +745,10 @@ msgstr "排放量（kgCO₂e）"
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 "当您收到供应商发票时，排放数据将自动从会计系统同步。<br>\n"
 "                您还可以手动添加与日记账无关的其他排放。"
@@ -1034,6 +1053,7 @@ msgid "Hydrofluorocarbons (HFCs)"
 msgstr "氢氟碳化合物（HFCs）"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__id
 #: model:ir.model.fields,field_description:esg.field_account_move__id
 #: model:ir.model.fields,field_description:esg.field_account_move_line__id
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__id
@@ -1059,9 +1079,10 @@ msgstr "IT运营"
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
-msgstr "如果选中此选项，则在根据您的配置找到匹配因子时，将重新分配任何已具有排放因子"
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
+msgstr ""
+"如果选中此选项，则在根据您的配置找到匹配因子时，将重新分配任何已具有排放因子"
 "（手动或自动分配）的排放线。"
 
 #. module: esg
@@ -1542,8 +1563,7 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr "在 100 年间，该气体在全球暖化上，与二氧化碳比较的相对威力"
 
 #. module: esg
@@ -1617,8 +1637,9 @@ msgstr "范围 3：其他间接排放"
 msgid ""
 "Seamlessly bring all your ESG data together, whether from Odoo or outside, "
 "in a simple and organized way."
-msgstr "透过简单、有条理的方式，将所有 ESG 资料（不论是 Odoo "
-"系统内的资料，还是外部数据）全部整合，集中处理。"
+msgstr ""
+"透过简单、有条理的方式，将所有 ESG 资料（不论是 Odoo 系统内的资料，还是外部数"
+"据）全部整合，集中处理。"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__sequence
@@ -1698,6 +1719,12 @@ msgid "The IPCC server did not return any file to import the data."
 msgstr ""
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_assignation_line.py:0
+msgid "The account type must be of type %(valid_account_type_names)s."
+msgstr ""
+
+#. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
 msgid "The assignation rule must have at least one field filled"
 msgstr "分配规则必须至少填写一个字段"
@@ -1730,7 +1757,8 @@ msgid ""
 "Track your ESG performance, transform data into actionable insights, and "
 "generate reports to meet compliance requirements all while making informed, "
 "strategic decisions."
-msgstr "追踪ESG绩效，将数据转化为可行洞察，并生成合规报告，同时制定明智的战略决策。"
+msgstr ""
+"追踪ESG绩效，将数据转化为可行洞察，并生成合规报告，同时制定明智的战略决策。"
 
 #. module: esg
 #. odoo-javascript
@@ -1893,6 +1921,12 @@ msgid "Very High Uncertainty (> 50%)"
 msgstr "极高不确定性（> 50%）"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid "Warning"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
@@ -1915,6 +1949,14 @@ msgstr "网站消息"
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
 msgstr "网站沟通记录"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
+msgstr ""
 
 #. module: esg
 #. odoo-python
@@ -2013,5 +2055,6 @@ msgstr "tCO₂e"
 msgid ""
 "with ease! Most emissions are seamlessly calculated from your accounting "
 "data, using account move lines to generate precise and compliant reports."
-msgstr "轻松实现！大多数排放数据可直接从您的会计数据中自动计算，通过会计凭证生成精确"
+msgstr ""
+"轻松实现！大多数排放数据可直接从您的会计数据中自动计算，通过会计凭证生成精确"
 "且合规的报告。"

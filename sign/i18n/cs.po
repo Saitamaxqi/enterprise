@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-15 12:00+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/sign/cs/>\n"
@@ -28,18 +28,6 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n == 1 && n % 1 == 0) ? 0 : (n >= 2 && n "
 "<= 4 && n % 1 == 0) ? 1: (n % 1 != 0 ) ? 2 : 3;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -227,8 +215,8 @@ msgstr ""
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
-msgstr "<b>Přetáhnout & pustit “Podpis”</b> na konec dokumentu."
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -2431,6 +2419,16 @@ msgid "My Templates"
 msgstr "Moje šablony"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "NDA"
@@ -2451,6 +2449,12 @@ msgstr "Název"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "Název souboru"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2804,7 +2808,8 @@ msgstr "Možnosti přepínacích tlačítek"
 #. module: sign
 #: model:ir.model,name:sign.model_sign_item_radio_set
 msgid "Radio button set for keeping radio button items together"
-msgstr "Sada přepínacích tlačítek, pro udržování přepínacích tlačítek dohromady"
+msgstr ""
+"Sada přepínacích tlačítek, pro udržování přepínacích tlačítek dohromady"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__rating_ids
@@ -4206,6 +4211,14 @@ msgid "The template doesn't exist anymore."
 msgstr "Šablona již neexistuje."
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
 "The total of sheets you saved is based on: the number of sent sign requests "
@@ -4549,8 +4562,8 @@ msgid ""
 "Validate <span class=\"o_sign_validate_text\"> &amp; Send Completed "
 "Document</span>"
 msgstr ""
-"Ověřte <span class=\"o_sign_validate_text\"> a odešlete vyplněný "
-"dokument</span>"
+"Ověřte <span class=\"o_sign_validate_text\"> a odešlete vyplněný dokument</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -4841,7 +4854,8 @@ msgstr "Váš podpis byl uložen. Dalším podepisujícím je"
 #: code:addons/sign/static/src/components/sign_request/document_signable.js:0
 msgid ""
 "Your signature was not submitted. Ensure the SMS validation code is correct."
-msgstr "Váš podpis nebyl odeslán. Ujistěte se, že SMS ověřovací kód je správný."
+msgstr ""
+"Váš podpis nebyl odeslán. Ujistěte se, že SMS ověřovací kód je správný."
 
 #. module: sign
 #. odoo-javascript
@@ -5155,6 +5169,9 @@ msgstr "vy"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr ""
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr "<b>Přetáhnout & pustit “Podpis”</b> na konec dokumentu."
 
 #~ msgid "Warning"
 #~ msgstr "Varování"

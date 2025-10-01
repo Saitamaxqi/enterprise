@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -34,6 +34,16 @@ msgstr ""
 "<span class=\"spinner-border spinner-border-sm\"/>\n"
 "                    正在搜尋 IoT Box。\n"
 "                    <span id=\"discover_retry_countdown\" class=\"fw-bold\"/>"
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "A fiscal data module has been connected. To use it,"
+msgstr ""
+
+#. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__must_install_fdm_module
+msgid "A fiscal data module is connected to this IoT Box"
+msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
@@ -77,11 +87,33 @@ msgid "Barcode Scanner"
 msgstr "條碼掃瞄"
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
+msgid "Be careful:"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid ""
-"Be sure your IoT Box is connected to internet, wait one minute for it to "
-"start."
-msgstr "確保你的 IoT Box 已連接互聯網，然後等候一分鐘，讓它啟動。"
+"Blackbox did not respond to your request. This usually means it has "
+"disconnected. Please check its cable connection and its power supply. "
+"Restart if necessary."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Blackbox is running and operational"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid ""
+"Blackbox responded with invalid response. Please check the cable connection "
+"and the power supply, then retry. Restart if necessary"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__bluetooth
@@ -97,12 +129,6 @@ msgstr "快取"
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__camera
 msgid "Camera"
 msgstr "攝像頭"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/iot_websocket_service.js:0
-msgid "Check IoT Box connection. Try restarting if needed."
-msgstr "檢查 IoT Box 物聯網盒子的連線。如有需要，可嘗試重新啟動。"
 
 #. module: iot
 #. odoo-javascript
@@ -168,12 +194,6 @@ msgid "Connection to device failed"
 msgstr "未能連線至裝置"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/iot_websocket_service.js:0
-msgid "Connection to printer failed "
-msgstr "連線至打印機失敗"
-
-#. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
 #: model:ir.model.fields,field_description:iot.field_iot_box__create_uid
 #: model:ir.model.fields,field_description:iot.field_iot_device__create_uid
@@ -205,6 +225,12 @@ msgid "Device Count"
 msgstr "裝置數目"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Device is disconnected"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "Device type is {{0}}"
 msgstr "裝置類型是 {{0}}"
@@ -218,9 +244,12 @@ msgid "Devices"
 msgstr "設備"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Discard"
 msgstr "捨棄"
 
@@ -257,6 +286,7 @@ msgstr "顯示裝置"
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__display_name
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__display_name
+#: model:ir.model.fields,field_description:iot.field_ir_config_parameter__display_name
 #: model:ir.model.fields,field_description:iot.field_ir_http__display_name
 #: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__display_name
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_name
@@ -292,6 +322,18 @@ msgstr "未能從 %s 下載系統日誌"
 
 #. module: iot
 #. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Failed to initiate print"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Failed to reach the IoT Box for device: %s"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
 msgid "Failed to reset %s password."
 msgstr "未能重設 %s 密碼。"
@@ -303,10 +345,21 @@ msgid "Failed to restart Odoo on %s"
 msgstr "未能在 %s 重新啟動 Odoo"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/iot_report_action.js:0
-msgid "Failed to send to printer."
-msgstr "未能傳送至打印機。"
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid "Finally, paste the pairing token below in the \"Server token\" field."
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid "Find the IP address of your IoT Box then connect to the web homepage."
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+msgid ""
+"First, connect the IoT Box to internet, using an ethernet cable. Or, "
+"checkout the"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
@@ -314,9 +367,34 @@ msgid "Fiscal Data Module"
 msgstr "財政數據模組"
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.iot_device_search
-msgid "Group By"
-msgstr "分組依據"
+#. odoo-javascript
+#: code:addons/iot/static/src/backend/iot_device_form.js:0
+msgid "Fiscal Data Module is connected and operational"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Fiscal Data Module memory 90% full."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Fiscal Data Module memory full."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Fiscal Data Module not operational. Please restart the blackbox"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Fiscal Data Module real time clock corrupt."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
@@ -341,6 +419,7 @@ msgstr "主頁"
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__id
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__id
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__id
+#: model:ir.model.fields,field_description:iot.field_ir_config_parameter__id
 #: model:ir.model.fields,field_description:iot.field_ir_http__id
 #: model:ir.model.fields,field_description:iot.field_publisher_warranty_contract__id
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__id
@@ -353,14 +432,10 @@ msgid "IOT Device"
 msgstr "IOT 設備"
 
 #. module: iot
+#: model:ir.model.fields,field_description:iot.field_iot_box__identifier
 #: model:ir.model.fields,field_description:iot.field_iot_device__identifier
 msgid "Identifier"
 msgstr "識別碼"
-
-#. module: iot
-#: model:ir.model.fields,field_description:iot.field_iot_box__identifier
-msgid "Identifier (Mac Address)"
-msgstr "標識 (Mac 地址)"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_select_printers_wizard__do_not_ask_again
@@ -368,6 +443,13 @@ msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
 msgstr "若選取，下次列印時將不會顯示此對話框，並會自動使用已選打印機。"
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid ""
+"If your IoT Box has no access to the internet, you can pair it with your "
+"database using the pairing token."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
@@ -378,6 +460,18 @@ msgstr "映像檔版本"
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Internet is connected"
 msgstr "互聯網已連線"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Invalid PIN."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Invalid data in message sent to the blackbox."
+msgstr ""
 
 #. module: iot
 #: model:ir.ui.menu,name:iot.iot_menu_root
@@ -404,9 +498,9 @@ msgid "IoT Box %s found. Connecting..."
 msgstr "找到 IoT Box %s。正在連線⋯"
 
 #. module: iot
-#: model:ir.model.fields,field_description:iot.field_iot_box__ip_url
-msgid "IoT Box Home Page"
-msgstr "物聯網盒子首頁"
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid "IoT Box detected correctly."
+msgstr ""
 
 #. module: iot
 #. odoo-python
@@ -566,6 +660,12 @@ msgstr "未找到物聯網盒子"
 
 #. module: iot
 #. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "No Vat Signing Card or Vat Signing Card broken."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "No printer selected"
 msgstr "未有選擇打印機"
@@ -575,12 +675,6 @@ msgstr "未有選擇打印機"
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 msgid "No report to display"
 msgstr "沒有報告可以顯示"
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/overrides/network_utils/longpolling.js:0
-msgid "No subscription linked to your IoT Box."
-msgstr "你的 IoT Box 沒有已連結的訂閱。"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
@@ -593,17 +687,50 @@ msgid "Office Printer"
 msgstr "辦公室打印機"
 
 #. module: iot
+#: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__pair_offline
+#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+#: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
+msgid "Offline Pairing"
+msgstr ""
+
+#. module: iot
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
 msgid ""
-"One of the printer used to print document have been removed. Please retry "
-"the operation to choose new printers to print."
-msgstr "其中一部用於列印文件的打印機，已被移除。請重試該操作，以選擇其他打印機進行列印。"
+"One of the printer used to print the document has been removed.\n"
+"To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
+"Printers\" and retry the operation."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Operation wasn't saved on the blackbox"
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Optional: Plug a screen"
 msgstr "可選：插入螢幕"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Out of paper"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "PIN accepted."
+msgstr ""
+
+#. module: iot
+#. odoo-python
+#: code:addons/iot/wizard/add_iot_box.py:0
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid "Pair an IoT Box offline"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__pairing_code
@@ -612,14 +739,15 @@ msgid "Pairing Code"
 msgstr "配對碼"
 
 #. module: iot
-#: model:ir.model.fields,help:iot.field_add_iot_box__pairing_code
-msgid "Pairing code of the IoT Box"
-msgstr "IoT Box 配對代碼"
-
-#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Pairing code received from a printer or screen"
 msgstr "從打印機或螢幕收到的配對代碼"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Paper is low"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__payment
@@ -628,11 +756,9 @@ msgstr "付款終端"
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/overrides/network_utils/longpolling.js:0
-msgid ""
-"Please contact your account manager to take advantage of your IoT Box's full"
-" potential."
-msgstr "請聯絡你的客戶經理，充份發揮 IoT Box 的潛力。"
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Please activate the Vat Signing Card with PIN."
+msgstr ""
 
 #. module: iot
 #. odoo-javascript
@@ -666,15 +792,27 @@ msgid "Printer"
 msgstr "列印機"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Printer is not ready"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Printer is unreachable"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Printers"
 msgstr "印表機"
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/iot_websocket_service.js:0
-msgid "Printing operation completed on printer %s"
-msgstr "列印操作完成。打印機：%s"
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Printing timed out"
+msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
@@ -685,6 +823,29 @@ msgstr "IoT Box 發行商保證合約"
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__receipt_printer
 msgid "Receipt Printer"
 msgstr "票據列印機"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
+msgid "Remote Debug"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
+msgid ""
+"Remote debug is enabled, the owner of the token you provided has access to "
+"both your IoT Box\n"
+"                and local network. If it's unintended, click on \"Disable\" "
+"below."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid ""
+"Repeated request. This request was already handled by the fiscal data module."
+msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_actions_report
@@ -770,6 +931,12 @@ msgid "Select IoT Box to connect"
 msgstr "選擇要連線的 IoT Box"
 
 #. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid "Select Printers"
+msgstr ""
+
+#. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "Select at least one printer"
@@ -783,9 +950,8 @@ msgstr "選取打印機"
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_report_action.js:0
-#: code:addons/iot/static/src/iot_websocket_service.js:0
-msgid "Sending to printer %s..."
-msgstr "正在傳送至打印機 %s⋯"
+msgid "Sending document to printer %s..."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__serial
@@ -799,9 +965,11 @@ msgid "Serial Number"
 msgstr "序號"
 
 #. module: iot
-#: model:ir.model.fields,help:iot.field_add_iot_box__serial_number
-msgid "Serial number of the IoT Box"
-msgstr "IoT Box 序號"
+#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+msgid ""
+"Setup in progress, should take maximum 1 minute...\n"
+"                    <span class=\"spinner-border spinner-border-sm\"/>"
+msgstr ""
 
 #. module: iot
 #. odoo-python
@@ -815,9 +983,25 @@ msgid "Stage"
 msgstr "階段"
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid "Standard Pairing"
+msgstr ""
+
+#. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__start
 msgid "Start"
 msgstr "開始"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/iot_report_action.js:0
+msgid "Started printing operation on printer %s..."
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "Status"
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__subtype
@@ -836,6 +1020,11 @@ msgid "Success"
 msgstr "成功"
 
 #. module: iot
+#: model:ir.model,name:iot.model_ir_config_parameter
+msgid "System Parameter"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Technical Information"
 msgstr "技術資訊"
@@ -852,22 +1041,14 @@ msgid "Test page printed"
 msgstr "已列印測試頁"
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/backend/iot_device_form.js:0
-msgid "Test print failed"
-msgstr "列印測試失敗"
-
-#. module: iot
 #: model:ir.model,name:iot.model_iot_channel
 msgid "The Websocket IoT Channel"
 msgstr "Websocket 物聯網頻道"
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
-msgid ""
-"Then provide the IoT Box pairing code found on a screen or printer connected"
-" to the IoT Box."
-msgstr "之後，在已連線至 IoT Box 的螢幕或打印機上，尋找 IoT Box 配對代碼，並提供該代碼。"
+#: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
+msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
@@ -881,6 +1062,9 @@ msgid "Timed out"
 msgstr "已逾時"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
+#: model:ir.model.fields,field_description:iot.field_add_iot_box__offline_pairing_token
 #: model:ir.model.fields,field_description:iot.field_iot_box__token
 msgid "Token"
 msgstr "代碼(token)"
@@ -903,14 +1087,38 @@ msgstr "設備類型."
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__display_url
 msgid ""
-"URL of the page that will be displayed by the device, leave empty to use the"
-" customer facing display of the POS."
+"URL of the page that will be displayed by the device, leave empty to use the "
+"customer facing display of the POS."
 msgstr "裝置將顯示頁面的網址。可留空以使用 POS 面向客戶的顯示器。"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__direct
 msgid "USB"
 msgstr "USB"
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Unknown identifier."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Unknown printer error occurred"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Unspecified error."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Unspecified warning."
+msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__unsupported
@@ -933,6 +1141,18 @@ msgid "Variant"
 msgstr "變體"
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Vat Signing Card blocked."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/network_utils/iot_http_service.js:0
+msgid "Vat Signing Card not compatible with Fiscal Data Module."
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Visible to all"
 msgstr "向全部人顯示"
@@ -950,13 +1170,16 @@ msgid "Which one do you want to connect?<br/><br/>"
 msgstr "你想連線至哪一個？<br/><br/>"
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 msgid ""
-"Your IoT is connecting to your database. This shouldn't take long <span "
-"class=\"spinner-border spinner-border-sm\"/>"
+"You can enable remote debug on your IoT Box by providing a Ngrok authtoken."
 msgstr ""
-"你的 IoT Box 正在連線至你的資料庫，應該不用很久 <span class=\"spinner-border spinner-border-"
-"sm\"/>"
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "app."
+msgstr ""
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -974,6 +1197,37 @@ msgid "device-icon"
 msgstr "device-icon"
 
 #. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+msgid "documentation"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+msgid "e.g. ABDE0123"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
+msgid ""
+"for Wi-Fi.<br/>\n"
+"                Then, connect the IoT Box to a printer (via USB cable) or a "
+"screen (via micro HDMI cable) to get the pairing code.<br/>\n"
+"                <br/>"
+msgstr ""
+
+#. module: iot
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "install the Fiscal Data Module"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
+msgid ""
+"it enables remote access to your local network to the owner of the token."
+msgstr ""
+
+#. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
 msgid "reset.linked.printers"
 msgstr "reset.linked.printers"
@@ -982,3 +1236,70 @@ msgstr "reset.linked.printers"
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
 msgstr "添加一個物聯網盒子"
+
+#~ msgid ""
+#~ "Be sure your IoT Box is connected to internet, wait one minute for it to "
+#~ "start."
+#~ msgstr "確保你的 IoT Box 已連接互聯網，然後等候一分鐘，讓它啟動。"
+
+#~ msgid "Check IoT Box connection. Try restarting if needed."
+#~ msgstr "檢查 IoT Box 物聯網盒子的連線。如有需要，可嘗試重新啟動。"
+
+#~ msgid "Connection to printer failed "
+#~ msgstr "連線至打印機失敗"
+
+#~ msgid "Failed to send to printer."
+#~ msgstr "未能傳送至打印機。"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Identifier (Mac Address)"
+#~ msgstr "標識 (Mac 地址)"
+
+#~ msgid "IoT Box Home Page"
+#~ msgstr "物聯網盒子首頁"
+
+#~ msgid "No subscription linked to your IoT Box."
+#~ msgstr "你的 IoT Box 沒有已連結的訂閱。"
+
+#~ msgid ""
+#~ "One of the printer used to print document have been removed. Please retry "
+#~ "the operation to choose new printers to print."
+#~ msgstr ""
+#~ "其中一部用於列印文件的打印機，已被移除。請重試該操作，以選擇其他打印機進行"
+#~ "列印。"
+
+#~ msgid "Pairing code of the IoT Box"
+#~ msgstr "IoT Box 配對代碼"
+
+#~ msgid ""
+#~ "Please contact your account manager to take advantage of your IoT Box's "
+#~ "full potential."
+#~ msgstr "請聯絡你的客戶經理，充份發揮 IoT Box 的潛力。"
+
+#~ msgid "Printing operation completed on printer %s"
+#~ msgstr "列印操作完成。打印機：%s"
+
+#~ msgid "Sending to printer %s..."
+#~ msgstr "正在傳送至打印機 %s⋯"
+
+#~ msgid "Serial number of the IoT Box"
+#~ msgstr "IoT Box 序號"
+
+#~ msgid "Test print failed"
+#~ msgstr "列印測試失敗"
+
+#~ msgid ""
+#~ "Then provide the IoT Box pairing code found on a screen or printer "
+#~ "connected to the IoT Box."
+#~ msgstr ""
+#~ "之後，在已連線至 IoT Box 的螢幕或打印機上，尋找 IoT Box 配對代碼，並提供該"
+#~ "代碼。"
+
+#~ msgid ""
+#~ "Your IoT is connecting to your database. This shouldn't take long <span "
+#~ "class=\"spinner-border spinner-border-sm\"/>"
+#~ msgstr ""
+#~ "你的 IoT Box 正在連線至你的資料庫，應該不用很久 <span class=\"spinner-"
+#~ "border spinner-border-sm\"/>"

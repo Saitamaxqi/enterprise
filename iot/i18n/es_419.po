@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-30 02:42+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -352,8 +352,8 @@ msgstr "Ocurrió un error al reiniciar Odoo en %s"
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Finally, paste the pairing token below in the \"Server token\" field."
 msgstr ""
-"Por útlimo, pega el token de emparejamiento abajo en el campo "
-"\"Token del servidor\"."
+"Por útlimo, pega el token de emparejamiento abajo en el campo \"Token del "
+"servidor\"."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -715,7 +715,8 @@ msgstr "Emparejamiento sin conexión"
 #: code:addons/iot/models/ir_actions_report.py:0
 msgid ""
 "One of the printer used to print the document has been removed.\n"
-"To reset printers, go to the IoT App, Configuration tab, \"Reset Linked Printers\" and retry the operation."
+"To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
+"Printers\" and retry the operation."
 msgstr ""
 "Se eliminó una de las impresoras utilizadas para imprimir el documento.\n"
 "Para reestablecer las impresoras, navega a la aplicación IoT, en la pestaña "
@@ -778,7 +779,8 @@ msgstr "Terminal de pago"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Please activate the Vat Signing Card with PIN."
-msgstr "Activa la firma de tarjeta con número de identificación fiscal con NIP."
+msgstr ""
+"Activa la firma de tarjeta con número de identificación fiscal con NIP."
 
 #. module: iot
 #. odoo-javascript
@@ -854,8 +856,10 @@ msgstr "Depuración de errores remota"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 msgid ""
-"Remote debug is enabled, the owner of the token you provided has access to both your IoT Box\n"
-"                and local network. If it's unintended, click on \"Disable\" below."
+"Remote debug is enabled, the owner of the token you provided has access to "
+"both your IoT Box\n"
+"                and local network. If it's unintended, click on \"Disable\" "
+"below."
 msgstr ""
 "Se habilitó la depuración remota, el dueño del token que proporcionaste "
 "tiene acceso a tu caja IoT\n"
@@ -866,8 +870,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid ""
-"Repeated request. This request was already handled by the fiscal data "
-"module."
+"Repeated request. This request was already handled by the fiscal data module."
 msgstr ""
 "Solicitud repetida. Esta solicitud ya la gestionó el módulo de datos "
 "fiscales."
@@ -954,6 +957,12 @@ msgstr "Buscando una caja IoT..."
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Select IoT Box to connect"
 msgstr "Seleccione la caja IoT a la que quiere conectarse"
+
+#. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid "Select Printers"
+msgstr ""
 
 #. module: iot
 #. odoo-javascript
@@ -1070,8 +1079,8 @@ msgstr "El canal de websocket IoT"
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Then click on \"Configure\" under \"Odoo database connected\" section."
 msgstr ""
-"Después, haz clic en \"Configurar\" en la sección "
-"\"Base de datos de Odoo conectada\"."
+"Después, haz clic en \"Configurar\" en la sección \"Base de datos de Odoo "
+"conectada\"."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_device_action
@@ -1110,8 +1119,8 @@ msgstr "Tipo de dispositivo."
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__display_url
 msgid ""
-"URL of the page that will be displayed by the device, leave empty to use the"
-" customer facing display of the POS."
+"URL of the page that will be displayed by the device, leave empty to use the "
+"customer facing display of the POS."
 msgstr ""
 "URL de la página que mostrará el dispositivo, déjela en blanco para usar la "
 "pantalla de PdV del cliente."
@@ -1237,7 +1246,8 @@ msgstr "Por ejemplo, ABDE0123"
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid ""
 "for Wi-Fi.<br/>\n"
-"                Then, connect the IoT Box to a printer (via USB cable) or a screen (via micro HDMI cable) to get the pairing code.<br/>\n"
+"                Then, connect the IoT Box to a printer (via USB cable) or a "
+"screen (via micro HDMI cable) to get the pairing code.<br/>\n"
 "                <br/>"
 msgstr ""
 "para conectarla a través de una red Wi-Fi.<br/>\n"

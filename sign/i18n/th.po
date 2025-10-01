@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/sign/th/>\n"
@@ -24,18 +24,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -62,8 +50,7 @@ msgstr ""
 msgid ""
 "%(partner)s validated the signature by SMS with the phone number %"
 "(phone_number)s."
-msgstr ""
-"%(partner)s ได้ตรวจสอบลายเซ็นทาง SMS ด้วยหมายเลขโทรศัพท์ %(phone_number)s"
+msgstr "%(partner)s ได้ตรวจสอบลายเซ็นทาง SMS ด้วยหมายเลขโทรศัพท์ %(phone_number)s"
 
 #. module: sign
 #. odoo-python
@@ -217,8 +204,8 @@ msgstr ""
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
-msgstr "<b>ลาก & วาง “ลายเซ็น”</b> ที่ด้านล่างของเอกสาร"
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -451,8 +438,8 @@ msgstr ""
 "<strong>คำเตือน</strong> อย่าส่งต่ออีเมลนี้ให้บุคคลอื่น!<br/>\n"
 "            พวกเขาจะสามารถเข้าถึงเอกสารนี้และลงนามในชื่อของคุณเองได้<br/>\n"
 "            <span>ที่อยู่ IP "
-"และการแปลเป็นภาษาท้องถิ่นของคุณเชื่อมโยงกับลายเซ็นของคุณเพื่อให้แน่ใจว่าสามารถตรวจสอบย้อนกลับไ"
-"ด้</span>"
+"และการแปลเป็นภาษาท้องถิ่นของคุณเชื่อมโยงกับลายเซ็นของคุณเพื่อให้แน่ใจว่าสามารถตรวจสอบย้อนกลับได้</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -1115,8 +1102,7 @@ msgstr "ผู้ติดต่อในการคัดลอก"
 msgid ""
 "Contacts in copy will be notified by email once the document is either fully "
 "signed or refused."
-msgstr ""
-"ผู้ติดต่อที่เป็นสำเนาจะได้รับแจ้งทางอีเมลเมื่อเอกสารได้รับการลงนามอย่างสมบูรณ์หรือถูกปฏิเสธ"
+msgstr "ผู้ติดต่อที่เป็นสำเนาจะได้รับแจ้งทางอีเมลเมื่อเอกสารได้รับการลงนามอย่างสมบูรณ์หรือถูกปฏิเสธ"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_share_view_form
@@ -2398,6 +2384,16 @@ msgid "My Templates"
 msgstr "เทมเพลตของฉัน"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "NDA"
@@ -2418,6 +2414,12 @@ msgstr "ชื่อ"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "ชื่อของไฟล์"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -3774,8 +3776,9 @@ msgid ""
 "signed the document.\n"
 "                                    "
 msgstr ""
-"ระบุลำดับของผู้ลงนามแต่ละคน คำร้องขอลายเซ็นจะถูกส่งไปยั"
-"ง                                     ผู้ลงนามคนถัดไปตามลำดับเท่านั้น "
+"ระบุลำดับของผู้ลงนามแต่ละคน "
+"คำร้องขอลายเซ็นจะถูกส่งไปยัง                                     "
+"ผู้ลงนามคนถัดไปตามลำดับเท่านั้น "
 "เมื่อผู้ลงนามทั้งหมดจากระดับก่อนหน้า                                     "
 "ได้ลงนามในเอกสารแล้ว\n"
 "                                    "
@@ -3898,8 +3901,7 @@ msgstr "แท็ก:"
 msgid ""
 "Technical name of the field on the partner model to auto-complete this "
 "signature field at the time of signature."
-msgstr ""
-"ชื่อทางเทคนิคของฟิลด์ในรูปแบบของพาร์ทเนอร์เพื่อเติมฟิลด์ลายเซ็นนี้โดยอัตโนมัติในเวลาที่ลงนาม"
+msgstr "ชื่อทางเทคนิคของฟิลด์ในรูปแบบของพาร์ทเนอร์เพื่อเติมฟิลด์ลายเซ็นนี้โดยอัตโนมัติในเวลาที่ลงนาม"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__template_id
@@ -4023,8 +4025,7 @@ msgstr ""
 msgid ""
 "The completed document cannot be created because the sign request is not "
 "fully signed"
-msgstr ""
-"ไม่สามารถสร้างเอกสารที่เสร็จสมบูรณ์ได้ เนื่องจากคำขอลงนามยังลงนามไม่ครบถ้วน"
+msgstr "ไม่สามารถสร้างเอกสารที่เสร็จสมบูรณ์ได้ เนื่องจากคำขอลงนามยังลงนามไม่ครบถ้วน"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4037,8 +4038,7 @@ msgstr "การคำนวณจะขึ้นอยู่กับเว็
 msgid ""
 "The contact of %(role)s has been changed from %(old_partner)s to %"
 "(new_partner)s."
-msgstr ""
-"ผู้ติดต่อของ %(role)s ถูกเปลี่ยนจาก %(old_partner)s เป็น %(new_partner)s"
+msgstr "ผู้ติดต่อของ %(role)s ถูกเปลี่ยนจาก %(old_partner)s เป็น %(new_partner)s"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_completed
@@ -4063,8 +4063,7 @@ msgstr "เอกสาร %s ได้รับการลงนามอย�
 msgid ""
 "The final document and this completion history have been sent by email "
 "on&amp;nbsp;"
-msgstr ""
-"เอกสารขั้นสุดท้ายและประวัติการดำเนินการนี้ถูกส่งไปทางอีเมลที่ &amp;nbsp;"
+msgstr "เอกสารขั้นสุดท้ายและประวัติการดำเนินการนี้ถูกส่งไปทางอีเมลที่ &amp;nbsp;"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form
@@ -4082,8 +4081,7 @@ msgstr ""
 msgid ""
 "The mail address of %(partner)s has been updated. The request will be "
 "automatically resent."
-msgstr ""
-"ที่อยู่อีเมลของ %(partner)s ได้รับการอัปเดตแล้ว คำขอจะถูกส่งอีกครั้งโดยอัตโนมัติ"
+msgstr "ที่อยู่อีเมลของ %(partner)s ได้รับการอัปเดตแล้ว คำขอจะถูกส่งอีกครั้งโดยอัตโนมัติ"
 
 #. module: sign
 #. odoo-python
@@ -4171,6 +4169,14 @@ msgid "The template doesn't exist anymore."
 msgstr "ไม่มีเทมเพลตนี้อีกต่อไป"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
 "The total of sheets you saved is based on: the number of sent sign requests "
@@ -4179,8 +4185,8 @@ msgid ""
 "We assume that one page weights 0.005 kilograms."
 msgstr ""
 "จำนวนแผ่นงานทั้งหมดที่คุณบันทึกไว้จะขึ้นอยู่กับ: จำนวนคำขอลงนามที่ส่ง x จำนวนแผ่นงานในเอกสาร x "
-"(จำนวนผู้ติดต่อที่ต้องลงนาม + จำนวนผู้ติดต่อในสำเนาหากคำขอลงนามได้รับการลงนาม) = จำนวนหน้าทั้"
-"งหมด เราถือว่าหนึ่งหน้ามีน้ำหนัก 0.005 กิโลกรัม"
+"(จำนวนผู้ติดต่อที่ต้องลงนาม + จำนวนผู้ติดต่อในสำเนาหากคำขอลงนามได้รับการลงนาม) = "
+"จำนวนหน้าทั้งหมด เราถือว่าหนึ่งหน้ามีน้ำหนัก 0.005 กิโลกรัม"
 
 #. module: sign
 #. odoo-javascript
@@ -4385,8 +4391,7 @@ msgstr "ไม่สามารถส่ง SMS ได้ โปรดติด
 msgid ""
 "Unable to sign the document due to missing required data. Please contact an "
 "administrator."
-msgstr ""
-"ไม่สามารถลงนามในเอกสารได้ เนื่องจากข้อมูลที่จำเป็นขาดหายไป โปรดติดต่อผู้ดูแลระบบ"
+msgstr "ไม่สามารถลงนามในเอกสารได้ เนื่องจากข้อมูลที่จำเป็นขาดหายไป โปรดติดต่อผู้ดูแลระบบ"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_item_role__auth_method__sms
@@ -4593,8 +4598,8 @@ msgid ""
 "In the mean time, please make sure to input a positive number of days for "
 "the reminder interval."
 msgstr ""
-"เราสามารถส่งการแจ้งเตือนได้ในอนาคตเท่านั้น ทันทีที่เราพบวิธีส่งการแจ้งเตือนในอดีต เราจะแจ้งให้คุ"
-"ณทราบ\n"
+"เราสามารถส่งการแจ้งเตือนได้ในอนาคตเท่านั้น ทันทีที่เราพบวิธีส่งการแจ้งเตือนในอดีต "
+"เราจะแจ้งให้คุณทราบ\n"
 "ในระหว่างนี้ โปรดตรวจสอบให้แน่ใจว่าได้ป้อนจำนวนวันที่เป็นบวกสำหรับช่วงการแจ้งเตือน"
 
 #. module: sign
@@ -4607,8 +4612,7 @@ msgstr "เราไม่พบคำขอลายเซ็นที่คุ
 msgid ""
 "We display to you a ratio based on the saved weight versus 1000 kg of paper "
 "usage."
-msgstr ""
-"เราแสดงอัตราส่วนให้คุณเห็นตามน้ำหนักที่ประหยัดได้เทียบกับการใช้กระดาษ 1,000 กิโลกรัม"
+msgstr "เราแสดงอัตราส่วนให้คุณเห็นตามน้ำหนักที่ประหยัดได้เทียบกับการใช้กระดาษ 1,000 กิโลกรัม"
 
 #. module: sign
 #. odoo-javascript
@@ -4641,8 +4645,7 @@ msgstr "ประวัติการสื่อสารของเว็บ
 msgid ""
 "Well done, your document is ready!<br>Let's send it to get our first "
 "signature."
-msgstr ""
-"เยี่ยมมาก เอกสารของคุณพร้อมแล้ว! <br>มาเริ่มส่งเพื่อรับลายเซ็นแรกของเรากันเถอะ"
+msgstr "เยี่ยมมาก เอกสารของคุณพร้อมแล้ว! <br>มาเริ่มส่งเพื่อรับลายเซ็นแรกของเรากันเถอะ"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4681,8 +4684,7 @@ msgstr "ใช่"
 msgid ""
 "You can contact the person who invited you to sign the document by email for "
 "help."
-msgstr ""
-"คุณสามารถติดต่อบุคคลที่เชิญคุณให้ลงนามในเอกสารทางอีเมลเพื่อขอความช่วยเหลือได้"
+msgstr "คุณสามารถติดต่อบุคคลที่เชิญคุณให้ลงนามในเอกสารทางอีเมลเพื่อขอความช่วยเหลือได้"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_expired
@@ -5107,6 +5109,9 @@ msgstr "คุณ"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr ""
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr "<b>ลาก & วาง “ลายเซ็น”</b> ที่ด้านล่างของเอกสาร"
 
 #~ msgid "Warning"
 #~ msgstr "คำเตือน"

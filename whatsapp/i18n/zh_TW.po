@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:42+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -59,7 +59,9 @@ msgstr ", ... (另外 %s 個)"
 msgid ""
 "- Button URL will be modified to include the domain. (e.g., \"/my_path\" "
 "will be \"https://mydomain.odoo.com/my_path\")\n"
-msgstr "- 修改按鈕網址，以包含網域名稱。（例：/my_path 會變成 https://mydomain.odoo.com/my_path）\n"
+msgstr ""
+"- 修改按鈕網址，以包含網域名稱。（例：/my_path 會變成 https://"
+"mydomain.odoo.com/my_path）\n"
 
 #. module: whatsapp
 #. odoo-python
@@ -72,16 +74,19 @@ msgstr "-「按鈕」中設定的電話號碼看似不正確。"
 msgid ""
 "<i class=\"fa fa-whatsapp me-1\" title=\"Messages Count\" aria-"
 "label=\"Messages Count\"/>"
-msgstr "<i class=\"fa fa-whatsapp me-1\" title=\"訊息數目\" aria-label=\"訊息數目\"/>"
+msgstr ""
+"<i class=\"fa fa-whatsapp me-1\" title=\"訊息數目\" aria-label=\"訊息數目\"/>"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.template_message_preview
 msgid ""
 "<span class=\"o-whatsapp-font-11\">{{Location name}}</span><br/>\n"
-"                            <span class=\"text-600 o-whatsapp-font-9\">{{Address}}</span>"
+"                            <span class=\"text-600 o-whatsapp-"
+"font-9\">{{Address}}</span>"
 msgstr ""
 "<span class=\"o-whatsapp-font-11\">{{Location name}}</span><br/>\n"
-"                            <span class=\"text-600 o-whatsapp-font-9\">{{Address}}</span>"
+"                            <span class=\"text-600 o-whatsapp-"
+"font-9\">{{Address}}</span>"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
@@ -96,11 +101,13 @@ msgstr "<span class=\"o_stat_text\">聊天</span>"
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.template_message_preview
 msgid ""
-"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 text-black-50\" area-hidden=\"true\">\n"
+"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 "
+"text-black-50\" area-hidden=\"true\">\n"
 "                        06:00\n"
 "                    </span>"
 msgstr ""
-"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 text-black-50\" area-hidden=\"true\">\n"
+"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 "
+"text-black-50\" area-hidden=\"true\">\n"
 "                        06:00\n"
 "                    </span>"
 
@@ -113,10 +120,12 @@ msgstr "<span class=\"text-success\">測試需求</span>"
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_composer_view_form
 msgid ""
 "<strong>Invalid number: </strong>\n"
-"                            <span>make sure to set a country on the Contact or to specify the country code.</span>"
+"                            <span>make sure to set a country on the Contact "
+"or to specify the country code.</span>"
 msgstr ""
 "<strong>號碼無效：</strong>\n"
-"                            <span>請確保為聯絡人設定國家，或指定國家號碼。</span>"
+"                            <span>請確保為聯絡人設定國家，或指定國家號碼。</"
+"span>"
 
 #. module: whatsapp
 #. odoo-python
@@ -130,18 +139,14 @@ msgstr "已為此文件新增一個 WhatsApp 頻道"
 msgid ""
 "A new template was sent on %(record_link)s.<br>Future replies will be "
 "transferred to a new chat."
-msgstr "已透過 %(record_link)s 傳送新範本。<br>之後的回覆將會轉移至新的聊天中。"
+msgstr ""
+"已透過 %(record_link)s 傳送新範本。<br>之後的回覆將會轉移至新的聊天中。"
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/discuss_channel.py:0
 msgid "A phone number is required for WhatsApp channels %(channel_names)s"
 msgstr "以下 WhatsApp 頻道需要電話號碼： %(channel_names)s"
-
-#. module: whatsapp
-#: model:ir.model,name:whatsapp.model_mail_thread
-msgid "AI features for mail thread"
-msgstr "郵件對話串 AI 功能"
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__token
@@ -250,6 +255,31 @@ msgid "Arabic"
 msgstr "阿拉伯文"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar_eg
+msgid "Arabic (EGY)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar_lb
+msgid "Arabic (LBN)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar_ma
+msgid "Arabic (MAR)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar_qa
+msgid "Arabic (QAT)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ar_ae
+msgid "Arabic (UAE)"
+msgstr ""
+
+#. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_search
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_form
@@ -282,9 +312,12 @@ msgstr "驗證"
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__template_type
 msgid ""
-"Authentication - One-time passwords that your customers use to authenticate a transaction or login.\n"
-"Marketing - Promotions or information about your business, products or services. Or any message that isn't utility or authentication.\n"
-"Utility - Messages about a specific transaction, account, order or customer request."
+"Authentication - One-time passwords that your customers use to authenticate "
+"a transaction or login.\n"
+"Marketing - Promotions or information about your business, products or "
+"services. Or any message that isn't utility or authentication.\n"
+"Utility - Messages about a specific transaction, account, order or customer "
+"request."
 msgstr ""
 "驗證：單次使用密碼，供客戶用作驗證交易或登入。\n"
 "推廣：有關你的業務、產品或服務的宣傳或資訊，或任何不屬於實用或驗證的訊息。\n"
@@ -301,9 +334,19 @@ msgid "Base"
 msgstr "計稅基數"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__be_by
+msgid "Belarusian"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__bn
 msgid "Bengali"
 msgstr "孟加拉文"
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__bn_in
+msgid "Bengali (IND)"
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__blacklisted
@@ -425,9 +468,11 @@ msgstr "群組類型"
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_discuss_channel__channel_type
 msgid ""
-"Chat is private and unique between 2 persons. Group is private among invited"
-" persons. Channel can be freely joined (depending on its configuration)."
-msgstr "2 人之間的聊天是私密且獨特的。群組在受邀者之間是私人的。頻道可以自由加入（取決於其配置）。"
+"Chat is private and unique between 2 persons. Group is private among invited "
+"persons. Channel can be freely joined (depending on its configuration)."
+msgstr ""
+"2 人之間的聊天是私密且獨特的。群組在受邀者之間是私人的。頻道可以自由加入（取"
+"決於其配置）。"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__zh_cn
@@ -552,6 +597,11 @@ msgid "Danish"
 msgstr "丹麥文"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__prs_af
+msgid "Dari"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_account__debug_logging
 msgid "Debug logging"
 msgstr "偵錯記錄"
@@ -653,6 +703,11 @@ msgid "Dutch"
 msgstr "荷蘭文"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__nl_be
+msgid "Dutch (BEL)"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_button__url_type__dynamic
 msgid "Dynamic"
 msgstr "動態"
@@ -661,8 +716,7 @@ msgstr "動態"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Dynamic button variable name must be the same as its respective button's "
-"name"
+"Dynamic button variable name must be the same as its respective button's name"
 msgstr "動態按鈕變數名稱必須與對應按鈕的名稱相同"
 
 #. module: whatsapp
@@ -671,15 +725,88 @@ msgid "Each whatsapp message should correspond to a single message uuid."
 msgstr "每個 whatsapp 訊息應該對應一個訊息 uuid。"
 
 #. module: whatsapp
+#: model:ir.model,name:whatsapp.model_mail_thread
+msgid "Email Thread"
+msgstr ""
+
+#. module: whatsapp
 #. odoo-javascript
 #: code:addons/whatsapp/static/src/components/phone_field/phone_field.js:0
 msgid "Enable WhatsApp"
 msgstr "啟用 WhatsApp"
 
 #. module: whatsapp
+#. odoo-python
+#: code:addons/whatsapp/models/whatsapp_account.py:0
+msgid ""
+"Enabling WhatsApp debug stops medias (pictures, videos, pdf, ...) from being "
+"received."
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en
 msgid "English"
 msgstr "英文"
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_au
+msgid "English (AUS)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_ca
+msgid "English (CAN)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_gh
+msgid "English (GHA)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_in
+msgid "English (IND)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_ie
+msgid "English (IRL)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_jm
+msgid "English (JAM)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_my
+msgid "English (MYS)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_nz
+msgid "English (NZL)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_qa
+msgid "English (QAT)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_sg
+msgid "English (SGP)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_ae
+msgid "English (UAE)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_ug
+msgid "English (UGA)"
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_gb
@@ -690,6 +817,11 @@ msgstr "英文（英國）"
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_us
 msgid "English (US)"
 msgstr "英文（美國）"
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__en_za
+msgid "English (ZAF)"
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__error_msg
@@ -734,8 +866,7 @@ msgstr "模型欄位"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
-msgid ""
-"Field template variables %(var_names)s must be associated with a field."
+msgid "Field template variables %(var_names)s must be associated with a field."
 msgstr "欄位範本變數 %(var_names)s 必須與欄位相關聯。"
 
 #. module: whatsapp
@@ -849,6 +980,31 @@ msgid "French"
 msgstr "法文"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fr_be
+msgid "French (BEL)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fr_ca
+msgid "French (CAN)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fr_ch
+msgid "French (CHE)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fr_ci
+msgid "French (CIV)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fr_ma
+msgid "French (MAR)"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ka
 msgid "Georgian"
 msgstr "格魯吉亞文"
@@ -859,6 +1015,16 @@ msgid "German"
 msgstr "德文"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__de_at
+msgid "German (AUT)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__de_ch
+msgid "German (CHE)"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__el
 msgid "Greek"
 msgstr "希臘文"
@@ -867,12 +1033,6 @@ msgstr "希臘文"
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__quality__green
 msgid "Green"
 msgstr "綠色"
-
-#. module: whatsapp
-#: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_message_view_search
-#: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_template_view_search
-msgid "Group By"
-msgstr "分組依據"
 
 #. module: whatsapp
 #: model:ir.model.constraint,message:whatsapp.constraint_discuss_channel_group_public_id_check
@@ -1477,6 +1637,11 @@ msgid "Partner created by incoming WhatsApp message."
 msgstr "根據收到的 WhatsApp 訊息建立的合作夥伴。"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__ps_af
+msgid "Pashto"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__status__paused
 msgid "Paused"
 msgstr "已暫停"
@@ -1538,6 +1703,12 @@ msgstr "選擇要通知的使用者⋯"
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__name
 msgid "Placeholder"
 msgstr "提示文字"
+
+#. module: whatsapp
+#. odoo-python
+#: code:addons/whatsapp/wizard/whatsapp_composer.py:0
+msgid "Please select a WhatsApp Template to send."
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__pl
@@ -1675,12 +1846,6 @@ msgstr "重試"
 
 #. module: whatsapp
 #. odoo-javascript
-#: code:addons/whatsapp/static/src/core/common/composer_patch.xml:0
-msgid "Revive Conversation"
-msgstr "重新開展對話"
-
-#. module: whatsapp
-#. odoo-javascript
 #: code:addons/whatsapp/static/src/core/common/composer_actions_patch.js:0
 msgid "Revive WhatsApp Conversation"
 msgstr "重新開展 WhatsApp 對話"
@@ -1718,6 +1883,12 @@ msgid "See all options"
 msgstr "查看所有選項"
 
 #. module: whatsapp
+#. odoo-python
+#: code:addons/whatsapp/models/ir_actions_server.py:0
+msgid "Send %(template_name)s"
+msgstr ""
+
+#. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_composer_view_form
 msgid "Send Message"
 msgstr "傳送訊息"
@@ -1740,12 +1911,6 @@ msgstr "傳送 WhatsApp 訊息"
 #: model:ir.model,name:whatsapp.model_whatsapp_composer
 msgid "Send WhatsApp Wizard"
 msgstr "傳送 WhatsApp 精靈"
-
-#. module: whatsapp
-#. odoo-python
-#: code:addons/whatsapp/models/ir_actions_server.py:0
-msgid "Send WhatsApp: %(template_name)s"
-msgstr "傳送 WhatsApp：%(template_name)s"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.res_config_settings_view_form
@@ -1795,6 +1960,11 @@ msgid "Server Action"
 msgstr "伺服器動作"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__si_lk
+msgid "Sinhala"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__sk
 msgid "Slovak"
 msgstr "斯洛伐克文"
@@ -1810,7 +1980,8 @@ msgstr "斯洛文尼亞文"
 msgid ""
 "Something went wrong when contacting WhatsApp, please try again later. If "
 "this happens frequently, contact support."
-msgstr "聯絡 WhatsApp 時出現錯誤，請稍後再試。若經常出現這種情況，請聯絡技術支援。"
+msgstr ""
+"聯絡 WhatsApp 時出現錯誤，請稍後再試。若經常出現這種情況，請聯絡技術支援。"
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es
@@ -1823,14 +1994,59 @@ msgid "Spanish (ARG)"
 msgstr "西班牙文（阿根廷）"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_cl
+msgid "Spanish (CHL)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_co
+msgid "Spanish (COL)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_cr
+msgid "Spanish (CRI)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_do
+msgid "Spanish (DOM)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_ec
+msgid "Spanish (ECU)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_hn
+msgid "Spanish (HND)"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_mx
 msgid "Spanish (MEX)"
 msgstr "西班牙文（墨西哥）"
 
 #. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_pa
+msgid "Spanish (PAN)"
+msgstr ""
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_pe
+msgid "Spanish (PER)"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_es
 msgid "Spanish (SPA)"
 msgstr "西班牙文（西班牙）"
+
+#. module: whatsapp
+#: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__es_uy
+msgid "Spanish (URY)"
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_message__state
@@ -1956,8 +2172,8 @@ msgstr "缺漏範本類別"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Template variable should be in format {{number}}. Cannot parse "
-"\"%(placeholder)s\""
+"Template variable should be in format {{number}}. Cannot parse \"%"
+"(placeholder)s\""
 msgstr "範本變數格式應為 {{number}}。無法解析 \"%(placeholder)s\""
 
 #. module: whatsapp
@@ -2003,8 +2219,7 @@ msgstr "泰文"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-msgid ""
-"The Header Text must either contain no variable or the first one {{1}}."
+msgid "The Header Text must either contain no variable or the first one {{1}}."
 msgstr "標題文字必須不包含任何變數，或只包含第一個變數 {{1}}。"
 
 #. module: whatsapp
@@ -2115,12 +2330,6 @@ msgstr "此對話已關閉，因為自上次收到訊息後，已過了超過 24
 
 #. module: whatsapp
 #. odoo-python
-#: code:addons/whatsapp/models/discuss_channel.py:0
-msgid "This join method is not possible for regular channels."
-msgstr "這種參加方法不適用於一般頻道。"
-
-#. module: whatsapp
-#. odoo-python
 #: code:addons/whatsapp/tools/whatsapp_api.py:0
 msgid "To use WhatsApp Configure it first"
 msgstr "若要使用 WhatsApp，請先進行配置"
@@ -2148,11 +2357,14 @@ msgid ""
 "- 'Update a Record': update the values of a record\n"
 "- 'Create Activity': create an activity (Discuss)\n"
 "- 'Send Email': post a message, a note or send an email (Discuss)\n"
-"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': add or remove followers to a record (Discuss)\n"
+"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': "
+"add or remove followers to a record (Discuss)\n"
 "- 'Create Record': create a new record with new values\n"
 "- 'Execute Code': a block of Python code that will be executed\n"
-"- 'Send Webhook Notification': send a POST request to an external system, also known as a Webhook\n"
-"- 'Multi Actions': define an action that triggers several other server actions\n"
+"- 'Send Webhook Notification': send a POST request to an external system, "
+"also known as a Webhook\n"
+"- 'Multi Actions': define an action that triggers several other server "
+"actions\n"
 msgstr ""
 "伺服器操作類型。可使用以下的值：\n"
 "- 更新記錄：更新某項記錄的值\n"
@@ -2200,7 +2412,8 @@ msgid ""
 "'comment': generated by user input e.g. through discuss or composer\n"
 "'email_outgoing': generated by a mailing\n"
 "'notification': generated by system e.g. tracking messages\n"
-"'auto_comment': generated by automated notification mechanism e.g. acknowledgment\n"
+"'auto_comment': generated by automated notification mechanism e.g. "
+"acknowledgment\n"
 "'user_notification': generated for a specific recipient"
 msgstr ""
 "用於對訊息生成器進行分類\n"
@@ -2297,8 +2510,8 @@ msgstr "同一範本內，變數名稱必須獨一無二"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Variables %(field_names)s do not seem to be valid field path for model "
-"%(model_name)s."
+"Variables %(field_names)s do not seem to be valid field path for model %"
+"(model_name)s."
 msgstr "變數 %(field_names)s 不像是模型 %(model_name)s 的有效欄位路徑。"
 
 #. module: whatsapp
@@ -2312,6 +2525,12 @@ msgid "Vietnamese"
 msgstr "越南文"
 
 #. module: whatsapp
+#. odoo-javascript
+#: code:addons/whatsapp/static/src/core/web/thread_actions.js:0
+msgid "View Contact"
+msgstr ""
+
+#. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template_button__button_type__url
 msgid "Visit Website"
 msgstr "瀏覽網站"
@@ -2322,6 +2541,12 @@ msgstr "瀏覽網站"
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__wa_template_id
 msgid "Wa Template"
 msgstr "WA範本"
+
+#. module: whatsapp
+#. odoo-python
+#: code:addons/whatsapp/models/whatsapp_account.py:0
+msgid "Warning"
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__warning_message
@@ -2499,8 +2724,8 @@ msgstr "無法聯絡 Whatsapp，或查詢格式錯誤。"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
 msgid ""
-"When using a \"location\" header, there should 4 location variables not "
-"%(count)d."
+"When using a \"location\" header, there should 4 location variables not %"
+"(count)d."
 msgstr "使用「位置」標頭時，應該有 4 個位置變數，而非 %(count)d 個。"
 
 #. module: whatsapp
@@ -2524,8 +2749,7 @@ msgstr "你不可在電話欄位中使用 %(field)s，請聯絡你的管理員�
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
-msgid ""
-"You are not allowed to use field %(field)s, contact your administrator."
+msgid "You are not allowed to use field %(field)s, contact your administrator."
 msgstr "你不可使用欄位 %(field)s，請聯絡你的管理員。"
 
 #. module: whatsapp
@@ -2557,15 +2781,15 @@ msgstr "你最多可設定 10 個變數。"
 #. odoo-python
 #: code:addons/whatsapp/models/discuss_channel.py:0
 msgid ""
-"You can't leave this channel. As you are the owner of this WhatsApp channel,"
-" you can only delete it."
-msgstr "你不可離開這個頻道。因為你是這個 WhatsApp 頻道的擁有人，所以只能刪除它。"
+"You can't leave this channel. As you are the owner of this WhatsApp channel, "
+"you can only delete it."
+msgstr ""
+"你不可離開這個頻道。因為你是這個 WhatsApp 頻道的擁有人，所以只能刪除它。"
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-msgid ""
-"You cannot modify a template model when it is linked to server actions."
+msgid "You cannot modify a template model when it is linked to server actions."
 msgstr "若範本模型連結至伺服器操作，便不可修改。"
 
 #. module: whatsapp
@@ -2639,12 +2863,6 @@ msgid "e.g. https://www.example.com"
 msgstr "例：https://www.example.com"
 
 #. module: whatsapp
-#. odoo-python
-#: code:addons/whatsapp/models/discuss_channel.py:0
-msgid "joined the channel"
-msgstr "已加入頻道"
-
-#. module: whatsapp
 #: model_terms:ir.actions.act_window,help:whatsapp.whatsapp_account_action
 msgid "platform then connect it to your Odoo database"
 msgstr "平台，然後將其連結至你的 Odoo 資料庫"
@@ -2664,7 +2882,26 @@ msgstr "可變項"
 #: model_terms:ir.actions.act_window,help:whatsapp.whatsapp_template_action
 msgid ""
 "will be visible here once they're synced.\n"
-"                You can also write new ones from here and submit them for approval, following the"
+"                You can also write new ones from here and submit them for "
+"approval, following the"
 msgstr ""
 "完成同步後，將會在此處顯示。\n"
 "                你亦可在此處編寫新的內容，然後提交審批，只需按照"
+
+#~ msgid "AI features for mail thread"
+#~ msgstr "郵件對話串 AI 功能"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Revive Conversation"
+#~ msgstr "重新開展對話"
+
+#~ msgid "Send WhatsApp: %(template_name)s"
+#~ msgstr "傳送 WhatsApp：%(template_name)s"
+
+#~ msgid "This join method is not possible for regular channels."
+#~ msgstr "這種參加方法不適用於一般頻道。"
+
+#~ msgid "joined the channel"
+#~ msgstr "已加入頻道"

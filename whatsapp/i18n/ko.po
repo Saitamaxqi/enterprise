@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:49+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-29 02:40+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/whatsapp/"
@@ -71,18 +71,20 @@ msgstr "- \"버튼\"에 설정된 전화번호가 올바르지 않습니다."
 msgid ""
 "<i class=\"fa fa-whatsapp me-1\" title=\"Messages Count\" aria-"
 "label=\"Messages Count\"/>"
-msgstr "<i class=\"fa fa-whatsapp me-1\" title=\"메시지 수\" aria-label=\"메시지 수\""
-"/>"
+msgstr ""
+"<i class=\"fa fa-whatsapp me-1\" title=\"메시지 수\" aria-label=\"메시지 수"
+"\"/>"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.template_message_preview
 msgid ""
 "<span class=\"o-whatsapp-font-11\">{{Location name}}</span><br/>\n"
-"                            <span class=\"text-600 o-whatsapp-font-9\">{{Address}}</span>"
+"                            <span class=\"text-600 o-whatsapp-"
+"font-9\">{{Address}}</span>"
 msgstr ""
 "<span class=\"o-whatsapp-font-11\">{{위치 이름}}</span><br/>\n"
-"                            <span class=\"text-600 o-whatsapp-font-9\""
-">{{주소}}</span>"
+"                            <span class=\"text-600 o-whatsapp-font-9\">{{주"
+"소}}</span>"
 
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_account_view_form
@@ -97,7 +99,8 @@ msgstr "<span class=\"o_stat_text\">채팅</span>"
 #. module: whatsapp
 #: model_terms:ir.ui.view,arch_db:whatsapp.template_message_preview
 msgid ""
-"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 text-black-50\" area-hidden=\"true\">\n"
+"<span class=\"position-absolute bottom-0 end-0 o-whatsapp-font-11 py-1 px-2 "
+"text-black-50\" area-hidden=\"true\">\n"
 "                        06:00\n"
 "                    </span>"
 msgstr ""
@@ -115,11 +118,12 @@ msgstr "<span class=\"text-success\">디버그 요청</span>"
 #: model_terms:ir.ui.view,arch_db:whatsapp.whatsapp_composer_view_form
 msgid ""
 "<strong>Invalid number: </strong>\n"
-"                            <span>make sure to set a country on the Contact or to specify the country code.</span>"
+"                            <span>make sure to set a country on the Contact "
+"or to specify the country code.</span>"
 msgstr ""
 "<strong>잘못된 번호: </strong>\n"
-"                            <span>연락처에서 국가를 설정하거나 국가 코드를 "
-"지정해야 합니다.</span>"
+"                            <span>연락처에서 국가를 설정하거나 국가 코드를 지"
+"정해야 합니다.</span>"
 
 #. module: whatsapp
 #. odoo-python
@@ -133,8 +137,9 @@ msgstr "이 문서에 대한 새 WhatsApp 채널이 생성됩니다."
 msgid ""
 "A new template was sent on %(record_link)s.<br>Future replies will be "
 "transferred to a new chat."
-msgstr "%(record_link)s에 새 템플릿이 전송되었습니다. <br>향후 답장은 새 채팅으로 "
-"연결됩니다."
+msgstr ""
+"%(record_link)s에 새 템플릿이 전송되었습니다. <br>향후 답장은 새 채팅으로 연"
+"결됩니다."
 
 #. module: whatsapp
 #. odoo-python
@@ -306,14 +311,17 @@ msgstr "인증"
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_template__template_type
 msgid ""
-"Authentication - One-time passwords that your customers use to authenticate a transaction or login.\n"
-"Marketing - Promotions or information about your business, products or services. Or any message that isn't utility or authentication.\n"
-"Utility - Messages about a specific transaction, account, order or customer request."
+"Authentication - One-time passwords that your customers use to authenticate "
+"a transaction or login.\n"
+"Marketing - Promotions or information about your business, products or "
+"services. Or any message that isn't utility or authentication.\n"
+"Utility - Messages about a specific transaction, account, order or customer "
+"request."
 msgstr ""
-"인증 - 고객이 거래 또는 로그인을 인증하는 데 사용하는 일회용 비밀번호입니다."
-"\n"
-"마케팅 - 비즈니스, 제품 또는 서비스에 대한 프로모션 및 정보입니다. "
-"유틸리티나 인증이 아닌 모든 메시지가 해당됩니다.\n"
+"인증 - 고객이 거래 또는 로그인을 인증하는 데 사용하는 일회용 비밀번호입니"
+"다.\n"
+"마케팅 - 비즈니스, 제품 또는 서비스에 대한 프로모션 및 정보입니다. 유틸리티"
+"나 인증이 아닌 모든 메시지가 해당됩니다.\n"
 "유틸리티 - 특정 거래, 계정, 주문, 고객 요청에 대한 메시지입니다."
 
 #. module: whatsapp
@@ -357,7 +365,8 @@ msgstr "본문"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
 msgid "Body variables should start at 1 and not skip any number, missing %d"
-msgstr "본문 변수는 1부터 시작해야 하며 숫자를 건너뛰거나 %d를 누락해서는 안됩니다."
+msgstr ""
+"본문 변수는 1부터 시작해야 하며 숫자를 건너뛰거나 %d를 누락해서는 안됩니다."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__state__bounced
@@ -461,12 +470,12 @@ msgstr "채널 유형"
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_discuss_channel__channel_type
 msgid ""
-"Chat is private and unique between 2 persons. Group is private among invited"
-" persons. Channel can be freely joined (depending on its configuration)."
+"Chat is private and unique between 2 persons. Group is private among invited "
+"persons. Channel can be freely joined (depending on its configuration)."
 msgstr ""
-"채팅은 두 사람 사이에 비공개로 고유하게 진행됩니다. 그룹은 초대받은 "
-"사람들간에 비공개로 진행됩니다. 채널은 자유롭게 가입할 수 있습니다 (설정에 "
-"따라 다름)."
+"채팅은 두 사람 사이에 비공개로 고유하게 진행됩니다. 그룹은 초대받은 사람들간"
+"에 비공개로 진행됩니다. 채널은 자유롭게 가입할 수 있습니다 (설정에 따라 다"
+"름)."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__zh_cn
@@ -710,8 +719,7 @@ msgstr "동적"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Dynamic button variable name must be the same as its respective button's "
-"name"
+"Dynamic button variable name must be the same as its respective button's name"
 msgstr "동적 버튼의 변수 이름은 해당 버튼의 이름과 일치해야 합니다."
 
 #. module: whatsapp
@@ -734,8 +742,8 @@ msgstr "WhatsApp 사용"
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_account.py:0
 msgid ""
-"Enabling WhatsApp debug stops medias (pictures, videos, pdf, ...) from being"
-" received."
+"Enabling WhatsApp debug stops medias (pictures, videos, pdf, ...) from being "
+"received."
 msgstr ""
 
 #. module: whatsapp
@@ -861,15 +869,15 @@ msgstr "모델 필드"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
-msgid ""
-"Field template variables %(var_names)s must be associated with a field."
+msgid "Field template variables %(var_names)s must be associated with a field."
 msgstr "필드 템플릿 변수 %(var_names)s는 필드에 연결되어야 합니다."
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
 msgid "File type %(file_type)s not supported for header type %(header_type)s"
-msgstr "%(file_type)s 파일 형식은 %(header_type)s 머리글 형식에 지원되지 않습니다."
+msgstr ""
+"%(file_type)s 파일 형식은 %(header_type)s 머리글 형식에 지원되지 않습니다."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__fil
@@ -1035,7 +1043,8 @@ msgstr "녹색"
 msgid ""
 "Group authorization and group auto-subscription are only supported on "
 "channels and whatsapp."
-msgstr "그룹 승인이나 그룹 자동 구독은 채널 및 WhatsApp에서만 지원되는 기능입니다."
+msgstr ""
+"그룹 승인이나 그룹 자동 구독은 채널 및 WhatsApp에서만 지원되는 기능입니다."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__gu
@@ -1346,7 +1355,8 @@ msgstr "위치"
 msgid ""
 "Location Latitude and Longitude %(latitude)s / %(longitude)s is not in "
 "proper format."
-msgstr "위도 및 경도 %(latitude)s / %(longitude)s 위치가 올바른 형식이 아닙니다."
+msgstr ""
+"위도 및 경도 %(latitude)s / %(longitude)s 위치가 올바른 형식이 아닙니다."
 
 #. module: whatsapp
 #. odoo-python
@@ -1355,8 +1365,8 @@ msgid ""
 "Location variable should be 'name', 'address', 'latitude' or 'longitude'. "
 "Cannot parse '%(placeholder)s'"
 msgstr ""
-"위치 변수는 '이름', '주소', '위도' 또는 '경도' 여야 합니다. '%(placeholder)"
-"s' 항목 구문을 분석할 수 없습니다."
+"위치 변수는 '이름', '주소', '위도' 또는 '경도' 여야 합니다. '%"
+"(placeholder)s' 항목 구문을 분석할 수 없습니다."
 
 #. module: whatsapp
 #. odoo-python
@@ -1701,6 +1711,12 @@ msgstr "알림을 보낼 사용자 선택..."
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template_variable__name
 msgid "Placeholder"
 msgstr "자리 표시자"
+
+#. module: whatsapp
+#. odoo-python
+#: code:addons/whatsapp/wizard/whatsapp_composer.py:0
+msgid "Please select a WhatsApp Template to send."
+msgstr ""
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__lang_code__pl
@@ -2165,9 +2181,10 @@ msgstr "템플릿 카테고리가 없습니다."
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Template variable should be in format {{number}}. Cannot parse "
-"\"%(placeholder)s\""
-msgstr "서식 속성은 {{number}} 형식이어야 합니다. \"%(placeholder)s\"를 구문 분석할 "
+"Template variable should be in format {{number}}. Cannot parse \"%"
+"(placeholder)s\""
+msgstr ""
+"서식 속성은 {{number}} 형식이어야 합니다. \"%(placeholder)s\"를 구문 분석할 "
 "수 없습니다."
 
 #. module: whatsapp
@@ -2213,8 +2230,7 @@ msgstr "태국어"
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-msgid ""
-"The Header Text must either contain no variable or the first one {{1}}."
+msgid "The Header Text must either contain no variable or the first one {{1}}."
 msgstr "머리말 글에는 변수가 없거나 {{1}}이 첫 번째 변수여야 합니다."
 
 #. module: whatsapp
@@ -2321,8 +2337,9 @@ msgstr "이 메시지를 전송하는 중에 문제가 발생했습니다."
 msgid ""
 "This conversation has been closed as more than 24 hours have passed since "
 "the last message received."
-msgstr "이 대화는 마지막 메시지 수신 후 24시간 이상이 경과되었기 때문에 "
-"종료되었습니다."
+msgstr ""
+"이 대화는 마지막 메시지 수신 후 24시간 이상이 경과되었기 때문에 종료되었습니"
+"다."
 
 #. module: whatsapp
 #. odoo-python
@@ -2353,11 +2370,14 @@ msgid ""
 "- 'Update a Record': update the values of a record\n"
 "- 'Create Activity': create an activity (Discuss)\n"
 "- 'Send Email': post a message, a note or send an email (Discuss)\n"
-"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': add or remove followers to a record (Discuss)\n"
+"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': "
+"add or remove followers to a record (Discuss)\n"
 "- 'Create Record': create a new record with new values\n"
 "- 'Execute Code': a block of Python code that will be executed\n"
-"- 'Send Webhook Notification': send a POST request to an external system, also known as a Webhook\n"
-"- 'Multi Actions': define an action that triggers several other server actions\n"
+"- 'Send Webhook Notification': send a POST request to an external system, "
+"also known as a Webhook\n"
+"- 'Multi Actions': define an action that triggers several other server "
+"actions\n"
 msgstr ""
 "서버 작업 유형입니다. 다음 값을 사용할 수 있습니다:\n"
 "- '레코드 업데이트': 레코드 값을 업데이트합니다.\n"
@@ -2367,8 +2387,8 @@ msgstr ""
 "레코드에 팔로워를 추가하거나 제거합니다. (토론)\n"
 "- '레코드 만들기': 새로운 값으로 새 레코드를 생성합니다.\n"
 "- '코드 실행': 실행할 파이썬 코드 블록입니다.\n"
-"- '웹훅 알림 보내기': 웹훅이라고도 하는 외부 시스템으로 POST 요청을 보냅니다."
-"\n"
+"- '웹훅 알림 보내기': 웹훅이라고도 하는 외부 시스템으로 POST 요청을 보냅니"
+"다.\n"
 "- '다중 작업 실행': 여러 다른 서버 작업을 트리거하는 작업을 정의합니다.\n"
 
 #. module: whatsapp
@@ -2406,7 +2426,8 @@ msgid ""
 "'comment': generated by user input e.g. through discuss or composer\n"
 "'email_outgoing': generated by a mailing\n"
 "'notification': generated by system e.g. tracking messages\n"
-"'auto_comment': generated by automated notification mechanism e.g. acknowledgment\n"
+"'auto_comment': generated by automated notification mechanism e.g. "
+"acknowledgment\n"
 "'user_notification': generated for a specific recipient"
 msgstr ""
 "메세지 작성을 분류하는 데 사용됩니다.\n"
@@ -2449,7 +2470,8 @@ msgstr "사용자가 WhatsApp 메시지 수신을 선택했습니다."
 #: code:addons/whatsapp/wizard/whatsapp_composer.py:0
 msgid ""
 "User phone number required in template but no value set on user profile."
-msgstr "서식에 사용자 전화번호가 있어야 합니다. 사용자 프로필에 설정된 값이 없습니다."
+msgstr ""
+"서식에 사용자 전화번호가 있어야 합니다. 사용자 프로필에 설정된 값이 없습니다."
 
 #. module: whatsapp
 #: model:ir.model.fields,field_description:whatsapp.field_whatsapp_template__allowed_user_ids
@@ -2467,8 +2489,9 @@ msgstr "알림을 받을 사용자가 있어야 합니다."
 msgid ""
 "Users to notify when a message is received and there is no template send in "
 "last 15 days"
-msgstr "메시지를 수신하였으나 지난 15일 동안 전송한 서식이 없을 경우 알림을 보낼 "
-"사용자입니다."
+msgstr ""
+"메시지를 수신하였으나 지난 15일 동안 전송한 서식이 없을 경우 알림을 보낼 사용"
+"자입니다."
 
 #. module: whatsapp
 #: model:ir.model.fields,help:whatsapp.field_whatsapp_message__failure_reason
@@ -2504,10 +2527,11 @@ msgstr "해당 서식에 대해 변수 이름은 반드시 고유해야 합니�
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
 msgid ""
-"Variables %(field_names)s do not seem to be valid field path for model "
-"%(model_name)s."
-msgstr "변수 %(field_names)s가 %(model_name)s의 모델에 대한 유효한 필드 경로가 "
-"아닙니다.."
+"Variables %(field_names)s do not seem to be valid field path for model %"
+"(model_name)s."
+msgstr ""
+"변수 %(field_names)s가 %(model_name)s의 모델에 대한 유효한 필드 경로가 아닙니"
+"다.."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_template__header_type__video
@@ -2719,10 +2743,11 @@ msgstr "WhatsApp에 연결할 수 없거나 잘못된 쿼리입니다."
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
 msgid ""
-"When using a \"location\" header, there should 4 location variables not "
-"%(count)d."
-msgstr "머리글로 '위치'를 사용할 경우, %(count)d 국가가 아닌 4개의 위치 변수를 "
-"사용해야 합니다."
+"When using a \"location\" header, there should 4 location variables not %"
+"(count)d."
+msgstr ""
+"머리글로 '위치'를 사용할 경우, %(count)d 국가가 아닌 4개의 위치 변수를 사용해"
+"야 합니다."
 
 #. module: whatsapp
 #: model:ir.model.fields.selection,name:whatsapp.selection__whatsapp_message__failure_type__phone_invalid
@@ -2740,14 +2765,14 @@ msgstr "노랑"
 msgid ""
 "You are not allowed to use %(field)s in phone field, contact your "
 "administrator to configure it."
-msgstr "%(field)s 필드 사용 권한이 없습니다. 관리자에게 연락하여 전화번호 필드를 "
-"설정하세요."
+msgstr ""
+"%(field)s 필드 사용 권한이 없습니다. 관리자에게 연락하여 전화번호 필드를 설정"
+"하세요."
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template_variable.py:0
-msgid ""
-"You are not allowed to use field %(field)s, contact your administrator."
+msgid "You are not allowed to use field %(field)s, contact your administrator."
 msgstr "%(field)s 필드 사용 권한이 없습니다. 관리자에게 문의하세요."
 
 #. module: whatsapp
@@ -2779,16 +2804,16 @@ msgstr "최대 10개의 변수를 설정할 수 있습니다."
 #. odoo-python
 #: code:addons/whatsapp/models/discuss_channel.py:0
 msgid ""
-"You can't leave this channel. As you are the owner of this WhatsApp channel,"
-" you can only delete it."
-msgstr "해당 채널에서 나갈 수 없습니다. 해당 WhatsApp 채널의 개설자이므로, 삭제만 할 "
+"You can't leave this channel. As you are the owner of this WhatsApp channel, "
+"you can only delete it."
+msgstr ""
+"해당 채널에서 나갈 수 없습니다. 해당 WhatsApp 채널의 개설자이므로, 삭제만 할 "
 "수 있습니다."
 
 #. module: whatsapp
 #. odoo-python
 #: code:addons/whatsapp/models/whatsapp_template.py:0
-msgid ""
-"You cannot modify a template model when it is linked to server actions."
+msgid "You cannot modify a template model when it is linked to server actions."
 msgstr "서식 모델이 서버 작업과 연결되어 있는 경우에는 수정할 수 없습니다."
 
 #. module: whatsapp
@@ -2881,8 +2906,9 @@ msgstr "가변"
 #: model_terms:ir.actions.act_window,help:whatsapp.whatsapp_template_action
 msgid ""
 "will be visible here once they're synced.\n"
-"                You can also write new ones from here and submit them for approval, following the"
+"                You can also write new ones from here and submit them for "
+"approval, following the"
 msgstr ""
 "동기화되면 여기에 표시됩니다.\n"
-"                또한 여기에서 새 문서를 작성하여 승인을 받기 위해 제출할 "
-"수도 있습니다."
+"                또한 여기에서 새 문서를 작성하여 승인을 받기 위해 제출할 수"
+"도 있습니다."

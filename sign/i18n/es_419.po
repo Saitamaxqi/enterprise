@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-25 17:35+0000\n"
 "Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -20,24 +20,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
-"\n"
-"                    Mi Empresa\n"
-"                    1034 Calle Falsa\n"
-"                    11270 Argentina Antigua, Ciudad de México\n"
-"                    +52 555-555-5556\n"
-"                "
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -67,8 +49,8 @@ msgid ""
 "%(partner)s validated the signature by SMS with the phone number %"
 "(phone_number)s."
 msgstr ""
-"%(partner)s validó la firma por SMS con el número de teléfono "
-"%(phone_number)s."
+"%(partner)s validó la firma por SMS con el número de teléfono %"
+"(phone_number)s."
 
 #. module: sign
 #. odoo-python
@@ -230,8 +212,8 @@ msgstr "<b>Documentos:</b>"
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
-msgstr "<b>Arrastra y suelta el campo \"Firma\"</b> al final del documento."
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -256,7 +238,8 @@ msgstr "<b>Residuos sólidos:</b> 1290 libras= 1290*0.4536 = 585.14 kg"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid "<b>Total Energy:</b> 27 Millions BTU = 27,000,000*0.0002931 = 7.91 kWh"
-msgstr "<b>Energía total:</b> 27 millones BTU = 27,000,000*0.0002931 = 7.91 kWh"
+msgstr ""
+"<b>Energía total:</b> 27 millones BTU = 27,000,000*0.0002931 = 7.91 kWh"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -360,8 +343,8 @@ msgid ""
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
-"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" title="
-"\"Compartido\" invisible=\"state != 'shared'\">\n"
+"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" "
+"title=\"Compartido\" invisible=\"state != 'shared'\">\n"
 "                                    Compartido\n"
 "                                </span>"
 
@@ -479,8 +462,8 @@ msgid ""
 msgstr ""
 "<strong>Advertencia:</strong> ¡no reenvíe este correo electrónico a otras "
 "personas!<br/>\n"
-"            Podrán acceder al documento y firmarlo como si fueran usted.<br/>"
-"\n"
+"            Podrán acceder al documento y firmarlo como si fueran usted.<br/"
+">\n"
 "            <span>Usamos su dirección IP y su ubicación para asegurar la "
 "trazabilidad de su firma.</span>"
 
@@ -2460,6 +2443,16 @@ msgid "My Templates"
 msgstr "Mis plantillas"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "ADC"
@@ -2480,6 +2473,12 @@ msgstr "Nombre"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "Nombre del archivo"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2963,7 +2962,8 @@ msgstr "Solicitar firma"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Request expiration date must be set in the future."
-msgstr "La fecha de vencimiento de la solicitud debe establecerse en el futuro."
+msgstr ""
+"La fecha de vencimiento de la solicitud debe establecerse en el futuro."
 
 #. module: sign
 #. odoo-python
@@ -4250,6 +4250,14 @@ msgid "The template doesn't exist anymore."
 msgstr "La plantilla ya no existe."
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
+
+#. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
 msgid ""
 "The total of sheets you saved is based on: the number of sent sign requests "
@@ -4598,8 +4606,8 @@ msgid ""
 "Validate <span class=\"o_sign_validate_text\"> &amp; Send Completed "
 "Document</span>"
 msgstr ""
-"Validar <span class=\"o_sign_validate_text\">y enviar documento "
-"completado</span>"
+"Validar <span class=\"o_sign_validate_text\">y enviar documento completado</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -5211,3 +5219,21 @@ msgstr "usted"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} Resumen"
+
+#~ msgid ""
+#~ "\n"
+#~ "                    My US Company\n"
+#~ "                    1034 Wildwood Street\n"
+#~ "                    44654 Millersburg Ohio United States\n"
+#~ "                    +1 555-555-5556\n"
+#~ "                "
+#~ msgstr ""
+#~ "\n"
+#~ "                    Mi Empresa\n"
+#~ "                    1034 Calle Falsa\n"
+#~ "                    11270 Argentina Antigua, Ciudad de México\n"
+#~ "                    +52 555-555-5556\n"
+#~ "                "
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr "<b>Arrastra y suelta el campo \"Firma\"</b> al final del documento."

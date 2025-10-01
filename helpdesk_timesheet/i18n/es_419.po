@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:32+0000\n"
+"POT-Creation-Date: 2025-09-30 18:42+0000\n"
 "PO-Revision-Date: 2025-09-17 09:37+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -23,6 +23,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__ticket_count
 msgid "# Tickets"
 msgstr "# Tickets"
+
+#. module: helpdesk_timesheet
+#. odoo-python
+#: code:addons/helpdesk_timesheet/wizard/timesheet_merge_wizard.py:0
+msgid "All timesheets must be linked to the same helpdesk ticket."
+msgstr ""
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__analytic_account_id
@@ -73,6 +79,7 @@ msgstr "Departamento"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_convert_wizard__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__display_name
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_hr_timesheet_merge_wizard__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_convert_wizard__display_name
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_timesheets_analysis_report__display_name
@@ -116,6 +123,7 @@ msgstr "Horas utilizadas (hojas de horas)"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_convert_wizard__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__id
+#: model:ir.model.fields,field_description:helpdesk_timesheet.field_hr_timesheet_merge_wizard__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_project__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_project_task_convert_wizard__id
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_timesheets_analysis_report__id
@@ -132,6 +140,11 @@ msgstr "Hay un problema con el nuevo portal del sistema"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__employee_parent_id
 msgid "Manager"
 msgstr "Gerente"
+
+#. module: helpdesk_timesheet
+#: model:ir.model,name:helpdesk_timesheet.model_hr_timesheet_merge_wizard
+msgid "Merge Timesheets"
+msgstr ""
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -250,7 +263,8 @@ msgstr "Tiempo utilizado (hojas de horas)"
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket__timesheet_ids
 msgid ""
-"Time spent on this ticket. By default, your timesheets will be linked to the sales order item of your ticket.\n"
+"Time spent on this ticket. By default, your timesheets will be linked to the "
+"sales order item of your ticket.\n"
 "Remove the sales order item to make your timesheet entries non billable."
 msgstr ""
 "Tiempo utilizado en este ticket. Las hojas de horas estarán vinculadas de "
@@ -296,8 +310,8 @@ msgstr "Total"
 #. module: helpdesk_timesheet
 #: model_terms:ir.actions.act_window,help:helpdesk_timesheet.act_hr_timesheet_line_helpdesk
 msgid ""
-"Track your working hours by projects every day and invoice this time to your"
-" customers."
+"Track your working hours by projects every day and invoice this time to your "
+"customers."
 msgstr ""
 "Lleve seguimiento de las horas que utiliza por proyecto todos los días y "
 "facture este tiempo a sus clientes."

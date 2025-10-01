@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 18:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -36,20 +36,19 @@ msgid "%(user_name)s suggests to use this document as instruction"
 msgstr "%(user_name)s 建議使用此文件作為指示"
 
 #. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
-msgid "+ New Operator"
-msgstr "+ 新操作員"
-
-#. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print barcode commands"
 msgstr "列印條碼命令"
 
 #. module: mrp_workorder
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_operation_form_view
-msgid "<span class=\"o_stat_text\">Instructions</span>"
-msgstr "<span class=\"o_stat_text\">指示</span>"
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_bom_form_view_inherited
+msgid "<span class=\"o_stat_text order-2\">Instructions</span>"
+msgstr ""
+
+#. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_bom_form_view_inherited
+msgid "<span class=\"o_stat_text order-2\">Operations</span>"
+msgstr ""
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_tablet
@@ -123,6 +122,7 @@ msgstr "加入組件"
 #. odoo-javascript
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_production.py:0
+#: code:addons/mrp_workorder/models/mrp_workorder.py:0
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_additional_workorder_wizard
 msgid "Add Work Order"
@@ -208,6 +208,7 @@ msgstr "已封存"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__employee_assigned_ids
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_workorder_form_view_filter_my_work_orders
 msgid "Assigned"
 msgstr "已分派"
 
@@ -316,11 +317,17 @@ msgstr "選擇操作員"
 
 #. module: mrp_workorder
 #. odoo-javascript
-#: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
+msgid "Clear"
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_log_note_dialog.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_worksheet_document_preview_form
 msgid "Close"
 msgstr "關閉"
 
@@ -392,12 +399,6 @@ msgid "Consumption"
 msgstr "消耗"
 
 #. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
-msgid "Continue"
-msgstr "繼續"
-
-#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__total_cost
 msgid "Cost"
 msgstr "成本"
@@ -407,12 +408,6 @@ msgstr "成本"
 #: code:addons/mrp_workorder/static/src/components/viewer.js:0
 msgid "Could not display the selected %s"
 msgstr "未能顯示已選取的 %s"
-
-#. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
-msgid "Create New"
-msgstr "建立新的"
 
 #. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_stock_picking_type_action
@@ -469,6 +464,11 @@ msgid "Date Start"
 msgstr "開始日期"
 
 #. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__default_picking_type_ids
+msgid "Default Picking Type"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_point__test_type_id
 msgid "Defines the type of the quality control point."
 msgstr "定義品質控制點類型"
@@ -497,6 +497,7 @@ msgstr "捨棄"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__display_name
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_backorder__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter__display_name
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__display_name
@@ -538,8 +539,6 @@ msgid "Edit Operators"
 msgstr "編輯操作員"
 
 #. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
 #: model:ir.model,name:mrp_workorder.model_hr_employee
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__employee_assigned_ids
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__employee_id
@@ -553,6 +552,11 @@ msgstr "員工"
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__employee_ratio
 msgid "Employee Capacity"
 msgstr "員工生產能力"
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__employee_costs_hour
+msgid "Employee Cost per hour"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter__employee_costs_hour
@@ -588,6 +592,12 @@ msgid "Error during log out!"
 msgstr "登出時出錯！"
 
 #. module: mrp_workorder
+#. odoo-python
+#: code:addons/mrp_workorder/report/mrp_report_mo_overview.py:0
+msgid "Estimated employee cost: %(operation_name)s"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__duration_expected
 msgid "Expected Duration"
 msgstr "預計時長"
@@ -597,11 +607,6 @@ msgstr "預計時長"
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
 msgid "Feedback Loop"
 msgstr "反饋迴路"
-
-#. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__finished_lot_id
-msgid "Finished Lot/Serial"
-msgstr "已完成批次/序列"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
@@ -624,11 +629,24 @@ msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesome 圖示，例如，fa-task"
 
 #. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
+msgid "Generate Lot"
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_register_production_dialog.xml:0
+msgid "Generate Serial"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_change_production_qty__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_hr_employee__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_additional_workorder__id
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production_backorder__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter__id
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workcenter_productivity__id
@@ -711,9 +729,15 @@ msgstr "指示："
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_routing_workcenter__quality_point_count
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_operation_form_view
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_workorder_view_form_inherit_workorder
 msgid "Instructions"
 msgstr "指示"
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_bom__quality_point_count
+msgid "Instructions Count"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_quality_check__component_barcode
@@ -723,8 +747,7 @@ msgstr "國際物品編碼用於產品標識"
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_workorder__move_line_ids
-msgid ""
-"Inventory moves for which you must scan a lot number at this work order"
+msgid "Inventory moves for which you must scan a lot number at this work order"
 msgstr "您必須在此工單掃瞄批次號碼的庫存移動"
 
 #. module: mrp_workorder
@@ -778,6 +801,12 @@ msgstr "最後上線"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
+msgid "Load All Manufacturing Orders"
+msgstr ""
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
 msgid "Load Samples"
 msgstr "載入範例"
 
@@ -812,9 +841,9 @@ msgid "Lot"
 msgstr "批次"
 
 #. module: mrp_workorder
-#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__lot_id
-msgid "Lot/Serial"
-msgstr "批次/序列號"
+#: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__finished_lot_ids
+msgid "Lot/Serial Number"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_report_mrp_report_mo_overview
@@ -853,6 +882,7 @@ msgid "Manufacturing Order"
 msgstr "製造訂單"
 
 #. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_gantt_view
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_tree_view_planning
 msgid "Manufacturing Orders"
 msgstr "製造訂單"
@@ -871,16 +901,21 @@ msgid "Mark as Done and Close MO"
 msgstr "標記為完成並關閉MO"
 
 #. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/mrp_display/mrp_display_record.xml:0
-msgid "Mass Produce"
-msgstr "量產"
+#: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__wo_shop_floor_maximum_card_count
+msgid "Maximum number of cards per page"
+msgstr ""
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "Menu"
 msgstr "功能表"
+
+#. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
+msgid "Modify Routing"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__move_line_ids_picked
@@ -979,11 +1014,6 @@ msgid "Next Check"
 msgstr "下一檢查"
 
 #. module: mrp_workorder
-#: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
-msgid "No manufacturing steps defined yet!"
-msgstr "尚未定義生產步驟！"
-
-#. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/employees_panel.xml:0
 msgid "No operators connected"
@@ -993,6 +1023,11 @@ msgstr "未有操作員連線"
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
 msgid "No work orders to do!"
 msgstr "沒有工單可作!"
+
+#. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
+msgid "No worksheet yet !"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__note
@@ -1074,12 +1109,6 @@ msgstr "PDF"
 #: code:addons/mrp_workorder/static/src/components/viewer.xml:0
 msgid "PDF file"
 msgstr "PDF"
-
-#. module: mrp_workorder
-#. odoo-javascript
-#: code:addons/mrp_workorder/static/src/components/working_employee_popup.xml:0
-msgid "Pause"
-msgstr "暫停"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_stock_picking_type
@@ -1269,9 +1298,9 @@ msgstr "生產記錄"
 
 #. module: mrp_workorder
 #. odoo-javascript
-#: code:addons/mrp_workorder/static/src/mrp_display/mrp_display_record.js:0
-msgid "Register %s"
-msgstr "註冊 %s"
+#: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/stock_move.js:0
+msgid "Register %(productName)s"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:quality.point.test_type,name:mrp_workorder.test_type_register_byproducts
@@ -1401,6 +1430,8 @@ msgid "Set a New picture"
 msgstr "設置新圖片"
 
 #. module: mrp_workorder
+#. odoo-javascript
+#: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_workcenter_dialog.js:0
 #: model:ir.actions.client,name:mrp_workorder.action_mrp_display
 #: model:ir.model.fields,field_description:mrp_workorder.field_res_config_settings__group_mrp_wo_shop_floor
 #: model:ir.ui.menu,name:mrp_workorder.menu_mrp_workorder_root
@@ -1423,11 +1454,6 @@ msgid "Shop Floor Onboarding Image"
 msgstr "工場新手導覽圖片"
 
 #. module: mrp_workorder
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_routing_workcenter_tree_view_inherited
-msgid "Show Instructions"
-msgstr "顯示指示"
-
-#. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.res_config_settings_view_form
 msgid "Show the timer on the work order screen"
 msgstr "在工作單螢幕上顯示計時器"
@@ -1437,6 +1463,16 @@ msgstr "在工作單螢幕上顯示計時器"
 #: code:addons/mrp_workorder/static/src/components/viewer.xml:0
 msgid "Slides viewer"
 msgstr "幻燈片顯示器"
+
+#. module: mrp_workorder
+#: model:product.template,description_sale:mrp_workorder.product_template_stool
+msgid "Small wooden stool"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__state_color
+msgid "State Color"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,help:mrp_workorder.field_mrp_bom__activity_state
@@ -1462,7 +1498,6 @@ msgid "Step to change"
 msgstr "待更改步驟"
 
 #. module: mrp_workorder
-#: model:ir.actions.act_window,name:mrp_workorder.action_mrp_workorder_show_steps
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__quality_point_count
 msgid "Steps"
 msgstr "步驟"
@@ -1473,6 +1508,21 @@ msgstr "步驟"
 #: model:ir.model.fields,field_description:mrp_workorder.field_quality_check__move_id
 msgid "Stock Move"
 msgstr "庫存移動"
+
+#. module: mrp_workorder
+#: model:product.template,name:mrp_workorder.product_template_stool
+msgid "Stool"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:product.template,name:mrp_workorder.product_template_stool_foot
+msgid "Stool Foot"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:product.template,name:mrp_workorder.product_template_stool_top
+msgid "Stool Top"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.actions.client,name:mrp_workorder.tablet_client_action
@@ -1491,6 +1541,11 @@ msgid "Test Type"
 msgstr "測試類型"
 
 #. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.mrp_production_kanban_view_inherit
+msgid "The deadline of this MO is on"
+msgstr ""
+
+#. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.js:0
 msgid "The operation has been successfully moved."
@@ -1500,8 +1555,10 @@ msgstr "操作已成功移動。"
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_stock_picking_type_action
 msgid ""
 "The operation type system allows you to assign each stock\n"
-"            operation a specific type which will alter its views accordingly.\n"
-"            On the operation type you could e.g. specify if packing is needed by default,\n"
+"            operation a specific type which will alter its views "
+"accordingly.\n"
+"            On the operation type you could e.g. specify if packing is "
+"needed by default,\n"
 "            if it should show the customer."
 msgstr ""
 "操作類型系統允許您為每個庫存操作分配一個特定類型，該類型將相應地改變其檢視.\n"
@@ -1513,6 +1570,11 @@ msgstr ""
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid "There is no session chief. Please log in."
 msgstr "沒有操作時段負責人。請登入。"
+
+#. module: mrp_workorder
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_filter_shop_floor
+msgid "This Station"
+msgstr ""
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1573,8 +1635,10 @@ msgstr "總數量"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_display.xml:0
 msgid ""
-"Track work orders, show instructions and record manufacturing operations from here:\n"
-"                                quality control, consumed quantities, lot/serial numbers, etc."
+"Track work orders, show instructions and record manufacturing operations "
+"from here:\n"
+"                                quality control, consumed quantities, lot/"
+"serial numbers, etc."
 msgstr ""
 "此處可追蹤工作單、顯示說明指示，及記錄製造操作：\n"
 "                                品質控制、已消耗數量、批次/序號等。"
@@ -1586,6 +1650,7 @@ msgstr "追蹤"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_check_workorder_form
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_routing_view_tree
 msgid "Type"
 msgstr "類型"
 
@@ -1644,22 +1709,12 @@ msgid "Update Instructions"
 msgstr "更新指示"
 
 #. module: mrp_workorder
-#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
-msgid "Upload your PDF file."
-msgstr "上傳您的 PDF 檔。"
-
-#. module: mrp_workorder
-#: model_terms:ir.actions.act_window,help:mrp_workorder.action_mrp_workorder_show_steps
-msgid ""
-"Use steps to show instructions on a worksheet to operators, or trigger "
-"quality checks at specific steps of the work order."
-msgstr "利用步驟，向操作員顯示工作表中的說明，或在工作單特定步驟觸發品質檢查。"
-
-#. module: mrp_workorder
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
 msgid ""
-"Use the table work center control panel to register operations in the shop floor directly.\n"
-"            The tablet provides worksheets for your workers and allow them to scrap products, track time,\n"
+"Use the table work center control panel to register operations in the shop "
+"floor directly.\n"
+"            The tablet provides worksheets for your workers and allow them "
+"to scrap products, track time,\n"
 "            launch a maintenance request, perform quality tests, etc."
 msgstr ""
 "使用桌面工作中心控制面板，直接在車間登記操作。\n"
@@ -1696,12 +1751,19 @@ msgid ""
 "When enabled, reserved lots for component moves will be displayed in the "
 "shop floor. When disabled, lots will always need to be selected manually "
 "when processing components in the shop floor."
-msgstr "啟用後，組件移動操作的保留批次，會在工場顯示。若停用，在工場處理組件時，一定要手動選擇批次。"
+msgstr ""
+"啟用後，組件移動操作的保留批次，會在工場顯示。若停用，在工場處理組件時，一定"
+"要手動選擇批次。"
 
 #. module: mrp_workorder
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_additional_workorder_wizard
-msgid "Will be placed at the beginning if emtpy"
-msgstr "若留空，將會放在起首"
+msgid "Will be placed at the beginning if empty"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:ir.model,name:mrp_workorder.model_mrp_production_backorder
+msgid "Wizard to mark as done or create back order"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_workcenter
@@ -1750,7 +1812,8 @@ msgstr "工作單"
 #: model_terms:ir.actions.act_window,help:mrp_workorder.mrp_workorder_action_tablet
 msgid ""
 "Work orders are operations to do as part of a manufacturing order.\n"
-"            Operations are defined in the bill of materials or added in the manufacturing order directly."
+"            Operations are defined in the bill of materials or added in the "
+"manufacturing order directly."
 msgstr ""
 "工作訂單是作為製造訂單的一部分執行的操作。\n"
 "             操作在物料清單中定義或直接添加到製造訂單中."
@@ -1783,6 +1846,8 @@ msgstr "工作單"
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_worksheet_dialog.xml:0
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_routing_view_tree
+#: model_terms:ir.ui.view,arch_db:mrp_workorder.quality_point_view_form_inherit_mrp
 msgid "Worksheet"
 msgstr "工作記錄表"
 
@@ -1790,6 +1855,12 @@ msgstr "工作記錄表"
 #: model:ir.model.fields,field_description:mrp_workorder.field_stock_move__worksheet_document
 msgid "Worksheet Image/PDF"
 msgstr "工作表圖片/PDF"
+
+#. module: mrp_workorder
+#. odoo-python
+#: code:addons/mrp_workorder/models/quality.py:0
+msgid "Worksheet Preview"
+msgstr ""
 
 #. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_workorder__worksheet_page
@@ -1838,8 +1909,8 @@ msgstr "若要處理部份這些工作單，必須登入。"
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_workorder.py:0
 msgid ""
-"You need to complete Quality Checks using the Shop Floor before marking Work"
-" Order as Done."
+"You need to complete Quality Checks using the Shop Floor before marking Work "
+"Order as Done."
 msgstr "將工作單標記為完成前，你需要使用「工場」功能，完成品質檢查。"
 
 #. module: mrp_workorder
@@ -1849,7 +1920,9 @@ msgid ""
 "You need to define at least one productivity loss in the category "
 "'Productive'. Create one from the Manufacturing app, menu: Configuration / "
 "Productivity Losses."
-msgstr "需要在「生產」類別中定義至少一個生產力損失。請在製造應用程式中建立，然後轉到選單：配置 / 生產力損失。"
+msgstr ""
+"需要在「生產」類別中定義至少一個生產力損失。請在製造應用程式中建立，然後轉到"
+"選單：配置 / 生產力損失。"
 
 #. module: mrp_workorder
 #. odoo-python
@@ -1926,6 +1999,61 @@ msgid "start"
 msgstr "開始"
 
 #. module: mrp_workorder
+#: model:product.template,description_sale:mrp_workorder.product_template_stool_foot
+msgid "wooden stool foot"
+msgstr ""
+
+#. module: mrp_workorder
+#: model:product.template,description_sale:mrp_workorder.product_template_stool_top
+msgid "wooden stool top"
+msgstr ""
+
+#. module: mrp_workorder
 #: model:ir.model.fields,field_description:mrp_workorder.field_mrp_production__employee_ids
 msgid "working employees"
 msgstr "正在工作員工"
+
+#~ msgid "+ New Operator"
+#~ msgstr "+ 新操作員"
+
+#~ msgid "<span class=\"o_stat_text\">Instructions</span>"
+#~ msgstr "<span class=\"o_stat_text\">指示</span>"
+
+#~ msgid "Continue"
+#~ msgstr "繼續"
+
+#~ msgid "Create New"
+#~ msgstr "建立新的"
+
+#~ msgid "Finished Lot/Serial"
+#~ msgstr "已完成批次/序列"
+
+#~ msgid "Lot/Serial"
+#~ msgstr "批次/序列號"
+
+#~ msgid "Mass Produce"
+#~ msgstr "量產"
+
+#~ msgid "No manufacturing steps defined yet!"
+#~ msgstr "尚未定義生產步驟！"
+
+#~ msgid "Pause"
+#~ msgstr "暫停"
+
+#~ msgid "Register %s"
+#~ msgstr "註冊 %s"
+
+#~ msgid "Show Instructions"
+#~ msgstr "顯示指示"
+
+#~ msgid "Upload your PDF file."
+#~ msgstr "上傳您的 PDF 檔。"
+
+#~ msgid ""
+#~ "Use steps to show instructions on a worksheet to operators, or trigger "
+#~ "quality checks at specific steps of the work order."
+#~ msgstr ""
+#~ "利用步驟，向操作員顯示工作表中的說明，或在工作單特定步驟觸發品質檢查。"
+
+#~ msgid "Will be placed at the beginning if emtpy"
+#~ msgstr "若留空，將會放在起首"

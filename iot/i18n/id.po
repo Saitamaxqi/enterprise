@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-15 23:08+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/iot/"
@@ -680,7 +680,8 @@ msgstr "Tidak ada laporan untuk ditampilkan"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Note: It takes ~1 minute. After that, try to pair manually."
-msgstr "Ingat: Membutuhkan ~1 menit. Setelah itu, coba hubungkan secara manual."
+msgstr ""
+"Ingat: Membutuhkan ~1 menit. Setelah itu, coba hubungkan secara manual."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
@@ -699,11 +700,12 @@ msgstr "Pairing Offline"
 #: code:addons/iot/models/ir_actions_report.py:0
 msgid ""
 "One of the printer used to print the document has been removed.\n"
-"To reset printers, go to the IoT App, Configuration tab, \"Reset Linked Printers\" and retry the operation."
+"To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
+"Printers\" and retry the operation."
 msgstr ""
 "Salah satu printer yang digunakan untuk mencetak dokumen telah dihapus.\n"
-"Untuk reset printer, kunjungi App IoT, tab Konfigurasi, "
-"\"Reset Printer Terhubung\" dan coba ulang operasi."
+"Untuk reset printer, kunjungi App IoT, tab Konfigurasi, \"Reset Printer "
+"Terhubung\" dan coba ulang operasi."
 
 #. module: iot
 #. odoo-javascript
@@ -837,16 +839,17 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 msgid ""
-"Remote debug is enabled, the owner of the token you provided has access to both your IoT Box\n"
-"                and local network. If it's unintended, click on \"Disable\" below."
+"Remote debug is enabled, the owner of the token you provided has access to "
+"both your IoT Box\n"
+"                and local network. If it's unintended, click on \"Disable\" "
+"below."
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid ""
-"Repeated request. This request was already handled by the fiscal data "
-"module."
+"Repeated request. This request was already handled by the fiscal data module."
 msgstr ""
 
 #. module: iot
@@ -931,6 +934,12 @@ msgstr "Mencari IoT Box..."
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Select IoT Box to connect"
 msgstr "Pilih IoT Box untuk dihubungkan"
+
+#. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid "Select Printers"
+msgstr ""
 
 #. module: iot
 #. odoo-javascript
@@ -1085,8 +1094,8 @@ msgstr "Tipe perangkat."
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__display_url
 msgid ""
-"URL of the page that will be displayed by the device, leave empty to use the"
-" customer facing display of the POS."
+"URL of the page that will be displayed by the device, leave empty to use the "
+"customer facing display of the POS."
 msgstr ""
 "URL dari halaman yang akan ditampilkan pada perangkat, cukup kosongkan untuk "
 "menggunakan mode tampilan pelanggan PoS."
@@ -1212,7 +1221,8 @@ msgstr "contoh. ABDE0123"
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid ""
 "for Wi-Fi.<br/>\n"
-"                Then, connect the IoT Box to a printer (via USB cable) or a screen (via micro HDMI cable) to get the pairing code.<br/>\n"
+"                Then, connect the IoT Box to a printer (via USB cable) or a "
+"screen (via micro HDMI cable) to get the pairing code.<br/>\n"
 "                <br/>"
 msgstr ""
 "untuk Wi-Fi.<br/>\n"

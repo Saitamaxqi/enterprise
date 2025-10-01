@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 21:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/sign/"
@@ -32,18 +32,6 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n == 0 || n == 1) ? 0 : ((n != 0 && n % "
 "1000000 == 0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: sign
-#. odoo-python
-#: code:addons/sign/models/sign_document.py:0
-msgid ""
-"\n"
-"                    My US Company\n"
-"                    1034 Wildwood Street\n"
-"                    44654 Millersburg Ohio United States\n"
-"                    +1 555-555-5556\n"
-"                "
-msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_res_partner__signature_count
@@ -71,8 +59,8 @@ msgid ""
 "%(partner)s validated the signature by SMS with the phone number %"
 "(phone_number)s."
 msgstr ""
-"%(partner)s validou a assinatura por SMS com o número de telefone "
-"%(phone_number)s."
+"%(partner)s validou a assinatura por SMS com o número de telefone %"
+"(phone_number)s."
 
 #. module: sign
 #. odoo-python
@@ -234,8 +222,8 @@ msgstr "<b>Documentos:</b>"
 #. module: sign
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
-msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
-msgstr "<b>Arraste e solte “Assinatura”</b> na parte de baixo do documento."
+msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -365,8 +353,8 @@ msgid ""
 "                                    Shared\n"
 "                                </span>"
 msgstr ""
-"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" title=\"Shared\""
-" invisible=\"state != 'shared'\">\n"
+"<span class=\"badge rounded-pill text-bg-success ms-2 mb-1\" "
+"title=\"Shared\" invisible=\"state != 'shared'\">\n"
 "                                    Compartilhado\n"
 "                                </span>"
 
@@ -399,8 +387,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "<span class=\"ms-1 text-nowrap\">Add certificate on each page</span>"
 msgstr ""
-"<span class=\"ms-1 text-nowrap\">Adicionar certificado em todas as "
-"páginas</span>"
+"<span class=\"ms-1 text-nowrap\">Adicionar certificado em todas as páginas</"
+"span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_partner_view_form
@@ -482,10 +470,10 @@ msgid ""
 "            <span>Your IP address and localization are associated to your "
 "signature to ensure traceability.</span>"
 msgstr ""
-"<strong>Atenção:</strong> não encaminhe este e-mail para outras pessoas.<br/>"
-"\n"
-"             Elas poderão acessar este documento e assinar no seu lugar.<br/>"
-"\n"
+"<strong>Atenção:</strong> não encaminhe este e-mail para outras pessoas.<br/"
+">\n"
+"             Elas poderão acessar este documento e assinar no seu lugar.<br/"
+">\n"
 "             <span>Seu endereço IP e localização estão associados à sua "
 "assinatura para garantir a rastreabilidade.</span>"
 
@@ -2458,6 +2446,16 @@ msgid "My Templates"
 msgstr "Meus modelos"
 
 #. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_document.py:0
+msgid ""
+"My US Company\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
+msgstr ""
+
+#. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
 msgid "NDA"
 msgstr "Acordo de confidencialidade"
@@ -2478,6 +2476,12 @@ msgstr "Nome"
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "Name of the file"
 msgstr "Nome do arquivo"
+
+#. module: sign
+#. odoo-javascript
+#: code:addons/sign/static/src/js/tours/sign.js:0
+msgid "Nearly there, keep going!"
+msgstr ""
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -2867,8 +2871,9 @@ msgid ""
 "Read-only can only be applied to items of the following types: 'Text', "
 "'Name', 'Email', 'Phone', 'Company', 'Multiline', 'Date', 'Strikethrough'"
 msgstr ""
-"Somente leitura Read-only só pode ser aplicado a itens dos seguintes tipos:"
-"'Text', 'Name','Email','Phone','Company','Multiline', 'Date','Strikethrough'"
+"Somente leitura Read-only só pode ser aplicado a itens dos seguintes "
+"tipos:'Text', 'Name','Email','Phone','Company','Multiline', "
+"'Date','Strikethrough'"
 
 #. module: sign
 #. odoo-javascript
@@ -3150,7 +3155,8 @@ msgstr "Seleção"
 #: code:addons/sign/static/src/backend_components/sign_template/sign_item_custom_popover.js:0
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_iframe.js:0
 msgid "Selection field cannot be empty. Please add at least one option."
-msgstr "O campo de seleção não pode estar vazio. Adicione pelo menos uma opção."
+msgstr ""
+"O campo de seleção não pode estar vazio. Adicione pelo menos uma opção."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item__option_ids
@@ -4230,7 +4236,8 @@ msgstr ""
 #: code:addons/sign/models/sign_request_item.py:0
 msgid ""
 "The signature has been refused by %(partner)s (%(role)s), refusal reason:"
-msgstr "A assinatura foi recusada por %(partner)s (%(role)s), motivo da recusa:"
+msgstr ""
+"A assinatura foi recusada por %(partner)s (%(role)s), motivo da recusa:"
 
 #. module: sign
 #. odoo-python
@@ -4248,6 +4255,14 @@ msgstr "O e-mail de assinatura foi enviado."
 #: code:addons/sign/static/src/backend_components/sign_template/sign_template_action.js:0
 msgid "The template doesn't exist anymore."
 msgstr "O modelo não existe mais."
+
+#. module: sign
+#. odoo-python
+#: code:addons/sign/models/sign_template.py:0
+msgid ""
+"The template model %(t_name)s is incompatible with the signature fields %"
+"(model_name)s."
+msgstr ""
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4597,8 +4612,8 @@ msgid ""
 "Validate <span class=\"o_sign_validate_text\"> &amp; Send Completed "
 "Document</span>"
 msgstr ""
-"Validar <span class=\"o_sign_validate_text\">e Enviar documento "
-"preenchido</span>"
+"Validar <span class=\"o_sign_validate_text\">e Enviar documento preenchido</"
+"span>"
 
 #. module: sign
 #. odoo-javascript
@@ -5212,6 +5227,9 @@ msgstr "você"
 #: model_terms:ir.ui.view,arch_db:sign.green_report_el_pdf
 msgid "{{0}} Summary"
 msgstr "{{0}} Resumo"
+
+#~ msgid "<b>Drag & drop “Signature”</b> into the bottom of the document."
+#~ msgstr "<b>Arraste e solte “Assinatura”</b> na parte de baixo do documento."
 
 #~ msgid "Warning"
 #~ msgstr "Aviso"

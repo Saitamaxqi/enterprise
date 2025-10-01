@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
-"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/esg/ja/>"
-"\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/esg/ja/"
+">\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,12 +35,14 @@ msgstr "%s (コピー)"
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    "
-"排出量にすでに割り当てられている排出係数を変更しています。\n"
+"                    排出量にすでに割り当てられている排出係数を変更していま"
+"す。\n"
 "変更すると、これらの排出量が更新されます。古い値を保持するには、係数を複製し"
 "てください。"
 
@@ -75,10 +77,12 @@ msgstr "ADEME のデータはすでに最新のものに更新されています
 msgid ""
 "Access to ESG features including viewing data, reporting, and mapping "
 "emissions with emissions factors, but without configuration rights."
-msgstr "データ閲覧、レポート作成、排出係数による排出量のマッピングなど、ESG "
-"機能へのアクセス権はありますが、設定権はありません。"
+msgstr ""
+"データ閲覧、レポート作成、排出係数による排出量のマッピングなど、ESG 機能への"
+"アクセス権はありますが、設定権はありません。"
 
 #. module: esg
+#: model:ir.model,name:esg.model_account_account
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
@@ -143,11 +147,11 @@ msgstr "金額"
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
-"規則による割当 (%(account_id)s, %(partner_id)s, %(product_id)s) "
-"はすでに排出係数 '%(factor_name)s' に存在します。"
+"規則による割当 (%(account_id)s, %(partner_id)s, %(product_id)s) はすでに排出"
+"係数 '%(factor_name)s' に存在します。"
 
 #. module: esg
 #. odoo-javascript
@@ -358,12 +362,25 @@ msgstr "四フッ化炭素 (CF₄) (t)"
 msgid ""
 "Categorize your data into Scope 1, 2, and 3 to structure your carbon "
 "emission reporting."
-msgstr "データをスコープ1、2、3に分類して、カーボン排出レポートを体系化しましょう。"
+msgstr ""
+"データをスコープ1、2、3に分類して、カーボン排出レポートを体系化しましょう。"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__category
 msgid "Category"
 msgstr "カテゴリー"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
+"Are you sure you want to continue?"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
@@ -555,7 +572,8 @@ msgstr "終了日"
 msgid ""
 "Define gases to convert emissions into CO₂ equivalents using Global Warming "
 "Potential values."
-msgstr "温室効果ガスを定義し、温室効果ガス排出係数を使用して排出量をCO₂相当量に換算し"
+msgstr ""
+"温室効果ガスを定義し、温室効果ガス排出係数を使用して排出量をCO₂相当量に換算し"
 "ます。"
 
 #. module: esg
@@ -581,6 +599,7 @@ msgid "Direct Emissions"
 msgstr "直接排出量"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__display_name
@@ -602,7 +621,8 @@ msgstr "表示名"
 msgid ""
 "Do you want to automatically assign the selected emission factor(s) to the "
 "move lines based on your predefined assignation rules?"
-msgstr "事前に定義した割当規則に基づいて、選択した排出係数を仕訳明細に自動的に割当て"
+msgstr ""
+"事前に定義した割当規則に基づいて、選択した排出係数を仕訳明細に自動的に割当て"
 "ますか？"
 
 #. module: esg
@@ -615,7 +635,8 @@ msgstr "ダウンロード"
 #: model_terms:ir.actions.act_window,help:esg.action_view_database
 msgid ""
 "Download a certified database we provide or upload your own in Odoo format."
-msgstr "当社が提供する認定データベースをダウンロードするか、Odoo形式のデータベースを"
+msgstr ""
+"当社が提供する認定データベースをダウンロードするか、Odoo形式のデータベースを"
 "アップロードしてください。"
 
 #. module: esg
@@ -733,13 +754,15 @@ msgstr "Emissions (kgCO₂換算)"
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 "サプライヤーからの請求書を受け取ると、排出データが会計から自動的に同期されま"
 "す。<br>\n"
-"                "
-"仕訳帳にリンクされていないその他の排出量を手動で追加することもできます。"
+"                仕訳帳にリンクされていないその他の排出量を手動で追加すること"
+"もできます。"
 
 #. module: esg
 #. odoo-python
@@ -1041,6 +1064,7 @@ msgid "Hydrofluorocarbons (HFCs)"
 msgstr "ハイドロフルオロカーボン (HFCs)"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__id
 #: model:ir.model.fields,field_description:esg.field_account_move__id
 #: model:ir.model.fields,field_description:esg.field_account_move_line__id
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__id
@@ -1066,8 +1090,8 @@ msgstr "IT業務"
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
 msgstr ""
 "このチェックボックスをオンにすると、設定に基づいて一致する係数が検出された場"
 "合、すでに排出係数(手動または自動で割当てられたもの)が設定されているすべての"
@@ -1551,8 +1575,7 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr "100年間のCO₂と比較した地球温暖化に対するガスの相対的影響"
 
 #. module: esg
@@ -1626,7 +1649,8 @@ msgstr "スコープ 3: その他間接"
 msgid ""
 "Seamlessly bring all your ESG data together, whether from Odoo or outside, "
 "in a simple and organized way."
-msgstr "すべてのESGデータを、Odooからも外部からも、シンプルかつ整理された方法でシーム"
+msgstr ""
+"すべてのESGデータを、Odooからも外部からも、シンプルかつ整理された方法でシーム"
 "レスにまとめることができます。"
 
 #. module: esg
@@ -1654,8 +1678,8 @@ msgid ""
 "Some gases you're trying to delete are used for data imports:\n"
 "%(gases)s"
 msgstr ""
-"削除しようとしているガスの中にデータインポートに使用されているものがあります:"
-"\n"
+"削除しようとしているガスの中にデータインポートに使用されているものがありま"
+"す:\n"
 "%(gases)s"
 
 #. module: esg
@@ -1705,6 +1729,12 @@ msgstr "六フッ化硫黄 (SF₆) (t)"
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "The IPCC server did not return any file to import the data."
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_assignation_line.py:0
+msgid "The account type must be of type %(valid_account_type_names)s."
 msgstr ""
 
 #. module: esg
@@ -1768,7 +1798,8 @@ msgstr "輸送および物流"
 msgid ""
 "Turn insights into action, monitor your impact in real-time, and drive "
 "meaningful change across your organization."
-msgstr "得られた洞察を行動に移し、リアルタイムでインパクトを把握し、組織全体で持続可"
+msgstr ""
+"得られた洞察を行動に移し、リアルタイムでインパクトを把握し、組織全体で持続可"
 "能な変革を実現しましょう。"
 
 #. module: esg
@@ -1907,6 +1938,12 @@ msgid "Very High Uncertainty (> 50%)"
 msgstr "不確実性: 非常に高 (> 50%)"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid "Warning"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
@@ -1929,6 +1966,14 @@ msgstr "ウェブサイトメッセージ"
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
 msgstr "ウェブサイト通信履歴"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
+msgstr ""
 
 #. module: esg
 #. odoo-python
@@ -2028,6 +2073,6 @@ msgid ""
 "with ease! Most emissions are seamlessly calculated from your accounting "
 "data, using account move lines to generate precise and compliant reports."
 msgstr ""
-"を簡単に追跡しましょう! "
-"ほぼすべての排出量は、会計データからシームレスに計算され、仕訳明細を使用して"
-"、正確でコンプライアンスに準拠したレポートを作成します。"
+"を簡単に追跡しましょう! ほぼすべての排出量は、会計データからシームレスに計算"
+"され、仕訳明細を使用して、正確でコンプライアンスに準拠したレポートを作成しま"
+"す。"

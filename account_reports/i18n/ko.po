@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -28,15 +28,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "\" 계정 잔액은 다음 항목으로 인해 변동됩니다"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
 
 #. module: account_reports
 #. odoo-python
@@ -64,6 +55,7 @@ msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (사본)"
@@ -86,8 +78,9 @@ msgstr "%s 선택"
 msgid ""
 "'%s' date scope cannot be evaluated for a report used by more than one "
 "return type."
-msgstr "%s 날짜 범위는 둘 이상의 반품 유형에 대해 사용되는 보고서에서는 평가할 수 "
-"없습니다."
+msgstr ""
+"%s 날짜 범위는 둘 이상의 반품 유형에 대해 사용되는 보고서에서는 평가할 수 없"
+"습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -95,7 +88,8 @@ msgstr "%s 날짜 범위는 둘 이상의 반품 유형에 대해 사용되는 �
 msgid ""
 "'%s' date scope cannot be evaluated for a report which is not used by any "
 "return type."
-msgstr "'%s' 날짜 범위는 어떠한 반환 유형에서도 사용되지 않으므로 평가할 수 없습니다."
+msgstr ""
+"'%s' 날짜 범위는 어떠한 반환 유형에서도 사용되지 않으므로 평가할 수 없습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -216,11 +210,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">안녕하세요, <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>)님</t>\n"
-"                    <t t-else=\"\">안녕하세요, <t t-out=\"object.name or ''\""
-"/>님.</t>\n"
+"                    <t t-if=\"object.id != object.commercial_partner_id.id\">"
+"안녕하세요, <t t-out=\"object.name or ''\"/> (<t t-"
+"out=\"object.commercial_partner_id.name or ''\"/>)님</t>\n"
+"                    <t t-else=\"\">안녕하세요, <t t-out=\"object.name or "
+"''\"/>님.</t>\n"
 "                    <br/>\n"
 "                    귀하의 계좌 명세서를 첨부해 드립니다.\n"
 "                    <br/>\n"
@@ -293,8 +287,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
-"title=\"The email address is unknown on the partner\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"The email address is unknown on the partner\" invisible=\"not "
+"send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -302,8 +296,8 @@ msgid ""
 "<i>Errors marked with <i class=\"fa fa-warning\"/> are critical and prevent "
 "the file generation.</i>"
 msgstr ""
-"<i><i class=\"fa fa-warning\"/> 표시가 되어 있는 오류는 매우 심각한 것으로 "
-"파일을 생성하는 것을 방해합니다.</i>"
+"<i><i class=\"fa fa-warning\"/> 표시가 되어 있는 오류는 매우 심각한 것으로 파"
+"일을 생성하는 것을 방해합니다.</i>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -386,7 +380,8 @@ msgstr ""
 msgid ""
 "A tax unit must contain a minimum of two companies. You might want to delete "
 "the unit."
-msgstr "세금 단위에는 최소 2개 이상의 회사가 포함되어 있어야 합니다. 단위를 삭제할 "
+msgstr ""
+"세금 단위에는 최소 2개 이상의 회사가 포함되어 있어야 합니다. 단위를 삭제할 "
 "수 있습니다."
 
 #. module: account_reports
@@ -557,6 +552,11 @@ msgstr "회계 보고서 예산 항목"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "회계 보고서 표현식"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -840,9 +840,8 @@ msgid ""
 "All customer VAT numbers are valid under <a href=\"https://ec.europa.eu/"
 "taxation_customs/vies\" target=\"_blank\">VIES</a>."
 msgstr ""
-"모든 고객 부가가치세 번호는 <a href="
-"\"https://ec.europa.eu/taxation_customs/vies\" target=\"_blank\">VIES</"
-"a>에서 유효합니다."
+"모든 고객 부가가치세 번호는 <a href=\"https://ec.europa.eu/taxation_customs/"
+"vies\" target=\"_blank\">VIES</a>에서 유효합니다."
 
 #. module: account_reports
 #. odoo-python
@@ -856,7 +855,8 @@ msgstr "모든 고객에게 부가가치세 번호가 있습니다."
 msgid ""
 "All selected companies or branches do not share the same Tax ID. Please "
 "check the Tax ID of the selected companies."
-msgstr "선택한 모든 회사 또는 지점의 세금 ID가 다릅니다. 선택한 각 회사의 세금 ID를 "
+msgstr ""
+"선택한 모든 회사 또는 지점의 세금 ID가 다릅니다. 선택한 각 회사의 세금 ID를 "
 "확인하시기 바랍니다."
 
 #. module: account_reports
@@ -1291,8 +1291,9 @@ msgstr "은행 및 현금 계정"
 #: code:addons/account_reports/models/account_return.py:0
 msgid ""
 "Bank matching isn’t required for VAT returns but helps spot missing bills."
-msgstr "부가가치세 신고 시 은행 조회가 필수는 아니지만, 누락된 청구서가 있을 경우 "
-"발견할 수 있습니다."
+msgstr ""
+"부가가치세 신고 시 은행 조회가 필수는 아니지만, 누락된 청구서가 있을 경우 발"
+"견할 수 있습니다."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1368,7 +1369,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/tests/common.py:0
 msgid "Can't use this helper to create a line with both tags and formula"
-msgstr "이 도우미는 태그와 공식이 모두 있는 항목을 만드는 데 사용할 수 없습니다."
+msgstr ""
+"이 도우미는 태그와 공식이 모두 있는 항목을 만드는 데 사용할 수 없습니다."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_send_form
@@ -1511,9 +1513,7 @@ msgid "Cash surplus"
 msgstr "현금 수지"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr ""
@@ -1705,8 +1705,8 @@ msgid ""
 "Company %(company)s already belongs to a tax unit in %(country)s. A company "
 "can at most be part of one tax unit per country."
 msgstr ""
-"%(company)s 회사는 이미 %(country)s 세금 단위로 분류되어 있습니다. 회사는 "
-"국가당 하나의 세금 단위에만 속할 수 있습니다."
+"%(company)s 회사는 이미 %(country)s 세금 단위로 분류되어 있습니다. 회사는 국"
+"가당 하나의 세금 단위에만 속할 수 있습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -1841,7 +1841,8 @@ msgstr "매출원가"
 msgid ""
 "Could not expand term %(term)s while evaluating formula %"
 "(unexpanded_formula)s"
-msgstr "기간%(term)s은 수식 %(unexpanded_formula)s을 평가할 때 확장할 수 없습니다"
+msgstr ""
+"기간%(term)s은 수식 %(unexpanded_formula)s을 평가할 때 확장할 수 없습니다"
 
 #. module: account_reports
 #. odoo-javascript
@@ -2042,8 +2043,8 @@ msgid ""
 "Custom engine _report_custom_engine_last_statement_balance_amount does not "
 "support groupby"
 msgstr ""
-"사용자 지정 engine _report_custom_engine_last_statement_balance_amount 은 "
-"그룹별 지원이 되지 않습니다."
+"사용자 지정 engine _report_custom_engine_last_statement_balance_amount 은 그"
+"룹별 지원이 되지 않습니다."
 
 #. module: account_reports
 #: model:account.report,name:account_reports.customer_statement_report
@@ -2322,6 +2323,7 @@ msgstr "메일 쓰기 표시"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2739,8 +2741,8 @@ msgid ""
 "this report only reference terms belonging to other reports."
 msgstr ""
 "현재 보고서를 계산하는 동안 '%(label)s''%(line)s'로 레이블이 지정된 표현식을 "
-"덮어썼습니다. 이 보고서의 교차 보고서 집계가 다른 보고서에 속하는 용어만 "
-"참조하는지 확인하세요."
+"덮어썼습니다. 이 보고서의 교차 보고서 집계가 다른 보고서에 속하는 용어만 참조"
+"하는지 확인하세요."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__field_name
@@ -2753,8 +2755,9 @@ msgstr "필드"
 msgid ""
 "Field %s does not exist on account.move.line, and is not supported by this "
 "report's custom handler."
-msgstr "이 필드%s는 account.move.line에 존재하지 않으며 이 보고서의 사용자 지정 "
-"핸들러에서 지원되지 않습니다."
+msgstr ""
+"이 필드%s는 account.move.line에 존재하지 않으며 이 보고서의 사용자 지정 핸들"
+"러에서 지원되지 않습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -2774,15 +2777,17 @@ msgstr "account.move.line의 %s 필드는 그룹 기준 표현식에서 사용�
 msgid ""
 "Field %s of account.move.line is not searchable and can therefore not be "
 "used in a groupby expression."
-msgstr "account.move.line의 %s 필드가 검색되지 않아서 그룹 기준 표현식에 사용할 수 "
-"없습니다."
+msgstr ""
+"account.move.line의 %s 필드가 검색되지 않아서 그룹 기준 표현식에 사용할 수 없"
+"습니다."
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
 "Field 'Custom Handler Model' can only reference records inheriting from [%s]."
-msgstr "'커스텀 핸들러 모델' 필드는 [%s]에서 상속된 레코드만 참조할 수 있습니다."
+msgstr ""
+"'커스텀 핸들러 모델' 필드는 [%s]에서 상속된 레코드만 참조할 수 있습니다."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__file_content
@@ -2815,6 +2820,7 @@ msgstr "필터:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "재정 예산"
 
@@ -2838,7 +2844,8 @@ msgstr "재정 위치 동기화"
 msgid ""
 "Fiscal Positions should apply to all companies of the tax unit. You may want "
 "to"
-msgstr "재정 위치는 세무 단위 회사 전체에 적용되어야 합니다. 다음과 같이 진행하세요."
+msgstr ""
+"재정 위치는 세무 단위 회사 전체에 적용되어야 합니다. 다음과 같이 진행하세요."
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_fixed_assets_review
@@ -2887,6 +2894,15 @@ msgstr "팔로워 (협력사)"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "멋진 아이콘 폰트 예: fa-tasks"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3198,6 +3214,7 @@ msgstr "IBAN (국제 은행 계좌 번호)"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3379,7 +3396,8 @@ msgstr "일치하지 않는 재무제표"
 msgid ""
 "Inconsistent data: more than one external value at the same date for a "
 "'most_recent' external line."
-msgstr "일치하지 않는 데이터: 'most_recent' 외부 항목에 대한 동일 날짜에 대하여 하나 "
+msgstr ""
+"일치하지 않는 데이터: 'most_recent' 외부 항목에 대한 동일 날짜에 대하여 하나 "
 "이상의 외부 값이 있습니다."
 
 #. module: account_reports
@@ -3389,8 +3407,8 @@ msgid ""
 "Inconsistent report_id in options dictionary. Options says %"
 "(options_report)s; report is %(report)s."
 msgstr ""
-"옵션 라이브러리에 일치하지 않는 report_id 가 있습니다. 옵션에서는 "
-"%(options_report)s이나, 보고서에서는 %(report)s입니다."
+"옵션 라이브러리에 일치하지 않는 report_id 가 있습니다. 옵션에서는 %"
+"(options_report)s이나, 보고서에서는 %(report)s입니다."
 
 #. module: account_reports
 #. odoo-python
@@ -3435,8 +3453,9 @@ msgstr ""
 msgid ""
 "Invalid domain formula in expression \"%(expression)s\" of line \"%"
 "(line)s\": %(formula)s"
-msgstr "표현식 \"%(expression)s\" (\"%(line)s\" 명세서 내) 도메인이 유효하지 "
-"않습니다: %(formula)s"
+msgstr ""
+"표현식 \"%(expression)s\" (\"%(line)s\" 명세서 내) 도메인이 유효하지 않습니"
+"다: %(formula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3451,14 +3470,15 @@ msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
 msgstr ""
-"표현식 \"%(expression)s\" (\"%(line)s\" 명세서 내)에 잘못한 하위 수식이 "
-"있습니다: %(subformula)s"
+"표현식 \"%(expression)s\" (\"%(line)s\" 명세서 내)에 잘못한 하위 수식이 있습"
+"니다: %(subformula)s"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "Invalid token '%(token)s' in account_codes formula '%(formula)s'"
-msgstr "'%(token)s' account_codes 수식 '%(formula)s'의 토큰이 유효하지 않습니다."
+msgstr ""
+"'%(token)s' account_codes 수식 '%(formula)s'의 토큰이 유효하지 않습니다."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__inventory
@@ -3666,6 +3686,11 @@ msgid "Last Comment"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
+msgstr ""
+
+#. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Last Statement balance + Transactions since statement"
 msgstr "최근 명세서 잔액 + 명세서 발행 이후 거래"
@@ -3761,8 +3786,9 @@ msgstr "영업 외 비용 차감"
 msgid ""
 "Line '%(child)s' is configured to appear before its parent '%(parent)s'. "
 "This is not allowed."
-msgstr "'%(child)s' 항목이 상위 항목 '%(parent)s'보다 먼저 표시되도록 "
-"설정되었습니다. 이는 허용되지 않습니다."
+msgstr ""
+"'%(child)s' 항목이 상위 항목 '%(parent)s'보다 먼저 표시되도록 설정되었습니"
+"다. 이는 허용되지 않습니다."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -4287,9 +4313,9 @@ msgid ""
 "found for this period. Ensure your start and end dates are correctly set on "
 "your bills and invoices."
 msgstr ""
-"Odoo는 지연된 항목을 자동으로 관리합니다. 해당 기간에 대해서 지연된 항목을 "
-"찾을 수 없습니다. 업체 청구서 및 발행할 청구서에 시작일과 종료일이 올바르게 "
-"설정되어 있는지 확인하세요."
+"Odoo는 지연된 항목을 자동으로 관리합니다. 해당 기간에 대해서 지연된 항목을 찾"
+"을 수 없습니다. 업체 청구서 및 발행할 청구서에 시작일과 종료일이 올바르게 설"
+"정되어 있는지 확인하세요."
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_period5
@@ -4854,7 +4880,8 @@ msgstr "개인 고객"
 msgid ""
 "Proceed with caution as there might be an existing adjustment for this "
 "period ("
-msgstr "이 기간에 대해서 기존에 조정한 내용이 있을 수 있으므로 주의하시기 바랍니다 ("
+msgstr ""
+"이 기간에 대해서 기존에 조정한 내용이 있을 수 있으므로 주의하시기 바랍니다 ("
 
 #. module: account_reports
 #. odoo-javascript
@@ -5217,8 +5244,9 @@ msgstr ""
 msgid ""
 "Review and post draft invoices and bills in the period, or change their "
 "accounting date."
-msgstr "해당 기간 동안의 청구서 및 업체 청구서 초안을 검토한 후 게시하거나 회계 "
-"일자를 변경하세요."
+msgstr ""
+"해당 기간 동안의 청구서 및 업체 청구서 초안을 검토한 후 게시하거나 회계 일자"
+"를 변경하세요."
 
 #. module: account_reports
 #. odoo-python
@@ -5226,7 +5254,8 @@ msgstr "해당 기간 동안의 청구서 및 업체 청구서 초안을 검토�
 msgid ""
 "Review and post draft invoices, bills and entries in the period, or change "
 "their accounting date."
-msgstr "해당 기간 동안의 청구서 초안, 업체 청구서 및 항목을 검토하고 게시하거나 회계 "
+msgstr ""
+"해당 기간 동안의 청구서 초안, 업체 청구서 및 항목을 검토하고 게시하거나 회계 "
 "일자를 조정하세요."
 
 #. module: account_reports
@@ -5245,8 +5274,9 @@ msgstr ""
 msgid ""
 "Review overdue payables aged over 60 days and assess the need for an "
 "allowance for uncertain liabilities."
-msgstr "60일 이상 경과된 연체 채권을 검토하고 불확실한 부채에 대한 충당금 필요성을 "
-"평가하세요."
+msgstr ""
+"60일 이상 경과된 연체 채권을 검토하고 불확실한 부채에 대한 충당금 필요성을 평"
+"가하세요."
 
 #. module: account_reports
 #. odoo-python
@@ -5292,8 +5322,9 @@ msgstr ""
 msgid ""
 "Review the tax code and ensure each transaction is correctly classified as a "
 "supply of goods or services."
-msgstr "세금 코드를 검토한 후 각 거래가 상품 또는 서비스 공급으로 정확하게 "
-"분류되었는지 확인하세요."
+msgstr ""
+"세금 코드를 검토한 후 각 거래가 상품 또는 서비스 공급으로 정확하게 분류되었는"
+"지 확인하세요."
 
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_type__states_workflow__generic_state_review_submit
@@ -5886,7 +5917,8 @@ msgstr "이 보고서에는 '%s' 열을 사용할 수 없습니다."
 msgid ""
 "The country detected for this VAT number does not match the one set on this "
 "Tax Unit."
-msgstr "이 VAT 번호로 감지된 국가가 이 세금 단위에서 설정된 국가와 일치하지 않습니다."
+msgstr ""
+"이 VAT 번호로 감지된 국가가 이 세금 단위에서 설정된 국가와 일치하지 않습니다."
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_tax_unit__country_id
@@ -6008,8 +6040,9 @@ msgstr ""
 msgid ""
 "This account exists in the Chart of Accounts but is not mentioned in any "
 "line of the report"
-msgstr "이 계정은 계정과목표에 있는 항목이나 보고서의 어느 내역에서도 나타나있지 "
-"않습니다."
+msgstr ""
+"이 계정은 계정과목표에 있는 항목이나 보고서의 어느 내역에서도 나타나있지 않습"
+"니다."
 
 #. module: account_reports
 #. odoo-python
@@ -6017,7 +6050,8 @@ msgstr "이 계정은 계정과목표에 있는 항목이나 보고서의 어느
 msgid ""
 "This account is reported in a line of the report but does not exist in the "
 "Chart of Accounts"
-msgstr "이 계정은 보고서 내역에서 보고되고 있으나 계정과목표에는 존재하지 않습니다."
+msgstr ""
+"이 계정은 보고서 내역에서 보고되고 있으나 계정과목표에는 존재하지 않습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -6043,8 +6077,9 @@ msgstr "이를 통해 재무 보고서에서 총계의 위치를 선택할 수 �
 msgid ""
 "This company is part of a tax unit. You're currently not viewing the whole "
 "unit."
-msgstr "해당 회사는 세무 관련 일부 단위 항목입니다. 현재 화면에서는 전체 단위를 "
-"표시하지 않습니다."
+msgstr ""
+"해당 회사는 세무 관련 일부 단위 항목입니다. 현재 화면에서는 전체 단위를 표시"
+"하지 않습니다."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6066,8 +6101,9 @@ msgstr "이 항목은 순서에서 벗어났습니다."
 msgid ""
 "This line is placed before its parent, which is not allowed. You can fix it "
 "by dragging it to the proper position."
-msgstr "해당 항목이 상위 항목보다 앞에 배치되었습니다. 올바른 위치로 드래그하여 "
-"수정하세요."
+msgstr ""
+"해당 항목이 상위 항목보다 앞에 배치되었습니다. 올바른 위치로 드래그하여 수정"
+"하세요."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
@@ -6091,8 +6127,9 @@ msgstr "이 보고서는 이미 메뉴 아이템이 있습니다."
 msgid ""
 "This report contains inconsistencies. The affected lines are marked with a "
 "warning."
-msgstr "이 보고서에는 불일치하는 내용이 포함되어 있으며, 관련 있는 항목에는 경고가 "
-"표시됩니다."
+msgstr ""
+"이 보고서에는 불일치하는 내용이 포함되어 있으며, 관련 있는 항목에는 경고가 표"
+"시됩니다."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6108,8 +6145,8 @@ msgid ""
 "parameters used for its computation could lead to errors."
 msgstr ""
 "이 보고서는 보고서 전용 코드를 사용하고 있습니다.\n"
-"                        수동으로 사용자 지정할 수 있으나 계산에 사용된 "
-"매개변수를 변경할 경우 오류가 발생할 수 있습니다."
+"                        수동으로 사용자 지정할 수 있으나 계산에 사용된 매개변"
+"수를 변경할 경우 오류가 발생할 수 있습니다."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6119,8 +6156,8 @@ msgid ""
 "using different currencies,\n"
 "        which can lead the report to be unbalanced."
 msgstr ""
-"이 보고서는 CTA 변환 방법을 사용하여 서로 다른 통화를 사용하는 여러 회사를 "
-"통합하므로\n"
+"이 보고서는 CTA 변환 방법을 사용하여 서로 다른 통화를 사용하는 여러 회사를 통"
+"합하므로\n"
 "        보고서의 데이터가 일치하지 않을 수 있습니다."
 
 #. module: account_reports
@@ -6135,7 +6172,8 @@ msgstr "이 하위 수식은 알 수 없는 수식을 참조합니다: %s"
 msgid ""
 "This tag is reported in a line of the report but is not linked to any "
 "account of the Chart of Accounts"
-msgstr "해당 태그는 보고서 내용으로 보고되지만 계정표에 있는 어떤 계정과도 연결되지 "
+msgstr ""
+"해당 태그는 보고서 내용으로 보고되지만 계정표에 있는 어떤 계정과도 연결되지 "
 "않습니다."
 
 #. module: account_reports
@@ -6287,8 +6325,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr "groupby 값이 없는 행에서 groupby 결과를 확장하려고 합니다."
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6625,8 +6665,9 @@ msgstr "어제"
 msgid ""
 "You are trying to create returns for a company you don't have access to, "
 "please select it in the company selector"
-msgstr "반품 생성 중인 회사에 대해 접근 권한이 없습니다. 회사 선택 메뉴에서 회사를 "
-"선택하세요."
+msgstr ""
+"반품 생성 중인 회사에 대해 접근 권한이 없습니다. 회사 선택 메뉴에서 회사를 선"
+"택하세요."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6644,7 +6685,8 @@ msgstr "각 반품 항목에는 고유한 수표 코드만 지정할 수 있습�
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "You can only revert a completed return if the previous state was new."
-msgstr "이전 상태가 신규 상태인 경우에 한하여 완료된 보고서를 되돌릴 수 있습니다."
+msgstr ""
+"이전 상태가 신규 상태인 경우에 한하여 완료된 보고서를 되돌릴 수 있습니다."
 
 #. module: account_reports
 #. odoo-python
@@ -6688,9 +6730,9 @@ msgid ""
 "values impacting the tax report of a locked period. Please change the "
 "following lock dates to proceed: %(lock_date_info)s."
 msgstr ""
-"결산 항목은 초안으로 초기화할 수 없습니다. 초기화할 경우 잠금 기간의 세무 "
-"신고와 관련된 이월 금액이 삭제됩니다. 초기화하려면 다음 잠금 날짜를 "
-"변경하세요: %(lock_date_info)s."
+"결산 항목은 초안으로 초기화할 수 없습니다. 초기화할 경우 잠금 기간의 세무 신"
+"고와 관련된 이월 금액이 삭제됩니다. 초기화하려면 다음 잠금 날짜를 변경하세"
+"요: %(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6698,6 +6740,12 @@ msgstr ""
 msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
 msgstr ""
 
 #. module: account_reports
@@ -6939,8 +6987,9 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} 명세서 - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} 명세서 - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript

@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* esg
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: esg
@@ -36,12 +37,15 @@ msgstr "%s (副本)"
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
 "                    你正嘗試修改已經指派給排放項目的排放因子。\n"
-"                    若更改因子，會同時更新這些已連結的排放項目。若要保留舊有數值，請複製該因子。"
+"                    若更改因子，會同時更新這些已連結的排放項目。若要保留舊有"
+"數值，請複製該因子。"
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_kanban_view
@@ -66,12 +70,6 @@ msgstr "已有同名標籤。"
 #. module: esg
 #. odoo-python
 #: code:addons/esg/models/esg_database.py:0
-msgid "ADEME data has been successfully imported."
-msgstr "成功匯入 ADEME 數據。"
-
-#. module: esg
-#. odoo-python
-#: code:addons/esg/models/esg_database.py:0
 msgid "ADEME data is already up to date."
 msgstr "ADEME 數據已是最新版本。"
 
@@ -80,9 +78,12 @@ msgstr "ADEME 數據已是最新版本。"
 msgid ""
 "Access to ESG features including viewing data, reporting, and mapping "
 "emissions with emissions factors, but without configuration rights."
-msgstr "使用 ESG 功能，包括檢視資料及數據、報告功能，以及將排放項目配對至排放因子，但沒有權限更改配置。"
+msgstr ""
+"使用 ESG 功能，包括檢視資料及數據、報告功能，以及將排放項目配對至排放因子，但"
+"沒有權限更改配置。"
 
 #. module: esg
+#: model:ir.model,name:esg.model_account_account
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
@@ -147,11 +148,11 @@ msgstr "金額"
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
-"排放因子已有使用此規則的指派：%(account_id)s, %(partner_id)s, "
-"%(product_id)s。排放因子：「%(factor_name)s」。"
+"排放因子已有使用此規則的指派：%(account_id)s, %(partner_id)s, %"
+"(product_id)s。排放因子：「%(factor_name)s」。"
 
 #. module: esg
 #. odoo-javascript
@@ -239,8 +240,25 @@ msgstr "生物甲烷（CH₄）（噸）"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.activity.type,name:esg.esg_activity_type_6
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_6
 msgid "Business Travel"
 msgstr "商務旅行"
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c4f6
+msgid "C4F6"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_c4f8o
+msgid "C4F8O"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c5f8
+msgid "C5F8"
+msgstr ""
 
 #. module: esg
 #. odoo-javascript
@@ -266,6 +284,11 @@ msgid "Calculation"
 msgstr "計算"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_esg_database__can_be_downloaded
+msgid "Can Be Downloaded"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Can be added manually"
@@ -279,6 +302,7 @@ msgstr "取消"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_2
 msgid "Capital Goods"
 msgstr "資本財貨"
 
@@ -315,6 +339,11 @@ msgid "Carbon Footprint"
 msgstr "碳足跡"
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_co
+msgid "Carbon Monoxide"
+msgstr ""
+
+#. module: esg
 #: model:ir.model,name:esg.model_esg_carbon_report_handler
 msgid "Carbon Report Custom Handler"
 msgstr "碳足跡報告自訂處理程式"
@@ -334,12 +363,25 @@ msgstr "四氟化碳（CF₄）（噸）"
 msgid ""
 "Categorize your data into Scope 1, 2, and 3 to structure your carbon "
 "emission reporting."
-msgstr "將數據分類為範圍 1、範圍 2 及範圍 3，使碳排放的匯報工作有清晰結構框架。"
+msgstr ""
+"將數據分類為範圍 1、範圍 2 及範圍 3，使碳排放的匯報工作有清晰結構框架。"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_gas__category
 msgid "Category"
 msgstr "類別"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
+"Are you sure you want to continue?"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
@@ -418,6 +460,11 @@ msgstr "完整名稱"
 #: model:ir.model.fields,field_description:esg.field_esg_other_emission__compute_method
 msgid "Compute Method"
 msgstr "計算方法"
+
+#. module: esg
+#: model:product.template,name:esg.product_computer_product_template
+msgid "Computer"
+msgstr ""
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_configuration
@@ -516,6 +563,12 @@ msgid "Date"
 msgstr "日期"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__date_end
+#: model:ir.model.fields,field_description:esg.field_esg_other_emission__date_end
+msgid "Date End"
+msgstr ""
+
+#. module: esg
 #: model_terms:ir.actions.act_window,help:esg.action_esg_gasses_list
 msgid ""
 "Define gases to convert emissions into CO₂ equivalents using Global Warming "
@@ -545,6 +598,7 @@ msgid "Direct Emissions"
 msgstr "直接排放"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__display_name
@@ -586,6 +640,16 @@ msgid "Downstream"
 msgstr "下游"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_5
+msgid "Downstream Leased Assets"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_1
+msgid "Downstream Transportation and Distribution"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Downstream activities"
@@ -607,6 +671,21 @@ msgstr "ESG 碳排放報告"
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Effortless"
 msgstr "簡單快捷"
+
+#. module: esg
+#: model:account.account,name:esg.account_electricity
+msgid "Electricity"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_2
+msgid "Electricity for Cars"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_indirect_1_1
+msgid "Electricity for Office"
+msgstr ""
 
 #. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
@@ -670,8 +749,10 @@ msgstr "排放量（kgCO₂e）"
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 "收到供應商發票時，排放數據會自動根據會計數據進行同步。<br>\n"
 "                你也可手動加入其他未連結至日記賬記項的排放項目。"
@@ -709,6 +790,8 @@ msgstr "已排放量"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.activity.type,name:esg.esg_activity_type_5
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_7
 msgid "Employee Commuting"
 msgstr "員工通勤"
 
@@ -718,10 +801,20 @@ msgid "End Date"
 msgstr "結束日期"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_4
+msgid "End-of-Life Treatment of Sold Products"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "End-of-life Treatment of Sold Products"
 msgstr "出售產品壽命完結時的處理"
+
+#. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_0
+msgid "Energy Consumption"
+msgstr ""
 
 #. module: esg
 #: model:ir.ui.menu,name:esg.menu_esg_environment
@@ -752,6 +845,11 @@ msgid "Followers (Partners)"
 msgstr "關注人（業務夥伴）"
 
 #. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_8
+msgid "Food Consumption"
+msgstr ""
+
+#. module: esg
 #: model:esg.gas,name:esg.esg_gas_ch4f
 msgid "Fossil Methane (CH₄)"
 msgstr "化石甲烷（CH₄）"
@@ -762,10 +860,25 @@ msgid "Fossil Methane (CH₄) (t)"
 msgstr "化石甲烷（CH₄）（噸）"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_6
+msgid "Franchises"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Fuel and Energy Related Activities"
 msgstr "燃料及能源相關活動"
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_3
+msgid "Fuel and Energy-Related Activites"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_4
+msgid "Fugitive Emissions"
+msgstr ""
 
 #. module: esg
 #: model:res.groups,comment:esg.esg_group_manager
@@ -812,11 +925,14 @@ msgid "Global Warming Potential (GWP) cannot be equal to 0."
 msgstr "全球暖化潛勢（GWP）不可等於零。"
 
 #. module: esg
-#: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
-#: model_terms:ir.ui.view,arch_db:esg.emission_factor_search_view
-#: model_terms:ir.ui.view,arch_db:esg.emission_source_search_view
-msgid "Group By"
-msgstr "分組依據"
+#: model:esg.gas,name:esg.esg_gas_hfc_125
+msgid "HFC-125"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_134
+msgid "HFC-134"
+msgstr ""
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_134a
@@ -829,6 +945,21 @@ msgid "HFC-134a (t)"
 msgstr "HFC-134a（噸）"
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_143
+msgid "HFC-143"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_143a
+msgid "HFC-143a"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_152
+msgid "HFC-152"
+msgstr ""
+
+#. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_152a
 msgid "HFC-152a"
 msgstr "HFC-152a"
@@ -837,6 +968,16 @@ msgstr "HFC-152a"
 #: model:account.report.column,name:esg.carbon_report_column_hfc_152a
 msgid "HFC-152a (t)"
 msgstr "HFC-152a（噸）"
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_161
+msgid "HFC-161"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_227ea
+msgid "HFC-227ea"
+msgstr ""
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_hfc_23
@@ -849,10 +990,45 @@ msgid "HFC-23 (t)"
 msgstr "HFC-23（噸）"
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_236cb
+msgid "HFC-236cb"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_32
+msgid "HFC-32"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_hfc_41
+msgid "HFC-41"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "HFCs"
 msgstr "HFC 氫氟碳化物"
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_cf3ochf2
+msgid "HFE-125"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_chf2ch2ocf3
+msgid "HFE-245fa1"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_cf3cf2ch2och3
+msgid "HFE-365mcf3"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_chf2_c4f9och3
+msgid "HFE-7100"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__has_message
@@ -881,6 +1057,7 @@ msgid "Hydrofluorocarbons (HFCs)"
 msgstr "氫氟碳化物（HFC）"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__id
 #: model:ir.model.fields,field_description:esg.field_account_move__id
 #: model:ir.model.fields,field_description:esg.field_account_move_line__id
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__id
@@ -898,12 +1075,19 @@ msgid "ID"
 msgstr "識別碼"
 
 #. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_7
+msgid "IT Operations"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
-msgstr "若勾選，任何已有排放因子的排放資料行（不論手動或自動指派），若根據你的設定找到相符的其他因子，便會重新指派。"
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
+msgstr ""
+"若勾選，任何已有排放因子的排放資料行（不論手動或自動指派），若根據你的設定找"
+"到相符的其他因子，便會重新指派。"
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_emission_factor__message_needaction
@@ -953,6 +1137,11 @@ msgstr "網址無效。"
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Investment"
 msgstr "投資"
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_7
+msgid "Investments"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_is_follower
@@ -1052,6 +1241,11 @@ msgid "Low Uncertainty (< 5%)"
 msgstr "不確定性較低（< 5%）"
 
 #. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_2
+msgid "Material Production"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 #: model:ir.ui.menu,name:esg.menu_esg_measure
@@ -1081,9 +1275,19 @@ msgid "Methane (CH₄)"
 msgstr "甲烷（CH₄）"
 
 #. module: esg
+#: model:esg.gas,name:esg.esg_gas_ch4
+msgid "Methane (generic) (CH₄)"
+msgstr ""
+
+#. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Missing Emission Factor"
 msgstr "缺漏排放因子"
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_2
+msgid "Mobile Combustion"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields.selection,name:esg.selection__esg_emission_factor__compute_method__monetary
@@ -1114,10 +1318,21 @@ msgid "Nb Linked Emissions"
 msgstr "已連結排放項目數量"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_neutral
+msgid "Neutral"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_carbon_analytics_box/esg_carbon_analytics_box.xml:0
 msgid "New"
 msgstr "新增"
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_nf3
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__nf3
+msgid "Nitrogen Trifluoride"
+msgstr ""
 
 #. module: esg
 #: model:esg.gas,name:esg.esg_gas_n2o
@@ -1216,10 +1431,30 @@ msgid "Other Emission"
 msgstr "其他排放"
 
 #. module: esg
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__other
+msgid "Other Halogenated substances"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Other Indirect Emissions"
 msgstr "其他間接排放"
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c3f8
+msgid "PFC-218"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c-c4f8
+msgid "PFC-318"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_pfc_c6f14
+msgid "PFC-51-14"
+msgstr ""
 
 #. module: esg
 #. odoo-javascript
@@ -1259,15 +1494,40 @@ msgid "Physically (Quantity)"
 msgstr "實體（數量）"
 
 #. module: esg
+#: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__precursors
+msgid "Precursors"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_3
+msgid "Process Emissions"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Processing of Sold Product"
 msgstr "出售產品的加工/處理"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_2
+msgid "Processing of Sold Products"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__product_id
 msgid "Product"
 msgstr "商品"
+
+#. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_4
+msgid "Product Usage and Disposal"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_indirect_1
+msgid "Purchased Electricity"
+msgstr ""
 
 #. module: esg
 #. odoo-javascript
@@ -1278,8 +1538,14 @@ msgstr "購買電力、蒸汽、供暖及製冷供自用"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_1
 msgid "Purchased Goods and Services"
 msgstr "購買的商品及服務"
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_indirect_2
+msgid "Purchased Steam, Heat or Cooling"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__quantity
@@ -1295,9 +1561,13 @@ msgid "Ratings"
 msgstr "評分"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_esg_emission_factor__region
+msgid "Region / Regional Conditions"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr "在 100 年間，該氣體在全球暖化上，與二氧化碳比較的相對威力"
 
 #. module: esg
@@ -1371,7 +1641,9 @@ msgstr "範圍 3：其他間接排放"
 msgid ""
 "Seamlessly bring all your ESG data together, whether from Odoo or outside, "
 "in a simple and organized way."
-msgstr "透過簡單、有條理的方式，將所有 ESG 資料（不論是 Odoo 系統內的資料，還是外部數據）全部整合，集中處理。"
+msgstr ""
+"透過簡單、有條理的方式，將所有 ESG 資料（不論是 Odoo 系統內的資料，還是外部數"
+"據）全部整合，集中處理。"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__sequence
@@ -1424,6 +1696,16 @@ msgid "Start Date"
 msgstr "開始日期"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_1
+msgid "Stationary Combustion"
+msgstr ""
+
+#. module: esg
+#: model:esg.gas,name:esg.esg_gas_so2
+msgid "Sulfur Dioxide (SO2+SO3)"
+msgstr ""
+
+#. module: esg
 #: model:esg.gas,name:esg.esg_gas_sf6
 #: model:ir.model.fields.selection,name:esg.selection__esg_gas__category__sf6
 msgid "Sulfur Hexafluoride (SF₆)"
@@ -1433,6 +1715,18 @@ msgstr "六氟化硫（SF₆）"
 #: model:account.report.column,name:esg.carbon_report_column_sf6
 msgid "Sulfur Hexafluoride (SF₆) (t)"
 msgstr "六氟化硫（SF₆）（噸）"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_database.py:0
+msgid "The IPCC server did not return any file to import the data."
+msgstr ""
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_assignation_line.py:0
+msgid "The account type must be of type %(valid_account_type_names)s."
+msgstr ""
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
@@ -1467,7 +1761,9 @@ msgid ""
 "Track your ESG performance, transform data into actionable insights, and "
 "generate reports to meet compliance requirements all while making informed, "
 "strategic decisions."
-msgstr "追蹤你的 ESG 績效表現，將數據轉化為可採取行動的見解，自動產生報告以符合合規要求，同時輕鬆作出明智的策略性決策。"
+msgstr ""
+"追蹤你的 ESG 績效表現，將數據轉化為可採取行動的見解，自動產生報告以符合合規要"
+"求，同時輕鬆作出明智的策略性決策。"
 
 #. module: esg
 #. odoo-javascript
@@ -1482,12 +1778,18 @@ msgid "Transportation and Distribution"
 msgstr "運輸及分發"
 
 #. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_1
+msgid "Transportation and Logistics"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/components/esg_dashboard/esg_dashboard.xml:0
 msgid ""
 "Turn insights into action, monitor your impact in real-time, and drive "
 "meaningful change across your organization."
-msgstr "將數據見解轉化為實際行動，實時監察成效，並在公司不同地方推動有意義的改革。"
+msgstr ""
+"將數據見解轉化為實際行動，實時監察成效，並在公司不同地方推動有意義的改革。"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move_line__esg_uncertainty_value
@@ -1567,6 +1869,16 @@ msgid "Upstream"
 msgstr "上游"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_8
+msgid "Upstream Leased Assets"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_4
+msgid "Upstream Transportation and Distribution"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 msgid "Upstream activities"
@@ -1580,6 +1892,7 @@ msgstr "網址"
 #. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.emission.source,name:esg.esg_emission_source_downstream_3
 msgid "Use of Sold Products"
 msgstr "出售產品的使用"
 
@@ -1599,15 +1912,37 @@ msgid "Valid To"
 msgstr "有效至"
 
 #. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_2_1
+msgid "Vehicle Type 1"
+msgstr ""
+
+#. module: esg
+#: model:esg.emission.source,name:esg.esg_emission_source_direct_2_2
+msgid "Vehicle Type 2"
+msgstr ""
+
+#. module: esg
 #: model_terms:ir.ui.view,arch_db:esg.carbon_emission_report_search_view
 msgid "Very High Uncertainty (> 50%)"
 msgstr "不確定性非常高（> 50%）"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid "Warning"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
+#: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
 msgid "Waste Generated in Operations"
 msgstr "營運過程產生的廢棄物"
+
+#. module: esg
+#: model:esg.activity.type,name:esg.esg_activity_type_3
+msgid "Waste Management"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__website_message_ids
@@ -1623,9 +1958,23 @@ msgstr "網站溝通記錄"
 
 #. module: esg
 #. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
+msgstr ""
+
+#. module: esg
+#. odoo-python
 #: code:addons/esg/models/esg_database.py:0
 msgid "You can't delete the ADEME database."
 msgstr "你不可刪除 ADEME 資料庫。"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_database.py:0
+msgid "You can't delete the IPCC database."
+msgstr ""
 
 #. module: esg
 #. odoo-python
@@ -1712,4 +2061,12 @@ msgstr "tCO₂e"
 msgid ""
 "with ease! Most emissions are seamlessly calculated from your accounting "
 "data, using account move lines to generate precise and compliant reports."
-msgstr "輕鬆完成！大部份排放量會根據你的會計數據自動計算，利用賬戶分錄資料行的數據，產生精確而合規的報表。"
+msgstr ""
+"輕鬆完成！大部份排放量會根據你的會計數據自動計算，利用賬戶分錄資料行的數據，"
+"產生精確而合規的報表。"
+
+#~ msgid "ADEME data has been successfully imported."
+#~ msgstr "成功匯入 ADEME 數據。"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"

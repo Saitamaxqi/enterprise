@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 18:35+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Norwegian Bokmål <https://translate.odoo.com/projects/odoo-19/"
@@ -28,6 +28,33 @@ msgstr ""
 
 #. module: sale_renting
 #. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid ""
+"\n"
+"%(from_date)s to %(to_date)s"
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_template.py:0
+msgid "%(amount)s (fixed)"
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_pricing.py:0
+msgid "%(amount)s / %(duration)s"
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_template.py:0
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "%(duration)s %(unit)s"
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
 #: code:addons/sale_renting/models/product_product.py:0
 #: code:addons/sale_renting/models/product_template.py:0
 msgid "%s (Rental)"
@@ -35,19 +62,14 @@ msgstr ""
 
 #. module: sale_renting
 #: model:ir.actions.report,print_report_name:sale_renting.action_report_rental_saleorder
-msgid "(object.rental_status not in ('draft', 'sent') and 'Delivery or Return Receipt - %s' %(object.name)) or 'Order - %s' % (object.name)"
+msgid ""
+"(object.rental_status not in ('draft', 'sent') and 'Delivery or Return "
+"Receipt - %s' %(object.name)) or 'Order - %s' % (object.name)"
 msgstr ""
 
 #. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/wizard/rental_configurator.py:0
-msgid "/day"
-msgstr ""
-
-#. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/wizard/rental_configurator.py:0
-msgid "/hour"
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "123 Main St"
 msgstr ""
 
 #. module: sale_renting
@@ -56,8 +78,33 @@ msgid "2 Weeks"
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "2023-08-01"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "2023-08-10"
+msgstr ""
+
+#. module: sale_renting
 #: model:sale.temporal.recurrence,name:sale_renting.recurrence_3_hours
 msgid "3 Hours"
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_3_year
+msgid "3 years"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "456 Other St"
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence5_year
+msgid "5 Years"
 msgstr ""
 
 #. module: sale_renting
@@ -68,21 +115,59 @@ msgstr ""
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_product_form_view_rental_gantt
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental_gantt
-msgid "<span class=\"o_stat_text\">in Rental</span>"
+msgid "<span class=\"o_stat_text\">In Rental</span>"
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
+msgid ""
+"<span invisible=\"duration_days != 1\"> day </span>\n"
+"                    <span invisible=\"duration_days in [0,1]\"> days </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">and </span>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
+msgid ""
+"<span invisible=\"remaining_hours != 1\"> hour </span>\n"
+"                    <span invisible=\"remaining_hours in [0,1]\"> hours </"
+"span>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
+msgid "<span> per day late</span>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
+msgid "<span> per hour late</span>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:web_tour.tour,rainbow_man_message:sale_renting.rental_tour
+msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "<strong class=\"d-block mt-3\">Shipping Address</strong>"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "<strong>Order # — </strong>"
 msgstr "<strong>Ordre # — </strong>"
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
-msgid "<strong>Pickup  — </strong>"
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
+msgid "<strong>Pickup — </strong>"
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "<strong>Return — </strong>"
 msgstr ""
 
@@ -92,19 +177,25 @@ msgid "<strong>Salesperson:</strong>"
 msgstr "<strong>Selger:</strong>"
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
-msgid "<strong>Shipping Address:</strong>"
-msgstr "<strong>Leveringsadresse:</strong>"
-
-#. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "<strong>Status — </strong>"
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_configurator_view_form
-msgid "Add"
-msgstr "Legg til"
+#. odoo-python
+#: code:addons/sale_renting/models/product_template.py:0
+msgid "A rental combo product can only contain rental products."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__active
+msgid "Active"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
+msgid "Add a price"
+msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
@@ -119,18 +210,14 @@ msgid "Allow renting of this product."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__analytic_account_id
-msgid "Analytic Account"
-msgstr "Analytisk konto"
-
-#. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
-msgid "Apply after"
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "An error occured. Please try again."
 msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
-msgid "Ask customer to sign documents on the spot."
+msgid "Apply after"
 msgstr ""
 
 #. module: sale_renting
@@ -140,27 +227,14 @@ msgid "At first, let's create some products to rent."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,help:sale_renting.field_rental_wizard__pricing_id
-msgid "Best Pricing Rule based on duration"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__pickup
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order_line__rental_status__pickup
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Booked"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_product_product__rent_ok
-#: model:ir.model.fields,field_description:sale_renting.field_product_template__rent_ok
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__is_product_rentable
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_product_template_search_view
-msgid "Can be Rented"
-msgstr ""
-
-#. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_configurator_view_form
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
 msgid "Cancel"
 msgstr "Avbryt"
@@ -168,10 +242,18 @@ msgstr "Avbryt"
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__cancel
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__cancel
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__cancel
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__state__cancel
 msgid "Cancelled"
 msgstr "Kansellert"
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__pickup_time
+msgid "Check-in"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__return_time
+msgid "Check-out"
+msgstr ""
 
 #. module: sale_renting
 #. odoo-javascript
@@ -198,9 +280,9 @@ msgid "Click here to start filling the quotation."
 msgstr "Trykk her for å fylle ut tilbudet"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__color
-msgid "Color"
-msgstr "Farge"
+#: model:product.template,description_sale:sale_renting.rental_product_3_template
+msgid "Compact laser printer with fast output"
+msgstr ""
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_res_company
@@ -208,11 +290,10 @@ msgid "Companies"
 msgstr "Firmaer"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__company_id
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__company_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__company_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__company_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Company"
 msgstr "Firma"
 
@@ -225,11 +306,6 @@ msgstr "Innstillinger"
 #: model:ir.ui.menu,name:sale_renting.menu_rental_config
 msgid "Configuration"
 msgstr "Konfigurasjon"
-
-#. module: sale_renting
-#: model:ir.model,name:sale_renting.model_rental_wizard
-msgid "Configure the rental of a product"
-msgstr ""
 
 #. module: sale_renting
 #. odoo-javascript
@@ -245,9 +321,14 @@ msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Confirmed Orders"
 msgstr "Bekreftede ordrer"
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__country_id
+msgid "Country"
+msgstr ""
 
 #. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.action_create_rental_order
@@ -255,9 +336,19 @@ msgid "Create Rental Orders"
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.actions.act_window,help:sale_renting.sale_temporal_recurrence_action
+msgid "Create a new period"
+msgstr ""
+
+#. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_action
 msgid "Create a new quotation, the first step of a new rental!"
 msgstr "Opprett et nytt tilbud, det første trinnet i en ny utleie!"
+
+#. module: sale_renting
+#: model_terms:ir.actions.act_window,help:sale_renting.product_pricing_action
+msgid "Create a new recurrence"
+msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.action_rental_report
@@ -277,53 +368,50 @@ msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__is_rental_order
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__order_is_rental
 msgid "Created In App Rental"
 msgstr ""
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__create_uid
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__create_uid
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_uid
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__create_uid
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_uid
 msgid "Created by"
 msgstr "Opprettet av"
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__create_date
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__create_date
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__create_date
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__create_date
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__create_date
 msgid "Created on"
 msgstr "Opprettet den"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__currency_id
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__currency_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__currency_id
 msgid "Currency"
 msgstr "Valuta"
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__product_pricing_ids
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__product_pricing_ids
+msgid "Custom Pricings"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__partner_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__partner_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Customer"
 msgstr "Kunde"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__country_id
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Customer Country"
 msgstr "Kundeland"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__commercial_partner_id
-msgid "Customer Entity"
-msgstr "Kundeenhet"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__card_name
-msgid "Customer Name"
-msgstr "Kundenavn"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_orders_customers
@@ -331,8 +419,19 @@ msgid "Customers"
 msgstr "Kunder"
 
 #. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_daily
+msgid "Daily"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__price
 msgid "Daily Amount"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_daily
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_daily
+msgid "Daily Fine"
 msgstr ""
 
 #. module: sale_renting
@@ -353,17 +452,19 @@ msgstr ""
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__date
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Date"
 msgstr "Dato"
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_configurator_view_form
-msgid "Dates"
-msgstr "Datoer"
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Day"
+msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__rental_wizard__duration_unit__day
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__day
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__day
 msgid "Days"
 msgstr "Dager"
 
@@ -378,39 +479,47 @@ msgid "Delay Product"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__description
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__description
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Description"
 msgstr "Beskrivelse"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_res_config_settings__module_sale_renting_sign
-msgid "Digital Documents"
-msgstr ""
-
-#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__display_name
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__display_name
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__display_name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__display_name
 msgid "Display Name"
 msgstr "Visningsnavn"
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__draft
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__state__draft
-msgid "Draft Quotation"
-msgstr "Tilbudskladd"
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__displayed_unit
+msgid "Displayed Unit"
+msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__duration
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Duration"
 msgstr "Varighet"
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_configurator_view_form
-msgid "Edited Rental Line"
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__name
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration_display
+msgid "Duration Display"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__duration_days
+msgid "Duration in days"
 msgstr ""
 
 #. module: sale_renting
@@ -420,58 +529,32 @@ msgid "Enter the product name."
 msgstr ""
 
 #. module: sale_renting
-#. odoo-javascript
-#: code:addons/sale_renting/static/src/js/tours/rental.js:0
-msgid ""
-"Enter the requested dates and check the price.\n"
-" Then, click here to add the product."
-msgstr ""
-
-#. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/models/sale_order_line.py:0
-msgid "Expected"
-msgstr "Forventet"
-
-#. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Expected Return"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_daily
-#: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_daily
-msgid "Extra Day"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_hourly
-#: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_hourly
-msgid "Extra Hour"
-msgstr ""
-
-#. module: sale_renting
 #. odoo-python
-#: code:addons/sale_renting/wizard/rental_configurator.py:0
-msgid "Extras:"
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "Expected: %(date)s"
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_product__extra_daily
 #: model:ir.model.fields,help:sale_renting.field_product_template__extra_daily
-msgid "Fine by day overdue"
+msgid "Fine per day late"
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_product_product__extra_hourly
 #: model:ir.model.fields,help:sale_renting.field_product_template__extra_hourly
-msgid "Fine by hour overdue"
+msgid "Fine per hour late"
 msgstr ""
 
 #. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/wizard/rental_configurator.py:0
-msgid "Fixed rental price"
+#: model:ir.model.fields,help:sale_renting.field_product_product__display_price
+#: model:ir.model.fields,help:sale_renting.field_product_template__display_price
+msgid "First rental pricing of the product"
 msgstr ""
 
 #. module: sale_renting
@@ -481,16 +564,8 @@ msgid "Go to the orders menu."
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
-msgid "Group By"
-msgstr "Grupper etter"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__has_late_lines
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order__has_late_lines
-msgid "Has Late Lines"
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__show_update_duration
+msgid "Has Duration Changed"
 msgstr ""
 
 #. module: sale_renting
@@ -509,8 +584,9 @@ msgid "Has Returnable Lines"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,help:sale_renting.field_rental_wizard__pricing_explanation
-msgid "Helper text to understand rental price computation."
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Hour"
 msgstr ""
 
 #. module: sale_renting
@@ -519,17 +595,30 @@ msgid "Hourly"
 msgstr "Timevis"
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__rental_wizard__duration_unit__hour
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_hourly
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_hourly
+msgid "Hourly Fine"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__hour
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__hour
 msgid "Hours"
 msgstr "Timer"
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__id
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__id
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__id
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__id
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__id
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__id
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__id
+#: model:ir.model.fields,field_description:sale_renting.field_res_company__id
+#: model:ir.model.fields,field_description:sale_renting.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__id
 msgid "ID"
 msgstr "ID"
 
@@ -544,8 +633,7 @@ msgid "Invoicing and Shipping Address:"
 msgstr "Faktura- og leveringsadresse:"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__is_late
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__late
+#: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__is_late
 msgid "Is Late"
 msgstr ""
 
@@ -555,39 +643,52 @@ msgid "Is Rental"
 msgstr ""
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__is_late
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__is_late
 msgid "Is overdue"
 msgstr "Har forfalt"
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "Jane Doe"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "John Doe"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__write_uid
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__write_uid
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_uid
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__write_uid
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_uid
 msgid "Last Updated by"
 msgstr "Sist oppdatert av"
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__write_date
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__write_date
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__write_date
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__write_date
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__write_date
 msgid "Last Updated on"
 msgstr "Sist oppdatert"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Late"
 msgstr "Forsinket"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Late Pickup"
 msgstr "Sen henting"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Late Return"
 msgstr ""
 
@@ -614,15 +715,39 @@ msgid "Minimum delay time before applying fines."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__rental_wizard__duration_unit__month
+#: model:ir.model.fields,help:sale_renting.field_sale_temporal_recurrence__duration
+msgid ""
+"Minimum duration before this rule is applied. If set to 0, it represents a "
+"fixedrental price."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Month"
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_monthly
+msgid "Monthly"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__month
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__month
 msgid "Months"
 msgstr "Måneder"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "My Orders"
 msgstr "Mine ordre"
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__name
+msgid "Name"
+msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__next_action_date
@@ -630,26 +755,36 @@ msgid "Next Action"
 msgstr "Neste tiltak"
 
 #. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_pricing.py:0
+msgid "Night period cannot be mixed with other rental periods."
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_nightly
+msgid "Nightly"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__night
+msgid "Nights"
+msgstr ""
+
+#. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.action_rental_report
 msgid "No data yet!"
 msgstr "Ingen data ennå"
 
 #. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/wizard/rental_configurator.py:0
-msgid ""
-"No rental price is defined on the product.\n"
-"The price used is the sales price."
-msgstr ""
-
-#. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_form_schedule
 msgid "Ok"
 msgstr "Ok"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_order_action
-msgid "Once the quotation is confirmed, it becomes a rental order.<br> You will be able to create an invoice and collect the payment."
+msgid ""
+"Once the quotation is confirmed, it becomes a rental order.<br> You will be "
+"able to create an invoice and collect the payment."
 msgstr ""
 
 #. module: sale_renting
@@ -666,30 +801,13 @@ msgstr "Ordre"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__order_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__order_id
 msgid "Order #"
 msgstr "Ordre #"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__order_date
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
-msgid "Order Date"
-msgstr "Ordredato"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__order_line_id
 msgid "Order Line"
 msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__name
-msgid "Order Reference"
-msgstr "Ordrereferanse"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__order_line_id
-msgid "Order line #"
-msgstr "Ordre linje #"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.rental_order_menu
@@ -698,8 +816,8 @@ msgid "Orders"
 msgstr "Ordrer"
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-msgid "PICKUP"
+#: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__overnight
+msgid "Overnight"
 msgstr ""
 
 #. module: sale_renting
@@ -715,43 +833,57 @@ msgid "Per Hour"
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
+msgid "Period"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_tree
+msgid "Periodicity"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.actions.act_window,name:sale_renting.sale_temporal_recurrence_action
+msgid "Periods"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.model,name:sale_renting.model_rental_order_wizard
 msgid "Pick-up/Return products"
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order_line__rental_status__return
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Picked-Up"
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__qty_delivered
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__return
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Picked-up"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__return
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__report_line_status__pickedup
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__return
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
 msgid "Pickedup"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__pickup_date
 #: model:ir.model.fields.selection,name:sale_renting.selection__rental_order_wizard__status__pickup
 #: model:ir.ui.menu,name:sale_renting.rental_orders_pickup
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Pickup"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__pickup_date
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Pickup Date"
 msgstr ""
 
@@ -776,61 +908,71 @@ msgid "Pickup:"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.constraint,message:sale_renting.constraint_rental_wizard_rental_period_coherence
-#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_line_rental_period_coherence
-msgid "Please choose a return date that is after the pickup date."
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__price
+msgid "Price"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__pricing_explanation
-msgid "Price Computation"
-msgstr "Prisberegning"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__pricelist_id
+#: model:ir.model,name:sale_renting.model_product_pricelist
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__pricelist_id
 msgid "Pricelist"
 msgstr "Prisliste"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__pricing_id
+#: model:ir.actions.act_window,name:sale_renting.product_pricing_action
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricing_tree
+msgid "Prices"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
 msgid "Pricing"
 msgstr "Priser"
 
 #. module: sale_renting
+#: model:ir.model,name:sale_renting.model_product_pricing
+msgid "Pricing rule of rental products"
+msgstr ""
+
+#. module: sale_renting
+#: model:product.template,name:sale_renting.rental_product_3_template
+msgid "Printer"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_template
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__product_id
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__product_id
 #: model:ir.model.fields,field_description:sale_renting.field_res_company__extra_product
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product"
 msgstr "Produkt"
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "Product A"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__categ_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__categ_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__categ_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Product Category"
 msgstr "Produktkategori"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_name
-msgid "Product Reference"
-msgstr ""
-
-#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_template_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_tmpl_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_tmpl_id
 msgid "Product Template"
 msgstr "Produktmal"
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_product_product
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__product_variant_ids
 msgid "Product Variant"
 msgstr "Produktvariant"
 
@@ -840,40 +982,16 @@ msgid "Product to charge extra time"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,help:sale_renting.field_rental_wizard__product_id
-msgid "Product to rent (has to be rentable)"
-msgstr ""
-
-#. module: sale_renting
 #: model:ir.actions.act_window,name:sale_renting.rental_product_template_action
 #: model:ir.ui.menu,name:sale_renting.menu_rental_products
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
 msgid "Products"
 msgstr "Produkter"
 
 #. module: sale_renting
-#: model:product.template,name:sale_renting.rental_product_1_product_template
+#: model:product.template,name:sale_renting.rental_product_1_template
 msgid "Projector"
 msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_uom_qty
-msgid "Qty Ordered"
-msgstr "Antall bestilt"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__qty_delivered
-msgid "Qty Picked-Up"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__qty_returned
-msgid "Qty Returned"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__quantity
-msgid "Quantity"
-msgstr "Antall"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__qty_in_rent
@@ -882,41 +1000,47 @@ msgid "Quantity currently in rent"
 msgstr ""
 
 #. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_quarterly
+msgid "Quarterly"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__draft
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__draft
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__draft
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Quotation"
 msgstr "Tilbud"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__sent
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sent
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__sent
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__state__sent
 msgid "Quotation Sent"
 msgstr "Tilbud sendt"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Quotations"
 msgstr "Tilbud"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-msgid "RETURN"
+msgid "Recompute all prices based on this duration"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.actions.act_window,name:sale_renting.rental_configurator_action
-msgid "Rent a product"
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__remaining_hours
+msgid "Remaining duration in hours"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order_line__temporal_type__rental
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__rent_ok
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__rent_ok
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__is_product_rentable
 #: model:ir.ui.menu,name:sale_renting.rental_menu_root
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_configurator_view_form
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_product_template_search_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Rental"
 msgstr "Utleie"
 
@@ -925,7 +1049,7 @@ msgstr "Utleie"
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_graph_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_pivot_view
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 #: model_terms:ir.ui.view,arch_db:sale_renting.sale_rental_report_view_tree
 msgid "Rental Analysis"
 msgstr ""
@@ -936,13 +1060,8 @@ msgid "Rental Analysis Report"
 msgstr ""
 
 #. module: sale_renting
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
-msgid "Rental Order"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__rental_order_line_id
-msgid "Rental Order Line"
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__rental_color
+msgid "Rental Color"
 msgstr ""
 
 #. module: sale_renting
@@ -958,19 +1077,26 @@ msgid "Rental Orders"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model,name:sale_renting.model_sale_rental_schedule
-msgid "Rental Schedule"
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
+msgid "Rental Pricelist Rules"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__rental_return_date
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__return_date
+msgid "Rental Return Date"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order__rental_start_date
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__start_date
+msgid "Rental Start Date"
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order__rental_status
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__rental_status
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__rental_status
 msgid "Rental Status"
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__report_line_status
-msgid "Rental Status (advanced)"
 msgstr ""
 
 #. module: sale_renting
@@ -979,8 +1105,35 @@ msgid "Rental Wizard Line"
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
+msgid "Rental period"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_sale_renting_periods
 msgid "Rental periods"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_product__display_price
+#: model:ir.model.fields,field_description:sale_renting.field_product_template__display_price
+msgid "Rental price"
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
+msgid "Rental prices"
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order.py:0
+msgid "Rental prices have been recomputed with the new period."
+msgstr ""
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
+msgid "Rental rules"
 msgstr ""
 
 #. module: sale_renting
@@ -994,6 +1147,16 @@ msgid "Rentals"
 msgstr "Utleier"
 
 #. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricing__recurrence_id
+msgid "Renting Period"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,field_description:sale_renting.field_product_pricelist__product_pricing_ids
+msgid "Renting Price Rules"
+msgstr ""
+
+#. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_reporting
 msgid "Reporting"
 msgstr "Rapportering"
@@ -1005,25 +1168,20 @@ msgstr "Reservasjoner"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__qty_reserved
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__pickup
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__report_line_status__reserved
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__pickup
 msgid "Reserved"
 msgstr "Reservert"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__return_date
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__return_date
 #: model:ir.model.fields.selection,name:sale_renting.selection__rental_order_wizard__status__return
 #: model:ir.ui.menu,name:sale_renting.rental_orders_return
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid "Return"
 msgstr "Retur"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__return_date
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Return Date"
 msgstr ""
 
@@ -1033,19 +1191,21 @@ msgid "Return:"
 msgstr ""
 
 #. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/models/sale_order_line.py:0
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__qty_returned
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__qty_returned
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_order__rental_status__returned
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__rental_status__returned
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__report_line_status__returned
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_order_line__rental_status__returned
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_form
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_gantt
 #: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_gantt_schedule
 msgid "Returned"
 msgstr "Returnert"
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "Returned: %(date)s"
+msgstr ""
 
 #. module: sale_renting
 #: model:ir.model,name:sale_renting.model_sale_temporal_recurrence
@@ -1053,15 +1213,8 @@ msgid "Sale temporal Recurrence"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__done
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__state__done
-msgid "Sales Done"
-msgstr "Salg fullført"
-
-#. module: sale_renting
 #: model:ir.model,name:sale_renting.model_sale_order
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_report__state__sale
-#: model:ir.model.fields.selection,name:sale_renting.selection__sale_rental_schedule__state__sale
 msgid "Sales Order"
 msgstr "Salgsordre"
 
@@ -1071,9 +1224,9 @@ msgid "Sales Order Line"
 msgstr "Salgsordrelinje"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__team_id
+#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__team_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Sales Team"
 msgstr "Salgsteam"
 
@@ -1083,12 +1236,16 @@ msgid "Salesman"
 msgstr "Selger"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__user_id
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "Salesperson"
 msgstr "Selger"
+
+#. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.report_rental_order_document
+msgid "Sample Document"
+msgstr ""
 
 #. module: sale_renting
 #. odoo-javascript
@@ -1097,22 +1254,31 @@ msgid "Save the product."
 msgstr ""
 
 #. module: sale_renting
-#. odoo-javascript
-#: code:addons/sale_renting/static/src/js/tours/rental.js:0
-msgid "Save the quotation."
-msgstr "Lagre tilbudet"
-
-#. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.menu_rental_schedule
 msgid "Schedule"
 msgstr "Planlegg"
 
 #. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/models/product_product.py:0
-#: code:addons/sale_renting/models/product_template.py:0
 #: model:ir.actions.act_window,name:sale_renting.action_rental_order_schedule
 msgid "Scheduled Rentals"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,help:sale_renting.field_product_pricing__product_variant_ids
+msgid ""
+"Select Variants of the Product for which this rule applies.Leave empty if "
+"this rule applies for any variant of this template."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields,help:sale_renting.field_product_pricing__product_template_id
+msgid "Select products on which this pricing will be applied."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-javascript
+#: code:addons/sale_renting/static/src/js/tours/rental.js:0
+msgid "Select the rental dates and check the price."
 msgstr ""
 
 #. module: sale_renting
@@ -1133,11 +1299,6 @@ msgid "Some delay cost will be added to the sales order."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__start_date
-msgid "Start Date"
-msgstr "Startdato"
-
-#. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_report_search_view
 msgid "State"
 msgstr "Status"
@@ -1146,9 +1307,7 @@ msgstr "Status"
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard__status
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__status
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__state
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__state
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
 msgid "Status"
 msgstr "Status"
 
@@ -1168,13 +1327,35 @@ msgid "Sum of Daily Picked-Up Qty"
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__temporal_type
-msgid "Temporal Type"
+#: model:ir.model.fields,help:sale_renting.field_sale_order__duration_days
+msgid "The duration in days of the rental period."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields,help:sale_renting.field_rental_wizard__duration
-msgid "The duration unit is based on the unit of the rental pricing rule."
+#: model:ir.model.fields,help:sale_renting.field_sale_order__remaining_hours
+msgid "The leftover hours of the rental period."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "The order is already picked-up."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "The order is already returned."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_pickup_time
+msgid "The pickup time has to be between 0 and 24."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_temporal_recurrence_duration
+msgid "The pricing duration has to be greater or equal to 0."
 msgstr ""
 
 #. module: sale_renting
@@ -1183,14 +1364,33 @@ msgid "The product is used to add the cost to the sales order"
 msgstr ""
 
 #. module: sale_renting
+#: model:ir.model.fields,help:sale_renting.field_sale_order__is_late
 #: model:ir.model.fields,help:sale_renting.field_sale_order_line__is_late
-msgid "The products haven't been returned in time"
+msgid ""
+"The products haven't been picked-up or returned in time. This excludes any "
+"grace period before late fees apply."
 msgstr ""
 
 #. module: sale_renting
 #. odoo-javascript
 #: code:addons/sale_renting/static/src/js/tours/rental.js:0
 msgid "The rental configuration is available here."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_line.py:0
+msgid "The rental prices have been updated."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_rental_period_coherence
+msgid "The rental start date must be before the rental return date if any."
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.constraint,message:sale_renting.constraint_sale_temporal_recurrence_check_return_time
+msgid "The return time has to be between 0 and 24."
 msgstr ""
 
 #. module: sale_renting
@@ -1201,17 +1401,16 @@ msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_day
-msgid "This is the default extra cost per day set on newly created products. You can change this value for existing products directly on the product itself."
+msgid ""
+"This is the default extra cost per day set on newly created products.You can "
+"change this value for existing products directly on the product itself."
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_hour
-msgid "This is the default extra cost per hour set on newly created products. You can change this value for existing products directly on the product itself."
-msgstr ""
-
-#. module: sale_renting
-#: model:ir.model.fields,help:sale_renting.field_rental_wizard__unit_price
-msgid "This price is based on the rental price rule that gives the cheapest price for requested duration."
+msgid ""
+"This is the default extra cost per hour set on newly created products.You "
+"can change this value for existing products directly on the product itself."
 msgstr ""
 
 #. module: sale_renting
@@ -1220,14 +1419,23 @@ msgid "This product will be used to add fines in the Rental Order."
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
+msgid ""
+"This will update the unit price of all rental products based on the new "
+"period."
+msgstr ""
+
+#. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
-msgid "Those values are applied to any new rental product and can be changed on product forms."
+msgid ""
+"Those values are applied to any new rental product and can be changed on "
+"product forms."
 msgstr ""
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.rental_orders_today
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_view_search
-#: model_terms:ir.ui.view,arch_db:sale_renting.rental_schedule_view_search
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_order_line_search_schedule
 msgid "To Do Today"
 msgstr ""
 
@@ -1247,22 +1455,16 @@ msgid "Total Tax Included"
 msgstr "Total (inkl. mva)"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__duration_unit
+#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom_id
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__unit
+#: model_terms:ir.ui.view,arch_db:sale_renting.sale_temporal_recurrence_view_form
 msgid "Unit"
 msgstr "Enhet"
 
 #. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__unit_price
-msgid "Unit Price"
-msgstr "Enhetspris"
-
-#. module: sale_renting
-#: model:ir.model.fields,field_description:sale_renting.field_rental_wizard__uom_id
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__product_uom
-#: model:ir.model.fields,field_description:sale_renting.field_sale_rental_schedule__product_uom
-msgid "Unit of Measure"
-msgstr "Enhet"
+#: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
+msgid "Update Rental Prices"
+msgstr ""
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_wizard_view_form
@@ -1288,6 +1490,11 @@ msgid "Validate the operation after checking the picked-up quantities."
 msgstr ""
 
 #. module: sale_renting
+#: model_terms:ir.ui.view,arch_db:sale_renting.product_pricelist_view
+msgid "Variants"
+msgstr ""
+
+#. module: sale_renting
 #. odoo-javascript
 #: code:addons/sale_renting/static/src/js/tours/rental.js:0
 msgid ""
@@ -1296,18 +1503,50 @@ msgid ""
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__rental_wizard__duration_unit__week
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Week"
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_weekly
+msgid "Weekly"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__week
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__week
 msgid "Weeks"
 msgstr "Uker"
 
 #. module: sale_renting
-#: model:ir.model.fields.selection,name:sale_renting.selection__rental_wizard__duration_unit__year
+#. odoo-python
+#: code:addons/sale_renting/models/sale_order_recurrence.py:0
+msgid "Year"
+msgstr ""
+
+#. module: sale_renting
+#: model:sale.temporal.recurrence,name:sale_renting.recurrence_yearly
+msgid "Yearly"
+msgstr ""
+
+#. module: sale_renting
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__year
+#: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__unit__year
 msgid "Years"
 msgstr "År"
 
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
-msgid "You can also create additional products or services to sell by checking *Can be Sold* in the product form (e.g. insurance)."
+msgid ""
+"You can also create additional products or services to sell by checking *Can "
+"be Sold* in the product form (e.g. insurance)."
+msgstr ""
+
+#. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_pricelist.py:0
+msgid "You can not have a time-based rule for products that are not rentable."
 msgstr ""
 
 #. module: sale_renting
@@ -1326,8 +1565,11 @@ msgid "You can't return more than what's been picked-up."
 msgstr ""
 
 #. module: sale_renting
-#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_line_rental_stock_coherence
-msgid "You cannot return more than what has been picked up."
+#. odoo-python
+#: code:addons/sale_renting/models/product_pricing.py:0
+msgid ""
+"You cannot have multiple pricing for the same variant, recurrence and "
+"pricelist"
 msgstr ""
 
 #. module: sale_renting
@@ -1337,12 +1579,78 @@ msgid "You're done with your fist rental. Congratulations!"
 msgstr ""
 
 #. module: sale_renting
+#. odoo-python
+#: code:addons/sale_renting/models/product_pricing.py:0
+msgid "all variants"
+msgstr ""
+
+#. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
 msgstr "timer"
 
-#. module: sale_renting
-#. odoo-python
-#: code:addons/sale_renting/models/sale_order_line.py:0
-msgid "to"
-msgstr "til"
+#~ msgid "<strong>Shipping Address:</strong>"
+#~ msgstr "<strong>Leveringsadresse:</strong>"
+
+#~ msgid "Add"
+#~ msgstr "Legg til"
+
+#~ msgid "Analytic Account"
+#~ msgstr "Analytisk konto"
+
+#~ msgid "Color"
+#~ msgstr "Farge"
+
+#~ msgid "Customer Entity"
+#~ msgstr "Kundeenhet"
+
+#~ msgid "Customer Name"
+#~ msgstr "Kundenavn"
+
+#~ msgid "Dates"
+#~ msgstr "Datoer"
+
+#~ msgid "Draft Quotation"
+#~ msgstr "Tilbudskladd"
+
+#~ msgid "Expected"
+#~ msgstr "Forventet"
+
+#~ msgid "Group By"
+#~ msgstr "Grupper etter"
+
+#~ msgid "Order Date"
+#~ msgstr "Ordredato"
+
+#~ msgid "Order Reference"
+#~ msgstr "Ordrereferanse"
+
+#~ msgid "Order line #"
+#~ msgstr "Ordre linje #"
+
+#~ msgid "Price Computation"
+#~ msgstr "Prisberegning"
+
+#~ msgid "Qty Ordered"
+#~ msgstr "Antall bestilt"
+
+#~ msgid "Quantity"
+#~ msgstr "Antall"
+
+#~ msgid "Sales Done"
+#~ msgstr "Salg fullført"
+
+#~ msgid "Save the quotation."
+#~ msgstr "Lagre tilbudet"
+
+#~ msgid "Start Date"
+#~ msgstr "Startdato"
+
+#~ msgid "Unit Price"
+#~ msgstr "Enhetspris"
+
+#~ msgid "Unit of Measure"
+#~ msgstr "Enhet"
+
+#~ msgid "to"
+#~ msgstr "til"

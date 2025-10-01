@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-09-30 18:41+0000\n"
 "PO-Revision-Date: 2025-09-26 12:11+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
@@ -34,21 +34,6 @@ msgstr ""
 #: code:addons/account_reports/static/src/components/bank_reconciliation_report/warnings.xml:0
 msgid "\" account balance is affected by"
 msgstr "“ Kontostand wird beeinflusst durch"
-
-#. module: account_reports
-#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
-msgid ""
-"\"For each high risk receivables (>60 days), verify the following:\n"
-"- Is there documented follow-up?\n"
-"- Has a payment plan been negotiated?\n"
-"- Is a provision recorded if recovery is doubtful?\""
-msgstr ""
-"„Für jede Forderung mit hohem Risiko (>60 Tage) ist Folgendes zu überprüfen:"
-"\n"
-"- Liegen dokumentierte Mahnungen vor?\n"
-"- Wurde ein Zahlungsplan ausgehandelt?\n"
-"- Ist eine Rückstellung gebildet worden, wenn die Eintreibung zweifelhaft "
-"ist?“"
 
 #. module: account_reports
 #. odoo-python
@@ -76,6 +61,7 @@ msgstr "%(return_type_name)s %(period_suffix)s %(country_code)s"
 
 #. module: account_reports
 #. odoo-python
+#: code:addons/account_reports/models/account_return.py:0
 #: code:addons/account_reports/models/budget.py:0
 msgid "%s (copy)"
 msgstr "%s (Kopie)"
@@ -206,11 +192,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Dear <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Hallo <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Dear <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Hallo <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    Anbei finden Sie die Liste Ihrer offenen Rechnungen..\n"
 "                    <br/>\n"
@@ -252,11 +238,11 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p style=\"margin: 0px; padding: 0px;\">\n"
-"                    <t t-if=\"object.id != object.commercial_partner_id.id\""
-">Hallo <t t-out=\"object.name or ''\"/> (<t t-out="
-"\"object.commercial_partner_id.name or ''\"/>),</t>\n"
-"                    <t t-else=\"\">Hallo <t t-out=\"object.name or ''\""
-"/>,</t>\n"
+"                    <t t-if=\"object.id != "
+"object.commercial_partner_id.id\">Hallo <t t-out=\"object.name or ''\"/> (<t "
+"t-out=\"object.commercial_partner_id.name or ''\"/>),</t>\n"
+"                    <t t-else=\"\">Hallo <t t-out=\"object.name or ''\"/>,</"
+"t>\n"
 "                    <br/>\n"
 "                    Im Anhang finden Sie eine Übersicht Ihres Kundenkontos.\n"
 "                    <br/>\n"
@@ -312,33 +298,34 @@ msgid ""
 msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "                <p>\n"
-"                    Hallo <t t-out=\"object.company_id.name\""
-">IhrUnternehmen</t>,\n"
+"                    Hallo <t t-"
+"out=\"object.company_id.name\">IhrUnternehmen</t>,\n"
 "                </p>\n"
 "                <p>\n"
 "                    Auf Grundlage der erhaltenen Unterlagen und "
-"Informationen wurde die MwSt.-Erklärung von <t t-out="
-"\"object.company_id.name\">IhrUnternehmen</t>\n"
-"                    für den Zeitraum <t t-out=\"object"
-".type_id._get_period_name(object.company_id, object.date_from, "
+"Informationen wurde die MwSt.-Erklärung von <t t-"
+"out=\"object.company_id.name\">IhrUnternehmen</t>\n"
+"                    für den Zeitraum <t t-"
+"out=\"object.type_id._get_period_name(object.company_id, object.date_from, "
 "object.date_to)\"/> eingereicht.\n"
 "                </p>\n"
 "                <p>\n"
-"                    Wir haben festgestellt, dass ein Betrag in Höhe von <t "
-"t-out=\"format_amount(object.total_amount_to_pay, "
+"                    Wir haben festgestellt, dass ein Betrag in Höhe von <t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
 "object.amount_to_pay_currency_id)\"/> noch offen ist.\n"
 "                </p>\n"
 "                <table style=\"border:1px solid black; padding:20px; text-"
 "align:left; border-spacing: 16px;\">\n"
 "                    <tr>\n"
 "                        <td>Zu zahlender Betrag</td>\n"
-"                        <td><t t-out=\"format_amount("
-"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                        <td><t t-"
+"out=\"format_amount(object.total_amount_to_pay, "
+"object.amount_to_pay_currency_id)\"/></td>\n"
 "                    </tr>\n"
 "                    <tr>\n"
 "                        <td>Fällig am</td>\n"
-"                        <td><t t-out=\"format_date(object.date_deadline)\""
-"/></td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\"/"
+"></td>\n"
 "                    </tr>\n"
 "                </table>\n"
 "                <p>Mit freundlichen Grüßen</p>\n"
@@ -364,8 +351,8 @@ msgid ""
 "send_mail_readonly\"/>"
 msgstr ""
 "<i class=\"fa fa-question-circle ml4\" role=\"img\" aria-label=\"Warning\" "
-"title=\"Die E-Mail-Adresse für den Partner ist nicht bekannt\" invisible="
-"\"not send_mail_readonly\"/>"
+"title=\"Die E-Mail-Adresse für den Partner ist nicht bekannt\" "
+"invisible=\"not send_mail_readonly\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -384,7 +371,8 @@ msgstr "<span class=\"oe_stat_text pe-1 text-black\">Frist: </span>"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "<span class=\"oe_stat_text pe-1 text-black-50\">Submitted on: </span>"
-msgstr "<span class=\"oe_stat_text pe-1 text-black-50\">Eingereicht am: </span>"
+msgstr ""
+"<span class=\"oe_stat_text pe-1 text-black-50\">Eingereicht am: </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -394,8 +382,8 @@ msgid ""
 "success\">Passed</span>"
 msgstr ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count != "
-"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-success\""
-">Bestanden</span>"
+"0 or resolved_check_count &lt;= 0\" class=\"oe_stat_text ps-0 text-"
+"success\">Bestanden</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -403,9 +391,8 @@ msgid ""
 "<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
 "&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Pending</span>"
 msgstr ""
-"<span invisible="
-"\"context.get('in_checks_view') or unresolved_check_count &lt;= 0\" class="
-"\"oe_stat_text ps-0 text-danger\">Ausstehend</span>"
+"<span invisible=\"context.get('in_checks_view') or unresolved_check_count "
+"&lt;= 0\" class=\"oe_stat_text ps-0 text-danger\">Ausstehend</span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_kanban_view
@@ -415,8 +402,8 @@ msgid ""
 "records_count\"> </span>"
 msgstr ""
 "<span invisible=\"not records_count or records_count &lt; 21\">20+</span>\n"
-"                                                    <span invisible="
-"\"not records_count\"> </span>"
+"                                                    <span invisible=\"not "
+"records_count\"> </span>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.return_creation_wizard_form
@@ -428,20 +415,20 @@ msgid ""
 "show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
 "danger pb-2\" title=\"A return already exists for the selected period.\"/>"
 msgstr ""
-"<span invisible=\"not show_warning_wrong_dates\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Der ausgewählte Bereich stimmt mit keiner Steuerposition überein.\"/>\n"
-"                            <span invisible="
-"\"not show_warning_existing_return\" class="
-"\"fa fa-exclamation-triangle text-danger pb-2\" title="
-"\"Es gibt bereits eine Erklärung für den ausgewählten Zeitraum.\"/>"
+"<span invisible=\"not show_warning_wrong_dates\" class=\"fa fa-exclamation-"
+"triangle text-danger pb-2\" title=\"Der ausgewählte Bereich stimmt mit "
+"keiner Steuerposition überein.\"/>\n"
+"                            <span invisible=\"not "
+"show_warning_existing_return\" class=\"fa fa-exclamation-triangle text-"
+"danger pb-2\" title=\"Es gibt bereits eine Erklärung für den ausgewählten "
+"Zeitraum.\"/>"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
 msgid "<span>One or more error(s) occurred during file generation:</span>"
 msgstr ""
-"<span>Während der Dateigenerierung ist einer oder mehrere Fehler "
-"aufgetreten:</span>"
+"<span>Während der Dateigenerierung ist einer oder mehrere Fehler aufgetreten:"
+"</span>"
 
 #. module: account_reports
 #: model:ir.model.constraint,message:account_reports.constraint_account_report_horizontal_group_name_uniq
@@ -648,6 +635,11 @@ msgstr "Budgetposten des Buchhaltungsberichts"
 #: model:ir.model,name:account_reports.model_account_report_expression
 msgid "Accounting Report Expression"
 msgstr "Buchhaltungsberichtsausdruck"
+
+#. module: account_reports
+#: model:ir.model,name:account_reports.model_account_report_external_value
+msgid "Accounting Report External Value"
+msgstr ""
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -933,9 +925,8 @@ msgid ""
 "All customer VAT numbers are valid under <a href=\"https://ec.europa.eu/"
 "taxation_customs/vies\" target=\"_blank\">VIES</a>."
 msgstr ""
-"Die USt.-IdNr. aller Kunden sind gemäß <a href="
-"\"https://ec.europa.eu/taxation_customs/vies\" target=\"_blank\">MIAS</a> "
-"gültig."
+"Die USt.-IdNr. aller Kunden sind gemäß <a href=\"https://ec.europa.eu/"
+"taxation_customs/vies\" target=\"_blank\">MIAS</a> gültig."
 
 #. module: account_reports
 #. odoo-python
@@ -1464,8 +1455,8 @@ msgid ""
 "By default, Odoo applies its own deadline for returns (shown as 0). Entering "
 "a value here will override it and be used as the new deadline."
 msgstr ""
-"Standardmäßig verwendet Odoo seine eigene Frist für Steuererklärungen ("
-"angezeigt als 0). Durch die Eingabe eines Wertes hier wird diese "
+"Standardmäßig verwendet Odoo seine eigene Frist für Steuererklärungen "
+"(angezeigt als 0). Durch die Eingabe eines Wertes hier wird diese "
 "überschrieben und als neue Frist verwendet."
 
 #. module: account_reports
@@ -1619,9 +1610,7 @@ msgid "Cash surplus"
 msgstr "Bargeldüberschuss"
 
 #. module: account_reports
-#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
-#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
 msgstr "Kategorie"
@@ -1813,8 +1802,8 @@ msgid ""
 "Company %(company)s already belongs to a tax unit in %(country)s. A company "
 "can at most be part of one tax unit per country."
 msgstr ""
-"Das Unternehmen %(company)s gehört bereits zu einer Steuereinheit in "
-"%(country)s. Ein Unternehmen kann nur Teil einer Steuereinheit pro Land sein."
+"Das Unternehmen %(company)s gehört bereits zu einer Steuereinheit in %"
+"(country)s. Ein Unternehmen kann nur Teil einer Steuereinheit pro Land sein."
 
 #. module: account_reports
 #. odoo-python
@@ -2434,6 +2423,7 @@ msgstr "E-Mail-Editor anzeigen"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__display_name
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__display_name
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__display_name
@@ -2941,6 +2931,7 @@ msgstr "Filter:"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_account_report_budget_tree
+#: model:ir.ui.menu,name:account_reports.menu_action_account_report_budget_tree
 msgid "Financial Budgets"
 msgstr "Finanzielle Budgets"
 
@@ -3015,6 +3006,15 @@ msgstr "Follower (Partner)"
 #: model:ir.model.fields,help:account_reports.field_account_return__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "FontAwesome-Icon, z. B. fa-tasks"
+
+#. module: account_reports
+#: model:account.return.check.template,description:account_reports.account_return_check_template_aged_receivable_followup
+msgid ""
+"For each high risk receivables (>60 days), verify the following:\n"
+"- Is there documented follow-up?\n"
+"- Has a payment plan been negotiated?\n"
+"- Is a provision recorded if recovery is doubtful?"
+msgstr ""
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_foreign_currency_liabilities
@@ -3329,6 +3329,7 @@ msgstr "IBAN"
 #: model:ir.model.fields,field_description:account_reports.field_account_report_budget_item__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_custom_handler__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_expression__id
+#: model:ir.model.fields,field_description:account_reports.field_account_report_external_value__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group__id
 #: model:ir.model.fields,field_description:account_reports.field_account_report_horizontal_group_rule__id
@@ -3521,8 +3522,8 @@ msgid ""
 "Inconsistent report_id in options dictionary. Options says %"
 "(options_report)s; report is %(report)s."
 msgstr ""
-"Inkonsistente report_id in Optionenwörterbuch. Optionen sagen "
-"%(options_report)s; Bericht ist %(report)s."
+"Inkonsistente report_id in Optionenwörterbuch. Optionen sagen %"
+"(options_report)s; Bericht ist %(report)s."
 
 #. module: account_reports
 #. odoo-python
@@ -3568,8 +3569,8 @@ msgid ""
 "Invalid domain formula in expression \"%(expression)s\" of line \"%"
 "(line)s\": %(formula)s"
 msgstr ""
-"Ungültige Domainformel in Ausdruck „%(expression)s“ der Zeile „%(line)s“: "
-"%(formula)s"
+"Ungültige Domainformel in Ausdruck „%(expression)s“ der Zeile „%(line)s“: %"
+"(formula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3584,8 +3585,8 @@ msgid ""
 "Invalid subformula in expression \"%(expression)s\" of line \"%(line)s\": %"
 "(subformula)s"
 msgstr ""
-"Ungültige Unterformel in Ausdruck „%(expression)s“ der Zeile „%(line)s“: "
-"%(subformula)s"
+"Ungültige Unterformel in Ausdruck „%(expression)s“ der Zeile „%(line)s“: %"
+"(subformula)s"
 
 #. module: account_reports
 #. odoo-python
@@ -3796,6 +3797,11 @@ msgstr "Sprache"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.pdf_export_main_table_header
 msgid "Last Comment"
+msgstr ""
+
+#. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_account__last_message
+msgid "Last Message"
 msgstr ""
 
 #. module: account_reports
@@ -6038,7 +6044,8 @@ msgstr "Text kopiert"
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid "The Accounts Coverage Report is not available for this report."
-msgstr "Der Bericht zur Kontenabdeckung ist für diesen Bericht nicht verfügbar."
+msgstr ""
+"Der Bericht zur Kontenabdeckung ist für diesen Bericht nicht verfügbar."
 
 #. module: account_reports
 #. odoo-python
@@ -6093,7 +6100,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_tax.py:0
 msgid "The main company of a tax unit has to be part of it."
-msgstr "Das Hauptunternehmen einer Steuereinheit muss Teil dieser Einheit sein."
+msgstr ""
+"Das Hauptunternehmen einer Steuereinheit muss Teil dieser Einheit sein."
 
 #. module: account_reports
 #. odoo-python
@@ -6261,8 +6269,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_line_form
 msgid "This line uses a custom user-defined 'Group By' value."
 msgstr ""
-"Diese Zeile verwendet einen individuellen benutzerdefinierten „Group "
-"by“-Wert."
+"Diese Zeile verwendet einen individuellen benutzerdefinierten „Group by“-"
+"Wert."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -6484,8 +6492,10 @@ msgid "Trying to expand groupby results on lines without a groupby value."
 msgstr "Versuch, Groupby-Ergebnisse auf Zeilen ohne Groupby-Wert zu erweitern."
 
 #. module: account_reports
+#: model:ir.model.fields,field_description:account_reports.field_account_return__return_type_category
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__type
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__type
+#: model:ir.model.fields,field_description:account_reports.field_account_return_type__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_list_view
 msgid "Type"
@@ -6902,8 +6912,8 @@ msgid ""
 msgstr ""
 "Sie können diese Abschlussbuchung nicht auf Entwurf zurücksetzen, da dadurch "
 "Übertragswerte gelöscht würden, die sich auf den Steuerbericht einer "
-"gesperrten Periode auswirken. Ändern Sie das Sperrdatum, um fortzufahren: "
-"%(lock_date_info)s."
+"gesperrten Periode auswirken. Ändern Sie das Sperrdatum, um fortzufahren: %"
+"(lock_date_info)s."
 
 #. module: account_reports
 #. odoo-python
@@ -6911,6 +6921,12 @@ msgstr ""
 msgid ""
 "You cannot reset this return to new, as another return has been locked at a "
 "later date."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid "You cannot update this value as it's locked by: %s"
 msgstr ""
 
 #. module: account_reports
@@ -7157,14 +7173,28 @@ msgid ""
 "object._get_followup_responsible().company_id).name }} Statement - "
 "{{ object.commercial_company_name }}"
 msgstr ""
-"{{ (object.company_id or object._get_followup_responsible().company_id).name "
-"}} Auszug - {{ object.commercial_company_name }}"
+"{{ (object.company_id or "
+"object._get_followup_responsible().company_id).name }} Auszug - "
+"{{ object.commercial_company_name }}"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/multicurrency_revaluation_report/warnings.xml:0
 msgid "⇒ Reset to Odoo’s Rate"
 msgstr "⇒ Zurücksetzen auf Odoos Kurs"
+
+#~ msgid ""
+#~ "\"For each high risk receivables (>60 days), verify the following:\n"
+#~ "- Is there documented follow-up?\n"
+#~ "- Has a payment plan been negotiated?\n"
+#~ "- Is a provision recorded if recovery is doubtful?\""
+#~ msgstr ""
+#~ "„Für jede Forderung mit hohem Risiko (>60 Tage) ist Folgendes zu "
+#~ "überprüfen:\n"
+#~ "- Liegen dokumentierte Mahnungen vor?\n"
+#~ "- Wurde ein Zahlungsplan ausgehandelt?\n"
+#~ "- Ist eine Rückstellung gebildet worden, wenn die Eintreibung zweifelhaft "
+#~ "ist?“"
 
 #~ msgid " and %s others"
 #~ msgstr "und %s andere"

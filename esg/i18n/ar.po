@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 13:42+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/esg/ar/>\n"
@@ -35,8 +35,10 @@ msgstr "%s (نسخة)"
 #: model_terms:ir.ui.view,arch_db:esg.emission_factor_form_view
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
-"                    You are modifying an emission factor already assigned to emissions.\n"
-"                    Changing it will update these emissions. To keep the old value, duplicate the factor."
+"                    You are modifying an emission factor already assigned to "
+"emissions.\n"
+"                    Changing it will update these emissions. To keep the old "
+"value, duplicate the factor."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-2\"/>\n"
 "                    أنت تقوم بتعديل عامل الانبعاثات الذي تم تعيينه بالفعل "
@@ -81,6 +83,7 @@ msgstr ""
 "الانبعاثات، ولكن دون صلاحيات التهيئة."
 
 #. module: esg
+#: model:ir.model,name:esg.model_account_account
 #: model:ir.model.fields,field_description:esg.field_esg_assignation_line__account_id
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__account_id
 msgid "Account"
@@ -145,8 +148,8 @@ msgstr "مبلغ"
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid ""
-"An assignation with the rules (%(account_id)s, %(partner_id)s, "
-"%(product_id)s) already exists in the emission factor '%(factor_name)s'."
+"An assignation with the rules (%(account_id)s, %(partner_id)s, %"
+"(product_id)s) already exists in the emission factor '%(factor_name)s'."
 msgstr ""
 "هناك تعيين يتضمن القواعد (%(account_id)s، %(partner_id)s، %(product_id)s) "
 "موجود بالفعل في عامل الانبعاث '%(factor_name)s'."
@@ -370,6 +373,18 @@ msgid "Category"
 msgstr "الفئة"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"Changing the account type to anything other than %"
+"(valid_account_type_names)s will reset all emission factors linked to "
+"journal items using this account.\n"
+"In addition, it will remove all the ESG assignations lines linked to that "
+"account.\n"
+"Are you sure you want to continue?"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
 msgid "Child"
 msgstr "الفرعي"
@@ -588,6 +603,7 @@ msgid "Direct Emissions"
 msgstr "الانبعاثات المباشرة"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move__display_name
 #: model:ir.model.fields,field_description:esg.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__display_name
@@ -742,8 +758,10 @@ msgstr "الانبعاثات (kgCO₂e)"
 #: model_terms:ir.actions.act_window,help:esg.action_emitted_emission_report_views
 #: model_terms:ir.actions.act_window,help:esg.action_offset_emission_report_views
 msgid ""
-"Emissions data will sync automatically from accounting when you receive supplier invoices.<br>\n"
-"                You can also manually add other emission not linked to journal entries."
+"Emissions data will sync automatically from accounting when you receive "
+"supplier invoices.<br>\n"
+"                You can also manually add other emission not linked to "
+"journal entries."
 msgstr ""
 "ستتم مزامنة بيانات الانبعاثات تلقائياً من تطبيق المحاسبة عندما تتلقى فواتير "
 "المورّدين.<br>\n"
@@ -1051,6 +1069,7 @@ msgid "Hydrofluorocarbons (HFCs)"
 msgstr "مركبات الكربون الهيدروفلورية (HFCs)"
 
 #. module: esg
+#: model:ir.model.fields,field_description:esg.field_account_account__id
 #: model:ir.model.fields,field_description:esg.field_account_move__id
 #: model:ir.model.fields,field_description:esg.field_account_move_line__id
 #: model:ir.model.fields,field_description:esg.field_esg_activity_type__id
@@ -1076,8 +1095,8 @@ msgstr "عمليات تقنية المعلومات"
 #: model:ir.model.fields,help:esg.field_factors_auto_assignment_wizard__replace_previous_factors
 msgid ""
 "If checked, any emission lines that already have an emission factor "
-"(manually or automatically assigned) will be reassigned if a matching factor"
-" is found based on your configuration."
+"(manually or automatically assigned) will be reassigned if a matching factor "
+"is found based on your configuration."
 msgstr ""
 "إذا تم تحديده، فسيتم إعادة تعيين أي بنود انبعاثات بها معامل انبعاث (يدوياً أو "
 "تلقائياً) إذا تم العثور على معامل مطابق بناءً على التهيئة الخاصة بك."
@@ -1560,8 +1579,7 @@ msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,help:esg.field_esg_gas__global_warming_potential
-msgid ""
-"Relative impact of gas on global warming compared to CO₂ over 100 years"
+msgid "Relative impact of gas on global warming compared to CO₂ over 100 years"
 msgstr ""
 "التأثير النسبي للغاز على الاحتباس الحراري مقارنة بغاز ثاني أكسيد الكربون على "
 "مدى 100 عام"
@@ -1719,6 +1737,12 @@ msgid "The IPCC server did not return any file to import the data."
 msgstr ""
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/esg_assignation_line.py:0
+msgid "The account type must be of type %(valid_account_type_names)s."
+msgstr ""
+
+#. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
 msgid "The assignation rule must have at least one field filled"
 msgstr "يجب أن تحتوي قاعدة التعيين على حقل واحد على الأقل تمت تعبئته"
@@ -1780,8 +1804,8 @@ msgid ""
 "Turn insights into action, monitor your impact in real-time, and drive "
 "meaningful change across your organization."
 msgstr ""
-"حوِّل رؤيتك إلى أفعال، وتمكن من مراقبة تأثيرك في الوقت الفعلي وحقق تغييراً هادفاً"
-" في مؤسستك."
+"حوِّل رؤيتك إلى أفعال، وتمكن من مراقبة تأثيرك في الوقت الفعلي وحقق تغييراً "
+"هادفاً في مؤسستك."
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_account_move_line__esg_uncertainty_value
@@ -1919,6 +1943,12 @@ msgid "Very High Uncertainty (> 50%)"
 msgstr "عدم التأكد بدرجة كبيرة جداً (أكثر من 50%)"
 
 #. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid "Warning"
+msgstr ""
+
+#. module: esg
 #. odoo-javascript
 #: code:addons/esg/static/src/no_content_helper/no_content_helper.xml:0
 #: model:esg.emission.source,name:esg.esg_emission_source_upstream_5
@@ -1941,6 +1971,14 @@ msgstr "رسائل الموقع الإلكتروني"
 #: model:ir.model.fields,help:esg.field_esg_emission_factor_line__website_message_ids
 msgid "Website communication history"
 msgstr "سجل تواصل الموقع الإلكتروني"
+
+#. module: esg
+#. odoo-python
+#: code:addons/esg/models/account_account.py:0
+msgid ""
+"You can only create accounts of type %(valid_account_type_names)s in the ESG "
+"module, as emission factors can only be linked to expense or asset accounts."
+msgstr ""
 
 #. module: esg
 #. odoo-python

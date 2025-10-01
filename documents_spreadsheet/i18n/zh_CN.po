@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 18:44+0000\n"
+"POT-Creation-Date: 2025-09-30 18:42+0000\n"
 "PO-Revision-Date: 2025-09-16 15:31+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -215,7 +215,6 @@ msgstr "冻结和共享"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 msgid "Freeze and share"
 msgstr "冻结并分享"
@@ -403,7 +402,6 @@ msgstr "序号"
 
 #. module: documents_spreadsheet
 #. odoo-javascript
-#: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.js:0
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_share/spreadsheet_share.xml:0
 msgid "Share"
@@ -556,8 +554,9 @@ msgstr "这个电子表格包含实时数据，只有内部用户可以查看。
 msgid ""
 "This type of file cannot be previewed or edited directly in Odoo. Opening "
 "your file with Odoo Spreadsheet will allow you to do so."
-msgstr "此类文件无法直接在 Odoo 中预览或编辑。使用 Odoo "
-"电子表格打开文件后，您就可以这样做了。"
+msgstr ""
+"此类文件无法直接在 Odoo 中预览或编辑。使用 Odoo 电子表格打开文件后，您就可以"
+"这样做了。"
 
 #. module: documents_spreadsheet
 #: model:ir.model.fields,field_description:documents_spreadsheet.field_documents_document__thumbnail

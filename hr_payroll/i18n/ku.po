@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:33+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-11 14:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -22,9 +23,12 @@ msgid ""
 "\n"
 "        Defines the source for work entries generation\n"
 "\n"
-"        Working Schedule: Work entries will be generated from the working hours below.\n"
-"        Attendances: Work entries will be generated from the employee's attendances. (requires Attendance app)\n"
-"        Planning: Work entries will be generated from the employee's planning. (requires Planning app)\n"
+"        Working Schedule: Work entries will be generated from the working "
+"hours below.\n"
+"        Attendances: Work entries will be generated from the employee's "
+"attendances. (requires Attendance app)\n"
+"        Planning: Work entries will be generated from the employee's "
+"planning. (requires Planning app)\n"
 "    "
 msgstr ""
 
@@ -190,8 +194,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid ""
-"<code>categories</code>: dict containing the computed salary rule categories"
-" (sum of amount of all rules belonging to that category)."
+"<code>categories</code>: dict containing the computed salary rule categories "
+"(sum of amount of all rules belonging to that category)."
 msgstr ""
 
 #. module: hr_payroll
@@ -337,11 +341,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
 msgid ""
 "<span invisible=\"schedule_pay != 'annually'\">/ year</span>\n"
-"                <span invisible=\"schedule_pay != 'semi-annually'\">/ half-year</span>\n"
-"                <span invisible=\"schedule_pay != 'quarterly'\">/ quarter</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ two months</span>\n"
-"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ half-month</span>\n"
-"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ two weeks</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ half-"
+"year</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ quarter</"
+"span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ two "
+"months</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ half-"
+"month</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/ two weeks</"
+"span>\n"
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
@@ -360,8 +369,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_edit_payslip_lines_form_wizard
 msgid ""
-"<span><strong>Tip:</strong> Each time you edit the quantity or the amount on"
-" a line, we recompute the following lines. We recommend that you edit from "
+"<span><strong>Tip:</strong> Each time you edit the quantity or the amount on "
+"a line, we recompute the following lines. We recommend that you edit from "
 "top to bottom to prevent your edition from being overwritten by the "
 "automatic recalculation. Be careful that reordering the lines doesn't "
 "recompute them.</span>"
@@ -507,9 +516,11 @@ msgstr ""
 #. module: hr_payroll
 #: model:mail.template,body_html:hr_payroll.mail_template_new_payslip
 msgid ""
-"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0px auto;\"><tbody>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; "
+"margin:0px auto;\"><tbody>\n"
 "    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
-"        Dear <t t-esc=\"object.employee_id.name\"/>, a new payslip is available for you.<br/><br/>\n"
+"        Dear <t t-esc=\"object.employee_id.name\"/>, a new payslip is "
+"available for you.<br/><br/>\n"
 "        Please find the PDF in your employee portal.<br/><br/>\n"
 "        Have a nice day,<br/>\n"
 "        The HR Team\n"
@@ -529,8 +540,10 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
 msgid ""
 "A Salary Adjustment is a recurring amount of money defined on the\n"
-"                employee and used in every payslip on an amount of time.<br>\n"
-"                Ex. Money recovery, Child support, Assessment of salary, ...<br><br>"
+"                employee and used in every payslip on an amount of time."
+"<br>\n"
+"                Ex. Money recovery, Child support, Assessment of salary, ..."
+"<br><br>"
 msgstr ""
 
 #. module: hr_payroll
@@ -824,8 +837,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid ""
-"Are you sure you want to revert this payslip? This will create a negative of"
-" this payslip."
+"Are you sure you want to revert this payslip? This will create a negative of "
+"this payslip."
 msgstr ""
 
 #. module: hr_payroll
@@ -1077,8 +1090,8 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
 msgid ""
-"Choose whether to correct only the selected payslip or all payslips affected"
-" by the changes in this version."
+"Choose whether to correct only the selected payslip or all payslips affected "
+"by the changes in this version."
 msgstr ""
 
 #. module: hr_payroll
@@ -1630,8 +1643,10 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_res_company__ytd_reset_day
 #: model:ir.model.fields,help:hr_payroll.field_res_config_settings__ytd_reset_day
 msgid ""
-"Day where the YTD will be reset every year. If zero or negative, then the first day of the month will be selected instead.\n"
-"        If greater than the last day of a month, then the last day of the month will be selected instead."
+"Day where the YTD will be reset every year. If zero or negative, then the "
+"first day of the month will be selected instead.\n"
+"        If greater than the last day of a month, then the last day of the "
+"month will be selected instead."
 msgstr ""
 
 #. module: hr_payroll
@@ -1774,6 +1789,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__note
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_category__note
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_work_days_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Description"
 msgstr ""
@@ -2041,8 +2057,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid ""
-"Employee Count - How many contracts are running in the company at the moment"
-" ?"
+"Employee Count - How many contracts are running in the company at the "
+"moment ?"
 msgstr ""
 
 #. module: hr_payroll
@@ -2129,7 +2145,9 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__resource_calendar_id
 msgid ""
 "Employee's working schedule.\n"
-"        When left empty, the employee is considered to have a fully flexible schedule, allowing them to work without any time limit, anytime of the week.\n"
+"        When left empty, the employee is considered to have a fully flexible "
+"schedule, allowing them to work without any time limit, anytime of the "
+"week.\n"
 "        "
 msgstr ""
 
@@ -2914,8 +2932,8 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_input__amount
 msgid ""
-"It is used in computation. E.g. a rule for salesmen having 1%% commission of"
-" basic salary per product can defined in expression like: result = "
+"It is used in computation. E.g. a rule for salesmen having 1%% commission of "
+"basic salary per product can defined in expression like: result = "
 "inputs['SALEURO'].amount * version.wage * 0.01."
 msgstr ""
 
@@ -3388,7 +3406,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_payroll_hr_version_list_view_payrun
 msgid ""
-"No record fit your period and salary structure type, please go back to select another period and/or\n"
+"No record fit your period and salary structure type, please go back to "
+"select another period and/or\n"
 "                salary structure type."
 msgstr ""
 
@@ -3427,8 +3446,8 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid ""
-"Note - Create as many notes as you want, like this one, to keep track of all"
-" useful information !"
+"Note - Create as many notes as you want, like this one, to keep track of all "
+"useful information !"
 msgstr ""
 
 #. module: hr_payroll
@@ -3488,8 +3507,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__full_time_required_hours
 #: model:ir.model.fields,help:hr_payroll.field_hr_version__full_time_required_hours
 msgid ""
-"Number of hours to work on the company schedule to be considered as "
-"fulltime."
+"Number of hours to work on the company schedule to be considered as fulltime."
 msgstr ""
 
 #. module: hr_payroll
@@ -3778,8 +3796,8 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_payment_report_wizard__effective_date
 msgid ""
-"Payment Entry Date: the banking day on which you intend the payslip batch to"
-" be settled."
+"Payment Entry Date: the banking day on which you intend the payslip batch to "
+"be settled."
 msgstr ""
 
 #. module: hr_payroll
@@ -4656,6 +4674,7 @@ msgstr ""
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
 msgid "Salary Rule"
 msgstr ""
 
@@ -4669,6 +4688,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_salary_rule_category
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_register
+#: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_line_view_search_report
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_filter
 msgid "Salary Rule Category"
 msgstr ""
@@ -4914,8 +4934,7 @@ msgstr ""
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_run.py:0
-msgid ""
-"Some work entries could not be validated. Time intervals to look for:%s"
+msgid "Some work entries could not be validated. Time intervals to look for:%s"
 msgstr ""
 
 #. module: hr_payroll
@@ -5092,8 +5111,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
 msgid ""
-"The Payslip is the computation of the pay based on a period of time for an employee.\n"
-"                        It computes the Net salary according to the Salary Rules you've defined in the configuration."
+"The Payslip is the computation of the pay based on a period of time for an "
+"employee.\n"
+"                        It computes the Net salary according to the Salary "
+"Rules you've defined in the configuration."
 msgstr ""
 
 #. module: hr_payroll
@@ -5107,8 +5128,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/res_company.py:0
 msgid ""
-"The YTD reset day must be a valid day of the month : since the current month"
-" is %(month)s, it should be between 1 and %(day)s."
+"The YTD reset day must be a valid day of the month : since the current month "
+"is %(month)s, it should be between 1 and %(day)s."
 msgstr ""
 
 #. module: hr_payroll
@@ -5702,9 +5723,11 @@ msgstr ""
 msgid ""
 "Watch out for gaps in %(employee_name)s's calendar\n"
 "\n"
-"Please complete the missing work entries of %(employee_name)s:%(time_intervals_str)s \n"
+"Please complete the missing work entries of %(employee_name)s:%"
+"(time_intervals_str)s \n"
 "\n"
-"Missing work entries are like the Bermuda Triangle for paychecks. Let's keep your colleague's earnings from vanishing into thin air!"
+"Missing work entries are like the Bermuda Triangle for paychecks. Let's keep "
+"your colleague's earnings from vanishing into thin air!"
 msgstr ""
 
 #. module: hr_payroll
@@ -5755,8 +5778,8 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_index__description
 msgid ""
-"Will be used as the message specifying why the wage on the contract has been"
-" modified"
+"Will be used as the message specifying why the wage on the contract has been "
+"modified"
 msgstr ""
 
 #. module: hr_payroll
@@ -6021,8 +6044,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip_input_type.py:0
 msgid ""
-"You cannot archive an input type if there exists a running salary adjustment"
-" of this type."
+"You cannot archive an input type if there exists a running salary adjustment "
+"of this type."
 msgstr ""
 
 #. module: hr_payroll

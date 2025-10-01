@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 15:13+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
 "PO-Revision-Date: 2025-09-16 22:54+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -119,23 +119,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"duration_days != 1\"> day </span>\n"
-"                    <span invisible=\"duration_days in [0,1]\"> days </span>\n"
-"                    <span invisible=\"duration_days == 0 or remaining_hours == 0\">and </span>"
+"                    <span invisible=\"duration_days in [0,1]\"> days </"
+"span>\n"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">and </span>"
 msgstr ""
 "<span invisible=\"duration_days != 1\"> วัน </span>\n"
 "                    <span invisible=\"duration_days in [0,1]\"> วัน </span>\n"
-"                    <span invisible="
-"\"duration_days == 0 or remaining_hours == 0\">และ </span>"
+"                    <span invisible=\"duration_days == 0 or remaining_hours "
+"== 0\">และ </span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.rental_order_form_view
 msgid ""
 "<span invisible=\"remaining_hours != 1\"> hour </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> hours </span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> hours </"
+"span>"
 msgstr ""
 "<span invisible=\"remaining_hours != 1\"> ชั่วโมง </span>\n"
-"                    <span invisible=\"remaining_hours in [0,1]\"> ชั่วโมง "
-"</span>"
+"                    <span invisible=\"remaining_hours in [0,1]\"> ชั่วโมง </"
+"span>"
 
 #. module: sale_renting
 #: model_terms:ir.ui.view,arch_db:sale_renting.product_template_form_view_rental
@@ -1406,8 +1409,8 @@ msgstr "ไม่มีกำหนดเวลารับหรือคืน
 #. module: sale_renting
 #: model:ir.model.fields,help:sale_renting.field_res_config_settings__extra_day
 msgid ""
-"This is the default extra cost per day set on newly created products.You can"
-" change this value for existing products directly on the product itself."
+"This is the default extra cost per day set on newly created products.You can "
+"change this value for existing products directly on the product itself."
 msgstr ""
 "นี่คือต้นทุนเพิ่มเติมต่อวันเริ่มต้นที่ตั้งไว้สำหรับผลิตภัณฑ์ที่สร้างขึ้นใหม่ "
 "คุณสามารถเปลี่ยนค่านี้สำหรับผลิตภัณฑ์ที่มีอยู่ได้โดยตรงบนตัวผลิตภัณฑ์"
@@ -1438,8 +1441,7 @@ msgstr "วิธีนี้จะอัปเดตราคาต่อหน
 msgid ""
 "Those values are applied to any new rental product and can be changed on "
 "product forms."
-msgstr ""
-"ค่าเหล่านี้ใช้กับสินค้าให้เช่าใหม่และสามารถเปลี่ยนแปลงได้ในแบบฟอร์มสินค้า"
+msgstr "ค่าเหล่านี้ใช้กับสินค้าให้เช่าใหม่และสามารถเปลี่ยนแปลงได้ในแบบฟอร์มสินค้า"
 
 #. module: sale_renting
 #: model:ir.ui.menu,name:sale_renting.rental_orders_today
@@ -1550,11 +1552,11 @@ msgstr "ปี"
 #. module: sale_renting
 #: model_terms:ir.actions.act_window,help:sale_renting.rental_product_template_action
 msgid ""
-"You can also create additional products or services to sell by checking *Can"
-" be Sold* in the product form (e.g. insurance)."
+"You can also create additional products or services to sell by checking *Can "
+"be Sold* in the product form (e.g. insurance)."
 msgstr ""
-"คุณยังสร้างสินค้าหรือบริการเพิ่มเติมเพื่อขายได้โดยทำเครื่องหมายที่ *สามารถขายได้* ในแบบฟอร์มสินค้"
-"า (เช่น ประกัน)"
+"คุณยังสร้างสินค้าหรือบริการเพิ่มเติมเพื่อขายได้โดยทำเครื่องหมายที่ *สามารถขายได้* "
+"ในแบบฟอร์มสินค้า (เช่น ประกัน)"
 
 #. module: sale_renting
 #. odoo-python
@@ -1590,11 +1592,6 @@ msgstr ""
 "คุณไม่สามารถกำหนดราคาหลายรายการสำหรับตัวแปร รายการที่เกิดซ้ำและรายการราคาเดียวกันได้"
 
 #. module: sale_renting
-#: model:ir.model.constraint,message:sale_renting.constraint_sale_order_line_rental_stock_coherence
-msgid "You cannot return more than what has been picked up."
-msgstr "คุณไม่สามารถส่งคืนได้มากกว่าที่รับไป"
-
-#. module: sale_renting
 #. odoo-javascript
 #: code:addons/sale_renting/static/src/js/tours/rental.js:0
 msgid "You're done with your fist rental. Congratulations!"
@@ -1610,3 +1607,6 @@ msgstr "ตัวแปรทั้งหมด"
 #: model_terms:ir.ui.view,arch_db:sale_renting.res_config_settings_view_form
 msgid "hours"
 msgstr "ชั่วโมง"
+
+#~ msgid "You cannot return more than what has been picked up."
+#~ msgstr "คุณไม่สามารถส่งคืนได้มากกว่าที่รับไป"
