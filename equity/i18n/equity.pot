@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-09-30 18:40+0000\n"
+"PO-Revision-Date: 2025-09-30 18:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -36,6 +36,12 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
+msgid "%(partner_name)s's Valuations"
+msgstr ""
+
+#. module: equity
+#. odoo-python
+#: code:addons/equity/models/res_partner.py:0
 msgid "(Completed through portal Form)"
 msgstr ""
 
@@ -51,6 +57,12 @@ msgid "(Non-positive options don't expire)"
 msgstr ""
 
 #. module: equity
+#. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
+msgid "(Optional)"
+msgstr ""
+
+#. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "(expired)"
@@ -59,30 +71,6 @@ msgstr ""
 #. module: equity
 #: model:ir.actions.report,print_report_name:equity.action_equity_ubo_report
 msgid "(object._get_ubo_report_filename())"
-msgstr ""
-
-#. module: equity
-#. odoo-javascript
-#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-msgid "*Control Start Date is mandatory"
-msgstr ""
-
-#. module: equity
-#. odoo-javascript
-#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-msgid "*Name is mandatory"
-msgstr ""
-
-#. module: equity
-#. odoo-javascript
-#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-msgid "*You must provide either the date of birth, or the ID number"
-msgstr ""
-
-#. module: equity
-#. odoo-javascript
-#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
-msgid "*please keep percentages between 0 and 100"
 msgstr ""
 
 #. module: equity
@@ -123,11 +111,11 @@ msgstr ""
 #: model:mail.template,body_html:equity.equity_ubo_form_email_template
 msgid ""
 "<div>\n"
-"                    <p> Hello <t t-out=\"object.name\">Colleen Diaz</t>,<br/>\n"
+"                    <p> Hello <t t-out=\"object.name\"/>,<br/>\n"
 "                        Following our legal obligations to identify clients, we need to report natural persons who directly or indirectly\n"
-"                        hold or control at least 25% in the capital or voting rights of <b><t t-out=\"user_id.company_id.name\">My Company</t></b>. <br/> <br/>\n"
+"                        hold or control at least 25% in the capital or voting rights of <b><t t-out=\"user_id.company_id.name\"/></b>. <br/> <br/>\n"
 "                        Please fill in the UBO request:<br/>\n"
-"                        <a t-attf-href=\"/my/ubo?{{object._get_request_ubo_form_params()}}\" class=\"btn btn-primary\">Fill UBO</a> <br/> <br/>\n"
+"                        <a t-attf-href=\"/my/ubo?{{object._get_equity_url_params()}}\" class=\"btn btn-primary\">Fill UBO</a> <br/> <br/>\n"
 "                        Thank you,\n"
 "                        <t t-if=\"user_id.signature\">\n"
 "                            <br/>--<br/>\n"
@@ -136,6 +124,20 @@ msgid ""
 "                    </p>\n"
 "                </div>\n"
 "            "
+msgstr ""
+
+#. module: equity
+#: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
+msgid ""
+"<i class=\"fa fa-envelope ms-2 mt-1\" aria-label=\"Email Address\" "
+"title=\"Email Address\"/>"
+msgstr ""
+
+#. module: equity
+#: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
+msgid ""
+"<i class=\"fa fa-phone ms-2 mt-1\" aria-label=\"Phone Number\" title=\"Phone"
+" Number\"/>"
 msgstr ""
 
 #. module: equity
@@ -318,8 +320,6 @@ msgid "Birth Date"
 msgstr ""
 
 #. module: equity
-#. odoo-javascript
-#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_birth_place
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_birth_place
 msgid "Birth Place"
@@ -425,6 +425,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.xml:0
 #: model:ir.model,name:equity.model_res_partner
+#: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
 msgid "Contact"
 msgstr ""
 
@@ -448,6 +449,12 @@ msgstr ""
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__start_date
 msgid "Control Start Date"
+msgstr ""
+
+#. module: equity
+#. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
+msgid "Control Start Date is mandatory"
 msgstr ""
 
 #. module: equity
@@ -644,6 +651,12 @@ msgid "Equity UBO Form Email"
 msgstr ""
 
 #. module: equity
+#: model:ir.model.fields,field_description:equity.field_res_partner__equity_valuation_ids
+#: model:ir.model.fields,field_description:equity.field_res_users__equity_valuation_ids
+msgid "Equity Valuation"
+msgstr ""
+
+#. module: equity
 #: model:mail.template,subject:equity.equity_shareholder_email_template
 msgid "Equity notice"
 msgstr ""
@@ -716,11 +729,6 @@ msgstr ""
 msgid ""
 "Following out legal obligations to identify clients, please report natural persons who directly or indirectly\n"
 "                <b>hold or control at least 25% in the capital or voting rights</b> of"
-msgstr ""
-
-#. module: equity
-#: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
-msgid "For any corrections or additional details, please contact us."
 msgstr ""
 
 #. module: equity
@@ -1021,6 +1029,12 @@ msgstr ""
 
 #. module: equity
 #. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
+msgid "Name is mandatory"
+msgstr ""
+
+#. module: equity
+#. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "Nationality"
 msgstr ""
@@ -1036,6 +1050,11 @@ msgid ""
 "Natural persons that do not have a controlling holding in the company or a "
 "formal mandate of any kind but who are de facto exercising similar control "
 "over the company."
+msgstr ""
+
+#. module: equity
+#: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
+msgid "Need help?"
 msgstr ""
 
 #. module: equity
@@ -1411,6 +1430,12 @@ msgid "Strike Price"
 msgstr ""
 
 #. module: equity
+#. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
+msgid "Submit"
+msgstr ""
+
+#. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id
 msgid "Subscriber"
 msgstr ""
@@ -1517,7 +1542,6 @@ msgstr ""
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_valuation__event__transaction
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
-#: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_form
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_search
 msgid "Transaction"
@@ -1736,6 +1760,12 @@ msgstr ""
 
 #. module: equity
 #. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
+msgid "You must provide either the date of birth, or the ID number"
+msgstr ""
+
+#. module: equity
+#. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Your Name"
 msgstr ""
@@ -1754,7 +1784,7 @@ msgstr ""
 #. module: equity
 #. odoo-python
 #: code:addons/equity/controllers/portal.py:0
-msgid "Your Value"
+msgid "Your Value ND"
 msgstr ""
 
 #. module: equity
@@ -1838,6 +1868,18 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "on"
+msgstr ""
+
+#. module: equity
+#. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
+msgid "or"
+msgstr ""
+
+#. module: equity
+#. odoo-javascript
+#: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
+msgid "please keep percentages between 0 and 100"
 msgstr ""
 
 #. module: equity
