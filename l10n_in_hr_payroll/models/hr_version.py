@@ -198,7 +198,7 @@ class HrVersion(models.Model):
                 version.l10n_in_performance_bonus,
                 version.l10n_in_leave_travel_allowance,
             ])
-            if total_allowance > monthly_wage:
+            if total_allowance and total_allowance > monthly_wage:
                 raise ValidationError(
                     self.env._("Sum of Basic Salary, HRA, Standard Allowance, Performance Bonus, and "
                     "Leave Travel Allowance must not exceed the monthly wage (%(monthly)s).\n Current total is %(total)s.",
@@ -485,6 +485,7 @@ class HrVersion(models.Model):
         """
         if self.wage_type == 'hourly':
             hours_per_day = self.resource_calendar_id.hours_per_day
-            return self._l10n_in_convert_amount(self.hourly_wage * hours_per_day, "daily", "monthly")
+            monthly_wage = self._l10n_in_convert_amount(self.hourly_wage * hours_per_day, "daily", "monthly")
         else:
-            return self.wage
+            monthly_wage = self.wage
+        return max(monthly_wage, 0)
