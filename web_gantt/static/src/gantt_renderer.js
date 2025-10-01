@@ -1214,7 +1214,7 @@ export class GanttRenderer extends Component {
             this.totalWidth = null;
             return;
         }
-        const visibleCellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
+        this.visibleCellContainerWidth = this.contentRefWidth - this.rowHeaderWidth;
         const hiddenColumnsCount =
             this.offHoursState.foldedColumns?.reduce(
                 (sum, folded) => (folded ? sum + 1 : sum),
@@ -1223,7 +1223,7 @@ export class GanttRenderer extends Component {
         const foldedColumnsCount =
             this.foldedGridColumnCount + hiddenColumnsCount - this.columnCount;
         const columnWidth = Math.floor(
-            (visibleCellContainerWidth - 36 * foldedColumnsCount) /
+            (this.visibleCellContainerWidth - 36 * foldedColumnsCount) /
                 (this.foldedGridColumnCount - foldedColumnsCount)
         );
         const rectifiedColumnWidth = Math.max(columnWidth, minimalColumnWidth);
@@ -1872,6 +1872,13 @@ export class GanttRenderer extends Component {
             style.push(`grid-${key}:${prefix}${first}/${prefix}${last}`);
         }
         return style.join(";");
+    }
+
+    /**
+     * @param {{ column?: [number, number], row?: [number, number] }} position
+     */
+    getGroupHeaderStyle(position) {
+        return this.getGridPosition(position) + `;max-width: ${this.visibleCellContainerWidth}px`;
     }
 
     setSomeGridStyleProperties() {

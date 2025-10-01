@@ -63,7 +63,7 @@
         <div class="o_gantt_header_groups o_gantt_grid_columns bg-100 position-sticky">
             <t t-foreach="columnsGroups" t-as="columnGroup" t-key="columnGroup_index">
                 <div class="o_gantt_header_title position-sticky d-flex align-items-center ps-2 overflow-hidden bg-100"
-                    t-att-style="getGridPosition({column: columnGroup.grid.column})"
+                    t-att-style="getGroupHeaderStyle({column: columnGroup.grid.column})"
                     t-att-title="!columnGroup.isFolded and model.metaData.scale.groupHeaderTitle(columnGroup.start, env)"
                 >
                     <t t-if="!columnGroup.isFolded" t-esc="model.metaData.scale.groupHeaderFormatter(columnGroup.start, env)"/>

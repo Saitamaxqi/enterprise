@@ -8,6 +8,7 @@ import {
     press,
     queryAllTexts,
     queryOne,
+    queryRect,
     scroll,
     waitFor,
 } from "@odoo/hoot-dom";
@@ -3154,4 +3155,16 @@ test("markup html server values", async function () {
 
     await contains(".o_popover .popover-header i.fa.fa-close").click();
     expect(".o_popover").toHaveCount(0);
+});
+
+test("group header width is capped by available space", async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop"/>',
+        groupBy: ["user_id"],
+    });
+    const titleWidth = queryRect(".o_gantt_title").width;
+    expect(".o_gantt_header_title:first").toHaveStyle({
+        maxWidth: document.body.clientWidth - titleWidth,
+    });
 });
