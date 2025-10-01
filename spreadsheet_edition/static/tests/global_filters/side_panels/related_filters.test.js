@@ -7,6 +7,10 @@ import { RelatedFilters } from "@spreadsheet_edition/bundle/global_filters/compo
 import { addGlobalFilter } from "@spreadsheet/../tests/helpers/commands";
 import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
+import {
+    createSpreadsheetWithList,
+    insertListInSpreadsheet,
+} from "@spreadsheet/../tests/helpers/list";
 const { useStoreProvider, ModelStore } = stores;
 
 defineSpreadsheetModels();
@@ -158,4 +162,34 @@ test("can change date filter offset", async () => {
         type: "date",
         offset: 4,
     });
+});
+
+test("can change list field matching with non-set filter", async () => {
+    const { model, env } = await createSpreadsheetWithList();
+    await addGlobalFilter(model, {
+        id: "42",
+        type: "relation",
+        label: "Filter",
+        modelName: "partner",
+    });
+    insertListInSpreadsheet(model, {
+        model: "partner",
+        columns: ["foo", "product_id"],
+    });
+    const [list1, list2] = model.getters.getListIds();
+    expect(model.getters.getListFieldMatching(list1, "42")).toBe(undefined);
+    expect(model.getters.getListFieldMatching(list2, "42")).toBe(undefined);
+    await openSidePanel(model, env, {
+        resModel: "partner",
+        dataSourceId: list1,
+        dataSourceType: "list",
+    });
+    await contains(".fa-unlink").click();
+    await contains(".o_model_field_selector").click();
+    await contains(".o_model_field_selector_popover_item_name:contains(Id)").click();
+    expect(model.getters.getListFieldMatching(list1, "42")).toEqual({
+        chain: "id",
+        type: "integer",
+    });
+    expect(model.getters.getListFieldMatching(list2, "42")).toEqual({});
 });
