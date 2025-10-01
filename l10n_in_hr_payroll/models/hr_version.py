@@ -142,7 +142,7 @@ class HrVersion(models.Model):
         Welfare Fund.')
 # ----- end of deductions -----
     l10n_in_gross_salary = fields.Monetary(string="Gross Salary", compute="_compute_l10n_in_gross_salary", store=True,
-        groups="hr.group_hr_payroll_user")
+        groups="hr_payroll.group_hr_payroll_user")
     _check_l10n_in_hra_percentage = models.Constraint(
         'CHECK(l10n_in_hra_percentage >= 0 and l10n_in_hra_percentage <= 1)',
         'House-Rent Allowance Percentage should be between 0% and 100%!'
