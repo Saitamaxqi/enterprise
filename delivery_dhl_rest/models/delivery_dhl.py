@@ -8,7 +8,7 @@ from datetime import timedelta
 
 from odoo import fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools.float_utils import float_round
+from odoo.tools.float_utils import float_round, json_float_round
 from odoo.tools.misc import groupby
 
 from .dhl_request import DHLProvider
@@ -475,7 +475,8 @@ class ProviderDHL(models.Model):
             weight = weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_lb'), round=False)
         else:
             weight = weight_uom_id._compute_quantity(weight, self.env.ref('uom.product_uom_kgm'), round=False)
-        return weight
+        # float_round doesn't work here, for example float_round(0.7000000000000001, 3) = 0.7000000000000001
+        return json_float_round(weight, 3)
 
     def _dhl_calculate_value(self, picking):
         sale_order = picking.sale_id
