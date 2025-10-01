@@ -111,11 +111,6 @@ class AccountEcSalesReportHandler(models.AbstractModel):
         report._init_options_journals(options, previous_options=previous_options)
 
         options['enable_export_buttons_for_common_vat_in_branches'] = True
-        options['custom_display_config'] = {
-            'components': {
-                'AccountReportFilters': 'SalesReportFilters',
-            },
-        }
 
     def _init_core_custom_options(self, report, options, previous_options):
         """
@@ -137,6 +132,11 @@ class AccountEcSalesReportHandler(models.AbstractModel):
             options['ec_tax_filter_selection'] = filtered_ec_tax_filter_selection
         else:
             options['ec_tax_filter_selection'] = ec_tax_filter_selection
+        options['custom_display_config'] = {
+            'components': {
+                'AccountReportFilters': 'SalesReportFilters',
+            },
+        }
 
     def _get_report_line_partner(self, report, options, partner, partner_values, markup=''):
         """
