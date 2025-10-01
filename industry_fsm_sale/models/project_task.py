@@ -673,6 +673,23 @@ class ProjectTask(models.Model):
                 'timesheet_ids': [fields.Command.update(timesheet.id, {'so_line': sale_order_line.id}) for timesheet in not_billed_timesheets if not timesheet.is_so_line_edited]
             })
 
+    def write(self, vals):
+        res = super().write(vals)
+
+        if 'under_warranty' in vals:
+            line = self.env['sale.order.line']
+            for task in self:
+                if task.fsm_done or not task.sale_order_id or task.sale_order_id.locked:
+                    continue
+                line |= task.sale_order_id.order_line.filtered(
+                    lambda l: l.task_id.id == task.id and l.qty_invoiced == 0)
+            if vals['under_warranty']:
+                line.sudo().write({'price_unit': 0, 'technical_price_unit': 0})
+            else:
+                line.with_context(force_price_recomputation=True).sudo()._compute_price_unit()
+
+        return res
+
     def copy_data(self, default=None):
         vals_list = super().copy_data(default)
         for task, vals in zip(self, vals_list):

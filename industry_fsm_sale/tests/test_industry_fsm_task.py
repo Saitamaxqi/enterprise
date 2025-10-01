@@ -171,3 +171,40 @@ class TestIndustryFsmTask(TestFsmFlowSaleCommon):
             pricelist.item_ids[0].fixed_price,
             "The service price does not match the fixed price defined in the customer's pricelist."
         )
+
+    def test_warranty_status_updates_sale_order_line_price(self):
+        """
+        Ensure that the product price is zero in the sales order line
+        when the task is under warranty.
+            Test Case:
+            ==========
+            1. Create a sales order linked to the customer.
+            2. Assign a customer (partner) to the task and link the task to the sales order.
+            3. Create a sales order line for a product and link it to the task.
+            4. Verify the price unit matches the product's list price by default.
+            5. Set the task as under warranty.
+            6. Verify the price unit is set to 0.0 in the sales order line.
+            7. Unset the warranty status.
+            8. Verify the price unit returns to the product's list price.
+        """
+        so = self.env['sale.order'].create([{
+            'name': 'Test SO linked to fsm task',
+            'partner_id': self.partner_1.id,
+        }])
+        self.task.write({'partner_id': self.partner_1.id, 'sale_order_id': so})
+        sol = self.env['sale.order.line'].create([{
+            'name': 'Test SOL linked to a fsm tasl',
+            'order_id': so.id,
+            'task_id': self.task.id,
+            'product_id': self.consu_product_delivered.id,
+            'product_uom_qty': 3,
+        }])
+
+        self.assertEqual(sol.price_unit, self.consu_product_delivered.list_price,
+                         "The price should match the product's listed price.")
+        self.task.under_warranty = True
+        self.assertEqual(sol.price_unit, 0.0,
+                         "If task is under warranty, the price of the sale order line should be 0.0")
+        self.task.under_warranty = False
+        self.assertEqual(sol.price_unit, self.consu_product_delivered.list_price,
+                         "The price should match the product's listed price.")
