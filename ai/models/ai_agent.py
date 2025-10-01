@@ -746,6 +746,7 @@ class AIAgent(models.Model):
             if current_view_info := self.env.context.get("current_view_info"):
                 action_id = current_view_info.get("action_id")
                 action = self.env['ir.actions.actions'].browse(action_id)
+                current_action = None
                 current_action_name = None
                 if action.type == 'ir.actions.act_window':
                     current_action = self.env['ir.actions.act_window'].browse(action_id)
@@ -755,6 +756,10 @@ class AIAgent(models.Model):
                     current_action = self.env['ir.actions.client'].browse(action_id)
                 if current_action:
                     current_action_name = current_action.name
+                    search_view = self.env[current_action.res_model].get_view(current_action.search_view_id.id, 'search')
+                    search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
+                    if search_view_xml:
+                        context_lines.append(f"  {search_view_xml}")
 
                 context_lines.append(
                     f'  <current_view id="{current_view_info.get("view_id")}" '
@@ -768,11 +773,6 @@ class AIAgent(models.Model):
                 facets = current_view_info.get("facets", [])
                 if facets:
                     context_lines.append(f'  <active_search_facets>\n    {self._facets_to_xml(facets)}\n  </active_search_facets>')
-
-                search_view = self.env[current_action.res_model].get_view(current_action.search_view_id.id, 'search')
-                search_view_xml = clean_search_view_xml(search_view['arch']) if search_view else ""
-                if search_view_xml:
-                    context_lines.append(f"  {search_view_xml}")
 
             context_lines.append("</session_info_context>")
             session_info_context = "\n".join(context_lines) + "\n" + dedent("""
