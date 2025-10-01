@@ -502,7 +502,7 @@ class L10n_Mx_EdiDocument(models.Model):
         regex = r"(?i:\s+(s\.?\s?(a\.?)( de c\.?v\.?|)|(s\.?\s?(a\.?s\.?)|s\.? en c\.?( por a\.?)?|s\.?\s?c\.?\s?(l\.?(\s?\(?limitada)?\)?|s\.?(\s?\(?suplementada\)?)?)|s\.? de r\.?l\.?)))\s*$"
         unaccented = remove_accents(re.sub(regex, "", name or ''))
         # ñ character should stay as-is because unlike accents, the mexican government saves this letter that way...
-        return ''.join(c if name[i] not in 'ñÑ' else name[i] for i, c in enumerate(unaccented)).upper()
+        return ''.join(c if name[i] not in 'üÜñÑ' else name[i] for i, c in enumerate(unaccented)).upper()
 
     @api.model
     def _add_base_cfdi_values(self, cfdi_values):
