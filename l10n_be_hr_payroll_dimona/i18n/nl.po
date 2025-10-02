@@ -1,23 +1,46 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_be_hr_payroll_dimona
-# 
+#
 # Translators:
 # Tiffany Chang, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 08:49+0000\n"
+"POT-Creation-Date: 2025-10-01 09:18+0000\n"
 "PO-Revision-Date: 2025-02-07 17:07+0000\n"
 "Last-Translator: Tiffany Chang, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid ""
+" The API response have an unexpected type. Please contact an administrator."
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid ""
+" The API response is not containing the required fields. Please contact an "
+"administrator."
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid ""
+" The API response is not in the expected format. Please contact an "
+"administrator."
+msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.actions.server,name:l10n_be_hr_payroll_dimona.ir_cron_check_dimona_ir_actions_server
@@ -41,7 +64,7 @@ msgstr "Werknemersaangifte annuleren"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Cannot connect with the ONSS servers. Please contact an administrator. (%s)"
 msgstr ""
@@ -49,14 +72,19 @@ msgstr ""
 "beheerder. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_dimona.hr_contract_view_form
+#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_dimona.hr_employee_view_form
 msgid "Check Dimona"
 msgstr "Check Dimona"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_id
-msgid "Contract"
-msgstr "Contract"
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_date_end
+msgid "Contract End Date"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_date_start
+msgid "Contract Start Date"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_country_code
@@ -81,31 +109,13 @@ msgstr "DIMONA"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
-msgid "DIMONA Cancel declaration posted successfully, waiting validation"
-msgstr "DIMONA Annulatie succesvol gepost, wacht op validatie"
-
-#. module: l10n_be_hr_payroll_dimona
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "DIMONA IN declaration posted successfully, waiting validation"
 msgstr "DIMONA IN aangifte succesvol geplaatst, wacht op validatie"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
-msgid "DIMONA Out declaration posted successfully, waiting validation"
-msgstr "DIMONA Out aangifte succesvol geplaatst, wacht op validatie"
-
-#. module: l10n_be_hr_payroll_dimona
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
-msgid "DIMONA Update declaration posted successfully, waiting validation"
-msgstr "DIMONA Wijziging succesvol gepost, wacht op validatie"
-
-#. module: l10n_be_hr_payroll_dimona
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "DIMONA declaration treated and accepted with non blocking anomalies\n"
 "%(anomalies)s\n"
@@ -117,13 +127,13 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "DIMONA declaration treated and accepted without anomalies"
 msgstr "DIMONA aangifte behandeld en aanvaard zonder afwijkingen"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "DIMONA declaration treated and refused (blocking anomalies)\n"
 "%s"
@@ -133,7 +143,7 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "DIMONA declaration waiting worker identification by Sigedis"
 msgstr "DIMONA aangifte wachtende op werknemer identificatie door Sigedis"
 
@@ -143,29 +153,52 @@ msgid "Declaration Type"
 msgstr "Type verklaring"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__done
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__done
 msgid "Declared and accepted"
 msgstr "Aangegeven en geaccepteerd"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__done_warning
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__done_warning
 msgid "Declared and accepted with warnings"
 msgstr "Aangegeven en geaccepteerd met waarschuwingen"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__refused
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__refused
 msgid "Declared and refused"
 msgstr "Aangegeven en geweigerd"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__waiting_sigedis
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__waiting_sigedis
 msgid "Declared and waiting Sigedis"
 msgstr "Aangegeven en wachtend op Sigedis"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__waiting
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__waiting
 msgid "Declared and waiting status"
 msgstr "Aangegeven en wachtstatus"
+
+#. module: l10n_be_hr_payroll_dimona
+#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_dimona.hr_employee_view_form
+msgid "Dimona"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__l10n_be_dimona_in_declaration_number
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__l10n_be_dimona_in_declaration_number
+msgid "Dimona Declaration Number"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__l10n_be_dimona_declaration_state
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__l10n_be_dimona_declaration_state
+msgid "Dimona Declaration State"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__l10n_be_dimona_last_declaration_number
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__l10n_be_dimona_last_declaration_number
+msgid "Dimona Last Declaration Number"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.model,name:l10n_be_hr_payroll_dimona.model_l10n_be_dimona_wizard
@@ -173,13 +206,15 @@ msgid "Dimona Wizard"
 msgstr "Dimona Wizard"
 
 #. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__display_name
 msgid "Display Name"
 msgstr "Schermnaam"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Due to a technical problem at the ONSS side, the Dimona declaration could "
 "not be received by the ONSS."
@@ -189,13 +224,13 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
-"Due to a technical problem at the ONSS side, the authentication could not be"
-" done by the ONSS."
+"Due to a technical problem at the ONSS side, the authentication could not be "
+"done by the ONSS."
 msgstr ""
-"Door een technisch probleem aan de kant van de RSZ kon de authenticatie niet"
-" worden uitgevoerd door de RSZ."
+"Door een technisch probleem aan de kant van de RSZ kon de authenticatie niet "
+"worden uitgevoerd door de RSZ."
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.model,name:l10n_be_hr_payroll_dimona.model_hr_employee
@@ -204,19 +239,19 @@ msgid "Employee"
 msgstr "Werknemer"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model,name:l10n_be_hr_payroll_dimona.model_hr_contract
+#: model:ir.model,name:l10n_be_hr_payroll_dimona.model_hr_version
 msgid "Employee Contract"
 msgstr "Arbeidsovereenkomst"
+
+#. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__version_id
+msgid "Employee Record"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__without_niss
 msgid "Employee Without NISS"
 msgstr "Werknemer zonder INSZ"
-
-#. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_date_end
-msgid "End Date"
-msgstr "Einddatum"
 
 #. module: l10n_be_hr_payroll_dimona
 #: model:ir.model.fields,help:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_date_end
@@ -225,13 +260,13 @@ msgstr "Einddatum van het contract (het is een vaste termijn contract)."
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "Error on authentication. Please contact an administrator. (%s)"
 msgstr "Fout bij authenticatie. Neem contact op met een beheerder. (%s)"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Error with one or several invalid parameters on the POST request during "
 "authentication. Please contact an administrator. (%s)"
@@ -241,7 +276,7 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Error with one or several invalid parameters on the POST request. Please "
 "contact an administrator. (%s)"
@@ -251,51 +286,35 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Foreigner employees should provide a complete address (street, number, zip, "
-"city, country"
+"city, country)"
 msgstr ""
-"Buitenlandse werknemers moeten een volledig adres opgeven (straat, nummer, "
-"postcode, stad, land"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
-"Foreigner employees should provide their name, birthdate, birth place, birth"
-" country, nationality and the gender"
+"Foreigner employees should provide their name, birthdate, birth place, birth "
+"country, nationality and sex"
 msgstr ""
-"Buitenlandse werknemers moeten hun naam, geboortedatum, geboorteplaats, "
-"geboorteland, nationaliteit en geslacht opgeven"
 
 #. module: l10n_be_hr_payroll_dimona
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__id
 msgid "ID"
 msgstr "ID"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__error
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__error
 msgid "Invalid declaration or restricted access"
 msgstr "Ongeldige aangifte of beperkte toegang"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_contract__l10n_be_dimona_declaration_state
-msgid "L10N Be Dimona Declaration State"
-msgstr "L10N Be Dimona Aangifte Status"
-
-#. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_contract__l10n_be_dimona_in_declaration_number
-msgid "L10N Be Dimona In Declaration Number"
-msgstr "L10N Be Dimona In Aangifte Nummer"
-
-#. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_contract__l10n_be_dimona_last_declaration_number
-msgid "L10N Be Dimona Last Declaration Number"
-msgstr "L10N Be Dimona Laatste aangifte nummer"
-
-#. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_contract__l10n_be_is_student
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__l10n_be_is_student
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__l10n_be_is_student
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_is_student
 msgid "L10N Be Is Student"
 msgstr "L10N Be Is een Student"
@@ -317,36 +336,36 @@ msgstr "Beheer DIMONA"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
-msgid "No Certificate definer on the Payroll Configuration"
-msgstr "Geen definitie van certificaten op de loonlijstconfiguratie"
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid "No Certificate defined on the Payroll Configuration"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "No DIMONA declaration is linked to this contract"
 msgstr "Er is geen DIMONA-aangifte gekoppeld aan dit contract"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "No ONSS registration number is defined for company %s"
 msgstr "Er is geen RSZ-registratienummer gedefinieerd voor bedrijf %s"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "No expeditor number defined on the payroll settings."
 msgstr "Er is geen expediteurnummer gedefinieerd in de salarisinstellingen."
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "No house number found on employee street"
 msgstr "Geen huisnummer gevonden in de straat van de werknemer"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_contract__l10n_be_dimona_declaration_state__none
+#: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__hr_version__l10n_be_dimona_declaration_state__none
 msgid "Not Declared"
 msgstr "Niet aangegeven"
 
@@ -361,18 +380,14 @@ msgid "Register employee entrance"
 msgstr "Aanvang van werknemer registreren"
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_date_start
-msgid "Start Date"
-msgstr "Begindatum"
-
-#. module: l10n_be_hr_payroll_dimona
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_dimona/wizard/l10n_be_dimona_wizard.py:0
 msgid "Start date and end date should belong to the same quarter."
 msgstr "De begindatum en einddatum moeten tot hetzelfde kwartaal behoren."
 
 #. module: l10n_be_hr_payroll_dimona
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_contract__l10n_be_dimona_planned_hours
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_employee__l10n_be_dimona_planned_hours
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_hr_version__l10n_be_dimona_planned_hours
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_dimona.field_l10n_be_dimona_wizard__contract_planned_hours
 msgid "Student Planned Hours"
 msgstr "Geplande uren Student"
@@ -400,13 +415,20 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "The NISS is invalid."
 msgstr "De INSZ is ongeldig."
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid ""
+"The authentication token is invalid. Please contact an administrator. (%s)"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "The declaration has been submitted but not processed yet or the declaration "
 "reference is not known. (%s)"
@@ -416,13 +438,19 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "The employee name is incomplete"
 msgstr "De naam van de werknemer is onvolledig"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
+msgid "The employee sex is not specified."
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "The employee zip does not exist."
 msgstr "De postcode van de werknemer bestaat niet."
 
@@ -457,6 +485,14 @@ msgid "There is not end date defined on the employee contract."
 msgstr "Er is geen einddatum vastgelegd op het werknemerscontract."
 
 #. module: l10n_be_hr_payroll_dimona
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_dimona/wizard/l10n_be_dimona_wizard.py:0
+msgid ""
+"This feature seems to be as exclusive as Belgian chocolates. You must be "
+"logged in to a Belgian company to use it."
+msgstr ""
+
+#. module: l10n_be_hr_payroll_dimona
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll_dimona.selection__l10n_be_dimona_wizard__declaration_type__update
 msgid "Update employee information"
 msgstr "Werknemersgegevens bijwerken"
@@ -468,19 +504,13 @@ msgstr "Soort salaris"
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid "You don't have the right to call this action"
 msgstr "Je hebt niet voldoende rechten om deze actie uit te voeren."
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/wizard/l10n_be_dimona_wizard.py:0
-msgid "You must be logged in a Belgian company to use this feature"
-msgstr "Je moet ingelogd zijn om deze functie te kunnen gebruiken"
-
-#. module: l10n_be_hr_payroll_dimona
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Your user does not have the rights to consult this declaration. This "
 "happens, for example, if the user does not have or no longer has a mandate "
@@ -492,12 +522,59 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_dimona
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_dimona/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_dimona/models/hr_version.py:0
 msgid ""
 "Your user does not have the rights to make a declaration for the employer. "
 "This happens, for example, if the user does not have or no longer has a "
 "mandate for the employer. (%s)"
 msgstr ""
-"Je gebruiker beschikt niet over de rechten om een aangifte voor de werkgever"
-" te maken. Dit gebeurt bijvoorbeeld als de gebruiker geen mandaat (meer) "
+"Je gebruiker beschikt niet over de rechten om een aangifte voor de werkgever "
+"te maken. Dit gebeurt bijvoorbeeld als de gebruiker geen mandaat (meer) "
 "heeft voor de werkgever. (%s)"
+
+#~ msgid "Contract"
+#~ msgstr "Contract"
+
+#~ msgid "DIMONA Cancel declaration posted successfully, waiting validation"
+#~ msgstr "DIMONA Annulatie succesvol gepost, wacht op validatie"
+
+#~ msgid "DIMONA Out declaration posted successfully, waiting validation"
+#~ msgstr "DIMONA Out aangifte succesvol geplaatst, wacht op validatie"
+
+#~ msgid "DIMONA Update declaration posted successfully, waiting validation"
+#~ msgstr "DIMONA Wijziging succesvol gepost, wacht op validatie"
+
+#~ msgid "End Date"
+#~ msgstr "Einddatum"
+
+#~ msgid ""
+#~ "Foreigner employees should provide a complete address (street, number, "
+#~ "zip, city, country"
+#~ msgstr ""
+#~ "Buitenlandse werknemers moeten een volledig adres opgeven (straat, "
+#~ "nummer, postcode, stad, land"
+
+#~ msgid ""
+#~ "Foreigner employees should provide their name, birthdate, birth place, "
+#~ "birth country, nationality and the gender"
+#~ msgstr ""
+#~ "Buitenlandse werknemers moeten hun naam, geboortedatum, geboorteplaats, "
+#~ "geboorteland, nationaliteit en geslacht opgeven"
+
+#~ msgid "L10N Be Dimona Declaration State"
+#~ msgstr "L10N Be Dimona Aangifte Status"
+
+#~ msgid "L10N Be Dimona In Declaration Number"
+#~ msgstr "L10N Be Dimona In Aangifte Nummer"
+
+#~ msgid "L10N Be Dimona Last Declaration Number"
+#~ msgstr "L10N Be Dimona Laatste aangifte nummer"
+
+#~ msgid "No Certificate definer on the Payroll Configuration"
+#~ msgstr "Geen definitie van certificaten op de loonlijstconfiguratie"
+
+#~ msgid "Start Date"
+#~ msgstr "Begindatum"
+
+#~ msgid "You must be logged in a Belgian company to use this feature"
+#~ msgstr "Je moet ingelogd zijn om deze functie te kunnen gebruiken"

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 18:40+0000\n"
-"PO-Revision-Date: 2025-10-02 02:42+0000\n"
+"PO-Revision-Date: 2025-10-02 11:55+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/sign/ko/>"
 "\n"
@@ -937,13 +937,13 @@ msgstr "인증서 참조"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_logs_user
 msgid "Certificate of Completion<br/>"
-msgstr "수료증 <br/>"
+msgstr "확인서 <br/>"
 
 #. module: sign
 #. odoo-python
 #: code:addons/sign/models/sign_request.py:0
 msgid "Certificate of completion - %s.pdf"
-msgstr "수료증 - %s.pdf"
+msgstr "확인서 - %s.pdf"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__change_authorized
@@ -3396,7 +3396,7 @@ msgstr "모두 서명"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_request
 msgid "Sign document"
-msgstr "서명 문서"
+msgstr "문서 서명"
 
 #. module: sign
 #: model:sign.item.type,tip:sign.sign_item_type_signature
