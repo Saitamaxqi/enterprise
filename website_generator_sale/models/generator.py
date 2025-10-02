@@ -173,5 +173,6 @@ class Website_GeneratorRequest(models.Model):
             images_info = self._get_image_info(tar, images, all_product_images)
             if images_info:
                 created_category.image_1920 = images_info[0].get('base64')
+                created_category.cover_image = images_info[0].get('base64')
 
         return category_redirects, created_category_mapping
