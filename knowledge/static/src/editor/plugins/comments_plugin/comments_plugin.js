@@ -21,13 +21,10 @@ import { batched } from "@web/core/utils/timing";
 import { withSequence } from "@html_editor/utils/resource";
 import { isHtmlContentSupported } from "@html_editor/core/selection_plugin";
 
-function isAllowedBeaconPosition(node) {
-    return isPhrasingContent(node) || isParagraphRelatedElement(node) || isListItemElement(node);
-}
-
 export class KnowledgeCommentsPlugin extends Plugin {
     static id = "knowledgeComments";
     static dependencies = [
+        "baseContainer",
         "history",
         "dom",
         "feff",
@@ -65,6 +62,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 description: _t("Add a comment to selection"),
                 text: _t("Comment"),
                 namespaces: ["expanded"],
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
             {
                 id: "comments_small",
@@ -72,6 +70,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 commandId: "addComments",
                 description: _t("Add a comment to selection"),
                 namespaces: ["compact"],
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
             {
                 id: "comments_image",
@@ -79,6 +78,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 commandId: "addComments",
                 description: _t("Add a comment to an image"),
                 text: _t("Comment"),
+                isDisabled: () => !this.canAddCommentToSelection(),
             },
         ],
 
@@ -301,6 +301,16 @@ export class KnowledgeCommentsPlugin extends Plugin {
         }
     }
 
+    isAllowedBeaconPosition(node) {
+        return (
+            closestElement(node).nodeName !== "PRE" &&
+            (isPhrasingContent(node) ||
+                isParagraphRelatedElement(node) ||
+                isListItemElement(node) ||
+                this.dependencies.baseContainer.isCandidateForBaseContainer(node))
+        );
+    }
+
     // TODO ABD: -> CTRL + DELETE needs some custo too (currently deletes too much)
     handleDeleteForward(range) {
         // allow deleteForward to go past a beacon instead of being blocked.
@@ -334,14 +344,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
     addCommentToSelection() {
         const { startContainer, startOffset, endContainer, endOffset } =
             this.dependencies.selection.getEditableSelection({ deep: true });
-        const isCollapsed = startContainer === endContainer && startOffset === endOffset;
-        if (
-            isCollapsed ||
-            !isAllowedBeaconPosition(startContainer) ||
-            !isAllowedBeaconPosition(endContainer) ||
-            !isContentEditable(startContainer) ||
-            !isContentEditable(endContainer)
-        ) {
+        if (!this.canAddCommentToSelection()) {
             return;
         }
         const previousUndefinedBeacons = [
@@ -389,6 +392,18 @@ export class KnowledgeCommentsPlugin extends Plugin {
         this.dependencies.history.addStep();
     }
 
+    canAddCommentToSelection() {
+        const { startContainer, endContainer, isCollapsed } =
+            this.dependencies.selection.getEditableSelection({ deep: true });
+        return (
+            !isCollapsed &&
+            this.isAllowedBeaconPosition(startContainer) &&
+            this.isAllowedBeaconPosition(endContainer) &&
+            isContentEditable(startContainer) &&
+            isContentEditable(endContainer)
+        );
+    }
+
     onWindowClick(ev) {
         const selector = `.oe-local-overlay, .o_knowledge_comment_box, .o-we-toolbar, .o-overlay-container`;
         const closestElement = ev.target.closest(selector);
@@ -403,7 +418,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         // for different users, is this an issue ?
         this.commentBeaconManager.removeBogusBeacons();
         for (const beacon of elem.querySelectorAll(".oe_thread_beacon")) {
-            if (beacon.isConnected && !isAllowedBeaconPosition(beacon.parentElement)) {
+            if (beacon.isConnected && !this.isAllowedBeaconPosition(beacon.parentElement)) {
                 this.commentBeaconManager.cleanupBeaconPair(beacon.dataset.id);
                 this.removeBeacon(beacon);
                 continue;
