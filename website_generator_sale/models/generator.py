@@ -149,7 +149,7 @@ class Website_GeneratorRequest(models.Model):
             for image_info in images_info[1:]:
                 all_variant_image_vals.append({
                     'name': image_info.get('name'),
-                    'image_1920': images_info.get('base64'),
+                    'image_1920': image_info.get('base64'),
                     'product_variant_id': variant.id,
                 })
 
