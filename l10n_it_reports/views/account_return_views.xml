@@ -16,7 +16,7 @@
                        t-value="record.country_code.raw_value == 'IT' and !record.is_quarter_month.raw_value"/>
                 </xpath>
 
-                <xpath expr="//button[@name='action_submit' and text()='Submit']" position="replace">
+                <xpath expr="//button[@name='action_submit']" position="replace">
                     <button class="btn btn-secondary"
                             type="object"
                             name="action_submit"
