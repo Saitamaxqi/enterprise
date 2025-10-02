@@ -34,7 +34,6 @@ class TestAIDraftUI(HttpCase):
         })
         cls.env['ai.composer'].create({
             'name': 'agent composer',
-            'default_prompt': "agent instructions",
             'interface_key': 'chatter_ai_button',
             'focused_models': [cls.env['ir.model']._get_id('ai.agent')],
             'available_prompts': [Command.create({

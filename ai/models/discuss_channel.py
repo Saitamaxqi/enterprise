@@ -70,9 +70,9 @@ class DiscussChannel(models.Model):
         # create a new AI chat
         channel = ai_agent._create_ai_chat_channel(channel_name=channel_name)
         # Create the initial context for the AI - the default prompt from the composer
-        model_context = [
-            ai_composer.default_prompt,
-        ]
+        model_context = []
+        if composer_prompt := ai_composer.default_prompt:
+            model_context.append(composer_prompt)
 
         model_has_thread = False
         if record_model:
