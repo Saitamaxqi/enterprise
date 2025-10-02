@@ -27,7 +27,7 @@
                 <div class="o-section-title">
                     Columns
                 </div>
-                <div t-foreach="getColumnFields()" t-as="field" t-key="field.name">
+                <div class="columns-list" t-foreach="getColumnFields()" t-as="field" t-key="field.name">
                     <div t-esc="field.string" t-att-title="field.name"/>
                 </div>
             </Section>

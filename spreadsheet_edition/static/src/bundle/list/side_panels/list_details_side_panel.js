@@ -5,12 +5,13 @@ import { _t } from "@web/core/l10n/translation";
 import { Component, onWillStart } from "@odoo/owl";
 import { getListHighlights } from "../list_highlight_helpers";
 
-import { hooks, components } from "@odoo/o-spreadsheet";
+import { hooks, components, helpers } from "@odoo/o-spreadsheet";
 import { SidePanelDomain } from "../../components/side_panel_domain/side_panel_domain";
 import { RelatedFiltersSection } from "../../global_filters/components/related_filters_section/related_fitlers_section";
 
 const { useHighlights } = hooks;
 const { ValidationMessages, CogWheelMenu, Section, TextInput } = components;
+const { isDefined } = helpers;
 
 export class ListDetailsSidePanel extends Component {
     static template = "spreadsheet_edition.ListDetailsSidePanel";
@@ -96,7 +97,8 @@ export class ListDetailsSidePanel extends Component {
     getColumnFields() {
         return this.getters
             .getListDefinition(this.props.listId)
-            .columns.map((col) => this.listFields[col]);
+            .columns.map((col) => this.listFields[col])
+            .filter(isDefined);
     }
 
     onNameChanged(name) {
