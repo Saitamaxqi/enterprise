@@ -34,7 +34,7 @@
                     <button string="Generate Proof Of Insurance" name="generate_proof_of_insurance" type="object" class="btn-primary" invisible="not has_proof_of_insurance"/>
                     <button string="Import LPP Contributions" name="import_lpp_contributions" type="object" class="btn-primary" invisible="not has_lpp_contributions"/>
                     <button string="Import Source-Tax Corrections" name="import_source_tax_corrections" type="object" class="btn-primary" invisible="not has_st_corrections"/>
-                    <button string="Download Verified Source-Tax Statement" name="generate_is_statement" type="object" class="btn-primary" invisible="domain != 'TaxAtSource' or result_state != 'Success'"/>
+                    <button string="Download Verified Source-Tax Statement" name="generate_is_statement" type="object" class="btn-primary" invisible="domain != 'TaxAtSource' or result_state != 'Success' or not has_st_corrections"/>
                 </header>
                 <sheet>
                     <div name="button_box" position="inside">
