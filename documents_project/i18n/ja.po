@@ -7,13 +7,14 @@
 # Martin Trigaux, 2023
 # Andy Yiu, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-02 02:42+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "documents_project/ja/>\n"
 "Language: ja\n"
@@ -27,7 +28,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
 msgid "%(project_name)s's Documents"
-msgstr ""
+msgstr "%(project_name)sのドキュメント"
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_documents_workflow_rule

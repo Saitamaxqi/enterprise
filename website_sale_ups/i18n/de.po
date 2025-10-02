@@ -7,13 +7,14 @@
 # Felix Schubert <felix.schubert@go-erp.com>, 2019
 # Leon Grill <leg@odoo.com>, 2019
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:03+0000\n"
-"PO-Revision-Date: 2025-09-15 21:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-01 12:59+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "website_sale_ups/de/>\n"
 "Language: de\n"
@@ -33,7 +34,7 @@ msgstr "(Mein Konto abrechnen)"
 msgid "<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"Delete\" title=\"Delete\"/>"
 msgstr ""
 "<i class=\"fa fa-trash-o\" role=\"img\" aria-label=\"Delete\" title="
-"\"Delete\"/>"
+"\"Löschen\"/>"
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,pending_msg:website_sale_ups.payment_provider_ups_cod
@@ -63,7 +64,7 @@ msgstr "Abbrechen"
 #. module: website_sale_ups
 #: model:ir.model.fields.selection,name:website_sale_ups.selection__payment_provider__custom_mode__cash_on_delivery
 msgid "Cash On Delivery"
-msgstr ""
+msgstr "Lieferung per Nachnahme"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.ups_bill_my_account_dialog
@@ -73,24 +74,26 @@ msgstr "Schließen"
 #. module: website_sale_ups
 #: model:ir.model.fields,field_description:website_sale_ups.field_payment_provider__custom_mode
 msgid "Custom Mode"
-msgstr ""
+msgstr "Benutzerdefinierter Modus"
 
 #. module: website_sale_ups
 #. odoo-javascript
 #: code:addons/website_sale_ups/static/src/js/checkout_form.js:0
 msgid "If you believe that it is an error, please contact the website administrator."
 msgstr ""
+"Wenn Sie glauben, dass es sich um einen Fehler handelt, wenden Sie sich an "
+"den Administrator der Website."
 
 #. module: website_sale_ups
 #. odoo-javascript
 #: code:addons/website_sale_ups/static/src/js/checkout_form.js:0
 msgid "No suitable payment option could be found."
-msgstr ""
+msgstr "Es konnte keine geeignete Zahlungsmöglichkeit gefunden werden."
 
 #. module: website_sale_ups
 #: model:ir.model,name:website_sale_ups.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "Zahlungsanbieter"
 
 #. module: website_sale_ups
 #: model:ir.model,name:website_sale_ups.model_sale_order
@@ -105,7 +108,7 @@ msgstr "UPS Mein Konto abrechnen"
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.property_ups_carrier_account_inherit_portal_details
 msgid "UPS Number Account"
-msgstr ""
+msgstr "Nummer des UPS-Kontos"
 
 #. module: website_sale_ups
 #: model_terms:ir.ui.view,arch_db:website_sale_ups.res_config_settings_view_form
@@ -130,9 +133,9 @@ msgstr "Ihre Zahlung wurde genehmigt."
 #. module: website_sale_ups
 #: model_terms:payment.provider,cancel_msg:website_sale_ups.payment_provider_ups_cod
 msgid "Your payment has been cancelled."
-msgstr ""
+msgstr "Ihre Zahlung wurde abgebrochen."
 
 #. module: website_sale_ups
 #: model_terms:payment.provider,done_msg:website_sale_ups.payment_provider_ups_cod
 msgid "Your payment has been successfully processed. Thank you!"
-msgstr ""
+msgstr "Ihre Zahlung wurde erfolgreich verarbeitet. Danke!"

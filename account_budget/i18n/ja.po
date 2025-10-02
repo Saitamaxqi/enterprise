@@ -7,13 +7,14 @@
 # Ryoko Tsuda <ryoko@quartile.co>, 2023
 # Andy Yiu, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-02 02:42+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_budget/ja/>\n"
 "Language: ja\n"
@@ -27,7 +28,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_budget/models/account_budget.py:0
 msgid "\"End Date\" of the budget line should be included in the Period of the budget"
-msgstr ""
+msgstr "予算明細業の 「終了日 」は、予算の期間に含まれていなくてはなりません"
 
 #. module: account_budget
 #. odoo-python
