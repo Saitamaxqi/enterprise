@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from unittest import mock
+
 from odoo.fields import Command
 from odoo.tests import tagged
 
@@ -9,12 +11,42 @@ from odoo.addons.payment_sepa_direct_debit.tests.common import SepaDirectDebitCo
 @tagged('post_install', '-at_install')
 class TestSepaDirectDebit(SepaDirectDebitCommon):
 
+    # TODO: Should only test that processing the tx confirms it.
     def test_transactions_are_confirmed_as_soon_as_mandate_is_valid(self):
         token = self._create_token(provider_ref=self.mandate.name, sdd_mandate_id=self.mandate.id)
         tx = self._create_transaction(flow='token', token_id=token.id)
 
         tx._charge_with_token()
         self.assertEqual(tx.state, 'done', "SEPA transactions should be immediately confirmed.")
+
+    def test_send_payment_request_refreshes_mandate_validity(self):
+        """Test that sending a payment request refreshes the mandate's state."""
+        token = self._create_token(provider_ref=self.mandate.name, sdd_mandate_id=self.mandate.id)
+        tx = self._create_transaction(flow='token', token_id=token.id)
+
+        with mock.patch(
+            'odoo.addons.account_sepa_direct_debit.models.sdd_mandate.SddMandate'
+            '._update_and_partition_state_by_validity'
+        ) as refresh_mandate_state_mock:
+            tx._send_payment_request()
+        self.assertEqual(refresh_mandate_state_mock.call_count, 1)
+
+    def test_send_payment_request_succeeds_for_active_mandates(self):
+        """Test that token payment requests are accepted for txs with an active mandate."""
+        token = self._create_token(provider_ref=self.mandate.name, sdd_mandate_id=self.mandate.id)
+        tx = self._create_transaction(flow='token', token_id=token.id)
+
+        tx._send_payment_request()
+        self.assertNotEqual(tx.state, 'error')
+
+    def test_send_payment_request_fails_for_inactive_mandates(self):
+        """Test that token payment requests are rejected for txs with an inactive mandate."""
+        self.mandate.state = 'revoked'
+        token = self._create_token(provider_ref=self.mandate.name, sdd_mandate_id=self.mandate.id)
+        tx = self._create_transaction('token', token_id=token.id)
+
+        tx._send_payment_request()
+        self.assertEqual(tx.state, 'error')
 
     def test_bank_statement_confirms_transaction_and_mandate(self):
         tx = self._create_transaction(flow='direct', state='pending', mandate_id=self.mandate.id)
