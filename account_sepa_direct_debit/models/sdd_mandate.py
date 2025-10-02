@@ -115,7 +115,6 @@ class SddMandate(models.Model):
         string="Mandate Form PDF",
         attachment=True,
         copy=False,
-        groups='account.group_account_readonly',
         readonly=True,
     )
 
