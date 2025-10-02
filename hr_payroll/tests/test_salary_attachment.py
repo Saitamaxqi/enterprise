@@ -252,3 +252,46 @@ class TestSalaryAttachment(TestPayslipBase):
             {"other_input_type_id": att_1.id, "paid_amount": 100},
             {"other_input_type_id": att_2.id, "paid_amount": 50},
         ])
+
+    def test_action_split_preserves_all_values(self):
+        titi = self.env['hr.employee'].create({
+            'name': 'Titi',
+            'date_version': date(self.current_year, 1, 1),
+            'contract_date_start': date(self.current_year, 1, 1),
+            'contract_date_end': date(self.current_year, 12, 31),
+            'wage': 1000.0,
+            'structure_type_id': self.structure_type.id,
+        })
+
+        attachment = self.env['hr.salary.attachment'].create({
+            'employee_ids': [(4, self.toto.id), (4, titi.id)],
+            'description': 'Multi-employee attachment',
+            'other_input_type_id': self.attachement_type.id,
+            'duration_type': 'limited',
+            'date_start': date(self.current_year, 2, 1),
+            'date_end': date(self.current_year, 6, 30),
+            'monthly_amount': 250,
+            'total_amount': 1000,
+            'paid_amount': 0,
+        })
+
+        self.assertEqual(attachment.employee_count, 2)
+
+        action = attachment.action_split()
+        split_attachments = self.env['hr.salary.attachment'].search(action['domain'])
+        self.assertEqual(len(split_attachments), 2)
+
+        for split_attachment in split_attachments:
+            self.assertRecordValues(split_attachment, [{
+                'description': 'Multi-employee attachment',
+                'other_input_type_id': self.attachement_type.id,
+                'duration_type': 'limited',
+                'monthly_amount': 250,
+                'total_amount': 1000,
+                'paid_amount': 0,
+                'date_start': date(self.current_year, 2, 1),
+                'date_end': date(self.current_year, 6, 30),
+                'state': 'open',
+                'company_id': self.env.company.id,
+            }])
+            self.assertEqual(split_attachment.employee_count, 1)

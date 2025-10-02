@@ -282,6 +282,7 @@ class HrSalaryAttachment(models.Model):
                 'company_id': self.company_id.id,
                 'description': self.description,
                 'other_input_type_id': self.other_input_type_id.id,
+                'duration_type': self.duration_type,
                 'monthly_amount': self.monthly_amount,
                 'total_amount': self.total_amount,
                 'paid_amount': self.paid_amount,
