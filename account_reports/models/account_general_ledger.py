@@ -233,9 +233,9 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             where_clause=report_query.where_clause,
             search_bar_sql=search_bar_sql,
             additional_groupby=SQL("GROUP BY %s", SQL(",").join(groupby)) if groupby else SQL(),
-            orderby_clause=SQL("ORDER BY 2, move_name, 1") if current_groupby == 'id_with_accumulated_balance' else SQL(),
+            orderby_clause=SQL("ORDER BY 2 NULLS FIRST, move_name, 1 NULLS FIRST") if current_groupby == 'id_with_accumulated_balance' else SQL(),
             offset_clause=SQL("OFFSET %s", offset) if offset else SQL(),
-            limit=None if not limit else limit + 1  # Initial balance query line
+            limit=limit
         )
 
         rows_by_key = defaultdict(lambda: {

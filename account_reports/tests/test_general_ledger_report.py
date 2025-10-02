@@ -336,11 +336,29 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
         self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         self.report.load_more_limit = 2
 
-        options = self._generate_options(self.report, fields.Date.from_string('2017-01-01'), fields.Date.from_string('2017-12-31'))
+        # To test the inital balance with load more
+        move = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': fields.Date.from_string('2017-01-02'),
+            'journal_id': self.company_data['default_journal_sale'].id,
+            'line_ids': [
+                (0, 0, {'debit': 1000.0,    'credit': 0.0,      'name': '2017_3_1',     'account_id': self.company_data['default_account_receivable'].id}),
+                (0, 0, {'debit': 2000.0,    'credit': 0.0,      'name': '2017_3_2',     'account_id': self.company_data['default_account_revenue'].id}),
+                (0, 0, {'debit': 3000.0,    'credit': 0.0,      'name': '2017_3_3',     'account_id': self.company_data['default_account_revenue'].id}),
+                (0, 0, {'debit': 4000.0,    'credit': 0.0,      'name': '2017_3_4',     'account_id': self.company_data['default_account_revenue'].id}),
+                (0, 0, {'debit': 5000.0,    'credit': 0.0,      'name': '2017_3_5',     'account_id': self.company_data['default_account_revenue'].id}),
+                (0, 0, {'debit': 6000.0,    'credit': 0.0,      'name': '2017_3_6',     'account_id': self.company_data['default_account_revenue'].id}),
+                (0, 0, {'debit': 0.0,       'credit': 6000.0,   'name': '2017_3_7',     'account_id': self.company_data['default_account_expense'].id}),
+                (0, 0, {'debit': 0.0,       'credit': 7000.0,   'name': '2017_3_8',     'account_id': self.company_data['default_account_expense'].id}),
+                (0, 0, {'debit': 0.0,       'credit': 8000.0,   'name': '2017_3_9',     'account_id': self.company_data['default_account_expense'].id}),
+            ],
+        })
+        move.action_post()
+
+        options = self._generate_options(self.report, fields.Date.from_string('2017-01-02'), fields.Date.from_string('2017-12-31'))
         parent_line_id = self.report._get_generic_line_id(model_name='account.report.line', value=self.env.ref("account_reports.general_ledger_custom_engine_line").id)
         account_revenue_line_id = self.report._get_generic_line_id(model_name='account.account', value=self.company_data['default_account_revenue'].id, markup={'groupby': 'account_or_unaff_id'}, parent_line_id=parent_line_id)
         options['unfolded_lines'] = [account_revenue_line_id]
-
         report_lines = self.report._get_lines(options)
 
         self.assertLinesValues(
@@ -348,16 +366,16 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
             #   Name                                    Debit           Credit          Balance
             [   0,                                      3,              4,              5],
             [
-                ('121000 Account Receivable',           1000.0,         0.0,            1000.0),
+                ('121000 Account Receivable',           2000.0,         0.0,            2000.0),
                 ('211000 Account Payable',              100.0,          0.0,            100.0),
-                ('400000 Product Sales',                20000.0,        0.0,            20000.0),
-                ('INV/2017/00001 2017_1_2',             2000.0,         0.0,            2000.0),
-                ('INV/2017/00001 2017_1_3',             3000.0,         0.0,            5000.0),
+                ('400000 Product Sales',                40000.0,        0.0,            40000.0),
+                ('Initial Balance',                     20000.0,        0.0,            20000.0),
+                ('INV/2017/00002 2017_3_2',             2000.0,         0.0,            22000.0),
                 ('Load more...',                        '',             '',             ''),
-                ('Total 400000 Product Sales',          20000.0,        0.0,            20000.0),
-                ('600000 Expenses',                     0.0,            21000.0,        -21000.0),
+                ('Total 400000 Product Sales',          40000.0,        0.0,            40000.0),
+                ('600000 Expenses',                     0.0,            42000.0,        -42000.0),
                 ('999999 Undistributed Profits/Losses', 200.0,          300.0,          -100.0),
-                ('Total General Ledger',                21300.0,        21300.0,        0.0),
+                ('Total General Ledger',                42300.0,        42300.0,        0.0),
             ],
             options,
         )
@@ -377,8 +395,8 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
             #   Name                                    Debit           Credit          Balance
             [   0,                                      3,              4,              5],
             [
-                ('INV/2017/00001 2017_1_4',                      4000.0,         0.0,            9000.0),
-                ('INV/2017/00001 2017_1_5',                      5000.0,         0.0,            14000.0),
+                ('INV/2017/00002 2017_3_3',             3000.0,         0.0,            25000.0),
+                ('INV/2017/00002 2017_3_4',             4000.0,         0.0,            29000.0),
                 ('Load more...',                        '',             '',             ''),
             ],
             options,
@@ -399,7 +417,8 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
             #   Name                                    Debit           Credit          Balance
             [   0,                                      3,              4,              5],
             [
-                ('INV/2017/00001 2017_1_6',                      6000.0,         0.0,            20000.0),
+                ('INV/2017/00002 2017_3_5',             5000.0,         0.0,            34000.0),
+                ('INV/2017/00002 2017_3_6',             6000.0,         0.0,            40000.0),
             ],
             options,
         )
