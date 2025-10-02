@@ -58,7 +58,7 @@
                     <group>
                        <field name="code"/>
                        <field name="category_id" placeholder="e.g. Net"/>
-                       <field name="struct_id"/>
+                       <field name="struct_id" readonly="input_used_in_definition"/>
                     </group>
                     <group>
                        <field name="sequence"/>
