@@ -280,12 +280,14 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('partner_id')
     def _compute_partner_name(self):
+        self.fetch(['partner_id'])
         for ticket in self:
             if ticket.partner_id:
                 ticket.partner_name = ticket.partner_id.name
 
     @api.depends('partner_id.email')
     def _compute_partner_email(self):
+        self.fetch(['partner_id'])
         for ticket in self:
             if ticket.partner_id:
                 ticket.partner_email = ticket.partner_id.email
@@ -297,6 +299,7 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('partner_id.phone')
     def _compute_partner_phone(self):
+        self.fetch(['partner_id'])
         for ticket in self:
             if ticket.partner_id:
                 ticket.partner_phone = ticket.partner_id.phone
