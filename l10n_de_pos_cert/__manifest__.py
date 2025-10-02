@@ -32,6 +32,9 @@ Install this if you are using the Point of Sale app in Germany.
         'point_of_sale._assets_pos': [
             'l10n_de_pos_cert/static/src/**/*',
         ],
+        'web.assets_unit_tests': [
+            'l10n_de_pos_cert/static/tests/unit/**/*',
+        ],
     },
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',

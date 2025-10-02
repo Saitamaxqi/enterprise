@@ -118,16 +118,19 @@ patch(PosOrder.prototype, {
             const existing = amountPerPaymentTypeArray.find((entry) => entry.payment_type === type);
 
             if (existing) {
-                existing.amount = this.currency.round(parseFloat(existing.amount) + amount);
+                existing.amount = roundCurrency(
+                    parseFloat(existing.amount) + amount,
+                    this.currency
+                ).toFixed(2);
             } else {
                 amountPerPaymentTypeArray.push({
                     payment_type: type,
-                    amount: this.currency.round(amount),
+                    amount: this.currency.round(amount).toFixed(2),
                 });
             }
         });
         const change = this.getChange();
-        if (change) {
+        if (roundCurrency(change, this.currency)) {
             amountPerPaymentTypeArray.push({
                 payment_type: "CASH",
                 amount: roundCurrency(-change, this.currency).toFixed(2),
