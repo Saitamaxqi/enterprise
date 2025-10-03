@@ -107,7 +107,10 @@
                 <th scope="row">
                     <span t-attf-class="{{! groups.mrp_mps_show_actual_replenishment and 'o_hidden' or ''}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The quantity being replenished, based on the Requests for Quotation and the Manufacturing Orders.">Actual</span>
                     <span t-attf-class="{{! (groups.mrp_mps_show_actual_replenishment and groups.mrp_mps_show_to_replenish) and 'o_hidden' or ''}}"> / </span>
-                    <span t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or ''}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="The quantity to replenish through Purchase Orders or Manufacturing Orders.">Replenishment: </span>
+                    <span t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or ''}}"
+                          data-bs-toggle="tooltip"
+                          data-bs-placement="bottom"
+                          title="The quantity to replenish through Purchase Orders or Manufacturing Orders.&#10;Color code: Green if to replenish now, Red if existing replenishment is too high for the period, Orange if current replenishment is too low.">Replenishment: </span>
                     <button type="button" title="Replenish" t-attf-class="{{! groups.mrp_mps_show_to_replenish and 'o_hidden' or 'btn btn-secondary o_mrp_mps_procurement'}}"
                             t-if="forecastToReplenish"
                             t-on-click.stop="() => this._onClickReplenish(productionSchedule.id)"

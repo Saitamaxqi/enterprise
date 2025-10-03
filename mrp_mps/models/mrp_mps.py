@@ -382,7 +382,6 @@ class MrpProductionSchedule(models.Model):
                 'warehouse_id': component[1],
                 'company_id': component[2],
                 'is_indirect': True,
-                'replenish_trigger': 'never',
             })
         if components_vals:
             self.env['mrp.production.schedule'].create(components_vals)

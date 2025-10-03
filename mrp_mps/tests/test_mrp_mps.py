@@ -252,7 +252,6 @@ class TestMpsMps(common.TransactionCase):
         line is updated.
         """
         self.env.company.horizon_days = 0
-        self.mps_screw.replenish_trigger = 'manual'
         forecast_screw = self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
             'date': self.mps_dates_month[0][0],
@@ -332,7 +331,6 @@ class TestMpsMps(common.TransactionCase):
             'delay': 7,
         })
 
-        self.mps_screw.replenish_trigger = 'manual'
         mps_dates_week = self.env.company._get_date_range()
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
@@ -645,7 +643,6 @@ class TestMpsMps(common.TransactionCase):
         self.table_leg.write({
             'route_ids': [(6, 0, [self.ref('mrp.route_warehouse0_manufacture')])]
         })
-        self.mps_table_leg.replenish_trigger = 'manual'
 
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table_leg.id,
@@ -798,11 +795,11 @@ class TestMpsMps(common.TransactionCase):
         self.assertEqual(mps_impacted[0], mps_c2.id)
 
     def test_replenish_trigger(self):
-        """Test that the replenish_trigger of components is 'never'
+        """Test that the replenish_trigger of components is 'manual'
         and that 'automated' correctly triggers in the cron.
         """
         mps_components = self.mps_drawer + self.mps_table_leg + self.mps_screw + self.mps_bolt
-        self.assertTrue(all(record.replenish_trigger == 'never' for record in mps_components))
+        self.assertTrue(all(record.replenish_trigger == 'manual' for record in mps_components))
 
         partner = self.env['res.partner'].create({'name': 'Bob Palindrome MacScam'})
         seller = self.env['product.supplierinfo'].create({
@@ -1204,7 +1201,6 @@ class TestMpsMps(common.TransactionCase):
             'price': 12.0,
             'delay': 0
         })
-        self.mps_screw.replenish_trigger = 'manual'
         self.table.route_ids = [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
 
         # Create a MO for 1 table and a PO for 20 screws
@@ -1282,7 +1278,6 @@ class TestMpsMps(common.TransactionCase):
             'price': 12.0,
             'delay': 0
         })
-        self.mps_screw.replenish_trigger = 'manual'
         self.table.route_ids = [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
 
         # Create an MO for 1 table and a PO for 20 screws
