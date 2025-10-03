@@ -56,7 +56,7 @@ export class IotWebsocket {
         onSuccess = (_message, _deviceIdentifier, _messageId) => {},
         onFailure = (_message, _deviceIdentifier, _messageId) => {},
         messageType = 'operation_confirmation',
-        requestId = null
+        requestId = null,
     ) {
         if (!this.iotChannel) {
             console.error("No IoT Channel found");

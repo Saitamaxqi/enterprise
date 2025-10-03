@@ -224,6 +224,11 @@ export const iotHttpService = {
         const iotWebsocket = new IotWebsocket({ bus_service, orm, lazy_session });
         const iotWebRtc = new IotWebRtc(bus_service, iotWebsocket);
 
+        const webRtc = {
+            sendMessage: iotWebRtc.sendMessage.bind(iotWebRtc),
+            onMessage: iotWebRtc.onMessage.bind(iotWebRtc),
+        };
+
         const longpolling = {
             sendMessage: iot_longpolling.sendMessage.bind(iot_longpolling),
             onMessage: iot_longpolling.onMessage.bind(iot_longpolling),
@@ -247,7 +252,7 @@ export const iotHttpService = {
         // Expose only those functions to the environment
         // status is a getter to have a reactive value
         return {
-            post, action, longpolling, websocket, onMessage, get status() {
+            post, action, webRtc, longpolling, websocket, onMessage, get status() {
                 return iot.connectionStatus;
             }
         };

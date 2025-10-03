@@ -15,6 +15,11 @@ registry.category("web_tour.tours").add("iot_device_test_printer", {
                 run: "click",
             },
             {
+                content: "Ensure the record is loaded (avoid clicking on 'Test' on the IoT Box record)",
+                trigger: ".o_last_breadcrumb_item:contains('Receipt Printer')",
+                run: "click",
+            },
+            {
                 content: "Click button 'Test'",
                 trigger: ".o_statusbar_buttons button:contains('Test')",
                 run: "click",
