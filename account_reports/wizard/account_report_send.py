@@ -189,7 +189,7 @@ class AccountReportSend(models.TransientModel):
         for wizard in self:
             wizard.partner_ids = wizard.account_report_id._get_report_send_recipients(wizard.report_options)
 
-    @api.depends('account_report_id', 'report_options')
+    @api.depends('account_report_id', 'report_options', 'mail_template_id')
     def _compute_mail_partner_ids(self):
         for wizard in self:
             wizard.mail_partner_ids = wizard.partner_ids
