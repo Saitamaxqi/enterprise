@@ -2604,6 +2604,12 @@
                 "language_regex": "^(es)$"
             },
             {
+                "name": "l10n_es_reports_2025",
+                "filemask": "l10n_es_reports_2025/i18n/*.po",
+                "new_base": "l10n_es_reports_2025/i18n/l10n_es_reports_2025.pot",
+                "language_regex": "^(es)$"
+            },
+            {
                 "name": "l10n_es_sale_amazon",
                 "filemask": "l10n_es_sale_amazon/i18n/*.po",
                 "new_base": "l10n_es_sale_amazon/i18n/l10n_es_sale_amazon.pot",
