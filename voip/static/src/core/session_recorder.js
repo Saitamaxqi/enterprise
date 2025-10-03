@@ -71,9 +71,18 @@ export class SessionRecorder {
         const localStream = new MediaStream([micTrack]);
         const remoteStream = sipSession.sessionDescriptionHandler.remoteMediaStream;
         const audioContext = new AudioContext();
-        const mergedAudio = audioContext.createMediaStreamDestination();
-        audioContext.createMediaStreamSource(remoteStream).connect(mergedAudio);
-        audioContext.createMediaStreamSource(localStream).connect(mergedAudio);
+        const mergedAudio = new MediaStreamAudioDestinationNode(audioContext, {
+            // down-mix to mono, using pre-defined mixing rules
+            channelCount: 1,
+            channelCountMode: "explicit",
+            channelInterpretation: "speakers",
+        });
+        const localSource = audioContext.createMediaStreamSource(localStream);
+        const remoteSource = audioContext.createMediaStreamSource(remoteStream);
+        // add gain to reduce clipping
+        const gain = 1 / Math.sqrt(2);
+        localSource.connect(new GainNode(audioContext, { gain })).connect(mergedAudio);
+        remoteSource.connect(new GainNode(audioContext, { gain })).connect(mergedAudio);
         return { audioContext, stream: mergedAudio.stream };
     }
 
