@@ -7,7 +7,7 @@ import { qrCodeSrc } from "@point_of_sale/utils";
 patch(OrderPaymentValidation.prototype, {
     async beforePostPushOrderResolve(order, order_server_ids) {
         if (this.pos.config.is_kenyan) {
-            this.env.services.ui.block();
+            this.pos.env.services.ui.block();
             try {
                 await this.pos.data.call("pos.order", "action_post_order", [order_server_ids], {});
             } catch (error) {
@@ -16,7 +16,7 @@ patch(OrderPaymentValidation.prototype, {
                     body: _t(error.data.message),
                 });
             } finally {
-                const l10n_ke_edi_oscu_pos_data = await this.orm.call(
+                const l10n_ke_edi_oscu_pos_data = await this.pos.data.call(
                     "pos.order",
                     "get_l10n_ke_edi_oscu_pos_data",
                     [order_server_ids],
@@ -41,7 +41,7 @@ patch(OrderPaymentValidation.prototype, {
                 order.l10n_ke_edi_oscu_pos_serial_number =
                     l10n_ke_edi_oscu_pos_data.l10n_ke_edi_oscu_pos_serial_number;
 
-                this.env.services.ui.unblock();
+                this.pos.env.services.ui.unblock();
             }
         }
 
