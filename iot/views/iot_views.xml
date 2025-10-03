@@ -148,19 +148,16 @@
                     <group name="iot_device_details">
                         <group>
                             <field name="iot_id" readonly="True"/>
-                            <field name="iot_ip" invisible="True"/>
                             <field name="identifier" readonly="True"/>
+                            <field name="connection"/>
                             <field name="is_scanner" invisible="type not in ['keyboard', 'scanner']" widget="boolean_toggle"/>
                             <field name="manufacturer" invisible="manufacturer == ''"/>
                             <field name="keyboard_layout" invisible="type not in ['keyboard', 'scanner']"/>
                             <field name="display_url" invisible="type != 'display'"/>
-                            <div class='fw-bold' groups="base.group_no_one">Last Sent Value</div>
-                            <widget name="iot_device_value_display" groups="base.group_no_one"/>
                         </group>
                         <group>
                             <field name="type"/>
                             <field name="subtype" invisible= "type != 'printer'"/>
-                            <field name="connection"/>
                         </group>
                     </group>
                     <notebook>
