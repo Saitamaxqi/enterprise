@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 18:42+0000\n"
-"PO-Revision-Date: 2025-09-25 02:41+0000\n"
+"PO-Revision-Date: 2025-10-03 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/documents_spreadsheet/es_419/>\n"
@@ -347,7 +347,7 @@ msgstr "Oportunidades por etapa"
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid "Partner(s): %(partner_names)s."
-msgstr ""
+msgstr "Contacto(s): %(partner_names)s."
 
 #. module: documents_spreadsheet
 #: model:documents.document,name:documents_spreadsheet.spreadsheet_demo_pipeline
@@ -359,12 +359,13 @@ msgstr "Tablero del flujo"
 #: code:addons/documents_spreadsheet/models/documents_document.py:0
 msgid "Portal users cannot be the owner of a spreadsheet."
 msgstr ""
+"Los usuarios del portal no pueden ser propietarios de una hoja de cálculo."
 
 #. module: documents_spreadsheet
 #. odoo-python
 #: code:addons/documents_spreadsheet/wizard/documents_sharing.py:0
 msgid "Read only spreadsheet(s): %(document_names)s."
-msgstr ""
+msgstr "Hoja(s) de cálculo de solo lectura: %(document_names)s."
 
 #. module: documents_spreadsheet
 #. odoo-javascript
@@ -501,7 +502,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_spreadsheet/static/src/bundle/actions/spreadsheet_action.js:0
 msgid "Spreadsheet moved to trash"
-msgstr ""
+msgstr "Hoja de cálculo movida a la papelera"
 
 #. module: documents_spreadsheet
 #. odoo-python

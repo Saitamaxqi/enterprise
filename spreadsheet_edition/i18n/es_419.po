@@ -10,8 +10,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:45+0000\n"
-"PO-Revision-Date: 2025-09-25 17:35+0000\n"
-"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
+"PO-Revision-Date: 2025-10-03 02:41+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/spreadsheet_edition/es_419/>\n"
 "Language: es_419\n"
@@ -333,7 +333,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Descartar"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_ir_model__display_name
@@ -604,6 +604,8 @@ msgid ""
 "Link each filter to a corresponding field in the data source to enable "
 "filtering."
 msgstr ""
+"Vincula cada filtro con un campo correspondiente en la fuente de datos para "
+"habilitar el filtrado."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1055,7 +1057,7 @@ msgstr "Restringir valores con un dominio"
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__revision_date
 msgid "Revision Date"
-msgstr ""
+msgstr "Fecha de revisión"
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_revision__revision_uuid
@@ -1143,13 +1145,13 @@ msgstr "Seleccione el número de registros a insertar"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/global_filter_side_panel.xml:0
 msgid "Selection"
-msgstr ""
+msgstr "Selección"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/filter_editor/selection_filter_editor_side_panel.xml:0
 msgid "Selection field"
-msgstr ""
+msgstr "Campo de selección"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1317,7 +1319,7 @@ msgstr "Total"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/global_filters/components/related_filters/related_filters.xml:0
 msgid "Unlink from the filter"
-msgstr ""
+msgstr "Desvincular del filtro"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
