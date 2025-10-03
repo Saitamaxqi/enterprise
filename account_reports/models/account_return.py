@@ -246,9 +246,14 @@ class AccountReturnType(models.Model):
             ('manually_created', '=', False),
             *return_root_company_domain,
         ])
+        returns_to_unlink = self.env['account.return']
         for return_to_check in all_return_that_might_be_deleted:
-            if not return_to_check.type_id._can_return_exist(return_to_check.company_id, return_to_check.tax_unit_id):
-                return_to_check.unlink()
+            if (
+                not return_to_check.type_id._can_return_exist(return_to_check.company_id, return_to_check.tax_unit_id)
+                or return_to_check.date_deadline < return_to_check.company_id.account_opening_date
+            ):
+                returns_to_unlink |= return_to_check
+        returns_to_unlink.unlink()
 
     @api.model
     def _generate_all_returns(self, country_code, main_company, tax_unit=None):
@@ -286,7 +291,7 @@ class AccountReturnType(models.Model):
             if return_type.category == 'audit':
                 return_type.with_company(self.env.company).deadline_periodicity = 'year'
 
-    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, allow_duplicates=False):
+    def _try_create_returns_for_fiscal_year(self, main_company, tax_unit, allow_duplicates=False, bypass_period_check=False):
         """
         Creates or updates the tax returns (possibly deleting the 'new' ones, if needed) for the provided main_company and tax_unit, so that all the
         returns are created from the start of the current fiscal year, up to one year after the current date.
@@ -323,6 +328,7 @@ class AccountReturnType(models.Model):
                 ('type_id', '=', self.id),
                 ('date_to', '>=', date_from),
                 ('date_from', '<=', date_to),
+                ('manually_created', '=', False),
             ])
             returns_to_unlink.unlink()
             return
@@ -349,10 +355,10 @@ class AccountReturnType(models.Model):
         periods = []
         deadline_date = date_pointer
         type_xml_id = self.get_external_id()[self.id]
-        while date_pointer < date_to and (deadline_date <= next_year or has_forced_dates):
+        while date_pointer < date_to and (deadline_date <= next_year or bypass_period_check):
             period_date_from, period_date_to = self._get_period_boundaries(main_company, date_pointer)
             deadline_date = self.env['account.return']._evaluate_deadline(main_company, self, type_xml_id, period_date_from, period_date_to)
-            if (main_company.account_opening_date or date.min) <= deadline_date <= next_year or has_forced_dates:
+            if (main_company.account_opening_date or date.min) <= deadline_date <= next_year or bypass_period_check:
                 periods.append((period_date_from, period_date_to))
             date_pointer = period_date_to + relativedelta(days=1)
 
@@ -393,7 +399,7 @@ class AccountReturnType(models.Model):
                     unmatched_existing_periods_posted_returns |= existing_periods[period]
 
             # We can safely unlink these as they are not posted. We will create new returns for these periods
-            unmatched_existing_periods_unposted_returns.unlink()
+            unmatched_existing_periods_unposted_returns.filtered(lambda r: not r.manually_created).unlink()
 
             # So now we are only left with existing one that cannot be unlinked
             # We should create new returns for periods after the last posted return
@@ -784,8 +790,12 @@ class AccountReturn(models.Model):
 
     @api.depends('company_id', 'tax_unit_id', 'type_id')
     def _compute_company_ids(self):
+        company_ids_map = defaultdict(lambda: self.env['account.return'])
         for record in self:
-            record.company_ids = record._get_company_ids(record.company_id, record.tax_unit_id, record.type_id.report_id)
+            company_ids_map[record.company_id, record.tax_unit_id, record.type_id.report_id] |= record
+
+        for (company, tax_unit, report), returns in company_ids_map.items():
+            returns.company_ids = self._get_company_ids(company, tax_unit, report)
 
     @api.depends_context('allowed_company_ids')
     @api.depends('company_ids')
@@ -983,22 +993,18 @@ class AccountReturn(models.Model):
             if not self.env.user.has_group('account.group_account_manager'):
                 raise UserError(_("You first need to define an opening date for your accounting. Please contact your administrator."))
 
-            # We are not giving the res_id to the wizard as it would be considered as
-            # not a new record and the input field for the opening_date would be red.
+            new_wizard = self.env['account.financial.year.op'].create({'company_id': company.id})
             return {
                 'type': 'ir.actions.act_window',
                 'name': _('Accounting Periods'),
                 'view_mode': 'form',
                 'res_model': 'account.financial.year.op',
+                'res_id': new_wizard.id,
                 'target': 'new',
                 'views': [[self.env.ref('account.setup_financial_year_opening_form').id, 'form']],
                 'context': {
                     'dialog_size': 'medium',
                     'open_account_return_on_save': True,
-                    'default_company_id': company.id,
-                    'default_fiscalyear_last_month': company.fiscalyear_last_month,
-                    'default_fiscalyear_last_day': company.fiscalyear_last_day,
-                    'default_account_return_periodicity': company.account_return_periodicity,
                 },
             }
 

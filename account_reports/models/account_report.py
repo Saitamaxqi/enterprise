@@ -1846,7 +1846,7 @@ class AccountReport(models.Model):
         options['has_inactive_variants'] = False
         allowed_country_variant_ids = {}
         all_variants = self._get_variants(options['variants_source_id'])
-        for variant in all_variants.filtered(lambda x: x._is_available_for(options)):
+        for variant in all_variants._is_available_for(options):
             if not self.root_report_id and variant != self and variant.active: # Non-route reports don't reroute the variant when computing their options
                 allowed_variant_ids.add(variant.id)
                 if variant.country_id:
@@ -4614,9 +4614,7 @@ class AccountReport(models.Model):
             'context': {
                 'active_test': False,
             },
-            'domain': [('id', 'in', self._get_variants(options['variants_source_id']).filtered(
-                lambda x: x._is_available_for(options)
-            ).ids)],
+            'domain': [('id', 'in', self._get_variants(options['variants_source_id'])._is_available_for(options).ids)],
         }
 
     def _get_audit_line_domain(self, column_group_options, expression, params):
@@ -5420,26 +5418,31 @@ class AccountReport(models.Model):
         Note that only the options initialized by the init_options with a more prioritary sequence than _init_options_variants are guaranteed to
         be in the provided options' dict (since this function is called by _init_options_variants, while resolving a call to get_options()).
         """
-        self.ensure_one()
-
         companies = self.env['res.company'].browse(self.get_report_company_ids(options))
 
-        if self.availability_condition == 'country':
+        reports = self
+        reports_available_by_country = self.filtered(lambda r: r.availability_condition == 'country')
+        reports_available_by_coa = self.filtered(lambda r: r.availability_condition == 'coa')
+
+        if reports_available_by_country:
             countries = companies.account_fiscal_country_id
-            if self.allow_foreign_vat:
+            reports_allowing_foreign_vat = reports_available_by_country.filtered('allow_foreign_vat')
+            reports -= (reports_available_by_country - reports_allowing_foreign_vat).filtered('country_id')
+
+            if reports_allowing_foreign_vat:
                 foreign_vat_fpos = self.env['account.fiscal.position'].search([
                     ('foreign_vat', '!=', False),
                     ('company_id', 'in', companies.ids),
                 ])
                 countries += foreign_vat_fpos.country_id
+                reports -= reports_allowing_foreign_vat.filtered(lambda r: r.country_id and r.country_id not in countries)
 
-            return not self.country_id or self.country_id in countries
+        if reports_available_by_coa:
+            # When restricting to 'coa', the report is only available if all the companies have the same CoA as the report
+            chart_templates = set(companies.mapped('chart_template'))
+            reports -= reports_available_by_coa.filtered(lambda r: r.chart_template not in chart_templates)
 
-        elif self.availability_condition == 'coa':
-            # When restricting to 'coa', the report is only available is all the companies have the same CoA as the report
-            return self.chart_template in set(companies.mapped('chart_template'))
-
-        return True
+        return reports
 
     def _get_column_headers_render_data(self, options):
         column_headers_render_data = {}
