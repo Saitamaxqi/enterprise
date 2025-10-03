@@ -836,19 +836,6 @@ class AccountMove(models.Model):
     # BUSINESS METHODS
     # -------------------------------------------------------------------------
 
-    def _post(self, soft=True):
-        # OVERRIDE
-        Document = self.env['l10n_mx_edi.document']
-        certificate_date = datetime.now(timezone('America/Mexico_City'))
-
-        for move in self.filtered('l10n_mx_edi_is_cfdi_needed'):
-
-            # Assign time and date coming from a certificate.
-            if move.is_invoice() and move.l10n_mx_edi_is_cfdi_needed and not move.invoice_date:
-                move.invoice_date = certificate_date.date()
-
-        return super()._post(soft=soft)
-
     def _l10n_mx_edi_need_cancel_request(self):
         self.ensure_one()
         return (
