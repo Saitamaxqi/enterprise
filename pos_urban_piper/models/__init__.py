@@ -13,3 +13,4 @@ from . import product
 from . import product_urban_piper_status
 from . import pos_payment_method
 from . import product_pricelist
+from . import pos_category
