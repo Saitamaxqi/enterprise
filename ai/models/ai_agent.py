@@ -206,6 +206,25 @@ def clean_search_view_xml(search_view_arch):
     return etree.tostring(clean_tree, encoding="unicode", pretty_print=False)
 
 
+def validate_measures(model, measures):
+    fields = model.fields_get()
+    valid_measures_dict = compute_report_measures(fields, None)
+    for measure in measures:
+        parts = measure.strip().split()
+        if ':' in parts[0]:
+            raise ValueError(
+                f"Invalid measure syntax '{measure}' for model '{model}'. "
+                "Aggregation operators like ':sum' are not supported. "
+                "Use '<field_name>' or '<field_name> asc/desc' instead."
+            )
+        base_measure = parts[0]
+        if base_measure not in valid_measures_dict:
+            raise ValueError(
+                f"Measure '{base_measure}' is invalid for model '{model}'. "
+                f"The base field is not a recognized or aggregatable field."
+            )
+
+
 def validate_groupbys(model, groupbys):
     if not groupbys:
         return
@@ -1219,6 +1238,7 @@ class AIAgent(models.Model):
         validate_search_terms(search)
         validate_groupbys(self.env[model_name], row_groupbys)
         validate_groupbys(self.env[model_name], col_groupbys)
+        validate_measures(self.env[model_name], measures)
 
         menus = self.env["ir.ui.menu"].load_menus(debug=request.session.debug)
         menu = menus.get(menu_id)
@@ -1299,6 +1319,7 @@ class AIAgent(models.Model):
         """
         validate_search_terms(search)
         validate_groupbys(self.env[model_name], selected_groupbys)
+        validate_measures(self.env[model_name], [measure])
 
         debug = request.session.debug if request else True
         menus = self.env["ir.ui.menu"].load_menus(debug=debug)
