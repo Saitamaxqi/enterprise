@@ -111,6 +111,9 @@ patch(WebsiteSale.prototype, {
         if (info.websiteTz) {
             this.websiteTz = info.websiteTz;
         }
+        if (info.rentingAvailabilities) {
+            this.rentingAvailabilities = info.rentingAvailabilities;
+        }
     },
 
     /**
