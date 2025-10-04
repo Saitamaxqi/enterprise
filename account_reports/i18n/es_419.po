@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 18:41+0000\n"
-"PO-Revision-Date: 2025-10-03 02:41+0000\n"
+"PO-Revision-Date: 2025-10-04 02:43+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/account_reports/es_419/>\n"
@@ -4318,12 +4318,12 @@ msgstr "Núm. del diario"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_no_negative_petty_cash_balances
 msgid "No Negative Petty Cash Balances"
-msgstr ""
+msgstr "Sin balances negativos de caja chica"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_no_unjustified_cash_payments_to_supplier
 msgid "No Unjustified Cash Payments to Suppliers"
-msgstr ""
+msgstr "Sin pagos en efectivo a proveedores sin justificación"
 
 #. module: account_reports
 #. odoo-python
@@ -5437,7 +5437,7 @@ msgstr ""
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_for_capitalizable_expenses
 msgid "Review for capitalizable expenses"
-msgstr ""
+msgstr "Revisa los gastos que se pueden capitalizar"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_review_of_guaranteed
@@ -6238,6 +6238,8 @@ msgid ""
 "These accounts must be cleared regularly, as they represent unallocated or "
 "pending transactions."
 msgstr ""
+"Estas cuentas deben liquidarse con frecuencia, ya que representan "
+"transacciones sin asignar o pendientes."
 
 #. module: account_reports
 #. odoo-python
@@ -6687,7 +6689,7 @@ msgstr "Valor"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_var_percentage
 msgid "Var %"
-msgstr ""
+msgstr "Var %"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_var_n_1
@@ -6715,6 +6717,19 @@ msgid ""
 "exchange for immediate cash.\n"
 "            "
 msgstr ""
+"Revisa que los recibos de efectivo y tarjeta registrados al cierre del "
+"periodo realmente se hayan saldado en el siguiente periodo. También verifica "
+"que las cesiones Dailly*, las operaciones de descuento y los contratos de "
+"factoraje** tengan el tratamiento contable correcto.\n"
+"\n"
+"* La \"Ley Dailly\" es una ley francesa que permite que las empresas cedan "
+"sus cuentas por cobrar comerciales (como facturas) a un banco a cambio de "
+"financiamiento.\n"
+"\n"
+"** Los contratos de factoraje consisten en que una empresa venda sus "
+"facturas pendientes a un tercero, llamado factor, a cambio de efectivo "
+"inmediato.\n"
+"            "
 
 #. module: account_reports
 #. odoo-python

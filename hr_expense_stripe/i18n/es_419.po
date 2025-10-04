@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-10-03 02:41+0000\n"
+"PO-Revision-Date: 2025-10-04 02:43+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_expense_stripe/es_419/>\n"
@@ -1806,7 +1806,7 @@ msgstr "Correo electrónico"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.emergency_services_gcas_visa_use_only
 msgid "Emergency Services GCAS Visa Use Only"
-msgstr ""
+msgstr "Servicios de emergencia, GCAS, Visa, solo uso"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_employee
@@ -1969,7 +1969,7 @@ msgstr "Instituciones financieras"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fines_government_administrative_entities
 msgid "Fines Government Administrative Entities"
-msgstr ""
+msgstr "Multas de entidades gubernamentales administrativas"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fireplace_fireplace_screens_and_accessories_stores
@@ -2674,7 +2674,7 @@ msgstr "Mes"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motion_picture_theaters_cinema
 msgid "Motion Picture Theaters Cinema"
-msgstr ""
+msgstr "Cines y películas"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.motor_freight_carriers_and_trucking
@@ -2793,21 +2793,23 @@ msgid ""
 "No valid employee selected, please set an employee to be able to update its "
 "cardholder data"
 msgstr ""
+"No hay ningún empleado válido seleccionado. Asigna un empleado para poder "
+"actualizar sus datos de titular de tarjeta."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.non_fi_money_orders
 msgid "Non-Fi Money Orders"
-msgstr ""
+msgstr "Giros no financieros"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.non_fi_stored_value_card_purchase_load
 msgid "Non-Fi Stored Value Card Purchase Load"
-msgstr ""
+msgstr "Carga de tarjetas de valor almacenado no financieras"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nondurable_goods
 msgid "Nondurable Goods"
-msgstr ""
+msgstr "Bienes no duraderos"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
@@ -2836,12 +2838,12 @@ msgstr "Número de mensajes con error de envío"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nurseries_lawn_and_garden_supply_stores
 msgid "Nurseries Lawn and Garden Supply Stores"
-msgstr ""
+msgstr "Viveros, tiendas de césped y jardín"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nursing_personal_care
 msgid "Nursing Personal Care"
-msgstr ""
+msgstr "Enfermería y cuidado personal"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2850,11 +2852,14 @@ msgid ""
 "Odoo cannot be held liable for any consequences arising from the use of\n"
 "                    your Stripe Issuing account, including lost funds, business interruption, or indirect damages."
 msgstr ""
+"Odoo no se hace responsable de ninguna consecuencia derivada del uso de\n"
+"                    tu cuenta de Stripe Issuing, incluyendo fondos perdidos, "
+"interrupción de actividades del negocio o daños indirectos."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.office_and_commercial_furniture
 msgid "Office and Commercial Furniture"
-msgstr ""
+msgstr "Mobiliario de oficina y comercial"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2862,6 +2867,8 @@ msgstr ""
 msgid ""
 "Only IBAN is supported for Stripe Issuing funding instructions right now"
 msgstr ""
+"Por ahora, solo IBAN es compatible con las instrucciones de financiación de "
+"Stripe Issuing"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2869,6 +2876,8 @@ msgstr ""
 msgid ""
 "Only SEPA is supported for Stripe Issuing funding instructions right now"
 msgstr ""
+"Por ahora, solo SEPA es compatible con las instrucciones de financiación de "
+"Stripe Issuing"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3143,7 +3152,7 @@ msgstr "Almacenaje y depósitos públicos"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__pull_push_funds
 msgid "Pull Push Funds"
-msgstr ""
+msgstr "Obtener y enviar fondos"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_topup_wizard__pull_push_funds__push
@@ -3870,6 +3879,8 @@ msgid ""
 "The charge is not allowed on the Stripe network, possibly because it is an "
 "ATM withdrawal or cash advance."
 msgstr ""
+"El cargo no está permitido en la red de Stripe, probablemente porque se "
+"trata de un retiro en cajero automático o anticipo en efectivo."
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_product_mcc_stripe_tag_constraint_code_unique
@@ -3973,6 +3984,8 @@ msgid ""
 "The route '%(route)s' is not allowed to be called from the Stripe IAP proxy "
 "server."
 msgstr ""
+"No está permitido llamar a la ruta %(route)s desde el servidor proxy de "
+"compras dentro de la aplicación de Stripe."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4037,6 +4050,8 @@ msgstr ""
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "There was an unexpected error on Odoo IAP proxy server"
 msgstr ""
+"Ocurrió un error inesperado en el servidor proxy de compras dentro de la "
+"aplicación de Odoo"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.timeshares
@@ -4344,6 +4359,9 @@ msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Missing account secret"
 msgstr ""
+"Recibimos el siguiente error del servidor proxy de compras dentro de la "
+"aplicación de Odoo:\n"
+"- Falta el secreto de la cuenta"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4352,6 +4370,9 @@ msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Missing account webhook"
 msgstr ""
+"Recibimos el siguiente error del servidor proxy de compras dentro de la "
+"aplicación de Odoo:\n"
+"- Falta el webhook de la cuenta"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4360,6 +4381,9 @@ msgid ""
 "We received the following error from Odoo IAP proxy server:\n"
 "- Wrong platform setup/route is restricted"
 msgstr ""
+"Recibimos el siguiente error del servidor proxy de compras dentro de la "
+"aplicación de Odoo:\n"
+"- La configuración de la plataforma es incorrecta o la ruta está restringida"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4372,6 +4396,8 @@ msgstr "Recibimos el siguiente error de Stripe: %(reason)s"
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "We were unable to reach Odoo IAP proxy server"
 msgstr ""
+"No pudimos conectarnos con el servidor proxy de compras dentro de la "
+"aplicación de Odoo"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__website_message_ids
@@ -4398,7 +4424,7 @@ msgstr "Reparación de soldadura"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_country_tag_ids
 msgid "Whitelist of countries where payments could be authorized from."
-msgstr ""
+msgstr "Lista autorizada de países desde los cuales se pueden autorizar pagos."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_category_tag_ids
@@ -4406,6 +4432,8 @@ msgid ""
 "Whitelist of merchant codes, to define which type of goods or services would"
 " be authorized."
 msgstr ""
+"Lista autorizada de códigos de comerciantes para definir qué tipo de bienes "
+"o servicios se autorizarían."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wholesale_clubs
@@ -4435,18 +4463,18 @@ msgstr "Tiendas de accesorios y artículos especiales para mujer"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.womens_ready_to_wear_stores
 msgid "Women's Ready to Wear Stores"
-msgstr ""
+msgstr "Tiendas de ropa lista para usar para mujer"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.wrecking_and_salvage_yards
 msgid "Wrecking and Salvage Yards"
-msgstr ""
+msgstr "Deshuesaderos y patios de salvamento"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Wrong or Expired validation code"
-msgstr ""
+msgstr "Código de validación incorrecto o vencido"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__spending_policy_interval__yearly
