@@ -29,7 +29,7 @@
         </t>  
         <t t-else="">
             <printRecSubtotal operator="1" option="1">
-                <t t-foreach="payments" t-as="payment" t-key="payment.index">
+                <t t-foreach="payments" t-as="payment" t-key="payment.id">
                     <PrintRecTotal operator="1" description="payment.description" payment="payment.payment" paymentType="payment.paymentType" index="payment.index" justification="2"/>
                 </t>
             </printRecSubtotal>

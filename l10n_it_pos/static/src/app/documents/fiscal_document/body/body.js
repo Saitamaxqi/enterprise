@@ -117,6 +117,7 @@ export class Body extends Component {
                 payment: this._itFormatCurrency(payment.amount),
                 paymentType: payment.payment_method_id.it_payment_code,
                 index: payment.payment_method_id.it_payment_index,
+                id: payment.id,
             }));
     }
 }
