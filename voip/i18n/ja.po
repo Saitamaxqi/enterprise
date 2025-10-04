@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/voip/ja/"
@@ -77,7 +77,8 @@ msgstr ""
 msgid ""
 "A hardware error has occurred while trying to access the audio recording "
 "device. Please ensure that your drivers are up to date and try again."
-msgstr "オーディオ録音デバイスへのアクセス中にハードウェアエラーが発生しました。ドラ"
+msgstr ""
+"オーディオ録音デバイスへのアクセス中にハードウェアエラーが発生しました。ドラ"
 "イバが最新であることを確認し、再度お試し下さい。"
 
 #. module: voip
@@ -302,7 +303,7 @@ msgstr "他のデバイスから電話する"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "着信拒否 (理由: “%(reasonPhrase)s”)"
 
@@ -389,10 +390,10 @@ msgid ""
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
 msgstr ""
-"音声録音デバイスにアクセスできません。マイクへのアクセスを拒否している場合は"
-"、許可してからもう一度お試し下さい。そうでない場合は、このウェブサイトがHTTPS"
-"で実行され、ブラウザがメディアデバイスへのアクセスを拒否するよう設定されてい"
-"ないことを確認して下さい。"
+"音声録音デバイスにアクセスできません。マイクへのアクセスを拒否している場合"
+"は、許可してからもう一度お試し下さい。そうでない場合は、このウェブサイトが"
+"HTTPSで実行され、ブラウザがメディアデバイスへのアクセスを拒否するよう設定され"
+"ていないことを確認して下さい。"
 
 #. module: voip
 #. odoo-javascript
@@ -564,7 +565,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -839,7 +840,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "通話中"
@@ -1032,7 +1033,8 @@ msgstr ""
 msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
-msgstr "音声録音デバイスがありません。このアプリケーションを使用するにはマイクが必要"
+msgstr ""
+"音声録音デバイスがありません。このアプリケーションを使用するにはマイクが必要"
 "です。"
 
 #. module: voip
@@ -1115,7 +1117,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "保留"
@@ -1212,7 +1214,8 @@ msgstr "マイクの使用を承諾してください。"
 msgid ""
 "Please try again later. If the problem persists, you may want to ask an "
 "administrator to check the configuration."
-msgstr "後でもう一度試してください。問題が解決しない場合は、管理者に設定を確認しても"
+msgstr ""
+"後でもう一度試してください。問題が解決しない場合は、管理者に設定を確認しても"
 "らいましょう。"
 
 #. module: voip
@@ -1446,8 +1449,8 @@ msgid ""
 "number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
-"電話番号が未設定のため、一部のリードはコールキューに追加できません: "
-"%(record_names)s\n"
+"電話番号が未設定のため、一部のリードはコールキューに追加できません: %"
+"(record_names)s\n"
 "不足している番号を追加して、コールを開始しましょう。"
 
 #. module: voip
@@ -1533,12 +1536,13 @@ msgstr "もしあれば、この通話に関連する活動の名前。"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
-msgstr "番号が正しくないか、ユーザー認証が間違っているか、接続できない可能性がありま"
+msgstr ""
+"番号が正しくないか、ユーザー認証が間違っているか、接続できない可能性がありま"
 "す。(設定を確認して下さい%(reasonPhrase)s)"
 
 #. module: voip
@@ -1559,9 +1563,8 @@ msgstr ""
 "\n"
 "スペースはそのまま保持されます。\n"
 "エンコードできない文字は「x」に置き換えられます。\n"
-"T9 は「Text on 9 "
-"keys（9個のキーで文字入力）」の略で、旧型携帯電話で使われていた入力方式の名前"
-"に由来します。"
+"T9 は「Text on 9 keys（9個のキーで文字入力）」の略で、旧型携帯電話で使われて"
+"いた入力方式の名前に由来します。"
 
 #. module: voip
 #: model:ir.model.fields,help:voip.field_res_users_settings__voip_secret
@@ -1570,7 +1573,7 @@ msgstr "PBXサーバーでの登録に使用するパスワードです。"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "連絡しようとした相手は現在不在です。"
 
@@ -1610,7 +1613,8 @@ msgstr "PBXサーバーへの登録に使用するユーザー名（通常は内
 msgid ""
 "The websocket connection to the server has been lost. Attempting to "
 "reestablish the connection…"
-msgstr "サーバへのウェブソケット接続が切断されました。接続を再確立を試みています…"
+msgstr ""
+"サーバへのウェブソケット接続が切断されました。接続を再確立を試みています…"
 
 #. module: voip
 #. odoo-javascript
@@ -1837,7 +1841,8 @@ msgstr ""
 msgid ""
 "Your browser does not support some of the features required for VoIP to "
 "work. Please try updating your browser or using a different one."
-msgstr "お使いのブラウザは、VoIPの動作に必要な機能の一部をサポートしていません。ブラ"
+msgstr ""
+"お使いのブラウザは、VoIPの動作に必要な機能の一部をサポートしていません。ブラ"
 "ウザを更新するか、別のブラウザを使用して下さい。"
 
 #. module: voip

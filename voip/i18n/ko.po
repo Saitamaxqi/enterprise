@@ -12,11 +12,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-10-03 02:41+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
-"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/voip/ko/>"
-"\n"
+"Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/voip/ko/"
+">\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -79,7 +79,8 @@ msgstr ""
 msgid ""
 "A hardware error has occurred while trying to access the audio recording "
 "device. Please ensure that your drivers are up to date and try again."
-msgstr "오디오 녹음 장치에 액세스하는 동안 하드웨어 오류가 발생했습니다. 드라이버가 "
+msgstr ""
+"오디오 녹음 장치에 액세스하는 동안 하드웨어 오류가 발생했습니다. 드라이버가 "
 "최신 버전인지 확인한 후 다시 시도하세요."
 
 #. module: voip
@@ -304,7 +305,7 @@ msgstr "다른 기기에서 통화"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "수신 거부됨 (사유: “%(reasonPhrase)s”)"
 
@@ -391,10 +392,10 @@ msgid ""
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
 msgstr ""
-"오디오 녹음 장치에 액세스할 수 없습니다. 마이크에 대한 권한 설정이 거부된 "
-"경우 마이크 권한을 허용하고 다시 시도해 주세요. 그렇지 않은 경우 이 "
-"웹사이트가 HTTPS를 통해 실행되고, 브라우저에서 미디어 디바이스에 대한 "
-"액세스를 거부하도록 설정되어 있지 않은지 확인해 주세요."
+"오디오 녹음 장치에 액세스할 수 없습니다. 마이크에 대한 권한 설정이 거부된 경"
+"우 마이크 권한을 허용하고 다시 시도해 주세요. 그렇지 않은 경우 이 웹사이트가 "
+"HTTPS를 통해 실행되고, 브라우저에서 미디어 디바이스에 대한 액세스를 거부하도"
+"록 설정되어 있지 않은지 확인해 주세요."
 
 #. module: voip
 #. odoo-javascript
@@ -566,7 +567,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -841,7 +842,7 @@ msgstr "이미지"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "통화 중"
@@ -1034,7 +1035,8 @@ msgstr ""
 msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
-msgstr "오디오 녹음 장치를 사용할 수 없습니다. 앱을 사용하려면 마이크가 필요합니다."
+msgstr ""
+"오디오 녹음 장치를 사용할 수 없습니다. 앱을 사용하려면 마이크가 필요합니다."
 
 #. module: voip
 #. odoo-javascript
@@ -1116,7 +1118,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "대기 중"
@@ -1213,8 +1215,9 @@ msgstr "마이크 사용을 수락하십시오."
 msgid ""
 "Please try again later. If the problem persists, you may want to ask an "
 "administrator to check the configuration."
-msgstr "나중에 다시 시도해 주세요. 문제가 지속되면 관리자에게 설정 사항을 확인해 "
-"달라고 요청할 수 있습니다."
+msgstr ""
+"나중에 다시 시도해 주세요. 문제가 지속되면 관리자에게 설정 사항을 확인해 달라"
+"고 요청할 수 있습니다."
 
 #. module: voip
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
@@ -1447,8 +1450,8 @@ msgid ""
 "number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
-"영업제안에 전화번호가 설정되지 않은 경우 통화 대기열에 추가할 수 없습니다: "
-"%(record_names)s.\n"
+"영업제안에 전화번호가 설정되지 않은 경우 통화 대기열에 추가할 수 없습니다: %"
+"(record_names)s.\n"
 "전화번호가 누락된 경우 추가하고 즉시 전화를 걸어 보세요!"
 
 #. module: voip
@@ -1534,14 +1537,14 @@ msgstr "이 전화 통화와 관련된 활동의 이름이 있는 경우,  이�
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
 "(Reason received: %(reasonPhrase)s)"
 msgstr ""
-"번호 또는 사용자 자격 증명이 잘못되었거나 연결할 수 없습니다 .설정을 다시 "
-"확인해 주세요.\n"
+"번호 또는 사용자 자격 증명이 잘못되었거나 연결할 수 없습니다 .설정을 다시 확"
+"인해 주세요.\n"
 "(사유: %(reasonPhrase)s)"
 
 #. module: voip
@@ -1568,7 +1571,7 @@ msgstr "PBX 서버에 등록하는 데 사용되는 비밀번호입니다."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "수신자가 현재 전화를 받으실 수 없습니다."
 
@@ -1600,7 +1603,8 @@ msgstr ""
 msgid ""
 "The username (typically the extension number) that will be used to register "
 "with the PBX server."
-msgstr "PBX 서버에 등록하는 데 사용되는 사용자 이름 (일반적으로 내선 번호)입니다."
+msgstr ""
+"PBX 서버에 등록하는 데 사용되는 사용자 이름 (일반적으로 내선 번호)입니다."
 
 #. module: voip
 #. odoo-javascript
@@ -1608,7 +1612,8 @@ msgstr "PBX 서버에 등록하는 데 사용되는 사용자 이름 (일반적�
 msgid ""
 "The websocket connection to the server has been lost. Attempting to "
 "reestablish the connection…"
-msgstr "서버에 대한 웹소켓 연결이 끊어졌습니다. 연결을 다시 설정하려고 시도 중입니다…"
+msgstr ""
+"서버에 대한 웹소켓 연결이 끊어졌습니다. 연결을 다시 설정하려고 시도 중입니다…"
 
 #. module: voip
 #. odoo-javascript
@@ -1836,8 +1841,8 @@ msgid ""
 "Your browser does not support some of the features required for VoIP to "
 "work. Please try updating your browser or using a different one."
 msgstr ""
-"사용 중인 브라우저가 VoIP 작동에 필요한 일부 기능을 지원하지 않습니다. "
-"브라우저를 업데이트하거나 다른 브라우저를 이용해 주세요."
+"사용 중인 브라우저가 VoIP 작동에 필요한 일부 기능을 지원하지 않습니다. 브라우"
+"저를 업데이트하거나 다른 브라우저를 이용해 주세요."
 
 #. module: voip
 #. odoo-javascript

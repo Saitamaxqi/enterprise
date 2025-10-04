@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:48+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -25,7 +26,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid ""
 "<span class=\"s_website_form_label_content\">Ask Your Question</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 
 #. module: website_helpdesk
@@ -45,7 +47,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid ""
 "<span class=\"s_website_form_label_content\">Email Address</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 
 #. module: website_helpdesk
@@ -53,7 +56,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid ""
 "<span class=\"s_website_form_label_content\">Full Name</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 
 #. module: website_helpdesk
@@ -67,7 +71,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid ""
 "<span class=\"s_website_form_label_content\">Message Subject</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 
 #. module: website_helpdesk
@@ -216,6 +221,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_ticket__display_name
 #: model:ir.model.fields,field_description:website_helpdesk.field_website__display_name
 #: model:ir.model.fields,field_description:website_helpdesk.field_website_menu__display_name
+#: model:ir.model.fields,field_description:website_helpdesk.field_website_page__display_name
 msgid "Display Name"
 msgstr ""
 
@@ -292,6 +298,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:website_helpdesk.field_helpdesk_ticket__id
 #: model:ir.model.fields,field_description:website_helpdesk.field_website__id
 #: model:ir.model.fields,field_description:website_helpdesk.field_website_menu__id
+#: model:ir.model.fields,field_description:website_helpdesk.field_website_page__id
 msgid "ID"
 msgstr ""
 
@@ -357,6 +364,11 @@ msgid "Our team will get right on it."
 msgstr ""
 
 #. module: website_helpdesk
+#: model:ir.model,name:website_helpdesk.model_website_page
+msgid "Page"
+msgstr ""
+
+#. module: website_helpdesk
 #. odoo-javascript
 #: code:addons/website_helpdesk/static/src/js/website_helpdesk_form_editor.js:0
 msgid "Phone Number"
@@ -410,7 +422,8 @@ msgstr ""
 #: code:addons/website_helpdesk/static/src/js/website_helpdesk_edit_menu.js:0
 msgid ""
 "The %s URL is reserved for the helpdesk team with the same name. \n"
-"                        To use it, please enable the 'website form' feature on that team instead."
+"                        To use it, please enable the 'website form' feature "
+"on that team instead."
 msgstr ""
 
 #. module: website_helpdesk

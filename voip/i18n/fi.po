@@ -18,11 +18,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 17:05+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
-"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/voip/fi/>"
-"\n"
+"Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/voip/fi/"
+">\n"
 "Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -201,8 +201,8 @@ msgid ""
 "Are you sure you want to delete this activity? It will be lost forever! (A "
 "long time!)"
 msgstr ""
-"Haluatko varmasti poistaa tämän toiminnon? Se menetetään pysyvästi! ("
-"Ikuisuus on todella pitkä aika!)"
+"Haluatko varmasti poistaa tämän toiminnon? Se menetetään pysyvästi! "
+"(Ikuisuus on todella pitkä aika!)"
 
 #. module: voip
 #. odoo-javascript
@@ -313,7 +313,7 @@ msgstr "Puhelu toisesta laitteesta"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "Puhelu hylätty (syy: \"%(reasonPhrase)s\")"
 
@@ -575,7 +575,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -850,7 +850,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "Puhelussa"
@@ -1127,7 +1127,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "Pidossa"
@@ -1546,7 +1546,7 @@ msgstr "Tähän puheluun liittyvän toiminnan nimi, jos sellainen on."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1571,8 +1571,8 @@ msgstr ""
 "Kumppanin nimi muunnettuna numeromuotoon, joka vastaa vanhan matkapuhelimen "
 "näppäimistön kirjaimia. \n"
 "Käytetään kumppanin etsimiseen tämän kentän perusteella.\n"
-"Välilyönnit säilytetään, ja merkit, joita ei voida koodata, korvataan 'x':"
-"llä. \n"
+"Välilyönnit säilytetään, ja merkit, joita ei voida koodata, korvataan "
+"'x':llä. \n"
 "T9 tarkoittaa \"Text on 9 keys\" – vanhojen puhelinten "
 "tekstinsyöttötekniikka."
 
@@ -1583,7 +1583,7 @@ msgstr "Salasana, jota käytetään rekisteröitymiseen PBX-palvelimelle."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr ""
 "Henkilö, johon yrität ottaa yhteyttä, ei ole tällä hetkellä tavoitettavissa."

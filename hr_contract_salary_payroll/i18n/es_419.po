@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 18:45+0000\n"
+"POT-Creation-Date: 2025-10-03 18:48+0000\n"
 "PO-Revision-Date: 2025-10-03 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -131,6 +131,11 @@ msgstr "Código"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Company cost"
 msgstr "Costo de la empresa"
+
+#. module: hr_contract_salary_payroll
+#: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
+msgid "Company's Working Schedule"
+msgstr ""
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -310,8 +315,8 @@ msgid ""
 "category Monthly Benefits"
 msgstr ""
 "Elige cómo se calcula el valor de la información:\n"
-"Valor fijo: Establece un valor determinado y estático para todos los enlaces."
-"\n"
+"Valor fijo: Establece un valor determinado y estático para todos los "
+"enlaces.\n"
 "Valor del registro del empleado: Obtiene el valor de un campo del registro "
 "del empleado.\n"
 "Valor del recibo de nómina: Obtiene el valor de un campo del registro del "

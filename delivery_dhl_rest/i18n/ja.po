@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-03 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -195,9 +195,9 @@ msgstr "DHLのAPIキーが設定されていません。配送方法の設定を
 #. module: delivery_dhl_rest
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
-msgid ""
-"DHL API secret is missing, please modify your delivery method settings."
-msgstr "DHLのAPIシークレットが設定されていません。配送方法の設定を修正してください。"
+msgid "DHL API secret is missing, please modify your delivery method settings."
+msgstr ""
+"DHLのAPIシークレットが設定されていません。配送方法の設定を修正してください。"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields,field_description:delivery_dhl_rest.field_delivery_carrier__dhl_account_number
@@ -295,14 +295,16 @@ msgstr "出荷リクエスト用の追加データ"
 #: model:ir.model.fields,help:delivery_dhl_rest.field_delivery_carrier__dhl_extra_data_ship_request
 msgid ""
 "Extra data to be sent in the request. It should be JSON-formatted.\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "\n"
 "Example of a valid value: ```\n"
 "\"content\": {\"packages\": {\"description\": \"amazing package\"}}\n"
 "```\n"
 "\n"
 "With the above example, the description of each package will be updated.\n"
-"For more information, please refer to the DHL API documentation: https://developer.dhl.com/api-reference/dhl-express-mydhl-api.\n"
+"For more information, please refer to the DHL API documentation: https://"
+"developer.dhl.com/api-reference/dhl-express-mydhl-api.\n"
 msgstr ""
 "リクエストで送信する追加データ。JSON 形式にしてください。\n"
 "この機能は高度な技術設定であるため、その使用方法をよく理解している場合にのみ"
@@ -313,8 +315,8 @@ msgstr ""
 "```\n"
 "\n"
 "上記の例では、各パッケージの説明が更新されます。\n"
-"詳細については、DHL API ドキュメント: https://developer.dhl.com/"
-"api-reference/dhl-express-mydhl-api をご確認ください。\n"
+"詳細については、DHL API ドキュメント: https://developer.dhl.com/api-"
+"reference/dhl-express-mydhl-api をご確認ください。\n"
 
 #. module: delivery_dhl_rest
 #: model:ir.model.fields.selection,name:delivery_dhl_rest.selection__delivery_carrier__dhl_product_code__f
@@ -466,6 +468,15 @@ msgid "Shipment created into DHL"
 msgstr "DHLに配送が作成されました"
 
 #. module: delivery_dhl_rest
+#. odoo-python
+#: code:addons/delivery_dhl_rest/models/delivery_dhl.py:0
+msgid ""
+"Shipment insurance is not available between the origin and destination. You "
+"should try with another DHL product, or select a delivery method with no "
+"insurance."
+msgstr ""
+
+#. module: delivery_dhl_rest
 #: model:ir.model,name:delivery_dhl_rest.model_delivery_carrier
 msgid "Shipping Methods"
 msgstr "配送方法"
@@ -500,7 +511,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid ""
-"The address of your company warehouse is missing or wrong (Missing field(s) :\n"
+"The address of your company warehouse is missing or wrong (Missing "
+"field(s) :\n"
 " %s)"
 msgstr ""
 "あなたの会社の倉庫のアドレスが見つからないか、誤っています(フィールド(複数可)"
@@ -511,7 +523,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl_rest/models/dhl_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "以下のプロダクトの重量がないため、見積送料を計算できません: \n"
@@ -523,7 +536,8 @@ msgstr ""
 msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
-msgstr "梱包を作成できません。ピッキングのプロダクトの合計重量が0.0 %sのためです。"
+msgstr ""
+"梱包を作成できません。ピッキングのプロダクトの合計重量が0.0 %sのためです。"
 
 #. module: delivery_dhl_rest
 #. odoo-python
@@ -537,8 +551,9 @@ msgstr "出荷予定日は現在より後の日付を指定してください。
 msgid ""
 "There is no price available for this shipping, you should rather try with "
 "the DHL product %s"
-msgstr "この配送のために利用可能な価格がありません。DHLプロダクト%sを試してみて下さい"
-"。"
+msgstr ""
+"この配送のために利用可能な価格がありません。DHLプロダクト%sを試してみて下さ"
+"い。"
 
 #. module: delivery_dhl_rest
 #. odoo-python

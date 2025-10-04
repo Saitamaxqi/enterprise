@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-30 10:53+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -178,8 +178,8 @@ msgid ""
 "\n"
 "Error: %(error)s"
 msgstr ""
-"Ocorreu um erro ao tentar enviar o convite para o seguinte número: "
-"%(phoneNumber)s\n"
+"Ocorreu um erro ao tentar enviar o convite para o seguinte número: %"
+"(phoneNumber)s\n"
 "\n"
 "Erro: %(error)s"
 
@@ -308,7 +308,7 @@ msgstr "Ligar de outro dispositivo"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "Ligação recusada (motivo \"%(reasonPhrase)s\")"
 
@@ -570,7 +570,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "Em ligação"
@@ -1122,7 +1122,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "Em espera"
@@ -1178,7 +1178,8 @@ msgstr "IP do servidor PBX"
 #. odoo-javascript
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid "PBX or Websocket address is missing. Please check your settings."
-msgstr "Endereço de PBX ou WebSocket não encontrado. Verifique suas definições."
+msgstr ""
+"Endereço de PBX ou WebSocket não encontrado. Verifique suas definições."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_mail_activity__phone
@@ -1541,7 +1542,7 @@ msgstr "Nome da atividade relacionada a este telefonema, se houver."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1578,7 +1579,7 @@ msgstr "A senha que será usada para registrar o servidor PBX."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "A pessoa que você tentou contatar está indisponível no momento."
 

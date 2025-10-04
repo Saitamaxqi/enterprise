@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-10-01 21:21+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -304,7 +304,7 @@ msgstr "Llamada desde otro dispositivo"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "Llamada rechazada (motivo: “%(reasonPhrase)s”)"
 
@@ -569,7 +569,7 @@ msgstr "Modo de demostración"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr "Llamada de demostración"
 
@@ -850,7 +850,7 @@ msgstr "Imagen"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "En una llamada"
@@ -1130,7 +1130,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "En espera"
@@ -1560,7 +1560,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1597,7 +1597,7 @@ msgstr "La contraseña que se usará para registrar el servidor PBX."
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "La persona que intenta contactar no está disponible en este momento."
 

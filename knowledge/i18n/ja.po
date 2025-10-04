@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:36+0000\n"
+"POT-Creation-Date: 2025-10-03 18:44+0000\n"
 "PO-Revision-Date: 2025-09-24 11:34+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -46,29 +46,29 @@ msgid ""
 "cannot be restored on its own. Contact the owner of \"%(article_name)s\" to "
 "have it restored instead."
 msgstr ""
-"\"%(article_item_name)s\"は\"%(article_name)s\"の記事アイテムであり"
-"、単独で復元することはできません。代わりに\"%(article_name)"
-"s\"の所有者に連絡して復元を依頼して下さい。"
+"\"%(article_item_name)s\"は\"%(article_name)s\"の記事アイテムであり、単独で復"
+"元することはできません。代わりに\"%(article_name)s\"の所有者に連絡して復元を"
+"依頼して下さい。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"\"%(article_name)s\" is a template and can not be a child of an article "
-"(\"%(parent_article_name)s\")."
+"\"%(article_name)s\" is a template and can not be a child of an article (\"%"
+"(parent_article_name)s\")."
 msgstr ""
-"\"%(article_name)s\"はテンプレートで、記事 (\"%(parent_article_name)s\""
-")の子であることはできません。"
+"\"%(article_name)s\"はテンプレートで、記事 (\"%(parent_article_name)s\")の子"
+"であることはできません。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"\"%(article_name)s\" is an article and can not be a child of a template "
-"(\"%(parent_article_name)s\").\""
+"\"%(article_name)s\" is an article and can not be a child of a template (\"%"
+"(parent_article_name)s\").\""
 msgstr ""
-"\"%(article_name)s\" は記事で、テンプレート (\"%(parent_article_name)s\""
-")の子であることはできません。\""
+"\"%(article_name)s\" は記事で、テンプレート (\"%(parent_article_name)s\")の子"
+"であることはできません。\""
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -135,7 +135,8 @@ msgstr "85x200 または 100x200、コンテンツによる"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "<br>\n"
-"                            Subscribe here to make sure you will not miss an episode!"
+"                            Subscribe here to make sure you will not miss an "
+"episode!"
 msgstr ""
 "<br>\n"
 "                          エピソードをお見逃しのないよう、購読はこちらから！"
@@ -175,7 +176,8 @@ msgstr ""
 msgid ""
 "<em>\n"
 "                    <font class=\"text-600\">\n"
-"                        What are you trying to accomplish with this campaign?\n"
+"                        What are you trying to accomplish with this "
+"campaign?\n"
 "                    </font>\n"
 "                </em>"
 msgstr ""
@@ -219,86 +221,91 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Ask a Senior Engineer to fill this part before launching the task.</font>\n"
+"                    <font class=\"text-600\">Ask a Senior Engineer to fill "
+"this part before launching the task.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">タスクを開始する前に、シニアエンジニアにこの部分を埋めてもらいましょう。</fo"
-"nt>\n"
+"                    <font class=\"text-600\">タスクを開始する前に、シニアエン"
+"ジニアにこの部分を埋めてもらいましょう。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Ask the developer to go through this checklist before asking for a review.</font>\n"
+"                    <font class=\"text-600\">Ask the developer to go through "
+"this checklist before asking for a review.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">レビューを依頼する前に、開発者にこのチェックリストに目を通してもらいましょう"
-"。</font>\n"
+"                    <font class=\"text-600\">レビューを依頼する前に、開発者に"
+"このチェックリストに目を通してもらいましょう。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain in a few words the problem that this change is going to solve.</font>\n"
+"                    <font class=\"text-600\">Explain in a few words the "
+"problem that this change is going to solve.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">この変更が解決しようとする問題を、一言で説明して下さい。</font>\n"
+"                    <font class=\"text-600\">この変更が解決しようとする問題"
+"を、一言で説明して下さい。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain in a single sentence what has been changed.</font>\n"
+"                    <font class=\"text-600\">Explain in a single sentence "
+"what has been changed.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">何が変更されたのか、一言で説明して下さい。</font>\n"
+"                    <font class=\"text-600\">何が変更されたのか、一言で説明し"
+"て下さい。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain the consequences of this issue.</font>\n"
+"                    <font class=\"text-600\">Explain the consequences of "
+"this issue.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">この問題の結果を説明して下さい。</font>\n"
+"                    <font class=\"text-600\">この問題の結果を説明して下さい。"
+"</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain what went wrong in just a few words.</font>\n"
+"                    <font class=\"text-600\">Explain what went wrong in just "
+"a few words.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">何が上手くいかなかったのか、簡潔に説明して下さい。</font>\n"
+"                    <font class=\"text-600\">何が上手くいかなかったのか、簡潔"
+"に説明して下さい。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">How did it get to happen?</font>\n"
+"                    <font class=\"text-600\">How did it get to happen?</"
+"font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">それはどのようにして起こりましたか？</font>\n"
+"                    <font class=\"text-600\">それはどのようにして起こりました"
+"か？</font>\n"
 "                </em>"
 
 #. module: knowledge
@@ -309,57 +316,61 @@ msgid ""
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">それはどのように解決されましたか？</font>\n"
+"                    <font class=\"text-600\">それはどのように解決されました"
+"か？</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Lay here any remaining question or doubt.</font>\n"
+"                    <font class=\"text-600\">Lay here any remaining question "
+"or doubt.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">残された疑問や疑念はここに置いておきましょう。</font>\n"
+"                    <font class=\"text-600\">残された疑問や疑念はここに置いて"
+"おきましょう。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the changes to implement.</font>\n"
+"                    <font class=\"text-600\">List here all the changes to "
+"implement.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">ここに、実施すべき全ての変更点を列挙して下さい。</font>\n"
+"                    <font class=\"text-600\">ここに、実施すべき全ての変更点を"
+"列挙して下さい。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the material and documentation related to the task.</font>\n"
+"                    <font class=\"text-600\">List here all the material and "
+"documentation related to the task.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">タスクに関連する全ての資料と文書をここにリストアップして下さい。</font>\n"
+"                    <font class=\"text-600\">タスクに関連する全ての資料と文書"
+"をここにリストアップして下さい。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the text you could not do this week. These shall be postponed in the next weekly schedule.</font>\n"
+"                    <font class=\"text-600\">List here all the text you "
+"could not do this week. These shall be postponed in the next weekly schedule."
+"</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\""
-">今週できなかったテキストを全てここに挙げて下さい。これらは次週のスケジュール"
-"に延期されます。</font>\n"
+"                    <font class=\"text-600\">今週できなかったテキストを全てこ"
+"こに挙げて下さい。これらは次週のスケジュールに延期されます。</font>\n"
 "                </em>"
 
 #. module: knowledge
@@ -379,14 +390,14 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                Abigail works a lot and never watches TV. Better reach her on her phone or on her to work."
+"                Abigail works a lot and never watches TV. Better reach her "
+"on her phone or on her to work."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>この顧客タイプに最適なアプローチ方法<br></em>\n"
 "                </font>\n"
-"                "
-"アビゲイルは仕事ばかりでテレビを見ないため、電話または仕事でアプローチした方"
-"が良いでしょう。"
+"                アビゲイルは仕事ばかりでテレビを見ないため、電話または仕事で"
+"アプローチした方が良いでしょう。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
@@ -394,15 +405,16 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                As a classic Gen Z member, Vittorio never watches TV and never listens to the radio. For him to see our message, we need to get to his Instagram feed."
+"                As a classic Gen Z member, Vittorio never watches TV and "
+"never listens to the radio. For him to see our message, we need to get to "
+"his Instagram feed."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>この顧客タイプに最適なアプローチ方法<br></em>\n"
 "                </font>\n"
-"               "
-"典型的なZ世代であるヴィットリオは、テレビは見ないし、ラジオも聴きません。彼に"
-"私たちのメッセージを見てもらうためには、彼のインスタグラムのフィードにアクセ"
-"スする必要があります。"
+"               典型的なZ世代であるヴィットリオは、テレビは見ないし、ラジオも"
+"聴きません。彼に私たちのメッセージを見てもらうためには、彼のインスタグラムの"
+"フィードにアクセスする必要があります。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -410,13 +422,14 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                As an avid music listener, the best way to reach Sonya is through the radio since hers is always on."
+"                As an avid music listener, the best way to reach Sonya is "
+"through the radio since hers is always on."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>この顧客タイプに最適なアプローチ方法<br></em>\n"
 "                </font>\n"
-"                "
-"熱心な音楽リスナーであるソーニャに連絡を取るには、ラジオが一番です。"
+"                熱心な音楽リスナーであるソーニャに連絡を取るには、ラジオが一"
+"番です。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -424,7 +437,8 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                Julius follows politics very tightly, and can best be reached with TV ads."
+"                Julius follows politics very tightly, and can best be "
+"reached with TV ads."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>この顧客タイプに最適なアプローチ方法<br></em>\n"
@@ -516,7 +530,8 @@ msgstr "<font class=\"text-600\">競合 3</font>"
 msgid ""
 "<font class=\"text-600\">Detailed Explanation of the feature, with "
 "screenshots or a GIF</font>"
-msgstr "<font class=\"text-600\">機能の詳細説明、スクリーンショットまたはGIF付</font>"
+msgstr ""
+"<font class=\"text-600\">機能の詳細説明、スクリーンショットまたはGIF付</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -536,23 +551,27 @@ msgstr "<font class=\"text-600\">今後 ...</font>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
-"<font class=\"text-600\">How do stakeholders interact regarding "
-"offers?</font>"
-msgstr "<font class=\"text-600\""
-">オファーに関して、関係者はどのように相互作用しているのか？</font>"
+"<font class=\"text-600\">How do stakeholders interact regarding offers?</"
+"font>"
+msgstr ""
+"<font class=\"text-600\">オファーに関して、関係者はどのように相互作用している"
+"のか？</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
-msgid "<font class=\"text-600\">How do they compare and evaluate offers?</font>"
-msgstr "<font class=\"text-600\""
-">彼らはどのようにオファーを比較し、評価するのか？</font>"
+msgid ""
+"<font class=\"text-600\">How do they compare and evaluate offers?</font>"
+msgstr ""
+"<font class=\"text-600\">彼らはどのようにオファーを比較し、評価するのか？</"
+"font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<font class=\"text-600\">I made sure any visual change is responsive</font>"
-msgstr "<font class=\"text-600\""
-">どんな視覚的な変化にも対応できるようにしました</font>"
+msgstr ""
+"<font class=\"text-600\">どんな視覚的な変化にも対応できるようにしました</"
+"font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -564,9 +583,10 @@ msgstr "<font class=\"text-600\">明らかな後退がないことを確認し�
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"<font class=\"text-600\">I made sure it did not introduce any security "
-"flaw</font>"
-msgstr "<font class=\"text-600\">セキュリティ上の欠陥がないことを確認しました</font>"
+"<font class=\"text-600\">I made sure it did not introduce any security flaw</"
+"font>"
+msgstr ""
+"<font class=\"text-600\">セキュリティ上の欠陥がないことを確認しました</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -686,13 +706,15 @@ msgstr "<font class=\"text-600\">彼らの主な判断基準は何か？</font>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
-"<font class=\"text-600\">What is your action plan to move forward with this account?</font><br>\n"
-"                <font class=\"text-600\">Which KPI will be used to measure this progress?</font>"
+"<font class=\"text-600\">What is your action plan to move forward with this "
+"account?</font><br>\n"
+"                <font class=\"text-600\">Which KPI will be used to measure "
+"this progress?</font>"
 msgstr ""
-"<font class=\"text-600\""
-">このアカウントを前進させるための行動計画は？</font><br>\n"
-"                <font class=\"text-600\""
-">この進捗を測定するために、どのKPIを使用するのか？</font>"
+"<font class=\"text-600\">このアカウントを前進させるための行動計画は？</"
+"font><br>\n"
+"                <font class=\"text-600\">この進捗を測定するために、どのKPIを"
+"使用するのか？</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -715,49 +737,56 @@ msgid ""
 "<i class=\"fa fa-w fa-info-circle\"/> All external users you selected won't "
 "be added to the members."
 msgstr ""
-"<i class=\"fa fa-w fa-info-circle\"/> "
-"選択したすべての外部ユーザがメンバーに追加されるわけではありません。"
+"<i class=\"fa fa-w fa-info-circle\"/> 選択したすべての外部ユーザがメンバーに"
+"追加されるわけではありません。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
 msgid ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
-"                                    <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                    <i invisible=\"is_user_favorite\" "
+"class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title="
-"\"Remove from favorites\"/>\n"
-"                                    <i invisible=\"is_user_favorite\" class="
-"\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                    <i invisible=\"is_user_favorite\" "
+"class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban
 msgid ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
-"                                <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                <i invisible=\"is_user_favorite\" class=\"fa "
+"fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title="
-"\"Remove from favorites\"/>\n"
-"                                <i invisible=\"is_user_favorite\" class="
-"\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                <i invisible=\"is_user_favorite\" class=\"fa "
+"fa-star-o\" title=\"Add to favorites\"/>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<i>\n"
-"                        <font style=\"color: rgb(0, 255, 0);\"><strong>Green: Values trust above all</strong></font><br>\n"
-"                        <font style=\"color: rgb(255, 0, 0);\"><strong>Red: Values results above all</strong></font><br>\n"
+"                        <font style=\"color: rgb(0, 255, 0);"
+"\"><strong>Green: Values trust above all</strong></font><br>\n"
+"                        <font style=\"color: rgb(255, 0, 0);\"><strong>Red: "
+"Values results above all</strong></font><br>\n"
 "                        <strong>\n"
 "                            <font style=\"color: rgb(239, 198, 49);\">\n"
-"                                Yellow: Values creativity and enthusiasm above results\n"
+"                                Yellow: Values creativity and enthusiasm "
+"above results\n"
 "                            </font>\n"
 "                        </strong>\n"
 "                    </i>"
 msgstr ""
 "<i>\n"
-"                        <font style=\"color: rgb(0, 255, 0);\"><strong>緑: "
-"何よりも信頼を重視</strong></font><br>\n"
-"                        <font style=\"color: rgb(255, 0, 0);\"><strong>赤: "
-"何よりも結果を重視</strong></font><br>\n"
+"                        <font style=\"color: rgb(0, 255, 0);\"><strong>緑: 何"
+"よりも信頼を重視</strong></font><br>\n"
+"                        <font style=\"color: rgb(255, 0, 0);\"><strong>赤: 何"
+"よりも結果を重視</strong></font><br>\n"
 "                        <strong>\n"
 "                            <font style=\"color: rgb(239, 198, 49);\">\n"
 "                                黄: 結果よりも創造性と熱意を重視\n"
@@ -770,7 +799,8 @@ msgstr ""
 msgid ""
 "<i>\n"
 "                    <font style=\"color: rgb(8, 82, 148);\">\n"
-"                        <strong>Blue: Expects accurate and rigorous results</strong>\n"
+"                        <strong>Blue: Expects accurate and rigorous results</"
+"strong>\n"
 "                    </font>\n"
 "                </i>"
 msgstr ""
@@ -788,12 +818,13 @@ msgstr "<span class=\"text-600\">新機能 1</span>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
 msgid ""
-"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
+"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: "
+"normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
 "                                        5125C\n"
 "                                    </span>"
 msgstr ""
-"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: normal"
-";font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
+"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: "
+"normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
 "                                        5125C\n"
 "                                    </span>"
 
@@ -801,12 +832,13 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<span style=\"font-size: 12px;\">\n"
-"                    <font class=\"text-600\">*💡 tick the box when the task is scheduled in the agenda</font>\n"
+"                    <font class=\"text-600\">*💡 tick the box when the task "
+"is scheduled in the agenda</font>\n"
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 12px;\">\n"
-"                    <font class=\"text-600\">*💡 "
-"タスクがアジェンダに予定されたら、ボックスにチェックを入れます。</font>\n"
+"                    <font class=\"text-600\">*💡 タスクがアジェンダに予定され"
+"たら、ボックスにチェックを入れます。</font>\n"
 "                </span>"
 
 #. module: knowledge
@@ -817,8 +849,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px\">\n"
-"                                    <font class=\"text-600\">タスク A</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク A</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -829,8 +861,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px\">\n"
-"                                    <font class=\"text-600\">タスク B</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク B</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -841,8 +873,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px\">\n"
-"                                    <font class=\"text-600\">タスク C</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク C</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -853,8 +885,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
-"                                    <font class=\"text-600\">タスク A</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク A</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -865,8 +897,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
-"                                    <font class=\"text-600\">タスク B</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク B</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -877,8 +909,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
-"                                    <font class=\"text-600\">タスク C</font>"
-"\n"
+"                                    <font class=\"text-600\">タスク C</"
+"font>\n"
 "                                </span>"
 
 #. module: knowledge
@@ -891,8 +923,8 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "                    チェックリストを追加\n"
-"                    (/<span style=\"font-style: italic;\""
-">チェックリスト</span>)\n"
+"                    (/<span style=\"font-style: italic;\">チェックリスト</"
+"span>)\n"
 "                </span>"
 
 #. module: knowledge
@@ -905,8 +937,8 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "                    セパレータを追加\n"
-"                    (/<span style=\"font-style: italic;\">セパレータ</span>)"
-"\n"
+"                    (/<span style=\"font-style: italic;\">セパレータ</"
+"span>)\n"
 "                </span>"
 
 #. module: knowledge
@@ -936,7 +968,8 @@ msgid ""
 "                <font class=\"text-o-color-2\">shortcuts</font>\n"
 "            </span>\n"
 "            you create for yourself.\n"
-"            Unstar ⭐ this page at the top to remove it from your favorites.\n"
+"            Unstar ⭐ this page at the top to remove it from your "
+"favorites.\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -961,9 +994,11 @@ msgid ""
 "        </span>\n"
 "        <span style=\"font-size: 14px;\">\n"
 "            — This is\n"
-"            <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">your stuff</font></span>,\n"
+"            <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">your stuff</font></span>,\n"
 "            the things you keep for yourself\n"
-"            (<span style=\"font-style: italic;\">Drafts, Todo lists, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">Drafts, Todo lists, ...</"
+"span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -973,11 +1008,11 @@ msgstr ""
 "        </span>\n"
 "        <span style=\"font-size: 14px;\">\n"
 "            — これは\n"
-"            <span style=\"font-weight: bolder;\"><font class=\"text-o-color-"
-"2\">あなたのものです</font></span>、\n"
+"            <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">あなたのものです</font></span>、\n"
 "            ご自分用にしておきましょう。\n"
-"            (<span style=\"font-style: italic;\">ドラフト、 "
-"Todoリスト..</span>)\n"
+"            (<span style=\"font-style: italic;\">ドラフト、 Todoリスト..</"
+"span>)\n"
 "        </span>"
 
 #. module: knowledge
@@ -991,7 +1026,8 @@ msgid ""
 "        <span style=\"font-size: 14px;\">\n"
 "            — Those are the ones you\n"
 "            <span style=\"font-weight: bolder;\">\n"
-"                <font class=\"text-o-color-2\">have invited someone or been invited to</font>\n"
+"                <font class=\"text-o-color-2\">have invited someone or been "
+"invited to</font>\n"
 "            </span>\n"
 "        </span>"
 msgstr ""
@@ -1003,8 +1039,8 @@ msgstr ""
 "        <span style=\"font-size: 14px;\">\n"
 "            — これらはあなたが\n"
 "            <span style=\"font-weight: bolder;\">\n"
-"                <font class=\"text-o-color-2\""
-">以下に誰かを招待したか、招待されたかです:</font>\n"
+"                <font class=\"text-o-color-2\">以下に誰かを招待したか、招待さ"
+"れたかです:</font>\n"
 "            </span>\n"
 "        </span>"
 
@@ -1066,7 +1102,8 @@ msgid ""
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">start typing</font>\n"
 "            </span>\n"
-"            (<span style=\"font-style: italic;\">documentation, tips, reports, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">documentation, tips, "
+"reports, ...</span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1074,8 +1111,8 @@ msgstr ""
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">入力を開始して下さい</font>\n"
 "            </span>\n"
-"            (<span style=\"font-style: italic;\">ドキュメント、ヒント、"
-"レポート ...</span>)\n"
+"            (<span style=\"font-style: italic;\">ドキュメント、ヒント、レポー"
+"ト ...</span>)\n"
 "        </span>"
 
 #. module: knowledge
@@ -1089,7 +1126,8 @@ msgid ""
 "                <font class=\"text-o-color-2\">Nest other Articles</font>\n"
 "            </span>\n"
 "            under it to regroup them\n"
-"            (<span style=\"font-style: italic;\">per team, topic, project, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">per team, topic, "
+"project, ...</span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1100,8 +1138,8 @@ msgstr ""
 "                <font class=\"text-o-color-2\">他の記事をネスト</font>\n"
 "            </span>\n"
 "            して、それらを再グループ化\n"
-"            (<span style=\"font-style: italic;\">チーム、トピック、"
-"プロジェクトごと ...</span>)\n"
+"            (<span style=\"font-style: italic;\">チーム、トピック、プロジェク"
+"トごと ...</span>)\n"
 "        </span>"
 
 #. module: knowledge
@@ -1110,17 +1148,19 @@ msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Select text to\n"
 "            <font class=\"bg-o-color-2\">Highlight</font>,\n"
-"            <span style=\"text-decoration-line: line-through;\">strikethrough</span>\n"
+"            <span style=\"text-decoration-line: line-through;"
+"\">strikethrough</span>\n"
 "            or\n"
 "            <span style=\"font-weight: bolder;\">style</span>\n"
-"            <span style=\"font-style: italic; text-decoration-line: underline;\">it</span>\n"
+"            <span style=\"font-style: italic; text-decoration-line: "
+"underline;\">it</span>\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            テキストを選び\n"
 "            <font class=\"bg-o-color-2\">ハイライト</font>、\n"
-"            <span style=\"text-decoration-line: line-through;\""
-">取消し線</span>\n"
+"            <span style=\"text-decoration-line: line-through;\">取消し線</"
+"span>\n"
 "            または\n"
 "            <span style=\"font-weight: bolder;\">スタイル</span>\n"
 "            <span style=\"font-style: italic; text-decoration-line: "
@@ -1132,7 +1172,8 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Use\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">clipboard</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">clipboard</font></span>\n"
 "            to insert a\n"
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">clipboard</font>\n"
@@ -1142,14 +1183,14 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            使用\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-"
-"2\">クリップボード</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">クリップボード</font></span>\n"
 "            して、\n"
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">クリップボード</font>\n"
 "            </span>\n"
-"            "
-"ボックスを挿入します。そのコンテンツを再利用する必要がありますか？\n"
+"            ボックスを挿入します。そのコンテンツを再利用する必要があります"
+"か？\n"
 "        </span>"
 
 #. module: knowledge
@@ -1157,14 +1198,15 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Use\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">file</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">file</font></span>\n"
 "            to share documents that are frequently needed\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            使用\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-"
-"2\">ファイル</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">ファイル</font></span>\n"
 "            して、頻繁に必要であるドキュメントを共有します。\n"
 "        </span>"
 
@@ -1176,7 +1218,8 @@ msgid ""
 "            <font class=\"text-o-color-2\">Articles</font>\n"
 "        </span>\n"
 "        are stored into different\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Sections</font></span>:\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">Sections</font></span>:\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1184,8 +1227,8 @@ msgstr ""
 "            <font class=\"text-o-color-2\">記事</font>\n"
 "        </span>\n"
 "        は様々な\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\""
-">セクション</font></span>に保管されています:\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">"
+"セクション</font></span>に保管されています:\n"
 "    </span>"
 
 #. module: knowledge
@@ -1263,14 +1306,15 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "        This is where you and your team can centralize your\n"
-"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\">Knowledge</font>\n"
+"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;"
+"\">Knowledge</font>\n"
 "        and best practices! 🚀\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "        ここにあなたとあなたのチームの\n"
-"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\""
-">ナレッジ</font>\n"
+"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\">ナレッ"
+"ジ</font>\n"
 "        とベストプラクティスを集約しましょう！ 🚀\n"
 "    </span>"
 
@@ -1279,13 +1323,14 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "        Those are your\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Articles</font></span>.\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">Articles</font></span>.\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "        これらはあなたの\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\""
-">記事</font></span>です。\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">"
+"記事</font></span>です。\n"
 "    </span>"
 
 #. module: knowledge
@@ -1333,7 +1378,8 @@ msgid ""
 "        <span style=\"font-weight: bolder;\">\n"
 "            <font class=\"text-o-color-2\">Command Palette</font>\n"
 "        </span>\n"
-"        (Ctrl+k/⌘+k) then search through articles by starting your query with\n"
+"        (Ctrl+k/⌘+k) then search through articles by starting your query "
+"with\n"
 "        \"<span style=\"font-weight: bolder;\">?</span>\".\n"
 "    </span>"
 msgstr ""
@@ -1353,8 +1399,8 @@ msgstr ""
 "            <font class=\"text-o-color-2\">コマンドパレット</font>を開き\n"
 "        </span>\n"
 "         (Ctrl+k/⌘+k) \n"
-"        \"<span style=\"font-weight: bolder;\">?</span>\""
-"でクエリを開始し、記事を検索します。\n"
+"        \"<span style=\"font-weight: bolder;\">?</span>\"でクエリを開始し、記"
+"事を検索します。\n"
 "    </span>"
 
 #. module: knowledge
@@ -1385,21 +1431,24 @@ msgstr "<span style=\"font-size: 14px;\">ほら、簡単でしょう</span>"
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Check this box to indicate it's done</span>"
-msgstr "<span style=\"font-size: 14px;\""
-">このボックスにチェックを入れ完了とします</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">このボックスにチェックを入れ完了とします</"
+"span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">Click anywhere, and just start "
-"typing</span>"
-msgstr "<span style=\"font-size: 14px;\""
-">任意の場所をクリックし、入力を開始します</span>"
+"<span style=\"font-size: 14px;\">Click anywhere, and just start typing</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">任意の場所をクリックし、入力を開始します</"
+"span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
-msgid "<span style=\"font-size: 14px;\">Each of them can be used both as:</span>"
-msgstr "<span style=\"font-size: 14px;\">それぞれ、次のような使い方ができます:</span>"
+msgid ""
+"<span style=\"font-size: 14px;\">Each of them can be used both as:</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">それぞれ、次のような使い方ができます:</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1407,9 +1456,8 @@ msgid ""
 "<span style=\"font-size: 14px;\">From any Odoo document, find this article "
 "by clicking on the 📗 icon in the chatter.</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\""
-">Odooドキュメントから、チャターの📗アイコンをクリックしてこの記事を見つけて下"
-"さい。</span>"
+"<span style=\"font-size: 14px;\">Odooドキュメントから、チャターの📗アイコンを"
+"クリックしてこの記事を見つけて下さい。</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1417,17 +1465,17 @@ msgid ""
 "<span style=\"font-size: 14px;\">From this box, files can be previewed, "
 "forwarded and downloaded. 📁</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\""
-">このボックスから、ファイルのプレビュー、転送、ダウンロードができます。📁</sp"
-"an>"
+"<span style=\"font-size: 14px;\">このボックスから、ファイルのプレビュー、転"
+"送、ダウンロードができます。📁</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">Got it? Now let's try advanced features "
-"🧠</span>"
-msgstr "<span style=\"font-size: 14px;\"> "
-"分かりましたか？では、高度な機能を使ってみましょう🧠</span>"
+"<span style=\"font-size: 14px;\">Got it? Now let's try advanced features 🧠</"
+"span>"
+msgstr ""
+"<span style=\"font-size: 14px;\"> 分かりましたか？では、高度な機能を使ってみ"
+"ましょう🧠</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1435,33 +1483,35 @@ msgid ""
 "<span style=\"font-size: 14px;\">Need this document somewhere? Come back "
 "here by clicking on the 📗 icon in the chatter.</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\""
-">このドキュメントがどこかで必要ですか？チャターの📗アイコンをクリックしてここ"
-"に戻って来て下さい。</span>"
+"<span style=\"font-size: 14px;\">このドキュメントがどこかで必要ですか？チャ"
+"ターの📗アイコンをクリックしてここに戻って来て下さい。</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Not sure how to do it? Check the video "
 "below 👇</span>"
-msgstr "<span style=\"font-size: 14px;\">やり方がわからない場合は、"
-"以下の動画をご覧下さい 👇</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">やり方がわからない場合は、以下の動画をご覧下"
+"さい 👇</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Press Ctrl+Z/⌘+Z to undo any change</span>"
-msgstr "<span style=\"font-size: 14px;\">Ctrl+Z/⌘+Zで変更をキャンセルする</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">Ctrl+Z/⌘+Zで変更をキャンセルする</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">This private page is for you to play around with.</span>\n"
+"<span style=\"font-size: 14px;\">This private page is for you to play around "
+"with.</span>\n"
 "    <br/>\n"
 "    <span style=\"font-size: 14px;\">Ready to give it a spin?</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\""
-">この非公開ページで自由に遊んでみましょう。</span>\n"
+"<span style=\"font-size: 14px;\">この非公開ページで自由に遊んでみましょう。</"
+"span>\n"
 "    <br/>\n"
 "    <span style=\"font-size: 14px;\">試してみますか？</span>"
 
@@ -1473,12 +1523,11 @@ msgstr "<span style=\"font-size: 14px;\">以下を試して下さい。 👇</sp
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">You can use the clipboard as a description,"
-" a message or simply copy it to your clipboard! 👌</span>"
+"<span style=\"font-size: 14px;\">You can use the clipboard as a description, "
+"a message or simply copy it to your clipboard! 👌</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\""
-">クリップボードを説明文やメッセージとして使用したり、ただクリップボードにコピ"
-"ーすることもできます！👌</span>"
+"<span style=\"font-size: 14px;\">クリップボードを説明文やメッセージとして使用"
+"したり、ただクリップボードにコピーすることもできます！👌</span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1543,34 +1592,36 @@ msgid ""
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 18px;\">\n"
-"                    3. どちらのスタイルがお好みですか？: "
-"ナチュラルまたはインダストリアル\n"
+"                    3. どちらのスタイルがお好みですか？: ナチュラルまたはイン"
+"ダストリアル\n"
 "                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
 "<span style=\"font-size: 18px;\">\n"
-"                    4. What can I do if I haven't found exactly what I wanted?\"\n"
+"                    4. What can I do if I haven't found exactly what I "
+"wanted?\"\n"
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 18px;\">\n"
-"                    4. "
-"欲しいものが見つからなかったら、どうしたらいいでしょう？\n"
+"                    4. 欲しいものが見つからなかったら、どうしたらいいでしょ"
+"う？\n"
 "                </span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<span style=\"font-size: 18px;\">\n"
-"                    Productivity is never an accident. It is always the result of a commitment to excellence, intelligent planning, and focused effort.\n"
+"                    Productivity is never an accident. It is always the "
+"result of a commitment to excellence, intelligent planning, and focused "
+"effort.\n"
 "                </span>​\n"
 "                - Paul J. Meyer"
 msgstr ""
 "<span style=\"font-size: 18px;\">\n"
-"                   "
-"生産性は決して偶然の産物ではない。それは常に、卓越性へのコミットメント、賢明"
-"な計画、集中した努力の結果なのです。\n"
+"                   生産性は決して偶然の産物ではない。それは常に、卓越性へのコ"
+"ミットメント、賢明な計画、集中した努力の結果なのです。\n"
 "                </span>​\n"
 "                - Paul J. Meyer"
 
@@ -1590,18 +1641,20 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
 "<span style=\"font-size: 24px;\">\n"
-"                                Make sure to comply as <strong>you will represent <u>our</u> brand</strong>\n"
+"                                Make sure to comply as <strong>you will "
+"represent <u>our</u> brand</strong>\n"
 "                            </span>\n"
 "                            <br>\n"
-"                            <span style=\"font-size: 24px;\">If in doubt, get in touch with us.</span>"
+"                            <span style=\"font-size: 24px;\">If in doubt, "
+"get in touch with us.</span>"
 msgstr ""
 "<span style=\"font-size: 24px;\">\n"
-"                                必ず遵守して下さい。なぜなら、 "
-"<strong>あなたは<u>当社の</u>ブランドを体現するのです。</strong>\n"
+"                                必ず遵守して下さい。なぜなら、 <strong>あなた"
+"は<u>当社の</u>ブランドを体現するのです。</strong>\n"
 "                            </span>\n"
 "                            <br>\n"
-"                            <span style=\"font-size: 24px;\""
-">疑問がある場合は、当社にご連絡下さい。</span>"
+"                            <span style=\"font-size: 24px;\">疑問がある場合"
+"は、当社にご連絡下さい。</span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -1611,8 +1664,8 @@ msgid ""
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 36px;\">今月はこれで終わりです！<br>\n"
-"                    お読み頂きありがとうございました。またお会いしましょう👋"
-"\n"
+"                    お読み頂きありがとうございました。またお会いしましょう"
+"👋\n"
 "                </span>"
 
 #. module: knowledge
@@ -1637,17 +1690,17 @@ msgid ""
 "<span style=\"font-weight: bolder;\"><font class=\"text-o-"
 "color-1\">Facebook</font></span>"
 msgstr ""
-"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\""
-">Facebook</font></span>"
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-1\">Facebook</font></span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-weight: bolder;\"><font class=\"text-o-"
-"color-1\">X</font></span>"
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\">X</"
+"font></span>"
 msgstr ""
-"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\""
-">X</font></span>"
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\">X</"
+"font></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -1655,8 +1708,8 @@ msgid ""
 "<span style=\"font-weight: bolder;\">Company Newsletter</span>: <font "
 "class=\"text-400\">Month</font>"
 msgstr ""
-"<span style=\"font-weight: bolder;"
-"\">会社ニュースレター</span>: <font class=\"text-400\">月</font>"
+"<span style=\"font-weight: bolder;\">会社ニュースレター</span>: <font "
+"class=\"text-400\">月</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -1681,12 +1734,13 @@ msgstr "<strong style=\"font-weight: 500\">⚡優先 TOP 3</strong>"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
 "<strong>\n"
-"                                    <font style=\"color: rgb(148, 189, 123);\">Do</font>\n"
+"                                    <font style=\"color: rgb(148, 189, 123);"
+"\">Do</font>\n"
 "                                </strong>"
 msgstr ""
 "<strong>\n"
-"                                    <font style="
-"\"color: rgb(148, 189, 123);\">行う</font>\n"
+"                                    <font style=\"color: rgb(148, 189, 123);"
+"\">行う</font>\n"
 "                                </strong>"
 
 #. module: knowledge
@@ -1694,7 +1748,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">FRIDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">FRIDAY 🏠 "
+"@home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1710,7 +1765,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">MONDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">MONDAY 🏢 "
+"@office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1726,14 +1782,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">Reminders</font>\n"
+"                                    <font class=\"text-o-"
+"color-1\">Reminders</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\""
-">リマインダ</font>\n"
+"                                    <font class=\"text-o-color-1\">リマインダ"
+"</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1742,7 +1799,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">SATURDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">SATURDAY "
+"🏠 @home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1758,7 +1816,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">SUNDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">SUNDAY 🏠 "
+"@home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1774,7 +1833,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">THURSDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">THURSDAY "
+"🏢 @office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1790,7 +1850,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">TUESDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">TUESDAY "
+"🏢 @office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1806,7 +1867,8 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">WEDNESDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">WEDNESDAY "
+"🏠 @home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
@@ -1821,64 +1883,68 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Name</span>\n"
+"                                <span style=\"font-size: 18px;\">Name</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">名前</span>"
-"\n"
+"                                <span style=\"font-size: 18px;\">名前</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Strengths</span>\n"
+"                                <span style=\"font-size: 18px;\">Strengths</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">強み</span>"
-"\n"
+"                                <span style=\"font-size: 18px;\">強み</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Weaknesses</span>\n"
+"                                <span style=\"font-size: 18px;\">Weaknesses</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">弱み</span>"
-"\n"
+"                                <span style=\"font-size: 18px;\">弱み</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead,"
-" use the book button in the chatter to find this article and autocomplete "
+"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead, "
+"use the book button in the chatter to find this article and autocomplete "
 "your description with this qualification template."
 msgstr ""
-"<strong><font class=\"text-o-color-2\">プロのヒント</font></strong>: "
-"リードから、チャターのブックボタンを使ってこの記事を見つけ、この資格テンプレ"
-"ートで説明を自動入力します。"
+"<strong><font class=\"text-o-color-2\">プロのヒント</font></strong>: リードか"
+"ら、チャターのブックボタンを使ってこの記事を見つけ、この資格テンプレートで説"
+"明を自動入力します。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead,"
-" use the book button in the chatter to find this article and autocomplete "
+"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead, "
+"use the book button in the chatter to find this article and autocomplete "
 "your email with this template."
 msgstr ""
-"<strong><font class=\"text-o-color-2\""
-">プロのヒント</font></strong>:リードから、チャターのブックボタンを使ってこの"
-"記事を見つけ、この資格テンプレートでEメールを自動入力します。"
+"<strong><font class=\"text-o-color-2\">プロのヒント</font></strong>:リードか"
+"ら、チャターのブックボタンを使ってこの記事を見つけ、この資格テンプレートでE"
+"メールを自動入力します。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "<strong><font style=\"color: rgb(231, 99, 99);\">Do Not</font></strong>"
-msgstr "<strong><font style=\"color: rgb(231, 99, 99);\">行わない</font></strong>"
+msgstr ""
+"<strong><font style=\"color: rgb(231, 99, 99);\">行わない</font></strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -1954,8 +2020,8 @@ msgid ""
 "<strong>N</strong>on-<strong>R</strong>ecurring <strong>R</strong>evenues\n"
 "                            (<em>consultancy services, ...</em>)"
 msgstr ""
-"<strong>N</strong>on(非)-<strong>R</strong>ecurring(経常) "
-"<strong>R</strong>evenues(収益)\n"
+"<strong>N</strong>on(非)-<strong>R</strong>ecurring(経常) <strong>R</"
+"strong>evenues(収益)\n"
 "                            (<em>コンサルタント業務 ...</em>)"
 
 #. module: knowledge
@@ -1976,20 +2042,22 @@ msgstr "<strong>Q1,2,3,4</strong>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
 msgid ""
-"<strong>Summary</strong>: <font class=\"text-600\">What an exciting release!"
-" This time the focus was on...</font>"
+"<strong>Summary</strong>: <font class=\"text-600\">What an exciting release! "
+"This time the focus was on...</font>"
 msgstr ""
-"<strong>概要</strong>: <font class=\"text-600\""
-">何ともエキサイティングなリリース！今回の焦点は...</font>"
+"<strong>概要</strong>: <font class=\"text-600\">何ともエキサイティングなリ"
+"リース！今回の焦点は...</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong>U</strong>nique <strong>S</strong>elling <strong>P</strong>roposition:\n"
-"                            Advantage that makes you stand out from the competition."
+"<strong>U</strong>nique <strong>S</strong>elling <strong>P</"
+"strong>roposition:\n"
+"                            Advantage that makes you stand out from the "
+"competition."
 msgstr ""
-"<strong>U</strong>nique <strong>S</strong>elling "
-"<strong>P</strong>roposition(独自の強み):\n"
+"<strong>U</strong>nique <strong>S</strong>elling <strong>P</"
+"strong>roposition(独自の強み):\n"
 "                           競合他社に差をつける強み"
 
 #. module: knowledge
@@ -2049,21 +2117,24 @@ msgstr "Abigail"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
-"About YourCompany: YourCompany is a team of passionate people whose goal is to improve everyone's life\n"
+"About YourCompany: YourCompany is a team of passionate people whose goal is "
+"to improve everyone's life\n"
 "                        through disruptive products.\n"
-"                        We build great products to solve your business problems.\n"
+"                        We build great products to solve your business "
+"problems.\n"
 "                        <br>\n"
-"                        Our products are designed for small to medium size companies willing to optimize their performance."
+"                        Our products are designed for small to medium size "
+"companies willing to optimize their performance."
 msgstr ""
-"YourCompanyについて: YourCompanyは、"
-"革新的なプロダクトを通じて人々の生活を向上させることを目標とする\n"
+"YourCompanyについて: YourCompanyは、革新的なプロダクトを通じて人々の生活を向"
+"上させることを目標とする\n"
 "　　　　　　情熱的な人々のチームです。\n"
-"                        "
-"当社はお客様のビジネ当社の製品は、業績の最適化を望む中小企業向けに設計されて"
-"います。スの課題を解決する素晴らしいプロダクトを構築しました。\n"
+"                        当社はお客様のビジネ当社の製品は、業績の最適化を望む"
+"中小企業向けに設計されています。スの課題を解決する素晴らしいプロダクトを構築"
+"しました。\n"
 "                        <br>\n"
-"                        "
-"当社のプロダクトは、業績の最適化を望む中小企業向けに設計されています。"
+"                        当社のプロダクトは、業績の最適化を望む中小企業向けに"
+"設計されています。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -2209,9 +2280,10 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
 msgid ""
-"Add an embed kanban view of article items in the body of an article by using"
-" '/kanban' command."
-msgstr "'/kanban'コマンドを使って、記事の本文に記事アイテムの埋込かんばんビューを追加"
+"Add an embed kanban view of article items in the body of an article by using "
+"'/kanban' command."
+msgstr ""
+"'/kanban'コマンドを使って、記事の本文に記事アイテムの埋込かんばんビューを追加"
 "します。"
 
 #. module: knowledge
@@ -2219,8 +2291,9 @@ msgstr "'/kanban'コマンドを使って、記事の本文に記事アイテム
 msgid ""
 "Add articles in your list of favorites by clicking on the <i class=\"fa fa-"
 "star-o\"></i> next to the article name."
-msgstr "記事名の横にある<i class=\"fa fa-star-o\""
-"></i>をクリックして、お気に入りリストに記事を追加して下さい。"
+msgstr ""
+"記事名の横にある<i class=\"fa fa-star-o\"></i>をクリックして、お気に入りリス"
+"トに記事を追加して下さい。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
@@ -2257,8 +2330,9 @@ msgstr "お気に入りに追加"
 msgid ""
 "Adding members allows you to share Articles while granting specific access "
 "rights<br>(can write, can read, ...)."
-msgstr "メンバーを追加することで、特定のアクセス権<br>（書き込み可能、読み取り可能、."
-"..）を付与しながら記事を共有することができます。"
+msgstr ""
+"メンバーを追加することで、特定のアクセス権<br>（書き込み可能、読み取り可"
+"能、...）を付与しながら記事を共有することができます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2274,66 +2348,64 @@ msgstr "オンラインまたはテレビに表示される広告"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
-"アフターセールスサービス <span class=\"o_stars o_five_stars\" id="
-"\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\""
-"></i></span>"
+"アフターセールスサービス <span class=\"o_stars o_five_stars\" "
+"id=\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"アフターセールスサービス <span class=\"o_stars o_five_stars\" id="
-"\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class="
-"\"fa fa-star-o\"></i></span>"
+"アフターセールスサービス <span class=\"o_stars o_five_stars\" "
+"id=\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-"
+"o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"アフターセールスサービス<span class=\"o_stars o_five_stars\" id=\"checkId-5\""
-"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"アフターセールスサービス<span class=\"o_stars o_five_stars\" "
+"id=\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
 msgid ""
-"After-Sales Service​ <span class=\"o_stars o_five_stars\" "
+"After-Sales Service​ <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+msgstr ""
+"アフターセールスサービス <span class=\"o_stars o_five_stars\" "
 "id=\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
 "star-o\"></i></span>"
-msgstr ""
-"アフターセールスサービス <span class=\"o_stars o_five_stars\" id="
-"\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class="
-"\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
-"After-Sales Service​ <span class=\"o_stars o_five_stars\" "
-"id=\"checkId-5\"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i></span>"
+"After-Sales Service​ <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"アフターセールスサービス<span class=\"o_stars o_five_stars\" id=\"checkId-5\""
-"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"アフターセールスサービス<span class=\"o_stars o_five_stars\" "
+"id=\"checkId-5\"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa "
+"fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -2394,8 +2466,9 @@ msgstr "ロゴの周りには常に十分なスペースを含めて下さい。
 msgid ""
 "Always type <strong>YourCompany</strong> in the same font size and style as "
 "the content of the text"
-msgstr "常にテキストのコンテンツと同じフォントサイズで <strong>会社名</strong> "
-"を入力して下さい。"
+msgstr ""
+"常にテキストのコンテンツと同じフォントサイズで <strong>会社名</strong> を入力"
+"して下さい。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -2405,9 +2478,10 @@ msgstr "１，2時間 (診療予約...)"
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_post_mortem
 msgid ""
-"Analyze what went wrong and the underlying causes. Extract insights to avoid"
-" making similar mistakes in the future."
-msgstr "何が問題だったのか、その根本的な原因を分析しましょう。今後、同じような過ちを"
+"Analyze what went wrong and the underlying causes. Extract insights to avoid "
+"making similar mistakes in the future."
+msgstr ""
+"何が問題だったのか、その根本的な原因を分析しましょう。今後、同じような過ちを"
 "犯さないための洞察を引き出します。"
 
 #. module: knowledge
@@ -2430,9 +2504,10 @@ msgstr "アーカイブ済"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to change the permission? This means it will no longer"
-" inherit access rights from its parent articles."
-msgstr "権限を変更してもよろしいですか？これにより、親記事からのアクセス権の継承が行"
+"Are you sure you want to change the permission? This means it will no longer "
+"inherit access rights from its parent articles."
+msgstr ""
+"権限を変更してもよろしいですか？これにより、親記事からのアクセス権の継承が行"
 "われなくなります。"
 
 #. module: knowledge
@@ -2441,7 +2516,8 @@ msgstr "権限を変更してもよろしいですか？これにより、親記
 msgid ""
 "Are you sure you want to delete this cover? It will be removed from every "
 "article it is used in."
-msgstr "本当にこの表紙を削除しますか？使用されているすべての記事から削除されます。"
+msgstr ""
+"本当にこの表紙を削除しますか？使用されているすべての記事から削除されます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2453,8 +2529,8 @@ msgstr "このテンプレートをデータベースから削除しますか？
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to leave this article? That means losing your personal"
-" access to it."
+"Are you sure you want to leave this article? That means losing your personal "
+"access to it."
 msgstr "この記事から離れてもよろしいですか？個人のアクセス権が失われます。"
 
 #. module: knowledge
@@ -2463,7 +2539,8 @@ msgstr "この記事から離れてもよろしいですか？個人のアクセ
 msgid ""
 "Are you sure you want to leave your private Article? As you are its last "
 "member, it will be moved to the Trash."
-msgstr "本当に未公開記事を削除しますか？あなたが最後のメンバなので、ゴミ箱に移動され"
+msgstr ""
+"本当に未公開記事を削除しますか？あなたが最後のメンバなので、ゴミ箱に移動され"
 "ます。"
 
 #. module: knowledge
@@ -2472,8 +2549,9 @@ msgstr "本当に未公開記事を削除しますか？あなたが最後のメ
 msgid ""
 "Are you sure you want to move \"%(icon)s%(title)s\" to private? Only you "
 "will be able to access it."
-msgstr "本当に \"%(icon)s%(title)s\""
-"を未公開に移動しますか？あなたのみがそれにアクセスできます。"
+msgstr ""
+"本当に \"%(icon)s%(title)s\"を未公開に移動しますか？あなたのみがそれにアクセ"
+"スできます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2481,8 +2559,9 @@ msgstr "本当に \"%(icon)s%(title)s\""
 msgid ""
 "Are you sure you want to move \"%(icon)s%(title)s\" to the Shared section? "
 "It will be shared with all listed members."
-msgstr "本当に \"%(icon)s%(title)s\"を "
-"共有セクションに移動しますか？リストアップされたメンバ全員と共有されます。"
+msgstr ""
+"本当に \"%(icon)s%(title)s\"を 共有セクションに移動しますか？リストアップされ"
+"たメンバ全員と共有されます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2490,18 +2569,19 @@ msgstr "本当に \"%(icon)s%(title)s\"を "
 msgid ""
 "Are you sure you want to move \"%(icon)s%(title)s\" to the Workspace? It "
 "will be shared with all internal users."
-msgstr "本当に \"%(icon)s%(title)s\""
-"をワークスペースに移動しますか？他の全ての内部ユーザとシェアされます。"
+msgstr ""
+"本当に \"%(icon)s%(title)s\"をワークスペースに移動しますか？他の全ての内部"
+"ユーザとシェアされます。"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid ""
-"Are you sure you want to move \"%(icon)s%(title)s\" under "
-"\"%(parentIcon)s%(parentTitle)s\"? It will be shared with the same persons."
+"Are you sure you want to move \"%(icon)s%(title)s\" under \"%(parentIcon)s%"
+"(parentTitle)s\"? It will be shared with the same persons."
 msgstr ""
-"本当に \"%(icon)s%(title)s\"を\"%(parentIcon)s%(parentTitle)"
-"s\"の下に移動しますか？何人かとシェアされます。"
+"本当に \"%(icon)s%(title)s\"を\"%(parentIcon)s%(parentTitle)s\"の下に移動しま"
+"すか？何人かとシェアされます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2525,25 +2605,28 @@ msgstr "本当に自分の\"執筆\"アクセスを削除しますか？"
 msgid ""
 "Are you sure you want to restore access? This means this article will now "
 "inherit any access set on its parent articles."
-msgstr "本当にアクセスを元に戻しますか？これは、この記事が親記事に設定されたアクセス"
+msgstr ""
+"本当にアクセスを元に戻しますか？これは、この記事が親記事に設定されたアクセス"
 "を継承することを意味します。"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to restrict access to this article? This means it will"
-" no longer inherit access rights from its parents."
-msgstr "この記事へのアクセスを制限してもよろしいですか？これは、この記事が親からアク"
+"Are you sure you want to restrict access to this article? This means it will "
+"no longer inherit access rights from its parents."
+msgstr ""
+"この記事へのアクセスを制限してもよろしいですか？これは、この記事が親からアク"
 "セス権を継承しなくなることを意味します。"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to restrict access to this article? This means that it"
-" will no longer inherit access rights from its parents."
-msgstr "この記事へのアクセスを制限してもよろしいですか？これにより、親記事からのアク"
+"Are you sure you want to restrict access to this article? This means that it "
+"will no longer inherit access rights from its parents."
+msgstr ""
+"この記事へのアクセスを制限してもよろしいですか？これにより、親記事からのアク"
 "セス権を継承しなくなります。"
 
 #. module: knowledge
@@ -2558,8 +2641,9 @@ msgstr "本当にこの記事をゴミ箱に移しますか？"
 msgid ""
 "Are you sure you want to set your permission to \"No Access\"? If you do, "
 "you will no longer have access to the article."
-msgstr "権限を\"アクセスなし\"に設定してもよろしいですか"
-"？その場合、この記事へのアクセスができなくなります。"
+msgstr ""
+"権限を\"アクセスなし\"に設定してもよろしいですか？その場合、この記事へのアク"
+"セスができなくなります。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2580,9 +2664,9 @@ msgstr "記事"
 msgid ""
 "Article '%s' should always have a writer: inherit write permission, or have "
 "a member with write access"
-msgstr "記事 '%s' "
-"には常に筆者が必要です。執筆権限を継承するか、執筆権限を持つメンバが必要です"
-"。"
+msgstr ""
+"記事 '%s' には常に筆者が必要です。執筆権限を継承するか、執筆権限を持つメンバ"
+"が必要です。"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_thread
@@ -2640,7 +2724,8 @@ msgstr "記事表紙"
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action_stages
 msgid ""
-"Article items are articles that exist inside their parents but are not displayed in the menu.\n"
+"Article items are articles that exist inside their parents but are not "
+"displayed in the menu.\n"
 "                They can be used to handle lists (Buildings, Tasks, ...)."
 msgstr ""
 "記事アイテムは親の中に存在するが、メニューに表示されない記事です。\n"
@@ -2680,7 +2765,8 @@ msgstr "記事"
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
 "Articles %s cannot be updated as this would create a recursive hierarchy."
-msgstr "記事%sはアップデートすることはできません。なぜなら再帰的な階層を作ることにな"
+msgstr ""
+"記事%sはアップデートすることはできません。なぜなら再帰的な階層を作ることにな"
 "るからです。"
 
 #. module: knowledge
@@ -2788,45 +2874,45 @@ msgid ""
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "ブランドの魅力 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\""
-"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
 "ブランドの魅力 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "ブランドの魅力 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"ブランドの魅力<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"ブランドの魅力<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2867,7 +2953,8 @@ msgstr "項目リストの作成"
 msgid ""
 "Build fictional representation of your customers to better tailor your "
 "advertising messages for them. "
-msgstr "架空の顧客像を構築することで、より適切な広告メッセージを提供することができま"
+msgstr ""
+"架空の顧客像を構築することで、より適切な広告メッセージを提供することができま"
 "す。 "
 
 #. module: knowledge
@@ -2962,15 +3049,17 @@ msgstr "キャンセル"
 msgid ""
 "Cannot create an article under article %(parent_name)s which is a non-"
 "private parent"
-msgstr "非公開でない親である記事 "
-"%(parent_name)sの下に記事を作成することはできません。"
+msgstr ""
+"非公開でない親である記事 %(parent_name)sの下に記事を作成することはできませ"
+"ん。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
 "Capitalize the word <strong>YourCompany</strong>, except if it's part of an "
 "URL e.g. website/company"
-msgstr "<strong>会社名</strong>は、URLである場合を除き、大文字で表記して下さい。 例: "
+msgstr ""
+"<strong>会社名</strong>は、URLである場合を除き、大文字で表記して下さい。 例: "
 "website/company"
 
 #. module: knowledge
@@ -2997,9 +3086,10 @@ msgstr "原因"
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_account_management
 msgid ""
-"Centralize account insights in one document for comprehensive monitoring and"
-" follow-up."
-msgstr "包括的なモニタリングとフォローアップのために、アカウントに関する洞察を1つのド"
+"Centralize account insights in one document for comprehensive monitoring and "
+"follow-up."
+msgstr ""
+"包括的なモニタリングとフォローアップのために、アカウントに関する洞察を1つのド"
 "キュメントに集約しましょう。"
 
 #. module: knowledge
@@ -3140,8 +3230,9 @@ msgstr "会社構成:"
 msgid ""
 "Compiled below are tips &amp; tricks collected among our veterans to help "
 "newcomers get started. We hope it will help you sign deals."
-msgstr "以下は、ベテランの間で収集された、新人が始めるのに役立つヒント "
-"&amp;トリックです。契約のお役に立てれば幸いです。"
+msgstr ""
+"以下は、ベテランの間で収集された、新人が始めるのに役立つヒント &amp;トリック"
+"です。契約のお役に立てれば幸いです。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3225,17 +3316,17 @@ msgstr "費用がかかりすぎる"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid ""
-"Could not move \"%(icon)s%(title)s\" under "
-"\"%(parentIcon)s%(parentTitle)s\", because you do not have write permission "
-"on the latter."
+"Could not move \"%(icon)s%(title)s\" under \"%(parentIcon)s%"
+"(parentTitle)s\", because you do not have write permission on the latter."
 msgstr ""
-"\"%(icon)s%(title)s\" (\"%(parentIcon)s%(parentTitle)s\""
-"下)を移動できませんでした。なぜなら、後者には書き込み権限がないからです。"
+"\"%(icon)s%(title)s\" (\"%(parentIcon)s%(parentTitle)s\"下)を移動できませんで"
+"した。なぜなら、後者には書き込み権限がないからです。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"Could you please let me know on which number I could reach you so that we could get in touch?<br>\n"
+"Could you please let me know on which number I could reach you so that we "
+"could get in touch?<br>\n"
 "                        It should not take longer than 15 minutes."
 msgstr ""
 "連絡を取りたいので、連絡先を教えていただけますか？<br>\n"
@@ -3415,8 +3506,9 @@ msgstr "デフォルトのスケール"
 msgid ""
 "Default permission for all internal users. (External users can still have "
 "access to this article if they are added to its members)"
-msgstr "すべての内部ユーザに対するデフォルト権限。(外部ユーザはメンバに追加された場合"
-"、この記事にアクセスすることができます)"
+msgstr ""
+"すべての内部ユーザに対するデフォルト権限。(外部ユーザはメンバに追加された場"
+"合、この記事にアクセスすることができます)"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3473,7 +3565,8 @@ msgstr "親と非同期しました"
 msgid ""
 "Did you know that access rights can be defined per user on any Knowledge "
 "Article?"
-msgstr "ナレッジ記事のアクセス権は、ユーザごとに定義できることをご存知でしたか?"
+msgstr ""
+"ナレッジ記事のアクセス権は、ユーザごとに定義できることをご存知でしたか?"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3513,7 +3606,8 @@ msgstr "表示名"
 msgid ""
 "Distribute brand digital assets while ensuring compliance with company "
 "policies and guidelines."
-msgstr "企業ポリシーやガイドラインを順守しながら、ブランドのデジタルアセットを配布し"
+msgstr ""
+"企業ポリシーやガイドラインを順守しながら、ブランドのデジタルアセットを配布し"
 "ます。"
 
 #. module: knowledge
@@ -3525,15 +3619,17 @@ msgstr "集中して取り掛かる"
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_marketing_campaign_brief
 msgid ""
 "Document your Marketing Campaigns to prioritize key objectives and outcomes."
-msgstr "マーケティングキャンペーンを文書化し、主要な目的と成果に優先順位をつけます。"
+msgstr ""
+"マーケティングキャンペーンを文書化し、主要な目的と成果に優先順位をつけます。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "Don't forget to spread the word, we're <em>so</em> looking forward to "
 "unveiling this new Odoo version! 🥳"
-msgstr "どうぞ口コミを広げて下さい。Odoo新バージョンをお披露目できることを "
-"<em>とても</em>楽しみにしております！ 🥳"
+msgstr ""
+"どうぞ口コミを広げて下さい。Odoo新バージョンをお披露目できることを <em>とても"
+"</em>楽しみにしております！ 🥳"
 
 #. module: knowledge
 #. odoo-python
@@ -3635,7 +3731,8 @@ msgstr "終了日時"
 msgid ""
 "Ensure all stakeholders of a product change are aligned by clearly "
 "communicating the requirements."
-msgstr "要件を明確に伝えることで、プロダクト変更の利害関係者全員の足並みを揃えます。"
+msgstr ""
+"要件を明確に伝えることで、プロダクト変更の利害関係者全員の足並みを揃えます。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3758,6 +3855,11 @@ msgid "Full width"
 msgstr "左右の余白を縮小"
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid "Gender(s):"
 msgstr "性別:"
@@ -3814,8 +3916,7 @@ msgstr "通常記事子があるか？"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__user_has_access_parent_path
-msgid ""
-"Has the user access to each parent from current article until its root?"
+msgid "Has the user access to each parent from current article until its root?"
 msgstr "ユーザは現在の記事からルートまでの各親にアクセスできるか？"
 
 #. module: knowledge
@@ -3833,7 +3934,8 @@ msgstr "こんにちは"
 msgid ""
 "Hello there, I am a template 👋\n"
 "            <br/>\n"
-"            Use the buttons at the top-right of this box to re-use my content.\n"
+"            Use the buttons at the top-right of this box to re-use my "
+"content.\n"
 "            <br/>\n"
 "            No more time wasted! 🔥"
 msgstr ""
@@ -3848,18 +3950,20 @@ msgstr ""
 msgid ""
 "Here are logos that you can use at your own convenience.\n"
 "                <br>\n"
-"                They can also be shared with customers, journalists and resellers."
+"                They can also be shared with customers, journalists and "
+"resellers."
 msgstr ""
 "以下は、ご自由にお使いいただけるロゴです。\n"
 "                <br>\n"
-"                "
-"また、顧客、ジャーナリスト、再販業者と共有することもできます。"
+"                また、顧客、ジャーナリスト、再販業者と共有することもできま"
+"す。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
 "Here is a short guide that will help you pick the right tiny house for you."
-msgstr "ここでは、あなたにぴったりの小さな家を選ぶのに役立つ簡単なガイドをご紹介しま"
+msgstr ""
+"ここでは、あなたにぴったりの小さな家を選ぶのに役立つ簡単なガイドをご紹介しま"
 "す。"
 
 #. module: knowledge
@@ -3985,12 +4089,12 @@ msgstr "ニーズにぴったりのモデルを見つけるには 😍"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
 "I was doing some research online and found your company.<br>\n"
-"                        Considering we just launched ProductName, I was thinking you would be interested."
+"                        Considering we just launched ProductName, I was "
+"thinking you would be interested."
 msgstr ""
 "ネット検索で、御社を知りました。<br>\n"
-"                        "
-"当社では’プロダクト名’を立ち上げたばかりです。ご興味を持って頂けるのはと思い"
-"ご連絡させて頂きました。"
+"                        当社では’プロダクト名’を立ち上げたばかりです。ご興味"
+"を持って頂けるのはと思いご連絡させて頂きました。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -4056,15 +4160,16 @@ msgstr "チェックした場合は、一部のメッセージに配信エラー
 msgid ""
 "If checked, the article will appear in the templates gallery under the "
 "'Shared Templates' section"
-msgstr "チェックを入れると、記事がテンプレートギャラリーの '共有テンプレート' "
-"セクションに表示されます。"
+msgstr ""
+"チェックを入れると、記事がテンプレートギャラリーの '共有テンプレート' セク"
+"ションに表示されます。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
-"If none of those offers convinced you, just get in touch with our "
-"team.<br>At MyCompany, your happiness is our utmost priority, and we'll go "
-"the extra mile to make sure you find what you're looking for!"
+"If none of those offers convinced you, just get in touch with our team."
+"<br>At MyCompany, your happiness is our utmost priority, and we'll go the "
+"extra mile to make sure you find what you're looking for!"
 msgstr ""
 "もし、これらのオファーがどれも納得のいくものでなければ、私たちのチームにご連"
 "絡ください。<br>MyCompanyでは、お客様のご満足を第一に考え、お客様がお探しのも"
@@ -4532,6 +4637,11 @@ msgid "Last Updated on"
 msgstr "最終更新日"
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Late Activities"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Leave"
@@ -4617,9 +4727,10 @@ msgstr "ロック済"
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"Logging changes from %(partner_name)s without write access on article "
-"%(article_name)s due to hierarchy tree update"
-msgstr "階層ツリーの更新により、%(partner_name)sが記事%(article_name)sに執筆アクセス"
+"Logging changes from %(partner_name)s without write access on article %"
+"(article_name)s due to hierarchy tree update"
+msgstr ""
+"階層ツリーの更新により、%(partner_name)sが記事%(article_name)sに執筆アクセス"
 "なしで変更をログに記録しています。"
 
 #. module: knowledge
@@ -4643,7 +4754,8 @@ msgstr "アクセス喪失"
 msgid ""
 "Make every week a success by proactively organizing your priority and "
 "optional tasks."
-msgstr "優先タスクと選択タスクを積極的に整理することで、毎週成功を目指しましょう。"
+msgstr ""
+"優先タスクと選択タスクを積極的に整理することで、毎週成功を目指しましょう。"
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_sprint_calendar
@@ -4773,9 +4885,12 @@ msgstr "他のアクション"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"More than 150 Odooers participated in this years' edition of the run of 5 or 11\n"
-"                            kilometers.<br>Starting from the office, they enjoyed a great tour in the countryside before\n"
-"                            coming back to Grand-Rosière, where they were welcomed with a drink and a burger."
+"More than 150 Odooers participated in this years' edition of the run of 5 or "
+"11\n"
+"                            kilometers.<br>Starting from the office, they "
+"enjoyed a great tour in the countryside before\n"
+"                            coming back to Grand-Rosière, where they were "
+"welcomed with a drink and a burger."
 msgstr ""
 "今年も150人以上のOdooスタッフが5キロまたは11キロのランに参加しました。<br>オ"
 "フィスから出発し、田園風景を楽しんだ後\n"
@@ -5036,11 +5151,12 @@ msgstr "進行中のものはありません"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
 "Nth <strong>Q</strong>uarter of the fiscal year.<br>\n"
-"                            <em>E.g. Q4 starts on Oct. 1 and ends on Dec. 31.</em>"
+"                            <em>E.g. Q4 starts on Oct. 1 and ends on Dec. 31."
+"</em>"
 msgstr ""
 "会計年度のN番目の <strong>四</strong>半期。<br>\n"
-"                            <em>例: "
-"Q4は10月1日に開始し、12月31日に終了します。</em>"
+"                            <em>例: Q4は10月1日に開始し、12月31日に終了しま"
+"す。</em>"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction_counter
@@ -5199,7 +5315,8 @@ msgstr "それ以外の場合は、以下のリストにあるものを自由に
 msgid ""
 "Our catalog can be found here and is updated every 2 years. If you do not "
 "manage to find the specific model you are looking for,"
-msgstr "カタログはこちらでご覧頂け、2年ごとに更新されます。お探しのモデルが見つからな"
+msgstr ""
+"カタログはこちらでご覧頂け、2年ごとに更新されます。お探しのモデルが見つからな"
 "い場合は、こちらまでお問い合わせ下さい。"
 
 #. module: knowledge
@@ -5301,7 +5418,8 @@ msgstr "以下の表をご参照下さい。"
 msgid ""
 "Please submit a request for assistance to the Marketing Team if you fall "
 "into one of the following:"
-msgstr "以下のいずれかに該当する場合は、マーケティングチームに支援要請を提出して下さ"
+msgstr ""
+"以下のいずれかに該当する場合は、マーケティングチームに支援要請を提出して下さ"
 "い:"
 
 #. module: knowledge
@@ -5350,58 +5468,57 @@ msgstr "プレビュー"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
-"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
-"i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
+"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
-"i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
+"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
-"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i"
-" class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
-"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>​"
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>​"
 msgstr ""
-"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>​"
+"価格 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>​"
 
 #. module: knowledge
 #. odoo-javascript
@@ -5461,7 +5578,8 @@ msgstr "見込審査テンプレート"
 msgid ""
 "Provide salespeople with tips, lexicon and templates to help them sell "
 "faster."
-msgstr "営業担当者に、より速く販売するためのヒント、語彙、テンプレートを提供しましょ"
+msgstr ""
+"営業担当者に、より速く販売するためのヒント、語彙、テンプレートを提供しましょ"
 "う。"
 
 #. module: knowledge
@@ -5910,6 +6028,11 @@ msgid "Show Weekends?"
 msgstr "週末を表示しますか?"
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
 msgid "Show in Workspace"
@@ -5939,9 +6062,9 @@ msgid ""
 "fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
-"ソーシャル <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></"
-"i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
+"ソーシャル <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
@@ -5950,36 +6073,36 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"ソーシャルステータス <span class=\"o_stars o_five_stars\" id=\"checkId-4\""
-"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"ソーシャルステータス <span class=\"o_stars o_five_stars\" "
+"id=\"checkId-4\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
 msgid ""
 "Social Status <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"ソーシャルステータス <span class=\"o_stars o_five_stars\" id=\"checkId-4\""
-"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"ソーシャルステータス <span class=\"o_stars o_five_stars\" "
+"id=\"checkId-4\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-"
+"o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
 "Social Status <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"ソーシャルステータス <span class=\"o_stars o_five_stars\" id=\"checkId-4\""
-"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"ソーシャルステータス <span class=\"o_stars o_five_stars\" "
+"id=\"checkId-4\"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa "
+"fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -5988,10 +6111,10 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"ソーシャルステータス ​<span class=\"o_stars o_five_stars\" id=\"checkId-4\""
-"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"ソーシャルステータス ​<span class=\"o_stars o_five_stars\" "
+"id=\"checkId-4\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i></span>"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_software_specification
@@ -6029,47 +6152,46 @@ msgid ""
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "サービスのスピード <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\""
-"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
 "Speed of Service <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
 "サービスのスピード <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
 "Speed of Service <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "サービスのスピード <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
 "Speed of Service ​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
 "サービスのスピード ​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i></span>"
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar
@@ -6127,9 +6249,10 @@ msgstr "タイトルから始める..."
 #. module: knowledge
 #: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_2
 msgid ""
-"Start working together on any Knowledge Article by sharing your article with"
-" others."
-msgstr "他のユーザと記事を共有することで、ナレッジベースの記事について一緒に作業を開"
+"Start working together on any Knowledge Article by sharing your article with "
+"others."
+msgstr ""
+"他のユーザと記事を共有することで、ナレッジベースの記事について一緒に作業を開"
 "始できます。"
 
 #. module: knowledge
@@ -6267,7 +6390,8 @@ msgstr "5つの戒律"
 msgid ""
 "The Accounting team handles all payments on Fridays afternoon.\n"
 "                <br>\n"
-"                If 2 weeks have passed and you are still waiting to be paid, get in touch with them."
+"                If 2 weeks have passed and you are still waiting to be paid, "
+"get in touch with them."
 msgstr ""
 "経理チームは金曜日の午後にすべての支払いを処理します。\n"
 "                <br>\n"
@@ -6304,7 +6428,8 @@ msgstr "開こうとしている記事は削除されているか、アクセス
 msgid ""
 "The destination placement of %(article_name)s is ambiguous, you should "
 "specify the category."
-msgstr "%(article_name)sの宛先の配置が曖昧なので、カテゴリを指定する必要があります。"
+msgstr ""
+"%(article_name)sの宛先の配置が曖昧なので、カテゴリを指定する必要があります。"
 
 #. module: knowledge
 #. odoo-python
@@ -6321,23 +6446,25 @@ msgstr "操作を完了できませんでした。"
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__article_anchor_text
 msgid ""
-"The original highlighted anchor text, giving initial context if that text is"
-" modified or removed afterwards."
-msgstr "元のハイライトされたアンカーテキストは、そのテキストが修正されたり削除された"
+"The original highlighted anchor text, giving initial context if that text is "
+"modified or removed afterwards."
+msgstr ""
+"元のハイライトされたアンカーテキストは、そのテキストが修正されたり削除された"
 "りした場合に、最初のコンテキストを提供します。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"The podcast launches its new technical talks, for all tech-savvy listeners out there! This\n"
-"                            new episode of the series features Géry, the mastermind behind OWL, the world fastest JS\n"
+"The podcast launches its new technical talks, for all tech-savvy listeners "
+"out there! This\n"
+"                            new episode of the series features Géry, the "
+"mastermind behind OWL, the world fastest JS\n"
 "                            framework. 🚀"
 msgstr ""
 "技術に詳しいリスナーのために、ポッドキャストは新しい技術的なトークを開始しま"
 "した！ この\n"
-"                            "
-"シリーズの新エピソードは、世界最速のJSフレームワークOWLの首謀者、Géryが登場し"
-"ます。 🚀"
+"                            シリーズの新エピソードは、世界最速のJSフレーム"
+"ワークOWLの首謀者、Géryが登場します。 🚀"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6380,12 +6507,12 @@ msgstr "Odooエクスペリエンス23の参加チケットは現在発売中で
 #. odoo-python
 #: code:addons/knowledge/__init__.py:0
 msgid ""
-"The version of the lxml package used is not supported. Consider reinstalling"
-" lxml package using 'pip install --nobinary :all: lxml'"
+"The version of the lxml package used is not supported. Consider reinstalling "
+"lxml package using 'pip install --nobinary :all: lxml'"
 msgstr ""
 "使用されている lxml パッケージのバージョンはサポートされていません。 lxml "
-"パッケージを再インストールするには、'pip install --nobinary :all: lxml' "
-"を使用して下さい。"
+"パッケージを再インストールするには、'pip install --nobinary :all: lxml' を使"
+"用して下さい。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6434,8 +6561,10 @@ msgstr "このフィルタは全体に関与してるため、全員から削除
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"This year again, Odoo was present at the <em>Tech and Innovation festival for students</em> in\n"
-"                            Antwerp, ready to promote our company!<br>Fabien was also there and gave an interview on the main\n"
+"This year again, Odoo was present at the <em>Tech and Innovation festival "
+"for students</em> in\n"
+"                            Antwerp, ready to promote our company!<br>Fabien "
+"was also there and gave an interview on the main\n"
 "                            stage."
 msgstr ""
 "今年もまた、Odooは アントワープの<em>学生向け技術革新フェスティバル</em> \n"
@@ -6447,7 +6576,8 @@ msgstr ""
 #: code:addons/knowledge/static/src/components/properties_panel/properties_panel.xml:0
 msgid ""
 "Those fields will be available on all articles that share the same parent."
-msgstr "これらのフィールドは、同じ親を共有する全ての記事で利用できるようになります。"
+msgstr ""
+"これらのフィールドは、同じ親を共有する全ての記事で利用できるようになります。"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_thread__is_resolved
@@ -6476,8 +6606,9 @@ msgstr "ヒント: 同じページで情報共有する"
 #: model:digest.tip,name:knowledge.digest_tip_knowledge_1
 #: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_1
 msgid "Tip: Use Clipboards to easily inject repetitive content"
-msgstr "ヒント: "
-"繰返し使用するコンテンツを簡単に挿入するには、クリップボードを使用します。"
+msgstr ""
+"ヒント: 繰返し使用するコンテンツを簡単に挿入するには、クリップボードを使用し"
+"ます。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -6494,6 +6625,11 @@ msgstr "タイトル"
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid "To be sure to stay updated, follow us on"
 msgstr "最新情報を入手するには、以下をフォローして下さい:"
+
+#. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Today Activities"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -6605,8 +6741,9 @@ msgstr "ナレッジ記事で/clipboardコマンドを使用して、始めま�
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Use the expression \"YourCompanions\" to refer to our community"
-msgstr "当社のコミュニティについて言及するには\"YourCompanions\" "
-"の表現を使用して下さい。"
+msgstr ""
+"当社のコミュニティについて言及するには\"YourCompanions\" の表現を使用して下さ"
+"い。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -6696,12 +6833,12 @@ msgstr "ようこそ%s"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "Welcome to the last edition of the MyCompany Newsletter!<br>\n"
-"                We are very excited to share with you the hottest updates and news! 🤩"
+"                We are very excited to share with you the hottest updates "
+"and news! 🤩"
 msgstr ""
 "MyCompanyニュースレターの最新版へようこそ！ <br>\n"
-"                "
-"私たちは最もホットな最新情報とニュースを皆さんにお伝えできることを大変嬉しく"
-"思っています！🤩"
+"                私たちは最もホットな最新情報とニュースを皆さんにお伝えできる"
+"ことを大変嬉しく思っています！🤩"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -6725,19 +6862,21 @@ msgstr "どの項目を管理したいですか？"
 msgid ""
 "When locked, users cannot write on the body or change the title, even if "
 "they have write access on the article."
-msgstr "ロックされている場合、その記事に書込権限があっても、本文への書き込みやタイト"
+msgstr ""
+"ロックされている場合、その記事に書込権限があっても、本文への書き込みやタイト"
 "ルの変更はできません。"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__to_delete
 msgid ""
 "When sent to trash, articles are flagged to be deleted\n"
-"                days after last edit. knowledge_article_trash_limit_days config\n"
+"                days after last edit. knowledge_article_trash_limit_days "
+"config\n"
 "                parameter can be used to modify the number of days. \n"
 "                (default is 30)"
 msgstr ""
-"ゴミ箱に送られると、"
-"最終編集日から指定日数の経過後に記事が削除されるフラグが立ちます\n"
+"ゴミ箱に送られると、最終編集日から指定日数の経過後に記事が削除されるフラグが"
+"立ちます\n"
 "                knowledge_article_trash_limit_days config\n"
 "                パラメータを使用して、日数を変更することができます。\n"
 " 　　　　(デフォルトは30)"
@@ -6745,10 +6884,11 @@ msgstr ""
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__full_width
 msgid ""
-"When set, the article body will take the full width available on the article"
-" page. Otherwise, the body will have large horizontal margins."
-msgstr "設定されている場合、記事本文は記事ページで利用可能な幅いっぱいに表示されます"
-"。そうでなければ、本文は大きな水平方向の余白を持ちます。"
+"When set, the article body will take the full width available on the article "
+"page. Otherwise, the body will have large horizontal margins."
+msgstr ""
+"設定されている場合、記事本文は記事ページで利用可能な幅いっぱいに表示されま"
+"す。そうでなければ、本文は大きな水平方向の余白を持ちます。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -6781,8 +6921,8 @@ msgstr "看板にはどの文字を印刷すればいいのでしょう？"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
-"While tiny houses are inherently small, it's important to prioritize comfort"
-" when sharing such limited space. To ensure everyone's happiness, we "
+"While tiny houses are inherently small, it's important to prioritize comfort "
+"when sharing such limited space. To ensure everyone's happiness, we "
 "recommend allowing at least 9m² per person. If you plan to live with "
 "multiple roommates, our Serenità model is highly recommended, providing "
 "ample space for each individual to enjoy<br>"
@@ -6798,8 +6938,8 @@ msgid ""
 "While tiny houses do offer a more cost-effective alternative to traditional "
 "houses, at MyCompany, we prioritize durability, which comes with a price. "
 "However, if you're on a tight budget, we have the perfect solution: our "
-"Cielo model.<br>It provides everything you need while allowing you to "
-"save.<br>"
+"Cielo model.<br>It provides everything you need while allowing you to save."
+"<br>"
 msgstr ""
 "タイニーハウスは伝統的な住宅よりも費用対効果の高い選択肢ですが、MyCompanyでは"
 "耐久性を優先しており、その分価格も高くなります。しかし、ご予算が限られている"
@@ -6847,8 +6987,8 @@ msgid ""
 "Write it without any article(<em><s>the</s> YourCompany, <s>a</s> "
 "YourCompany, ...</em>)"
 msgstr ""
-"冠詞なしで書いて下さい。(<em><s>the</s> YourCompany, <s>a</s> YourCompany, "
-"...</em>)"
+"冠詞なしで書いて下さい。(<em><s>the</s> YourCompany, <s>a</s> "
+"YourCompany, ...</em>)"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_shared_todos_write_the_next_newsletter
@@ -6888,9 +7028,9 @@ msgstr "'%(article_name)s' をプライベートに変更する権限があり�
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
-msgid ""
-"You are not allowed to move '%(article_name)s' under '%(parent_name)s'."
-msgstr "'%(article_name)s' を '%(parent_name)s'の下に移動する権限がありません。"
+msgid "You are not allowed to move '%(article_name)s' under '%(parent_name)s'."
+msgstr ""
+"'%(article_name)s' を '%(parent_name)s'の下に移動する権限がありません。"
 
 #. module: knowledge
 #. odoo-python
@@ -6923,15 +7063,16 @@ msgid ""
 "You can't move %(article_name)s under %(item_name)s, as %(item_name)s is an "
 "Article Item. Convert %(item_name)s into an Article first."
 msgstr ""
-"%(article_name)s を "
-"%(item_name)sの下に移動することはできません。%(item_name)sは記事項目であるた"
-"めです。%(item_name)sをまずは記事に変換して下さい。"
+"%(article_name)s を %(item_name)sの下に移動することはできません。%"
+"(item_name)sは記事項目であるためです。%(item_name)sをまずは記事に変換して下さ"
+"い。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid "You cannot add or remove this article to your favorites"
-msgstr "この記事をお気に入りに追加したり、お気に入りから削除することはできません"
+msgstr ""
+"この記事をお気に入りに追加したり、お気に入りから削除することはできません"
 
 #. module: knowledge
 #. odoo-python
@@ -6950,7 +7091,8 @@ msgstr "書き込みができない記事の下に記事を作成することは
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
 "You cannot move an article under %(parent_name)s as you cannot write on it"
-msgstr "書き込みができないので、%(parent_name)s の下に記事を移動することはできません"
+msgstr ""
+"書き込みができないので、%(parent_name)s の下に記事を移動することはできません"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6975,23 +7117,26 @@ msgstr "メンバーを追加するには %(article_name)s の編集者である
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
 "You have to be editor on %(article_name)s to change its internal permission."
-msgstr "内部の許可を変更するには %(article_name)s の編集者である必要があります。"
+msgstr ""
+"内部の許可を変更するには %(article_name)s の編集者である必要があります。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
 "You have to be editor on %(article_name)s to modify members permissions."
-msgstr "メンバ権限を変更するには %(article_name)s の編集者である必要があります。"
+msgstr ""
+"メンバ権限を変更するには %(article_name)s の編集者である必要があります。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"You have to be editor on %(article_name)s to remove or exclude member "
-"%(member_name)s."
-msgstr "あなたは %(article_name)s上の編集者である必要があります。(メンバ "
-"%(member_name)sを削除、除外するためには)"
+"You have to be editor on %(article_name)s to remove or exclude member %"
+"(member_name)s."
+msgstr ""
+"あなたは %(article_name)s上の編集者である必要があります。(メンバ %"
+"(member_name)sを削除、除外するためには)"
 
 #. module: knowledge
 #. odoo-python
@@ -7002,8 +7147,10 @@ msgstr "%(article_name)s をリストアするためには編集者である必�
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"You may have heard those a million times and yet you are not entirely sure of what it means.<br>\n"
-"                Here is a quick recap for you to shine during the next meeting."
+"You may have heard those a million times and yet you are not entirely sure "
+"of what it means.<br>\n"
+"                Here is a quick recap for you to shine during the next "
+"meeting."
 msgstr ""
 "何度も耳にしたことがあっても、それが何を意味するのかよくわからないかもしれま"
 "せん。<br>\n"
@@ -7055,13 +7202,13 @@ msgstr "YourCompanyは、以下を発表します:"
 msgid ""
 "YourCompany is very proud of its brand image.\n"
 "                <br>\n"
-"                When representing the brand, we thus ask you to be very cautious in how you refer to the company."
+"                When representing the brand, we thus ask you to be very "
+"cautious in how you refer to the company."
 msgstr ""
 "YourCompanはブランドイメージに誇りを持っています。\n"
 "                <br>\n"
-"                "
-"このため、ブランドを代表する際には、当社への言及の仕方に細心の注意を払うよう"
-"お願いします。"
+"                このため、ブランドを代表する際には、当社への言及の仕方に細心"
+"の注意を払うようお願いします。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
@@ -7185,35 +7332,35 @@ msgstr "書き込み"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class="
-"\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\""
-"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_campaign_brief

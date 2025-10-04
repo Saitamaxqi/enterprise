@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:37+0000\n"
+"POT-Creation-Date: 2025-10-03 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -26,6 +26,7 @@ msgstr "分析行"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
+#: model_terms:ir.ui.view,arch_db:mrp_workorder_hr_account.mrp_report_pivot_view
 msgid "Average Employee Cost / Unit"
 msgstr "平均従業員原価/単位"
 
@@ -55,8 +56,7 @@ msgstr "従業員分析勘定明細"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,help:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
-msgid ""
-"Employee Cost per unit produced (in product UoM) of manufacturing order"
+msgid "Employee Cost per unit produced (in product UoM) of manufacturing order"
 msgstr "製造オーダの生産された単位 (プロダクト単位)ごとの従業員原価"
 
 #. module: mrp_workorder_hr_account

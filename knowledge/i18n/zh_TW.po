@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 18:42+0000\n"
+"POT-Creation-Date: 2025-10-03 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -49,24 +49,26 @@ msgid ""
 "cannot be restored on its own. Contact the owner of \"%(article_name)s\" to "
 "have it restored instead."
 msgstr ""
-"%(article_item_name)s 是 %(article_name)s 之下的文章項目，不可單獨還原。請聯絡 %(article_name)s"
-" 的擁有人，以將該文章還原。"
+"%(article_item_name)s 是 %(article_name)s 之下的文章項目，不可單獨還原。請聯"
+"絡 %(article_name)s 的擁有人，以將該文章還原。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"\"%(article_name)s\" is a template and can not be a child of an article "
-"(\"%(parent_article_name)s\")."
-msgstr "%(article_name)s 是一個範本，不可作為文章（%(parent_article_name)s）的子項。"
+"\"%(article_name)s\" is a template and can not be a child of an article (\"%"
+"(parent_article_name)s\")."
+msgstr ""
+"%(article_name)s 是一個範本，不可作為文章（%(parent_article_name)s）的子項。"
 
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"\"%(article_name)s\" is an article and can not be a child of a template "
-"(\"%(parent_article_name)s\").\""
-msgstr "%(article_name)s 是一篇文章，不可作為範本（%(parent_article_name)s）的子項。"
+"\"%(article_name)s\" is an article and can not be a child of a template (\"%"
+"(parent_article_name)s\").\""
+msgstr ""
+"%(article_name)s 是一篇文章，不可作為範本（%(parent_article_name)s）的子項。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -96,6 +98,18 @@ msgid "%s has been sent to Trash"
 msgstr "%s 已送至垃圾桶"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
+msgid "(Guest)"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
+msgid "(You)"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_mail_invite
 msgid ".<br/>"
 msgstr "。<br/>"
@@ -103,21 +117,14 @@ msgstr "。<br/>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
-"250 Executive Park Blvd, Suite 3400 94134\n"
+"8000 Marina Blvd, Suite 300 94005\n"
 "                        <br>\n"
-"                        San Francisco California (US)\n"
+"                        Brisbane California (US)\n"
 "                        <br>\n"
 "                        United States\n"
 "                        <br>\n"
 "                        info@yourcompany.com"
 msgstr ""
-"250 Executive Park Blvd, Suite 3400 94134\n"
-"                        <br>\n"
-"                        San Francisco California (US)\n"
-"                        <br>\n"
-"                        United States\n"
-"                        <br>\n"
-"                        info@yourcompany.com"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
@@ -128,7 +135,8 @@ msgstr "85×200 或 100×200，視乎內容而定"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "<br>\n"
-"                            Subscribe here to make sure you will not miss an episode!"
+"                            Subscribe here to make sure you will not miss an "
+"episode!"
 msgstr ""
 "<br>\n"
 "                            在此訂閱，確保不會錯過任何一集！"
@@ -168,7 +176,8 @@ msgstr ""
 msgid ""
 "<em>\n"
 "                    <font class=\"text-600\">\n"
-"                        What are you trying to accomplish with this campaign?\n"
+"                        What are you trying to accomplish with this "
+"campaign?\n"
 "                    </font>\n"
 "                </em>"
 msgstr ""
@@ -212,51 +221,60 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Ask a Senior Engineer to fill this part before launching the task.</font>\n"
+"                    <font class=\"text-600\">Ask a Senior Engineer to fill "
+"this part before launching the task.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">開展任務前，請高級工程師填寫這部份內容。</font>\n"
+"                    <font class=\"text-600\">開展任務前，請高級工程師填寫這部"
+"份內容。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Ask the developer to go through this checklist before asking for a review.</font>\n"
+"                    <font class=\"text-600\">Ask the developer to go through "
+"this checklist before asking for a review.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">請求審批前，請開發人員仔細閱讀這份清單。</font>\n"
+"                    <font class=\"text-600\">請求審批前，請開發人員仔細閱讀這"
+"份清單。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain in a few words the problem that this change is going to solve.</font>\n"
+"                    <font class=\"text-600\">Explain in a few words the "
+"problem that this change is going to solve.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">用幾個詞語解釋這一變化將會解決的問題。</font>\n"
+"                    <font class=\"text-600\">用幾個詞語解釋這一變化將會解決的"
+"問題。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain in a single sentence what has been changed.</font>\n"
+"                    <font class=\"text-600\">Explain in a single sentence "
+"what has been changed.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">用一句句子解釋改動了甚麼。</font>\n"
+"                    <font class=\"text-600\">用一句句子解釋改動了甚麼。</"
+"font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain the consequences of this issue.</font>\n"
+"                    <font class=\"text-600\">Explain the consequences of "
+"this issue.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
@@ -267,18 +285,21 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Explain what went wrong in just a few words.</font>\n"
+"                    <font class=\"text-600\">Explain what went wrong in just "
+"a few words.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">簡短解釋一下甚麼出了錯。</font>\n"
+"                    <font class=\"text-600\">簡短解釋一下甚麼出了錯。</"
+"font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">How did it get to happen?</font>\n"
+"                    <font class=\"text-600\">How did it get to happen?</"
+"font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
@@ -300,44 +321,53 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">Lay here any remaining question or doubt.</font>\n"
+"                    <font class=\"text-600\">Lay here any remaining question "
+"or doubt.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">在此處交代任何遺留的問題或疑問。</font>\n"
+"                    <font class=\"text-600\">在此處交代任何遺留的問題或疑問。"
+"</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the changes to implement.</font>\n"
+"                    <font class=\"text-600\">List here all the changes to "
+"implement.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">在此處列出要實施的所有變更。</font>\n"
+"                    <font class=\"text-600\">在此處列出要實施的所有變更。</"
+"font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the material and documentation related to the task.</font>\n"
+"                    <font class=\"text-600\">List here all the material and "
+"documentation related to the task.</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">在此列出與任務相關的所有材料及說明文件。</font>\n"
+"                    <font class=\"text-600\">在此列出與任務相關的所有材料及說"
+"明文件。</font>\n"
 "                </em>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<em>\n"
-"                    <font class=\"text-600\">List here all the text you could not do this week. These shall be postponed in the next weekly schedule.</font>\n"
+"                    <font class=\"text-600\">List here all the text you "
+"could not do this week. These shall be postponed in the next weekly schedule."
+"</font>\n"
 "                </em>"
 msgstr ""
 "<em>\n"
-"                    <font class=\"text-600\">在此列出本週未能完成的所有文本。這些文本將順延至下週的日程中。</font>\n"
+"                    <font class=\"text-600\">在此列出本週未能完成的所有文本。"
+"這些文本將順延至下週的日程中。</font>\n"
 "                </em>"
 
 #. module: knowledge
@@ -357,12 +387,14 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                Abigail works a lot and never watches TV. Better reach her on her phone or on her to work."
+"                Abigail works a lot and never watches TV. Better reach her "
+"on her phone or on her to work."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>如何最有效地接觸這類型客戶。<br></em>\n"
 "                </font>\n"
-"                Abigail 經常工作，從不看電視。最好透過電話或在她上班時聯絡她。"
+"                Abigail 經常工作，從不看電視。最好透過電話或在她上班時聯絡"
+"她。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
@@ -370,12 +402,15 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                As a classic Gen Z member, Vittorio never watches TV and never listens to the radio. For him to see our message, we need to get to his Instagram feed."
+"                As a classic Gen Z member, Vittorio never watches TV and "
+"never listens to the radio. For him to see our message, we need to get to "
+"his Instagram feed."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>如何最有效地接觸這類型客戶。<br></em>\n"
 "                </font>\n"
-"                身為典型的 Z 世代成員，Vittorio 從不看電視，也不聽電台。為了讓他看到我們的訊息，我們需要進入他的 Instagram 訊息流。"
+"                身為典型的 Z 世代成員，Vittorio 從不看電視，也不聽電台。為了"
+"讓他看到我們的訊息，我們需要進入他的 Instagram 訊息流。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -383,12 +418,14 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                As an avid music listener, the best way to reach Sonya is through the radio since hers is always on."
+"                As an avid music listener, the best way to reach Sonya is "
+"through the radio since hers is always on."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>如何最有效地接觸這類型客戶。<br></em>\n"
 "                </font>\n"
-"                作為一名狂熱的音樂聽眾，接觸 Sonya 的最佳方式是電台，因為她的收音機長開。"
+"                作為一名狂熱的音樂聽眾，接觸 Sonya 的最佳方式是電台，因為她的"
+"收音機長開。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
@@ -396,7 +433,8 @@ msgid ""
 "<font class=\"text-400\">\n"
 "                    <em>How to best reach this customer type.<br></em>\n"
 "                </font>\n"
-"                Julius follows politics very tightly, and can best be reached with TV ads."
+"                Julius follows politics very tightly, and can best be "
+"reached with TV ads."
 msgstr ""
 "<font class=\"text-400\">\n"
 "                    <em>如何最有效地接觸這類型客戶。<br></em>\n"
@@ -488,7 +526,8 @@ msgstr "<font class=\"text-600\">競爭對手 3</font>"
 msgid ""
 "<font class=\"text-600\">Detailed Explanation of the feature, with "
 "screenshots or a GIF</font>"
-msgstr "<font class=\"text-600\">關於功能的詳細解說，附有螢幕截圖或 GIF 圖</font>"
+msgstr ""
+"<font class=\"text-600\">關於功能的詳細解說，附有螢幕截圖或 GIF 圖</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -508,13 +547,14 @@ msgstr "<font class=\"text-600\">從現在起，⋯</font>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
-"<font class=\"text-600\">How do stakeholders interact regarding "
-"offers?</font>"
+"<font class=\"text-600\">How do stakeholders interact regarding offers?</"
+"font>"
 msgstr "<font class=\"text-600\">持份者如何就優惠進行互動？</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
-msgid "<font class=\"text-600\">How do they compare and evaluate offers?</font>"
+msgid ""
+"<font class=\"text-600\">How do they compare and evaluate offers?</font>"
 msgstr "<font class=\"text-600\">他們如何比較及評估優惠？</font>"
 
 #. module: knowledge
@@ -533,8 +573,8 @@ msgstr "<font class=\"text-600\">我確保了不會出現任何明顯倒退</fon
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"<font class=\"text-600\">I made sure it did not introduce any security "
-"flaw</font>"
+"<font class=\"text-600\">I made sure it did not introduce any security flaw</"
+"font>"
 msgstr "<font class=\"text-600\">我確保了不會引入任何安全漏洞</font>"
 
 #. module: knowledge
@@ -655,11 +695,14 @@ msgstr "<font class=\"text-600\">他們的關鍵決策準則是甚麼？</font>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
-"<font class=\"text-600\">What is your action plan to move forward with this account?</font><br>\n"
-"                <font class=\"text-600\">Which KPI will be used to measure this progress?</font>"
+"<font class=\"text-600\">What is your action plan to move forward with this "
+"account?</font><br>\n"
+"                <font class=\"text-600\">Which KPI will be used to measure "
+"this progress?</font>"
 msgstr ""
 "<font class=\"text-600\">你推進該賬戶的行動計劃是甚麼？</font><br>\n"
-"                <font class=\"text-600\">將使用哪些關鍵績效指標（KPI）去量度相關進度？</font>"
+"                <font class=\"text-600\">將使用哪些關鍵績效指標（KPI）去量度"
+"相關進度？</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -681,42 +724,57 @@ msgstr ""
 msgid ""
 "<i class=\"fa fa-w fa-info-circle\"/> All external users you selected won't "
 "be added to the members."
-msgstr "<i class=\"fa fa-w fa-info-circle\"/> 選取的所有外部使用者，都不會加入至成員中。"
+msgstr ""
+"<i class=\"fa fa-w fa-info-circle\"/> 選取的所有外部使用者，都不會加入至成員"
+"中。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
 msgid ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
-"                                    <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                    <i invisible=\"is_user_favorite\" "
+"class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"從最愛移除\"/>\n"
-"                                    <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"加入最愛\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"從最愛移除"
+"\"/>\n"
+"                                    <i invisible=\"is_user_favorite\" "
+"class=\"fa fa-star-o\" title=\"加入最愛\"/>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban
 msgid ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
-"                                <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove "
+"from favorites\"/>\n"
+"                                <i invisible=\"is_user_favorite\" class=\"fa "
+"fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"從最愛移除\"/>\n"
-"                                <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"加入最愛\"/>"
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"從最愛移除"
+"\"/>\n"
+"                                <i invisible=\"is_user_favorite\" class=\"fa "
+"fa-star-o\" title=\"加入最愛\"/>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<i>\n"
-"                        <font style=\"color: rgb(0, 255, 0);\"><strong>Green: Values trust above all</strong></font><br>\n"
-"                        <font style=\"color: rgb(255, 0, 0);\"><strong>Red: Values results above all</strong></font><br>\n"
+"                        <font style=\"color: rgb(0, 255, 0);"
+"\"><strong>Green: Values trust above all</strong></font><br>\n"
+"                        <font style=\"color: rgb(255, 0, 0);\"><strong>Red: "
+"Values results above all</strong></font><br>\n"
 "                        <strong>\n"
 "                            <font style=\"color: rgb(239, 198, 49);\">\n"
-"                                Yellow: Values creativity and enthusiasm above results\n"
+"                                Yellow: Values creativity and enthusiasm "
+"above results\n"
 "                            </font>\n"
 "                        </strong>\n"
 "                    </i>"
 msgstr ""
 "<i>\n"
-"                        <font style=\"color: rgb(0, 255, 0);\"><strong>綠色：最着重信任</strong></font><br>\n"
-"                        <font style=\"color: rgb(255, 0, 0);\"><strong>紅色：最着重結果</strong></font><br>\n"
+"                        <font style=\"color: rgb(0, 255, 0);\"><strong>綠色："
+"最着重信任</strong></font><br>\n"
+"                        <font style=\"color: rgb(255, 0, 0);\"><strong>紅色："
+"最着重結果</strong></font><br>\n"
 "                        <strong>\n"
 "                            <font style=\"color: rgb(239, 198, 49);\">\n"
 "                                黃色：着重創意與熱情多於結果\n"
@@ -729,7 +787,8 @@ msgstr ""
 msgid ""
 "<i>\n"
 "                    <font style=\"color: rgb(8, 82, 148);\">\n"
-"                        <strong>Blue: Expects accurate and rigorous results</strong>\n"
+"                        <strong>Blue: Expects accurate and rigorous results</"
+"strong>\n"
 "                    </font>\n"
 "                </i>"
 msgstr ""
@@ -747,11 +806,13 @@ msgstr "<span class=\"text-600\">新功能 1</span>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
 msgid ""
-"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
+"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: "
+"normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
 "                                        5125C\n"
 "                                    </span>"
 msgstr ""
-"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
+"<span style=\"color: rgb(255, 255, 255);font-size: 16px;font-style: "
+"normal;font-weight: 400;background-color: rgb(113, 75, 103)\">\n"
 "                                        5125C\n"
 "                                    </span>"
 
@@ -759,11 +820,13 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<span style=\"font-size: 12px;\">\n"
-"                    <font class=\"text-600\">*💡 tick the box when the task is scheduled in the agenda</font>\n"
+"                    <font class=\"text-600\">*💡 tick the box when the task "
+"is scheduled in the agenda</font>\n"
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 12px;\">\n"
-"                    <font class=\"text-600\">*💡 當任務被安排在日程時，請勾選該方格</font>\n"
+"                    <font class=\"text-600\">*💡 當任務被安排在日程時，請勾選"
+"該方格</font>\n"
 "                </span>"
 
 #. module: knowledge
@@ -842,7 +905,8 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "                    新增檢查清單\n"
-"                    （/<span style=\"font-style: italic;\">checklist</span>）\n"
+"                    （/<span style=\"font-style: italic;\">checklist</"
+"span>）\n"
 "                </span>"
 
 #. module: knowledge
@@ -855,7 +919,8 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "                    加入分隔\n"
-"                    （/<span style=\"font-style: italic;\">separator</span>）\n"
+"                    （/<span style=\"font-style: italic;\">separator</"
+"span>）\n"
 "                </span>"
 
 #. module: knowledge
@@ -885,7 +950,8 @@ msgid ""
 "                <font class=\"text-o-color-2\">shortcuts</font>\n"
 "            </span>\n"
 "            you create for yourself.\n"
-"            Unstar ⭐ this page at the top to remove it from your favorites.\n"
+"            Unstar ⭐ this page at the top to remove it from your "
+"favorites.\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -910,9 +976,11 @@ msgid ""
 "        </span>\n"
 "        <span style=\"font-size: 14px;\">\n"
 "            — This is\n"
-"            <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">your stuff</font></span>,\n"
+"            <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">your stuff</font></span>,\n"
 "            the things you keep for yourself\n"
-"            (<span style=\"font-style: italic;\">Drafts, Todo lists, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">Drafts, Todo lists, ...</"
+"span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -922,9 +990,11 @@ msgstr ""
 "        </span>\n"
 "        <span style=\"font-size: 14px;\">\n"
 "            － 是你保留給自己使用的\n"
-"            <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">私人資料</font></span>\n"
+"            <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">私人資料</font></span>\n"
 "            （例如：\n"
-"            <span style=\"font-style: italic;\">草稿、待辦清單</span>，等等）\n"
+"            <span style=\"font-style: italic;\">草稿、待辦清單</span>，等"
+"等）\n"
 "        </span>"
 
 #. module: knowledge
@@ -938,7 +1008,8 @@ msgid ""
 "        <span style=\"font-size: 14px;\">\n"
 "            — Those are the ones you\n"
 "            <span style=\"font-weight: bolder;\">\n"
-"                <font class=\"text-o-color-2\">have invited someone or been invited to</font>\n"
+"                <font class=\"text-o-color-2\">have invited someone or been "
+"invited to</font>\n"
 "            </span>\n"
 "        </span>"
 msgstr ""
@@ -950,7 +1021,8 @@ msgstr ""
 "        <span style=\"font-size: 14px;\">\n"
 "            － 是\n"
 "            <span style=\"font-weight: bolder;\">\n"
-"                <font class=\"text-o-color-2\">你已邀請某人協作，或你獲邀請參與協作的資料</font>\n"
+"                <font class=\"text-o-color-2\">你已邀請某人協作，或你獲邀請參"
+"與協作的資料</font>\n"
 "            </span>\n"
 "        </span>"
 
@@ -1012,7 +1084,8 @@ msgid ""
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">start typing</font>\n"
 "            </span>\n"
-"            (<span style=\"font-style: italic;\">documentation, tips, reports, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">documentation, tips, "
+"reports, ...</span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1020,7 +1093,8 @@ msgstr ""
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">開始輸入</font>\n"
 "            </span>\n"
-"            （<span style=\"font-style: italic;\">使用說明、提示、報告</span>，等等）\n"
+"            （<span style=\"font-style: italic;\">使用說明、提示、報告</"
+"span>，等等）\n"
 "        </span>"
 
 #. module: knowledge
@@ -1034,7 +1108,8 @@ msgid ""
 "                <font class=\"text-o-color-2\">Nest other Articles</font>\n"
 "            </span>\n"
 "            under it to regroup them\n"
-"            (<span style=\"font-style: italic;\">per team, topic, project, ...</span>)\n"
+"            (<span style=\"font-style: italic;\">per team, topic, "
+"project, ...</span>)\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1042,10 +1117,12 @@ msgstr ""
 "        </span>\n"
 "        <span style=\"font-size: 14px;\">\n"
 "            <span style=\"font-weight: bolder;\">\n"
-"                <font class=\"text-o-color-2\">將其他文章放入欄目之下，形成巢狀結構</font>\n"
+"                <font class=\"text-o-color-2\">將其他文章放入欄目之下，形成巢"
+"狀結構</font>\n"
 "            </span>\n"
 "            ，以作分組\n"
-"            （可按照<span style=\"font-style: italic;\">團隊、題目、專案</span>，等等）\n"
+"            （可按照<span style=\"font-style: italic;\">團隊、題目、專案</"
+"span>，等等）\n"
 "        </span>"
 
 #. module: knowledge
@@ -1054,19 +1131,23 @@ msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Select text to\n"
 "            <font class=\"bg-o-color-2\">Highlight</font>,\n"
-"            <span style=\"text-decoration-line: line-through;\">strikethrough</span>\n"
+"            <span style=\"text-decoration-line: line-through;"
+"\">strikethrough</span>\n"
 "            or\n"
 "            <span style=\"font-weight: bolder;\">style</span>\n"
-"            <span style=\"font-style: italic; text-decoration-line: underline;\">it</span>\n"
+"            <span style=\"font-style: italic; text-decoration-line: "
+"underline;\">it</span>\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            選取文字以作\n"
 "            <font class=\"bg-o-color-2\">醒目提示</font>、\n"
-"            <span style=\"text-decoration-line: line-through;\">加上刪除線</span>\n"
+"            <span style=\"text-decoration-line: line-through;\">加上刪除線</"
+"span>\n"
 "            ，或套用\n"
 "            <span style=\"font-weight: bolder;\">不同</span>\n"
-"            <span style=\"font-style: italic; text-decoration-line: underline;\">格式</span>\n"
+"            <span style=\"font-style: italic; text-decoration-line: "
+"underline;\">格式</span>\n"
 "        </span>"
 
 #. module: knowledge
@@ -1074,7 +1155,8 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Use\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">clipboard</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">clipboard</font></span>\n"
 "            to insert a\n"
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">clipboard</font>\n"
@@ -1084,7 +1166,8 @@ msgid ""
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            使用「\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">clipboard</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">clipboard</font></span>\n"
 "            」插入一個\n"
 "            <span style=\"font-weight: bolder;\">\n"
 "                <font class=\"text-o-color-2\">剪貼簿</font>\n"
@@ -1097,13 +1180,15 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "            Use\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">file</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">file</font></span>\n"
 "            to share documents that are frequently needed\n"
 "        </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "            使用「\n"
-"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">file</font></span>\n"
+"            /<span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">file</font></span>\n"
 "            」分享常用文件檔案\n"
 "        </span>"
 
@@ -1115,7 +1200,8 @@ msgid ""
 "            <font class=\"text-o-color-2\">Articles</font>\n"
 "        </span>\n"
 "        are stored into different\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Sections</font></span>:\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">Sections</font></span>:\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
@@ -1123,7 +1209,8 @@ msgstr ""
 "            <font class=\"text-o-color-2\">文章</font>\n"
 "        </span>\n"
 "        會被儲存至不同\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">章節</font></span>中：\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">"
+"章節</font></span>中：\n"
 "    </span>"
 
 #. module: knowledge
@@ -1201,13 +1288,15 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "        This is where you and your team can centralize your\n"
-"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\">Knowledge</font>\n"
+"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;"
+"\">Knowledge</font>\n"
 "        and best practices! 🚀\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "        此處可讓你與團隊集中記錄\n"
-"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\">知識庫</font>文章\n"
+"        <font class=\"text-o-color-2\" style=\"font-weight: bolder;\">知識庫"
+"</font>文章\n"
 "        及最佳實踐方法！ 🚀\n"
 "    </span>"
 
@@ -1216,12 +1305,14 @@ msgstr ""
 msgid ""
 "<span style=\"font-size: 14px;\">\n"
 "        Those are your\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">Articles</font></span>.\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-"
+"color-2\">Articles</font></span>.\n"
 "    </span>"
 msgstr ""
 "<span style=\"font-size: 14px;\">\n"
 "        那些是你的\n"
-"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">文章</font></span>。\n"
+"        <span style=\"font-weight: bolder;\"><font class=\"text-o-color-2\">"
+"文章</font></span>。\n"
 "    </span>"
 
 #. module: knowledge
@@ -1269,7 +1360,8 @@ msgid ""
 "        <span style=\"font-weight: bolder;\">\n"
 "            <font class=\"text-o-color-2\">Command Palette</font>\n"
 "        </span>\n"
-"        (Ctrl+k/⌘+k) then search through articles by starting your query with\n"
+"        (Ctrl+k/⌘+k) then search through articles by starting your query "
+"with\n"
 "        \"<span style=\"font-weight: bolder;\">?</span>\".\n"
 "    </span>"
 msgstr ""
@@ -1325,13 +1417,14 @@ msgstr "<span style=\"font-size: 14px;\">勾選此方塊以表示完成</span>"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">Click anywhere, and just start "
-"typing</span>"
-msgstr "<span style=\"font-size: 14px;\">只需按一下任何位置，然後開始輸入</span>"
+"<span style=\"font-size: 14px;\">Click anywhere, and just start typing</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">只需按一下任何位置，然後開始輸入</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
-msgid "<span style=\"font-size: 14px;\">Each of them can be used both as:</span>"
+msgid ""
+"<span style=\"font-size: 14px;\">Each of them can be used both as:</span>"
 msgstr "<span style=\"font-size: 14px;\">每個都可用作以下兩個用途：</span>"
 
 #. module: knowledge
@@ -1340,36 +1433,43 @@ msgid ""
 "<span style=\"font-size: 14px;\">From any Odoo document, find this article "
 "by clicking on the 📗 icon in the chatter.</span>"
 msgstr ""
-"<span style=\"font-size: 14px;\">在任何 Odoo 文件中，只需按聊天視窗中的 📗 "
-"圖示，即可找到這篇文章。</span>"
+"<span style=\"font-size: 14px;\">在任何 Odoo 文件中，只需按聊天視窗中的 📗 圖"
+"示，即可找到這篇文章。</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">From this box, files can be previewed, "
 "forwarded and downloaded. 📁</span>"
-msgstr "<span style=\"font-size: 14px;\">在此區塊中，可預覽、轉發及下載文件。 📁</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">在此區塊中，可預覽、轉發及下載文件。 📁</"
+"span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">Got it? Now let's try advanced features "
-"🧠</span>"
-msgstr "<span style=\"font-size: 14px;\">明白嗎？現在，讓我們試試較進階的功能 🧠</span>"
+"<span style=\"font-size: 14px;\">Got it? Now let's try advanced features 🧠</"
+"span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">明白嗎？現在，讓我們試試較進階的功能 🧠</"
+"span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Need this document somewhere? Come back "
 "here by clicking on the 📗 icon in the chatter.</span>"
-msgstr "<span style=\"font-size: 14px;\">需要這份文件？按聊天視窗中的 📗 圖示，便可返回此處。</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">需要這份文件？按聊天視窗中的 📗 圖示，便可返"
+"回此處。</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
 "<span style=\"font-size: 14px;\">Not sure how to do it? Check the video "
 "below 👇</span>"
-msgstr "<span style=\"font-size: 14px;\">不知道應該如何做？看看下方的影片 👇</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">不知道應該如何做？看看下方的影片 👇</span>"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
@@ -1380,7 +1480,8 @@ msgstr "<span style=\"font-size: 14px;\">按 Ctrl+Z/⌘+Z 可撤銷任何更改<
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">This private page is for you to play around with.</span>\n"
+"<span style=\"font-size: 14px;\">This private page is for you to play around "
+"with.</span>\n"
 "    <br/>\n"
 "    <span style=\"font-size: 14px;\">Ready to give it a spin?</span>"
 msgstr ""
@@ -1396,9 +1497,11 @@ msgstr "<span style=\"font-size: 14px;\">試試以下操作 👇</span>"
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-size: 14px;\">You can use the clipboard as a description,"
-" a message or simply copy it to your clipboard! 👌</span>"
-msgstr "<span style=\"font-size: 14px;\">你可使用剪貼簿作為描述、訊息，或複製內容至剪貼簿中！ 👌</span>"
+"<span style=\"font-size: 14px;\">You can use the clipboard as a description, "
+"a message or simply copy it to your clipboard! 👌</span>"
+msgstr ""
+"<span style=\"font-size: 14px;\">你可使用剪貼簿作為描述、訊息，或複製內容至剪"
+"貼簿中！ 👌</span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
@@ -1470,7 +1573,8 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
 "<span style=\"font-size: 18px;\">\n"
-"                    4. What can I do if I haven't found exactly what I wanted?\"\n"
+"                    4. What can I do if I haven't found exactly what I "
+"wanted?\"\n"
 "                </span>"
 msgstr ""
 "<span style=\"font-size: 18px;\">\n"
@@ -1481,12 +1585,15 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_personal_organizer
 msgid ""
 "<span style=\"font-size: 18px;\">\n"
-"                    Productivity is never an accident. It is always the result of a commitment to excellence, intelligent planning, and focused effort.\n"
+"                    Productivity is never an accident. It is always the "
+"result of a commitment to excellence, intelligent planning, and focused "
+"effort.\n"
 "                </span>​\n"
 "                - Paul J. Meyer"
 msgstr ""
 "<span style=\"font-size: 18px;\">\n"
-"                    生產力從來都不是偶然的。只有在追求卓越、明智規劃及專注努力時，才有這樣的結果。\n"
+"                    生產力從來都不是偶然的。只有在追求卓越、明智規劃及專注努"
+"力時，才有這樣的結果。\n"
 "                </span>\n"
 "                — Paul J. Meyer"
 
@@ -1505,16 +1612,20 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
 "<span style=\"font-size: 24px;\">\n"
-"                                Make sure to comply as <strong>you will represent <u>our</u> brand</strong>\n"
+"                                Make sure to comply as <strong>you will "
+"represent <u>our</u> brand</strong>\n"
 "                            </span>\n"
 "                            <br>\n"
-"                            <span style=\"font-size: 24px;\">If in doubt, get in touch with us.</span>"
+"                            <span style=\"font-size: 24px;\">If in doubt, "
+"get in touch with us.</span>"
 msgstr ""
 "<span style=\"font-size: 24px;\">\n"
-"                                請務必遵守，因為<strong>你將會代表<u>我們</u>的品牌</strong>\n"
+"                                請務必遵守，因為<strong>你將會代表<u>我們</u>"
+"的品牌</strong>\n"
 "                            </span>\n"
 "                            <br>\n"
-"                            <span style=\"font-size: 24px;\">如有疑問，請聯絡我們。</span>"
+"                            <span style=\"font-size: 24px;\">如有疑問，請聯絡"
+"我們。</span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -1555,11 +1666,11 @@ msgstr ""
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_user_onboarding
 msgid ""
-"<span style=\"font-weight: bolder;\"><font class=\"text-o-"
-"color-1\">X</font></span>"
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\">X</"
+"font></span>"
 msgstr ""
-"<span style=\"font-weight: bolder;\"><font class=\"text-o-"
-"color-1\">X</font></span>"
+"<span style=\"font-weight: bolder;\"><font class=\"text-o-color-1\">X</"
+"font></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -1593,11 +1704,13 @@ msgstr "<strong style=\"font-weight: 500\">⚡ 最優先 3 件事</strong>"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
 "<strong>\n"
-"                                    <font style=\"color: rgb(148, 189, 123);\">Do</font>\n"
+"                                    <font style=\"color: rgb(148, 189, 123);"
+"\">Do</font>\n"
 "                                </strong>"
 msgstr ""
 "<strong>\n"
-"                                    <font style=\"color: rgb(148, 189, 123);\">使用指引</font>\n"
+"                                    <font style=\"color: rgb(148, 189, 123);"
+"\">使用指引</font>\n"
 "                                </strong>"
 
 #. module: knowledge
@@ -1605,13 +1718,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">FRIDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">FRIDAY 🏠 "
+"@home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期五 🏠 @家中</font>\n"
+"                                    <font class=\"text-o-color-1\">星期五 🏠 "
+"@家中</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1620,13 +1735,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">MONDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">MONDAY 🏢 "
+"@office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期一 🏢 @辦公室</font>\n"
+"                                    <font class=\"text-o-color-1\">星期一 🏢 "
+"@辦公室</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1635,13 +1752,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">Reminders</font>\n"
+"                                    <font class=\"text-o-"
+"color-1\">Reminders</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">提醒事項</font>\n"
+"                                    <font class=\"text-o-color-1\">提醒事項</"
+"font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1650,13 +1769,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">SATURDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">SATURDAY "
+"🏠 @home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期六 🏠 @家中</font>\n"
+"                                    <font class=\"text-o-color-1\">星期六 🏠 "
+"@家中</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1665,13 +1786,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">SUNDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">SUNDAY 🏠 "
+"@home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期日 🏠 @家中</font>\n"
+"                                    <font class=\"text-o-color-1\">星期日 🏠 "
+"@家中</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1680,13 +1803,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">THURSDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">THURSDAY "
+"🏢 @office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期四 🏢 @辦公室</font>\n"
+"                                    <font class=\"text-o-color-1\">星期四 🏢 "
+"@辦公室</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1695,13 +1820,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">TUESDAY 🏢 @office</font>\n"
+"                                    <font class=\"text-o-color-1\">TUESDAY "
+"🏢 @office</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期二 🏢 @辦公室</font>\n"
+"                                    <font class=\"text-o-color-1\">星期二 🏢 "
+"@辦公室</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1710,13 +1837,15 @@ msgstr ""
 msgid ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">WEDNESDAY 🏠 @home</font>\n"
+"                                    <font class=\"text-o-color-1\">WEDNESDAY "
+"🏠 @home</font>\n"
 "                                </span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
 "                                <span style=\"font-size: 18px;\">\n"
-"                                    <font class=\"text-o-color-1\">星期三 🏠 @家中</font>\n"
+"                                    <font class=\"text-o-color-1\">星期三 🏠 "
+"@家中</font>\n"
 "                                </span>\n"
 "                            </strong>"
 
@@ -1724,59 +1853,68 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Name</span>\n"
+"                                <span style=\"font-size: 18px;\">Name</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">名稱</span>\n"
+"                                <span style=\"font-size: 18px;\">名稱</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Strengths</span>\n"
+"                                <span style=\"font-size: 18px;\">Strengths</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">優勢</span>\n"
+"                                <span style=\"font-size: 18px;\">優勢</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_account_management
 msgid ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">Weaknesses</span>\n"
+"                                <span style=\"font-size: 18px;\">Weaknesses</"
+"span>\n"
 "                            </strong>"
 msgstr ""
 "<strong>\n"
-"                                <span style=\"font-size: 18px;\">弱點</span>\n"
+"                                <span style=\"font-size: 18px;\">弱點</"
+"span>\n"
 "                            </strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead,"
-" use the book button in the chatter to find this article and autocomplete "
+"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead, "
+"use the book button in the chatter to find this article and autocomplete "
 "your description with this qualification template."
 msgstr ""
-"<strong><font class=\"text-o-"
-"color-2\">專業提示</font></strong>：在潛在客戶頁面中，使用聊天視窗內的「書本」按鈕，可查找此文章，並可使用此資格評定範本，自動填寫描述。"
+"<strong><font class=\"text-o-color-2\">專業提示</font></strong>：在潛在客戶頁"
+"面中，使用聊天視窗內的「書本」按鈕，可查找此文章，並可使用此資格評定範本，自"
+"動填寫描述。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead,"
-" use the book button in the chatter to find this article and autocomplete "
+"<strong><font class=\"text-o-color-2\">PRO TIP</font></strong>: From a lead, "
+"use the book button in the chatter to find this article and autocomplete "
 "your email with this template."
 msgstr ""
-"<strong><font class=\"text-o-"
-"color-2\">專業提示</font></strong>：在潛在客戶頁面中，使用聊天視窗內的「書本」按鈕，可查找此文章，並可使用此範本，自動填寫電郵。"
+"<strong><font class=\"text-o-color-2\">專業提示</font></strong>：在潛在客戶頁"
+"面中，使用聊天視窗內的「書本」按鈕，可查找此文章，並可使用此範本，自動填寫電"
+"郵。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "<strong><font style=\"color: rgb(231, 99, 99);\">Do Not</font></strong>"
-msgstr "<strong><font style=\"color: rgb(231, 99, 99);\">不要做</font></strong>"
+msgstr ""
+"<strong><font style=\"color: rgb(231, 99, 99);\">不要做</font></strong>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
@@ -1873,15 +2011,19 @@ msgstr "<strong>第 1,2,3,4 季</strong>"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_release_note
 msgid ""
-"<strong>Summary</strong>: <font class=\"text-600\">What an exciting release!"
-" This time the focus was on...</font>"
-msgstr "<strong>概覽</strong>：<font class=\"text-600\">令人興奮的一次發佈！這次發佈的焦點是⋯</font>"
+"<strong>Summary</strong>: <font class=\"text-600\">What an exciting release! "
+"This time the focus was on...</font>"
+msgstr ""
+"<strong>概覽</strong>：<font class=\"text-600\">令人興奮的一次發佈！這次發佈"
+"的焦點是⋯</font>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"<strong>U</strong>nique <strong>S</strong>elling <strong>P</strong>roposition:\n"
-"                            Advantage that makes you stand out from the competition."
+"<strong>U</strong>nique <strong>S</strong>elling <strong>P</"
+"strong>roposition:\n"
+"                            Advantage that makes you stand out from the "
+"competition."
 msgstr ""
 "<strong>USP</strong> <strong>獨特銷售主張</strong><strong></strong>：\n"
 "                            讓你在競爭中脫穎而出的優勢。"
@@ -1943,11 +2085,14 @@ msgstr "Abigail"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid ""
-"About YourCompany: YourCompany is a team of passionate people whose goal is to improve everyone's life\n"
+"About YourCompany: YourCompany is a team of passionate people whose goal is "
+"to improve everyone's life\n"
 "                        through disruptive products.\n"
-"                        We build great products to solve your business problems.\n"
+"                        We build great products to solve your business "
+"problems.\n"
 "                        <br>\n"
-"                        Our products are designed for small to medium size companies willing to optimize their performance."
+"                        Our products are designed for small to medium size "
+"companies willing to optimize their performance."
 msgstr ""
 "關於YourCompany: YourCompany是一個朝氣蓬勃的團隊，旨在開發前沿產品，\n"
 "                        從而改善每個人的生活。\n"
@@ -2074,23 +2219,44 @@ msgstr "加入留言⋯"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
+msgid "Add a foldable section."
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
 #: code:addons/knowledge/static/src/components/knowledge_icon/knowledge_icon.xml:0
 msgid "Add a random icon"
 msgstr "加入隨機圖示"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
+msgid "Add a title to your section"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
+msgid "Add an Article"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_stage_action
 msgid ""
-"Add an embed kanban view of article items in the body of an article by using"
-" '/kanban' command."
-msgstr "使用「/kanban」指令，將嵌入式看板檢視畫面加入文章正文，用作顯示文章項目。"
+"Add an embed kanban view of article items in the body of an article by using "
+"'/kanban' command."
+msgstr ""
+"使用「/kanban」指令，將嵌入式看板檢視畫面加入文章正文，用作顯示文章項目。"
 
 #. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_favorite_action
 msgid ""
 "Add articles in your list of favorites by clicking on the <i class=\"fa fa-"
 "star-o\"></i> next to the article name."
-msgstr "按下文章名稱旁邊的 <i class=\"fa fa-star-o\"></i> 圖示，將文章加入至你的最愛清單。"
+msgstr ""
+"按下文章名稱旁邊的 <i class=\"fa fa-star-o\"></i> 圖示，將文章加入至你的最愛"
+"清單。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
@@ -2100,8 +2266,14 @@ msgstr "加入用戶或電郵地址"
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "Add people or email addresses..."
-msgstr "加入用戶或電郵地址⋯"
+msgid "Add people..."
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Add to Favorites"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -2121,13 +2293,9 @@ msgstr "加入最愛"
 msgid ""
 "Adding members allows you to share Articles while granting specific access "
 "rights<br>(can write, can read, ...)."
-msgstr "加入成員後，你可以分享文章，以及授予特定的存取權限<br>（例如：可寫入、可讀取等）。"
-
-#. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "Admin"
-msgstr "管理員"
+msgstr ""
+"加入成員後，你可以分享文章，以及授予特定的存取權限<br>（例如：可寫入、可讀取"
+"等）。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2143,61 +2311,59 @@ msgstr "網上或電視廣告"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
-"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
-"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i"
-" class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"After-Sales Service <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
+"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
 msgid ""
-"After-Sales Service​ <span class=\"o_stars o_five_stars\" "
-"id=\"checkId-5\"><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"After-Sales Service​ <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
+"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
-"After-Sales Service​ <span class=\"o_stars o_five_stars\" "
-"id=\"checkId-5\"><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i></span>"
+"After-Sales Service​ <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"售後服務 <span class=\"o_stars o_five_stars\" id=\"checkId-5\"><i class=\"fa "
+"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -2243,6 +2409,12 @@ msgid "All my activities will always be encoded in our CRM"
 msgstr "所有活動都會記錄在我們的客戶關係管理系統中"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/article_annexe_picker_dialog/article_annexe_picker_no_content_helper.xml:0
+msgid "All pages have already been loaded."
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
 msgid "Always include sufficient clear space around the logo"
 msgstr "標誌周圍一定要留有足夠空白位置"
@@ -2252,7 +2424,9 @@ msgstr "標誌周圍一定要留有足夠空白位置"
 msgid ""
 "Always type <strong>YourCompany</strong> in the same font size and style as "
 "the content of the text"
-msgstr "文字提及 <strong>YourCompany</strong> 時，請使用與前後文本相同的字體大小及樣式"
+msgstr ""
+"文字提及 <strong>YourCompany</strong> 時，請使用與前後文本相同的字體大小及樣"
+"式"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -2262,8 +2436,8 @@ msgstr "一兩個小時（例如看病等）"
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_post_mortem
 msgid ""
-"Analyze what went wrong and the underlying causes. Extract insights to avoid"
-" making similar mistakes in the future."
+"Analyze what went wrong and the underlying causes. Extract insights to avoid "
+"making similar mistakes in the future."
 msgstr "分析出錯的項目及背後根本原因。總結重要資訊，避免再犯類似錯誤。"
 
 #. module: knowledge
@@ -2286,8 +2460,8 @@ msgstr "已封存"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to change the permission? This means it will no longer"
-" inherit access rights from its parent articles."
+"Are you sure you want to change the permission? This means it will no longer "
+"inherit access rights from its parent articles."
 msgstr "確定更改權限？更改後，文章將不會再繼承其母項文章的存取權限設定。"
 
 #. module: knowledge
@@ -2308,8 +2482,8 @@ msgstr "確定要從資料庫刪除此範本？"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to leave this article? That means losing your personal"
-" access to it."
+"Are you sure you want to leave this article? That means losing your personal "
+"access to it."
 msgstr "確定要離開這篇文章？離開後，你將失去對它的個人存取權限。"
 
 #. module: knowledge
@@ -2318,7 +2492,8 @@ msgstr "確定要離開這篇文章？離開後，你將失去對它的個人存
 msgid ""
 "Are you sure you want to leave your private Article? As you are its last "
 "member, it will be moved to the Trash."
-msgstr "確定要離開你的私人文章？由於你是最後一位成員，離開文章後它將會移至垃圾桶。"
+msgstr ""
+"確定要離開你的私人文章？由於你是最後一位成員，離開文章後它將會移至垃圾桶。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2334,7 +2509,8 @@ msgstr "確定要將「%(icon)s %(title)s」移至「私人」？只有你才可
 msgid ""
 "Are you sure you want to move \"%(icon)s%(title)s\" to the Shared section? "
 "It will be shared with all listed members."
-msgstr "確定要將 \"%(icon)s %(title)s\" 移至共用部份？它將會與列出的所有成員共用。"
+msgstr ""
+"確定要將 \"%(icon)s %(title)s\" 移至共用部份？它將會與列出的所有成員共用。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2348,10 +2524,11 @@ msgstr "確定要將「%(icon)s %(title)s」移至工作區？它將與所有內
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid ""
-"Are you sure you want to move \"%(icon)s%(title)s\" under "
-"\"%(parentIcon)s%(parentTitle)s\"? It will be shared with the same persons."
+"Are you sure you want to move \"%(icon)s%(title)s\" under \"%(parentIcon)s%"
+"(parentTitle)s\"? It will be shared with the same persons."
 msgstr ""
-"確定要將「%(icon)s %(title)s」移至「%(parentIcon)s %(parentTitle)s」之下？它將與相同的人員分享。"
+"確定要將「%(icon)s %(title)s」移至「%(parentIcon)s %(parentTitle)s」之下？它"
+"將與相同的人員分享。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2381,17 +2558,20 @@ msgstr "確定要恢復存取權限？這表示此文章現在會繼承其母項
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to restrict access to this article? This means it will"
-" no longer inherit access rights from its parents."
-msgstr "確定要限制此文章的存取權限？此操作表示該文章不會再從其母級文章繼承存取權限。"
+"Are you sure you want to restrict access to this article? This means it will "
+"no longer inherit access rights from its parents."
+msgstr ""
+"確定要限制此文章的存取權限？此操作表示該文章不會再從其母級文章繼承存取權限。"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 msgid ""
-"Are you sure you want to restrict access to this article? This means that it"
-" will no longer inherit access rights from its parents."
-msgstr "確定要限制此文章的存取權限？執行操作後，文章將不會再從其母級項目繼承存取權限。"
+"Are you sure you want to restrict access to this article? This means that it "
+"will no longer inherit access rights from its parents."
+msgstr ""
+"確定要限制此文章的存取權限？執行操作後，文章將不會再從其母級項目繼承存取權"
+"限。"
 
 #. module: knowledge
 #. odoo-javascript
@@ -2426,7 +2606,9 @@ msgstr "文章"
 msgid ""
 "Article '%s' should always have a writer: inherit write permission, or have "
 "a member with write access"
-msgstr "文章 %s 應該永遠有一名寫入者。可將文章設為繼承寫入權限，或設置一名具有寫入權限的成員。"
+msgstr ""
+"文章 %s 應該永遠有一名寫入者。可將文章設為繼承寫入權限，或設置一名具有寫入權"
+"限的成員。"
 
 #. module: knowledge
 #: model:ir.model,name:knowledge.model_knowledge_article_thread
@@ -2484,7 +2666,8 @@ msgstr "文章封面圖片"
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_item_action_stages
 msgid ""
-"Article items are articles that exist inside their parents but are not displayed in the menu.\n"
+"Article items are articles that exist inside their parents but are not "
+"displayed in the menu.\n"
 "                They can be used to handle lists (Buildings, Tasks, ...)."
 msgstr ""
 "文章項目是存在於其母項內，但不在選單中顯示的文章。\n"
@@ -2555,9 +2738,19 @@ msgid "Attachment Count"
 msgstr "附件數目"
 
 #. module: knowledge
+#: model:ir.model.fields,field_description:knowledge.field_knowledge_article__template_child_default_create
+msgid "Auto-Create Child Article"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid "Available Models ✅"
 msgstr "有售款式 ✅"
+
+#. module: knowledge
+#: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_member_avatar
+msgid "Avatar 128"
+msgstr ""
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
@@ -2620,46 +2813,46 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
+"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
 "Brand Attraction <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa "
-"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"品牌吸引度 <span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -2801,7 +2994,9 @@ msgstr "未能在文章 %(parent_name)s 下建立新文章，因該文章為非�
 msgid ""
 "Capitalize the word <strong>YourCompany</strong>, except if it's part of an "
 "URL e.g. website/company"
-msgstr "請保留 <strong>YourCompany</strong> 相關字母大寫，但在網址使用時除外。例如：website/company。"
+msgstr ""
+"請保留 <strong>YourCompany</strong> 相關字母大寫，但在網址使用時除外。例如："
+"website/company。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -2827,8 +3022,8 @@ msgstr "原因"
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_account_management
 msgid ""
-"Centralize account insights in one document for comprehensive monitoring and"
-" follow-up."
+"Centralize account insights in one document for comprehensive monitoring and "
+"follow-up."
 msgstr "將帳戶相關的深入資訊集中在同一份文件中，以便全面監控及跟進。"
 
 #. module: knowledge
@@ -2969,7 +3164,9 @@ msgstr "公司架構："
 msgid ""
 "Compiled below are tips &amp; tricks collected among our veterans to help "
 "newcomers get started. We hope it will help you sign deals."
-msgstr "以下收集了我們資深同事提供的技巧及心得，幫助新人開展工作。希望能幫助你成功簽單、達成銷售！"
+msgstr ""
+"以下收集了我們資深同事提供的技巧及心得，幫助新人開展工作。希望能幫助你成功簽"
+"單、達成銷售！"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3053,16 +3250,17 @@ msgstr "成本太高"
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.js:0
 msgid ""
-"Could not move \"%(icon)s%(title)s\" under "
-"\"%(parentIcon)s%(parentTitle)s\", because you do not have write permission "
-"on the latter."
+"Could not move \"%(icon)s%(title)s\" under \"%(parentIcon)s%"
+"(parentTitle)s\", because you do not have write permission on the latter."
 msgstr ""
-"未能將「%(icon)s %(title)s」移至「%(parentIcon)s %(parentTitle)s」之下，因為你沒有後者的寫入權限。"
+"未能將「%(icon)s %(title)s」移至「%(parentIcon)s %(parentTitle)s」之下，因為"
+"你沒有後者的寫入權限。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"Could you please let me know on which number I could reach you so that we could get in touch?<br>\n"
+"Could you please let me know on which number I could reach you so that we "
+"could get in touch?<br>\n"
 "                        It should not take longer than 15 minutes."
 msgstr ""
 "請告訴我可以聯繫到你的電話號碼，方便我們聯絡。<br>\n"
@@ -3109,15 +3307,15 @@ msgstr "建立客戶"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
-msgid "Create a nested article"
-msgstr "建立巢狀結構文章"
+#: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
+msgid "Create a new article in workspace"
+msgstr "在工作區建立新文章"
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
-msgid "Create a new article in workspace"
-msgstr "在工作區建立新文章"
+msgid "Create a new private article"
+msgstr ""
 
 #. module: knowledge
 #: model:knowledge.article,template_description:knowledge.knowledge_article_template_product_catalog
@@ -3133,16 +3331,16 @@ msgid "Create an Article Item"
 msgstr "建立文章項目"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
+msgid "Create an Article inside"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_action
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_form
 msgid "Create an article"
 msgstr "建立新文章"
-
-#. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
-msgid "Created"
-msgstr "建立"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__create_uid
@@ -3233,12 +3431,6 @@ msgstr "決定 4"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "Default Access Rights"
-msgstr "預設存取權限"
-
-#. module: knowledge
-#. odoo-javascript
 #: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
 msgid "Default Scale"
 msgstr "預設範圍"
@@ -3248,7 +3440,9 @@ msgstr "預設範圍"
 msgid ""
 "Default permission for all internal users. (External users can still have "
 "access to this article if they are added to its members)"
-msgstr "所有內部使用者的預設權限。（至於外部使用者，如果獲加入該文章的成員中，他們也有存取該文章的權限。）"
+msgstr ""
+"所有內部使用者的預設權限。（至於外部使用者，如果獲加入該文章的成員中，他們也"
+"有存取該文章的權限。）"
 
 #. module: knowledge
 #. odoo-javascript
@@ -3262,6 +3456,12 @@ msgstr "刪除篩選器"
 #: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_dialog.xml:0
 msgid "Delete Template"
 msgstr "刪除範本"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index_list.xml:0
+msgid "Delete article"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -3314,6 +3514,12 @@ msgid "Discard"
 msgstr "捨棄"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
+msgid "Discard all changes"
+msgstr ""
+
+#. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__display_name
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__display_name
@@ -3359,6 +3565,12 @@ msgstr "記得傳開消息，我們<em>非常</em>期待新版 Odoo 的發佈！
 #: model:knowledge.article.stage,name:knowledge.knowledge_article_template_stage_done
 msgid "Done"
 msgstr "完成"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Download PDF"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -3478,12 +3690,6 @@ msgid "Expense Policy"
 msgstr "開支報銷政策"
 
 #. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
-msgid "Export"
-msgstr "匯出"
-
-#. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_invite_view_form
 msgid "Extra Comment"
 msgstr "額外備註"
@@ -3522,6 +3728,18 @@ msgstr "最愛"
 #: model_terms:ir.ui.view,arch_db:knowledge.portal_my_home_knowledge
 msgid "Find all articles shared with you"
 msgstr "找尋所有向你分享的文章"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
+msgid "Fold/unfold the section"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
+msgid "Foldable Section"
+msgstr ""
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_stage__fold
@@ -3564,6 +3782,11 @@ msgid "Full width"
 msgstr "全寬"
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Future Activities"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid "Gender(s):"
 msgstr "性別："
@@ -3581,20 +3804,10 @@ msgid "Gender(s): W"
 msgstr "性別：女"
 
 #. module: knowledge
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_favorite_view_search
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_member_view_search
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_stage_view_search
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_template_view_search
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search_items
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "Guest"
-msgstr "訪客"
+msgid "General Access"
+msgstr ""
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_hr_faq
@@ -3630,8 +3843,7 @@ msgstr "有正常文章子項？"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__user_has_access_parent_path
-msgid ""
-"Has the user access to each parent from current article until its root?"
+msgid "Has the user access to each parent from current article until its root?"
 msgstr "使用者有否權限，以存取從目前文章至根級項目的每一層母級項目？"
 
 #. module: knowledge
@@ -3649,7 +3861,8 @@ msgstr "你好"
 msgid ""
 "Hello there, I am a template 👋\n"
 "            <br/>\n"
-"            Use the buttons at the top-right of this box to re-use my content.\n"
+"            Use the buttons at the top-right of this box to re-use my "
+"content.\n"
 "            <br/>\n"
 "            No more time wasted! 🔥"
 msgstr ""
@@ -3664,7 +3877,8 @@ msgstr ""
 msgid ""
 "Here are logos that you can use at your own convenience.\n"
 "                <br>\n"
-"                They can also be shared with customers, journalists and resellers."
+"                They can also be shared with customers, journalists and "
+"resellers."
 msgstr ""
 "你可隨意使用以下標誌。\n"
 "                <br>\n"
@@ -3686,6 +3900,30 @@ msgstr "ProspectName 你好，"
 #: code:addons/knowledge/static/src/xml/knowledge_command_palette.xml:0
 msgid "Hidden"
 msgstr "隱藏"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Hide Chatter"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Hide Comments"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Hide Properties"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
+msgid "Hide sub-articles"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -3775,10 +4013,12 @@ msgstr "如何找到滿足你要求的完美型號 😍"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
 "I was doing some research online and found your company.<br>\n"
-"                        Considering we just launched ProductName, I was thinking you would be interested."
+"                        Considering we just launched ProductName, I was "
+"thinking you would be interested."
 msgstr ""
 "我剛在網絡上做了一些研究，找到了你們公司。<br>\n"
-"                        考慮到我們剛剛推出了 ProductName 產品，我想你會感興趣。"
+"                        考慮到我們剛剛推出了 ProductName 產品，我想你會感興"
+"趣。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -3849,17 +4089,25 @@ msgstr "若選取，文章會出現在「共享範本」部份之下的範本庫
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
-"If none of those offers convinced you, just get in touch with our "
-"team.<br>At MyCompany, your happiness is our utmost priority, and we'll go "
-"the extra mile to make sure you find what you're looking for!"
+"If none of those offers convinced you, just get in touch with our team."
+"<br>At MyCompany, your happiness is our utmost priority, and we'll go the "
+"extra mile to make sure you find what you're looking for!"
 msgstr ""
-"如果這些優惠都無法說服您，請與我們的團隊聯繫。<br>在 MyCompany，您滿意是我們的首要任務，我們將加倍努力，確保您找到想要的東西！"
+"如果這些優惠都無法說服您，請與我們的團隊聯繫。<br>在 MyCompany，您滿意是我們"
+"的首要任務，我們將加倍努力，確保您找到想要的東西！"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__is_desynchronized
 msgid ""
 "If set, this article won't inherit access rules from its parents anymore."
 msgstr "若設定，這篇文章不會再從母項繼承存取規則。"
+
+#. module: knowledge
+#: model:ir.model.fields,help:knowledge.field_knowledge_article__template_child_default_create
+msgid ""
+"If set, this will automatically create this child article when its parent "
+"template is used"
+msgstr ""
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -3903,6 +4151,7 @@ msgstr "不穩定的客戶體驗"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Index"
@@ -4012,7 +4261,9 @@ msgid ""
 "Instead of setting up complicated processes, <strong>we prefer to let our "
 "employees buy whatever they need</strong>. Just fill in an expense and we "
 "will reimburse you."
-msgstr "與其設立繁複流程，<strong>我們更願意讓員工購買他們所需的任何東西</strong>。只需填寫開支報銷，我們便會發還款項。"
+msgstr ""
+"與其設立繁複流程，<strong>我們更願意讓員工購買他們所需的任何東西</strong>。只"
+"需填寫開支報銷，我們便會發還款項。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
@@ -4262,12 +4513,6 @@ msgid "Last Edit Date"
 msgstr "最後編輯日期"
 
 #. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
-msgid "Last Edited"
-msgstr "最後編輯"
-
-#. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_uid
 msgid "Last Edited by"
 msgstr "最後編輯人員"
@@ -4276,6 +4521,17 @@ msgstr "最後編輯人員"
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_date
 msgid "Last Edited on"
 msgstr "最後編輯於"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Last Edited ·"
+msgstr ""
+
+#. module: knowledge
+#: model:ir.model.fields,field_description:knowledge.field_knowledge_article__last_edition_user_avatar
+msgid "Last Editor's Avatar"
+msgstr ""
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__write_uid
@@ -4300,6 +4556,11 @@ msgstr "最後更新者"
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_invite__write_date
 msgid "Last Updated on"
 msgstr "最後更新於"
+
+#. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Late Activities"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -4368,6 +4629,7 @@ msgstr "載入範本"
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/wysiwyg_article_helper/wysiwyg_article_helper.xml:0
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Load a Template"
 msgstr "載入範本"
 
@@ -4386,9 +4648,11 @@ msgstr "已鎖定"
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"Logging changes from %(partner_name)s without write access on article "
-"%(article_name)s due to hierarchy tree update"
-msgstr "由於層級樹狀結構有更新，正在記錄 %(partner_name)s 提供的修訂，但對文章 %(article_name)s 沒有寫入權限"
+"Logging changes from %(partner_name)s without write access on article %"
+"(article_name)s due to hierarchy tree update"
+msgstr ""
+"由於層級樹狀結構有更新，正在記錄 %(partner_name)s 提供的修訂，但對文章 %"
+"(article_name)s 沒有寫入權限"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -4472,7 +4736,6 @@ msgstr "會員"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 #: model:ir.actions.act_window,name:knowledge.knowledge_article_member_action
 #: model:ir.ui.menu,name:knowledge.knowledge_article_member_menu
@@ -4484,6 +4747,14 @@ msgstr "成員"
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__article_member_ids
 msgid "Members Information"
 msgstr "會員資訊"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.js:0
+#: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__none
+#: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__internal_permission__none
+msgid "Members only"
+msgstr ""
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__root_article_id
@@ -4534,12 +4805,16 @@ msgstr "更多操作"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"More than 150 Odooers participated in this years' edition of the run of 5 or 11\n"
-"                            kilometers.<br>Starting from the office, they enjoyed a great tour in the countryside before\n"
-"                            coming back to Grand-Rosière, where they were welcomed with a drink and a burger."
+"More than 150 Odooers participated in this years' edition of the run of 5 or "
+"11\n"
+"                            kilometers.<br>Starting from the office, they "
+"enjoyed a great tour in the countryside before\n"
+"                            coming back to Grand-Rosière, where they were "
+"welcomed with a drink and a burger."
 msgstr ""
 "超過 150 名 Odoo 人員參加了今年的 5 公里或 11 公里\n"
-"                            跑。<br>他們從辦公室出發，享受了一段愉快郊野旅程，\n"
+"                            跑。<br>他們從辦公室出發，享受了一段愉快郊野旅"
+"程，\n"
 "                            然後回到Grand-Rosière接受款待，享用飲品及漢堡包。"
 
 #. module: knowledge
@@ -4736,12 +5011,6 @@ msgid "No Article in Trash"
 msgstr "垃圾桶沒有文章"
 
 #. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/sidebar/sidebar_row.xml:0
-msgid "No Articles here"
-msgstr "此處沒有文章"
-
-#. module: knowledge
 #: model_terms:ir.actions.act_window,help:knowledge.knowledge_article_favorite_action
 msgid "No Favorites yet!"
 msgstr "未有最愛項目。"
@@ -4752,12 +5021,16 @@ msgid "No Members yet!"
 msgstr "未有成員。"
 
 #. module: knowledge
-#: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__inherited_permission__none
-#: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__internal_permission__none
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article_member__permission__none
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_invite__permission__none
 msgid "No access"
 msgstr "未能存取"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/article_annexe_picker_dialog/article_annexe_picker_no_content_helper.xml:0
+msgid "No annex found!"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -4768,6 +5041,7 @@ msgstr "未找到文章。"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 #: code:addons/knowledge/static/src/editor/embedded_components/core/article_index/readonly_article_index.xml:0
 msgid "No article to display"
 msgstr "沒有文章可顯示"
@@ -4784,7 +5058,7 @@ msgstr "尚未建立階段。"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_dialog.xml:0
+#: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_no_content_helper.xml:0
 msgid "No template yet."
 msgstr "尚未有範本。"
 
@@ -4798,10 +5072,12 @@ msgstr "沒事發生呢！"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
 "Nth <strong>Q</strong>uarter of the fiscal year.<br>\n"
-"                            <em>E.g. Q4 starts on Oct. 1 and ends on Dec. 31.</em>"
+"                            <em>E.g. Q4 starts on Oct. 1 and ends on Dec. 31."
+"</em>"
 msgstr ""
 "財政年度的第 N 個<strong>季度</strong>。<br>\n"
-"                            例如：第 4 季由 10 月 1 日開始，至 12 月 31 日結束。<em></em>"
+"                            例如：第 4 季由 10 月 1 日開始，至 12 月 31 日結"
+"束。<em></em>"
 
 #. module: knowledge
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article__message_needaction_counter
@@ -4960,7 +5236,9 @@ msgstr "否則，你可處理下列其他事項："
 msgid ""
 "Our catalog can be found here and is updated every 2 years. If you do not "
 "manage to find the specific model you are looking for,"
-msgstr "我們的目錄可以在這裡找到，並每兩年更新一次。如果您沒有找到您正在尋找的特定型號,"
+msgstr ""
+"我們的目錄可以在這裡找到，並每兩年更新一次。如果您沒有找到您正在尋找的特定型"
+"號,"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
@@ -5074,6 +5352,12 @@ msgid "Podcast updates 📻"
 msgstr "播客更新 📻"
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/mail/composer/composer_patch.js:0
+msgid "Post"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_post_mortem
 msgid "Post-Mortem Analysis"
 msgstr "事後分析"
@@ -5103,8 +5387,8 @@ msgstr "預覽"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i></span>"
 msgstr ""
 "價錢 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
@@ -5114,8 +5398,8 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "價錢 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
@@ -5125,8 +5409,8 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "價錢 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
@@ -5136,9 +5420,9 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_3
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i"
-" class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
 "價錢 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
@@ -5147,10 +5431,9 @@ msgstr ""
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_personas
 msgid ""
-"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa "
-"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>​"
+"Price <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>​"
 msgstr ""
 "價錢 <span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
 "star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
@@ -5293,6 +5576,12 @@ msgstr "移除"
 #: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 msgid "Remove Cover"
 msgstr "移除封面"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Remove From Favorites"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -5469,6 +5758,12 @@ msgstr "儲存位置"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
+msgid "Save manually"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
 #: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover.xml:0
 msgid "Save position"
 msgstr "儲存位置"
@@ -5542,7 +5837,7 @@ msgstr "選擇範本"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/external_embedded_view_favorite_menu/embedded_view_favorite_menu.js:0
+#: code:addons/knowledge/static/src/hooks/knowledge_article_selector.js:0
 msgid "Select an article"
 msgstr "選取文章"
 
@@ -5587,6 +5882,12 @@ msgstr "分享"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/components/permission_panel_dialog/permission_panel_dialog.xml:0
+msgid "Share settings"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
 #: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.js:0
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
 #: model:ir.model.fields.selection,name:knowledge.selection__knowledge_article__category__shared
@@ -5608,14 +5909,19 @@ msgstr "共享的待辦清單"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
-msgid "Show All"
-msgstr "顯示全部"
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Show Chatter"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
+msgid "Show Comments"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/comments/comment/comment.xml:0
-#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
 msgid "Show Less"
 msgstr "顯示較少"
 
@@ -5627,6 +5933,7 @@ msgstr "顯示更多"
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/components/options_dropdown/options_dropdown.xml:0
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Show Properties"
 msgstr "顯示屬性"
@@ -5638,10 +5945,27 @@ msgid "Show Weekends?"
 msgstr "顯示週末？"
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
+msgid "Show in Workspace"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/editor/embedded_components/plugins/article_index_plugin/article_index_plugin.js:0
 msgid "Show nested articles"
 msgstr "顯示巢狀結構文章"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/backend/article_index/article_index.xml:0
+msgid "Show sub-articles"
+msgstr ""
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
@@ -5666,8 +5990,8 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5675,11 +5999,11 @@ msgstr ""
 msgid ""
 "Social Status <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5687,12 +6011,12 @@ msgstr ""
 msgid ""
 "Social Status <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa "
+"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_1
@@ -5701,8 +6025,8 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"社會地位 <span class=\"o_stars o_five_stars\" id=\"checkId-4\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5740,8 +6064,8 @@ msgid ""
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
 "star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5749,11 +6073,11 @@ msgstr ""
 msgid ""
 "Speed of Service <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
 "class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
+"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5761,12 +6085,11 @@ msgstr ""
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_2
 msgid ""
 "Speed of Service <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
-"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"class=\"fa fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
+"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa "
+"fa-star\"></i><i class=\"fa fa-star\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -5774,12 +6097,12 @@ msgstr ""
 msgid ""
 "Speed of Service ​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-"
-"star-o\"></i></span>"
+"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></"
+"span>"
 msgstr ""
-"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
-"class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
+"服務速度 <span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa "
+"fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></"
+"i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_sprint_calendar
@@ -5837,8 +6160,8 @@ msgstr "首先寫一個標題⋯"
 #. module: knowledge
 #: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_2
 msgid ""
-"Start working together on any Knowledge Article by sharing your article with"
-" others."
+"Start working together on any Knowledge Article by sharing your article with "
+"others."
 msgstr "與他人分享你的知識庫文章，開始共同協作。"
 
 #. module: knowledge
@@ -5933,6 +6256,11 @@ msgid "Template Title"
 msgstr "範本標題"
 
 #. module: knowledge
+#: model:ir.model.fields,field_description:knowledge.field_knowledge_article__origin_template_id
+msgid "Template used to generate the article"
+msgstr ""
+
+#. module: knowledge
 #: model:ir.ui.menu,name:knowledge.knowledge_article_template_menu
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
 msgid "Templates"
@@ -5971,7 +6299,8 @@ msgstr "五大戒條"
 msgid ""
 "The Accounting team handles all payments on Fridays afternoon.\n"
 "                <br>\n"
-"                If 2 weeks have passed and you are still waiting to be paid, get in touch with them."
+"                If 2 weeks have passed and you are still waiting to be paid, "
+"get in touch with them."
 msgstr ""
 "會計團隊會在星期五下午處理所有付款事宜。\n"
 "                <br>\n"
@@ -6025,19 +6354,22 @@ msgstr "該項操作未能完成。"
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article_thread__article_anchor_text
 msgid ""
-"The original highlighted anchor text, giving initial context if that text is"
-" modified or removed afterwards."
+"The original highlighted anchor text, giving initial context if that text is "
+"modified or removed afterwards."
 msgstr "原文突出顯示的連結文字。如果之後修改或刪除，便可提供原文語境。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"The podcast launches its new technical talks, for all tech-savvy listeners out there! This\n"
-"                            new episode of the series features Géry, the mastermind behind OWL, the world fastest JS\n"
+"The podcast launches its new technical talks, for all tech-savvy listeners "
+"out there! This\n"
+"                            new episode of the series features Géry, the "
+"mastermind behind OWL, the world fastest JS\n"
 "                            framework. 🚀"
 msgstr ""
 "該播客為所有精通技術的聽眾，推出新的技術訪談節目！\n"
-"                            系列的新一集以 Géry 為主角，他是世界上最快的 JS 框架 OWL 的\n"
+"                            系列的新一集以 Géry 為主角，他是世界上最快的 JS "
+"框架 OWL 的\n"
 "                            幕後功臣。 🚀"
 
 #. module: knowledge
@@ -6081,11 +6413,11 @@ msgstr "Odoo Experience 23 門票已開始發售，現在預訂更便宜！"
 #. odoo-python
 #: code:addons/knowledge/__init__.py:0
 msgid ""
-"The version of the lxml package used is not supported. Consider reinstalling"
-" lxml package using 'pip install --nobinary :all: lxml'"
+"The version of the lxml package used is not supported. Consider reinstalling "
+"lxml package using 'pip install --nobinary :all: lxml'"
 msgstr ""
-"系統不支援所使用 lxml 套件的版本。你可考慮使用以下指令，重新安裝 lxml 套件：pip install --nobinary :all: "
-"lxml"
+"系統不支援所使用 lxml 套件的版本。你可考慮使用以下指令，重新安裝 lxml 套件："
+"pip install --nobinary :all: lxml"
 
 #. module: knowledge
 #. odoo-javascript
@@ -6116,7 +6448,7 @@ msgstr "本篇文章已封存。"
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
+#: code:addons/knowledge/static/src/components/hierarchy/hierarchy.xml:0
 msgid "This article is locked"
 msgstr "此文章已鎖定"
 
@@ -6134,12 +6466,15 @@ msgstr "這是全域篩選器，將會為每個人都移除。"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
-"This year again, Odoo was present at the <em>Tech and Innovation festival for students</em> in\n"
-"                            Antwerp, ready to promote our company!<br>Fabien was also there and gave an interview on the main\n"
+"This year again, Odoo was present at the <em>Tech and Innovation festival "
+"for students</em> in\n"
+"                            Antwerp, ready to promote our company!<br>Fabien "
+"was also there and gave an interview on the main\n"
 "                            stage."
 msgstr ""
 "今年，Odoo 再次出席在安特衛普舉行的「學生科技與創新節」，<em></em>\n"
-"                            準備宣傳我們的公司！<br>Fabien 也到場出席，並在主舞台上\n"
+"                            準備宣傳我們的公司！<br>Fabien 也到場出席，並在主"
+"舞台上\n"
 "                            受訪。"
 
 #. module: knowledge
@@ -6195,6 +6530,11 @@ msgid "To be sure to stay updated, follow us on"
 msgstr "為確保隨時得知最新動態，請在以下平台關注我們："
 
 #. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_search
+msgid "Today Activities"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar.xml:0
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
@@ -6229,6 +6569,18 @@ msgstr "類型"
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__activity_exception_decoration
 msgid "Type of the exception activity on record."
 msgstr "記錄的異常活動的類型。"
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/editor/embedded_components/plugins/foldable_section_plugin/foldable_section_plugin.js:0
+msgid "Type something inside this section"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/form_status_indicator/form_status_indicator.xml:0
+msgid "Unable to save. Correct the issue or discard all changes"
+msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
@@ -6339,12 +6691,6 @@ msgid "VersionName - ReleaseDate"
 msgstr "版本名稱 - 發佈日期"
 
 #. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "Visibility"
-msgstr "可見性"
-
-#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_marketing_customer_persona_4
 msgid "Vittorio"
 msgstr "Vittorio"
@@ -6388,7 +6734,8 @@ msgstr "歡迎 %s"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_company_newsletter
 msgid ""
 "Welcome to the last edition of the MyCompany Newsletter!<br>\n"
-"                We are very excited to share with you the hottest updates and news! 🤩"
+"                We are very excited to share with you the hottest updates "
+"and news! 🤩"
 msgstr ""
 "歡迎閱讀最新一期的 MyCompany 電子報！<br>\n"
 "                我們非常高興與您分享最熱門的最新資訊和新聞！ 🤩"
@@ -6415,27 +6762,33 @@ msgstr "您想管理哪些項目？"
 msgid ""
 "When locked, users cannot write on the body or change the title, even if "
 "they have write access on the article."
-msgstr "文章鎖定後，使用者將不可在正文書寫或更改標題，即使他們擁有文章的寫入權限也是如此。"
+msgstr ""
+"文章鎖定後，使用者將不可在正文書寫或更改標題，即使他們擁有文章的寫入權限也是"
+"如此。"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__to_delete
 msgid ""
 "When sent to trash, articles are flagged to be deleted\n"
-"                days after last edit. knowledge_article_trash_limit_days config\n"
+"                days after last edit. knowledge_article_trash_limit_days "
+"config\n"
 "                parameter can be used to modify the number of days. \n"
 "                (default is 30)"
 msgstr ""
 "文章放入垃圾桶後，會被標記在最後修改日期\n"
-"                天後自動刪除。修改設定參數 knowledge_article_trash_limit_days\n"
+"                天後自動刪除。修改設定參數 "
+"knowledge_article_trash_limit_days\n"
 "                便可改變此日數。\n"
 "                （預設值：30）"
 
 #. module: knowledge
 #: model:ir.model.fields,help:knowledge.field_knowledge_article__full_width
 msgid ""
-"When set, the article body will take the full width available on the article"
-" page. Otherwise, the body will have large horizontal margins."
-msgstr "設定後，文章正文將採用文章頁面可用的全部完整寬度。否則，正文將具有較大的水平邊距。"
+"When set, the article body will take the full width available on the article "
+"page. Otherwise, the body will have large horizontal margins."
+msgstr ""
+"設定後，文章正文將採用文章頁面可用的全部完整寬度。否則，正文將具有較大的水平"
+"邊距。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -6446,8 +6799,9 @@ msgid ""
 "in touch with our architects and we will make sure to provide any specific "
 "choice you desire."
 msgstr ""
-"無論您喜歡木屋的質樸魅力，還是維多利亞時代鋼鐵廠的複雜美，我們都能滿足您的需求。 想要一個特定的選項？ 請放心，我們會滿足您的願望！ "
-"只需與我們的建築師聯繫，我們將確保提供您想要的任何特別選擇。"
+"無論您喜歡木屋的質樸魅力，還是維多利亞時代鋼鐵廠的複雜美，我們都能滿足您的需"
+"求。 想要一個特定的選項？ 請放心，我們會滿足您的願望！ 只需與我們的建築師聯"
+"繫，我們將確保提供您想要的任何特別選擇。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_meeting_example_branding
@@ -6467,14 +6821,15 @@ msgstr "廣告牌應該印上甚麼文字？"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
 msgid ""
-"While tiny houses are inherently small, it's important to prioritize comfort"
-" when sharing such limited space. To ensure everyone's happiness, we "
+"While tiny houses are inherently small, it's important to prioritize comfort "
+"when sharing such limited space. To ensure everyone's happiness, we "
 "recommend allowing at least 9m² per person. If you plan to live with "
 "multiple roommates, our Serenità model is highly recommended, providing "
 "ample space for each individual to enjoy<br>"
 msgstr ""
-"雖然小房子本來就很小，但在共享如此有限的空間時，優先考慮舒適度是很重要。 為了確保每人的福祉，我們建議為每人至少預留 9 "
-"平方米空間。如果您打算與多名室友同住，強烈推薦我們的 Serenità 型號，它為每個人提供足夠的空間<br>"
+"雖然小房子本來就很小，但在共享如此有限的空間時，優先考慮舒適度是很重要。 為了"
+"確保每人的福祉，我們建議為每人至少預留 9 平方米空間。如果您打算與多名室友同"
+"住，強烈推薦我們的 Serenità 型號，它為每個人提供足夠的空間<br>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_product_catalog
@@ -6482,12 +6837,12 @@ msgid ""
 "While tiny houses do offer a more cost-effective alternative to traditional "
 "houses, at MyCompany, we prioritize durability, which comes with a price. "
 "However, if you're on a tight budget, we have the perfect solution: our "
-"Cielo model.<br>It provides everything you need while allowing you to "
-"save.<br>"
+"Cielo model.<br>It provides everything you need while allowing you to save."
+"<br>"
 msgstr ""
-"雖然小型房屋確實提供比傳統房屋更具成本效益的替代方案，但在 "
-"MyCompany，我們優先考慮耐用度，而耐用度是有成本的。然而，如果預算緊張，我們也有完美的解決方案：我們的 Cielo "
-"型號。<br>它能提供您所需的一切，同時讓您節省開支。<br>"
+"雖然小型房屋確實提供比傳統房屋更具成本效益的替代方案，但在 MyCompany，我們優"
+"先考慮耐用度，而耐用度是有成本的。然而，如果預算緊張，我們也有完美的解決方"
+"案：我們的 Cielo 型號。<br>它能提供您所需的一切，同時讓您節省開支。<br>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_hr_faq
@@ -6538,12 +6893,6 @@ msgid "Write the next Newsletter"
 msgstr "撰寫下一期公司通訊"
 
 #. module: knowledge
-#. odoo-javascript
-#: code:addons/knowledge/static/src/components/permission_panel/permission_panel.xml:0
-msgid "You"
-msgstr "你"
-
-#. module: knowledge
 #: model:ir.model.constraint,message:knowledge.constraint_knowledge_article_member_unique_article_partner
 msgid "You already added this partner on this article."
 msgstr "此合作夥伴已經加入至這篇文章。"
@@ -6575,8 +6924,7 @@ msgstr "你不被允許將 \"%(article_name)s\"設為私人。"
 #. module: knowledge
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
-msgid ""
-"You are not allowed to move '%(article_name)s' under '%(parent_name)s'."
+msgid "You are not allowed to move '%(article_name)s' under '%(parent_name)s'."
 msgstr "你不被允許將 \"%(article_name)s\"移至 %(parent_name)s 之下。"
 
 #. module: knowledge
@@ -6610,8 +6958,8 @@ msgid ""
 "You can't move %(article_name)s under %(item_name)s, as %(item_name)s is an "
 "Article Item. Convert %(item_name)s into an Article first."
 msgstr ""
-"你不能將%(article_name)s移動到%(item_name)s下，因為%(item_name)s是一個文章項目。 "
-"請先將%(item_name)s轉換為文章。"
+"你不能將%(article_name)s移動到%(item_name)s下，因為%(item_name)s是一個文章項"
+"目。 請先將%(item_name)s轉換為文章。"
 
 #. module: knowledge
 #. odoo-python
@@ -6647,8 +6995,8 @@ msgstr "你沒有權限存取這篇文章"
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/sidebar/sidebar_section.xml:0
-msgid "You do not have any private Article."
-msgstr "你沒有任何私人文章。"
+msgid "You have no private Article."
+msgstr ""
 
 #. module: knowledge
 #. odoo-python
@@ -6674,8 +7022,8 @@ msgstr "您必須是%(article_name)s的編輯,才可修改成員權限。"
 #. odoo-python
 #: code:addons/knowledge/models/knowledge_article.py:0
 msgid ""
-"You have to be editor on %(article_name)s to remove or exclude member "
-"%(member_name)s."
+"You have to be editor on %(article_name)s to remove or exclude member %"
+"(member_name)s."
 msgstr "你必須是%(article_name)s的編輯,才可移除或排除成員%(member_name)s。"
 
 #. module: knowledge
@@ -6687,8 +7035,10 @@ msgstr "您必須是%(article_name)s的編輯,才可復原它。"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid ""
-"You may have heard those a million times and yet you are not entirely sure of what it means.<br>\n"
-"                Here is a quick recap for you to shine during the next meeting."
+"You may have heard those a million times and yet you are not entirely sure "
+"of what it means.<br>\n"
+"                Here is a quick recap for you to shine during the next "
+"meeting."
 msgstr ""
 "您可能已經聽過這些話一百萬次，但仍未能完全確定它的意思。<br>\n"
 "                以下是讓您在下次會議表現出色的簡短回顧。"
@@ -6725,7 +7075,9 @@ msgstr "你的存取權限：%s"
 msgid ""
 "Your car can be driven by <strong>you, your spouse and by any person living "
 "under the same roof</strong> as long as they have a valid permit."
-msgstr "<strong>你、你的配偶，以及同住的任何人</strong>，都可以駕駛你的汽車，只要他們持有有效執照。"
+msgstr ""
+"<strong>你、你的配偶，以及同住的任何人</strong>，都可以駕駛你的汽車，只要他們"
+"持有有效執照。"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_brand_assets
@@ -6737,11 +7089,13 @@ msgstr "YourCompany 自豪地宣佈⋯"
 msgid ""
 "YourCompany is very proud of its brand image.\n"
 "                <br>\n"
-"                When representing the brand, we thus ask you to be very cautious in how you refer to the company."
+"                When representing the brand, we thus ask you to be very "
+"cautious in how you refer to the company."
 msgstr ""
 "YourCompany 對其品牌形象感到非常自豪。\n"
 "                <br>\n"
-"                因此，在代表該品牌時，我們要求你對提及該公司的方式要非常謹慎。"
+"                因此，在代表該品牌時，我們要求你對提及該公司的方式要非常謹"
+"慎。"
 
 #. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_trash_notification
@@ -6865,34 +7219,34 @@ msgstr "寫入"
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"<span class=\"o_stars o_five_stars\" id=\"checkId-1\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"<span class=\"o_stars o_five_stars\" id=\"checkId-2\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid ""
-"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"​<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 msgstr ""
-"<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-"
-"star-o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
+"<span class=\"o_stars o_five_stars\" id=\"checkId-3\"><i class=\"fa fa-star-"
+"o\"></i><i class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i><i "
 "class=\"fa fa-star-o\"></i><i class=\"fa fa-star-o\"></i></span>"
 
 #. module: knowledge
@@ -6997,3 +7351,62 @@ msgstr "🛕 屋型 - Dolcezza"
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_software_specification
 msgid "🧠 Functional Specifications"
 msgstr "🧠 功能規格"
+
+#~ msgid ""
+#~ "250 Executive Park Blvd, Suite 3400 94134\n"
+#~ "                        <br>\n"
+#~ "                        San Francisco California (US)\n"
+#~ "                        <br>\n"
+#~ "                        United States\n"
+#~ "                        <br>\n"
+#~ "                        info@yourcompany.com"
+#~ msgstr ""
+#~ "250 Executive Park Blvd, Suite 3400 94134\n"
+#~ "                        <br>\n"
+#~ "                        San Francisco California (US)\n"
+#~ "                        <br>\n"
+#~ "                        United States\n"
+#~ "                        <br>\n"
+#~ "                        info@yourcompany.com"
+
+#~ msgid "Add people or email addresses..."
+#~ msgstr "加入用戶或電郵地址⋯"
+
+#~ msgid "Admin"
+#~ msgstr "管理員"
+
+#~ msgid "Create a nested article"
+#~ msgstr "建立巢狀結構文章"
+
+#~ msgid "Created"
+#~ msgstr "建立"
+
+#~ msgid "Default Access Rights"
+#~ msgstr "預設存取權限"
+
+#~ msgid "Export"
+#~ msgstr "匯出"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Guest"
+#~ msgstr "訪客"
+
+#~ msgid "Last Edited"
+#~ msgstr "最後編輯"
+
+#~ msgid "No Articles here"
+#~ msgstr "此處沒有文章"
+
+#~ msgid "Show All"
+#~ msgstr "顯示全部"
+
+#~ msgid "Visibility"
+#~ msgstr "可見性"
+
+#~ msgid "You"
+#~ msgstr "你"
+
+#~ msgid "You do not have any private Article."
+#~ msgstr "你沒有任何私人文章。"

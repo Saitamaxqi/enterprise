@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-03 18:48+0000\n"
 "PO-Revision-Date: 2025-09-15 21:09+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
@@ -26,118 +26,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: mrp_account_enterprise
-#: model:ir.actions.report,print_report_name:mrp_account_enterprise.action_cost_struct_mrp_production
-msgid "'Cost Analysis - %s ' % object.name"
-msgstr "'Anàlisi de pèrdua - %s ' % objecte.name"
-
-#. module: mrp_account_enterprise
-#: model:ir.actions.report,print_report_name:mrp_account_enterprise.action_cost_struct_product_template
-msgid "'Cost Structure Analysis - %s' % object.name"
-msgstr "'Anàlisi de l'estructura perduda - %s' % objecte.name"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid ", from"
-msgstr ", des de"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_production_form_inherit_view6
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.product_product_inherit_form_view_cost_structure
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.product_template_inherit_form_view_cost_structure
-msgid "<span class=\"o_stat_text\">Cost Analysis</span>"
-msgstr "<span class=\"o_stat_text\">Anàlisis de costos</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Avg Cost of Components Per Unit</span>"
-msgstr "<span>Cost mitjà dels components per unitat</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Avg Cost of Operations Per Unit</span>"
-msgstr "<span>Cost mitjà de les operacions per unitat</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Avg Total Cost Per Unit</span>"
-msgstr "<span>Cost total mitjà per unitat</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Components</span>"
-msgstr "<span>Components</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Cost/hour</span>"
-msgstr "<span>Cost/hora</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Operation</span>"
-msgstr "<span>Operació</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Product</span>"
-msgstr "<span>Producte</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Quantity</span>"
-msgstr "<span>Quantitat</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Resource</span>"
-msgstr "<span>Recurs</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Scraps</span>"
-msgstr "<span>Scraps</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Total Cost</span>"
-msgstr "<span>Cost total</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Unit Cost</span>"
-msgstr "<span>Cost d'unitat</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Unit of Measure</span>"
-msgstr "<span>Unitat de mesura</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<span>Working Time</span>"
-msgstr "<span>Temps de treball</span>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<strong>Total Cost of Components</strong>"
-msgstr "<strong>Cost total dels components</strong>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<strong>Total Cost of Operations</strong>"
-msgstr "<strong>Cost total de les operacions</strong>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<strong>Total Cost of Scraps</strong>"
-msgstr "<strong>Cost total dels residus</strong>"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "<strong>Total Production Cost</strong>"
-msgstr "<strong>Cost total de producció</strong>"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_pivot_view
@@ -155,9 +43,9 @@ msgid "Average Total Cost / Unit"
 msgstr "Cost total mitjà / Unitat"
 
 #. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "By product(s)"
-msgstr "Per producte(s)"
+#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_form_view
+msgid "Average Workcenter Cost / Unit"
+msgstr ""
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__byproduct_cost
@@ -176,58 +64,16 @@ msgstr "Cost / Unitat del component"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__unit_component_cost
-msgid "Component cost per unit produced (in product UoM) of manufacturing order"
-msgstr "Cost del component per unitat produïda (en el producte UoM) d'ordre de fabricació"
+msgid ""
+"Component cost per unit produced (in product UoM) of manufacturing order"
+msgstr ""
+"Cost del component per unitat produïda (en el producte UoM) d'ordre de "
+"fabricació"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__unit_cost
 msgid "Cost / Unit"
 msgstr "Cost / Unitat"
-
-#. module: mrp_account_enterprise
-#: model:ir.actions.report,name:mrp_account_enterprise.action_cost_struct_mrp_production
-msgid "Cost Analysis"
-msgstr "Anàlisis de cost"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost Analysis Report"
-msgstr "Informe d'anàlisi de costos"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost Breakdown of Products"
-msgstr "Desglossament de costos dels productes"
-
-#. module: mrp_account_enterprise
-#: model:ir.actions.report,name:mrp_account_enterprise.action_cost_struct_product_template
-msgid "Cost Structure Analysis"
-msgstr "Anàlisis d'estructura de costos"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost of Components"
-msgstr "Cost dels components"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost of Components per unit (in"
-msgstr "Cost dels components per unitat (en"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost of Operations"
-msgstr "Cost de les operacions"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost of Operations per unit (in"
-msgstr "Cost de les operacions per unitat (en"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Cost of Scraps"
-msgstr "Cost dels residus"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__unit_cost
@@ -266,19 +112,29 @@ msgid "End Date"
 msgstr "Data de finalització"
 
 #. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_search_view
-msgid "Group by"
-msgstr "Agrupar per"
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__expected_component_cost_unit
+msgid "Expected Component Cost / Unit"
+msgstr ""
+
+#. module: mrp_account_enterprise
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__expected_employee_cost_unit
+msgid "Expected Employee Cost / Unit"
+msgstr ""
+
+#. module: mrp_account_enterprise
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__expected_operation_cost_unit
+msgid "Expected Operation Cost / Unit"
+msgstr ""
+
+#. module: mrp_account_enterprise
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__expected_total_cost_unit
+msgid "Expected Total Cost / Unit"
+msgstr ""
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__id
-msgid "ID"
-msgstr "ID"
-
-#. module: mrp_account_enterprise
-#: model:ir.model,name:mrp_account_enterprise.model_report_mrp_account_enterprise_mrp_cost_structure
-msgid "MRP Cost Structure Report"
-msgstr "Informe d'estructura de costos MRP"
+msgid "Id"
+msgstr ""
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__production_id
@@ -298,13 +154,17 @@ msgstr "Encara no hi han dades!"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__unit_operation_cost
-msgid "Operation cost per unit produced (in product UoM) of manufacturing order"
-msgstr "Cost d'operació per unitat produïda (en el producte UoM) de l'ordre de fabricació"
+msgid ""
+"Operation cost per unit produced (in product UoM) of manufacturing order"
+msgstr ""
+"Cost d'operació per unitat produïda (en el producte UoM) de l'ordre de "
+"fabricació"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__unit_duration
 msgid "Operation duration (minutes) per unit produced of manufacturing order"
-msgstr "Durada de l'operació (minuts) per unitat produïda per ordre de fabricació"
+msgstr ""
+"Durada de l'operació (minuts) per unitat produïda per ordre de fabricació"
 
 #. module: mrp_account_enterprise
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_pivot_view
@@ -312,21 +172,10 @@ msgid "Order Overview"
 msgstr "Resum de la comanda"
 
 #. module: mrp_account_enterprise
-#: model:ir.model,name:mrp_account_enterprise.model_product_template
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__product_id
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_search_view
 msgid "Product"
 msgstr "Producte"
-
-#. module: mrp_account_enterprise
-#: model:ir.model,name:mrp_account_enterprise.model_report_mrp_account_enterprise_product_template_cost_structure
-msgid "Product Template Cost Structure Report"
-msgstr "Informe de l'estructura del cost de la plantilla de producte"
-
-#. module: mrp_account_enterprise
-#: model:ir.model,name:mrp_account_enterprise.model_product_product
-msgid "Product Variant"
-msgstr "Variant de producte"
 
 #. module: mrp_account_enterprise
 #: model:ir.actions.act_window,name:mrp_account_enterprise.mrp_report_dashboard_action
@@ -335,15 +184,20 @@ msgid "Production Analysis"
 msgstr "Anàlisi de la producció"
 
 #. module: mrp_account_enterprise
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__qty_demanded
+msgid "Quantity Demanded"
+msgstr ""
+
+#. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__qty_produced
 #: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_pivot_view
 msgid "Quantity Produced"
 msgstr "Quantitat produïda"
 
 #. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Some of the Manufacturing Order(s) selected are not done yet"
-msgstr "Algunes de les ordre(s) de fabricació seleccionades no estan fetes"
+#: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__yield_rate
+msgid "Ratio of quantity produced over quantity demanded"
+msgstr ""
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__component_cost
@@ -354,11 +208,6 @@ msgstr "Cost total del component"
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__total_cost
 msgid "Total Cost"
 msgstr "Cost total"
-
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "Total Cost per unit (in"
-msgstr "Cost total per unitat (en"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__duration
@@ -376,14 +225,23 @@ msgid "Total Operation Cost / Unit"
 msgstr "Cost total de l'operació / unitat"
 
 #. module: mrp_account_enterprise
+#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_report_form_view
+msgid "Total Workcenter Cost"
+msgstr ""
+
+#. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__component_cost
 msgid "Total cost of components for manufacturing order"
 msgstr "Cost total dels components per a l'ordre de fabricació"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__total_cost
-msgid "Total cost of manufacturing order (component + operation costs + subcontracting cost)"
-msgstr "Cost total de l'ordre de fabricació (component + costos d'operació + cost de subcontractació)"
+msgid ""
+"Total cost of manufacturing order (component + operation costs + "
+"subcontracting cost)"
+msgstr ""
+"Cost total de l'ordre de fabricació (component + costos d'operació + cost de "
+"subcontractació)"
 
 #. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__operation_cost
@@ -396,16 +254,139 @@ msgid "Total duration (minutes) of operations for manufacturing order"
 msgstr "Durada total (minuts) de les operacions per a l'ordre de fabricació"
 
 #. module: mrp_account_enterprise
+#: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__qty_demanded
+msgid "Total quantity demanded in product's UoM"
+msgstr ""
+
+#. module: mrp_account_enterprise
 #: model:ir.model.fields,help:mrp_account_enterprise.field_mrp_report__qty_produced
 msgid "Total quantity produced in product's UoM"
 msgstr "Quantitat total produïda a l'UoM del producte"
 
 #. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "hours"
-msgstr "hores"
+#: model:ir.model.fields,field_description:mrp_account_enterprise.field_mrp_report__yield_rate
+msgid "Yield Percentage(%)"
+msgstr ""
 
-#. module: mrp_account_enterprise
-#: model_terms:ir.ui.view,arch_db:mrp_account_enterprise.mrp_cost_structure
-msgid "manufacturing order(s)."
-msgstr "ordre(s) de producció"
+#~ msgid "'Cost Analysis - %s ' % object.name"
+#~ msgstr "'Anàlisi de pèrdua - %s ' % objecte.name"
+
+#~ msgid "'Cost Structure Analysis - %s' % object.name"
+#~ msgstr "'Anàlisi de l'estructura perduda - %s' % objecte.name"
+
+#~ msgid ", from"
+#~ msgstr ", des de"
+
+#~ msgid "<span class=\"o_stat_text\">Cost Analysis</span>"
+#~ msgstr "<span class=\"o_stat_text\">Anàlisis de costos</span>"
+
+#~ msgid "<span>Avg Cost of Components Per Unit</span>"
+#~ msgstr "<span>Cost mitjà dels components per unitat</span>"
+
+#~ msgid "<span>Avg Cost of Operations Per Unit</span>"
+#~ msgstr "<span>Cost mitjà de les operacions per unitat</span>"
+
+#~ msgid "<span>Avg Total Cost Per Unit</span>"
+#~ msgstr "<span>Cost total mitjà per unitat</span>"
+
+#~ msgid "<span>Components</span>"
+#~ msgstr "<span>Components</span>"
+
+#~ msgid "<span>Cost/hour</span>"
+#~ msgstr "<span>Cost/hora</span>"
+
+#~ msgid "<span>Operation</span>"
+#~ msgstr "<span>Operació</span>"
+
+#~ msgid "<span>Product</span>"
+#~ msgstr "<span>Producte</span>"
+
+#~ msgid "<span>Quantity</span>"
+#~ msgstr "<span>Quantitat</span>"
+
+#~ msgid "<span>Resource</span>"
+#~ msgstr "<span>Recurs</span>"
+
+#~ msgid "<span>Scraps</span>"
+#~ msgstr "<span>Scraps</span>"
+
+#~ msgid "<span>Total Cost</span>"
+#~ msgstr "<span>Cost total</span>"
+
+#~ msgid "<span>Unit Cost</span>"
+#~ msgstr "<span>Cost d'unitat</span>"
+
+#~ msgid "<span>Unit of Measure</span>"
+#~ msgstr "<span>Unitat de mesura</span>"
+
+#~ msgid "<span>Working Time</span>"
+#~ msgstr "<span>Temps de treball</span>"
+
+#~ msgid "<strong>Total Cost of Components</strong>"
+#~ msgstr "<strong>Cost total dels components</strong>"
+
+#~ msgid "<strong>Total Cost of Operations</strong>"
+#~ msgstr "<strong>Cost total de les operacions</strong>"
+
+#~ msgid "<strong>Total Cost of Scraps</strong>"
+#~ msgstr "<strong>Cost total dels residus</strong>"
+
+#~ msgid "<strong>Total Production Cost</strong>"
+#~ msgstr "<strong>Cost total de producció</strong>"
+
+#~ msgid "By product(s)"
+#~ msgstr "Per producte(s)"
+
+#~ msgid "Cost Analysis"
+#~ msgstr "Anàlisis de cost"
+
+#~ msgid "Cost Analysis Report"
+#~ msgstr "Informe d'anàlisi de costos"
+
+#~ msgid "Cost Breakdown of Products"
+#~ msgstr "Desglossament de costos dels productes"
+
+#~ msgid "Cost Structure Analysis"
+#~ msgstr "Anàlisis d'estructura de costos"
+
+#~ msgid "Cost of Components"
+#~ msgstr "Cost dels components"
+
+#~ msgid "Cost of Components per unit (in"
+#~ msgstr "Cost dels components per unitat (en"
+
+#~ msgid "Cost of Operations"
+#~ msgstr "Cost de les operacions"
+
+#~ msgid "Cost of Operations per unit (in"
+#~ msgstr "Cost de les operacions per unitat (en"
+
+#~ msgid "Cost of Scraps"
+#~ msgstr "Cost dels residus"
+
+#~ msgid "Group by"
+#~ msgstr "Agrupar per"
+
+#~ msgid "ID"
+#~ msgstr "ID"
+
+#~ msgid "MRP Cost Structure Report"
+#~ msgstr "Informe d'estructura de costos MRP"
+
+#~ msgid "Product Template Cost Structure Report"
+#~ msgstr "Informe de l'estructura del cost de la plantilla de producte"
+
+#~ msgid "Product Variant"
+#~ msgstr "Variant de producte"
+
+#~ msgid "Some of the Manufacturing Order(s) selected are not done yet"
+#~ msgstr "Algunes de les ordre(s) de fabricació seleccionades no estan fetes"
+
+#~ msgid "Total Cost per unit (in"
+#~ msgstr "Cost total per unitat (en"
+
+#~ msgid "hours"
+#~ msgstr "hores"
+
+#~ msgid "manufacturing order(s)."
+#~ msgstr "ordre(s) de producció"

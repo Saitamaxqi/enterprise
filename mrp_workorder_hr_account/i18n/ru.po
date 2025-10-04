@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:21+0000\n"
+"POT-Creation-Date: 2025-10-03 18:49+0000\n"
 "PO-Revision-Date: 2024-01-30 15:14+0400\n"
 "Last-Translator: \n"
 "Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
@@ -15,22 +15,36 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model,name:mrp_workorder_hr_account.model_account_analytic_line
-msgid "Analytic Account"
-msgstr "Аналитический Счёт"
+msgid "Analytic Line"
+msgstr ""
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
+#: model_terms:ir.ui.view,arch_db:mrp_workorder_hr_account.mrp_report_pivot_view
 msgid "Average Employee Cost / Unit"
 msgstr "Средняя стоимость сотрудника / единицы"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,help:mrp_workorder_hr_account.field_account_analytic_line__employee_id
-msgid "Define an 'hourly cost' on the employee to track the cost of their time."
-msgstr "Определите \"почасовую стоимость\" для сотрудника, чтобы отслеживать стоимость его рабочего времени."
+msgid ""
+"Define an 'hourly cost' on the employee to track the cost of their time."
+msgstr ""
+"Определите \"почасовую стоимость\" для сотрудника, чтобы отслеживать "
+"стоимость его рабочего времени."
+
+#. module: mrp_workorder_hr_account
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_account_analytic_line__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_workcenter_productivity__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_workorder__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_account_analytic_line__employee_id
@@ -45,22 +59,26 @@ msgstr "Линия аналитических счетов сотруднико�
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,help:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
 msgid "Employee Cost per unit produced (in product UoM) of manufacturing order"
-msgstr "Сотрудник Затраты на единицу произведенной продукции (в продукте UoM) производственного заказа"
+msgstr ""
+"Сотрудник Затраты на единицу произведенной продукции (в продукте UoM) "
+"производственного заказа"
 
 #. module: mrp_workorder_hr_account
-#: model:ir.model,name:mrp_workorder_hr_account.model_report_mrp_account_enterprise_mrp_cost_structure
-msgid "MRP Cost Structure Report"
-msgstr "Отчет о структуре затрат MRP"
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_account_analytic_line__id
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_workcenter_productivity__id
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_workorder__id
+msgid "ID"
+msgstr ""
+
+#. module: mrp_workorder_hr_account
+#: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__id
+msgid "Id"
+msgstr ""
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model,name:mrp_workorder_hr_account.model_mrp_report
 msgid "Manufacturing Report"
 msgstr "Отчет о производстве"
-
-#. module: mrp_workorder_hr_account
-#: model:ir.model,name:mrp_workorder_hr_account.model_mrp_production
-msgid "Production Order"
-msgstr "Заказ на производство"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__employee_cost
@@ -71,11 +89,6 @@ msgstr "Общие расходы на сотрудников"
 #: model:ir.model.fields,help:mrp_workorder_hr_account.field_mrp_report__employee_cost
 msgid "Total cost of employees for manufacturing order"
 msgstr "Общая стоимость сотрудников для выполнения производственного заказа"
-
-#. module: mrp_workorder_hr_account
-#: model:ir.model,name:mrp_workorder_hr_account.model_mrp_routing_workcenter
-msgid "Work Center Usage"
-msgstr "Использование рабочего центра"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model,name:mrp_workorder_hr_account.model_mrp_workorder
@@ -90,5 +103,20 @@ msgstr "Журнал учета производительности рабоч�
 #. module: mrp_workorder_hr_account
 #. odoo-python
 #: code:addons/mrp_workorder_hr_account/models/mrp_workorder.py:0
-msgid "[EMPL] %s - %s"
-msgstr "[EMPL] %s - %s"
+msgid "[EMPL] %(work_order)s - %(employee)s"
+msgstr ""
+
+#~ msgid "Analytic Account"
+#~ msgstr "Аналитический Счёт"
+
+#~ msgid "MRP Cost Structure Report"
+#~ msgstr "Отчет о структуре затрат MRP"
+
+#~ msgid "Production Order"
+#~ msgstr "Заказ на производство"
+
+#~ msgid "Work Center Usage"
+#~ msgstr "Использование рабочего центра"
+
+#~ msgid "[EMPL] %s - %s"
+#~ msgstr "[EMPL] %s - %s"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 22:56+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/voip/th/>\n"
@@ -303,7 +303,7 @@ msgstr "โทรจากอุปกรณ์อื่น"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "การโทรถูกปฏิเสธ (เหตุผล: “%(reasonPhrase)s”)"
 
@@ -563,7 +563,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -838,7 +838,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr ""
@@ -1031,8 +1031,7 @@ msgstr ""
 msgid ""
 "No audio recording device available. The application requires a microphone "
 "in order to be used."
-msgstr ""
-"ไม่มีอุปกรณ์บันทึกเสียงที่พร้อมใช้งาน แอปพลิเคชันจำเป็นต้องใช้ไมโครโฟนจึงจะใช้งานได้"
+msgstr "ไม่มีอุปกรณ์บันทึกเสียงที่พร้อมใช้งาน แอปพลิเคชันจำเป็นต้องใช้ไมโครโฟนจึงจะใช้งานได้"
 
 #. module: voip
 #. odoo-javascript
@@ -1114,7 +1113,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr ""
@@ -1532,7 +1531,7 @@ msgstr "ชื่อของกิจกรรมที่เกี่ยวข
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1566,7 +1565,7 @@ msgstr "รหัสผ่านที่จะใช้ในการลงท
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "คนที่คุณพยายามติดต่อไม่ว่างในขณะนี้"
 
@@ -1598,8 +1597,7 @@ msgstr ""
 msgid ""
 "The username (typically the extension number) that will be used to register "
 "with the PBX server."
-msgstr ""
-"ชื่อผู้ใช้ (โดยทั่วไปคือหมายเลขต่อภายใน) ที่จะใช้ในการลงทะเบียนกับเซิร์ฟเวอร์ PBX"
+msgstr "ชื่อผู้ใช้ (โดยทั่วไปคือหมายเลขต่อภายใน) ที่จะใช้ในการลงทะเบียนกับเซิร์ฟเวอร์ PBX"
 
 #. module: voip
 #. odoo-javascript
@@ -1607,8 +1605,7 @@ msgstr ""
 msgid ""
 "The websocket connection to the server has been lost. Attempting to "
 "reestablish the connection…"
-msgstr ""
-"การเชื่อมต่อ websocket ไปยังเซิร์ฟเวอร์สูญหาย กำลังพยายามสร้างการเชื่อมต่ออีกครั้ง…"
+msgstr "การเชื่อมต่อ websocket ไปยังเซิร์ฟเวอร์สูญหาย กำลังพยายามสร้างการเชื่อมต่ออีกครั้ง…"
 
 #. module: voip
 #. odoo-javascript
@@ -1850,8 +1847,7 @@ msgstr "ประวัติการโทรของคุณว่างเ
 #: code:addons/voip/static/src/core/user_agent_service.js:0
 msgid ""
 "Your login details are not set correctly. Please contact your administrator."
-msgstr ""
-"รายละเอียดการเข้าสู่ระบบของคุณไม่ได้ตั้งค่าอย่างถูกต้อง โปรดติดต่อผู้ดูแลระบบของคุณ"
+msgstr "รายละเอียดการเข้าสู่ระบบของคุณไม่ได้ตั้งค่าอย่างถูกต้อง โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #. module: voip
 #: model:res.groups,comment:voip.group_voip_officer

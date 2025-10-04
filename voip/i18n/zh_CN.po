@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 15:25+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -78,8 +78,9 @@ msgstr ""
 msgid ""
 "A hardware error has occurred while trying to access the audio recording "
 "device. Please ensure that your drivers are up to date and try again."
-msgstr "在尝试访问录音设备时发生了硬件错误。请确保您的驱动程序是最新的，然后再试一次"
-"。"
+msgstr ""
+"在尝试访问录音设备时发生了硬件错误。请确保您的驱动程序是最新的，然后再试一"
+"次。"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__aborted
@@ -303,7 +304,7 @@ msgstr "来自其他设备的呼叫"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "呼叫被拒绝（原因：\"%(reasonPhrase)s\"）。"
 
@@ -389,8 +390,9 @@ msgid ""
 "microphone, please allow it and try again. Otherwise, make sure that this "
 "website is running over HTTPS and that your browser is not set to deny "
 "access to media devices."
-msgstr "无法访问录音设备。如果您拒绝访问麦克风，请允许后再试一次。否则，"
-"请确保本网站通过 HTTPS 运行，且您的浏览器未设置为拒绝访问媒体设备。"
+msgstr ""
+"无法访问录音设备。如果您拒绝访问麦克风，请允许后再试一次。否则，请确保本网站"
+"通过 HTTPS 运行，且您的浏览器未设置为拒绝访问媒体设备。"
 
 #. module: voip
 #. odoo-javascript
@@ -420,8 +422,9 @@ msgid ""
 "Computes the country ISO code (e.g. be for Belgium) from the phone number "
 "dialing code (e.g. +32), if any.\n"
 "Useful for displaying the flag associated with a phone number."
-msgstr "根据电话号码国际区号（如+32）自动计算国家 ISO 代码（如比利时为 "
-"be），用于显示电话号码关联的国家旗帜。"
+msgstr ""
+"根据电话号码国际区号（如+32）自动计算国家 ISO 代码（如比利时为 be），用于显示"
+"电话号码关联的国家旗帜。"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.menu_voip_call_configuration
@@ -560,7 +563,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -835,7 +838,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "通话中"
@@ -1110,7 +1113,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "通话保持中"
@@ -1440,8 +1443,8 @@ msgid ""
 "number set. The fixer-uppers: %(record_names)s.\n"
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
-"某些潜在客户无法添加到呼叫队列，因为他们没有设置电话号码。需要修复的记录：%(r"
-"ecord_names)s。\n"
+"某些潜在客户无法添加到呼叫队列，因为他们没有设置电话号码。需要修复的记录：%"
+"(record_names)s。\n"
 "让我们添加缺失的号码，开始拨号吧！"
 
 #. module: voip
@@ -1527,7 +1530,7 @@ msgstr "与此电话有关的活动名称（如果有）。"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1560,7 +1563,7 @@ msgstr "用于向 PBX 服务器注册的密码。"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "你试图联系的人目前不在。"
 
@@ -1827,8 +1830,9 @@ msgstr ""
 msgid ""
 "Your browser does not support some of the features required for VoIP to "
 "work. Please try updating your browser or using a different one."
-msgstr "您的浏览器不支持网络电话运行所需的某些功能。请尝试更新浏览器或使用其他浏览器"
-"。"
+msgstr ""
+"您的浏览器不支持网络电话运行所需的某些功能。请尝试更新浏览器或使用其他浏览"
+"器。"
 
 #. module: voip
 #. odoo-javascript

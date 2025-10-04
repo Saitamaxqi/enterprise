@@ -13,11 +13,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-29 12:10+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
-"Language-Team: German <https://translate.odoo.com/projects/odoo-19/voip/de/>"
-"\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/voip/de/"
+">\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -157,8 +157,8 @@ msgid ""
 "An error occured involving the audio recording device (%(errorName)s):\n"
 "%(errorMessage)s"
 msgstr ""
-"Es ist ein Fehler im Zusammenhang mit dem Audioaufnahmegerät aufgetreten "
-"(%(errorName)s):\n"
+"Es ist ein Fehler im Zusammenhang mit dem Audioaufnahmegerät aufgetreten (%"
+"(errorName)s):\n"
 "%(errorMessage)s"
 
 #. module: voip
@@ -181,8 +181,8 @@ msgid ""
 "\n"
 "Error: %(error)s"
 msgstr ""
-"Beim Versuch, die folgende Nummer einzuladen, ist ein Fehler "
-"aufgetreten:%(phoneNumber)s\n"
+"Beim Versuch, die folgende Nummer einzuladen, ist ein Fehler aufgetreten:%"
+"(phoneNumber)s\n"
 "\n"
 "Fehler:%(error)s"
 
@@ -311,7 +311,7 @@ msgstr "Anruf von einem anderen Gerät"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "Anruf abgelehnt (Begründung: „%(reasonPhrase)s“)"
 
@@ -574,7 +574,7 @@ msgstr "Demo-Modus"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr "Demo-Anruf"
 
@@ -849,7 +849,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "Im Anruf"
@@ -1126,7 +1126,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "In Warteschlange"
@@ -1461,8 +1461,8 @@ msgid ""
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
 "Einige Leads können nicht zur Anrufwarteschlange hinzugefügt werden, da "
-"keine Telefonnummer angegeben ist. Die zu bearbeitenden Fälle: "
-"%(record_names)s.\n"
+"keine Telefonnummer angegeben ist. Die zu bearbeitenden Fälle: %"
+"(record_names)s.\n"
 "Fügen wir die fehlenden Nummern hinzu und beginnen wir mit dem Telefonieren!"
 
 #. module: voip
@@ -1551,7 +1551,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1590,7 +1590,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr ""
 "Die Person, die Sie zu kontaktieren versuchen, ist derzeit nicht verfügbar."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:37+0000\n"
+"POT-Creation-Date: 2025-10-03 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 15:31+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -26,6 +26,7 @@ msgstr "分析行"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,field_description:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
+#: model_terms:ir.ui.view,arch_db:mrp_workorder_hr_account.mrp_report_pivot_view
 msgid "Average Employee Cost / Unit"
 msgstr "平均员工成本/单位"
 
@@ -55,8 +56,7 @@ msgstr "员工分析科目行"
 
 #. module: mrp_workorder_hr_account
 #: model:ir.model.fields,help:mrp_workorder_hr_account.field_mrp_report__unit_employee_cost
-msgid ""
-"Employee Cost per unit produced (in product UoM) of manufacturing order"
+msgid "Employee Cost per unit produced (in product UoM) of manufacturing order"
 msgstr "制造订单的单位制造成本（以产品 UoM 计"
 
 #. module: mrp_workorder_hr_account

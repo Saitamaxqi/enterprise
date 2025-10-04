@@ -10,17 +10,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-03 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
-"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/voip/it/>"
-"\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/voip/it/"
+">\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: voip
@@ -180,8 +180,8 @@ msgid ""
 "\n"
 "Error: %(error)s"
 msgstr ""
-"Si è verificato un errore durante la chiamata con il seguente numero: "
-"%(phoneNumber)s\n"
+"Si è verificato un errore durante la chiamata con il seguente numero: %"
+"(phoneNumber)s\n"
 "\n"
 "Errore: %(error)s"
 
@@ -308,7 +308,7 @@ msgstr "Chiama da un altro dispositivo"
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Call rejected (reason: “%(reasonPhrase)s”)"
 msgstr "Chiamata rifiutata (motivo: \"%(reasonPhrase)s\")"
 
@@ -570,7 +570,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "Demo call"
 msgstr ""
 
@@ -845,7 +845,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/softphone.js:0
 msgid "In call"
 msgstr "In chiamata"
@@ -1122,7 +1122,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 #: code:addons/voip/static/src/softphone/in_call_view.xml:0
 msgid "On hold"
 msgstr "In attesa"
@@ -1455,8 +1455,8 @@ msgid ""
 "Let’s add the missing numbers and start the dialing party!"
 msgstr ""
 "Alcuni lead non possono essere aggiunti alla coda della chiamata perché non "
-"hanno un numero di telefono configurato. Gli esperti del settore: "
-"%(record_names)s.\n"
+"hanno un numero di telefono configurato. Gli esperti del settore: %"
+"(record_names)s.\n"
 "Aggiungiamo i numeri mancanti per dare il via alle chiamate!"
 
 #. module: voip
@@ -1544,7 +1544,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid ""
 "The number is incorrect, the user credentials could be wrong or the "
 "connection cannot be made. Please check your configuration.\n"
@@ -1583,7 +1583,7 @@ msgstr ""
 
 #. module: voip
 #. odoo-javascript
-#: code:addons/voip/static/src/core/user_agent_service.js:0
+#: code:addons/voip/static/src/core/session.js:0
 msgid "The person you try to contact is currently unavailable."
 msgstr "La persona da contattare non è al momento disponibile."
 
