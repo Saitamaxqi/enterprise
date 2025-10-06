@@ -1600,6 +1600,8 @@ class HrPayslip(models.Model):
         return res
 
     def action_print_payslip(self):
+        if self.filtered('error_count'):
+            raise ValidationError(self._get_error_message())
         return {
             'name': 'Payslip',
             'type': 'ir.actions.act_url',
