@@ -6,6 +6,22 @@ class MailThread(models.AbstractModel):
     _name = 'mail.thread'
     _inherit = ['mail.thread']
 
+    def _ai_serialize_activities_data(self):
+        """Serialize planned activities data for AI context"""
+        activities_data = []
+        for activity in self.activity_ids:
+            activity_info = f"Activity: {activity.activity_type_id.name}"
+            if activity.summary:
+                activity_info += f" - {activity.summary}"
+            activity_info += f" (Due: {activity.date_deadline}, Assigned to: {activity.user_id.name}, Status: {activity.state})"
+            if activity.note:
+                # Strip HTML tags from note and limit length
+                note_text = activity.note.striptags().strip() if activity.note else ''
+                if note_text:
+                    activity_info += f" - Note: {note_text}"
+            activities_data.append(activity_info)
+        return " | ".join(activities_data) if activities_data else ""
+
     def _ai_serialize_messages_data(self):
         chatter_messages = []
         for message in self.message_ids:
@@ -14,6 +30,9 @@ class MailThread(models.AbstractModel):
             )
         # the messages are stored from newest to oldest - reverse them so they are formatted like the conversation history
         chatter_messages = " ".join(list(reversed(chatter_messages)))
+        activities_data = self._ai_serialize_activities_data()
+        if activities_data:
+            chatter_messages += f" Additionally, this chatter has the following planned activities: {activities_data}"
 
         return chatter_messages
 
