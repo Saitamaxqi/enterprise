@@ -1855,6 +1855,18 @@ export default class BarcodePickingModel extends BarcodeModel {
         ]);
         this.cache.setCache(res.records);
         const quants = res.records["stock.quant"];
+        // Do not allow extra products if they are not allowed
+        if (!this.config.barcode_allow_extra_product) {
+            const allowedProductIds = new Set(
+                this.currentState.lines.map((line) => line.product_id.id)
+            );
+            if (quants.some((quant) => !allowedProductIds.has(quant.product_id))) {
+                barcodeData.error = _t(
+                    "This package contains extra products and extra products are not allowed on this operation."
+                );
+                return;
+            }
+        }
         // If the package is empty or is already at the destination location,
         // assign it to the last scanned line.
         const currentLine = this.selectedLine || this.lastScannedLine;

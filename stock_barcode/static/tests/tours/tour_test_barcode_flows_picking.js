@@ -5151,6 +5151,34 @@ registry.category("web_tour.tours").add("test_show_entire_package", {
             trigger: "button.o_close",
             run: "click",
         },
+        // Scan the unreserved package002 and remove it as it was a mistake
+        { trigger: ".o_barcode_lines", run: "scan package002" },
+        {
+            trigger: ".o_barcode_line[data-package=package002]",
+            run: function () {
+                helper.assertLinesCount(2);
+                const [line1, line2] = helper.getLines();
+                helper.assert(
+                    line1.querySelector("[name=package]").innerText,
+                    "package001package001"
+                );
+                helper.assertLineQty(line1, "0/1");
+                helper.assertLineIsFaulty(line1, false);
+                helper.assert(
+                    line2.querySelector("[name=package]").innerText,
+                    "package002package002"
+                );
+                helper.assertLineQty(line2, "1");
+                helper.assertLineIsFaulty(line2, true);
+            },
+        },
+        {
+            trigger: ".o_barcode_line[data-package=package002] .o_delete_line",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_lines:not(:has(.o_delete_line))",
+        },
         // Scans package001 to be sure no moves will be created but the package line will be done.
         { trigger: ".o_barcode_lines", run: "scan package001" },
         {
@@ -5329,6 +5357,78 @@ registry.category("web_tour.tours").add("test_setting_barcode_allow_extra_produc
                 helper.assert(lines.length, 2);
                 helper.assertLineProduct(lines[0], "product1");
                 helper.assertLineProduct(lines[1], "product2");
+            },
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_setting_barcode_allow_extra_product_with_packages", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SBAEPWP",
+        },
+        // Scan package with extra product -> ignored + raise notification
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan PACK04",
+        },
+        {
+            trigger: ".o_notification_bar.bg-danger",
+            run: function () {
+                helper.assertErrorMessage(
+                    "This package contains extra products and extra products are not allowed on this operation."
+                );
+            },
+        },
+        // Scan valid package -> should be processed
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan PACK01",
+        },
+        {
+            trigger: ".o_barcode_line:contains(PACK01)",
+            run: () => {
+                helper.assertLinesCount(2);
+                const [line1, line2] = helper.getLines();
+                helper.assertLineQty(line1, "0/5");
+                helper.assertLineQty(line2, "10");
+            },
+        },
+        {
+            trigger: "button.o_exit",
+            run: "click",
+        },
+        // process the move entire packages delivery
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan SBAEPWMEP",
+        },
+        // Scan package with extra product -> ignored + raise notification
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan PACK04",
+        },
+        {
+            trigger: ".o_notification_bar.bg-danger",
+            run: function () {
+                helper.assertErrorMessage(
+                    "This package contains extra products and extra products are not allowed on this operation."
+                );
+            },
+        },
+        // Scan valid package -> should be processed
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan PACK03",
+        },
+        {
+            trigger: ".o_barcode_line[data-package=PACK03]",
+            run: () => {
+                helper.assertLinesCount(2);
+                const [line1, line2] = helper.getLines();
+                helper.assert(line1.querySelector("[name=package]").innerText, "PACK02PACK02");
+                helper.assert(line2.querySelector("[name=package]").innerText, "PACK03PACK03");
             },
         },
     ],

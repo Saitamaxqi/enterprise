@@ -2617,6 +2617,57 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         delivery.action_assign()
         self.start_tour("/odoo/barcode", 'test_setting_barcode_allow_extra_product', login='admin', timeout=180)
 
+    def test_setting_barcode_allow_extra_product_with_packages(self):
+        """
+        Check that with allow extra products disabled, package scans containing extra
+        products are ignored, while scans of valid packages are still processed.
+
+        The test is performed with two deliveries: one in move entire package the other not.
+        """
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'group_ids': [Command.link(grp_pack.id)]})
+        # Disable "Allow Extra Products" setting
+        self.picking_type_out.barcode_allow_extra_product = False
+        picking_type_out_move_entire_package = self.picking_type_out.copy({'show_entire_packs': True})
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10)
+        # PACK01-03: 10 x product1
+        # PACK04: 10 x product1 and 5 x product2
+        pack01, pack02, pack03, pack04 = self.env['stock.package'].create([
+            {'name': f"PACK0{i + 1}"} for i in range(4)
+        ])
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=pack01)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=pack02)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=pack03)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=pack04)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5, package_id=pack04)
+
+        deliveries = self.env['stock.picking'].create([
+            {
+                'name': 'SBAEPWP',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'picking_type_id': self.picking_type_out.id,
+                'move_ids': [
+                    Command.create({
+                        'location_id': self.stock_location.id,
+                        'location_dest_id': self.customer_location.id,
+                        'product_id': self.product1.id,
+                        'product_uom_qty': 5,
+                    }),
+                ],
+            },
+            {
+                'name': 'SBAEPWMEP',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'picking_type_id': picking_type_out_move_entire_package.id,
+            },
+        ])
+        deliveries[1].action_add_entire_packs(pack02.id)
+        deliveries.action_confirm()
+
+        self.start_tour('/odoo/barcode', 'test_setting_barcode_allow_extra_product_with_packages', login='admin')
+
     def test_split_line_reservation(self):
         """ Tests new lines created when a line is split to take
             from qty in a different location than the reserved
