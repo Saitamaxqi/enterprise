@@ -13,11 +13,14 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_comparison", {
         {
             content: "add first product 'Color T-Shirt' in a comparison list",
             trigger: '.oe_product_cart:contains("Color T-Shirt")',
-            run: "hover && click .o_add_compare",
+        },
+        {
+            trigger: ".o_add_compare:hidden",
+            run: "click",
         },
         {
             content: "check the compare button contains two products",
-            trigger: '.o_wsale_comparison_bottom_bar .badge:contains(2)',
+            trigger: ".o_wsale_comparison_bottom_bar .badge:contains(2)",
         },
         {
             content: "click on compare button",
