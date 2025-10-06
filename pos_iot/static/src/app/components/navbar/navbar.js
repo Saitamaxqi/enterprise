@@ -6,14 +6,8 @@ patch(Navbar.prototype, {
         super.setup(...arguments);
         this.connectionStatus();
     },
-    async toggleIotConnection() {
-        for (const iotBox of this.pos.hardwareProxy.iotBoxes) {
-            await this.pos.iotHttp.toggleMode(iotBox.ip);
-        }
-        this.connectionStatus();
-    },
     connectionStatus() {
-        this.state.iotStatus = !this.pos.ui.isSmall && `IoT Box ${this.pos.iotHttp.status}`;
+        this.state.iotStatus = !this.pos.ui.isSmall && `IoT Box (${this.pos.iotHttp.status})`;
         return true;
     },
 });

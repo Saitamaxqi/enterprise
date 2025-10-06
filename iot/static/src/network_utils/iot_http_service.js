@@ -1,10 +1,9 @@
 import { registry } from "@web/core/registry";
-import { post, formatEndpoint } from "@iot_base/network_utils/http";
+import { post } from "@iot_base/network_utils/http";
 import { uuid } from "@web/core/utils/strings";
 import { IotWebsocket } from "@iot/network_utils/iot_websocket";
 import { _t } from "@web/core/l10n/translation";
 import { IotWebRtc } from "./iot_webrtc";
-import { browser } from "@web/core/browser/browser";
 
 export const PRINTER_MESSAGES = {
     ERROR_FAILED: _t("Failed to initiate print"),
@@ -46,7 +45,7 @@ export const FDM_MESSAGES = {
  */
 export class IotHttpService {
     longpollingFailedTimestamp = null;
-    connectionStatus = "local"; // local, online, offline
+    connectionStatus = "webrtc"; // webrtc, longpolling, websocket, offline
     connectionTypes = [
         this._webRtc.bind(this),
         this._longpolling.bind(this),
@@ -96,7 +95,7 @@ export class IotHttpService {
         if (data) {
             await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, messageId);
         }
-        this.connectionStatus = "local";
+        this.connectionStatus = "webrtc";
     }
 
     async _longpolling({ ip, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
@@ -114,7 +113,7 @@ export class IotHttpService {
             this.longpollingFailedTimestamp = Date.now();
             throw e;
         }
-        this.connectionStatus = "local";
+        this.connectionStatus = "longpolling";
     }
 
     async _websocket({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
@@ -126,7 +125,7 @@ export class IotHttpService {
         if (data) {
             await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, messageId);
         }
-        this.connectionStatus = "online";
+        this.connectionStatus = "websocket";
     }
 
     async _attemptFallbacks({ iotBoxId, deviceIdentifier, onFailure }) {
@@ -215,21 +214,6 @@ export class IotHttpService {
             onFailure,
         });
     }
-
-    async toggleMode(iotBoxIp) {
-        if (this.connectionStatus !== "local") {
-            try {
-                await browser.fetch(formatEndpoint(iotBoxIp, '/iot_drivers/ping'));
-                this.longpollingFailedTimestamp = null;
-                this.connectionStatus = "local";
-            } catch {
-                console.debug("IoT Box is unreachable via local network, can't toggle to local mode.");
-            }
-            return
-        }
-        this.longpollingFailedTimestamp = Date.now();
-        this.connectionStatus = "online";
-    }
 }
 
 
@@ -259,12 +243,11 @@ export const iotHttpService = {
         );
         const action = iot.action.bind(iot);
         const onMessage = iot.onMessage.bind(iot);
-        const toggleMode = iot.toggleMode.bind(iot);
 
         // Expose only those functions to the environment
         // status is a getter to have a reactive value
         return {
-            post, action, longpolling, websocket, toggleMode, onMessage, get status() {
+            post, action, longpolling, websocket, onMessage, get status() {
                 return iot.connectionStatus;
             }
         };
