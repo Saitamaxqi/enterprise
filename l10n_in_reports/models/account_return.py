@@ -90,12 +90,6 @@ class AccountReturn(models.Model):
     l10n_in_fetch_vendor_edi_feature_enabled = fields.Boolean(related='company_id.l10n_in_fetch_vendor_edi_feature')
     l10n_in_irn_fetch_date = fields.Date(string="Last IRN Fetch Datetime")
 
-    @api.constrains('tax_unit_id')
-    def _check_tax_unit(self):
-        for record in self:
-            if record.tax_unit_id and record.tax_unit_id.main_company_id != record.company_id:
-                raise ValidationError(_('GST Unit main company is different than this period company.'))
-
     @api.depends('next_state')
     def _compute_show_submit_button(self):
         """
