@@ -847,10 +847,12 @@ test("when middle clicked on cell open records in new window ", async () => {
     await contains("td.o_cohort_value").click({ ctrlKey: true });
     expect.verifySteps([
         "get menu_id-null",
+        "get current_lang-null",
         "get current_state-null",
         "get current_action-null",
         'set current_state-{"actionStack":[{"displayName":"Subscriptions","action":22,"view_type":"cohort"}],"action":22}',
         'set current_action-{"id":22,"name":"Subscriptions","res_model":"subscription","type":"ir.actions.act_window","views":[[false,"cohort"],["my_list_view","list"],["my_form_view","form"]]}',
+        "set current_lang-en",
         'get current_action-{"id":22,"name":"Subscriptions","res_model":"subscription","type":"ir.actions.act_window","views":[[false,"cohort"],["my_list_view","list"],["my_form_view","form"]]}',
         'get current_state-{"actionStack":[{"displayName":"Subscriptions","action":22,"view_type":"cohort"}],"action":22}',
         'set current_action-{"type":"ir.actions.act_window","name":"Subscriptions","res_model":"subscription","views":[["my_list_view","list"],["my_form_view","form"]],"view_mode":"list","target":"current","context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]},"domain":["&",["start",">=","2017-07-10"],["start","<","2017-07-17"]]}',
