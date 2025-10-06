@@ -1602,12 +1602,7 @@ class HrPayslip(models.Model):
         }
 
     def action_export_payslip(self):
-        self.ensure_one()
-        return {
-            "name": self.env._("Debug Payslip"),
-            "type": "ir.actions.act_url",
-            "url": "/debug/payslip/%s" % self.id,
-        }
+        pass
 
     def _get_contract_wage(self):
         self.ensure_one()
