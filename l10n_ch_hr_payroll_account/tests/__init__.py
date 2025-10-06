@@ -2,3 +2,4 @@
 
 from . import swissdec_common
 from . import test_swissdec_cases
+from . import test_swiss_warnings

@@ -930,6 +930,7 @@ class HrPayslip(models.Model):
         swiss_slips._compute_l10n_ch_is_model()
         swiss_slips._compute_l10n_ch_lpp_not_insured()
         swiss_slips._compute_l10n_ch_compensation_fund_id()
+        swiss_slips._compute_issues()
         swiss_slips.compute_sheet()
 
         super(HrPayslip, self - swiss_slips).action_refresh_from_work_entries()
