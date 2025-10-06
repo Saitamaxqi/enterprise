@@ -1,6 +1,7 @@
 from .common import TestAccountReportsCommon
 
 from odoo import Command, fields
+from freezegun import freeze_time
 from odoo.tools import format_date
 from odoo.tests import tagged
 
@@ -14,14 +15,16 @@ class TestFollowupReport(TestAccountReportsCommon):
 
         cls.report = cls.env.ref('account_reports.followup_report')
         # Initiate Invoices
+        with freeze_time('2025-10-08'):
+            cls.today = fields.Date.today()
         invoices_data = [
             # Partner A invoices
             {'partner': cls.partner_a, 'amount': 100.0, 'due_date': '2025-01-01'},
-            {'partner': cls.partner_a, 'amount': 100.0, 'due_date': fields.Date.today()},
+            {'partner': cls.partner_a, 'amount': 100.0, 'due_date': cls.today},
             {'partner': cls.partner_a, 'amount': 100.0, 'due_date': '2025-01-01', 'move_type': 'out_refund'},
             # Partner B invoices
             {'partner': cls.partner_b, 'amount': 100.0, 'due_date': '2025-01-01'},
-            {'partner': cls.partner_b, 'amount': 100.0, 'due_date': fields.Date.today()},
+            {'partner': cls.partner_b, 'amount': 100.0, 'due_date': cls.today},
             {'partner': cls.partner_b, 'amount': 400.0, 'due_date': '2025-01-01', 'move_type': 'out_refund'},
         ]
         for invoice_data in invoices_data:
@@ -32,7 +35,7 @@ class TestFollowupReport(TestAccountReportsCommon):
                 invoice_date_due=invoice_data['due_date'],
                 invoice_date=invoice_data.get('invoice_date', '2025-01-01'),
             )
-        cls.formatted_today = format_date(cls.env, fields.Date.today(), date_format='MM/dd/YYY')
+        cls.formatted_today = format_date(cls.env, cls.today, date_format='MM/dd/YYY')
 
     @classmethod
     def init_invoice(cls, move_type, partner=None, invoice_date=None, post=False, products=None, amounts=None, taxes=None, company=False, currency=None, journal=None, invoice_date_due=None):
@@ -43,6 +46,7 @@ class TestFollowupReport(TestAccountReportsCommon):
         move.action_post()
         return move
 
+    @freeze_time('2025-10-08')
     def test_followup_report_unfold(self):
         ''' Test unfolding a line when rendering the whole report, having overdue and due sections '''
         options = self._generate_options(self.report, fields.Date.from_string('2025-01-01'), fields.Date.from_string('2025-01-31'))
@@ -77,13 +81,14 @@ class TestFollowupReport(TestAccountReportsCommon):
             options
         )
 
+    @freeze_time('2025-10-08')
     def test_followup_report_load_more(self):
         ''' Test loading more lines when reaching the limit '''
         self.report.load_more_limit = 2
 
         invoices_data = [
             {'amount': 100.0, 'due_date': '2024-12-03'},
-            {'amount': 100.0, 'due_date': fields.Date.today()}
+            {'amount': 100.0, 'due_date': self.today}
         ]
 
         for invoice_data in invoices_data:
