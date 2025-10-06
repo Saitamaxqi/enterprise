@@ -160,4 +160,12 @@
                 ref('base.mt'), ref('base.mk'), ref('base.no'), ref('base.pl'), ref('base.ro'), ref('base.rs'), ref('base.sk'), ref('base.si'),
                 ref('base.se'), ref('base.uz')])]"/>
     </record>
+    <record id="pos_delivery_provider_keeta" model="pos.delivery.provider">
+        <field name="name">Keeta</field>
+        <field name="technical_name">keeta</field>
+        <field name="journal_code">KET</field>
+        <field name="image_128" type="base64" file="pos_urban_piper/static/img/Keeta.svg"/>
+        <field name="available_country_ids" eval="[Command.set([ref('base.sa'), ref('base.kw'), ref('base.ae'),
+            ref('base.qa'), ref('base.hk'), ref('base.cn'), ref('base.br')])]"/>
+    </record>
 </odoo>
