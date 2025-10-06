@@ -1,4 +1,5 @@
-.o-mail-ChatHub-bubbles {
+.o-mail-ChatHub-bubbles,
+.o-overlay-container:has(~ .o-mail-ChatHub > .o-mail-ChatWindow) > .o-overlay-item:has(.o_dialog) {
     z-index: $zindex-sticky;
 }
 
