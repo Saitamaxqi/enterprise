@@ -21,6 +21,7 @@ from PIL import ImageFont
 
 from odoo import api, fields, models, _
 from odoo.addons.web.controllers.utils import clean_action
+from odoo.addons.account.models.account_report import ACCOUNT_CODES_ENGINE_SPLIT_REGEX, ACCOUNT_CODES_ENGINE_TERM_REGEX
 from odoo.exceptions import RedirectWarning, UserError, ValidationError
 from odoo.fields import Command, Domain
 from odoo.service.model import get_public_method
@@ -31,15 +32,6 @@ from odoo.tools.misc import file_path, format_date, formatLang
 from odoo.tools.safe_eval import expr_eval, safe_eval
 
 _logger = logging.getLogger(__name__)
-
-ACCOUNT_CODES_ENGINE_SPLIT_REGEX = re.compile(r"(?=[+-])")
-
-ACCOUNT_CODES_ENGINE_TERM_REGEX = re.compile(
-    r"^(?P<sign>[+-]?)"\
-    r"(?P<prefix>([A-Za-z\d.]*|tag\([\w.]+\))((?=\\)|(?<=[^CD])))"\
-    r"(\\\((?P<excluded_prefixes>([A-Za-z\d.]+,)*[A-Za-z\d.]*)\))?"\
-    r"(?P<balance_character>[DC]?)$"
-)
 
 ACCOUNT_CODES_ENGINE_TAG_ID_PREFIX_REGEX = re.compile(r"tag\(((?P<id>\d+)|(?P<ref>\w+\.\w+))\)")
 
