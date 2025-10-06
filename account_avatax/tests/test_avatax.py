@@ -92,6 +92,22 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
 
         self.assertEqual(invoice.amount_total, 32.7, "Wrong total amount, it should be $30.00 + $2.70 of taxes.")
 
+    def test_04_odoo_invoice(self):
+        """Test an invoice for which Avatax returns no taxes."""
+        invoice, response = self._create_invoice_03_and_expected_response()
+        self.assertRecordValues(invoice, [{
+            'amount_total': 30.0,
+            'amount_untaxed': 30.0,
+            'amount_tax': 0.0,
+        }])
+        response['summary'] = []
+        response['lines'][0]['details'] = []
+
+        with self._capture_request(return_value=response):
+            invoice.action_post()
+
+        self.assertEqual(invoice.amount_total, 30.0, "Wrong total amount, it should remain $30.00.")
+
     def test_01_odoo_refund(self):
         invoice, response = self._create_invoice_01_and_expected_response()
 

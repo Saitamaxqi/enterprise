@@ -85,7 +85,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             extra_tax_data = self.env["account.tax"]._export_base_line_extra_tax_data(base_line)
             line.write({
                 "extra_tax_data": extra_tax_data,
-                "tax_ids": [Command.set([int(tax_id) for tax_id in extra_tax_data["manual_tax_amounts"]])],
+                "tax_ids": [Command.set([int(tax_id) for tax_id in extra_tax_data.get("manual_tax_amounts", {})])],
             })
 
     @api.model
