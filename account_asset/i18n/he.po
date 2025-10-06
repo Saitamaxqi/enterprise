@@ -28,7 +28,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-29 02:40+0000\n"
+"PO-Revision-Date: 2025-10-06 02:40+0000\n"
 "Last-Translator: or balmas <or@laylinetech.com>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/he/>\n"
@@ -170,7 +170,9 @@ msgstr "חשבון"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_type
 msgid "Account Type is used for information purpose, to generate country-specific legal reports, and set the rules to close a fiscal year and generate opening entries."
-msgstr "סוג החשבון משמש לצורכי מידע, במטרה להפיק דוחות ולקבוע כללים לרישום פקודות פתיחה וסגירת תקופה."
+msgstr ""
+"סוג החשבון משמש לצורכי מידע, במטרה להפיק דוחות ולקבוע כללים לרישום פקודות "
+"פתיחה וסגירת תקופה."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_depreciation_id
@@ -235,7 +237,7 @@ msgstr "הנהלת חשבונות"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_report
 msgid "Accounting Report"
-msgstr "דוח הנה\"כ"
+msgstr "דוח הנהלת חשבונות"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_acquisition_date

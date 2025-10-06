@@ -21,13 +21,14 @@
 # דודי מלכה <Dudimalka6@gmail.com>, 2023
 # Yihya Hugirat <hugirat@gmail.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# or balmas <or@laylinetech.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-16 18:27+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-06 02:40+0000\n"
+"Last-Translator: or balmas <or@laylinetech.com>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/he/>\n"
 "Language: he\n"
@@ -77,7 +78,9 @@ msgstr "<b class=\"tip_title\">טיפ: עדכון פעולות יומן מרוב
 #. module: account_accountant
 #: model_terms:digest.tip,tip_description:account_accountant.digest_tip_account_accountant_1
 msgid "<b class=\"tip_title\">Tip: Find an Accountant or register your Accounting Firm</b>"
-msgstr "<b class=\"tip_title\">טיפ: למצוא מנהל חשבונות, או להרשם כחברה לניהול חשבונות</b>"
+msgstr ""
+"<b class=\"tip_title\">טיפ: למצוא מנהל חשבונות, או להרשם כחברה לניהול "
+"חשבונות</b>"
 
 #. module: account_accountant
 #. odoo-javascript
