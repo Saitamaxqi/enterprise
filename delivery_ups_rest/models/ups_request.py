@@ -108,7 +108,9 @@ class UPSRequest:
             return img_decoded
 
     def _check_required_value(self, order=False, picking=False, is_return=False):
+        is_express_checkout_partial_delivery_address = False
         if order:
+            is_express_checkout_partial_delivery_address = order.env.context.get('express_checkout_partial_delivery_address')
             shipper = order.company_id.partner_id
             ship_from = order.warehouse_id.partner_id
             ship_to = order.partner_shipping_id
@@ -148,7 +150,7 @@ class UPSRequest:
         res = [required_field[field] for field in required_field if field != 'phone' and not ship_to[field]]
         if ship_to.country_id.code in ('US', 'CA', 'IE') and not ship_to.state_id.code:
             res.append('State')
-        if not ship_to.street and not ship_to.street2:
+        if not ship_to.street and not ship_to.street2 and not is_express_checkout_partial_delivery_address:
             res.append('Street')
         if ship_to.country_id.code != 'HK' and not ship_to.zip:
             res.append('ZIP code')
@@ -173,11 +175,11 @@ class UPSRequest:
             packages_without_weight = picking.move_line_ids.mapped('result_package_id').filtered(lambda p: not p.shipping_weight)
             if packages_without_weight:
                 return _('Packages %s do not have a positive shipping weight.', ', '.join(packages_without_weight.mapped('display_name')))
-        if not phone:
+        if not phone and not is_express_checkout_partial_delivery_address:
             res.append('Phone')
         if res:
             return _("The recipient address is missing or wrong.\n(Missing field(s) : %s)", ",".join(res))
-        if len(self._clean_phone_number(phone)) < 10:
+        if phone and len(self._clean_phone_number(phone)) < 10:
             return _("Recipient Phone must be at least 10 alphanumeric characters."),
         return False
 
