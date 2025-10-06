@@ -24,7 +24,7 @@ class SepaDirectDebitController(Controller):
         :raise NotFound: If the access token is invalid.
         """
         tx_sudo = request.env['payment.transaction'].sudo()._search_by_reference(
-            'sepa_direct_debit', {'reference': reference}
+            'custom', {'reference': reference}
         )
         if not tx_sudo:
             return
