@@ -279,7 +279,7 @@ test("remove column colspan", async () => {
         getEditorOptions()
     );
 
-    expect(getContent(el.firstElementChild)).toBe(`
+    expect(getContent(el.querySelector("div"))).toBe(`
         <q-table class="oe_unbreakable" style="--q-table-col-count: 3;">
             <q-thead class="oe_unbreakable">
                 <q-tr class="oe_unbreakable">
@@ -524,7 +524,7 @@ test("add t-field", async () => {
     ).toHaveValue("My little field");
 
     await contains(".o-web-studio-report-dynamic-placeholder-popover button.btn-primary").click();
-    expect(getContent(el.firstElementChild)).toBe(
+    expect(getContent(el.querySelector("div"))).toBe(
         '<span data-oe-expression-readable="My little field" data-oe-demo="My little field" t-field="doc.field" data-oe-protected="true" contenteditable="false">My little field</span>[]'
     );
 });

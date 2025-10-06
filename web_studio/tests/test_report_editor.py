@@ -885,9 +885,6 @@ class TestReportEditorUIUnit(HttpCase):
                         </tr>
                     </tbody>
                   </table>
-                  <p>
-                    <br/>
-                  </p>
             </t>
         """)
 
