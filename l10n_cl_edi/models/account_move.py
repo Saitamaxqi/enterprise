@@ -509,7 +509,7 @@ services reception has been received as well.
         dte_attachment = self.sudo().l10n_cl_dte_file
         if not dte_attachment:
             raise UserError(_('DTE attachment not found => %s') % attch_name)
-        xml_dte = base64.b64decode(dte_attachment.datas).decode('utf-8')
+        xml_dte = base64.b64decode(dte_attachment.datas)
         xml_content = etree.fromstring(xml_dte)
         response_id = self.env['ir.sequence'].browse(self.env.ref('l10n_cl_edi.response_sequence').id).next_by_id()
         xml_ack_template = self.env['ir.qweb']._render('l10n_cl_edi.ack_template', {
