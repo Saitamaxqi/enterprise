@@ -66,7 +66,7 @@
 
     <record id="user_laurie_poiret" model="res.users">
         <field name="partner_id" ref="l10n_be_hr_contract_salary.res_partner_laurie_poiret"/>
-        <field name="login">lauriepoiret@example.com</field>
+        <field name="login">laurie.poiret@example.com</field>
         <field name="password">lauriepoiret</field>
         <field name="signature">L. Poiret</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_be'))]"/>
