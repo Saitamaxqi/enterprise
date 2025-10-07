@@ -1,4 +1,5 @@
 import base64
+from cryptography.hazmat.primitives import serialization
 import json
 import random
 import re
@@ -1503,7 +1504,8 @@ class L10n_Mx_EdiDocument(models.Model):
         company = cfdi_values['root_company']
         certificate_sudo = cfdi_values['certificate'].sudo()
         cer_pem = base64.b64decode(certificate_sudo.pem_certificate)
-        key_pem = base64.b64decode(certificate_sudo.private_key_id.pem_key)
+        key_pem = self._get_unencrypted_private_key_pem(certificate_sudo.private_key_id)
+
         try:
             client = Client(credentials['cancel_url'], timeout=20)
             factory = client.type_factory('apps.services.soap.core.views')
@@ -1619,7 +1621,7 @@ class L10n_Mx_EdiDocument(models.Model):
         if cancel_uuid:
             uuid_param += cancel_uuid
         cer_pem = base64.b64decode(certificate.pem_certificate)
-        key_pem = base64.b64decode(certificate.private_key_id.pem_key)
+        key_pem = self._get_unencrypted_private_key_pem(certificate.private_key_id)
         key_password = certificate.private_key_id.password
 
         try:
@@ -1820,7 +1822,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         payload_dict = {
             'rfc': company.vat,
             'b64Cer': certificate_sudo.pem_certificate.decode('UTF-8'),
-            'b64Key': certificate_sudo.private_key_id.pem_key.decode('UTF-8'),
+            'b64Key': base64.b64encode(self._get_unencrypted_private_key_pem(certificate_sudo.private_key_id)).decode('UTF-8'),
             'password': certificate_sudo.private_key_id.password,
             'uuid': uuid,
             'motivo': cancel_reason,
@@ -1849,6 +1851,17 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             return {'errors': errors}
 
         return {}
+
+    @api.model
+    def _get_unencrypted_private_key_pem(self, key):
+        return serialization.load_pem_private_key(
+            base64.b64decode(key.pem_key),
+            key.password.encode() if key.password else None,
+        ).private_bytes(
+            encoding=serialization.Encoding.PEM,
+            format=serialization.PrivateFormat.PKCS8,
+            encryption_algorithm=serialization.NoEncryption(),
+        )
 
     # -------------------------------------------------------------------------
     # BUSINESS METHODS
