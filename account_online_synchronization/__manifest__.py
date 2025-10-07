@@ -39,8 +39,12 @@ a periodic and automatic synchronization of their bank statements.
     'assets': {
         'web.assets_backend': [
             'account_online_synchronization/static/src/components/**/*',
+            ('remove', 'account_online_synchronization/static/src/components/**/*.dark.scss'),
             'account_online_synchronization/static/src/hooks/**/*',
             'account_online_synchronization/static/src/js/odoo_fin_connector.js',
+        ],
+        'web.assets_web_dark': [
+            'account_online_synchronization/static/src/components/**/*.dark.scss',
         ],
         'web.assets_frontend': [
             'account_online_synchronization/static/src/interactions/*',

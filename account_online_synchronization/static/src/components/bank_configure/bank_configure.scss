@@ -6,7 +6,7 @@
     .dashboard_bank {
         aspect-ratio: 1 / 1;
         .align-self-center {
-            background-color: $gray-100;
+            background-color: var(--bank-configure-bg, $gray-100);
             border: 1px solid $gray-100;
         }
         margin-bottom: 0.25rem;
