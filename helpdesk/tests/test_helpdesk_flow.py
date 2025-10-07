@@ -932,3 +932,12 @@ Content-Transfer-Encoding: quoted-printable
 
         ticket.write({'tag_ids': [(5, 0, 0)]})
         self.assertFalse(ticket.tag_ids)
+
+    def test_create_ticket_with_stage_days_to_rot(self):
+        """Test that creating a ticket with stage New having Days to rot > 0"""
+        self.stage_new.rotting_threshold_days = 1
+        ticket_form = Form(self.env['helpdesk.ticket'])
+        ticket_form.name = "Test Ticket"
+        ticket = ticket_form.save()
+        self.assertTrue(ticket.id)
+        self.assertEqual(ticket.stage_id.name, 'New')
