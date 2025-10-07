@@ -40,9 +40,11 @@ export class BoxLayer extends Component {
             this.pageHeight = this.props.pageLayer.style.height;
 
             // Get the scrollable element of the PDF viewer to listen to scroll events
-            this.viewerContainerEl = this.props.pageLayer.ownerDocument.getElementById("viewerContainer");
-            useExternalListener(this.viewerContainerEl, "scroll", this.onScroll);
+            this.viewerScrollableEl = this.props.pageLayer.ownerDocument.getElementById("viewerContainer");
+            useExternalListener(this.viewerScrollableEl, "scroll", this.onScroll);
         } else if (this.isOnImg) {
+            this.viewerScrollableEl = this.props.pageLayer.parentElement;
+            useExternalListener(this.viewerScrollableEl, "scroll", this.onScroll);
             this.pageWidth = `${this.props.pageLayer.clientWidth}px`;
             this.pageHeight = `${this.props.pageLayer.clientHeight}px`;
         }
@@ -121,9 +123,9 @@ export class BoxLayer extends Component {
         this.state.isSelecting = true;
         this.state.selectionStart = { x: event.clientX, y: event.clientY};
         this.state.selectionEnd = { x: event.clientX, y: event.clientY};
-        if (this.viewerContainerEl) {
-            this.scrollX = this.viewerContainerEl.scrollLeft;
-            this.scrollY = this.viewerContainerEl.scrollTop;
+        if (this.viewerScrollableEl) {
+            this.scrollX = this.viewerScrollableEl.scrollLeft;
+            this.scrollY = this.viewerScrollableEl.scrollTop;
         }
     }
 
@@ -155,8 +157,8 @@ export class BoxLayer extends Component {
     onScroll(event) {
         if (this.state.isSelecting) {
             // Adjust the selection on scroll
-            const scrollX = this.viewerContainerEl.scrollLeft;
-            const scrollY = this.viewerContainerEl.scrollTop;
+            const scrollX = this.viewerScrollableEl.scrollLeft;
+            const scrollY = this.viewerScrollableEl.scrollTop;
 
             this.state.selectionStart.x += this.scrollX - scrollX;
             this.state.selectionStart.y += this.scrollY - scrollY;
