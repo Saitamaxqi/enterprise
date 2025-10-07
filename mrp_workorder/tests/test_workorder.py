@@ -2,12 +2,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import unittest
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.addons.mrp_workorder.tests.common import TestMrpWorkorderCommon
 from odoo.addons.base.tests.common import HttpCase
 from odoo.tests import Form, tagged
 from odoo.tools import mute_logger
 from odoo.exceptions import UserError
+from datetime import timedelta
+from freezegun import freeze_time
 import logging
 
 _logger = logging.getLogger(__name__)
@@ -581,6 +583,44 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         self.assertEqual(operation_2.finished_lot_ids, mo.lot_producing_ids)
         mo.button_mark_done()
         self.assertEqual(mo.state, 'done')
+
+    @freeze_time('2025-10-01')
+    def test_workorder_duration_inverse_time_ids_consistency(self):
+        """
+        Verify that the inverse method of the workorder duration field correctly
+        mirrors the logic of its compute method.
+
+        Specifically, the duration is computed as the total interval duration,
+        counting overlapping time_ids only once. This ensures that the inverse
+        method does not accidentally unlink any time_ids when updating durations.
+        """
+        now = fields.Datetime.now()
+        mo = self.env['mrp.production'].create({
+            'product_qty': 1,
+            'product_id': self.product_1.id,
+            'workorder_ids': [Command.create({
+                'name': 'workorder_1',
+                'workcenter_id': self.workcenter_1.id,
+                'time_ids': [
+                    Command.create({
+                        'workcenter_id': self.workcenter_1.id,
+                        'date_start': now - timedelta(minutes=30),
+                        'date_end': now,
+                        'loss_id': self.ref('mrp.block_reason4'),
+                    }),
+                    Command.create({
+                        'workcenter_id': self.workcenter_1.id,
+                        'date_start': now - timedelta(minutes=20),
+                        'date_end': now - timedelta(minutes=5),
+                        'loss_id': self.ref('mrp.block_reason4'),
+                    }),
+                ],
+            })],
+        })
+        wo = mo.workorder_ids
+        wo.duration = wo.duration
+        self.assertEqual(wo.duration, 30.0)
+        self.assertRecordValues(wo.time_ids, [{'duration': 30.0}, {'duration': 15.0}])
 
 
 @tagged("post_install", "-at_install")

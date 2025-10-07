@@ -731,7 +731,7 @@ class MrpWorkorder(models.Model):
 
     def get_duration(self):
         self.ensure_one()
-        now = fields.Datetime.now()
+        now = self.env.cr.now()
         loss_type_times = defaultdict(lambda: self.env['mrp.workcenter.productivity'])
         for time in self.time_ids:
             loss_type_times[time.loss_id.loss_type] |= time
@@ -742,7 +742,7 @@ class MrpWorkorder(models.Model):
 
     def get_working_duration(self):
         self.ensure_one()
-        now = fields.Datetime.now()
+        now = self.env.cr.now()
         return self._intervals_duration([(t.date_start, now, t) for t in self.time_ids if not t.date_end])
 
     def get_productive_duration(self):
