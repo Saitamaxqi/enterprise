@@ -98,7 +98,10 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         const actionData = await this.orm.call(
             "account.journal",
             "action_open_bank_balance_in_gl",
-            [this.env.model.config.context.active_id]
+            [
+                this.env.model.config.context.default_journal_id ||
+                    this.env.model.config.context.active_id,
+            ],
         );
         this.action.doAction(actionData);
     }
