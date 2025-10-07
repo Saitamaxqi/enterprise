@@ -527,9 +527,11 @@ def find_rates(x, rates):
             return low, high, fix, rate
 
 gross = categories['GROSS']
-isr_table = payslip._rule_parameter('l10n_mx_isr_tables')[version.schedule_pay]
-low, high, fix, rate = find_rates(gross, isr_table)
-result = -((gross - low) * rate + fix)
+result = 0
+if gross:
+    isr_table = payslip._rule_parameter('l10n_mx_isr_tables')[version.schedule_pay]
+    low, high, fix, rate = find_rates(gross, isr_table)
+    result = -((gross - low) * rate + fix)
         </field>
         <field name="struct_id" ref="l10n_mx_regular_pay"/>
         <field name="note">
