@@ -18,6 +18,7 @@
         <div t-ref="boxLayer"
              t-attf-class="o_extract_mixin_box_layer #{state.isSelecting ? 'is-selecting' : ''}"
              t-att-style="style"
+             t-on-click.stop=""
              t-on-mousedown.prevent="onMouseDown"
              t-on-mouseup="onMouseUp"
              t-on-mousemove="onMouseMove">

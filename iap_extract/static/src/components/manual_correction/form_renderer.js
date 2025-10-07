@@ -87,6 +87,14 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
             }
         });
 
+        useExternalListener(window, "pointerdown", (event) => {
+            // For date fields, a calendar popup appear and listens on the pointerdown event to hide itself when a
+            // click occurs outside of it. This causes the loss of focus of the field and thus hides the boxes.
+            if (this.activeField && event.target.closest('.o-mail-Attachment')) {
+                event.stopImmediatePropagation();
+            }
+        }, { capture: true });
+
         onWillUnmount (() => {
             this.destroyBoxLayers();
         });
