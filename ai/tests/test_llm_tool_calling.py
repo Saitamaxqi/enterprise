@@ -205,9 +205,8 @@ class TestLLMToolCalling(common.TransactionCase):
         self.assertEqual(warning_log.message, "AI: Tool call limit reached, stopping further tool calls")
 
         # Check the inputs for the second LLM call
-        second_call_args = mock_request.call_args_list[1].args
-        body = second_call_args[3]
-        tool_responses = body['input'][-2:]
+        second_call_kwargs = mock_request.call_args.kwargs
+        tool_responses = second_call_kwargs['body']['input'][-2:]
 
         self.assertEqual(tool_responses[0]['type'], 'function_call_output')
         self.assertEqual(tool_responses[0]['call_id'], 'call_1')
@@ -250,9 +249,8 @@ class TestLLMToolCalling(common.TransactionCase):
         self.assertEqual(error_log.message, "AI: Try to call a forbidden action unknown_tool")
 
         # Check the inputs for the second LLM call
-        second_call_args = mock_request.call_args_list[1].args
-        body = second_call_args[3]
-        tool_response = body['input'][-1]
+        second_call_kwargs = mock_request.call_args.kwargs
+        tool_response = second_call_kwargs['body']['input'][-1]
 
         self.assertEqual(tool_response['type'], 'function_call_output')
         self.assertEqual(tool_response['call_id'], 'call_1')

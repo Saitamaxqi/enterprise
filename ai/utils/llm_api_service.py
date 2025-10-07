@@ -114,10 +114,10 @@ class LLMApiService:
         self._add_if_set(body, 'user', user)
 
         return self._request(
-            'post',
-            '/embeddings',
-            self._get_base_headers(),
-            body,
+            method='post',
+            endpoint='/embeddings',
+            headers=self._get_base_headers(),
+            body=body,
         )
 
     def get_transcription(
@@ -193,7 +193,7 @@ class LLMApiService:
         headers = self._get_base_headers()
 
         body = dict(**config) if config is not None else {}
-        return self._request("post", "/realtime/client_secrets", headers, body)
+        return self._request(method="post", endpoint="/realtime/client_secrets", headers=headers, body=body)
 
     def _add_if_set(self, d: dict, key: str, value):
         if value is not None:
@@ -363,10 +363,10 @@ class LLMApiService:
 
     def _request_llm_openai_helper(self, body, tools=None, inputs=()):
         llm_response = self._request(
-            "post",
-            "/responses",
-            self._get_base_headers(),
-            body,
+            method="post",
+            endpoint="/responses",
+            headers=self._get_base_headers(),
+            body=body,
         )
 
         to_call = []
@@ -473,7 +473,7 @@ class LLMApiService:
 
     def _request_llm_google_helper(self, body, llm_model, inputs=()):
         llm_response = self._request(
-            "post",
+            method="post",
             base_url="https://generativelanguage.googleapis.com/v1beta",
             headers={},
             endpoint=f"/models/{llm_model}:generateContent",
