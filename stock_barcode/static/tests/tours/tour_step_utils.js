@@ -21,7 +21,7 @@ export const stepUtils = {
             { trigger: "input#manual_barcode+button", run: "click" },
         ];
     },
-    validateBarcodeOperation(trigger = ".o_barcode_client_action") {
+    validateBarcodeOperation(trigger = ".o_barcode_client_action .o_barcode_lines") {
         return [
             {
                 trigger: "body:not(:has(.modal))",
