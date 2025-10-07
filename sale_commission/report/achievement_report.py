@@ -137,7 +137,7 @@ class SaleCommissionAchievementReport(models.Model):
         else:
             all_plan_ids = self.env['sale.commission.plan'].sudo().search([('state', '=', 'approved')])
             date_from = all_plan_ids and min(all_plan_ids.mapped('date_from'))
-            date_to = all_plan_ids and min(all_plan_ids.mapped('date_to'))
+            date_to = all_plan_ids and max(all_plan_ids.mapped('date_to'))
         company_count = len(self.env.companies.ids)
         if company_count == 1:
             company_condition = f"AND company_id = {self.env.companies.id}"
