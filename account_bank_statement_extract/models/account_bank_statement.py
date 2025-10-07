@@ -1,4 +1,4 @@
-from odoo import api, fields, models, Command, _
+from odoo import api, models, Command, _
 from odoo.addons.iap.tools import iap_tools
 
 OCR_VERSION = 100
