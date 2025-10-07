@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-03 18:45+0000\n"
-"PO-Revision-Date: 2025-10-02 11:55+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_workorder/pt_BR/>\n"
@@ -107,7 +107,7 @@ msgstr "Ícone do tipo de atividade"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/control_panel.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Adicionar"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -129,13 +129,13 @@ msgstr "Adicionar componente"
 #: code:addons/mrp_workorder/static/src/mrp_display/dialog/mrp_menu_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:mrp_workorder.view_mrp_production_additional_workorder_wizard
 msgid "Add Work Order"
-msgstr ""
+msgstr "Adicionar ordem de trabalho"
 
 #. module: mrp_workorder
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/control_panel.xml:0
 msgid "Add Workcenter"
-msgstr ""
+msgstr "Adicionar centro de trabalho"
 
 #. module: mrp_workorder
 #. odoo-javascript
@@ -149,13 +149,13 @@ msgstr "Adicionar uma etapa"
 #. odoo-javascript
 #: code:addons/mrp_workorder/static/src/mrp_display/mrp_record_line/stock_move.js:0
 msgid "Add line: %(productName)s"
-msgstr ""
+msgstr "Adicionar linha: %(productName)s"
 
 #. module: mrp_workorder
 #. odoo-python
 #: code:addons/mrp_workorder/models/mrp_production.py:0
 msgid "Add log note"
-msgstr ""
+msgstr "Adicionar nota de registro"
 
 #. module: mrp_workorder
 #: model:ir.model,name:mrp_workorder.model_mrp_production_additional_workorder

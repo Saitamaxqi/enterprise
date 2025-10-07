@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 18:42+0000\n"
-"PO-Revision-Date: 2025-10-02 11:55+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/helpdesk_timesheet/pt_BR/>\n"
@@ -123,7 +123,7 @@ msgstr "Chamado da Central de Ajuda"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_sla_report_analysis__total_hours_spent
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__total_hours_spent
 msgid "Hours Spent (Timesheets)"
-msgstr ""
+msgstr "Horas gastas (Planilhas de horas)"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_account_analytic_line__id
@@ -142,7 +142,7 @@ msgstr "ID"
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_table
 msgid "Issue with new portal system"
-msgstr ""
+msgstr "Problema com o novo sistema de portal"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_sla_report_analysis__manager_id
@@ -153,7 +153,7 @@ msgstr "Gerente"
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_hr_timesheet_merge_wizard
 msgid "Merge Timesheets"
-msgstr ""
+msgstr "Mesclar planilhas de horas"
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -163,6 +163,10 @@ msgid ""
 "timesheet drafts in the original helpdesk team. Although they won't be "
 "visible here, you can still edit them using the Timesheets app."
 msgstr ""
+"Transferir essa tarefa para uma equipe de Central de Ajuda sem suporte a "
+"planilhas de horas manterá os rascunhos das planilhas na equipe original. "
+"Embora não fiquem visíveis aqui, você ainda poderá editá-los usando o "
+"aplicativo Planilhas de Horas."
 
 #. module: helpdesk_timesheet
 #. odoo-python

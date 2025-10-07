@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:33+0000\n"
-"PO-Revision-Date: 2025-10-04 02:43+0000\n"
+"PO-Revision-Date: 2025-10-07 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/hr_expense_stripe/es_419/>\n"
@@ -4488,6 +4488,11 @@ msgid ""
 "You agree to indemnify and hold Odoo, its directors and officers, and affiliates harmless\n"
 "                    from any losses, claims, or liabilities related to your use of Stripe Issuing services, including misuse or violations."
 msgstr ""
+"Aceptas indemnizar y eximir de responsabilidad a Odoo, sus directores, "
+"ejecutivos y afiliados\n"
+"                    de cualquier pérdida, reclamo o responsabilidad "
+"relacionada con tu uso de los servicios de Stripe Issuing, incluido el mal "
+"uso o las infracciones."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4504,18 +4509,23 @@ msgid ""
 "You are responsible for all transactions made with your card,\n"
 "                    including unauthorized charges unless covered by law or Stripe’s policy."
 msgstr ""
+"Eres responsable de todas las transacciones realizadas con tu tarjeta,\n"
+"                    incluyendo los cargos no autorizados, a menos que estén "
+"cubiertos por la ley o la política de Stripe."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "You can't change the card type once the card has been created."
-msgstr ""
+msgstr "No puedes cambiar el tipo de tarjeta una vez que ha sido creada."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "You can't change the delivery address once the card has been shipped."
 msgstr ""
+"No puedes cambiar la dirección de entrega de la tarjeta una vez que ha sido "
+"enviada."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4524,6 +4534,7 @@ msgid ""
 "You can't change the employee of an active card. Please create a new card "
 "instead."
 msgstr ""
+"No puedes cambiar al empleado de una tarjeta activa, crea una nueva tarjeta."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4531,13 +4542,13 @@ msgstr ""
 msgid ""
 "You can't delete a card that already exists for Stripe, please block it "
 "instead"
-msgstr ""
+msgstr "No puedes eliminar una tarjeta que ya existe en Stripe, bloquéala."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "You can't set the card state back to draft."
-msgstr ""
+msgstr "No puedes restablecer el estado de la tarjeta a borrador."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4546,6 +4557,8 @@ msgid ""
 "You cannot delete a payment method line that is used by an active/paused "
 "card."
 msgstr ""
+"No puedes eliminar una línea de método de pago utilizada por una tarjeta "
+"activa o que está en pausa."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4554,18 +4567,21 @@ msgid ""
 "You cannot delete an expense that was created from a Stripe card "
 "transaction."
 msgstr ""
+"No puedes eliminar un gasto creado a partir de una transacción de una "
+"tarjeta de Stripe."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
 msgid "You cannot edit the security fields of an expense manually"
-msgstr ""
+msgstr "No puedes editar los campos de seguridad de un gasto de forma manual"
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_res_company_constraint_journal_stripe_activated
 msgid ""
 "You cannot remove the journal used by Stripe Issuing when it is activated"
 msgstr ""
+"No puedes eliminar el diario que utiliza Stripe Issuing cuando está activo"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4574,6 +4590,8 @@ msgid ""
 "You cannot set a cost on a product that is used as an Expense card category."
 " Please duplicate it instead."
 msgstr ""
+"No puedes definir un costo en un producto que es utilizado como categoría de "
+"la tarjeta de gastos, duplícalo."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4583,12 +4601,15 @@ msgid ""
 "inactive Stripe cards. Please manually block all cards before uninstalling "
 "the module."
 msgstr ""
+"No puedes desinstalar el módulo \"Tarjetas de gastos\" mientras hayan "
+"tarjetas de Stripe activas o inactivas. Bloquea todas las tarjetas de forma "
+"manual antes de desinstalar el módulo."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_card_receive_terms.xml:0
 msgid "You confirm you have received the physical expense card."
-msgstr ""
+msgstr "Confirmas que recibiste la tarjeta de gastos física."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4597,18 +4618,22 @@ msgid ""
 "You must comply with all applicable laws and regulations and you are responsible\n"
 "                    for ensuring lawful use of funds and expense cards in your jurisdiction."
 msgstr ""
+"Debes cumplir con todas las leyes y regulaciones aplicables y eres "
+"responsable\n"
+"                    de asegurar el uso legítimo de los fondos y las tarjetas "
+"de gastos en tu jurisdicción."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_card_receive_wizard.py:0
 msgid "You must confirm that you have received the card before activating it."
-msgstr ""
+msgstr "Debes confirmar que recibiste la tarjeta antes de activarla."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "You must create a Stripe account in order to use Stripe"
-msgstr ""
+msgstr "Debes crear una cuenta de Stripe para usar Stripe"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4617,27 +4642,30 @@ msgid ""
 "You must report lost or stolen cards immediately.\n"
 "                    You are responsible for monitoring usage and disputing unauthorized charges promptly."
 msgstr ""
+"Debes reportar las tarjetas perdidas o robadas de inmediato.\n"
+"                    Eres responsable de monitorear el uso y disputar los "
+"cargos no autorizados de inmediato."
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
 msgid "You need to be connected to stripe in order to configure your account."
-msgstr ""
+msgstr "Necesitas conectarte a Stripe para configurar tu cuenta."
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
 msgid "Your Expense Card Has Been Canceled"
-msgstr ""
+msgstr "Tu tarjeta de gastos ha sido cancelada"
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_shipped
 msgid "Your Expense Card Has Been Shipped"
-msgstr ""
+msgstr "Tu tarjeta de gastos ha sido enviada"
 
 #. module: hr_expense_stripe
 #: model:mail.template,subject:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
 msgid "Your Expense Card has been Ordered"
-msgstr ""
+msgstr "Tu tarjeta de gastos ha sido ordenada"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4646,12 +4674,14 @@ msgid ""
 "Your Odoo database failed to respond to Stripe in time, and the "
 "authorization was refused by default"
 msgstr ""
+"Tu base de datos de Odoo no respondió a Stripe a tiempo y la autorización "
+"fue rechazada de forma predeterminada"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Your Stripe account is disabled"
-msgstr ""
+msgstr "Tu cuenta de Stripe está deshabilitada"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4660,6 +4690,8 @@ msgid ""
 "Your account balance isn't zero, please use any remaining funds or contact "
 "support to close your account."
 msgstr ""
+"El saldo de tu cuenta no es cero, usa los fondos restantes o contacta a "
+"soporte para cerrar tu cuenta."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_zip
@@ -4671,10 +4703,10 @@ msgstr "Código postal"
 #: code:addons/hr_expense_stripe/models/hr_expense.py:0
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
 msgid "terms and conditions"
-msgstr ""
+msgstr "términos y condiciones"

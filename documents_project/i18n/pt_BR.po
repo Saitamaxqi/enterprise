@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-25 23:35+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_project/pt_BR/>\n"
@@ -142,13 +142,13 @@ msgstr "Marcar como rascunho"
 #. odoo-python
 #: code:addons/documents_project/models/documents_folder.py:0
 msgid "Merged Workspace"
-msgstr ""
+msgstr "Espaço de trabalho mesclado"
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_workflow_rule.py:0
 msgid "New task from Documents"
-msgstr ""
+msgstr "Nova tarefa a partir de documentos"
 
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_project_project__document_count

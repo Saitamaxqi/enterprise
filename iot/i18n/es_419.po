@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-03 18:45+0000\n"
-"PO-Revision-Date: 2025-09-30 02:42+0000\n"
+"PO-Revision-Date: 2025-10-07 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/iot/es_419/>\n"
@@ -379,31 +379,33 @@ msgstr "Módulo de datos fiscales"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
 msgid "Fiscal Data Module is connected and operational"
-msgstr ""
+msgstr "El módulo de datos fiscales está conectado y en funcionamiento"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module memory 90% full."
-msgstr ""
+msgstr "La memoria del módulo de datos fiscales está al 90% de su capacidad."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module memory full."
-msgstr ""
+msgstr "La memoria del módulo de datos fiscales está llena."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module not operational. Please restart the blackbox"
 msgstr ""
+"El módulo de datos fiscales no está en funcionamiento. Reinicia la unidad de "
+"almacenamiento."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Fiscal Data Module real time clock corrupt."
-msgstr ""
+msgstr "El reloj en tiempo real del módulo de datos fiscales está dañado."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
@@ -485,6 +487,7 @@ msgstr "NIP inválido."
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Invalid data in message sent to the blackbox."
 msgstr ""
+"Los datos en el mensaje enviado a la unidad de almacenamiento son inválidos."
 
 #. module: iot
 #: model:ir.ui.menu,name:iot.iot_menu_root
@@ -1047,7 +1050,7 @@ msgstr "Aprobada"
 #. module: iot
 #: model:ir.model,name:iot.model_ir_config_parameter
 msgid "System Parameter"
-msgstr ""
+msgstr "Parámetro del sistema"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1129,7 +1132,7 @@ msgstr "USB"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Unknown identifier."
-msgstr ""
+msgstr "Identificador desconocido."
 
 #. module: iot
 #. odoo-javascript
@@ -1147,7 +1150,7 @@ msgstr "Error no especificado."
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Unspecified warning."
-msgstr ""
+msgstr "Advertencia indefinida."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__unsupported
@@ -1173,13 +1176,13 @@ msgstr "Variante"
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card blocked."
-msgstr ""
+msgstr "Tarjeta de firma de IVA bloqueada."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/network_utils/iot_http_service.js:0
 msgid "Vat Signing Card not compatible with Fiscal Data Module."
-msgstr ""
+msgstr "Tarjeta de firma de IVA incompatible con el módulo de datos fiscales."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1206,6 +1209,8 @@ msgstr "¿Cuál quiere conectar?<br/><br/>"
 msgid ""
 "You can enable remote debug on your IoT Box by providing a Ngrok authtoken."
 msgstr ""
+"Puedes habilitar la depuración remota en tu caja IoT si proporcionas un "
+"token de tipo authtoken de Ngrok."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1261,7 +1266,7 @@ msgstr "instala el módulo de datos fiscales"
 #: code:addons/iot/static/src/view_widgets/iot_remote_debug.xml:0
 msgid ""
 "it enables remote access to your local network to the owner of the token."
-msgstr ""
+msgstr "habilita el acceso remoto a tu red local al propietario del token."
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu

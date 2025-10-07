@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-03 18:45+0000\n"
-"PO-Revision-Date: 2025-10-01 21:21+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/voip/es_419/>\n"
@@ -323,12 +323,12 @@ msgstr "Llamar a %(phone_number)s"
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__voip
 msgid "Call with Odoo Phone"
-msgstr ""
+msgstr "Llamar con el teléfono de Odoo"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__res_users__how_to_call_on_mobile__phone
 msgid "Call with phone's default app"
-msgstr ""
+msgstr "Llamar con la aplicación predeterminada de teléfono"
 
 #. module: voip
 #: model:ir.model.fields.selection,name:voip.selection__voip_call__state__calling
@@ -1078,7 +1078,7 @@ msgstr "No se encontraron llamadas recientes"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "No redirect"
-msgstr ""
+msgstr "Sin redirigir"
 
 #. module: voip
 #. odoo-javascript
@@ -1126,7 +1126,7 @@ msgstr "Encargado"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "On Mobile"
-msgstr ""
+msgstr "En celular"
 
 #. module: voip
 #. odoo-javascript
@@ -1266,7 +1266,7 @@ msgstr "Imagen de perfil de %(user)s"
 #: model_terms:ir.ui.view,arch_db:voip.res_user_form
 #: model_terms:ir.ui.view,arch_db:voip.res_users_view_form_preferences
 msgid "Provider"
-msgstr ""
+msgstr "Proveedor"
 
 #. module: voip
 #: model:ir.ui.menu,name:voip.voip_provider_view_inner_menu
@@ -1484,6 +1484,9 @@ msgid ""
 "preferred device (your desk phone or cell phone) and then connect you to the "
 "recipient."
 msgstr ""
+"Especifica un número de teléfono para que, al llamar con el teléfono de "
+"Odoo, suene tu dispositivo preferido (tu teléfono de escritorio o celular) y "
+"luego te conecte con el destinatario."
 
 #. module: voip
 #: model:ir.model.fields,field_description:voip.field_voip_call__start_date

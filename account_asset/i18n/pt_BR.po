@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-30 10:52+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/account_asset/pt_BR/>\n"
@@ -125,6 +125,8 @@ msgstr ""
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "A depreciation entry will be posted on and including the date %s.<br/> A disposal entry will be posted on the %s account <b>%s</b>."
 msgstr ""
+"Um lançamento de depreciação será feito na data (incluindo a data) %s. <br/> "
+"Um lançamento de cessão será feito na conta %s <b>%s</b>."
 
 #. module: account_asset
 #. odoo-python
@@ -158,6 +160,7 @@ msgstr "Um aumento bruto foi criado: "
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "A non deductible tax value of %s was added to %s's initial value of %s"
 msgstr ""
+"Um valor de imposto não dedutível de %s foi adicionado ao valor inicial de %s"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_account

@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-29 12:10+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/planning/pt_BR/>\n"
@@ -435,11 +435,15 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_shift_notification
 msgid "<i class=\"fa fa-check-circle text-success\"/> This shift is no longer assigned to you."
 msgstr ""
+"<i class=\"fa fa-check-circle text-success\"/> Esse turno não está mais "
+"atribuído a você."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_shift_notification
 msgid "<i class=\"fa fa-check-circle text-success\"/> You were successfully assigned this open shift."
 msgstr ""
+"<i class=\"fa fa-check-circle text-success\"/>Esse turno aberto foi "
+"atribuído a você com sucesso."
 
 #. module: planning
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_kanban

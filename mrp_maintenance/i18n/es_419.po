@@ -3,13 +3,14 @@
 # * mrp_maintenance
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:36+0000\n"
-"PO-Revision-Date: 2025-09-17 09:38+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-07 02:41+0000\n"
+"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/mrp_maintenance/es_419/>\n"
 "Language: es_419\n"
@@ -407,6 +408,8 @@ msgstr "Siguiente tipo de actividad"
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
 msgid "No available slot within 700 days after the planned start."
 msgstr ""
+"No hay un espacio disponible dentro de los 700 días posteriores al inicio "
+"planeado."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_needaction_counter

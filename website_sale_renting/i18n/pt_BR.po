@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:49+0000\n"
-"PO-Revision-Date: 2025-09-23 15:03+0000\n"
+"PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/website_sale_renting/pt_BR/>\n"
@@ -221,7 +221,7 @@ msgstr "<strong class=\"attribute_name\">Preço</strong>"
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.rental_product
 msgid "<strong>Rental Period</strong>"
-msgstr ""
+msgstr "<strong>Período de aluguel</strong>"
 
 #. module: website_sale_renting
 #. odoo-javascript
