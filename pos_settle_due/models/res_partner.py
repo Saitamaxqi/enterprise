@@ -66,7 +66,8 @@ class ResPartner(models.Model):
 
     def get_all_total_due(self, config_id):
         due_amounts = []
-        for partner in self:
+        partners = self.exists()
+        for partner in partners:
             due_amounts.append(partner.get_total_due(config_id))
         return due_amounts
 

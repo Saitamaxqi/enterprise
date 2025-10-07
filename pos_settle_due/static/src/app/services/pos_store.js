@@ -70,9 +70,15 @@ patch(PosStore.prototype, {
             this.config.id,
         ]);
         for (const partner of partners) {
-            const updatedPartner = partners_total_due.find(
+            const updatedPartnerRecord = partners_total_due.find(
                 (p) => p["res.partner"][0].id == [partner.id]
-            )["res.partner"][0];
+            );
+            if (!updatedPartnerRecord) {
+                // the partner has been deleted from the server
+                partner.delete();
+                continue;
+            }
+            const updatedPartner = updatedPartnerRecord["res.partner"][0];
             partner.total_due = updatedPartner.total_due;
             partner.pos_orders_amount_due = updatedPartner.pos_orders_amount_due;
             partner.invoices_amount_due = updatedPartner.invoices_amount_due;

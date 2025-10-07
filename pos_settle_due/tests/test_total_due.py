@@ -87,3 +87,14 @@ class TestPointOfSaleFlow(CommonPosTest):
         self.assertEqual(len(aml_receivable), 3)
         for aml_g in aml_receivable:
             self.assertEqual(aml_g['__count'], 2)
+
+    def test_deleted_partner_get_all_total_due(self):
+        """ Test that get_all_total_due works when some partners have been deleted """
+        partner_a = self.env["res.partner"].create({"name": "A Partner"})
+        partner_b = self.env["res.partner"].create({"name": "B Partner"})
+        partner_c = self.env["res.partner"].create({"name": "C Partner"})
+
+        partners = self.env['res.partner'].browse([partner_a.id, partner_b.id, partner_c.id])
+
+        partner_b.unlink()
+        self.assertEqual(len(partners.get_all_total_due(self.pos_config_usd.id)), 2)
