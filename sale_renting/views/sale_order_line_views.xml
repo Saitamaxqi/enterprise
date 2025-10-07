@@ -91,7 +91,7 @@
                     <filter
                         name="groupby_company"
                         string="Company"
-                        context="{'group_by': 'company_id', 'group_expand': True}"
+                        context="{'group_by': 'company_id'}"
                         groups="base.group_multi_company"
                     />
                     <separator/>
