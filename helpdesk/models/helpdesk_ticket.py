@@ -216,7 +216,7 @@ class HelpdeskTicket(models.Model):
         for ticket in self:
 
             # the current team is invalid, no need to compute new values since the transaction will be rolled back anyway.
-            if not ticket.team_id:
+            if not (ticket.team_id and ticket.team_id.use_sla):
                 continue
             min_deadline = False
             for status in ticket.sla_status_ids:
@@ -334,7 +334,7 @@ class HelpdeskTicket(models.Model):
     def _compute_close_hours(self):
         for ticket in self:
             create_date = fields.Datetime.from_string(ticket.create_date)
-            if create_date and ticket.close_date and ticket.team_id:
+            if create_date and ticket.close_date and ticket.team_id.resource_calendar_id:
                 duration_data = ticket.team_id.resource_calendar_id.get_work_duration_data(create_date, fields.Datetime.from_string(ticket.close_date), compute_leaves=True)
                 ticket.close_hours = duration_data['hours']
             else:
