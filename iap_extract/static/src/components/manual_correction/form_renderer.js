@@ -549,6 +549,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                 });
 
                 const existingLines = this.x2ManyLines[parentField].filter((x2ManyLine) => x2ManyLine.line.page === pageNumber);
+                existingLines.sort((a, b) => a.line.minY - b.line.minY);
                 let i = 0;
                 const updates = {};
                 lines.forEach(async (line) => {
