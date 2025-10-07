@@ -161,9 +161,9 @@ class WorldlineDriver(CtypesTerminalDriver):
             # Transaction successful
             self.send_status(
                 response='Approved',
-                ticket=customer_receipt.value,
-                ticket_merchant=merchant_receipt.value,
-                card=card.value,
+                ticket=customer_receipt.value.decode(),
+                ticket_merchant=merchant_receipt.value.decode(),
+                card=card.value.decode(),
                 transaction_id=transaction['actionIdentifier'],
                 request_data=transaction,
             )

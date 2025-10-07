@@ -92,10 +92,10 @@ class SixDriver(CtypesTerminalDriver):
             if result == 1:
                 self.send_status(
                     response='Approved',
-                    ticket=customer_receipt.value,
-                    ticket_merchant=merchant_receipt.value,
-                    card=card.value,
-                    transaction_id=transaction_id.value,
+                    ticket=customer_receipt.value.decode(),
+                    ticket_merchant=merchant_receipt.value.decode(),
+                    card=card.value.decode(),
+                    transaction_id=transaction_id.value.decode(),
                     request_data=transaction,
                 )
             # Transaction failed
