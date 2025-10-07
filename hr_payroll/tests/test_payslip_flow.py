@@ -413,3 +413,18 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(richard_payslip.state, 'validated')
         richard_payslip.with_user(test_user).action_payslip_cancel()
         self.assertEqual(richard_payslip.state, 'cancel')
+
+    def test_hr_payslip_without_date_to(self):
+        """Ensure payslip creation fails if date_to is missing."""
+        employee = self.env['hr.employee'].create({
+            'name': 'Jethalal Gada',
+            'date_version': '2025-10-01',
+            'contract_date_start': '2025-10-01',
+        })
+
+        payslip_form = Form(self.env['hr.payslip'])
+        payslip_form.employee_id = employee
+        payslip_form.date_to = False
+        with self.assertRaises(AssertionError):
+            payslip_form.save()
+        self.assertTrue(payslip_form)
