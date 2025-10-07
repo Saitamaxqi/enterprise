@@ -548,7 +548,11 @@ class AccountExternalTaxMixin(models.AbstractModel):
         if tax_detail['taxImpact']['impactOnNetAmount'] == 'Subtracted':
             tax_amount *= -1
 
-        base_amount_currency = line_detail['lineNetFigure'] - line_detail['lineTaxedDiscount']
+        base_amount_currency = line_detail['lineNetFigure']
+        # The service API already accounts for the discount in the net figure.
+        if not service_params['is_service']:
+            base_amount_currency -= line_detail['lineTaxedDiscount']
+
         return (
             {'name': 'Avalara Brazil', 'company_id': service_params['company'].id},
             {

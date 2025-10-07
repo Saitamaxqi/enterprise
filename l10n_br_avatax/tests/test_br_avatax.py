@@ -607,6 +607,21 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             "Installments should be sent without taxes."
         )
 
+    def test_11_service_invoice_with_discount(self):
+        invoice, response = self._create_invoice_01_and_expected_response()
+        invoice.invoice_line_ids.product_id.type = 'service'
+        invoice.l10n_latam_document_type_id = self.env.ref('l10n_br.dt_SE')
+        invoice.partner_id.city_id = self.env.ref('l10n_br.city_br_001')
+
+        with self._capture_request_br(return_value=response):
+            invoice.action_post()
+
+        self.assertEqual(
+            invoice.invoice_line_ids[0].price_total,
+            35.0,
+            "The discount shouldn't have been subtracted, it's already accounted for in lineNetFigure."
+        )
+
 
 @tagged('post_install_l10n', '-at_install', 'post_install')
 class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
