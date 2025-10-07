@@ -21,12 +21,16 @@ class StockLocation(models.Model):
         }
         for location in self:
             if location.barcode:
-                barcode = self.env['ir.actions.report'].barcode(
-                    'Code128',
-                    location.barcode,
-                    **options
-                )
-                location.barcode_img = base64.b64encode(barcode).decode()
+                try:
+                    barcode = self.env['ir.actions.report'].barcode(
+                        'Code128',
+                        location.barcode,
+                        **options
+                    )
+                    location.barcode_img = base64.b64encode(barcode).decode()
+                except ValueError:
+                    location.barcode_img = False
+                    pass
             else:
                 location.barcode_img = False
 
