@@ -80,7 +80,6 @@ class CtypesTerminalDriver(Driver):
 
     def _action_default(self, data):
         data_message_type = data.get('messageType')
-        data['owner'] = self.data.get('owner')
         _logger.debug('%s: _action_default %s %s', self.device_name, data_message_type, data)
         if data_message_type == 'Transaction':
             if self.terminal_busy:
@@ -113,7 +112,8 @@ class CtypesTerminalDriver(Driver):
             sleep(delay_diff)
 
     def send_status(self, value='', response=False, stage=False, ticket=False, ticket_merchant=False, card=False, transaction_id=False, error=False, disconnected=False, request_data=False):
-        self.data = {
+        self.data['status'] = 'success'  # always success: let service handle errors
+        self.data['result'] = {
             'value': value,
             'Stage': stage,
             'Response': response,
@@ -123,7 +123,6 @@ class CtypesTerminalDriver(Driver):
             'PaymentTransactionID': transaction_id,
             'Error': error,
             'Disconnected': disconnected,
-            'owner': request_data.get('owner'),
             'cid': request_data.get('cid'),
         }
         # TODO: add `stacklevel=2` in image with python version > 3.8

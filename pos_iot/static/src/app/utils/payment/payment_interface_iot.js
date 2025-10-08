@@ -85,7 +85,7 @@ export class PaymentInterfaceIot extends PaymentInterface {
                     this._resolvePayment = null;
                 }
                 if (!this._resolveCancellation && !this._resolvePayment) {
-                    this.terminal.removeListener();
+                    this.transactionInProgress = false;
                 }
             };
             if (isCancellation) {
@@ -93,27 +93,42 @@ export class PaymentInterfaceIot extends PaymentInterface {
             } else {
                 this._resolvePayment = resolveRequest;
             }
-            this.terminal.addListener(this._onValueChange.bind(this, this.pos.getOrder()));
-            this.terminal
-                .action(data)
-                .then(this._onActionResult.bind(this))
-                .catch(this._onActionFail.bind(this));
+
+            this.transactionInProgress = true;
+            this.pos.iotHttp.action(
+                this.terminal.iotId,
+                this.terminal.identifier,
+                data,
+                (e) => this._onValueChange(this.pos.getOrder(), e.result),
+                (e) => this._onActionFail(e)
+            );
         });
     }
 
-    _onActionResult(data) {
-        if (!data.result) {
-            this._onActionFail();
+    _keepListening() {
+        if (this.transactionInProgress) {
+            this.pos.iotHttp.onMessage(
+                this.terminal.iotId,
+                this.terminal.identifier,
+                (e) => this._onValueChange(this.pos.getOrder(), e.result),
+                (e) => this._onActionFail(e)
+            );
+        }
+    }
+
+    _onActionFail(data) {
+        if (data.status === "timeout") {
+            // ignore timeout, we keep waiting for the terminal to respond
+            return this._keepListening();
+        }
+        this.transactionInProgress = false;
+        this._resolvePayment?.(false);
+        if (data?.Disconnected === "disconnected") {
             this.env.services.dialog.add(AlertDialog, {
                 title: _t("Connection to terminal failed"),
                 body: _t("Please check if the terminal is still connected."),
             });
         }
-    }
-
-    _onActionFail() {
-        this.terminal.removeListener();
-        this._resolvePayment?.(false);
     }
 
     _showErrorConfig() {
@@ -124,6 +139,7 @@ export class PaymentInterfaceIot extends PaymentInterface {
     }
 
     _onValueChange(order, data) {
+        this._keepListening();
         const line = this.getPaymentLineForMessage(order, data);
         if (line) {
             this.onTerminalMessageReceived(data, line);

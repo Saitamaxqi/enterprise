@@ -121,6 +121,11 @@ class SixDriver(CtypesTerminalDriver):
 
     def cancelTransaction(self, transaction):
         self.send_status(stage='waitingCancel', request_data=transaction)
+        if not self.terminal_busy:
+            # In case of restart after sending a payment request, the terminal is not busy
+            # but the pos is still waiting for the transaction confirmation: we need to be
+            # able to unblock it pressing cancel
+            return self.send_status(stage="Cancel", request_data=transaction)
         try:
             if not TIMAPI.six_cancel_transaction(ctypes.cast(self.dev, ctypes.c_void_p)):
                 self.send_status(stage='Cancel', error='Transaction could not be cancelled', request_data=transaction)

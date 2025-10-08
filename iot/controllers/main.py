@@ -133,7 +133,7 @@ class IoTController(http.Controller):
             return
 
         request.env['iot.channel'].send_message({
-            'session_id': session_id,
+            'session_id': session_id or kwargs.get("owner"),  # TODO: replace "owner" by "session_id" in drivers
             'iot_box_identifier': iot_box_identifier,
             'device_identifier': device_identifier,
             'message': {

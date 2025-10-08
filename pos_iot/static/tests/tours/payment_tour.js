@@ -6,52 +6,50 @@ import * as Order from "@point_of_sale/../tests/generic_helpers/order_widget_uti
 import * as PaymentScreen from "@point_of_sale/../tests/pos/tours/utils/payment_screen_util";
 import { inLeftSide } from "@point_of_sale/../tests/pos/tours/utils/common";
 
-class TerminalProxy {
-    action(data) {
-        var self = this;
-        switch (data.messageType) {
-            case "Transaction":
-                if (!this.transaction) {
-                    this.transaction = true;
-                    this.cid = data.cid;
-                    setTimeout(function () {
-                        self.listener({
-                            Stage: "WaitingForCard",
-                            cid: self.cid,
-                        });
-                    });
-                    this.timer = setTimeout(function () {
-                        self.listener({
-                            Response: "Approved",
-                            Reversal: true,
-                            cid: self.cid,
-                        });
-                        self.transaction = false;
-                    }, 1000);
-                } else {
-                    throw "Another transaction is still running";
-                }
-                break;
-            case "Cancel":
-                clearTimeout(this.timer);
-                this.transaction = false;
-                setTimeout(function () {
-                    self.listener({
-                        Error: "Canceled",
-                        cid: self.cid,
-                    });
-                });
-                break;
+class PaymentTerminalDummy {
+    iotId = 1;
+    identifier = "scale_1";
+}
+
+class IotHttpServiceDummy {
+    action(iotBoxId, deviceIdentifier, data, onSuccess) {
+        if (data.messageType === "Transaction") {
+            if (this.transaction) {
+                throw "Another transaction is still running";
+            }
+            this.transaction = true;
+            this.cid = data.cid;
+            onSuccess({
+                status: "success",
+                result: {
+                    Stage: "WaitingForCard",
+                    cid: this.cid,
+                },
+            });
+        } else if (data.messageType === "Cancel") {
+            clearTimeout(this.txApprovedTimeout);
+            this.transaction = false;
+            onSuccess({
+                status: "success",
+                result: {
+                    Error: "Canceled",
+                    cid: this.cid,
+                },
+            });
         }
-        return Promise.resolve({
-            result: true,
-        });
+        return Promise.resolve();
     }
-    addListener(callback) {
-        this.listener = callback;
-    }
-    removeListener() {
-        this.listener = false;
+    onMessage(_iotBoxId, _deviceIdentifier, onSuccess) {
+        this.txApprovedTimeout = setTimeout(() => {
+            onSuccess({
+                status: "success",
+                result: {
+                    Response: "Approved",
+                    cid: this.cid,
+                },
+            });
+            this.transaction = false;
+        }, 1000);
     }
 }
 
@@ -80,10 +78,10 @@ registry.category("web_tour.tours").add("payment_terminals_tour", {
                 content: "Waiting for loading to finish",
                 trigger: ".pos .pos-content",
                 run: function () {
-                    //Overrides the methods inside DeviceController to mock the IoT Box
+                    posmodel.iotHttp = new IotHttpServiceDummy();
                     posmodel.models["pos.payment.method"].forEach(function (payment_method) {
                         if (payment_method.terminal_proxy) {
-                            payment_method.terminal_proxy = new TerminalProxy();
+                            payment_method.terminal_proxy = new PaymentTerminalDummy();
                         }
                     });
                 },
