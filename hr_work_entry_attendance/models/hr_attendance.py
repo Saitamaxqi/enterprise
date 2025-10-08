@@ -4,7 +4,7 @@ from datetime import datetime, time
 from odoo.exceptions import UserError
 
 from odoo import api, models, _
-from odoo.fields import Datetime
+from odoo.fields import Datetime, Domain
 
 
 class HrAttendance(models.Model):
@@ -40,8 +40,8 @@ class HrAttendance(models.Model):
                 start = min((datetime.combine(a.check_in, time.min) for a in self if a.check_in), default=False)
                 stop = max((datetime.combine(a.check_out, time.max) for a in self if a.check_out), default=False)
                 work_entry_groups = self.env['hr.work.entry'].sudo()._read_group([
-                    ('date', '<', stop),
-                    ('date', '>', start),
+                    ('date', '<=', stop),
+                    ('date', '>=', start),
                     ('employee_id', 'in', self.employee_id.ids),
                 ], ['employee_id'], ['id:recordset'])
                 work_entries_by_employee = {
@@ -86,6 +86,14 @@ class HrAttendance(models.Model):
         new_check_out = vals.get('check_out')
         open_attendances = self.filtered(lambda a: not a.check_out) if new_check_out else self.env['hr.attendance']
         res = super().write(vals)
+        if vals.get('check_out') or vals.get('check_in'):
+            domain = Domain.AND([
+                 Domain('employee_id', 'in', self.employee_id.ids),
+                 Domain('date', 'in', self.mapped('date'))
+            ])
+            work_entries = self.env['hr.work.entry'].sudo().search(domain)
+            slots = [{'date': attendance.date, 'employee_id': attendance.employee_id.id} for attendance in self]
+            self.env["hr.work.entry.regeneration.wizard"].regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
         if not open_attendances:
             return res
         skip_check = not bool({'check_in', 'check_out', 'employee_id'} & vals.keys())
@@ -102,10 +110,19 @@ class HrAttendance(models.Model):
             raise UserError(_("This attendance record is linked to a validated working entry. You can't delete it."))
 
     def unlink(self):
-        # Archive linked work entries upon deleting attendances
-        self.env['hr.work.entry'].sudo().search([('attendance_id', 'in', self.ids)]).write({'active': False})
+        # Archive linked work entries upon deleting last attendance linked to the work entries
+        work_entries = (
+            self.env["hr.work.entry"].sudo().search(Domain.AND([
+                Domain("employee_id", "in", self.employee_id.ids),
+                Domain("date", "in", self.mapped('date'))
+            ])
+            )
+        )
         start_dates = [a.check_in for a in self if a.check_in]
         stop_dates = [a.check_out for a in self if a.check_out]
         with self.env['hr.work.entry']._error_checking(start=min(start_dates, default=False), stop=max(stop_dates, default=False), employee_ids=self.employee_id.ids):
             res = super().unlink()
+        if work_entries:
+            slots = [{'date': work_entry.date, 'employee_id': work_entry.employee_id.id} for work_entry in work_entries]
+            self.env["hr.work.entry.regeneration.wizard"].regenerate_work_entries(slots=slots, record_ids=work_entries.ids)
         return res

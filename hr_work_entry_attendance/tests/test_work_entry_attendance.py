@@ -286,3 +286,78 @@ class TestWorkentryAttendance(HrWorkEntryAttendanceCommon):
         self.assertEqual(len(time_off_entries), 1)
         self.assertEqual(time_off_entries.duration, 8)
         self.assertEqual((work_entries - time_off_entries).duration, 4)
+
+    def test_creating_attendance_regenerate_work_entry(self):
+        self.contract.write({
+            'date_generated_from': datetime(2021, 9, 1, 0, 0, 0),
+            'date_generated_to': datetime(2021, 9, 30, 23, 59, 59),
+        })
+        self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 8, 0, 0),
+            'check_out': datetime(2021, 9, 14, 12, 0, 0),
+        })
+
+        work_entries1 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 14, 0, 0),
+            'check_out': datetime(2021, 9, 14, 17, 0, 0),
+        })
+
+        work_entries2 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        self.assertNotEqual(work_entries1, work_entries2)
+        self.assertFalse(work_entries1.active)
+        self.assertTrue(work_entries2.active)
+        self.assertEqual(work_entries2.duration, 3)
+
+    def test_writing_attendance_regenerate_work_entry(self):
+        self.contract.write({
+            'date_generated_from': datetime(2021, 9, 1, 0, 0, 0),
+            'date_generated_to': datetime(2021, 9, 30, 23, 59, 59),
+        })
+        attendance = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 8, 0, 0),
+            'check_out': datetime(2021, 9, 14, 12, 0, 0),
+        })
+
+        work_entries1 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        attendance.write({'check_out': datetime(2021, 9, 14, 17, 0, 0)})
+
+        work_entries2 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        self.assertNotEqual(work_entries1, work_entries2)
+        self.assertFalse(work_entries1.active)
+        self.assertTrue(work_entries2.active)
+        self.assertEqual(work_entries2.duration, 8)
+
+    def test_unlinking_regenerate_work_entry(self):
+        self.contract.write({
+            'date_generated_from': datetime(2021, 9, 1, 0, 0, 0),
+            'date_generated_to': datetime(2021, 9, 30, 23, 59, 59),
+        })
+        attendance1 = self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 8, 0, 0),
+            'check_out': datetime(2021, 9, 14, 12, 0, 0),
+        })
+
+        self.env['hr.attendance'].create({
+            'employee_id': self.employee.id,
+            'check_in': datetime(2021, 9, 14, 14, 0, 0),
+            'check_out': datetime(2021, 9, 14, 17, 0, 0),
+        })
+
+        work_entries1 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        attendance1.unlink()
+        work_entries2 = self.env['hr.work.entry'].search([('employee_id', '=', self.employee.id)])
+
+        self.assertNotEqual(work_entries1, work_entries2)
+        self.assertFalse(work_entries1.active)
+        self.assertTrue(work_entries2.active)
+        self.assertEqual(work_entries2.duration, 3)
