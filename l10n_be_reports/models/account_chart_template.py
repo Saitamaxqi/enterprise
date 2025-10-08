@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from odoo.addons.account.models.chart_template import template
-from odoo import models
+from odoo import _, models
+from odoo.fields import Command
 
 
 class AccountChartTemplate(models.AbstractModel):
@@ -22,3 +23,52 @@ class AccountChartTemplate(models.AbstractModel):
                 'deferred_revenue_account_id': 'a493',
             }
         }
+
+    @template('be_asso', 'res.partner')
+    def _get_be_asso_reports_res_partner(self):
+        return self._get_be_reports_res_partner()
+
+    @template('be_comp', 'res.partner')
+    def _get_be_comp_reports_res_partner(self):
+        return self._get_be_reports_res_partner()
+
+    @template('be', model='res.partner')
+    def _get_be_reports_res_partner(self):
+        return {
+            'l10n_be_reports.partner_fps_belgium': {
+                'property_account_receivable_id': 'a4112',
+                'property_account_payable_id': 'a4512',
+            },
+            'l10n_be_reports.partner_centre_de_perception_belgium': {
+                'property_account_receivable_id': 'a4121',
+                'property_account_payable_id': 'a4521',
+            },
+        }
+
+    @template(model='account.reconcile.model')
+    def _get_be_account_reconcile_model(self, template_code):
+        be_recon_models = {}
+        if template_code in ['be', 'be_comp', 'be_asso']:
+            prepayment_communication = self.env['qr.code.payment.wizard']._be_company_vat_communication(self.env.company).replace('+++', '')
+            be_recon_models = {
+                'advanced_tax_payment_reco': {
+                    'name': _('Advanced Tax Payment'),
+                    'trigger': 'auto_reconcile' if prepayment_communication else 'manual',
+                    'match_partner_ids': [self.env.ref('l10n_be_reports.partner_centre_de_perception_belgium').id],
+                    'match_amount': 'lower',
+                    'match_amount_max': 0.0,
+                    **({
+                        'match_label': 'contains',
+                        'match_label_param': prepayment_communication,
+                    } if prepayment_communication else {}),
+                    'line_ids': [
+                        Command.create({
+                            'partner_id': self.env.ref('l10n_be_reports.partner_centre_de_perception_belgium').id,
+                            'account_id': 'a4121',
+                            'amount_type': 'percentage',
+                            'amount_string': '100',
+                        }),
+                    ],
+                },
+            }
+        return be_recon_models

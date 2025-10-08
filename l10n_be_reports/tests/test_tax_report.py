@@ -401,3 +401,68 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
             self.get_xml_tree_from_attachment(xml_file),
             self.get_xml_tree_from_string(expected_xml)
         )
+
+    @freeze_time('2019-12-15')
+    def test_tax_return_recon(self):
+        tax = self.env['account.tax'].search([('name', '=', '21%'), ('company_id', '=', self.company_data['company'].id)], limit=1)
+
+        # Create and post a move to have non-zero tax return
+        move_out = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'journal_id': self.company_data['default_journal_sale'].id,
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2019-11-15',
+            'date': '2019-11-15',
+            'invoice_line_ids': [Command.create({
+                'product_id': self.product_a.id,
+                'quantity': 1.0,
+                'name': 'product test sale',
+                'price_unit': 100,
+                'tax_ids': tax.ids,
+            })]
+        })
+        move_out.action_post()
+
+        account_return = self.env['account.return'].create({
+            'name': 'BE Tax Return',
+            'type_id': self.env.ref('l10n_be_reports.be_vat_return_type').id,
+            'company_id': self.company_data['company'].id,
+            'date_from': '2019-11-01',
+            'date_to': '2019-11-30',
+        })
+        wizard_lock = self.env['l10n_be_reports.vat.return.lock.wizard'].create({
+            'return_id': account_return.id,
+        })
+        with self.allow_pdf_render():
+            wizard_lock.action_proceed_with_locking()
+
+        action = account_return._proceed_with_submission()
+        vat_wizard = self.env[action['res_model']].browse(action['res_id'])
+        vat_wizard.action_mark_as_paid()
+
+        tax_closing_move = account_return.closing_move_ids
+        self.assertTrue(tax_closing_move, "A tax closing move should have been created when paying the tax return.")
+
+        # Create a bank transaction to reconcile with the tax closing move
+        bank_statement_line = self.env['account.bank.statement.line'].create({
+            'date': '2019-12-15',
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ref': vat_wizard.communication,
+            'partner_id': self.env.ref('l10n_be_reports.partner_fps_belgium').id,
+            'amount': -vat_wizard.amount_to_pay,
+        })
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
+
+        tax_payable_account = self.env['account.chart.template'].ref('a4512')
+
+        bank_transaction_move = bank_statement_line.move_id
+        self.assertTrue(bank_transaction_move, "A bank transaction move should have been created for the bank statement line.")
+
+        reconciled_lines = tax_closing_move.line_ids.filtered(lambda line: line.account_id == tax_payable_account and line.reconciled)
+        self.assertEqual(len(reconciled_lines), 1, "The tax closing move lines should be reconciled after paying the tax return.")
+
+        reconciled_bank_lines = bank_transaction_move.line_ids.filtered(lambda line: line.account_id == tax_payable_account and line.reconciled)
+        self.assertEqual(len(reconciled_bank_lines), 1, "The bank transaction move lines should be reconciled.")
+
+        self.assertEqual(reconciled_lines, reconciled_bank_lines.reconciled_lines_ids)
+        self.assertEqual(reconciled_lines.reconciled_lines_ids, reconciled_bank_lines)
