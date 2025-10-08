@@ -179,7 +179,7 @@ registry.category("web_tour.tours").add("test_process_confirmed_mo", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_scrap_done_mo', {
+registry.category("web_tour.tours").add("test_scrap_done_mo", {
     steps: () => [
         {
             trigger: "button.o_barcode_actions",
@@ -196,7 +196,8 @@ registry.category("web_tour.tours").add('test_scrap_done_mo', {
         },
         {
             content: "Select the product from the dropdown",
-            trigger: '.o_field_many2one_selection .dropdown-item:not([id$=_loading]):contains("Final Product")',
+            trigger:
+                '.o_field_many2one_selection .dropdown-item:not([id$=_loading]):contains("Final Product")',
             run: "click",
         },
         {
@@ -1666,17 +1667,19 @@ registry.category("web_tour.tours").add("test_select_mo_component_line_scan_pack
     ],
 });
 
-registry.category("web_tour.tours").add("test_create_all_transfers_for_3_step_manufacturing", {steps: () => [
-    { trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')", run: "click" },
-    { trigger: ".o-kanban-button-new", run: "click" },
-    { trigger: "button.o_add_line", run: "click" },
-    { trigger: "input#product_id_0", run: "edit Final" },
-    { trigger: ".ui-autocomplete a:contains('Final Product')", run: "click" },
-    { trigger: "div[name=product_id] .o_external_button", run() {} },
-    { trigger: "button.o_save", run: "click" },
-    { trigger: "button.o_validate_page:enabled", run: "click" },
-    { trigger: ".o_notification_bar.bg-success", run() {} },
-]});
+registry.category("web_tour.tours").add("test_create_all_transfers_for_3_step_manufacturing", {
+    steps: () => [
+        { trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')", run: "click" },
+        { trigger: ".o-kanban-button-new", run: "click" },
+        { trigger: "button.o_add_line", run: "click" },
+        { trigger: "input#product_id_0", run: "edit Final" },
+        { trigger: ".ui-autocomplete a:contains('Final Product')", run: "click" },
+        { trigger: "div[name=product_id] .o_external_button", run() {} },
+        { trigger: "button.o_save", run: "click" },
+        { trigger: "button.o_validate_page:enabled", run: "click" },
+        { trigger: ".o_notification_bar.bg-success", run() {} },
+    ],
+});
 
 registry.category("web_tour.tours").add("test_quant_selection_mrp", {
     steps: () => [
@@ -1808,7 +1811,7 @@ registry.category("web_tour.tours").add("test_quant_selection_mrp", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_picking_product_with_kit_and_component', {
+registry.category("web_tour.tours").add("test_picking_product_with_kit_and_component", {
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1817,7 +1820,7 @@ registry.category("web_tour.tours").add('test_picking_product_with_kit_and_compo
                 helper.assertLineQty(0, "0/1");
                 helper.assertLineQty(1, "0/1");
                 helper.assertLineQty(2, "0/1");
-            }
+            },
         },
     ],
 });

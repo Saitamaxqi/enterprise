@@ -2244,9 +2244,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
         self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
         self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
-        warehouse = self.env.ref('stock.warehouse0')
-        warehouse.reception_steps = 'two_steps'
-        warehouse.delivery_steps = 'pick_pack_ship'
+        self.warehouse.reception_steps = 'two_steps'
+        self.warehouse.delivery_steps = 'pick_pack_ship'
 
         # Creates two cluster packs.
         reusable_type = self.env['stock.package.type'].create({
@@ -2270,25 +2269,26 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.picking_type_in.barcode_validation_full = False
         self.picking_type_in.restrict_put_in_pack = 'no'
         # Quality Control / Storage (internal transfer): no put in pack, scan dest. after each product.
-        internal_types = warehouse.qc_type_id | warehouse.store_type_id
+        internal_types = self.warehouse.qc_type_id | self.warehouse.store_type_id
         internal_types.barcode_validation_full = False
         internal_types.restrict_put_in_pack = 'no'
         internal_types.restrict_scan_dest_location = 'mandatory'
         internal_types.show_reserved_sns = True
         # Pick: source mandatory, lots reserved only.
-        warehouse.pick_type_id.barcode_validation_full = False
-        warehouse.pick_type_id.restrict_scan_source_location = 'mandatory'
-        warehouse.pick_type_id.restrict_put_in_pack = 'mandatory'  # Will use cluster packs.
-        warehouse.pick_type_id.restrict_scan_tracking_number = 'mandatory'
-        warehouse.pick_type_id.restrict_scan_dest_location = 'no'
-        warehouse.pick_type_id.show_reserved_sns = True
+        self.warehouse.pick_type_id.barcode_validation_full = False
+        self.warehouse.pick_type_id.restrict_scan_source_location = 'mandatory'
+        self.warehouse.pick_type_id.restrict_put_in_pack = 'mandatory'  # Will use cluster packs.
+        self.warehouse.pick_type_id.restrict_scan_tracking_number = 'mandatory'
+        self.warehouse.pick_type_id.restrict_scan_dest_location = 'no'
+        self.warehouse.pick_type_id.show_reserved_sns = True
         # Pack: pack after group, all products have to be packed to be validate.
-        warehouse.pack_type_id.restrict_put_in_pack = 'optional'
-        warehouse.pack_type_id.restrict_scan_tracking_number = 'mandatory'
-        warehouse.pack_type_id.barcode_validation_all_product_packed = True
-        warehouse.pick_type_id.restrict_scan_dest_location = 'no'
+        self.warehouse.pack_type_id.restrict_put_in_pack = 'optional'
+        self.warehouse.pack_type_id.restrict_scan_tracking_number = 'mandatory'
+        self.warehouse.pack_type_id.barcode_validation_all_product_packed = True
+        self.warehouse.pick_type_id.restrict_scan_dest_location = 'no'
         # Delivery: pack after group, all products have to be packed to be validate.
         self.picking_type_out.restrict_put_in_pack = 'optional'
+        self.picking_type_out.restrict_scan_source_location = 'no'
         self.picking_type_out.restrict_scan_tracking_number = 'mandatory'
         self.picking_type_out.barcode_validation_all_product_packed = True
         self.picking_type_out.show_entire_packs = True
@@ -2299,7 +2299,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         picking_receipt.action_assign()
 
         # Creates the pick, pack, ship.
-        picking_pick = create_picking(warehouse.pick_type_id)
+        picking_pick = create_picking(self.warehouse.pick_type_id)
 
         # Process each picking one by one.
         url = self._get_client_action_url(picking_receipt.id)
@@ -2317,7 +2317,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_picking_type_mandatory_scan_complete_flux_pick', login='admin', timeout=180)
         self.assertEqual(picking_pick.state, 'done')
 
-        picking_pack = self.env['stock.picking'].search([('location_id', '=', warehouse.pack_type_id.default_location_src_id.id)])
+        picking_pack = self.env['stock.picking'].search([('location_id', '=', self.warehouse.pack_type_id.default_location_src_id.id)])
         picking_pack.action_confirm()
         picking_pack.action_assign()
         for move_line in picking_pack.move_line_ids:  # TODO: shouldn't have to do that, reusable packages shouldn't be set in `result_package_id` for the next move.
@@ -2326,7 +2326,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_picking_type_mandatory_scan_complete_flux_pack', login='admin', timeout=180)
         self.assertEqual(picking_pack.state, 'done')
 
-        picking_delivery = self.env['stock.picking'].search([('location_id', '=', warehouse.out_type_id.default_location_src_id.id)])
+        picking_delivery = self.env['stock.picking'].search([('location_id', '=', self.warehouse.out_type_id.default_location_src_id.id)])
         picking_delivery.action_confirm()
         picking_delivery.action_assign()
         url = self._get_client_action_url(picking_delivery.id)
@@ -2349,7 +2349,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             "/",
             self.env.company,
             {
-                "warehouse_id": self.env['stock.warehouse'].search([], limit=1),
+                "warehouse_id": self.warehouse,
                 "reference_ids": reference,
             }
         )
@@ -2455,6 +2455,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             Command.link(self.env.ref('stock.group_stock_multi_locations').id),
             Command.link(self.env.ref('stock.group_production_lot').id),
         ]
+        dest_location = self.picking_type_out.default_location_dest_id
         self.product1.tracking = 'lot'
         lot1 = self.env['stock.lot'].create({
             'name': 'Lot1',
@@ -2464,7 +2465,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         picking = self.env['stock.picking'].create({
             'name': self.product1.name,
             'location_id': self.stock_location.id,
-            'location_dest_id': self.env.ref('stock.stock_location_output').id,
+            'location_dest_id': dest_location.id,
             'picking_type_id': self.picking_type_internal.id,
         })
         self.env['stock.move'].create({
@@ -2474,7 +2475,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'quantity': 10.00,
             'picking_id': picking.id,
             'location_id': self.stock_location.id,
-            'location_dest_id': self.env.ref('stock.stock_location_output').id,
+            'location_dest_id': dest_location.id,
         })
         picking.action_confirm()
         url = self._get_client_action_url(picking.id)
@@ -2485,7 +2486,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             [
                 {'location_id': self.shelf1.id, 'quantity': 0},
                 {'location_id': scrap_location_id, 'quantity': 15},
-                {'location_id': self.ref('stock.stock_location_output'), 'quantity': 10},
+                {'location_id': dest_location.id, 'quantity': 10},
             ]
         )
 
@@ -4463,8 +4464,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_pack = self.env.ref('stock.group_tracking_lot')
         self.env.user.write({'group_ids': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0)]})
-        picking_type = self.env.ref('stock.picking_type_internal')
-        picking_type.write({
+        self.picking_type_internal.write({
             'restrict_scan_source_location': 'mandatory',
             'restrict_scan_dest_location': 'mandatory',
             'active': True,

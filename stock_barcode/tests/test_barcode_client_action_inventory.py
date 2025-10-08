@@ -849,7 +849,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         })
         self.env["stock.quant"].create({
             'product_id': product.id,
-            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'location_id': self.stock_location.id,
             'quantity': 10,
             'package_id': self.env['stock.package'].create({
                 'name': 'Package-test',
@@ -871,7 +871,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         shelf1 = self.env['stock.location'].create({
             'name': 'Shelf 11',
             'barcode': 'Shelf11',
-            'location_id': self.env.ref('stock.warehouse0').lot_stock_id.id,
+            'location_id': self.warehouse.lot_stock_id.id,
         })
         product = self.env['product.product'].create({
             'name': 'Product',

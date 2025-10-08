@@ -27,6 +27,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         both dates are scanned, only the expiration date will be used.
         """
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
+        self.env.user.write({'group_ids': [Command.link(self.ref('stock.group_production_lot'))]})
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in

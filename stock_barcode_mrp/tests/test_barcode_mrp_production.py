@@ -775,7 +775,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             'barcode': 'MO2_BARCODE',
             'code': 'mrp_operation',
             'sequence_code': 'MO2',
-            'warehouse_id': self.env.ref('stock.warehouse0').id,
+            'warehouse_id': self.warehouse.id,
         })
 
         product_to_manufacture = self.env['product.product'].create({
@@ -799,7 +799,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             'name': 'MO2',
             'code': 'mrp_operation',
             'sequence_code': 'MO2',
-            'warehouse_id': self.env.ref('stock.warehouse0').id,
+            'warehouse_id': self.warehouse.id,
         })
 
         product_to_manufacture = self.env['product.product'].create({
@@ -818,7 +818,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         """ This test ensures that non-reserved products cannot be added when the
             "allow extra product" option is disabled for the manufacturing operation type
         """
-        picking_type_manufacturing = self.env.ref('stock.warehouse0').manu_type_id
+        picking_type_manufacturing = self.warehouse.manu_type_id
         picking_type_manufacturing.barcode_allow_extra_product = False
 
         # Create a manufacturing order in the backend and process it in the barcode app.
@@ -900,8 +900,6 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
                 Command.link(self.env.ref('mrp.group_mrp_byproducts').id),
             ],
         })
-        # disable "Create New Lots/Serial Numbers for Components"
-        self.env.ref('stock.warehouse0').manu_type_id.use_create_components_lots = False
         product = self.final_product
         bom = self.env['mrp.bom'].create({
             'product_tmpl_id': product.product_tmpl_id.id,
