@@ -422,7 +422,7 @@ class SaleOrderLine(models.Model):
                     qty_to_invoice = 0
             else:
                 # upsell
-                qty_to_invoice = self.qty_to_invoice
+                qty_to_invoice = self.qty_to_invoice if not self.is_downpayment else 1.0
             res.update({
                 'name': description,
                 'quantity': qty_to_invoice,
