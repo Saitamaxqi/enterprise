@@ -1478,28 +1478,14 @@ class HrPayslip(models.Model):
         result = defaultdict(lambda: defaultdict(lambda: dict.fromkeys(vals_list, 0.0)))
         if not self or not code_list:
             return result
-        self.env.flush_all()
-        selected_fields = ','.join('SUM(%s) AS %s' % (vals, vals) for vals in vals_list)
-        self.env.cr.execute("""
-            SELECT
-                p.id,
-                pl.code,
-                %s
-            FROM hr_payslip_line pl
-            JOIN hr_payslip p
-            ON p.id IN %s
-            AND pl.slip_id = p.id
-            AND pl.code IN %s
-            GROUP BY p.id, pl.code
-        """ % (selected_fields, '%s', '%s'), (tuple(self.ids), tuple(code_list)))
-        # self = hr.payslip(1, 2)
-        # request_rows = [
-        #     {'id': 1, 'code': 'IP', 'total': 100, 'quantity': 1},
-        #     {'id': 1, 'code': 'IP.DED', 'total': 200, 'quantity': 1},
-        #     {'id': 2, 'code': 'IP', 'total': -2, 'quantity': 1},
-        #     {'id': 2, 'code': 'IP.DED', 'total': -3, 'quantity': 1}
-        # ]
-        request_rows = self.env.cr.dictfetchall()
+        payslip_line_read_group = self.env['hr.payslip.line']._read_group(
+            [
+                ('slip_id', 'in', self.ids),
+                ('code', 'in', code_list),
+            ],
+            ['slip_id', 'code'],
+            [f'{f_name}:sum' for f_name in vals_list],
+        )
         # result = {
         #     'IP': {
         #         'sum': {'quantity': 2, 'total': 300},
@@ -1512,13 +1498,11 @@ class HrPayslip(models.Model):
         #         2: {'quantity': 1, 'total': -3},
         #     },
         # }
-        for row in request_rows:
-            code = row['code']
-            payslip_id = row['id']
-            for vals in vals_list:
+        for payslip, code, *sum_vals_list in payslip_line_read_group:
+            for vals, vals_value in zip(vals_list, sum_vals_list):
                 if compute_sum:
-                    result[code]['sum'][vals] += row[vals] or 0.0
-                result[code][payslip_id][vals] += row[vals] or 0.0
+                    result[code]['sum'][vals] += vals_value or 0.0
+                result[code][payslip.id][vals] += vals_value or 0.0
         return result
 
     def _get_worked_days_line_values_orm(self, code, field_name=None):
