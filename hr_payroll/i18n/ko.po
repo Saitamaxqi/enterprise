@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-30 18:40+0000\n"
-"PO-Revision-Date: 2025-10-03 12:11+0000\n"
+"PO-Revision-Date: 2025-10-08 07:51+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/ko/>\n"
@@ -87,7 +87,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_declaration_mixin.py:0
 msgid "%(employee_name)s-declaration-%(year)s"
-msgstr ""
+msgstr "%(employee_name)s-신고서-%(year)s"
 
 #. module: hr_payroll
 #. odoo-python
@@ -158,7 +158,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.contribution_register
 msgid "100"
-msgstr ""
+msgstr "100"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_003
@@ -394,12 +394,12 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "<span>Output:</span>"
-msgstr ""
+msgstr "<span>결과:</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<span>Total</span>"
-msgstr ""
+msgstr "<span>전체 작업</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -424,12 +424,12 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "<span>gross</span>"
-msgstr ""
+msgstr "<span>총액</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "<span>net</span>"
-msgstr ""
+msgstr "<span>순액</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -526,7 +526,7 @@ msgstr "<strong>합계</strong>"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "<strong>YTD</strong>"
-msgstr ""
+msgstr "<strong>YTD</strong>"
 
 #. module: hr_payroll
 #: model:mail.template,body_html:hr_payroll.mail_template_new_payslip
@@ -828,7 +828,7 @@ msgstr "예상 종료일."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__4
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__4
 msgid "April"
-msgstr ""
+msgstr "4월"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
@@ -907,7 +907,7 @@ msgstr "근태 관리"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__8
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__8
 msgid "August"
-msgstr ""
+msgstr "8월"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -939,13 +939,13 @@ msgstr "아바타 128"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "BIC"
-msgstr ""
+msgstr "BIC"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Back"
-msgstr ""
+msgstr "뒤로"
 
 #. module: hr_payroll
 #. odoo-python
@@ -997,12 +997,12 @@ msgstr "벨기에식 급여"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__bold
 msgid "Bold"
-msgstr ""
+msgstr "굵은 도형"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_payment_report_wizard__export_format__csv
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -1021,7 +1021,7 @@ msgstr "취소"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__cancel
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__cancel
 msgid "Canceled"
-msgstr ""
+msgstr "취소됨"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
@@ -1089,7 +1089,7 @@ msgstr "새로 생성한 계약과 관련된 <strong>작업 항목</strong>을 �
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__boolean
 msgid "Checkbox"
-msgstr ""
+msgstr "체크박스"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_child_support
@@ -1175,7 +1175,7 @@ msgstr "닫기"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__close
 msgid "Closed"
-msgstr ""
+msgstr "종료"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__half-up
@@ -1202,7 +1202,7 @@ msgstr "코드"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__color
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__color
 msgid "Color"
-msgstr ""
+msgstr "색상"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_company
@@ -1243,7 +1243,7 @@ msgstr "계산"
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "Compute"
-msgstr ""
+msgstr "계산"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_compute_payroll
@@ -1308,7 +1308,7 @@ msgstr "충돌"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_form/hr_payslip_run_form.xml:0
 msgid "Continue"
-msgstr ""
+msgstr "계속"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1692,7 +1692,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__12
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__12
 msgid "December"
-msgstr ""
+msgstr "12월"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_list
@@ -1712,7 +1712,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_declaration_mixin__line_ids
 msgid "Declarations"
-msgstr ""
+msgstr "신고서"
 
 #. module: hr_payroll
 #: model:hr.payslip.input.type,name:hr_payroll.input_deduction
@@ -1775,7 +1775,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Delete"
-msgstr ""
+msgstr "삭제"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_line__department_id
@@ -1791,12 +1791,12 @@ msgstr "부서"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Department:"
-msgstr ""
+msgstr "부서:"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_filter_payrun
 msgid "Departure"
-msgstr ""
+msgstr "퇴사"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__dependent_input_id
@@ -1832,7 +1832,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__disabled
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__disabled
 msgid "Disabled"
-msgstr ""
+msgstr "비활성화"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -1849,7 +1849,7 @@ msgstr "취소"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Display"
-msgstr ""
+msgstr "표시"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__display_name
@@ -1916,7 +1916,7 @@ msgstr "문서"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__condition_select__domain
 msgid "Domain"
-msgstr ""
+msgstr "도메인"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__02_close
@@ -1959,18 +1959,18 @@ msgstr "명세서 초안 작성"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Duplicate(s)"
-msgstr ""
+msgstr "복제"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__duration_type
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Duration"
-msgstr ""
+msgstr "소요 기간"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Earnings"
-msgstr ""
+msgstr "수익"
 
 #. module: hr_payroll
 #. odoo-python
@@ -2258,7 +2258,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "End"
-msgstr ""
+msgstr "종료"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_end
@@ -2323,7 +2323,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_work_entry_export_employee_mixin__export_id
 msgid "Export"
-msgstr ""
+msgstr "내보내기"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payslip_run__payment_report
@@ -2370,7 +2370,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__2
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__2
 msgid "February"
-msgstr ""
+msgstr "2월"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -2572,7 +2572,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_tree
 msgid "Headcount"
-msgstr ""
+msgstr "인원수"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_line
@@ -2610,7 +2610,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
 msgid "History"
-msgstr ""
+msgstr "히스토리"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__hourly_wage
@@ -2624,7 +2624,7 @@ msgstr "시간당 임금"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Hours"
-msgstr ""
+msgstr "시간"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -2756,12 +2756,12 @@ msgstr "128 이미지"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "Indefinite"
-msgstr ""
+msgstr "무기한"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__indented
 msgid "Indented"
-msgstr ""
+msgstr "들여쓰기"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_hr_payroll_index
@@ -2949,7 +2949,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/components/status_bubble/status_bubble.xml:0
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__issues
 msgid "Issues"
-msgstr ""
+msgstr "문제"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_rule__quantity
@@ -2970,18 +2970,18 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__italic
 msgid "Italic"
-msgstr ""
+msgstr "기울기"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__1
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__1
 msgid "January"
-msgstr ""
+msgstr "1월"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_search
 msgid "Job"
-msgstr ""
+msgstr "직무"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__job_id
@@ -3004,13 +3004,13 @@ msgstr ""
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__7
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__7
 msgid "July"
-msgstr ""
+msgstr "7월"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__6
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__6
 msgid "June"
-msgstr ""
+msgstr "6월"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__keep_wrong_version
@@ -3105,12 +3105,12 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__duration_type__limited
 msgid "Limited"
-msgstr ""
+msgstr "리미티드"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount__line_ids
 msgid "Line"
-msgstr ""
+msgstr "행"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -3138,7 +3138,7 @@ msgstr "주요 첨부 파일"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__3
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__3
 msgid "March"
-msgstr ""
+msgstr "3월"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
@@ -3162,7 +3162,7 @@ msgstr "결제 완료로 표시"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__5
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__5
 msgid "May"
-msgstr ""
+msgstr "5월"
 
 #. module: hr_payroll
 #: model:hr.salary.rule,name:hr_payroll.hr_salary_rule_meal_voucher
@@ -3202,7 +3202,7 @@ msgstr "등록자별로 그룹화 된 hr.payslip.line 인쇄 모델"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_rule__input_unit__monetary
 msgid "Monetary"
-msgstr ""
+msgstr "통화"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3264,7 +3264,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip
 msgid "Name:"
-msgstr ""
+msgstr "이름:"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__negative_net_to_report_amount
@@ -3464,7 +3464,7 @@ msgstr "비거주자"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #. module: hr_payroll
 #. odoo-python
@@ -3503,7 +3503,7 @@ msgstr "표시할 것이 없습니다"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__11
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__11
 msgid "November"
-msgstr ""
+msgstr "11월"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__message_needaction_counter
@@ -3564,13 +3564,13 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__occurrences
 msgid "Occurrences"
-msgstr ""
+msgstr "발생"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__10
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__10
 msgid "October"
-msgstr ""
+msgstr "10월"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -3579,7 +3579,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_tree
 msgid "Off-Cycle"
-msgstr ""
+msgstr "주기 외"
 
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_user
@@ -3708,7 +3708,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/employee_declaration_list/hr_payroll_employee_declaration_list_controller.xml:0
 msgid "PDFs"
-msgstr ""
+msgstr "PDF"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__paid
@@ -4268,12 +4268,12 @@ msgstr "일정 관리"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_export_mixin_form_view
 msgid "Populate"
-msgstr ""
+msgstr "채우기"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
 msgid "Preview"
-msgstr ""
+msgstr "미리보기"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4358,7 +4358,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__rate
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Rate"
-msgstr ""
+msgstr "요율"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_edit_payslip_line__rate
@@ -4377,7 +4377,7 @@ msgstr "평가"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__01_ready
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Ready"
-msgstr ""
+msgstr "준비"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
@@ -4409,7 +4409,7 @@ msgstr "%s의 신규 결제를 기록했습니다."
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Records"
-msgstr ""
+msgstr "레코드"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -4441,7 +4441,7 @@ msgstr "환불: %(payslip)s"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_search
 msgid "Refunds"
-msgstr ""
+msgstr "환불"
 
 #. module: hr_payroll
 #: model:hr.payroll.structure,name:hr_payroll.structure_002
@@ -4501,7 +4501,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Remove"
-msgstr ""
+msgstr "제거"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4553,7 +4553,7 @@ msgstr "담당 사용자"
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Restart"
-msgstr ""
+msgstr "다시 시작하기"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4561,7 +4561,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Revert"
-msgstr ""
+msgstr "되돌리기"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
@@ -4802,7 +4802,7 @@ msgstr "급여 구조"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__schedule_pay
@@ -4871,7 +4871,7 @@ msgstr "구조 유형 검색"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__input_section
 msgid "Section"
-msgstr ""
+msgstr "섹션"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -4879,7 +4879,7 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.xml:0
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Select"
-msgstr ""
+msgstr "선택"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_payroll_hr_version_list_view_payrun
@@ -4910,7 +4910,7 @@ msgstr "직원에게 새 급여 명세서 발행 알림을 전송합니다."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__9
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__9
 msgid "September"
-msgstr ""
+msgstr "9월"
 
 #. module: hr_payroll
 #. odoo-python
@@ -4982,7 +4982,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Split"
-msgstr ""
+msgstr "분할"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
@@ -4998,7 +4998,7 @@ msgstr "표준 캘린더"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_version_list_view_payrun
 msgid "Start"
-msgstr ""
+msgstr "시작"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_attachment__date_start
@@ -5054,7 +5054,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Stop"
-msgstr ""
+msgstr "중지"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule_section__struct_ids

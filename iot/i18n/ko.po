@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-03 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"PO-Revision-Date: 2025-10-08 07:51+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/iot/ko/>\n"
 "Language: ko\n"
@@ -1172,7 +1172,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "app."
-msgstr ""
+msgstr "앱."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -1182,17 +1182,17 @@ msgstr "연결"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "connection_type"
-msgstr ""
+msgstr "connection_type"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 msgid "device-icon"
-msgstr ""
+msgstr "device-icon"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid "documentation"
-msgstr ""
+msgstr "참고 문서"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1223,7 +1223,7 @@ msgstr ""
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
 msgid "reset.linked.printers"
-msgstr ""
+msgstr "reset.linked.printers"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
