@@ -3,13 +3,14 @@
 # * pos_self_order_iot
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-09-18 02:46+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "pos_self_order_iot/fr/>\n"
 "Language: fr\n"
@@ -28,7 +29,7 @@ msgstr "IoT Box disponibles"
 #. module: pos_self_order_iot
 #: model:ir.model.fields,field_description:pos_self_order_iot.field_iot_box__can_be_kiosk
 msgid "Can Be Kiosk"
-msgstr "Peut être Kiosk"
+msgstr "Peut être Kiosque"
 
 #. module: pos_self_order_iot
 #: model:ir.model,name:pos_self_order_iot.model_res_config_settings

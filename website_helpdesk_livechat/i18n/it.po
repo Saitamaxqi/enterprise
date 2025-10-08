@@ -8,13 +8,14 @@
 # Marianna Ciofani, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:01+0000\n"
-"PO-Revision-Date: 2025-09-15 12:01+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk_livechat/it/>\n"
 "Language: it\n"
@@ -33,6 +34,10 @@ msgid ""
 "                    Create a new helpdesk ticket by typing <b>/ticket <i>ticket title</i></b><br>\n"
 "                    "
 msgstr ""
+"\n"
+"                    Crea un nuovo ticket di assistenza digitando <b>/ticket "
+"<i>titolo ticket</i></b><br>\n"
+"                    "
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -59,7 +64,7 @@ msgstr "Risposte predefinite"
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.im_livechat_canned_response_view_search
 msgid "Canned Responses Search"
-msgstr ""
+msgstr "Ricerca risposte predefinite"
 
 #. module: website_helpdesk_livechat
 #: model:ir.model,name:website_helpdesk_livechat.model_chatbot_script
@@ -74,7 +79,7 @@ msgstr "Chatbot Script Step"
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
 msgid "Configure Canned Responses"
-msgstr ""
+msgstr "Configura risposte predefinite"
 
 #. module: website_helpdesk_livechat
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_livechat.helpdesk_team_view_form_inherit_website_helpdesk_livechat
@@ -111,7 +116,7 @@ msgstr "Per prima cosa, qual è la natura del tuo problema?"
 #. module: website_helpdesk_livechat
 #: model:ir.model.fields,field_description:website_helpdesk_livechat.field_chatbot_script__ticket_count
 msgid "Generated Ticket Count"
-msgstr ""
+msgstr "Numero di ticket generati"
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref_yes
@@ -167,13 +172,15 @@ msgstr "No"
 #. module: website_helpdesk_livechat
 #: model_terms:ir.actions.act_window,help:website_helpdesk_livechat.helpdesk_im_livechat_canned_response_action
 msgid "No canned reponses found. Let's create one!"
-msgstr ""
+msgstr "Nessuna risposta predefinita trovata. Creiamone una!"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:0
 msgid "No tickets found for <b>%s</b>. <br> Make sure you are using the right format:<br> <b>/search_tickets <i>keyword</i></b>"
 msgstr ""
+"Non è stato trovato nessun ticket per <b>%s</b>. <br>Assicurati di "
+"utilizzare il formato giusto:<br> <b>/search_tickets <i>parola chiave</i></b>"
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_ticket
@@ -203,6 +210,8 @@ msgstr "Cerca ticket di assistenza (/search_tickets parola chiave)"
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:0
 msgid "Search helpdesk tickets by typing <b>/search_tickets <i>keyword</i></b>"
 msgstr ""
+"Cerca ticket di assistenza digitando <b>/search_tickets<i>parola "
+"chiave</i></b>"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -230,7 +239,7 @@ msgstr "Ticket"
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/helpdesk.py:0
 msgid "Tickets search results for %s: "
-msgstr ""
+msgstr "Risultati ricerca ticket per %s: "
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref
@@ -255,6 +264,10 @@ msgstr "Siamo pronti. Qual è il tuo problema?"
 #: model_terms:ir.actions.act_window,help:website_helpdesk_livechat.helpdesk_im_livechat_canned_response_action
 msgid "With canned responses, you can type <i>:shortcuts</i> to insert prewritten responses into your messages. These shortcuts are replaced directly in your messages so that you can still make changes before sending them."
 msgstr ""
+"Utilizzando le risposte predefinite, puoi utilizzare delle <i>scorciatoie</"
+"i> per inserire risposte già redatte nei tuoi messaggi. Le scelte rapide da "
+"tastiera vengono sostituite direttamente nei tuoi messaggi così puoi "
+"comunque apportare modifiche prima di inviarli."
 
 #. module: website_helpdesk_livechat
 #: model:chatbot.script.answer,name:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref_answer_yes

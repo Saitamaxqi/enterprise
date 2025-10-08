@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:59+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/it/>\n"
 "Language: it\n"
@@ -132,7 +133,7 @@ msgstr "Crea fattura cliente"
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.misc_entry_rule
 msgid "Create Miscellaneous Operations"
-msgstr ""
+msgstr "Crea operazioni varie"
 
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.vendor_bill_rule_financial
@@ -142,7 +143,7 @@ msgstr "Crea fattura fornitore"
 #. module: documents_account
 #: model:documents.workflow.rule,name:documents_account.vendor_refund_rule
 msgid "Create Vendor Refund"
-msgstr ""
+msgstr "Crea rimborso fornitore"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_uid
@@ -167,7 +168,7 @@ msgstr "Fattura cliente"
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__display_journal_id
 msgid "Display Journal"
-msgstr ""
+msgstr "Visualizza registro"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__display_name
@@ -279,6 +280,8 @@ msgstr "Elaboriamo il documento, in arrivo dallo scanner."
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Let's tag this mail as legal<br/> <i>Tips: actions can be tailored to your process, according to the workspace.</i>"
 msgstr ""
+"Etichettiamo l'e-mail come legale<br/> <i>Suggerimenti: le azioni possono "
+"essere adattate al processo, in base allo spazio di lavoro.</i>"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_entry
@@ -288,7 +291,7 @@ msgstr "Operazioni varie"
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__move_type
 msgid "Move Type"
-msgstr ""
+msgstr "Tipo di movimento"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
@@ -306,7 +309,7 @@ msgstr "Invia questa lettera all'ufficio legale assegnando le etichette corrette
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__suitable_journal_ids
 msgid "Suitable Journal"
-msgstr ""
+msgstr "Registro idoneo"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids

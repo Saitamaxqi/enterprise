@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-12 14:56+0000\n"
-"PO-Revision-Date: 2025-10-07 02:41+0000\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/accountant_knowledge/es_419/>\n"
@@ -1251,7 +1251,7 @@ msgstr "No revelado"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Off-Balance Sheet Commitments"
-msgstr ""
+msgstr "Compromisos fuera del balance general"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1285,7 +1285,7 @@ msgstr "Otros eventos significativos"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Other off-balance-sheet transactions"
-msgstr ""
+msgstr "Otras operaciones fuera del balance general"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1406,6 +1406,8 @@ msgid ""
 "Provide details of any significant off-balance-sheet transactions or "
 "commitments not recorded in the financial statements"
 msgstr ""
+"Proporciona detalles de cualquier transacción o compromiso importante fuera "
+"del balance general que no esté registrada en los estados financieros"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
@@ -1565,7 +1567,7 @@ msgstr "Establecer como borrador"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Share Capital"
-msgstr ""
+msgstr "Capital social"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
@@ -1921,22 +1923,22 @@ msgstr "Equipo de transporte: 5 años"
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Unqualified Attestation"
-msgstr ""
+msgstr "Atestación sin salvedades"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of free shares granted<br>"
-msgstr ""
+msgstr "Valuación de acciones gratuitas otorgadas<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of multi-year variable compensation<br>"
-msgstr ""
+msgstr "Valuación de compensaciones variables multianuales<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Valuation of stock options granted during the year<br>"
-msgstr ""
+msgstr "Valuación de opciones sobre acciones otorgadas durante el año<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1949,6 +1951,8 @@ msgid ""
 "We are making the following comment regarding a matter that may affect the "
 "overall consistency and reliability of the financial statements:"
 msgstr ""
+"Hacemos el siguiente comentario relacionado con un asunto que puede afectar "
+"la coherencia y confiabilidad general de los estados financieros:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview

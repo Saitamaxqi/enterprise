@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-13 21:43+0000\n"
-"PO-Revision-Date: 2025-10-03 12:11+0000\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/ai/it/>\n"
 "Language: it\n"
@@ -212,6 +212,32 @@ msgid ""
 "            ⚠️ Order must be exactly 'ASC' or 'DESC'\n"
 "        "
 msgstr ""
+"\n"
+"            Apre una vista grafico/tabella utilizzando gli elementi della "
+"vista di ricerca.\n"
+"            Ideale per: tendenze, confronti, distribuzioni, KPI visivi.\n"
+"\n"
+"            Tipi di grafico supportati:\n"
+"            - 'barre': confronta i valori tra le diverse categorie\n"
+"            - 'linee': mostra le tendenze nel tempo\n"
+"            - 'torta': visualizza le proporzioni di un insieme\n"
+"\n"
+"            Funzionalità:\n"
+"            - applica i filtri dalle opzioni disponibili nel menu\n"
+"            - visualizza una singola misura\n"
+"            - raggruppa per un campo per l'asse del grafico\n"
+"            - cerca in campi specifici\n"
+"            - opzioni di accumulo e cumulo\n"
+"            - controllo ordine (ASC/DESC)\n"
+"\n"
+"            💡 Per prima cosa, chiama compute_report_measures() per trovare "
+"misure valide\n"
+"            ⚠️ Ogni stringa di ricerca dovrebbe usare il formato "
+"'field=text'. L'array può contenere più stringhe di ricerca oppure essere "
+"vuoto []\n"
+"            ⚠️ La modalità può essere 'barra', 'linee' o 'torta'\n"
+"            ⚠️ L'ordine deve essere esattamente 'ASC' o 'DESC'\n"
+"        "
 
 #. module: ai
 #: model:ir.actions.server,ai_tool_description:ai.ir_actions_server_open_menu_kanban
@@ -371,7 +397,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0 code:addons/ai/models/ai_composer.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (copia)"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -379,6 +405,8 @@ msgid ""
 "<br/>\n"
 "            It used the following tools:"
 msgstr ""
+"<br/>\n"
+"            Ha usato i seguenti strumenti:"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -387,11 +415,14 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
+"<i class=\"fa fa-warning text-warning me-2\" invisible="
+"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
+"\"The AI will not be limited by the groups defined on tools\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "<span>with arguments</span>"
-msgstr ""
+msgstr "<span>con argomenti</span>"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__topic_ids
@@ -415,7 +446,7 @@ msgstr "IA"
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_action_prompt
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_action_prompt
 msgid "AI Action Prompt"
-msgstr ""
+msgstr "Prompt azione IA"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent
@@ -425,17 +456,18 @@ msgstr "Agente IA"
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
 msgid "AI Agent Source"
-msgstr ""
+msgstr "Origine agente IA"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_process_sources_ir_actions_server
 msgid "AI Agent Sources: Process Sources"
-msgstr ""
+msgstr "Origini agente IA: origini processo"
 
 #. module: ai
 #: model:ir.model.constraint,message:ai.constraint_discuss_channel_ai_channel_type_check
 msgid "AI Agent can only be set for ai_chat or livechat channels."
 msgstr ""
+"L'agente IA può essere configurato solo per ai_chat o per i canali live chat."
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
@@ -445,25 +477,25 @@ msgstr "Integrazione IA: generare integrazioni"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_prompt_button__name
 msgid "AI Prompt"
-msgstr ""
+msgstr "Prompt IA"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_field_selector_plugin.js:0
 msgid "AI Prompt Tools"
-msgstr ""
+msgstr "Strumenti prompt IA"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_schema
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_schema
 msgid "AI Schema"
-msgstr ""
+msgstr "Schema IA"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_description
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_description
 msgid "AI Tool Description"
-msgstr ""
+msgstr "Descrizione strumento IA"
 
 #. module: ai
 #. odoo-javascript
@@ -482,13 +514,13 @@ msgstr "Chat IA"
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "AI is listening..."
-msgstr ""
+msgstr "L'IA ti sta ascoltando..."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/typing_patch.js:0
 msgid "AI is thinking..."
-msgstr ""
+msgstr "L'IA sta pensando..."
 
 #. module: ai
 #: model:ir.model,name:ai.model_ai_composer
@@ -500,7 +532,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/discuss_channel.py:0
 msgid "AI not reachable, AI Agent not found."
-msgstr ""
+msgstr "IA non raggiungibile, agente IA non trovato."
 
 #. module: ai
 #. odoo-python
@@ -511,124 +543,126 @@ msgstr "IA: %(name)s"
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_adjust_search
 msgid "AI: Adjust Search"
-msgstr ""
+msgstr "IA: rettifica ricerca"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_compute_report_measures
 msgid "AI: Compute Report Measures"
-msgstr ""
+msgstr "IA: calcola misure resoconto"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_fields
 msgid "AI: Get Fields"
-msgstr ""
+msgstr "IA: ottieni campi"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_get_menu_details
 msgid "AI: Get Menu Details"
-msgstr ""
+msgstr "IA: ottieni dettagli menu"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_graph
 msgid "AI: Open Menu Graph"
-msgstr ""
+msgstr "IA: apri grafico menu"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_kanban
 msgid "AI: Open Menu Kanban"
-msgstr ""
+msgstr "IA: apri kanban menu"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_list
 msgid "AI: Open Menu List"
-msgstr ""
+msgstr "IA: apri elenco menu"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_open_menu_pivot
 msgid "AI: Open Menu Pivot"
-msgstr ""
+msgstr "IA: apri pivot menu"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_read_group
 msgid "AI: Read group"
-msgstr ""
+msgstr "IA: leggi gruppo"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_actions_server_search
 msgid "AI: Search"
-msgstr ""
+msgstr "IA: ricerca"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "Access error"
-msgstr ""
+msgstr "Errore di accesso"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__interface_key
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
 msgid "Action"
-msgstr ""
+msgstr "Azione"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Action \"%(action)s\" done."
-msgstr ""
+msgstr "Azione \"%(action)s\" eseguita."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__active
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__is_active
 msgid "Active"
-msgstr ""
+msgstr "Attivo"
 
 #. module: ai
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "Activity created for %(user)s."
-msgstr ""
+msgstr "Attività creata per %(user)s."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Add"
-msgstr ""
+msgstr "Aggiungi"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add Links"
-msgstr ""
+msgstr "Aggiungi link"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add Sources"
-msgstr ""
+msgstr "Aggiungi fonti"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.js:0
 msgid "Add a Link"
-msgstr ""
+msgstr "Aggiungi un link"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/plugins/voice_transcription_plugin.js:0
 msgid "Add notes about your upcoming meeting"
-msgstr ""
+msgstr "Aggiungi note sui meeting futuri"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add sources to your AI Agent to get answers based on specific content."
 msgstr ""
+"Aggiungi fonti al tuo agente IA per avere risposte in base a contenuti "
+"specifici."
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Adding sources..."
-msgstr ""
+msgstr "Aggiungi fonti..."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent_source__agent_id
@@ -646,43 +680,43 @@ msgstr "Nome agente"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_agent_id
 msgid "Ai Agent"
-msgstr ""
+msgstr "Agente IA"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_has_schema
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_has_schema
 msgid "Ai Tool Has Schema"
-msgstr ""
+msgstr "Strumento IA ha schema"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_is_candidate
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_is_candidate
 msgid "Ai Tool Is Candidate"
-msgstr ""
+msgstr "Strumento IA è candidato"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_show_warning
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_show_warning
 msgid "Ai Tool Show Warning"
-msgstr ""
+msgstr "Strumento IA mostra avviso"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_allow_end_message
 #: model:ir.model.fields,field_description:ai.field_ir_cron__ai_tool_allow_end_message
 msgid "Allow End Message"
-msgstr ""
+msgstr "Consenti messaggio finale"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/editor/embedded_components/core/voice_transcription.js:0
 msgid "An error occured"
-msgstr ""
+msgstr "Si è verificato un errore"
 
 #. module: ai
 #. odoo-javascript
 #: code:addons/ai/static/src/discuss/core/common/thread_model_patch.js:0
 msgid "An error occurred while generating the AI response."
-msgstr ""
+msgstr "Si è verificato un errore durante la generazione della risposta IA."
 
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_agent__response_style__analytical
@@ -701,7 +735,7 @@ msgstr "Chiedi all'IA"
 #. module: ai
 #: model:ir.model.fields.selection,name:ai.selection__ai_composer__interface_key__systray_ai_button
 msgid "Ask AI for help"
-msgstr ""
+msgstr "Chiedi aiuto all'IA"
 
 #. module: ai
 #: model:ir.model,name:ai.model_ir_attachment
@@ -718,7 +752,7 @@ msgstr "Integrazione parti allegato"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__available_prompts
 msgid "Available User Prompts"
-msgstr ""
+msgstr "Prompt utente disponibili"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__avatar_128

@@ -3,13 +3,14 @@
 # * esg_project
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-09-11 14:31+0000\n"
-"PO-Revision-Date: 2025-09-18 02:41+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "esg_project/it/>\n"
 "Language: it\n"
@@ -27,6 +28,10 @@ msgid ""
 "                <a class=\"btn btn-secondary mt-3\" type=\"action\" name=\"%d\">Load sample data</a>\n"
 "            "
 msgstr ""
+"\n"
+"                <a class=\"btn btn-secondary mt-3\" type=\"action\" name="
+"\"%d\">Carica dati campione</a>\n"
+"            "
 
 #. module: esg_project
 #. odoo-python
@@ -37,6 +42,13 @@ msgid ""
 "            <p>Keep track of the progress of your initiatives to take action on your impact from creation to completion.<br/>Collaborate efficiently by chatting in real-time or via email.</p>\n"
 "        "
 msgstr ""
+"\n"
+"            <p class=\"o_view_nocontent_smiling_face\">Non abbiamo trovato "
+"nessun lavoro. Creiamone uno!</p>\n"
+"            <p>Tieni traccia dell'avanzamento delle iniziative per gestire "
+"il tuo impatto dalla creazione al completamento delle stesse.<br/>Collabora "
+"in modo efficace comunicando in tempo reale o tramite e-mail.</p>\n"
+"        "
 
 #. module: esg_project
 #: model:ir.ui.menu,name:esg_project.menu_esg_act
@@ -46,22 +58,22 @@ msgstr "Atto"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_12
 msgid "Awareness"
-msgstr ""
+msgstr "Sensibilizzazione"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_11
 msgid "Business Travel"
-msgstr ""
+msgstr "Viaggio di lavoro"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_5
 msgid "Carbon Footprint"
-msgstr ""
+msgstr "Emissioni di carbonio"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_1
 msgid "Circular Economy"
-msgstr ""
+msgstr "Economia circolare"
 
 #. module: esg_project
 #. odoo-javascript
@@ -72,7 +84,7 @@ msgstr "Crea iniziativa"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_10
 msgid "Digital Efficiency"
-msgstr ""
+msgstr "Efficienza digitale"
 
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__display_name
@@ -87,17 +99,17 @@ msgstr "Completato 🌳🌲"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_2
 msgid "Energy Efficiency"
-msgstr ""
+msgstr "Efficienza energetica"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_6
 msgid "GHG Reduction"
-msgstr ""
+msgstr "Riduzione emissioni gas effetto serra"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_7
 msgid "Governance"
-msgstr ""
+msgstr "Gestione"
 
 #. module: esg_project
 #: model:ir.model.fields,field_description:esg_project.field_project_project__id
@@ -107,7 +119,7 @@ msgstr "ID"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_4
 msgid "IT Policy"
-msgstr ""
+msgstr "Politica IT"
 
 #. module: esg_project
 #: model:project.task.type,name:esg_project.esg_project_stage_0
@@ -135,17 +147,17 @@ msgstr "Azione server iniziative"
 #. module: esg_project
 #: model:ir.actions.server,name:esg_project.action_load_demo_data
 msgid "Load ESG Project demo data"
-msgstr ""
+msgstr "Carica dati campione progetto ESG"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_8
 msgid "Mobility"
-msgstr ""
+msgstr "Mobilità"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_9
 msgid "Operational Excellence"
-msgstr ""
+msgstr "Eccellenza operativo"
 
 #. module: esg_project
 #: model:ir.model,name:esg_project.model_project_project
@@ -155,12 +167,12 @@ msgstr "Progetto"
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_3
 msgid "Scope 2"
-msgstr ""
+msgstr "Ambito 2"
 
 #. module: esg_project
 #: model:project.tags,name:esg_project.esg_project_tags_0
 msgid "Scope 3"
-msgstr ""
+msgstr "Ambito 3"
 
 #. module: esg_project
 #: model:project.project,label_tasks:esg_project.esg_project_project_0

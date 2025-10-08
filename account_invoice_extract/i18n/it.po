@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-05-16 16:02+0000\n"
-"PO-Revision-Date: 2025-09-15 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "account_invoice_extract/it/>\n"
 "Language: it\n"
@@ -29,6 +30,8 @@ msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
 "                        Buy credits"
 msgstr ""
+"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
+"                        Acquista crediti"
 
 #. module: account_invoice_extract
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
@@ -36,6 +39,8 @@ msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
 "                        Refresh"
 msgstr ""
+"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
+"                        Ricarica"
 
 #. module: account_invoice_extract
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
@@ -43,6 +48,8 @@ msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
 "                        Resend For Digitization"
 msgstr ""
+"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
+"                        Invia di nuovo per la digitalizzazione"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_needaction
@@ -67,13 +74,13 @@ msgstr "Numero allegati"
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_journal__alias_auto_extract_pdfs_only
 msgid "Auto extract PDFs only"
-msgstr ""
+msgstr "Estrazione automatica solo PDF"
 
 #. module: account_invoice_extract
 #. odoo-python
 #: code:addons/account_invoice_extract/models/account_invoice.py:0
 msgid "Bill is being Digitized"
-msgstr ""
+msgstr "La fattura è in fase di digitalizzazione"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_can_show_banners
@@ -149,7 +156,7 @@ msgstr "Digitalizzare solo su richiesta"
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_journal__display_alias_auto_extract_pdfs_only
 msgid "Display Alias Auto Extract Pdfs Only"
-msgstr ""
+msgstr "Mostra alias estrazione automatica solo PDF"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__display_name
@@ -274,7 +281,7 @@ msgstr "Fattura"
 #. module: account_invoice_extract
 #: model:ir.actions.server,name:account_invoice_extract.ir_cron_ocr_parse_ir_actions_server
 msgid "Invoice OCR: Parse Invoices"
-msgstr ""
+msgstr "OCR fattura: analizza le fatture"
 
 #. module: account_invoice_extract
 #: model:ir.actions.server,name:account_invoice_extract.ir_cron_update_ocr_status_ir_actions_server
@@ -299,7 +306,7 @@ msgstr "Può essere estratto"
 #. module: account_invoice_extract
 #: model:ir.model,name:account_invoice_extract.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Registro"
 
 #. module: account_invoice_extract
 #: model:ir.model,name:account_invoice_extract.model_account_move
@@ -354,12 +361,13 @@ msgstr "Numero di messaggi con errore di consegna"
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__ocr_selected
 msgid "Ocr Selected"
-msgstr ""
+msgstr "OCR selezionato"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,help:account_invoice_extract.field_account_journal__alias_auto_extract_pdfs_only
 msgid "Only extract PDF files attached to email arriving trough this email alias."
 msgstr ""
+"Estrai esclusivamente file PDF allegati a e-mail in arrivo da questo alias."
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__rating_ids
@@ -384,7 +392,7 @@ msgstr "Invia fatture per digitalizzazione"
 #. module: account_invoice_extract
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
 msgid "Send For Digitization"
-msgstr ""
+msgstr "Invia per la digitalizzazione"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__extract_single_line_per_tax
@@ -396,6 +404,8 @@ msgstr "Singola riga fattura per imposta"
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
 msgid "The data extraction is not finished yet. The extraction usually takes between 5 and 10 seconds."
 msgstr ""
+"L'estrazione dei dati non è ancora terminata. In generale, dura dai 5 ai 10 "
+"secondi."
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__user_selected
