@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { beforeEach, describe, expect, queryOne, test } from "@odoo/hoot";
 import { hover, pointerDown, queryAll, queryFirst, queryRect, resize } from "@odoo/hoot-dom";
 import { advanceFrame, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import {
@@ -695,9 +695,11 @@ test("Connect two very distant pills", async () => {
     await advanceFrame(200);
 
     // FIXME: ELEMENT SHOULD BE INTERACTIVE -> test is simulating a situation that
-    // cannot happen. Investigate the issue and remove `interactive: false` and
+    // cannot happen. Investigate the issue, remove the following line and the
     // "broken" tag when fixed.
-    await drop(selector, { interactive: false });
+    queryOne(selector).classList.add("pe-auto");
+
+    await drop(selector);
     expect.verifySteps([[[2], { depend_on_ids: [[4, 1, false]] }]]);
     expect(SELECTORS.connector).toHaveCount(1);
 });
