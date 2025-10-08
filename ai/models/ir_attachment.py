@@ -72,7 +72,7 @@ class IrAttachment(models.Model):
         """
         self.ensure_one()
         # For PDF files, try to get content via _compute_pdf_content first
-        if self.mimetype == 'application/pdf' and self.raw and self.raw.startswith(b'%PDF-'):
+        if self.mimetype in ['application/pdf', 'application/pdf;base64'] and self.raw and self.raw.startswith(b'%PDF-'):
             pdf_content = self._compute_pdf_content()
             if pdf_content:
                 content = pdf_content
