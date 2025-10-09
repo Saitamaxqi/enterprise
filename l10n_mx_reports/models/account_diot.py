@@ -27,7 +27,7 @@ def diot_country_adapt(values):
         'QA': 'QAT', 'TD': 'TCD', 'CL': 'CHL', 'CN': 'CHN', 'CY': 'CYP', 'CO': 'COL', 'KM': 'COM', 'KP': 'PRK', 'KR': 'KOR', 'CI': 'CIV',
         'CR': 'CRI', 'HR': 'HRV', 'CU': 'CUB', 'CW': 'CUW', 'DK': 'DNK', 'DM': 'DMA', 'EC': 'ECU', 'EG': 'EGY', 'SV': 'SLV', 'AE': 'ARE',
         'ER': 'ERI', 'SK': 'SVK', 'SI': 'SVN', 'ES': 'ESP', 'US': 'USA', 'EE': 'EST', 'ET': 'ETH', 'PH': 'PHL', 'FI': 'FIN', 'FJ': 'FJI',
-        'FR': 'FRA', 'GA': 'GAB', 'GM': 'GMB', 'GE': 'GEO', 'GH': 'GHA', 'GI': 'GIB', 'GD': 'GRD', 'GR': 'GRC', 'GL': 'GRL', 'GP': 'GLP',
+        'FR': 'FRA', 'GA': 'GAB', 'GB': 'GBR', 'GM': 'GMB', 'GE': 'GEO', 'GH': 'GHA', 'GI': 'GIB', 'GD': 'GRD', 'GR': 'GRC', 'GL': 'GRL', 'GP': 'GLP',
         'GU': 'GUM', 'GT': 'GTM', 'GF': 'GUF', 'GG': 'GGY', 'GN': 'GIN', 'GW': 'GNB', 'GQ': 'GNY', 'HT': 'HTI', 'HN': 'HND', 'HK': 'HKG',
         'HU': 'HUN', 'IN': 'IND', 'IQ': 'IRQ', 'IR': 'IRN', 'IE': 'IRL', 'BV': 'BVT', 'IM': 'IMN', 'CX': 'CXR', 'NF': 'NFK', 'IS': 'ISL',
         'KY': 'CYM', 'CC': 'CCK', 'CK': 'COK', 'FO': 'FRO', 'GS': 'SGS', 'HM': 'HMD', 'FK': 'FLK', 'MP': 'MNP', 'MH': 'MHL', 'PN': 'PCN',
