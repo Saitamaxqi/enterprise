@@ -396,7 +396,7 @@ class SendCloud:
         if not shipping_methods:
             raise UserError(_('There is no shipping method available for this picking with the selected carrier'))
         elif any(float_compare(pkg.weight, user_uom_max_weight, precision_rounding=user_weight_uom.rounding) > 0 for pkg in delivery_packages):
-            overweight_products = picking.move_ids.filtered(lambda m: float_compare(m.product_id.weight, user_uom_max_weight, precision_rounding=m.product_uom.rounding) > 0)
+            overweight_products = picking.move_ids.filtered(lambda m: float_compare(m.product_id.weight, user_uom_max_weight, precision_rounding=m.product_uom.rounding) > 0).product_id
             not_packed = bool(not picking.move_line_ids.result_package_id and picking.weight_bulk)
             if not_packed:
                 message = _('The total weight of your transfer is too heavy for the heaviest available shipping method.')

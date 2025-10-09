@@ -679,3 +679,54 @@ class TestDeliverySendCloud(TransactionCase):
         })
         with self.assertRaises(UserError):
             picking.open_website_url()
+
+    def test_overweight_individual_products_error_message(self):
+        """
+        Test that when individual products are too heavy for the shipping method,
+        a specific error message is raised mentioning the overweight products.
+        """
+        products = self.env["product.product"].create([{
+            'name': 'Super Heavy Door',
+            'type': 'consu',
+            'weight': 25.0,  # exceeds the 20kg limit
+        }, {
+            'name': 'Massive Window',
+            'type': 'consu',
+            'weight': 30.0,  # also exceeds the limit
+        }, {
+            'name': 'Light Chair',
+            'type': 'consu',
+            'weight': 5.0,  # within limits
+        }])
+
+        sale_order = self.env['sale.order'].create({
+            'partner_id': self.eu_partner.id,
+            'order_line': [
+                Command.create({
+                    'product_id': product.id,
+                    'product_uom_qty': 1.0,
+                }) for product in products
+            ]
+        })
+
+        wiz_action = sale_order.action_open_delivery_wizard()
+        choose_delivery_carrier = self.env[wiz_action['res_model']].with_context(wiz_action['context']).create({
+            'carrier_id': self.sendcloud.id,
+            'order_id': sale_order.id,
+        })
+
+        with _mock_sendcloud_call(self.warehouse_id):
+            choose_delivery_carrier.update_price()
+            choose_delivery_carrier.button_confirm()
+            sale_order.action_confirm()
+            picking = sale_order.picking_ids[0]
+            picking.action_assign()
+
+            with self.assertRaises(UserError) as cm:
+                picking._action_done()
+
+            error_message = str(cm.exception)
+            self.assertIn("Additionally, some individual product(s) are too heavy for the heaviest available shipping method", error_message)
+            self.assertIn("Super Heavy Door", error_message)
+            self.assertIn("Massive Window", error_message)
+            self.assertNotIn("Light Chair", error_message)
