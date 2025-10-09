@@ -81,7 +81,12 @@ registry.category("web_tour.tours").add("test_appointment_kanban_view", {
                 trigger: ".o_form_renderer .o_field_many2many_selection .o_input",
                 run: "click",
             },
-            RestaurantAppointment.selectTable("Test Main Floor - Table 4"),
+            RestaurantAppointment.selectTable("Test Main Floor - Table 4"), // 2 capacity
+            {
+                trigger: ".o_form_renderer .o_field_many2many_selection .o_input",
+                run: "click",
+            },
+            RestaurantAppointment.selectTable("Test Main Floor - Table 5"), // 2 capacity
             {
                 trigger: ".o_form_button_save",
                 run: "click",

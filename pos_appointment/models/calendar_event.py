@@ -61,7 +61,8 @@ class CalendarEvent(models.Model):
                 'active_model': 'appointment.type',
                 'default_partner_ids': [],
                 'default_duration': 2,
-                'default_total_capacity_reserved': 2,
+                'default_total_capacity_reserved': 0,
+                'default_waiting_list_capacity': 2,
                 "search_default_appointment_type_id": self.env.context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
                 'hide_no_content_helper': True,
@@ -89,14 +90,19 @@ class CalendarEvent(models.Model):
             'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking').id, 'form')],
             'context': {
                 'default_appointment_type_id': appointment_type_id,
-                'default_total_capacity_reserved': 2,
+                'default_total_capacity_reserved': 0,
+                'default_waiting_list_capacity': 2,
             }
         }
 
     @api.depends('resource_ids', 'total_capacity_reserved')
     def _compute_waiting_list_capacity(self):
         for event in self:
-            if not event.waiting_list_capacity:
+            # always sync if capacity is managed
+            if event.appointment_type_schedule_based_on == 'resources' and event.appointment_type_manage_capacity:
+                event.waiting_list_capacity = event.total_capacity_reserved
+            # otherwise only set a default from reserved capacity and let users edit it
+            elif not event.waiting_list_capacity:
                 if event.total_capacity_reserved:
                     event.waiting_list_capacity = event.total_capacity_reserved
                 elif event.resource_ids:

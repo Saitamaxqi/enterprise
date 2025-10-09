@@ -25,8 +25,10 @@
                             <field name="stop" invisible="1"/><!--required for various things in custom js views and widgets-->
                         </div>
                         <div colspan="2">
-                            <label for="waiting_list_capacity" class="me-2"/>
-                            <field name="waiting_list_capacity" string="Reservation for" class="oe_inline ms-1"/>
+                            <label for="total_capacity_reserved" class="me-2" invisible="appointment_type_schedule_based_on != 'resources' or not appointment_type_manage_capacity"/>
+                            <field name="total_capacity_reserved" string="Reservation for" class="oe_inline ms-1" invisible="appointment_type_schedule_based_on != 'resources' or not appointment_type_manage_capacity"/>
+                            <label for="waiting_list_capacity" class="me-2" invisible="appointment_type_schedule_based_on == 'resources' and appointment_type_manage_capacity"/>
+                            <field name="waiting_list_capacity" string="Reservation for" class="oe_inline ms-1" invisible="appointment_type_schedule_based_on == 'resources' and appointment_type_manage_capacity"/>
                             <span>people</span>
                         </div>
                         <field name="phone_number" widget="phone"/>
