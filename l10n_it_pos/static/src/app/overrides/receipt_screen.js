@@ -7,7 +7,7 @@ patch(ReceiptScreen.prototype, {
     setup() {
         super.setup(...arguments);
         onMounted(async () => {
-            const order = this.pos.getOrder();
+            const order = this.currentOrder;
             if (isFiscalPrinterActive(this.pos.config) && !order.nb_print) {
                 //make sure we print the fiscal receipt
                 await this.pos.printReceipt({ order });

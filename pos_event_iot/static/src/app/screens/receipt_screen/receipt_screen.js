@@ -3,7 +3,7 @@ import { patch } from "@web/core/utils/patch";
 
 patch(ReceiptScreen.prototype, {
     async printEventBadge() {
-        const registrations = this.pos.getOrder().eventRegistrations;
+        const registrations = this.currentOrder.eventRegistrations;
 
         const badgePrinterRegistrations = registrations.filter(
             (reg) => reg.event_id.badge_format === "96x82"
