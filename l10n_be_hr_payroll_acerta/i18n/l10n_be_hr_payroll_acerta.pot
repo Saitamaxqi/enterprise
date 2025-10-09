@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~18.2+e\n"
+"Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-03-26 15:31+0000\n"
-"PO-Revision-Date: 2025-03-26 15:31+0000\n"
+"POT-Creation-Date: 2025-10-09 12:56+0000\n"
+"PO-Revision-Date: 2025-10-09 12:56+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_be_hr_payroll_acerta
-#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_acerta.hr_contract_form_inherit
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_acerta.res_config_settings_view_form
 msgid "Acerta"
 msgstr ""
@@ -28,32 +27,15 @@ msgid "Acerta Affiliation Number"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
-msgid "Acerta Affiliation Number is missing for company: %(company)s"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_acerta
 #: model:ir.model,name:l10n_be_hr_payroll_acerta.model_l10n_be_hr_payroll_export_acerta_employee
 msgid "Acerta Export Employee"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_contract__acerta_code
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_employee__acerta_code
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_version__acerta_code
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_work_entry_type__acerta_code
 msgid "Acerta code"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_acerta
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
-msgid "Acerta code is missing for contract: %(contract)s"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_acerta
-#. odoo-python
-#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
-msgid "Acerta code is missing for work entry type %(work_entry_type)s"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
@@ -62,18 +44,18 @@ msgid "Allow to export Working Entries to your Social Secretariat"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:hr.leave.type,name:l10n_be_hr_payroll_acerta.holiday_type_small_unemployment_birth
-#: model:hr.work.entry.type,name:l10n_be_hr_payroll_acerta.work_entry_type_small_unemployment_birth
-msgid "Brief Holiday (Birth)"
-msgstr ""
-
-#. module: l10n_be_hr_payroll_acerta
 #: model:ir.model,name:l10n_be_hr_payroll_acerta.model_res_company
 msgid "Companies"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_acerta.hr_payroll_dashboard_warning_missing_acerta_code_companies
+msgid "Companies without Acerta Code"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta__company_id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__company_id
 msgid "Company"
 msgstr ""
 
@@ -83,8 +65,8 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__contract_ids
-msgid "Contract"
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_acerta.hr_payroll_dashboard_warning_missing_acerta_code_contracts
+msgid "Contracts without Acerta Code"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
@@ -100,7 +82,7 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_contract__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_version__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_work_entry_type__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__display_name
@@ -125,7 +107,7 @@ msgid "Employee"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:ir.model,name:l10n_be_hr_payroll_acerta.model_hr_contract
+#: model:ir.model,name:l10n_be_hr_payroll_acerta.model_hr_version
 msgid "Employee Contract"
 msgstr ""
 
@@ -167,7 +149,7 @@ msgid "HR Work Entry Type"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_contract__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_version__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_hr_work_entry_type__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__id
@@ -216,9 +198,9 @@ msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_acerta/models/hr_contract.py:0
+#: code:addons/l10n_be_hr_payroll_acerta/models/hr_version.py:0
 msgid ""
-"The following contracts have an Acerta code that is too long: %(contracts)s"
+"The following versions have an Acerta code that is too long: %(versions)s"
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
@@ -230,6 +212,34 @@ msgid ""
 msgstr ""
 
 #. module: l10n_be_hr_payroll_acerta
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__version_ids
+msgid "Version"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_acerta.field_l10n_be_hr_payroll_export_acerta_employee__work_entry_ids
 msgid "Work Entry"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_acerta.hr_payroll_dashboard_warning_missing_acerta_code_wet
+msgid "Work Entry Types without Acerta Code"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
+msgid "companies"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
+msgid "versions"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_acerta
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_acerta/models/hr_payroll_export_acerta.py:0
+msgid "work entry types"
 msgstr ""
