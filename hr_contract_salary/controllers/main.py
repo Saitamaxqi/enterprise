@@ -601,7 +601,7 @@ class HrContractSalary(http.Controller):
 
         if not no_name_write:
             employee_vals['name'] = employee_infos.get('name', '')
-        employee.write(employee_vals)
+        employee.with_context(tracking_disable=True).write(employee_vals)
         version.with_context(tracking_disable=True).write(version_vals)
         if attachment_create_vals:
             request.env['ir.attachment'].sudo().create(attachment_create_vals)
