@@ -7,6 +7,8 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import misc, format_date
 from odoo.tools.pdf import PdfFileReader, PdfFileWriter, PdfReadError, reshape_text
 
+from odoo.addons.sign.utils.pdf_handling import get_valid_pdf_data
+
 from PIL import UnidentifiedImageError
 
 from reportlab.lib.styles import ParagraphStyle
@@ -436,10 +438,5 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
 
     @api.model
     def _get_pdf_number_of_pages(self, pdf_data):
-        file_pdf = PdfFileReader(io.BytesIO(pdf_data), strict=False, overwriteWarnings=False)
-        if file_pdf.isEncrypted:
-            raise ValidationError(self.env._(
-            "It seems that we're not able to process one of the uploaded pdf. It is either"
-            " encrypted, or encoded in a format we do not support."
-        ))
+        file_pdf = get_valid_pdf_data(pdf_data, strict=False)
         return len(file_pdf.pages)

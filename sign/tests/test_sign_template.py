@@ -3,7 +3,7 @@
 import base64
 
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools import file_open
+from odoo.tools import file_open, mute_logger
 from odoo.tests import tagged
 from odoo.tests.common import TransactionCase, new_test_user
 
@@ -15,6 +15,10 @@ class TestSignTemplate(TransactionCase):
         super().setUpClass()
         with file_open('sign/static/demo/sample_contract.pdf', "rb") as f:
             cls.pdf_data = base64.b64encode(f.read())
+        with file_open('mail/tests/discuss/files/test_AES.pdf', "rb") as f:
+            cls.AES_pdf_data = base64.b64encode(f.read())
+        with file_open('mail/tests/discuss/files/test_unicode.pdf', "rb") as f:
+            cls.unicode_pdf_data = base64.b64encode(f.read())
 
         cls.test_user = new_test_user(cls.env,
                                       "test_user_1",
@@ -283,3 +287,31 @@ class TestSignTemplate(TransactionCase):
             sign_template.model_id = type_request.id
         with self.assertRaises(UserError):
             sign_template.model_id = type_cron.id
+
+    @mute_logger('odoo.addons.sign.utils.pdf_handling')
+    def test_invalid_pdf_upload(self):
+        """ Make sure that uploading invalid/encrypted PDF upload should raise the error. """
+        for fname, data in [('test_AES.pdf', self.AES_pdf_data), ('test_unicode.pdf', self.unicode_pdf_data)]:
+            with self.subTest(fname=fname):
+                with self.assertRaises(ValidationError):
+                    self.env['sign.template'].with_user(self.test_user).create_from_attachment_data(
+                        attachment_data_list=[{'name': fname, 'datas': data}]
+                    )
+
+    @mute_logger('odoo.addons.sign.utils.pdf_handling')
+    def test_invalid_pdf_add_in_document(self):
+        """ Make sure that adding invalid/encrypted PDF in Document should raise the error. """
+        # create a valid template first
+        res = self.env['sign.template'].with_user(self.test_user).create_from_attachment_data(
+            attachment_data_list=[{'name': 'sample_contract.pdf', 'datas': self.pdf_data}]
+        )
+        template_id = self.env['sign.template'].with_user(self.test_user).browse(res.get('id', 0))
+        self.assertEqual(len(template_id.document_ids), 1)
+
+        for fname, data, exc in [
+            ('test_AES.pdf', self.AES_pdf_data, ValidationError),
+            ('test_unicode.pdf', self.unicode_pdf_data, UserError),
+        ]:
+            with self.subTest(fname=fname):
+                with self.assertRaises(exc):
+                    template_id.update_from_attachment_data(attachment_data_list=[{'name': fname, 'datas': data}])
