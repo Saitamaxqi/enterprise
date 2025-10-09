@@ -1,6 +1,7 @@
 import { registry } from "@web/core/registry";
 import { inputFiles } from "@web/../tests/utils";
 import { redirect } from "@web/core/utils/urls";
+import { stepUtils } from "@web_tour/tour_utils";
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
     url: "/odoo",
@@ -34,9 +35,20 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             trigger: 'span:contains("Jean Jasse")',
             run: "click",
         },
+        stepUtils.autoExpandMoreButtons(),
         {
             content: "Generate offer",
-            trigger: ".o_statusbar_buttons > button > span:contains(Generate Offer)",
+            trigger: ".btn:contains(Offers)",
+            run: "click",
+        },
+        {
+            content: "Contract Template",
+            trigger: ".o_field_widget.o_field_many2one[name=contract_template_id] input",
+            run: "edit Senior Developer Template Contract",
+        },
+        {
+            isActive: ["auto"],
+            trigger: ".ui-autocomplete > li > a:contains(Senior Developer Template Contract)",
             run: "click",
         },
         {
@@ -125,7 +137,13 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
             trigger: "input[name=ip_value_radio]:eq(1):not(:visible)",
             run: "click",
         },
-         {
+        // We set internet to show the upload invoice button
+        {
+            content: "Set Internet",
+            trigger: 'input[name="internet_manual"]',
+            run: "edit 30",
+        },
+        {
             content: "sex",
             trigger: "input[name=sex]:not(:visible)",
             run: function () {
