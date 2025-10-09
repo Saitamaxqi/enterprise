@@ -458,6 +458,7 @@ class AccountOnlineLink(models.Model):
             'name': data.get('account_number'),
             'type': journal_type,
             'bank_account_id': bank_account.id,
+            'company_id': self.company_id.id,
         })
 
         return {'type': 'ir.actions.client', 'tag': 'soft_reload'}
