@@ -439,7 +439,7 @@
 
     <record id="action_open_employee_list" model="ir.actions.act_window">
         <field name="name">Select Employee</field>
-        <field name="res_model">hr.employee</field>
+        <field name="res_model">hr.employee.public</field>
         <field name="view_mode">list</field>
         <field name="search_view_id" ref="mrp_view_employee_filter"/>
         <field name="view_id" ref="mrp_workorder.view_employee_tree_workorder"/>
