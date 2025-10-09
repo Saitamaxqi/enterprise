@@ -18,6 +18,7 @@ class HrEmployee(models.Model):
             "res_model": "hr.version",
             "views": [[False, "list"], [False, "form"]],
             "domain": [["origin_version_id", "=", self.version_id.id]],
+            "context": {"active_test": False},
             "name": "Contracts Reviews",
         }
 
