@@ -446,10 +446,20 @@ class HrVersion(models.Model):
         whitelisted_fields = super()._get_whitelist_fields_from_template() or []
         if self.env.company.country_id.code == "IN":
             whitelisted_fields += [
-                "l10n_in_gratuity",
-                "l10n_in_medical_insurance",
-                "l10n_in_provident_fund",
-                "l10n_in_tds",
+                "l10n_in_hra_percentage", "l10n_in_hra", "l10n_in_leave_travel_percentage",
+                "l10n_in_leave_travel_allowance", "l10n_in_basic_percentage", "l10n_in_basic_salary_amount",
+                "l10n_in_standard_allowance", "l10n_in_standard_allowance_percentage", "l10n_in_performance_bonus",
+                "l10n_in_performance_bonus_percentage", "l10n_in_fixed_allowance_percentage", "l10n_in_fixed_allowance",
+                "l10n_in_phone_subscription", "l10n_in_internet_subscription", "l10n_in_meal_voucher_amount",
+                "l10n_in_company_transport", "l10n_in_tds", "l10n_in_medical_insurance",
+                "l10n_in_insured_spouse", "l10n_in_insured_first_children", "l10n_in_insured_second_children",
+                "l10n_in_gratuity_percentage", "l10n_in_gratuity", "l10n_in_provident_fund",
+                "l10n_in_pf_employee_amount", "l10n_in_pf_employee_percentage", "l10n_in_pf_employer_amount",
+                "l10n_in_pf_employer_percentage", "l10n_in_pt", "l10n_in_esic", "l10n_in_esic_employee_amount",
+                "l10n_in_esic_employee_percentage", "l10n_in_esic_employer_amount", "l10n_in_esic_employer_percentage",
+                "l10n_in_labour_welfare", "l10n_in_lwf_employer_contribution", "l10n_in_lwf_employee_contribution",
+                "pt_rule_parameter_id", "l10n_in_pf_employee_type", "l10n_in_pf_employer_type",
+                "overtime_from_attendance",
             ]
         return whitelisted_fields
 
