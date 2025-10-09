@@ -77,7 +77,7 @@
                             <li t-if="phone_number">
                                 <strong>Phone: </strong> <t t-out="phone_number"/>
                             </li>
-                            <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id[1]"/></strong> for: <t t-out="waiting_list_capacity"/></li>
+                            <li t-if="appointment_type_manage_capacity"><strong><t t-out="appointment_type_id.display_name"/></strong> for: <t t-out="waiting_list_capacity"/></li>
                             <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
                             <t t-set="hours" t-value="Math.floor(duration)"/>
                             <t t-set="minutes" t-value="Math.floor((duration - hours) * 60)"/>
