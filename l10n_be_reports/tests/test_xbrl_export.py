@@ -121,3 +121,16 @@ class TestXBRLExports(TestAccountReportsCommon):
         xbrl_file = self._generate_file(base_report, options)
         self.assertTrue(xbrl_file)
         self.assertEqual(xbrl_file['file_type'], 'xml')
+
+    def test_alphanumeric_zip_code(self):
+        """
+        Test that the Belgian region is correctly computed for a valid numeric ZIP code
+        and that it is safely ignored for non-numeric ZIP codes.
+        """
+        self.company.l10n_be_region_id = False
+
+        self.company.zip = 'R93R2R3'
+        self.assertFalse(self.company.l10n_be_region_id)
+
+        self.company.zip = '1000'
+        self.assertTrue(self.company.l10n_be_region_id)

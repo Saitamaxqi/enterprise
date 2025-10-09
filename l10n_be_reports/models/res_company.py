@@ -38,7 +38,11 @@ class ResCompany(models.Model):
     def _compute_l10n_be_region_id(self):
         """Compute the region based on the company's zip code."""
         for company in self:
-            if company.country_code == 'BE' and company.zip and not company.l10n_be_region_id:
+            if (company.country_code == 'BE'
+                and company.zip
+                and company.zip.isdigit()
+                and not company.l10n_be_region_id
+            ):
                 company.l10n_be_region_id = self.env['l10n_be.company.region'].search([
                     ('zip_start', '<=', company.zip),
                     ('zip_end', '>=', company.zip)
