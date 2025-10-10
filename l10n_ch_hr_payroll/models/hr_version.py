@@ -215,7 +215,7 @@ class HrVersion(models.Model):
     ], default='noCadre', string="Job Type", groups="hr.group_hr_user", tracking=True)
     wage_type = fields.Selection(selection_add=[("NoTimeConstraint", "No Time Constraint")],
                                  ondelete={"NoTimeConstraint": 'cascade'}, default="monthly")
-    l10n_ch_laa_group = fields.Many2one("l10n.ch.accident.group", string="LAA Code", groups="hr.group_hr_user", tracking=True)
+    l10n_ch_laa_group = fields.Many2one("l10n.ch.accident.group", string="LAA Code", groups="hr.group_hr_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
     laa_solution_number = fields.Selection(selection=[
         ('0', '0 - Not insured'),
         ('1', '1 - Occupational and Non-Occupational Insured, with deductions'),
@@ -242,17 +242,17 @@ class HrVersion(models.Model):
     l10n_ch_thirteen_month = fields.Boolean(
         string="Has 13th Month", groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_social_insurance_id = fields.Many2one(
-        'l10n.ch.social.insurance', string="AVS/AC Insurance", groups="hr.group_hr_user", tracking=True)
+        'l10n.ch.social.insurance', string="AVS/AC Insurance", groups="hr.group_hr_user", tracking=True, domain='[("company_id", "=", company_id)]')
     l10n_ch_lpp_insurance_id = fields.Many2one(
-        'l10n.ch.lpp.insurance', string="LPP Insurance", groups="hr.group_hr_user", tracking=True)
+        'l10n.ch.lpp.insurance', string="LPP Insurance", groups="hr.group_hr_user", tracking=True, domain='[("company_id", "=", company_id)]')
     l10n_ch_accident_insurance_line_id = fields.Many2one(
         'l10n.ch.accident.insurance.line', string="LAA Insurance", groups="hr.group_hr_user", tracking=True)
     l10n_ch_additional_accident_insurance_line_ids = fields.Many2many(
-        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr.group_hr_user", tracking=True)
+        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr.group_hr_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
     l10n_ch_sickness_insurance_line_ids = fields.Many2many(
-        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr.group_hr_user", tracking=True)
+        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr.group_hr_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
     l10n_ch_compensation_fund_id = fields.Many2one(
-        'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user", tracking=True)
+        'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user", tracking=True, domain='[("company_id", "=", company_id)]')
     l10n_ch_lesson_wage = fields.Float('Lesson Wage', tracking=True, help="Employee's gross wage by lesson.", groups="hr_payroll.group_hr_payroll_user")
     l10n_ch_contractual_13th_month_rate = fields.Float("Contractual allowances for 13th/14th month", digits='Payroll Rate', default=8.3333, groups="hr_payroll.group_hr_payroll_user", tracking=True)
     l10n_ch_location_unit_id = fields.Many2one("l10n.ch.location.unit", string="Workplace", groups="hr_payroll.group_hr_payroll_user", tracking=True)
