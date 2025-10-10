@@ -116,7 +116,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_employee_flow_tour",
         },
         {
             content: "Select Option",
-            trigger: ".o_select_menu_item div.text-wrap:contains('Egypt')",
+            trigger: ".o_select_menu_item div:contains('Egypt')",
             run: "click"
         },
         {
