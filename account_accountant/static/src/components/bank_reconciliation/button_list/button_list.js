@@ -633,11 +633,16 @@ export class BankRecButtonList extends Component {
         }
 
         let primaryButtonKeys = [];
-
+        let secondaryButtonKeys = [];
         if (buttons?.partner && buttons?.account) {
             primaryButtonKeys = ["partner", "account"];
         } else if (buttons?.reconcile && !!buttons.reconcile?.count) {
             primaryButtonKeys = ["reconcile"];
+            if (buttons?.receivable) {
+                secondaryButtonKeys = ["receivable"];
+            } else {
+                secondaryButtonKeys = ["payable"];
+            }
         } else if (buttons?.receivable) {
             primaryButtonKeys = ["receivable"];
         } else if (buttons?.payable) {
@@ -646,7 +651,10 @@ export class BankRecButtonList extends Component {
 
         // Handle top line
         if (this.props.isTopLine) {
-            return primaryButtonKeys.map((key) => ({ ...buttons[key], primary: true }));
+            return [
+                ...primaryButtonKeys.map((key) => ({ ...buttons[key], primary: true })),
+                ...secondaryButtonKeys.map((key) => ({ ...buttons[key] })),
+            ];
         }
 
         // Get all other buttons excluding primary ones
