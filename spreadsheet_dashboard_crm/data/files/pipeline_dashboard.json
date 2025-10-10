@@ -408,9 +408,7 @@
             "searchParams": {
               "comparison": null,
               "context": {
-                "default_type": "opportunity",
-                "search_default_assigned_to_me": 1,
-                "default_team_id": 1
+                "default_type": "opportunity"
               },
               "domain": [
                 "&",
@@ -520,9 +518,7 @@
                 "searchParams": {
                   "comparison": null,
                   "context": {
-                    "default_type": "opportunity",
-                    "search_default_assigned_to_me": 1,
-                    "default_team_id": 1
+                    "default_type": "opportunity"
                   },
                   "domain": [
                     ["type", "=", "opportunity"]
@@ -1049,9 +1045,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         ["type", "=", "opportunity"]
@@ -1059,7 +1053,7 @@
       "id": "1",
       "measures": [
         { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "prorated_revenue", "fieldName": "prorated_revenue", "aggregator": "sum_currency" }
       ],
       "model": "crm.lead",
       "name": "expected - current",
@@ -1083,9 +1077,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         ["type", "=", "opportunity"]
@@ -1093,7 +1085,7 @@
       "id": "2",
       "measures": [
         { "id": "__count", "fieldName": "__count" },
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "prorated_revenue", "fieldName": "prorated_revenue", "aggregator": "sum_currency" }
       ],
       "model": "crm.lead",
       "name": "expected - previous",
@@ -1117,9 +1109,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1132,6 +1122,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1161,9 +1152,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1176,6 +1165,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1205,9 +1195,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1220,6 +1208,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1249,9 +1238,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1264,6 +1251,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1293,9 +1281,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1308,6 +1294,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1337,9 +1324,7 @@
         "c33d6d0a-df2d-4150-86b0-112cd250ddbd": { "chain": "source_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1352,6 +1337,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1385,7 +1371,7 @@
         {
           "id": "prorated_revenue:sum",
           "fieldName": "prorated_revenue",
-          "aggregator": "sum"
+          "aggregator": "sum_currency"
         }
       ],
       "model": "crm.lead",
@@ -1415,7 +1401,7 @@
       "id": "bf6dcdb0-d22d-468c-b6a9-64f717005043",
       "type": "date",
       "label": "Period",
-      "defaultValue": {}
+      "defaultValue": "last_12_months"
     },
     {
       "id": "9f3d4602-0b4b-4eb4-b013-959d72af88ab",
@@ -1484,9 +1470,7 @@
       ],
       "model": "crm.lead",
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "orderBy": [
         { "name": "prorated_revenue", "asc": false }

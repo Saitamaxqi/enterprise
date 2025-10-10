@@ -727,9 +727,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -763,9 +761,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -799,9 +795,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -810,7 +804,7 @@
       ],
       "id": "3",
       "measures": [
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "prorated_revenue", "fieldName": "prorated_revenue", "aggregator": "sum_currency" }
       ],
       "model": "crm.lead",
       "name": "average deal size - current",
@@ -835,9 +829,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -846,7 +838,7 @@
       ],
       "id": "4",
       "measures": [
-        { "id": "prorated_revenue", "fieldName": "prorated_revenue" }
+        { "id": "prorated_revenue", "fieldName": "prorated_revenue", "aggregator": "sum_currency" }
       ],
       "model": "crm.lead",
       "name": "average deal size - previous",
@@ -871,9 +863,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -908,9 +898,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "|",
@@ -945,9 +933,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -962,6 +948,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -992,9 +979,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1009,6 +994,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1039,9 +1025,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1060,6 +1044,7 @@
         {
           "id": "expected_revenue",
           "fieldName": "expected_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1090,9 +1075,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1107,6 +1090,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1137,9 +1121,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1154,6 +1136,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1184,9 +1167,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1201,6 +1182,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1231,9 +1213,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1248,6 +1228,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
@@ -1278,9 +1259,7 @@
         "e6c83660-136f-4665-a809-ba4d1f735de4": { "chain": "user_id", "type": "many2one" }
       },
       "context": {
-        "default_type": "opportunity",
-        "search_default_assigned_to_me": 1,
-        "default_team_id": 1
+        "default_type": "opportunity"
       },
       "domain": [
         "&",
@@ -1295,6 +1274,7 @@
         {
           "id": "prorated_revenue",
           "fieldName": "prorated_revenue",
+          "aggregator": "sum_currency",
           "userDefinedName": "Revenue"
         }
       ],
