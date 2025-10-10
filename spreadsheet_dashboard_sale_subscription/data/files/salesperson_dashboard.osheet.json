@@ -745,7 +745,7 @@
       ],
       "id": "5",
       "measures": [
-        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized" }
+        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized", "aggregator": "sum" }
       ],
       "model": "sale.order.log.report",
       "name": "Sale Order Log Analysis",
@@ -771,7 +771,7 @@
       ],
       "id": "6",
       "measures": [
-        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized" }
+        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized", "aggregator": "sum" }
       ],
       "model": "sale.order.log.report",
       "name": "Sale Order Log Analysis",
@@ -797,7 +797,7 @@
       ],
       "id": "7",
       "measures": [
-        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized" }
+        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized", "aggregator": "sum" }
       ],
       "model": "sale.order.log.report",
       "name": "Sale Order Log Analysis",
@@ -823,7 +823,7 @@
       ],
       "id": "8",
       "measures": [
-        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized" }
+        { "id": "mrr_change_normalized", "fieldName": "mrr_change_normalized", "aggregator": "sum" }
       ],
       "model": "sale.order.log.report",
       "name": "Sale Order Log Analysis",
@@ -856,8 +856,8 @@
       ],
       "id": "9",
       "measures": [
-        { "id": "recurring_monthly", "fieldName": "recurring_monthly" },
-        { "id": "order_reference", "fieldName": "order_reference" }
+        { "id": "recurring_monthly", "fieldName": "recurring_monthly", "aggregator": "sum" },
+        { "id": "order_reference", "fieldName": "order_reference", "aggregator": "count" }
       ],
       "model": "sale.subscription.report",
       "name": "Subscription Analysis",
@@ -891,13 +891,15 @@
       "id": "10",
       "measures": [
         {
-          "id": "recurring_monthly",
-          "fieldName": "recurring_monthly",
+          "id": "order_reference",
+          "fieldName": "order_reference",
+          "aggregator": "count",
           "userDefinedName": "# Subscriptions"
         },
         {
-          "id": "order_reference",
-          "fieldName": "order_reference",
+          "id": "recurring_monthly",
+          "fieldName": "recurring_monthly",
+          "aggregator": "sum",
           "userDefinedName": "MRR"
         }
       ],
@@ -932,7 +934,7 @@
       "domain": "[\"&\", (\"state\", \"!=\", \"cancel\"), \"&\", (\"state\", \"not in\", (\"draft\", \"cancel\", \"sent\")), (\"product_tmpl_id.recurring_invoice\", \"!=\", True)]",
       "id": "12",
       "measures": [
-        { "id": "price_subtotal", "fieldName": "price_subtotal" }
+        { "id": "price_subtotal", "fieldName": "price_subtotal", "aggregator": "sum" }
       ],
       "model": "sale.report",
       "name": "Sales Analysis",
@@ -972,7 +974,7 @@
       ],
       "id": "13",
       "measures": [
-        { "id": "recurring_monthly", "fieldName": "recurring_monthly" }
+        { "id": "recurring_monthly", "fieldName": "recurring_monthly", "aggregator": "sum" }
       ],
       "model": "sale.subscription.report",
       "name": "Subscription Analysis",
