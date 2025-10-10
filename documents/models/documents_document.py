@@ -216,7 +216,7 @@ class DocumentsDocument(models.Model):
         not_accessible_records.display_name = _("Restricted")
         folders = accessible_records.filtered(lambda d: d.type == 'folder')
         for record in folders:
-            if record.user_permission != 'none':
+            if record.user_permission != 'none' or self.env.su:
                 record.display_name = (
                     record.name
                     if not self.env.context.get('documents_show_parent_name') or not record.folder_id
