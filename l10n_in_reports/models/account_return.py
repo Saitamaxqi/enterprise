@@ -1707,9 +1707,9 @@ class AccountReturn(models.Model):
                         ('vat', '=', bill_vat),
                     ], limit=1)
                     journal = self.env['account.journal'].search([
-                        *self.env['account.journal']._check_company_domain(self.company_id),
+                        *self.env['account.journal']._check_company_domain(self.company_ids or self.company_id),
                         ('type', '=', 'purchase')
-                    ], limit=1)
+                    ], order="sequence, id", limit=1)
                     if not partner or partner.l10n_in_gst_treatment not in ('deemed_export', 'uin_holders'):
                         l10n_in_gst_treatment = {
                             'impg': 'overseas',
