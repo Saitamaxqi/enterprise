@@ -490,7 +490,7 @@ class DocumentsDocument(models.Model):
                 if (
                     not (company := document.company_id)
                     or company in self.env.companies
-                    or company not in self.env.user.company_ids
+                    or company not in self.env.user.with_context(active_test=True).company_ids
                 ):
                     document.user_permission = 'edit'
                 else:
@@ -500,6 +500,9 @@ class DocumentsDocument(models.Model):
         permission_by_document = self._get_permission_without_token_multi()
 
         for document in self:
+            if document.company_id and not document.company_id.active:
+                document.user_permission = 'none'
+                continue
             document.user_permission = permission_by_document[document]
             if document.user_permission == 'view' and document.access_via_link == 'edit':
                 document.user_permission = 'edit'
@@ -514,7 +517,7 @@ class DocumentsDocument(models.Model):
 
             if document.user_permission == 'none' and document.folder_id and document.access_via_link != 'none' \
                     and not document.is_access_via_link_hidden \
-                    and (document.company_id in self.env.companies or document.company_id not in self.env.user.company_ids):
+                    and (document.company_id in self.env.companies or document.company_id not in self.env.user.with_context(active_test=True).company_ids):
                 # If the user can access the parent, they have the link.
                 # This only works one level up, as it mimics accessing through the interface.
                 with contextlib.suppress(AccessError):
@@ -530,7 +533,7 @@ class DocumentsDocument(models.Model):
         documents_to_process = self
         for document in self:
             exclude_ownership = bool(document.shortcut_document_id)
-            is_user_company = document.company_id and document.company_id in self.env.user.company_ids
+            is_user_company = document.company_id and document.company_id in self.env.user.with_context(active_test=False).company_ids
             is_disabled_company = is_user_company and document.company_id not in self.env.companies
             if is_disabled_company:
                 permission_by_document[document] = 'none'
@@ -597,16 +600,22 @@ class DocumentsDocument(models.Model):
             return Domain.FALSE
         searched_roles = list(searched_roles)
 
-        other_company = Domain('company_id', '!=', False) & Domain('company_id', 'not in', self.env.user.company_ids.ids)
+        other_company = Domain('company_id', '!=', False) & Domain('company_id', 'not in', self.env.user.with_context(active_test=False).company_ids.ids)
         allowed_or_no_company = Domain('company_id', 'in', [False] + self.env.companies.ids)
-        any_except_disabled_company = (
+        any_except_disabled_company = Domain.OR([
+            Domain('company_id', 'in', self.env.companies.ids),
+            Domain('company_id', 'not in', self.env.user.company_ids.ids),
+            Domain('company_id.active', '=', False),
+        ])
+        any_except_disabled_and_archived_company = (
             Domain('company_id', 'in', self.env.companies.ids)
-            | Domain('company_id', 'not in', self.env.user.company_ids.ids)
+            | Domain('company_id', 'not in', self.env.user.with_context(active_test=False).company_ids.ids)
         )
 
         if self.env.user.has_group('documents.group_documents_system'):
             if searched_roles == ['view']:
                 return Domain.FALSE  # System Administrator has "edit" on all documents, so finds none with "view" only.
+            # System Administrator should always be able to edit documents from archived companies (even with active_test=False)
             return any_except_disabled_company
 
         # Access from membership
@@ -639,7 +648,7 @@ class DocumentsDocument(models.Model):
                 if set(searched_roles) == {'edit'}
                 else Domain.FALSE,
             ])
-        direct_domain = any_except_disabled_company & (
+        direct_domain = any_except_disabled_and_archived_company & (
             access_domain if 'edit' not in searched_roles else access_domain | owner_domain
         )
 
@@ -665,7 +674,7 @@ class DocumentsDocument(models.Model):
 
         # Look one level up for links unless hidden
         link_via_parent_domain = Domain.AND([
-            any_except_disabled_company,
+            any_except_disabled_and_archived_company,
             [('access_via_link', 'in', searched_roles)],
             [('is_access_via_link_hidden', '=', False)],
             [('folder_id', 'any', direct_domain)],
