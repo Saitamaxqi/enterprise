@@ -1428,8 +1428,8 @@ class HrPayslip(models.Model):
             date_from = slip_tz.localize(datetime.combine(slip.date_from, time.min)).astimezone(utc).replace(tzinfo=None)
             date_to = slip_tz.localize(datetime.combine(slip.date_to, time.max)).astimezone(utc).replace(tzinfo=None)
             payslip_work_entries = work_entries_by_version[slip.version_id].filtered_domain([
-                ('date_stop', '<=', date_to),
-                ('date_start', '>=', date_from),
+                ('date', '<=', date_to),
+                ('date', '>=', date_from),
             ])
             payslip_work_entries._check_undefined_slots(slip.date_from, slip.date_to)
             # YTI Note: We can't use a batched create here as the payslip may not exist
