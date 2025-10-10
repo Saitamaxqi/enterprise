@@ -85,7 +85,11 @@
                         </group>
                         <group string="General Domain">
                             <field name="l10n_ch_gross_included" string="Gross"/>
-                             <field name="l10n_ch_source_tax_included" string="IS"/>
+                            <field name="l10n_ch_13th_month_included"/>
+                            <field name="l10n_ch_13th_month_hourly_included"/>
+                            <field name="l10n_ch_vacation_pay_included"/>
+                            <field name="l10n_ch_source_tax_included" string="IS"/>
+                            <field name="l10n_ch_is_periodic"/>
                             <field name="l10n_ch_salary_certificate" string="Certificat de salaire"/>
                             <field name="l10n_ch_caf_statement" string="Décompte CAF"/>
                             <field name="l10n_ch_wage_statement" string="Statistique mois"/>
