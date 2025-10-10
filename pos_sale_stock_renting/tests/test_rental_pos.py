@@ -53,7 +53,7 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
             'order_line': [
                 Command.create({
                     'product_id': self.tracked_product_id.id,
-                    'product_uom_qty': 0.0,
+                    'product_uom_qty': 1.0,
                     'price_unit': 250,
                 })
             ]
