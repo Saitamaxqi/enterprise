@@ -190,8 +190,16 @@ export class Document extends Component {
     controlNavigatorVisibility(hasUnsignedItems) {
         if (this.documents) {
             const currentDoc = this.documents[this.state.openedDocumentIndex];
-            if (currentDoc.iframeManager && currentDoc.iframeManager.navigator) {
-                currentDoc.iframeManager.navigator.toggle(hasUnsignedItems);
+            const iframeManager = currentDoc.iframeManager;
+            if (iframeManager && iframeManager.navigator) {
+                // If hasUnsignedItems is false, we need to check if there are unsigned items for the current role in the document
+                if (!hasUnsignedItems && this.isDocumentUnsigned()) {
+                    // Check if there are items for the current role
+                    hasUnsignedItems = Object.values(iframeManager.signItems || {}).some(pageItems =>
+                        Object.values(pageItems).some(item => item.data.responsible === iframeManager.currentRole)
+                    );
+                }
+                iframeManager.navigator.toggle(hasUnsignedItems);
             }
         }
     }
