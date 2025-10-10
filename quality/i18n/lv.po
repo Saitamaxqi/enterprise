@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2022-09-22 05:48+0000\n"
 "Last-Translator: Armīns Jeltajevs <armins.jeltajevs@gmail.com>, 2023\n"
 "Language-Team: Latvian (https://app.transifex.com/odoo/teams/41243/lv/)\n"
@@ -24,7 +24,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alert_count
@@ -39,8 +40,12 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_defaults
-msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
-msgstr "Python vārdnīca, kas tiks novērtēta, lai nodrošinātu noklusējuma vērtības, izveidojot jaunus ierakstus šiem aizstājvārdiem."
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
+msgstr ""
+"Python vārdnīca, kas tiks novērtēta, lai nodrošinātu noklusējuma vērtības, "
+"izveidojot jaunus ierakstus šiem aizstājvārdiem."
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__message_needaction
@@ -85,6 +90,11 @@ msgid "Activity Type Icon"
 msgstr "Aktivitātes veida ikona"
 
 #. module: quality
+#: model_terms:ir.ui.view,arch_db:quality.quality_check_view_activity
+msgid "Activity view"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__additional_note
 msgid "Additional Note"
 msgstr "Papildus piezīme"
@@ -120,6 +130,21 @@ msgid "Alias Contact Security"
 msgstr "Alias Contact Security"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_domain_id
+msgid "Alias Domain"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_domain
+msgid "Alias Domain Name"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_full_name
+msgid "Alias Email"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_name
 msgid "Alias Name"
 msgstr "Alias Name"
@@ -128,11 +153,6 @@ msgstr "Alias Name"
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_status
 msgid "Alias Status"
 msgstr ""
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_domain
-msgid "Alias domain"
-msgstr "Alias domain"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_status
@@ -172,12 +192,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_point__check_count
 msgid "Check Count"
 msgstr ""
-
-#. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Close"
-msgstr "Aizvērt"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__color
@@ -304,14 +318,34 @@ msgid "Done"
 msgstr "Gatavs"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_email
+msgid "Email Alias"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__email_cc
 msgid "Email cc"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,help:quality.field_quality_alert_team__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
 msgstr ""
 
 #. module: quality
 #: model:ir.model.fields.selection,name:quality.selection__quality_check__quality_state__fail
 msgid "Failed"
 msgstr "Neizdevās"
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check__failure_location_id
+msgid "Failure Location"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point__failure_location_ids
+msgid "Failure Locations"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage__folded
@@ -346,11 +380,6 @@ msgid "Future Activities"
 msgstr "Nākotnes aktivitātes"
 
 #. module: quality
-#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-msgid "Group By"
-msgstr "Grupēt pēc"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__has_message
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__has_message
 #: model:ir.model.fields,field_description:quality.field_quality_check__has_message
@@ -377,8 +406,12 @@ msgstr "ID"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_parent_thread_id
-msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ID of the parent record holding the alias (example: project holding the task creation alias)"
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
+msgstr ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__activity_exception_icon
@@ -413,8 +446,19 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Ja atzīmēts, dažiem ziņojumiem ir piegādes kļūda."
 
 #. module: quality
+#: model:ir.model.fields,help:quality.field_quality_point__failure_location_ids
+msgid ""
+"If quality check fails, a destination location is chosen from this list for\n"
+"- each failed specific product quantity if control is per quantity\n"
+" /- all quantities of a product if control is per product\n"
+" /- all quantities of products in the operation if control is per operation"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_bounced_content
-msgid "If set, this content will automatically be sent out to unauthorized users instead of the default message."
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
 msgstr ""
 
 #. module: quality
@@ -423,6 +467,7 @@ msgid "In Progress"
 msgstr "Tiek izpildīts"
 
 #. module: quality
+#: model:quality.point.test_type,name:quality.test_type_instructions
 #: model_terms:ir.ui.view,arch_db:quality.quality_point_view_form
 msgid "Instructions"
 msgstr ""
@@ -465,12 +510,17 @@ msgid "Late Activities"
 msgstr "Pēdējās aktivitātes"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_ids
 msgid "Lot"
 msgstr "Preču Partija"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_check__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_check__lot_ids
 msgid "Lot/Serial"
 msgstr "Partija/Sērija"
 
@@ -494,6 +544,11 @@ msgstr "Ziņojuma piegādes kļūda"
 #: model:ir.model.fields,field_description:quality.field_quality_point__message_ids
 msgid "Messages"
 msgstr "Ziņojumi"
+
+#. module: quality
+#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
+msgid "My Activities"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__my_activity_date_deadline
@@ -550,8 +605,8 @@ msgstr "Nākamās darbības veids"
 #. odoo-python
 #: code:addons/quality/models/quality.py:0
 msgid ""
-"No quality team found for this company.\n"
-"Please go to configuration and create one first."
+"No quality teams found for this company! Head over to the configuration menu "
+"to create your first quality team."
 msgstr ""
 
 #. module: quality
@@ -592,8 +647,8 @@ msgstr "Kļūdu skaits"
 #: model:ir.model.fields,help:quality.field_quality_alert_team__message_needaction_counter
 #: model:ir.model.fields,help:quality.field_quality_check__message_needaction_counter
 #: model:ir.model.fields,help:quality.field_quality_point__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Ziņojumu, kuriem nepieciešama darbība, skaits"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert__message_has_error_counter
@@ -616,18 +671,19 @@ msgstr "Operācijas"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_force_thread_id
-msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
+msgstr ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
 
 #. module: quality
 #: model:quality.reason,name:quality.reason_other
 msgid "Others"
 msgstr ""
-
-#. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_user_id
-msgid "Owner"
-msgstr "Īpašnieks"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_parent_model_id
@@ -641,8 +697,14 @@ msgstr "Parent Record Thread ID"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_parent_model_id
-msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
-msgstr "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
+msgstr ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__partner_id
@@ -676,12 +738,14 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__action_preventive
@@ -716,6 +780,11 @@ msgid "Products"
 msgstr "Produkti"
 
 #. module: quality
+#: model:res.groups.privilege,name:quality.res_groups_privilege_quality
+msgid "Quality"
+msgstr ""
+
+#. module: quality
 #: model:ir.model,name:quality.model_quality_alert
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Quality Alert"
@@ -748,7 +817,9 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_point__product_category_ids
-msgid "Quality Point will apply to every Products in the selected Product Categories."
+msgid ""
+"Quality Point will apply to every Products in the selected Product "
+"Categories."
 msgstr ""
 
 #. module: quality
@@ -826,9 +897,14 @@ msgid "Sequence"
 msgstr "Secība"
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point__show_failure_location
+msgid "Show Failure Location"
+msgstr ""
+
+#. module: quality
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-msgid "Show all records which has next action date is before today"
-msgstr "Rādīt visus ierakstus, kuriem  nākamais darbības datums ir pirms šodienas"
+msgid "Show all records whose next activity date is past"
+msgstr ""
 
 #. module: quality
 #: model:quality.alert.stage,name:quality.quality_alert_stage_3
@@ -871,8 +947,7 @@ msgid "Tags"
 msgstr "Birkas"
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
+#: model:quality.point.test_type,name:quality.test_type_picture
 msgid "Take a Picture"
 msgstr ""
 
@@ -903,18 +978,23 @@ msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_model_id
-msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
+msgstr ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_name
-msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-
-#. module: quality
-#: model:ir.model.fields,help:quality.field_quality_alert_team__alias_user_id
-msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
-msgstr "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
+msgstr ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
 
 #. module: quality
 #: model:res.groups,comment:quality.group_quality_manager
@@ -975,12 +1055,6 @@ msgid "Very High"
 msgstr "Ļoti augsta"
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Viewer"
-msgstr ""
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_check__website_message_ids
@@ -1010,3 +1084,33 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type__active
 msgid "active"
 msgstr ""
+
+#~ msgid "Alias domain"
+#~ msgstr "Alias domain"
+
+#~ msgid "Close"
+#~ msgstr "Aizvērt"
+
+#~ msgid "Group By"
+#~ msgstr "Grupēt pēc"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Ziņojumu, kuriem nepieciešama darbība, skaits"
+
+#~ msgid "Owner"
+#~ msgstr "Īpašnieks"
+
+#~ msgid "Show all records which has next action date is before today"
+#~ msgstr ""
+#~ "Rādīt visus ierakstus, kuriem  nākamais darbības datums ir pirms šodienas"
+
+#~ msgid ""
+#~ "The owner of records created upon receiving emails on this alias. If this "
+#~ "field is not set the system will attempt to find the right owner based on "
+#~ "the sender (From) address, or will use the Administrator account if no "
+#~ "system user is found for that address."
+#~ msgstr ""
+#~ "The owner of records created upon receiving emails on this alias. If this "
+#~ "field is not set the system will attempt to find the right owner based on "
+#~ "the sender (From) address, or will use the Administrator account if no "
+#~ "system user is found for that address."

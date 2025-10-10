@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 09:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2022-09-22 05:47+0000\n"
 "Last-Translator: Dragan Vukosavljevic <dragan.vukosavljevic@gmail.com>, "
 "2022\n"
@@ -64,7 +64,10 @@ msgid "Device"
 msgstr ""
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__display_name
 msgid "Display Name"
 msgstr "Naziv za prikaz"
 
@@ -74,7 +77,10 @@ msgid "Finish"
 msgstr ""
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__id
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__id
 msgid "ID"
 msgstr "ID"
 
@@ -123,6 +129,12 @@ msgstr "Pakovanje"
 #: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__paus
 msgid "Pause"
 msgstr "Pauza"
+
+#. module: mrp_workorder_iot
+#. odoo-javascript
+#: code:addons/mrp_workorder_iot/static/src/mrp_display/pedal_status_button.xml:0
+msgid "Pedal Status"
+msgstr ""
 
 #. module: mrp_workorder_iot
 #: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prev

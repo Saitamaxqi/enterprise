@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -124,20 +124,23 @@ msgstr "チャネル"
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_platform_ids
 #: model:ir.model.fields,help:pos_urban_piper.field_product_template__urbanpiper_pos_platform_ids
 msgid "Check this if the product is available for following platform."
-msgstr "プロダクトが以下のプラットフォームで利用可能である場合にチェックしてください"
-"。"
+msgstr ""
+"プロダクトが以下のプラットフォームで利用可能である場合にチェックしてくださ"
+"い。"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_config_ids
 #: model:ir.model.fields,help:pos_urban_piper.field_product_template__urbanpiper_pos_config_ids
 msgid "Check this if the product is available for food delivery."
-msgstr "プロダクトがフードデリバリーで利用可能な場合、これにをチェックを入れて下さい"
-"。"
+msgstr ""
+"プロダクトがフードデリバリーで利用可能な場合、これにをチェックを入れて下さ"
+"い。"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__is_delivery_payment
 msgid "Check this if this payment method is used for online delivery orders."
-msgstr "オンライン配送オーダ用にこの支払方法が使用される場合、これにチェックを入れて"
+msgstr ""
+"オンライン配送オーダ用にこの支払方法が使用される場合、これにチェックを入れて"
 "下さい。"
 
 #. module: pos_urban_piper
@@ -399,7 +402,8 @@ msgstr "送信準備表示でエラーが発生しました。"
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Fill this form to get Username &amp; Api key"
-msgstr "このフォームに必要事項を入力して、ユーザー名とAPIキーを取得して下さい。"
+msgstr ""
+"このフォームに必要事項を入力して、ユーザー名とAPIキーを取得して下さい。"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -459,8 +463,9 @@ msgstr "会社設定へ移動"
 msgid ""
 "Handle products with urban piper and pos config - Product is linked or not "
 "with appropriate store."
-msgstr "Urban PiperとPOS設定でプロダクトを処理 - "
-"プロダクトが適切な店舗にリンクされているかどうか。"
+msgstr ""
+"Urban PiperとPOS設定でプロダクトを処理 - プロダクトが適切な店舗にリンクされて"
+"いるかどうか。"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -942,13 +947,13 @@ msgstr "オーダを却下"
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Rejecting this order is not allowed for \"%(providerName)s\""
-msgstr "このオーダを却下することは \"%(providerName)s\" に対して許可されていません。"
+msgstr ""
+"このオーダを却下することは \"%(providerName)s\" に対して許可されていません。"
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
-msgid ""
-"Responsible delivery provider for online order, e.g., UberEats, Zomato."
+msgid "Responsible delivery provider for online order, e.g., UberEats, Zomato."
 msgstr "オンラインオーダ用の担当配送プロバイダー 例:UberEats, Zomato"
 
 #. module: pos_urban_piper
@@ -1309,6 +1314,6 @@ msgstr "pos_urban_piper.uuid を変更することはできません。"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-msgid ""
-"Your company %s needs to have a correct city in order create the store."
-msgstr "店舗を作成するには会社 %s に正確な都市町村が指定されている必要があります。"
+msgid "Your company %s needs to have a correct city in order create the store."
+msgstr ""
+"店舗を作成するには会社 %s に正確な都市町村が指定されている必要があります。"

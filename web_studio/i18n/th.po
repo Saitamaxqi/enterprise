@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/web_studio/"
@@ -127,8 +127,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)sได้กำหนดสิทธิ์การอนุมัติจาก %(previous_approvers)s ถึง "
-"%(next_approvers)s"
+"%(user_name)sได้กำหนดสิทธิ์การอนุมัติจาก %(previous_approvers)s ถึง %"
+"(next_approvers)s"
 
 #. module: web_studio
 #. odoo-python
@@ -2805,8 +2805,8 @@ msgid ""
 "Nicely done! Let's build your screen now; <b>drag</b> a <i>text field</i> "
 "and <b>drop</b> it in your view, on the right."
 msgstr ""
-"ทำได้ดีมาก! มาสร้างหน้าจอของคุณกันเลย "
-"<b>ลาก</b><i>ช่องข้อความ</i>แล้ว<b>วาง</b>ลงในมุมมองของคุณทางด้านขวา"
+"ทำได้ดีมาก! มาสร้างหน้าจอของคุณกันเลย <b>ลาก</b><i>ช่องข้อความ</i>แล้ว<b>วาง</"
+"b>ลงในมุมมองของคุณทางด้านขวา"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3640,8 +3640,8 @@ msgid ""
 "Some records were skipped because approvals were missing "
 "to                                    proceed with your request: "
 msgstr ""
-"บันทึกบางรายการถูกข้ามเนื่องจากการอนุมัติที่ขาดหายไปเพื่"
-"อ                                    ดำเนินการตามคำขอของคุณ: "
+"บันทึกบางรายการถูกข้ามเนื่องจากการอนุมัติที่ขาดหายไปเพื่อ                                    "
+"ดำเนินการตามคำขอของคุณ: "
 
 #. module: web_studio
 #. odoo-javascript
@@ -4026,8 +4026,7 @@ msgstr "คำอธิบายขั้นตอนจะแสดงบนป
 msgid ""
 "The user who approves this step will not be able to approve other steps for "
 "the same record."
-msgstr ""
-"ผู้ใช้ที่อนุมัติขั้นตอนนี้จะไม่สามารถอนุมัติขั้นตอนอื่นๆ สำหรับบันทึกเดียวกันได้"
+msgstr "ผู้ใช้ที่อนุมัติขั้นตอนนี้จะไม่สามารถอนุมัติขั้นตอนอื่นๆ สำหรับบันทึกเดียวกันได้"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4060,8 +4059,7 @@ msgstr "ไม่มีวิธีการ %(method)s ในโมเดล %(
 msgid ""
 "There is no record on which this report can be previewed. Create at least "
 "one record to preview the report."
-msgstr ""
-"ไม่มีบันทึกที่สามารถดูตัวอย่างรายงานนี้ได้ สร้างอย่างน้อยหนึ่งบันทึกเพื่อดูตัวอย่างรายงาน"
+msgstr "ไม่มีบันทึกที่สามารถดูตัวอย่างรายงานนี้ได้ สร้างอย่างน้อยหนึ่งบันทึกเพื่อดูตัวอย่างรายงาน"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4077,9 +4075,7 @@ msgstr "ไม่มีบันทึกที่จะแสดงตัวอ
 msgid ""
 "These users are able to approve or reject the step and will be assigned to "
 "an activity when their approval is requested."
-msgstr ""
-"ผู้ใช้เหล่านี้สามารถอนุมัติหรือปฏิเสธขั้นตอนและจะได้รับมอบหมายให้ดำเนินกิจกรรมเมื่อมีการร้องขอการอนุ"
-"มัติ"
+msgstr "ผู้ใช้เหล่านี้สามารถอนุมัติหรือปฏิเสธขั้นตอนและจะได้รับมอบหมายให้ดำเนินกิจกรรมเมื่อมีการร้องขอการอนุมัติ"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4088,8 +4084,7 @@ msgstr ""
 msgid ""
 "These users will receive a notification via internal note when the step is "
 "approved or rejected"
-msgstr ""
-"ผู้ใช้เหล่านี้จะได้รับการแจ้งเตือนผ่านทางบันทึกภายในเมื่อขั้นตอนได้รับการอนุมัติหรือปฏิเสธ"
+msgstr "ผู้ใช้เหล่านี้จะได้รับการแจ้งเตือนผ่านทางบันทึกภายในเมื่อขั้นตอนได้รับการอนุมัติหรือปฏิเสธ"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4230,8 +4225,7 @@ msgstr ""
 msgid ""
 "Use Bootstrap or any other custom classes to customize the style and the "
 "display of the element."
-msgstr ""
-"ใช้ Bootstrap หรือคลาสที่กำหนดเองเพื่อปรับแต่งสไตล์และการแสดงผลขององค์ประกอบ"
+msgstr "ใช้ Bootstrap หรือคลาสที่กำหนดเองเพื่อปรับแต่งสไตล์และการแสดงผลขององค์ประกอบ"
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__user_id
@@ -4442,9 +4436,7 @@ msgstr ""
 msgid ""
 "You cannot cancel an approval you didn't set yourself or you don't belong to "
 "an higher level rule's approvers."
-msgstr ""
-"คุณไม่สามารถยกเลิกการอนุมัติที่คุณไม่ได้ตั้งค่าด้วยตนเองหรือคุณไม่ได้อยู่ในกลุ่มผู้ให้การอนุมัติของกฎระดับที่"
-"สูงกว่าได้"
+msgstr "คุณไม่สามารถยกเลิกการอนุมัติที่คุณไม่ได้ตั้งค่าด้วยตนเองหรือคุณไม่ได้อยู่ในกลุ่มผู้ให้การอนุมัติของกฎระดับที่สูงกว่าได้"
 
 #. module: web_studio
 #. odoo-javascript

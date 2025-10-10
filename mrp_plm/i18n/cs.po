@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:00+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/mrp_plm/cs/"
@@ -31,7 +31,7 @@ msgstr ""
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_count
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__document_count
 msgid "# Attachments"
 msgstr "# příloh"
 
@@ -43,11 +43,6 @@ msgid "# ECOs"
 msgstr "# změnových řízení"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__eco_inprogress_count
-msgid "# ECOs in progress"
-msgstr ""
-
-#. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "%(approval_name)s %(approver_name)s %(approval_status)s this ECO"
@@ -56,19 +51,23 @@ msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
-msgid "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title=\"Domain alias\"/>&amp;nbsp;"
+msgid ""
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title="
-"\"Domain alias\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
-"                        Upload files to your ECO, that will be applied to the product later\n"
+"                        Upload files to your ECO, that will be applied to "
+"the product later\n"
 "                    </p><p>\n"
-"                        Use this feature to store any files, like drawings or specifications.\n"
+"                        Use this feature to store any files, like drawings "
+"or specifications.\n"
 "                    </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
@@ -80,24 +79,29 @@ msgstr ""
 "                    </p>"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
-msgid "<span class=\"text-bg-danger\">Archived</span>"
-msgstr ""
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
-msgid "<span class=\"text-bg-primary\">New</span>"
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
+msgid "<span class=\"o_stat_text\">ECO(S)</span>"
 msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "<span>Revision</span><br/>"
+msgid "<span class=\"o_stat_text\">Revision</span>"
 msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
-msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
-msgstr "Slovník Pythonu, který bude vyhodnocen tak, aby poskytoval výchozí hodnoty při vytváření nových záznamů pro tento alias."
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
+msgstr ""
+"Slovník Pythonu, který bude vyhodnocen tak, aby poskytoval výchozí hodnoty "
+"při vytváření nových záznamů pro tento alias."
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "A user cannot be assigned more than once to the same stage"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -162,6 +166,21 @@ msgid "Alias Contact Security"
 msgstr "Zabezpečení aliasu kontaktu"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain_id
+msgid "Alias Domain"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
+msgid "Alias Domain Name"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_full_name
+msgid "Alias Email"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_name
 msgid "Alias Name"
 msgstr "Název aliasu"
@@ -172,11 +191,6 @@ msgid "Alias Status"
 msgstr "Stav aliasu"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
-msgid "Alias domain"
-msgstr "Doména aliasu"
-
-#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias status assessed on the last message received."
 msgstr "Stav aliasu při poslední doručené zprávě."
@@ -185,11 +199,6 @@ msgstr "Stav aliasu při poslední doručené zprávě."
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "Aliased Model"
 msgstr "Model aliasu"
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
-msgid "All"
-msgstr "Vše"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -289,7 +298,6 @@ msgstr "Schvaluje se, ale schválení je volitelné"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "Archived"
 msgstr "Archivováno"
 
@@ -312,7 +320,7 @@ msgstr "Počet příloh"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__document_ids
 msgid "Attachments"
 msgstr "Přílohy"
 
@@ -331,6 +339,16 @@ msgstr "Čeká na ověření"
 #: model:ir.model,name:mrp_plm.model_report_mrp_report_bom_structure
 msgid "BOM Overview Report"
 msgstr "Přehled kusovníku"
+
+#. module: mrp_plm
+#: model:mrp.eco.type,name:mrp_plm.ecotype_bom_update
+msgid "BOM Updates"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode_batch
+msgid "Batch count Change"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -368,10 +386,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__kanban_state__blocked
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_validated
 msgid "Blocked"
 msgstr "Blokováno"
 
@@ -381,13 +399,17 @@ msgid "Blocking Stage"
 msgstr "Fáze blokování"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "BoM Changes"
-msgstr "změny v Kusovníku"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__byproduct_id
+msgid "BoM By-Product"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__bom_line_id
+msgid "BoM Line"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Rebase"
 msgstr "Přeskládání kusovníku"
 
@@ -395,6 +417,12 @@ msgstr "Přeskládání kusovníku"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_revision
 msgid "BoM Revision"
 msgstr "Revize kusovníku"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid "BoM Suggestions from %(mo_name)s"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -409,6 +437,16 @@ msgid "BoM:"
 msgstr "Kusovník:"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "By-Product Changes"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_bom_byproduct
+msgid "Byproduct"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
 msgid "Can Approve"
 msgstr "Může Schválit"
@@ -417,6 +455,14 @@ msgstr "Může Schválit"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Can Reject"
 msgstr "Může zamítnout"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid ""
+"Cannot create an ECO if the Manufacturing Order doesn't use a Bill of "
+"Materials"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -466,9 +512,20 @@ msgstr "Pouze komentáře"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__company_id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__company_id
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Company"
 msgstr "Společnost"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Component Changes"
+msgstr ""
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Component Rebase"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -492,6 +549,11 @@ msgstr "Konflikt vyřešen"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__operation_change
 msgid "Consumed in Operation"
 msgstr "Spotřebováno v provozu"
+
+#. module: mrp_plm
+#: model:ir.actions.server,name:mrp_plm.action_production_order_create_eco
+msgid "Create ECO"
+msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
@@ -581,6 +643,9 @@ msgid "Difference between old operation and new operation revision"
 msgstr "Rozdíl mezi starou operací a novou revizí operace"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_byproduct__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_line__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__display_name
@@ -589,6 +654,12 @@ msgstr "Rozdíl mezi starou operací a novou revizí operace"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_report_mrp_report_bom_structure__display_name
 msgid "Display Name"
 msgstr "Zobrazovací název"
 
@@ -609,11 +680,6 @@ msgid "Done"
 msgstr "Hotovo"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
-msgid "Duration"
-msgstr "Trvání"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__eco_id
 msgid "ECO"
 msgstr "Změnové řízení"
@@ -625,8 +691,9 @@ msgid "ECO Analysis"
 msgstr "Analýza změnového řízení"
 
 #. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
-#: model:mail.activity.type,name:mrp_plm.mail_activity_eco_approval
 msgid "ECO Approval"
 msgstr "Schválení změnového řízení"
 
@@ -639,6 +706,16 @@ msgstr "Schvalovací šablona změnového řízení"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids
 msgid "ECO BoM Changes"
 msgstr "Změny kusovníku změnového řízení"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_byproduct
+msgid "ECO BoM Changes - By-Product"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_line
+msgid "ECO BoM Changes - Component"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
@@ -686,12 +763,6 @@ msgid "ECO Types"
 msgstr "Typy změnových řízení"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
-msgid "ECO details"
-msgstr ""
-
-#. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "ECO stages give the different stages for the Engineering Change Orders"
 msgstr "Fáze změnového řízení umožňují nastavit workflow pro změnová řízení"
@@ -708,19 +779,25 @@ msgstr "Změnové řízení"
 
 #. module: mrp_plm
 #. odoo-javascript
-#: code:addons/mrp_plm/static/src/components/bom_overview_display_filter/mrp_bom_overview_display_filter.js:0
 #: code:addons/mrp_plm/static/src/components/bom_overview_line/mrp_bom_overview_line.js:0
 #: code:addons/mrp_plm/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_ecos
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product__eco_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template__eco_ids
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_report
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_calendar
+#: model_terms:ir.ui.view,arch_db:mrp_plm.product_product_view_form_inherit_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.report_mrp_bom_inherit_mrp_plm
 msgid "ECOs"
 msgstr "Změnová řízení"
+
+#. module: mrp_plm
+#: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
+msgid "ECOs Analysis"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-python
@@ -735,6 +812,11 @@ msgid "Eco BoM"
 msgstr "Kusovník změn. říz."
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_count
+msgid "Eco Count"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
 msgid "Eco Routing changes"
 msgstr "Změny tras změnového řízení"
@@ -746,7 +828,7 @@ msgstr "Upravit úkol"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__effectivity
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_effective
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_effective
 msgid "Effective"
 msgstr "Evektivní"
 
@@ -756,6 +838,7 @@ msgid "Effective Date"
 msgstr "Datum účinnosti"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_email
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "Email Alias"
 msgstr "Emailový alias"
@@ -765,6 +848,11 @@ msgstr "Emailový alias"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Email cc"
 msgstr "Kopie e-mailu"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_id
@@ -784,7 +872,6 @@ msgstr "Změnové řízení (ECO)"
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_late
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_main
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_product_tmpl
-#: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
 msgid "Engineering Change Orders"
 msgstr "Změnová řízení"
 
@@ -797,11 +884,6 @@ msgstr "Změnová řízení"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Extra Info"
 msgstr "Další informace"
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Filters"
-msgstr "Filtry"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__final_stage
@@ -851,20 +933,10 @@ msgid "Grey Kanban Label"
 msgstr "Šedý Kanban štítek"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Group by..."
-msgstr "Seskupit podle..."
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__has_message
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__has_message
 msgid "Has Message"
 msgstr "Má zprávu"
-
-#. module: mrp_plm
-#: model:ir.module.category,description:mrp_plm.module_category_manufacturing_product_lifecycle_management_(plm)
-msgid "Helps you manage your product's lifecycles."
-msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__priority__1
@@ -872,6 +944,9 @@ msgid "High"
 msgstr "Vysoká"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_byproduct__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_line__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__id
@@ -880,13 +955,23 @@ msgstr "Vysoká"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template__id
+#: model:ir.model.fields,field_description:mrp_plm.field_report_mrp_report_bom_structure__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_thread_id
-msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
-msgstr "ID rodičovského záznamu obsahující alias (například: Projekt obsahující alias pro vytváření úkolů)"
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
+msgstr ""
+"ID rodičovského záznamu obsahující alias (například: Projekt obsahující "
+"alias pro vytváření úkolů)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__activity_exception_icon
@@ -914,15 +999,28 @@ msgstr "Pokud zaškrtnuto, některé zprávy mají chybu při doručení."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_bounced_content
-msgid "If set, this content will automatically be sent out to unauthorized users instead of the default message."
-msgstr "Pokud je nastaveno, bude tento obsah místo výchozí zprávy automaticky odeslán neoprávněným uživatelům."
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
+msgstr ""
+"Pokud je nastaveno, bude tento obsah místo výchozí zprávy automaticky "
+"odeslán neoprávněným uživatelům."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
-msgid "If the active field is set to False, it will allow you to hide the engineering change order without removing it."
+msgid ""
+"If the active field is set to False, it will allow you to hide the "
+"engineering change order without removing it."
 msgstr ""
 "Pokud pole aktivní není vyplněno, umožní schovat změnová řízení bez jejich "
 "odstranění"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__will_update_version
+msgid ""
+"If unchecked, the version of the product/BoM will remain unchanged once the "
+"ECO is applied"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -930,21 +1028,15 @@ msgid "Image 128"
 msgstr "Obrázek 128"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
-msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr "V #{kanban_getcolorname(record.color.raw_value)}"
-
-#. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__kanban_state__normal
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__state__progress
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_validated
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_progress
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_validated
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_progress
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "In Progress"
 msgstr "Probíhá"
@@ -1035,6 +1127,11 @@ msgid "Latest Bom"
 msgstr "Poslední kusovník"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_approval
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_approval_my
@@ -1044,7 +1141,8 @@ msgstr "Poslední kusovník"
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_report
 msgid ""
 "Manage your products and bills of materials changes with the ECO's.\n"
-"              Gather the related documentation and receive the necessary approvals\n"
+"              Gather the related documentation and receive the necessary "
+"approvals\n"
 "              before applying your changes."
 msgstr ""
 "Spravujte své produkty a změny kusovníků pomocí změnového řízení.\n"
@@ -1056,6 +1154,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_cycle_manual
 msgid "Manual Duration Change"
 msgstr "Minimální doba trvání změny"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__production_id
+msgid "Manufacturing Orders"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -1075,9 +1183,19 @@ msgid "Messages"
 msgstr "Zprávy"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode
+msgid "Mode Change"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
 msgstr "Štítky výroby změnového řízení"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1101,7 +1219,8 @@ msgid "Name"
 msgstr "Název"
 
 #. module: mrp_plm
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_new
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_new
+#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "New"
 msgstr "Nové"
 
@@ -1109,6 +1228,12 @@ msgstr "Nové"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_id
 msgid "New Bill of Materials"
 msgstr "Nové kusovník"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid "New BoM from %(mo_name)s"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
@@ -1121,24 +1246,9 @@ msgid "New Consumed in Operation"
 msgstr "Nové spotřebováno v provozu"
 
 #. module: mrp_plm
-#: model:mrp.eco.type,name:mrp_plm.ecotype0
-msgid "New Product Introduction"
-msgstr "Představení nového produktu"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_uom_id
 msgid "New Product UoM"
 msgstr "Nová MJ produktu"
-
-#. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__new_time_cycle_manual
-msgid "New manual duration"
-msgstr ""
-
-#. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
-msgid "New or Previous Operation"
-msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_product_qty
@@ -1212,8 +1322,8 @@ msgstr "Počet chyb"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Počet zpráv, které vyžadují akci"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
@@ -1222,14 +1332,20 @@ msgid "Number of messages with delivery error"
 msgstr "Počet zpráv s chybou při doručení"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__old_time_cycle_manual
-msgid "Old manual duration"
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__final_stage
+msgid "Once the changes are applied, the ECOs will be moved to this stage."
+msgstr ""
+"Jakmile jsou změny aplikovány, přesunou se změnová řízení do této fáze."
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Open Component"
 msgstr ""
 
 #. module: mrp_plm
-#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__final_stage
-msgid "Once the changes are applied, the ECOs will be moved to this stage."
-msgstr "Jakmile jsou změny aplikovány, přesunou se změnová řízení do této fáze."
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Open Operation"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1242,25 +1358,42 @@ msgid "Operation Changes"
 msgstr "Provozní změny"
 
 #. module: mrp_plm
-#. odoo-python
-#: code:addons/mrp_plm/models/mrp_eco.py:0
-msgid "Operation not supported"
-msgstr "Provoz není podporován"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
+msgid "Operation Id"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
-msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "Volitelné ID vlákna (záznamu), ke kterému budou připojeny všechny příchozí zprávy, i když na něj neodpověděly. Je-li nastaveno, zakáže se úplné vytvoření nových záznamů."
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
+msgstr ""
+"Volitelné ID vlákna (záznamu), ke kterému budou připojeny všechny příchozí "
+"zprávy, i když na něj neodpověděly. Je-li nastaveno, zakáže se úplné "
+"vytvoření nových záznamů."
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_document__origin_attachment_id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_attachment_id
 msgid "Origin Attachment"
 msgstr "Původní příloha"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_model
+msgid "Origin Model"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_name
+msgid "Origin Name"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_blocked
-msgid "Override the default value displayed for the blocked state for kanban selection, when the ECO is in that stage."
+msgid ""
+"Override the default value displayed for the blocked state for kanban "
+"selection, when the ECO is in that stage."
 msgstr ""
 "Přepínejte výchozí hodnotu zobrazenou pro zablokovaný stav pro výběr kanban, "
 "když je změnové řízení v této fázi."
@@ -1268,7 +1401,9 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_done
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_done
-msgid "Override the default value displayed for the done state for kanban selection, when the ECO is in that stage."
+msgid ""
+"Override the default value displayed for the done state for kanban "
+"selection, when the ECO is in that stage."
 msgstr ""
 "Přepínejte výchozí hodnotu zobrazenou pro dokončený stav pro výběr kanban, "
 "když je změnové řízení v této fázi."
@@ -1276,7 +1411,9 @@ msgstr ""
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_normal
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_normal
-msgid "Override the default value displayed for the normal state for kanban selection, when the ECO is in that stage."
+msgid ""
+"Override the default value displayed for the normal state for kanban "
+"selection, when the ECO is in that stage."
 msgstr ""
 "Přepínejte výchozí hodnotu zobrazenou pro normální stav pro výběr kanban, "
 "když je změnové řízení v této fázi."
@@ -1287,13 +1424,8 @@ msgid "Overview"
 msgstr "Přehled"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_user_id
-msgid "Owner"
-msgstr "Majitel"
-
-#. module: mrp_plm
-#: model:ir.module.category,name:mrp_plm.module_category_manufacturing_product_lifecycle_management_(plm)
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_root
+#: model:res.groups.privilege,name:mrp_plm.res_groups_privilege_plm
 msgid "PLM"
 msgstr "PLM"
 
@@ -1314,8 +1446,14 @@ msgstr "ID vlákna nadřazeného záznamu"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_model_id
-msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
-msgstr "Nadřazený model s aliasem. Model obsahující odkaz na alias nemusí být nutně modelem daným od alias_model_id (příklad: project (parent_model) a task (model))"
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
+msgstr ""
+"Nadřazený model s aliasem. Model obsahující odkaz na alias nemusí být nutně "
+"modelem daným od alias_model_id (příklad: project (parent_model) a task "
+"(model))"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_contact
@@ -1323,12 +1461,14 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "Zásady zveřejňování zpráv v dokumentu pomocí poštovní brány.\n"
 "- každý: každý může psát\n"
 "- partneři: pouze ověření partneři\n"
-"- sledující: pouze sledující související dokument nebo členové následujících kanálů\n"
+"- sledující: pouze sledující související dokument nebo členové následujících "
+"kanálů\n"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__previous_bom_id
@@ -1347,7 +1487,7 @@ msgstr "Předchozí změny změnového řízení"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "Previous Eco Bom Changes"
+msgid "Previous Eco Component Changes"
 msgstr ""
 
 #. module: mrp_plm
@@ -1366,13 +1506,22 @@ msgid "Priority"
 msgstr "Priorita"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Produced in Operation"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__product_tmpl_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__product_id
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Product"
 msgstr "Produkt"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_product_document
+msgid "Product Document"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-python
@@ -1381,14 +1530,14 @@ msgid "Product Only"
 msgstr "Pouze produkty"
 
 #. module: mrp_plm
-#: model:ir.model,name:mrp_plm.model_mrp_document
-msgid "Production Document"
-msgstr "Dokument výroby"
+#: model:ir.model,name:mrp_plm.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: mrp_plm
-#: model:ir.model,name:mrp_plm.model_mrp_production
-msgid "Production Order"
-msgstr "Výrobní příkaz"
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Production"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
@@ -1414,10 +1563,10 @@ msgstr "Hodnocení"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_validated
 msgid "Ready"
 msgstr "Připraveno"
 
@@ -1533,8 +1682,8 @@ msgstr "Zobrazit Použít změnu"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Show all records which has next action date is before today"
-msgstr "Zobrazit všechny záznamy, které mají následující datum akce před dneškem"
+msgid "Show all records whose next activity date is past"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__stage_id
@@ -1590,7 +1739,9 @@ msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "System will automatically resolved the conflict(s) and apply changes. Do you agree?"
+msgid ""
+"System will automatically resolved the conflict(s) and apply changes. Do you "
+"agree?"
 msgstr "Systém automaticky vyřeší konflikt(y) a použije změny. Souhlasíte?"
 
 #. module: mrp_plm
@@ -1622,12 +1773,14 @@ msgstr "Úkol je blokován. Kliknutím odblokujete nebo nastavíte jako hotové.
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_approve
 msgid "Technical field to check if approval by current user is required"
-msgstr "Technické pole pro kontrolu, zda je vyžadováno schválení aktuálním uživatelem"
+msgstr ""
+"Technické pole pro kontrolu, zda je vyžadováno schválení aktuálním uživatelem"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Technical field to check if reject by current user is possible"
-msgstr "Technické pole pro kontrolu, zda je možné odmítnutí aktuálním uživatelem"
+msgstr ""
+"Technické pole pro kontrolu, zda je možné odmítnutí aktuálním uživatelem"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__approval_template_id
@@ -1652,18 +1805,23 @@ msgstr "Aktuální verze produktu."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
-msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "Model (Odoo Document Kind), ke kterému odpovídá tento alias. Jakýkoli příchozí e-mail, který neodpovídá stávajícímu záznamu, způsobí vytvoření nového záznamu tohoto modelu (například projektové úlohy)"
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
+msgstr ""
+"Model (Odoo Document Kind), ke kterému odpovídá tento alias. Jakýkoli "
+"příchozí e-mail, který neodpovídá stávajícímu záznamu, způsobí vytvoření "
+"nového záznamu tohoto modelu (například projektové úlohy)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
-msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "Název aliasu e-mailu, např. 'jobs', pokud chcete zachytit e-maily pro <jobs@example.odoo.com>"
-
-#. module: mrp_plm
-#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_user_id
-msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
-msgstr "Majitel záznamů vytvořených při příjmu e-mailů o tomto aliasu. Není-li toto pole nastaveno, systém se pokusí najít správného vlastníka na základě adresy odesílatele (Od) nebo použije účet správce, pokud pro danou adresu nebyl nalezen žádný uživatel systému."
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
+msgstr ""
+"Název aliasu e-mailu, např. 'jobs', pokud chcete zachytit e-maily pro "
+"<jobs@example.odoo.com>"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1712,8 +1870,8 @@ msgstr "vrátit"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
-msgid "Unit of Measure"
-msgstr "Měrná jednotka"
+msgid "Unit"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__update
@@ -1722,8 +1880,8 @@ msgid "Update"
 msgstr "Aktualizace"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
-msgid "Update BoM"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__will_update_version
+msgid "Update Version"
 msgstr ""
 
 #. module: mrp_plm
@@ -1737,9 +1895,14 @@ msgid "Users"
 msgstr "Uživatelé"
 
 #. module: mrp_plm
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_validated
 msgid "Validated"
 msgstr "Potvrzeno"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
+msgid "Variant"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1748,6 +1911,11 @@ msgstr "Potvrzeno"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "Verze"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Visible to all"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
@@ -1777,14 +1945,23 @@ msgid "Work Center"
 msgstr "Výrobní středisko"
 
 #. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
 msgid "Work Centers"
 msgstr "Výrobní střediska"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
-msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
-msgstr "Můžete také přidat popis, který pomůže spolupracovníkům pochopit smysl a účel fáze."
+msgid ""
+"You can also add a description to help your coworkers understand the meaning "
+"and purpose of the stage."
+msgstr ""
+"Můžete také přidat popis, který pomůže spolupracovníkům pochopit smysl a "
+"účel fáze."
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1808,6 +1985,11 @@ msgid "You cannot change the stage, as approvals are still required."
 msgstr "Fáze nelze změnit, protože jsou stále vyžadována schválení."
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
+msgid "alias"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "e.g. Awesome Product 2.0"
 msgstr "např. Úžasný produkt 2.0"
@@ -1818,6 +2000,83 @@ msgid "e.g. Engineering Department"
 msgstr "např. Technické oddělení"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
+msgid "e.g. mycompany.com"
+msgstr ""
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "product"
+msgstr ""
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "res_model"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
-msgid "oe_kanban_text_red"
-msgstr "oe_kanban_text_red"
+msgid "text-danger"
+msgstr ""
+
+#~ msgid "Alias domain"
+#~ msgstr "Doména aliasu"
+
+#~ msgid "All"
+#~ msgstr "Vše"
+
+#~ msgid "BoM Changes"
+#~ msgstr "změny v Kusovníku"
+
+#~ msgid "Duration"
+#~ msgstr "Trvání"
+
+#~ msgid "Filters"
+#~ msgstr "Filtry"
+
+#~ msgid "Group by..."
+#~ msgstr "Seskupit podle..."
+
+#~ msgid "In #{kanban_getcolorname(record.color.raw_value)}"
+#~ msgstr "V #{kanban_getcolorname(record.color.raw_value)}"
+
+#~ msgid "New Product Introduction"
+#~ msgstr "Představení nového produktu"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Počet zpráv, které vyžadují akci"
+
+#~ msgid "Operation not supported"
+#~ msgstr "Provoz není podporován"
+
+#~ msgid "Owner"
+#~ msgstr "Majitel"
+
+#~ msgid "Production Document"
+#~ msgstr "Dokument výroby"
+
+#~ msgid "Production Order"
+#~ msgstr "Výrobní příkaz"
+
+#~ msgid "Show all records which has next action date is before today"
+#~ msgstr ""
+#~ "Zobrazit všechny záznamy, které mají následující datum akce před dneškem"
+
+#~ msgid ""
+#~ "The owner of records created upon receiving emails on this alias. If this "
+#~ "field is not set the system will attempt to find the right owner based on "
+#~ "the sender (From) address, or will use the Administrator account if no "
+#~ "system user is found for that address."
+#~ msgstr ""
+#~ "Majitel záznamů vytvořených při příjmu e-mailů o tomto aliasu. Není-li "
+#~ "toto pole nastaveno, systém se pokusí najít správného vlastníka na "
+#~ "základě adresy odesílatele (Od) nebo použije účet správce, pokud pro "
+#~ "danou adresu nebyl nalezen žádný uživatel systému."
+
+#~ msgid "Unit of Measure"
+#~ msgstr "Měrná jednotka"
+
+#~ msgid "oe_kanban_text_red"
+#~ msgstr "oe_kanban_text_red"

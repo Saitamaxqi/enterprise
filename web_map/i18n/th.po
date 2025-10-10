@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
-"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/web_map/th/>"
-"\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/web_map/th/"
+">\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -24,7 +24,8 @@ msgstr ""
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
 ".st0{opacity:0.3;enable-background:new;}\n"
-"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-miterlimit:10;}"
+"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
+"miterlimit:10;}"
 msgstr ""
 ".st0{opacity:0.3;enable-background:new;}\n"
 "                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
@@ -205,8 +206,7 @@ msgstr "การป้อนข้อมูลของโทเค็นไม
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_model.js:0
 msgid ""
-"The view has switched to another provider but functionalities will be "
-"limited"
+"The view has switched to another provider but functionalities will be limited"
 msgstr "มุมมองเปลี่ยนไปเป็นผู้ให้บริการรายอื่น แต่ฟังก์ชันจะถูกจำกัด"
 
 #. module: web_map
@@ -219,10 +219,9 @@ msgstr "ผู้อ้างอิงนี้ไม่ได้รับอน
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
-"To get routing on your map, you first need to set up your MapBox token. It's"
-" free."
-msgstr ""
-"หากต้องการรับเส้นทางบนแผนที่ คุณต้องตั้งค่าโทเค็น MapBox ก่อน สามารถทำได้ฟรี"
+"To get routing on your map, you first need to set up your MapBox token. It's "
+"free."
+msgstr "หากต้องการรับเส้นทางบนแผนที่ คุณต้องตั้งค่าโทเค็น MapBox ก่อน สามารถทำได้ฟรี"
 
 #. module: web_map
 #: model_terms:ir.ui.view,arch_db:web_map.res_config_settings_view_form

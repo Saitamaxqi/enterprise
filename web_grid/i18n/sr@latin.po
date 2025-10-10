@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 09:05+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2022-09-22 05:49+0000\n"
 "Last-Translator: Dragan Vukosavljevic <dragan.vukosavljevic@gmail.com>, "
 "2022\n"
@@ -53,8 +53,12 @@ msgid "Count"
 msgstr ""
 
 #. module: web_grid
-#. odoo-javascript
-#: code:addons/web_grid/static/src/views/grid_view.js:0
+#: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__display_name
+#: model:ir.model.fields,field_description:web_grid.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_grid
 #: model:ir.model.fields.selection,name:web_grid.selection__ir_actions_act_window_view__view_mode__grid
 #: model:ir.model.fields.selection,name:web_grid.selection__ir_ui_view__type__grid
 msgid "Grid"
@@ -65,6 +69,12 @@ msgstr "Mreža"
 #: code:addons/web_grid/static/src/views/grid_model.js:0
 msgid ""
 "Grouping by the field used in the column of the grid view is not possible."
+msgstr ""
+
+#. module: web_grid
+#: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__id
+#: model:ir.model.fields,field_description:web_grid.field_ir_ui_view__id
+msgid "ID"
 msgstr ""
 
 #. module: web_grid

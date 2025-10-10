@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:27+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-26 04:03+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -46,7 +46,8 @@ msgstr ""
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_validated
-msgid "<i class=\"fa fa-check-circle text-success me-3\"/>Appointment Scheduled!"
+msgid ""
+"<i class=\"fa fa-check-circle text-success me-3\"/>Appointment Scheduled!"
 msgstr "<i class=\"fa fa-check-circle text-success me-3\"/>予約が完了しました!"
 
 #. module: appointment_account_payment
@@ -63,25 +64,29 @@ msgstr "<i class=\"fa fa-pencil-square-o text-warning me-3\"/>支払待ち予約
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
-msgid "<i class=\"fa fa-times-circle text-danger me-3\"/>Appointment Unavailable!"
-msgstr "<i class=\"fa fa-times-circle text-danger me-3\"/>予約が利用出来ません!"
+msgid ""
+"<i class=\"fa fa-times-circle text-danger me-3\"/>Appointment Unavailable!"
+msgstr ""
+"<i class=\"fa fa-times-circle text-danger me-3\"/>予約が利用出来ません!"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_type_view_form
 msgid ""
 "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/> Configure Payment "
 "Providers"
-msgstr "<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>決済プロバイダー設定"
+msgstr ""
+"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>決済プロバイダー設定"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_type_view_form
 msgid ""
 "<span invisible=\"manage_capacity\" class=\"ms-1\">per booking</span>\n"
-"                            <span invisible=\"not manage_capacity\" class=\"ms-1\">per seat</span>"
+"                            <span invisible=\"not manage_capacity\" "
+"class=\"ms-1\">per seat</span>"
 msgstr ""
 "<span invisible=\"manage_capacity\" class=\"ms-1\">予約ごと</span>\n"
-"                            <span invisible=\"not manage_capacity\" class="
-"\"ms-1\">席ごと</span>"
+"                            <span invisible=\"not manage_capacity\" "
+"class=\"ms-1\">席ごと</span>"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
@@ -92,18 +97,20 @@ msgstr "<span>オンライン</span>"
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_progress_bar
 msgid ""
 "<span>Payment</span>\n"
-"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-"
+"muted fs-5\"/>"
 msgstr ""
 "<span>支払</span>\n"
-"            <span class="
-"\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-"
+"muted fs-5\"/>"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
 msgid ""
 "<strong>Warning</strong> Make sure you are logged in as the right partner "
 "before making this payment."
-msgstr "<strong>警告</strong>この支払を行う前に適正な取引先にログインしていることを確"
+msgstr ""
+"<strong>警告</strong>この支払を行う前に適正な取引先にログインしていることを確"
 "認して下さい。"
 
 #. module: appointment_account_payment
@@ -259,7 +266,8 @@ msgstr ""
 msgid ""
 "Discover the secrets kept in high-end kitchens with one of our starred "
 "chefs, from the comfort of your own home."
-msgstr "ご自宅にいながら、星付きシェフとともに高級レストランの厨房に隠された秘密を体"
+msgstr ""
+"ご自宅にいながら、星付きシェフとともに高級レストランの厨房に隠された秘密を体"
 "験しましょう。"
 
 #. module: appointment_account_payment
@@ -455,7 +463,8 @@ msgstr "停止"
 msgid ""
 "Thank you for your reservation. We will soon contact you to discuss menu "
 "options."
-msgstr "ご予約ありがとうございます。メニューのご相談につきましては、追ってご連絡させ"
+msgstr ""
+"ご予約ありがとうございます。メニューのご相談につきましては、追ってご連絡させ"
 "て頂きます。"
 
 #. module: appointment_account_payment
@@ -469,16 +478,18 @@ msgstr "回答入力は、ミーティングまたは予約にリンクされて
 msgid ""
 "The following booking was not confirmed due to insufficient availability or "
 "configuration changes: %s"
-msgstr "以下の予約は、空席が十分でなかったため、または設定が変更されたため、確定され"
+msgstr ""
+"以下の予約は、空席が十分でなかったため、または設定が変更されたため、確定され"
 "ませんでした:%s"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,help:appointment_account_payment.field_appointment_type__product_lst_price
 msgid ""
-"The sale price is managed from the product template. Click on the 'Configure"
-" Variants' button to set the extra attribute prices."
-msgstr "販売価格はプロダクトテンプレートから管理されます。追加属性価格を設定するには"
-"、「バリアントを設定する」ボタンをクリックして下さい。"
+"The sale price is managed from the product template. Click on the 'Configure "
+"Variants' button to set the extra attribute prices."
+msgstr ""
+"販売価格はプロダクトテンプレートから管理されます。追加属性価格を設定するに"
+"は、「バリアントを設定する」ボタンをクリックして下さい。"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
@@ -510,8 +521,9 @@ msgstr "変更が必要な場合は、ご連絡下さい。"
 msgid ""
 "Unfortunately, it looks like this booking is not possible anymore. Please "
 "contact us to find an alternative."
-msgstr "残念ながら、この予約はできません。代替案をお探しいたしますので、ご連絡下さい"
-"。"
+msgstr ""
+"残念ながら、この予約はできません。代替案をお探しいたしますので、ご連絡下さ"
+"い。"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__has_payment_step

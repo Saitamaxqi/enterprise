@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:27+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -23,11 +23,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment_google_calendar/models/appointment_type.py:0
 msgid ""
-"%(user_names)s did not synchronize their Google Calendar account yet, Google"
-" Meeting links won't be added to their meetings."
+"%(user_names)s did not synchronize their Google Calendar account yet, Google "
+"Meeting links won't be added to their meetings."
 msgstr ""
-"%(user_names)s님이 아직 Google 캘린더 계정을 동기화하지 않았으므로 Google "
-"미팅 링크가 미팅에 추가되지 않습니다."
+"%(user_names)s님이 아직 Google 캘린더 계정을 동기화하지 않았으므로 Google 미"
+"팅 링크가 미팅에 추가되지 않습니다."
 
 #. module: appointment_google_calendar
 #: model_terms:ir.ui.view,arch_db:appointment_google_calendar.appointment_type_view_form
@@ -54,8 +54,9 @@ msgstr "구글 커넥터"
 msgid ""
 "Defines the type of video call link that will be used for the generated "
 "events. Keep it empty to prevent generating meeting url."
-msgstr "생성된 행사에 사용할 화상 통화 링크 유형을 지정하세요. 회의 URL이 생성되지 "
-"않도록 비워 두세요."
+msgstr ""
+"생성된 행사에 사용할 화상 통화 링크 유형을 지정하세요. 회의 URL이 생성되지 않"
+"도록 비워 두세요."
 
 #. module: appointment_google_calendar
 #: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__display_name
@@ -75,8 +76,9 @@ msgstr "Google Meet"
 msgid ""
 "Google Sync is either paused or not properly configured. Google Meet links "
 "won't be added to the meetings."
-msgstr "Google Sync가 일시 중지되었거나 잘못 구성되었습니다. 따라서 Google Meet "
-"링크가 미팅에 추가되지 않습니다."
+msgstr ""
+"Google Sync가 일시 중지되었거나 잘못 구성되었습니다. 따라서 Google Meet 링크"
+"가 미팅에 추가되지 않습니다."
 
 #. module: appointment_google_calendar
 #: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__id

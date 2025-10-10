@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-09 20:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -29,9 +29,9 @@ msgstr ""
 msgid ""
 " You've gained {gained} points with this progress.{new_line}It makes you a "
 "new total of {total} points. Visit {link1}this link{link2} to pick a gift!"
-msgstr " "
-"您已獲得{gained}點數。{new_line}您的總點數達到{total}點。訪問{link1}此連結{li"
-"nk2} 挑選禮物！"
+msgstr ""
+" 您已獲得{gained}點數。{new_line}您的總點數達到{total}點。訪問{link1}此連結"
+"{link2} 挑選禮物！"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__referral_hired
@@ -58,7 +58,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_sms_template
 msgid ""
 ".\n"
-"If you know someone who would be a great fit for this position, please share this link with them:"
+"If you know someone who would be a great fit for this position, please share "
+"this link with them:"
 msgstr ""
 "。\n"
 "如果你的親友十分適合該職位，請與他們分享以下連結："
@@ -87,35 +88,44 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/>\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by Mail\">Send Email</span>"
+"                                        <span title=\"Send by Mail\">Send "
+"Email</span>"
 msgstr ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"以電郵傳送\"/>\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"以電郵傳送\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"以電郵傳送\">傳送電郵</span>"
+"                                        <span title=\"以電郵傳送\">傳送電郵</"
+"span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"Job Page\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"More info\">Job Page</span>"
+"                                        <span title=\"More info\">Job Page</"
+"span>"
 msgstr ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"職位頁面\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"更多資訊\">職位頁面</span>"
+"                                        <span title=\"更多資訊\">職位頁面</"
+"span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"Send by SMS\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by SMS\">Send SMS</span>"
+"                                        <span title=\"Send by SMS\">Send "
+"SMS</span>"
 msgstr ""
-"<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"以電話短訊傳送\"/>\n"
+"<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"以電話短訊傳送\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"以電話短訊傳送\">傳送短訊</span>"
+"                                        <span title=\"以電話短訊傳送\">傳送短"
+"訊</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
@@ -162,42 +172,37 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Facebook\">\n"
-"                                            <i class=\"fa fa-lg fa-facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
 "                                        </span>"
 msgstr ""
-"<span title=\"分享至 Facebook\">\n"
-"                                            <i class=\"fa fa-lg fa-facebook\" role=\"img\" aria-label=\"分享至 facebook\"/>\n"
-"                                        </span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Linkedin\">\n"
-"                                            <i class=\"fa fa-lg fa-linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
 "                                        </span>"
 msgstr ""
-"<span title=\"分享至 Linkedin\">\n"
-"                                            <i class=\"fa fa-lg fa-linkedin\" role=\"img\" aria-label=\"分享至 linkedin\"/>\n"
-"                                        </span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Twitter\">\n"
-"                                            <i class=\"fa fa-lg fa-twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
+"                                            <i class=\"fa fa-2x fa-twitter\" "
+"role=\"img\" aria-label=\"Share on twitter\"/>\n"
 "                                        </span>"
 msgstr ""
-"<span title=\"分享至 Twitter\">\n"
-"                                            <i class=\"fa fa-lg fa-twitter\" role=\"img\" aria-label=\"分享至 twitter\"/>\n"
-"                                        </span>"
 
 #. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_alert_mail_wizard.py:0
 msgid ""
-"A new alert has been added to the Referrals app! Check your <a "
-"href=%(url)s>dashboard</a> now!"
-msgstr "內部推薦應用程式加入了新警報！請即查看你的<a href=%(url)s>Dashboard</a>。"
+"A new alert has been added to the Referrals app! Check your <a href=%"
+"(url)s>dashboard</a> now!"
+msgstr ""
+"內部推薦應用程式加入了新警報！請即查看你的<a href=%(url)s>Dashboard</a>。"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_needaction
@@ -262,6 +267,11 @@ msgstr "警示會在主要螢幕顯示，以向員工提供資訊或重新導向
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__target__all
 msgid "All"
 msgstr "所有"
+
+#. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
+msgid "All Employees"
+msgstr ""
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__points
@@ -354,6 +364,7 @@ msgstr "行銷活動"
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_mail_view_form
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_sms_view_form
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 msgid "Cancel"
 msgstr "取消"
 
@@ -428,7 +439,14 @@ msgid "Confirm"
 msgstr "確認"
 
 #. module: hr_referral
+#. odoo-python
+#: code:addons/hr_referral/models/hr_referral_reward.py:0
+msgid "Confirmation"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__target
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
 msgid "Contacted Employees"
 msgstr "聯絡員工"
 
@@ -528,7 +546,9 @@ msgid ""
 "Define the position of the friend. If it's a small friend like a dog, you "
 "must select Front, it will be placed in the front of the dashboard, above "
 "superhero."
-msgstr "定義朋友的位置。如果是像小狗這樣的朋友，必須選擇前方，將它放置於Dashboard的前面、超級英雄的上方。"
+msgstr ""
+"定義朋友的位置。如果是像小狗這樣的朋友，必須選擇前方，將它放置於Dashboard的前"
+"面、超級英雄的上方。"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__department_id
@@ -564,6 +584,7 @@ msgid "Dismissed User"
 msgstr "已解僱使用者"
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_applicant_get_refuse_reason__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__display_name
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__display_name
@@ -596,6 +617,7 @@ msgid "Do not have access"
 msgstr "沒有存取權限"
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid ""
 "Do you want to confirm this reward? After confirmation an HR will contact "
@@ -610,7 +632,6 @@ msgstr "已獲取積分"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_send_mail__email_to
-#: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__sending_method__work_email
 msgid "Email"
 msgstr "電郵"
 
@@ -686,9 +707,10 @@ msgstr "推薦連結複製至剪貼簿時出錯：%s"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_alert__url
 msgid ""
-"External links must start with 'http://www.'. For an internal url, you don't"
-" need to put domain name, you can just insert the path."
-msgstr "外部連結須以「http://www.」起首。內部網址則不須輸入網域名稱，可以只輸入路徑。"
+"External links must start with 'http://www.'. For an internal url, you don't "
+"need to put domain name, you can just insert the path."
+msgstr ""
+"外部連結須以「http://www.」起首。內部網址則不須輸入網域名稱，可以只輸入路徑。"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__facebook
@@ -754,6 +776,11 @@ msgid "Gather your team!"
 msgstr "召集你的團隊！"
 
 #. module: hr_referral
+#: model:ir.model,name:hr_referral.model_applicant_get_refuse_reason
+msgid "Get Refuse Reason"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__gift_manager_id
 msgid "Gift Responsible"
 msgstr "禮物負責人"
@@ -772,13 +799,6 @@ msgstr "禮物"
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_alert__onclick__all_jobs
 msgid "Go to All Jobs"
 msgstr "前往所有工作職位"
-
-#. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_report_view_search
-#: model_terms:ir.ui.view,arch_db:hr_referral.employee_referral_reward_report_view_search
-#: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
-msgid "Group By"
-msgstr "分組依據"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_alert_view_search
@@ -805,15 +825,18 @@ msgstr "您好"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_send_sms.py:0
 msgid ""
-"Hello! There is an amazing job offer for %(job_name)s in my company! It will"
-" be a fit for you %(referral_url)s"
-msgstr "你好！我們公司有個不錯的 %(job_name)s 工作機會，很適合你，歡迎看看：%(referral_url)s"
+"Hello! There is an amazing job offer for %(job_name)s in my company! It will "
+"be a fit for you %(referral_url)s"
+msgstr ""
+"你好！我們公司有個不錯的 %(job_name)s 工作機會，很適合你，歡迎看看：%"
+"(referral_url)s"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
 msgid ""
 "Hello,<br/><br/>\n"
-"                There are some amazing job offers in my company! Have a look, they can be interesting for you:"
+"                There are some amazing job offers in my company! Have a "
+"look, they can be interesting for you:"
 msgstr ""
 "你好！<br/><br/>\n"
 "                我們公司有些不錯的工作機會！歡迎看看，說不定你會感興趣："
@@ -846,6 +869,7 @@ msgid "Hr Referral Onboarding Page"
 msgstr "人力資源推薦入職簡介頁面"
 
 #. module: hr_referral
+#: model:ir.model.fields,field_description:hr_referral.field_applicant_get_refuse_reason__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__id
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__id
@@ -1066,11 +1090,6 @@ msgid "Linkedin Clicks"
 msgstr "Linkedin點擊"
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Mail"
-msgstr "郵件"
-
-#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_applicant__max_points
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__max_points
 msgid "Max Points"
@@ -1202,6 +1221,11 @@ msgstr ""
 "幫助我們招募一支超級英雄團隊，拯救世界！"
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
+msgid "Ok"
+msgstr ""
+
+#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_alert__onclick
 msgid "On Click"
 msgstr "On Click"
@@ -1236,6 +1260,7 @@ msgid "Our company is hiring for a"
 msgstr "我們公司正在招聘一名"
 
 #. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_reward_kanban
 msgid "Point icon"
 msgstr "積分圖示"
@@ -1246,6 +1271,7 @@ msgstr "積分圖示"
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_level__points
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_points__points
 #: model:ir.ui.menu,name:hr_referral.menu_hr_points_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_referral_points_filter
@@ -1307,9 +1333,9 @@ msgid "Product Name"
 msgstr "產品名稱"
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Publish & Send"
-msgstr "發佈並傳送"
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_job_form_inherit_hr_referral
+msgid "Promote"
+msgstr ""
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__rating_ids
@@ -1366,7 +1392,6 @@ msgid "Referral Background"
 msgstr "推薦背景"
 
 #. module: hr_referral
-#: model:ir.actions.server,name:hr_referral.action_hr_job_launch_referral_campaign
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_kanban_inherit_referral
 msgid "Referral Campaign"
 msgstr "推薦活動"
@@ -1541,17 +1566,6 @@ msgid "Rewards"
 msgstr "獎勵"
 
 #. module: hr_referral
-#: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__sending_method__work_phone
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "SMS"
-msgstr "電話短訊（SMS）"
-
-#. module: hr_referral
-#: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__sms_body
-msgid "SMS Content"
-msgstr "SMS 內容"
-
-#. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "簡訊發送錯誤"
@@ -1570,11 +1584,6 @@ msgstr "搜尋內部推薦"
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
 msgid "See Job Offer"
 msgstr "查看工作機會"
-
-#. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid "Select employees"
-msgstr "選取員工"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_applicant_view_form_inherit_referral
@@ -1623,11 +1632,6 @@ msgstr "發送信件"
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_send_sms_view_form
 msgid "Send SMS"
 msgstr "發送簡訊"
-
-#. module: hr_referral
-#: model:ir.model.fields,field_description:hr_referral.field_hr_referral_campaign_wizard__sending_method
-msgid "Sending Method"
-msgstr "傳送方式"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_onboarding__sequence
@@ -1683,7 +1687,7 @@ msgstr "跳過並開始"
 
 #. module: hr_referral
 #. odoo-python
-#: code:addons/hr_referral/models/hr_applicant.py:0
+#: code:addons/hr_referral/wizard/applicant_refuse_reason.py:0
 msgid "Sorry, your referral %s has been refused in the recruitment process."
 msgstr "抱歉，你的推薦對象 %s 已在招募過程中被拒絕。"
 
@@ -1761,9 +1765,10 @@ msgstr "此欄位包含Dashboard上的朋友圖片，上限為 1024×1024px。"
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
 msgid ""
-"This field holds the image used as image for the head's friend when the user"
-" must choose a new friend, limited to 1024x1024px."
-msgstr "此欄位是使用者必須選擇新朋友時，用作朋友頭部圖像的圖片，上限為 1024×1024px。"
+"This field holds the image used as image for the head's friend when the user "
+"must choose a new friend, limited to 1024x1024px."
+msgstr ""
+"此欄位是使用者必須選擇新朋友時，用作朋友頭部圖像的圖片，上限為 1024×1024px。"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_reward__image
@@ -1780,27 +1785,22 @@ msgid ""
 msgstr "連結的來源，例：搜尋引擎、其他網站，或電郵清單的名稱"
 
 #. module: hr_referral
-#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
-msgid ""
-"This job position is not published. \n"
-"                    The referral campaign will automatically publish it."
-msgstr ""
-"此職位尚未發佈。\n"
-"                    推薦活動將會自動將它發佈。"
-
-#. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid ""
-"This link contains a tracker so that people clicking on it will account to a"
-" referral for you, even if they apply on a position after a few days."
-msgstr "此連結內置追蹤器，點擊者將會記錄為你的推薦對象，即使他們在幾天後才申請工作職位。"
+"This link contains a tracker so that people clicking on it will account to a "
+"referral for you, even if they apply on a position after a few days."
+msgstr ""
+"此連結內置追蹤器，點擊者將會記錄為你的推薦對象，即使他們在幾天後才申請工作職"
+"位。"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__use_in_referral
 msgid ""
 "This option is used in app 'Referrals'. If checked, the stage is displayed "
 "in 'Referrals Dashboard' and points are given to the employee."
-msgstr "此選項用於「內部推薦」應用程式。如果勾選，該階段會在「推薦Dashboard」顯示，員工會獲得積分。"
+msgstr ""
+"此選項用於「內部推薦」應用程式。如果勾選，該階段會在「推薦Dashboard」顯示，員"
+"工會獲得積分。"
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.employee_referral_report_action
@@ -1819,6 +1819,11 @@ msgid ""
 "This will make the onboarding process visible to all users who have "
 "previously completed it. Do you want to proceed?"
 msgstr "這會使之前已完成入職流程的所有使用者，會再看到該流程。確定要繼續？"
+
+#. module: hr_referral
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_campaign_wizard_view_form
+msgid "To"
+msgstr ""
 
 #. module: hr_referral
 #. odoo-javascript
@@ -1932,16 +1937,19 @@ msgstr "你不可查閱申請人的記錄。"
 #. odoo-python
 #: code:addons/hr_referral/models/hr_applicant.py:0
 msgid ""
-"You are not allowed to access this application record because you're not one"
-" of the interviewers of this application. If you think that's an error, "
+"You are not allowed to access this application record because you're not one "
+"of the interviewers of this application. If you think that's an error, "
 "please contact your administrator."
-msgstr "你不可存取此申請記錄，因為你不是此申請的面試官之一。如果認為有錯誤，請聯絡你的管理員。"
+msgstr ""
+"你不可存取此申請記錄，因為你不是此申請的面試官之一。如果認為有錯誤，請聯絡你"
+"的管理員。"
 
 #. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/models/utm_campaign.py:0
 msgid ""
-"You cannot delete these UTM Campaigns as they are linked to the following jobs in Referral:\n"
+"You cannot delete these UTM Campaigns as they are linked to the following "
+"jobs in Referral:\n"
 "%(job_names)s"
 msgstr ""
 "您無法刪除這些UTM推廣活動，因為它們連結至內部推薦中的以下工作：\n"
@@ -1951,7 +1959,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to the following users in Referral:\n"
+"You cannot delete these UTM Sources as they are linked to the following "
+"users in Referral:\n"
 "%(employee_names)s"
 msgstr ""
 "您無法刪除這些UTM來源，因為它們連結至內部推薦中的以下使用者：\n"
@@ -2027,7 +2036,8 @@ msgstr "正在招募一個職位"
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_email_body_template
 msgid ""
 "position.\n"
-"                If you know someone who would be a great fit for this position, please share this link with them:"
+"                If you know someone who would be a great fit for this "
+"position, please share this link with them:"
 msgstr ""
 "職位。\n"
 "                如果你的親友十分適合該職位，請與他們分享以下連結："
@@ -2035,6 +2045,7 @@ msgstr ""
 #. module: hr_referral
 #. odoo-javascript
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
+#: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_view_form_reward_purchase_dialog
 msgid "reward"
 msgstr "獎勵"
 
@@ -2043,3 +2054,74 @@ msgstr "獎勵"
 #: code:addons/hr_referral/static/src/views/dashboard.xml:0
 msgid "share"
 msgstr "分享"
+
+#. module: hr_referral
+#. odoo-python
+#: code:addons/hr_referral/wizard/hr_referral_link_to_share.py:0
+msgid ""
+"🚀 An exciting opportunity for a %(job_name)s at my company. If you're "
+"looking for a new challenge, check it out!👇%(new_line_code)s🔗%(short_url)s%"
+"(new_line_code)s%(hashtag_code)sHiring %(hashtag_code)sJobOpening %"
+"(hashtag_code)sCareerOpportunity"
+msgstr ""
+
+#~ msgid ""
+#~ "<span title=\"Share on Facebook\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+#~ "                                        </span>"
+#~ msgstr ""
+#~ "<span title=\"分享至 Facebook\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "facebook\" role=\"img\" aria-label=\"分享至 facebook\"/>\n"
+#~ "                                        </span>"
+
+#~ msgid ""
+#~ "<span title=\"Share on Linkedin\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+#~ "                                        </span>"
+#~ msgstr ""
+#~ "<span title=\"分享至 Linkedin\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "linkedin\" role=\"img\" aria-label=\"分享至 linkedin\"/>\n"
+#~ "                                        </span>"
+
+#~ msgid ""
+#~ "<span title=\"Share on Twitter\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
+#~ "                                        </span>"
+#~ msgstr ""
+#~ "<span title=\"分享至 Twitter\">\n"
+#~ "                                            <i class=\"fa fa-lg fa-"
+#~ "twitter\" role=\"img\" aria-label=\"分享至 twitter\"/>\n"
+#~ "                                        </span>"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Mail"
+#~ msgstr "郵件"
+
+#~ msgid "Publish & Send"
+#~ msgstr "發佈並傳送"
+
+#~ msgid "SMS"
+#~ msgstr "電話短訊（SMS）"
+
+#~ msgid "SMS Content"
+#~ msgstr "SMS 內容"
+
+#~ msgid "Select employees"
+#~ msgstr "選取員工"
+
+#~ msgid "Sending Method"
+#~ msgstr "傳送方式"
+
+#~ msgid ""
+#~ "This job position is not published. \n"
+#~ "                    The referral campaign will automatically publish it."
+#~ msgstr ""
+#~ "此職位尚未發佈。\n"
+#~ "                    推薦活動將會自動將它發佈。"

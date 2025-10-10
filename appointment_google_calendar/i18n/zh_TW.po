@@ -1,31 +1,34 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* appointment_google_calendar
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: appointment_google_calendar
 #. odoo-python
 #: code:addons/appointment_google_calendar/models/appointment_type.py:0
 msgid ""
-"%(user_names)s did not synchronize their Google Calendar account yet, Google"
-" Meeting links won't be added to their meetings."
-msgstr "%(user_names)s 尚未同步其 Google 日曆帳戶，因此 Google 會議連結不會加入其會議。"
+"%(user_names)s did not synchronize their Google Calendar account yet, Google "
+"Meeting links won't be added to their meetings."
+msgstr ""
+"%(user_names)s 尚未同步其 Google 日曆帳戶，因此 Google 會議連結不會加入其會"
+"議。"
 
 #. module: appointment_google_calendar
 #: model_terms:ir.ui.view,arch_db:appointment_google_calendar.appointment_type_view_form
@@ -72,7 +75,8 @@ msgstr "Google Meet"
 msgid ""
 "Google Sync is either paused or not properly configured. Google Meet links "
 "won't be added to the meetings."
-msgstr "Google 同步已暫停，或未正確配置。系統不會將 Google Meet 連結加入至會議。"
+msgstr ""
+"Google 同步已暫停，或未正確配置。系統不會將 Google Meet 連結加入至會議。"
 
 #. module: appointment_google_calendar
 #: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__id
@@ -87,5 +91,8 @@ msgstr "Google 日曆未作同步的用戶"
 
 #. module: appointment_google_calendar
 #: model:ir.model.fields,field_description:appointment_google_calendar.field_appointment_type__event_videocall_source
-msgid "Videoconference Link"
-msgstr "視像會議連結"
+msgid "Video Link"
+msgstr ""
+
+#~ msgid "Videoconference Link"
+#~ msgstr "視像會議連結"

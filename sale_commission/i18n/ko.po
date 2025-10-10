@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-10-02 02:42+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -521,7 +521,8 @@ msgstr "종료일"
 msgid ""
 "Ensure you are assigned to a commission plan and have made sales that "
 "qualify for commissions"
-msgstr "커미션 플랜에 배정되어 있고 자격을 충족하는 판매를 수행했는지 확인합니다."
+msgstr ""
+"커미션 플랜에 배정되어 있고 자격을 충족하는 판매를 수행했는지 확인합니다."
 
 #. module: sale_commission
 #. odoo-python
@@ -641,8 +642,9 @@ msgstr "지난 해"
 msgid ""
 "Main user sales team. Used notably for pipeline, or to set sales team in "
 "invoicing or subscription."
-msgstr "주 사용자인 영업팀입니다. 특히 파이프라인 관리에 사용하거나 영업팀에서 "
-"청구서 발행 또는 구독 업무를 진행할 경우에 사용합니다."
+msgstr ""
+"주 사용자인 영업팀입니다. 특히 파이프라인 관리에 사용하거나 영업팀에서 청구"
+"서 발행 또는 구독 업무를 진행할 경우에 사용합니다."
 
 #. module: sale_commission
 #: model:ir.model,name:sale_commission.model_sale_commission_achievement
@@ -987,8 +989,7 @@ msgstr "목표"
 #. module: sale_commission
 #. odoo-python
 #: code:addons/sale_commission/model/commission_plan.py:0
-msgid ""
-"The plan should have at least one target with an achievement rate of 0%"
+msgid "The plan should have at least one target with an achievement rate of 0%"
 msgstr "계획에는 달성률이 0%인 목표가 하나 이상 있어야 합니다."
 
 #. module: sale_commission

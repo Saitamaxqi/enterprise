@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
@@ -27,11 +27,10 @@ msgstr ""
 #. module: snailmail_account_followup
 #: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail
 msgid ""
-"<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" title=\"The letter will be sent using the IAP service from Odoo.&#10;Make sure you have enough credits on your account or proceed to a recharge.\"/>\n"
-"                        <br/>"
+"<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" "
+"title=\"The letter will be sent using the IAP service from Odoo.&#10;Make "
+"sure you have enough credits on your account or proceed to a recharge.\"/>"
 msgstr ""
-"<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" title=\"La lettre sera envoyée en utilisant le service IAP d'Odoo.&amp;#10;Assurez-vous d'avoir suffisamment de crédits sur votre compte ou procédez à une recharge.\"/>\n"
-"                        <br/>"
 
 #. module: snailmail_account_followup
 #: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail
@@ -44,6 +43,19 @@ msgid "Contact"
 msgstr "Contact"
 
 #. module: snailmail_account_followup
+#: model:ir.model,website_form_label:snailmail_account_followup.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: snailmail_account_followup
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_followup_line__display_name
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_manual_reminder__display_name
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_report__display_name
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_res_partner__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: snailmail_account_followup
 #: model:ir.model,name:snailmail_account_followup.model_account_followup_followup_line
 msgid "Follow-up Criteria"
 msgstr "Critère de suivi"
@@ -54,14 +66,17 @@ msgid "Follow-up Report"
 msgstr "Rapport de relance"
 
 #. module: snailmail_account_followup
-#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_followup_line__send_letter
-msgid "Send a Letter"
-msgstr "Envoyer une lettre"
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_followup_line__id
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_manual_reminder__id
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_report__id
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_res_partner__id
+msgid "ID"
+msgstr ""
 
 #. module: snailmail_account_followup
-#: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail
-msgid "Sending this document by post will cost"
-msgstr "L'envoi de ce document par la poste coûtera"
+#: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_followup_line__send_letter
+msgid "Letter"
+msgstr ""
 
 #. module: snailmail_account_followup
 #: model:ir.model.fields,field_description:snailmail_account_followup.field_account_followup_manual_reminder__snailmail
@@ -81,5 +96,28 @@ msgstr "Assistant pour envoyer des rappels manuels aux clients"
 #. module: snailmail_account_followup
 #. odoo-python
 #: code:addons/snailmail_account_followup/models/account_followup_report.py:0
-msgid "You are trying to send a letter by post, but no follow-up contact has any address set"
-msgstr "Vous essayez d'envoyer une lettre par la poste, mais aucun contact de suivi n'a d'adresse définie"
+msgid ""
+"You are trying to send a letter by post, but no follow-up contact has any "
+"address set"
+msgstr ""
+"Vous essayez d'envoyer une lettre par la poste, mais aucun contact de suivi "
+"n'a d'adresse définie"
+
+#~ msgid ""
+#~ "<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" "
+#~ "title=\"The letter will be sent using the IAP service from Odoo.&#10;Make "
+#~ "sure you have enough credits on your account or proceed to a recharge.\"/"
+#~ ">\n"
+#~ "                        <br/>"
+#~ msgstr ""
+#~ "<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"Warning\" "
+#~ "title=\"La lettre sera envoyée en utilisant le service IAP "
+#~ "d'Odoo.&amp;#10;Assurez-vous d'avoir suffisamment de crédits sur votre "
+#~ "compte ou procédez à une recharge.\"/>\n"
+#~ "                        <br/>"
+
+#~ msgid "Send a Letter"
+#~ msgstr "Envoyer une lettre"
+
+#~ msgid "Sending this document by post will cost"
+#~ msgstr "L'envoi de ce document par la poste coûtera"

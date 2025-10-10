@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:30+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -28,7 +28,8 @@ msgstr "%(field_name)s は以下に設定する必要があります: %(partner_
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ". This link will give you personalized attention plus lower prices."
-msgstr "。このリンクからなら、よりパーソナライズされた対応と低価格が期待できます。"
+msgstr ""
+"。このリンクからなら、よりパーソナライズされた対応と低価格が期待できます。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_shipping_method_envia
@@ -36,9 +37,8 @@ msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping services depend on "
 "enabled carriers in your Envia account."
 msgstr ""
-"<i class=\"fa fa-info-circle\"/> "
-"ご利用頂ける配送サービスは、Enviaアカウントで有効になっている配送業者によって"
-"異なります。"
+"<i class=\"fa fa-info-circle\"/> ご利用頂ける配送サービスは、Enviaアカウント"
+"で有効になっている配送業者によって異なります。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
@@ -49,13 +49,11 @@ msgid ""
 "doorstep. To enable this feature, enable Returned at Shippers Expense "
 "otherwise it will be abandoned at the customer's door."
 msgstr ""
-"注: "
-"一部の国では、パレット輸送や箱輸送に対する独自の追加サービスが提供されていま"
-"す。例えば、カナダでは、配送の不在時に、倉庫に返送するか、玄関先に放置するか"
-"のオプションが提供されています。この機能を有効にするには、「Returned at "
-"Shippers "
-"Expense(出荷元負担で返送)」を有効にして下さい。そうでないと、顧客の玄関先に放"
-"置されます。"
+"注: 一部の国では、パレット輸送や箱輸送に対する独自の追加サービスが提供されて"
+"います。例えば、カナダでは、配送の不在時に、倉庫に返送するか、玄関先に放置す"
+"るかのオプションが提供されています。この機能を有効にするには、「Returned at "
+"Shippers Expense(出荷元負担で返送)」を有効にして下さい。そうでないと、顧客の"
+"玄関先に放置されます。"
 
 #. module: delivery_envia
 #. odoo-python
@@ -100,22 +98,25 @@ msgstr "配送業者:"
 msgid ""
 "Carriers and Services must be selected from the list of available shipping "
 "methods."
-msgstr "配送業者とサービスは、利用可能な配送方法のリストから選択する必要があります。"
+msgstr ""
+"配送業者とサービスは、利用可能な配送方法のリストから選択する必要があります。"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_residential_delivery
 msgid ""
 "Certain carriers like UPS will charge an extra fee to deliver to a "
 "residential zone (United States Only)"
-msgstr "UPSなどの特定の配送業者では、住宅地への配達には追加料金が発生します(米国のみ)"
-"。"
+msgstr ""
+"UPSなどの特定の配送業者では、住宅地への配達には追加料金が発生します(米国の"
+"み)。"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_residential_pickup
 msgid ""
 "Certain carriers like UPS will charge an extra fee to pickup from "
 "residential zones (United States Only)"
-msgstr "UPSなどの特定の配送業者では、住宅地からの集荷には追加料金が発生します(米国の"
+msgstr ""
+"UPSなどの特定の配送業者では、住宅地からの集荷には追加料金が発生します(米国の"
 "み)。"
 
 #. module: delivery_envia
@@ -144,10 +145,11 @@ msgstr "Envia.comアカウントで選択可能なサービスのリストが含
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Copy over the API Key from Envia into either the sandbox or production field"
-" in Delivery Methods."
-msgstr "APIキーを「Envia」から「配信方法」のサンドボックスまたは本番のどちらかにコピ"
-"ーします。"
+"Copy over the API Key from Envia into either the sandbox or production field "
+"in Delivery Methods."
+msgstr ""
+"APIキーを「Envia」から「配信方法」のサンドボックスまたは本番のどちらかにコ"
+"ピーします。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
@@ -159,12 +161,12 @@ msgstr "アカウントを作成"
 msgid ""
 "Create and edit a package for this delivery method to be used as reference "
 "for quotations and labels. This package can be of type <b>box</b>, "
-"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be"
-" used."
+"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be "
+"used."
 msgstr ""
 "この配送方法用の梱包を作成と編集し、見積やラベルの参考情報として使用します。"
-"この梱包は、使用可能な配送業者を決定する<b>箱 "
-"</b>または<b>封筒</b>、または<b>パレット</b>のタイプにすることができます。"
+"この梱包は、使用可能な配送業者を決定する<b>箱 </b>または<b>封筒</b>、または"
+"<b>パレット</b>のタイプにすることができます。"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__create_uid
@@ -208,7 +210,8 @@ msgstr "表示名"
 msgid ""
 "Don't worry about the printing options, just note which ones exist for your "
 "favorite carrier as we will select them in Odoo."
-msgstr "印刷オプションについてはご心配なく。お気に入りの配送業者で利用できるオプショ"
+msgstr ""
+"印刷オプションについてはご心配なく。お気に入りの配送業者で利用できるオプショ"
 "ンをメモして下さい。Odooで選択します。"
 
 #. module: delivery_envia
@@ -258,18 +261,17 @@ msgstr "Enviaエラー: %(description)s - %(message)s"
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: %(message)s - %(description)s %(location)s (Reference code: "
-"%(reference)s)"
+"Envia Error: %(message)s - %(description)s %(location)s (Reference code: %"
+"(reference)s)"
 msgstr ""
-"Enviaエラー: %(message)s - %(description)s %(location)s (参照コード: "
-"%(reference)s)"
+"Enviaエラー: %(message)s - %(description)s %(location)s (参照コード: %"
+"(reference)s)"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The API key you entered for %(carrier_name)s seems to be "
-"invalid"
+"Envia Error: The API key you entered for %(carrier_name)s seems to be invalid"
 msgstr "Enviaエラー: %(carrier_name)s 用に入力されたAPIコードが無効なようです"
 
 #. module: delivery_envia
@@ -277,21 +279,20 @@ msgstr "Enviaエラー: %(carrier_name)s 用に入力されたAPIコードが無
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
 "Envia Error: The Envia Mail Type (%(package_types)s) set on the package(s) "
-"does not match the type set on the carrier (%(carrier_package_type)s). Use a"
-" different package or different carrier that matches the mail type."
+"does not match the type set on the carrier (%(carrier_package_type)s). Use a "
+"different package or different carrier that matches the mail type."
 msgstr ""
-"Enviaエラー: 梱包に設定されたEnviaメールタイプ (%(package_types)s) "
-"が配送業者に設定されたタイプ (%(carrier_package_type)s) "
-"と一致しません。メールの種類に合った別のパッケージングまたは別の配送業者を利"
-"用して下さい。"
+"Enviaエラー: 梱包に設定されたEnviaメールタイプ (%(package_types)s) が配送業者"
+"に設定されたタイプ (%(carrier_package_type)s) と一致しません。メールの種類に"
+"合った別のパッケージングまたは別の配送業者を利用して下さい。"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The following products don't have weights set: "
-"%(product_names)s"
-msgstr "Enviaエラー: 以下のプロダクトには重量が設定されていません: %(product_names)s"
+"Envia Error: The following products don't have weights set: %(product_names)s"
+msgstr ""
+"Enviaエラー: 以下のプロダクトには重量が設定されていません: %(product_names)s"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_label_file_type
@@ -335,7 +336,8 @@ msgstr "配送をキャンセルするためのEnviaオーダが見つかりま�
 msgid ""
 "Envia requires package dimensions for getting accurate rate, you can define "
 "these in a package type that you set as default"
-msgstr "Enviaでの正確なレート獲得のために梱包の寸法が必要です。デフォルトとして設定し"
+msgstr ""
+"Enviaでの正確なレート獲得のために梱包の寸法が必要です。デフォルトとして設定し"
 "た梱包タイプで定義できます。"
 
 #. module: delivery_envia
@@ -346,10 +348,9 @@ msgid ""
 "Make sure city/commune and state/region are set otherwise enter a postal "
 "code directly"
 msgstr ""
-"Enviaは、取引先: "
-"%(partner_name)sの郵便番号を特定できませんでした。市区町村と都道府県/州・地域"
-"が設定されていることを確認して下さい。設定されていない場合は、郵便番号を直接"
-"入力して下さい。"
+"Enviaは、取引先: %(partner_name)sの郵便番号を特定できませんでした。市区町村と"
+"都道府県/州・地域が設定されていることを確認して下さい。設定されていない場合"
+"は、郵便番号を直接入力して下さい。"
 
 #. module: delivery_envia
 #: model:delivery.carrier,name:delivery_envia.delivery_carrier_envia
@@ -388,27 +389,28 @@ msgstr "Envia配送業者の獲得に失敗しました。後ほど再度お試�
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in"
-" order to send the required information you need to set the UNSPSC code in "
+"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in "
+"order to send the required information you need to set the UNSPSC code in "
 "the following product: %(product_name)s"
 msgstr ""
-"メキシコへの小口貨物輸送には、仕入先請求書(Carta "
-"Porte)が必要です。必要な情報を送信するには、以下のプロダクトで UNSPSC "
-"コードを設定する必要があります: %(product_name)s"
+"メキシコへの小口貨物輸送には、仕入先請求書(Carta Porte)が必要です。必要な情報"
+"を送信するには、以下のプロダクトで UNSPSC コードを設定する必要があります: %"
+"(product_name)s"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
 "For any carriers you'd like to use that are not activated, be sure to "
 "activate it here."
-msgstr "利用したいがまだ有効化されていない配送業者がある場合は、必ずここで有効化して"
+msgstr ""
+"利用したいがまだ有効化されていない配送業者がある場合は、必ずここで有効化して"
 "下さい。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"For your available carriers you'll need to make sure that they are available"
-" through Envia (make sure to select all available countries):<br/>"
+"For your available carriers you'll need to make sure that they are available "
+"through Envia (make sure to select all available countries):<br/>"
 msgstr ""
 "利用可能な配送業者については、それらがEnviaを通じて利用可能であることを確認す"
 "る必要があります(利用可能な国を全て選択して下さい): <br/>"
@@ -433,9 +435,10 @@ msgstr "ID"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
 msgid ""
-"If the carrier is unable to deliver the package, the package can be returned"
-" to the shipper or abandoned at the door. (Canada only)"
-msgstr "配送業者が荷物を配達できない場合、荷物は発送人に返送されるか、または玄関先で"
+"If the carrier is unable to deliver the package, the package can be returned "
+"to the shipper or abandoned at the door. (Canada only)"
+msgstr ""
+"配送業者が荷物を配達できない場合、荷物は発送人に返送されるか、または玄関先で"
 "放棄されます。(カナダのみ)"
 
 #. module: delivery_envia
@@ -462,12 +465,12 @@ msgstr "最終更新日"
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
 "Lastly, head to the Developers / API Keys section and generate a new API "
-"Key. This will be used by Odoo to communicate with Envia so note it down for"
-" later."
+"Key. This will be used by Odoo to communicate with Envia so note it down for "
+"later."
 msgstr ""
-"最後に、「開発者 / API キー」セクションに移動し、新しい API "
-"キーを生成します。これは Odoo が Envia "
-"と通信するため、後で必要になりますのでメモして下さい。"
+"最後に、「開発者 / API キー」セクションに移動し、新しい API キーを生成しま"
+"す。これは Odoo が Envia と通信するため、後で必要になりますのでメモして下さ"
+"い。"
 
 #. module: delivery_envia
 #. odoo-python
@@ -513,9 +516,8 @@ msgid ""
 "No carrier is set on \"%(delivery_method)s\". To use Envia.com, you'll need "
 "to sync your carriers with your account."
 msgstr ""
-"\"%(delivery_method)s\" "
-"には配送業者が設定されていません。Envia.comを利用するには、配送業者情報をアカ"
-"ウントと同期させる必要があります。"
+"\"%(delivery_method)s\" には配送業者が設定されていません。Envia.comを利用する"
+"には、配送業者情報をアカウントと同期させる必要があります。"
 
 #. module: delivery_envia
 #. odoo-python
@@ -528,7 +530,8 @@ msgstr "レートが見つかりません"
 msgid ""
 "Once your delivery method is properly configured, you can sync the carriers "
 "Envia provides for your country of origin: <br/>"
-msgstr "配送方法が適切に設定されたら、Enviaが提供する原産国向けの配送業者と同期するこ"
+msgstr ""
+"配送方法が適切に設定されたら、Enviaが提供する原産国向けの配送業者と同期するこ"
 "とができます: <br/>"
 
 #. module: delivery_envia
@@ -589,9 +592,10 @@ msgstr "集荷住居区域"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_delivery
 msgid ""
-"Provide liftgate assistance if the recipient doesn't have a dock or forklift"
-" to unload the shipment. (United States and Mexico Only)"
-msgstr "受取人がドックやフォークリフトを持っていない場合、配達物を降ろすためのリフト"
+"Provide liftgate assistance if the recipient doesn't have a dock or forklift "
+"to unload the shipment. (United States and Mexico Only)"
+msgstr ""
+"受取人がドックやフォークリフトを持っていない場合、配達物を降ろすためのリフト"
 "ゲート支援を提供します。(米国およびメキシコのみ)"
 
 #. module: delivery_envia
@@ -599,7 +603,8 @@ msgstr "受取人がドックやフォークリフトを持っていない場合
 msgid ""
 "Provide liftgate assitance if the supplier doesn't have a dock or forklift "
 "to load the shipment. (United States and Mexico Only)"
-msgstr "サプライヤーがドックやフォークリフトを持っていない場合、配達物を積み込むため"
+msgstr ""
+"サプライヤーがドックやフォークリフトを持っていない場合、配達物を積み込むため"
 "のリフトゲート支援を提供します。(米国およびメキシコのみ)"
 
 #. module: delivery_envia
@@ -742,15 +747,17 @@ msgstr "配送プロダクト"
 msgid ""
 "Specify the Origin country that this connector will ship from. By default "
 "this is the company's country."
-msgstr "このコネクタが発送される出荷元の国を指定します。デフォルトでは、会社の国です"
-"。"
+msgstr ""
+"このコネクタが発送される出荷元の国を指定します。デフォルトでは、会社の国で"
+"す。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Specify the currency your Envia account is configured in. By default this is"
-" the company's currency."
-msgstr "Enviaアカウントの設定通貨を指定して下さい。デフォルトでは、会社の通貨が設定さ"
+"Specify the currency your Envia account is configured in. By default this is "
+"the company's currency."
+msgstr ""
+"Enviaアカウントの設定通貨を指定して下さい。デフォルトでは、会社の通貨が設定さ"
 "れています。"
 
 #. module: delivery_envia
@@ -773,7 +780,8 @@ msgstr "Envia配送業者を同期"
 msgid ""
 "The carrier on Envia.com used by this carrier. The service code belongs to "
 "it."
-msgstr "この配送業者が使用するEnvia.comの配送業者。サービスコードはこれに属します。"
+msgstr ""
+"この配送業者が使用するEnvia.comの配送業者。サービスコードはこれに属します。"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_service_code
@@ -781,7 +789,8 @@ msgstr "この配送業者が使用するEnvia.comの配送業者。サービス
 msgid ""
 "The service that will be used for this carrier. This is set when you select "
 "a carrier from the wizard."
-msgstr "この配送業者に使用されるサービス。ウィザードから配送業者を選択する際に設定し"
+msgstr ""
+"この配送業者に使用されるサービス。ウィザードから配送業者を選択する際に設定し"
 "ます。"
 
 #. module: delivery_envia
@@ -805,8 +814,8 @@ msgstr "オーダをキャンセルできません: %(order_number)s"
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You can also preselect which services will be used, our recommendation is to"
-" not limit this as we will pick them in Odoo anyway."
+"You can also preselect which services will be used, our recommendation is to "
+"not limit this as we will pick them in Odoo anyway."
 msgstr ""
 "また、使用するサービスを事前に選択することもできます。当社の推奨は、これを制"
 "限しないことです。いずれにしても、Odooで選択することになります。"
@@ -814,9 +823,10 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You should also make sure that if you export to other countries, you have to"
-" select who will pay for customs duties."
-msgstr "また、他の国に輸出する場合は、関税の支払者を指定する必要がありますのでご確認"
+"You should also make sure that if you export to other countries, you have to "
+"select who will pay for customs duties."
+msgstr ""
+"また、他の国に輸出する場合は、関税の支払者を指定する必要がありますのでご確認"
 "下さい。"
 
 #. module: delivery_envia
@@ -826,8 +836,8 @@ msgid ""
 "intend to use in this region. Note that each service can have different "
 "pricing and availability."
 msgstr ""
-"この地域で利用する予定の特定のEnvia配送業者とサービスを指定することができます"
-"。各サービスには、異なる価格設定と利用可能条件が適用される場合があります。"
+"この地域で利用する予定の特定のEnvia配送業者とサービスを指定することができま"
+"す。各サービスには、異なる価格設定と利用可能条件が適用される場合があります。"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia

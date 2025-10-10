@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -61,13 +61,25 @@ msgstr "<i class=\"fa fa-pie-chart\"/> 詳情"
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid ""
-"<i data-trigger-type=\"sms_click\" class=\"fa fa-hand-pointer-o o_ma_text_processed o_add_child_activity text-success\" title=\"Clicked\" role=\"img\" aria-label=\"Clicked\"/>\n"
-"                    <i data-trigger-type=\"sms_not_click\" class=\"fa fa-hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" title=\"Not Clicked\" role=\"img\" aria-label=\"Not Clicked\"/>\n"
-"                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" title=\"Bounced\" role=\"img\" aria-label=\"Bounced\"/>"
+"<i data-trigger-type=\"sms_click\" class=\"fa fa-hand-pointer-o "
+"o_ma_text_processed o_add_child_activity text-success\" title=\"Clicked\" "
+"role=\"img\" aria-label=\"Clicked\"/>\n"
+"                    <i data-trigger-type=\"sms_not_click\" class=\"fa fa-"
+"hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"Not Clicked\" role=\"img\" aria-label=\"Not Clicked\"/>\n"
+"                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-"
+"exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"Bounced\" role=\"img\" aria-label=\"Bounced\"/>"
 msgstr ""
-"<i data-trigger-type=\"sms_click\" class=\"fa fa-hand-pointer-o o_ma_text_processed o_add_child_activity text-success\" title=\"已點擊開啟\" role=\"img\" aria-label=\"已點擊開啟\"/>\n"
-"                    <i data-trigger-type=\"sms_not_click\" class=\"fa fa-hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" title=\"未有點擊開啟\" role=\"img\" aria-label=\"未有點擊開啟\"/>\n"
-"                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" title=\"彈回\" role=\"img\" aria-label=\"彈回\"/>"
+"<i data-trigger-type=\"sms_click\" class=\"fa fa-hand-pointer-o "
+"o_ma_text_processed o_add_child_activity text-success\" title=\"已點擊開啟\" "
+"role=\"img\" aria-label=\"已點擊開啟\"/>\n"
+"                    <i data-trigger-type=\"sms_not_click\" class=\"fa fa-"
+"hand-pointer-o o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"未有點擊開啟\" role=\"img\" aria-label=\"未有點擊開啟\"/>\n"
+"                    <i data-trigger-type=\"sms_bounce\" class=\"fa fa fa-"
+"exclamation-circle o_ma_text_rejected o_add_child_activity text-danger\" "
+"title=\"彈回\" role=\"img\" aria-label=\"彈回\"/>"
 
 #. module: marketing_automation_sms
 #: model:ir.model.fields,field_description:marketing_automation_sms.field_marketing_activity__activity_type
@@ -176,16 +188,6 @@ msgid "SMS"
 msgstr "電話短訊（SMS）"
 
 #. module: marketing_automation_sms
-#: model_terms:ir.ui.view,arch_db:marketing_automation_sms.mailing_mailing_view_form_marketing_activity
-msgid "SMS Content"
-msgstr "SMS 內容"
-
-#. module: marketing_automation_sms
-#: model_terms:ir.ui.view,arch_db:marketing_automation_sms.mailing_mailing_view_form_marketing_activity
-msgid "SMS Options"
-msgstr "短訊選項"
-
-#. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_campaign_view_form
 msgid "SMS Sent"
 msgstr "SMS Sent"
@@ -262,7 +264,8 @@ msgid ""
 "after the Participant <strong>clicked</strong>,<br/>on any link included in "
 "the <strong>SMS text message</strong> sent by the Activity \""
 msgstr ""
-"在參加者<strong>按下</strong><br/>活動傳送的<strong>SMS 文字訊息</strong>內含的任何連結之後。活動：「"
+"在參加者<strong>按下</strong><br/>活動傳送的<strong>SMS 文字訊息</strong>內含"
+"的任何連結之後。活動：「"
 
 #. module: marketing_automation_sms
 #: model_terms:ir.ui.view,arch_db:marketing_automation_sms.marketing_activity_summary_template_sms
@@ -270,3 +273,9 @@ msgid ""
 "if no link included in the <strong>SMS text message</strong> sent by the "
 "Activity \""
 msgstr "如果由以下活動傳送的 <strong>SMS 文字簡訊</strong>內，沒有包括連結：「"
+
+#~ msgid "SMS Content"
+#~ msgstr "SMS 內容"
+
+#~ msgid "SMS Options"
+#~ msgstr "短訊選項"

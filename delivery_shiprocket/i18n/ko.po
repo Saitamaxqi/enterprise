@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -29,14 +29,15 @@ msgstr "<b>새로운 채널 추가를 클릭하세요.</b>"
 msgid ""
 "<b>Copy your API User's Email and Password and paste into Shipping method's "
 "configuration.</b>"
-msgstr "<b>API 사용자 이메일 및 비밀번호를 복사해서 배송 방법의 환경 설정에 붙여 "
-"넣으세요.</b>"
+msgstr ""
+"<b>API 사용자 이메일 및 비밀번호를 복사해서 배송 방법의 환경 설정에 붙여 넣으"
+"세요.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Fill the details and Click on Save Channel &amp; Test Connection "
-"button.</b>"
+"<b>Fill the details and Click on Save Channel &amp; Test Connection button.</"
+"b>"
 msgstr "<b>세부 정보 입력 후 채널 저장 및 테스트 연결 버튼을 클릭하세요.</b>"
 
 #. module: delivery_shiprocket
@@ -56,13 +57,15 @@ msgstr "<b>수기 추가 버튼을 클릭하세요.</b>"
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </b>\n"
-"                                <b>You can add new API User from the right side of the page.</b>\n"
+"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </"
+"b>\n"
+"                                <b>You can add new API User from the right "
+"side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>계정을 생성한 후에는 설정 &gt; API &gt; 환경 설정으로 이동합니다. </b>\n"
-"                                <b>페이지 우측에서 새로운 API 사용자를 "
-"추가할 수 있습니다.</b>\n"
+"                                <b>페이지 우측에서 새로운 API 사용자를 추가"
+"할 수 있습니다.</b>\n"
 "                                <br/>"
 
 #. module: delivery_shiprocket
@@ -75,21 +78,21 @@ msgstr "<b>채널을 생성하려면 Shiprocket 채널로 이동하세요.</b>"
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> In test environment, to avoid "
 "charges, your shippings are automatically <b>cancelled</b> after the label "
-"creation. The amount of cancelled shipment will be returned in next 3-4 "
-"days."
+"creation. The amount of cancelled shipment will be returned in next 3-4 days."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/> 테스트 환경에서 요금이 부과되지 "
-"않도록 라벨 생성 후 배송이 자동으로 <b>취소</b>됩니다. 취소된 배송 요금은 3-"
-"4 일 이후에 환불됩니다."
+"<i class=\"fa fa-exclamation-triangle\"/> 테스트 환경에서 요금이 부과되지 않"
+"도록 라벨 생성 후 배송이 자동으로 <b>취소</b>됩니다. 취소된 배송 요금은 3-4 "
+"일 이후에 환불됩니다."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid ""
-"A manifest is a document that is required by some carriers to streamline the"
-" pickup process.particularly when shipping out a high-volume of ecommerce "
+"A manifest is a document that is required by some carriers to streamline the "
+"pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
-msgstr "적하 목록은 배송업체에서 요구하는 문서입니다. 픽업 프로세스를 간소화하기 "
-"위한 것으로, 온라인몰 대량 주문 배송 시 요청합니다."
+msgstr ""
+"적하 목록은 배송업체에서 요구하는 문서입니다. 픽업 프로세스를 간소화하기 위"
+"한 것으로, 온라인몰 대량 주문 배송 시 요청합니다."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -193,10 +196,11 @@ msgstr "API 사용자 생성"
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid ""
-"Create a pickup request for your order shipment using Validate button of the"
-" Delivery Order."
-msgstr "주문 배송과 관련된 수령요청서를 작성하려면 배송주문서의 확인 버튼을 "
-"클릭하세요."
+"Create a pickup request for your order shipment using Validate button of the "
+"Delivery Order."
+msgstr ""
+"주문 배송과 관련된 수령요청서를 작성하려면 배송주문서의 확인 버튼을 클릭하세"
+"요."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__create_uid
@@ -248,8 +252,9 @@ msgstr "Shiprocket 계정 (API) 사용자 이름을 입력하세요."
 msgid ""
 "Eway Bill number is required to ship an order if order amount is more than "
 "50,000 INR."
-msgstr "주문 금액이 50,000 INR 이상인 경우에는 Eway 청구서 번호를 입력해야 주문 "
-"배송을 할 수 있습니다."
+msgstr ""
+"주문 금액이 50,000 INR 이상인 경우에는 Eway 청구서 번호를 입력해야 주문 배송"
+"을 할 수 있습니다."
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -285,13 +290,13 @@ msgstr ""
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid ""
-"Get all the integrated channels from your Shiprocket account.This channel id"
-" is used to select or specify a custom channel at the time of Shiprocket "
+"Get all the integrated channels from your Shiprocket account.This channel id "
+"is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
 msgstr ""
 "Shiprocket 계정에서 전체 통합 채널 정보를 가져옵니다. 채널 아이디는 "
-"Shiprocket 주문을 생성할 경우 사용자 지정 채널을 선택하거나 지정하기 위해 "
-"사용됩니다."
+"Shiprocket 주문을 생성할 경우 사용자 지정 채널을 선택하거나 지정하기 위해 사"
+"용됩니다."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -325,7 +330,8 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Label generated for %(courier)s with Tracking Number: %(tracking_ref)s"
-msgstr "트래킹 번호가 포함된 %(courier)s 택배용 라벨이 생성됩니다:%(tracking_ref)s"
+msgstr ""
+"트래킹 번호가 포함된 %(courier)s 택배용 라벨이 생성됩니다:%(tracking_ref)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_uid
@@ -413,8 +419,9 @@ msgstr "요금 정보를 확인하려면 판매주문서나 픽업이 필요합�
 msgid ""
 "Same order is available in Shiprocket so label provided is the copy of "
 "existing one."
-msgstr "Shiprocket에서 동일한 주문을 할 수 있습니다. 제공되는 라벨은 기존 주문서의 "
-"사본입니다."
+msgstr ""
+"Shiprocket에서 동일한 주문을 할 수 있습니다. 제공되는 라벨은 기존 주문서의 사"
+"본입니다."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -546,16 +553,18 @@ msgstr "Shiprocket 업체가 배송 시 수령만 사용하도록 환경설정�
 msgid ""
 "Shiprocket requires package dimensions for getting accurate rate, you can "
 "define these in a package type that you set as default"
-msgstr "Shiprocket 패키지 치수 정보가 있어야 정확한 요금을 확인할 수 있습니다. "
-"패키지 유형 기본값에서 지정하시면 됩니다."
+msgstr ""
+"Shiprocket 패키지 치수 정보가 있어야 정확한 요금을 확인할 수 있습니다. 패키"
+"지 유형 기본값에서 지정하시면 됩니다."
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto
 msgid ""
 "Shiprocket token expires in 10 days. Token will be auto generate based on "
 "this token expiry date."
-msgstr "Shiprocket 토큰이 10일 후 만료됩니다. 해당 만료일을 기준으로 토큰이 자동 "
-"생성됩니다."
+msgstr ""
+"Shiprocket 토큰이 10일 후 만료됩니다. 해당 만료일을 기준으로 토큰이 자동 생성"
+"됩니다."
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -572,8 +581,9 @@ msgstr "재고 포장 유형"
 msgid ""
 "Store shiprocket order(s) in a (+) separated string, used in cancelling the "
 "order."
-msgstr "Shiprocket 주문은 주문서를 취소할 때 사용하는 (+)로 구분된 문자열로 "
-"저장하세요."
+msgstr ""
+"Shiprocket 주문은 주문서를 취소할 때 사용하는 (+)로 구분된 문자열로 저장하세"
+"요."
 
 #. module: delivery_shiprocket
 #. odoo-python

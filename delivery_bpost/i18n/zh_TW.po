@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -267,7 +267,8 @@ msgstr "BPost 貨運服務無回應，請稍後再試。"
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
+"The address of your company/warehouse is incomplete or wrong (Missing "
+"field(s):  \n"
 " %s)"
 msgstr ""
 "你公司/倉庫的地址不完整或錯誤（缺漏欄位：\n"
@@ -285,7 +286,8 @@ msgstr "由於你所有的產品都是服務，因此無法估算預計運費。
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "由於以下產品缺漏重量資料，因此未能估算預計運費：\n"

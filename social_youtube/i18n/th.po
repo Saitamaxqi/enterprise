@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -44,8 +44,10 @@ msgstr "<span class=\"fw-bold\">ช่อง YouTube ของคุณ</span>"
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
-"<span>These are stored up to 30 days and refreshed often to provide you an accurate depiction of reality. </span>\n"
-"                        <span>To delete these from Odoo, simply delete this account.</span>"
+"<span>These are stored up to 30 days and refreshed often to provide you an "
+"accurate depiction of reality. </span>\n"
+"                        <span>To delete these from Odoo, simply delete this "
+"account.</span>"
 msgstr ""
 "<span>สิ่งเหล่านี้จะถูกเก็บไว้นานถึง 30 "
 "วันและรีเฟรชบ่อยครั้งเพื่อให้คุณเห็นภาพความเป็นจริงที่แม่นยำ</span>\n"
@@ -186,10 +188,9 @@ msgstr "คุณต้องการลบวิดีโอออกจาก
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_token_expiration_date
 msgid ""
-"Expiration date of the Access Token provided by the YouTube API, this should"
-" never be set manually."
-msgstr ""
-"วันหมดอายุของโทเค็นการเข้าถึงที่ได้รับจาก YouTube API ไม่ควรตั้งค่าด้วยตนเอง"
+"Expiration date of the Access Token provided by the YouTube API, this should "
+"never be set manually."
+msgstr "วันหมดอายุของโทเค็นการเข้าถึงที่ได้รับจาก YouTube API ไม่ควรตั้งค่าด้วยตนเอง"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account__youtube_access_token
@@ -275,7 +276,8 @@ msgstr "เมื่อโพสต์แล้ว ให้ตั้งค่�
 #. odoo-python
 #: code:addons/social_youtube/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "โอ๊ะ! ขณะนี้คุณยังไม่มีการสมัครใช้งานแบบแอคทีฟ ไม่ต้องกังวลไป คุณสามารถสมัครใช้งานได้ง่ายๆ ที่นี่: "
@@ -329,8 +331,7 @@ msgstr "เหตุผล:"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
 msgid ""
-"Refresh token provided by the YouTube API, this should never be set "
-"manually."
+"Refresh token provided by the YouTube API, this should never be set manually."
 msgstr "รีเฟรชโทเค็นที่จัดทำโดย YouTube API ไม่ควรตั้งค่าด้วยตนเอง"
 
 #. module: social_youtube
@@ -523,8 +524,8 @@ msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
 msgstr ""
-"ใช้ในการเปรียบเทียบเมื่อเราต้องการจำกัดฟีเจอร์บางอย่างสำหรับสื่อเฉพาะ ('facebook', 'x', "
-"...)"
+"ใช้ในการเปรียบเทียบเมื่อเราต้องการจำกัดฟีเจอร์บางอย่างสำหรับสื่อเฉพาะ ('facebook', "
+"'x', ...)"
 
 #. module: social_youtube
 #. odoo-python
@@ -741,8 +742,7 @@ msgstr "ยอดเข้าชม YouTube"
 #. odoo-python
 #: code:addons/social_youtube/controllers/main.py:0
 msgid "YouTube did not provide a valid access token or it may have expired."
-msgstr ""
-"YouTube ไม่ได้มอบโทเค็นเพื่อการเข้าถึงที่ถูกต้อง หรือโทเค็นอาจหมดอายุแล้ว"
+msgstr "YouTube ไม่ได้มอบโทเค็นเพื่อการเข้าถึงที่ถูกต้อง หรือโทเค็นอาจหมดอายุแล้ว"
 
 #. module: social_youtube
 #. odoo-python
@@ -783,10 +783,9 @@ msgstr "ข้อมูลเมตาของวิดีโอของคุ
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid ""
-"e.g. Engage your entire community with a single app! "
-"https://www.odoo.com/trial"
-msgstr ""
-"เช่น มีส่วนร่วมกับชุมชนทั้งหมดของคุณด้วยแอปเดียว! https://www.odoo.com/trial"
+"e.g. Engage your entire community with a single app! https://www.odoo.com/"
+"trial"
+msgstr "เช่น มีส่วนร่วมกับชุมชนทั้งหมดของคุณด้วยแอปเดียว! https://www.odoo.com/trial"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form

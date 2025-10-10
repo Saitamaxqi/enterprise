@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/pos_pricer/"
@@ -92,8 +92,7 @@ msgstr "ข้อผิดพลาด: ตรวจสอบข้อมูล�
 #. odoo-python
 #: code:addons/pos_pricer/models/pricer_store.py:0
 msgid "Failed to unlink Pricer tag %(pricer_tag)s at API url %(api_url)s"
-msgstr ""
-"ไม่สามารถยกเลิกการเชื่อมโยงแท็ก Pricer %(pricer_tag)s ที่ API url %(api_url)s"
+msgstr "ไม่สามารถยกเลิกการเชื่อมโยงแท็ก Pricer %(pricer_tag)s ที่ API url %(api_url)s"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pos_config__id
@@ -116,8 +115,7 @@ msgstr "ตัวระบุร้านค้าในระบบ Pricer"
 msgid ""
 "Invalid tag name. Should be 1 letter followed by 16 digits. Example: "
 "'N4081315789813275'"
-msgstr ""
-"ชื่อแท็กไม่ถูกต้อง ควรเป็น 1 ตัวอักษรตามด้วย 16 หลัก ตัวอย่าง: 'N4081315789813275'"
+msgstr "ชื่อแท็กไม่ถูกต้อง ควรเป็น 1 ตัวอักษรตามด้วย 16 หลัก ตัวอย่าง: 'N4081315789813275'"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__name
@@ -241,8 +239,7 @@ msgstr "รหัสร้านค้า Pricer"
 msgid ""
 "Pricer Store ID must only contain lowercase a-z, 0-9 or '-' and not start "
 "with '-'"
-msgstr ""
-"รหัสร้านค้าของ Pricer ต้องมีเฉพาะตัวพิมพ์เล็ก a-z, 0-9 หรือ '-' และไม่ขึ้นต้นด้วย '-'"
+msgstr "รหัสร้านค้าของ Pricer ต้องมีเฉพาะตัวพิมพ์เล็ก a-z, 0-9 หรือ '-' และไม่ขึ้นต้นด้วย '-'"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__name
@@ -377,8 +374,7 @@ msgstr ""
 msgid ""
 "Tag id should be a 17 characters string composed of a letter followed by 16 "
 "digits"
-msgstr ""
-"รหัสแท็กควรเป็นสตริงอักขระ 17 ตัวที่ประกอบด้วยตัวอักษรตามด้วยตัวเลข 16 หลัก"
+msgstr "รหัสแท็กควรเป็นสตริงอักขระ 17 ตัวที่ประกอบด้วยตัวอักษรตามด้วยตัวเลข 16 หลัก"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_sale_pricelist_id
@@ -390,8 +386,8 @@ msgstr "รายการราคานี้จะใช้เพื่อก
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__pricer_store_id
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_store_id
 msgid ""
-"This product will be linked to and displayed on the Pricer tags of the store"
-" selected here"
+"This product will be linked to and displayed on the Pricer tags of the store "
+"selected here"
 msgstr "สินค้านี้จะเชื่อมโยงและแสดงบนแท็กราคาของร้านค้าที่เลือกที่นี่"
 
 #. module: pos_pricer

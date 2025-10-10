@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 11:58+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
@@ -19,8 +19,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_bpost
@@ -126,6 +126,12 @@ msgid "Destroy"
 msgstr "Destruir"
 
 #. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__domestic
 msgid "Domestic"
 msgstr "Doméstico"
@@ -139,6 +145,12 @@ msgstr "REGALO"
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__goods
 msgid "GOODS"
 msgstr "BIENES"
+
+#. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__international
@@ -256,7 +268,8 @@ msgstr "El servicio de envío BPOST no responde, por favor intenta más tarde."
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
+"The address of your company/warehouse is incomplete or wrong (Missing "
+"field(s):  \n"
 " %s)"
 msgstr ""
 "La dirección de su empresa o almacén no está completa o es errónea (Campos "
@@ -266,17 +279,23 @@ msgstr ""
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "The estimated shipping price cannot be computed because all your products are service."
-msgstr "No se puede calcular el precio estimado del envío porque todos sus productos son servicios."
+msgid ""
+"The estimated shipping price cannot be computed because all your products "
+"are service."
+msgstr ""
+"No se puede calcular el precio estimado del envío porque todos sus productos "
+"son servicios."
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"El precio estimado de envío no se puede calcular porque falta el peso para los siguientes productos: \n"
+"El precio estimado de envío no se puede calcular porque falta el peso para "
+"los siguientes productos: \n"
 " %s"
 
 #. module: delivery_bpost
@@ -312,7 +331,9 @@ msgstr "Números de rastreo:"
 #. odoo-python
 #: code:addons/delivery_bpost/models/delivery_bpost.py:0
 msgid "You cannot compute a passphrase for non-bpost carriers."
-msgstr "No puede calcular una frase de contraseña para operadores que no utilizan bpost."
+msgstr ""
+"No puede calcular una frase de contraseña para operadores que no utilizan "
+"bpost."
 
 #. module: delivery_bpost
 #. odoo-python
@@ -371,7 +392,9 @@ msgstr "Tipo de paquete por defecto de Bpost"
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."
+msgid ""
+"bpost Domestic is used only to ship inside Belgium. Please change the "
+"delivery method into bpost International."
 msgstr ""
 "bpost Domestic se utiliza únicamente dentro de Bélgica. Por favor cambia el "
 "método de entrega a bpost International."
@@ -379,7 +402,9 @@ msgstr ""
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."
+msgid ""
+"bpost International is used only to ship outside Belgium. Please change the "
+"delivery method into bpost Domestic."
 msgstr ""
 "bpost International se utiliza únicamente fuera de Bélgica. Por favor cambia "
 "el método de entrega a bpost  Domestic."

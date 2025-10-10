@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 23:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -34,8 +34,10 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
 "<b>Khi tài khoản được tạo, đi tới Bảng điều khiển và bấm vào mũi tên cạnh "
@@ -46,8 +48,8 @@ msgstr ""
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
@@ -129,14 +131,19 @@ msgid "Delivery Carrier"
 msgstr "Dịch vụ giao hàng"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "Tên hiển thị"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
 msgstr ""
 "Đừng quên tải tài khoản đơn vị vận chuyển Easypost của bạn để có cấu hình "
 "hợp lệ."
@@ -226,8 +233,11 @@ msgid "Go to"
 msgstr "Đi đến"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -249,7 +259,9 @@ msgstr "Mức phí bảo hiểm (USD)"
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
 msgstr ""
 "Có vẻ Easypost không cung cấp lô vận chuyển cho đơn hàng này.                "
 "Chúng tôi khuyên bạn nên thử loại đóng gói khác hoặc cấp độ dịch vụ khác."
@@ -295,7 +307,8 @@ msgstr "PNG"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Package type used in pack %s is not configured for easypost."
-msgstr "Loại kiện hàng dùng trong gói %s không được định cấu hình cho easypost."
+msgstr ""
+"Loại kiện hàng dùng trong gói %s không được định cấu hình cho easypost."
 
 #. module: delivery_easypost
 #. odoo-python
@@ -409,23 +422,29 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "Không thể tính toán giá ước tính vì trọng lượng của sản phẩm bị thiếu."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Không thể tính giá vận chuyển ước tính vì thiếu khối lượng của (các) sản phẩm sau: \n"
+"Không thể tính giá vận chuyển ước tính vì thiếu khối lượng của (các) sản "
+"phẩm sau: \n"
 " %s"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
 msgstr ""
 "Cấp độ dịch vụ được chọn cho một kiện hàng của bạn không có mức phí. Vui "
 "lòng chọn cấp độ dịch vụ khác."
@@ -462,7 +481,9 @@ msgstr "Bạn không thể hủy vận chuyển Easypost."
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
 msgstr ""
 "Bạn không có đơn vị vận chuyển liên kết với tài khoản "
 "Easypost.                Vui lòng kết nối với Easypost, liên kết tài khoản "
@@ -477,3 +498,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "để tạo một tài khoản mới:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"

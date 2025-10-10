@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-17 09:36+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -45,7 +45,8 @@ msgstr "Icono de flecha"
 #. module: esg_hr_fleet
 #: model_terms:ir.ui.view,arch_db:esg_hr_fleet.res_config_settings_view_form
 msgid "Average number of days per week employees commute to the office."
-msgstr "Número promedio de días a la semana que los empleados van a la oficina."
+msgstr ""
+"Número promedio de días a la semana que los empleados van a la oficina."
 
 #. module: esg_hr_fleet
 #: model:ir.model,name:esg_hr_fleet.model_res_company
@@ -243,8 +244,8 @@ msgstr ""
 #. module: esg_hr_fleet
 #: model_terms:ir.actions.act_window,help:esg_hr_fleet.action_employee_commuting_report_views
 msgid ""
-"Track commuting emissions based on each employee’s distance from home to the"
-" office and the emission factor of their vehicle model."
+"Track commuting emissions based on each employee’s distance from home to the "
+"office and the emission factor of their vehicle model."
 msgstr ""
 "Monitorear las emisiones por el desplazamiento diario según la distancia que "
 "cada empleado viaja de su casa a la oficina y el factor de emisión del "

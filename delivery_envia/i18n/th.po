@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:30+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:59+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -49,9 +49,9 @@ msgid ""
 "otherwise it will be abandoned at the customer's door."
 msgstr ""
 "หมายเหตุ บางประเทศรองรับบริการเสริมพิเศษสำหรับการจัดส่งพาเลทหรือกล่อง ตัวอย่างเช่น "
-"ประเทศแคนาดามีตัวเลือกในการจัดการการจัดส่งที่พลาดไปโดยการส่งคืนสินค้ากลับไปยังคลังสินค้าของคุณห"
-"รือทิ้งไว้ที่หน้าประตูบ้าน หากต้องการเปิดใช้งานฟีเจอร์นี้ โปรดเปิดใช้งาน "
-"\"ส่งคืนที่ค่าใช้จ่ายของผู้จัดส่ง\" ไม่เช่นนั้น สินค้าจะถูกทิ้งไว้ที่ประตูบ้านของลูกค้า"
+"ประเทศแคนาดามีตัวเลือกในการจัดการการจัดส่งที่พลาดไปโดยการส่งคืนสินค้ากลับไปยังคลังสินค้าของคุณหรือทิ้งไว้ที่หน้าประตูบ้าน "
+"หากต้องการเปิดใช้งานฟีเจอร์นี้ โปรดเปิดใช้งาน \"ส่งคืนที่ค่าใช้จ่ายของผู้จัดส่ง\" ไม่เช่นนั้น "
+"สินค้าจะถูกทิ้งไว้ที่ประตูบ้านของลูกค้า"
 
 #. module: delivery_envia
 #. odoo-python
@@ -142,8 +142,8 @@ msgstr "ประกอบด้วยรายการบริการที
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Copy over the API Key from Envia into either the sandbox or production field"
-" in Delivery Methods."
+"Copy over the API Key from Envia into either the sandbox or production field "
+"in Delivery Methods."
 msgstr "คัดลอกรหัส API จาก Envia ลงในแซนด์บ็อกซ์หรือฟิลด์การผลิตในวิธีการจัดส่ง"
 
 #. module: delivery_envia
@@ -156,8 +156,8 @@ msgstr ""
 msgid ""
 "Create and edit a package for this delivery method to be used as reference "
 "for quotations and labels. This package can be of type <b>box</b>, "
-"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be"
-" used."
+"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be "
+"used."
 msgstr ""
 "สร้างและแก้ไขแพ็คเกจสำหรับวิธีการจัดส่งนี้เพื่อใช้เป็นข้อมูลอ้างอิงสำหรับใบเสนอราคาและฉลาก "
 "แพ็คเกจนี้สามารถเป็น<b>กล่อง</b> <b>ซอง</b> หรือ<b>พาเลท</b> "
@@ -256,28 +256,26 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: %(message)s - %(description)s %(location)s (Reference code: "
-"%(reference)s)"
+"Envia Error: %(message)s - %(description)s %(location)s (Reference code: %"
+"(reference)s)"
 msgstr ""
-"เกิดข้อผิดพลาด Envia: %(message)s - %(description)s %(location)s (รหัสอ้างอิง: "
-"%(reference)s)"
+"เกิดข้อผิดพลาด Envia: %(message)s - %(description)s %(location)s (รหัสอ้างอิง: %"
+"(reference)s)"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The API key you entered for %(carrier_name)s seems to be "
-"invalid"
-msgstr ""
-"ข้อผิดพลาด Envia: รหัส API ที่คุณป้อนสำหรับ %(carrier_name)s ดูเหมือนจะไม่ถูกต้อง"
+"Envia Error: The API key you entered for %(carrier_name)s seems to be invalid"
+msgstr "ข้อผิดพลาด Envia: รหัส API ที่คุณป้อนสำหรับ %(carrier_name)s ดูเหมือนจะไม่ถูกต้อง"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
 "Envia Error: The Envia Mail Type (%(package_types)s) set on the package(s) "
-"does not match the type set on the carrier (%(carrier_package_type)s). Use a"
-" different package or different carrier that matches the mail type."
+"does not match the type set on the carrier (%(carrier_package_type)s). Use a "
+"different package or different carrier that matches the mail type."
 msgstr ""
 "ข้อผิดพลาด Envia: ประเภทอีเมล Envia (%(package_types)s) "
 "ที่ตั้งไว้บนแพ็คเกจไม่ตรงกับประเภทที่ตั้งไว้บนผู้ให้บริการ (%(carrier_package_type)s) "
@@ -287,8 +285,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The following products don't have weights set: "
-"%(product_names)s"
+"Envia Error: The following products don't have weights set: %(product_names)s"
 msgstr "Envia Error: ผลิตภัณฑ์ต่อไปนี้ไม่มีการตั้งค่าน้ำหนัก: %(product_names)s"
 
 #. module: delivery_envia
@@ -385,8 +382,8 @@ msgstr "ไม่สามารถดึงข้อมูล Envia Carriers �
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in"
-" order to send the required information you need to set the UNSPSC code in "
+"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in "
+"order to send the required information you need to set the UNSPSC code in "
 "the following product: %(product_name)s"
 msgstr ""
 "สำหรับการขนส่งแบบ LTL ในประเทศเม็กซิโก จำเป็นต้องมีใบตราส่งสินค้า (Carta Porte) "
@@ -397,14 +394,13 @@ msgstr ""
 msgid ""
 "For any carriers you'd like to use that are not activated, be sure to "
 "activate it here."
-msgstr ""
-"สำหรับผู้ให้บริการใดๆ ที่คุณต้องการใช้แต่ยังไม่ได้เปิดใช้งาน โปรดเปิดใช้งานที่นี่"
+msgstr "สำหรับผู้ให้บริการใดๆ ที่คุณต้องการใช้แต่ยังไม่ได้เปิดใช้งาน โปรดเปิดใช้งานที่นี่"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"For your available carriers you'll need to make sure that they are available"
-" through Envia (make sure to select all available countries):<br/>"
+"For your available carriers you'll need to make sure that they are available "
+"through Envia (make sure to select all available countries):<br/>"
 msgstr ""
 "สำหรับผู้ให้บริการขนส่งที่คุณมีอยู่ กรุณาตรวจสอบให้แน่ใจว่าพวกเขาสามารถใช้งานได้ผ่าน Envia "
 "(อย่าลืมเลือกทุกประเทศที่รองรับ):<br/>"
@@ -429,8 +425,8 @@ msgstr "ไอดี"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
 msgid ""
-"If the carrier is unable to deliver the package, the package can be returned"
-" to the shipper or abandoned at the door. (Canada only)"
+"If the carrier is unable to deliver the package, the package can be returned "
+"to the shipper or abandoned at the door. (Canada only)"
 msgstr ""
 "หากผู้ให้บริการขนส่งไม่สามารถส่งมอบพัสดุได้ พัสดุอาจถูกส่งคืนไปยังผู้ส่งหรือทิ้งไว้ที่ประตู "
 "(เฉพาะในประเทศแคนาดาเท่านั้น)"
@@ -459,11 +455,11 @@ msgstr "อัปเดตครั้งล่าสุดเมื่อ"
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
 "Lastly, head to the Developers / API Keys section and generate a new API "
-"Key. This will be used by Odoo to communicate with Envia so note it down for"
-" later."
+"Key. This will be used by Odoo to communicate with Envia so note it down for "
+"later."
 msgstr ""
-"ขั้นตอนสุดท้าย ให้ไปที่ส่วนนักพัฒนา/คีย์ API และสร้างคีย์ API ใหม่ ซึ่ง Odoo จะใช้คีย์นี้ในการสื่อสารกั"
-"บ Envia ดังนั้นจดไว้สำหรับใช้ในภายหลัง"
+"ขั้นตอนสุดท้าย ให้ไปที่ส่วนนักพัฒนา/คีย์ API และสร้างคีย์ API ใหม่ ซึ่ง Odoo "
+"จะใช้คีย์นี้ในการสื่อสารกับ Envia ดังนั้นจดไว้สำหรับใช้ในภายหลัง"
 
 #. module: delivery_envia
 #. odoo-python
@@ -488,8 +484,8 @@ msgid ""
 "have multi country operations you can also create two separate accounts, "
 "keep in mind that your billing will be done in your main currency. <br/>"
 msgstr ""
-"ตรวจสอบให้แน่ใจว่าคุณได้เลือกประเทศที่เหมาะสมสำหรับการเรียกเก็บเงินหลักของคุณ หากคุณมีการดำเนิ"
-"นงานหลายประเทศ คุณยังสามารถสร้างบัญชีแยกกันสองบัญชีได้ "
+"ตรวจสอบให้แน่ใจว่าคุณได้เลือกประเทศที่เหมาะสมสำหรับการเรียกเก็บเงินหลักของคุณ "
+"หากคุณมีการดำเนินงานหลายประเทศ คุณยังสามารถสร้างบัญชีแยกกันสองบัญชีได้ "
 "โปรดทราบว่าการเรียกเก็บเงินของคุณจะดำเนินการในสกุลเงินหลักของคุณ <br/>"
 
 #. module: delivery_envia
@@ -583,8 +579,8 @@ msgstr ""
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_delivery
 msgid ""
-"Provide liftgate assistance if the recipient doesn't have a dock or forklift"
-" to unload the shipment. (United States and Mexico Only)"
+"Provide liftgate assistance if the recipient doesn't have a dock or forklift "
+"to unload the shipment. (United States and Mexico Only)"
 msgstr ""
 "ให้ความช่วยเหลือด้านประตูท้ายรถหากผู้รับสินค้าไม่มีท่าเทียบเรือหรือรถยกเพื่อขนถ่ายสินค้า "
 "(เฉพาะสหรัฐอเมริกาและเม็กซิโก)"
@@ -738,16 +734,14 @@ msgstr "สินค้าจัดส่ง"
 msgid ""
 "Specify the Origin country that this connector will ship from. By default "
 "this is the company's country."
-msgstr ""
-"ระบุประเทศต้นทางที่ตัวเชื่อมต่อนี้จะจัดส่งมา โดยค่าเริ่มต้นจะเป็นประเทศของบริษัท"
+msgstr "ระบุประเทศต้นทางที่ตัวเชื่อมต่อนี้จะจัดส่งมา โดยค่าเริ่มต้นจะเป็นประเทศของบริษัท"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Specify the currency your Envia account is configured in. By default this is"
-" the company's currency."
-msgstr ""
-"ระบุสกุลเงินที่ใช้ในบัญชี Envia ของคุณ โดยค่าเริ่มต้นคือสกุลเงินของบริษัท"
+"Specify the currency your Envia account is configured in. By default this is "
+"the company's currency."
+msgstr "ระบุสกุลเงินที่ใช้ในบัญชี Envia ของคุณ โดยค่าเริ่มต้นคือสกุลเงินของบริษัท"
 
 #. module: delivery_envia
 #: model:ir.model,name:delivery_envia.model_stock_package_type
@@ -769,8 +763,7 @@ msgstr ""
 msgid ""
 "The carrier on Envia.com used by this carrier. The service code belongs to "
 "it."
-msgstr ""
-"ผู้ให้บริการบน Envia.com ที่ผู้ให้บริการรายนี้ใช้ รหัสบริการเป็นของผู้ให้บริการรายนี้"
+msgstr "ผู้ให้บริการบน Envia.com ที่ผู้ให้บริการรายนี้ใช้ รหัสบริการเป็นของผู้ให้บริการรายนี้"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_service_code
@@ -778,8 +771,7 @@ msgstr ""
 msgid ""
 "The service that will be used for this carrier. This is set when you select "
 "a carrier from the wizard."
-msgstr ""
-"บริการที่จะใช้สำหรับผู้ให้บริการรายนี้ สิ่งนี้จะถูกตั้งค่าเมื่อคุณเลือกผู้ให้บริการจากวิซาร์ด"
+msgstr "บริการที่จะใช้สำหรับผู้ให้บริการรายนี้ สิ่งนี้จะถูกตั้งค่าเมื่อคุณเลือกผู้ให้บริการจากวิซาร์ด"
 
 #. module: delivery_envia
 #. odoo-python
@@ -802,8 +794,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You can also preselect which services will be used, our recommendation is to"
-" not limit this as we will pick them in Odoo anyway."
+"You can also preselect which services will be used, our recommendation is to "
+"not limit this as we will pick them in Odoo anyway."
 msgstr ""
 "คุณสามารถเลือกบริการที่จะใช้งานได้ล่วงหน้า "
 "เราขอแนะนำให้ไม่จำกัดสิ่งนี้เนื่องจากเราจะเลือกบริการเหล่านี้ใน Odoo อยู่แล้ว"
@@ -811,8 +803,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You should also make sure that if you export to other countries, you have to"
-" select who will pay for customs duties."
+"You should also make sure that if you export to other countries, you have to "
+"select who will pay for customs duties."
 msgstr ""
 "คุณควรตรวจสอบให้แน่ใจว่าหากคุณส่งออกไปยังประเทศอื่น คุณจะต้องเลือกผู้ที่จะชำระภาษีศุลกากร"
 

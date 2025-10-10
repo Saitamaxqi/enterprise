@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -22,8 +22,7 @@ msgstr ""
 #. module: hr_payroll_holidays
 #: model_terms:ir.actions.act_window,help:hr_payroll_holidays.hr_leave_work_entry_action
 msgid ""
-"A great way to keep track on employee’s PTOs, sick days, and approval "
-"status."
+"A great way to keep track on employee’s PTOs, sick days, and approval status."
 msgstr "追踪员工的PTO、病假和批准状态的一个好方法。"
 
 #. module: hr_payroll_holidays
@@ -198,7 +197,8 @@ msgstr "下个月的工作条目尚未生成，或者已经过验证，以便休
 msgid ""
 "The pay of the month is already validated with this day included. If you "
 "need to adapt, please refer to HR."
-msgstr "本月的薪资已经包含此日期进行了审核。如果您需要进行调整,请咨询人力资源部门。"
+msgstr ""
+"本月的薪资已经包含此日期进行了审核。如果您需要进行调整,请咨询人力资源部门。"
 
 #. module: hr_payroll_holidays
 #. odoo-python

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Ukrainian <https://translate.odoo.com/projects/odoo-19/"
@@ -20,10 +20,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
-"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
-"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
-"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_easypost
@@ -38,18 +38,23 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
-"<b>Після того, як буде створено ваш обліковий запис, перейдіть до Панелі приладів та натисніть на стрілку поруч з ім’ям користувача, щоби налаштувати облікові записи постачальника. </b>\n"
-"                <b>Ви можете додати нові облікові записи постачальника справа на тій же сторінці.</b>\n"
+"<b>Після того, як буде створено ваш обліковий запис, перейдіть до Панелі "
+"приладів та натисніть на стрілку поруч з ім’ям користувача, щоби налаштувати "
+"облікові записи постачальника. </b>\n"
+"                <b>Ви можете додати нові облікові записи постачальника "
+"справа на тій же сторінці.</b>\n"
 "                <br/>"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Дюйми</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
@@ -130,15 +135,22 @@ msgid "Delivery Carrier"
 msgstr "Перевізник"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
-msgstr "Не забудьте завантажити рахунки перевізника Easypost для дійсного налаштування."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
+msgstr ""
+"Не забудьте завантажити рахунки перевізника Easypost для дійсного "
+"налаштування."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__epl2
@@ -225,15 +237,20 @@ msgid "Go to"
 msgstr "Перейти до"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
 #. module: delivery_easypost
 #: model:ir.model.fields,help:delivery_easypost.field_delivery_carrier__easypost_default_service_id
 msgid "If not set, the less expensive available service level will be chosen."
-msgstr "Якщо не встановлено, буде обраний менш доступний доступний рівень обслуговування."
+msgstr ""
+"Якщо не встановлено, буде обраний менш доступний доступний рівень "
+"обслуговування."
 
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_insurance_fee_minimum
@@ -248,8 +265,13 @@ msgstr "Ставка страхового внеску (USD)"
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "Здається Easypost не надає послуги доставки за цим замовленням.                Радимо спробувати інший тип пакунка або рівень обслуговування."
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
+msgstr ""
+"Здається Easypost не надає послуги доставки за цим "
+"замовленням.                Радимо спробувати інший тип пакунка або рівень "
+"обслуговування."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -292,7 +314,9 @@ msgstr "PNG"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Package type used in pack %s is not configured for easypost."
-msgstr "Тип пакування, що використовується в упаковці %s не налаштований для easypost."
+msgstr ""
+"Тип пакування, що використовується в упаковці %s не налаштований для "
+"easypost."
 
 #. module: delivery_easypost
 #. odoo-python
@@ -406,24 +430,34 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
-msgstr "Оцінювана вартість не може бути обчислена, оскільки вага вашого товару відсутня."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
+msgstr ""
+"Оцінювана вартість не може бути обчислена, оскільки вага вашого товару "
+"відсутня."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Приблизну ціну доставки неможливо обчислити, оскільки відсутня вага для таких товарів: \n"
+"Приблизну ціну доставки неможливо обчислити, оскільки відсутня вага для "
+"таких товарів: \n"
 " %s"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
-msgstr "Для вибраного рівня обслуговування для одного з пакунків немає доступних тарифів. Виберіть інший рівень обслуговування."
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
+msgstr ""
+"Для вибраного рівня обслуговування для одного з пакунків немає доступних "
+"тарифів. Виберіть інший рівень обслуговування."
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_picking
@@ -457,8 +491,13 @@ msgstr "Ви не можете скасувати доставку Easypost."
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "У вас немає прив'язаного перевізника до облікового запису Easypost.                Будь ласка, зв'яжіться з Easypost, прив'яжіть ваш обліковий запис до перевізників та спробуйте ще раз."
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"У вас немає прив'язаного перевізника до облікового запису "
+"Easypost.                Будь ласка, зв'яжіться з Easypost, прив'яжіть ваш "
+"обліковий запис до перевізників та спробуйте ще раз."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -469,3 +508,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "створити новий обліковий запис:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Дюйми</span>"

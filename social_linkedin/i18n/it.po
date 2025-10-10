@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-18 02:46+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -267,7 +267,8 @@ msgstr "Messaggio"
 #. odoo-python
 #: code:addons/social_linkedin/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "Ops! Al momento non disponi di un abbonamento attivo. Non preoccuparti! Puoi "
@@ -335,7 +336,8 @@ msgstr "Post flusso social"
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_account__linkedin_access_token
 msgid "The access token is used to perform request to the REST API"
-msgstr "Il token di accesso è utilizzato per effettuare richieste alle API REST"
+msgstr ""
+"Il token di accesso è utilizzato per effettuare richieste alle API REST"
 
 #. module: social_linkedin
 #. odoo-python

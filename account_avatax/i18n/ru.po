@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 10:55+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 21:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,21 +18,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
-msgid "%(response)s"
-msgstr "%(response)s"
-
-#. module: account_avatax
-#. odoo-python
-#: code:addons/account_avatax/models/account_external_tax_mixin.py:0
-msgid "- %s (ID: %s) on %s"
-msgstr "- %s (ID: %s) на %s"
+msgid "- %(partner_name)s (ID: %(partner_id)s) on %(record_list)s"
+msgstr ""
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -46,46 +40,56 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax "
+"portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                Avatax portal"
 msgstr ""
-"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax "
+"portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                Портал Аватакс"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                Show logs"
 msgstr ""
-"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                Показать журналы"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start "
+"logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
 "                                Start logging for 30 minutes"
 msgstr ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start "
+"logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
 "                                Начните вести журнал в течение 30 минут"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" class=\"fa fa-refresh\"/>\n"
+"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" "
+"class=\"fa fa-refresh\"/>\n"
 "                                Sync Parameters"
 msgstr ""
-"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" class=\"fa fa-refresh\"/>\n"
+"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" "
+"class=\"fa fa-refresh\"/>\n"
 "                                Параметры синхронизации"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
+"class=\"fa fa-plug fa-fw\"/>\n"
 "                                Test connection"
 msgstr ""
-"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
+"class=\"fa fa-plug fa-fw\"/>\n"
 "                                Тестовое соединение"
 
 #. module: account_avatax
@@ -99,14 +103,23 @@ msgid "API KEY"
 msgstr "API KEY"
 
 #. module: account_avatax
+#: model:ir.model,name:account_avatax.model_account_chart_template
+msgid "Account Chart Template"
+msgstr ""
+
+#. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_fiscal_position__avatax_invoice_account_id
 msgid "Account that will be used by Avatax taxes for invoices."
-msgstr "Счет, который будет использоваться Avatax taxes для выставления счетов-фактур."
+msgstr ""
+"Счет, который будет использоваться Avatax taxes для выставления счетов-"
+"фактур."
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_fiscal_position__avatax_refund_account_id
 msgid "Account that will be used by Avatax taxes for refunds."
-msgstr "Счет, который будет использоваться налоговой службой Avatax для возврата средств."
+msgstr ""
+"Счет, который будет использоваться налоговой службой Avatax для возврата "
+"средств."
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -130,11 +143,6 @@ msgstr "Ошибка аутентификации."
 #: code:addons/account_avatax/models/res_company.py:0
 msgid "Authentication success."
 msgstr "Аутентификация прошла успешно."
-
-#. module: account_avatax
-#: model:account.fiscal.position,name:account_avatax.account_fiscal_position_avatax_us
-msgid "Automatic Tax Mapping (AvaTax)"
-msgstr "Автоматическое отображение налогов (AvaTax)"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
@@ -168,7 +176,6 @@ msgstr "Проверка подлинности адресов Avalara"
 #: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__avatax_unique_code
 #: model:ir.model.fields,field_description:account_avatax.field_account_bank_statement_line__avatax_unique_code
 #: model:ir.model.fields,field_description:account_avatax.field_account_move__avatax_unique_code
-#: model:ir.model.fields,field_description:account_avatax.field_account_payment__avatax_unique_code
 #: model:ir.model.fields,field_description:account_avatax.field_res_partner__avatax_unique_code
 #: model:ir.model.fields,field_description:account_avatax.field_res_users__avatax_unique_code
 msgid "Avalara Code"
@@ -223,7 +230,6 @@ msgstr "Категория Аватакс"
 #. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_bank_statement_line__avatax_tax_date
 #: model:ir.model.fields,field_description:account_avatax.field_account_move__avatax_tax_date
-#: model:ir.model.fields,field_description:account_avatax.field_account_payment__avatax_tax_date
 msgid "Avatax Date"
 msgstr "Аватакс Дата"
 
@@ -250,9 +256,12 @@ msgstr "Счет возврата Avatax"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_bank_statement_line__avatax_tax_date
 #: model:ir.model.fields,help:account_avatax.field_account_move__avatax_tax_date
-#: model:ir.model.fields,help:account_avatax.field_account_payment__avatax_tax_date
-msgid "Avatax will use this date to calculate the tax on this invoice. If not specified it will use the Invoice Date."
-msgstr "Avatax будет использовать эту дату для расчета налога по данному счету-фактуре. Если дата не указана, то будет использоваться дата счета-фактуры."
+msgid ""
+"Avatax will use this date to calculate the tax on this invoice. If not "
+"specified it will use the Invoice Date."
+msgstr ""
+"Avatax будет использовать эту дату для расчета налога по данному счету-"
+"фактуре. Если дата не указана, то будет использоваться дата счета-фактуры."
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -319,6 +328,11 @@ msgid "Country"
 msgstr "Страна"
 
 #. module: account_avatax
+#: model:ir.model,website_form_label:account_avatax.model_res_partner
+msgid "Create a Customer"
+msgstr ""
+
+#. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__create_uid
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__create_uid
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__create_uid
@@ -347,10 +361,21 @@ msgid "Description"
 msgstr "Описание"
 
 #. module: account_avatax
+#: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_account_external_tax_mixin__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_account_fiscal_position__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__display_name
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_product_category__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_product_product__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_product_template__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:account_avatax.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
@@ -381,10 +406,21 @@ msgid "Go to the configuration panel"
 msgstr "Перейдите на панель конфигурации"
 
 #. module: account_avatax
+#: model:ir.model.fields,field_description:account_avatax.field_account_avatax_unique_code__id
+#: model:ir.model.fields,field_description:account_avatax.field_account_chart_template__id
+#: model:ir.model.fields,field_description:account_avatax.field_account_external_tax_mixin__id
+#: model:ir.model.fields,field_description:account_avatax.field_account_fiscal_position__id
+#: model:ir.model.fields,field_description:account_avatax.field_account_move__id
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__id
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_exemption__id
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_validate_address__id
 #: model:ir.model.fields,field_description:account_avatax.field_product_avatax_category__id
+#: model:ir.model.fields,field_description:account_avatax.field_product_category__id
+#: model:ir.model.fields,field_description:account_avatax.field_product_product__id
+#: model:ir.model.fields,field_description:account_avatax.field_product_template__id
+#: model:ir.model.fields,field_description:account_avatax.field_res_company__id
+#: model:ir.model.fields,field_description:account_avatax.field_res_config_settings__id
+#: model:ir.model.fields,field_description:account_avatax.field_res_partner__id
 msgid "ID"
 msgstr "ID"
 
@@ -397,7 +433,6 @@ msgstr "Уже действует"
 #: model:ir.model.fields,field_description:account_avatax.field_account_bank_statement_line__is_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_external_tax_mixin__is_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_account_move__is_avatax
-#: model:ir.model.fields,field_description:account_avatax.field_account_payment__is_avatax
 msgid "Is Avatax"
 msgstr "Аватакс"
 
@@ -451,10 +486,12 @@ msgstr "Имя"
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
 msgid ""
-"Odoo could not change the state of the transaction related to %(document)s in AvaTax\n"
+"Odoo could not change the state of the transaction related to %(document)s "
+"in AvaTax\n"
 "Please check the status of `%(technical)s` in the AvaTax portal."
 msgstr ""
-"Odoo не удалось изменить состояние транзакции, связанной с %(document)s в AvaTax\n"
+"Odoo не удалось изменить состояние транзакции, связанной с %(document)s в "
+"AvaTax\n"
 "Пожалуйста, проверьте состояние `%(technical)s` на портале AvaTax."
 
 #. module: account_avatax
@@ -478,16 +515,6 @@ msgstr ""
 #: code:addons/account_avatax/wizard/avatax_validate_address.py:0
 msgid "Odoo could not validate the address of %(partner)s with Avalara."
 msgstr "Odoo не удалось подтвердить адрес %(partner)s с помощью Avalara."
-
-#. module: account_avatax
-#. odoo-python
-#: code:addons/account_avatax/models/account_external_tax_mixin.py:0
-msgid ""
-"Odoo could not void the transaction related to %(document)s in AvaTax\n"
-"Please check the status of `%(technical)s` in the AvaTax portal."
-msgstr ""
-"Odoo не смог аннулировать транзакцию, связанную с %(document)s в AvaTax\n"
-"Пожалуйста, проверьте статус `%(technical)s` на портале AvaTax."
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -536,12 +563,6 @@ msgid "Save Validated"
 msgstr "Сохранить подтвержденное"
 
 #. module: account_avatax
-#. odoo-python
-#: code:addons/account_avatax/models/account_avatax_unique_code.py:0
-msgid "Search operation not supported"
-msgstr "Операция поиска не поддерживается"
-
-#. module: account_avatax
 #: model:ir.model.fields,field_description:account_avatax.field_avatax_connection_test_result__server_response
 msgid "Server Response"
 msgstr "Ответ сервера"
@@ -586,8 +607,12 @@ msgstr "Тестовое соединение с avatax"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_partner_code
-msgid "The Avalara Company Code for this company. Avalara will interpret as DEFAULT if it is not set."
-msgstr "Код компании Avalara для этой компании. Если он не задан, Avalara интерпретирует его как DEFAULT."
+msgid ""
+"The Avalara Company Code for this company. Avalara will interpret as DEFAULT "
+"if it is not set."
+msgstr ""
+"Код компании Avalara для этой компании. Если он не задан, Avalara "
+"интерпретирует его как DEFAULT."
 
 #. module: account_avatax
 #. odoo-python
@@ -602,8 +627,12 @@ msgstr ""
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
-msgid "The following customer(s) need to have a zip, state and country when using Avatax:"
-msgstr "Следующим клиентам при использовании Avatax необходимо указать почтовый индекс, штат и страну:"
+msgid ""
+"The following customer(s) need to have a zip, state and country when using "
+"Avatax:"
+msgstr ""
+"Следующим клиентам при использовании Avatax необходимо указать почтовый "
+"индекс, штат и страну:"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_commit
@@ -636,13 +665,14 @@ msgstr "Используйте UPC"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_use_upc
 msgid "Use Universal Product Code instead of custom defined codes in Avalara."
-msgstr "Используйте в Avalara универсальный код продукта вместо пользовательских кодов."
+msgstr ""
+"Используйте в Avalara универсальный код продукта вместо пользовательских "
+"кодов."
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_account_avatax_unique_code__avatax_unique_code
 #: model:ir.model.fields,help:account_avatax.field_account_bank_statement_line__avatax_unique_code
 #: model:ir.model.fields,help:account_avatax.field_account_move__avatax_unique_code
-#: model:ir.model.fields,help:account_avatax.field_account_payment__avatax_unique_code
 #: model:ir.model.fields,help:account_avatax.field_res_partner__avatax_unique_code
 #: model:ir.model.fields,help:account_avatax.field_res_users__avatax_unique_code
 msgid "Use this code to cross-reference in the Avalara portal."
@@ -666,8 +696,11 @@ msgstr "Проверка адреса %s"
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_address_validation
-msgid "Validate and correct the addresses of partners in North America with Avalara."
-msgstr "Проверяйте и корректируйте адреса партнеров в Северной Америке с помощью Avalara."
+msgid ""
+"Validate and correct the addresses of partners in North America with Avalara."
+msgstr ""
+"Проверяйте и корректируйте адреса партнеров в Северной Америке с помощью "
+"Avalara."
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -713,8 +746,8 @@ msgstr "Почтовый индекс"
 #. module: account_avatax
 #. odoo-python
 #: code:addons/account_avatax/models/product.py:0
-msgid "[%s] %s"
-msgstr "[%s] %s"
+msgid "[%(code)s] %(description)s"
+msgstr ""
 
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_product_category__avatax_category_id
@@ -722,3 +755,25 @@ msgstr "[%s] %s"
 #: model:ir.model.fields,help:account_avatax.field_product_template__avatax_category_id
 msgid "https://taxcode.avatax.avalara.com/"
 msgstr "https://taxcode.avatax.avalara.com/"
+
+#~ msgid "%(response)s"
+#~ msgstr "%(response)s"
+
+#~ msgid "- %s (ID: %s) on %s"
+#~ msgstr "- %s (ID: %s) на %s"
+
+#~ msgid "Automatic Tax Mapping (AvaTax)"
+#~ msgstr "Автоматическое отображение налогов (AvaTax)"
+
+#~ msgid ""
+#~ "Odoo could not void the transaction related to %(document)s in AvaTax\n"
+#~ "Please check the status of `%(technical)s` in the AvaTax portal."
+#~ msgstr ""
+#~ "Odoo не смог аннулировать транзакцию, связанную с %(document)s в AvaTax\n"
+#~ "Пожалуйста, проверьте статус `%(technical)s` на портале AvaTax."
+
+#~ msgid "Search operation not supported"
+#~ msgstr "Операция поиска не поддерживается"
+
+#~ msgid "[%s] %s"
+#~ msgstr "[%s] %s"

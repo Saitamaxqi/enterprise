@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 09:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2022-09-22 05:48+0000\n"
 "Last-Translator: Dragan Vukosavljevic <dragan.vukosavljevic@gmail.com>, "
 "2023\n"
@@ -195,12 +195,6 @@ msgid "Check Count"
 msgstr ""
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Close"
-msgstr "Zatvori"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__color
 msgid "Color"
 msgstr "Boja"
@@ -346,6 +340,16 @@ msgid "Failed"
 msgstr ""
 
 #. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_check__failure_location_id
+msgid "Failure Location"
+msgstr ""
+
+#. module: quality
+#: model:ir.model.fields,field_description:quality.field_quality_point__failure_location_ids
+msgid "Failure Locations"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage__folded
 msgid "Folded"
 msgstr ""
@@ -376,11 +380,6 @@ msgstr "Font awesome ikonica npr. fa-tasks"
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Future Activities"
 msgstr "Buduće aktivnosti"
-
-#. module: quality
-#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-msgid "Group By"
-msgstr "Grupiši po"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__has_message
@@ -449,6 +448,15 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Ako je označeno, neke poruke imaju grešku u isporuci."
 
 #. module: quality
+#: model:ir.model.fields,help:quality.field_quality_point__failure_location_ids
+msgid ""
+"If quality check fails, a destination location is chosen from this list for\n"
+"- each failed specific product quantity if control is per quantity\n"
+" /- all quantities of a product if control is per product\n"
+" /- all quantities of products in the operation if control is per operation"
+msgstr ""
+
+#. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_bounced_content
 msgid ""
 "If set, this content will automatically be sent out to unauthorized users "
@@ -511,12 +519,12 @@ msgid "Local-part based incoming detection"
 msgstr ""
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_ids
 msgid "Lot"
 msgstr "Partija"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_check__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_check__lot_ids
 msgid "Lot/Serial"
 msgstr ""
 
@@ -540,6 +548,11 @@ msgstr "Greška u isporuci poruke"
 #: model:ir.model.fields,field_description:quality.field_quality_point__message_ids
 msgid "Messages"
 msgstr "Poruke"
+
+#. module: quality
+#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
+msgid "My Activities"
+msgstr ""
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__my_activity_date_deadline
@@ -596,8 +609,8 @@ msgstr "Tip sledeće aktivnosti"
 #. odoo-python
 #: code:addons/quality/models/quality.py:0
 msgid ""
-"No quality team found for this company.\n"
-"Please go to configuration and create one first."
+"No quality teams found for this company! Head over to the configuration menu "
+"to create your first quality team."
 msgstr ""
 
 #. module: quality
@@ -771,6 +784,11 @@ msgid "Products"
 msgstr "Proizvod"
 
 #. module: quality
+#: model:res.groups.privilege,name:quality.res_groups_privilege_quality
+msgid "Quality"
+msgstr ""
+
+#. module: quality
 #: model:ir.model,name:quality.model_quality_alert
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Quality Alert"
@@ -883,10 +901,14 @@ msgid "Sequence"
 msgstr "Niz"
 
 #. module: quality
-#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-msgid "Show all records which has next action date is before today"
+#: model:ir.model.fields,field_description:quality.field_quality_point__show_failure_location
+msgid "Show Failure Location"
 msgstr ""
-"Prikaži sve zapise koji imaju datum sledeće aktivnosti pre današnjeg datuma"
+
+#. module: quality
+#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
+msgid "Show all records whose next activity date is past"
+msgstr ""
 
 #. module: quality
 #: model:quality.alert.stage,name:quality.quality_alert_stage_3
@@ -929,8 +951,6 @@ msgid "Tags"
 msgstr "Oznake"
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
 #: model:quality.point.test_type,name:quality.test_type_picture
 msgid "Take a Picture"
 msgstr ""
@@ -1039,12 +1059,6 @@ msgid "Very High"
 msgstr ""
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Viewer"
-msgstr "Posmatrač"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_check__website_message_ids
@@ -1074,6 +1088,20 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type__active
 msgid "active"
 msgstr ""
+
+#~ msgid "Close"
+#~ msgstr "Zatvori"
+
+#~ msgid "Group By"
+#~ msgstr "Grupiši po"
+
+#~ msgid "Show all records which has next action date is before today"
+#~ msgstr ""
+#~ "Prikaži sve zapise koji imaju datum sledeće aktivnosti pre današnjeg "
+#~ "datuma"
+
+#~ msgid "Viewer"
+#~ msgstr "Posmatrač"
 
 #~ msgid "Owner"
 #~ msgstr "Vlasnik"

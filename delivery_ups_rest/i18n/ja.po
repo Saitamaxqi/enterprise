@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -140,8 +140,8 @@ msgid ""
 "If checked, ecommerce users will be prompted their UPS account number\n"
 "and delivery fees will be charged on it."
 msgstr ""
-"チェックした場合、"
-"eコマースのユーザーには自分のUPS口座番号を求めるメッセージが表示されます\n"
+"チェックした場合、eコマースのユーザーには自分のUPS口座番号を求めるメッセージ"
+"が表示されます\n"
 "そして、配達料が口座番号に課金されます。"
 
 #. module: delivery_ups_rest
@@ -184,17 +184,17 @@ msgid ""
 "(step2) and Client ID + Client Secret (step 8). Also ensure you use correct "
 "dimensions and weight unit for your country"
 msgstr ""
-"アカウント番号(ステップ2)とクライアントID + "
-"クライアントシークレット(ステップ8)を使用して、odooでUPSの配送方法を作成しま"
-"す。また、あなたの国の正しい寸法と重量単位を使用していることを確認して下さい"
-"。"
+"アカウント番号(ステップ2)とクライアントID + クライアントシークレット(ステップ"
+"8)を使用して、odooでUPSの配送方法を作成します。また、あなたの国の正しい寸法と"
+"重量単位を使用していることを確認して下さい。"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid ""
 "Now open your app, you'll have your <b>Client ID</b> and <b>Client Secret</b>"
-msgstr "アプリを開けると、<b>クライアントID</b>と "
-"<b>クライアントシークレット</b>を入手できます。"
+msgstr ""
+"アプリを開けると、<b>クライアントID</b>と <b>クライアントシークレット</b>を入"
+"手できます。"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -266,8 +266,8 @@ msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
 msgstr ""
-"返品ラベルが生成されました<br/><b>追跡番号:</b> %(tracking_numbers)s<br/"
-"><b>梱包:</b> %(packages)s"
+"返品ラベルが生成されました<br/><b>追跡番号:</b> %(tracking_numbers)s<br/><b>"
+"梱包:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
@@ -307,8 +307,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
-"UPSでの発送が作成されました<br/><b>追跡番号:</b> %(tracking_numbers)s<br/"
-"><b>梱包:</b> %(packages)s"
+"UPSでの発送が作成されました<br/><b>追跡番号:</b> %(tracking_numbers)s<br/><b>"
+"梱包:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -580,7 +580,8 @@ msgstr "[UPS] UPSの請求は顧客負担のままです"
 msgid ""
 "add products <b>Authorization, Address validation, Locator, Paperless "
 "Documents, Shipping and Rating</b>"
-msgstr "プロダクト追加<b>認証、住所確認、ロケーター、ペーパーレスドキュメント、配送と"
+msgstr ""
+"プロダクト追加<b>認証、住所確認、ロケーター、ペーパーレスドキュメント、配送と"
 "評価</b>"
 
 #. module: delivery_ups_rest

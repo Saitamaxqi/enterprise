@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 17:06+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -115,16 +115,19 @@ msgstr "Allekirjoitettavat asiakirjat"
 #. module: hr_recruitment_sign
 #: model:ir.model.fields,help:hr_recruitment_sign.field_hr_recruitment_sign_document_wizard__sign_template_ids
 msgid ""
-"Documents to sign. Only documents with 1 or 2 different responsible are selectable.\n"
-"        Documents with 1 responsible will only have to be signed by the applicant while documents with 2 different responsible will have to be signed by both the applicant and the responsible.\n"
+"Documents to sign. Only documents with 1 or 2 different responsible are "
+"selectable.\n"
+"        Documents with 1 responsible will only have to be signed by the "
+"applicant while documents with 2 different responsible will have to be "
+"signed by both the applicant and the responsible.\n"
 "        "
 msgstr ""
 "Allekirjoitettavia asiakirjoja. Vain asiakirjat, joissa on 1 tai 2 eri "
 "vastuuhenkilöä, ovat valittavissa.\n"
 "        Asiakirjoihin, joissa on yksi vastuuhenkilö, riittää vain hakijan "
 "allekirjoitettava, kun taas asiakirjoihin, joissa on kaksi eri "
-"vastuuhenkilöä, tarvitaan sekä hakijan että vastuuhenkilön allekirjoitukset."
-"\n"
+"vastuuhenkilöä, tarvitaan sekä hakijan että vastuuhenkilön "
+"allekirjoitukset.\n"
 "        "
 
 #. module: hr_recruitment_sign
@@ -163,8 +166,8 @@ msgstr "Viesti"
 #. odoo-python
 #: code:addons/hr_recruitment_sign/wizard/hr_recruitment_sign_document_wizard.py:0
 msgid ""
-"No appropriate template could be found, please make sure you configured them"
-" properly."
+"No appropriate template could be found, please make sure you configured them "
+"properly."
 msgstr "Sopivaa mallia ei löytynyt, varmista, että olet määrittänyt ne oikein."
 
 #. module: hr_recruitment_sign

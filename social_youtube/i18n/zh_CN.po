@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 15:30+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -44,8 +44,10 @@ msgstr "<span class=\"fw-bold\">您的优酷频道</span>"
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
-"<span>These are stored up to 30 days and refreshed often to provide you an accurate depiction of reality. </span>\n"
-"                        <span>To delete these from Odoo, simply delete this account.</span>"
+"<span>These are stored up to 30 days and refreshed often to provide you an "
+"accurate depiction of reality. </span>\n"
+"                        <span>To delete these from Odoo, simply delete this "
+"account.</span>"
 msgstr ""
 "<span>这些资料最多存储30天，并经常刷新，为您提供准确的现实描述。 </span>\n"
 "                        <span>要从Odoo中删除这些，只需删除这个账户。</span>"
@@ -185,8 +187,8 @@ msgstr "您是否也想从您的YouTube账户中删除该视频？"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_token_expiration_date
 msgid ""
-"Expiration date of the Access Token provided by the YouTube API, this should"
-" never be set manually."
+"Expiration date of the Access Token provided by the YouTube API, this should "
+"never be set manually."
 msgstr "YouTube API 提供的访问令牌的到期日期，切勿手动设置。"
 
 #. module: social_youtube
@@ -273,7 +275,8 @@ msgstr "发布后，将视频设置为公开/私享/不公开列出"
 #. odoo-python
 #: code:addons/social_youtube/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "哎呀！您当前没有有效订阅。别担心，立即获取：%s。\n"
@@ -326,8 +329,7 @@ msgstr "原因："
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
 msgid ""
-"Refresh token provided by the YouTube API, this should never be set "
-"manually."
+"Refresh token provided by the YouTube API, this should never be set manually."
 msgstr "由YouTube API提供的刷新令牌，这不应该被手动设置。"
 
 #. module: social_youtube
@@ -460,7 +462,8 @@ msgstr "标题不得包含 > 或 < 符号。"
 msgid ""
 "To provide our application services, note that we store the following data "
 "from your YouTube account:"
-msgstr "为了提供我们的应用服务，请注意，我们会从您的YouTube账户中存储以下数据。"
+msgstr ""
+"为了提供我们的应用服务，请注意，我们会从您的YouTube账户中存储以下数据。"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account__youtube_token_expiration_date
@@ -518,7 +521,8 @@ msgstr "使用您自己的油管账户"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要将某些功能限制在特定媒体使用时（例如facebook、X......）时，用于进行比较。"
+msgstr ""
+"需要将某些功能限制在特定媒体使用时（例如facebook、X......）时，用于进行比较。"
 
 #. module: social_youtube
 #. odoo-python
@@ -776,9 +780,10 @@ msgstr "您的视频元数据，包括标题和观看计数（但不包括视频
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid ""
-"e.g. Engage your entire community with a single app! "
-"https://www.odoo.com/trial"
-msgstr "例如：用一个单一的应用程序来吸引您的整个社区！https://www.odoo.com/trial"
+"e.g. Engage your entire community with a single app! https://www.odoo.com/"
+"trial"
+msgstr ""
+"例如：用一个单一的应用程序来吸引您的整个社区！https://www.odoo.com/trial"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form

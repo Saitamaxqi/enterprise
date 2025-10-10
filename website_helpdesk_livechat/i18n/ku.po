@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-11 14:48+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -91,8 +92,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Create a new helpdesk ticket with: %(pre_start)s%(ticket_command)s "
-"%(i_start)sticket title%(i_end)s%(pre_end)s"
+"Create a new helpdesk ticket with: %(pre_start)s%(ticket_command)s %"
+"(i_start)sticket title%(i_end)s%(pre_end)s"
 msgstr ""
 
 #. module: website_helpdesk_livechat
@@ -215,8 +216,8 @@ msgstr ""
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
 "No tickets found for %(b_start)s%(keywords)s%(b_end)s.%(br)sMake sure you "
-"are using the right format: %(pre_start)s%(search_tickets_command)s "
-"%(i_start)skeywords%(i_end)s%(pre_end)s"
+"are using the right format: %(pre_start)s%(search_tickets_command)s %"
+"(i_start)skeywords%(i_end)s%(pre_end)s"
 msgstr ""
 
 #. module: website_helpdesk_livechat
@@ -252,8 +253,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Search helpdesk tickets by typing: %(pre_start)s%(search_tickets_command)s "
-"%(i_start)skeywords%(i_end)s%(pre_end)s"
+"Search helpdesk tickets by typing: %(pre_start)s%(search_tickets_command)s %"
+"(i_start)skeywords%(i_end)s%(pre_end)s"
 msgstr ""
 
 #. module: website_helpdesk_livechat
@@ -298,8 +299,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Tickets search results for %(b_start)s%(keywords)s%(b_end)s: "
-"%(br)s%(tickets)s"
+"Tickets search results for %(b_start)s%(keywords)s%(b_end)s: %(br)s%"
+"(tickets)s"
 msgstr ""
 
 #. module: website_helpdesk_livechat
@@ -339,8 +340,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/helpdesk_ticket.py:0
 msgid ""
-"You cannot update a ticket and link it to a channel you don't have access "
-"to."
+"You cannot update a ticket and link it to a channel you don't have access to."
 msgstr ""
 
 #. module: website_helpdesk_livechat

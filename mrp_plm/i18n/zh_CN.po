@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:24+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -24,7 +24,7 @@ msgstr ""
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_count
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__document_count
 msgid "# Attachments"
 msgstr "#附件"
 
@@ -36,31 +36,31 @@ msgid "# ECOs"
 msgstr "#工程变更指令（ECO）"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__eco_inprogress_count
-msgid "# ECOs in progress"
-msgstr "# 进行中 ECOs "
-
-#. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "%(approval_name)s %(approver_name)s %(approval_status)s this ECO"
-msgstr "%(approval_name)s %(approver_name)s %(approval_status)s工程变更指令（ECO）"
+msgstr ""
+"%(approval_name)s %(approver_name)s %(approval_status)s工程变更指令（ECO）"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
-msgid "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title=\"Domain alias\"/>&amp;nbsp;"
+msgid ""
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title="
-"\"Domain alias\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
-"                        Upload files to your ECO, that will be applied to the product later\n"
+"                        Upload files to your ECO, that will be applied to "
+"the product later\n"
 "                    </p><p>\n"
-"                        Use this feature to store any files, like drawings or specifications.\n"
+"                        Use this feature to store any files, like drawings "
+"or specifications.\n"
 "                    </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
@@ -70,24 +70,27 @@ msgstr ""
 "                    </p>"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
-msgid "<span class=\"text-bg-danger\">Archived</span>"
-msgstr ""
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
-msgid "<span class=\"text-bg-primary\">New</span>"
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
+msgid "<span class=\"o_stat_text\">ECO(S)</span>"
 msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "<span>Revision</span><br/>"
-msgstr "<span>修订版</span><br/>"
+msgid "<span class=\"o_stat_text\">Revision</span>"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
-msgid "A Python dictionary that will be evaluated to provide default values when creating new records for this alias."
+msgid ""
+"A Python dictionary that will be evaluated to provide default values when "
+"creating new records for this alias."
 msgstr "为该别名创建新记录时评估以提供默认值的Python字典。"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "A user cannot be assigned more than once to the same stage"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -152,6 +155,21 @@ msgid "Alias Contact Security"
 msgstr "别名授权于"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain_id
+msgid "Alias Domain"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
+msgid "Alias Domain Name"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_full_name
+msgid "Alias Email"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_name
 msgid "Alias Name"
 msgstr "别名"
@@ -162,11 +180,6 @@ msgid "Alias Status"
 msgstr "别名状态"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
-msgid "Alias domain"
-msgstr "域名别名"
-
-#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_status
 msgid "Alias status assessed on the last message received."
 msgstr "根据收到的最后一条消息评估的别名状态。"
@@ -175,11 +188,6 @@ msgstr "根据收到的最后一条消息评估的别名状态。"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid "Aliased Model"
 msgstr "有别名的模型"
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
-msgid "All"
-msgstr "全部"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -279,7 +287,6 @@ msgstr "批准，但批核可选"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_search_mrp_plm
 msgid "Archived"
 msgstr "已归档"
 
@@ -302,7 +309,7 @@ msgstr "附件数量"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__mrp_document_ids
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__document_ids
 msgid "Attachments"
 msgstr "附件"
 
@@ -321,6 +328,16 @@ msgstr "等待验证"
 #: model:ir.model,name:mrp_plm.model_report_mrp_report_bom_structure
 msgid "BOM Overview Report"
 msgstr "物料清单（BOM）概述报表"
+
+#. module: mrp_plm
+#: model:mrp.eco.type,name:mrp_plm.ecotype_bom_update
+msgid "BOM Updates"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode_batch
+msgid "Batch count Change"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -357,10 +374,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__kanban_state__blocked
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_validated
 msgid "Blocked"
 msgstr "已阻止"
 
@@ -370,13 +387,17 @@ msgid "Blocking Stage"
 msgstr "阻止阶段"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "BoM Changes"
-msgstr "BOM变更"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__byproduct_id
+msgid "BoM By-Product"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__bom_line_id
+msgid "BoM Line"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "BoM Rebase"
 msgstr "物料清单（BOM）变基"
 
@@ -384,6 +405,12 @@ msgstr "物料清单（BOM）变基"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_revision
 msgid "BoM Revision"
 msgstr "物料清单（BOM）修订"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid "BoM Suggestions from %(mo_name)s"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -398,6 +425,16 @@ msgid "BoM:"
 msgstr "物料清单（BOM）："
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "By-Product Changes"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_bom_byproduct
+msgid "Byproduct"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
 msgid "Can Approve"
 msgstr "可以批核"
@@ -406,6 +443,14 @@ msgstr "可以批核"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_reject
 msgid "Can Reject"
 msgstr "可以拒绝"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid ""
+"Cannot create an ECO if the Manufacturing Order doesn't use a Bill of "
+"Materials"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -455,9 +500,20 @@ msgstr "仅评论"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__company_id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__company_id
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Company"
 msgstr "公司"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Component Changes"
+msgstr ""
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Component Rebase"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -481,6 +537,11 @@ msgstr "已解决的冲突"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__operation_change
 msgid "Consumed in Operation"
 msgstr "在作业中消耗"
+
+#. module: mrp_plm
+#: model:ir.actions.server,name:mrp_plm.action_production_order_create_eco
+msgid "Create ECO"
+msgstr ""
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
@@ -570,6 +631,9 @@ msgid "Difference between old operation and new operation revision"
 msgstr "旧作业与新作业修订的区别"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_byproduct__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_line__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__display_name
@@ -578,6 +642,12 @@ msgstr "旧作业与新作业修订的区别"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag__display_name
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template__display_name
+#: model:ir.model.fields,field_description:mrp_plm.field_report_mrp_report_bom_structure__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
@@ -598,11 +668,6 @@ msgid "Done"
 msgstr "已完成"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
-msgid "Duration"
-msgstr "时长"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__eco_id
 msgid "ECO"
 msgstr "工程变更指令（ECO）"
@@ -614,8 +679,9 @@ msgid "ECO Analysis"
 msgstr "工程变更指令（ECO）分析"
 
 #. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model,name:mrp_plm.model_mrp_eco_approval
-#: model:mail.activity.type,name:mrp_plm.mail_activity_eco_approval
 msgid "ECO Approval"
 msgstr "工程变更指令（ECO）批核"
 
@@ -628,6 +694,16 @@ msgstr "工程变更指令（ECO）批核模板"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids
 msgid "ECO BoM Changes"
 msgstr "工程变更指令（ECO）物料清单（BOM）变更"
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_byproduct
+msgid "ECO BoM Changes - By-Product"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_line
+msgid "ECO BoM Changes - Component"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
@@ -675,12 +751,6 @@ msgid "ECO Types"
 msgstr "工程变更指令（ECO）类型"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_routing_change_view_form
-msgid "ECO details"
-msgstr "ECO 详情"
-
-#. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
 msgid "ECO stages give the different stages for the Engineering Change Orders"
 msgstr "工程变更指令（ECO）阶段为工程变更单提供不同阶段"
@@ -697,19 +767,25 @@ msgstr "工程变更指令（ECO）"
 
 #. module: mrp_plm
 #. odoo-javascript
-#: code:addons/mrp_plm/static/src/components/bom_overview_display_filter/mrp_bom_overview_display_filter.js:0
 #: code:addons/mrp_plm/static/src/components/bom_overview_line/mrp_bom_overview_line.js:0
 #: code:addons/mrp_plm/static/src/components/bom_overview_table/mrp_bom_overview_table.xml:0
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_ecos
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_product__eco_ids
 #: model:ir.model.fields,field_description:mrp_plm.field_product_template__eco_ids
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_eco_report
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_calendar
+#: model_terms:ir.ui.view,arch_db:mrp_plm.product_product_view_form_inherit_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.product_template_view_form_inherit_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.report_mrp_bom_inherit_mrp_plm
 msgid "ECOs"
 msgstr "工程变更指令（ECO）"
+
+#. module: mrp_plm
+#: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
+msgid "ECOs Analysis"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-python
@@ -724,6 +800,11 @@ msgid "Eco BoM"
 msgstr "工程变更指令（ECO）物料清单（BOM）"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_count
+msgid "Eco Count"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
 msgid "Eco Routing changes"
 msgstr "工程变更指令（ECO）工艺路线变更"
@@ -735,7 +816,7 @@ msgstr "编辑任务"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__effectivity
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_effective
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_effective
 msgid "Effective"
 msgstr "实际"
 
@@ -745,6 +826,7 @@ msgid "Effective Date"
 msgstr "生效日期"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_email
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "Email Alias"
 msgstr "电子邮箱别名"
@@ -754,6 +836,11 @@ msgstr "电子邮箱别名"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Email cc"
 msgstr "电子邮件抄送"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_domain
+msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_id
@@ -773,7 +860,6 @@ msgstr "工程变更指令（ECO）"
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_late
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_main
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_product_tmpl
-#: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
 msgid "Engineering Change Orders"
 msgstr "工程变更指令"
 
@@ -786,11 +872,6 @@ msgstr "工程变更"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Extra Info"
 msgstr "额外信息"
-
-#. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Filters"
-msgstr "筛选器"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__final_stage
@@ -840,20 +921,10 @@ msgid "Grey Kanban Label"
 msgstr "灰色看板标签"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Group by..."
-msgstr "分组方式...…"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__has_message
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__has_message
 msgid "Has Message"
 msgstr "有消息"
-
-#. module: mrp_plm
-#: model:ir.module.category,description:mrp_plm.module_category_manufacturing_product_lifecycle_management_(plm)
-msgid "Helps you manage your product's lifecycles."
-msgstr "协助管理产品生命周期."
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__priority__1
@@ -861,6 +932,9 @@ msgid "High"
 msgstr "高"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_byproduct__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom_line__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_approval_template__id
@@ -869,12 +943,20 @@ msgstr "高"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_tag__id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__id
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_routing_workcenter__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_product__id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_template__id
+#: model:ir.model.fields,field_description:mrp_plm.field_report_mrp_report_bom_structure__id
 msgid "ID"
 msgstr "ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_thread_id
-msgid "ID of the parent record holding the alias (example: project holding the task creation alias)"
+msgid ""
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr "有别名的上级记录ID（例如：有任务创建别名的项目）"
 
 #. module: mrp_plm
@@ -903,13 +985,24 @@ msgstr "如果勾选此项， 某些消息将出现发送错误。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_bounced_content
-msgid "If set, this content will automatically be sent out to unauthorized users instead of the default message."
+msgid ""
+"If set, this content will automatically be sent out to unauthorized users "
+"instead of the default message."
 msgstr "如果设置，将自动向未经授权用户发送该内容而非默认消息。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__active
-msgid "If the active field is set to False, it will allow you to hide the engineering change order without removing it."
+msgid ""
+"If the active field is set to False, it will allow you to hide the "
+"engineering change order without removing it."
 msgstr "如果有效字段设置为假，将隐藏而非删除工程变更指令。"
+
+#. module: mrp_plm
+#: model:ir.model.fields,help:mrp_plm.field_mrp_eco__will_update_version
+msgid ""
+"If unchecked, the version of the product/BoM will remain unchanged once the "
+"ECO is applied"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -917,21 +1010,15 @@ msgid "Image 128"
 msgstr "图像128"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
-msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr "在 #{kanban_getcolorname(record.color.raw_value)}"
-
-#. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__kanban_state__normal
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco__state__progress
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_validated
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_progress
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_validated
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_progress
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "In Progress"
 msgstr "进行中"
@@ -1022,6 +1109,11 @@ msgid "Latest Bom"
 msgstr "最新物料清单（BOM）"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_incoming_local
+msgid "Local-part based incoming detection"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_approval
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_approval_my
@@ -1031,7 +1123,8 @@ msgstr "最新物料清单（BOM）"
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_report
 msgid ""
 "Manage your products and bills of materials changes with the ECO's.\n"
-"              Gather the related documentation and receive the necessary approvals\n"
+"              Gather the related documentation and receive the necessary "
+"approvals\n"
 "              before applying your changes."
 msgstr ""
 "通过工程变更指令（ECO）管理产品和物料清单。\n"
@@ -1042,6 +1135,16 @@ msgstr ""
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_cycle_manual
 msgid "Manual Duration Change"
 msgstr "手动时长变更"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_production
+msgid "Manufacturing Order"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__production_id
+msgid "Manufacturing Orders"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -1061,9 +1164,19 @@ msgid "Messages"
 msgstr "消息"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode
+msgid "Mode Change"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
 msgid "Mrp Eco Tags"
 msgstr "MRP工程变更指令（ECO）标签"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
+msgid "My Activities"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1087,7 +1200,8 @@ msgid "Name"
 msgstr "名称"
 
 #. module: mrp_plm
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_new
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_new
+#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "New"
 msgstr "新建"
 
@@ -1095,6 +1209,12 @@ msgstr "新建"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__new_bom_id
 msgid "New Bill of Materials"
 msgstr "新物料清单"
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_production.py:0
+msgid "New BoM from %(mo_name)s"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
@@ -1107,24 +1227,9 @@ msgid "New Consumed in Operation"
 msgstr "作业中的新消耗"
 
 #. module: mrp_plm
-#: model:mrp.eco.type,name:mrp_plm.ecotype0
-msgid "New Product Introduction"
-msgstr "新的产品介绍"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_uom_id
 msgid "New Product UoM"
 msgstr "新的产品计量单位"
-
-#. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__new_time_cycle_manual
-msgid "New manual duration"
-msgstr "新手动时长"
-
-#. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
-msgid "New or Previous Operation"
-msgstr "新的或以前的操作"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_product_qty
@@ -1198,8 +1303,8 @@ msgstr "错误数量"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "需要采取动作消息数量"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
@@ -1208,14 +1313,19 @@ msgid "Number of messages with delivery error"
 msgstr "出现发送错误的消息的数量"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__old_time_cycle_manual
-msgid "Old manual duration"
-msgstr "旧手动时长"
-
-#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__final_stage
 msgid "Once the changes are applied, the ECOs will be moved to this stage."
 msgstr "变更应用后，工程变更指令（ECO）将移至该阶段。"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Open Component"
+msgstr ""
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Open Operation"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1228,39 +1338,61 @@ msgid "Operation Changes"
 msgstr "作业变更"
 
 #. module: mrp_plm
-#. odoo-python
-#: code:addons/mrp_plm/models/mrp_eco.py:0
-msgid "Operation not supported"
-msgstr "不支持该作业"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
+msgid "Operation Id"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
-msgid "Optional ID of a thread (record) to which all incoming messages will be attached, even if they did not reply to it. If set, this will disable the creation of new records completely."
-msgstr "所有传入消息将附至线程（记录）的可选ID，即使消息无回复。如果设置，将禁止创建"
+msgid ""
+"Optional ID of a thread (record) to which all incoming messages will be "
+"attached, even if they did not reply to it. If set, this will disable the "
+"creation of new records completely."
+msgstr ""
+"所有传入消息将附至线程（记录）的可选ID，即使消息无回复。如果设置，将禁止创建"
 "新记录。"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_document__origin_attachment_id
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_attachment_id
 msgid "Origin Attachment"
 msgstr "原附件"
 
 #. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_model
+msgid "Origin Model"
+msgstr ""
+
+#. module: mrp_plm
+#: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_name
+msgid "Origin Name"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_blocked
-msgid "Override the default value displayed for the blocked state for kanban selection, when the ECO is in that stage."
-msgstr "当工程变更指令（ECO）处于该阶段时，覆盖选择看板时受阻状态显示的默认值。"
+msgid ""
+"Override the default value displayed for the blocked state for kanban "
+"selection, when the ECO is in that stage."
+msgstr ""
+"当工程变更指令（ECO）处于该阶段时，覆盖选择看板时受阻状态显示的默认值。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_done
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_done
-msgid "Override the default value displayed for the done state for kanban selection, when the ECO is in that stage."
-msgstr "当工程变更指令（ECO）处于该阶段时，覆盖选择看板时已完成状态显示的默认值。"
+msgid ""
+"Override the default value displayed for the done state for kanban "
+"selection, when the ECO is in that stage."
+msgstr ""
+"当工程变更指令（ECO）处于该阶段时，覆盖选择看板时已完成状态显示的默认值。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_normal
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_stage__legend_normal
-msgid "Override the default value displayed for the normal state for kanban selection, when the ECO is in that stage."
-msgstr "当工程变更指令（ECO）处于该阶段时，覆盖选择看板时正常状态显示的默认值。"
+msgid ""
+"Override the default value displayed for the normal state for kanban "
+"selection, when the ECO is in that stage."
+msgstr ""
+"当工程变更指令（ECO）处于该阶段时，覆盖选择看板时正常状态显示的默认值。"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_dashboard
@@ -1268,13 +1400,8 @@ msgid "Overview"
 msgstr "概述"
 
 #. module: mrp_plm
-#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_user_id
-msgid "Owner"
-msgstr "所有者"
-
-#. module: mrp_plm
-#: model:ir.module.category,name:mrp_plm.module_category_manufacturing_product_lifecycle_management_(plm)
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_root
+#: model:res.groups.privilege,name:mrp_plm.res_groups_privilege_plm
 msgid "PLM"
 msgstr "产品生命周期（PLM）"
 
@@ -1295,8 +1422,12 @@ msgstr "上级记录线程ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_model_id
-msgid "Parent model holding the alias. The model holding the alias reference is not necessarily the model given by alias_model_id (example: project (parent_model) and task (model))"
-msgstr "有别名的上级模型。有别名参考号的模型不一定是alias_model_id给出的模型（例如："
+msgid ""
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
+"(parent_model) and task (model))"
+msgstr ""
+"有别名的上级模型。有别名参考号的模型不一定是alias_model_id给出的模型（例如："
 "项目（parent_model）和任务（模型））"
 
 #. module: mrp_plm
@@ -1305,7 +1436,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "通过邮件网关在单据中留言的政策。\n"
 "- 所有人：所有人均可留言\n"
@@ -1329,8 +1461,8 @@ msgstr "之前工程变更指令（ECO）变更"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "Previous Eco Bom Changes"
-msgstr "前一个 Eco Bom变化"
+msgid "Previous Eco Component Changes"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_uom_id
@@ -1348,13 +1480,22 @@ msgid "Priority"
 msgstr "优先级"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Produced in Operation"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__product_tmpl_id
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__product_id
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_bom_change_view_form
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Product"
 msgstr "产品"
+
+#. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_product_document
+msgid "Product Document"
+msgstr ""
 
 #. module: mrp_plm
 #. odoo-python
@@ -1363,14 +1504,14 @@ msgid "Product Only"
 msgstr "仅产品"
 
 #. module: mrp_plm
-#: model:ir.model,name:mrp_plm.model_mrp_document
-msgid "Production Document"
-msgstr "生产文档"
+#: model:ir.model,name:mrp_plm.model_product_product
+msgid "Product Variant"
+msgstr ""
 
 #. module: mrp_plm
-#: model:ir.model,name:mrp_plm.model_mrp_production
-msgid "Production Order"
-msgstr "生产订单"
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Production"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
@@ -1396,10 +1537,10 @@ msgstr "评分"
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_effective
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_new
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_progress
+#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_validated
 msgid "Ready"
 msgstr "准备就绪"
 
@@ -1413,8 +1554,9 @@ msgstr "变基"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
-msgstr "根据之前工程变更指令（ECO）物料清单（BOM）和旧物料清单变更变基物料清单新版本"
-"。"
+msgstr ""
+"根据之前工程变更指令（ECO）物料清单（BOM）和旧物料清单变更变基物料清单新版"
+"本。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1514,8 +1656,8 @@ msgstr "显示应用变更"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Show all records which has next action date is before today"
-msgstr "显示所有的在今天之前的下一个动作日期的记录"
+msgid "Show all records whose next activity date is past"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__stage_id
@@ -1571,7 +1713,9 @@ msgstr "变基成功！"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
-msgid "System will automatically resolved the conflict(s) and apply changes. Do you agree?"
+msgid ""
+"System will automatically resolved the conflict(s) and apply changes. Do you "
+"agree?"
 msgstr "系统将自动处理冲突并应用更改。是否同意？"
 
 #. module: mrp_plm
@@ -1633,20 +1777,22 @@ msgstr "产品当前版本."
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
-msgid "The model (Odoo Document Kind) to which this alias corresponds. Any incoming email that does not reply to an existing record will cause the creation of a new record of this model (e.g. a Project Task)"
-msgstr "该别名对应的模型（Odoo单据种类）。任何非回复已有记录的传入电子邮件将导致为该"
+msgid ""
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
+msgstr ""
+"该别名对应的模型（Odoo单据种类）。任何非回复已有记录的传入电子邮件将导致为该"
 "模型创建新记录（例如：项目任务）。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
-msgid "The name of the email alias, e.g. 'jobs' if you want to catch emails for <jobs@example.odoo.com>"
-msgstr "电子邮箱别名名称，例如：如果希望为<jobs@example.odoo.com>捕获电子邮件，别名应"
+msgid ""
+"The name of the email alias, e.g. 'jobs' if you want to catch emails for "
+"<jobs@example.odoo.com>"
+msgstr ""
+"电子邮箱别名名称，例如：如果希望为<jobs@example.odoo.com>捕获电子邮件，别名应"
 "为“jobs”"
-
-#. module: mrp_plm
-#: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_user_id
-msgid "The owner of records created upon receiving emails on this alias. If this field is not set the system will attempt to find the right owner based on the sender (From) address, or will use the Administrator account if no system user is found for that address."
-msgstr "基于此别名接收到的邮件，创建记录的所有人。若此字段没有设置，系统将试图根据发送者(From)地址来查找正确的所有者，如果对于那个地址没有系统用户被找到，将使用系统管理员账户。"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
@@ -1695,8 +1841,8 @@ msgstr "取消"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
-msgid "Unit of Measure"
-msgstr "计量单位"
+msgid "Unit"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__update
@@ -1705,9 +1851,9 @@ msgid "Update"
 msgstr "更新"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
-msgid "Update BoM"
-msgstr "更新BoM"
+#: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__will_update_version
+msgid "Update Version"
+msgstr ""
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_user
@@ -1720,9 +1866,14 @@ msgid "Users"
 msgstr "用户"
 
 #. module: mrp_plm
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
+#: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_validated
 msgid "Validated"
 msgstr "已验证"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
+msgid "Variant"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1731,6 +1882,11 @@ msgstr "已验证"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_bom_view_form_inherit_plm
 msgid "Version"
 msgstr "版本"
+
+#. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
+msgid "Visible to all"
+msgstr ""
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
@@ -1760,13 +1916,20 @@ msgid "Work Center"
 msgstr "工作中心"
 
 #. module: mrp_plm
+#: model:ir.model,name:mrp_plm.model_mrp_routing_workcenter
+msgid "Work Center Usage"
+msgstr ""
+
+#. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
 msgid "Work Centers"
 msgstr "工作中心"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
-msgid "You can also add a description to help your coworkers understand the meaning and purpose of the stage."
+msgid ""
+"You can also add a description to help your coworkers understand the meaning "
+"and purpose of the stage."
 msgstr "也可以添加描述，帮助同事理解该阶段的意义和目的。"
 
 #. module: mrp_plm
@@ -1791,6 +1954,11 @@ msgid "You cannot change the stage, as approvals are still required."
 msgstr "不能更改该阶段，因为仍需批核。"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
+msgid "alias"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "e.g. Awesome Product 2.0"
 msgstr "例如：Awesome Product 2.0"
@@ -1801,6 +1969,108 @@ msgid "e.g. Engineering Department"
 msgstr "例如：工程部"
 
 #. module: mrp_plm
+#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
+msgid "e.g. mycompany.com"
+msgstr ""
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "product"
+msgstr ""
+
+#. module: mrp_plm
+#. odoo-python
+#: code:addons/mrp_plm/models/mrp_eco.py:0
+msgid "res_model"
+msgstr ""
+
+#. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
-msgid "oe_kanban_text_red"
-msgstr "oe_kanban_text_red"
+msgid "text-danger"
+msgstr ""
+
+#~ msgid "# ECOs in progress"
+#~ msgstr "# 进行中 ECOs "
+
+#~ msgid "<span>Revision</span><br/>"
+#~ msgstr "<span>修订版</span><br/>"
+
+#~ msgid "Alias domain"
+#~ msgstr "域名别名"
+
+#~ msgid "All"
+#~ msgstr "全部"
+
+#~ msgid "BoM Changes"
+#~ msgstr "BOM变更"
+
+#~ msgid "Duration"
+#~ msgstr "时长"
+
+#~ msgid "ECO details"
+#~ msgstr "ECO 详情"
+
+#~ msgid "Filters"
+#~ msgstr "筛选器"
+
+#~ msgid "Group by..."
+#~ msgstr "分组方式...…"
+
+#~ msgid "Helps you manage your product's lifecycles."
+#~ msgstr "协助管理产品生命周期."
+
+#~ msgid "In #{kanban_getcolorname(record.color.raw_value)}"
+#~ msgstr "在 #{kanban_getcolorname(record.color.raw_value)}"
+
+#~ msgid "New Product Introduction"
+#~ msgstr "新的产品介绍"
+
+#~ msgid "New manual duration"
+#~ msgstr "新手动时长"
+
+#~ msgid "New or Previous Operation"
+#~ msgstr "新的或以前的操作"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "需要采取动作消息数量"
+
+#~ msgid "Old manual duration"
+#~ msgstr "旧手动时长"
+
+#~ msgid "Operation not supported"
+#~ msgstr "不支持该作业"
+
+#~ msgid "Owner"
+#~ msgstr "所有者"
+
+#~ msgid "Previous Eco Bom Changes"
+#~ msgstr "前一个 Eco Bom变化"
+
+#~ msgid "Production Document"
+#~ msgstr "生产文档"
+
+#~ msgid "Production Order"
+#~ msgstr "生产订单"
+
+#~ msgid "Show all records which has next action date is before today"
+#~ msgstr "显示所有的在今天之前的下一个动作日期的记录"
+
+#~ msgid ""
+#~ "The owner of records created upon receiving emails on this alias. If this "
+#~ "field is not set the system will attempt to find the right owner based on "
+#~ "the sender (From) address, or will use the Administrator account if no "
+#~ "system user is found for that address."
+#~ msgstr ""
+#~ "基于此别名接收到的邮件，创建记录的所有人。若此字段没有设置，系统将试图根据"
+#~ "发送者(From)地址来查找正确的所有者，如果对于那个地址没有系统用户被找到，将"
+#~ "使用系统管理员账户。"
+
+#~ msgid "Unit of Measure"
+#~ msgstr "计量单位"
+
+#~ msgid "Update BoM"
+#~ msgstr "更新BoM"
+
+#~ msgid "oe_kanban_text_red"
+#~ msgstr "oe_kanban_text_red"

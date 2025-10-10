@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 15:32+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -90,8 +90,8 @@ msgstr "您已经添加"
 #. odoo-javascript
 #: code:addons/website_sale_stock_renting/static/src/xml/website_sale_stock_renting_product_availability.xml:0
 msgid ""
-"You already added all the available product in your cart during the selected"
-" period."
+"You already added all the available product in your cart during the selected "
+"period."
 msgstr "您已经在选定的时间段内将所有可用的产品加入您的购物车"
 
 #. module: website_sale_stock_renting
@@ -101,8 +101,8 @@ msgid ""
 "You asked for %(desired_qty)s %(product_name)s but only %(new_qty)s are "
 "available from %(rental_period)s."
 msgstr ""
-"你要求租用 %(desired_qty)s 件 %(product_name)s，但在以下期间，只有 %(new_qty)"
-"s 件可供出租：%(rental_period)s。"
+"你要求租用 %(desired_qty)s 件 %(product_name)s，但在以下期间，只有 %"
+"(new_qty)s 件可供出租：%(rental_period)s。"
 
 #. module: website_sale_stock_renting
 #. odoo-javascript

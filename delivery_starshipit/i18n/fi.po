@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -31,12 +31,15 @@ msgstr ""
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your shippings are automatically <b>archived</b> after the label creation. <br/>\n"
-"                        Please note that charges can still occur for label creations and some shipping carriers may automatically validate the shipment when printing labels."
+"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your "
+"shippings are automatically <b>archived</b> after the label creation. <br/>\n"
+"                        Please note that charges can still occur for label "
+"creations and some shipping carriers may automatically validate the shipment "
+"when printing labels."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle\"/> <b>Testiympäristössä</b> "
-"lähetykset <b>arkistoidaan</b> automaattisesti etiketin luomisen jälkeen. <"
-"br/>\n"
+"lähetykset <b>arkistoidaan</b> automaattisesti etiketin luomisen jälkeen. "
+"<br/>\n"
 "                        Huomaa, että etikettien luomisesta voi edelleen "
 "aiheutua maksuja ja että jotkin rahdinkuljettajat saattavat vahvistaa "
 "lähetyksen automaattisesti, kun ne tulostavat etikettejä."
@@ -79,8 +82,8 @@ msgstr "Vahvista"
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_starshipit_shipping_wizard__available_services
 msgid ""
-"Contains the list of available services for the starshipit account to select"
-" from."
+"Contains the list of available services for the starshipit account to select "
+"from."
 msgstr ""
 "Sisältää luettelon käytettävissä olevista palveluista, joista Starshipit-"
 "tili voi valita."
@@ -129,7 +132,8 @@ msgstr "Näyttönimi"
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
 "Error: %(file_name)s file could not be obtained for order %(order_name)s."
-msgstr "Virhe: %(file_name)s tiedostoa ei saatu tilausta %(order_name)s varten."
+msgstr ""
+"Virhe: %(file_name)s tiedostoa ei saatu tilausta %(order_name)s varten."
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -193,7 +197,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Order %(order)s was sent to the carrier during label creation.As you are in "
+"a test environment, please make sure to cancel the order with your carrier "
+"directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "Tilaus %(order)s lähetettiin rahdinkuljettajalle etiketin luomisen "
@@ -259,7 +265,8 @@ msgstr "Tilaukselle on luotu palautuslappuja %s"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was already sent to the carrier during label creation.\n"
+"Return order %(order)s was already sent to the carrier during label "
+"creation.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "Palautusmääräys %(order)s on jo lähetetty rahdinkuljettajalle etiketin "
@@ -270,7 +277,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Return order %(order)s was sent to the carrier during label creation.As you "
+"are in a test environment, please make sure to cancel the order with your "
+"carrier directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "Palautustilaus %(order)s lähetettiin kuljetusyritykselle lähetysdokumentin "
@@ -416,35 +425,35 @@ msgstr "Starshipit palautti virheen: %(message)s"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact"
-" price (%(final_carrier_price)s) from transfer %(picking_name)s."
+"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact "
+"price (%(final_carrier_price)s) from transfer %(picking_name)s."
 msgstr ""
 "Starshipit: Toimituskulut myyntitilaukselle on arvioitu uudelleen päivitetyn "
-"tarkan hinnan (%(final_carrier_price)s) perusteella siirrosta "
-"%(picking_name)s."
+"tarkan hinnan (%(final_carrier_price)s) perusteella siirrosta %"
+"(picking_name)s."
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s, but automatic sale order delivery cost re-"
-"evaluation failed: %(e_so)s"
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s, but automatic sale order delivery cost re-evaluation "
+"failed: %(e_so)s"
 msgstr ""
-"Starshipit: Tarkka hinta toimitukselle %(picking_name)s on nyt "
-"%(final_carrier_price)s, mutta automaattinen myyntitilauksen hinnan "
+"Starshipit: Tarkka hinta toimitukselle %(picking_name)s on nyt %"
+"(final_carrier_price)s, mutta automaattinen myyntitilauksen hinnan "
 "uudelleenarviointi epäonnistui: %(e_so)s"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s. This sale order is already invoiced, please review "
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s. This sale order is already invoiced, please review "
 "if a manual adjustment to the invoice is needed."
 msgstr ""
-"Starshipit: Tarkka hinta toimitukselle %(picking_name)s on nyt "
-"%(final_carrier_price)s. Tämä myyntitilaus on jo laskutettu, ole hyvä ja "
+"Starshipit: Tarkka hinta toimitukselle %(picking_name)s on nyt %"
+"(final_carrier_price)s. Tämä myyntitilaus on jo laskutettu, ole hyvä ja "
 "tarkista, tarviiko laskuun tehdä muutoksia tai korjausia manuaalisesti."
 
 #. module: delivery_starshipit
@@ -538,8 +547,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"There are no shipping services available, please verify the shipping address"
-" or activate suitable carriers in your starshipit account."
+"There are no shipping services available, please verify the shipping address "
+"or activate suitable carriers in your starshipit account."
 msgstr ""
 "Toimituspalveluja ei ole saatavilla, tarkista toimitusosoite tai aktivoi "
 "sopivat kuljetusliikkeet Starshipit-tililläsi."

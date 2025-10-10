@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -186,12 +186,6 @@ msgstr "檢查"
 #: model:ir.model.fields,field_description:quality.field_quality_point__check_count
 msgid "Check Count"
 msgstr "檢查數目"
-
-#. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Close"
-msgstr "關閉"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__color
@@ -380,11 +374,6 @@ msgid "Future Activities"
 msgstr "未來活動"
 
 #. module: quality
-#: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__has_message
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__has_message
 #: model:ir.model.fields,field_description:quality.field_quality_check__has_message
@@ -412,8 +401,8 @@ msgstr "識別號"
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr "上級記錄ID支援別名(例如:專案支援任務建立別名)"
 
 #. module: quality
@@ -522,12 +511,12 @@ msgid "Local-part based incoming detection"
 msgstr "基於本地部件的來件檢測"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_alert__lot_ids
 msgid "Lot"
 msgstr "批次"
 
 #. module: quality
-#: model:ir.model.fields,field_description:quality.field_quality_check__lot_id
+#: model:ir.model.fields,field_description:quality.field_quality_check__lot_ids
 msgid "Lot/Serial"
 msgstr "批次/序列號"
 
@@ -612,11 +601,9 @@ msgstr "下一活動類型"
 #. odoo-python
 #: code:addons/quality/models/quality.py:0
 msgid ""
-"No quality team found for this company.\n"
-"Please go to configuration and create one first."
+"No quality teams found for this company! Head over to the configuration menu "
+"to create your first quality team."
 msgstr ""
-"未找到此公司的品質團隊。\n"
-"請先到「配置」並建立一個團隊。"
 
 #. module: quality
 #: model:ir.model.fields.selection,name:quality.selection__quality_alert__priority__0
@@ -684,7 +671,9 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr "所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。如果設定了，這個將完全阻止新記錄的建立。"
+msgstr ""
+"所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。"
+"如果設定了，這個將完全阻止新記錄的建立。"
 
 #. module: quality
 #: model:quality.reason,name:quality.reason_other
@@ -704,11 +693,12 @@ msgstr "上級記錄線程ID"
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模型，例如：專案（parent_model）與任務（model）"
+"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模"
+"型，例如：專案（parent_model）與任務（model）"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__partner_id
@@ -742,7 +732,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "通過信件網關在文件上提交一個訊息政策。\n"
 "- 任何人：任何人都可以提交\n"
@@ -753,12 +744,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality.field_quality_alert__action_preventive
 msgid "Preventive Action"
 msgstr "預防措施的動作"
-
-#. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Preview"
-msgstr "預覽"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__priority
@@ -955,8 +940,6 @@ msgid "Tags"
 msgstr "標籤"
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
 #: model:quality.point.test_type,name:quality.test_type_picture
 msgid "Take a Picture"
 msgstr "拍照"
@@ -989,11 +972,12 @@ msgstr "測試類型"
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
-"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
+"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到"
+"來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_name
@@ -1061,12 +1045,6 @@ msgid "Very High"
 msgstr "非常高"
 
 #. module: quality
-#. odoo-javascript
-#: code:addons/quality/static/src/tablet_image_field/tablet_image_field.xml:0
-msgid "Viewer"
-msgstr "查看者"
-
-#. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__website_message_ids
 #: model:ir.model.fields,field_description:quality.field_quality_check__website_message_ids
@@ -1096,3 +1074,22 @@ msgstr "工作中心失誤"
 #: model:ir.model.fields,field_description:quality.field_quality_point_test_type__active
 msgid "active"
 msgstr "啟用"
+
+#~ msgid "Close"
+#~ msgstr "關閉"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid ""
+#~ "No quality team found for this company.\n"
+#~ "Please go to configuration and create one first."
+#~ msgstr ""
+#~ "未找到此公司的品質團隊。\n"
+#~ "請先到「配置」並建立一個團隊。"
+
+#~ msgid "Preview"
+#~ msgstr "預覽"
+
+#~ msgid "Viewer"
+#~ msgstr "查看者"

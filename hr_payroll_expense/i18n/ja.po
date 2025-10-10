@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -23,13 +23,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll_expense.view_account_payment_register_form_inherit_hr_payroll_expense
 msgid ""
 "<span class=\"fw-bold\">\n"
-"                            The expenses will already be reimbursed in a payslip. Make sure this payment is intended.\n"
+"                            The expenses will already be reimbursed in a "
+"payslip. Make sure this payment is intended.\n"
 "                        </span>"
 msgstr ""
 "<span class=\"fw-bold\">\n"
-"                            "
-"経費はすでに給与明細で精算される予定です。この支払が意図したものであることを"
-"確認して下さい。\n"
+"                            経費はすでに給与明細で精算される予定です。この支"
+"払が意図したものであることを確認して下さい。\n"
 "                        </span>"
 
 #. module: hr_payroll_expense
@@ -67,12 +67,14 @@ msgstr "経費 (\"%(name)s\") は次の給与明細に追加されます。"
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_expense.py:0
 msgid ""
-"Expense reimbursement rule needs to be configured to add expenses to payslips.\n"
-"Please create one salary rule with the \"%(code)s\" code on the relevant salary structures."
+"Expense reimbursement rule needs to be configured to add expenses to "
+"payslips.\n"
+"Please create one salary rule with the \"%(code)s\" code on the relevant "
+"salary structures."
 msgstr ""
 "経費を給与明細に追加するには、経費精算規則を設定する必要があります。\n"
-"該当する給与規則に \"%(code)s\" "
-"コードを使用して、1つの給与規則を作成して下さい。"
+"該当する給与規則に \"%(code)s\" コードを使用して、1つの給与規則を作成して下さ"
+"い。"
 
 #. module: hr_payroll_expense
 #. odoo-python
@@ -138,12 +140,11 @@ msgstr ""
 #: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
 "No debit account found in the '%(rule_name)s' payslip salary rule. Please "
-"add a payable debit account to be able to create an accounting entry for the"
-" expenses linked to this payslip."
+"add a payable debit account to be able to create an accounting entry for the "
+"expenses linked to this payslip."
 msgstr ""
-"'%(rule_name)s ' "
-"給与明細の給与規則に借方勘定が見つかりません。給与明細に関連する経費の会計仕"
-"訳を作成できるように、支払用の借方勘定を追加して下さい。"
+"'%(rule_name)s ' 給与明細の給与規則に借方勘定が見つかりません。給与明細に関連"
+"する経費の会計仕訳を作成できるように、支払用の借方勘定を追加して下さい。"
 
 #. module: hr_payroll_expense
 #. odoo-python
@@ -215,8 +216,9 @@ msgstr "給与体系"
 msgid ""
 "The '%(account_name)s' account for the salary rule '%(rule_name)s' must be "
 "of type 'Payable'."
-msgstr "'%(account_name)s' 勘定科目、給与規則'%(rule_name)s' "
-"用は、'買掛金'タイプである必要があります。"
+msgstr ""
+"'%(account_name)s' 勘定科目、給与規則'%(rule_name)s' 用は、'買掛金'タイプであ"
+"る必要があります。"
 
 #. module: hr_payroll_expense
 #. odoo-python
@@ -228,7 +230,8 @@ msgstr "有効な経費が選択されていません。"
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_expense.py:0
 msgid ""
-"You cannot remove an expense from a payslip that has already been validated.\n"
+"You cannot remove an expense from a payslip that has already been "
+"validated.\n"
 "Expenses can only be removed from draft or canceled payslips."
 msgstr ""
 "すでに有効になっている給与明細書から経費を削除することはできません。\n"
@@ -246,7 +249,8 @@ msgstr "この経費を給与明細に追加する権限はありません。"
 msgid ""
 "You don't have the access rights to link an expense to a payslip. You need "
 "to be a payroll officer to do that."
-msgstr "経費を給与明細にリンクするアクセス権限がありません。それを実行するには、給与"
+msgstr ""
+"経費を給与明細にリンクするアクセス権限がありません。それを実行するには、給与"
 "担当者に依頼する必要があります。"
 
 #. module: hr_payroll_expense

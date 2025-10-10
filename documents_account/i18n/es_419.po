@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:30+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -134,8 +134,8 @@ msgstr "Haga clic en una tarjeta para <b>seleccionar el documento</b>."
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Click on a thumbnail to <b>preview the document</b>."
 msgstr ""
-"Haga clic sobre una miniatura para<b>tener una vista previa del "
-"documento</b>."
+"Haga clic sobre una miniatura para<b>tener una vista previa del documento</"
+"b>."
 
 #. module: documents_account
 #. odoo-javascript
@@ -244,8 +244,7 @@ msgstr "Crear recibo de proveedor"
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
-msgid ""
-"Create a new document for the remaining page, it will be handled later."
+msgid "Create a new document for the remaining page, it will be handled later."
 msgstr ""
 "Cree un nuevo documento para la página restante, lo gestionaremos después."
 
@@ -462,8 +461,8 @@ msgstr "Procesemos este documento ahora."
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid ""
-"Let's tag this mail as Finance<br/> <i>Tips: actions can be tailored to your"
-" process, according to the folder.</i>"
+"Let's tag this mail as Finance<br/> <i>Tips: actions can be tailored to your "
+"process, according to the folder.</i>"
 msgstr ""
 "Agreguemos la etiqueta \"Finanzas\" a este correo.<br/> <i>Consejo: Las "
 "acciones pueden adaptarse a su proceso según la carpeta correspondiente.</i>"
@@ -549,7 +548,8 @@ msgstr "Impuestos"
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "This invoice has been initiated by a bank transaction."
-msgstr "Se inició el trámite de esta factura debido a una transacción bancaria."
+msgstr ""
+"Se inició el trámite de esta factura debido a una transacción bancaria."
 
 #. module: documents_account
 #. odoo-javascript
@@ -571,11 +571,14 @@ msgid ""
 "- 'Update a Record': update the values of a record\n"
 "- 'Create Activity': create an activity (Discuss)\n"
 "- 'Send Email': post a message, a note or send an email (Discuss)\n"
-"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': add or remove followers to a record (Discuss)\n"
+"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': "
+"add or remove followers to a record (Discuss)\n"
 "- 'Create Record': create a new record with new values\n"
 "- 'Execute Code': a block of Python code that will be executed\n"
-"- 'Send Webhook Notification': send a POST request to an external system, also known as a Webhook\n"
-"- 'Multi Actions': define an action that triggers several other server actions\n"
+"- 'Send Webhook Notification': send a POST request to an external system, "
+"also known as a Webhook\n"
+"- 'Multi Actions': define an action that triggers several other server "
+"actions\n"
 msgstr ""
 "Tipo de acción de servidor. Los valores disponibles son:\n"
 "- 'Actualizar un registro': Actualiza los valores de un registro\n"

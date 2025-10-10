@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-29 12:10+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -48,27 +48,38 @@ msgstr "<i class=\"oi oi-fw oi-arrow-right\"/>업무 평가로 이동"
 #: model:mail.template,body_html:hr_appraisal_survey.mail_template_appraisal_ask_feedback
 msgid ""
 "<p style=\"margin: 0px; padding: 0px; font-size: 13px;\">\n"
-"                    Dear <t t-out=\"object.partner_id.name or 'participant'\">[participant]</t>,\n"
+"                    Dear <t t-out=\"object.partner_id.name or "
+"'participant'\">[participant]</t>,\n"
 "                    <br/>\n"
-"                    As part of our 360° feedback process, <t t-out=\"ctx.get('logged_user')\">[Current user]</t> would love\n"
-"                    to get your insights on <t t-out=\"ctx.get('employee')\">[the employee]</t>'s performance.\n"
+"                    As part of our 360° feedback process, <t t-"
+"out=\"ctx.get('logged_user')\">[Current user]</t> would love\n"
+"                    to get your insights on <t t-out=\"ctx.get('employee')"
+"\">[the employee]</t>'s performance.\n"
 "                    <br/>\n"
-"                    Your feedback is valuable in helping us recognize strengths and identify growth opportunities.\n"
+"                    Your feedback is valuable in helping us recognize "
+"strengths and identify growth opportunities.\n"
 "                    <br/>\n"
-"                    It should only take a few minutes, and you can submit your feedback via the link below:\n"
+"                    It should only take a few minutes, and you can submit "
+"your feedback via the link below:\n"
 "                    <br/>\n"
 "                    </p><div class=\"text-center my-4\">\n"
-"                        <a t-att-href=\"object.get_start_url()\" t-attf-style=\"background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\">\n"
+"                        <a t-att-href=\"object.get_start_url()\" t-attf-"
+"style=\"background-color: {{user.company_id.email_secondary_color or "
+"'#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: "
+"{{user.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\">\n"
 "                            Give your feedback\n"
 "                        </a>\n"
 "                    </div>\n"
-"                    Please complete the survey before <t t-out=\"ctx.get('deadline')\">[the specified deadline]</t>.\n"
+"                    Please complete the survey before <t t-"
+"out=\"ctx.get('deadline')\">[the specified deadline]</t>.\n"
 "                    <br/>\n"
 "                    Thank you for your time and honesty!\n"
 "                    <br/>\n"
 "                    <t t-if=\"ctx.get('user_body')\">\n"
 "                        <div class=\"my-3 py-2 px-3 bg-secondary\">\n"
-"                            <t t-out=\"ctx.get('user_body')\">[Optional comment]</t>\n"
+"                            <t t-out=\"ctx.get('user_body')\">[Optional "
+"comment]</t>\n"
 "                        </div>\n"
 "                    </t>\n"
 "                \n"
@@ -89,8 +100,8 @@ msgstr "<span> / </span>"
 #. odoo-python
 #: code:addons/hr_appraisal_survey/models/hr_appraisal.py:0
 msgid ""
-"A new 360 Feedback report has been completed for the appraisal of "
-"%(employee_name)s."
+"A new 360 Feedback report has been completed for the appraisal of %"
+"(employee_name)s."
 msgstr "%(employee_name)s의 평가에 대한 새 360 피드백 보고서가 작성되었습니다."
 
 #. module: hr_appraisal_survey
@@ -163,8 +174,8 @@ msgid ""
 "An appraisal feedback was requested. Please take time to fill the <a "
 "href=\"%s\" target=\"_blank\">survey</a>"
 msgstr ""
-"인사평가 피드백이 요청되었습니다. 잠시 시간을 내어 <a href=\"%s\" target="
-"\"_blank\">설문조사</a>에 응답해주시기 바랍니다."
+"인사평가 피드백이 요청되었습니다. 잠시 시간을 내어 <a href=\"%s\" "
+"target=\"_blank\">설문조사</a>에 응답해주시기 바랍니다."
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.arow_3_1_11
@@ -337,8 +348,9 @@ msgstr "창의력과 기대 적성"
 msgid ""
 "Critical or key elements of performance and professional development needs "
 "(if any), should also be noted at this time"
-msgstr "중요한 성과 및 전문성 개발 요구사항 (해당하는 경우)의 핵심적인 내용도 이 "
-"시기에 기록해야 합니다."
+msgstr ""
+"중요한 성과 및 전문성 개발 요구사항 (해당하는 경우)의 핵심적인 내용도 이 시기"
+"에 기록해야 합니다."
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.arow_3_1_8
@@ -494,7 +506,8 @@ msgstr "ID"
 msgid ""
 "Identify professional, performance, or project objectives you recommend for "
 "employee’s continued career development over the coming year."
-msgstr "직원의 지속적인 경력 개발을 위해 다음 한 해 동안 권장되는 전문성, 업무 성과 "
+msgstr ""
+"직원의 지속적인 경력 개발을 위해 다음 한 해 동안 권장되는 전문성, 업무 성과 "
 "또는 프로젝트 목표를 파악합니다."
 
 #. module: hr_appraisal_survey
@@ -516,12 +529,12 @@ msgstr "편집자입니다"
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
 msgid ""
 "It is the joint responsibility of the employee and the supervisor "
-"(appraiser) to establish a feasible work plan for the coming year, including"
-" major employee responsibilities and corresponding benchmarks against which "
+"(appraiser) to establish a feasible work plan for the coming year, including "
+"major employee responsibilities and corresponding benchmarks against which "
 "results will be evaluated."
 msgstr ""
-"직원의 주요 직무와 결과 평가 기준을 포함하여 내년도에 실행 가능한 업무 "
-"계획을 수립하는 것은 직원과 관리자(평가자)의 공동 책임입니다."
+"직원의 주요 직무와 결과 평가 기준을 포함하여 내년도에 실행 가능한 업무 계획"
+"을 수립하는 것은 직원과 관리자(평가자)의 공동 책임입니다."
 
 #. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
@@ -529,7 +542,8 @@ msgid ""
 "It is the primary responsibility of the supervisor to gather the necessary "
 "input from the appropriate sources of feedback (internal and/or external "
 "customers, peers)."
-msgstr "적절한 피드백 출처 (내부 및 외부 고객, 동료 등)로부터 필요한 의견을 수집하는 "
+msgstr ""
+"적절한 피드백 출처 (내부 및 외부 고객, 동료 등)로부터 필요한 의견을 수집하는 "
 "것은 관리자의 주요 책임입니다."
 
 #. module: hr_appraisal_survey
@@ -723,7 +737,8 @@ msgstr "결과"
 msgid ""
 "Results of the bottom-up survey and mitigation actions to face technical, "
 "organizational, structural and/or relational issues"
-msgstr "상향식 설문조사 결과 및 직면한 기술적, 조직적, 구조적으로 관련된 문제에 대한 "
+msgstr ""
+"상향식 설문조사 결과 및 직면한 기술적, 조직적, 구조적으로 관련된 문제에 대한 "
 "개선 대책"
 
 #. module: hr_appraisal_survey
@@ -846,8 +861,8 @@ msgstr "설문 조사 사용자 입력"
 #. module: hr_appraisal_survey
 #: model:mail.template,subject:hr_appraisal_survey.mail_template_appraisal_ask_feedback
 msgid ""
-"Take part in {{ ctx.get('employee_id') and ctx['employee_id'].name or 'this'"
-" }} appraisal"
+"Take part in {{ ctx.get('employee_id') and ctx['employee_id'].name or "
+"'this' }} appraisal"
 msgstr ""
 "{{ ctx.get('employee_id') and ctx['employee_id'].name or 'this' }} 업무 평가 "
 "참여하기"
@@ -857,8 +872,9 @@ msgstr ""
 msgid ""
 "Team spirit: ability to work efficiently with peers, manage the conflicts "
 "with diplomacy"
-msgstr "팀 정신 : 타인과의 관계 및 갈등을 관리하여 동료들과 업무를 효율적으로 "
-"처리하는 능력"
+msgstr ""
+"팀 정신 : 타인과의 관계 및 갈등을 관리하여 동료들과 업무를 효율적으로 처리하"
+"는 능력"
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.arow_3_1_10
@@ -875,15 +891,17 @@ msgstr "시간을 내어 참여해 주셔서 감사합니다!"
 msgid ""
 "The appraiser should rate the employee’s major work accomplishments and "
 "performance according to the metric provided below:"
-msgstr "평가자는 아래 제공된 여러 지표에 따라 직원의 주요 업무 성과 및 실적을 "
-"평가해야 합니다:"
+msgstr ""
+"평가자는 아래 제공된 여러 지표에 따라 직원의 주요 업무 성과 및 실적을 평가해"
+"야 합니다:"
 
 #. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
 msgid ""
 "The employee may choose to offer comments or explanation regarding the "
 "completed review."
-msgstr "직원은 평가 완료된 리뷰에 대한 의견이나 설명을 제공하도록 요청할 수 있습니다."
+msgstr ""
+"직원은 평가 완료된 리뷰에 대한 의견이나 설명을 제공하도록 요청할 수 있습니다."
 
 #. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
@@ -895,8 +913,8 @@ msgid ""
 "supervisor."
 msgstr ""
 "직원은 개인 업무 결산을 위한 도구이자 관리자의 평가를 위한 업무 평가 양식의 "
-"초안을 작성해야 합니다. 직원은 각 기준에 맞추어 업무 실적 예시를 서술할 수 "
-"있습니다. 작성이 완료되면, 해당 양식은 관리자에게 전송할 수 있습니다."
+"초안을 작성해야 합니다. 직원은 각 기준에 맞추어 업무 실적 예시를 서술할 수 있"
+"습니다. 작성이 완료되면, 해당 양식은 관리자에게 전송할 수 있습니다."
 
 #. module: hr_appraisal_survey
 #. odoo-python
@@ -914,8 +932,9 @@ msgid ""
 "The supervisor synthesizes and integrates all input into the completed "
 "appraisal. The motivation of the evaluation is explained in the ad hoc "
 "fields."
-msgstr "관리자는 모든 내용을 종합하여 최종 인사 평가에 반영해야합니다. 업무 평가에 "
-"대한 자세한 내용은 임시 필드에 설명되어 있습니다."
+msgstr ""
+"관리자는 모든 내용을 종합하여 최종 인사 평가에 반영해야합니다. 업무 평가에 대"
+"한 자세한 내용은 임시 필드에 설명되어 있습니다."
 
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,help:hr_appraisal_survey.field_hr_appraisal_template__survey_template_ids
@@ -930,8 +949,8 @@ msgid ""
 "This survey allows you to give a feedback about your collaboration with an "
 "employee. Filling it helps us improving the appraisal process."
 msgstr ""
-"이 설문조사를 통해 직원과의 업무 협업에 대한 피드백을 제공할 수 있습니다. "
-"설문지를 작성하면 평가 프로세스를 개선하는 데 큰 도움이 됩니다."
+"이 설문조사를 통해 직원과의 업무 협업에 대한 피드백을 제공할 수 있습니다. 설"
+"문지를 작성하면 평가 프로세스를 개선하는 데 큰 도움이 됩니다."
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.arow_3_1_15
@@ -941,8 +960,8 @@ msgstr "시간 관리 : 시간 내에 프로젝트/업무 완료"
 #. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
 msgid ""
-"To assist employees in their professional growth, through the identification"
-" of strengths and opportunities for development"
+"To assist employees in their professional growth, through the identification "
+"of strengths and opportunities for development"
 msgstr "직원의 강점과 발전 기회를 파악하여 직원의 전문적인 성장을 지원합니다."
 
 #. module: hr_appraisal_survey
@@ -958,8 +977,8 @@ msgstr "총 설문조사 수"
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_5_1
 msgid ""
-"Use the following space to make any comments regarding the above performance"
-" evaluation."
+"Use the following space to make any comments regarding the above performance "
+"evaluation."
 msgstr "위의 직무 능력 평가에 대한 의견을 아래 공간에 적어주십시오."
 
 #. module: hr_appraisal_survey
@@ -986,17 +1005,21 @@ msgstr "다른 팀에 속한 동료입니다."
 #: model_terms:survey.survey,description:hr_appraisal_survey.appraisal_360_feedback_template
 msgid ""
 "Welcome to this survey, <br><br>\n"
-"                You've been asked to participate to a 360 Feedback. It's a small survey that will allow managers to get more feedback about their employee. \n"
-"                By working with him/her, you're the best to share your thoughts and explain how your collaboration was.<br><br>\n"
-"                Your answers will be viewed only by the managers. This is not an anonymous survey."
+"                You've been asked to participate to a 360 Feedback. It's a "
+"small survey that will allow managers to get more feedback about their "
+"employee. \n"
+"                By working with him/her, you're the best to share your "
+"thoughts and explain how your collaboration was.<br><br>\n"
+"                Your answers will be viewed only by the managers. This is "
+"not an anonymous survey."
 msgstr ""
 "설문조사에 오신 것을 환영합니다! <br><br>\n"
 "                360 피드백에 참여하도록 초대되셨습니다. 이 간단한 설문조사는 "
 "관리자에게 직원에 대한 귀중한 인사이트를 제공하기 위한 것입니다. \n"
-"                귀하는 직원과 긴밀하게 협업해 온 사람으로서 협업에 관한 "
-"생각과 경험을 공유할 수 있는 가장 좋은 위치에 있습니다.<br><br>\n"
-"                귀하의 답변은 관리자만 열람할 수 있습니다. 이 설문조사는 "
-"익명 설문조사가 아닙니다."
+"                귀하는 직원과 긴밀하게 협업해 온 사람으로서 협업에 관한 생각"
+"과 경험을 공유할 수 있는 가장 좋은 위치에 있습니다.<br><br>\n"
+"                귀하의 답변은 관리자만 열람할 수 있습니다. 이 설문조사는 익"
+"명 설문조사가 아닙니다."
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_6
@@ -1034,8 +1057,8 @@ msgid ""
 "You can create surveys used for appraisals. Design easily your appraisal,\n"
 "                send invitations and analyze answers."
 msgstr ""
-"업무 평가에 사용되는 설문조사를 작성할 수 있습니다. 쉽고 간단하게 업무 "
-"평가서를 만들어보세요. \n"
+"업무 평가에 사용되는 설문조사를 작성할 수 있습니다. 쉽고 간단하게 업무 평가서"
+"를 만들어보세요. \n"
 "                초대를 보내고 답변을 분석할 수 있습니다."
 
 #. module: hr_appraisal_survey

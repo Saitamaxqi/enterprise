@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:42+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -36,8 +36,8 @@ msgstr ""
 "<span class=\"fa fa-exclamation-triangle text-warning\" title=\"The sales "
 "order associated with this shift has been cancelled. We recommend either "
 "updating the sales order item or unscheduling this shift in line with the "
-"cancellation of the sales order.\" invisible=\"sale_order_state != 'cancel'\""
-"/>"
+"cancellation of the sales order.\" invisible=\"sale_order_state != "
+"'cancel'\"/>"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.view_order_form_inherit_sale_planning
@@ -69,9 +69,10 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/planning_hooks.js:0
 msgid ""
-"All open shifts and sales orders have already been assigned, or there are no"
-" resources available to take them at this time."
-msgstr "すべてのオープンシフトと販売オーダはすでに割り当てられているか、または現時点"
+"All open shifts and sales orders have already been assigned, or there are no "
+"resources available to take them at this time."
+msgstr ""
+"すべてのオープンシフトと販売オーダはすでに割り当てられているか、または現時点"
 "でそれらを取得するために利用可能なリソースがありません。"
 
 #. module: sale_planning
@@ -153,19 +154,18 @@ msgstr "IT技術者"
 msgid ""
 "If enabled, a shift will automatically be generated for the selected role "
 "when confirming the Sales Order.                 With the 'auto plan' "
-"feature, only employees with this role will be automatically assigned shifts"
-" for Sales Orders containing this service.                 The system will "
-"consider employee availability and the remaining time to be planned."
-"                 You can also manually schedule open shifts for your Sales "
-"Order or assign them to any employee you prefer."
+"feature, only employees with this role will be automatically assigned shifts "
+"for Sales Orders containing this service.                 The system will "
+"consider employee availability and the remaining time to be "
+"planned.                 You can also manually schedule open shifts for your "
+"Sales Order or assign them to any employee you prefer."
 msgstr ""
 "有効にすると、販売オーダを確認する際に、選択した役割に対してシフトが自動的に"
-"作成されます。                 '自動計画' "
-"機能により、この役割を持つ従業員のみに、このサービスを含む販売オーダのシフト"
-"が自動的に割当てられます。                 "
-"システムは、従業員の稼働状況と計画予定の残時間を考慮します。                 "
-"販売オーダに対して手動でオープンシフトをスケジュールしたり、優先する従業員に"
-"割当たりすることも可能です。"
+"作成されます。                 '自動計画' 機能により、この役割を持つ従業員の"
+"みに、このサービスを含む販売オーダのシフトが自動的に割当てられま"
+"す。                 システムは、従業員の稼働状況と計画予定の残時間を考慮しま"
+"す。                 販売オーダに対して手動でオープンシフトをスケジュールした"
+"り、優先する従業員に割当たりすることも可能です。"
 
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_search_inherit_sale_planning
@@ -187,7 +187,8 @@ msgstr "請求不可"
 msgid ""
 "Only slots linked to a Sales Order with a plannable service can be "
 "unscheduled."
-msgstr "計画可能なサービスを持つ販売オーダにリンクされたスロットのみ、スケジュール解"
+msgstr ""
+"計画可能なサービスを持つ販売オーダにリンクされたスロットのみ、スケジュール解"
 "除が可能です。"
 
 #. module: sale_planning
@@ -205,8 +206,9 @@ msgstr "スケジュールされていないオープンシフトと販売オー
 #. module: sale_planning
 #: model_terms:product.template,description:sale_planning.developer_product_product_template
 msgid "Our developer will help you to add new features to your Software."
-msgstr "当社の開発者は、お客様のソフトウェアに新しい機能を追加するのをお手伝いします"
-"。"
+msgstr ""
+"当社の開発者は、お客様のソフトウェアに新しい機能を追加するのをお手伝いしま"
+"す。"
 
 #. module: sale_planning
 #: model:ir.model.fields,field_description:sale_planning.field_product_product__planning_enabled
@@ -299,7 +301,8 @@ msgid ""
 "Sales order item for which this shift will be performed. When sales orders "
 "are automatically planned, the remaining hours of the sales order item, as "
 "well as the role defined on the service, are taken into account."
-msgstr "このシフトが実行される販売オーダ項目。販売オーダが自動的に計画される場合、販"
+msgstr ""
+"このシフトが実行される販売オーダ項目。販売オーダが自動的に計画される場合、販"
 "売オーダ項目の残り時間とサービス上で定義された役割が考慮されます。"
 
 #. module: sale_planning
@@ -312,7 +315,8 @@ msgstr "販売オーダごとのスケジュール"
 msgid ""
 "Schedule your human and material resources across roles, projects and sales "
 "orders."
-msgstr "役割、プロジェクト、販売オーダにまたがる人的・物的リソースのスケジュールを立"
+msgstr ""
+"役割、プロジェクト、販売オーダにまたがる人的・物的リソースのスケジュールを立"
 "てることができます。"
 
 #. module: sale_planning
@@ -336,7 +340,8 @@ msgstr "お休み下さい。私たちがベストを尽くします。"
 msgid ""
 "There are no hours left to plan, or there are no resources available at the "
 "time."
-msgstr "計画を立てる時間が残されていない、あるいはその時点で利用できるリソースがあり"
+msgstr ""
+"計画を立てる時間が残されていない、あるいはその時点で利用できるリソースがあり"
 "ません。"
 
 #. module: sale_planning
@@ -386,12 +391,12 @@ msgstr "キャンセルされた販売オーダのスロットを作成しよう
 #. odoo-python
 #: code:addons/sale_planning/models/sale_order.py:0
 msgid ""
-"You cannot update the company for sales order %(order_name)s as it's linked to shifts in another company.\n"
+"You cannot update the company for sales order %(order_name)s as it's linked "
+"to shifts in another company.\n"
 "Please transfer shifts %(slots_names)s to the destination company first."
 msgstr ""
-"販売オーダ %(order_name)s "
-"用に会社を更新することはできません。他の会社のシフトにリンクしているためです"
-"。\n"
+"販売オーダ %(order_name)s 用に会社を更新することはできません。他の会社のシフ"
+"トにリンクしているためです。\n"
 "シフト %(slots_names)s をまず、宛先の会社に移行して下さい。"
 
 #. module: sale_planning

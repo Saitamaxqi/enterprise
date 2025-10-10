@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* website_knowledge
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: website_knowledge
@@ -85,7 +86,8 @@ msgid "Knowledge Article"
 msgstr "知識庫文章"
 
 #. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_searchbar_input_snippet_options
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/plugins/searchbar_option.xml:0
 msgid "Knowledge articles"
 msgstr "知識庫文章"
 
@@ -174,6 +176,8 @@ msgid "Unpublish Articles"
 msgstr "取消發佈文章"
 
 #. module: website_knowledge
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/sidebar/knowledge_public_sidebar.xml:0
 #: model_terms:ir.ui.view,arch_db:website_knowledge.article_public_content
 msgid "Untitled"
 msgstr "未命名"

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -33,6 +33,12 @@ msgstr "相機配置錯誤"
 #: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
 msgid "Capturing image..."
 msgstr "正在擷取圖像⋯"
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Close"
+msgstr ""
 
 #. module: quality_iot
 #. odoo-javascript
@@ -120,6 +126,12 @@ msgid ""
 msgstr "請將相應的品質控制點，連結至測量裝置。"
 
 #. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Preview"
+msgstr ""
+
+#. module: quality_iot
 #: model:ir.model.fields,field_description:quality_iot.field_iot_device__qcp_test_type
 msgid "Qcp Test Type"
 msgstr "Qcp測試類型"
@@ -143,3 +155,15 @@ msgstr "品質控制點"
 #: model:ir.model.fields,field_description:quality_iot.field_iot_device__quality_point_ids
 msgid "Quality Point"
 msgstr "品質點"
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Take a Picture"
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Viewer"
+msgstr ""

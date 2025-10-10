@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 13:38+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -203,8 +203,8 @@ msgstr ""
 "                                    هذا الحقل يمكن تعديله فقط بواسطة مدير "
 "الخادم. تواصل معه إذا كنت تريد تعديل إجراء تلك الحقول.\n"
 "                                </span>\n"
-"                                <span invisible="
-"\"requested_documents_fields_string\">\n"
+"                                <span "
+"invisible=\"requested_documents_fields_string\">\n"
 "                                    لا توجد حقول مطلوبة حالياً.\n"
 "                                </span>"
 
@@ -364,8 +364,8 @@ msgstr ""
 msgid ""
 "An %(offer)s has been sent by %(user)s to the employee (mail: %(email)s)"
 msgstr ""
-"لقد تم إرسال %(offer)s بواسطة %(user)s إلى الموظف (البريد الإلأكتروني: "
-"%(email)s)"
+"لقد تم إرسال %(offer)s بواسطة %(user)s إلى الموظف (البريد الإلأكتروني: %"
+"(email)s)"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -1524,8 +1524,8 @@ msgid ""
 "Mismatch between res_field_id %(field)s and model %(model)s for info %"
 "(personal_info)s"
 msgstr ""
-"يوجد عدم تطابق بين res_field_id %(field)s والنموذج %(model)s للمعلومات "
-"%(personal_info)s"
+"يوجد عدم تطابق بين res_field_id %(field)s والنموذج %(model)s للمعلومات %"
+"(personal_info)s"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields.selection,name:hr_contract_salary.selection__hr_contract_salary_benefit_type__periodicity__monthly
@@ -2906,8 +2906,8 @@ msgid ""
 "{{ object.company_id.name }}: Job Offer - "
 "{{ object.applicant_id.partner_name }}"
 msgstr ""
-"{{ object.company_id.name }}: عرض عمل - {{ object.applicant_id.partner_name "
-"}}"
+"{{ object.company_id.name }}: عرض عمل - "
+"{{ object.applicant_id.partner_name }}"
 
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer

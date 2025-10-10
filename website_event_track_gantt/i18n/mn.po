@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:22+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2022-09-22 05:50+0000\n"
 "Last-Translator: Батмөнх Ганбат <batmunkh2522@gmail.com>, 2022\n"
 "Language-Team: Mongolian (https://app.transifex.com/odoo/teams/41243/mn/)\n"
@@ -48,6 +48,12 @@ msgid "Discard"
 msgstr "Үл хэрэгсэх"
 
 #. module: website_event_track_gantt
+#: model:ir.model.fields,field_description:website_event_track_gantt.field_event_event__display_name
+#: model:ir.model.fields,field_description:website_event_track_gantt.field_event_track__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: website_event_track_gantt
 #: model:ir.model,name:website_event_track_gantt.model_event_event
 msgid "Event"
 msgstr "Арга хэмжээ"
@@ -56,6 +62,12 @@ msgstr "Арга хэмжээ"
 #: model:ir.model,name:website_event_track_gantt.model_event_track
 msgid "Event Track"
 msgstr "Арга хэмжээний Зам"
+
+#. module: website_event_track_gantt
+#: model:ir.model.fields,field_description:website_event_track_gantt.field_event_event__id
+#: model:ir.model.fields,field_description:website_event_track_gantt.field_event_track__id
+msgid "ID"
+msgstr ""
 
 #. module: website_event_track_gantt
 #: model_terms:ir.ui.view,arch_db:website_event_track_gantt.event_track_view_form_in_gantt

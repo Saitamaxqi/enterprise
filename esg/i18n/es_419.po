@@ -4,13 +4,14 @@
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 # "Fernanda Alvarez (mfar)" <mfar@odoo.com>, 2025.
+# "Patricia Gutiérrez (pagc)" <pagc@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-30 18:40+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"PO-Revision-Date: 2025-10-09 21:12+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/esg/es_419/>\n"
 "Language: es_419\n"
@@ -384,6 +385,12 @@ msgid ""
 "account.\n"
 "Are you sure you want to continue?"
 msgstr ""
+"Cambiar el tipo de cuenta a uno que no sea %(valid_account_type_names)s "
+"restablecerá todos los factores de emisión vinculados a los asientos "
+"contables que usen esta cuenta.\n"
+"Además, eliminará todas las líneas de asignación ESG vinculadas a esa cuenta."
+"\n"
+"¿Seguro de querer continuar?"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__child_ids
@@ -844,6 +851,11 @@ msgstr "Otras emisiones ESG"
 #: model:ir.model.fields,field_description:esg.field_account_move__esg_show_emissions_button
 msgid "Esg Show Emissions Button"
 msgstr "Mostrar botón de emisiones ESG"
+
+#. module: esg
+#: model:account.account,name:esg.account_expense
+msgid "Expense"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
@@ -1613,6 +1625,11 @@ msgid "SMS Delivery error"
 msgstr "Error en el envío del SMS"
 
 #. module: esg
+#: model:account.account,name:esg.account_salary
+msgid "Salary"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__scope
 #: model:ir.model.fields,field_description:esg.field_esg_emission_source__scope
@@ -1749,7 +1766,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/esg/models/esg_assignation_line.py:0
 msgid "The account type must be of type %(valid_account_type_names)s."
-msgstr ""
+msgstr "El tipo de cuenta debe ser del tipo %(valid_account_type_names)s."
 
 #. module: esg
 #: model:ir.model.constraint,message:esg.constraint_esg_assignation_line_at_least_one_field_filled
@@ -1955,7 +1972,7 @@ msgstr "Incertidumbre muy alta (> 50%)"
 #. odoo-python
 #: code:addons/esg/models/account_account.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Advertencia"
 
 #. module: esg
 #. odoo-javascript
@@ -1988,6 +2005,9 @@ msgid ""
 "You can only create accounts of type %(valid_account_type_names)s in the ESG "
 "module, as emission factors can only be linked to expense or asset accounts."
 msgstr ""
+"En el módulo ESG solo puedes crear cuentas de tipo "
+"%(valid_account_type_names)s, ya que los factores de emisión solo pueden "
+"estar vinculados a cuentas de gastos o de activos."
 
 #. module: esg
 #. odoo-python

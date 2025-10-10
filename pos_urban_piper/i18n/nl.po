@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-14 11:58+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
@@ -124,7 +124,8 @@ msgstr "Kanaal"
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_platform_ids
 #: model:ir.model.fields,help:pos_urban_piper.field_product_template__urbanpiper_pos_platform_ids
 msgid "Check this if the product is available for following platform."
-msgstr "Vink dit aan als het product beschikbaar is voor het volgende platform."
+msgstr ""
+"Vink dit aan als het product beschikbaar is voor het volgende platform."
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_product_product__urbanpiper_pos_config_ids
@@ -946,8 +947,7 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
-msgid ""
-"Responsible delivery provider for online order, e.g., UberEats, Zomato."
+msgid "Responsible delivery provider for online order, e.g., UberEats, Zomato."
 msgstr "Verantwoordelijke bezorger voor online orders, bijv. UberEats, Zomato."
 
 #. module: pos_urban_piper
@@ -1313,7 +1313,6 @@ msgstr "Je kunt de pos_urban_piper.uuid niet wijzigen."
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-msgid ""
-"Your company %s needs to have a correct city in order create the store."
+msgid "Your company %s needs to have a correct city in order create the store."
 msgstr ""
 "Je bedrijf %s moet een correcte stad hebben om de winkel te kunnen maken."

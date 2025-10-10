@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2022-09-22 05:48+0000\n"
 "Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2022\n"
 "Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
@@ -24,11 +24,24 @@ msgstr ""
 #. module: quality_iot
 #. odoo-javascript
 #: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
-msgid "Capture image..."
-msgstr "Acquisizione immagine..."
+msgid "Camera configuration error"
+msgstr ""
 
 #. module: quality_iot
 #. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
+msgid "Capturing image..."
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Close"
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.js:0
 #: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
 msgid "Connection to device failed"
 msgstr "Connessione al dispositivo non riuscita"
@@ -44,9 +57,35 @@ msgid "Device Name: "
 msgstr "Nome dispositivo: "
 
 #. module: quality_iot
+#: model:ir.model.fields,field_description:quality_iot.field_iot_device__display_name
+#: model:ir.model.fields,field_description:quality_iot.field_quality_check__display_name
+#: model:ir.model.fields,field_description:quality_iot.field_quality_point__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: quality_iot
 #: model:ir.model.fields,field_description:quality_iot.field_quality_check__ip
 msgid "Domain Address"
 msgstr "Indirizzo dominio"
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.xml:0
+msgid "Get Measurement"
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.js:0
+msgid "Getting measurement..."
+msgstr ""
+
+#. module: quality_iot
+#: model:ir.model.fields,field_description:quality_iot.field_iot_device__id
+#: model:ir.model.fields,field_description:quality_iot.field_quality_check__id
+#: model:ir.model.fields,field_description:quality_iot.field_quality_point__id
+msgid "ID"
+msgstr ""
 
 #. module: quality_iot
 #: model:ir.model,name:quality_iot.model_iot_device
@@ -60,9 +99,36 @@ msgstr "Identificatore"
 
 #. module: quality_iot
 #. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.js:0
+msgid "Measurement device configuration error"
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.js:0
 #: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
 msgid "Please check if the device is still connected."
 msgstr "Controllare che il dispositivo sia ancora connesso."
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.js:0
+msgid "Please link the corresponding Quality Control Point to the camera."
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_measure.js:0
+msgid ""
+"Please link the corresponding Quality Control Point to the measurement "
+"device."
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Preview"
+msgstr ""
 
 #. module: quality_iot
 #: model:ir.model.fields,field_description:quality_iot.field_iot_device__qcp_test_type
@@ -88,3 +154,18 @@ msgstr "Punti di controllo qualità"
 #: model:ir.model.fields,field_description:quality_iot.field_iot_device__quality_point_ids
 msgid "Quality Point"
 msgstr "Punto qualità"
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Take a Picture"
+msgstr ""
+
+#. module: quality_iot
+#. odoo-javascript
+#: code:addons/quality_iot/static/src/iot_picture/iot_picture.xml:0
+msgid "Viewer"
+msgstr ""
+
+#~ msgid "Capture image..."
+#~ msgstr "Acquisizione immagine..."

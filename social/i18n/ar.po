@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 13:39+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/social/ar/"
@@ -32,8 +32,8 @@ msgstr "عدد الحسابات"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "%s (max %s chars)"
-msgstr "%s (%s رموز كحد أقصى) "
+msgid "%(media_name)s (max %(max_chars)s chars)"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -47,9 +47,20 @@ msgid "<b>An error occurred while trying to link your account</b>"
 msgstr "<b>حدث خطأ أثناء محاولة ربط حسابك</b>"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "<i class=\"fa fa-globe\" title=\"See the post\"/>"
-msgstr "<i class=\"fa fa-globe\" title=\"انظر إلى المنشور \"/>"
+msgid "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
@@ -57,14 +68,10 @@ msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
 msgstr "<i class=\"oi oi-arrow-left\"/> العودة إلى أودو"
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<small class=\"pe-1\">Clicks:</small>"
-msgstr "<small class=\"pe-1\">نقرات:</small>"
-
-#. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/js/tours/social.js:0
-msgid "<strong>Congrats! Come back in a few minutes to check your statistics.</strong>"
+#: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
+msgid ""
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr "<strong>تهانينا! عد مجدداً خلال بضع دقائق لتتفقد إحصائياتك.</strong>"
 
 #. module: social
@@ -111,9 +118,14 @@ msgstr "إضافة منشور"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Add Stream"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
 #: code:addons/social/static/src/js/add_stream_modal.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
-#: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add a Stream"
 msgstr "إضافة وسائط"
 
@@ -162,6 +174,11 @@ msgid "Attach Images"
 msgstr "إرفاق صور"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__image_ids
+msgid "Attached Images"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
 #: model:ir.model.fields,field_description:social.field_social_post__message_attachment_count
 msgid "Attachment Count"
@@ -191,8 +208,8 @@ msgstr "اسم الكاتب"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_link
-msgid "Author link to the external social.media (ex: link to the Twitter Account)."
-msgstr "رابط الكاتب إلى social.media الخارجي (مثال: الرابط إلى حساب تويتر). "
+msgid "Author link to the external social.media (ex: link to the X Account)."
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -231,7 +248,9 @@ msgstr "الحملات"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
-msgid "Campaigns are used to centralize your marketing efforts and track their results."
+msgid ""
+"Campaigns are used to centralize your marketing efforts and track their "
+"results."
 msgstr "تُستخدم الحملات لتركيز جهودك التسويقية وتتبع نتائجها."
 
 #. module: social
@@ -240,8 +259,6 @@ msgid "Can link accounts?"
 msgstr "بإمكانه ربط الحسابات؟"
 
 #. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Cancel"
 msgstr "إلغاء"
@@ -262,6 +279,11 @@ msgstr "اضغط للتحديث."
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Clicks"
 msgstr "النقرات"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Clicks:"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -299,12 +321,16 @@ msgstr "مشكلة الاتصال"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__social_account_handle
-msgid "Contains the social media handle of the person that created this account. E.g: '@odoo.official' for the 'Odoo' Twitter account"
-msgstr "يحتوي على اسم المستخدم على مواقع التواصل الاجتماعي، للشخص الذي قام بإنشاء هذا الحساب. مثال: '@odoo.official' لحساب 'أودو' على تويتر "
+msgid ""
+"Contains the social media handle of the person that created this account. "
+"E.g: '@odoo.official' for the 'Odoo' X account"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
-msgid "Content of the social post message that is post-processed (links are shortened, UTMs, ...)"
+msgid ""
+"Content of the social post message that is post-processed (links are "
+"shortened, UTMs, ...)"
 msgstr ""
 "محتوى رسالة المنشور الاجتماعي التي قم تمت معالجتها (تقصير الروابط، UTMs، ...)"
 
@@ -333,10 +359,12 @@ msgstr "إنشاء منشور"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
-msgid "Create other accounts for %(media_names)s for this company or ask %(company_names)s to share their accounts"
+msgid ""
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
-"إنشاء حسابات أخرى لـ %(media_names)s لهذه الشركة أو اطلب من %(company_names)"
-"s مشاركة حساباتها"
+"إنشاء حسابات أخرى لـ %(media_names)s لهذه الشركة أو اطلب من %"
+"(company_names)s مشاركة حساباتها"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -381,9 +409,22 @@ msgstr "يحدد ما إذا كان لهذا الحساب إحصائيات ال�
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
+#: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Delete"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Delete Comment"
 msgstr "حذف التعليق"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Delete Post"
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -401,6 +442,19 @@ msgid "Developer Accounts"
 msgstr "حسابات المطورين"
 
 #. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__display_message
+#: model:ir.model.fields,field_description:social.field_social_post_template__display_message
+msgid "Display Message"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:social.field_social_account__display_name
 #: model:ir.model.fields,field_description:social.field_social_live_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_media__display_name
@@ -410,14 +464,23 @@ msgstr "حسابات المطورين"
 #: model:ir.model.fields,field_description:social.field_social_stream_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_type__display_name
+#: model:ir.model.fields,field_description:social.field_utm_campaign__display_name
+#: model:ir.model.fields,field_description:social.field_utm_medium__display_name
+#: model:ir.model.fields,field_description:social.field_utm_source__display_name
 msgid "Display Name"
 msgstr "اسم العرض"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
-msgid "Do you really want to delete %s"
-msgstr "هل ترغب حقاً في حذف %s "
+msgid "Do you really want to delete this %s?"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Do you really want to delete this Post ?"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__draft
@@ -437,8 +500,14 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Edit Comment"
-msgstr "تحرير التعليق "
+msgid "Edit"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Edit Your Post"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__module_social_demo
@@ -447,7 +516,9 @@ msgstr "تمكين وضع العرض التوضيحي"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Enable this option and load demo data to test the social module. This must never be used on a production database!"
+msgid ""
+"Enable this option and load demo data to test the social module. This must "
+"never be used on a production database!"
 msgstr ""
 "قم بتمكين هذا الخيار لتحميل البيانات التجريبية لاختبار التطبيق الاجتماعي. "
 "يجب ألا يتم استخدامها في قاعدة بيانات الإنتاج مطلقاً!"
@@ -459,7 +530,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_live_post__engagement
 #: model:ir.model.fields,field_description:social.field_social_post__engagement
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Engagement"
 msgstr "التفاعل"
@@ -470,8 +540,15 @@ msgid "Engagement Trend"
 msgstr "توجه التفاعل"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Engagement:"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
-msgid "Every time an account is created, a utm.medium is also created and linked to the account"
+msgid ""
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr "في كل مرة يتم إنشاء حساب فيها، يتم إنشاء utm.medium أيضاً وربطه بالحساب"
 
 #. module: social
@@ -527,21 +604,14 @@ msgstr "تاريخ النشر المنسق"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience
-msgid "General audience of the Social Account (Page Likes, Account Follows, ...)."
+msgid ""
+"General audience of the Social Account (Page Likes, Account Follows, ...)."
 msgstr "الجمهور العام للحساب الاجتماعي (إعجابات الصفحات، متابعات الحساب، ...)."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "Go to the"
 msgstr "الذهاب إلى"
-
-#. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_account_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
-msgid "Group By"
-msgstr "تجميع حسب"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
@@ -576,6 +646,7 @@ msgid "Hatched"
 msgstr "Hatched"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__id
 #: model:ir.model.fields,field_description:social.field_social_account__id
 #: model:ir.model.fields,field_description:social.field_social_live_post__id
 #: model:ir.model.fields,field_description:social.field_social_media__id
@@ -585,6 +656,9 @@ msgstr "Hatched"
 #: model:ir.model.fields,field_description:social.field_social_stream_post__id
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__id
+#: model:ir.model.fields,field_description:social.field_utm_campaign__id
+#: model:ir.model.fields,field_description:social.field_utm_medium__id
+#: model:ir.model.fields,field_description:social.field_utm_source__id
 msgid "ID"
 msgstr "المُعرف"
 
@@ -647,6 +721,11 @@ msgid "Insights"
 msgstr "وجهات النظر"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_stream_post__is_author
+msgid "Is Author"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
 #: model:ir.model.fields,field_description:social.field_social_post__message_is_follower
 msgid "Is Follower"
@@ -655,7 +734,9 @@ msgstr "متابع"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "It appears there is an issue with the Social Media link, click here to link the account again"
+msgid ""
+"It appears there is an issue with the Social Media link, click here to link "
+"the account again"
 msgstr ""
 "يبدو أنه هناك مشكلة برابط التواصل الاجتماعي. اضغط هنا لربط الحساب مجدداً"
 
@@ -694,8 +775,8 @@ msgstr "آخر تحديث في"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
-msgid "Let's <b>connect</b> to Facebook, LinkedIn or Twitter."
-msgstr "فلنقم <b>بالاتصال</b> بـ Facebook ،LinkedIn أو Twitter. "
+msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -769,7 +850,9 @@ msgstr "ربط حساب"
 #: model:ir.model.fields,help:social.field_social_live_post__company_id
 #: model:ir.model.fields,help:social.field_social_stream__company_id
 #: model:ir.model.fields,help:social.field_social_stream_post__company_id
-msgid "Link an account to a company to restrict its usage or keep empty to let all companies use it."
+msgid ""
+"Link an account to a company to restrict its usage or keep empty to let all "
+"companies use it."
 msgstr ""
 "قم بربط حساب بشركة لتقييد استخدامها أو اتركه فارغاً للسماح لكافة الشركات "
 "باستخدامه."
@@ -816,10 +899,17 @@ msgid "Max Post Length"
 msgstr "الحد الأقصى لطول المنشور"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__media_type
 #: model:ir.model.fields,field_description:social.field_social_post__media_ids
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Media"
 msgstr "الإعلام"
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__media_count
+#: model:ir.model.fields,field_description:social.field_social_post_template__media_count
+msgid "Media Count"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
@@ -842,12 +932,6 @@ msgid "Message Delivery error"
 msgstr "خطأ في تسليم الرسائل"
 
 #. module: social
-#: model:ir.model.fields,field_description:social.field_social_post__message_length
-#: model:ir.model.fields,field_description:social.field_social_post_template__message_length
-msgid "Message Length"
-msgstr "كول الرسالة "
-
-#. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted"
@@ -868,8 +952,10 @@ msgstr "الرسائل"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "معظم social.live.posts تنتقل مباشرة من الحالة \"جاهزة\" إلى تم النشر/فشل "
 "النشر بما أنها تنتج عن استدعاء واحد لواجهة الطرف الثالث البرمجية.\n"
@@ -907,6 +993,12 @@ msgstr "الاسم"
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New Post"
 msgstr "منشور جديد"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "New comments are disabled"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -992,15 +1084,16 @@ msgstr "عدد الأخطاء"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
-msgid "Number of interactions (likes, shares, comments ...) with the social posts"
+msgid ""
+"Number of interactions (likes, shares, comments ...) with the social posts"
 msgstr ""
 "عدد التفاعلات (الإعجابات، المشاركات، التعليقات، ...) في المنشورات الاجتماعية"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,help:social.field_social_post__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء "
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
@@ -1021,13 +1114,15 @@ msgstr "عدد تفاعلات الأفراد مع منشوراتك (الإعجا
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
-msgid "Number of stories created from your posts (Shares, Re-tweets, ...)."
-msgstr "عدد القصص التي قد تم إنشاؤها من منشوراتك (المشاركات، إعادة التغريد، ...). "
+msgid "Number of stories created from your posts (Shares, Reposts, ...)."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people have engaged with your posts (likes, comments, shares,...)"
+msgid ""
+"Number of times people have engaged with your posts (likes, comments, "
+"shares,...)"
 msgstr ""
 "عدد المرات التي تفاعل فيها الأفراد مع منشوراتك (الإعجابات، التعليقات، "
 "المشاركات، ...)"
@@ -1035,8 +1130,10 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people who have engaged with your channel have created stories on their friends' or followers' feed (Shares, Retweets...)"
-msgstr "عدد المرات التي قام فيها الأفراد الذين تفاعلوا مع قناتك بإنشاء قصص في صفحات أصدقائهم أو متابعيهم (المشاركات، إعادة التغريد، ...) "
+msgid ""
+"Number of times people who have engaged with your channel have created "
+"stories on their friends' or followers' feed (Shares, Reposts...)"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1051,7 +1148,8 @@ msgstr "نسبة زيادة/نقصان الجمهور خلال فترة محدد
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement_trend
-msgid "Percentage of increase/decrease of the engagement over a defined period."
+msgid ""
+"Percentage of increase/decrease of the engagement over a defined period."
 msgstr "نسبة زيادة/نقصان التفاعلات خلال فترة محددة."
 
 #. module: social
@@ -1067,6 +1165,12 @@ msgstr "يرجى تحديد حساب واحد على الأقل للنشر في�
 
 #. module: social
 #. odoo-python
+#: code:addons/social/models/social_post_template.py:0
+msgid "Please specify either a message or upload some images."
+msgstr ""
+
+#. module: social
+#. odoo-python
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post"
@@ -1074,6 +1178,7 @@ msgstr "منشور"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.xml:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_kanban
@@ -1082,6 +1187,7 @@ msgstr "صورة المنشور"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.js:0
 #: code:addons/social/static/src/js/post_kanban_view.js:0
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_renderer.js:0
@@ -1107,7 +1213,9 @@ msgstr "انشر الآن"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
-msgid "Post link to the external social.media (ex: link to the actual Facebook Post)."
+msgid ""
+"Post link to the external social.media (ex: link to the actual Facebook "
+"Post)."
 msgstr ""
 "رابط المنشور إلى social.media الخارجي (مثال: رابط المنشور الأصلي على "
 "Fecbook)."
@@ -1132,6 +1240,7 @@ msgstr "جاري النشر"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_post_ids
 #: model:ir.ui.menu,name:social.menu_social_post
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_kanban
 msgid "Posts"
@@ -1143,9 +1252,15 @@ msgid "Posts By Account"
 msgstr "المنشورات حسب الحساب"
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "Posts By Accounts"
-msgstr "المنشورات حسب الحسابات "
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Posts Preview"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1202,8 +1317,8 @@ msgstr "مواقع التواصل الاجتماعي ذات الصلة"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
-msgid "Related Social Media (Facebook, Twitter, ...)."
-msgstr "مواقع التواصل الاجتماعي ذات الصلة (Facebook، Twitter، ...). "
+msgid "Related Social Media (Facebook, X, ...)."
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__account_id
@@ -1256,8 +1371,10 @@ msgstr "التاريخ المجدول"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "Selected accounts (%s) do not match the selected company (%s)"
-msgstr "لا تتوافق الحسابات المحددة (%s) الشركة المحددة (%s) "
+msgid ""
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
@@ -1277,7 +1394,8 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
-msgid "Set a maximum number of characters can be posted in post. 0 for no limit."
+msgid ""
+"Set a maximum number of characters can be posted in post. 0 for no limit."
 msgstr ""
 "قم بتحديد الحد الأقصى المسموح به من الأحرف في منشور. 0 إذا لم يكن هناك حد "
 "أقصى."
@@ -1318,6 +1436,8 @@ msgstr "المدير الاجتماعي"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_global
+#: model:res.groups.privilege,name:social.res_groups_privilege_social_marketing
+#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Social Marketing"
 msgstr "التسويق على وسائل التواصل الإجتماعي"
 
@@ -1330,7 +1450,6 @@ msgstr "التسويق على وسائل التواصل الإجتماعي"
 #: model:ir.model.fields,field_description:social.field_social_stream__media_id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__media_id
 #: model:ir.ui.menu,name:social.menu_social_media
-#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Social Media"
@@ -1403,7 +1522,9 @@ msgstr "التواصل الاجتماعي: قم بنشر المنشورات ال
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_dashboard.js:0
-msgid "Sorry, you're not allowed to re-link this account, please contact your administrator."
+msgid ""
+"Sorry, you're not allowed to re-link this account, please contact your "
+"administrator."
 msgstr "عذراً، لا يسمح لك بإعادة ربط هذا الحساب. يرجى التواصل مع مديرك."
 
 #. module: social
@@ -1413,10 +1534,24 @@ msgstr "المصدر"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
-msgid "Special technical field that holds a dict containing the live posts names by media ids (used for kanban view)."
+msgid ""
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
 msgstr ""
 "حقل تقني اجتماعي به dict يحتوي على أسماء المنشورات الحية بواسطة معرفات "
 "الوسائط (يستخدم في عرض كانبان)."
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_post_split_per_media.xml:0
+msgid "Split Per Media"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__is_split_per_media
+#: model:ir.model.fields,field_description:social.field_social_post_template__is_split_per_media
+msgid "Split Per Network"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
@@ -1499,14 +1634,8 @@ msgstr "المنشورات الفرعية التي سيتم نشرها في كل
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Synchronize"
-msgstr "المزامنة"
-
-#. module: social
-#. odoo-python
-#: code:addons/social/models/social_post_template.py:0
-msgid "The 'message' field is required for post ID %s"
-msgstr "حقل 'الرسالة' مطلوب لمعرف المنشور %s "
+msgid "Sync"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__account_ids
@@ -1521,10 +1650,12 @@ msgstr "اسم كاتب المنشور بناءً على معلومات الطر
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
-msgid "The post is considered as 'Posted' when all its sub-posts (one per social account) are either 'Failed' or 'Posted'"
+msgid ""
+"The post is considered as 'Posted' when all its sub-posts (one per social "
+"account) are either 'Failed' or 'Posted'"
 msgstr ""
-"يتم اعتبار المنشور \"قد تم نشره\" عندما تكون كافة منشوراته الفرعية إما "
-"\"قد تم نشرها\" أو \"فشلت\""
+"يتم اعتبار المنشور \"قد تم نشره\" عندما تكون كافة منشوراته الفرعية إما \"قد "
+"تم نشرها\" أو \"فشلت\""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1533,10 +1664,12 @@ msgstr "تاريج نشر المنشور بناءً على معلومات الط
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__failure_reason
-msgid "The reason why a post is not successfully posted on the Social Media (eg: connection error, duplicated post, ...)."
+msgid ""
+"The reason why a post is not successfully posted on the Social Media (eg: "
+"connection error, duplicated post, ...)."
 msgstr ""
-"سبب تعذر نشر المنشور بنجاح على مواقع التواصل الاجتماعي (مثال: خطأ في الاتصال،"
-" منشور مكرر، ...)."
+"سبب تعذر نشر المنشور بنجاح على مواقع التواصل الاجتماعي (مثال: خطأ في "
+"الاتصال، منشور مكرر، ...)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
@@ -1555,7 +1688,9 @@ msgstr "توجد أخطاء منشورات في المنشورات الفرعي�
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__csrf_token
-msgid "This token can be used to verify that an incoming request from a social provider has not been forged."
+msgid ""
+"This token can be used to verify that an incoming request from a social "
+"provider has not been forged."
 msgstr ""
 "يمكن استخدام هذا الرمز للتحقق من أنه لم يتم تزوير الطلب الوارد من المزود "
 "الاجتماعي."
@@ -1599,6 +1734,12 @@ msgstr "مصدر UTM"
 
 #. module: social
 #. odoo-python
+#: code:addons/social/controllers/main.py:0
+msgid "Uh-oh! It looks like this message has been deleted from X."
+msgstr ""
+
+#. module: social
+#. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Unknown error"
 msgstr "خطأ غير معروف"
@@ -1611,23 +1752,34 @@ msgstr "لا يبدو أن الملف المرفوع صورة صالحة."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Use your own Developer Accounts on our Social app. Those credentials are provided in the developer section of your professional social media account."
+msgid ""
+"Use your own Developer Accounts on our Social app. Those credentials are "
+"provided in the developer section of your professional social media account."
 msgstr ""
 "استخدم حسابات المطورين الخاصة بك على تطبيقنا الاجتماعي. ستجد بيانات الاعتماد "
 "تلك في قسم المطور في حساب التواصل الاجتماعي المهني الخاص بك."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
+#: model:ir.model.fields,help:social.field_social_live_post__media_type
 #: model:ir.model.fields,help:social.field_social_media__media_type
 #: model:ir.model.fields,help:social.field_social_stream_post__media_type
-msgid "Used to make comparisons when we need to restrict some features to a specific media ('facebook', 'twitter', ...)."
-msgstr "يستخدم لإجراء المقارنات عند الحاجة إلى تقييد بعض الخصائص لموقع تواصل اجتماعي محدد ('facebook'، 'twitter'، ...). "
+msgid ""
+"Used to make comparisons when we need to restrict some features to a "
+"specific media ('facebook', 'x', ...)."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "View"
 msgstr "أداة العرض"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_account_view_form
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
+msgid "Visible to all"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__website_message_ids
@@ -1648,7 +1800,9 @@ msgstr "الزمان"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
-msgid "When the global post was published. The actual sub-posts published dates may be different depending on the media."
+msgid ""
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr ""
 "عندما تم نشر المنشور العام. قد تختلف تواريخ نشر المنشورات الفرعية الفعلية "
 "بناءً على موقع التواصل الاجتماعي."
@@ -1657,13 +1811,19 @@ msgstr ""
 #: model:ir.model.fields,help:social.field_social_post__image_ids
 #: model:ir.model.fields,help:social.field_social_post_template__image_ids
 msgid "Will attach images to your posts (if the social media supports it)."
-msgstr "سيقوم بإرفاق الصور بمنشوراتك (إذا كان موقع التواصل الاجتماعي يدعم ذلك)."
+msgstr ""
+"سيقوم بإرفاق الصور بمنشوراتك (إذا كان موقع التواصل الاجتماعي يدعم ذلك)."
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Write a comment..."
 msgstr "اكتب تعليقا..."
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Write a message or upload an image"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1679,7 +1839,9 @@ msgstr "اكتب رداً..."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_post
-msgid "Write an enticing post, add images and schedule it to be posted later on multiple platforms at once."
+msgid ""
+"Write an enticing post, add images and schedule it to be posted later on "
+"multiple platforms at once."
 msgstr ""
 "قم بكتابة منشور مثير للاهتمام وأضف الصور وقم بجدولته ليتم نشره لاحقاً على عدة "
 "منصات تواصل اجتماعي تارة واحدة."
@@ -1688,7 +1850,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "لا يمكنك حذف أوساط UTM تلك، حيث إنها مرتبطة بالحسابات الاجتماعية التالية: \n"
@@ -1698,7 +1861,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "لا يمكنك حذف مصادر UTM تلك، حيث إنها مرتبطة بالحسابات الاجتماعية التالية: \n"
@@ -1769,3 +1933,76 @@ msgstr "لربط حساباتك والبدء بالنشر."
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "to start posting from Odoo."
 msgstr "لتبدأ بالنشر من أودو."
+
+#~ msgid "%s (max %s chars)"
+#~ msgstr "%s (%s رموز كحد أقصى) "
+
+#~ msgid "<i class=\"fa fa-globe\" title=\"See the post\"/>"
+#~ msgstr "<i class=\"fa fa-globe\" title=\"انظر إلى المنشور \"/>"
+
+#~ msgid "<small class=\"pe-1\">Clicks:</small>"
+#~ msgstr "<small class=\"pe-1\">نقرات:</small>"
+
+#~ msgid ""
+#~ "Author link to the external social.media (ex: link to the Twitter "
+#~ "Account)."
+#~ msgstr ""
+#~ "رابط الكاتب إلى social.media الخارجي (مثال: الرابط إلى حساب تويتر). "
+
+#~ msgid ""
+#~ "Contains the social media handle of the person that created this account. "
+#~ "E.g: '@odoo.official' for the 'Odoo' Twitter account"
+#~ msgstr ""
+#~ "يحتوي على اسم المستخدم على مواقع التواصل الاجتماعي، للشخص الذي قام بإنشاء "
+#~ "هذا الحساب. مثال: '@odoo.official' لحساب 'أودو' على تويتر "
+
+#~ msgid "Do you really want to delete %s"
+#~ msgstr "هل ترغب حقاً في حذف %s "
+
+#~ msgid "Edit Comment"
+#~ msgstr "تحرير التعليق "
+
+#~ msgid "Group By"
+#~ msgstr "تجميع حسب"
+
+#~ msgid "Let's <b>connect</b> to Facebook, LinkedIn or Twitter."
+#~ msgstr "فلنقم <b>بالاتصال</b> بـ Facebook ،LinkedIn أو Twitter. "
+
+#~ msgid "Message Length"
+#~ msgstr "كول الرسالة "
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء "
+
+#~ msgid "Number of stories created from your posts (Shares, Re-tweets, ...)."
+#~ msgstr ""
+#~ "عدد القصص التي قد تم إنشاؤها من منشوراتك (المشاركات، إعادة التغريد، ...). "
+
+#~ msgid ""
+#~ "Number of times people who have engaged with your channel have created "
+#~ "stories on their friends' or followers' feed (Shares, Retweets...)"
+#~ msgstr ""
+#~ "عدد المرات التي قام فيها الأفراد الذين تفاعلوا مع قناتك بإنشاء قصص في "
+#~ "صفحات أصدقائهم أو متابعيهم (المشاركات، إعادة التغريد، ...) "
+
+#~ msgid "Posts By Accounts"
+#~ msgstr "المنشورات حسب الحسابات "
+
+#~ msgid "Related Social Media (Facebook, Twitter, ...)."
+#~ msgstr "مواقع التواصل الاجتماعي ذات الصلة (Facebook، Twitter، ...). "
+
+#~ msgid "Selected accounts (%s) do not match the selected company (%s)"
+#~ msgstr "لا تتوافق الحسابات المحددة (%s) الشركة المحددة (%s) "
+
+#~ msgid "Synchronize"
+#~ msgstr "المزامنة"
+
+#~ msgid "The 'message' field is required for post ID %s"
+#~ msgstr "حقل 'الرسالة' مطلوب لمعرف المنشور %s "
+
+#~ msgid ""
+#~ "Used to make comparisons when we need to restrict some features to a "
+#~ "specific media ('facebook', 'twitter', ...)."
+#~ msgstr ""
+#~ "يستخدم لإجراء المقارنات عند الحاجة إلى تقييد بعض الخصائص لموقع تواصل "
+#~ "اجتماعي محدد ('facebook'، 'twitter'، ...). "

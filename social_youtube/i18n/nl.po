@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-14 11:59+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
@@ -46,8 +46,10 @@ msgstr "<span class=\"fw-bold\">Je YouTube-kanaal</span>"
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
-"<span>These are stored up to 30 days and refreshed often to provide you an accurate depiction of reality. </span>\n"
-"                        <span>To delete these from Odoo, simply delete this account.</span>"
+"<span>These are stored up to 30 days and refreshed often to provide you an "
+"accurate depiction of reality. </span>\n"
+"                        <span>To delete these from Odoo, simply delete this "
+"account.</span>"
 msgstr ""
 "<span>Deze worden maximaal 30 dagen bewaard en vaak vernieuwd om je een "
 "nauwkeurige weergave van de werkelijkheid te geven. </span>\n"
@@ -194,8 +196,8 @@ msgstr "Wil je de video ook van je YouTube-account verwijderen?"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_token_expiration_date
 msgid ""
-"Expiration date of the Access Token provided by the YouTube API, this should"
-" never be set manually."
+"Expiration date of the Access Token provided by the YouTube API, this should "
+"never be set manually."
 msgstr ""
 "Vervaldatum van de toegangstoken geleverd door de YouTube API, deze mag "
 "nooit handmatig worden ingesteld."
@@ -285,7 +287,8 @@ msgstr "Eenmaal gepost, stel de video in als Openbaar/Privé/Verborgen"
 #. odoo-python
 #: code:addons/social_youtube/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "Oeps! Je hebt momenteel geen actief abonnement. Geen zorgen, schaf er hier "
@@ -339,8 +342,7 @@ msgstr "Reden:"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
 msgid ""
-"Refresh token provided by the YouTube API, this should never be set "
-"manually."
+"Refresh token provided by the YouTube API, this should never be set manually."
 msgstr ""
 "Refresh token geleverd door de YouTube API, dit mag nooit handmatig worden "
 "ingesteld."
@@ -809,8 +811,8 @@ msgstr ""
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid ""
-"e.g. Engage your entire community with a single app! "
-"https://www.odoo.com/trial"
+"e.g. Engage your entire community with a single app! https://www.odoo.com/"
+"trial"
 msgstr "bijv. Betrek je hele community met één app! https://www.odoo.com/trial"
 
 #. module: social_youtube

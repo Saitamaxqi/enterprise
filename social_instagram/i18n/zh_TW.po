@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* social_instagram
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: social_instagram
@@ -56,7 +57,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
-"                Your image appears to be corrupted, please try loading it again."
+"                Your image appears to be corrupted, please try loading it "
+"again."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
 "                你的圖片檔案似乎已損壞，請嘗試重新上載。"
@@ -144,8 +146,10 @@ msgstr "顯示名稱"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_facebook_account_id
 msgid ""
-"Facebook Account ID provided by the Facebook API, this should never be set manually.\n"
-"        The Instagram (\"Professional\") account is always linked to a Facebook account."
+"Facebook Account ID provided by the Facebook API, this should never be set "
+"manually.\n"
+"        The Instagram (\"Professional\") account is always linked to a "
+"Facebook account."
 msgstr ""
 "Facebook 帳戶識別碼，是由 Facebook API 提供，不應手動設定。\n"
 "        Instagram（「專業」）帳戶是一定會連結至 Facebook 帳戶。"
@@ -188,8 +192,10 @@ msgstr "Instagram 存取權杖"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_access_token
 msgid ""
-"Instagram Access Token provided by the Facebook API, this should never be set manually.\n"
-"        It's used to authenticate requests when posting to or reading information from this account."
+"Instagram Access Token provided by the Facebook API, this should never be "
+"set manually.\n"
+"        It's used to authenticate requests when posting to or reading "
+"information from this account."
 msgstr ""
 "Instagram 存取權杖，是由 Facebook API 提供，不應手動設定。\n"
 "        發佈至此帳戶，或從帳戶讀取資訊時，該權杖會用作驗證請求。"
@@ -306,6 +312,15 @@ msgstr "訊息"
 
 #. module: social_instagram
 #. odoo-python
+#: code:addons/social_instagram/models/social_media.py:0
+msgid ""
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
+"Grab a subscription and unlock a world of amazing features!"
+msgstr ""
+
+#. module: social_instagram
+#. odoo-python
 #: code:addons/social_instagram/models/social_stream_post.py:0
 msgid ""
 "Please confirm that commenting is enabled for this post on the platform."
@@ -397,7 +412,8 @@ msgstr "以下圖片不符合"
 #. odoo-python
 #: code:addons/social_instagram/models/social_post.py:0
 msgid ""
-"The following images do not meet the required aspect ratio (between 1.91:1 and 4:5).\n"
+"The following images do not meet the required aspect ratio (between 1.91:1 "
+"and 4:5).\n"
 "\n"
 "%(images)s"
 msgstr ""
@@ -433,7 +449,8 @@ msgstr "用於允許 Instagram 存取權限，以讀取帖文圖片"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
+msgstr ""
+"需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
 
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_post__instagram_image_ids
@@ -449,18 +466,14 @@ msgstr "每次發佈最多只可有 10 張圖片。"
 
 #. module: social_instagram
 #. odoo-python
-#: code:addons/social_instagram/models/social_media.py:0
-msgid "You don't have an active subscription. Please buy one here: %s"
-msgstr "您尚未訂閱。請點選連結添購：%s"
-
-#. module: social_instagram
-#. odoo-python
 #: code:addons/social_instagram/controllers/main.py:0
 msgid ""
-"You need to link your Instagram page to your Facebook account to post with Odoo Social.\n"
+"You need to link your Instagram page to your Facebook account to post with "
+"Odoo Social.\n"
 " Please create one and make sure it is linked to your account."
 msgstr ""
-"你需要將你的 Instagram 頁面連結至你的 Facebook 帳戶，才可使用 Odoo 社交媒體推廣程式發佈內容。\n"
+"你需要將你的 Instagram 頁面連結至你的 Facebook 帳戶，才可使用 Odoo 社交媒體推"
+"廣程式發佈內容。\n"
 " 請建立一個，並確保其連結至你的帳戶。"
 
 #. module: social_instagram
@@ -473,3 +486,6 @@ msgstr "圖片檔案似乎已損壞，請嘗試重新載入。"
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
 msgid "required aspect ratio"
 msgstr "要求的寬高比"
+
+#~ msgid "You don't have an active subscription. Please buy one here: %s"
+#~ msgstr "您尚未訂閱。請點選連結添購：%s"

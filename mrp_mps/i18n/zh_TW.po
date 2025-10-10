@@ -1,28 +1,42 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* mrp_mps
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: mrp_mps
-#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
-msgid "<span invisible=\"enable_batch_size\">No Batch Size</span>"
-msgstr "<span invisible=\"enable_batch_size\">無批次大小</span>"
+#. odoo-python
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "%(month)s %(day)s %(year)s"
+msgstr ""
+
+#. module: mrp_mps
+#. odoo-python
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "%(month)s %(year)s"
+msgstr ""
+
+#. module: mrp_mps
+#. odoo-python
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "%(year)s"
+msgstr ""
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_bom_form_view_inherit_mps
@@ -44,6 +58,7 @@ msgstr "實際"
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__actual_demand
 msgid "Actual Demand"
 msgstr "實際需求"
 
@@ -94,6 +109,11 @@ msgid "Allowed Route"
 msgstr "允許的途程"
 
 #. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "Apply"
+msgstr ""
+
+#. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/models/master_production_schedule_model.js:0
 msgid "Are you sure you want to delete these records?"
@@ -122,9 +142,14 @@ msgid "Available to Promise"
 msgstr "可承諾貨量"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__batch_size
-msgid "Batch Size"
-msgstr "批次大小"
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on_readonly
+msgid "Based On Readonly"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on
+msgid "Based on"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_bom
@@ -169,6 +194,7 @@ msgstr "確認"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__create_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__create_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__create_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__create_uid
 msgid "Created by"
@@ -176,6 +202,7 @@ msgstr "建立人員"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__create_date
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__create_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__create_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__create_date
 msgid "Created on"
@@ -210,8 +237,7 @@ msgstr "所有庫存商品的預設單位。"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_res_company__manufacturing_period
 #: model:ir.model.fields,help:mrp_mps.field_res_config_settings__manufacturing_period
-msgid ""
-"Default value for the time ranges in Master Production Schedule report."
+msgid "Default value for the time ranges in Master Production Schedule report."
 msgstr "主生產計劃報告中的時間範圍預設值。"
 
 #. module: mrp_mps
@@ -226,6 +252,11 @@ msgstr "刪除"
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__forecast_qty
 msgid "Demand Forecast"
 msgstr "需求預測"
+
+#. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "Discard"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_demand
@@ -258,6 +289,11 @@ msgid "Display Demand Forecast"
 msgstr "顯示需求預測"
 
 #. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_actual_demand
+msgid "Display Indirect Actual Demand"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_demand
 msgid "Display Indirect Demand"
 msgstr "顯示間接需求"
@@ -265,6 +301,7 @@ msgstr "顯示間接需求"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_bom__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__display_name
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__display_name
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__display_name
@@ -292,11 +329,6 @@ msgid "Display To Replenish"
 msgstr "顯示待補貨"
 
 #. module: mrp_mps
-#: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__enable_batch_size
-msgid "Enable Batch Size"
-msgstr "啟用批次大小"
-
-#. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__excessive_replenishment
 msgid "Excessive Replenishment"
 msgstr "過量補貨"
@@ -317,6 +349,22 @@ msgstr "外部識別碼"
 #: model:ir.model,name:mrp_mps.model_mrp_mps_forecast_details
 msgid "Forecast Demand Details"
 msgstr "需求預測詳情"
+
+#. module: mrp_mps
+#: model:ir.model,name:mrp_mps.model_mrp_mps_forecast_suggestion
+msgid "Forecast Demand Suggestion"
+msgstr ""
+
+#. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "Forecast Quantity for"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__low_forecast
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
+msgid "Forecast Too Low"
+msgstr ""
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -345,6 +393,7 @@ msgstr "該日期的預測數量"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_bom__id
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__id
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__id
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__id
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__id
 #: model:ir.model.fields,field_description:mrp_mps.field_product_product__id
@@ -362,17 +411,16 @@ msgid "If set, the bill of materials components will also be imported."
 msgstr "若設定，物料清單的組件也會匯入。"
 
 #. module: mrp_mps
-#: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__batch_size
-msgid ""
-"If set, the generated manufacturing orders will be split in quantities of "
-"this value at maximum."
-msgstr "如果設置，產生的製造訂單會最多分拆為此值的數目。"
-
-#. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/models/mrp_mps.py:0
 msgid "Import Template for Master Production Schedule"
 msgstr "主生產計劃匯入範本"
+
+#. module: mrp_mps
+#. odoo-javascript
+#: code:addons/mrp_mps/static/src/search/group_menu.xml:0
+msgid "Indirect Actual Demand"
+msgstr ""
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
@@ -398,7 +446,23 @@ msgid "Is Manufacture Route"
 msgstr "是製造路線"
 
 #. module: mrp_mps
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__one_year
+msgid "Last 12 Months"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__three_months
+msgid "Last 3 Months"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__30_days
+msgid "Last 30 Days"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_uid
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__write_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__write_uid
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__write_uid
 msgid "Last Updated by"
@@ -406,6 +470,7 @@ msgstr "最後更新者"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_date
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__write_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__write_date
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__write_date
 msgid "Last Updated on"
@@ -415,6 +480,12 @@ msgstr "最後更新於"
 #: model:ir.ui.menu,name:mrp_mps.mrp_mps_menu_planning
 msgid "MPS"
 msgstr "主生產計劃（MPS）"
+
+#. module: mrp_mps
+#. odoo-javascript
+#: code:addons/mrp_mps/static/src/components/mps_selection.js:0
+msgid "MPS Period Selection"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.actions.server,name:mrp_mps.ir_cron_replenish_automated_mps_ir_actions_server
@@ -510,6 +581,11 @@ msgid "Moves String"
 msgstr "移動字串"
 
 #. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__mrp_mps_id
+msgid "Mrp Mps"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__never
 msgid "Never"
 msgstr "從不"
@@ -587,9 +663,30 @@ msgid "Order"
 msgstr "訂單"
 
 #. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__percent_factor
+msgid "Percent Factor"
+msgstr ""
+
+#. module: mrp_mps
+#. odoo-python
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "Percent factor cannot be less than zero."
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__period
+msgid "Period"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__route_id
 msgid "Preferred Route"
 msgstr "首選途程"
+
+#. module: mrp_mps
+#: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__last_year
+msgid "Previous Year"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__procurement_launched
@@ -598,6 +695,7 @@ msgstr "已為此預測運行採購"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_product_template
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__product_id
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__product_id
 msgid "Product"
 msgstr "商品"
@@ -646,6 +744,16 @@ msgstr "採購訂單"
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__purchase_order_line_ids
 msgid "Purchase Order Line"
 msgstr "採購訂單項目"
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__quantity
+msgid "Quantity"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__quantity_before_scale
+msgid "Quantity Before Scale"
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__moves_qty
@@ -809,6 +917,14 @@ msgid "Stock Rule"
 msgstr "庫存規則"
 
 #. module: mrp_mps
+#. odoo-javascript
+#. odoo-python
+#: code:addons/mrp_mps/static/src/components/line.xml:0
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "Suggest Forecasted Demand"
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__replenish_state
 msgid "Technical field to support filtering by replenish state"
 msgstr "技術欄位，支援按補貨狀態進行篩選"
@@ -823,6 +939,12 @@ msgstr "倉庫與產品的組合須獨一無二！"
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The confirmed demand, based on the confirmed sales orders."
 msgstr "已確定的需求，基於已確定的銷售訂單。"
+
+#. module: mrp_mps
+#. odoo-javascript
+#: code:addons/mrp_mps/static/src/components/line.xml:0
+msgid "The confirmed demand, based on the manufacturing orders."
+msgstr ""
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -854,12 +976,15 @@ msgstr "期末預測庫存數量。"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.xml:0
 msgid ""
-"The master schedule translates your sales and demand forecasts into a production and purchase planning for each component.\n"
-"                    It ensures everything gets scheduled on time, based on constraints such as: safety stock, production capacity, lead times.\n"
+"The master schedule translates your sales and demand forecasts into a "
+"production and purchase planning for each component.\n"
+"                    It ensures everything gets scheduled on time, based on "
+"constraints such as: safety stock, production capacity, lead times.\n"
 "                    It's the perfect tool to support your S&OP meetings."
 msgstr ""
 "主計劃將你的銷售及需求預測，轉化為每個組件的生產及採購計劃。\n"
-"                    它確保一切都根據安全庫存、生產產能、交貨時間等約束條件，及時安排和完成。\n"
+"                    它確保一切都根據安全庫存、生產產能、交貨時間等約束條件，"
+"及時安排和完成。\n"
 "                    它是支援你 S&OP（銷售及營運規劃）會議的完美工具。"
 
 #. module: mrp_mps
@@ -874,8 +999,10 @@ msgstr "補貨數量，基於報價請求及生產訂單。"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid ""
-"The quantity to replenish through Purchase Orders or Manufacturing Orders."
-msgstr "透過採購訂單或生產訂單補貨的數量。"
+"The quantity to replenish through Purchase Orders or Manufacturing Orders.\n"
+"Color code: Green if to replenish now, Red if existing replenishment is too "
+"high for the period, Orange if current replenishment is too low."
+msgstr ""
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__forecast_target_qty
@@ -928,6 +1055,12 @@ msgstr "星期"
 
 #. module: mrp_mps
 #. odoo-python
+#: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
+msgid "Week %(week)s (%(start_day)s-%(end_day)s/%(month)s) %(year)s"
+msgstr ""
+
+#. module: mrp_mps
+#. odoo-python
 #: code:addons/mrp_mps/models/res_company.py:0
 msgid "Week %(week_num)s (%(start_date)s-%(end_date)s/%(month)s)"
 msgstr "第%(week_num)s 週(%(start_date)s-%(end_date)s/%(month)s)"
@@ -939,8 +1072,7 @@ msgstr "每週"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__is_indirect
-msgid ""
-"When checked, this product will not appear in the 'To Forecast' filter."
+msgid "When checked, this product will not appear in the 'To Forecast' filter."
 msgstr "若勾選，使用「待預測」篩選器時，將不會顯示此產品。"
 
 #. module: mrp_mps
@@ -955,7 +1087,40 @@ msgid "Yearly"
 msgstr "每年"
 
 #. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "based on historical date or actual demand."
+msgstr ""
+
+#. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "by"
 msgstr "由"
+
+#. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "units"
+msgstr ""
+
+#. module: mrp_mps
+#: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
+msgid "units x"
+msgstr ""
+
+#~ msgid "<span invisible=\"enable_batch_size\">No Batch Size</span>"
+#~ msgstr "<span invisible=\"enable_batch_size\">無批次大小</span>"
+
+#~ msgid "Batch Size"
+#~ msgstr "批次大小"
+
+#~ msgid "Enable Batch Size"
+#~ msgstr "啟用批次大小"
+
+#~ msgid ""
+#~ "If set, the generated manufacturing orders will be split in quantities of "
+#~ "this value at maximum."
+#~ msgstr "如果設置，產生的製造訂單會最多分拆為此值的數目。"
+
+#~ msgid ""
+#~ "The quantity to replenish through Purchase Orders or Manufacturing Orders."
+#~ msgstr "透過採購訂單或生產訂單補貨的數量。"

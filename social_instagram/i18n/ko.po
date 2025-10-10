@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -41,8 +41,8 @@ msgid ""
 "                At least one image is required when posting on Instagram."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
-"                인스타그램에 게시할 때는 최소 한 장 이상의 이미지가 "
-"필요합니다."
+"                인스타그램에 게시할 때는 최소 한 장 이상의 이미지가 필요합니"
+"다."
 
 #. module: social_instagram
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
@@ -57,7 +57,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
-"                Your image appears to be corrupted, please try loading it again."
+"                Your image appears to be corrupted, please try loading it "
+"again."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
 "                이미지가 손상된 것 같습니다. 다시 시도해 보세요."
@@ -111,8 +112,9 @@ msgstr "작성자 이미지"
 msgid ""
 "Check this if you want to use your personal Instagram Developer Account "
 "instead of the provided one."
-msgstr "제공된 계정 대신 개인 인스타그램 개발자 계정을 사용하려면 이 옵션을 "
-"선택하세요."
+msgstr ""
+"제공된 계정 대신 개인 인스타그램 개발자 계정을 사용하려면 이 옵션을 선택하세"
+"요."
 
 #. module: social_instagram
 #: model:ir.model,name:social_instagram.model_res_config_settings
@@ -146,8 +148,10 @@ msgstr "표시명"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_facebook_account_id
 msgid ""
-"Facebook Account ID provided by the Facebook API, this should never be set manually.\n"
-"        The Instagram (\"Professional\") account is always linked to a Facebook account."
+"Facebook Account ID provided by the Facebook API, this should never be set "
+"manually.\n"
+"        The Instagram (\"Professional\") account is always linked to a "
+"Facebook account."
 msgstr ""
 "페이스북 API에서 제공하는 페이스북 계정 ID는 수동으로 설정해서는 안됩니다.\n"
 "        인스타그램 (\"프로페셔널\") 계정은 항상 페이스북 계정과 연동됩니다."
@@ -190,13 +194,15 @@ msgstr "인스타그램 액세스 토큰"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_access_token
 msgid ""
-"Instagram Access Token provided by the Facebook API, this should never be set manually.\n"
-"        It's used to authenticate requests when posting to or reading information from this account."
+"Instagram Access Token provided by the Facebook API, this should never be "
+"set manually.\n"
+"        It's used to authenticate requests when posting to or reading "
+"information from this account."
 msgstr ""
-"페이스북 API에서 제공하는 페이스북 페이지 액세스 토큰으로, 수동으로 "
-"설정해서는 안됩니다. \n"
-"            이 계정에 게시물을 올리거나 정보를 읽을 때 요청을 인증하는  "
-"용도로 사용됩니다."
+"페이스북 API에서 제공하는 페이스북 페이지 액세스 토큰으로, 수동으로 설정해서"
+"는 안됩니다. \n"
+"            이 계정에 게시물을 올리거나 정보를 읽을 때 요청을 인증하는  용도"
+"로 사용됩니다."
 
 #. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_social_account__instagram_account_id
@@ -208,7 +214,8 @@ msgstr "인스타그램 계정 ID"
 msgid ""
 "Instagram Account ID provided by the Facebook API, this should never be set "
 "manually."
-msgstr "페이스북 API에서 제공하는 인스타그램 계정 ID는 수동으로 설정해서는 안됩니다."
+msgstr ""
+"페이스북 API에서 제공하는 인스타그램 계정 ID는 수동으로 설정해서는 안됩니다."
 
 #. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_res_config_settings__instagram_app_id
@@ -312,7 +319,8 @@ msgstr "메시지"
 #. odoo-python
 #: code:addons/social_instagram/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "죄송합니다. 현재 구독이 활성화되어 있지 않습니다. 여기에서 간단하게 구독할 "
@@ -384,8 +392,9 @@ msgstr "소셜 스트림 게시물"
 msgid ""
 "The Facebook ID of this Instagram post author, used to fetch the profile "
 "picture."
-msgstr "프로필 사진을 가져오는 데 사용되는 인스타그램 게시물 작성자의 페이스북 "
-"ID입니다."
+msgstr ""
+"프로필 사진을 가져오는 데 사용되는 인스타그램 게시물 작성자의 페이스북 ID입니"
+"다."
 
 #. module: social_instagram
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
@@ -413,12 +422,13 @@ msgstr "다음 이미지는"
 #. odoo-python
 #: code:addons/social_instagram/models/social_post.py:0
 msgid ""
-"The following images do not meet the required aspect ratio (between 1.91:1 and 4:5).\n"
+"The following images do not meet the required aspect ratio (between 1.91:1 "
+"and 4:5).\n"
 "\n"
 "%(images)s"
 msgstr ""
-"다음 이미지의 가로 및 세로 비율이 필수 범위 (1.91:1 ~ 4:5 사이)에 있지 "
-"않습니다.\n"
+"다음 이미지의 가로 및 세로 비율이 필수 범위 (1.91:1 ~ 4:5 사이)에 있지 않습니"
+"다.\n"
 "\n"
 "%(images)s"
 
@@ -450,8 +460,9 @@ msgstr "인스타그램에 액세스하여 게시물 이미지를 검색할 수 
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "일부 기능을 특정 미디어 ( 'facebook', 'x' 등)로 제한해야 할 때 비교하는 데 "
-"사용됩니다."
+msgstr ""
+"일부 기능을 특정 미디어 ( 'facebook', 'x' 등)로 제한해야 할 때 비교하는 데 사"
+"용됩니다."
 
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_post__instagram_image_ids
@@ -469,11 +480,12 @@ msgstr "한 번에 최대 10개까지만 이미지를 게시할 수 있습니다
 #. odoo-python
 #: code:addons/social_instagram/controllers/main.py:0
 msgid ""
-"You need to link your Instagram page to your Facebook account to post with Odoo Social.\n"
+"You need to link your Instagram page to your Facebook account to post with "
+"Odoo Social.\n"
 " Please create one and make sure it is linked to your account."
 msgstr ""
-"Odoo 소셜에 게시하려면 인스타그램 페이지를 페이스북 계정에 연동시켜야 합니다."
-"\n"
+"Odoo 소셜에 게시하려면 인스타그램 페이지를 페이스북 계정에 연동시켜야 합니"
+"다.\n"
 " 계정을 생성하고 연동이 완료되었는지 확인하십시오."
 
 #. module: social_instagram

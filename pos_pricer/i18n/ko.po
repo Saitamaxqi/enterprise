@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -115,7 +115,8 @@ msgstr "Pricer 시스템 내 매장 인증"
 msgid ""
 "Invalid tag name. Should be 1 letter followed by 16 digits. Example: "
 "'N4081315789813275'"
-msgstr "태그 이름이 잘못되었습니다. 문자 한 글자와 16자리로 구성되어야 합니다. 예: "
+msgstr ""
+"태그 이름이 잘못되었습니다. 문자 한 글자와 16자리로 구성되어야 합니다. 예: "
 "'N4081315789813275'."
 
 #. module: pos_pricer
@@ -240,8 +241,9 @@ msgstr "Pricer 스토어 ID"
 msgid ""
 "Pricer Store ID must only contain lowercase a-z, 0-9 or '-' and not start "
 "with '-'"
-msgstr "가격 책정자 스토어 ID는 소문자 a-z, 숫자 0-9 또는 '-'로만 구성되어야 하며 '-"
-"'로 시작할 수 없습니다."
+msgstr ""
+"가격 책정자 스토어 ID는 소문자 a-z, 숫자 0-9 또는 '-'로만 구성되어야 하며 "
+"'-'로 시작할 수 없습니다."
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__name
@@ -388,17 +390,19 @@ msgstr "이 가격표는 이 제품의 가격표 태그에 판매를 설정하�
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__pricer_store_id
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_store_id
 msgid ""
-"This product will be linked to and displayed on the Pricer tags of the store"
-" selected here"
-msgstr "이 품목은 여기에서 선택한 스토어의 가격 책정 태그에 연결되고 표시됩니다."
+"This product will be linked to and displayed on the Pricer tags of the store "
+"selected here"
+msgstr ""
+"이 품목은 여기에서 선택한 스토어의 가격 책정 태그에 연결되고 표시됩니다."
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_tag_ids
 msgid ""
 "This product will be linked to and displayed on the Pricer tags with ids "
 "listed here. It is recommended to use a barcode scanner"
-msgstr "이 제품은 나열된 ID로 가격표 태그에 연결되고 표시됩니다. 바코드 스캐너를 "
-"사용하는 것이 좋습니다."
+msgstr ""
+"이 제품은 나열된 ID로 가격표 태그에 연결되고 표시됩니다. 바코드 스캐너를 사용"
+"하는 것이 좋습니다."
 
 #. module: pos_pricer
 #: model_terms:ir.ui.view,arch_db:pos_pricer.pricer_pricer_store_view_list

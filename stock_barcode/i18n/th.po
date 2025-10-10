@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 22:56+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -30,8 +30,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_quant_model.js:0
 msgid "%s can't be inventoried. Only storable products can be inventoried."
-msgstr ""
-"%s ไม่สามารถจัดเก็บในสินค้าคงคลังได้ สามารถจัดเก็บได้เฉพาะสินค้าที่จัดเก็บได้เท่านั้น"
+msgstr "%s ไม่สามารถจัดเก็บในสินค้าคงคลังได้ สามารถจัดเก็บได้เฉพาะสินค้าที่จัดเก็บได้เท่านั้น"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -51,8 +50,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"ตำแหน่งเศษเหล็ก\""
-"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"ตำแหน่งเศษเหล็ก\"/"
+">"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -118,8 +117,7 @@ msgstr ""
 msgid ""
 "A product tracked by serial numbers can't have multiple quantities for the "
 "same serial number."
-msgstr ""
-"สินค้าที่ติดตามด้วยหมายเลขซีเรียลไม่สามารถมีหมายเลขซีเรียลเดียวกันหลายจำนวนได้"
+msgstr "สินค้าที่ติดตามด้วยหมายเลขซีเรียลไม่สามารถมีหมายเลขซีเรียลเดียวกันหลายจำนวนได้"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -228,8 +226,7 @@ msgstr ""
 msgid ""
 "An unexisting package type was scanned. This part of the barcode can't be "
 "processed."
-msgstr ""
-"สแกนประเภทบรรรจุภัณฑ์ที่ไม่มีอยู่แล้ว ซึ่งไม่สามารถประมวลผลบาร์โค้ดส่วนนี้ได้"
+msgstr "สแกนประเภทบรรรจุภัณฑ์ที่ไม่มีอยู่แล้ว ซึ่งไม่สามารถประมวลผลบาร์โค้ดส่วนนี้ได้"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -309,8 +306,7 @@ msgstr "เครื่องสแกนบาร์โค้ด"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid "Barcode scan is ambiguous with several model: %s. Use the most likely."
-msgstr ""
-"การสแกนบาร์โค้ดมีความคลุมเครือในหลายรุ่น: %s ใช้อันที่มีความเป็นไปได้มากที่สุด"
+msgstr "การสแกนบาร์โค้ดมีความคลุมเครือในหลายรุ่น: %s ใช้อันที่มีความเป็นไปได้มากที่สุด"
 
 #. module: stock_barcode
 #. odoo-python
@@ -899,8 +895,7 @@ msgstr ""
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_res_config_settings__barcode_max_time_between_keys_in_ms
 msgid "Maximum delay between each key in ms (100 ms by default)"
-msgstr ""
-"ความล่าช้าสูงสุดระหว่างแต่ละคีย์เป็นมิลลิวินาที (ค่าเริ่มต้นคือ 100 มิลลิวินาที)"
+msgstr "ความล่าช้าสูงสุดระหว่างแต่ละคีย์เป็นมิลลิวินาที (ค่าเริ่มต้นคือ 100 มิลลิวินาที)"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__barcode_separator_regex
@@ -1673,8 +1668,7 @@ msgstr "สแกนตำแหน่งต้นทางหรือบรร
 msgid ""
 "Scanned product %s is not reserved for this transfer. Are you sure you want "
 "to add it?"
-msgstr ""
-"สแกนสินค้า %s ไม่ได้สำรองไว้สำหรับการโอนย้ายนี้ คุณแน่ใจว่าต้องการเพิ่ม?"
+msgstr "สแกนสินค้า %s ไม่ได้สำรองไว้สำหรับการโอนย้ายนี้ คุณแน่ใจว่าต้องการเพิ่ม?"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1715,8 +1709,7 @@ msgstr "หมายเลขซีเรียล/ล็อต"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "Set the maximum delay between each key in ms (100 ms by default.)"
-msgstr ""
-"ตั้งค่าความล่าช้าสูงสุดระหว่างแต่ละคีย์เป็นมิลลิวินาที (ค่าเริ่มต้นคือ 100 มิลลิวินาที)"
+msgstr "ตั้งค่าความล่าช้าสูงสุดระหว่างแต่ละคีย์เป็นมิลลิวินาที (ค่าเริ่มต้นคือ 100 มิลลิวินาที)"
 
 #. module: stock_barcode
 #: model:ir.model.fields,field_description:stock_barcode.field_res_config_settings__show_barcode_nomenclature
@@ -1896,8 +1889,7 @@ msgid ""
 "and improve global performance at the cost of reactivity."
 msgstr ""
 "เวลาที่ใช้ก่อนการประมวลผลชุดข้อมูล "
-"ใช้เพื่อจัดกลุ่มการสื่อสารไปยังเซิร์ฟเวอร์และปรับปรุงประสิทธิภาพโดยรวมโดยแลกกับการตอบสนองที่รวดเ"
-"ร็ว"
+"ใช้เพื่อจัดกลุ่มการสื่อสารไปยังเซิร์ฟเวอร์และปรับปรุงประสิทธิภาพโดยรวมโดยแลกกับการตอบสนองที่รวดเร็ว"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2026,8 +2018,7 @@ msgstr ""
 msgid ""
 "You are expected to scan one or more products or a package available at the "
 "picking location"
-msgstr ""
-"คุณจะต้องสแกนสินค้าหรือแพ็คเกจตั้งแต่หนึ่งรายการขึ้นไปที่ตำแหน่งเบิกสินค้า"
+msgstr "คุณจะต้องสแกนสินค้าหรือแพ็คเกจตั้งแต่หนึ่งรายการขึ้นไปที่ตำแหน่งเบิกสินค้า"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2053,8 +2044,7 @@ msgstr "คุณไม่สามารถลงทะเบียนเศษ
 msgid ""
 "You have already scanned %s items of this package. Do you want to scan the "
 "whole package?"
-msgstr ""
-"คุณได้สแกน %s รายการของแพ็คเกจนี้แล้ว คุณต้องการสแกนแพ็คเกจทั้งหมดหรือไม่"
+msgstr "คุณได้สแกน %s รายการของแพ็คเกจนี้แล้ว คุณต้องการสแกนแพ็คเกจทั้งหมดหรือไม่"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.view_backorder_confirmation

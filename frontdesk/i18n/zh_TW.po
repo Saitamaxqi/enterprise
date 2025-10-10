@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -22,6 +22,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid " - Manager: %(manager_name)s"
+msgstr ""
 
 #. module: frontdesk
 #. odoo-python
@@ -59,6 +65,14 @@ msgid "'Badge - %s' % (object.name).replace('/', '')"
 msgstr "'識別證 - %s' % (object.name).replace('/', '')"
 
 #. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid ""
+")\n"
+"                        will be notified via email/SMS only, as they are not "
+"available on Discuss."
+msgstr ""
+
+#. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid ",<br/>I hope this message finds you well. This is to inform you that"
 msgstr "：<br/>首先祝你一切安好。謹此通知你，"
@@ -67,11 +81,14 @@ msgstr "：<br/>首先祝你一切安好。謹此通知你，"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid ""
 ".\n"
-"                    <br/>Please let us know if you would like us to direct them to a meeting room or if you require any further assistance.\n"
-"                    <br/>After a successful meeting with the visitor, please proceed to check out their login."
+"                    <br/>Please let us know if you would like us to direct "
+"them to a meeting room or if you require any further assistance.\n"
+"                    <br/>After a successful meeting with the visitor, please "
+"proceed to check out their login."
 msgstr ""
 "。\n"
-"                    <br/>若想我們引領他們前往會議室，或需要任何進一步協助，請告知我們。\n"
+"                    <br/>若想我們引領他們前往會議室，或需要任何進一步協助，請"
+"告知我們。\n"
 "                    <br/>與訪客完成會面後，請為他們今次到訪登記離開。"
 
 #. module: frontdesk
@@ -125,6 +142,23 @@ msgid "Administrator"
 msgstr "管理員"
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "All"
+msgstr ""
+
+#. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid "All Employees"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.js:0
+msgid "All departments"
+msgstr ""
+
+#. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Allow visitor to select a drink during registration"
 msgstr "允許訪客在登記時選擇飲品"
@@ -162,6 +196,7 @@ msgstr "驗證賓客身份"
 
 #. module: frontdesk
 #. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
 #: code:addons/frontdesk/static/src/navbar/navbar.xml:0
 msgid "Back"
 msgstr "返回"
@@ -170,6 +205,12 @@ msgstr "返回"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid "Best regards,<br/>"
 msgstr "順祝  安康<br/>"
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Browse All Hosts"
+msgstr ""
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_search
@@ -250,6 +291,12 @@ msgstr "簽出"
 
 #. module: frontdesk
 #. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Choose who you would like to visit"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-javascript
 #: code:addons/frontdesk/static/src/end_page/end_page.xml:0
 #: code:addons/frontdesk/static/src/register_page/register_page.xml:0
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_check_out
@@ -283,8 +330,8 @@ msgstr "配置飲品"
 #. module: frontdesk
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/host_page/host_page.xml:0
-msgid "Confirm"
-msgstr "確認"
+msgid "Continue"
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_drink__create_uid
@@ -314,6 +361,12 @@ msgstr "日期"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid "Dear"
 msgstr "親愛的"
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid "Dear %(visitor_name)s,"
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__description
@@ -453,10 +506,10 @@ msgid "Frontdesk Visitors"
 msgstr "前台訪客"
 
 #. module: frontdesk
-#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_search
-#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_visitor_view_search
-msgid "Group By"
-msgstr "分組依據"
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Go back"
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.actions.act_window,name:frontdesk.action_open_guest_on_site_visitor
@@ -477,13 +530,13 @@ msgstr "有訊息"
 #: model:sms.template,body:frontdesk.frontdesk_sms_template
 msgid ""
 "Hello, Your visitor {{ object.name }} {{ '(%s)' % object.phone if "
-"object.phone else '' }} {{ '(%s)' % object.company if object.company else ''"
-" }} wants to meet you at {{ object.station_id.name }}. Please let them know "
-"you'll be there shortly."
+"object.phone else '' }} {{ '(%s)' % object.company if object.company else "
+"'' }} wants to meet you at {{ object.station_id.name }}. Please let them "
+"know you'll be there shortly."
 msgstr ""
-"你好！你的訪客 {{ object.name }} {{ '(%s)' % object.phone if object.phone else '' "
-"}} {{ '(%s)' % object.company if object.company else '' }} 希望與你在 {{ "
-"object.station_id.name }} 見面。請讓他們知道您很快就會到達。"
+"你好！你的訪客 {{ object.name }} {{ '(%s)' % object.phone if object.phone "
+"else '' }} {{ '(%s)' % object.company if object.company else '' }} 希望與你"
+"在 {{ object.station_id.name }} 見面。請讓他們知道您很快就會到達。"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.print_visitor_badge
@@ -503,6 +556,12 @@ msgid "Host"
 msgstr "接待人"
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Host Avatar"
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__host_ids
 msgid "Host Name"
 msgstr "接待人姓名"
@@ -511,6 +570,11 @@ msgstr "接待人姓名"
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__host_selection
 msgid "Host Selection"
 msgstr "接待人選擇"
+
+#. module: frontdesk
+#: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__host_ids
+msgid "Hosts"
+msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
@@ -615,12 +679,6 @@ msgstr "淺色"
 
 #. module: frontdesk
 #. odoo-javascript
-#: code:addons/frontdesk/static/src/host_page/many2one/many2one.js:0
-msgid "Loading..."
-msgstr "載入中⋯"
-
-#. module: frontdesk
-#. odoo-javascript
 #: code:addons/frontdesk/static/src/js/tours/frontdesk.js:0
 msgid ""
 "Looking for a better way to manage your visitors? \n"
@@ -699,6 +757,11 @@ msgstr "無"
 #: code:addons/frontdesk/static/src/drink_page/drink_page.xml:0
 msgid "Nothing, thanks."
 msgstr "沒甚麼，謝謝。"
+
+#. module: frontdesk
+#: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__notify_warning
+msgid "Notify Warning"
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__notify_sms
@@ -894,6 +957,18 @@ msgid "Responsibles"
 msgstr "負責人"
 
 #. module: frontdesk
+#: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__responsible_ids
+msgid ""
+"Responsibles are people who will welcome the client and handle their drinks, "
+"etc."
+msgstr ""
+
+#. module: frontdesk
+#: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__host_selection
+msgid "Restrict the hosts available from the client to choose from."
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "簡訊發送錯誤"
@@ -910,9 +985,21 @@ msgid "Save the visitor."
 msgstr "儲存該訪客。"
 
 #. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_manual_selection.xml:0
+msgid "Search..."
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__access_token
 msgid "Security Token"
 msgstr "安全金鑰"
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Select Host"
+msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
@@ -924,6 +1011,12 @@ msgstr "訪客抵達時，選擇或臨時建立一個工作站。"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Select the color of the Desk"
 msgstr "選擇桌面顏色"
+
+#. module: frontdesk
+#. odoo-javascript
+#: code:addons/frontdesk/static/src/host_page/host_page.xml:0
+msgid "Selected host:"
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__self_check_in
@@ -962,6 +1055,11 @@ msgstr "在介面上顯示二維碼，方便客人用自己手機簽到。"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Side Message"
 msgstr "側邊訊息"
+
+#. module: frontdesk
+#: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
+msgid "Some employees ("
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__station_id
@@ -1004,6 +1102,12 @@ msgstr "狀態"
 #: code:addons/frontdesk/static/src/end_page/end_page.xml:0
 msgid "Thank you for registering!"
 msgstr "感謝你的註冊！"
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid "Thanks for your understanding."
+msgstr ""
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__theme
@@ -1053,6 +1157,14 @@ msgid "Visitors"
 msgstr "訪客"
 
 #. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid ""
+"We regret to inform you that the following %(host_status)s currently "
+"unavailable:"
+msgstr ""
+
+#. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_visitor__website_message_ids
 msgid "Website Messages"
 msgstr "網站資訊"
@@ -1090,6 +1202,14 @@ msgstr "寫訊息⋯"
 #: code:addons/frontdesk/static/src/register_page/register_page.xml:0
 msgid "Yes, please"
 msgstr "好的，謝謝"
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid ""
+"You can contact the host's manager or frontdesk responsible for further "
+"assistance."
+msgstr ""
 
 #. module: frontdesk
 #. odoo-javascript
@@ -1132,6 +1252,12 @@ msgstr "你的訪客 %(name)s 請求與你見面"
 #: code:addons/frontdesk/static/src/end_page/end_page.xml:0
 msgid "Your drink is on the way."
 msgstr "你的飲品很快會送上。"
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid "Your host isn't available"
+msgstr ""
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
@@ -1178,6 +1304,18 @@ msgstr "已獲悉。"
 
 #. module: frontdesk
 #. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid "host is"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-python
+#: code:addons/frontdesk/models/frontdesk_visitor.py:0
+msgid "hosts are"
+msgstr ""
+
+#. module: frontdesk
+#. odoo-python
 #: code:addons/frontdesk/models/frontdesk_frontdesk.py:0
 msgid "station_id.id"
 msgstr "station_id.id"
@@ -1187,3 +1325,12 @@ msgstr "station_id.id"
 #: code:addons/frontdesk/static/src/register_page/register_page.xml:0
 msgid "will get back to you."
 msgstr "會向你回覆。"
+
+#~ msgid "Confirm"
+#~ msgstr "確認"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Loading..."
+#~ msgstr "載入中⋯"

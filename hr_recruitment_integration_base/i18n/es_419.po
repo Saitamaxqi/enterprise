@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-10-09 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -34,10 +34,11 @@ msgstr "<span class=\"px-2\">-</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
-msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgid ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
 msgstr ""
-"<span class=\"text-muted\" invisible=\"campaign_end_date\">No tiene "
-"límite</span>"
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No tiene límite</"
+"span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
@@ -327,8 +328,8 @@ msgstr "Correo electrónico"
 #: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
 msgid "Email is required if the apply method is 'Send an email'.\n"
 msgstr ""
-"El correo electrónico es obligatorio si el método de postulación es "
-"\"Enviar un correo\".\n"
+"El correo electrónico es obligatorio si el método de postulación es \"Enviar "
+"un correo\".\n"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
@@ -839,9 +840,9 @@ msgstr "Aprobada"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid ""
-"The Recruiter will be the default value for all Applicants in this job"
-"             position. The Recruiter is automatically added to all meetings "
-"with the Applicant."
+"The Recruiter will be the default value for all Applicants in this "
+"job             position. The Recruiter is automatically added to all "
+"meetings with the Applicant."
 msgstr ""
 "El reclutador será el valor predeterminado para todos los postulantes de "
 "este puesto. El reclutador se agrega de forma automática a todas las "
@@ -874,17 +875,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid ""
-"This action will update the job post on the platform. This action will cost "
-"%(price)s credits. Do you want to continue?"
+"This action will update the job post on the platform. This action will cost %"
+"(price)s credits. Do you want to continue?"
 msgstr ""
-"Esta acción actualizará la vacante en la plataforma. Esta acción costará "
-"%(price)s créditos, ¿quiere continuar?"
+"Esta acción actualizará la vacante en la plataforma. Esta acción costará %"
+"(price)s créditos, ¿quiere continuar?"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
 msgid ""
-"This will update the applicant's availability status once they are hired for"
-" this position."
+"This will update the applicant's availability status once they are hired for "
+"this position."
 msgstr ""
 "Esto actualizará el estado de disponibilidad del postulante una vez que sea "
 "contratado para este puesto."

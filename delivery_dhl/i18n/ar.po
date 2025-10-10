@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 13:38+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -187,8 +187,8 @@ msgstr "D - إكسبريس لكافة أنحاء العالم"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__delivery_type__dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__stock_package_type__package_carrier_type__dhl
-msgid "DHL"
-msgstr "DHL"
+msgid "DHL (Legacy)"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
@@ -219,11 +219,6 @@ msgid "DHL EU -> International"
 msgstr "DHL أوروبا -> دولي"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
-msgid "DHL Package Type"
-msgstr "نوع حزمة DHL "
-
-#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
 msgstr "كلمة مرور DHL"
@@ -232,12 +227,6 @@ msgstr "كلمة مرور DHL"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
 msgstr "منتج DHL"
-
-#. module: delivery_dhl
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
-msgid "DHL Shipping Methods"
-msgstr "طرق شحن DHL "
 
 #. module: delivery_dhl
 #. odoo-python
@@ -265,7 +254,8 @@ msgstr "DHL الولايات المتحدة الأمريكية -> دولي"
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
-msgid "DHL account number is missing, please modify your delivery method settings."
+msgid ""
+"DHL account number is missing, please modify your delivery method settings."
 msgstr "اسم مستخدم DHL مفقود، الرجاء تعديل إعدادات طريقة التسليم الخاصة بك."
 
 #. module: delivery_dhl
@@ -281,9 +271,20 @@ msgid "DHL password is missing, please modify your delivery method settings."
 msgstr "كلمة مرور DHL مفقودة. الرجاء تعديل إعدادات طريقة التسليم الخاصة بك."
 
 #. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
+msgid "DHLxw Package Type"
+msgstr ""
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_duty_payment
 msgid "Dhl Duty Payment"
 msgstr "دفع جمارك DHL"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_dhl.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_dutiable
@@ -335,6 +336,12 @@ msgstr "تلميح: قد لا تتطلب الوجهة خياراً يفرض دف
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__i
 msgid "I - Break Bulk Economy"
 msgstr "I - توزيع الحمولة الدرجة الاقتصادية"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_dhl.field_stock_package_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_package_dimension_unit__i
@@ -425,7 +432,9 @@ msgstr "وحدة وزن الطرد"
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
-msgid "Please define an incoterm in the associated sale order or set a default incoterm for the company in the accounting's settings."
+msgid ""
+"Please define an incoterm in the associated sale order or set a default "
+"incoterm for the company in the accounting's settings."
 msgstr ""
 "الرجاء تحديد شروط التجارة الدولية في أمر المبيعات ذي الصلة لتعيين شرط "
 "التجارة الدولي الافتراضي للشركة في إعدادات المحاسبة."
@@ -511,7 +520,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The address of your company warehouse is missing or wrong (Missing field(s) :\n"
+"The address of your company warehouse is missing or wrong (Missing "
+"field(s) :\n"
 " %s)"
 msgstr ""
 "عنوان شركتك/مستودعك غير موجود أو غير صحيح (الحقل (الحقول) المفقودة: \n"
@@ -521,7 +531,8 @@ msgstr ""
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_custom_data_request
 msgid ""
 "The custom data in DHL is organized like the inside of a json file.\n"
-"        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
+"        There are 3 possible keys: 'rate', 'ship', 'return', to which you "
+"can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
 "يتم تنظيم البيانات المخصصة في DHL كما في داخل ملف json.\n"
@@ -534,7 +545,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "تعذر احتساب سعر الشحن لعدم تحديد الوزن للمنتج (المنتجات) التالية: \n"
@@ -543,7 +555,9 @@ msgstr ""
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
-msgid "There is no price available for this shipping, you should rather try with the DHL product %s"
+msgid ""
+"There is no price available for this shipping, you should rather try with "
+"the DHL product %s"
 msgstr "لا يوجد سعر متوفر لهذا الشحن، عوضاً عن ذلك، جربه مع منتج DHL%s"
 
 #. module: delivery_dhl
@@ -592,3 +606,12 @@ msgstr "Z - رسوم الوصول للوجهة"
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_label_image_format__zpl2
 msgid "ZPL2"
 msgstr "ZPL2"
+
+#~ msgid "DHL"
+#~ msgstr "DHL"
+
+#~ msgid "DHL Package Type"
+#~ msgstr "نوع حزمة DHL "
+
+#~ msgid "DHL Shipping Methods"
+#~ msgstr "طرق شحن DHL "

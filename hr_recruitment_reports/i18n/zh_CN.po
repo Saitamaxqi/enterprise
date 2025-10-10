@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 15:32+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -279,7 +279,8 @@ msgstr "此报告让你可比较招聘人员及其表现。"
 msgid ""
 "This report allows you to compare various measures grouped by your sources "
 "of applicants (e.g. LinkedIn, Monster, etc.)."
-msgstr "通过该报表，您可以比较按申请人来源（如 LinkedIn、Monster 等）分组的各种指标。"
+msgstr ""
+"通过该报表，您可以比较按申请人来源（如 LinkedIn、Monster 等）分组的各种指标。"
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_action

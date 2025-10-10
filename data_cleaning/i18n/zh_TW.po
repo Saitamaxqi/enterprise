@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* data_cleaning
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:49+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: data_cleaning
@@ -138,8 +139,8 @@ msgstr "已封存"
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid ""
-"Are you sure that you want to merge the selected records in their respective"
-" group?"
+"Are you sure that you want to merge the selected records in their respective "
+"group?"
 msgstr "確定合併其各自組別中的選定記錄?"
 
 #. module: data_cleaning
@@ -453,8 +454,7 @@ msgstr "待合併重複資料"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__create_threshold
-msgid ""
-"Duplicates with a similarity below this threshold will not be suggested"
+msgid "Duplicates with a similarity below this threshold will not be suggested"
 msgstr "不會建議具有低於此閾值相似性的重複項"
 
 #. module: data_cleaning
@@ -518,11 +518,6 @@ msgid "Format Phone"
 msgstr "格式化電話"
 
 #. module: data_cleaning
-#: model_terms:ir.ui.view,arch_db:data_cleaning.view_data_storage_search
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: data_cleaning
 #: model:ir.model.fields,field_description:data_cleaning.field_ir_model__hide_merge_action
 msgid "Hide merge action button"
 msgstr "隱藏合併動作按鈕"
@@ -531,9 +526,11 @@ msgstr "隱藏合併動作按鈕"
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_case
 msgid ""
 "How the type case is set by the rule. 'First Letters to Uppercase' sets "
-"every letter to lowercase except the first letter of each word, which is set"
-" to uppercase."
-msgstr "規則如何設定字母大小寫。「首字母大寫」會將每個字詞的第一個字母設為大寫，其餘所有字母小寫。"
+"every letter to lowercase except the first letter of each word, which is set "
+"to uppercase."
+msgstr ""
+"規則如何設定字母大小寫。「首字母大寫」會將每個字詞的第一個字母設為大寫，其餘"
+"所有字母小寫。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
@@ -573,10 +570,13 @@ msgstr "如果是 \"真\", 這個記錄將用於目標模型上的上下文菜�
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__hide_merge_action
 msgid ""
-"If the model already has a custom merge method, the class attribute `_merge_disabled` is set to true on\n"
-"             that model and the generic data merge action should not be available on that model."
+"If the model already has a custom merge method, the class attribute "
+"`_merge_disabled` is set to true on\n"
+"             that model and the generic data merge action should not be "
+"available on that model."
 msgstr ""
-"如果模型已經有一個自定義的合併方法，類屬性`_merge_disabled`在該模型上被設置為 \"true\",通用數據合併動作在該模型上不可用。\n"
+"如果模型已經有一個自定義的合併方法，類屬性`_merge_disabled`在該模型上被設置"
+"為 \"true\",通用數據合併動作在該模型上不可用。\n"
 "             該模型上, 通用數據合併動作不應該在該模型上可用。"
 
 #. module: data_cleaning
@@ -1070,3 +1070,6 @@ msgstr "已合併至這一個"
 #: model_terms:ir.ui.view,arch_db:data_cleaning.notification
 msgid "records to clean with the '"
 msgstr "記錄要清理，連同「"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"

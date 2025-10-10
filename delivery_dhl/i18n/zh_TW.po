@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -206,6 +206,18 @@ msgid "DHL Documents"
 msgstr "DHL 文件"
 
 #. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_eu_dom
+#: model:product.template,name:delivery_dhl.product_product_delivery_dhl_eu_dom_product_template
+msgid "DHL EU"
+msgstr ""
+
+#. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_eu_intl
+#: model:product.template,name:delivery_dhl.product_product_delivery_dhl_eu_intl_product_template
+msgid "DHL EU -> International"
+msgstr ""
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
 msgstr "DHL的密碼"
@@ -214,12 +226,6 @@ msgstr "DHL的密碼"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
 msgstr "DHL Product"
-
-#. module: delivery_dhl
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
-msgid "DHL Shipping Methods"
-msgstr "DHL"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -231,6 +237,18 @@ msgstr "DHL Site ID is missing, please modify your delivery method settings."
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_SiteID
 msgid "DHL SiteID"
 msgstr "DHL SiteID"
+
+#. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_us_dom
+#: model:product.template,name:delivery_dhl.product_product_delivery_dhl_us_dom_product_template
+msgid "DHL US"
+msgstr ""
+
+#. module: delivery_dhl
+#: model:delivery.carrier,name:delivery_dhl.delivery_carrier_dhl_us_intl
+#: model:product.template,name:delivery_dhl.product_product_delivery_dhl_us_intl_product_template
+msgid "DHL US -> International"
+msgstr ""
 
 #. module: delivery_dhl
 #. odoo-python
@@ -416,7 +434,9 @@ msgstr "包裝重量單位"
 msgid ""
 "Please define an incoterm in the associated sale order or set a default "
 "incoterm for the company in the accounting's settings."
-msgstr "請在關聯的銷售訂單中定義一個國際貿易術語, 或在會計設置中為公司設置一個預設的貿易術語。"
+msgstr ""
+"請在關聯的銷售訂單中定義一個國際貿易術語, 或在會計設置中為公司設置一個預設的"
+"貿易術語。"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -499,7 +519,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The address of your company warehouse is missing or wrong (Missing field(s) :\n"
+"The address of your company warehouse is missing or wrong (Missing "
+"field(s) :\n"
 " %s)"
 msgstr ""
 "你公司倉庫的地址缺漏或錯誤（缺漏欄位：\n"
@@ -509,7 +530,8 @@ msgstr ""
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_custom_data_request
 msgid ""
 "The custom data in DHL is organized like the inside of a json file.\n"
-"        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
+"        There are 3 possible keys: 'rate', 'ship', 'return', to which you "
+"can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
 "DHL 自訂數據的整理方式，類似 JSON 檔案的內部結構。\n"
@@ -520,7 +542,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "由於以下產品缺漏重量資料，因此未能估算預計運費：\n"
@@ -580,3 +603,6 @@ msgstr "Z - Destination Charges"
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_label_image_format__zpl2
 msgid "ZPL2"
 msgstr "ZPL2"
+
+#~ msgid "DHL Shipping Methods"
+#~ msgstr "DHL"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-03 09:04+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2022-09-22 05:47+0000\n"
 "Last-Translator: Dragan Vukosavljevic <dragan.vukosavljevic@gmail.com>, "
 "2022\n"
@@ -39,10 +39,49 @@ msgid "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Arrow\"/>"
 
 #. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+msgid "<strong>Name: </strong>"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+msgid "<strong>Start: </strong>"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+msgid "<strong>Stop: </strong>"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_report_calendar_view_gantt
+msgid "Approve"
+msgstr ""
+
+#. module: hr_holidays_gantt
 #: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_allocation_gantt_view
 #: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
 msgid "Days"
 msgstr "dana"
+
+#. module: hr_holidays_gantt
+#: model:ir.model.fields,field_description:hr_holidays_gantt.field_hr_leave__display_name
+#: model:ir.model.fields,field_description:hr_holidays_gantt.field_hr_leave_report_calendar__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model:ir.model.fields,field_description:hr_holidays_gantt.field_hr_leave__id
+#: model:ir.model.fields,field_description:hr_holidays_gantt.field_hr_leave_report_calendar__id
+msgid "ID"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_report_calendar_view_gantt
+msgid "Refuse"
+msgstr ""
 
 #. module: hr_holidays_gantt
 #: model:ir.model,name:hr_holidays_gantt.model_hr_leave
@@ -53,6 +92,18 @@ msgstr "Odsustvo"
 #. module: hr_holidays_gantt
 #: model:ir.model,name:hr_holidays_gantt.model_hr_leave_report_calendar
 msgid "Time Off Calendar"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#. odoo-javascript
+#: code:addons/hr_holidays_gantt/static/src/views/gantt/hr_holidays_gantt_view.js:0
+msgid "Time Off Request"
+msgstr ""
+
+#. module: hr_holidays_gantt
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_gantt_view
+#: model_terms:ir.ui.view,arch_db:hr_holidays_gantt.hr_leave_report_calendar_view_gantt
+msgid "Validate"
 msgstr ""
 
 #. module: hr_holidays_gantt

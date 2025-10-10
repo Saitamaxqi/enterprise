@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 21:19+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Romanian <https://translate.odoo.com/projects/odoo-19/"
@@ -45,7 +45,9 @@ msgstr "Bifați această casută dacă contul dvs. a fost validate de USPS"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Company phone number is invalid. Please insert a US phone number."
-msgstr "Numărul de telefon al companiei este nevalid. Vă rugăm să introduceți un număr de telefon din SUA."
+msgstr ""
+"Numărul de telefon al companiei este nevalid. Vă rugăm să introduceți un "
+"număr de telefon din SUA."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
@@ -56,6 +58,11 @@ msgstr "Tip continut"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "Natura livrării"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -114,6 +121,11 @@ msgstr ""
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
 msgstr "Cadou"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
@@ -231,13 +243,18 @@ msgstr ""
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Please check on USPS website to ensure that your package is machinable."
-msgstr "Vă rugăm să verificați pe site-ul USPS pentru a vă asigura că pachetul dvs. este prelucrabil."
+msgstr ""
+"Vă rugăm să verificați pe site-ul USPS pentru a vă asigura că pachetul dvs. "
+"este prelucrabil."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr "Vă rugăm să alegeți un alt serviciu (greutatea maximă a acestui serviciu este de 4 lire sterline)"
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
+msgstr ""
+"Vă rugăm să alegeți un alt serviciu (greutatea maximă a acestui serviciu "
+"este de 4 lire sterline)"
 
 #. module: delivery_usps
 #. odoo-python
@@ -260,8 +277,12 @@ msgstr "Vă rugăm să furnizați cel puțin un articol pentru livrare."
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
-msgstr "Vă rugăm să setați țara SUA la adresa companiei dvs. Serviciul este disponibil numai pentru SUA"
+msgid ""
+"Please set country U.S.A in your company address, Service is only available "
+"for U.S.A"
+msgstr ""
+"Vă rugăm să setați țara SUA la adresa companiei dvs. Serviciul este "
+"disponibil numai pentru SUA"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__postcard
@@ -282,13 +303,16 @@ msgstr "Furnizor"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Quantity for each move line should be less than 1000."
-msgstr "Cantitatea pentru fiecare linie de mișcare trebuie să fie mai mică de 1000."
+msgstr ""
+"Cantitatea pentru fiecare linie de mișcare trebuie să fie mai mică de 1000."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Recipient address cannot be found. Please check the address exists."
-msgstr "Adresa destinatarului nu poate fi găsită. Vă rugăm să verificați dacă adresa există."
+msgstr ""
+"Adresa destinatarului nu poate fi găsită. Vă rugăm să verificați dacă adresa "
+"există."
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__rectangular
@@ -378,7 +402,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 
@@ -421,8 +446,13 @@ msgstr "Tip de Container"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
-msgstr "USPS"
+msgid "USPS (Legacy)"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
+msgid "USPS (Legacy) Label File Type"
+msgstr ""
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -438,7 +468,9 @@ msgstr ""
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
+msgid ""
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
+"delivery method into USPS International."
 msgstr ""
 
 #. module: delivery_usps
@@ -455,12 +487,9 @@ msgstr ""
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
-msgstr ""
-
-#. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-msgid "USPS Label File Type"
+msgid ""
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
 msgstr ""
 
 #. module: delivery_usps
@@ -472,12 +501,6 @@ msgstr "Tip Mail USPS"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "Service USPS"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
-msgid "USPS Shipping Methods"
-msgstr "USPS Metode de expediere"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
@@ -499,3 +522,9 @@ msgstr "Codul poștal al companiei sau al destinatarului dvs. este incorect."
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
 msgstr "inci"
+
+#~ msgid "USPS"
+#~ msgstr "USPS"
+
+#~ msgid "USPS Shipping Methods"
+#~ msgstr "USPS Metode de expediere"

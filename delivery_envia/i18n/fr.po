@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:30+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-18 02:44+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
@@ -147,8 +147,8 @@ msgstr "Contient la liste des services disponibles pour le compte Envia.com."
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Copy over the API Key from Envia into either the sandbox or production field"
-" in Delivery Methods."
+"Copy over the API Key from Envia into either the sandbox or production field "
+"in Delivery Methods."
 msgstr ""
 "Copiez la clé API d'Envia dans le champ sandbox ou production des modes de "
 "livraison."
@@ -163,8 +163,8 @@ msgstr "Créer un compte"
 msgid ""
 "Create and edit a package for this delivery method to be used as reference "
 "for quotations and labels. This package can be of type <b>box</b>, "
-"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be"
-" used."
+"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be "
+"used."
 msgstr ""
 "Créez et modifiez un emballage pour ce mode de livraison afin de l'utiliser "
 "comme référence pour les devis et les étiquettes. Cet emballage peut être de "
@@ -265,42 +265,41 @@ msgstr "Erreur Envia : %(description)s - %(message)s"
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: %(message)s - %(description)s %(location)s (Reference code: "
-"%(reference)s)"
+"Envia Error: %(message)s - %(description)s %(location)s (Reference code: %"
+"(reference)s)"
 msgstr ""
-"Erreur Envia : %(message)s - %(description)s %(location)s (Code de référence "
-": %(reference)s)"
+"Erreur Envia : %(message)s - %(description)s %(location)s (Code de "
+"référence : %(reference)s)"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The API key you entered for %(carrier_name)s seems to be "
-"invalid"
-msgstr "Erreur Envia : La clé API saisie pour %(carrier_name)s semble invalide."
+"Envia Error: The API key you entered for %(carrier_name)s seems to be invalid"
+msgstr ""
+"Erreur Envia : La clé API saisie pour %(carrier_name)s semble invalide."
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
 "Envia Error: The Envia Mail Type (%(package_types)s) set on the package(s) "
-"does not match the type set on the carrier (%(carrier_package_type)s). Use a"
-" different package or different carrier that matches the mail type."
+"does not match the type set on the carrier (%(carrier_package_type)s). Use a "
+"different package or different carrier that matches the mail type."
 msgstr ""
 "Erreur Envia : Le type d'envoi Envia (%(package_types)s) défini sur le(s) "
-"colis ne correspond pas au type défini sur le transporteur "
-"(%(carrier_package_type)s). Utilisez un autre emballage ou un autre "
+"colis ne correspond pas au type défini sur le transporteur (%"
+"(carrier_package_type)s). Utilisez un autre emballage ou un autre "
 "transporteur correspondant au type d'envoi."
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The following products don't have weights set: "
-"%(product_names)s"
+"Envia Error: The following products don't have weights set: %(product_names)s"
 msgstr ""
-"Erreur Envia : Les produits suivants n'ont pas de poids défini : "
-"%(product_names)s"
+"Erreur Envia : Les produits suivants n'ont pas de poids défini : %"
+"(product_names)s"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_delivery_carrier__envia_label_file_type
@@ -356,8 +355,8 @@ msgid ""
 "Make sure city/commune and state/region are set otherwise enter a postal "
 "code directly"
 msgstr ""
-"Envia n'a pas pu localiser un code postal pour le partenaire : "
-"%(partner_name)s. Assurez-vous que la ville/commune et l'état/région sont "
+"Envia n'a pas pu localiser un code postal pour le partenaire : %"
+"(partner_name)s. Assurez-vous que la ville/commune et l'état/région sont "
 "définis, sinon saisissez directement un code postal."
 
 #. module: delivery_envia
@@ -399,8 +398,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in"
-" order to send the required information you need to set the UNSPSC code in "
+"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in "
+"order to send the required information you need to set the UNSPSC code in "
 "the following product: %(product_name)s"
 msgstr ""
 "Pour les expéditions LTL au Mexique, un connaissement (Carta Porte) est "
@@ -419,11 +418,11 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"For your available carriers you'll need to make sure that they are available"
-" through Envia (make sure to select all available countries):<br/>"
+"For your available carriers you'll need to make sure that they are available "
+"through Envia (make sure to select all available countries):<br/>"
 msgstr ""
-"Assurez-vous que les transporteurs disponibles sont accessibles via Envia ("
-"veillez à sélectionner tous les pays disponibles) :<br/>"
+"Assurez-vous que les transporteurs disponibles sont accessibles via Envia "
+"(veillez à sélectionner tous les pays disponibles) :<br/>"
 
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_production_api_key
@@ -445,8 +444,8 @@ msgstr "ID"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
 msgid ""
-"If the carrier is unable to deliver the package, the package can be returned"
-" to the shipper or abandoned at the door. (Canada only)"
+"If the carrier is unable to deliver the package, the package can be returned "
+"to the shipper or abandoned at the door. (Canada only)"
 msgstr ""
 "Si le transporteur ne peut pas livrer le colis, celui-ci peut être retourné "
 "à l'expéditeur ou laissé devant la porte. (Canada uniquement)"
@@ -459,7 +458,8 @@ msgstr "Si vous n'avez pas de compte"
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid "If you don't have an account, we recommend heading to"
-msgstr "Si vous n'avez pas de compte, nous vous recommandons de vous rendre sur"
+msgstr ""
+"Si vous n'avez pas de compte, nous vous recommandons de vous rendre sur"
 
 #. module: delivery_envia
 #: model:ir.model.fields,field_description:delivery_envia.field_envia_shipping_wizard__write_uid
@@ -475,8 +475,8 @@ msgstr "Mis à jour le"
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
 "Lastly, head to the Developers / API Keys section and generate a new API "
-"Key. This will be used by Odoo to communicate with Envia so note it down for"
-" later."
+"Key. This will be used by Odoo to communicate with Envia so note it down for "
+"later."
 msgstr ""
 "Pour finir, allez dans la section Développeurs / Clés API et générez une "
 "nouvelle clé API. Cette clé sera utilisée par Odoo pour communiquer avec "
@@ -606,8 +606,8 @@ msgstr "Enlèvement en zone résidentielle"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_delivery
 msgid ""
-"Provide liftgate assistance if the recipient doesn't have a dock or forklift"
-" to unload the shipment. (United States and Mexico Only)"
+"Provide liftgate assistance if the recipient doesn't have a dock or forklift "
+"to unload the shipment. (United States and Mexico Only)"
 msgstr ""
 "Fournir une assistance pour le hayon élévateur si le destinataire ne dispose "
 "pas d'un quai ou d'un chariot élévateur pour décharger la cargaison. (États-"
@@ -772,8 +772,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Specify the currency your Envia account is configured in. By default this is"
-" the company's currency."
+"Specify the currency your Envia account is configured in. By default this is "
+"the company's currency."
 msgstr ""
 "Spécifiez la devise dans laquelle votre compte Envia est configuré. Par "
 "défaut, il s'agit de la devise de l'entreprise."
@@ -833,8 +833,8 @@ msgstr "Impossible d'annuler la commande : %(order_number)s"
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You can also preselect which services will be used, our recommendation is to"
-" not limit this as we will pick them in Odoo anyway."
+"You can also preselect which services will be used, our recommendation is to "
+"not limit this as we will pick them in Odoo anyway."
 msgstr ""
 "Vous pouvez également présélectionner les services qui seront utilisés. Nous "
 "vous recommandons de ne pas vous limiter votre choix, car nous les "
@@ -843,8 +843,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You should also make sure that if you export to other countries, you have to"
-" select who will pay for customs duties."
+"You should also make sure that if you export to other countries, you have to "
+"select who will pay for customs duties."
 msgstr ""
 "Si vous exportez vers d'autres pays, assurez-vous également de choisir qui "
 "paiera les droits de douane."

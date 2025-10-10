@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:30+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 23:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -147,8 +147,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Copy over the API Key from Envia into either the sandbox or production field"
-" in Delivery Methods."
+"Copy over the API Key from Envia into either the sandbox or production field "
+"in Delivery Methods."
 msgstr ""
 "Sao chép Khóa API từ Envia vào trường production hoặc sandbox trong Phương "
 "thức giao hàng."
@@ -163,8 +163,8 @@ msgstr "Tạo một tài khoản"
 msgid ""
 "Create and edit a package for this delivery method to be used as reference "
 "for quotations and labels. This package can be of type <b>box</b>, "
-"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be"
-" used."
+"<b>envelope</b>, or <b>pallet</b>, which determines the carriers that can be "
+"used."
 msgstr ""
 "Tạo và chỉnh sửa một kiện hàng cho phương thức giao hàng này để sử dụng làm "
 "tham chiếu cho báo giá và nhãn. Loại kiện hàng này có thể là <b>hộp</b>, "
@@ -265,18 +265,17 @@ msgstr "Lỗi Envia: %(description)s - %(message)s"
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: %(message)s - %(description)s %(location)s (Reference code: "
-"%(reference)s)"
+"Envia Error: %(message)s - %(description)s %(location)s (Reference code: %"
+"(reference)s)"
 msgstr ""
-"Lỗi Envia: %(message)s - %(description)s %(location)s (Mã tham chiếu: "
-"%(reference)s)"
+"Lỗi Envia: %(message)s - %(description)s %(location)s (Mã tham chiếu: %"
+"(reference)s)"
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The API key you entered for %(carrier_name)s seems to be "
-"invalid"
+"Envia Error: The API key you entered for %(carrier_name)s seems to be invalid"
 msgstr "Lỗi Envia: Khóa API bạn nhập cho %(carrier_name)s có vẻ không hợp lệ"
 
 #. module: delivery_envia
@@ -284,20 +283,19 @@ msgstr "Lỗi Envia: Khóa API bạn nhập cho %(carrier_name)s có vẻ không
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
 "Envia Error: The Envia Mail Type (%(package_types)s) set on the package(s) "
-"does not match the type set on the carrier (%(carrier_package_type)s). Use a"
-" different package or different carrier that matches the mail type."
+"does not match the type set on the carrier (%(carrier_package_type)s). Use a "
+"different package or different carrier that matches the mail type."
 msgstr ""
 "Lỗi Envia: Loại thư Envia (%(package_types)s) được thiết lập trên (các) kiện "
-"hàng không khớp với loại được thiết lập trên đơn vị vận chuyển "
-"(%(carrier_package_type)s). Hãy sử dụng một kiện hàng khác hoặc đơn vị vận "
+"hàng không khớp với loại được thiết lập trên đơn vị vận chuyển (%"
+"(carrier_package_type)s). Hãy sử dụng một kiện hàng khác hoặc đơn vị vận "
 "chuyển khác khớp với loại thư."
 
 #. module: delivery_envia
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"Envia Error: The following products don't have weights set: "
-"%(product_names)s"
+"Envia Error: The following products don't have weights set: %(product_names)s"
 msgstr "Lỗi Envia: Các sản phẩm sau đây không có khối lượng: %(product_names)s"
 
 #. module: delivery_envia
@@ -395,13 +393,13 @@ msgstr "Không thể truy xuất các Đơn vị vận chuyển Envia. Vui lòng
 #. odoo-python
 #: code:addons/delivery_envia/models/envia_request.py:0
 msgid ""
-"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in"
-" order to send the required information you need to set the UNSPSC code in "
+"For LTL shipments in Mexico, a Bill of Landing (Carta Porte) is required, in "
+"order to send the required information you need to set the UNSPSC code in "
 "the following product: %(product_name)s"
 msgstr ""
 "Đối với các lô hàng LTL ở Mexico, cần phải có Vận đơn (Carta Porte); để gửi "
-"thông tin bắt buộc, bạn cần thiết lập mã UNSPSC trong sản phẩm sau: "
-"%(product_name)s"
+"thông tin bắt buộc, bạn cần thiết lập mã UNSPSC trong sản phẩm sau: %"
+"(product_name)s"
 
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
@@ -415,8 +413,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"For your available carriers you'll need to make sure that they are available"
-" through Envia (make sure to select all available countries):<br/>"
+"For your available carriers you'll need to make sure that they are available "
+"through Envia (make sure to select all available countries):<br/>"
 msgstr ""
 "Đối với các đơn vị vận chuyển khả dụng, bạn cần đảm bảo rằng họ khả dụng "
 "thông qua Envia (đảm bảo chọn tất cả các quốc gia có sẵn): <br/>"
@@ -441,8 +439,8 @@ msgstr "ID"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_return_at_senders_expense
 msgid ""
-"If the carrier is unable to deliver the package, the package can be returned"
-" to the shipper or abandoned at the door. (Canada only)"
+"If the carrier is unable to deliver the package, the package can be returned "
+"to the shipper or abandoned at the door. (Canada only)"
 msgstr ""
 "Nếu đơn vị vận chuyển không thể giao hàng, thì kiện hàng có thể được trả lại "
 "cho người gửi hàng hoặc bị bỏ lại cửa nhà khách hàng. (Chỉ áp dụng cho "
@@ -472,8 +470,8 @@ msgstr "Cập nhật lần cuối vào"
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
 "Lastly, head to the Developers / API Keys section and generate a new API "
-"Key. This will be used by Odoo to communicate with Envia so note it down for"
-" later."
+"Key. This will be used by Odoo to communicate with Envia so note it down for "
+"later."
 msgstr ""
 "Cuối cùng, hãy đến phần Nhà phát triển/Khoá API và tạo một Khoá API mới. "
 "Khóa này sẽ được Odoo sử dụng để giao tiếp với Envia, vì vậy hãy lưu lại để "
@@ -601,8 +599,8 @@ msgstr "Lấy hàng tại khu vực dân cư"
 #. module: delivery_envia
 #: model:ir.model.fields,help:delivery_envia.field_delivery_carrier__envia_lift_delivery
 msgid ""
-"Provide liftgate assistance if the recipient doesn't have a dock or forklift"
-" to unload the shipment. (United States and Mexico Only)"
+"Provide liftgate assistance if the recipient doesn't have a dock or forklift "
+"to unload the shipment. (United States and Mexico Only)"
 msgstr ""
 "Hỗ trợ nâng hạ hàng nếu người nhận không có bến xếp dỡ hàng hoặc xe nâng để "
 "dỡ hàng. (Chỉ dành cho Hoa Kỳ và Mexico)"
@@ -763,8 +761,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"Specify the currency your Envia account is configured in. By default this is"
-" the company's currency."
+"Specify the currency your Envia account is configured in. By default this is "
+"the company's currency."
 msgstr ""
 "Chỉ định loại tiền tệ mà tài khoản Envia của bạn được cấu hình. Theo mặc "
 "định, đây là loại tiền tệ của công ty."
@@ -824,8 +822,8 @@ msgstr "Không thể huỷ đơn hàng: %(order_number)s"
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You can also preselect which services will be used, our recommendation is to"
-" not limit this as we will pick them in Odoo anyway."
+"You can also preselect which services will be used, our recommendation is to "
+"not limit this as we will pick them in Odoo anyway."
 msgstr ""
 "Bạn cũng có thể chọn trước những dịch vụ nào sẽ được sử dụng, chúng tôi "
 "khuyên bạn không nên giới hạn chúng vì dù sao chúng tôi cũng sẽ chọn trong "
@@ -834,8 +832,8 @@ msgstr ""
 #. module: delivery_envia
 #: model_terms:ir.ui.view,arch_db:delivery_envia.view_delivery_carrier_form_inherit_delivery_envia
 msgid ""
-"You should also make sure that if you export to other countries, you have to"
-" select who will pay for customs duties."
+"You should also make sure that if you export to other countries, you have to "
+"select who will pay for customs duties."
 msgstr ""
 "Bạn cũng nên đảm bảo rằng nếu xuất khẩu sang các quốc gia khác, bạn phải "
 "chọn bên nào sẽ trả thuế hải quan."

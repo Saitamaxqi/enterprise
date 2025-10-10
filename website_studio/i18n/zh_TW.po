@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* website_studio
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: website_studio
@@ -28,10 +29,12 @@ msgstr "<span class=\"bg-300 align-self-baseline\">/model/</span>"
 #: model_terms:ir.ui.view,arch_db:website_studio.default_form_field_name
 msgid ""
 "<span class=\"s_website_form_label_content\">Name</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 "<span class=\"s_website_form_label_content\">名稱</span>\n"
-"                                            <span class=\"s_website_form_mark\"> *（必填）</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *（必填）</span>"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
@@ -50,7 +53,7 @@ msgstr "基礎參數"
 
 #. module: website_studio
 #. odoo-javascript
-#: code:addons/website_studio/static/src/website_form_editor.js:0
+#: code:addons/website_studio/static/src/plugins/form_option_plugin.js:0
 msgid "Create %s"
 msgstr "創建 %s"
 
@@ -91,7 +94,8 @@ msgid "Exposed model"
 msgstr "已暴露模型"
 
 #. module: website_studio
-#: model_terms:ir.ui.view,arch_db:website_studio.s_website_form_options
+#. odoo-javascript
+#: code:addons/website_studio/static/src/plugins/form_option.xml:0
 msgid "Form Access"
 msgstr "表單存取"
 
@@ -128,7 +132,7 @@ msgstr "模型頁面"
 
 #. module: website_studio
 #. odoo-javascript
-#: code:addons/website_studio/static/src/website_form_editor.js:0
+#: code:addons/website_studio/static/src/plugins/form_option.xml:0
 msgid "More models"
 msgstr "更多模型"
 
@@ -144,7 +148,7 @@ msgstr "搜尋⋯"
 
 #. module: website_studio
 #. odoo-javascript
-#: code:addons/website_studio/static/src/website_form_editor.js:0
+#: code:addons/website_studio/static/src/plugins/form_option_plugin.js:0
 msgid "Select model"
 msgstr "選擇模型"
 
@@ -168,6 +172,14 @@ msgstr "檢視名稱"
 #: code:addons/website_studio/models/website_controller_page.py:0
 msgid "Website Description"
 msgstr "網站簡介"
+
+#. module: website_studio
+#. odoo-javascript
+#: code:addons/website_studio/static/src/plugins/form_option.xml:0
+msgid ""
+"Will be activated on save. Deactivate this if you do not want forms about "
+"this model."
+msgstr ""
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_listing

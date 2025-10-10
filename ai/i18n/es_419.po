@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -109,16 +109,16 @@ msgstr ""
 "esta orden\n"
 "            date_order|Fecha de la orden|datetime|true|true|Fecha en la que "
 "se realizó la orden\n"
-"            order_line|Líneas de la "
-"orden|one2many(sale.order.line)|false|false|Líneas en esta orden\n"
+"            order_line|Líneas de la orden|one2many(sale.order.line)|false|"
+"false|Líneas en esta orden\n"
 "            state|Estado|selection|true|true|Estado de la orden\n"
 "            ```\n"
 "\n"
 "            Puntos importantes:\n"
 "            - ⚠️ Solo muestra campos QUE SE PUEDAN BUSCAR, otros no se pueden "
 "usar en dominios\n"
-"            - Para relaciones: Muestra modelos relacionados en paréntesis ("
-"many2one, one2many, many2many).\n"
+"            - Para relaciones: Muestra modelos relacionados en paréntesis "
+"(many2one, one2many, many2many).\n"
 "            - Solo se pueden usar los campos de relación para relacionar con "
 "otros modelos\n"
 "            - Los campos literales como char/text/float NO se pueden usar "
@@ -383,8 +383,8 @@ msgstr ""
 "            ⚠️ Nota: Utiliza row_groupbys/col_groupbys (arreglos) en lugar de "
 "selected_groupbys\n"
 "\n"
-"            Por ejemplo, para \"Mejores vendedores de productos de oficina\":"
-"\n"
+"            Por ejemplo, para \"Mejores vendedores de productos de "
+"oficina\":\n"
 "            - Usa search=[\"categ_id\", \"oficina\"] si puedes buscar en "
 "categ_id\n"
 "            - Solo usa un dominio_personalizado si no hay ningún campo en el "
@@ -423,16 +423,16 @@ msgstr ""
 "\n"
 "            Recupera información detallada (contexto, dominio, search_view) "
 "de menús específicos.\n"
-"            DEBES llamarlo antes de usar cualquier herramienta de open_menu_*"
-" para obtener detalles específicos del menú.\n"
+"            DEBES llamarlo antes de usar cualquier herramienta de "
+"open_menu_* para obtener detalles específicos del menú.\n"
 "\n"
 "            Devuelve un CSV con un delimitador de barra vertical (|):\n"
 "            ``` \n"
 "            menu_id|model_name|context|domain|search_view\n"
-"            389|sale.order|{\"search_default_my_quotation\": "
-"1}|[]|<search><fields>...</fields></search>\n"
-"            172|account.move|{\"search_default_draft\": 1}|"
-"[[\"type\", \"=\", \"out_invoice\"]]|<search>...</search>\n"
+"            389|sale.order|{\"search_default_my_quotation\": 1}|[]|"
+"<search><fields>...</fields></search>\n"
+"            172|account.move|{\"search_default_draft\": 1}|[[\"type\", "
+"\"=\", \"out_invoice\"]]|<search>...</search>\n"
 "            ```\n"
 "\n"
 "            Información clave:\n"
@@ -557,9 +557,9 @@ msgid ""
 "ai_tool_show_warning\" aria-hidden=\"true\" title=\"The AI will not be "
 "limited by the groups defined on tools\"/>"
 msgstr ""
-"<i class=\"fa fa-warning text-warning me-2\" invisible="
-"\"not ai_tool_show_warning\" aria-hidden=\"true\" title="
-"\"La IA no estará limitada por los grupos definidos en las herramientas\"/>"
+"<i class=\"fa fa-warning text-warning me-2\" invisible=\"not "
+"ai_tool_show_warning\" aria-hidden=\"true\" title=\"La IA no estará limitada "
+"por los grupos definidos en las herramientas\"/>"
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ai_log_action
@@ -930,8 +930,8 @@ msgid ""
 "persons. Channel can be freely joined (depending on its configuration)."
 msgstr ""
 "Un chat es privado y único entre 2 personas. Un grupo es privado entre las "
-"personas invitadas. Un canal es abierto y cualquier persona puede unirse ("
-"depende de la configuración)."
+"personas invitadas. Un canal es abierto y cualquier persona puede unirse "
+"(depende de la configuración)."
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_embedding__checksum
@@ -1279,7 +1279,8 @@ msgstr "Insertar registros"
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_prompt/ai_prompt_field.js:0
 msgid "Insert records the AI can use with the '/record' command"
-msgstr "Inserta los registros que la IA puede usar con el comando \"/registro\""
+msgstr ""
+"Inserta los registros que la IA puede usar con el comando \"/registro\""
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__default_prompt
@@ -1328,8 +1329,8 @@ msgid ""
 "JSON containing the values that can be returned by the LLM along with their "
 "properties (type, length, ...)"
 msgstr ""
-"JSON que contiene valores que LLM puede regresar junto con sus propiedades ("
-"como tipo, longitud y más)."
+"JSON que contiene valores que LLM puede regresar junto con sus propiedades "
+"(como tipo, longitud y más)."
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
@@ -1661,8 +1662,8 @@ msgid ""
 "Some URLs are invalid and were skipped. URLs must start with http://, "
 "https://, or ftp://"
 msgstr ""
-"Algunas URL no son válidas y se omitieron. Las URL deben comenzar con http://"
-", https:// o ftp://"
+"Algunas URL no son válidas y se omitieron. Las URL deben comenzar con "
+"http://, https:// o ftp://"
 
 #. module: ai
 #. odoo-javascript
@@ -1792,8 +1793,8 @@ msgid ""
 "The type of the parameter '%(name)s' is incorrect. It should be '%"
 "(expected_param_type)s'."
 msgstr ""
-"El tipo del parámetro \"%(name)s\" es incorrecto. Debería ser "
-"\"%(expected_param_type)s\"."
+"El tipo del parámetro \"%(name)s\" es incorrecto. Debería ser \"%"
+"(expected_param_type)s\"."
 
 #. module: ai
 #. odoo-python
@@ -1802,8 +1803,8 @@ msgid ""
 "The value '%(value)s' of the parameter '%(name)s' doesn't match the expected "
 "pattern '%(expected_pattern)s'."
 msgstr ""
-"El valor \"%(value)s\" del parámetro \"%(name)s\" no coincide con "
-"\"%(expected_pattern)s\", que es el patrón esperado."
+"El valor \"%(value)s\" del parámetro \"%(name)s\" no coincide con \"%"
+"(expected_pattern)s\", que es el patrón esperado."
 
 #. module: ai
 #. odoo-python
@@ -1831,7 +1832,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai/static/src/ai_json_schema/ai_json_schema.xml:0
 msgid "Those parameters will be passed as global variables of the actions."
-msgstr "Esos parámetros se pasarán como las variables globales de las acciones."
+msgstr ""
+"Esos parámetros se pasarán como las variables globales de las acciones."
 
 #. module: ai
 #: model_terms:ir.ui.view,arch_db:ai.mail_template_view_form
@@ -1851,8 +1853,8 @@ msgstr "Título"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
-"Para devolver un resultado al agente de IA, utiliza <code>ai['result'] = "
-"...</code>"
+"Para devolver un resultado al agente de IA, utiliza <code>ai['result'] = ..."
+"</code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids

@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* delivery_sendcloud
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: delivery_sendcloud
@@ -24,9 +25,11 @@ msgstr ""
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
 msgid ""
 "\n"
-"Additionally, some individual product(s) are too heavy for the heaviest available shipping method.\n"
+"Additionally, some individual product(s) are too heavy for the heaviest "
+"available shipping method.\n"
 "                             \n"
-"Divide the quantity of the following product(s) across your packages if possible or choose another carrier:\n"
+"Divide the quantity of the following product(s) across your packages if "
+"possible or choose another carrier:\n"
 "\t%s"
 msgstr ""
 "\n"
@@ -40,10 +43,12 @@ msgstr ""
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
 msgid ""
 "\n"
-"Try to distribute your products across your packages so that they weigh less than %(max_weight)s %(unit)s or choose another carrier."
+"Try to distribute your products across your packages so that they weigh less "
+"than %(max_weight)s %(unit)s or choose another carrier."
 msgstr ""
 "\n"
-"請嘗試將產品分裝至不同包裝內，使其重量低於 %(max_weight)s %(unit)s，或選擇其他承運商。"
+"請嘗試將產品分裝至不同包裝內，使其重量低於 %(max_weight)s %(unit)s，或選擇其"
+"他承運商。"
 
 #. module: delivery_sendcloud
 #. odoo-python
@@ -62,7 +67,9 @@ msgstr "%(partner_name)s 的電話為必需"
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> Do not forget to load your "
 "SendCloud shipping products for a valid configuration."
-msgstr "<i class=\"fa fa-exclamation-triangle\"/> 記得載入您的SendCloud運輸產品以獲得有效的配置。"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> 記得載入您的SendCloud運輸產品以獲得"
+"有效的配置。"
 
 #. module: delivery_sendcloud
 #: model_terms:ir.ui.view,arch_db:delivery_sendcloud.view_delivery_carrier_form
@@ -71,22 +78,25 @@ msgid ""
 "charges, your shippings are automatically <b>cancelled</b> after the label "
 "creation."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/> "
-"在測試環境中，為避免產生費用，您的發貨會在建立標籤後自動<b>取消</b>。"
+"<i class=\"fa fa-exclamation-triangle\"/> 在測試環境中，為避免產生費用，您的"
+"發貨會在建立標籤後自動<b>取消</b>。"
 
 #. module: delivery_sendcloud
 #: model_terms:ir.ui.view,arch_db:delivery_sendcloud.view_delivery_carrier_form
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> Only administrators can configure "
 "the public and private keys."
-msgstr "<i class=\"fa fa-exclamation-triangle\"/> 只限管理員才可配置公鑰及私鑰。"
+msgstr ""
+"<i class=\"fa fa-exclamation-triangle\"/> 只限管理員才可配置公鑰及私鑰。"
 
 #. module: delivery_sendcloud
 #: model_terms:ir.ui.view,arch_db:delivery_sendcloud.view_shipping_method_sendcloud
 msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping products depend on "
 "enabled carriers in your Sendcloud account."
-msgstr "<i class=\"fa fa-info-circle\"/> 可用的運輸產品取決於你在 Sendcloud 帳戶中已啟用的貨運商。"
+msgstr ""
+"<i class=\"fa fa-info-circle\"/> 可用的運輸產品取決於你在 Sendcloud 帳戶中已"
+"啟用的貨運商。"
 
 #. module: delivery_sendcloud
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_sendcloud_shipping_wizard__sendcloud_products_code
@@ -184,10 +194,13 @@ msgstr "交貨產品"
 #. module: delivery_sendcloud
 #: model:ir.model.fields,help:delivery_sendcloud.field_delivery_carrier__sendcloud_shipping_rules
 msgid ""
-"Depending your Sendcloud account type, through rules you can define the shipping method to use depending on different conditions like destination, weight, value, etc.\n"
+"Depending your Sendcloud account type, through rules you can define the "
+"shipping method to use depending on different conditions like destination, "
+"weight, value, etc.\n"
 "Rules can override shipping product selected in Odoo"
 msgstr ""
-"根據您的Sendcloud帳戶類型，您可以利用規則根據目的地、重量、價值等不同條件，定義要使用的發貨方式。\n"
+"根據您的Sendcloud帳戶類型，您可以利用規則根據目的地、重量、價值等不同條件，定"
+"義要使用的發貨方式。\n"
 "規則可覆蓋在 Odoo 中選擇的發貨產品"
 
 #. module: delivery_sendcloud
@@ -203,8 +216,8 @@ msgstr "顯示名稱"
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
 msgid ""
-"Each address line can only contain a maximum of 75 characters. You can split"
-" the address into multiple lines to try to avoid this limitation."
+"Each address line can only contain a maximum of 75 characters. You can split "
+"the address into multiple lines to try to avoid this limitation."
 msgstr "每行地址最多只能包含 75 個字符。你可將地址分成多行，以繞過此限制。"
 
 #. module: delivery_sendcloud
@@ -347,7 +360,8 @@ msgstr "請注意，產品\"%s\"的單位重量超過了運輸方式允許的最
 msgid ""
 "Note that this price is for %s packages since the order weight is more than "
 "the maximum weight allowed by the shipping method."
-msgstr "請注意，此價錢是適用於 %s 個貨件，因為訂單重量超過了運送方式允許的最大重量。"
+msgstr ""
+"請注意，此價錢是適用於 %s 個貨件，因為訂單重量超過了運送方式允許的最大重量。"
 
 #. module: delivery_sendcloud
 #: model_terms:ir.ui.view,arch_db:delivery_sendcloud.view_delivery_carrier_form
@@ -371,9 +385,11 @@ msgstr "其他功能"
 #: code:addons/delivery_sendcloud/static/src/views/sendcloud_product_selection_widget.xml:0
 msgid ""
 "Please check SendCloud return product documentation before selecting return "
-"product. For some products, you can be charged for return labels printed but"
-" not used."
-msgstr "選擇退貨產品之前，請檢查 SendCloud 退貨產品使用說明。對部份產品而言，你可能需要為已列印但未使用的退貨標籤付費。"
+"product. For some products, you can be charged for return labels printed but "
+"not used."
+msgstr ""
+"選擇退貨產品之前，請檢查 SendCloud 退貨產品使用說明。對部份產品而言，你可能需"
+"要為已列印但未使用的退貨標籤付費。"
 
 #. module: delivery_sendcloud
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_delivery_carrier__delivery_type
@@ -474,8 +490,7 @@ msgstr "Sendcloud運輸產品"
 #. module: delivery_sendcloud
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
-msgid ""
-"Sendcloud is not responding. Check your credentials and/or retry later."
+msgid "Sendcloud is not responding. Check your credentials and/or retry later."
 msgstr "Sendcloud 沒有回應。請檢查你的憑證及/或稍後再試。"
 
 #. module: delivery_sendcloud
@@ -515,7 +530,9 @@ msgstr "運輸產品"
 msgid ""
 "Some carriers require package dimensions, you can define these in a package "
 "type that you set as default"
-msgstr "部份貨運商需要貨件尺寸資料。你可在一個你設為預設選項的貨件類型內，定義這些尺寸"
+msgstr ""
+"部份貨運商需要貨件尺寸資料。你可在一個你設為預設選項的貨件類型內，定義這些尺"
+"寸"
 
 #. module: delivery_sendcloud
 #. odoo-python
@@ -573,13 +590,15 @@ msgid ""
 "delivery partner via the delivery order and make sure the parent of the "
 "delivery partner is the partner you want to ship to."
 msgstr ""
-"客戶的送貨地址已從取貨地點移除，但 Sendcloud 需要此資訊。請透過送貨單前往送貨合作夥伴資料頁，並確保送貨合作夥伴的母項是你要送貨往的合作夥伴。"
+"客戶的送貨地址已從取貨地點移除，但 Sendcloud 需要此資訊。請透過送貨單前往送貨"
+"合作夥伴資料頁，並確保送貨合作夥伴的母項是你要送貨往的合作夥伴。"
 
 #. module: delivery_sendcloud
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "由於以下產品缺漏重量資料，因此未能估算預計運費：\n"
@@ -605,19 +624,21 @@ msgstr "轉移的總重量太重，超越可用運輸方式的最高承運重量
 msgid ""
 "There are no shipping products available, please update the 'Shipping From' "
 "field or activate suitable carriers in your sendcloud account"
-msgstr "沒有可用的運輸產品，請更新「發貨人」欄位，或在您的 sendcloud帳戶中，啟動合適的貨運商"
+msgstr ""
+"沒有可用的運輸產品，請更新「發貨人」欄位，或在您的 sendcloud帳戶中，啟動合適"
+"的貨運商"
 
 #. module: delivery_sendcloud
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/delivery_carrier.py:0
 msgid ""
-"There is no rate available for this order with the selected shipping "
-"product."
+"There is no rate available for this order with the selected shipping product."
 msgstr "對於已選取的運輸產品，沒有收費率可用於此訂單。"
 
 #. module: delivery_sendcloud
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
+#: code:addons/delivery_sendcloud/tests/test_delivery_sendcloud.py:0
 msgid ""
 "There is no shipping method available for this order with the selected "
 "carrier"
@@ -637,7 +658,8 @@ msgstr "所選取貨運商未有提供此提貨的運輸方式"
 msgid ""
 "There's no method with matching weight range for packages :\n"
 "%s\n"
-"You can either choose another carrier, change your filters or redefine the content of your package(s)."
+"You can either choose another carrier, change your filters or redefine the "
+"content of your package(s)."
 msgstr ""
 "沒有符合貨件重量範圍的方法：\n"
 "%s\n"

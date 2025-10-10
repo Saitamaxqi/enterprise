@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:13+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-07-01 12:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -23,8 +24,8 @@ msgstr ""
 #. module: website_event_track_social
 #: model:ir.model.fields,help:website_event_track_social.field_event_track__push_reminder
 msgid ""
-"Check this if you want to send a push notification reminder to everyone that"
-" has favorited this track."
+"Check this if you want to send a push notification reminder to everyone that "
+"has favorited this track."
 msgstr ""
 
 #. module: website_event_track_social

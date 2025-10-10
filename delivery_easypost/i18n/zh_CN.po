@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:22+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -36,8 +36,10 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
 "<b>创建账户后，转到仪表板，单击用户名旁边的箭头，以配置您的承运商账户. </b>\n"
@@ -46,8 +48,8 @@ msgstr ""
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_承运商_type', '!=', 'easypost')]}\">英寸</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
@@ -128,14 +130,19 @@ msgid "Delivery Carrier"
 msgstr "发货承运商"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "显示名称"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
 msgstr "不要忘记加载 Easypost 运营商账户，以便进行有效配置。"
 
 #. module: delivery_easypost
@@ -223,8 +230,11 @@ msgid "Go to"
 msgstr "转到"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -246,9 +256,12 @@ msgstr "保险费率 (USD)"
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "看来 Easypost 不提供此订单的货运服务。                "
-"我们建议您尝试其他包裹类型或服务级别。"
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
+msgstr ""
+"看来 Easypost 不提供此订单的货运服务。                我们建议您尝试其他包裹"
+"类型或服务级别。"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -405,14 +418,17 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "由于缺少产品重量，因此无法计算估计价格。"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "因为缺少以下产品的重量，所以无法计算出估计的运输价格。\n"
@@ -421,7 +437,9 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
 msgstr "您所选的服务级别中没有适合您的套餐之一的费率。请选择其他服务级别。"
 
 #. module: delivery_easypost
@@ -456,9 +474,12 @@ msgstr "您不能取消 Easypost 运输."
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "您的 Easypost 帐户未链接任何运营商。                请连接 "
-"Easypost，将您的账户与运营商链接，然后重试。"
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"您的 Easypost 帐户未链接任何运营商。                请连接 Easypost，将您的账"
+"户与运营商链接，然后重试。"
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -469,3 +490,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "创建一个新的账号："
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_承运商_type', '!=', 'easypost')]}"
+#~ "\">英寸</span>"

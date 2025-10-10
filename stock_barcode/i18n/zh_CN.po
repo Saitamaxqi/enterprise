@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:26+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -51,8 +51,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap Location\""
-"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
+"Location\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -183,8 +183,9 @@ msgstr "即使尚未扫描，也允许验证拣货，即立即进行传输"
 msgid ""
 "An error occured during parsing of element_string: AI code %(ai_code)s is "
 "missing for scheme %(scheme_name)s"
-msgstr "解析 element_string 时发生错误：方案缺漏 AI 代码 "
-"%(ai_code)s。方案：%(scheme_name)s"
+msgstr ""
+"解析 element_string 时发生错误：方案缺漏 AI 代码 %(ai_code)s。方案：%"
+"(scheme_name)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -192,8 +193,9 @@ msgstr "解析 element_string 时发生错误：方案缺漏 AI 代码 "
 msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
-msgstr "字段 “%(field_name)s” 发生错误：在 element_string 中找不到对应的 AI "
-"“%(ai_code)s”。"
+msgstr ""
+"字段 “%(field_name)s” 发生错误：在 element_string 中找不到对应的 AI “%"
+"(ai_code)s”。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -202,8 +204,8 @@ msgid ""
 "An error occured: value of company_prefix_length (%(company_prefix_length)s) "
 "must be between 6 and 12 inclusive."
 msgstr ""
-"发生错误：公司字首长度值 company_prefix_length（%(company_prefix_length)s）"
-"必须介乎 6 至 12 之间（包括该两个数值）。"
+"发生错误：公司字首长度值 company_prefix_length（%(company_prefix_length)s）必"
+"须介乎 6 至 12 之间（包括该两个数值）。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -539,7 +541,8 @@ msgstr "显示保留批次/序列号。未生效时，拣选者可随意拣选�
 msgid ""
 "Do you want to permanently remove this message ? It won't appear anymore, so "
 "make sure you don't need the barcodes sheet or you have a copy."
-msgstr "您想永久删除这条信息吗？它不会再出现了，所以请确保您不需要条形码表，或者您有"
+msgstr ""
+"您想永久删除这条信息吗？它不会再出现了，所以请确保您不需要条形码表，或者您有"
 "一份副本。"
 
 #. module: stock_barcode
@@ -604,7 +607,8 @@ msgstr "空的移动计数"
 msgid ""
 "Error: The product barcode is not a valid Global Trade Item Number, we can't "
 "generate an Electronic Product Code for it."
-msgstr "错误：产品条形码不是有效的全球贸易项目编号，我们无法为其生成电子产品代码。"
+msgstr ""
+"错误：产品条形码不是有效的全球贸易项目编号，我们无法为其生成电子产品代码。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -796,7 +800,8 @@ msgstr "字元 word_pad_char「%(word_pad_char)s」无效。请使用「0」或�
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid word_pad_side '%(word_pad_side)s'. Use 'left' or 'right'."
-msgstr "Invalid word_pad_side '%(word_pad_side)s'。请使用 '左left' 或 'righr（手）"
+msgstr ""
+"Invalid word_pad_side '%(word_pad_side)s'。请使用 '左left' 或 'righr（手）"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_location
@@ -1774,7 +1779,8 @@ msgstr "库存包裹类型"
 msgid ""
 "Technical field indicating if type should be used in barcode app and used to "
 "control visibility in the related UI."
-msgstr "技术字段，表示是否应在条形码应用程序中使用该类型，并用于控制是否在相关用户界"
+msgstr ""
+"技术字段，表示是否应在条形码应用程序中使用该类型，并用于控制是否在相关用户界"
 "面中显示。"
 
 #. module: stock_barcode
@@ -1782,7 +1788,8 @@ msgstr "技术字段，表示是否应在条形码应用程序中使用该类型
 msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
 "should be displayed, to support combined groups/invisible complexity."
-msgstr "技术字段，用于计算是否显示 “最终验证” 组别，以支持组合群组/不可见的复杂性。"
+msgstr ""
+"技术字段，用于计算是否显示 “最终验证” 组别，以支持组合群组/不可见的复杂性。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1876,9 +1883,9 @@ msgid ""
 "This regex is used in the Barcode application to separate individual "
 "barcodes when an aggregate barcode (i.e. single barcode consisting of "
 "multiple barcode encodings) is scanned."
-msgstr "此 regex "
-"表达式在条形码应用程序中，用于在扫描聚合条形码时（即由多组条形码编码组成的单"
-"一条形码），分隔开各个条码。"
+msgstr ""
+"此 regex 表达式在条形码应用程序中，用于在扫描聚合条形码时（即由多组条形码编码"
+"组成的单一条形码），分隔开各个条码。"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1891,7 +1898,8 @@ msgstr "该序列号已被使用。"
 msgid ""
 "Time before processing a batch. Used to group communication to the server "
 "and improve global performance at the cost of reactivity."
-msgstr "处理批次前的时间。用于对服务器的通信进行分组，以提高整体性能，但会牺牲反应速"
+msgstr ""
+"处理批次前的时间。用于对服务器的通信进行分组，以提高整体性能，但会牺牲反应速"
 "度。"
 
 #. module: stock_barcode
@@ -2011,8 +2019,8 @@ msgid ""
 "(locationName)s but this product isn't reserved in this location.\n"
 "Scan the current location to confirm that."
 msgstr ""
-"您准备从位置 %(locationName)s 提取产品 "
-"%(productName)s，但该产品未在此位置保留。\n"
+"您准备从位置 %(locationName)s 提取产品 %(productName)s，但该产品未在此位置保"
+"留。\n"
 "扫描当前位置确认。"
 
 #. module: stock_barcode

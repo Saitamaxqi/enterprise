@@ -26,7 +26,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
@@ -1642,7 +1642,8 @@ msgstr "Valors per defecte"
 #: model:ir.model.fields,help:documents.field_documents_document__deletion_delay
 #: model:ir.model.fields,help:documents.field_res_config_settings__deletion_delay
 msgid "Delay after permanent deletion of the document in the trash (days)"
-msgstr "Termini després de moure permanentment el document a la paperera (dies)"
+msgstr ""
+"Termini després de moure permanentment el document a la paperera (dies)"
 
 #. module: documents
 #. odoo-javascript
@@ -2487,7 +2488,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "Impossible to delete folders used by other applications."
-msgstr "No és possible eliminar carpetes que s'utilitzin en altres aplicacions."
+msgstr ""
+"No és possible eliminar carpetes que s'utilitzin en altres aplicacions."
 
 #. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_kanban
@@ -4149,7 +4151,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following documents/shortcuts have a type mismatch: \n"
-msgstr "Els següents documents/dreceres presenten una discrepància de tipus: \n"
+msgstr ""
+"Els següents documents/dreceres presenten una discrepància de tipus: \n"
 
 #. module: documents
 #. odoo-python
@@ -4559,7 +4562,8 @@ msgstr "No tens permís per (des)arxivar documents."
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You are not allowed to change ownerships of documents you do not own."
-msgstr "No tens permís per canviar la propietat dels documents que no són teus."
+msgstr ""
+"No tens permís per canviar la propietat dels documents que no són teus."
 
 #. module: documents
 #. odoo-python
@@ -4660,7 +4664,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You cannot change the owner of documents you do not own."
-msgstr "No tens permís per canviar la propietat dels documents que no són teus."
+msgstr ""
+"No tens permís per canviar la propietat dels documents que no són teus."
 
 #. module: documents
 #. odoo-python
@@ -4708,7 +4713,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "You do not have sufficient access rights to delete these documents."
-msgstr "No tens els permisos d'accés suficients per eliminar aquests documents."
+msgstr ""
+"No tens els permisos d'accés suficients per eliminar aquests documents."
 
 #. module: documents
 #. odoo-javascript

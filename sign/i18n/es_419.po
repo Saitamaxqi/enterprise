@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-30 18:40+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"PO-Revision-Date: 2025-10-09 21:12+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/sign/es_419/>\n"
 "Language: es_419\n"
@@ -213,7 +213,7 @@ msgstr "<b>Documentos:</b>"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
-msgstr ""
+msgstr "<b>Arrastra y suelta el campo \"Firma\"</b> al final del documento."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -367,8 +367,8 @@ msgid ""
 "<span class=\"fw-bold\">Cryptographic signature<i class=\"fa fa-building-o "
 "ms-1\"/></span>"
 msgstr ""
-"<span class=\"fw-bold\">Firma criptográfica<i class=\"fa fa-building-o ms-1\""
-"/></span>"
+"<span class=\"fw-bold\">Firma criptográfica<i class=\"fa fa-building-o "
+"ms-1\"/></span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -399,7 +399,8 @@ msgstr "<span class=\"text-muted\">No disponible</span>"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "<span class=\"text-nowrap\">Add certificate on each page</span>"
-msgstr "<span class=\"text-nowrap\">Agrega un certificado en cada página</span>"
+msgstr ""
+"<span class=\"text-nowrap\">Agrega un certificado en cada página</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -410,8 +411,8 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span groups=\"base.group_system\">\n"
-"                                    Certifica tus documentos con el archivo "
-".pfx o .p12 proporcionado.\n"
+"                                    Certifica tus documentos con el "
+"archivo .pfx o .p12 proporcionado.\n"
 "                                </span>"
 
 #. module: sign
@@ -2459,6 +2460,10 @@ msgid ""
 "44654 Millersburg Ohio United States\n"
 "+1 555-555-5556"
 msgstr ""
+"Mi empresa de EE. UU.\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio United States\n"
+"+1 555-555-5556"
 
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
@@ -2486,7 +2491,7 @@ msgstr "Nombre del archivo"
 #. odoo-javascript
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "Nearly there, keep going!"
-msgstr ""
+msgstr "Ya casi acaba, ¡ánimo!"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__need_my_signature
@@ -3707,7 +3712,8 @@ msgstr "Documentos firmados"
 msgid ""
 "Signed documents cannot be deleted for legal reasons. Please archive them "
 "instead."
-msgstr "No puedes eliminar documentos firmados por motivos legales, archívalos."
+msgstr ""
+"No puedes eliminar documentos firmados por motivos legales, archívalos."
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item__signing_date
@@ -4266,6 +4272,8 @@ msgid ""
 "The template model %(t_name)s is incompatible with the signature fields %"
 "(model_name)s."
 msgstr ""
+"El modelo de la plantilla %(t_name)s está incompleta con campos de firma "
+"%(model_name)s."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report

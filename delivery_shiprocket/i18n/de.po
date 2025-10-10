@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 21:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
@@ -36,8 +36,8 @@ msgstr ""
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Fill the details and Click on Save Channel &amp; Test Connection "
-"button.</b>"
+"<b>Fill the details and Click on Save Channel &amp; Test Connection button.</"
+"b>"
 msgstr ""
 "<b>Füllen Sie die Details aus und klicken Sie auf die Schaltflächen „Kanal "
 "speichern“ &amp; „Verbindung testen“.</b>"
@@ -48,9 +48,9 @@ msgid ""
 "<b>In Odoo configuration click on <i class=\"fa fa-refresh oe_inline\"/> "
 "icon near Shiprocket Channel to sync newly created channels.</b>"
 msgstr ""
-"<b>Klicken Sie in der Odoo-Konfiguration auf das Symbol <i class="
-"\"fa fa-refresh oe_inline\"/> neben dem Shiprocket-Kanal, um neu erstellte "
-"Kanäle zu synchronisieren.</b>"
+"<b>Klicken Sie in der Odoo-Konfiguration auf das Symbol <i class=\"fa fa-"
+"refresh oe_inline\"/> neben dem Shiprocket-Kanal, um neu erstellte Kanäle zu "
+"synchronisieren.</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -60,8 +60,10 @@ msgstr "<b>Klicken Sie jetzt auf „Für MANUELL hinzufügen“</b>"
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </b>\n"
-"                                <b>You can add new API User from the right side of the page.</b>\n"
+"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </"
+"b>\n"
+"                                <b>You can add new API User from the right "
+"side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>Sobald Ihr Konto erstellt ist, gehen Sie zu Einstellungen &gt; API-"
@@ -73,15 +75,15 @@ msgstr ""
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid "<b>To Create a channel, Go to Shiprocket Channels</b>"
-msgstr "<b>Um einen Kanal zu erstellen, gehen Sie zu den Shiprocket-Kanälen</b>"
+msgstr ""
+"<b>Um einen Kanal zu erstellen, gehen Sie zu den Shiprocket-Kanälen</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> In test environment, to avoid "
 "charges, your shippings are automatically <b>cancelled</b> after the label "
-"creation. The amount of cancelled shipment will be returned in next 3-4 "
-"days."
+"creation. The amount of cancelled shipment will be returned in next 3-4 days."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle\"/> In der Testumgebung werden Ihre "
 "Sendungen nach der Erstellung des Etiketts automatisch <b>storniert</b>, um "
@@ -91,8 +93,8 @@ msgstr ""
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid ""
-"A manifest is a document that is required by some carriers to streamline the"
-" pickup process.particularly when shipping out a high-volume of ecommerce "
+"A manifest is a document that is required by some carriers to streamline the "
+"pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
 msgstr ""
 "Eine Ladeliste ist ein Dokument, das von einigen Zustellern verlangt wird, "
@@ -202,8 +204,8 @@ msgstr "API-Benutzer erstellen"
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid ""
-"Create a pickup request for your order shipment using Validate button of the"
-" Delivery Order."
+"Create a pickup request for your order shipment using Validate button of the "
+"Delivery Order."
 msgstr ""
 "Erstellen Sie über die Schaltfläche „Validieren“ des Lieferauftrags einen "
 "Kommissionierauftrag für Ihre Auftragssendung."
@@ -300,8 +302,8 @@ msgstr ""
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid ""
-"Get all the integrated channels from your Shiprocket account.This channel id"
-" is used to select or specify a custom channel at the time of Shiprocket "
+"Get all the integrated channels from your Shiprocket account.This channel id "
+"is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
 msgstr ""
 "Erhalten Sie alle integrierten Kanäle von Ihrem Shiprocket-Konto. Diese "
@@ -341,8 +343,8 @@ msgstr "ID"
 #: code:addons/delivery_shiprocket/models/delivery_carrier.py:0
 msgid "Label generated for %(courier)s with Tracking Number: %(tracking_ref)s"
 msgstr ""
-"Etikett generiert für %(courier)s mit Sendungsverfolgungsnummer: "
-"%(tracking_ref)s"
+"Etikett generiert für %(courier)s mit Sendungsverfolgungsnummer: %"
+"(tracking_ref)s"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,field_description:delivery_shiprocket.field_shiprocket_channel__write_uid

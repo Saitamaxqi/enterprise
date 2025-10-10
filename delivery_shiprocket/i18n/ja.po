@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -29,15 +29,17 @@ msgstr "<b>新規チャネルを追加</b>"
 msgid ""
 "<b>Copy your API User's Email and Password and paste into Shipping method's "
 "configuration.</b>"
-msgstr "<b>APIユーザのメールアドレスとパスワードをコピーし、Shippingメソッドの設定に"
+msgstr ""
+"<b>APIユーザのメールアドレスとパスワードをコピーし、Shippingメソッドの設定に"
 "貼り付けます。</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Fill the details and Click on Save Channel &amp; Test Connection "
-"button.</b>"
-msgstr "<b>1詳細を入力し、チャネルを保存 &amp; 接続をテストボタンをクリックします</b>"
+"<b>Fill the details and Click on Save Channel &amp; Test Connection button.</"
+"b>"
+msgstr ""
+"<b>1詳細を入力し、チャネルを保存 &amp; 接続をテストボタンをクリックします</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -45,9 +47,8 @@ msgid ""
 "<b>In Odoo configuration click on <i class=\"fa fa-refresh oe_inline\"/> "
 "icon near Shiprocket Channel to sync newly created channels.</b>"
 msgstr ""
-"<b>Odoo設定で<i class=\"fa fa-refresh oe_inline\""
-"/>Shiprocketチャネル近くのアイコンをクリックして、作成されたチャネルと同期し"
-"ます</b>"
+"<b>Odoo設定で<i class=\"fa fa-refresh oe_inline\"/>Shiprocketチャネル近くのア"
+"イコンをクリックして、作成されたチャネルと同期します</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -57,13 +58,15 @@ msgstr "<b>マニュアル用に追加をクリックしましょう</b>"
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </b>\n"
-"                                <b>You can add new API User from the right side of the page.</b>\n"
+"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </"
+"b>\n"
+"                                <b>You can add new API User from the right "
+"side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>アカウントが作成されたら、 設定 &gt; API &gt; に行き、設定します</b>\n"
-"                                "
-"<b>ページの右側から新規APIユーザを追加できます。</b>\n"
+"                                <b>ページの右側から新規APIユーザを追加できま"
+"す。</b>\n"
 "                                <br/>"
 
 #. module: delivery_shiprocket
@@ -76,20 +79,20 @@ msgstr "<b>チャネルを作成するには、Shiprocketチャネルに移動�
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> In test environment, to avoid "
 "charges, your shippings are automatically <b>cancelled</b> after the label "
-"creation. The amount of cancelled shipment will be returned in next 3-4 "
-"days."
+"creation. The amount of cancelled shipment will be returned in next 3-4 days."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/> "
-"テスト環境では、課金を避けるため、配送はラベル作成後に自動的に<b>キャンセル</"
-"b>されます。キャンセル済の配送金額は3-4日後に返金されます。"
+"<i class=\"fa fa-exclamation-triangle\"/> テスト環境では、課金を避けるため、"
+"配送はラベル作成後に自動的に<b>キャンセル</b>されます。キャンセル済の配送金額"
+"は3-4日後に返金されます。"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid ""
-"A manifest is a document that is required by some carriers to streamline the"
-" pickup process.particularly when shipping out a high-volume of ecommerce "
+"A manifest is a document that is required by some carriers to streamline the "
+"pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
-msgstr "マニフェストは、特に大量のEコマース注文を発送する場合、集荷プロセスを合理化す"
+msgstr ""
+"マニフェストは、特に大量のEコマース注文を発送する場合、集荷プロセスを合理化す"
 "るために一部の配送業者が要求するドキュメントです。"
 
 #. module: delivery_shiprocket
@@ -194,8 +197,8 @@ msgstr "APIユーザを作成"
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid ""
-"Create a pickup request for your order shipment using Validate button of the"
-" Delivery Order."
+"Create a pickup request for your order shipment using Validate button of the "
+"Delivery Order."
 msgstr "配送オーダの検証ボタンを使用して、オーダ配送の集荷依頼を作成します。"
 
 #. module: delivery_shiprocket
@@ -248,8 +251,9 @@ msgstr "Shiprocketアカウント(API)のユーザ名を入力して下さい。
 msgid ""
 "Eway Bill number is required to ship an order if order amount is more than "
 "50,000 INR."
-msgstr "オーダ金額が50,000インドルピーを超える場合は、オーダの配送にEway "
-"Bill番号が必要です。"
+msgstr ""
+"オーダ金額が50,000インドルピーを超える場合は、オーダの配送にEway Bill番号が必"
+"要です。"
 
 #. module: delivery_shiprocket
 #. odoo-python
@@ -278,16 +282,18 @@ msgstr "Shiprocket 認証情報を使用してアクセストークンを作成"
 msgid ""
 "Get all the integrated Couriers from your Shiprocket account.Based on the "
 "courier selections the rate will be fetched from the Shiprocket."
-msgstr "Shiprocketアカウントから統合された全ての配送業者を取得します。配送業者の選択"
+msgstr ""
+"Shiprocketアカウントから統合された全ての配送業者を取得します。配送業者の選択"
 "に基づいて、料金はShiprocketから獲得されます。"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid ""
-"Get all the integrated channels from your Shiprocket account.This channel id"
-" is used to select or specify a custom channel at the time of Shiprocket "
+"Get all the integrated channels from your Shiprocket account.This channel id "
+"is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
-msgstr "このチャネルIDは、Shiprocketオーダ作成時にカスタムチャネルを選択または指定す"
+msgstr ""
+"このチャネルIDは、Shiprocketオーダ作成時にカスタムチャネルを選択または指定す"
 "るために使用されます。"
 
 #. module: delivery_shiprocket
@@ -410,7 +416,8 @@ msgstr "レート入手には、販売オーダまたはピッキングが必要
 msgid ""
 "Same order is available in Shiprocket so label provided is the copy of "
 "existing one."
-msgstr "同じオーダがShiprocketでも可能なので、提供されるラベルは既存のもののコピーで"
+msgstr ""
+"同じオーダがShiprocketでも可能なので、提供されるラベルは既存のもののコピーで"
 "す。"
 
 #. module: delivery_shiprocket
@@ -543,7 +550,8 @@ msgstr "Shiprocket プロバイダは、着払いのみを使用するように�
 msgid ""
 "Shiprocket requires package dimensions for getting accurate rate, you can "
 "define these in a package type that you set as default"
-msgstr "Shiprocketは正確なレート獲得のために梱包の寸法が必要です。デフォルトとして設"
+msgstr ""
+"Shiprocketは正確なレート獲得のために梱包の寸法が必要です。デフォルトとして設"
 "定した梱包タイプで定義できます。"
 
 #. module: delivery_shiprocket
@@ -551,7 +559,8 @@ msgstr "Shiprocketは正確なレート獲得のために梱包の寸法が必�
 msgid ""
 "Shiprocket token expires in 10 days. Token will be auto generate based on "
 "this token expiry date."
-msgstr "Shiprocketトークンの有効期限は10日です。トークンはこのトークン有効期限に基づ"
+msgstr ""
+"Shiprocketトークンの有効期限は10日です。トークンはこのトークン有効期限に基づ"
 "いて自動生成されます。"
 
 #. module: delivery_shiprocket
@@ -569,7 +578,8 @@ msgstr "在庫梱包タイプ"
 msgid ""
 "Store shiprocket order(s) in a (+) separated string, used in cancelling the "
 "order."
-msgstr "Shiprocketオーダを(+)別の文字列に保管し、オーダをキャンセルするために使用され"
+msgstr ""
+"Shiprocketオーダを(+)別の文字列に保管し、オーダをキャンセルするために使用され"
 "ます。"
 
 #. module: delivery_shiprocket

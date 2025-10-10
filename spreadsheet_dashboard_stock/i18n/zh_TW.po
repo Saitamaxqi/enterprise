@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -61,10 +61,15 @@ msgstr "平均延遲"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Avg Cycle Time"
 msgstr "平均流轉周期時間"
+
+#. module: spreadsheet_dashboard_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
+msgid "Avg Lead Time"
+msgstr ""
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -77,12 +82,6 @@ msgstr "貝果"
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "BlueWave Solar"
 msgstr "BlueWave 太陽能"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Bottom"
-msgstr "底部"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -101,12 +100,6 @@ msgstr "類別"
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 msgid "Contact"
 msgstr "聯絡人"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Count"
-msgstr "個數"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -202,18 +195,6 @@ msgstr "抽屜"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Dynamic fields for filters fill rate"
-msgstr "動態欄位（填補速度篩選器）"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Dynamic fields for on time"
-msgstr "動態欄位（準時）"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Elisabeth Wild"
 msgstr "Elisabeth Wild"
@@ -227,21 +208,9 @@ msgstr "填補速度"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Fill rate sort by "
-msgstr "填補速度排序依據 "
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Fill rate sort by Top Demand"
 msgstr "填補速度，按最高需求排序"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Filter"
-msgstr "篩選"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -317,7 +286,6 @@ msgstr "製造"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Moves lines count by operation"
 msgstr "移動資料行數目，按操作分類"
@@ -327,6 +295,12 @@ msgstr "移動資料行數目，按操作分類"
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Multigrain Bread"
 msgstr "多穀麵包"
+
+#. module: spreadsheet_dashboard_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
+msgid "Number of Operations by Operation Type"
+msgstr ""
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -343,12 +317,11 @@ msgstr "辦公室椅 黑色"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "On Time"
-msgstr "準時"
+msgid "On Time Operations"
+msgstr ""
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "On Time delivery"
 msgstr "準時送貨"
@@ -356,27 +329,9 @@ msgstr "準時送貨"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "On time"
-msgstr "準時"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "On time deliveries"
 msgstr "準時送貨"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "On time rate"
-msgstr "準時率"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "On time rate sort by "
-msgstr "準時率排序依據 "
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -500,12 +455,6 @@ msgstr "分揀"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Pivot to choose"
-msgstr "可選樞紐"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "PoS Orders"
 msgstr "POS 訂單"
@@ -598,12 +547,6 @@ msgstr "Rivian"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Row"
-msgstr "橫行"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Scheduled on"
@@ -611,21 +554,9 @@ msgstr "已排程"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Selected filter"
-msgstr "已選取篩選器"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Slack Technologies"
 msgstr "Slack Technologies"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Sort graph by"
-msgstr "圖表排序依據"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
@@ -648,31 +579,12 @@ msgstr "測試批次產品"
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Top"
-msgstr "頂部"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Top/Bottoms values"
-msgstr "頂部/底部值"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
-msgid "Total count"
-msgstr "總數目"
-
-#. module: spreadsheet_dashboard_stock
-#. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "Total orders"
 msgstr "訂單總數"
 
 #. module: spreadsheet_dashboard_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_stock/data/files/warehouse_operations_sample_dashboard.json:0
 msgid "Transfer"
@@ -747,3 +659,54 @@ msgstr "[FURN_8855] 抽屜"
 #: code:addons/spreadsheet_dashboard_stock/data/files/operation_analysis_sample_dashboard.json:0
 msgid "last period"
 msgstr "上個時段"
+
+#~ msgid "Bottom"
+#~ msgstr "底部"
+
+#~ msgid "Count"
+#~ msgstr "個數"
+
+#~ msgid "Dynamic fields for filters fill rate"
+#~ msgstr "動態欄位（填補速度篩選器）"
+
+#~ msgid "Dynamic fields for on time"
+#~ msgstr "動態欄位（準時）"
+
+#~ msgid "Fill rate sort by "
+#~ msgstr "填補速度排序依據 "
+
+#~ msgid "Filter"
+#~ msgstr "篩選"
+
+#~ msgid "On Time"
+#~ msgstr "準時"
+
+#~ msgid "On time"
+#~ msgstr "準時"
+
+#~ msgid "On time rate"
+#~ msgstr "準時率"
+
+#~ msgid "On time rate sort by "
+#~ msgstr "準時率排序依據 "
+
+#~ msgid "Pivot to choose"
+#~ msgstr "可選樞紐"
+
+#~ msgid "Row"
+#~ msgstr "橫行"
+
+#~ msgid "Selected filter"
+#~ msgstr "已選取篩選器"
+
+#~ msgid "Sort graph by"
+#~ msgstr "圖表排序依據"
+
+#~ msgid "Top"
+#~ msgstr "頂部"
+
+#~ msgid "Top/Bottoms values"
+#~ msgstr "頂部/底部值"
+
+#~ msgid "Total count"
+#~ msgstr "總數目"

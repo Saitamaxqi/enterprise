@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -77,6 +77,21 @@ msgstr ""
 "    <br/><br/>"
 
 #. module: helpdesk
+#: model:helpdesk.sla,name:helpdesk.helpdesk_sla_1
+msgid "2 days to start"
+msgstr ""
+
+#. module: helpdesk
+#: model:helpdesk.sla,name:helpdesk.helpdesk_sla_2
+msgid "7 days to finish"
+msgstr ""
+
+#. module: helpdesk
+#: model:helpdesk.sla,name:helpdesk.helpdesk_sla_3
+msgid "8 hours to finish"
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
 msgid "<b class=\"tip_title\">Tip: Create tickets from incoming emails</b>"
 msgstr "<b class=\"tip_title\">提示：利用收到的電郵直接建立支援請求</b>"
@@ -91,32 +106,44 @@ msgstr "<b>拖放</b>卡片，以改變支援請求的階段。"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid ""
-"<b>Log internal notes</b> and use @<b>mentions</b> to notify your "
-"colleagues."
+"<b>Log internal notes</b> and use @<b>mentions</b> to notify your colleagues."
 msgstr "<b>記錄內部備註</b>，使用 @<b>提及</b> 以通知你的同事。"
 
 #. module: helpdesk
 #: model:mail.template,body_html:helpdesk.solved_ticket_request_email_template
 msgid ""
 "<div>\n"
-"        Dear <t t-out=\"object.sudo().partner_id.name or 'Madam/Sir'\">Madam/Sir</t>,<br/><br/>\n"
-"        We would like to inform you that we have closed your ticket (reference <t t-out=\"object.id or ''\">15</t>). \n"
-"        We trust that the services provided have met your expectations and that you have found a satisfactory resolution to your issue.<br/><br/>\n"
-"        However, if you have any further questions or comments, please do not hesitate to reply to this email to re-open your ticket. \n"
-"        Our team is always here to help you and we will be happy to assist you with any further concerns you may have.<br/><br/>\n"
-"        Thank you for choosing our services and for your cooperation throughout this process. We truly value your business and appreciate the opportunity to serve you.<br/><br/>\n"
+"        Dear <t t-out=\"object.sudo().partner_id.name or 'Madam/Sir'\">Madam/"
+"Sir</t>,<br/><br/>\n"
+"        We would like to inform you that we have closed your ticket "
+"(reference <t t-out=\"object.id or ''\">15</t>). \n"
+"        We trust that the services provided have met your expectations and "
+"that you have found a satisfactory resolution to your issue.<br/><br/>\n"
+"        However, if you have any further questions or comments, please do "
+"not hesitate to reply to this email to re-open your ticket. \n"
+"        Our team is always here to help you and we will be happy to assist "
+"you with any further concerns you may have.<br/><br/>\n"
+"        Thank you for choosing our services and for your cooperation "
+"throughout this process. We truly value your business and appreciate the "
+"opportunity to serve you.<br/><br/>\n"
 "        Kind regards,<br/><br/>\n"
 "        <t t-out=\"object.team_id.name or 'Helpdesk'\">Helpdesk</t> Team.\n"
 "    </div>\n"
 "        "
 msgstr ""
 "<div>\n"
-"        <t t-out=\"object.sudo().partner_id.name or '女士 / 先生'\">女士 / 先生</t> 你好！<br/><br/>\n"
-"        謹此通知，我們已關閉你的技術支援請求（參考編號： <t t-out=\"object.id or ''\">15</t>）。\n"
-"        相信我們的服務達到你的期望，以及你已找到滿意的問題解決方案。<br/><br/>\n"
-"        不過，如果你仍有任何其他問題或意見，請隨時回覆此電郵，以重新打開你的技術支援請求。\n"
-"        我們的團隊隨時準備為你提供協助，也很樂意為你解決任何其他問題。<br/><br/>\n"
-"        感謝你選擇我們的服務，並在整個過程中給予合作。我們真正重視你的業務，榮幸有機會為你服務。<br/><br/>\n"
+"        <t t-out=\"object.sudo().partner_id.name or '女士 / 先生'\">女士 / 先"
+"生</t> 你好！<br/><br/>\n"
+"        謹此通知，我們已關閉你的技術支援請求（參考編號： <t t-"
+"out=\"object.id or ''\">15</t>）。\n"
+"        相信我們的服務達到你的期望，以及你已找到滿意的問題解決方案。<br/><br/"
+">\n"
+"        不過，如果你仍有任何其他問題或意見，請隨時回覆此電郵，以重新打開你的"
+"技術支援請求。\n"
+"        我們的團隊隨時準備為你提供協助，也很樂意為你解決任何其他問題。<br/"
+"><br/>\n"
+"        感謝你選擇我們的服務，並在整個過程中給予合作。我們真正重視你的業務，"
+"榮幸有機會為你服務。<br/><br/>\n"
 "        順祝 安康<br/><br/>\n"
 "        <t t-out=\"object.team_id.name or '技術支援'\">技術支援</t> 團隊\n"
 "    </div>\n"
@@ -126,47 +153,63 @@ msgstr ""
 #: model:mail.template,body_html:helpdesk.rating_ticket_request_email_template
 msgid ""
 "<div>\n"
-"    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/>\n"
+"    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/"
+">\n"
 "    <t t-set=\"partner\" t-value=\"object._rating_get_partner()\"/>\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0;\">\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:100%; margin:0;\">\n"
 "    <tbody>\n"
 "        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
 "            <t t-if=\"partner.name\">\n"
-"                Hello <t t-out=\"partner.name or ''\">Brandon Freeman</t>,<br/><br/>\n"
+"                Hello <t t-out=\"partner.name or ''\">Brandon Freeman</t>,"
+"<br/><br/>\n"
 "            </t>\n"
 "            <t t-else=\"\">\n"
 "                Hello,<br/>\n"
 "            </t>\n"
-"            Please take a moment to rate our services related to the ticket \"<strong t-out=\"object.name or ''\">Table legs are unbalanced</strong>\"\n"
+"            Please take a moment to rate our services related to the ticket "
+"\"<strong t-out=\"object.name or ''\">Table legs are unbalanced</strong>\"\n"
 "            <t t-if=\"object._rating_get_operator().name\">\n"
-"                assigned to <strong t-out=\"object._rating_get_operator().name or ''\">Mitchell Admin</strong>.<br/>\n"
+"                assigned to <strong t-"
+"out=\"object._rating_get_operator().name or ''\">Mitchell Admin</strong>.<br/"
+">\n"
 "            </t>\n"
 "            <t t-else=\"\">\n"
 "                .<br/><br/>\n"
 "            </t>\n"
 "        </td></tr>\n"
 "        <tr><td style=\"text-align: center;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin: 32px 0px 32px 0px; display: inline-table;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:100%; margin: 32px 0px 32px 0px; display: inline-table;\">\n"
 "                <tr><td style=\"font-size: 14px; text-align:center;\">\n"
-"                    <strong>Tell us how you feel about our services</strong><br/>\n"
-"                    <span style=\"text-color: #888888\">(click on one of these smileys)</span>\n"
+"                    <strong>Tell us how you feel about our services</"
+"strong><br/>\n"
+"                    <span style=\"text-color: #888888\">(click on one of "
+"these smileys)</span>\n"
 "                </td></tr>\n"
 "                <tr><td style=\"font-size: 14px;\">\n"
-"                    <table style=\"width:100%;text-align:center;margin-top:2rem;\">\n"
+"                    <table style=\"width:100%;text-align:center;margin-"
+"top:2rem;\">\n"
 "                        <tr>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/5\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"Happy\" src=\"/rating/static/src/img/rating_5.png\" title=\"Happy\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"5\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Happy\" src=\"/rating/static/"
+"src/img/rating_5.png\" title=\"Happy\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/3\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"Neutral\" src=\"/rating/static/src/img/rating_3.png\" title=\"Neutral\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"3\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Neutral\" src=\"/rating/"
+"static/src/img/rating_3.png\" title=\"Neutral\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/1\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"Unhappy\" src=\"/rating/static/src/img/rating_1.png\" title=\"Unhappy\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"1\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"Unhappy\" src=\"/rating/"
+"static/src/img/rating_1.png\" title=\"Unhappy\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                        </tr>\n"
@@ -176,7 +219,10 @@ msgid ""
 "        </td></tr>\n"
 "        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
 "            We appreciate your feedback. It helps us improve continuously.\n"
-"            <br/><br/><span style=\"margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;\">This customer survey has been sent because your ticket has been moved to the stage <b t-out=\"object.stage_id.name or ''\">In Progress</b>.</span>\n"
+"            <br/><br/><span style=\"margin: 0px 0px 0px 0px; font-size: "
+"12px; opacity: 0.5; color: #454748;\">This customer survey has been sent "
+"because your ticket has been moved to the stage <b t-"
+"out=\"object.stage_id.name or ''\">In Progress</b>.</span>\n"
 "        </td></tr>\n"
 "    </tbody>\n"
 "    </table>\n"
@@ -184,47 +230,62 @@ msgid ""
 "        "
 msgstr ""
 "<div>\n"
-"    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/>\n"
+"    <t t-set=\"access_token\" t-value=\"object._rating_get_access_token()\"/"
+">\n"
 "    <t t-set=\"partner\" t-value=\"object._rating_get_partner()\"/>\n"
-"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin:0;\">\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:100%; margin:0;\">\n"
 "    <tbody>\n"
 "        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
 "            <t t-if=\"partner.name\">\n"
-"                <t t-out=\"partner.name or ''\">Brandon Freeman</t> 你好！<br/><br/>\n"
+"                <t t-out=\"partner.name or ''\">Brandon Freeman</t> 你好！"
+"<br/><br/>\n"
 "            </t>\n"
 "            <t t-else=\"\">\n"
 "                你好！<br/>\n"
 "            </t>\n"
-"            請抽少許時間，對我們處理「<strong t-out=\"object.name or ''\">枱腳不平</strong>」問題的服務評分。\n"
+"            請抽少許時間，對我們處理「<strong t-out=\"object.name or ''\">枱"
+"腳不平</strong>」問題的服務評分。\n"
 "            <t t-if=\"object._rating_get_operator().name\">\n"
-"                該項服務要求是分派給 <strong t-out=\"object._rating_get_operator().name or ''\">Mitchell Admin</strong> 處理的。<br/>\n"
+"                該項服務要求是分派給 <strong t-"
+"out=\"object._rating_get_operator().name or ''\">Mitchell Admin</strong> 處理"
+"的。<br/>\n"
 "            </t>\n"
 "            <t t-else=\"\">\n"
 "                <br/><br/>\n"
 "            </t>\n"
 "        </td></tr>\n"
 "        <tr><td style=\"text-align: center;\">\n"
-"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"width:100%; margin: 32px 0px 32px 0px; display: inline-table;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"style=\"width:100%; margin: 32px 0px 32px 0px; display: inline-table;\">\n"
 "                <tr><td style=\"font-size: 14px; text-align:center;\">\n"
 "                    <strong>享用我們的服務後，你的感受是：</strong><br/>\n"
-"                    <span style=\"text-color: #888888\">（請選擇下列一個表情並按下）</span>\n"
+"                    <span style=\"text-color: #888888\">（請選擇下列一個表情"
+"並按下）</span>\n"
 "                </td></tr>\n"
 "                <tr><td style=\"font-size: 14px;\">\n"
-"                    <table style=\"width:100%;text-align:center;margin-top:2rem;\">\n"
+"                    <table style=\"width:100%;text-align:center;margin-"
+"top:2rem;\">\n"
 "                        <tr>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/5\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"滿意\" src=\"/rating/static/src/img/rating_5.png\" title=\"滿意\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"5\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"滿意\" src=\"/rating/static/"
+"src/img/rating_5.png\" title=\"滿意\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/3\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"中性\" src=\"/rating/static/src/img/rating_3.png\" title=\"中性\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"3\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"中性\" src=\"/rating/static/"
+"src/img/rating_3.png\" title=\"中性\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                            <td>\n"
-"                                <a t-attf-href=\"/rate/{{ access_token }}/1\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
-"                                    <img alt=\"不滿意\" src=\"/rating/static/src/img/rating_1.png\" title=\"不滿意\"/>\n"
+"                                <a t-attf-href=\"/rate/{{ access_token }}/"
+"1\" t-att-class=\"'pe-none' if object._rating_get_operator() else ''\">\n"
+"                                    <img alt=\"不滿意\" src=\"/rating/static/"
+"src/img/rating_1.png\" title=\"不滿意\"/>\n"
 "                                </a>\n"
 "                            </td>\n"
 "                        </tr>\n"
@@ -234,7 +295,10 @@ msgstr ""
 "        </td></tr>\n"
 "        <tr><td valign=\"top\" style=\"font-size: 14px;\">\n"
 "            感謝回應。你的寶貴意見，將協助我們持續改進。\n"
-"            <br/><br/><span style=\"margin: 0px 0px 0px 0px; font-size: 12px; opacity: 0.5; color: #454748;\">註：本次客戶意見調查，是因應你的服務要求已踏入<b t-out=\"object.stage_id.name or ''\">「進行中」</b>階段，由系統自動發出。</span>\n"
+"            <br/><br/><span style=\"margin: 0px 0px 0px 0px; font-size: "
+"12px; opacity: 0.5; color: #454748;\">註：本次客戶意見調查，是因應你的服務要"
+"求已踏入<b t-out=\"object.stage_id.name or ''\">「進行中」</b>階段，由系統自"
+"動發出。</span>\n"
 "        </td></tr>\n"
 "    </tbody>\n"
 "    </table>\n"
@@ -245,38 +309,78 @@ msgstr ""
 #: model:mail.template,body_html:helpdesk.new_ticket_request_email_template
 msgid ""
 "<div>\n"
-"    Dear <t t-out=\"object.sudo().partner_id.name or object.sudo().partner_name or 'Madam/Sir'\">Madam/Sir</t>,<br/><br/>\n"
+"    Dear <t t-out=\"object.sudo().partner_id.name or "
+"object.sudo().partner_name or 'Madam/Sir'\">Madam/Sir</t>,<br/><br/>\n"
 "    Your request\n"
-"    <t t-if=\"hasattr(object.team_id, 'website_id') and object.get_portal_url()\">\n"
-"        <a t-attf-href=\"{{ object.team_id.website_id.domain }}/my/ticket/{{ object.id }}/{{ object.access_token }}\" t-out=\"object.name or ''\">Table legs are unbalanced</a>\n"
+"    <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.get_portal_url()\">\n"
+"        <a t-attf-href=\"{{ object.team_id.website_id.domain }}/my/ticket/"
+"{{ object.id }}/{{ object.access_token }}\" t-out=\"object.name or "
+"''\">Table legs are unbalanced</a>\n"
 "    </t>\n"
-"    has been received and is being reviewed by our <t t-out=\"object.team_id.name or ''\">VIP Support</t> team.<br/><br/>\n"
-"    The reference for your ticket is <strong><t t-out=\"object.ticket_ref or ''\">15</t></strong>.<br/><br/>\n"
+"    has been received and is being reviewed by our <t t-"
+"out=\"object.team_id.name or ''\">VIP Support</t> team.<br/><br/>\n"
+"    The reference for your ticket is <strong><t t-out=\"object.ticket_ref or "
+"''\">15</t></strong>.<br/><br/>\n"
 "\n"
-"    To provide any additional information, simply reply to this email.<br/><br/>\n"
+"    To provide any additional information, simply reply to this email.<br/"
+"><br/>\n"
 "    <t t-if=\"object.team_id.show_knowledge_base\">\n"
-"        Don't hesitate to visit our <a t-attf-href=\"{{ object.team_id.get_knowledge_base_url() }}\">Help Center</a>. You might find the answer to your question.\n"
+"        Don't hesitate to visit our <a t-attf-"
+"href=\"{{ object.team_id.get_knowledge_base_url() }}\">Help Center</a>. You "
+"might find the answer to your question.\n"
 "        <br/><br/>\n"
 "    </t>\n"
 "    <t t-if=\"object.team_id.allow_portal_ticket_closing\">\n"
-"        Feel free to close your ticket if our help is no longer needed. Thank you for your collaboration.<br/><br/>\n"
+"        Feel free to close your ticket if our help is no longer needed. "
+"Thank you for your collaboration.<br/><br/>\n"
 "    </t>\n"
 "\n"
 "    <div style=\"text-align: center; padding: 16px 0px 16px 0px;\">\n"
-"        <t t-if=\"hasattr(object.team_id, 'website_id') and object.team_id.use_website_helpdesk_form\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;\" t-att-href=\"'%s%s' % (object.team_id.website_id.domain or '', object.get_portal_url())\" target=\"_blank\">View Ticket</a>\n"
+"        <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.team_id.use_website_helpdesk_form\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size: 13px;\" t-att-href=\"'%s%s' % (object.team_id.website_id.domain "
+"or '', object.get_portal_url())\" target=\"_blank\">View Ticket</a>\n"
 "        </t>\n"
 "        <t t-else=\"\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"object.get_portal_url()\" target=\"_blank\">View Ticket</a>\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"object.get_portal_url()\" "
+"target=\"_blank\">View Ticket</a>\n"
 "        </t>\n"
-"        <t t-if=\"hasattr(object.team_id, 'website_id') and object.team_id.allow_portal_ticket_closing\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"'%s/my/ticket/close/%s/%s' % (object.team_id.website_id.domain or '', object.id, object.access_token)\" target=\"_blank\">Close Ticket</a>\n"
+"        <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.team_id.allow_portal_ticket_closing\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"'%s/my/ticket/close/%s/%s' % "
+"(object.team_id.website_id.domain or '', object.id, object.access_token)\" "
+"target=\"_blank\">Close Ticket</a>\n"
 "        </t>\n"
 "        <t t-elif=\"object.team_id.allow_portal_ticket_closing\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"'/my/ticket/close/%s/%s' % (object.id, object.access_token)\" target=\"_blank\">Close Ticket</a>\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"'/my/ticket/close/%s/%s' % (object.id, "
+"object.access_token)\" target=\"_blank\">Close Ticket</a>\n"
 "        </t>\n"
-"        <t t-if=\"object.team_id.use_website_helpdesk_forum or object.team_id.use_website_helpdesk_knowledge or object.team_id.use_website_helpdesk_slides\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"object.team_id.feature_form_url\" target=\"_blank\">Visit Help Center</a>\n"
+"        <t t-if=\"object.team_id.use_website_helpdesk_forum or "
+"object.team_id.use_website_helpdesk_knowledge or "
+"object.team_id.use_website_helpdesk_slides\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"object.team_id.feature_form_url\" "
+"target=\"_blank\">Visit Help Center</a>\n"
 "        </t><br/><br/>\n"
 "    </div>\n"
 "\n"
@@ -286,17 +390,25 @@ msgid ""
 "        "
 msgstr ""
 "<div>\n"
-"    親愛的 <t t-out=\"object.sudo().partner_id.name or object.sudo().partner_name or '先生 / 女士'\">先生 / 女士</t>：<br/><br/>\n"
+"    親愛的 <t t-out=\"object.sudo().partner_id.name or "
+"object.sudo().partner_name or '先生 / 女士'\">先生 / 女士</t>：<br/><br/>\n"
 "    你的支援請求「\n"
-"    <t t-if=\"hasattr(object.team_id, 'website_id') and object.get_portal_url()\">\n"
-"        <a t-attf-href=\"{{ object.team_id.website_id.domain }}/my/ticket/{{ object.id }}/{{ object.access_token }}\" t-out=\"object.name or ''\">枱腳不平衡</a>\n"
+"    <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.get_portal_url()\">\n"
+"        <a t-attf-href=\"{{ object.team_id.website_id.domain }}/my/ticket/"
+"{{ object.id }}/{{ object.access_token }}\" t-out=\"object.name or ''\">枱腳"
+"不平衡</a>\n"
 "    </t>\n"
-"    」已收到，現正由我們的 <t t-out=\"object.team_id.name or ''\">VIP 支援</t> 團隊審視及跟進。<br/><br/>\n"
-"    技術支援請求參考編號： <strong><t t-out=\"object.ticket_ref or ''\">15</t></strong><br/><br/>\n"
+"    」已收到，現正由我們的 <t t-out=\"object.team_id.name or ''\">VIP 支援</"
+"t> 團隊審視及跟進。<br/><br/>\n"
+"    技術支援請求參考編號： <strong><t t-out=\"object.ticket_ref or ''\">15</"
+"t></strong><br/><br/>\n"
 "\n"
 "    若有任何額外資訊需要提供，只需回覆此電郵。<br/><br/>\n"
 "    <t t-if=\"object.team_id.show_knowledge_base\">\n"
-"        同時，歡迎你看看我們的<a t-attf-href=\"{{ object.team_id.get_knowledge_base_url() }}\">幫助中心</a>，說不定已有資料解答你的疑難。\n"
+"        同時，歡迎你看看我們的<a t-attf-"
+"href=\"{{ object.team_id.get_knowledge_base_url() }}\">幫助中心</a>，說不定已"
+"有資料解答你的疑難。\n"
 "        <br/><br/>\n"
 "    </t>\n"
 "    <t t-if=\"object.team_id.allow_portal_ticket_closing\">\n"
@@ -304,20 +416,50 @@ msgstr ""
 "    </t>\n"
 "\n"
 "    <div style=\"text-align: center; padding: 16px 0px 16px 0px;\">\n"
-"        <t t-if=\"hasattr(object.team_id, 'website_id') and object.team_id.use_website_helpdesk_form\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size: 13px;\" t-att-href=\"'%s%s' % (object.team_id.website_id.domain or '', object.get_portal_url())\" target=\"_blank\">查看請求</a>\n"
+"        <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.team_id.use_website_helpdesk_form\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size: 13px;\" t-att-href=\"'%s%s' % (object.team_id.website_id.domain "
+"or '', object.get_portal_url())\" target=\"_blank\">查看請求</a>\n"
 "        </t>\n"
 "        <t t-else=\"\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"object.get_portal_url()\" target=\"_blank\">查看請求</a>\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"object.get_portal_url()\" target=\"_blank\">查"
+"看請求</a>\n"
 "        </t>\n"
-"        <t t-if=\"hasattr(object.team_id, 'website_id') and object.team_id.allow_portal_ticket_closing\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"'%s/my/ticket/close/%s/%s' % (object.team_id.website_id.domain or '', object.id, object.access_token)\" target=\"_blank\">關閉請求</a>\n"
+"        <t t-if=\"hasattr(object.team_id, 'website_id') and "
+"object.team_id.allow_portal_ticket_closing\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"'%s/my/ticket/close/%s/%s' % "
+"(object.team_id.website_id.domain or '', object.id, object.access_token)\" "
+"target=\"_blank\">關閉請求</a>\n"
 "        </t>\n"
 "        <t t-elif=\"object.team_id.allow_portal_ticket_closing\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"'/my/ticket/close/%s/%s' % (object.id, object.access_token)\" target=\"_blank\">關閉請求</a>\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"'/my/ticket/close/%s/%s' % (object.id, "
+"object.access_token)\" target=\"_blank\">關閉請求</a>\n"
 "        </t>\n"
-"        <t t-if=\"object.team_id.use_website_helpdesk_forum or object.team_id.use_website_helpdesk_knowledge or object.team_id.use_website_helpdesk_slides\">\n"
-"            <a t-attf-style=\"background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px 8px 16px; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; font-size:13px;\" t-att-href=\"object.team_id.feature_form_url\" target=\"_blank\">前往幫助中心</a>\n"
+"        <t t-if=\"object.team_id.use_website_helpdesk_forum or "
+"object.team_id.use_website_helpdesk_knowledge or "
+"object.team_id.use_website_helpdesk_slides\">\n"
+"            <a t-attf-style=\"background-color: "
+"{{object.company_id.email_secondary_color or '#875A7B'}}; padding: 8px 16px "
+"8px 16px; text-decoration: none; color: "
+"{{object.company_id.email_primary_color or '#FFFFFF'}}; border-radius: 5px; "
+"font-size:13px;\" t-att-href=\"object.team_id.feature_form_url\" "
+"target=\"_blank\">前往幫助中心</a>\n"
 "        </t><br/><br/>\n"
 "    </div>\n"
 "\n"
@@ -332,20 +474,28 @@ msgid ""
 "<i class=\"fa fa-envelope-o\" title=\"Domain alias\" role=\"img\" aria-"
 "label=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" title=\"網域別名\" role=\"img\" aria-label="
-"\"網域別名\"/>"
+"<i class=\"fa fa-envelope-o\" title=\"網域別名\" role=\"img\" aria-label=\"網"
+"域別名\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
 msgid ""
-"<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" invisible=\"rating_avg &lt; 3.66\" title=\"Happy\"/>\n"
-"                            <i class=\"fa fa-fw o_button_icon fa-meh-o text-warning\" invisible=\"rating_avg &lt; 2.33 or rating_avg &gt;= 3.66\" title=\"Neutral\"/>\n"
-"                            <i class=\"fa fa-fw o_button_icon fa-frown-o text-danger\" invisible=\"rating_avg &gt;= 2.33\" title=\"Unhappy\"/>"
+"<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" "
+"invisible=\"rating_avg &lt; 3.66\" title=\"Happy\"/>\n"
+"                            <i class=\"fa fa-fw o_button_icon fa-meh-o text-"
+"warning\" invisible=\"rating_avg &lt; 2.33 or rating_avg &gt;= 3.66\" "
+"title=\"Neutral\"/>\n"
+"                            <i class=\"fa fa-fw o_button_icon fa-frown-o "
+"text-danger\" invisible=\"rating_avg &gt;= 2.33\" title=\"Unhappy\"/>"
 msgstr ""
-"<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" invisible=\"rating_avg &lt; 3.66\" title=\"滿意\"/>\n"
-"                            <i class=\"fa fa-fw o_button_icon fa-meh-o text-warning\" invisible=\"rating_avg &lt; 2.33 or rating_avg &gt;= 3.66\" title=\"中性\"/>\n"
-"                            <i class=\"fa fa-fw o_button_icon fa-frown-o text-danger\" invisible=\"rating_avg &gt;= 2.33\" title=\"不滿意\"/>"
+"<i class=\"fa fa-fw o_button_icon fa-smile-o text-success\" "
+"invisible=\"rating_avg &lt; 3.66\" title=\"滿意\"/>\n"
+"                            <i class=\"fa fa-fw o_button_icon fa-meh-o text-"
+"warning\" invisible=\"rating_avg &lt; 2.33 or rating_avg &gt;= 3.66\" "
+"title=\"中性\"/>\n"
+"                            <i class=\"fa fa-fw o_button_icon fa-frown-o "
+"text-danger\" invisible=\"rating_avg &gt;= 2.33\" title=\"不滿意\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_form
@@ -360,35 +510,43 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid ""
 "<i class=\"fa fa-lightbulb-o\" role=\"img\"/><span class=\"ms-2\">To use an "
-"email alias, the first step is to configure an Alias Domain. You can achieve"
-" this by navigating to the General Settings and configuring the "
-"corresponding field.</span>"
+"email alias, the first step is to configure an Alias Domain. You can achieve "
+"this by navigating to the General Settings and configuring the corresponding "
+"field.</span>"
 msgstr ""
-"<i class=\"fa fa-lightbulb-o\" role=\"img\"/><span "
-"class=\"ms-2\">要使用電子郵件別名，第一步是配置別名域。您可以通過導航到常規設置, 並配置相應字段來實現。</span>"
+"<i class=\"fa fa-lightbulb-o\" role=\"img\"/><span class=\"ms-2\">要使用電子"
+"郵件別名，第一步是配置別名域。您可以通過導航到常規設置, 並配置相應字段來實"
+"現。</span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid ""
 "<i class=\"fa fa-lightbulb-o\"/>\n"
-"                                    <span class=\"ms-2\">A rating request will automatically be sent by email to the customer when their ticket reaches the corresponding stage with the email template set.</span>"
+"                                    <span class=\"ms-2\">A rating request "
+"will automatically be sent by email to the customer when their ticket "
+"reaches the corresponding stage with the email template set.</span>"
 msgstr ""
 "<i class=\"fa fa-lightbulb-o\"/>\n"
-"                                    <span class=\"ms-2\">當客戶的支援請求到達相應階段，而該階段有設置電郵範本時，系統會自動向客戶發送評分請求的電郵。</span>"
+"                                    <span class=\"ms-2\">當客戶的支援請求到達"
+"相應階段，而該階段有設置電郵範本時，系統會自動向客戶發送評分請求的電郵。</"
+"span>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid ""
 "<i class=\"fa fa-lightbulb-o\"/>\n"
 "                                <span class=\"ms-2\">\n"
-"                                    Type <b>/ticket</b> to create tickets<br/>\n"
-"                                    Type <b>/search_tickets</b> to find tickets<br/>\n"
+"                                    Type <b>/ticket</b> to create tickets<br/"
+">\n"
+"                                    Type <b>/search_tickets</b> to find "
+"tickets<br/>\n"
 "                                </span>"
 msgstr ""
 "<i class=\"fa fa-lightbulb-o\"/>\n"
 "                                <span class=\"ms-2\">\n"
 "                                    輸入 <b>/ticket</b> 以建立支援請求<br/>\n"
-"                                    輸入 <b>/search_tickets</b> 以搜尋支援請求<br/>\n"
+"                                    輸入 <b>/search_tickets</b> 以搜尋支援請"
+"求<br/>\n"
 "                                </span>"
 
 #. module: helpdesk
@@ -434,7 +592,8 @@ msgid ""
 "updated.\" invisible=\"not is_partner_phone_update\"/>"
 msgstr ""
 "<span class=\"fa fa-exclamation-triangle text-warning oe_edit_only\" "
-"title=\"若儲存此變更，客戶電話號碼也將更新。\" invisible=\"not is_partner_phone_update\"/>"
+"title=\"若儲存此變更，客戶電話號碼也將更新。\" invisible=\"not "
+"is_partner_phone_update\"/>"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_activity
@@ -638,9 +797,11 @@ msgstr "活動類型"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid ""
-"Adapt your <b>pipeline</b> to your workflow by adding <b>stages</b> <i>(e.g."
-" Awaiting Customer Feedback, etc.).</i>"
-msgstr "按照工作流程，修改<b>工作管道</b>：你可加入不同的<b>工作階段</b>（例如：等候客戶回應，等等）。<i></i>"
+"Adapt your <b>pipeline</b> to your workflow by adding <b>stages</b> <i>(e.g. "
+"Awaiting Customer Feedback, etc.).</i>"
+msgstr ""
+"按照工作流程，修改<b>工作管道</b>：你可加入不同的<b>工作階段</b>（例如：等候"
+"客戶回應，等等）。<i></i>"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_stage_action
@@ -658,8 +819,8 @@ msgstr "加入有關此支援請求的詳情⋯"
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid ""
-"Add your stage and place it at the right step of your workflow by dragging &"
-" dropping it."
+"Add your stage and place it at the right step of your workflow by dragging & "
+"dropping it."
 msgstr "加入工作階段，透過拖放將其放置在工作流程內的正確步驟。"
 
 #. module: helpdesk
@@ -785,7 +946,9 @@ msgstr "確定要刪除這些階段嗎？"
 msgid ""
 "Assign tickets to the appropriate team members by defining who can work on "
 "tickets with certain tags."
-msgstr "透過設定誰人可處理附有特定標籤的支援請求，便可輕鬆將支援請求分配至適當的團隊成員。"
+msgstr ""
+"透過設定誰人可處理附有特定標籤的支援請求，便可輕鬆將支援請求分配至適當的團隊"
+"成員。"
 
 #. module: helpdesk
 #. odoo-python
@@ -827,11 +990,10 @@ msgstr "分配方法"
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
 msgid ""
-"At this time, there is no customer preview available to show. The current "
-"ticket cannot be accessed by the customer, as it belongs to a helpdesk team "
-"that is not publicly available, or there is no customer associated with the "
-"ticket."
-msgstr "目前，沒有可供顯示的客戶預覽。客戶無法存取目前請求，因為它屬於不公開的支援團隊，或者沒有與該請求關聯的客戶。"
+"At this time, there is no preview available to show. The current ticket "
+"cannot be accessed by the customer, as it belongs to a helpdesk team that is "
+"not publicly available, or there is no customer associated with the ticket."
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__message_attachment_count
@@ -950,6 +1112,11 @@ msgid "Blocked"
 msgstr "受阻"
 
 #. module: helpdesk
+#: model:helpdesk.tag,name:helpdesk.tag_crm
+msgid "CRM"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__campaign_id
 msgid "Campaign"
 msgstr "行銷活動"
@@ -969,7 +1136,9 @@ msgstr "預設回應"
 msgid ""
 "Centralize, manage, share and grow your knowledge library. Allow customers "
 "to search your articles in the help center for answers to their questions."
-msgstr "集中、管理、分享及發展你的知識庫。允許客戶在支援中心搜尋你的文章，以獲取問題的答案。"
+msgstr ""
+"集中、管理、分享及發展你的知識庫。允許客戶在支援中心搜尋你的文章，以獲取問題"
+"的答案。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1173,7 +1342,9 @@ msgstr "建立新範本"
 msgid ""
 "Create teams to organize your tickets by expertise or geographical region, "
 "and define a different workflow for each team."
-msgstr "建立不同團隊，以按專業知識範疇或地區，整理支援請求，並可以為每個團隊訂立不同的工作流程。"
+msgstr ""
+"建立不同團隊，以按專業知識範疇或地區，整理支援請求，並可以為每個團隊訂立不同"
+"的工作流程。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1228,11 +1399,6 @@ msgid "Criteria"
 msgstr "準則"
 
 #. module: helpdesk
-#: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
-msgid "Current stage of this ticket"
-msgstr "此請求的目前階段"
-
-#. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__alias_bounced_content
 msgid "Custom Bounced Message"
 msgstr "自訂彈跳訊息"
@@ -1282,11 +1448,6 @@ msgid "Customer Portal URL"
 msgstr "客戶網站入口網址"
 
 #. module: helpdesk
-#: model:ir.actions.server,name:helpdesk.action_open_customer_preview
-msgid "Customer Preview"
-msgstr "客戶預覽"
-
-#. module: helpdesk
 #: model:ir.actions.act_window,name:helpdesk.rating_rating_action_helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_rating
 #: model:ir.ui.menu,name:helpdesk.helpdesk_ticket_report_menu_ratings
@@ -1316,11 +1477,26 @@ msgid "Datetime at which the SLA stage was reached for the first time"
 msgstr "首次達到SLA階段的日期時間"
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__rotting_days
+msgid "Day count since this resource was last updated"
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_sla_report_analysis__sla_exceeded_hours
 msgid ""
 "Day to reach the stage of the SLA, without taking the working calendar into "
 "account"
 msgstr "達到SLA階段的尚餘日數，不考慮工作日曆"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__rotting_days
+msgid "Days Rotting"
+msgstr ""
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__rotting_threshold_days
+msgid "Days to rot"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__deadline
@@ -1352,6 +1528,11 @@ msgstr "刪除"
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_unarchive_wizard
 msgid "Delete Stage"
 msgstr "刪除階段"
+
+#. module: helpdesk
+#: model:mail.message.subtype,name:helpdesk.mt_ticket_delivery_status
+msgid "Delivery Status"
+msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1405,6 +1586,8 @@ msgstr "根據標籤分派支援請求"
 #: model:ir.model.fields,field_description:helpdesk.field_ir_module_module__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_ir_ui_menu__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_mail_message__display_name
+#: model:ir.model.fields,field_description:helpdesk.field_portal_share__display_name
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_company__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_partner__display_name
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__display_name
@@ -1442,13 +1625,17 @@ msgstr "電郵範本"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__template_id
 msgid ""
-"Email automatically sent to the customer when the ticket reaches this stage.\n"
-"By default, the email will be sent from the email alias of the helpdesk team.\n"
-"Otherwise it will be sent from the company's email address, or from the catchall (as defined in the System Parameters)."
+"Email automatically sent to the customer when the ticket reaches this "
+"stage.\n"
+"By default, the email will be sent from the email alias of the helpdesk "
+"team.\n"
+"Otherwise it will be sent from the company's email address, or from the "
+"catchall (as defined in the System Parameters)."
 msgstr ""
 "支援請求到達此階段時，會自動向客戶發送電子郵件。\n"
 "預設情況下，電子郵件將從技術支援團隊的電郵別名發送。\n"
-"否則，會以公司的電郵地址，或使用泛郵箱（catchall，正如系統參數中所定義）發送。"
+"否則，會以公司的電郵地址，或使用泛郵箱（catchall，正如系統參數中所定義）發"
+"送。"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__email_cc
@@ -1467,8 +1654,7 @@ msgstr "電郵傳送至"
 
 #. module: helpdesk
 #: model_terms:digest.tip,tip_description:helpdesk.digest_tip_helpdesk_0
-msgid ""
-"Emails sent to a Helpdesk Team alias generate tickets in your pipeline."
+msgid "Emails sent to a Helpdesk Team alias generate tickets in your pipeline."
 msgstr "發送至支援團隊別名的電郵，會在你的工作管道產生支援請求。"
 
 #. module: helpdesk
@@ -1482,7 +1668,8 @@ msgstr "為支援團隊啟用「客戶評分」功能"
 msgid ""
 "Enter the <b>subject</b> of your ticket <br/><i>(e.g. Problem with my "
 "installation, Wrong order, etc.).</i>"
-msgstr "輸入支援請求的<b>主題</b><br/>（例如：安裝發生問題、訂單出錯，等等）<i></i>"
+msgstr ""
+"輸入支援請求的<b>主題</b><br/>（例如：安裝發生問題、訂單出錯，等等）<i></i>"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__exceeded_hours
@@ -1539,8 +1726,8 @@ msgstr "首次分派日期"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__fold
-msgid "Folded in Kanban"
-msgstr "在看板中折疊"
+msgid "Folded"
+msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -1585,7 +1772,9 @@ msgstr "未來活動"
 msgid ""
 "Get in touch with your website visitors, and engage them with scripted "
 "chatbot conversations. Create and search tickets from your conversations."
-msgstr "與網站訪客取得聯繫，透過預設腳本的聊天機器人對話，與他們互動。可在對話內建立及搜尋支援請求。"
+msgstr ""
+"與網站訪客取得聯繫，透過預設腳本的聊天機器人對話，與他們互動。可在對話內建立"
+"及搜尋支援請求。"
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_analysis_action
@@ -1601,6 +1790,11 @@ msgid "Get tickets through an online form"
 msgstr "以網上表格獲取支援請求"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_giftcards
+msgid "Gift Cards"
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "Grant discounts, free products or free shipping"
 msgstr "贈送折扣、免費產品或免費送貨"
@@ -1612,16 +1806,20 @@ msgid ""
 "Grant employees access to your helpdesk team or tickets by adding them as "
 "followers. Employees automatically get access to the tickets they are "
 "assigned to."
-msgstr "將員工加入為關注者，藉此向員工授予權限，以存取你的支援團隊或支援請求。獲分派支援請求後，員工將自動享有相關請求的存取權限。"
+msgstr ""
+"將員工加入為關注者，藉此向員工授予權限，以存取你的支援團隊或支援請求。獲分派"
+"支援請求後，員工將自動享有相關請求的存取權限。"
 
 #. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid ""
-"Grant portal users access to your helpdesk team or tickets by adding them as"
-" followers. Customers automatically get access to their tickets in their "
+"Grant portal users access to your helpdesk team or tickets by adding them as "
+"followers. Customers automatically get access to their tickets in their "
 "portal."
-msgstr "將門戶網頁使用者加入為關注者，藉此向他們授予權限，以存取你的支援團隊或支援請求。客戶自動享有對自己所有請求的存取權限，可在門戶網頁中存取。"
+msgstr ""
+"將門戶網頁使用者加入為關注者，藉此向他們授予權限，以存取你的支援團隊或支援請"
+"求。客戶自動享有對自己所有請求的存取權限，可在門戶網頁中存取。"
 
 #. module: helpdesk
 #: model:ir.model.fields.selection,name:helpdesk.selection__helpdesk_sla_report_analysis__kanban_state__done
@@ -1644,15 +1842,6 @@ msgstr "灰色"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_stage__legend_normal
 msgid "Grey Kanban Label"
 msgstr "灰色看板標籤"
-
-#. module: helpdesk
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_search
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_search
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_search_analysis_closed
-#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
-msgid "Group By"
-msgstr "分組依據"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
@@ -1809,6 +1998,11 @@ msgid "High priority"
 msgstr "高優先級別"
 
 #. module: helpdesk
+#: model:ir.model.fields,help:helpdesk.field_helpdesk_stage__rotting_threshold_days
+msgid "Highlight tickets that haven't been updated for this many days."
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid "History"
 msgstr "歷史"
@@ -1841,6 +2035,8 @@ msgstr "首次回應需時"
 #: model:ir.model.fields,field_description:helpdesk.field_ir_module_module__id
 #: model:ir.model.fields,field_description:helpdesk.field_ir_ui_menu__id
 #: model:ir.model.fields,field_description:helpdesk.field_mail_message__id
+#: model:ir.model.fields,field_description:helpdesk.field_portal_share__id
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_company__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_partner__id
 #: model:ir.model.fields,field_description:helpdesk.field_res_users__id
@@ -1851,9 +2047,14 @@ msgstr "識別號"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr "上級記錄ID支援別名(例如:專案支援任務建立別名)"
+
+#. module: helpdesk
+#: model:helpdesk.team,name:helpdesk.helpdesk_team2
+msgid "IT Support (Auto Assignment by Tags)"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__activity_exception_icon
@@ -2447,7 +2648,9 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr "所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。如果設定了，這個將完全阻止新記錄的建立。"
+msgstr ""
+"所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。"
+"如果設定了，這個將完全阻止新記錄的建立。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_my_home_menu_helpdesk
@@ -2472,11 +2675,12 @@ msgstr "上級記錄線程ID"
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模型，例如：專案（parent_model）與任務（model）"
+"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模"
+"型，例如：專案（parent_model）與任務（model）"
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__partner_ticket_ids
@@ -2489,23 +2693,35 @@ msgstr "合作夥伴支援請求"
 msgid ""
 "People to whom this helpdesk team and its tickets will be visible.\n"
 "\n"
-"- Invited internal users: internal users can access the team and the tickets they are following. This access can be modified on each ticket individually by adding or removing the user as follower.\n"
-"A user with the helpdesk > administrator access right level can still access this team and its tickets, even if they are not explicitely part of the followers.\n"
+"- Invited internal users: internal users can access the team and the tickets "
+"they are following. This access can be modified on each ticket individually "
+"by adding or removing the user as follower.\n"
+"A user with the helpdesk > administrator access right level can still access "
+"this team and its tickets, even if they are not explicitely part of the "
+"followers.\n"
 "\n"
-"- All internal users: all internal users can access the team and all of its tickets without distinction.\n"
+"- All internal users: all internal users can access the team and all of its "
+"tickets without distinction.\n"
 "\n"
-"- Invited portal users and all internal users: all internal users can access the team and all of its tickets without distinction.\n"
-"Portal users can only access the tickets they are following. This access can be modified on each ticket individually by adding or removing the portal user as follower."
+"- Invited portal users and all internal users: all internal users can access "
+"the team and all of its tickets without distinction.\n"
+"Portal users can only access the tickets they are following. This access can "
+"be modified on each ticket individually by adding or removing the portal "
+"user as follower."
 msgstr ""
 "可看見此技術支援團隊及其支援請求的人員。\n"
 "\n"
-"-【受邀內部使用者】：內部使用者可存取正在關注的團隊及其支援請求。可在個別請求的關注者名單新增或移除使用者，以單獨修改個別請求的存取權限。\n"
-"擁有「技術支援 > 管理員」存取權限等級的使用者，即使未有明確加入關注者名單，將仍可存取此團隊及其支援請求。\n"
+"-【受邀內部使用者】：內部使用者可存取正在關注的團隊及其支援請求。可在個別請求"
+"的關注者名單新增或移除使用者，以單獨修改個別請求的存取權限。\n"
+"擁有「技術支援 > 管理員」存取權限等級的使用者，即使未有明確加入關注者名單，將"
+"仍可存取此團隊及其支援請求。\n"
 "\n"
 "-【所有內部用戶】：所有內部用戶都可以無差別地存取團隊及其所有支援請求。\n"
 "\n"
-"-【受邀門戶網站使用者及所有內部使用者】：所有內部使用者都可以無差別地存取團隊及其所有支援請求。\n"
-"門戶網站使用者只可存取他們關注的支援請求。可在個別請求的關注者名單新增或移除門戶使用者，以單獨修改個別請求的存取權限。"
+"-【受邀門戶網站使用者及所有內部使用者】：所有內部使用者都可以無差別地存取團隊"
+"及其所有支援請求。\n"
+"門戶網站使用者只可存取他們關注的支援請求。可在個別請求的關注者名單新增或移除"
+"門戶使用者，以單獨修改個別請求的存取權限。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -2526,8 +2742,8 @@ msgstr "沒有任何未達SLA的已關閉請求的百分比。"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_kanban
 msgid ""
-"Percentage of tickets whose SLAs have successfully been reached on time over"
-" the total number of tickets closed within the past 7 days."
+"Percentage of tickets whose SLAs have successfully been reached on time over "
+"the total number of tickets closed within the past 7 days."
 msgstr "成功按時達至SLA的支援請求佔過去 7 天內已關閉請求總數的百分比。"
 
 #. module: helpdesk
@@ -2587,7 +2803,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "通過信件網關在文件上提交一個訊息政策。\n"
 "- 任何人：任何人都可以提交\n"
@@ -2600,11 +2817,21 @@ msgid "Portal Access URL"
 msgstr "網站入口訪問網址"
 
 #. module: helpdesk
+#: model:ir.model,name:helpdesk.model_portal_share
+msgid "Portal Sharing"
+msgstr ""
+
+#. module: helpdesk
 #. odoo-python
 #: code:addons/helpdesk/models/helpdesk_team.py:0
 msgid ""
 "Portal users will be removed from the followers of the team and its tickets."
 msgstr "團隊及其支援請求的關注者名單，將會移除門戶用戶。"
+
+#. module: helpdesk
+#: model:ir.actions.server,name:helpdesk.action_open_customer_preview
+msgid "Preview"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla__priority
@@ -2620,6 +2847,7 @@ msgid "Properties"
 msgstr "屬性"
 
 #. module: helpdesk
+#: model:ir.model,name:helpdesk.model_rating_rating
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_tree
 msgid "Rating"
 msgstr "評分"
@@ -2708,8 +2936,8 @@ msgstr "準備好"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid ""
-"Receive notifications whenever tickets are created, rated or discussed on in"
-" this team"
+"Receive notifications whenever tickets are created, rated or discussed on in "
+"this team"
 msgstr "每當在此團隊中建立、討論或對支援請求評分時，接收通知"
 
 #. module: helpdesk
@@ -2739,6 +2967,16 @@ msgid "Refunds"
 msgstr "退款"
 
 #. module: helpdesk
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Reimburse customers with a voucher code for future purchases"
+msgstr ""
+
+#. module: helpdesk
+#: model:helpdesk.tag,name:helpdesk.tag_repair
+msgid "Repair"
+msgstr ""
+
+#. module: helpdesk
 #: model:mail.message.subtype,name:helpdesk.mt_ticket_repair_status
 msgid "Repair Status"
 msgstr "維修狀態"
@@ -2747,6 +2985,11 @@ msgstr "維修狀態"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_repairs
 msgid "Repairs"
 msgstr "維修"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_replacements
+msgid "Replacements"
+msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -2782,6 +3025,12 @@ msgstr "退回有問題產品"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_product_returns
 msgid "Returns"
 msgstr "退回"
+
+#. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__is_rotting
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search
+msgid "Rotting"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__sla_id
@@ -2991,7 +3240,19 @@ msgid ""
 "team. Automatically send an email to customers when a ticket reaches a "
 "specific stage in a helpdesk team by setting this template on that stage."
 msgstr ""
-"向客戶發送確認電子郵件，通知他們技術支援請求已收到，目前正由技術支援團隊審視。在特定階段設定此範本，當支援請求到達支援團隊中的該階段時，自動向客戶發送電子郵件。"
+"向客戶發送確認電子郵件，通知他們技術支援請求已收到，目前正由技術支援團隊審"
+"視。在特定階段設定此範本，當支援請求到達支援團隊中的該階段時，自動向客戶發送"
+"電子郵件。"
+
+#. module: helpdesk
+#: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
+msgid "Send customers a replacement for a lost, damaged, or returned item"
+msgstr ""
+
+#. module: helpdesk
+#: model:helpdesk.tag,name:helpdesk.tag_service
+msgid "Service"
+msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3019,9 +3280,11 @@ msgstr "分享支援請求"
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid ""
 "Share presentations and videos, and organize them into courses. Allow "
-"customers to search your eLearning courses in the help center for answers to"
-" their questions."
-msgstr "分享簡報及影片，將它們整合成為課程。允許客戶在支援中心搜尋你的網上學習課程，以解答自己的問題。"
+"customers to search your eLearning courses in the help center for answers to "
+"their questions."
+msgstr ""
+"分享簡報及影片，將它們整合成為課程。允許客戶在支援中心搜尋你的網上學習課程，"
+"以解答自己的問題。"
 
 #. module: helpdesk
 #: model:res.groups,name:helpdesk.group_use_rating
@@ -3208,13 +3471,20 @@ msgid "Templates"
 msgstr "範本"
 
 #. module: helpdesk
+#. odoo-python
+#: code:addons/helpdesk/models/helpdesk_ticket.py:0
+msgid "The customer cannot belong to a different company than the ticket."
+msgstr ""
+
+#. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
-"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
+"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到"
+"來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_team__alias_name
@@ -3237,14 +3507,6 @@ msgid ""
 msgstr "計算 SLA 時，不會考慮在這些階段上花費的時間。"
 
 #. module: helpdesk
-#. odoo-python
-#: code:addons/helpdesk/models/helpdesk_team.py:0
-msgid ""
-"The visibility of the team needs to be set as \"Invited portal users and all"
-" internal users\" in order to use the website form."
-msgstr "團隊的顯示設定須設為「受邀門戶網站使用者及所有內部使用者」，才可使用網站表單。"
-
-#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
 msgid "There are currently no Ticket for your account."
 msgstr "你的帳戶目前沒有支援請求。"
@@ -3257,16 +3519,16 @@ msgstr "此"
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_sla_view_form
 msgid ""
-"This SLA Policy will apply to tickets matching ALL of the following "
-"criteria:"
+"This SLA Policy will apply to tickets matching ALL of the following criteria:"
 msgstr "本 SLA 政策將套用至符合以下所有準則的支援請求："
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__campaign_id
 msgid ""
-"This is a name that helps you keep track of your different campaign efforts,"
-" e.g. Fall_Drive, Christmas_Special"
-msgstr "這是一個幫助您追蹤不同行銷活動的名稱，例如，Fall_Drive、Christmas_Special"
+"This is a name that helps you keep track of your different campaign efforts, "
+"e.g. Fall_Drive, Christmas_Special"
+msgstr ""
+"這是一個幫助您追蹤不同行銷活動的名稱，例如，Fall_Drive、Christmas_Special"
 
 #. module: helpdesk
 #: model:ir.model.fields,help:helpdesk.field_helpdesk_ticket__medium_id
@@ -3316,6 +3578,7 @@ msgstr "三星，最高分"
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_report_analysis__ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_sla_status__ticket_id
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket_report_analysis__ticket_id
+#: model:ir.model.fields,field_description:helpdesk.field_rating_rating__ticket_id
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_ticket_view_activity
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_tickets_view_search_base
 #: model_terms:ir.ui.view,arch_db:helpdesk.portal_helpdesk_ticket
@@ -3500,7 +3763,8 @@ msgstr "提示：從收到的電郵建立支援請求"
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_unassigned
 msgid ""
 "To get things done, plan activities and use the ticket status.<br>\n"
-"                Collaborate efficiently by chatting in real-time or via email."
+"                Collaborate efficiently by chatting in real-time or via "
+"email."
 msgstr ""
 "要完成工作，你可事先規劃活動，並使用支援請求狀態。<br>\n"
 "                透過即時聊天或電子郵件，進行高效協作。"
@@ -3546,7 +3810,8 @@ msgstr "追蹤客戶對技術支援的滿意度"
 msgid ""
 "Track the performance of your teams, the success rate of your tickets, and "
 "how quickly you reach your service level agreements (SLAs)."
-msgstr "追蹤團隊的績效表現、支援服務的成功率，以及達至服務水平協議（SLA）的速度。"
+msgstr ""
+"追蹤團隊的績效表現、支援服務的成功率，以及達至服務水平協議（SLA）的速度。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
@@ -3630,19 +3895,31 @@ msgid "Use Coupons"
 msgstr "使用優惠券"
 
 #. module: helpdesk
+#: model:ir.model.fields,field_description:helpdesk.field_helpdesk_ticket__use_giftcards
+msgid "Use Gift Cards"
+msgstr ""
+
+#. module: helpdesk
 #. odoo-javascript
 #: code:addons/helpdesk/static/src/js/tours/helpdesk.js:0
 msgid ""
 "Use the chatter to <b>send emails</b> and communicate efficiently with your "
 "customers. Add new people to the followers' list to make them aware of the "
 "progress of this ticket."
-msgstr "利用聊天視窗，<b>發送電子郵件</b>並與客戶高效溝通。將相關人士加入關注者名單，讓他們知道此支援請求的處理進度。"
+msgstr ""
+"利用聊天視窗，<b>發送電子郵件</b>並與客戶高效溝通。將相關人士加入關注者名單，"
+"讓他們知道此支援請求的處理進度。"
 
 #. module: helpdesk
 #: model:ir.model,name:helpdesk.model_res_users
 #: model:res.groups,name:helpdesk.group_helpdesk_user
 msgid "User"
 msgstr "使用者"
+
+#. module: helpdesk
+#: model:helpdesk.team,name:helpdesk.helpdesk_team3
+msgid "VIP Support"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__privacy_visibility
@@ -3663,11 +3940,37 @@ msgid ""
 msgstr "想要<b>提高客戶滿意度</b>嗎？<br/>請按「技術支援」開始。<i></i>"
 
 #. module: helpdesk
+#. odoo-python
+#: code:addons/helpdesk/models/helpdesk_team.py:0
+msgid ""
+"Want to use the website form? Just adjust your team's visibility to "
+"\"Invited portal users and all internal users\" and watch the magic happen!"
+msgstr ""
+
+#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.tickets_followup
 msgid ""
-"We hope to have addressed your request satisfactorily. If you no longer need"
-" our assistance, please close this ticket. Thank you for your collaboration."
-msgstr "我們希望能圓滿解決你的請求。如果你不再需要我們的幫助，請關閉此支援請求。感謝你的合作。"
+"We hope to have addressed your request satisfactorily. If you no longer need "
+"our assistance, please close this ticket. Thank you for your collaboration."
+msgstr ""
+"我們希望能圓滿解決你的請求。如果你不再需要我們的幫助，請關閉此支援請求。感謝"
+"你的合作。"
+
+#. module: helpdesk
+#: model_terms:helpdesk.team,description:helpdesk.helpdesk_team1
+#: model_terms:helpdesk.team,description:helpdesk.helpdesk_team2
+#: model_terms:helpdesk.team,description:helpdesk.helpdesk_team3
+msgid ""
+"We provide 24/7 support, Monday through Friday. Ticket responses are usually "
+"provided within 2 working days.<br>\n"
+"            Support is mainly provided in English. We can also assist in "
+"Spanish, French, and Dutch."
+msgstr ""
+
+#. module: helpdesk
+#: model:helpdesk.tag,name:helpdesk.tag_website
+msgid "Website"
+msgstr ""
 
 #. module: helpdesk
 #: model:ir.model.fields,field_description:helpdesk.field_helpdesk_team__use_website_helpdesk_form
@@ -3742,7 +4045,8 @@ msgstr "是否也要取消封存這些階段包含的所有支援請求？"
 msgid ""
 "You cannot delete stages containing tickets. You can either archive them or "
 "first delete all of their tickets."
-msgstr "不可刪除包含支援請求的階段。你可封存它們，或者先刪除它們的所有支援請求。"
+msgstr ""
+"不可刪除包含支援請求的階段。你可封存它們，或者先刪除它們的所有支援請求。"
 
 #. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.view_helpdesk_stage_delete_wizard
@@ -3757,6 +4061,14 @@ msgstr "不可刪除包含支援請求的階段。你應該先刪除它們的所
 #: model:ir.model.constraint,message:helpdesk.constraint_res_users_target_success_not_zero
 msgid "You cannot have negative targets"
 msgstr "目標不可是負數"
+
+#. module: helpdesk
+#. odoo-python
+#: code:addons/helpdesk/models/res_partner.py:0
+msgid ""
+"You cannot update the company of this partner because it would lead to "
+"inconsistency with some of its tickets."
+msgstr ""
 
 #. module: helpdesk
 #: model_terms:ir.actions.act_window,help:helpdesk.helpdesk_ticket_action_sla
@@ -3827,11 +4139,6 @@ msgid "has been created from ticket:"
 msgstr "已從支援請求建立："
 
 #. module: helpdesk
-#: model:ir.actions.server,name:helpdesk.helpdesk_ratings_server_action
-msgid "helpdesk view rating"
-msgstr "技術支援檢視評分"
-
-#. module: helpdesk
 #: model_terms:ir.ui.view,arch_db:helpdesk.helpdesk_team_view_form
 msgid "team search"
 msgstr "搜尋團隊"
@@ -3857,11 +4164,11 @@ msgstr "user_id"
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.rating_ticket_request_email_template
 msgid ""
-"{{ object.company_id.name or object.user_id.company_id.name or 'Helpdesk' "
-"}}: Service Rating Request"
+"{{ object.company_id.name or object.user_id.company_id.name or "
+"'Helpdesk' }}: Service Rating Request"
 msgstr ""
-"{{ object.company_id.name or object.user_id.company_id.name or '技術支援' "
-"}}：服務評分請求"
+"{{ object.company_id.name or object.user_id.company_id.name or '技術支"
+"援' }}：服務評分請求"
 
 #. module: helpdesk
 #: model:mail.template,subject:helpdesk.new_ticket_request_email_template
@@ -3873,3 +4180,34 @@ msgstr "{{ object.name }}"
 #: code:addons/helpdesk/models/helpdesk_ticket.py:0
 msgid "👤 Unassigned"
 msgstr "👤 未指派"
+
+#~ msgid ""
+#~ "At this time, there is no customer preview available to show. The current "
+#~ "ticket cannot be accessed by the customer, as it belongs to a helpdesk "
+#~ "team that is not publicly available, or there is no customer associated "
+#~ "with the ticket."
+#~ msgstr ""
+#~ "目前，沒有可供顯示的客戶預覽。客戶無法存取目前請求，因為它屬於不公開的支援"
+#~ "團隊，或者沒有與該請求關聯的客戶。"
+
+#~ msgid "Current stage of this ticket"
+#~ msgstr "此請求的目前階段"
+
+#~ msgid "Customer Preview"
+#~ msgstr "客戶預覽"
+
+#~ msgid "Folded in Kanban"
+#~ msgstr "在看板中折疊"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid ""
+#~ "The visibility of the team needs to be set as \"Invited portal users and "
+#~ "all internal users\" in order to use the website form."
+#~ msgstr ""
+#~ "團隊的顯示設定須設為「受邀門戶網站使用者及所有內部使用者」，才可使用網站表"
+#~ "單。"
+
+#~ msgid "helpdesk view rating"
+#~ msgstr "技術支援檢視評分"

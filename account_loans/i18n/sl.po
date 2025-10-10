@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 21:33+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
@@ -49,22 +49,24 @@ msgstr "30U/360"
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
-"                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">month</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">mesecev\n"
 "</span>\n"
-"                                        <span class=\"oe_inline\" invisible="
-"\"duration != 1\">mesec</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">mesec</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
-"                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">year</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">leta</span>\n"
-"                                    <span class=\"oe_inline\" invisible="
-"\"loan_term != 1\">leto</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">leto</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -241,8 +243,8 @@ msgstr "Potrdi"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
 msgid ""
-"Confirm that all loans recorded in the accounts actually exist and match the"
-" loan agreements."
+"Confirm that all loans recorded in the accounts actually exist and match the "
+"loan agreements."
 msgstr ""
 
 #. module: account_loans
@@ -352,7 +354,8 @@ msgstr "Konec meseca"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
 msgid ""
-"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Ensure that loans are properly classified as current vs. non-current, and "
+"disclosed in accordance with Belgian GAAP. \n"
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
@@ -913,8 +916,8 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
-"Znesek posojila %(loan_amount)s mora biti enak vsoti glavnic: "
-"%(principal_sum)s (razlika%(principal_difference)s)"
+"Znesek posojila %(loan_amount)s mora biti enak vsoti glavnic: %"
+"(principal_sum)s (razlika%(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
@@ -933,7 +936,8 @@ msgstr "Trajanje posojila mora biti enako številu kreditnih linij."
 #: code:addons/account_loans/models/account_loan.py:0
 msgid ""
 "The loan interest should be equal to the sum of the loan lines interest."
-msgstr "Obresti za posojilo morajo biti enake vsoti obresti za kreditne linije."
+msgstr ""
+"Obresti za posojilo morajo biti enake vsoti obresti za kreditne linije."
 
 #. module: account_loans
 #. odoo-python
@@ -1001,8 +1005,7 @@ msgstr "Naložena datoteka"
 msgid ""
 "Upon confirmation of the loan, Odoo will ignore the loan lines that are up "
 "to this date (included) and not create entries for them. This is useful if "
-"you have already manually created entries prior to the creation of this "
-"loan."
+"you have already manually created entries prior to the creation of this loan."
 msgstr ""
 "Po potrditvi posojila bo Odoo prezrl kreditne linije, ki so bile do tega "
 "datuma (vključno) posodobljene, in zanje ne bo ustvaril vnosov. To je "

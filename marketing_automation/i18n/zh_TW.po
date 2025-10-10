@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-23 18:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -108,7 +108,9 @@ msgstr "<i class=\"fa fa-check-circle\"/> 已回覆"
 msgid ""
 "<i class=\"fa fa-clock-o pe-1\" role=\"img\" aria-label=\"Select time\" "
 "title=\"Select time\"/>"
-msgstr "<i class=\"fa fa-clock-o pe-1\" role=\"img\" aria-label=\"選擇時間\" title=\"選擇時間\"/>"
+msgstr ""
+"<i class=\"fa fa-clock-o pe-1\" role=\"img\" aria-label=\"選擇時間\" "
+"title=\"選擇時間\"/>"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -180,18 +182,28 @@ msgstr "<span class=\"o_form_label\">記錄</span>"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid ""
-"<span role=\"img\" title=\"Graph\" aria-label=\"Graph\" class=\"o_ma_activity_tab active\" data-tab-type=\"graph\">\n"
-"                                                            <i class=\"fa fa-pie-chart\"/>\n"
+"<span role=\"img\" title=\"Graph\" aria-label=\"Graph\" "
+"class=\"o_ma_activity_tab active\" data-tab-type=\"graph\">\n"
+"                                                            <i class=\"fa fa-"
+"pie-chart\"/>\n"
 "                                                        </span>\n"
-"                                                        <span title=\"Filter\" role=\"img\" aria-label=\"Filter\" class=\"o_ma_activity_tab\" data-tab-type=\"filter\">\n"
-"                                                            <i class=\"fa fa-filter\"/>\n"
+"                                                        <span "
+"title=\"Filter\" role=\"img\" aria-label=\"Filter\" "
+"class=\"o_ma_activity_tab\" data-tab-type=\"filter\">\n"
+"                                                            <i class=\"fa fa-"
+"filter\"/>\n"
 "                                                        </span>"
 msgstr ""
-"<span role=\"img\" title=\"圖表\" aria-label=\"圖表\" class=\"o_ma_activity_tab active\" data-tab-type=\"graph\">\n"
-"                                                            <i class=\"fa fa-pie-chart\"/>\n"
+"<span role=\"img\" title=\"圖表\" aria-label=\"圖表\" "
+"class=\"o_ma_activity_tab active\" data-tab-type=\"graph\">\n"
+"                                                            <i class=\"fa fa-"
+"pie-chart\"/>\n"
 "                                                        </span>\n"
-"                                                        <span title=\"篩選器\" role=\"img\" aria-label=\"篩選器\" class=\"o_ma_activity_tab\" data-tab-type=\"filter\">\n"
-"                                                            <i class=\"fa fa-filter\"/>\n"
+"                                                        <span title=\"篩選器"
+"\" role=\"img\" aria-label=\"篩選器\" class=\"o_ma_activity_tab\" data-tab-"
+"type=\"filter\">\n"
+"                                                            <i class=\"fa fa-"
+"filter\"/>\n"
 "                                                        </span>"
 
 #. module: marketing_automation
@@ -288,7 +300,9 @@ msgstr "活動類型"
 msgid ""
 "Activity will only be performed if record satisfies this domain, obtained "
 "from the combination of the activity filter and its inherited filter"
-msgstr "只限在記錄滿足這個範圍時（該範圍是結合活動篩選器及其繼承篩選器所得），才會執行活動"
+msgstr ""
+"只限在記錄滿足這個範圍時（該範圍是結合活動篩選器及其繼承篩選器所得），才會執"
+"行活動"
 
 #. module: marketing_automation
 #. odoo-python
@@ -314,20 +328,10 @@ msgid "Add new activity"
 msgstr "加入新活動"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Add to Templates"
-msgstr "加入至範本"
-
-#. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_campaign.py:0
 msgid "Add to list"
 msgstr "加入清單"
-
-#. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Advanced"
-msgstr "進階"
 
 #. module: marketing_automation
 #. odoo-python
@@ -356,6 +360,12 @@ msgid "Allows us to filter relevant Campaigns"
 msgstr "允許我們過濾相關行銷活動"
 
 #. module: marketing_automation
+#. odoo-python
+#: code:addons/marketing_automation/wizard/marketing_campaign_test.py:0
+msgid "Another test has been launched for this participant"
+msgstr ""
+
+#. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__domain
 msgid "Applied Filter"
 msgstr "已套用的篩選"
@@ -374,11 +384,6 @@ msgid ""
 msgstr "確定要為每一項未用的配對記錄新增參加者？"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Attach a file"
-msgstr "附加一個文件"
-
-#. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__is_auto_campaign
 msgid "Automatically Generated Campaign"
 msgstr "自動生成的活動"
@@ -386,9 +391,11 @@ msgstr "自動生成的活動"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid ""
-"Be aware that participants that had no more activities could be reintroduced"
-" into the campaign and new traces could be created for them."
-msgstr "請注意，沒有更多活動的參與者可重新進入行銷活動，並且可為這些參與者建立新的痕跡。"
+"Be aware that participants that had no more activities could be reintroduced "
+"into the campaign and new traces could be created for them."
+msgstr ""
+"請注意，沒有更多活動的參與者可重新進入行銷活動，並且可為這些參與者建立新的痕"
+"跡。"
 
 #. module: marketing_automation
 #. odoo-python
@@ -473,7 +480,9 @@ msgid ""
 "Check this to make sure your actions are not executed after a specific "
 "amount of time after the scheduled date. (e.g. Time-limited offer, Upcoming "
 "event, …)"
-msgstr "勾選此項，令動作不會在規劃日期指定時間長度之後執行。（例如：限時優惠、即將舉行的活動⋯）"
+msgstr ""
+"勾選此項，令動作不會在規劃日期指定時間長度之後執行。（例如：限時優惠、即將舉"
+"行的活動⋯）"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_activity__child_ids
@@ -611,8 +620,7 @@ msgstr "刪除"
 #. odoo-javascript
 #: code:addons/marketing_automation/static/src/js/marketing_automation_one2many.js:0
 msgid ""
-"Deleting this activity will delete ALL its children activities. Are you "
-"sure?"
+"Deleting this activity will delete ALL its children activities. Are you sure?"
 msgstr "刪除此活動亦會刪除其所有子活動。確定要繼續？"
 
 #. module: marketing_automation
@@ -897,13 +905,11 @@ msgid "Mail"
 msgstr "郵件"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
 #: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_automation
 msgid "Mail Body"
 msgstr "郵件正文"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_view_form
 msgid "Mail Template"
 msgstr "信件範本"
@@ -944,11 +950,6 @@ msgid "Mail: replied"
 msgstr "信件：已回覆"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Mailing"
-msgstr "郵寄"
-
-#. module: marketing_automation
 #: model:ir.model,name:marketing_automation.model_mailing_trace
 msgid "Mailing Statistics"
 msgstr "簡訊統計"
@@ -969,7 +970,9 @@ msgstr "信件"
 msgid ""
 "Mailings %(mailing_names)s are used in marketing campaigns. You should take "
 "care of this before unlinking the mailings."
-msgstr "有些郵件推廣活動，使用郵件「%(mailing_names)s」。取消郵件連結之前，請先處理這一點。"
+msgstr ""
+"有些郵件推廣活動，使用郵件「%(mailing_names)s」。取消郵件連結之前，請先處理這"
+"一點。"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
@@ -1013,6 +1016,7 @@ msgstr "自動化推廣"
 
 #. module: marketing_automation
 #: model:ir.actions.act_window,name:marketing_automation.mail_mass_mailing_action_marketing_automation
+#: model:ir.actions.act_window,name:marketing_automation.mailing_mailing_action_view_form
 msgid "Marketing Automation Mailings"
 msgstr "自動化推廣郵件發送"
 
@@ -1057,7 +1061,8 @@ msgstr "推廣追蹤"
 msgid ""
 "Marketing campaigns use mass mailings with some specific behavior; this "
 "field is used to indicate its statistics may be suspicious."
-msgstr "推廣計劃使用的群發郵件，有某些特別行為。此欄位是指出其統計數據或非完全可信。"
+msgstr ""
+"推廣計劃使用的群發郵件，有某些特別行為。此欄位是指出其統計數據或非完全可信。"
 
 #. module: marketing_automation
 #: model:ir.model,name:marketing_automation.model_mailing_mailing
@@ -1220,11 +1225,6 @@ msgid "Opened Ratio"
 msgstr "打開比例"
 
 #. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Options"
-msgstr "選項"
-
-#. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_participant_view_form
 msgid "Other activity"
@@ -1285,7 +1285,6 @@ msgstr "參加者摘要"
 #: model:ir.actions.act_window,name:marketing_automation.marketing_participants_action_reporting
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__participant_ids
 #: model:ir.ui.menu,name:marketing_automation.marketing_participants_menu
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_tree
 msgid "Participants"
@@ -1375,11 +1374,6 @@ msgstr "已被活動過濾器拒絕或記錄已刪除/歸檔"
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid "Reload a favorite filter"
 msgstr "重新載入最愛篩選器"
-
-#. module: marketing_automation
-#: model_terms:ir.ui.view,arch_db:marketing_automation.mailing_mailing_view_form_marketing_activity
-msgid "Remove from Templates"
-msgstr "從範本移除"
 
 #. module: marketing_automation
 #: model:ir.model.fields.selection,name:marketing_automation.selection__marketing_participant__state__unlinked
@@ -1552,8 +1546,8 @@ msgstr "社交媒體帖文"
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_campaign_view_form
 msgid ""
-"Some participants are already running on this campaign. Click on 'Update' to"
-" apply the modifications you've just made."
+"Some participants are already running on this campaign. Click on 'Update' to "
+"apply the modifications you've just made."
 msgstr "點選「更新」套用您剛剛完成的修改。"
 
 #. module: marketing_automation
@@ -1629,7 +1623,9 @@ msgstr "成功"
 msgid ""
 "Switching Target Model invalidates the existing activities. Either update "
 "your activity actions to match the new Target Model or delete them."
-msgstr "切換目標模型會使現有活動變為無效。請更新你的活動動作，以符合新的目標模型，或刪除動作。"
+msgstr ""
+"切換目標模型會使現有活動變為無效。請更新你的活動動作，以符合新的目標模型，或"
+"刪除動作。"
 
 #. module: marketing_automation
 #: model:ir.model.fields,field_description:marketing_automation.field_marketing_campaign__require_sync
@@ -1798,7 +1794,8 @@ msgid ""
 msgstr ""
 "用於根據模型欄位避免重複。\n"
 "例如，\n"
-"對於模型「客戶」，如果您不想處理具有相同電子信件地址的記錄，則在此處選擇電子信件欄位"
+"對於模型「客戶」，如果您不想處理具有相同電子信件地址的記錄，則在此處選擇電子"
+"信件欄位"
 
 #. module: marketing_automation
 #: model:res.groups,name:marketing_automation.group_marketing_automation_user
@@ -1864,17 +1861,21 @@ msgstr "工作流啟動時間"
 #. odoo-python
 #: code:addons/marketing_automation/models/marketing_activity.py:0
 msgid ""
-"You are trying to set the activity \"%(parent_activity)s\" as \"%(parent_type)s\" while its child \"%(activity)s\" has the trigger type \"%(trigger_type)s\"\n"
+"You are trying to set the activity \"%(parent_activity)s\" as \"%"
+"(parent_type)s\" while its child \"%(activity)s\" has the trigger type \"%"
+"(trigger_type)s\"\n"
 "Please modify one of those activities before saving."
 msgstr ""
-"你正嘗試將活動「%(parent_activity)s」設為 %(parent_type)s，而它的子活動「%(activity)s」的觸發器類型為 %(trigger_type)s。\n"
+"你正嘗試將活動「%(parent_activity)s」設為 %(parent_type)s，而它的子活動「%"
+"(activity)s」的觸發器類型為 %(trigger_type)s。\n"
 "請修改其中一項活動，然後才儲存。"
 
 #. module: marketing_automation
 #. odoo-python
 #: code:addons/marketing_automation/models/utm_campaign.py:0
 msgid ""
-"You cannot delete these UTM Campaigns as they are linked to the following marketing campaigns in Marketing Automation:\n"
+"You cannot delete these UTM Campaigns as they are linked to the following "
+"marketing campaigns in Marketing Automation:\n"
 "%(campaign_names)s"
 msgstr ""
 "您不能刪除這些UTM推廣計劃，因為它們連結至自動化推廣中的以下推廣計劃:\n"
@@ -1884,7 +1885,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/marketing_automation/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to the following marketing activities in Marketing Automation:\n"
+"You cannot delete these UTM Sources as they are linked to the following "
+"marketing activities in Marketing Automation:\n"
 "%(activities_names)s"
 msgstr ""
 "您不能刪除這些UTM來源，因為它們連結至自動化推廣中的以下推廣活動:\n"
@@ -1911,21 +1913,25 @@ msgstr "在<strong>工作流程開始</strong>之後，<br/>該"
 msgid ""
 "after the Participant <strong>clicked</strong>,<br/>on any link included in "
 "the <strong>Mailing</strong> sent by the Activity \""
-msgstr "在參加者<strong>按下</strong><br/>活動傳送的<strong>郵件</strong>內含的任何連結之後。活動：「"
+msgstr ""
+"在參加者<strong>按下</strong><br/>活動傳送的<strong>郵件</strong>內含的任何連"
+"結之後。活動：「"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid ""
 "after the Participant <strong>opened</strong> the <strong>Mailing</strong> "
 "sent by the Activity \""
-msgstr "在參加者<strong>開啟</strong>活動傳送的<strong>郵件</strong>之後。活動：「"
+msgstr ""
+"在參加者<strong>開啟</strong>活動傳送的<strong>郵件</strong>之後。活動：「"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid ""
-"after the Participant <strong>replied</strong> to the "
-"<strong>Mailing</strong> sent by the Activity \""
-msgstr "在參加者<strong>回覆</strong>活動傳送的<strong>郵件</strong>之後。活動：「"
+"after the Participant <strong>replied</strong> to the <strong>Mailing</"
+"strong> sent by the Activity \""
+msgstr ""
+"在參加者<strong>回覆</strong>活動傳送的<strong>郵件</strong>之後。活動：「"
 
 #. module: marketing_automation
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
@@ -2008,3 +2014,21 @@ msgstr "以生成一名測試參加者"
 #: model_terms:ir.ui.view,arch_db:marketing_automation.marketing_activity_summary_template
 msgid "will be"
 msgstr "將會"
+
+#~ msgid "Add to Templates"
+#~ msgstr "加入至範本"
+
+#~ msgid "Advanced"
+#~ msgstr "進階"
+
+#~ msgid "Attach a file"
+#~ msgstr "附加一個文件"
+
+#~ msgid "Mailing"
+#~ msgstr "郵寄"
+
+#~ msgid "Options"
+#~ msgstr "選項"
+
+#~ msgid "Remove from Templates"
+#~ msgstr "從範本移除"

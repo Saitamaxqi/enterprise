@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:50+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -97,9 +97,10 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"Keep track of and analyze intervention data. Identify recurring patterns and"
-" take preventive measures accordingly."
-msgstr "追跡し、作業データを分析します。繰返しパターンを特定し、それに応じて予防措置"
+"Keep track of and analyze intervention data. Identify recurring patterns and "
+"take preventive measures accordingly."
+msgstr ""
+"追跡し、作業データを分析します。繰返しパターンを特定し、それに応じて予防措置"
 "を講じます。"
 
 #. module: worksheet
@@ -159,16 +160,18 @@ msgstr "このテンプレートを使用しているモデル"
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
 "The template to print this worksheet template should be a QWeb template."
-msgstr "このワークシートをプリントするためのテンプレートはQwebテンプレートである必要"
+msgstr ""
+"このワークシートをプリントするためのテンプレートはQwebテンプレートである必要"
 "があります。"
 
 #. module: worksheet
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"Unfortunately, you cannot unlink this worksheet template from %s because the"
-" template is still connected to tasks within the company."
-msgstr "残念ながら、この%sのワークシートテンプレートはまだ社内のタスクとつながってい"
+"Unfortunately, you cannot unlink this worksheet template from %s because the "
+"template is still connected to tasks within the company."
+msgstr ""
+"残念ながら、この%sのワークシートテンプレートはまだ社内のタスクとつながってい"
 "るため、リンクを解除することはできません。"
 
 #. module: worksheet
@@ -195,18 +198,17 @@ msgstr "ワークシート"
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"You can't restrict this worksheet template to '%(selected_company)s' because"
-" it's still connected to tasks in '%(tasks_company)s' (and potentially other"
-" companies). Please either unlink those tasks from this worksheet template, "
+"You can't restrict this worksheet template to '%(selected_company)s' because "
+"it's still connected to tasks in '%(tasks_company)s' (and potentially other "
+"companies). Please either unlink those tasks from this worksheet template, "
 "move them to a project for the right company, or keep this worksheet "
 "template open to all companies."
 msgstr ""
-"このワークシートテンプレートは "
-"'%(selected_company)s'に限定することはできません。というのも、 "
-"'%(tasks_company)s'(そして潜在的には他の会社)のタスクとまだつながっているため"
-"です。このワークシートテンプレートからこれらのタスクのリンクを解除するか、適"
-"切な会社のプロジェクトに移動するか、このワークシートテンプレートを全ての会社"
-"にオープンにしておいて下さい。"
+"このワークシートテンプレートは '%(selected_company)s'に限定することはできませ"
+"ん。というのも、 '%(tasks_company)s'(そして潜在的には他の会社)のタスクとまだ"
+"つながっているためです。このワークシートテンプレートからこれらのタスクのリン"
+"クを解除するか、適切な会社のプロジェクトに移動するか、このワークシートテンプ"
+"レートを全ての会社にオープンにしておいて下さい。"
 
 #. module: worksheet
 #: model_terms:ir.ui.view,arch_db:worksheet.worksheet_template_view_form

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-10-02 01:54+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -145,8 +145,9 @@ msgstr "오름차순"
 msgid ""
 "At least one data source has an invalid model. Please delete it before "
 "editing this global filter."
-msgstr "하나 이상의 데이터 소스에 유효하지 않은 모델이 있습니다. 전체 필터를 "
-"편집하기 전에 제거하십시오."
+msgstr ""
+"하나 이상의 데이터 소스에 유효하지 않은 모델이 있습니다. 전체 필터를 편집하"
+"기 전에 제거하십시오."
 
 #. module: spreadsheet_edition
 #: model:ir.model.fields,field_description:spreadsheet_edition.field_spreadsheet_cell_thread__message_attachment_count
@@ -193,7 +194,8 @@ msgstr "취소"
 msgid ""
 "Changing the pivot definition requires to reload the data. It may take some "
 "time."
-msgstr "피벗 정의를 수정하려면 데이터를 다시 로드해야 하므로 완료하는 데 다소 시간이 "
+msgstr ""
+"피벗 정의를 수정하려면 데이터를 다시 로드해야 하므로 완료하는 데 다소 시간이 "
 "걸릴 수 있습니다."
 
 #. module: spreadsheet_edition
@@ -319,12 +321,12 @@ msgstr "내림차순"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/locale_status/locale_status.js:0
 msgid ""
-"Difference between user locale (%(user_locale)s) and spreadsheet locale "
-"(%(spreadsheet_locale)s). This spreadsheet is using the formats below:"
+"Difference between user locale (%(user_locale)s) and spreadsheet locale (%"
+"(spreadsheet_locale)s). This spreadsheet is using the formats below:"
 msgstr ""
-"사용자에 대한 로컬 설정 (%(user_locale)s)과 스프레드시트 로컬 "
-"설정(%(spreadsheet_locale)s)의 차이입니다. 이 스프레드시트는 아래와 같은 "
-"형식을 사용하고 있습니다:"
+"사용자에 대한 로컬 설정 (%(user_locale)s)과 스프레드시트 로컬 설정(%"
+"(spreadsheet_locale)s)의 차이입니다. 이 스프레드시트는 아래와 같은 형식을 사"
+"용하고 있습니다:"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -643,8 +645,9 @@ msgstr "목록 이름"
 msgid ""
 "List duplicated. Use the \"Re-insert list\" menu item to insert it in a "
 "sheet."
-msgstr "목록이 복사되었습니다. \"목록 다시 삽입\" 메뉴 항목을 사용하여 시트에 "
-"삽입합니다."
+msgstr ""
+"목록이 복사되었습니다. \"목록 다시 삽입\" 메뉴 항목을 사용하여 시트에 삽입합"
+"니다."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1214,38 +1217,39 @@ msgstr "문자"
 msgid ""
 "The history of your spreadsheet is corrupted and you are likely missing "
 "recent revisions. This feature cannot be used."
-msgstr "스프레드시트의 기록이 손상되어 최근 수정 내용이 누락되었을 수 있습니다. "
-"현재는 이 기능을 사용할 수 없습니다."
+msgstr ""
+"스프레드시트의 기록이 손상되어 최근 수정 내용이 누락되었을 수 있습니다. 현재"
+"는 이 기능을 사용할 수 없습니다."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.js:0
 msgid ""
-"The model (%(model)s) of this chart is not valid (it may have been "
-"renamed/deleted). Please re-insert a new chart."
+"The model (%(model)s) of this chart is not valid (it may have been renamed/"
+"deleted). Please re-insert a new chart."
 msgstr ""
-"이 차트의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 "
-"삭제되었을 수 있습니다) 새 차트를 삽입하십시오."
+"이 차트의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 삭제되었"
+"을 수 있습니다) 새 차트를 삽입하십시오."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 msgid ""
-"The model (%(model)s) of this list is not valid (it may have been "
-"renamed/deleted). Please re-insert a new list."
+"The model (%(model)s) of this list is not valid (it may have been renamed/"
+"deleted). Please re-insert a new list."
 msgstr ""
-"이 목록의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 "
-"삭제되었을 수 있습니다) 새 목록을 삽입하십시오."
+"이 목록의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 삭제되었"
+"을 수 있습니다) 새 목록을 삽입하십시오."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
 msgid ""
-"The model (%(model)s) of this pivot is not valid (it may have been "
-"renamed/deleted). Please re-insert a new pivot."
+"The model (%(model)s) of this pivot is not valid (it may have been renamed/"
+"deleted). Please re-insert a new pivot."
 msgstr ""
-"이 피벗의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 "
-"삭제되었을 수 있습니다) 새 피벗을 삽입하십시오."
+"이 피벗의 모델 (%(model)s)이 유효하지 않습니다. (이름이 변경되었거나 삭제되었"
+"을 수 있습니다) 새 피벗을 삽입하십시오."
 
 #. module: spreadsheet_edition
 #. odoo-python
@@ -1253,14 +1257,16 @@ msgstr ""
 msgid ""
 "The operation could not be applied because of a concurrent update. Please "
 "try again."
-msgstr "현재 업데이트를 진행 중이므로 이 작업을 적용할 수 없습니다. 나중에 다시 "
-"시도해 주세요."
+msgstr ""
+"현재 업데이트를 진행 중이므로 이 작업을 적용할 수 없습니다. 나중에 다시 시도"
+"해 주세요."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
 msgid ""
-"There are missing revisions that prevent to restore the whole edition history.\n"
+"There are missing revisions that prevent to restore the whole edition "
+"history.\n"
 "\n"
 "Would you like to load the more recent modifications?"
 msgstr ""

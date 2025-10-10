@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-10-03 12:11+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -51,7 +51,8 @@ msgstr "要アクション"
 msgid ""
 "All fields will be automatically populated by Artificial Intelligence, it "
 "might take 5 seconds."
-msgstr "全ての項目は人工知能により自動入力されます。5秒ほどかかる場合があります。"
+msgstr ""
+"全ての項目は人工知能により自動入力されます。5秒ほどかかる場合があります。"
 
 #. module: iap_extract
 #. odoo-python
@@ -85,7 +86,8 @@ msgstr "ドキュメントからデータを抽出するための基本クラス
 #. module: iap_extract
 #: model:ir.model,name:iap_extract.model_extract_mixin_with_words
 msgid "Base class to extract data from documents with OCRed words saved"
-msgstr "OCR処理された単語が保存されたドキュメントからデータを抽出するための基底クラス"
+msgstr ""
+"OCR処理された単語が保存されたドキュメントからデータを抽出するための基底クラス"
 
 #. module: iap_extract
 #. odoo-javascript
@@ -112,9 +114,10 @@ msgstr "フロー完了"
 #. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
 msgid ""
-"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and"
-" Artificial Intelligence."
-msgstr "仕入先請求書、経費、履歴書などのスキャン画像やPDFをOCRと人工知能でデジタル化"
+"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and "
+"Artificial Intelligence."
+msgstr ""
+"仕入先請求書、経費、履歴書などのスキャン画像やPDFをOCRと人工知能でデジタル化"
 "します。"
 
 #. module: iap_extract
@@ -376,9 +379,10 @@ msgstr "すでにデジタル化されていたため、一部のドキュメン
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
-"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo"
-" generate a new one or fill it with a valid token."
-msgstr "'invoice_ocr'のIAPアカウントトークンが無効です。削除して新しいトークンを生成"
+"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo "
+"generate a new one or fill it with a valid token."
+msgstr ""
+"'invoice_ocr'のIAPアカウントトークンが無効です。削除して新しいトークンを生成"
 "するか、有効なトークンを入力して下さい。"
 
 #. module: iap_extract
@@ -452,8 +456,9 @@ msgstr "ドキュメントからデータを抽出するには、クレジット
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
 "Your PDF file is protected by a password. The OCR can't extract data from it"
-msgstr "PDFファイルはパスワードで保護されています。 "
-"OCRはそこからデータを抽出できません"
+msgstr ""
+"PDFファイルはパスワードで保護されています。 OCRはそこからデータを抽出できませ"
+"ん"
 
 #. module: iap_extract
 #. odoo-python

@@ -3,13 +3,14 @@
 # * delivery_fedex_rest
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
-"PO-Revision-Date: 2025-09-15 12:02+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
+"PO-Revision-Date: 2025-10-09 19:15+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "delivery_fedex_rest/ja/>\n"
 "Language: ja\n"
@@ -22,7 +23,8 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>After finishing creation of the project, you will see your test API key, secret key and account number:</b>\n"
+"<b>After finishing creation of the project, you will see your test API key, "
+"secret key and account number:</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>プロジェクトの作成が完了すると、テスト用のAPIキー、シークレットキー、アカ"
@@ -32,42 +34,48 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>Once your account is created, go to the My Projects tab and create a new API project. Make sure to select the options indicated below:</b>\n"
+"<b>Once your account is created, go to the My Projects tab and create a new "
+"API project. Make sure to select the options indicated below:</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>アカウントが作成されたら、マイプロジェクトタブに移動し、新しいAPIプロジェ"
-"クトを作成します。 以下のオプションが選択されていることを確認して下さい:</b>"
-"\n"
+"クトを作成します。 以下のオプションが選択されていることを確認して下さい:</"
+"b>\n"
 "                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>To enable the creation of FedEx shipping labels, the last step is the Certification Process, click on 'Go to API certification' and follow the required steps to get your account certified for label creation.</b>\n"
-"                                <br/>These certifications usually require that you contact the FedEx support team by email."
+"<b>To enable the creation of FedEx shipping labels, the last step is the "
+"Certification Process, click on 'Go to API certification' and follow the "
+"required steps to get your account certified for label creation.</b>\n"
+"                                <br/>These certifications usually require "
+"that you contact the FedEx support team by email."
 msgstr ""
 "<b>FedExの発送ラベルを作成できるようにするには、最後のステップとして認証プロ"
-"セスが必要です。 'API認証に進む' "
-"をクリックし、ラベル作成用のアカウントを認証するための必要な手順に従って下さ"
-"い。</b>\n"
-"                                <br/"
-">認証には、通常、FedExサポートチームへのメール連絡が必要です。"
+"セスが必要です。 'API認証に進む' をクリックし、ラベル作成用のアカウントを認証"
+"するための必要な手順に従って下さい。</b>\n"
+"                                <br/>認証には、通常、FedExサポートチームへの"
+"メール連絡が必要です。"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>To move to production, generate a production key and link it to a FedEx account number (you can add/create one if necessary), you will receive production API and secret keys:</b>\n"
+"<b>To move to production, generate a production key and link it to a FedEx "
+"account number (you can add/create one if necessary), you will receive "
+"production API and secret keys:</b>\n"
 "                                <br/>"
 msgstr ""
-"<b>本番に移動するには、プロダクションキーを生成し、それをFedExアカウント番号("
-"必要に応じて追加/作成可)にリンクします。本番APIとシークレットキーを受け取りま"
-"す:</b>\n"
+"<b>本番に移動するには、プロダクションキーを生成し、それをFedExアカウント番号"
+"(必要に応じて追加/作成可)にリンクします。本番APIとシークレットキーを受け取り"
+"ます:</b>\n"
 "                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>When asked to select APIs for the project, make sure to enable at least the following APIs:</b>\n"
+"<b>When asked to select APIs for the project, make sure to enable at least "
+"the following APIs:</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>プロジェクト用にAPIを選択するよう求められた場合は、少なくとも以下のAPIを有"
@@ -83,11 +91,12 @@ msgstr "<span class=\"o_form_label\">梱包長さ単位</span>"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
 "<span invisible=\"fedex_rest_weight_unit != 'KG'\">Centimeters</span>\n"
-"                                <span invisible=\"fedex_rest_weight_unit != 'LB'\">Inches</span>"
+"                                <span invisible=\"fedex_rest_weight_unit != "
+"'LB'\">Inches</span>"
 msgstr ""
 "<span invisible=\"fedex_rest_weight_unit != 'KG'\">センチメートル</span>\n"
-"                                <span invisible="
-"\"fedex_rest_weight_unit != 'LB'\">インチ</span>"
+"                                <span invisible=\"fedex_rest_weight_unit != "
+"'LB'\">インチ</span>"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_key
@@ -110,7 +119,8 @@ msgstr "常に可能"
 msgid ""
 "Automated return label generation is not supported by FedEx for multi-"
 "package shipments. Please generate the return labels manually."
-msgstr "FedExでは、複数の梱包品を発送する際の返送用ラベルの自動作成はサポートされてい"
+msgstr ""
+"FedExでは、複数の梱包品を発送する際の返送用ラベルの自動作成はサポートされてい"
 "ません。手動で返送用ラベルを作成して下さい。"
 
 #. module: delivery_fedex_rest
@@ -142,10 +152,9 @@ msgid ""
 "this information using the FedEx Address API, we assume that the address is "
 "residential unless it is marked explicitly as a BUSINESS address."
 msgstr ""
-"宛先住所を住宅用とするするかどうかを決定します(追加料金の正確な計算を行うため"
-")。 注: "
-"FedEx住所APIを使用してこの情報を取得する際、ビジネス用として明確にマークされ"
-"ていない限り、その住所は住宅であると見なされます。"
+"宛先住所を住宅用とするするかどうかを決定します(追加料金の正確な計算を行うた"
+"め)。 注: FedEx住所APIを使用してこの情報を取得する際、ビジネス用として明確に"
+"マークされていない限り、その住所は住宅であると見なされます。"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__display_name
@@ -471,8 +480,8 @@ msgstr "Fedex US"
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
 msgid ""
 "For international shipments (or some intra-country shipments), a commercial "
-"invoice might be required for customs clearance. This commercial invoice can"
-" be generated by FedEx based on shipment data and returned as PDF for "
+"invoice might be required for customs clearance. This commercial invoice can "
+"be generated by FedEx based on shipment data and returned as PDF for "
 "printing and attaching to the shipment or manual electronic submission to "
 "FedEx. It can also be submitted directly as ETD information to FedEx upon "
 "shipment validation."
@@ -534,7 +543,7 @@ msgstr "ラベルサイズ"
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_residential_address__never
 msgid "Never"
-msgstr "しない"
+msgstr "確認しない"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields.selection,name:delivery_fedex_rest.selection__delivery_carrier__fedex_rest_documentation_type__none
@@ -743,12 +752,13 @@ msgstr "在庫梱包タイプ"
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_ship_request
 msgid ""
 "The extra data in FedEx is organized like the inside of a json file.\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "More info on https://www.developer.fedex.com"
 msgstr ""
 "FedExの追加データは、jsonファイルの内部のように構成されています。\n"
-"この機能は高度な技術設定であるため、操作方法をご存知の場合のみご利用下さい。"
-"\n"
+"この機能は高度な技術設定であるため、操作方法をご存知の場合のみご利用下さ"
+"い。\n"
 "詳細については、https://www.developer.fedex.com をご覧下さい。"
 
 #. module: delivery_fedex_rest
@@ -785,9 +795,10 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_email_notifications
 msgid ""
-"When enabled, the customer will receive email notifications from FedEx about"
-" this shipment (when an email address is configured on the customer)"
-msgstr "有効にすると、顧客はFedExからこの出荷に関するメール通知を受け取ります(顧客にE"
+"When enabled, the customer will receive email notifications from FedEx about "
+"this shipment (when an email address is configured on the customer)"
+msgstr ""
+"有効にすると、顧客はFedExからこの出荷に関するメール通知を受け取ります(顧客にE"
 "メールアドレスが設定されている場合)。"
 
 #. module: delivery_fedex_rest
@@ -800,11 +811,9 @@ msgid ""
 "BUSINESS_NATIONAL."
 msgstr ""
 "FedExに提供される、生成された顧客請求書に記載される、BUSINESS_UNIONタイプの主"
-"要会社の税識別子です。 "
-"国税番号に加えてIOSSまたはEORI番号を使用する必要がある場合に、こちらを使用し"
-"て下さい。 "
-"通常の登録番号が提供されない場合は、BUSINESS_NATIONALの形式で会社の登録番号が"
-"使用されます。"
+"要会社の税識別子です。 国税番号に加えてIOSSまたはEORI番号を使用する必要がある"
+"場合に、こちらを使用して下さい。 通常の登録番号が提供されない場合は、"
+"BUSINESS_NATIONALの形式で会社の登録番号が使用されます。"
 
 #. module: delivery_fedex_rest
 #. odoo-python

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 15:22+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -187,8 +187,8 @@ msgstr "D－全球快递"
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__delivery_type__dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__stock_package_type__package_carrier_type__dhl
-msgid "DHL"
-msgstr "DHL"
+msgid "DHL (Legacy)"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_account_number
@@ -219,11 +219,6 @@ msgid "DHL EU -> International"
 msgstr "DHL EU -> International"
 
 #. module: delivery_dhl
-#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
-msgid "DHL Package Type"
-msgstr "DHL 包裹类型"
-
-#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_password
 msgid "DHL Password"
 msgstr "DHL密码"
@@ -232,12 +227,6 @@ msgstr "DHL密码"
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_product_code
 msgid "DHL Product"
 msgstr "DHL 产品"
-
-#. module: delivery_dhl
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_dhl.res_config_settings_view_form_stock
-msgid "DHL Shipping Methods"
-msgstr "DHL运输方式"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -265,7 +254,8 @@ msgstr "DHL US -> International"
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
-msgid "DHL account number is missing, please modify your delivery method settings."
+msgid ""
+"DHL account number is missing, please modify your delivery method settings."
 msgstr "缺少 DHL 账号，请修改配送方式设置。"
 
 #. module: delivery_dhl
@@ -281,9 +271,20 @@ msgid "DHL password is missing, please modify your delivery method settings."
 msgstr "DHL 密码丢失，请修改递送方式设置。"
 
 #. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
+msgid "DHLxw Package Type"
+msgstr ""
+
+#. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_duty_payment
 msgid "Dhl Duty Payment"
 msgstr "DHL关税款项"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_dhl.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_dutiable
@@ -335,6 +336,12 @@ msgstr "提示：目的地可能不需要征税选项。"
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_product_code__i
 msgid "I - Break Bulk Economy"
 msgstr "I - 散装经济"
+
+#. module: delivery_dhl
+#: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_dhl.field_stock_package_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_package_dimension_unit__i
@@ -425,8 +432,12 @@ msgstr "包裹重量单位"
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
-msgid "Please define an incoterm in the associated sale order or set a default incoterm for the company in the accounting's settings."
-msgstr "请在关联的销售订单中定义一个国际贸易术语，或在会计设置中为公司设置一个默认的贸易术语。"
+msgid ""
+"Please define an incoterm in the associated sale order or set a default "
+"incoterm for the company in the accounting's settings."
+msgstr ""
+"请在关联的销售订单中定义一个国际贸易术语，或在会计设置中为公司设置一个默认的"
+"贸易术语。"
 
 #. module: delivery_dhl
 #. odoo-python
@@ -509,7 +520,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The address of your company warehouse is missing or wrong (Missing field(s) :\n"
+"The address of your company warehouse is missing or wrong (Missing "
+"field(s) :\n"
 " %s)"
 msgstr ""
 "公司仓库的地址缺失或者错误（缺失字段（集）：\n"
@@ -519,18 +531,21 @@ msgstr ""
 #: model:ir.model.fields,help:delivery_dhl.field_delivery_carrier__dhl_custom_data_request
 msgid ""
 "The custom data in DHL is organized like the inside of a json file.\n"
-"        There are 3 possible keys: 'rate', 'ship', 'return', to which you can add your custom data.\n"
+"        There are 3 possible keys: 'rate', 'ship', 'return', to which you "
+"can add your custom data.\n"
 "        More info on https://xmlportal.dhl.com/"
 msgstr ""
 "DHL中的自定义数据像json文件的内部一样组织。\n"
-"        有3个可能的键：'rate'，'ship'，'return'，您可以将自定义数据添加到其中。\n"
+"        有3个可能的键：'rate'，'ship'，'return'，您可以将自定义数据添加到其"
+"中。\n"
 "        更多资料https://xmlportal.dhl.com/"
 
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/dhl_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "因为缺少以下产品的重量，所以无法计算出估计的运输价格。\n"
@@ -539,7 +554,9 @@ msgstr ""
 #. module: delivery_dhl
 #. odoo-python
 #: code:addons/delivery_dhl/models/delivery_dhl.py:0
-msgid "There is no price available for this shipping, you should rather try with the DHL product %s"
+msgid ""
+"There is no price available for this shipping, you should rather try with "
+"the DHL product %s"
 msgstr "此运费没有价格，你应该尝试使用DHL产品%s"
 
 #. module: delivery_dhl
@@ -588,3 +605,12 @@ msgstr "Z - 目的地运费"
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__dhl_label_image_format__zpl2
 msgid "ZPL2"
 msgstr "ZPL2"
+
+#~ msgid "DHL"
+#~ msgstr "DHL"
+
+#~ msgid "DHL Package Type"
+#~ msgstr "DHL 包裹类型"
+
+#~ msgid "DHL Shipping Methods"
+#~ msgstr "DHL运输方式"

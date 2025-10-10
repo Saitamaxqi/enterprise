@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:27+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -27,21 +28,22 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid ""
-"%(appointment_type_name)s: Please configure your Google Reserve Merchant for"
-" Google Reserve."
+"%(appointment_type_name)s: Please configure your Google Reserve Merchant for "
+"Google Reserve."
 msgstr ""
 
 #. module: appointment_google_reserve
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid ""
-"%(appointment_type_name)s: The Google Bookings integration only works in the"
-" auto-assign mode."
+"%(appointment_type_name)s: The Google Bookings integration only works in the "
+"auto-assign mode."
 msgstr ""
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-msgid "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
+msgid ""
+"<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 msgstr ""
 
 #. module: appointment_google_reserve
@@ -54,7 +56,8 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid ""
-"<span class=\"fa fa-check fa-hourglass me-1\"/>Your Appointment Type is being synchronized with Google Reserve.<br/>\n"
+"<span class=\"fa fa-check fa-hourglass me-1\"/>Your Appointment Type is "
+"being synchronized with Google Reserve.<br/>\n"
 "                                This can take up to 24 hours to be active."
 msgstr ""
 
@@ -253,8 +256,8 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
 msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive"
-" mass mailing sms anymore, from any list"
+"If the sanitized phone number is on the blacklist, the contact won't receive "
+"mass mailing sms anymore, from any list"
 msgstr ""
 
 #. module: appointment_google_reserve
@@ -358,8 +361,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid ""
 "Ready to synchronize your Appointment Type with Google Reserve? Make sure "
-"your setup is complete — changes may take up to 24 hours to appear once "
-"live."
+"your setup is complete — changes may take up to 24 hours to appear once live."
 msgstr ""
 
 #. module: appointment_google_reserve

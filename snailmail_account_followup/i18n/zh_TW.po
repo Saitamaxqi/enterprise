@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* snailmail_account_followup
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: snailmail_account_followup
@@ -26,8 +27,8 @@ msgid ""
 "title=\"The letter will be sent using the IAP service from Odoo.&#10;Make "
 "sure you have enough credits on your account or proceed to a recharge.\"/>"
 msgstr ""
-"<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"警告\" title=\"信件將以 "
-"Odoo 的 IAP 服務發送。&#10;請確保你的帳戶有足夠點數，或前往增值。\"/>"
+"<i class=\"fa fa-info-circle\" role=\"img\" aria-label=\"警告\" title=\"信件"
+"將以 Odoo 的 IAP 服務發送。&#10;請確保你的帳戶有足夠點數，或前往增值。\"/>"
 
 #. module: snailmail_account_followup
 #: model_terms:ir.ui.view,arch_db:snailmail_account_followup.manual_reminder_view_form_inherit_snailmail

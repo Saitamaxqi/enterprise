@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
-"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/social/th/>"
-"\n"
+"Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/social/th/"
+">\n"
 "Language: th\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,7 +48,8 @@ msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
 
 #. module: social
@@ -64,10 +65,9 @@ msgstr "<i class=\"oi oi-arrow-left\"/> กลับไปที่ Odoo"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
-msgstr ""
-"<strong>ยินดีด้วย! กลับมาตรวจสอบสถิติของคุณอีกครั้งในไม่กี่นาที</strong>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
+msgstr "<strong>ยินดีด้วย! กลับมาตรวจสอบสถิติของคุณอีกครั้งในไม่กี่นาที</strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
@@ -328,8 +328,7 @@ msgstr ""
 msgid ""
 "Content of the social post message that is post-processed (links are "
 "shortened, UTMs, ...)"
-msgstr ""
-"เนื้อหาของข้อความที่โพสต์บนโซเชียลซึ่งมีการประมวลผลภายหลัง (ลิงก์สั้นลง, UTM, ...)"
+msgstr "เนื้อหาของข้อความที่โพสต์บนโซเชียลซึ่งมีการประมวลผลภายหลัง (ลิงก์สั้นลง, UTM, ...)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__has_streams
@@ -355,8 +354,8 @@ msgstr "สร้างโพสต์"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
 "สร้างบัญชีอื่นสำหรับ%(media_names)s สำหรับบริษัทนี้หรือสอบถาม %(company_names)s "
 "เพื่อแชร์บัญชีของพวกเขา"
@@ -542,8 +541,8 @@ msgstr "การมีส่วนร่วม:"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr "ทุกครั้งที่สร้างบัญชี จะมีการสร้าง utm.medium และเชื่อมโยงกับบัญชี"
 
 #. module: social
@@ -732,8 +731,7 @@ msgstr "เป็นผู้ติดตาม"
 msgid ""
 "It appears there is an issue with the Social Media link, click here to link "
 "the account again"
-msgstr ""
-"ดูเหมือนว่าจะมีปัญหากับลิงก์โซเชียลมีเดีย คลิกที่นี่เพื่อเชื่อมโยงบัญชีอีกครั้ง"
+msgstr "ดูเหมือนว่าจะมีปัญหากับลิงก์โซเชียลมีเดีย คลิกที่นี่เพื่อเชื่อมโยงบัญชีอีกครั้ง"
 
 #. module: social
 #. odoo-javascript
@@ -848,8 +846,7 @@ msgstr "เชื่อมโยงบัญชี"
 msgid ""
 "Link an account to a company to restrict its usage or keep empty to let all "
 "companies use it."
-msgstr ""
-"เชื่อมโยงบัญชีกับบริษัทเพื่อจำกัดการใช้งานหรือเว้นว่างไว้เพื่อให้ทุกบริษัทใช้งานได้"
+msgstr "เชื่อมโยงบัญชีกับบริษัทเพื่อจำกัดการใช้งานหรือเว้นว่างไว้เพื่อให้ทุกบริษัทใช้งานได้"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__live_post_link
@@ -934,8 +931,7 @@ msgstr "โพสต์ข้อความ"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr "ข้อความถูกโพสต์บางส่วน นี่คือรายการที่ไม่สามารถโพสต์ได้: %s"
 
 #. module: social
@@ -947,8 +943,10 @@ msgstr "ข้อความ"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "social.live.posts ส่วนใหญ่เปลี่ยนจาก พร้อมที่จะโพสต์/ล้มเหลว เนื่องจากเป็นผลจากการเรียก "
 "API ของบุคคลที่สามเพียงครั้งเดียว\n"
@@ -1114,8 +1112,7 @@ msgstr "จำนวนเรื่องราวที่สร้างจา
 msgid ""
 "Number of times people have engaged with your posts (likes, comments, "
 "shares,...)"
-msgstr ""
-"จำนวนครั้งที่ผู้คนมีส่วนร่วมกับโพสต์ของคุณ (ถูกใจ แสดงความคิดเห็น แชร์...)"
+msgstr "จำนวนครั้งที่ผู้คนมีส่วนร่วมกับโพสต์ของคุณ (ถูกใจ แสดงความคิดเห็น แชร์...)"
 
 #. module: social
 #. odoo-javascript
@@ -1361,8 +1358,8 @@ msgstr "วันที่ตามกำหนดการ"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr "บัญชีที่เลือก (%(account_list)s) ไม่ตรงกับบริษัทที่เลือก (%(company)s)"
 
 #. module: social
@@ -1384,8 +1381,7 @@ msgstr "ลำดับที่ใช้ในคำสั่งสตรีม
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
 msgid ""
 "Set a maximum number of characters can be posted in post. 0 for no limit."
-msgstr ""
-"กำหนดจำนวนตัวอักษรสูงสุดที่สามารถโพสต์ได้ในโพสต์ หากกำหนดเป็น 0 จะถือว่าไม่จำกัด"
+msgstr "กำหนดจำนวนตัวอักษรสูงสุดที่สามารถโพสต์ได้ในโพสต์ หากกำหนดเป็น 0 จะถือว่าไม่จำกัด"
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_global_settings
@@ -1512,8 +1508,7 @@ msgstr "โซเชียล: เผยแพร่โพสต์ตามก�
 msgid ""
 "Sorry, you're not allowed to re-link this account, please contact your "
 "administrator."
-msgstr ""
-"ขออภัย คุณไม่ได้รับอนุญาตให้เชื่อมโยงบัญชีนี้อีกครั้ง โปรดติดต่อผู้ดูแลระบบของคุณ"
+msgstr "ขออภัย คุณไม่ได้รับอนุญาตให้เชื่อมโยงบัญชีนี้อีกครั้ง โปรดติดต่อผู้ดูแลระบบของคุณ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__source_id
@@ -1523,10 +1518,9 @@ msgstr "แหล่งที่มา"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
-msgstr ""
-"ฟิลด์เทคนิคพิเศษที่ถือ dict ที่มีชื่อไลฟ์โพสต์ตามไอดีมีเดีย (ใช้สำหรับมุมมองคัมบัง)"
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
+msgstr "ฟิลด์เทคนิคพิเศษที่ถือ dict ที่มีชื่อไลฟ์โพสต์ตามไอดีมีเดีย (ใช้สำหรับมุมมองคัมบัง)"
 
 #. module: social
 #. odoo-javascript
@@ -1632,8 +1626,7 @@ msgstr "บัญชีที่จะเผยแพร่โพสต์นี
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr "ชื่อผู้เขียนโพสต์ตามข้อมูลบุคคลที่สาม (เช่น \"John Doe\")"
 
 #. module: social
@@ -1655,8 +1648,7 @@ msgstr "วันที่เผยแพร่โพสต์ตามข้อ
 msgid ""
 "The reason why a post is not successfully posted on the Social Media (eg: "
 "connection error, duplicated post, ...)."
-msgstr ""
-"สาเหตุที่โพสต์ไม่สำเร็จบนโซเชียลมีเดีย (เช่น: ข้อผิดพลาดในการเชื่อมต่อ โพสต์ซ้ำ ...)"
+msgstr "สาเหตุที่โพสต์ไม่สำเร็จบนโซเชียลมีเดีย (เช่น: ข้อผิดพลาดในการเชื่อมต่อ โพสต์ซ้ำ ...)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
@@ -1678,8 +1670,7 @@ msgstr "มีข้อผิดพลาดในการโพสต์บน
 msgid ""
 "This token can be used to verify that an incoming request from a social "
 "provider has not been forged."
-msgstr ""
-"โทเค็นนี้สามารถใช้เพื่อตรวจสอบว่าคำขอขาเข้าจากผู้ให้บริการโซเชียลไม่ถูกปลอมแปลง"
+msgstr "โทเค็นนี้สามารถใช้เพื่อตรวจสอบว่าคำขอขาเข้าจากผู้ให้บริการโซเชียลไม่ถูกปลอมแปลง"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__name
@@ -1754,8 +1745,8 @@ msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
 msgstr ""
-"ใช้ในการเปรียบเทียบเมื่อเราต้องการจำกัดฟีเจอร์บางอย่างสำหรับสื่อเฉพาะ ('facebook', 'x', "
-"...)"
+"ใช้ในการเปรียบเทียบเมื่อเราต้องการจำกัดฟีเจอร์บางอย่างสำหรับสื่อเฉพาะ ('facebook', "
+"'x', ...)"
 
 #. module: social
 #. odoo-javascript
@@ -1789,10 +1780,9 @@ msgstr "จาก"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
-msgstr ""
-"เมื่อโพสต์ทั่วโลกถูกเผยแพร่ วันที่เผยแพร่โพสต์ย่อยจริงอาจแตกต่างขึ้นอยู่กับสื่อ"
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
+msgstr "เมื่อโพสต์ทั่วโลกถูกเผยแพร่ วันที่เผยแพร่โพสต์ย่อยจริงอาจแตกต่างขึ้นอยู่กับสื่อ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__image_ids
@@ -1835,7 +1825,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "คุณไม่สามารถลบวิธีที่เข้ามา UTM เหล่านี้ได้เนื่องจากเชื่อมโยงกับบัญชีโซเชียลต่อไปนี้ในโซเชียล:\n"
@@ -1845,7 +1836,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "คุณไม่สามารถลบแหล่งที่มา UTM เหล่านี้ได้ เนื่องจากลิงก์ไปยังโพสต์โซเชียลในโซเชียล:\n"

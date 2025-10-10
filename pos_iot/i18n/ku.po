@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:38+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-11 14:38+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -74,8 +75,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid ""
-"Click on Proceed to .../Add Exception/Visit this website/Go on to the "
-"webpage"
+"Click on Proceed to .../Add Exception/Visit this website/Go on to the webpage"
 msgstr ""
 
 #. module: pos_iot
@@ -422,9 +422,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid ""
-"The IoT Box is connected, but the receipt printer isn't. In order to continue, ensure your printer is connected:\n"
+"The IoT Box is connected, but the receipt printer isn't. In order to "
+"continue, ensure your printer is connected:\n"
 "\n"
-"1/ for USB printers, check the cable between the IoT Box and the receipt printer\n"
+"1/ for USB printers, check the cable between the IoT Box and the receipt "
+"printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
 
@@ -440,8 +442,8 @@ msgstr ""
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid ""
-"The transactions are processed by Six via an IoT box. Setup your terminal on"
-" the related payment method."
+"The transactions are processed by Six via an IoT box. Setup your terminal on "
+"the related payment method."
 msgstr ""
 
 #. module: pos_iot

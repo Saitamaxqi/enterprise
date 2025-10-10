@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:24+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -282,18 +282,22 @@ msgstr "最終更新日"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in Europe support exporting SAF-T file for audit purposes.\n"
+"Most accounting software in Europe support exporting SAF-T file for audit "
+"purposes.\n"
 "                            Use the"
-msgstr "フランスの大抵の会計ソフトは、監査目的としたSAF-Tファイルのエクスポートに対応"
+msgstr ""
+"フランスの大抵の会計ソフトは、監査目的としたSAF-Tファイルのエクスポートに対応"
 "しています。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in France support exporting FEC file for audit purposes.\n"
+"Most accounting software in France support exporting FEC file for audit "
+"purposes.\n"
 "                            Use the"
-msgstr "フランス大抵の会計ソフトは、監査目的としたFECファイルのエクスポートに対応して"
+msgstr ""
+"フランス大抵の会計ソフトは、監査目的としたFECファイルのエクスポートに対応して"
 "います。"
 
 #. module: account_base_import
@@ -348,14 +352,15 @@ msgstr "SIE 5 インポートモジュール"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data\n"
-"                            from and to other accounting applications. Odoo support importing data from both type 4 and 5 of SIE."
+"The SIE standard file format is very common in Sweden for several purposes "
+"such as auditing, importing and exporting data\n"
+"                            from and to other accounting applications. Odoo "
+"support importing data from both type 4 and 5 of SIE."
 msgstr ""
 "SIE標準ファイル形式は、スウェーデンでは監査、他の会計アプリケーションとのデー"
 "タのインポートおよびエクスポートなど、\n"
-"                            "
-"さまざまな用途で広く使用されています。Odooは、SIEのタイプ4とタイプ5の両方から"
-"のデータインポートをサポートしています。"
+"                            さまざまな用途で広く使用されています。Odooは、SIE"
+"のタイプ4とタイプ5の両方からのデータインポートをサポートしています。"
 
 #. module: account_base_import
 #. odoo-python
@@ -367,14 +372,13 @@ msgstr "インポートファイルには以下の必須カラムがありませ
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Tip: we recommend importing your initial balances using the Chart of Account"
-" import. Only use the Journal Items import for unreconciled entries in your "
+"Tip: we recommend importing your initial balances using the Chart of Account "
+"import. Only use the Journal Items import for unreconciled entries in your "
 "Payable and Receivable Accounts."
 msgstr ""
-"ヒント: "
-"開始残高のインポートは、勘定科目表インポートを使用することをお勧めします。売"
-"掛及び買掛の勘定科目に未収・未払の項目がある場合のみ、仕訳明細のインポートを"
-"使用してください。"
+"ヒント: 開始残高のインポートは、勘定科目表インポートを使用することをお勧めし"
+"ます。売掛及び買掛の勘定科目に未収・未払の項目がある場合のみ、仕訳明細のイン"
+"ポートを使用してください。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -386,7 +390,8 @@ msgstr "既定フォーマットで、より速くデータをインポートし
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use templates to import CSV or Excel for your accounting setup."
-msgstr "会計設定をするために、テンプレートを使ってCSVやExcelをインポートします。"
+msgstr ""
+"会計設定をするために、テンプレートを使ってCSVやExcelをインポートします。"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -416,8 +421,9 @@ msgstr "Winbooksは、Exactに買収されたベルギーの会計ソフトで�
 msgid ""
 "You must provide both the `code_mapping_ids/company_id` and the "
 "`code_mapping_ids/code` columns."
-msgstr "`code_mapping_ids/company_id` および `code_mapping_ids/code` "
-"列両方が必要です。"
+msgstr ""
+"`code_mapping_ids/company_id` および `code_mapping_ids/code` 列両方が必要で"
+"す。"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
@@ -429,32 +435,37 @@ msgstr "インポート済勘定科目"
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
 "is required to import the SIE 4 files.\n"
-"                                    By design, it's also backward compatible with previous SIE versions (version 1 up to 3).\n"
-"                                    This import will not validate the correctness of the file."
+"                                    By design, it's also backward compatible "
+"with previous SIE versions (version 1 up to 3).\n"
+"                                    This import will not validate the "
+"correctness of the file."
 msgstr ""
 "が、SIE 4ファイルをインポートするには必要です。\n"
-"                                    "
-"設計上、以前のSIEバージョン(バージョン1から3まで)との下位互換性もあります。\n"
-"                                    "
-"このインポートでは、ファイルの正確性が検証されることはありません。"
+"                                    設計上、以前のSIEバージョン(バージョン1か"
+"ら3まで)との下位互換性もあります。\n"
+"                                    このインポートでは、ファイルの正確性が検"
+"証されることはありません。"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
 "is required to import the SIE 5 and SIE 5 entry files.\n"
-"                                    For general SIE 5, we will set up your charts of accounts balances, journals, partners, and the history of journal entries\n"
-"                                    (journals data must be present in the file).\n"
-"                                    For the SIE 5 entry, only entries and partners will be created, the rest must already be present in the system."
+"                                    For general SIE 5, we will set up your "
+"charts of accounts balances, journals, partners, and the history of journal "
+"entries\n"
+"                                    (journals data must be present in the "
+"file).\n"
+"                                    For the SIE 5 entry, only entries and "
+"partners will be created, the rest must already be present in the system."
 msgstr ""
 "SIE 5 および SIE 5 仕訳ファイルをインポートする必要があります。\n"
-"                                    一般的な SIE 5 "
-"については、勘定科目残高表、仕訳帳、取引先、仕訳帳の履歴を設定します\n"
-"                                    "
-"(仕訳帳データはファイル内に存在する必要があります)。\n"
-"                                    SIE 5 "
-"仕訳については、仕訳と取引先のみが作成され、残りのデータはすでにシステム内に"
-"存在している必要があります。"
+"                                    一般的な SIE 5 については、勘定科目残高"
+"表、仕訳帳、取引先、仕訳帳の履歴を設定します\n"
+"                                    (仕訳帳データはファイル内に存在する必要が"
+"あります)。\n"
+"                                    SIE 5 仕訳については、仕訳と取引先のみが"
+"作成され、残りのデータはすでにシステム内に存在している必要があります。"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
@@ -498,12 +509,12 @@ msgstr "テンプレートを使います。"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of accounts, contacts, taxes, history of journal entries, and documents.\n"
+"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of "
+"accounts, contacts, taxes, history of journal entries, and documents.\n"
 "                            Support versions: Winbooks Desktop 5.50, 6, 7, 8."
 msgstr ""
-"を使って、Winbooks完全バックアップ (整備 > "
-"バックアップ)をインポートして、勘定科目表、連絡先、税金、仕訳履歴、及びドキュ"
-"メントを取得します。\n"
+"を使って、Winbooks完全バックアップ (整備 > バックアップ)をインポートして、勘"
+"定科目表、連絡先、税金、仕訳履歴、及びドキュメントを取得します。\n"
 "対応バージョン: Winbooks Desktop 5.50, 6, 7, 8"
 
 #. module: account_base_import
@@ -512,7 +523,8 @@ msgstr ""
 msgid ""
 "to import the FEC file. We will setup your charts of accounts and the "
 "history of journal entries."
-msgstr "を使って、FECファイルをインポートしましょう。こちらが勘定科目表及び仕訳履歴を"
+msgstr ""
+"を使って、FECファイルをインポートしましょう。こちらが勘定科目表及び仕訳履歴を"
 "設定します。"
 
 #. module: account_base_import

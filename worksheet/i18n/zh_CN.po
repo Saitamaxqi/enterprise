@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:50+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 15:32+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -97,8 +97,8 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"Keep track of and analyze intervention data. Identify recurring patterns and"
-" take preventive measures accordingly."
+"Keep track of and analyze intervention data. Identify recurring patterns and "
+"take preventive measures accordingly."
 msgstr "追踪和分析干预数据。识别反复出现的模式，并采取相应的预防措施。"
 
 #. module: worksheet
@@ -164,10 +164,11 @@ msgstr "打印这个工作表模板的模板应该是一个QWeb模板。"
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"Unfortunately, you cannot unlink this worksheet template from %s because the"
-" template is still connected to tasks within the company."
-msgstr "遗憾的是，您无法从 %s "
-"取消对该工作表模板的链接，因为该模板仍与公司内的任务相连。"
+"Unfortunately, you cannot unlink this worksheet template from %s because the "
+"template is still connected to tasks within the company."
+msgstr ""
+"遗憾的是，您无法从 %s 取消对该工作表模板的链接，因为该模板仍与公司内的任务相"
+"连。"
 
 #. module: worksheet
 #: model:ir.model.fields,field_description:worksheet.field_worksheet_template__worksheet_count
@@ -193,15 +194,15 @@ msgstr "工时单"
 #. odoo-python
 #: code:addons/worksheet/models/worksheet_template.py:0
 msgid ""
-"You can't restrict this worksheet template to '%(selected_company)s' because"
-" it's still connected to tasks in '%(tasks_company)s' (and potentially other"
-" companies). Please either unlink those tasks from this worksheet template, "
+"You can't restrict this worksheet template to '%(selected_company)s' because "
+"it's still connected to tasks in '%(tasks_company)s' (and potentially other "
+"companies). Please either unlink those tasks from this worksheet template, "
 "move them to a project for the right company, or keep this worksheet "
 "template open to all companies."
 msgstr ""
-"您不能将此工作表模板设定为仅限%(selected_company)s使用，因为它仍连接至%(tasks"
-"_company)s的任务（可能还有其他公司的任务）。请取消这些任务与此工作表模板的连"
-"接，将它们移动到正确公司的项目中，或者保持该工作表模板对所有公司开放。"
+"您不能将此工作表模板设定为仅限%(selected_company)s使用，因为它仍连接至%"
+"(tasks_company)s的任务（可能还有其他公司的任务）。请取消这些任务与此工作表模"
+"板的连接，将它们移动到正确公司的项目中，或者保持该工作表模板对所有公司开放。"
 
 #. module: worksheet
 #: model_terms:ir.ui.view,arch_db:worksheet.worksheet_template_view_form

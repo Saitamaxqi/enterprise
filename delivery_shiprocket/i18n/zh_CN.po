@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:09+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:30+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -34,8 +34,8 @@ msgstr "<b>复制 API 用户的电子邮件和密码，然后在发货方式设�
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Fill the details and Click on Save Channel &amp; Test Connection "
-"button.</b>"
+"<b>Fill the details and Click on Save Channel &amp; Test Connection button.</"
+"b>"
 msgstr "<b>填写详细信息并单击 \"保存频道和测试连接\" 按钮。</b>"
 
 #. module: delivery_shiprocket
@@ -44,8 +44,8 @@ msgid ""
 "<b>In Odoo configuration click on <i class=\"fa fa-refresh oe_inline\"/> "
 "icon near Shiprocket Channel to sync newly created channels.</b>"
 msgstr ""
-"<b>在 Odoo 设置中点击<i class=\"fa fa-refresh oe_inline\"/>Shiprocket "
-"频道附近的图标，同步新创建的频道。</b>"
+"<b>在 Odoo 设置中点击<i class=\"fa fa-refresh oe_inline\"/>Shiprocket 频道附"
+"近的图标，同步新创建的频道。</b>"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -55,8 +55,10 @@ msgstr "<b>现在点击手动添加</b>"
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
 msgid ""
-"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </b>\n"
-"                                <b>You can add new API User from the right side of the page.</b>\n"
+"<b>Once your account is created, go to Settings &gt; API &gt; Configure. </"
+"b>\n"
+"                                <b>You can add new API User from the right "
+"side of the page.</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>创建账户后，打开设置 > API > 配置。 </b>\n"
@@ -73,21 +75,20 @@ msgstr "<b>要创建频道，请打开 Shiprocket 频道</b>"
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> In test environment, to avoid "
 "charges, your shippings are automatically <b>cancelled</b> after the label "
-"creation. The amount of cancelled shipment will be returned in next 3-4 "
-"days."
+"creation. The amount of cancelled shipment will be returned in next 3-4 days."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\""
-"/>在测试环境中，为避免产生费用，您的发货将在创建标签后自动<b>取消</b>。"
-"取消发货的金额将在接下来 3 - 4天内退还。"
+"<i class=\"fa fa-exclamation-triangle\"/>在测试环境中，为避免产生费用，您的发"
+"货将在创建标签后自动<b>取消</b>。取消发货的金额将在接下来 3 - 4天内退还。"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_manifests_generate
 msgid ""
-"A manifest is a document that is required by some carriers to streamline the"
-" pickup process.particularly when shipping out a high-volume of ecommerce "
+"A manifest is a document that is required by some carriers to streamline the "
+"pickup process.particularly when shipping out a high-volume of ecommerce "
 "orders."
-msgstr "清单是一些承运商为简化提货流程而要求提供的文件，尤其是运输大量电子商务订单时"
-"。"
+msgstr ""
+"清单是一些承运商为简化提货流程而要求提供的文件，尤其是运输大量电子商务订单"
+"时。"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -191,8 +192,8 @@ msgstr "创建 API 用户"
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_pickup_request
 msgid ""
-"Create a pickup request for your order shipment using Validate button of the"
-" Delivery Order."
+"Create a pickup request for your order shipment using Validate button of the "
+"Delivery Order."
 msgstr "使用交货单的验证按钮，为订单货物创建提货请求。"
 
 #. module: delivery_shiprocket
@@ -274,17 +275,19 @@ msgstr "使用 Shiprocket 凭据生成访问令牌"
 msgid ""
 "Get all the integrated Couriers from your Shiprocket account.Based on the "
 "courier selections the rate will be fetched from the Shiprocket."
-msgstr "从您的 Shiprocket 账户获取所有集成的快递公司。根据所选择的快递公司，将从 "
+msgstr ""
+"从您的 Shiprocket 账户获取所有集成的快递公司。根据所选择的快递公司，将从 "
 "Shiprocket 获取费率。"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_channel_id
 msgid ""
-"Get all the integrated channels from your Shiprocket account.This channel id"
-" is used to select or specify a custom channel at the time of Shiprocket "
+"Get all the integrated channels from your Shiprocket account.This channel id "
+"is used to select or specify a custom channel at the time of Shiprocket "
 "order creation."
-msgstr "从您的 Shiprocket 账户获取所有集成的频道。此频道ID用于在创建 Shiprocket "
-"订单时选择或指定自定义频道。"
+msgstr ""
+"从您的 Shiprocket 账户获取所有集成的频道。此频道ID用于在创建 Shiprocket 订单"
+"时选择或指定自定义频道。"
 
 #. module: delivery_shiprocket
 #: model_terms:ir.ui.view,arch_db:delivery_shiprocket.view_delivery_carrier_form_inherit_delivery_shiprocket
@@ -538,8 +541,9 @@ msgstr "Shiprocket 物流服务商当前设置为仅支持“货到付款”模�
 msgid ""
 "Shiprocket requires package dimensions for getting accurate rate, you can "
 "define these in a package type that you set as default"
-msgstr "Shiprocket "
-"需要包装尺寸才能获得准确的速率，您可以在默认设置的包装类型中定义这些尺寸"
+msgstr ""
+"Shiprocket 需要包装尺寸才能获得准确的速率，您可以在默认设置的包装类型中定义这"
+"些尺寸"
 
 #. module: delivery_shiprocket
 #: model:ir.model.fields,help:delivery_shiprocket.field_delivery_carrier__shiprocket_token_valid_upto

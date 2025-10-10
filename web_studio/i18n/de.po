@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
@@ -121,7 +121,8 @@ msgstr "“ fehlgeschlagen."
 #. odoo-python
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid "%(user_name)s delegated approval rights to %(delegate_to)s"
-msgstr "%(user_name)s hat die Genehmigungsrechte auf %(delegate_to)s übertragen"
+msgstr ""
+"%(user_name)s hat die Genehmigungsrechte auf %(delegate_to)s übertragen"
 
 #. module: web_studio
 #. odoo-python
@@ -130,8 +131,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s hat Genehmigungsregeln von %(previous_approvers)s auf "
-"%(next_approvers)s geändert"
+"%(user_name)s hat Genehmigungsregeln von %(previous_approvers)s auf %"
+"(next_approvers)s geändert"
 
 #. module: web_studio
 #. odoo-python
@@ -200,8 +201,8 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:web_studio.web_studio_new_app_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
-"<span><b>Gut gemacht!</b> Sie haben alle Schritte dieser Tour "
-"absolviert.</span>"
+"<span><b>Gut gemacht!</b> Sie haben alle Schritte dieser Tour absolviert.</"
+"span>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1990,8 +1991,8 @@ msgstr "Weiter so, fast geschafft!"
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Good job! To add more <b>fields</b>, come back to the <i>Add tab</i>."
 msgstr ""
-"Gut gemacht! Um weitere <b>Felder</b> hinzuzufügen, gehen Sie zurück zum <i"
-">Hinzufügen-Reiter</i>."
+"Gut gemacht! Um weitere <b>Felder</b> hinzuzufügen, gehen Sie zurück zum "
+"<i>Hinzufügen-Reiter</i>."
 
 #. module: web_studio
 #. odoo-python

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 10:55+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 21:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: account_base_import
@@ -100,7 +100,10 @@ msgid "Customers"
 msgstr "Клиенты"
 
 #. module: account_base_import
+#: model:ir.model.fields,field_description:account_base_import.field_account_account__display_name
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__display_name
+#: model:ir.model.fields,field_description:account_base_import.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:account_base_import.field_base_import_import__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
@@ -129,7 +132,10 @@ msgid "FEC Import module"
 msgstr "Модуль импорта FEC"
 
 #. module: account_base_import
+#: model:ir.model.fields,field_description:account_base_import.field_account_account__id
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__id
+#: model:ir.model.fields,field_description:account_base_import.field_account_move_line__id
+#: model:ir.model.fields,field_description:account_base_import.field_base_import_import__id
 msgid "ID"
 msgstr "ID"
 
@@ -139,6 +145,13 @@ msgstr "ID"
 #: model_terms:ir.ui.view,arch_db:account_base_import.view_account_setup_base_import_list
 msgid "Import"
 msgstr "Импорт"
+
+#. module: account_base_import
+#. odoo-javascript
+#: code:addons/account_base_import/static/src/xml/account_import.xml:0
+#: model:ir.actions.client,name:account_base_import.action_asset_import
+msgid "Import Assets"
+msgstr ""
 
 #. module: account_base_import
 #. odoo-javascript
@@ -183,39 +196,9 @@ msgid "Import Summary Account"
 msgstr "Сводка по импорту счетов"
 
 #. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_have_data
-msgid "Import Summary Have Data"
-msgstr ""
-
-#. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_journal_ids
 msgid "Import Summary Journal"
 msgstr "Сводка по импорту журналов"
-
-#. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_len_account
-msgid "Import Summary Len Account"
-msgstr ""
-
-#. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_len_journal
-msgid "Import Summary Len Journal"
-msgstr ""
-
-#. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_len_move
-msgid "Import Summary Len Move"
-msgstr ""
-
-#. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_len_partner
-msgid "Import Summary Len Partner"
-msgstr ""
-
-#. module: account_base_import
-#: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_len_tax
-msgid "Import Summary Len Tax"
-msgstr ""
 
 #. module: account_base_import
 #: model:ir.model.fields,field_description:account_base_import.field_account_import_summary__import_summary_move_ids
@@ -254,6 +237,12 @@ msgstr "Импорт клиентов или поставщиков (партн�
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import the Chart of Accounts and initial balances using a"
 msgstr "Импортируйте план счетов и начальные остатки с помощью программы"
+
+#. module: account_base_import
+#. odoo-javascript
+#: code:addons/account_base_import/static/src/xml/account_import.xml:0
+msgid "Import your fixed assets and their opening depreciation values using a"
+msgstr ""
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
@@ -296,20 +285,24 @@ msgstr "Дата последнего обновления:"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in Europe support exporting SAF-T file for audit purposes.\n"
+"Most accounting software in Europe support exporting SAF-T file for audit "
+"purposes.\n"
 "                            Use the"
 msgstr ""
-"Большинство бухгалтерских программ в Европе поддерживают экспорт файла SAF-T для целей аудита.\n"
+"Большинство бухгалтерских программ в Европе поддерживают экспорт файла SAF-T "
+"для целей аудита.\n"
 "                            Используйте"
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in France support exporting FEC file for audit purposes.\n"
+"Most accounting software in France support exporting FEC file for audit "
+"purposes.\n"
 "                            Use the"
 msgstr ""
-"Большинство бухгалтерских программ во Франции поддерживают экспорт файла FEC для целей аудита.\n"
+"Большинство бухгалтерских программ во Франции поддерживают экспорт файла FEC "
+"для целей аудита.\n"
 "                            Используйте"
 
 #. module: account_base_import
@@ -321,7 +314,9 @@ msgstr "Данные не были импортированы."
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Optional, but useful to import open receivables & payables using a"
-msgstr "Необязательно, но полезно импортировать открытую дебиторскую и кредиторскую задолженность, используя"
+msgstr ""
+"Необязательно, но полезно импортировать открытую дебиторскую и кредиторскую "
+"задолженность, используя"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -345,20 +340,30 @@ msgstr "Модуль импорта SAF-T"
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "SIE 5"
-msgstr "SIE 5"
+msgid "SIE 4 Import module"
+msgstr ""
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "SIE Import module"
-msgstr "Модуль импорта SIE"
+msgid "SIE 4/5"
+msgstr ""
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data from and to other accounting softwares."
-msgstr "Стандартный формат файлов SIE очень распространен в Швеции для различных целей, таких как аудит, импорт и экспорт данных из других бухгалтерских программ и в них."
+msgid "SIE 5 Import module"
+msgstr ""
+
+#. module: account_base_import
+#. odoo-javascript
+#: code:addons/account_base_import/static/src/xml/account_import.xml:0
+msgid ""
+"The SIE standard file format is very common in Sweden for several purposes "
+"such as auditing, importing and exporting data\n"
+"                            from and to other accounting applications. Odoo "
+"support importing data from both type 4 and 5 of SIE."
+msgstr ""
 
 #. module: account_base_import
 #. odoo-python
@@ -367,34 +372,41 @@ msgid "The import file is missing the following required columns: %s"
 msgstr "В файле импорта отсутствуют следующие необходимые столбцы: %s"
 
 #. module: account_base_import
-#. odoo-python
-#: code:addons/account_base_import/models/account_account.py:0
-msgid "The import file must contain the 'code' column"
-msgstr "Файл импорта должен содержать колонку 'code'"
-
-#. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "Tip: we recommend importing your initial balances using the Chart of Account import. Only use the Journal Items import for unreconciled entries in your Payable and Receivable Accounts."
-msgstr "Совет: мы рекомендуем импортировать начальные остатки с помощью импорта плана счетов. Импорт статей журнала используйте только для несогласованных записей в счетах кредиторской и дебиторской задолженности."
+msgid ""
+"Tip: we recommend importing your initial balances using the Chart of Account "
+"import. Only use the Journal Items import for unreconciled entries in your "
+"Payable and Receivable Accounts."
+msgstr ""
+"Совет: мы рекомендуем импортировать начальные остатки с помощью импорта "
+"плана счетов. Импорт статей журнала используйте только для несогласованных "
+"записей в счетах кредиторской и дебиторской задолженности."
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use predefined format to import your data faster."
-msgstr "Используйте предопределенный формат, чтобы быстрее импортировать данные."
+msgstr ""
+"Используйте предопределенный формат, чтобы быстрее импортировать данные."
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Use templates to import CSV or Excel for your accounting setup."
-msgstr "Используйте шаблоны для импорта данных в формате CSV или Excel для настройки учета."
+msgstr ""
+"Используйте шаблоны для импорта данных в формате CSV или Excel для настройки "
+"учета."
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "We will setup your charts of accounts and the history of journal entries, that will stay in draft."
-msgstr "Мы настроим ваши планы счетов и историю записей в журналах, которые будут оставаться в черновиках."
+msgid ""
+"We will setup your charts of accounts and the history of journal entries, "
+"that will stay in draft."
+msgstr ""
+"Мы настроим ваши планы счетов и историю записей в журналах, которые будут "
+"оставаться в черновиках."
 
 #. module: account_base_import
 #. odoo-javascript
@@ -409,8 +421,17 @@ msgid ""
 "Winbooks is an old school Belgian accounting software acquired by Exact.\n"
 "                            Use the"
 msgstr ""
-"Winbooks - это старое бельгийское бухгалтерское программное обеспечение, приобретенное компанией Exact.\n"
+"Winbooks - это старое бельгийское бухгалтерское программное обеспечение, "
+"приобретенное компанией Exact.\n"
 "                            Используйте"
+
+#. module: account_base_import
+#. odoo-python
+#: code:addons/account_base_import/models/account_account.py:0
+msgid ""
+"You must provide both the `code_mapping_ids/company_id` and the "
+"`code_mapping_ids/code` columns."
+msgstr ""
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
@@ -421,13 +442,26 @@ msgstr "счета импортированы"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"is required to import the SIE and SIE entry files.\n"
-"                            For general SIE, we will setup your charts of accounts balances, journals, partners, and the history of journal entries (journals data must be present in the file).\n"
-"                            For the SIE entry, only entries and partners will be created, the rest must already be present in the system."
+"is required to import the SIE 4 files.\n"
+"                                    By design, it's also backward compatible "
+"with previous SIE versions (version 1 up to 3).\n"
+"                                    This import will not validate the "
+"correctness of the file."
 msgstr ""
-"требуется для импорта файлов SIE и записей SIE.\n"
-"                            Для общего SIE мы настроим остатки по планам счетов, журналы, партнеров и историю записей в журналах (данные о журналах должны присутствовать в файле).\n"
-"                            Для записи SIE будут созданы только записи и партнеры, остальные данные уже должны присутствовать в системе."
+
+#. module: account_base_import
+#. odoo-javascript
+#: code:addons/account_base_import/static/src/xml/account_import.xml:0
+msgid ""
+"is required to import the SIE 5 and SIE 5 entry files.\n"
+"                                    For general SIE 5, we will set up your "
+"charts of accounts balances, journals, partners, and the history of journal "
+"entries\n"
+"                                    (journals data must be present in the "
+"file).\n"
+"                                    For the SIE 5 entry, only entries and "
+"partners will be created, the rest must already be present in the system."
+msgstr ""
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form
@@ -458,6 +492,12 @@ msgstr "налоги импортированы"
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
+msgid "template"
+msgstr ""
+
+#. module: account_base_import
+#. odoo-javascript
+#: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "template."
 msgstr "шаблон."
 
@@ -465,20 +505,61 @@ msgstr "шаблон."
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of accounts, contacts, taxes, history of journal entries, and documents.\n"
+"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of "
+"accounts, contacts, taxes, history of journal entries, and documents.\n"
 "                            Support versions: Winbooks Desktop 5.50, 6, 7, 8."
 msgstr ""
-"импортировать полную резервную копию Winbooks (Maintenance > Backup), чтобы получить план счетов, контакты, налоги, историю записей в журналах и документы.\n"
-"                            Поддерживаемые версии: Winbooks Desktop 5.50, 6, 7, 8."
+"импортировать полную резервную копию Winbooks (Maintenance > Backup), чтобы "
+"получить план счетов, контакты, налоги, историю записей в журналах и "
+"документы.\n"
+"                            Поддерживаемые версии: Winbooks Desktop 5.50, 6, "
+"7, 8."
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
-msgid "to import the FEC file. We will setup your charts of accounts and the history of journal entries."
-msgstr "чтобы импортировать файл FEC. Мы настроим ваши планы счетов и историю записей в журналах."
+msgid ""
+"to import the FEC file. We will setup your charts of accounts and the "
+"history of journal entries."
+msgstr ""
+"чтобы импортировать файл FEC. Мы настроим ваши планы счетов и историю "
+"записей в журналах."
 
 #. module: account_base_import
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "to import the SAF-T file."
 msgstr "чтобы импортировать файл SAF-T."
+
+#~ msgid "SIE 5"
+#~ msgstr "SIE 5"
+
+#~ msgid "SIE Import module"
+#~ msgstr "Модуль импорта SIE"
+
+#~ msgid ""
+#~ "The SIE standard file format is very common in Sweden for several "
+#~ "purposes such as auditing, importing and exporting data from and to other "
+#~ "accounting softwares."
+#~ msgstr ""
+#~ "Стандартный формат файлов SIE очень распространен в Швеции для различных "
+#~ "целей, таких как аудит, импорт и экспорт данных из других бухгалтерских "
+#~ "программ и в них."
+
+#~ msgid "The import file must contain the 'code' column"
+#~ msgstr "Файл импорта должен содержать колонку 'code'"
+
+#~ msgid ""
+#~ "is required to import the SIE and SIE entry files.\n"
+#~ "                            For general SIE, we will setup your charts of "
+#~ "accounts balances, journals, partners, and the history of journal entries "
+#~ "(journals data must be present in the file).\n"
+#~ "                            For the SIE entry, only entries and partners "
+#~ "will be created, the rest must already be present in the system."
+#~ msgstr ""
+#~ "требуется для импорта файлов SIE и записей SIE.\n"
+#~ "                            Для общего SIE мы настроим остатки по планам "
+#~ "счетов, журналы, партнеров и историю записей в журналах (данные о "
+#~ "журналах должны присутствовать в файле).\n"
+#~ "                            Для записи SIE будут созданы только записи и "
+#~ "партнеры, остальные данные уже должны присутствовать в системе."

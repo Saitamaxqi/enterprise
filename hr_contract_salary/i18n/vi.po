@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-15 23:07+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -203,8 +203,8 @@ msgstr ""
 "                                    Chỉ quản trị viên máy chủ mới có thể sửa "
 "đổi trường này, hãy liên hệ với họ nếu cần sửa đổi trường.\n"
 "                                </span>\n"
-"                                <span invisible="
-"\"requested_documents_fields_string\">\n"
+"                                <span "
+"invisible=\"requested_documents_fields_string\">\n"
 "                                    Hiện tại không có trường được yêu cầu.\n"
 "                                </span>"
 
@@ -1313,7 +1313,8 @@ msgstr ""
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__always_show_description
 msgid "If unchecked, Description will only be shown when Benefit is selected"
-msgstr "Nếu không được chọn, Mô tả sẽ chỉ được hiển thị khi Quyền lợi được chọn"
+msgstr ""
+"Nếu không được chọn, Mô tả sẽ chỉ được hiển thị khi Quyền lợi được chọn"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_version__image_1920
@@ -2914,8 +2915,8 @@ msgid ""
 "{{ object.company_id.name }}: Job Offer - "
 "{{ object.applicant_id.partner_name }}"
 msgstr ""
-"{{ object.company_id.name }}: Đề xuất Nhận việc - {{ "
-"object.applicant_id.partner_name }}"
+"{{ object.company_id.name }}: Đề xuất Nhận việc - "
+"{{ object.applicant_id.partner_name }}"
 
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer

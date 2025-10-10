@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -38,9 +38,10 @@ msgid "Checks"
 msgstr "支票"
 
 #. module: quality_mrp_workorder
-#: model_terms:ir.ui.view,arch_db:quality_mrp_workorder.quality_check_view_form_inherit_mrp_workorder
-msgid "Component Lot/Serial"
-msgstr "組件批次/序號"
+#. odoo-javascript
+#: code:addons/quality_mrp_workorder/static/src/mrp_display/mrp_display_record.xml:0
+msgid "Close Production"
+msgstr ""
 
 #. module: quality_mrp_workorder
 #. odoo-javascript
@@ -187,17 +188,8 @@ msgstr "成功"
 #. module: quality_mrp_workorder
 #. odoo-python
 #: code:addons/quality_mrp_workorder/models/quality.py:0
-msgid ""
-"The On-demand frequency is not possible with work order quality points."
+msgid "The On-demand frequency is not possible with work order quality points."
 msgstr "工作單的品質檢查點，不可使用「按需」頻率。"
-
-#. module: quality_mrp_workorder
-#. odoo-python
-#: code:addons/quality_mrp_workorder/models/quality.py:0
-msgid ""
-"The Quantity quality check type is not possible with manufacturing operation"
-" types."
-msgstr "數量的品質檢查類型，不能與製造操作類型同時使用。"
 
 #. module: quality_mrp_workorder
 #: model:ir.model,name:quality_mrp_workorder.model_mrp_workorder
@@ -209,3 +201,11 @@ msgstr "工單"
 #: model_terms:ir.ui.view,arch_db:quality_mrp_workorder.quality_check_view_tree_inherit_mrp_workorder
 msgid "Work Order Operation"
 msgstr "工單作業"
+
+#~ msgid "Component Lot/Serial"
+#~ msgstr "組件批次/序號"
+
+#~ msgid ""
+#~ "The Quantity quality check type is not possible with manufacturing "
+#~ "operation types."
+#~ msgstr "數量的品質檢查類型，不能與製造操作類型同時使用。"

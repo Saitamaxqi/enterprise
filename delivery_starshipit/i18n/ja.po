@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -25,18 +25,20 @@ msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/> Do not forget to select a service "
 "for a valid configuration."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\"/> "
-"有効なコンフィギュレーションのためのサービスを忘れずに選択して下さい。"
+"<i class=\"fa fa-exclamation-triangle\"/> 有効なコンフィギュレーションのため"
+"のサービスを忘れずに選択して下さい。"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your shippings are automatically <b>archived</b> after the label creation. <br/>\n"
-"                        Please note that charges can still occur for label creations and some shipping carriers may automatically validate the shipment when printing labels."
+"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your "
+"shippings are automatically <b>archived</b> after the label creation. <br/>\n"
+"                        Please note that charges can still occur for label "
+"creations and some shipping carriers may automatically validate the shipment "
+"when printing labels."
 msgstr ""
-"<i class=\"fa fa-exclamation-triangle\""
-"/><b>テスト環境</b>では、ラベル作成後、発送物は自動的に<b>アーカイブ</b>され"
-"ます。<br/>\n"
+"<i class=\"fa fa-exclamation-triangle\"/><b>テスト環境</b>では、ラベル作成"
+"後、発送物は自動的に<b>アーカイブ</b>されます。<br/>\n"
 "また、配送業者によっては、ラベルを印刷する際に自動的に貨物の確認が行われる場"
 "合があります。"
 
@@ -46,9 +48,8 @@ msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping services depend on "
 "enabled carriers in your Starshipit account."
 msgstr ""
-"<i class=\"fa fa-info-circle\"/> "
-"利用可能な配送サービスは、Starshipitアカウントで有効になっている配送業者によ"
-"って異なります。"
+"<i class=\"fa fa-info-circle\"/> 利用可能な配送サービスは、Starshipitアカウン"
+"トで有効になっている配送業者によって異なります。"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
@@ -79,8 +80,8 @@ msgstr "確定"
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_starshipit_shipping_wizard__available_services
 msgid ""
-"Contains the list of available services for the starshipit account to select"
-" from."
+"Contains the list of available services for the starshipit account to select "
+"from."
 msgstr "starshipitアカウントで選択可能なサービスのリストが含まれています。"
 
 #. module: delivery_starshipit
@@ -127,8 +128,9 @@ msgstr "表示名"
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
 "Error: %(file_name)s file could not be obtained for order %(order_name)s."
-msgstr "エラー: %(file_name)s "
-"ファイルを%(order_name)s用に獲得することができませんでした。"
+msgstr ""
+"エラー: %(file_name)s ファイルを%(order_name)s用に獲得することができませんで"
+"した。"
 
 #. module: delivery_starshipit
 #. odoo-python
@@ -191,11 +193,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Order %(order)s was sent to the carrier during label creation.As you are in "
+"a test environment, please make sure to cancel the order with your carrier "
+"directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
-"ラベル作成時に配送業者にオーダ%(order)sが送信されました。テスト環境であるため"
-"、必ず配送業者に対して直接オーダをキャンセルして下さい。\n"
+"ラベル作成時に配送業者にオーダ%(order)sが送信されました。テスト環境であるた"
+"め、必ず配送業者に対して直接オーダをキャンセルして下さい。\n"
 "伝票番号 :%(manifest_number)s"
 
 #. module: delivery_starshipit
@@ -220,7 +224,8 @@ msgstr "発送元住所"
 msgid ""
 "Package dimensions are required to get more accurate rates. You can define "
 "these in a package type that you set as default"
-msgstr "高ン峰の寸法は、より正確な金額を取得するために必要です。デフォルトとして設定"
+msgstr ""
+"高ン峰の寸法は、より正確な金額を取得するために必要です。デフォルトとして設定"
 "した梱包タイプで定義することができます。"
 
 #. module: delivery_starshipit
@@ -255,7 +260,8 @@ msgstr "オーダ%s用に返品ラベルが生成されました。"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was already sent to the carrier during label creation.\n"
+"Return order %(order)s was already sent to the carrier during label "
+"creation.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "返品オーダ%(order)s はラベル作成中にすでに配送業者に送信されました。\n"
@@ -265,7 +271,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Return order %(order)s was sent to the carrier during label creation.As you "
+"are in a test environment, please make sure to cancel the order with your "
+"carrier directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "ラベル作成時に配送業者に返品オーダ%(order)sが送信されました。テスト環境である"
@@ -393,7 +401,8 @@ msgstr "Starshipitサブスクリプションキー"
 msgid ""
 "Starshipit cannot generate returns for the carrier %s. Please handle this "
 "return with the carrier directly."
-msgstr "Starshipitは配送業者%s用に返品を生成できません。配送業者と直接、この返品に関"
+msgstr ""
+"Starshipitは配送業者%s用に返品を生成できません。配送業者と直接、この返品に関"
 "する手続きを行って下さい。"
 
 #. module: delivery_starshipit
@@ -406,35 +415,34 @@ msgstr "Starshipitがエラーを返信しました: %(message)s"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact"
-" price (%(final_carrier_price)s) from transfer %(picking_name)s."
+"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact "
+"price (%(final_carrier_price)s) from transfer %(picking_name)s."
 msgstr ""
-"Starshipit: 配送の最新価格  (%(final_carrier_price)s) "
-"に基づき、販売オーダの配送料%(picking_name)sが更新されました。"
+"Starshipit: 配送の最新価格  (%(final_carrier_price)s) に基づき、販売オーダの"
+"配送料%(picking_name)sが更新されました。"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s, but automatic sale order delivery cost re-"
-"evaluation failed: %(e_so)s"
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s, but automatic sale order delivery cost re-evaluation "
+"failed: %(e_so)s"
 msgstr ""
-"Starshipit: 配送 %(picking_name)s の正確な送料は %(final_carrier_price)s "
-"になりましたが、販売オーダの配送料の自動再評価に失敗しました: %(e_so)s"
+"Starshipit: 配送 %(picking_name)s の正確な送料は %(final_carrier_price)s にな"
+"りましたが、販売オーダの配送料の自動再評価に失敗しました: %(e_so)s"
 
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s. This sale order is already invoiced, please review "
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s. This sale order is already invoiced, please review "
 "if a manual adjustment to the invoice is needed."
 msgstr ""
-"Starshipit: "
-"配送%(picking_name)sの正確な送料が%(final_carrier_price)sに更新されました。こ"
-"の販売オーダはすでに請求済みのため、請求書に手動で修正が必要かご確認ください"
-"。"
+"Starshipit: 配送%(picking_name)sの正確な送料が%(final_carrier_price)sに更新さ"
+"れました。この販売オーダはすでに請求済みのため、請求書に手動で修正が必要かご"
+"確認ください。"
 
 #. module: delivery_starshipit
 #: model:ir.actions.server,name:delivery_starshipit.ir_cron_starshipit_fetch_pending_prices_ir_actions_server
@@ -462,7 +470,8 @@ msgstr "送料はバックグラウンドで取得されています。"
 msgid ""
 "The carrier on starshipit used by this carrier. The service code belongs to "
 "it."
-msgstr "この配送業者が使用するスStarshipitの配送業者。サービスコードはそれに属してい"
+msgstr ""
+"この配送業者が使用するスStarshipitの配送業者。サービスコードはそれに属してい"
 "ます。"
 
 #. module: delivery_starshipit
@@ -471,7 +480,8 @@ msgstr "この配送業者が使用するスStarshipitの配送業者。サー�
 msgid ""
 "The exact price could not be retrieved. It will be updated by a scheduled "
 "action."
-msgstr "正確な価格を取得できませんでした。スケジュールされたアクションによって後で更"
+msgstr ""
+"正確な価格を取得できませんでした。スケジュールされたアクションによって後で更"
 "新されます。"
 
 #. module: delivery_starshipit
@@ -480,7 +490,8 @@ msgstr "正確な価格を取得できませんでした。スケジュールさ
 msgid ""
 "The picking %(picking_name)s sequence is too long for Starshipit. Please "
 "update your pickings sequence in order to use at most 50 characters."
-msgstr "ピッキング%(picking_name)s付番がStarshipitには長すぎます。ピッキング付番を50"
+msgstr ""
+"ピッキング%(picking_name)s付番がStarshipitには長すぎます。ピッキング付番を50"
 "文字以内に更新して下さい。"
 
 #. module: delivery_starshipit
@@ -506,7 +517,8 @@ msgstr ""
 msgid ""
 "The service that will be used for this carrier. This is set when you select "
 "a carrier from the wizard."
-msgstr "この配送業者に使用されるサービス。ウィザードから配送業者を選択する際に設定し"
+msgstr ""
+"この配送業者に使用されるサービス。ウィザードから配送業者を選択する際に設定し"
 "ます。"
 
 #. module: delivery_starshipit
@@ -523,9 +535,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"There are no shipping services available, please verify the shipping address"
-" or activate suitable carriers in your starshipit account."
-msgstr "利用可能な配送サービスはありません。配送先住所を確認するか、Starshipitアカウ"
+"There are no shipping services available, please verify the shipping address "
+"or activate suitable carriers in your starshipit account."
+msgstr ""
+"利用可能な配送サービスはありません。配送先住所を確認するか、Starshipitアカウ"
 "ントで適切な配送業者を有効にして下さい。"
 
 #. module: delivery_starshipit
@@ -539,7 +552,8 @@ msgstr "このアクションにはStarshipit配送業者が必要です。"
 msgid ""
 "This address will be used when fetching the available services from "
 "starshipit."
-msgstr "このアドレスは、Starshipitから利用可能なサービスを取得する際に使用されます。"
+msgstr ""
+"このアドレスは、Starshipitから利用可能なサービスを取得する際に使用されます。"
 
 #. module: delivery_starshipit
 #: model:ir.model,name:delivery_starshipit.model_stock_picking

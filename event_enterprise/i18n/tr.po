@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-01-17 10:16+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2022-09-22 05:46+0000\n"
 "Last-Translator: Tugay Hatıl <tugayh@projetgrup.com>, 2023\n"
 "Language-Team: Turkish (https://app.transifex.com/odoo/teams/41243/tr/)\n"
@@ -38,6 +38,11 @@ msgid "Attendees"
 msgstr "Katılımcılar"
 
 #. module: event_enterprise
+#: model:ir.model.fields,field_description:event_enterprise.field_event_registration__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: event_enterprise
 #: model:ir.model,name:event_enterprise.model_event_registration
 msgid "Event Registration"
 msgstr "Etkinlik Kaydı"
@@ -46,6 +51,11 @@ msgstr "Etkinlik Kaydı"
 #: model:ir.model.fields,field_description:event_enterprise.field_event_registration__event_begin_date
 msgid "Event Start Date"
 msgstr "Etkinlik Başlama Tarihi"
+
+#. module: event_enterprise
+#: model:ir.model.fields,field_description:event_enterprise.field_event_registration__id
+msgid "ID"
+msgstr ""
 
 #. module: event_enterprise
 #: model_terms:ir.ui.view,arch_db:event_enterprise.event_event_view_map

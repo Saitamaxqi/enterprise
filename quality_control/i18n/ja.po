@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -25,12 +25,13 @@ msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-msgid "% of Operations"
+msgid "% of the time"
 msgstr ""
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-msgid "% of Transfers"
+#. odoo-python
+#: code:addons/quality_control/models/quality.py:0
+msgid "%(product_name)s is not in Picking %(picking_name)s"
 msgstr ""
 
 #. module: quality_control
@@ -40,23 +41,32 @@ msgid "'Worksheet_%s' % object.name"
 msgstr "'Worksheet_%s' % object.name"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "15.3 cm"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "2023-08-15"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_dashboard_view_kanban
-msgid "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title=\"Domain alias\"/>&amp;nbsp;"
+msgid ""
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title="
-"\"Domain alias\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-msgid "<span attrs=\"{'invisible': [('measure_frequency_type', '=', 'all')]}\">Every </span>"
+msgid ""
+"<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;\" "
+"role=\"img\" aria-label=\"Statistics\" title=\"Statistics\"/>"
 msgstr ""
-
-#. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-msgid "<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;\" role=\"img\" aria-label=\"Statistics\" title=\"Statistics\"/>"
-msgstr ""
-"<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;"
-"\" role=\"img\" aria-label=\"Statistics\" title=\"Statistics\"/>"
+"<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;\" "
+"role=\"img\" aria-label=\"Statistics\" title=\"Statistics\"/>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
@@ -93,6 +103,11 @@ msgid "<span class=\"o_stat_text\">Quality Alert</span>"
 msgstr "<span class=\"o_stat_text\">品質アラート</span>"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.stock_production_lot_view_form
+msgid "<span class=\"o_stat_text\">Quality Alerts:</span>"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_view_form
 msgid "<span class=\"o_stat_text\">Quality Check</span>"
 msgstr "<span class=\"o_stat_text\">品質検査</span>"
@@ -101,6 +116,16 @@ msgstr "<span class=\"o_stat_text\">品質検査</span>"
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
 msgid "<span class=\"o_stat_text\">Quality Checks</span>"
 msgstr "<span class=\"o_stat_text\">品質検査</span>"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
+msgid "<span>% of products</span>"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
+msgid "<span>Test </span>"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
@@ -128,19 +153,9 @@ msgid "<strong>Notes: </strong>"
 msgstr "<strong>メモ: </strong>"
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
-msgid "<strong>Operations:</strong>"
-msgstr ""
-
-#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
 msgid "<strong>Product: </strong>"
 msgstr "<strong>プロダクト: </strong>"
-
-#. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
-msgid "<strong>Products:</strong>"
-msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
@@ -204,6 +219,16 @@ msgid "All checks passed"
 msgstr "全てのチェックに合格済"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "All parameters passed."
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__allowed_product_ids
+msgid "Allowed Product"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_search
 msgid "Archived"
 msgstr "アーカイブ済"
@@ -214,9 +239,9 @@ msgid "Average"
 msgstr "平均"
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
-msgid "Cancel"
-msgstr "取消"
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
+msgid "Back"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__check_ids
@@ -251,10 +276,21 @@ msgid "Checks In Progress"
 msgstr "検査中"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__company_id
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__company_id
+msgid "Company"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.ui.menu,name:quality_control.menu_quality_configuration
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_dashboard_view_kanban
 msgid "Configuration"
 msgstr "設定"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
+msgid "Confirm"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
@@ -279,6 +315,7 @@ msgid "Control Point"
 msgstr "検査ポイント"
 
 #. module: quality_control
+#: model:ir.actions.act_window,name:quality_control.quality_point_action
 #: model:ir.ui.menu,name:quality_control.menu_quality_control_points
 msgid "Control Points"
 msgstr "検査ポイント"
@@ -289,6 +326,11 @@ msgstr "検査ポイント"
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__measure_on
 msgid "Control per"
 msgstr "検査単位"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
+msgid "Control per:"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
@@ -316,12 +358,16 @@ msgid "Create a new quality alert stage"
 msgstr "新しい品質アラートステージを作成"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__create_uid
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__create_uid
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__create_uid
 msgid "Created by"
 msgstr "作成者"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__create_date
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__create_date
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__create_date
 msgid "Created on"
 msgstr "作成日"
 
@@ -329,6 +375,17 @@ msgstr "作成日"
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__current_check_id
 msgid "Current Check"
 msgstr "現在のチェック"
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__current_revision_uuid
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__current_revision_uuid
+msgid "Current Revision Uuid"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_spreadsheet_template_view_list
+msgid "Data"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_frequency_unit__day
@@ -346,8 +403,10 @@ msgstr "すべての在庫操作に使用されるデフォルトの測定単位
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_team
 msgid ""
 "Define Quality Control Points in order to automatically generate\n"
-"              quality checks at the right logistic operation: transfers, manufacturing orders."
-msgstr "適正なロジスティック工程(運送/製造オーダ)の際に自動的に品質検査が生成されるよ"
+"              quality checks at the right logistic operation: transfers, "
+"manufacturing orders."
+msgstr ""
+"適正なロジスティック工程(運送/製造オーダ)の際に自動的に品質検査が生成されるよ"
 "うに品質管理ポイントを定義しましょう"
 
 #. module: quality_control
@@ -385,9 +444,38 @@ msgid "Determines if only a fraction of the lot should be tested"
 msgstr "ロットうち少量のみのテストでよいのかを定義します。"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
+msgid "Discard"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_product_product__display_name
+#: model:ir.model.fields,field_description:quality_control.field_product_template__display_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_alert__display_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__display_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__display_name
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__display_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_point__display_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__display_name
+#: model:ir.model.fields,field_description:quality_control.field_report_quality_control_quality_worksheet__display_name
+#: model:ir.model.fields,field_description:quality_control.field_report_quality_control_quality_worksheet_internal__display_name
+#: model:ir.model.fields,field_description:quality_control.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:quality_control.field_stock_move__display_name
+#: model:ir.model.fields,field_description:quality_control.field_stock_move_line__display_name
+#: model:ir.model.fields,field_description:quality_control.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "表示名"
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__display_thumbnail
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__display_thumbnail
+msgid "Display Thumbnail"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_spreadsheet_template_view_list
+msgid "Edit"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
@@ -413,6 +501,21 @@ msgid "Failed"
 msgstr "不合格"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_form
+msgid "Failed Quantity"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__failure_location_id
+msgid "Failure Location"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__potential_failure_location_ids
+msgid "Failure Locations"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__failure_message
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__failure_message
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__failure_message
@@ -431,19 +534,50 @@ msgstr "頻度単位値"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_search
-msgid "Group By"
-msgstr "グループ化"
+msgid "Future Activities"
+msgstr ""
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_picking_id
+msgid "Hide Picking"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_production_id
+msgid "Hide Production"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__hide_repair_id
+msgid "Hide Repair"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_product_product__id
+#: model:ir.model.fields,field_description:quality_control.field_product_template__id
+#: model:ir.model.fields,field_description:quality_control.field_quality_alert__id
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__id
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__id
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__id
+#: model:ir.model.fields,field_description:quality_control.field_quality_point__id
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__id
+#: model:ir.model.fields,field_description:quality_control.field_report_quality_control_quality_worksheet__id
+#: model:ir.model.fields,field_description:quality_control.field_report_quality_control_quality_worksheet_internal__id
+#: model:ir.model.fields,field_description:quality_control.field_stock_lot__id
+#: model:ir.model.fields,field_description:quality_control.field_stock_move__id
+#: model:ir.model.fields,field_description:quality_control.field_stock_move_line__id
+#: model:ir.model.fields,field_description:quality_control.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_dashboard_view_kanban
-msgid "In #{kanban_getcolorname(record.color.raw_value)}"
-msgstr "番号{kanban_getcolorname(record.color.raw_value)}の中にあります"
+#: model:ir.model.fields,help:quality_control.field_quality_check_wizard__potential_failure_location_ids
+msgid ""
+"If quality check fails, a destination location is chosen from this list for\n"
+"- each failed specific product quantity if control is per quantity\n"
+" /- all quantities of a product if control is per product\n"
+" /- all quantities of products in the operation if control is per operation"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
@@ -452,7 +586,9 @@ msgstr "進行中"
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__move_line_id
-msgid "In case of Quality Check by Quantity, Move Line on which the Quality Check applies"
+msgid ""
+"In case of Quality Check by Quantity, Move Line on which the Quality Check "
+"applies"
 msgstr "数量による品質検査の場合、品質検査の対象となる移動ライン"
 
 #. module: quality_control
@@ -466,14 +602,38 @@ msgid "Is Last Check"
 msgstr "最終確認"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "John Doe"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "LT-00045"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "Laptop XYZ"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__write_uid
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__write_uid
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__write_uid
 msgid "Last Updated by"
 msgstr "最終更新者"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__write_date
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__write_date
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__write_date
 msgid "Last Updated on"
 msgstr "最終更新日"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
+msgid "Late Activities"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__lot_line_id
@@ -489,12 +649,13 @@ msgid "Lot Tested Fractionally"
 msgstr "ロット部分テスト済"
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
 msgid "Lot/SN"
 msgstr "ロット/シリアル番号"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_stock_lot
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__lot_ids
 msgid "Lot/Serial"
 msgstr "ロット/シリアル"
 
@@ -518,6 +679,7 @@ msgstr "最大許容値"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__measure
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__measure
+#: model:quality.point.test_type,name:quality_control.test_type_measure
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_form
 msgid "Measure"
 msgstr "測定"
@@ -552,6 +714,12 @@ msgstr "その他"
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_frequency_unit__month
 msgid "Months"
 msgstr "月"
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__name
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__name
+msgid "Name"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__nb_checks
@@ -628,9 +796,14 @@ msgid "Notes"
 msgstr "ノート"
 
 #. module: quality_control
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
-msgid "OK"
-msgstr "OK"
+#: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_frequency_type__on_demand
+msgid "On-demand"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
+msgid "Open spreadsheet"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_check__measure_on__operation
@@ -645,13 +818,13 @@ msgstr "工程"
 msgid ""
 "Operation = One quality check is requested at the operation level.\n"
 "                  Product = A quality check is requested per product.\n"
-"                 Quantity = A quality check is requested for each new product quantity registered, with partial quantity checks also possible."
+"                 Quantity = A quality check is requested for each new "
+"product quantity registered, with partial quantity checks also possible."
 msgstr ""
 "工程 = 工程レベルで1品質検査が要求されます。\n"
 "                  プロダクト = プロダクトにつき1品質検査が要求されます。\n"
-"                 数量 = "
-"品質検査は、登録された新規プロダクトの数量ごとに要求され、部分的な数量検査も"
-"可能です。"
+"                 数量 = 品質検査は、登録された新規プロダクトの数量ごとに要求"
+"され、部分的な数量検査も可能です。"
 
 #. module: quality_control
 #: model:ir.ui.menu,name:quality_control.menu_quality_dashboard
@@ -660,7 +833,7 @@ msgstr "概要"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
-msgid "Partial Transfer Test"
+msgid "Partial Test"
 msgstr ""
 
 #. module: quality_control
@@ -676,7 +849,13 @@ msgid "Pass"
 msgstr "合格"
 
 #. module: quality_control
+#: model:quality.point.test_type,name:quality_control.test_type_passfail
+msgid "Pass - Fail"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
 msgid "Passed"
 msgstr "合格"
 
@@ -687,7 +866,6 @@ msgstr "保留中チェック"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_point__measure_frequency_value
-#: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
 msgid "Percentage"
 msgstr "パーセント"
 
@@ -724,6 +902,7 @@ msgstr "前へ"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_product_template
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__product_id
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__product_id
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_check__measure_on__product
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_on__product
@@ -735,12 +914,6 @@ msgstr "プロダクト"
 #: model:ir.model,name:quality_control.model_stock_move_line
 msgid "Product Moves (Stock Move Line)"
 msgstr "プロダクトの移動(在庫移動ライン)"
-
-#. module: quality_control
-#: model:ir.model.fields,field_description:quality_control.field_quality_check__uom_id
-#: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__uom_id
-msgid "Product Unit of Measure"
-msgstr "プロダクト単位"
 
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_product_product
@@ -759,6 +932,16 @@ msgid "Products"
 msgstr "プロダクト"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "QC-00123"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__qty_failed
+msgid "Qty Failed"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.ui.menu,name:quality_control.menu_quality_root
 msgid "Quality"
 msgstr "品質"
@@ -766,6 +949,7 @@ msgstr "品質"
 #. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
+#: model:ir.actions.server,name:quality_control.stock_picking_action_quality_alert
 #: model:ir.model,name:quality_control.model_quality_alert
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_view_calendar
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_view_search_inherit_quality_control
@@ -785,6 +969,11 @@ msgid "Quality Alert Count"
 msgstr "品質アラート数"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_stock_lot__quality_alert_qty
+msgid "Quality Alert Qty"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.actions.act_window,name:quality_control.quality_alert_stage_action
 #: model:ir.ui.menu,name:quality_control.menu_quality_config_alert_stage
 msgid "Quality Alert Stages"
@@ -792,29 +981,38 @@ msgstr "品質アラートステージ"
 
 #. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_alert_stage_action
-msgid "Quality Alert stages define the different steps a quality alert should go through."
+msgid ""
+"Quality Alert stages define the different steps a quality alert should go "
+"through."
 msgstr "品質アラートステージは品質アラートの進捗を示します。"
 
 #. module: quality_control
 #: model:ir.actions.act_window,name:quality_control.quality_alert_action_check
-#: model:ir.actions.act_window,name:quality_control.quality_alert_action_report
 #: model:ir.actions.act_window,name:quality_control.quality_alert_action_team
 #: model:ir.ui.menu,name:quality_control.menu_quality_alert
-#: model:ir.ui.menu,name:quality_control.menu_quality_alert_report
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_dashboard_view_kanban
 msgid "Quality Alerts"
 msgstr "品質アラート"
 
 #. module: quality_control
+#: model:ir.actions.act_window,name:quality_control.quality_alert_action_report
+#: model:ir.ui.menu,name:quality_control.menu_quality_alert_report
+msgid "Quality Alerts Analysis"
+msgstr ""
+
+#. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
 #: model:ir.actions.act_window,name:quality_control.action_quality_check_wizard
+#: model:ir.actions.server,name:quality_control.stock_picking_action_quality_check_on_demand
 #: model:ir.model,name:quality_control.model_quality_check
 #: model_terms:ir.ui.view,arch_db:quality_control.view_stock_move_line_detailed_operation_tree_inherit_quality
 msgid "Quality Check"
 msgstr "品質検査"
 
 #. module: quality_control
+#: model:ir.actions.act_window,name:quality_control.quality_check_action_report
+#: model:ir.ui.menu,name:quality_control.menu_quality_check_report
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_graph
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_pivot
 msgid "Quality Check Analysis"
@@ -831,6 +1029,12 @@ msgstr "品質検査不合格"
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
 msgid "Quality Check Failed"
 msgstr "品質検査不合格"
+
+#. module: quality_control
+#. odoo-python
+#: code:addons/quality_control/wizard/quality_check_wizard.py:0
+msgid "Quality Check Failed for %(product_name)s"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
@@ -851,12 +1055,11 @@ msgstr "品質検査:"
 #: model:ir.actions.act_window,name:quality_control.quality_check_action_main
 #: model:ir.actions.act_window,name:quality_control.quality_check_action_picking
 #: model:ir.actions.act_window,name:quality_control.quality_check_action_production_lot
-#: model:ir.actions.act_window,name:quality_control.quality_check_action_report
 #: model:ir.actions.act_window,name:quality_control.quality_check_action_team
-#: model:ir.ui.menu,name:quality_control.menu_quality_check_report
 #: model:ir.ui.menu,name:quality_control.menu_quality_checks
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
+#: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_search_inherit_quality
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_production_lot_form_quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
 msgid "Quality Checks"
@@ -884,11 +1087,6 @@ msgid "Quality Control Point Qty"
 msgstr "品質管理ポイント数量"
 
 #. module: quality_control
-#: model:ir.actions.act_window,name:quality_control.quality_point_action
-msgid "Quality Control Points"
-msgstr "品質管理ポイント"
-
-#. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_product_product__quality_fail_qty
 #: model:ir.model.fields,field_description:quality_control.field_product_template__quality_fail_qty
 msgid "Quality Fail Qty"
@@ -910,6 +1108,12 @@ msgstr "品質合格数量"
 #: model_terms:ir.ui.view,arch_db:quality_control.product_template_form_view_quality_control
 msgid "Quality Points"
 msgstr "品質ポイント"
+
+#. module: quality_control
+#: model:ir.actions.act_window,name:quality_control.quality_spreadsheet_template_action_config
+#: model:ir.ui.menu,name:quality_control.menu_config_quality_spreadsheet_template
+msgid "Quality Spreadsheet Templates"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.actions.act_window,name:quality_control.quality_tag_action
@@ -943,11 +1147,22 @@ msgid "Quality Worksheet Report"
 msgstr "品質ワークシートレポート"
 
 #. module: quality_control
+#: model:ir.model,name:quality_control.model_quality_check_spreadsheet
+msgid "Quality check spreadsheet"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model,name:quality_control.model_quality_spreadsheet_template
+msgid "Quality check template spreadsheet"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.actions.act_window,help:quality_control.quality_point_action
 msgid ""
 "Quality control points define the quality checks which should be\n"
 "              performed at each operation, for your different products."
-msgstr "品質検査ポイントは、各工程でプロダクトごとに実施すべき品質検査を定義します。"
+msgstr ""
+"品質検査ポイントは、各工程でプロダクトごとに実施すべき品質検査を定義します。"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_line
@@ -956,6 +1171,17 @@ msgstr "品質検査ポイントは、各工程でプロダクトごとに実施
 #: model:ir.model.fields.selection,name:quality_control.selection__quality_point__measure_on__move_line
 msgid "Quantity"
 msgstr "数量"
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_failed
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_wizard_form_failure
+msgid "Quantity Failed"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_passed
+msgid "Quantity Passed"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__qty_tested
@@ -968,6 +1194,16 @@ msgstr "品質テスト済"
 #: model:ir.model.fields,help:quality_control.field_quality_check_wizard__qty_tested
 msgid "Quantity of product tested within the lot"
 msgstr "ロット内でテストされたプロダクト数量"
+
+#. module: quality_control
+#: model:ir.model.fields,help:quality_control.field_quality_check__qty_failed
+msgid "Quantity of product that failed the quality check"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,help:quality_control.field_quality_check__qty_passed
+msgid "Quantity of product that passed the quality check"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_check__qty_to_test
@@ -1002,6 +1238,12 @@ msgid "Responsible"
 msgstr "担当者"
 
 #. module: quality_control
+#. odoo-javascript
+#: code:addons/quality_control/static/src/spreadsheet_bundle/quality_check_spreadsheet_action/quality_check_spreadsheet_action.xml:0
+msgid "Save in"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__show_lot_text
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__show_lot_text
 msgid "Show Lot Text"
@@ -1016,6 +1258,49 @@ msgstr "いくつかのチェックに失敗しました"
 #: model:ir.model.fields.selection,name:quality_control.selection__stock_move_line__check_state__in_progress
 msgid "Some checks to be done"
 msgstr "行うべきチェックがいくつかあります"
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__spreadsheet_id
+#: model:quality.point.test_type,name:quality_control.test_type_spreadsheet
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_form
+msgid "Spreadsheet"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__spreadsheet_data
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__spreadsheet_data
+msgid "Spreadsheet Data"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__spreadsheet_file_name
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__spreadsheet_file_name
+msgid "Spreadsheet File Name"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__spreadsheet_revision_ids
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__spreadsheet_revision_ids
+msgid "Spreadsheet Revision"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__spreadsheet_snapshot
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__spreadsheet_snapshot
+msgid "Spreadsheet Snapshot"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__spreadsheet_template_id
+#: model:ir.model.fields,field_description:quality_control.field_quality_point__spreadsheet_template_id
+msgid "Spreadsheet Template"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__spreadsheet_binary_data
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__spreadsheet_binary_data
+msgid "Spreadsheet file"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_stage_view_tree
@@ -1044,6 +1329,13 @@ msgid "Stock Move Line"
 msgstr "在庫移動明細"
 
 #. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__check_cell
+#: model:ir.model.fields,field_description:quality_control.field_quality_point__spreadsheet_check_cell
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__check_cell
+msgid "Success cell"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_tag_view_search
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_tag_view_tree
 msgid "Tags"
@@ -1059,6 +1351,11 @@ msgstr "チーム"
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
 msgid "Team Name"
 msgstr "チーム名"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
+msgid "Team:"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_tree
@@ -1088,10 +1385,36 @@ msgid "Testing Percentage Within Lot"
 msgstr "ロット内のテスト％"
 
 #. module: quality_control
+#: model:ir.model.fields,help:quality_control.field_quality_check_spreadsheet__check_cell
+#: model:ir.model.fields,help:quality_control.field_quality_point__spreadsheet_check_cell
+#: model:ir.model.fields,help:quality_control.field_quality_spreadsheet_template__check_cell
+msgid ""
+"The check is successful if the success cell value is TRUE. If there are "
+"several sheets, specify which one you want to use (e.g. Sheet2!C4). If not "
+"specified, the first sheet is selected by default."
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,help:quality_control.field_quality_point__measure_frequency_value
+msgid "The probability of each quality check being generated"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_spreadsheet__thumbnail
+#: model:ir.model.fields,field_description:quality_control.field_quality_spreadsheet_template__thumbnail
+msgid "Thumbnail"
+msgstr ""
+
+#. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_alert__title
 #: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__title
 msgid "Title"
 msgstr "タイトル"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_search
+msgid "Today Activities"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
@@ -1111,9 +1434,25 @@ msgid "Transfer"
 msgstr "転送"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "Transfer-987"
+msgstr ""
+
+#. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_check_view_form
 msgid "Type"
 msgstr "タイプ"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_point_kanban
+msgid "Type:"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.model.fields,field_description:quality_control.field_quality_check__uom_id
+#: model:ir.model.fields,field_description:quality_control.field_quality_check_wizard__uom_id
+msgid "Unit"
+msgstr ""
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
@@ -1125,6 +1464,21 @@ msgstr "単位"
 #: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
 msgid "Validate"
 msgstr "検証"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "Value near threshold."
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_spreadsheet_template_view_list
+msgid "Visible to all"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.worksheet_page
+msgid "Visual Check"
+msgstr ""
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_quality_check__warning_message
@@ -1153,9 +1507,16 @@ msgid "Worksheet Report - Internal (PDF)"
 msgstr "ワークシートレポート - 内部 (PDF)"
 
 #. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.view_quality_check_wizard
+msgid "Write quality check notes..."
+msgstr ""
+
+#. module: quality_control
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
-msgid "You measured %.2f %s and it should be between %.2f and %.2f %s."
+msgid ""
+"You measured %(measure).2f %(unit)s and it should be between %"
+"(tolerance_min).2f and %(tolerance_max).2f %(unit)s."
 msgstr ""
 
 #. module: quality_control
@@ -1172,5 +1533,33 @@ msgstr "品質検査が必要です。"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
+msgid "alias"
+msgstr ""
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
 msgid "e.g. The QA Masters"
 msgstr "例: QAマスター"
+
+#. module: quality_control
+#: model_terms:ir.ui.view,arch_db:quality_control.quality_alert_team_view_form
+msgid "e.g. mycompany.com"
+msgstr ""
+
+#~ msgid "Cancel"
+#~ msgstr "取消"
+
+#~ msgid "Group By"
+#~ msgstr "グループ化"
+
+#~ msgid "In #{kanban_getcolorname(record.color.raw_value)}"
+#~ msgstr "番号{kanban_getcolorname(record.color.raw_value)}の中にあります"
+
+#~ msgid "OK"
+#~ msgstr "OK"
+
+#~ msgid "Product Unit of Measure"
+#~ msgstr "プロダクト単位"
+
+#~ msgid "Quality Control Points"
+#~ msgstr "品質管理ポイント"

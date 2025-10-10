@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:36+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-11 14:36+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -72,8 +73,7 @@ msgstr ""
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_request__recurring_leaves_count
-msgid ""
-"Block the workcenter for this many time slots in the future in advance."
+msgid "Block the workcenter for this many time slots in the future in advance."
 msgstr ""
 
 #. module: mrp_maintenance
@@ -325,8 +325,10 @@ msgstr ""
 #. module: mrp_maintenance
 #: model_terms:ir.actions.act_window,help:mrp_maintenance.maintenance_workcenter_action
 msgid ""
-"Manufacturing operations are processed at Work Centers. A Work Center can be composed of\n"
-"            workers and/or machines, they are used for costing, scheduling, capacity planning, etc."
+"Manufacturing operations are processed at Work Centers. A Work Center can be "
+"composed of\n"
+"            workers and/or machines, they are used for costing, scheduling, "
+"capacity planning, etc."
 msgstr ""
 
 #. module: mrp_maintenance
@@ -533,8 +535,12 @@ msgstr ""
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_maintenance_stage__create_leaves
 msgid ""
-"When this box is unticked, and the maintenance is of the type 'Work Center', no leave is created on the respective work center when a maintenance request is created.\n"
-"If the box is ticked, the work center is automatically blocked for the listed duration, either at the specified date, or as soon as possible, if the work center is unavailable then."
+"When this box is unticked, and the maintenance is of the type 'Work Center', "
+"no leave is created on the respective work center when a maintenance request "
+"is created.\n"
+"If the box is ticked, the work center is automatically blocked for the "
+"listed duration, either at the specified date, or as soon as possible, if "
+"the work center is unavailable then."
 msgstr ""
 
 #. module: mrp_maintenance

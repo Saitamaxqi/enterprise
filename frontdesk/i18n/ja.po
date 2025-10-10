@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-10-03 12:11+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -65,26 +65,30 @@ msgstr "'バッジ - %s' % (object.name).replace('/', '')"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid ""
 ")\n"
-"                        will be notified via email/SMS only, as they are not available on Discuss."
+"                        will be notified via email/SMS only, as they are not "
+"available on Discuss."
 msgstr ""
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid ",<br/>I hope this message finds you well. This is to inform you that"
-msgstr "、<br/>お世話になっております。以下の件につきましてご連絡申し上げます。"
+msgstr ""
+"、<br/>お世話になっております。以下の件につきましてご連絡申し上げます。"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid ""
 ".\n"
-"                    <br/>Please let us know if you would like us to direct them to a meeting room or if you require any further assistance.\n"
-"                    <br/>After a successful meeting with the visitor, please proceed to check out their login."
+"                    <br/>Please let us know if you would like us to direct "
+"them to a meeting room or if you require any further assistance.\n"
+"                    <br/>After a successful meeting with the visitor, please "
+"proceed to check out their login."
 msgstr ""
 ".\n"
-"                    <br/"
-">会議室へのご案内やその他サポートが必要な場合はお知らせください。\n"
-"                    <br/"
-">訪問者とのミーティングが完了したら、ログインの確認にお進みください。"
+"                    <br/>会議室へのご案内やその他サポートが必要な場合はお知ら"
+"せください。\n"
+"                    <br/>訪問者とのミーティングが完了したら、ログインの確認に"
+"お進みください。"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.print_visitor_badge
@@ -525,14 +529,14 @@ msgstr "メッセージあり"
 #: model:sms.template,body:frontdesk.frontdesk_sms_template
 msgid ""
 "Hello, Your visitor {{ object.name }} {{ '(%s)' % object.phone if "
-"object.phone else '' }} {{ '(%s)' % object.company if object.company else ''"
-" }} wants to meet you at {{ object.station_id.name }}. Please let them know "
-"you'll be there shortly."
+"object.phone else '' }} {{ '(%s)' % object.company if object.company else "
+"'' }} wants to meet you at {{ object.station_id.name }}. Please let them "
+"know you'll be there shortly."
 msgstr ""
 "訪問者{{ object.name }} {{ '(%s)' % object.phone if object.phone else '' }} "
-"{{ '(%s)' % object.company if object.company else '' }} が {{ "
-"object.station_id.name "
-"}}であなたとのミーティングを希望しています。まもなく伺うことを伝えましょう。"
+"{{ '(%s)' % object.company if object.company else '' }} が "
+"{{ object.station_id.name }}であなたとのミーティングを希望しています。まもな"
+"く伺うことを伝えましょう。"
 
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.print_visitor_badge
@@ -955,8 +959,8 @@ msgstr "担当者"
 #. module: frontdesk
 #: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__responsible_ids
 msgid ""
-"Responsibles are people who will welcome the client and handle their drinks,"
-" etc."
+"Responsibles are people who will welcome the client and handle their drinks, "
+"etc."
 msgstr ""
 
 #. module: frontdesk
@@ -1038,14 +1042,16 @@ msgstr "計画済として設定"
 #. module: frontdesk
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid "Show a QR code on the welcome screen to check-in from mobile"
-msgstr "ウェルカムスクリーンにQRコードを表示し、モバイルからのチェックインを促します"
+msgstr ""
+"ウェルカムスクリーンにQRコードを表示し、モバイルからのチェックインを促します"
 
 #. module: frontdesk
 #: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__self_check_in
 msgid ""
 "Shows a QR code in the interface, for guests to check in from their mobile "
 "phone."
-msgstr "インターフェイスにQRコードを表示し、ゲストが携帯電話からチェックインできるよ"
+msgstr ""
+"インターフェイスにQRコードを表示し、ゲストが携帯電話からチェックインできるよ"
 "うにします"
 
 #. module: frontdesk
@@ -1206,8 +1212,9 @@ msgstr "はい、お願いします。"
 msgid ""
 "You can contact the host's manager or frontdesk responsible for further "
 "assistance."
-msgstr "詳細な対応が必要な場合は、ホストのマネジャーまたは受付担当者にご連絡ください"
-"。"
+msgstr ""
+"詳細な対応が必要な場合は、ホストのマネジャーまたは受付担当者にご連絡くださ"
+"い。"
 
 #. module: frontdesk
 #. odoo-javascript

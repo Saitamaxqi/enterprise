@@ -20,7 +20,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 21:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
@@ -42,8 +42,10 @@ msgstr "<b>API anahtarlarınızı Odoo'da kopyalayın</b><br/>"
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
 "<b>Hesabınızı oluşturduktan sonra, kontrol panelinize gidin ve kullanıcı "
@@ -54,14 +56,15 @@ msgstr ""
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">İnç</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "A production key is required in order to load your easypost carriers."
-msgstr "Easypost taşıyıcılarınızı yüklemek için bir üretim anahtarı gereklidir."
+msgstr ""
+"Easypost taşıyıcılarınızı yüklemek için bir üretim anahtarı gereklidir."
 
 #. module: delivery_easypost
 #. odoo-python
@@ -136,15 +139,22 @@ msgid "Delivery Carrier"
 msgstr "Teslim Yöntemi"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "İsim Göster"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
-msgstr "Geçerli bir yapılandırma için Easypost taşıyıcı hesaplarınızı yüklemeyi unutmayın."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
+msgstr ""
+"Geçerli bir yapılandırma için Easypost taşıyıcı hesaplarınızı yüklemeyi "
+"unutmayın."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__epl2
@@ -231,8 +241,11 @@ msgid "Go to"
 msgstr "Gidin"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -254,7 +267,9 @@ msgstr "Sigorta ücreti oranı (USD)"
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
 msgstr ""
 "Easypost'un bu sipariş için gönderi sağlamadığı anlaşılıyor. Başka bir paket "
 "türü veya hizmet seviyesi ile denemenizi tavsiye ederiz."
@@ -414,23 +429,29 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "Ürününüzün ağırlığı olmadığı için tahmini fiyat hesaplanamadı."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Aşağıdaki ürün(ler) için ağırlık eksik olduğundan tahmini nakliye fiyatı hesaplanamıyor:\n"
+"Aşağıdaki ürün(ler) için ağırlık eksik olduğundan tahmini nakliye fiyatı "
+"hesaplanamıyor:\n"
 "%s"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
 msgstr ""
 "Paketlerinizden biri için seçilen hizmet düzeyinde fiyat mevcut değil. "
 "Lütfen başka bir hizmet seviyesi seçin."
@@ -467,8 +488,12 @@ msgstr "Easypost gönderimini iptal edemezsiniz."
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "Easypost Hesabınıza bağlı operatörünüz yok. Lütfen Easypost'a bağlanın, hesabınızı operatörlere bağlayın ve ardından yeniden deneyin."
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"Easypost Hesabınıza bağlı operatörünüz yok. Lütfen Easypost'a bağlanın, "
+"hesabınızı operatörlere bağlayın ve ardından yeniden deneyin."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -479,3 +504,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "yeni bir hesap oluşturmak için:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">İnç</span>"

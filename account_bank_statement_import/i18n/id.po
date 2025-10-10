@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 23:09+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
@@ -41,6 +41,12 @@ msgid "A bank account transactions can be imported only once!"
 msgstr "Transaksi akun bank hanya dapat diimpor sekali saja!"
 
 #. module: account_bank_statement_import
+#. odoo-python
+#: code:addons/account_bank_statement_import/models/account_journal.py:0
+msgid "All or part of the following file(s) could not be imported:\n"
+msgstr ""
+
+#. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
 msgid "Bank Statement Line"
 msgstr "Baris Rekening Koran"
@@ -53,8 +59,24 @@ msgstr "Bank setup manual config"
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "Cannot find in which journal import this statement. Please manually select a journal."
-msgstr "Tidak dapat menemukan dari jurnal mana laporan ini diimpor. Mohon pilih jurnal secara manual."
+msgid ""
+"Cannot find in which journal to import the statement for account %s. Please "
+"configure the journal first."
+msgstr ""
+
+#. module: account_bank_statement_import
+#. odoo-python
+#: code:addons/account_bank_statement_import/models/account_journal.py:0
+msgid ""
+"Cannot find in which journal to import this statement. Please manually "
+"select a journal."
+msgstr ""
+
+#. module: account_bank_statement_import
+#. odoo-python
+#: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
+msgid "Click \"New\" or upload a %s."
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -67,21 +89,40 @@ msgstr ""
 "Apakah Anda sudah menginstal modul yang mendukung tipe file ini?"
 
 #. module: account_bank_statement_import
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__display_name
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "Go to Apps"
 msgstr "Pergi ke Aplikasi"
 
 #. module: account_bank_statement_import
-#. odoo-python
-#: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "If it contains transactions for more than one account, it must be imported on each of them."
-msgstr "Bila memiliki transaksi untuk lebih dari satu akun, harus diimpor untuk setiap akun."
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__id
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__id
+#: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__id
+msgid "ID"
+msgstr ""
+
+#. module: account_bank_statement_import
+#: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit
+msgid "Import File"
+msgstr ""
 
 #. module: account_bank_statement_import
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__unique_import_id
 msgid "Import ID"
 msgstr "Impor ID"
+
+#. module: account_bank_statement_import
+#. odoo-python
+#: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
+msgid "Import Template for Bank Statement Lines"
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-javascript
@@ -114,37 +155,48 @@ msgstr "Tidak ada mata uang yang cocok '%s'."
 
 #. module: account_bank_statement_import
 #. odoo-python
-#: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "The account of this statement (%s) is not the same as the journal (%s)."
-msgstr "Rekening dari laporan (%s) ini tidak sama dengan yang ada di jurnal (%s)."
+#: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
+msgid "No transactions matching your filters were found."
+msgstr ""
+
+#. module: account_bank_statement_import
+#. odoo-python
+#: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
+msgid "Nothing to do here!"
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "The currency of the bank statement (%s) is not the same as the currency of the journal (%s)."
-msgstr "Mata uang laporan bank (%s) tidak sama dengan mata uang jurnal (%s)."
+msgid ""
+"The account of this statement (%(account)s) is not the same as the journal (%"
+"(journal)s)."
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "The following files could not be imported:\n"
-msgstr "File-file berikut tidak dapat diimpor:\n"
+msgid ""
+"The currency of the bank statement (%(code)s) is not the same as the "
+"currency of the journal (%(journal)s)."
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "This file doesn't contain any statement for account %s."
-msgstr "File ini tidak memiliki statement untuk akun %s."
+msgid ""
+"This file doesn't contain any statement for account %s.\n"
+"If it contains transactions for more than one account, it must be imported "
+"on each of them."
+msgstr ""
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
-msgid "This file doesn't contain any transaction for account %s."
-msgstr "File ini tidak memiliki transaksi apapun untuk akun %s."
-
-#. module: account_bank_statement_import
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit
-msgid "Transactions"
+msgid ""
+"This file doesn't contain any transaction for account %s.\n"
+"If it contains transactions for more than one account, it must be imported "
+"on each of them."
 msgstr ""
 
 #. module: account_bank_statement_import
@@ -171,7 +223,36 @@ msgstr "Anda harus menetapkan Default Account untuk jurnal: %s"
 msgid "You uploaded an invalid or empty file."
 msgstr "Anda mengunggah file yang tidak valid atau kosong."
 
-#. module: account_bank_statement_import
-#: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit
-msgid "or"
-msgstr ""
+#~ msgid ""
+#~ "Cannot find in which journal import this statement. Please manually "
+#~ "select a journal."
+#~ msgstr ""
+#~ "Tidak dapat menemukan dari jurnal mana laporan ini diimpor. Mohon pilih "
+#~ "jurnal secara manual."
+
+#~ msgid ""
+#~ "If it contains transactions for more than one account, it must be "
+#~ "imported on each of them."
+#~ msgstr ""
+#~ "Bila memiliki transaksi untuk lebih dari satu akun, harus diimpor untuk "
+#~ "setiap akun."
+
+#~ msgid ""
+#~ "The account of this statement (%s) is not the same as the journal (%s)."
+#~ msgstr ""
+#~ "Rekening dari laporan (%s) ini tidak sama dengan yang ada di jurnal (%s)."
+
+#~ msgid ""
+#~ "The currency of the bank statement (%s) is not the same as the currency "
+#~ "of the journal (%s)."
+#~ msgstr ""
+#~ "Mata uang laporan bank (%s) tidak sama dengan mata uang jurnal (%s)."
+
+#~ msgid "The following files could not be imported:\n"
+#~ msgstr "File-file berikut tidak dapat diimpor:\n"
+
+#~ msgid "This file doesn't contain any statement for account %s."
+#~ msgstr "File ini tidak memiliki statement untuk akun %s."
+
+#~ msgid "This file doesn't contain any transaction for account %s."
+#~ msgstr "File ini tidak memiliki transaksi apapun untuk akun %s."

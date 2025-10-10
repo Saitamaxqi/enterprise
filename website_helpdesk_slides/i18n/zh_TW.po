@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* website_helpdesk_slides
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: website_helpdesk_slides
@@ -76,7 +77,8 @@ msgid ""
 "Alternatively, you can make courses private to restrict this feature to "
 "internal users."
 msgstr ""
-"在支援中心內，客戶只會看到所選課程的內容。如果你想所有課程均可存取，只需將欄位留空。或者，你可將課程設為私人，以將此功能限制至只供內部使用者使用。"
+"在支援中心內，客戶只會看到所選課程的內容。如果你想所有課程均可存取，只需將欄"
+"位留空。或者，你可將課程設為私人，以將此功能限制至只供內部使用者使用。"
 
 #. module: website_helpdesk_slides
 #: model:ir.model.fields,field_description:website_helpdesk_slides.field_helpdesk_team__display_name

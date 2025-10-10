@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:58+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -155,8 +155,8 @@ msgid ""
 "Invalid Authentication Information: Please check your credentials and "
 "configuration within UPS's system."
 msgstr ""
-"ข้อมูลการรับรองความถูกต้องนั้นไม่ถูกต้อง: โปรดตรวจสอบข้อมูลรับรองและการกำหนดค่าของคุ"
-"ณภายในระบบของ UPS"
+"ข้อมูลการรับรองความถูกต้องนั้นไม่ถูกต้อง: "
+"โปรดตรวจสอบข้อมูลรับรองและการกำหนดค่าของคุณภายในระบบของ UPS"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_package_weight_unit__kgs
@@ -251,8 +251,7 @@ msgstr "ผู้รับ"
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Recipient Phone must be at least 10 alphanumeric characters."
-msgstr ""
-"โทรศัพท์ผู้รับต้องมีอักขระที่เป็นตัวอักษรและตัวเลขคละกันอย่างน้อย 10 ตัว"
+msgstr "โทรศัพท์ผู้รับต้องมีอักขระที่เป็นตัวอักษรและตัวเลขคละกันอย่างน้อย 10 ตัว"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_require_signature
@@ -314,8 +313,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid "Shipper Phone must be at least 10 alphanumeric characters."
-msgstr ""
-"โทรศัพท์ของผู้จัดส่งต้องมีอักขระที่เป็นตัวอักษรและตัวเลขคละกันอย่างน้อย 10 ตัว"
+msgstr "โทรศัพท์ของผู้จัดส่งต้องมีอักขระที่เป็นตัวอักษรและตัวเลขคละกันอย่างน้อย 10 ตัว"
 
 #. module: delivery_ups_rest
 #: model:ir.model,name:delivery_ups_rest.model_delivery_carrier
@@ -390,8 +388,7 @@ msgstr ""
 msgid ""
 "This value added service enables UPS to collect the payment of the shipment "
 "from your customer."
-msgstr ""
-"บริการเพิ่มมูลค่านี้ทำให้ UPS สามารถเรียกเก็บเงินค่าขนส่งจากลูกค้าของคุณได้"
+msgstr "บริการเพิ่มมูลค่านี้ทำให้ UPS สามารถเรียกเก็บเงินค่าขนส่งจากลูกค้าของคุณได้"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,help:delivery_ups_rest.field_delivery_carrier__ups_saturday_delivery
@@ -536,8 +533,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups_rest/models/payment_provider.py:0
 msgid "UPS provider is configured to use only Collect on Delivery."
-msgstr ""
-"ผู้ให้บริการ UPS ได้รับการกำหนดค่าให้ใช้เฉพาะบริการ Collect on Delivery เท่านั้น"
+msgstr "ผู้ให้บริการ UPS ได้รับการกำหนดค่าให้ใช้เฉพาะบริการ Collect on Delivery เท่านั้น"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_duty_payment

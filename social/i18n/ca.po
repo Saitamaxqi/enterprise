@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:15+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/social/"
@@ -48,7 +48,8 @@ msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"CalendarI\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
 
 #. module: social
@@ -64,11 +65,11 @@ msgstr "<i class=\"oi oi-arrow-left\"/> Tornar a Odoo"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr ""
-"<strong>Felicitats. Torna en uns minuts per comprovar les "
-"estadístiques.</strong>"
+"<strong>Felicitats. Torna en uns minuts per comprovar les estadístiques.</"
+"strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
@@ -358,8 +359,8 @@ msgstr "Crea una publicació"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
 "Creeu altres comptes per a %(media_names)s per a aquesta empresa o demaneu a "
 "%(company_names)s que comparteixin els seus comptes"
@@ -396,8 +397,8 @@ msgid ""
 "Defines whether this account has Audience/Engagements/Stories stats.\n"
 "        Account with stats are displayed on the dashboard."
 msgstr ""
-"Defineix si aquest compte té estadístiques d'Audiència/Engagements/Estòries."
-"\n"
+"Defineix si aquest compte té estadístiques d'Audiència/Engagements/"
+"Estòries.\n"
 "        El compte amb estadístiques es mostra al tauler."
 
 #. module: social
@@ -545,8 +546,8 @@ msgstr ""
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr ""
 "Cada vegada que es crea un compte, també es crea un utm.medium i està "
 "enllaçat al compte"
@@ -606,7 +607,8 @@ msgstr "Data de publicació amb format"
 #: model:ir.model.fields,help:social.field_social_account__audience
 msgid ""
 "General audience of the Social Account (Page Likes, Account Follows, ...)."
-msgstr "Audiència general del compte social (Page Likes, Account Follows, ...)."
+msgstr ""
+"Audiència general del compte social (Page Likes, Account Follows, ...)."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
@@ -676,7 +678,8 @@ msgstr "Icona que indica una activitat d'excepció."
 #: model:ir.model.fields,help:social.field_social_media__message_needaction
 #: model:ir.model.fields,help:social.field_social_post__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
+msgstr ""
+"Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error
@@ -941,8 +944,7 @@ msgstr "Missatge penjat"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr ""
 
 #. module: social
@@ -954,8 +956,10 @@ msgstr "Missatges"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "La majoria de publicacions socials van directament de Ready a Posted/Failed, "
 "ja que són el resultat d'una única trucada a l'API de tercers.\n"
@@ -1116,8 +1120,8 @@ msgstr ""
 #: model:ir.model.fields,help:social.field_social_account__engagement
 msgid "Number of people engagements with your posts (Likes, Comments, ...)."
 msgstr ""
-"Nombre de persones que es comprometen amb les vostres publicacions ("
-"lliuraments, comentaris...)."
+"Nombre de persones que es comprometen amb les vostres publicacions "
+"(lliuraments, comentaris...)."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
@@ -1131,8 +1135,8 @@ msgid ""
 "Number of times people have engaged with your posts (likes, comments, "
 "shares,...)"
 msgstr ""
-"Nombre de vegades que la gent ha interaccionat amb les teves publicacions ("
-"m'agrada, comentaris, comparticions,...)"
+"Nombre de vegades que la gent ha interaccionat amb les teves publicacions "
+"(m'agrada, comentaris, comparticions,...)"
 
 #. module: social
 #. odoo-javascript
@@ -1384,8 +1388,8 @@ msgstr "Data programada"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr ""
 "Els comptes seleccionats (%(account_list)s) no coincideixen amb l'empresa "
 "seleccionada (%(company)s)"
@@ -1552,12 +1556,12 @@ msgstr "Font"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
 msgstr ""
 "Camp tècnic especial que conté un dict que conté els noms de les "
-"publicacions en directe per mitjà dels identificadors de les xarxes socials ("
-"utilitzat per a la vista kanban)."
+"publicacions en directe per mitjà dels identificadors de les xarxes socials "
+"(utilitzat per a la vista kanban)."
 
 #. module: social
 #. odoo-javascript
@@ -1663,8 +1667,7 @@ msgstr "Els comptes en què es publicarà aquesta publicació."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr ""
 "El nom de l'autor de la publicació basat en informació de tercers (ex: 'John "
 "Doe')."
@@ -1675,8 +1678,8 @@ msgid ""
 "The post is considered as 'Posted' when all its sub-posts (one per social "
 "account) are either 'Failed' or 'Posted'"
 msgstr ""
-"La publicació es considera com a «Posició», quan tots els seus subentrades ("
-"una per compte social) són «Posits» o «Posits»"
+"La publicació es considera com a «Posició», quan tots els seus subentrades "
+"(una per compte social) són «Posits» o «Posits»"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1820,8 +1823,8 @@ msgstr "Data i hora"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr ""
 "Quan es va publicar l'entrada global. Les dates de publicació de les sub-"
 "publicacions reals poden ser diferents depenent dels mitjans de comunicació."
@@ -1869,7 +1872,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "No podeu suprimir aquests suports UTM perquè estan enllaçats amb els "
@@ -1880,7 +1884,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "No podeu suprimir aquestes fonts UTM perquè estan enllaçades a publicacions "

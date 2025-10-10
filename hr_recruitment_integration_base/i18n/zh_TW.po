@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* hr_recruitment_integration_base
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: hr_recruitment_integration_base
@@ -26,23 +27,16 @@ msgid "%(job)s on %(platform)s"
 msgstr "%(job)s 於 %(platform)s"
 
 #. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
-msgid ""
-"<span class=\"o_stat_value\">New</span>\n"
-"                            <span class=\"o_stat_text\">Job Board</span>"
-msgstr ""
-"<span class=\"o_stat_value\">新增</span>\n"
-"                            <span class=\"o_stat_text\">招聘平台</span>"
-
-#. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
 msgid "<span class=\"px-2\">-</span>"
 msgstr "<span class=\"px-2\">-</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
-msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
-msgstr "<span class=\"text-muted\" invisible=\"campaign_end_date\">沒有限制</span>"
+msgid ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgstr ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">沒有限制</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
@@ -95,9 +89,19 @@ msgid "Activity Type Icon"
 msgstr "活動類型圖示"
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model,name:hr_recruitment_integration_base.model_hr_applicant
+msgid "Applicant"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__apply_method
 msgid "Apply Method"
 msgstr "申請方式"
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model,website_form_label:hr_recruitment_integration_base.model_hr_applicant
+msgid "Apply for a Job"
+msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_attachment_count
@@ -256,6 +260,16 @@ msgid "Data"
 msgstr "資料"
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__date_from
+msgid "Date From"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__date_to
+msgid "Date To"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__daily
 msgid "Day"
 msgstr "日"
@@ -280,6 +294,7 @@ msgid "Description"
 msgstr "說明"
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__display_name
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__display_name
@@ -301,6 +316,7 @@ msgstr "複製"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__job_apply_mail
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__apply_method__email
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_form
 msgid "Email"
 msgstr "電郵"
 
@@ -309,6 +325,11 @@ msgstr "電郵"
 #: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
 msgid "Email is required if the apply method is 'Send an email'.\n"
 msgstr "若申請方法是「傳送電郵」，便須提供電郵。\n"
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid "End Date"
+msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
@@ -347,11 +368,6 @@ msgid "From"
 msgstr "由"
 
 #. module: hr_recruitment_integration_base
-#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__has_message
 msgid "Has Message"
 msgstr "有訊息"
@@ -362,6 +378,7 @@ msgid "Hour"
 msgstr "小時"
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_applicant__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__id
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_platform__id
@@ -416,9 +433,20 @@ msgid "Image 512"
 msgstr "圖像 512"
 
 #. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__industry_id
+msgid "Industry"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job_post__message_is_follower
 msgid "Is Follower"
 msgstr "是關注者"
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job__date_from
+msgid ""
+"Is set, update applicants availability once hired for that specific mission."
+msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban_search
@@ -523,6 +551,21 @@ msgstr "訊息"
 #: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_job__salary_min
 msgid "Minimum Salary"
 msgstr "最低薪酬"
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
+msgid "Mission Dates"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_to
+msgid "Mission date end"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,field_description:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
+msgid "Mission date start"
+msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job__payment_interval__monthly
@@ -633,6 +676,11 @@ msgstr "立即發佈"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
+msgid "Post on Job Boards"
+msgstr ""
+
+#. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Posts"
 msgstr "貼文"
 
@@ -725,6 +773,7 @@ msgstr "發送電子郵件"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_list
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.view_hr_job_form
 msgid "Start Date"
 msgstr "開始日期"
 
@@ -782,10 +831,12 @@ msgstr "成功"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid ""
-"The Recruiter will be the default value for all Applicants in this job"
-"             position. The Recruiter is automatically added to all meetings "
-"with the Applicant."
-msgstr "該招聘人員將成為所有申請此職位的申請人的預設值。該招聘人員將自動加入至與申請人進行的所有會議中。"
+"The Recruiter will be the default value for all Applicants in this "
+"job             position. The Recruiter is automatically added to all "
+"meetings with the Applicant."
+msgstr ""
+"該招聘人員將成為所有申請此職位的申請人的預設值。該招聘人員將自動加入至與申請"
+"人進行的所有會議中。"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__campaign_end_date
@@ -809,9 +860,17 @@ msgstr "發送申請至的目標電郵地址、電話號碼及網址。"
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid ""
-"This action will update the job post on the platform. This action will cost "
-"%(price)s credits. Do you want to continue?"
-msgstr "此操作會在平台上更新工作職位資料。此操作會消耗 %(price)s 個點數。繼續操作？"
+"This action will update the job post on the platform. This action will cost %"
+"(price)s credits. Do you want to continue?"
+msgstr ""
+"此操作會在平台上更新工作職位資料。此操作會消耗 %(price)s 個點數。繼續操作？"
+
+#. module: hr_recruitment_integration_base
+#: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
+msgid ""
+"This will update the applicant's availability status once they are hired for "
+"this position."
+msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__activity_exception_decoration
@@ -867,6 +926,11 @@ msgid "created"
 msgstr "已建立"
 
 #. module: hr_recruitment_integration_base
+#: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
+msgid "e.g. Health, IT Services, Agriculture ..."
+msgstr ""
+
+#. module: hr_recruitment_integration_base
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_recruitment_platform.py:0
 msgid "failure"
@@ -887,3 +951,13 @@ msgstr "平台圖示"
 #: code:addons/hr_recruitment_integration_base/wizard/hr_recruitment_post.py:0
 msgid "updated"
 msgstr "已更新"
+
+#~ msgid ""
+#~ "<span class=\"o_stat_value\">New</span>\n"
+#~ "                            <span class=\"o_stat_text\">Job Board</span>"
+#~ msgstr ""
+#~ "<span class=\"o_stat_value\">新增</span>\n"
+#~ "                            <span class=\"o_stat_text\">招聘平台</span>"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"

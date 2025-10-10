@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:09+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: documents
@@ -2682,8 +2682,8 @@ msgid ""
 "- %(folders_list)s"
 msgstr ""
 "Восстанавливаемые элементы находятся в архивированных папках. Чтобы "
-"восстановить эти документы, необходимо сначала восстановить следующие папки:"
-"\n"
+"восстановить эти документы, необходимо сначала восстановить следующие "
+"папки:\n"
 "- %(folders_list)s"
 
 #. module: documents
@@ -4141,8 +4141,8 @@ msgstr "Типы следующих документов/ярлыков не с�
 #: code:addons/documents/models/documents_document.py:0
 msgid "The following shortcuts cannot be set as documents parents: \n"
 msgstr ""
-"Следующие ярлыки не могут быть назначены в качестве родительских документов: "
-"\n"
+"Следующие ярлыки не могут быть назначены в качестве родительских "
+"документов: \n"
 
 #. module: documents
 #. odoo-python
@@ -4267,8 +4267,8 @@ msgid ""
 "Those represent the different categories of things you have to do (e.g. "
 "\"Call\" or \"Send email\")."
 msgstr ""
-"Они представляют собой различные категории дел, которые вам нужно сделать ("
-"например, «Звонок» или «Отправить e-mail»)."
+"Они представляют собой различные категории дел, которые вам нужно сделать "
+"(например, «Звонок» или «Отправить e-mail»)."
 
 #. module: documents
 #: model:ir.model.fields,field_description:documents.field_documents_document__thumbnail

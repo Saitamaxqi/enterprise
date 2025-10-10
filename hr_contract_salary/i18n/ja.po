@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-15 11:59+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -28,9 +28,9 @@ msgstr ""
 msgid ""
 " If checked, any change on this information will trigger a new computation "
 "of the gross-->net salary."
-msgstr " "
-"チェックすると、この情報に変更があった場合、総支給額-->手取り給与の新しい計算"
-"がトリガされます。"
+msgstr ""
+" チェックすると、この情報に変更があった場合、総支給額-->手取り給与の新しい計"
+"算がトリガされます。"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_employee__signatures_count
@@ -200,14 +200,13 @@ msgid ""
 "                                </span>"
 msgstr ""
 "<span>\n"
-"                                    "
-"このフィールドはサーバ管理者のみが変更できます。変更が必要な場合はサーバ管理"
-"者に連絡して下さい。\n"
+"                                    このフィールドはサーバ管理者のみが変更で"
+"きます。変更が必要な場合はサーバ管理者に連絡して下さい。\n"
 "                                </span>\n"
-"                                <span invisible="
-"\"requested_documents_fields_string\">\n"
-"                                    "
-"現在、リクエストされたフィールドはありません。\n"
+"                                <span "
+"invisible=\"requested_documents_fields_string\">\n"
+"                                    現在、リクエストされたフィールドはありま"
+"せん。\n"
 "                                </span>"
 
 #. module: hr_contract_salary
@@ -239,7 +238,8 @@ msgstr "折畳済フィールドが必要です"
 msgid ""
 "A signatory role is unassigned. Please ensure there is a valid group or "
 "person assigned to each role."
-msgstr "署名者役割が割当てられていません。各役割に有効なグループまたは人が割当てられ"
+msgstr ""
+"署名者役割が割当てられていません。各役割に有効なグループまたは人が割当てられ"
 "ていることを確認して下さい。"
 
 #. module: hr_contract_salary
@@ -545,8 +545,8 @@ msgid ""
 "conclude the process."
 msgstr ""
 "活動がいつ作成されるかを選択して下さい:\n"
-"- 従業員が契約書に署名: 従業員が契約書に署名すると同時に活動が開始されます。"
-"\n"
+"- 従業員が契約書に署名: 従業員が契約書に署名すると同時に活動が開始されま"
+"す。\n"
 "- 契約書が副署された: 人事担当者が契約書に署名し、プロセスを終了します。"
 
 #. module: hr_contract_salary
@@ -821,7 +821,8 @@ msgstr "従業員用のデフォルト給与コンフィギュレータリンク
 msgid ""
 "Default contract used to generate an offer. If empty, benefits will be taken "
 "from current contract of the employee/nothing for an applicant."
-msgstr "オファーを生成する際に使用されるデフォルトの契約。空欄の場合、福利厚生は従業"
+msgstr ""
+"オファーを生成する際に使用されるデフォルトの契約。空欄の場合、福利厚生は従業"
 "員の現在の契約から取得されます。"
 
 #. module: hr_contract_salary
@@ -831,7 +832,8 @@ msgstr "オファーを生成する際に使用されるデフォルトの契約
 msgid ""
 "Default document that the applicant will have to sign to accept a contract "
 "offer."
-msgstr "契約オファーを承諾するために応募者が署名しなければならないデフォルトのドキュ"
+msgstr ""
+"契約オファーを承諾するために応募者が署名しなければならないデフォルトのドキュ"
 "メント。"
 
 #. module: hr_contract_salary
@@ -839,7 +841,8 @@ msgstr "契約オファーを承諾するために応募者が署名しなけれ
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_version__contract_update_template_id
 msgid ""
 "Default document that the employee will have to sign to update his contract."
-msgstr "契約を更新するために従業員が署名しなければならないデフォルトのドキュメント。"
+msgstr ""
+"契約を更新するために従業員が署名しなければならないデフォルトのドキュメント。"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__activity_creation_type
@@ -864,10 +867,10 @@ msgid ""
 "change regarding the benefit."
 msgstr ""
 "システムが新しい署名依頼を作成するタイミングを定義します:\n"
-"- 福利厚生が設定されたとき： "
-"従業員が初めて福利厚生を利用する際の一意の署名依頼\n"
-"- 福利厚生が変更されたとき： "
-"署名依頼は、福利厚生に関する変更ごとに作成されます。"
+"- 福利厚生が設定されたとき： 従業員が初めて福利厚生を利用する際の一意の署名依"
+"頼\n"
+"- 福利厚生が変更されたとき： 署名依頼は、福利厚生に関する変更ごとに作成されま"
+"す。"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields,field_description:hr_contract_salary.field_hr_contract_salary_offer__department_id
@@ -951,7 +954,8 @@ msgid ""
 "Documents selected here will be requested to the employee for additional "
 "signatures related to the benefit. eg: A company car policy to approve if "
 "you choose a company car."
-msgstr "ここで選択されたドキュメントは、その福利厚生に関連する追加の署名のために従業"
+msgstr ""
+"ここで選択されたドキュメントは、その福利厚生に関連する追加の署名のために従業"
 "員に依頼されます。例: 社用車を選択した場合に承認する社用車規定。"
 
 #. module: hr_contract_salary
@@ -1202,8 +1206,9 @@ msgstr "人事担当者"
 msgid ""
 "HR Responsible %s should be a user of Sign when New Contract Document "
 "Template is specified"
-msgstr "新規契約テンプレートが定義される際、人事責任者 "
-"%sは署名のユーザである必要があります。"
+msgstr ""
+"新規契約テンプレートが定義される際、人事責任者 %sは署名のユーザである必要があ"
+"ります。"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -1211,7 +1216,8 @@ msgstr "新規契約テンプレートが定義される際、人事責任者 "
 msgid ""
 "HR Responsible %s should have a valid email address when New Contract "
 "Document Template is specified"
-msgstr "人事責任者%sは、新規契約書テンプレートが定義される際には、有効なEメールアドレ"
+msgstr ""
+"人事責任者%sは、新規契約書テンプレートが定義される際には、有効なEメールアドレ"
 "スを持っている必要があります。"
 
 #. module: hr_contract_salary
@@ -1297,7 +1303,8 @@ msgstr "チェックした場合は、一部のメッセージに配信エラー
 msgid ""
 "If checked, the value of this information will be computed in all "
 "information set as Monthly Total"
-msgstr "チェックした場合、この情報の値は月次合計として設定された全ての情報で計算され"
+msgstr ""
+"チェックした場合、この情報の値は月次合計として設定された全ての情報で計算され"
 "ます"
 
 #. module: hr_contract_salary
@@ -1344,9 +1351,9 @@ msgid ""
 "annual time off (legal leaves)."
 msgstr ""
 "法定休暇に加え、最大30日の追加休暇を選ぶことができます。\n"
-"年次有給休暇(法定休暇)の取得日数は、前年の勤務スケジュールによって異なります"
-"。前年の12か月間、フルタイムで勤務した場合、年間休日(法定休暇)は20日となりま"
-"す。"
+"年次有給休暇(法定休暇)の取得日数は、前年の勤務スケジュールによって異なりま"
+"す。前年の12か月間、フルタイムで勤務した場合、年間休日(法定休暇)は20日となり"
+"ます。"
 
 #. module: hr_contract_salary
 #: model:hr.contract.salary.personal.info.type,name:hr_contract_salary.hr_contract_salary_personal_info_type_emergency
@@ -1519,7 +1526,8 @@ msgstr "メッセージ"
 msgid ""
 "Mismatch between res_field_id %(field)s and model %(model)s for info %"
 "(personal_info)s"
-msgstr "res_field_id %(field)s とモデル %(model)s の不一致、情報%(personal_info)s用"
+msgstr ""
+"res_field_id %(field)s とモデル %(model)s の不一致、情報%(personal_info)s用"
 
 #. module: hr_contract_salary
 #: model:ir.model.fields.selection,name:hr_contract_salary.selection__hr_contract_salary_benefit_type__periodicity__monthly
@@ -1685,7 +1693,8 @@ msgstr "選択されたオファーがありません。"
 msgid ""
 "No signature template defined on the version. Please contact the HR "
 "responsible."
-msgstr "このバージョンには署名テンプレートが設定されていません。人事担当者にご連絡く"
+msgstr ""
+"このバージョンには署名テンプレートが設定されていません。人事担当者にご連絡く"
 "ださい。"
 
 #. module: hr_contract_salary
@@ -2285,9 +2294,8 @@ msgid ""
 "        "
 msgstr ""
 "1人または2人の署名者がいるドキュメントのみを選択して下さい。\n"
-"        "
-"署名者が1人のドキュメントには従業員の署名のみが必要ですが、署名者が2人のドキ"
-"ュメントには、従業員と人事担当者の両方の署名が必要です。\n"
+"        署名者が1人のドキュメントには従業員の署名のみが必要ですが、署名者が2"
+"人のドキュメントには、従業員と人事担当者の両方の署名が必要です。\n"
 "        "
 
 #. module: hr_contract_salary
@@ -2573,8 +2581,9 @@ msgstr ""
 #: model:ir.model.fields,help:hr_contract_salary.field_hr_contract_salary_benefit__fold_res_field_id
 msgid ""
 "The field here needs to be set for this benefit to be folded by default."
-msgstr "この福利厚生をデフォルトで折畳むには、このフィールドを設定する必要があります"
-"。"
+msgstr ""
+"この福利厚生をデフォルトで折畳むには、このフィールドを設定する必要がありま"
+"す。"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -2613,7 +2622,8 @@ msgstr "元のオファー"
 msgid ""
 "The type of activity that will be created automatically on the contract if "
 "this benefit is chosen by the employee."
-msgstr "この福利厚生を従業員が選択した場合、契約書に自動的に作成される活動のタイプ。"
+msgstr ""
+"この福利厚生を従業員が選択した場合、契約書に自動的に作成される活動のタイプ。"
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.salary_package_benefits
@@ -2630,7 +2640,8 @@ msgstr "前契約書からの変更はありません。"
 msgid ""
 "They will review your contract.<br/> Feel free to contact them if you have "
 "any questions."
-msgstr "契約内容を確認してくれます。<br/>ご不明な点はお気軽にお問い合わせ下さい。"
+msgstr ""
+"契約内容を確認してくれます。<br/>ご不明な点はお気軽にお問い合わせ下さい。"
 
 #. module: hr_contract_salary
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary.hr_contract_salary_view_employee_form_readonly
@@ -2649,7 +2660,8 @@ msgstr "リンクは無効です。人事担当者に連絡して新しいリン
 msgid ""
 "This offer has been fully signed and can no longer be edited. However, you "
 "can still make changes to the Signed Contract if needed."
-msgstr "このオファーは署名が完了しているため、編集することはできません。ただし、必要"
+msgstr ""
+"このオファーは署名が完了しているため、編集することはできません。ただし、必要"
 "に応じて署名済みの契約書を変更することは可能です。"
 
 #. module: hr_contract_salary
@@ -2813,7 +2825,8 @@ msgstr "はい"
 msgid ""
 "You cannot have multiple person responsible for the same role on contract "
 "signature template."
-msgstr "契約署名テンプレートでは、同じ役割に複数の担当者を設定することはできません。"
+msgstr ""
+"契約署名テンプレートでは、同じ役割に複数の担当者を設定することはできません。"
 
 #. module: hr_contract_salary
 #. odoo-python
@@ -2821,7 +2834,8 @@ msgstr "契約署名テンプレートでは、同じ役割に複数の担当者
 msgid ""
 "You cannot have multiple person responsible for the same role on contract "
 "update signature template."
-msgstr "契約更新の署名テンプレートでは、同じ役割に複数の担当者を設定することはできま"
+msgstr ""
+"契約更新の署名テンプレートでは、同じ役割に複数の担当者を設定することはできま"
 "せん。"
 
 #. module: hr_contract_salary
@@ -2892,8 +2906,8 @@ msgid ""
 "{{ object.company_id.name }}: Job Offer - "
 "{{ object.applicant_id.partner_name }}"
 msgstr ""
-"{{ object.company_id.name }}: 採用通知 - {{ object.applicant_id.partner_name "
-"}}"
+"{{ object.company_id.name }}: 採用通知 - "
+"{{ object.applicant_id.partner_name }}"
 
 #. module: hr_contract_salary
 #: model:mail.template,subject:hr_contract_salary.mail_template_send_offer
@@ -2901,8 +2915,8 @@ msgid ""
 "{{ object.company_id.name }}: Job Offer - "
 "{{ object.employee_version_id.name }}"
 msgstr ""
-"{{ object.company_id.name }}: 採用通知 - {{ object.employee_version_id.name "
-"}}"
+"{{ object.company_id.name }}: 採用通知 - "
+"{{ object.employee_version_id.name }}"
 
 #~ msgid "Advantages"
 #~ msgstr "利点"

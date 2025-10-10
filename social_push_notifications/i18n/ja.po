@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:44+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -454,8 +454,7 @@ msgstr "このウェブサイトの構成がすでに存在しています。"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_account__website_id
-msgid ""
-"This firebase configuration will only be used for the specified website"
+msgid "This firebase configuration will only be used for the specified website"
 msgstr "このfirebase構成は、指定されたウェブサイトのためにのみ使用されます"
 
 #. module: social_push_notifications
@@ -492,8 +491,9 @@ msgstr "独自のFirebaseのアカウントを使用します"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__visitor_domain
@@ -542,8 +542,9 @@ msgstr "プッシュ通知のアカウントを削除することはできませ
 msgid ""
 "You have to install \"google_auth>=1.18.0\" to be able to send push "
 "notifications."
-msgstr "プッシュ通知を送信するには \"google_auth>=1.18.0\""
-"をインストールする必要があります"
+msgstr ""
+"プッシュ通知を送信するには \"google_auth>=1.18.0\"をインストールする必要があ"
+"ります"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -576,6 +577,6 @@ msgstr "例: \"my-project-id\""
 msgid ""
 "e.g: If you post at 15:00 your time, all visitors will receive the post at "
 "15:00 their time."
-msgstr "例: "
-"15:00に投稿する場合、訪問者は15:00に自分の時間をポストを受け取ることになりま"
-"す。"
+msgstr ""
+"例: 15:00に投稿する場合、訪問者は15:00に自分の時間をポストを受け取ることにな"
+"ります。"

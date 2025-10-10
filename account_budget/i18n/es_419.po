@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:24+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-17 09:36+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -21,16 +21,20 @@ msgstr ""
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_kanban
-msgid "<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" title=\"Period\"/>"
+msgid ""
+"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" "
+"title=\"Period\"/>"
 msgstr ""
-"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Periodo\" title="
-"\"Periodo\"/>"
+"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Periodo\" "
+"title=\"Periodo\"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
-msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"to\"/>"
-msgstr "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"a\" title=\"a\"/>"
+msgid ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"to\"/>"
+msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"a\" title=\"a\"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
@@ -651,8 +655,8 @@ msgstr ""
 #: code:addons/account_budget/models/budget_line.py:0
 msgid "The 'End Date' must be greater than or equal to 'Start Date'."
 msgstr ""
-"La \"Fecha de finalización\" debe ser un momento posterior a la "
-"\"Fecha de inicio\"."
+"La \"Fecha de finalización\" debe ser un momento posterior a la \"Fecha de "
+"inicio\"."
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_amount

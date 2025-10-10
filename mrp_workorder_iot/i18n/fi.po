@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 17:04+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -40,17 +40,17 @@ msgid "Boxes"
 msgstr "Laatikot"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__cancel
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__canc
 msgid "Cancel"
 msgstr "Peruuta"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clomo
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clmo
 msgid "Close MO"
 msgstr "Sulje tuotantotilaus"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clowo
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clwo
 msgid "Close WO"
 msgstr "Sulje työtilaus"
 
@@ -70,17 +70,23 @@ msgid "Device"
 msgstr "Laite"
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__display_name
 msgid "Display Name"
 msgstr "Näyttönimi"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__finish
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__fini
 msgid "Finish"
 msgstr "Valmis"
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__id
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__id
 msgid "ID"
 msgstr "Tunnus"
 
@@ -126,13 +132,13 @@ msgid "Pack"
 msgstr "Pakkaus"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__pause
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__paus
 msgid "Pause"
 msgstr "Tauko"
 
 #. module: mrp_workorder_iot
 #. odoo-javascript
-#: code:addons/mrp_workorder_iot/static/src/pedal_status_button/pedal_status_button.xml:0
+#: code:addons/mrp_workorder_iot/static/src/mrp_display/pedal_status_button.xml:0
 msgid "Pedal Status"
 msgstr "Polkimen tila"
 
@@ -142,17 +148,17 @@ msgid "Previous"
 msgstr "Edellinen"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print-slip
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prsl
 msgid "Print Delivery Slip"
 msgstr "Tulosta rahtikirja"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prnt
 msgid "Print Labels"
 msgstr "Tulosta tarrat"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print-op
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prop
 msgid "Print Operation"
 msgstr "Tulosta toiminto"
 
@@ -162,12 +168,12 @@ msgid "Quality Check"
 msgstr "Laaduntarkastus"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__record
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__reco
 msgid "Record Production"
 msgstr "Kirjaa tuotanto"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__scrap
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__scra
 msgid "Scrap"
 msgstr "Roskakoriin"
 
@@ -197,7 +203,7 @@ msgid "Triggers"
 msgstr "Käynnistävä toiminnot"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__validate
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__vali
 msgid "Validate"
 msgstr "Vahvista"
 

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -29,13 +29,21 @@ msgstr "<i class=\"fa fa-lg fa-truck\" title=\"轉移\"/>"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_picking_view_kanban
-msgid "<span class=\"fa fa-external-link-square ms-1\" title=\"Open Batch Picking\"/>"
-msgstr "<span class=\"fa fa-external-link-square ms-1\" title=\"開啟批量揀貨\"/>"
+msgid ""
+"<span class=\"fa fa-external-link-square ms-1\" title=\"Open Batch Picking\"/"
+">"
+msgstr ""
+"<span class=\"fa fa-external-link-square ms-1\" title=\"開啟批量揀貨\"/>"
 
 #. module: stock_barcode_picking_batch
 #: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_barcode_batch_picking_view_info
 msgid "Allocation"
 msgstr "分配"
+
+#. module: stock_barcode_picking_batch
+#: model_terms:ir.ui.view,arch_db:stock_barcode_picking_batch.stock_picking_batch_form
+msgid "Barcode"
+msgstr ""
 
 #. module: stock_barcode_picking_batch
 #: model:ir.actions.client,name:stock_barcode_picking_batch.stock_barcode_picking_batch_client_action
@@ -191,9 +199,12 @@ msgstr "該批量揀貨已被取消"
 #: model_terms:ir.actions.act_window,help:stock_barcode_picking_batch.stock_barcode_batch_picking_action_kanban
 msgid ""
 "The goal of the batch transfer is to group operations that may\n"
-"            (needs to) be done together in order to increase their efficiency.\n"
-"            It may also be useful to assign jobs (one person = one batch) or\n"
-"            help the timing management of operations (tasks to be done at 1pm)."
+"            (needs to) be done together in order to increase their "
+"efficiency.\n"
+"            It may also be useful to assign jobs (one person = one batch) "
+"or\n"
+"            help the timing management of operations (tasks to be done at "
+"1pm)."
 msgstr ""
 "批次調撥的目標是對可能\n"
 "            （需要）一起做，以提高其效率。\n"
@@ -233,6 +244,8 @@ msgstr "非批量調撥"
 #: code:addons/stock_barcode_picking_batch/models/stock_picking.py:0
 msgid ""
 "You cannot validate a transfer if no quantities are reserved nor done. You "
-"can use the info button on the top right corner of your screen to remove the"
-" transfer in question from the batch."
-msgstr "如果沒有預留也沒有完成的數量，您就不能驗證調撥。您可以使用屏幕右上角的信息按鈕，從批次中刪除有問題的調撥。"
+"can use the info button on the top right corner of your screen to remove the "
+"transfer in question from the batch."
+msgstr ""
+"如果沒有預留也沒有完成的數量，您就不能驗證調撥。您可以使用屏幕右上角的信息按"
+"鈕，從批次中刪除有問題的調撥。"

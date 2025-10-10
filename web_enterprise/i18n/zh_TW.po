@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -48,7 +48,7 @@ msgstr "新增自訂欄位"
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
+#: code:addons/web_enterprise/static/src/views/view_components/group_config_menu_patch.js:0
 msgid "Automations"
 msgstr "自動化"
 
@@ -69,6 +69,12 @@ msgstr "建立新報告"
 #: code:addons/web_enterprise/static/src/webclient/share_url/burger_menu.xml:0
 msgid "Close menu"
 msgstr "關閉選單"
+
+#. module: web_enterprise
+#: model:ir.model.fields,field_description:web_enterprise.field_res_users__color_scheme
+#: model:ir.model.fields,field_description:web_enterprise.field_res_users_settings__color_scheme
+msgid "Color Scheme"
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -97,10 +103,9 @@ msgid "Customize any screen"
 msgstr "自訂任何螢幕"
 
 #. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/color_scheme/color_scheme_menu_items.js:0
-msgid "Dark Mode"
-msgstr "深色模式"
+#: model:ir.model.fields.selection,name:web_enterprise.selection__res_users_settings__color_scheme__dark
+msgid "Dark"
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -128,6 +133,7 @@ msgstr "解除"
 
 #. module: web_enterprise
 #: model:ir.model.fields,field_description:web_enterprise.field_ir_http__display_name
+#: model:ir.model.fields,field_description:web_enterprise.field_res_users__display_name
 #: model:ir.model.fields,field_description:web_enterprise.field_res_users_settings__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
@@ -168,6 +174,7 @@ msgstr "我已經付款，請再檢查！"
 
 #. module: web_enterprise
 #: model:ir.model.fields,field_description:web_enterprise.field_ir_http__id
+#: model:ir.model.fields,field_description:web_enterprise.field_res_users__id
 #: model:ir.model.fields,field_description:web_enterprise.field_res_users_settings__id
 msgid "ID"
 msgstr "識別號"
@@ -183,6 +190,11 @@ msgstr "安裝 Odoo Studio 及其依賴項目"
 #: code:addons/web_enterprise/static/src/webclient/promote_studio/promote_studio_dialog.xml:0
 msgid "Learn More"
 msgstr "瞭解更多"
+
+#. module: web_enterprise
+#: model:ir.model.fields.selection,name:web_enterprise.selection__res_users_settings__color_scheme__light
+msgid "Light"
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -223,7 +235,7 @@ msgstr "Odoo Studio － 為任何檢視畫面加入新欄位"
 
 #. module: web_enterprise
 #. odoo-javascript
-#: code:addons/web_enterprise/static/src/views/kanban/kanban_header_patch.js:0
+#: code:addons/web_enterprise/static/src/views/view_components/group_config_menu_patch.js:0
 msgid "Odoo Studio - Customize workflows in minutes"
 msgstr "Odoo Studio － 幾分鐘即可自訂工作流程"
 
@@ -260,8 +272,8 @@ msgstr "註冊享用免費服務計劃"
 #. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
-msgid "Renew your subscription"
-msgstr "更新訂購計劃"
+msgid "Renew now"
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -280,12 +292,6 @@ msgstr "傳送電郵"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Sending the instructions by email ..."
 msgstr "正在發送電郵指示⋯"
-
-#. module: web_enterprise
-#. odoo-javascript
-#: code:addons/web_enterprise/static/src/webclient/share_url/share_url.js:0
-msgid "Share"
-msgstr "分享"
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -314,6 +320,11 @@ msgid "Subscription Code:"
 msgstr "訂購碼："
 
 #. module: web_enterprise
+#: model:ir.model.fields.selection,name:web_enterprise.selection__res_users_settings__color_scheme__system
+msgid "System"
+msgstr ""
+
+#. module: web_enterprise
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "TIP"
@@ -330,8 +341,7 @@ msgstr "謝謝，你的註冊成功了！ 您的資料庫有效期至"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid ""
-"Thank you, your registration was successful! Your database is valid until "
-"%s."
+"Thank you, your registration was successful! Your database is valid until %s."
 msgstr "謝謝，您的註冊已成功！您的資料庫有效期至 %s。"
 
 #. module: web_enterprise
@@ -341,6 +351,12 @@ msgid ""
 "The instructions to unlink your subscription from the previous database(s) "
 "have been sent"
 msgstr "有關如何將服務計劃取消連結舊有資料庫的指示，已經發送"
+
+#. module: web_enterprise
+#: model_terms:ir.ui.view,arch_db:web_enterprise.view_users_form_color_scheme
+#: model_terms:ir.ui.view,arch_db:web_enterprise.view_users_form_simple_modif_color_scheme
+msgid "Theme"
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -379,6 +395,11 @@ msgid "Upgrade your subscription"
 msgstr "升級你的訂購計劃"
 
 #. module: web_enterprise
+#: model:ir.model,name:web_enterprise.model_res_users
+msgid "User"
+msgstr ""
+
+#. module: web_enterprise
 #: model:ir.model,name:web_enterprise.model_res_users_settings
 msgid "User Settings"
 msgstr "使用者設定"
@@ -409,6 +430,19 @@ msgstr "安裝第一個應用程式後，便可註冊資料庫。"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.xml:0
 msgid "Your subscription code"
 msgstr "你的訂購碼"
+
+#. module: web_enterprise
+#. odoo-javascript
+#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
+msgid ""
+"Your subscription expired %s days ago. This database will be blocked soon. "
+msgstr ""
+
+#. module: web_enterprise
+#. odoo-javascript
+#: code:addons/web_enterprise/static/src/webclient/home_menu/expiration_panel.js:0
+msgid "Your subscription expires in %s days. "
+msgstr ""
 
 #. module: web_enterprise
 #. odoo-javascript
@@ -457,3 +491,12 @@ msgstr "給訂購計劃擁有人以確認更改，輸入新的代碼或"
 #: code:addons/web_enterprise/static/src/webclient/home_menu/home_menu.xml:0
 msgid "— open me anywhere with"
 msgstr "— 隨處可開啟，利用"
+
+#~ msgid "Dark Mode"
+#~ msgstr "深色模式"
+
+#~ msgid "Renew your subscription"
+#~ msgstr "更新訂購計劃"
+
+#~ msgid "Share"
+#~ msgstr "分享"

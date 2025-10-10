@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* mrp_plm
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: mrp_plm
@@ -36,7 +37,8 @@ msgstr "工程變更指令（ECO）數目"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "%(approval_name)s %(approver_name)s %(approval_status)s this ECO"
-msgstr "%(approval_name)s %(approver_name)s %(approval_status)s 此工程變更指令（ECO）"
+msgstr ""
+"%(approval_name)s %(approver_name)s %(approval_status)s 此工程變更指令（ECO）"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_dashboard_view_kanban
@@ -44,17 +46,19 @@ msgid ""
 "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
 "title=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"域別名\" "
-"title=\"域別名\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"域別名\" title=\"域別"
+"名\"/>&amp;nbsp;"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
-"                        Upload files to your ECO, that will be applied to the product later\n"
+"                        Upload files to your ECO, that will be applied to "
+"the product later\n"
 "                    </p><p>\n"
-"                        Use this feature to store any files, like drawings or specifications.\n"
+"                        Use this feature to store any files, like drawings "
+"or specifications.\n"
 "                    </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
@@ -372,10 +376,6 @@ msgstr ""
 #: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_new
 #: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_progress
 #: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_bom_update_validated
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_blocked:mrp_plm.ecostage_validated
 msgid "Blocked"
 msgstr "已封鎖"
 
@@ -815,7 +815,6 @@ msgstr "編輯任務"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__effectivity
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_effective
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_effective
 msgid "Effective"
 msgstr "有效的"
 
@@ -873,11 +872,6 @@ msgid "Extra Info"
 msgstr "額外資訊"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Filters"
-msgstr "篩選"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_stage__final_stage
 msgid "Final Stage"
 msgstr "最終階段"
@@ -925,11 +919,6 @@ msgid "Grey Kanban Label"
 msgstr "灰色看板標籤"
 
 #. module: mrp_plm
-#: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
-msgid "Group by..."
-msgstr "分組依據⋯"
-
-#. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__has_message
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__has_message
 msgid "Has Message"
@@ -964,8 +953,8 @@ msgstr "識別號"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_thread_id
 msgid ""
-"ID of the parent record holding the alias (example: project holding the task"
-" creation alias)"
+"ID of the parent record holding the alias (example: project holding the task "
+"creation alias)"
 msgstr "上級記錄ID支援別名(例如:專案支援任務建立別名)"
 
 #. module: mrp_plm
@@ -1027,12 +1016,7 @@ msgstr "圖像 128"
 #: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_new
 #: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_progress
 #: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_bom_update_validated
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_normal:mrp_plm.ecostage_validated
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_progress
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_progress
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "In Progress"
 msgstr "進行中"
@@ -1137,7 +1121,8 @@ msgstr "基於本地部件的來件檢測"
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action_report
 msgid ""
 "Manage your products and bills of materials changes with the ECO's.\n"
-"              Gather the related documentation and receive the necessary approvals\n"
+"              Gather the related documentation and receive the necessary "
+"approvals\n"
 "              before applying your changes."
 msgstr ""
 "通過工程變更指令（ECO）管理產品和物料清單。\n"
@@ -1214,7 +1199,6 @@ msgstr "名稱"
 
 #. module: mrp_plm
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_new
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_new
 #: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "New"
 msgstr "新增"
@@ -1239,11 +1223,6 @@ msgstr "新物料清單（BOM）"
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_operation_id
 msgid "New Consumed in Operation"
 msgstr "操作的新消耗"
-
-#. module: mrp_plm
-#: model:mrp.eco.type,name:mrp_plm.ecotype0
-msgid "New Product Introduction"
-msgstr "新產品介紹"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__new_uom_id
@@ -1367,7 +1346,9 @@ msgid ""
 "Optional ID of a thread (record) to which all incoming messages will be "
 "attached, even if they did not reply to it. If set, this will disable the "
 "creation of new records completely."
-msgstr "所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。如果設定了，這個將完全阻止新記錄的建立。"
+msgstr ""
+"所有的進來的信件都將附上一條潛在商機（記錄）選配的ID，即使它們不曾回覆過它。"
+"如果設定了，這個將完全阻止新記錄的建立。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_attachment_id
@@ -1390,7 +1371,8 @@ msgstr "原始名稱"
 msgid ""
 "Override the default value displayed for the blocked state for kanban "
 "selection, when the ECO is in that stage."
-msgstr "當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時受阻狀態顯示的預設值。"
+msgstr ""
+"當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時受阻狀態顯示的預設值。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_done
@@ -1398,7 +1380,8 @@ msgstr "當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時
 msgid ""
 "Override the default value displayed for the done state for kanban "
 "selection, when the ECO is in that stage."
-msgstr "當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時已完成狀態顯示的預設值。"
+msgstr ""
+"當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時已完成狀態顯示的預設值。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_normal
@@ -1406,7 +1389,8 @@ msgstr "當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時
 msgid ""
 "Override the default value displayed for the normal state for kanban "
 "selection, when the ECO is in that stage."
-msgstr "當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時正常狀態顯示的預設值。"
+msgstr ""
+"當工程變更指令（ECO）處於該階段時，覆蓋選擇看板時正常狀態顯示的預設值。"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_dashboard
@@ -1437,11 +1421,12 @@ msgstr "上級記錄線程ID"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_parent_model_id
 msgid ""
-"Parent model holding the alias. The model holding the alias reference is not"
-" necessarily the model given by alias_model_id (example: project "
+"Parent model holding the alias. The model holding the alias reference is not "
+"necessarily the model given by alias_model_id (example: project "
 "(parent_model) and task (model))"
 msgstr ""
-"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模型，例如：專案（parent_model）與任務（model）"
+"載有該別名的母項模型。載有別名參照的模型，不一定是 alias_model_id 提供的模"
+"型，例如：專案（parent_model）與任務（model）"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_contact
@@ -1449,7 +1434,8 @@ msgid ""
 "Policy to post a message on the document using the mailgateway.\n"
 "- everyone: everyone can post\n"
 "- partners: only authenticated partners\n"
-"- followers: only followers of the related document or members of following channels\n"
+"- followers: only followers of the related document or members of following "
+"channels\n"
 msgstr ""
 "通過信件網關在文件上提交一個訊息政策。\n"
 "- 任何人：任何人都可以提交\n"
@@ -1553,10 +1539,6 @@ msgstr "評分"
 #: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_new
 #: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_progress
 #: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_bom_update_validated
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_effective
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_new
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_progress
-#: model:mrp.eco.stage,legend_done:mrp_plm.ecostage_validated
 msgid "Ready"
 msgstr "準備好"
 
@@ -1570,7 +1552,9 @@ msgstr "變基"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Rebase new revision of BoM with previous eco bom and old bom changes."
-msgstr "根據之前工程變更指令（ECO）物料清單（BOM）和舊物料清單變更變基物料清單新版本。"
+msgstr ""
+"根據之前工程變更指令（ECO）物料清單（BOM）和舊物料清單變更變基物料清單新版"
+"本。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1728,8 +1712,8 @@ msgstr "變基成功！"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid ""
-"System will automatically resolved the conflict(s) and apply changes. Do you"
-" agree?"
+"System will automatically resolved the conflict(s) and apply changes. Do you "
+"agree?"
 msgstr "系統將自動處理衝突並套用更改。同意？"
 
 #. module: mrp_plm
@@ -1792,11 +1776,12 @@ msgstr "產品目前版本"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_model_id
 msgid ""
-"The model (Odoo Document Kind) to which this alias corresponds. Any incoming"
-" email that does not reply to an existing record will cause the creation of "
-"a new record of this model (e.g. a Project Task)"
+"The model (Odoo Document Kind) to which this alias corresponds. Any incoming "
+"email that does not reply to an existing record will cause the creation of a "
+"new record of this model (e.g. a Project Task)"
 msgstr ""
-"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
+"相應於這個別名對應的模型(Odoo單據種類)。任何一封不屬於對某個已存在的記錄的到"
+"來信件，將導致此模組中新記錄的建立(例如，一個新專案任務)。"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_name
@@ -1878,7 +1863,6 @@ msgstr "使用者"
 
 #. module: mrp_plm
 #: model:mrp.eco.stage,name:mrp_plm.ecostage_bom_update_validated
-#: model:mrp.eco.stage,name:mrp_plm.ecostage_validated
 msgid "Validated"
 msgstr "已驗證"
 
@@ -1940,8 +1924,8 @@ msgstr "工作中心"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_stage_view_form
 msgid ""
-"You can also add a description to help your coworkers understand the meaning"
-" and purpose of the stage."
+"You can also add a description to help your coworkers understand the meaning "
+"and purpose of the stage."
 msgstr "您還可以添加一個說明來讓您的同時理解相關階段的意思和目的"
 
 #. module: mrp_plm
@@ -2001,3 +1985,12 @@ msgstr "res_model"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "text-danger"
 msgstr "text-danger"
+
+#~ msgid "Filters"
+#~ msgstr "篩選"
+
+#~ msgid "Group by..."
+#~ msgstr "分組依據⋯"
+
+#~ msgid "New Product Introduction"
+#~ msgstr "新產品介紹"

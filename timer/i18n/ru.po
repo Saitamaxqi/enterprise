@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:20+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 21:10+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/timer/ru/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: timer
@@ -33,40 +33,24 @@ msgid "Created on"
 msgstr "Дата создания:"
 
 #. module: timer
+#: model:ir.model.fields,field_description:timer.field_timer_mixin__display_name
+#: model:ir.model.fields,field_description:timer.field_timer_parent_mixin__display_name
 #: model:ir.model.fields,field_description:timer.field_timer_timer__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
 #. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__display_timer_pause
-msgid "Display Timer Pause"
-msgstr "Дисплей Таймер Пауза"
-
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__display_timer_resume
-msgid "Display Timer Resume"
-msgstr "Дисплей Таймер Возобновление"
-
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__display_timer_start_primary
-msgid "Display Timer Start Primary"
-msgstr "Дисплей Таймер запуска Первичный"
-
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__display_timer_stop
-msgid "Display Timer Stop"
-msgstr "Дисплей Таймер Стоп"
-
-#. module: timer
+#: model:ir.model.fields,field_description:timer.field_timer_mixin__id
+#: model:ir.model.fields,field_description:timer.field_timer_parent_mixin__id
 #: model:ir.model.fields,field_description:timer.field_timer_timer__id
 msgid "ID"
 msgstr "ID"
 
 #. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__is_timer_running
-#: model:ir.model.fields,field_description:timer.field_timer_timer__is_timer_running
-msgid "Is Timer Running"
-msgstr "Работает ли таймер"
+#. odoo-python
+#: code:addons/timer/models/timer_parent_mixin.py:0
+msgid "Impossible to start a timer if no record exists to link it to."
+msgstr ""
 
 #. module: timer
 #: model:ir.model.fields,field_description:timer.field_timer_timer__write_uid
@@ -85,19 +69,14 @@ msgstr "Только одно появление таймера для моде�
 
 #. module: timer
 #. odoo-python
-#: code:addons/timer/models/timer_mixin.py:0
+#: code:addons/timer/models/timer_parent_mixin.py:0
 msgid "Operation not supported"
 msgstr "Операция не поддерживается"
 
 #. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_timer__res_id
-msgid "Res"
-msgstr "Ресет"
-
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_timer__res_model
-msgid "Res Model"
-msgstr "Res Model"
+#: model:ir.model,name:timer.model_timer_parent_mixin
+msgid "Parent Timer Mixin"
+msgstr ""
 
 #. module: timer
 #. odoo-javascript
@@ -112,12 +91,6 @@ msgid "Stop"
 msgstr "Стоп"
 
 #. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__timer_pause
-#: model:ir.model.fields,field_description:timer.field_timer_timer__timer_pause
-msgid "Timer Last Pause"
-msgstr "Таймер Последняя пауза"
-
-#. module: timer
 #: model:ir.model,name:timer.model_timer_mixin
 msgid "Timer Mixin"
 msgstr "Миксин таймера"
@@ -127,18 +100,35 @@ msgstr "Миксин таймера"
 msgid "Timer Module"
 msgstr "Модуль таймера"
 
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__timer_start
-#: model:ir.model.fields,field_description:timer.field_timer_timer__timer_start
-msgid "Timer Start"
-msgstr "Запуск таймера"
+#~ msgid "Display Timer Pause"
+#~ msgstr "Дисплей Таймер Пауза"
 
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_timer__user_id
-msgid "User"
-msgstr "Пользователь"
+#~ msgid "Display Timer Resume"
+#~ msgstr "Дисплей Таймер Возобновление"
 
-#. module: timer
-#: model:ir.model.fields,field_description:timer.field_timer_mixin__user_timer_id
-msgid "User Timer"
-msgstr "Пользовательский таймер"
+#~ msgid "Display Timer Start Primary"
+#~ msgstr "Дисплей Таймер запуска Первичный"
+
+#~ msgid "Display Timer Stop"
+#~ msgstr "Дисплей Таймер Стоп"
+
+#~ msgid "Is Timer Running"
+#~ msgstr "Работает ли таймер"
+
+#~ msgid "Res"
+#~ msgstr "Ресет"
+
+#~ msgid "Res Model"
+#~ msgstr "Res Model"
+
+#~ msgid "Timer Last Pause"
+#~ msgstr "Таймер Последняя пауза"
+
+#~ msgid "Timer Start"
+#~ msgstr "Запуск таймера"
+
+#~ msgid "User"
+#~ msgstr "Пользователь"
+
+#~ msgid "User Timer"
+#~ msgstr "Пользовательский таймер"

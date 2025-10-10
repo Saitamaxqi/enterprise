@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -23,13 +23,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_winbooks_import.winbooks_import_form
 msgid ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible=\"only_open\">\n"
-"                        The export of data from Winbooks for closed years might contain unbalanced entries. However if you want to try to import everything, Odoo will set the difference of balance in a Suspense Account.\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
+"                        The export of data from Winbooks for closed years "
+"might contain unbalanced entries. However if you want to try to import "
+"everything, Odoo will set the difference of balance in a Suspense Account.\n"
 "                    </span>"
 msgstr ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible="
-"\"only_open\">\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
 "                        마감 기간 동안 Winbook에서 데이터를 내 보내면 불균형 "
 "항목이 포함될 수 있습니다. 그러나 모든 것을 가져 오려면 Odoo는 Suspense "
 "Account에서 잔액의 차이를 설정합니다.\n"
@@ -179,8 +182,9 @@ msgstr "Winbook에서 사용한 라인 ID"
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
 msgid ""
 "No data zip in the main archive. Please use the complete Winbooks export."
-msgstr "기본 보관함에 데이터 압축이 포함되어 있지 않습니다. 대신 전체 Winbooks "
-"내보내기를 사용하세요."
+msgstr ""
+"기본 보관함에 데이터 압축이 포함되어 있지 않습니다. 대신 전체 Winbooks 내보내"
+"기를 사용하세요."
 
 #. module: account_winbooks_import
 #. odoo-python
@@ -206,8 +210,7 @@ msgstr "세금 그룹"
 #. module: account_winbooks_import
 #. odoo-python
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
-msgid ""
-"The code for the Suspense Account you entered doesn't match any account"
+msgid "The code for the Suspense Account you entered doesn't match any account"
 msgstr "입력하신 가계정 코드와 일치하는 계정이 없습니다."
 
 #. module: account_winbooks_import
@@ -217,8 +220,8 @@ msgid ""
 "unbalanced moves. This might be an account from your Winbooks data, or an "
 "account that you created in Odoo before the import."
 msgstr ""
-"이것은 미결산 이동의 상대편을 넣을 계정의 코드입니다. 이 계정은 Winbook "
-"데이터의 계정 또는 가져오기 전에 Odoo에서 생성한 계정일 수 있습니다."
+"이것은 미결산 이동의 상대편을 넣을 계정의 코드입니다. 이 계정은 Winbook 데이"
+"터의 계정 또는 가져오기 전에 Odoo에서 생성한 계정일 수 있습니다."
 
 #. module: account_winbooks_import
 #: model:ir.actions.act_window,name:account_winbooks_import.winbooks_import_action

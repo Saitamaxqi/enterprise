@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:46+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -22,6 +22,18 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
+msgid " is offline on ."
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
+msgid " is online on ."
+msgstr ""
 
 #. module: pos_urban_piper
 #. odoo-python
@@ -376,6 +388,12 @@ msgstr "錯誤"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
+msgid "Error occurred while updating  status."
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/services/pos_store.js:0
 msgid "Error to send in preparation display."
 msgstr "要發送至準備顯示屏的錯誤。"
 
@@ -403,6 +421,11 @@ msgstr "固定折扣金額"
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__discount_amount
 msgid "Fixed discount value for test order."
 msgstr "用於測試訂單的固定折扣值。"
+
+#. module: pos_urban_piper
+#: model_terms:ir.ui.view,arch_db:pos_urban_piper.product_template_search_view_inherit_pos_urban_piper
+msgid "Food Delivery Location"
+msgstr ""
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -437,7 +460,9 @@ msgstr "前往公司配置"
 msgid ""
 "Handle products with urban piper and pos config - Product is linked or not "
 "with appropriate store."
-msgstr "請使用 UrbanPiper 及 POS 銷售點配置去處理產品。產品已連結或並非與適當的商店連結。"
+msgstr ""
+"請使用 UrbanPiper 及 POS 銷售點配置去處理產品。產品已連結或並非與適當的商店連"
+"結。"
 
 #. module: pos_urban_piper
 #. odoo-javascript
@@ -562,6 +587,12 @@ msgstr "餐食類型"
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/store/order_change_receipt_template.xml:0
 msgid "Min"
 msgstr "最小值"
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/components/order_display/order_display.xml:0
+msgid "Min(s)"
+msgstr ""
 
 #. module: pos_urban_piper
 #: model:ir.model.fields.selection,name:pos_urban_piper.selection__product_template__urbanpiper_meal_type__4
@@ -918,8 +949,7 @@ msgstr "%(providerName)s 不允許拒絕此訂單"
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
-msgid ""
-"Responsible delivery provider for online order, e.g., UberEats, Zomato."
+msgid "Responsible delivery provider for online order, e.g., UberEats, Zomato."
 msgstr "負責為網上訂單送餐的服務商，例如 UberEats、Zomato。"
 
 #. module: pos_urban_piper
@@ -1115,6 +1145,12 @@ msgstr "沒有生效的送貨服務商。"
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
+msgid "Today"
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 msgid "Total Missmatch"
 msgstr "完全不相符"
 
@@ -1228,6 +1264,17 @@ msgid "UrbanPiper Username is required.\n"
 msgstr "需要有 UrbanPiper 使用者名稱。\n"
 
 #. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/receipt_screen/receipt/receipt_header/receipt_header.xml:0
+msgid "UrbanPiper:"
+msgstr ""
+
+#. module: pos_urban_piper
+#: model:account.fiscal.position,name:pos_urban_piper.pos_account_fiscal_position_urbanpiper
+msgid "Urbanpiper"
+msgstr ""
+
+#. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_pos_urbanpiper_test_order_wizard
 msgid "Urbanpiper test order wizard"
 msgstr "Urbanpiper 測試訂單精靈"
@@ -1263,6 +1310,5 @@ msgstr "你不可更改 pos_urban_piper.uuid。"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-msgid ""
-"Your company %s needs to have a correct city in order create the store."
+msgid "Your company %s needs to have a correct city in order create the store."
 msgstr "你的公司「%s」需要設定正確的城市，才可建立商店。"

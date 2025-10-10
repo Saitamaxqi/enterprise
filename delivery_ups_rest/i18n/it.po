@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-22 15:45+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -270,8 +270,8 @@ msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
 msgstr ""
-"Etichetta di reso generata<br/><b>Codici tracciabilità:</b> "
-"%(tracking_numbers)s<br/><b>Colli:</b> %(packages)s"
+"Etichetta di reso generata<br/><b>Codici tracciabilità:</b> %"
+"(tracking_numbers)s<br/><b>Colli:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
@@ -311,8 +311,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
-"Spedizione creata con UPS<br/><b>Codici di tracciabilità:</b> "
-"%(tracking_numbers)s<br/><b>Colli:</b> %(packages)s"
+"Spedizione creata con UPS<br/><b>Codici di tracciabilità:</b> %"
+"(tracking_numbers)s<br/><b>Colli:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python

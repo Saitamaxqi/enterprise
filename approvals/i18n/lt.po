@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 18:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Lithuanian <https://translate.odoo.com/projects/odoo-19/"
@@ -32,9 +32,45 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n % 10 == 1 && (n % 100 > 19 || n % 100 < "
-"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? 1 :"
-" n % 1 != 0 ? 2: 3);\n"
+"11) ? 0 : (n % 10 >= 2 && n % 10 <=9) && (n % 100 > 19 || n % 100 < 11) ? "
+"1 : n % 1 != 0 ? 2: 3);\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "%s (copy)"
+msgstr ""
+
+#. module: approvals
+#: model:ir.actions.report,print_report_name:approvals.action_report_approval_request
+msgid "'Approval - %s' % object.name"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "07/07/2023 10:00:00"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "07/08/2023 10:00:00"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "1200"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
+msgid "<i class=\"fa fa-check text-success me-1\"/>Approve"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
+msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
+msgstr ""
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -42,13 +78,18 @@ msgid "<span class=\"fa fa-warning\" title=\"Invalid minimum approvals\"/>"
 msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
-msgid "<span>From: </span>"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "<span class=\"fw-bold\">Description:</span>"
 msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
-msgid "<span>to: </span>"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "<span class=\"fw-bold\">To</span>"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
+msgid "<span class=\"mx-1\">-</span>"
 msgstr ""
 
 #. module: approvals
@@ -58,6 +99,7 @@ msgstr "Reikalingas veiksmas"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__active
+#: model:ir.model.fields,field_description:approvals.field_approval_request__active
 msgid "Active"
 msgstr "Aktyvus"
 
@@ -80,6 +122,11 @@ msgstr "Veiklos išimties žymėjimas"
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_state
 msgid "Activity State"
 msgstr "Veiklos būsena"
+
+#. module: approvals
+#: model:ir.model,name:approvals.model_mail_activity_type
+msgid "Activity Type"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__activity_type_icon
@@ -106,7 +153,9 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__approval_type
 #: model:ir.model.fields,help:approvals.field_approval_request__approval_type
-msgid "Allows you to define which documents you would like to create once the request has been approved"
+msgid ""
+"Allows you to define which documents you would like to create once the "
+"request has been approved"
 msgstr ""
 
 #. module: approvals
@@ -116,9 +165,19 @@ msgid "Amount"
 msgstr "Suma"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Amount:"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__has_reference
 #: model:ir.model.fields,help:approvals.field_approval_request__has_reference
 msgid "An additional reference that should be specified on the request."
+msgstr ""
+
+#. module: approvals
+#: model:ir.model.constraint,message:approvals.constraint_approval_approver_unique_request_user
+msgid "An approver with the same user already exists for this request."
 msgstr ""
 
 #. module: approvals
@@ -133,14 +192,40 @@ msgid "Approval"
 msgstr ""
 
 #. module: approvals
+#: model:ir.actions.act_window,name:approvals.approval_category_action
+#: model:ir.ui.menu,name:approvals.approvals_category_menu_config
+msgid "Approval Categories"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model,name:approvals.model_approval_category
+#: model:ir.model.fields,field_description:approvals.field_approval_category_approver__category_id
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Approval Category"
 msgstr ""
 
 #. module: approvals
+#: model:ir.model,name:approvals.model_approval_category_approver
+msgid "Approval Category Approver"
+msgstr ""
+
+#. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_category__approval_properties_definition
+msgid "Approval Properties"
+msgstr ""
+
+#. module: approvals
+#: model:ir.actions.report,name:approvals.action_report_approval_request
 #: model:ir.model,name:approvals.model_approval_request
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__approval_request_id
+#: model:ir.model.fields,field_description:approvals.field_mail_activity__approval_request_id
 msgid "Approval Request"
+msgstr ""
+
+#. module: approvals
+#: model:mail.message.subtype,description:approvals.mt_approval_request_status
+#: model:mail.message.subtype,name:approvals.mt_approval_request_status
+msgid "Approval Status Change"
 msgstr ""
 
 #. module: approvals
@@ -150,32 +235,15 @@ msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approval_type
-#: model:ir.model.fields,field_description:approvals.field_approval_category_approver__category_id
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approval_type
-#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Approval Type"
 msgstr "Patvirtinimo tipas"
 
 #. module: approvals
-#: model:ir.model,name:approvals.model_approval_category_approver
-msgid "Approval Type Approver"
-msgstr ""
-
-#. module: approvals
 #: model:ir.ui.menu,name:approvals.approvals_menu_root
+#: model:res.groups.privilege,name:approvals.res_groups_privilege_approvals
 msgid "Approvals"
 msgstr "Patvirtinimai"
-
-#. module: approvals
-#: model:ir.actions.act_window,name:approvals.approval_category_action
-#: model:ir.ui.menu,name:approvals.approvals_category_menu_config
-msgid "Approvals Types"
-msgstr ""
-
-#. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
-msgid "Approvals Types Image"
-msgstr ""
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_request_action_to_review
@@ -190,10 +258,8 @@ msgstr ""
 
 #. module: approvals
 #. odoo-javascript
-#: code:addons/approvals/static/src/web/activity/approval.xml:0
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
+#: code:addons/approvals/static/src/web/approval.xml:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Approve"
 msgstr "Patvirtinti"
 
@@ -201,11 +267,14 @@ msgstr "Patvirtinti"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__approved
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__approved
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__approved
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Approved"
 msgstr "Patvirtinta"
 
 #. module: approvals
 #: model:ir.model,name:approvals.model_approval_approver
+#: model:ir.model.fields,field_description:approvals.field_mail_activity__approver_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Approver"
 msgstr ""
@@ -213,7 +282,8 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
-msgid "Approver Sequence can only be activated with at least 1 minimum approver."
+msgid ""
+"Approver Sequence can only be activated with at least 1 minimum approver."
 msgstr ""
 
 #. module: approvals
@@ -230,6 +300,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_category__approver_ids
 #: model:ir.model.fields,field_description:approvals.field_approval_request__approver_ids
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
 msgid "Approvers"
 msgstr "Atsakingas už prašymų patvirtinimus"
 
@@ -240,10 +311,31 @@ msgid "Approvers Sequence?"
 msgstr ""
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Approvers:"
+msgstr ""
+
+#. module: approvals
+#. odoo-javascript
+#: code:addons/approvals/static/src/views/kanban/approvals_category_kanban_controller.js:0
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
+msgid "Archive"
+msgstr ""
+
+#. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_search
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Archived"
 msgstr "Archyvuotas"
+
+#. module: approvals
+#. odoo-javascript
+#: code:addons/approvals/static/src/views/kanban/approvals_category_kanban_controller.js:0
+msgid "Are you sure that you want to archive this record?"
+msgstr ""
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
@@ -251,9 +343,19 @@ msgid "Attach Document"
 msgstr "Prisegti dokumentą"
 
 #. module: approvals
+#: model:ir.model,name:approvals.model_ir_attachment
+msgid "Attachment"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_attachment_count
 msgid "Attachment Count"
 msgstr "Prisegtukų skaičius"
+
+#. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_request__attachment_ids
+msgid "Attachments"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__automated_sequence
@@ -272,6 +374,11 @@ msgid "Borrow Items"
 msgstr ""
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Brussels"
+msgstr ""
+
+#. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_business_trip
 msgid "Business Trip"
 msgstr ""
@@ -287,12 +394,22 @@ msgid "Can Edit"
 msgstr "Gali redaguoti"
 
 #. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_approver__can_edit_user_id
+msgid "Can Edit User"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__cancel
-#: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__cancel
-#: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__cancel
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Cancel"
 msgstr "Atšaukti"
+
+#. module: approvals
+#: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__cancel
+#: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__cancel
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
+msgid "Canceled"
+msgstr ""
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_car_rental_application
@@ -300,8 +417,8 @@ msgid "Car Rental Application"
 msgstr "Auton vuokraussovellus"
 
 #. module: approvals
-#: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_category_id
 #: model:ir.model.fields,field_description:approvals.field_approval_request__category_id
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Category"
 msgstr "Kategorija"
 
@@ -330,10 +447,20 @@ msgid "Configuration"
 msgstr "Konfigūracija"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
+msgid "Confirm Date"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__partner_id
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
 msgid "Contact"
 msgstr "Kontaktas"
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Contact:"
+msgstr ""
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_contract_approval
@@ -341,9 +468,9 @@ msgid "Contract Approval"
 msgstr ""
 
 #. module: approvals
-#: model:ir.model.fields,help:approvals.field_approval_product_line__product_uom_category_id
-msgid "Conversion between Units of Measure can only occur if they belong to the same category. The conversion will be made based on the ratios."
-msgstr "Konvertavimas galimas tik tarp tai pačiai grupei priklausančių matavimo vienetų. Konvertuojant kiekiai bus paskaičiuoti pagal santykį."
+#: model_terms:ir.actions.act_window,help:approvals.product_product_action
+msgid "Create a new product variant"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__create_uid
@@ -365,6 +492,7 @@ msgstr "Sukurta"
 
 #. module: approvals
 #: model:ir.actions.act_window,name:approvals.approval_category_action_new_request
+#: model:ir.ui.menu,name:approvals.approvals_category_menu_new
 msgid "Dashboard"
 msgstr "Valdymo skydelis"
 
@@ -391,15 +519,16 @@ msgid "Date start"
 msgstr ""
 
 #. module: approvals
-#. odoo-javascript
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
-msgid "Deadline"
-msgstr "Galutinis terminas"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Date:"
+msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
-msgid "Delete"
-msgstr "Trinti"
+#: model_terms:ir.actions.act_window,help:approvals.product_template_action
+msgid ""
+"Define the components and finished products you wish to use in\n"
+"            bill of materials and manufacturing orders."
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_category__description
@@ -415,6 +544,9 @@ msgstr "Aprašymas"
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__display_name
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__display_name
 #: model:ir.model.fields,field_description:approvals.field_approval_request__display_name
+#: model:ir.model.fields,field_description:approvals.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:approvals.field_mail_activity__display_name
+#: model:ir.model.fields,field_description:approvals.field_mail_activity_type__display_name
 msgid "Display Name"
 msgstr "Rodomas pavadinimas"
 
@@ -431,13 +563,18 @@ msgid "Documents"
 msgstr "Dokumentai"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Documents:"
+msgstr ""
+
+#. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "E.g: Expenses Paris business trip"
 msgstr ""
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
-msgid "Edit Request"
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
+msgid "Edit"
 msgstr ""
 
 #. module: approvals
@@ -474,6 +611,16 @@ msgstr "Sekėjai (partneriai)"
 #: model:ir.model.fields,help:approvals.field_approval_request__activity_type_icon
 msgid "Font awesome icon e.g. fa-tasks"
 msgstr "Font awesome piktograma, pvz., fa-tasks"
+
+#. module: approvals
+#: model:ir.actions.server,name:approvals.model_approval_request_approve_admin
+msgid "Force Approval"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
+msgid "From:"
+msgstr ""
 
 #. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_general_approval
@@ -551,7 +698,8 @@ msgid ""
 "\n"
 "        Empty: do nothing\n"
 "        Is Approver: the employee's manager will be in the approver list\n"
-"        Is Required Approver: the employee's manager will be required to approve the request.\n"
+"        Is Required Approver: the employee's manager will be required to "
+"approve the request.\n"
 "    "
 msgstr ""
 
@@ -561,6 +709,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__id
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__id
 #: model:ir.model.fields,field_description:approvals.field_approval_request__id
+#: model:ir.model.fields,field_description:approvals.field_ir_attachment__id
+#: model:ir.model.fields,field_description:approvals.field_mail_activity__id
+#: model:ir.model.fields,field_description:approvals.field_mail_activity_type__id
 msgid "ID"
 msgstr "ID"
 
@@ -581,19 +732,25 @@ msgstr "Jeigu pažymėta, naujiems pranešimams reikės jūsų dėmesio."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error
+#: model:ir.model.fields,help:approvals.field_approval_request__message_has_sms_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Jei pažymėta, yra žinučių, turinčių pristatymo klaidų."
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__automated_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__automated_sequence
-msgid "If checked, the Approval Requests will have an automated generated name based on the given code."
+msgid ""
+"If checked, the Approval Requests will have an automated generated name "
+"based on the given code."
 msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__approver_sequence
-msgid "If checked, the approvers have to approve in sequence (one after the other). If Employee's Manager is selected as approver, they will be the first in line."
+msgid ""
+"If checked, the approvers have to approve in sequence (one after the other). "
+"If Employee's Manager is selected as approver, they will be the first in "
+"line."
 msgstr ""
 
 #. module: approvals
@@ -659,14 +816,21 @@ msgstr ""
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__location
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
 msgid "Location"
 msgstr "Vieta"
 
 #. module: approvals
-#. odoo-javascript
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
-msgid "Log"
-msgstr "Registruoti"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Location:"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid ""
+"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod "
+"tempor incididunt ut labore et dolore magna aliqua."
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_main_attachment_id
@@ -677,6 +841,11 @@ msgstr "Pagrindinis prisegtukas"
 #: model:ir.ui.menu,name:approvals.approvals_menu_manager
 msgid "Manager"
 msgstr "Vadovas"
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Marc Demo"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_error
@@ -697,7 +866,13 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_category.py:0
-msgid "Minimum Approval must be equal or superior to the sum of required Approvers."
+msgid ""
+"Minimum Approval must be equal or superior to the sum of required Approvers."
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Mitchell Admin"
 msgstr ""
 
 #. module: approvals
@@ -740,7 +915,8 @@ msgid "New"
 msgstr "Naujas"
 
 #. module: approvals
-#: model:ir.ui.menu,name:approvals.approvals_category_menu_new
+#. odoo-javascript
+#: code:addons/approvals/static/src/views/kanban/approvals_category_kanban_controller.xml:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
 msgid "New Request"
 msgstr "Nauja užklausa"
@@ -782,6 +958,11 @@ msgid "No new approvals to review"
 msgstr ""
 
 #. module: approvals
+#: model_terms:ir.actions.act_window,help:approvals.product_template_action
+msgid "No product found. Let's create one!"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_amount__no
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_date__no
 #: model:ir.model.fields.selection,name:approvals.selection__approval_category__has_location__no
@@ -811,8 +992,8 @@ msgstr "Klaidų kiekis"
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Žinučių, kurioms reikia jūsų veiksmo, skaičius"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,help:approvals.field_approval_request__message_has_error_counter
@@ -827,6 +1008,11 @@ msgstr ""
 #. module: approvals
 #: model:res.groups,name:approvals.group_approval_user
 msgid "Officer: Approve all requests"
+msgstr ""
+
+#. module: approvals
+#: model:ir.actions.server,name:approvals.action_open_approval_category
+msgid "Open Approval Category"
 msgstr ""
 
 #. module: approvals
@@ -865,6 +1051,16 @@ msgid "Period"
 msgstr "Laikotarpis"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Period:"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
+msgid "Print"
+msgstr ""
+
+#. module: approvals
 #: model:approval.category,name:approvals.approval_category_data_procurement
 msgid "Procurement"
 msgstr "Planinis užsakymas"
@@ -875,20 +1071,28 @@ msgid "Product"
 msgstr "Produktas"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Product Description"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model,name:approvals.model_approval_product_line
 #: model:ir.model.fields,field_description:approvals.field_approval_request__product_line_ids
 msgid "Product Line"
 msgstr ""
 
 #. module: approvals
+#: model:ir.actions.act_window,name:approvals.product_product_action
 #: model:ir.ui.menu,name:approvals.approvals_menu_product_variant
 msgid "Product Variants"
 msgstr "Produkto variantai"
 
 #. module: approvals
+#: model:ir.actions.act_window,name:approvals.product_template_action
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_id
 #: model:ir.ui.menu,name:approvals.approvals_menu_product
 #: model:ir.ui.menu,name:approvals.approvals_menu_product_template
+#: model_terms:ir.ui.view,arch_db:approvals.approval_product_kanban_mobile_view
 #: model_terms:ir.ui.view,arch_db:approvals.approval_product_line_view_form
 #: model_terms:ir.ui.view,arch_db:approvals.approval_product_line_view_tree
 #: model_terms:ir.ui.view,arch_db:approvals.approval_product_line_view_tree_independent
@@ -897,9 +1101,15 @@ msgid "Products"
 msgstr "Produktai"
 
 #. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_request__approval_properties
+msgid "Properties"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_product_line__quantity
 #: model:ir.model.fields,field_description:approvals.field_approval_request__quantity
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
 msgid "Quantity"
 msgstr "Kiekis"
 
@@ -920,11 +1130,14 @@ msgid "Reference Sequence"
 msgstr "Numerių seka"
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Reference:"
+msgstr ""
+
+#. module: approvals
 #. odoo-javascript
-#: code:addons/approvals/static/src/web/activity/approval.xml:0
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
+#: code:addons/approvals/static/src/web/approval.xml:0
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Refuse"
 msgstr "Atmesti"
 
@@ -932,6 +1145,7 @@ msgstr "Atmesti"
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__refused
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__refused
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__refused
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Refused"
 msgstr "Atmesta"
 
@@ -942,18 +1156,30 @@ msgid "Request"
 msgstr "Užklausa"
 
 #. module: approvals
-#: model_terms:ir.ui.view,arch_db:approvals.res_users_view_form
-msgid "Request Approval"
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Request By:"
 msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__request_owner_id
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Request Owner"
 msgstr ""
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
+msgid "Request Start"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__request_status
+#: model_terms:ir.ui.view,arch_db:approvals.approval_search_view_search
 msgid "Request Status"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_tree
+msgid "Request To"
 msgstr ""
 
 #. module: approvals
@@ -978,13 +1204,35 @@ msgid "Responsible User"
 msgstr "Atsakingas vartotojas"
 
 #. module: approvals
-#. odoo-python
-#: code:addons/approvals/models/approval_category.py:0
+#: model:ir.model.fields,field_description:approvals.field_approval_request__message_has_sms_error
+msgid "SMS Delivery error"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_category__sequence
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__sequence
 msgid "Sequence"
 msgstr "Seka"
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_category.py:0
+msgid "Sequence %(code)s"
+msgstr ""
+
+#. module: approvals
+#: model:ir.model.fields,help:approvals.field_approval_approver__can_edit_user_id
+msgid ""
+"Simple users should not be able to remove themselves as approvers because "
+"they will lose access to the record if they misclick."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "Start date should precede the end date."
+msgstr ""
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__status
@@ -1005,14 +1253,73 @@ msgstr ""
 "Suplanuotas: Ateities veiklos."
 
 #. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Status:"
+msgstr ""
+
+#. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "Submit"
 msgstr "Pateikti"
 
 #. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__request_status__pending
+#: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__pending
 msgid "Submitted"
 msgstr "Pateikta"
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Test Category"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Test Document"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Test Product"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Test Reference"
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "The request %(request_name)s for %(request_owner)s has been approved"
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "The request %(request_name)s for %(request_owner)s has been refused"
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid ""
+"The request created on %(create_date)s by %(request_owner)s has been "
+"approved."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid ""
+"The request created on %(create_date)s by %(request_owner)s has been refused."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "The request has been approved by an Approval Officer"
+msgstr ""
 
 #. module: approvals
 #: model:res.groups,comment:approvals.group_approval_user
@@ -1027,27 +1334,29 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-msgid "This request needs to be approved by your manager. There is no manager linked to your employee profile."
+msgid ""
+"This request needs to be approved by your manager. There is no manager "
+"linked to your employee profile."
 msgstr ""
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-msgid "This request needs to be approved by your manager. There is no user linked to your manager."
+msgid ""
+"This request needs to be approved by your manager. There is no user linked "
+"to your manager."
 msgstr ""
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-msgid "This request needs to be approved by your manager. Your manager is not in the approvers list."
+msgid ""
+"This request needs to be approved by your manager. Your manager is not in "
+"the approvers list."
 msgstr ""
 
 #. module: approvals
-#. odoo-javascript
-#: code:addons/approvals/static/src/web/activity/approval.xml:0
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__pending
-#: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__pending
 msgid "To Approve"
 msgstr "Reikia patvirtinti"
 
@@ -1067,13 +1376,22 @@ msgid "Type of the exception activity on record."
 msgstr "Įrašytos išimties veiklos tipas."
 
 #. module: approvals
-#: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_id
-msgid "Unit of Measure"
-msgstr "Mato vienetas"
+#: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
+msgid "Unarchive"
+msgstr ""
 
 #. module: approvals
-#. odoo-javascript
-#: code:addons/approvals/static/src/xml/web_kanban_activity.xml:0
+#: model:ir.model.fields,field_description:approvals.field_approval_product_line__product_uom_id
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Unit"
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.report_aprroval_request_document
+msgid "Units"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_approver__user_id
 #: model:ir.model.fields,field_description:approvals.field_approval_category_approver__user_id
 msgid "User"
@@ -1085,15 +1403,41 @@ msgid "User Status"
 msgstr ""
 
 #. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_request__user_ids
+msgid "Users"
+msgstr ""
+
+#. module: approvals
 #: model:ir.model.fields.selection,name:approvals.selection__approval_approver__status__waiting
 #: model:ir.model.fields.selection,name:approvals.selection__approval_request__user_status__waiting
 msgid "Waiting"
 msgstr "Laukia"
 
 #. module: approvals
+#: model:ir.model.fields,field_description:approvals.field_approval_request__website_message_ids
+msgid "Website Messages"
+msgstr ""
+
+#. module: approvals
+#: model:ir.model.fields,help:approvals.field_approval_request__website_message_ids
+msgid "Website communication history"
+msgstr ""
+
+#. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
-#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "Withdraw"
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "You are not allowed to approved or refused your own approval."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "You can't delete an approved request. Archive it instead."
 msgstr ""
 
 #. module: approvals
@@ -1104,8 +1448,16 @@ msgstr ""
 
 #. module: approvals
 #. odoo-python
+#: code:addons/approvals/models/ir_attachment.py:0
+msgid ""
+"You cannot unlink an attachment which is linked to a validated, refused or "
+"cancelled approval request."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-msgid "You cannot assign the same approver multiple times on the same request."
+msgid "You do not have the rights to execute that action."
 msgstr ""
 
 #. module: approvals
@@ -1117,7 +1469,20 @@ msgstr ""
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
-msgid "You have to attach at lease one document."
+msgid "You have to attach at least one document."
+msgstr ""
+
+#. module: approvals
+#. odoo-python
+#: code:addons/approvals/models/approval_request.py:0
+msgid "You must cancel and then back to draft the approval first."
+msgstr ""
+
+#. module: approvals
+#: model_terms:ir.actions.act_window,help:approvals.product_product_action
+msgid ""
+"You must define a product for everything you sell or purchase,\n"
+"            whether it's a storable product, a consumable or a service."
 msgstr ""
 
 #. module: approvals
@@ -1147,3 +1512,30 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:approvals.approval_request_action_all
 msgid "new request"
 msgstr ""
+
+#. module: approvals
+#: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
+msgid "to:"
+msgstr ""
+
+#~ msgid ""
+#~ "Conversion between Units of Measure can only occur if they belong to the "
+#~ "same category. The conversion will be made based on the ratios."
+#~ msgstr ""
+#~ "Konvertavimas galimas tik tarp tai pačiai grupei priklausančių matavimo "
+#~ "vienetų. Konvertuojant kiekiai bus paskaičiuoti pagal santykį."
+
+#~ msgid "Deadline"
+#~ msgstr "Galutinis terminas"
+
+#~ msgid "Delete"
+#~ msgstr "Trinti"
+
+#~ msgid "Log"
+#~ msgstr "Registruoti"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Žinučių, kurioms reikia jūsų veiksmo, skaičius"
+
+#~ msgid "Unit of Measure"
+#~ msgstr "Mato vienetas"

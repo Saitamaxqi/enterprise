@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* iap_extract
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: iap_extract
@@ -109,26 +110,17 @@ msgid "Completed flow"
 msgstr "完工流程"
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__create_uid
-msgid "Created by"
-msgstr "建立人員"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__create_date
-msgid "Created on"
-msgstr "建立於"
-
-#. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
 msgid ""
-"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and"
-" Artificial Intelligence."
-msgstr "利用 OCR（光學字元辨識）及 AI 人工智能，將供應商賬單、開支報銷收據、應徵者履歷等數碼化，掃瞄本或 PDF 格式檔案都可以。"
+"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and "
+"Artificial Intelligence."
+msgstr ""
+"利用 OCR（光學字元辨識）及 AI 人工智能，將供應商賬單、開支報銷收據、應徵者履"
+"歷等數碼化，掃瞄本或 PDF 格式檔案都可以。"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__display_name
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__display_name
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
 
@@ -191,19 +183,19 @@ msgid "Extract status"
 msgstr "提取狀態"
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_word_ids
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_dates
+msgid "Extracted Dates"
+msgstr ""
+
+#. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_numbers
+msgid "Extracted Numbers"
+msgstr ""
+
+#. module: iap_extract
+#: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__extracted_words
 msgid "Extracted Words"
 msgstr "擷取的單字"
-
-#. module: iap_extract
-#: model:ir.model,name:iap_extract.model_iap_extracted_words
-msgid "Extracted words from an OCRed document"
-msgstr "透過光學字元辨識（OCR）從文件讀取的文字"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__field
-msgid "Field"
-msgstr "欄位"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_follower_ids
@@ -232,7 +224,6 @@ msgstr "IAP 提取通知"
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__id
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__id
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__id
 msgid "ID"
 msgstr "識別號"
 
@@ -277,16 +268,6 @@ msgstr "是關注人"
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__is_in_extractable_state
 msgid "Is In Extractable State"
 msgstr "處於可提取狀態"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__write_uid
-msgid "Last Updated by"
-msgstr "最後更新者"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__write_date
-msgid "Last Updated on"
-msgstr "最後更新於"
 
 #. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__message_main_attachment_id
@@ -357,11 +338,6 @@ msgid "Number of messages with delivery error"
 msgstr "有發送錯誤的郵件數量"
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__ocr_selected
-msgid "Ocr Selected"
-msgstr "OCR 已選擇"
-
-#. module: iap_extract
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin__rating_ids
 #: model:ir.model.fields,field_description:iap_extract.field_extract_mixin_with_words__rating_ids
 msgid "Ratings"
@@ -372,16 +348,6 @@ msgstr "評分"
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
 msgid "Refresh"
 msgstr "重新載入"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__res_id
-msgid "Resource ID"
-msgstr "資源識別碼"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__res_model
-msgid "Resource Model"
-msgstr "資源模型"
 
 #. module: iap_extract
 #. odoo-javascript
@@ -411,9 +377,11 @@ msgstr "部份文件已經數碼化，所以跳過"
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
-"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo"
-" generate a new one or fill it with a valid token."
-msgstr "IAP 賬戶的服務代碼「invoice_ocr」無效。 請刪除它，以便 Odoo 產生新的代碼或使用有效代碼取代。"
+"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo "
+"generate a new one or fill it with a valid token."
+msgstr ""
+"IAP 賬戶的服務代碼「invoice_ocr」無效。 請刪除它，以便 Odoo 產生新的代碼或使"
+"用有效代碼取代。"
 
 #. module: iap_extract
 #. odoo-python
@@ -450,9 +418,10 @@ msgid "Unsupported image format"
 msgstr "圖像格式不支援"
 
 #. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__user_selected
-msgid "User Selected"
-msgstr "使用者選擇"
+#. odoo-python
+#: code:addons/iap_extract/models/extract_mixin.py:0
+msgid "Version is unsupported"
+msgstr ""
 
 #. module: iap_extract
 #: model:ir.model.fields.selection,name:iap_extract.selection__account_bank_statement__extract_state__waiting_extraction
@@ -473,41 +442,6 @@ msgstr "等待匯出"
 #: model:ir.model.fields.selection,name:iap_extract.selection__hr_expense__extract_state__waiting_validation
 msgid "Waiting validation"
 msgstr "等待驗證"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_angle
-msgid "Word Box Angle"
-msgstr "字元框角度"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_height
-msgid "Word Box Height"
-msgstr "字元框高度"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_midX
-msgid "Word Box Midx"
-msgstr "字元框水平居中點"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_midY
-msgid "Word Box Midy"
-msgstr "字元框垂直居中點"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_box_width
-msgid "Word Box Width"
-msgstr "字元框寬度"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_page
-msgid "Word Page"
-msgstr "字元框頁面"
-
-#. module: iap_extract
-#: model:ir.model.fields,field_description:iap_extract.field_iap_extracted_words__word_text
-msgid "Word Text"
-msgstr "字元文本"
 
 #. module: iap_extract
 #. odoo-javascript
@@ -537,3 +471,54 @@ msgstr "文件頁數太多"
 #: model:ir.model.fields.selection,name:iap_extract.selection__hr_expense__extract_state__extract_not_ready
 msgid "waiting extraction, but it is not ready"
 msgstr "等待擷取，尚未完成"
+
+#~ msgid "Created by"
+#~ msgstr "建立人員"
+
+#~ msgid "Created on"
+#~ msgstr "建立於"
+
+#~ msgid "Extracted words from an OCRed document"
+#~ msgstr "透過光學字元辨識（OCR）從文件讀取的文字"
+
+#~ msgid "Field"
+#~ msgstr "欄位"
+
+#~ msgid "Last Updated by"
+#~ msgstr "最後更新者"
+
+#~ msgid "Last Updated on"
+#~ msgstr "最後更新於"
+
+#~ msgid "Ocr Selected"
+#~ msgstr "OCR 已選擇"
+
+#~ msgid "Resource ID"
+#~ msgstr "資源識別碼"
+
+#~ msgid "Resource Model"
+#~ msgstr "資源模型"
+
+#~ msgid "User Selected"
+#~ msgstr "使用者選擇"
+
+#~ msgid "Word Box Angle"
+#~ msgstr "字元框角度"
+
+#~ msgid "Word Box Height"
+#~ msgstr "字元框高度"
+
+#~ msgid "Word Box Midx"
+#~ msgstr "字元框水平居中點"
+
+#~ msgid "Word Box Midy"
+#~ msgstr "字元框垂直居中點"
+
+#~ msgid "Word Box Width"
+#~ msgstr "字元框寬度"
+
+#~ msgid "Word Page"
+#~ msgstr "字元框頁面"
+
+#~ msgid "Word Text"
+#~ msgstr "字元文本"

@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-11 14:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -19,7 +20,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll_expense.view_account_payment_register_form_inherit_hr_payroll_expense
 msgid ""
 "<span class=\"fw-bold\">\n"
-"                            The expenses will already be reimbursed in a payslip. Make sure this payment is intended.\n"
+"                            The expenses will already be reimbursed in a "
+"payslip. Make sure this payment is intended.\n"
 "                        </span>"
 msgstr ""
 
@@ -58,8 +60,10 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_expense.py:0
 msgid ""
-"Expense reimbursement rule needs to be configured to add expenses to payslips.\n"
-"Please create one salary rule with the \"%(code)s\" code on the relevant salary structures."
+"Expense reimbursement rule needs to be configured to add expenses to "
+"payslips.\n"
+"Please create one salary rule with the \"%(code)s\" code on the relevant "
+"salary structures."
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -126,8 +130,8 @@ msgstr ""
 #: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
 "No debit account found in the '%(rule_name)s' payslip salary rule. Please "
-"add a payable debit account to be able to create an accounting entry for the"
-" expenses linked to this payslip."
+"add a payable debit account to be able to create an accounting entry for the "
+"expenses linked to this payslip."
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -212,7 +216,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_expense/models/hr_expense.py:0
 msgid ""
-"You cannot remove an expense from a payslip that has already been validated.\n"
+"You cannot remove an expense from a payslip that has already been "
+"validated.\n"
 "Expenses can only be removed from draft or canceled payslips."
 msgstr ""
 

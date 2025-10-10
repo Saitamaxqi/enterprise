@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-30 18:40+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
@@ -833,6 +833,11 @@ msgid "Esg Show Emissions Button"
 msgstr "Esg 顯示排放按鈕"
 
 #. module: esg
+#: model:account.account,name:esg.account_expense
+msgid "Expense"
+msgstr ""
+
+#. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_follower_ids
 msgid "Followers"
@@ -1591,6 +1596,11 @@ msgstr "SF₆"
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor_line__message_has_sms_error
 msgid "SMS Delivery error"
 msgstr "簡訊發送錯誤"
+
+#. module: esg
+#: model:account.account,name:esg.account_salary
+msgid "Salary"
+msgstr ""
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope

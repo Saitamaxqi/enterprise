@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 13:39+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -128,8 +128,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s قام بتغيير صلاحيات منح الموافقة من %(previous_approvers)s إلى "
-"%(next_approvers)s"
+"%(user_name)s قام بتغيير صلاحيات منح الموافقة من %(previous_approvers)s إلى %"
+"(next_approvers)s"
 
 #. module: web_studio
 #. odoo-python
@@ -4072,7 +4072,8 @@ msgstr ""
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid ""
 "There is no method %(method)s on the model %(model_name)s (%(model_id)s)"
-msgstr "لا توجد طريقة محددة %(method)s في النموذج %(model_name)s (%(model_id)s)"
+msgstr ""
+"لا توجد طريقة محددة %(method)s في النموذج %(model_name)s (%(model_id)s)"
 
 #. module: web_studio
 #. odoo-javascript

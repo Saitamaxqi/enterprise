@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -183,14 +183,15 @@ msgid ""
 "(step2) and Client ID + Client Secret (step 8). Also ensure you use correct "
 "dimensions and weight unit for your country"
 msgstr ""
-"现在进入 odoo，使用帐号（第 2 步）和客户 ID + 客户密文（第 8 步）为 UPS "
-"创建运输方法。同时确保使用所在国家/地区适用的正确尺寸和重量单位"
+"现在进入 odoo，使用帐号（第 2 步）和客户 ID + 客户密文（第 8 步）为 UPS 创建"
+"运输方法。同时确保使用所在国家/地区适用的正确尺寸和重量单位"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid ""
 "Now open your app, you'll have your <b>Client ID</b> and <b>Client Secret</b>"
-msgstr "现在，开启您的应用程序，将会有您的<b>客户识别码</b> 以及<b>客户密钥</b>"
+msgstr ""
+"现在，开启您的应用程序，将会有您的<b>客户识别码</b> 以及<b>客户密钥</b>"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
@@ -261,8 +262,9 @@ msgstr "请求签名"
 msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
-msgstr "已生成退货标签<br/><b>退货编号：</b>%(tracking_numbers)s<br/"
-"><b>包裹：</b>%(packages)s"
+msgstr ""
+"已生成退货标签<br/><b>退货编号：</b>%(tracking_numbers)s<br/><b>包裹：</b>%"
+"(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
@@ -302,8 +304,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
-"已在 UPS 中创建货运<br/><b>追踪编号：</b>%(tracking_numbers)s<br/"
-"><b>包裹</b>%(packages)s"
+"已在 UPS 中创建货运<br/><b>追踪编号：</b>%(tracking_numbers)s<br/><b>包裹</"
+"b>%(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -519,7 +521,8 @@ msgstr "UPS帐号"
 msgid ""
 "UPS address lines can only contain a maximum of 35 characters. You can split "
 "the contacts addresses on multiple lines to try to avoid this limitation."
-msgstr "UPS地址行最多只能包含35个字符。您可以将联系人地址拆分为多行以避免此限制。"
+msgstr ""
+"UPS地址行最多只能包含35个字符。您可以将联系人地址拆分为多行以避免此限制。"
 
 #. module: delivery_ups_rest
 #. odoo-python

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -23,16 +23,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/product_barcodelookup/wizard/product_fetch_image_wizard.py:0
 msgid ""
-"%(matching_images_count)s matching images have been found for "
-"%(product_count)s products."
-msgstr ""
-"พบรูปภาพที่ตรงกัน %(matching_images_count)s สำหรับสินค้า %(product_count)s"
+"%(matching_images_count)s matching images have been found for %"
+"(product_count)s products."
+msgstr "พบรูปภาพที่ตรงกัน %(matching_images_count)s สำหรับสินค้า %(product_count)s"
 
 #. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
 msgid ""
 "<span invisible=\"nb_products_selected &lt;= 1000\">\n"
-"                            As only 1000 products can be processed per day, the remaining will be\n"
+"                            As only 1000 products can be processed per day, "
+"the remaining will be\n"
 "                            done tomorrow.\n"
 "                        </span>"
 msgstr ""
@@ -41,7 +41,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
 msgid ""
 "<strong>Note: </strong>\n"
-"                        Some images may not be royalty-free and should not be published online."
+"                        Some images may not be royalty-free and should not "
+"be published online."
 msgstr ""
 
 #. module: product_barcodelookup
@@ -205,8 +206,7 @@ msgstr "ผลิตภัณฑ์ที่ต้องดำเนินกา
 msgid ""
 "Products are processed in the background. Images will be updated "
 "progressively."
-msgstr ""
-"สินค้าได้รับการประมวลผลในเบื้องหลังแล้ว รูปภาพจะได้รับการอัปเดตอย่างต่อเนื่อง"
+msgstr "สินค้าได้รับการประมวลผลในเบื้องหลังแล้ว รูปภาพจะได้รับการอัปเดตอย่างต่อเนื่อง"
 
 #. module: product_barcodelookup
 #. odoo-python
@@ -323,6 +323,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.product_fetch_image_wizard_view_form
 msgid ""
 "won't be\n"
-"                            processed because they either already have an image or\n"
+"                            processed because they either already have an "
+"image or\n"
 "                            lack a barcode"
 msgstr ""

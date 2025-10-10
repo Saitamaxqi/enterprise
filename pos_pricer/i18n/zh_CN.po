@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -92,7 +92,8 @@ msgstr "错误:检查 Pricer 凭据"
 #. odoo-python
 #: code:addons/pos_pricer/models/pricer_store.py:0
 msgid "Failed to unlink Pricer tag %(pricer_tag)s at API url %(api_url)s"
-msgstr "未能使用以下链接取消与 Pricer 价格牌%(pricer_tag)s的链接：API 地址%(api_url)s"
+msgstr ""
+"未能使用以下链接取消与 Pricer 价格牌%(pricer_tag)s的链接：API 地址%(api_url)s"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pos_config__id
@@ -386,8 +387,8 @@ msgstr "此价格表将用于设置该产品的 Pricer 标签上的销售额"
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__pricer_store_id
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_store_id
 msgid ""
-"This product will be linked to and displayed on the Pricer tags of the store"
-" selected here"
+"This product will be linked to and displayed on the Pricer tags of the store "
+"selected here"
 msgstr "此产品将被链接到并显示在这里选择的商店的价格标签上"
 
 #. module: pos_pricer

@@ -29,7 +29,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
@@ -38,8 +38,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
@@ -69,8 +69,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title="
-"\"Lokalizacja resztek\"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Lokalizacja "
+"resztek\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -102,7 +102,8 @@ msgstr ""
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print barcode demo sheet"
-msgstr "<i class=\"fa fa-print\"/>Drukuj arkusz demonstracyjny kodów kreskowych"
+msgstr ""
+"<i class=\"fa fa-print\"/>Drukuj arkusz demonstracyjny kodów kreskowych"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
@@ -207,8 +208,8 @@ msgid ""
 "An error occured during parsing of element_string: AI code %(ai_code)s is "
 "missing for scheme %(scheme_name)s"
 msgstr ""
-"Podczas analizowania element_string wystąpił błąd: brakuje kodu AI %(ai_code)"
-"s dla schematu %(scheme_name)s"
+"Podczas analizowania element_string wystąpił błąd: brakuje kodu AI %"
+"(ai_code)s dla schematu %(scheme_name)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -356,8 +357,8 @@ msgstr "Kody kreskowe nie są dostępne."
 msgid ""
 "Binary value %(word)s cannot be represented with %(word_size_write)s bits"
 msgstr ""
-"Wartość binarna %(word)s nie może być reprezentowana przez %(word_size_write)"
-"s bity"
+"Wartość binarna %(word)s nie może być reprezentowana przez %"
+"(word_size_write)s bity"
 
 #. module: stock_barcode
 #: model:product.template,name:stock_barcode.product_cable_management_box_2_product_template
@@ -1175,8 +1176,8 @@ msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
 msgstr ""
-"Tabela partycji %(table_name)s nie została znaleziona, dostępne tabele to: "
-"%(table_list)s)"
+"Tabela partycji %(table_name)s nie została znaleziona, dostępne tabele to: %"
+"(table_list)s)"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2088,8 +2089,8 @@ msgid ""
 "(locationName)s but this product isn't reserved in this location.\n"
 "Scan the current location to confirm that."
 msgstr ""
-"Właśnie zamierzasz zabrać produkt %(productName)s z lokalizacji "
-"%(locationName)s, ale ten produkt nie jest zarezerwowany w tej lokalizacji.\n"
+"Właśnie zamierzasz zabrać produkt %(productName)s z lokalizacji %"
+"(locationName)s, ale ten produkt nie jest zarezerwowany w tej lokalizacji.\n"
 "Zeskanuj aktualną lokalizację, aby to potwierdzić."
 
 #. module: stock_barcode

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -193,7 +193,8 @@ msgstr "Esta acción solo se puede aplicar en un documento PDF."
 #. module: documents_sign
 #: model:ir.model,name:documents_sign.model_sign_import_documents
 msgid "Wizard to select PDF documents from the Documents app to sign"
-msgstr "Asistente para seleccionar archivos PDF desde Documentos para firmarlos"
+msgstr ""
+"Asistente para seleccionar archivos PDF desde Documentos para firmarlos"
 
 #. module: documents_sign
 #. odoo-python

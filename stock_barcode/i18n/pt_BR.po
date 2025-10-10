@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -51,8 +51,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap Location\""
-"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
+"Location\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -138,8 +138,8 @@ msgstr "Adicionar produto"
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_view_picking_type_form
 msgid "Add colors to operation cards to help users differentiate them."
 msgstr ""
-"Adicione cores aos cartões de operação para ajudar os usuários a "
-"diferenciá-los."
+"Adicione cores aos cartões de operação para ajudar os usuários a diferenciá-"
+"los."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -206,8 +206,8 @@ msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
 msgstr ""
-"Ocorreu um erro com o campo '%(field_name)s': a IA correspondente a "
-"'%(ai_code)s' não foi encontrado noelement_string"
+"Ocorreu um erro com o campo '%(field_name)s': a IA correspondente a '%"
+"(ai_code)s' não foi encontrado noelement_string"
 
 #. module: stock_barcode
 #. odoo-python
@@ -216,8 +216,8 @@ msgid ""
 "An error occured: value of company_prefix_length (%(company_prefix_length)s) "
 "must be between 6 and 12 inclusive."
 msgstr ""
-"Ocorreu um erro: o valor de company_prefix_length (%(company_prefix_length)s)"
-" deve estar entre 6 e 12, inclusive."
+"Ocorreu um erro: o valor de company_prefix_length (%"
+"(company_prefix_length)s) deve estar entre 6 e 12, inclusive."
 
 #. module: stock_barcode
 #. odoo-python
@@ -982,8 +982,8 @@ msgstr "Nenhum tipo de operação interna. Configure nas definições de armazé
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or location or product corresponding to barcode %(barcode)s"
 msgstr ""
-"Nenhuma separação, local ou produto correspondente ao código de barras "
-"%(barcode)s"
+"Nenhuma separação, local ou produto correspondente ao código de barras %"
+"(barcode)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1160,8 +1160,8 @@ msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
 msgstr ""
-"Tabela de partição %(table_name)s não encontrado, as tabelas disponíveis são:"
-" %(table_list)s)"
+"Tabela de partição %(table_name)s não encontrado, as tabelas disponíveis "
+"são: %(table_list)s)"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2068,8 +2068,8 @@ msgid ""
 "(locationName)s but this product isn't reserved in this location.\n"
 "Scan the current location to confirm that."
 msgstr ""
-"Você está prestes a retirar o produto %(productName)s do local "
-"%(locationName)s, mas esse produto não está reservado nesse local.\n"
+"Você está prestes a retirar o produto %(productName)s do local %"
+"(locationName)s, mas esse produto não está reservado nesse local.\n"
 "Escaneie o local atual para confirmar isso."
 
 #. module: stock_barcode
@@ -2108,7 +2108,8 @@ msgstr "Não é possível registrar sucata nesse estágio da operação"
 msgid ""
 "You have already scanned %s items of this package. Do you want to scan the "
 "whole package?"
-msgstr "Você já escaneou %s itens desse pacote. Quer escanear o pacote inteiro?"
+msgstr ""
+"Você já escaneou %s itens desse pacote. Quer escanear o pacote inteiro?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.view_backorder_confirmation

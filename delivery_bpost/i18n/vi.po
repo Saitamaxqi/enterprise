@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 23:08+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -125,6 +125,12 @@ msgid "Destroy"
 msgstr "Tiêu hủy"
 
 #. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__domestic
 msgid "Domestic"
 msgstr "Nội địa"
@@ -138,6 +144,12 @@ msgstr "QUÀ TẶNG"
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_shipment_type__goods
 msgid "GOODS"
 msgstr "HÀNG HÓA"
+
+#. module: delivery_bpost
+#: model:ir.model.fields,field_description:delivery_bpost.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_bpost.field_stock_package_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_bpost
 #: model:ir.model.fields.selection,name:delivery_bpost.selection__delivery_carrier__bpost_delivery_nature__international
@@ -255,7 +267,8 @@ msgstr "Dịch vụ vận chuyển Bpost không phản hồi, vui lòng thử l�
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The address of your company/warehouse is incomplete or wrong (Missing field(s):  \n"
+"The address of your company/warehouse is incomplete or wrong (Missing "
+"field(s):  \n"
 " %s)"
 msgstr ""
 "Địa chỉ công ty/nhà kho của bạn không đầy đủ hoặc sai (Trường bị thiếu:  \n"
@@ -264,17 +277,23 @@ msgstr ""
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "The estimated shipping price cannot be computed because all your products are service."
-msgstr "Không thể tính giá vận chuyển ước tính vì tất cả các sản phẩm của bạn đều là dịch vụ."
+msgid ""
+"The estimated shipping price cannot be computed because all your products "
+"are service."
+msgstr ""
+"Không thể tính giá vận chuyển ước tính vì tất cả các sản phẩm của bạn đều là "
+"dịch vụ."
 
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Không thể tính giá vận chuyển ước tính vì thiếu khối lượng của (các) sản phẩm sau: \n"
+"Không thể tính giá vận chuyển ước tính vì thiếu khối lượng của (các) sản "
+"phẩm sau: \n"
 " %s"
 
 #. module: delivery_bpost
@@ -367,7 +386,9 @@ msgstr "Loại kiện hàng mặc định bpost"
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost Domestic is used only to ship inside Belgium. Please change the delivery method into bpost International."
+msgid ""
+"bpost Domestic is used only to ship inside Belgium. Please change the "
+"delivery method into bpost International."
 msgstr ""
 "bpost Nội địa chỉ được sử dụng để vận chuyển tại Bỉ. Vui lòng chọn phương "
 "thức giao hàng bpost Quốc tế."
@@ -375,7 +396,9 @@ msgstr ""
 #. module: delivery_bpost
 #. odoo-python
 #: code:addons/delivery_bpost/models/bpost_request.py:0
-msgid "bpost International is used only to ship outside Belgium. Please change the delivery method into bpost Domestic."
+msgid ""
+"bpost International is used only to ship outside Belgium. Please change the "
+"delivery method into bpost Domestic."
 msgstr ""
 "bpost Quốc tế chỉ được sử dụng để vận chuyển bên ngoài Bỉ. Vui lòng chọn "
 "phương thức giao hàng bpost Nội địa."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-18 02:41+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
@@ -271,8 +271,8 @@ msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
 msgstr ""
-"Etiqueta de devolución generada<br/><b>Números de rastreo:</b> "
-"%(tracking_numbers)s<br/><b>Paquetes:</b> %(packages)s"
+"Etiqueta de devolución generada<br/><b>Números de rastreo:</b> %"
+"(tracking_numbers)s<br/><b>Paquetes:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
@@ -364,7 +364,8 @@ msgstr ""
 #: code:addons/delivery_ups_rest/models/ups_request.py:0
 msgid ""
 "The delivery cannot be done because the weight of your product %s is missing."
-msgstr "No se puede realizar la entrega porque falta el peso de su producto %s."
+msgstr ""
+"No se puede realizar la entrega porque falta el peso de su producto %s."
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -612,7 +613,8 @@ msgstr "developer.ups.com"
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form
 msgid "the callback is your odoo address https://\"mycompany\".odoo.com"
-msgstr "la retrollamada es su dirección de odoo https://\"micompañía\".odoo.com"
+msgstr ""
+"la retrollamada es su dirección de odoo https://\"micompañía\".odoo.com"
 
 #. module: delivery_ups_rest
 #: model_terms:ir.ui.view,arch_db:delivery_ups_rest.view_delivery_carrier_form

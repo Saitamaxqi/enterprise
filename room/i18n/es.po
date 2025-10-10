@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-18 02:46+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
-"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/room/es/>"
-"\n"
+"Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/room/es/"
+">\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -55,7 +55,8 @@ msgstr "<span class=\"o_stat_text\">Siguiente reunión</span>"
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "<span invisible=\"next_booking_start\">No Upcoming Meetings</span>"
-msgstr "<span invisible=\"next_booking_start\">No hay próximas reuniones</span>"
+msgstr ""
+"<span invisible=\"next_booking_start\">No hay próximas reuniones</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
@@ -372,8 +373,7 @@ msgstr "Oficina principal"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-msgid ""
-"Make meeting room sharing easy by centralizing all meetings in this App"
+msgid "Make meeting room sharing easy by centralizing all meetings in this App"
 msgstr ""
 "Haga que compartir una sala de reunión sea fácil. Centralice todos los "
 "mensajes en esta aplicación"
@@ -629,7 +629,8 @@ msgstr ""
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
 msgid "They can then be booked for meetings from a Tablet or the back-end."
-msgstr "Luego se pueden reservar para reuniones desde una tableta o el backend."
+msgstr ""
+"Luego se pueden reservar para reuniones desde una tableta o el backend."
 
 #. module: room
 #. odoo-javascript

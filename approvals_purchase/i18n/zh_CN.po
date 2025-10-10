@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 15:32+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -144,9 +144,10 @@ msgstr "采购单位数量"
 #. odoo-python
 #: code:addons/approvals_purchase/models/purchase_order.py:0
 msgid ""
-"RFQ %(rfq_name)s state has been changed: %(old_state_label)s -> "
-"%(new_state_label)s"
-msgstr "询价单 %(rfq_name)s 状态已更改：%(old_state_label)s -> %(new_state_label)s"
+"RFQ %(rfq_name)s state has been changed: %(old_state_label)s -> %"
+"(new_state_label)s"
+msgstr ""
+"询价单 %(rfq_name)s 状态已更改：%(old_state_label)s -> %(new_state_label)s"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_partner__category_id
@@ -158,8 +159,8 @@ msgstr "标签"
 #. odoo-python
 #: code:addons/approvals_purchase/models/approval_request.py:0
 msgid ""
-"The following products couldn't be removed because the RFQs are not in draft"
-" state:"
+"The following products couldn't be removed because the RFQs are not in draft "
+"state:"
 msgstr "以下产品无法删除，因为其 RFQ 还未处于草稿状态："
 
 #. module: approvals_purchase

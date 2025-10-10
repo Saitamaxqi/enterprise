@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2022-09-22 05:46+0000\n"
 "Last-Translator: JanaAvalah, 2023\n"
 "Language-Team: Estonian (https://app.transifex.com/odoo/teams/41243/et/)\n"
@@ -28,293 +28,366 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/project_project.py:0
-msgid "%(project_name)s's Documents"
-msgstr "%(project_name)s dokumendid"
-
-#. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_workflow_rule
-msgid "A set of condition and actions which will be available to all attachments matching the conditions"
-msgstr "Tingimuste ja tegevuste kogumik, mis on saadaval kõikidele tingimusi täitvatele manustele"
-
-#. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_ask_for_validation
-msgid "Ask for Validation"
-msgstr "Küsi kinnitust"
-
-#. module: documents_project
 #: model:ir.model,name:documents_project.model_ir_attachment
 msgid "Attachment"
 msgstr "Manus"
 
 #. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
-msgid "Categorize and share your documents with your customers"
-msgstr "Kategoriseerige ja jagage oma dokumente klientidega"
+#: model:ir.model,name:documents_project.model_res_company
+msgid "Companies"
+msgstr ""
 
 #. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_facet
-msgid "Category"
-msgstr "Kategooria"
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+#: code:addons/documents_project/models/res_company.py:0
+msgid "Company Project Folders cannot be linked to another company.%s"
+msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_documents_workflow_rule__create_model
-msgid "Create"
-msgstr "Loo"
+#: model:ir.model,name:documents_project.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_task
-msgid "Create a Task"
-msgstr "Loo ülesanne"
+#: model:documents.document,name:documents_project.project_1_document_1
+msgid "Daily Meeting Notes (today)"
+msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_tag_ids
-msgid "Default Tags"
-msgstr "Vaikesildid"
+#: model:documents.document,name:documents_project.project_1_document_2
+msgid "Daily Meeting Notes (yesterday)"
+msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_deprecate
-msgid "Deprecate"
-msgstr "Amortiseerige"
+#: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
+msgid "Default Project Folder"
+msgstr ""
 
 #. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_deprecated
-msgid "Deprecated"
-msgstr "Ei kasutata enam"
+#: model:ir.model.fields,field_description:documents_project.field_documents_document__display_name
+#: model:ir.model.fields,field_description:documents_project.field_documents_tag__display_name
+#: model:ir.model.fields,field_description:documents_project.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:documents_project.field_project_project__display_name
+#: model:ir.model.fields,field_description:documents_project.field_res_company__display_name
+#: model:ir.model.fields,field_description:documents_project.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_documents_document
-#: model:ir.model.fields,field_description:documents_project.field_ir_attachment__document_ids
 msgid "Document"
 msgstr "Dokument"
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
-#: model:ir.actions.act_window,name:documents_project.action_view_documents_project_task
-#: model:ir.model.fields,field_description:documents_project.field_project_project__use_documents
-#: model:ir.model.fields,field_description:documents_project.field_project_task__document_ids
-#: model_terms:ir.ui.view,arch_db:documents_project.portal_my_task
-#: model_terms:ir.ui.view,arch_db:documents_project.portal_tasks_list
-#: model_terms:ir.ui.view,arch_db:documents_project.project_sharing_project_task_view_form_inherit
+#: model:ir.embedded.actions,name:documents_project.project_embedded_action_documents
+#: model:ir.embedded.actions,name:documents_project.project_embedded_action_documents_dashboard
 #: model_terms:ir.ui.view,arch_db:documents_project.project_view_kanban_inherit_documents
-#: model_terms:ir.ui.view,arch_db:documents_project.view_task_form2_document_inherit
 msgid "Documents"
 msgstr "Dokumendid"
 
 #. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.edit_project_document_form_inherit
-msgid "Documents &amp; Analytics"
-msgstr "Dokumendid &amp; analüütika"
-
-#. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_folder
-msgid "Documents Workspace"
-msgstr "Dokumentide tööala"
-
-#. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_draft
-msgid "Draft"
-msgstr "Mustand"
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_document.py:0
-msgid "Invalid project search"
+#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
+msgid "Documents Folder"
 msgstr ""
 
 #. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_document.py:0
-msgid "Invalid task search"
+#: model:documents.document,name:documents_project.project_1_document_3
+msgid "First Floor Plan"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_documents_document__is_shared
-msgid "Is Shared"
-msgstr "Jagatud"
+#: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
+msgid "Folder"
+msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_mark_as_draft
-msgid "Mark As Draft"
-msgstr "Märgi mustandiks"
+#: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
+msgid ""
+"Folder in which all of the documents of this project will be categorized."
+msgstr ""
 
 #. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid "Merged Workspace"
-msgstr "Ühendatud tööalad"
+#: model_terms:ir.ui.view,arch_db:documents_project.res_config_settings_view_form_inherit_documents_project
+msgid "Folder where new projects are created"
+msgstr ""
 
 #. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
-msgid "New task from Documents"
-msgstr "Uus ülesanne Dokumentidest"
+#: model:ir.model.fields,field_description:documents_project.field_documents_document__id
+#: model:ir.model.fields,field_description:documents_project.field_documents_tag__id
+#: model:ir.model.fields,field_description:documents_project.field_ir_attachment__id
+#: model:ir.model.fields,field_description:documents_project.field_project_project__id
+#: model:ir.model.fields,field_description:documents_project.field_res_company__id
+#: model:ir.model.fields,field_description:documents_project.field_res_config_settings__id
+msgid "ID"
+msgstr ""
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__document_count
-msgid "Number of documents in Project"
-msgstr "Dokumentide arv projektis"
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_task__document_count
-msgid "Number of documents in Task"
-msgstr "Dokumentide arv ülesandes"
+#: model:documents.document,name:documents_project.project_1_document_4
+msgid "Important Customer Letter"
+msgstr ""
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_project_project
-#: model:ir.model.fields,field_description:documents_project.field_documents_document__project_id
-#: model:ir.model.fields,field_description:documents_project.field_documents_folder__project_ids
-#: model_terms:ir.ui.view,arch_db:documents_project.document_view_search_inherit
 msgid "Project"
 msgstr "Projekt"
 
 #. module: documents_project
-#: model:documents.folder,name:documents_project.documents_project_folder
+#: model:ir.model.fields,field_description:documents_project.field_res_company__documents_project_folder_id
+#: model:ir.model.fields,field_description:documents_project.field_res_config_settings__documents_project_folder_id
+msgid "Project Folder"
+msgstr ""
+
+#. module: documents_project
+#: model:documents.document,name:documents_project.document_project_folder
+#: model:ir.model.fields,field_description:documents_project.field_documents_document__project_ids
 msgid "Projects"
 msgstr "Projektid"
 
 #. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__shared_document_ids
-#: model:ir.model.fields,field_description:documents_project.field_project_task__shared_document_ids
-msgid "Shared Documents"
-msgstr "Jagatud dokumendid"
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__shared_document_count
-#: model:ir.model.fields,field_description:documents_project.field_project_task__shared_document_count
-msgid "Shared Documents Count"
-msgstr "Jagatud dokumentide arv"
-
-#. module: documents_project
-#: model:documents.facet,name:documents_project.documents_project_status
-msgid "Status"
-msgstr "Staatus"
-
-#. module: documents_project
-#: model:ir.model,name:documents_project.model_project_task
-#: model:ir.model.fields,field_description:documents_project.field_documents_document__task_id
-#: model:ir.model.fields.selection,name:documents_project.selection__documents_workflow_rule__create_model__project_task
-#: model_terms:ir.ui.view,arch_db:documents_project.document_view_search_inherit
-msgid "Task"
-msgstr "Ülesanne"
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
-msgid "Task created from document %s"
+#: model:ir.model,name:documents_project.model_documents_tag
+msgid "Tag"
 msgstr ""
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
-msgid "Task created from documents %s"
-msgstr ""
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/project_task.py:0
-msgid "Task's Documents"
-msgstr ""
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid "The \"%s\" workspace is required by the Project application and cannot be deleted."
-msgstr "Projektide rakendus nõuab tööala \"%s\" ja seda ei saa kustutada."
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/project_project.py:0
-msgid "The \"%s\" workspace should either be in the \"%s\" company like this project or be open to all companies."
-msgstr "Tööala \"%s\" peaks asuma ettevõttes \"%s\" nagu see projekt või olema avatud kõigile ettevõtetele."
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid "This workspace should remain in the same company as the \"%s\" project to which it is linked. Please update the company of the \"%s\" project, or leave the company of this workspace empty."
-msgstr "See tööala peaks jääma samale ettevõttele kui project \"%s\", millega see seotud on. Palun uuendage projekti \"%s\" ettevõtet või jätke selle tööala ettevõte tühjaks."
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid ""
-"This workspace should remain in the same company as the following projects to which it is linked:\n"
-"%s\n"
-"\n"
-"Please update the company of those projects, or leave the company of this workspace empty."
-msgstr ""
-"See tööala peaks jääma samale ettevõttele, millega järgnevad projektid seotud on:\n"
-"%s\n"
-"\n"
-"Uuendage projektidel ettevõtet või jätke ettevõtte väli tööalal tühjaks."
-
-#. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_to_validate
-msgid "To Validate"
-msgstr "Kinnitada"
-
-#. module: documents_project
-#: model_terms:ir.actions.act_window,help:documents_project.action_view_documents_project_task
-msgid "Upload <span class=\"fw-normal\">a file or </span>drag <span class=\"fw-normal\">it here.</span>"
-msgstr "Lae<span class=\"fw-normal\">fail üles või </span>lohista <span class=\"fw-normal\">siia.</span>"
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_task__project_use_documents
-msgid "Use Documents"
-msgstr "Kasuta dokumente"
-
-#. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_validate
-msgid "Validate"
-msgstr "Kinnita"
-
-#. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_validated
-msgid "Validated"
-msgstr "Kinnitatud"
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
-#: model:ir.model.fields,field_description:documents_project.field_project_task__documents_folder_id
-msgid "Workspace"
-msgstr "Tööala"
-
-#. module: documents_project
-#: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
-#: model:ir.model.fields,help:documents_project.field_project_task__documents_folder_id
-msgid "Workspace in which all of the documents of this project will be categorized. All of the attachments of your tasks will be automatically added as documents in this workspace as well."
-msgstr "Tööala, kuhu kõik selle projekti dokumendid kategoriseeritakse. Kõik teie ülesannete manused lisatakse automaatselt dokumentidena ka sellele tööalale."
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
 msgid ""
-"You cannot change the company of this project, because its workspace is linked to the other following projects that are still in the \"%s\" company:\n"
-"%s\n"
-"\n"
-"Please update the company of all projects so that they remain in the same company as their workspace, or leave the company of the \"%s\" workspace blank."
-msgstr ""
-"Ei saa muuta selle projekti ettevõtet, sest selle tööala on seotud teiste järgmiste projektidega, mis on ikka ettevõttes \"%s\":\n"
-"%s\n"
-"\n"
-"Uuendage kõigi projektide ettevõtteid, et need jääksid tööalaga samasse ettevõttesse või jätke tööala \"%s\" ettevõte väli tühjaks."
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid "You cannot set a company on the %s workspace."
+"The \"%(folder)s\" folder should either be in the \"%(company)s\" company "
+"like this project or be open to all companies."
 msgstr ""
 
 #. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.share_page
-msgid "documents shared"
-msgstr "jagatud dokumendid"
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid ""
+"The \"%s\" folder is required by the Project application and cannot be "
+"archived."
+msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
-msgid "new %s from %s"
-msgstr "new %s from %s"
+#: code:addons/documents_project/models/documents_document.py:0
+msgid ""
+"This action can't be performed, as it would remove the folders used by the "
+"following projects:\n"
+"%(projects)s\n"
+"To continue, choose different folders for these projects."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid ""
+"This folder should remain in the same company as the \"%(project)s\" project "
+"to which it is linked. Please update the company of the \"%(project)s\" "
+"project, or leave the company of this folder empty."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid ""
+"This folder should remain in the same company as the following projects to "
+"which it is linked:\n"
+"%s\n"
+"\n"
+"Please update the company of those projects, or leave the company of this "
+"folder empty."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "Uh-oh! The project app needs the \"%s\" folder, so you can’t delete it."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "You cannot archive the project base folder (%s)."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/project_project.py:0
+msgid ""
+"You cannot change the company of this project, because its folder is linked "
+"to the other following projects that are still in the \"%(other_company)s\" "
+"company:\n"
+"%(other_folders)s\n"
+"\n"
+"Please update the company of all projects so that they remain in the same "
+"company as their folder, or leave the company of the \"%(folder)s\" folder "
+"blank."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "You cannot set a company on the %s folder."
+msgstr ""
+
+#~ msgid "%(project_name)s's Documents"
+#~ msgstr "%(project_name)s dokumendid"
+
+#~ msgid ""
+#~ "A set of condition and actions which will be available to all attachments "
+#~ "matching the conditions"
+#~ msgstr ""
+#~ "Tingimuste ja tegevuste kogumik, mis on saadaval kõikidele tingimusi "
+#~ "täitvatele manustele"
+
+#~ msgid "Ask for Validation"
+#~ msgstr "Küsi kinnitust"
+
+#~ msgid "Categorize and share your documents with your customers"
+#~ msgstr "Kategoriseerige ja jagage oma dokumente klientidega"
+
+#~ msgid "Category"
+#~ msgstr "Kategooria"
+
+#~ msgid "Create"
+#~ msgstr "Loo"
+
+#~ msgid "Create a Task"
+#~ msgstr "Loo ülesanne"
+
+#~ msgid "Default Tags"
+#~ msgstr "Vaikesildid"
+
+#~ msgid "Deprecate"
+#~ msgstr "Amortiseerige"
+
+#~ msgid "Deprecated"
+#~ msgstr "Ei kasutata enam"
+
+#~ msgid "Documents &amp; Analytics"
+#~ msgstr "Dokumendid &amp; analüütika"
+
+#~ msgid "Documents Workspace"
+#~ msgstr "Dokumentide tööala"
+
+#~ msgid "Draft"
+#~ msgstr "Mustand"
+
+#~ msgid "Is Shared"
+#~ msgstr "Jagatud"
+
+#~ msgid "Mark As Draft"
+#~ msgstr "Märgi mustandiks"
+
+#~ msgid "Merged Workspace"
+#~ msgstr "Ühendatud tööalad"
+
+#~ msgid "New task from Documents"
+#~ msgstr "Uus ülesanne Dokumentidest"
+
+#~ msgid "Number of documents in Project"
+#~ msgstr "Dokumentide arv projektis"
+
+#~ msgid "Number of documents in Task"
+#~ msgstr "Dokumentide arv ülesandes"
+
+#~ msgid "Shared Documents"
+#~ msgstr "Jagatud dokumendid"
+
+#~ msgid "Shared Documents Count"
+#~ msgstr "Jagatud dokumentide arv"
+
+#~ msgid "Status"
+#~ msgstr "Staatus"
+
+#~ msgid "Task"
+#~ msgstr "Ülesanne"
+
+#~ msgid ""
+#~ "The \"%s\" workspace is required by the Project application and cannot be "
+#~ "deleted."
+#~ msgstr "Projektide rakendus nõuab tööala \"%s\" ja seda ei saa kustutada."
+
+#~ msgid ""
+#~ "The \"%s\" workspace should either be in the \"%s\" company like this "
+#~ "project or be open to all companies."
+#~ msgstr ""
+#~ "Tööala \"%s\" peaks asuma ettevõttes \"%s\" nagu see projekt või olema "
+#~ "avatud kõigile ettevõtetele."
+
+#~ msgid ""
+#~ "This workspace should remain in the same company as the \"%s\" project to "
+#~ "which it is linked. Please update the company of the \"%s\" project, or "
+#~ "leave the company of this workspace empty."
+#~ msgstr ""
+#~ "See tööala peaks jääma samale ettevõttele kui project \"%s\", millega see "
+#~ "seotud on. Palun uuendage projekti \"%s\" ettevõtet või jätke selle "
+#~ "tööala ettevõte tühjaks."
+
+#~ msgid ""
+#~ "This workspace should remain in the same company as the following "
+#~ "projects to which it is linked:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please update the company of those projects, or leave the company of this "
+#~ "workspace empty."
+#~ msgstr ""
+#~ "See tööala peaks jääma samale ettevõttele, millega järgnevad projektid "
+#~ "seotud on:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Uuendage projektidel ettevõtet või jätke ettevõtte väli tööalal tühjaks."
+
+#~ msgid "To Validate"
+#~ msgstr "Kinnitada"
+
+#~ msgid ""
+#~ "Upload <span class=\"fw-normal\">a file or </span>drag <span class=\"fw-"
+#~ "normal\">it here.</span>"
+#~ msgstr ""
+#~ "Lae<span class=\"fw-normal\">fail üles või </span>lohista <span "
+#~ "class=\"fw-normal\">siia.</span>"
+
+#~ msgid "Use Documents"
+#~ msgstr "Kasuta dokumente"
+
+#~ msgid "Validate"
+#~ msgstr "Kinnita"
+
+#~ msgid "Validated"
+#~ msgstr "Kinnitatud"
+
+#~ msgid "Workspace"
+#~ msgstr "Tööala"
+
+#~ msgid ""
+#~ "Workspace in which all of the documents of this project will be "
+#~ "categorized. All of the attachments of your tasks will be automatically "
+#~ "added as documents in this workspace as well."
+#~ msgstr ""
+#~ "Tööala, kuhu kõik selle projekti dokumendid kategoriseeritakse. Kõik teie "
+#~ "ülesannete manused lisatakse automaatselt dokumentidena ka sellele "
+#~ "tööalale."
+
+#~ msgid ""
+#~ "You cannot change the company of this project, because its workspace is "
+#~ "linked to the other following projects that are still in the \"%s\" "
+#~ "company:\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Please update the company of all projects so that they remain in the same "
+#~ "company as their workspace, or leave the company of the \"%s\" workspace "
+#~ "blank."
+#~ msgstr ""
+#~ "Ei saa muuta selle projekti ettevõtet, sest selle tööala on seotud teiste "
+#~ "järgmiste projektidega, mis on ikka ettevõttes \"%s\":\n"
+#~ "%s\n"
+#~ "\n"
+#~ "Uuendage kõigi projektide ettevõtteid, et need jääksid tööalaga samasse "
+#~ "ettevõttesse või jätke tööala \"%s\" ettevõte väli tühjaks."
+
+#~ msgid "documents shared"
+#~ msgstr "jagatud dokumendid"
+
+#~ msgid "new %s from %s"
+#~ msgstr "new %s from %s"

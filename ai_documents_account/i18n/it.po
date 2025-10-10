@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-10-08 02:41+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -24,8 +24,8 @@ msgstr ""
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid "%(b_open)sContracts & NDAs%(b_close)s go to the %(legal)s folder."
 msgstr ""
-"%(b_open)sI contratti e gli accordi di riservatezza%(b_close)s vanno nella "
-"%(legal)s cartella."
+"%(b_open)sI contratti e gli accordi di riservatezza%(b_close)s vanno nella %"
+"(legal)s cartella."
 
 #. module: ai_documents_account
 #. odoo-python
@@ -109,9 +109,8 @@ msgstr "Se è falso, continua con la procedura normale"
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If it is true, add the tag %(b_open)s\"To Split\"%(b_close)s and stop there."
-" This way, we'll know we first need to manually split it into different "
-"files."
+"If it is true, add the tag %(b_open)s\"To Split\"%(b_close)s and stop there. "
+"This way, we'll know we first need to manually split it into different files."
 msgstr ""
 "Se vero, aggiungi il tag %(b_open)s\"Da dividere\"%(b_close)s ed è fatta. In "
 "questo modo sapremo di dover dividere il documento manualmente in più file."
@@ -139,11 +138,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If the customer of the invoice is us (%(company_name)s, with email "
-"%(company_email)s), create a Vendor Bill."
+"If the customer of the invoice is us (%(company_name)s, with email %"
+"(company_email)s), create a Vendor Bill."
 msgstr ""
-"Se il cliente della fattura siamo noi (%(company_name)s, con e-mail "
-"%(company_email)s), crea una fattura fornitore."
+"Se il cliente della fattura siamo noi (%(company_name)s, con e-mail %"
+"(company_email)s), crea una fattura fornitore."
 
 #. module: ai_documents_account
 #. odoo-python
@@ -159,11 +158,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If the document is an %(b_open)sinvoice%(b_close)s, move it to the "
-"%(finance)s folder then trigger the relevant action:"
+"If the document is an %(b_open)sinvoice%(b_close)s, move it to the %"
+"(finance)s folder then trigger the relevant action:"
 msgstr ""
-"Se il documento è una %(b_open)sfattura%(b_close)s, spostalo nella %(finance)"
-"s cartella e poi attiva l'azione rilevante:"
+"Se il documento è una %(b_open)sfattura%(b_close)s, spostalo nella %"
+"(finance)s cartella e poi attiva l'azione rilevante:"
 
 #. module: ai_documents_account
 #. odoo-python

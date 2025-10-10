@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* pos_tyro
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: pos_tyro
@@ -30,7 +31,9 @@ msgstr "永遠列印商戶存根"
 msgid ""
 "By default, merchant copies are only printed when a signature is required. "
 "Enable this setting to always print the merchant copy."
-msgstr "預設情況下，只會在需要簽名時，才會列印商戶存根。啟用此設定後，會永遠列印商戶存根。"
+msgstr ""
+"預設情況下，只會在需要簽名時，才會列印商戶存根。啟用此設定後，會永遠列印商戶"
+"存根。"
 
 #. module: pos_tyro
 #. odoo-javascript
@@ -66,9 +69,10 @@ msgstr "識別碼"
 #. module: pos_tyro
 #: model:ir.model.fields,help:pos_tyro.field_pos_payment_method__tyro_integrated_receipts
 msgid ""
-"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise"
-" the terminal will print a separate payment receipt."
-msgstr "啟用後，Tyro 收據會嵌入至 Odoo 收據中。否則，終端機會列印單獨的付款收據。"
+"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise "
+"the terminal will print a separate payment receipt."
+msgstr ""
+"啟用後，Tyro 收據會嵌入至 Odoo 收據中。否則，終端機會列印單獨的付款收據。"
 
 #. module: pos_tyro
 #: model:ir.model.fields,field_description:pos_tyro.field_pos_payment_method__tyro_integrated_receipts
@@ -136,6 +140,12 @@ msgstr "列印收據"
 #: model:ir.model.fields.selection,name:pos_tyro.selection__pos_payment_method__tyro_mode__prod
 msgid "Production Mode"
 msgstr "正式運行模式"
+
+#. module: pos_tyro
+#. odoo-javascript
+#: code:addons/pos_tyro/static/src/overrides/screens/payment_screen/payment_lines/payment_lines.xml:0
+msgid "Refund in process"
+msgstr ""
 
 #. module: pos_tyro
 #: model_terms:ir.ui.view,arch_db:pos_tyro.pos_payment_method_view_form_inherit_pos_tyro

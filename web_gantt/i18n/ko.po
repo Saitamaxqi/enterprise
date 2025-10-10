@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/web_gantt/"
@@ -180,8 +180,8 @@ msgid ""
 "Gantt must have a 'dependency_inverted_field' attribute once the "
 "'dependency_field' is specified"
 msgstr ""
-"'dependency_field'가 지정되는 경우, 간트에서 'dependency_inverted_field' "
-"속성을 지정해야 합니다."
+"'dependency_field'가 지정되는 경우, 간트에서 'dependency_inverted_field' 속성"
+"을 지정해야 합니다."
 
 #. module: web_gantt
 #. odoo-javascript
@@ -226,8 +226,8 @@ msgid ""
 "Invalid attributes (%(invalid_attributes)s) in gantt view. Attributes must "
 "be in (%(valid_attributes)s)"
 msgstr ""
-"간트 보기에 잘못된 속성 (%(invalid_attributes)s)이 있습니다. 속성은 "
-"(%(valid_attributes)s)에 위치해야 합니다."
+"간트 보기에 잘못된 속성 (%(invalid_attributes)s)이 있습니다. 속성은 (%"
+"(valid_attributes)s)에 위치해야 합니다."
 
 #. module: web_gantt
 #. odoo-python

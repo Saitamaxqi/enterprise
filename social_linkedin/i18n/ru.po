@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 10:57+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2024-01-30 15:14+0400\n"
 "Last-Translator: \n"
 "Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
@@ -15,7 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.linkedin_preview
@@ -40,13 +42,13 @@ msgstr "Фактический LinkedIn ID сообщения"
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/models/social_account.py:0
-msgid "An error occurred when fetching your pages data: %r."
+msgid "An error occurred when fetching your pages data: “%s”."
 msgstr ""
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/models/social_account.py:0
-msgid "An error occurred when fetching your pages: %r."
+msgid "An error occurred when fetching your pages: “%s”."
 msgstr ""
 
 #. module: social_linkedin
@@ -68,8 +70,12 @@ msgstr "Фото автора"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_res_config_settings__linkedin_use_own_account
-msgid "Check this if you want to use your personal LinkedIn Developer Account instead of the provided one."
-msgstr "Установите этот флажок, если вы хотите использовать свою личную учетную запись разработчика LinkedIn вместо предоставленной."
+msgid ""
+"Check this if you want to use your personal LinkedIn Developer Account "
+"instead of the provided one."
+msgstr ""
+"Установите этот флажок, если вы хотите использовать свою личную учетную "
+"запись разработчика LinkedIn вместо предоставленной."
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_res_config_settings
@@ -77,10 +83,77 @@ msgid "Config Settings"
 msgstr "Параметры конфигурации"
 
 #. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid "Could not like / dislike this comment."
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid "Couldn't delete the post: “%s”."
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid "Couldn't update the post: “%s”."
+msgstr ""
+
+#. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__display_linkedin_preview
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__display_linkedin_preview
 msgid "Display LinkedIn Preview"
 msgstr "Отображение предварительного просмотра LinkedIn"
+
+#. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_account__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_live_post__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_media__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_stream__display_name
+#: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid "Failed to post the comment: “%(error_description)s”"
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid ""
+"Failed to retrieve the post. It might have been deleted or you may not have "
+"permission to view it."
+msgstr ""
+
+#. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__has_linkedin_account
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__has_linkedin_account
+msgid "Has LinkedIn Account"
+msgstr ""
+
+#. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_res_config_settings__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_account__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_live_post__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_media__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_stream__id
+#: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__id
+msgid "ID"
+msgstr ""
+
+#. module: social_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
+msgid "Images"
+msgstr ""
 
 #. module: social_linkedin
 #. odoo-javascript
@@ -91,6 +164,7 @@ msgstr "Лайки"
 #. module: social_linkedin
 #: model:ir.model.fields.selection,name:social_linkedin.selection__social_media__media_type__linkedin
 #: model:social.media,name:social_linkedin.social_media_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
@@ -113,9 +187,21 @@ msgid "LinkedIn Comments"
 msgstr "Комментарии LinkedIn"
 
 #. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_image_ids
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__linkedin_image_ids
+msgid "LinkedIn Images"
+msgstr ""
+
+#. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_likes_count
 msgid "LinkedIn Likes"
 msgstr "LinkedIn Likes"
+
+#. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_message
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__linkedin_message
+msgid "LinkedIn Message"
+msgstr ""
 
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_preview
@@ -168,6 +254,27 @@ msgstr "Учетная запись разработчика Linkedin"
 #: model:ir.model.fields,field_description:social_linkedin.field_social_media__media_type
 msgid "Media Type"
 msgstr "Тип медиа"
+
+#. module: social_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
+msgid "Message"
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_media.py:0
+msgid ""
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
+"Grab a subscription and unlock a world of amazing features!"
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_post_template.py:0
+msgid ""
+"Please specify either a LinkedIn Message or upload some LinkedIn Images."
+msgstr ""
 
 #. module: social_linkedin
 #: model_terms:ir.ui.view,arch_db:social_linkedin.linkedin_preview
@@ -228,8 +335,12 @@ msgstr "Токен доступа используется для выполне
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/models/social_media.py:0
-msgid "The url that this service requested returned an error. Please contact the author of the app."
-msgstr "Url, запрошенный этой службой, вернул ошибку. Пожалуйста, свяжитесь с автором приложения."
+msgid ""
+"The url that this service requested returned an error. Please contact the "
+"author of the app."
+msgstr ""
+"Url, запрошенный этой службой, вернул ошибку. Пожалуйста, свяжитесь с "
+"автором приложения."
 
 #. module: social_linkedin
 #. odoo-python
@@ -245,6 +356,7 @@ msgstr "Неавторизованный. Пожалуйста, свяжитес
 
 #. module: social_linkedin
 #. odoo-python
+#: code:addons/social_linkedin/models/social_stream.py:0
 #: code:addons/social_linkedin/models/social_stream_post.py:0
 msgid "Unknown"
 msgstr "Неизвестно"
@@ -256,8 +368,10 @@ msgstr "Используйте свой собственный аккаунт в
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_media__media_type
-msgid "Used to make comparisons when we need to restrict some features to a specific media ('facebook', 'twitter', ...)."
-msgstr "Используется для сравнения, когда нам нужно ограничить некоторые функции определенным медиа (\"facebook\", \"twitter\", ...)."
+msgid ""
+"Used to make comparisons when we need to restrict some features to a "
+"specific media ('facebook', 'x', ...)."
+msgstr ""
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_stream_post__linkedin_author_vanity_name
@@ -266,15 +380,28 @@ msgstr "Тщеславное имя, используемое для созда�
 
 #. module: social_linkedin
 #. odoo-python
-#: code:addons/social_linkedin/models/social_live_post.py:0
-msgid "We could not upload your image, try reducing its size and posting it again (error: Failed during upload registering)."
-msgstr "Мы не смогли загрузить ваше изображение, попробуйте уменьшить его размер и опубликовать снова (ошибка: Не удалось загрузить при регистрации)."
+#: code:addons/social_linkedin/models/social_account.py:0
+msgid ""
+"We could not upload your image, try reducing its size and posting it again "
+"(error: Failed during upload registering)."
+msgstr ""
+"Мы не смогли загрузить ваше изображение, попробуйте уменьшить его размер и "
+"опубликовать снова (ошибка: Не удалось загрузить при регистрации)."
 
 #. module: social_linkedin
 #. odoo-python
-#: code:addons/social_linkedin/models/social_live_post.py:0
-msgid "We could not upload your image, try reducing its size and posting it again."
-msgstr "Мы не смогли загрузить ваше изображение, попробуйте уменьшить его размер и опубликовать снова."
+#: code:addons/social_linkedin/models/social_account.py:0
+msgid ""
+"We could not upload your image, try reducing its size and posting it again."
+msgstr ""
+"Мы не смогли загрузить ваше изображение, попробуйте уменьшить его размер и "
+"опубликовать снова."
+
+#. module: social_linkedin
+#: model:ir.model.fields,help:social_linkedin.field_social_post__linkedin_image_ids
+#: model:ir.model.fields,help:social_linkedin.field_social_post_template__linkedin_image_ids
+msgid "Will attach images to your posts."
+msgstr ""
 
 #. module: social_linkedin
 #. odoo-python
@@ -284,18 +411,13 @@ msgstr "Неправильный тип потока для \"%s\""
 
 #. module: social_linkedin
 #. odoo-python
-#: code:addons/social_linkedin/models/social_media.py:0
-msgid "You don't have an active subscription. Please buy one here: %s"
-msgstr "У вас нет активной подписки. Пожалуйста, купите ее здесь: %s"
-
-#. module: social_linkedin
-#. odoo-python
 #: code:addons/social_linkedin/models/social_account.py:0
 msgid ""
 "You need a Business Account to post on LinkedIn with Odoo Social.\n"
 " Please create one and make sure it is linked to your account"
 msgstr ""
-"Вам нужен бизнес-аккаунт, чтобы размещать информацию на LinkedIn с помощью Odoo Social.\n"
+"Вам нужен бизнес-аккаунт, чтобы размещать информацию на LinkedIn с помощью "
+"Odoo Social.\n"
 " Пожалуйста, создайте его и убедитесь, что он связан с вашей учетной записью"
 
 #. module: social_linkedin
@@ -303,3 +425,13 @@ msgstr ""
 #: code:addons/social_linkedin/models/social_live_post.py:0
 msgid "unknown"
 msgstr "неизвестно"
+
+#~ msgid ""
+#~ "Used to make comparisons when we need to restrict some features to a "
+#~ "specific media ('facebook', 'twitter', ...)."
+#~ msgstr ""
+#~ "Используется для сравнения, когда нам нужно ограничить некоторые функции "
+#~ "определенным медиа (\"facebook\", \"twitter\", ...)."
+
+#~ msgid "You don't have an active subscription. Please buy one here: %s"
+#~ msgstr "У вас нет активной подписки. Пожалуйста, купите ее здесь: %s"

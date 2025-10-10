@@ -21,7 +21,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 21:10+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
@@ -52,6 +52,11 @@ msgstr "İzin Ver"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
+msgid "App ID"
+msgstr ""
+
+#. module: social_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Body"
 msgstr "Gövde"
 
@@ -59,6 +64,11 @@ msgstr "Gövde"
 #: model:ir.model,name:social_push_notifications.model_res_config_settings
 msgid "Config Settings"
 msgstr "Yapılandırma Ayarları"
+
+#. module: social_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
+msgid "Configure Push Notifications"
+msgstr ""
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -72,15 +82,19 @@ msgid "Deny"
 msgstr "Reddet"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_ir_http__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_account__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_media__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_utm_campaign__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_website__display_name
+#: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__display_name
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor_push_subscription__display_name
 msgid "Display Name"
 msgstr "İsim Göster"
-
-#. module: social_push_notifications
-#: model:ir.model.fields,field_description:social_push_notifications.field_social_post__display_push_notification_attributes
-#: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__display_push_notification_attributes
-msgid "Display Push Notifications Attributes"
-msgstr "Anlık Bildirimler Niteliklerini Görüntüleyin"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__display_push_notifications_preview
@@ -105,7 +119,9 @@ msgstr "Web Anlık Bildirimlerini Etkinleştir"
 #: code:addons/social_push_notifications/controllers/main.py:0
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Enable push notifications to be notified about new features."
-msgstr "Yeni özellikler hakkında bilgilendirilmek için push bildirimlerini etkinleştirin."
+msgstr ""
+"Yeni özellikler hakkında bilgilendirilmek için push bildirimlerini "
+"etkinleştirin."
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_admin_key_file
@@ -149,6 +165,13 @@ msgid "Firebase Web API Key"
 msgstr "Firebase Web API Anahtarı"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_web_app_id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_web_app_id
+#: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_web_app_id
+msgid "Firebase Web App ID"
+msgstr ""
+
+#. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.push_notifications_preview
 msgid "Google Chrome ·"
 msgstr "Google Chrome ·"
@@ -159,6 +182,22 @@ msgid "HTTP Routing"
 msgstr "HTTP Yönlendirme"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post__has_push_notifications_account
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__has_push_notifications_account
+msgid "Has Push Notifications Account"
+msgstr ""
+
+#. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_ir_http__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_account__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_media__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_utm_campaign__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_website__id
+#: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor_push_subscription__id
 msgid "ID"
 msgstr "ID"
@@ -187,6 +226,11 @@ msgstr "Yerel zaman"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_media__media_type
 msgid "Media Type"
 msgstr "Medya Türü"
+
+#. module: social_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
+msgid "Message"
+msgstr ""
 
 #. module: social_push_notifications
 #. odoo-python
@@ -243,6 +287,12 @@ msgid "Number Of Push Notifications"
 msgstr "Anlık Bildirim Sayısı"
 
 #. module: social_push_notifications
+#. odoo-python
+#: code:addons/social_push_notifications/models/social_post_template.py:0
+msgid "Please specify a Notification Message."
+msgstr ""
+
+#. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Project ID"
 msgstr "Proje ID'si"
@@ -258,10 +308,16 @@ msgid "Push Certificate Key ID"
 msgstr "Sertifika Anahtar ID'si"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__push_notification_image
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_image
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__push_notification_image
 msgid "Push Icon Image"
 msgstr "Simge Resmi"
+
+#. module: social_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
+msgid "Push Notification"
+msgstr ""
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.website_visitor_view_search
@@ -279,6 +335,7 @@ msgid "Push Notification Options"
 msgstr "Anlık Bildirim Seçenekleri"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__push_notification_title
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_title
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__push_notification_title
 msgid "Push Notification Title"
@@ -289,6 +346,7 @@ msgstr "Anlık Bildirim Başlığı"
 #: model:ir.model.fields,field_description:social_push_notifications.field_utm_campaign__social_push_notification_ids
 #: model:ir.model.fields.selection,name:social_push_notifications.selection__social_media__media_type__push_notifications
 #: model:social.media,name:social_push_notifications.social_media_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.utm_campaign_view_form
 msgid "Push Notifications"
 msgstr "Anlık Bildirimler"
@@ -297,6 +355,12 @@ msgstr "Anlık Bildirimler"
 #: model:ir.model.fields,field_description:social_push_notifications.field_website_visitor__has_push_notifications
 msgid "Push Notifications Enabled"
 msgstr "Anlık Bildirimleri Etkin"
+
+#. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_message
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__push_notification_message
+msgid "Push Notifications Message"
+msgstr ""
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notifications_preview
@@ -320,6 +384,7 @@ msgid "Push Subscriptions"
 msgstr "Push Abonelikleri"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,field_description:social_push_notifications.field_social_live_post__push_notification_target_url
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_target_url
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__push_notification_target_url
 msgid "Push Target URL"
@@ -356,11 +421,6 @@ msgstr "Anlık Bildirim Gönder"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__use_visitor_timezone
 msgid "Send at Visitors' Timezone"
 msgstr "Ziyaretçilerin Zaman Dilimini Gönder"
-
-#. module: social_push_notifications
-#: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
-msgid "Send push notifications and configure this website's notifications permission request"
-msgstr "Push bildirimleri gönderin ve bu web sitesinin bildirim izin isteğini yapılandırın"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -411,9 +471,11 @@ msgstr "Bu web sitesi için zaten bir yapılandırma var."
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_account__website_id
 msgid "This firebase configuration will only be used for the specified website"
-msgstr "Bu firebase yapılandırması yalnızca belirtilen web sitesi için kullanılacak"
+msgstr ""
+"Bu firebase yapılandırması yalnızca belirtilen web sitesi için kullanılacak"
 
 #. module: social_push_notifications
+#: model:ir.model.fields,help:social_push_notifications.field_social_live_post__push_notification_image
 #: model:ir.model.fields,help:social_push_notifications.field_social_post__push_notification_image
 #: model:ir.model.fields,help:social_push_notifications.field_social_post_template__push_notification_image
 msgid "This icon will be displayed in the browser notification"
@@ -432,7 +494,8 @@ msgstr "UTM Kampanyası"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "Use your own Firebase Account for this website's push notifications"
-msgstr "Bu web sitesinin anlık bildirimleri için kendi Firebase hesabınızı kullanın"
+msgstr ""
+"Bu web sitesinin anlık bildirimleri için kendi Firebase hesabınızı kullanın"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_res_config_settings__firebase_use_own_account
@@ -443,8 +506,10 @@ msgstr "Kendi Firebase hesabınızı kullanın"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_media__media_type
-msgid "Used to make comparisons when we need to restrict some features to a specific media ('facebook', 'twitter', ...)."
-msgstr "Bazı özellikleri belirli bir medyayla sınırlamamız gerektiğinde karşılaştırmalar yapmak için kullanılır ('facebook', 'twitter', ...)."
+msgid ""
+"Used to make comparisons when we need to restrict some features to a "
+"specific media ('facebook', 'x', ...)."
+msgstr ""
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__visitor_domain
@@ -490,7 +555,14 @@ msgstr "Anlık bildirim hesabını silemezsiniz."
 #. module: social_push_notifications
 #. odoo-python
 #: code:addons/social_push_notifications/models/social_account.py:0
-msgid "You have to install \"google_auth>=1.18.0\" to be able to send push notifications."
+msgid ""
+"You have to install \"google_auth>=1.18.0\" to be able to send push "
+"notifications."
+msgstr ""
+
+#. module: social_push_notifications
+#: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
+msgid "e.g. \"1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d\""
 msgstr ""
 
 #. module: social_push_notifications
@@ -516,5 +588,26 @@ msgstr "e.g. \"my-project-id\""
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_post__use_visitor_timezone
 #: model:ir.model.fields,help:social_push_notifications.field_social_post_template__use_visitor_timezone
-msgid "e.g: If you post at 15:00 your time, all visitors will receive the post at 15:00 their time."
-msgstr "örneğin: Kendi saatinize göre saat 15:00'te yayınlarsanız, tüm ziyaretçiler gönderiyi kendi saatlerine göre 15:00'da alacaktır."
+msgid ""
+"e.g: If you post at 15:00 your time, all visitors will receive the post at "
+"15:00 their time."
+msgstr ""
+"örneğin: Kendi saatinize göre saat 15:00'te yayınlarsanız, tüm ziyaretçiler "
+"gönderiyi kendi saatlerine göre 15:00'da alacaktır."
+
+#~ msgid "Display Push Notifications Attributes"
+#~ msgstr "Anlık Bildirimler Niteliklerini Görüntüleyin"
+
+#~ msgid ""
+#~ "Send push notifications and configure this website's notifications "
+#~ "permission request"
+#~ msgstr ""
+#~ "Push bildirimleri gönderin ve bu web sitesinin bildirim izin isteğini "
+#~ "yapılandırın"
+
+#~ msgid ""
+#~ "Used to make comparisons when we need to restrict some features to a "
+#~ "specific media ('facebook', 'twitter', ...)."
+#~ msgstr ""
+#~ "Bazı özellikleri belirli bir medyayla sınırlamamız gerektiğinde "
+#~ "karşılaştırmalar yapmak için kullanılır ('facebook', 'twitter', ...)."

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -26,6 +26,12 @@ msgstr ""
 #. module: pos_restaurant_preparation_display
 #. odoo-python
 #: code:addons/pos_restaurant_preparation_display/models/pos_prep_order.py:0
+msgid "Course"
+msgstr ""
+
+#. module: pos_restaurant_preparation_display
+#. odoo-python
+#: code:addons/pos_restaurant_preparation_display/models/pos_prep_order.py:0
 msgid "Course %s Fired"
 msgstr "點餐 %s 已撤銷"
 
@@ -34,6 +40,12 @@ msgstr "點餐 %s 已撤銷"
 #: code:addons/pos_restaurant_preparation_display/models/pos_prep_order.py:0
 msgid "Course %s Updated"
 msgstr "點餐 %s 已更新"
+
+#. module: pos_restaurant_preparation_display
+#. odoo-python
+#: code:addons/pos_restaurant_preparation_display/models/pos_prep_order.py:0
+msgid "Direct Sale"
+msgstr ""
 
 #. module: pos_restaurant_preparation_display
 #: model:ir.model.fields,field_description:pos_restaurant_preparation_display.field_pos_config__display_name

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 21:25+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
@@ -114,7 +114,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_purchase_inter_company_rules/models/purchase_order.py:0
 msgid "Provide at least one user for inter company relation for %(name)s"
-msgstr "Forneça pelo menos um usuário para a relação interempresa para %(name)s"
+msgstr ""
+"Forneça pelo menos um usuário para a relação interempresa para %(name)s"
 
 #. module: sale_purchase_inter_company_rules
 #. odoo-python
@@ -146,10 +147,13 @@ msgstr "Pedido de venda de origem"
 #. odoo-python
 #: code:addons/sale_purchase_inter_company_rules/models/purchase_order.py:0
 msgid ""
-"You cannot create SO from PO because sale price list currency is different than purchase price list currency.\n"
-"The currency of the SO is obtained from the pricelist of the company partner.\n"
+"You cannot create SO from PO because sale price list currency is different "
+"than purchase price list currency.\n"
+"The currency of the SO is obtained from the pricelist of the company "
+"partner.\n"
 "\n"
-"(SO currency: %(so_currency)s, Pricelist: %(pricelist)s, Partner: %(partner)s (ID: %(id)s))"
+"(SO currency: %(so_currency)s, Pricelist: %(pricelist)s, Partner: %"
+"(partner)s (ID: %(id)s))"
 msgstr ""
 "Não é possível criar um pedido de venda a partir de um pedido de compra "
 "porque a moeda da lista de preços de venda é diferente da moeda da lista de "

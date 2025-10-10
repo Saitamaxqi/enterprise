@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 15:32+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -33,7 +33,8 @@ msgstr "Näyttönimi"
 #. odoo-python
 #: code:addons/crm_sale_subscription/models/crm_lead.py:0
 msgid "Expected revenue has been updated based on the linked Sales orders."
-msgstr "Odotetut tulot on päivitetty linkitettyjen myyntitilausten perusteella."
+msgstr ""
+"Odotetut tulot on päivitetty linkitettyjen myyntitilausten perusteella."
 
 #. module: crm_sale_subscription
 #: model:ir.model.fields,field_description:crm_sale_subscription.field_crm_lead__id
@@ -49,8 +50,8 @@ msgstr "Liidi"
 #. odoo-python
 #: code:addons/crm_sale_subscription/models/crm_lead.py:0
 msgid ""
-"Recurring revenue and Expected revenue have been updated based on the linked"
-" Sales Orders."
+"Recurring revenue and Expected revenue have been updated based on the linked "
+"Sales Orders."
 msgstr ""
 "Toistuvat tulot ja Odotettavissa olevat tulot on päivitetty linkitettyjen "
 "myyntitilausten perusteella."

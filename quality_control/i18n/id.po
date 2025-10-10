@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:40+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 23:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
@@ -52,8 +52,8 @@ msgid ""
 "<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
 "title=\"Domain alias\"/>&amp;nbsp;"
 msgstr ""
-"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" title="
-"\"Domain alias\"/>&amp;nbsp;"
+"<i class=\"fa fa-envelope-o\" role=\"img\" aria-label=\"Domain alias\" "
+"title=\"Domain alias\"/>&amp;nbsp;"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.quality_point_view_form_inherit_quality_control
@@ -61,8 +61,8 @@ msgid ""
 "<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;\" "
 "role=\"img\" aria-label=\"Statistics\" title=\"Statistics\"/>"
 msgstr ""
-"<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;"
-"\" role=\"img\" aria-label=\"Statistics\" title=\"Statistik\"/>"
+"<span class=\"fa fa-2x\" data-icon=\"∑\" style=\"padding-left: 10px;\" "
+"role=\"img\" aria-label=\"Statistics\" title=\"Statistik\"/>"
 
 #. module: quality_control
 #: model_terms:ir.ui.view,arch_db:quality_control.stock_picking_view_form_inherit_quality
@@ -399,7 +399,8 @@ msgstr "Satuan unit default yang digunakan untuk semua operasi stok."
 #: model_terms:ir.actions.act_window,help:quality_control.quality_check_action_team
 msgid ""
 "Define Quality Control Points in order to automatically generate\n"
-"              quality checks at the right logistic operation: transfers, manufacturing orders."
+"              quality checks at the right logistic operation: transfers, "
+"manufacturing orders."
 msgstr ""
 "Definisikan Kualitas Control Points untuk secara otomatis membuat\n"
 "              pemeriksaan kualitas pada operasi logistik yang tepat: "
@@ -821,7 +822,8 @@ msgstr "Operasi"
 msgid ""
 "Operation = One quality check is requested at the operation level.\n"
 "                  Product = A quality check is requested per product.\n"
-"                 Quantity = A quality check is requested for each new product quantity registered, with partial quantity checks also possible."
+"                 Quantity = A quality check is requested for each new "
+"product quantity registered, with partial quantity checks also possible."
 msgstr ""
 "Operasi = Satu pemeriksaan kualitas diminta pada level operasi.\n"
 "                  Produk = Pemeriksaan kualitas diminta per produk.\n"
@@ -1402,8 +1404,8 @@ msgid ""
 "specified, the first sheet is selected by default."
 msgstr ""
 "Pemeriksaan sukses bila nilai cell sukses adalah TRUE. Bila terdapat "
-"beberapa sheet, spesifikasi yang mana Anda ingin gunakan (contoh, Sheet2!C4)"
-". bila tidak ditentukan, sheet pertama dipilih secara default."
+"beberapa sheet, spesifikasi yang mana Anda ingin gunakan (contoh, Sheet2!"
+"C4). bila tidak ditentukan, sheet pertama dipilih secara default."
 
 #. module: quality_control
 #: model:ir.model.fields,help:quality_control.field_quality_point__measure_frequency_value
@@ -1526,11 +1528,11 @@ msgstr "Tulis catatan pemeriksaan kualitas..."
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
 msgid ""
-"You measured %(measure).2f %(unit)s and it should be between "
-"%(tolerance_min).2f and %(tolerance_max).2f %(unit)s."
+"You measured %(measure).2f %(unit)s and it should be between %"
+"(tolerance_min).2f and %(tolerance_max).2f %(unit)s."
 msgstr ""
-"Anda mengukur %(measure).2f %(unit)s dan seharusnya di antara "
-"%(tolerance_min).2f and %(tolerance_max).2f %(unit)s."
+"Anda mengukur %(measure).2f %(unit)s dan seharusnya di antara %"
+"(tolerance_min).2f and %(tolerance_max).2f %(unit)s."
 
 #. module: quality_control
 #. odoo-python

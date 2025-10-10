@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/room/th/>\n"
@@ -54,8 +54,7 @@ msgstr "<span class=\"o_stat_text\">การประชุมครั้ง�
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "<span invisible=\"next_booking_start\">No Upcoming Meetings</span>"
-msgstr ""
-"<span invisible=\"next_booking_start\">ไม่มีการประชุมที่จะเกิดขึ้น</span>"
+msgstr "<span invisible=\"next_booking_start\">ไม่มีการประชุมที่จะเกิดขึ้น</span>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
@@ -370,10 +369,8 @@ msgstr "สำนักงานหลัก"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-msgid ""
-"Make meeting room sharing easy by centralizing all meetings in this App"
-msgstr ""
-"ทำให้การแชร์ห้องประชุมเป็นเรื่องง่ายโดยรวมการประชุมทั้งหมด ในแอปนี้ไว้เป็นศูนย์กลาง"
+msgid "Make meeting room sharing easy by centralizing all meetings in this App"
+msgstr "ทำให้การแชร์ห้องประชุมเป็นเรื่องง่ายโดยรวมการประชุมทั้งหมด ในแอปนี้ไว้เป็นศูนย์กลาง"
 
 #. module: room
 #: model:res.groups,name:room.group_room_manager

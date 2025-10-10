@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* project_forecast
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: project_forecast
@@ -108,7 +109,6 @@ msgstr "計劃排班"
 #: model_terms:ir.ui.view,arch_db:project_forecast.open_slots_list_template
 #: model_terms:ir.ui.view,arch_db:project_forecast.period_report_template
 #: model_terms:ir.ui.view,arch_db:project_forecast.planning_slot_view_search
-#: model_terms:ir.ui.view,arch_db:project_forecast.resource_planning_project_forecast
 msgid "Project"
 msgstr "專案"
 
@@ -142,11 +142,19 @@ msgid "Shift Template"
 msgstr "排班範本"
 
 #. module: project_forecast
+#: model:planning.role,name:project_forecast.planning_role_tester
+msgid "Tester"
+msgstr ""
+
+#. module: project_forecast
 #. odoo-python
 #: code:addons/project_forecast/models/project_project.py:0
 msgid ""
-"You cannot update the company for the %(project_name)s project because it’s tied to shifts in another company.\n"
-"To change it, first clear the company field for the project. Then move the shifts to the new company, and update the project's company."
+"You cannot update the company for the %(project_name)s project because it’s "
+"tied to shifts in another company.\n"
+"To change it, first clear the company field for the project. Then move the "
+"shifts to the new company, and update the project's company."
 msgstr ""
 "你不可更新專案 %(project_name)s 的公司，因為它已連結至另一公司的輪班。\n"
-"若要更改，請先清除該專案的公司欄位，然後將已連結的輪班移至新公司，最後返回專案更新公司資料。"
+"若要更改，請先清除該專案的公司欄位，然後將已連結的輪班移至新公司，最後返回專"
+"案更新公司資料。"

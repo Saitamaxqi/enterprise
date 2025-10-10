@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -29,15 +29,15 @@ msgstr "<small>이름: 서명인은 itsme®를 통해 신원 정보를 제공했
 #: model:iap.service,description:sign_itsme.iap_service_itsme_proxy
 msgid ""
 "Ask document signatories in Odoo Sign to provide their identity using the "
-"itsme® identity platform. By combining Odoo Sign with itsme®️, you can add "
-"an identification step in your signature flows and ask signatories to "
-"provide their identity through the itsme®️ platform, using their mobile "
-"device. Available in Belgium and in the Netherlands."
+"itsme® identity platform. By combining Odoo Sign with itsme®️, you can add an "
+"identification step in your signature flows and ask signatories to provide "
+"their identity through the itsme®️ platform, using their mobile device. "
+"Available in Belgium and in the Netherlands."
 msgstr ""
-"Odoo 서명에서 문서 서명자에게 itsme® 플랫폼을 통해 신원을 확인하도록 "
-"요청하세요. Odoo 서명 앱을 itsme®️ 과 통합하면 서명 단계에 신원 확인 단계를 "
-"도입하여 서명자가 모바일 장치에서 itsme®️을 통해 신원을 확인하도록 요청할 수 "
-"있습니다. 이 서비스는 벨기에와 네덜란드에서 사용할 수 있습니다."
+"Odoo 서명에서 문서 서명자에게 itsme® 플랫폼을 통해 신원을 확인하도록 요청하세"
+"요. Odoo 서명 앱을 itsme®️ 과 통합하면 서명 단계에 신원 확인 단계를 도입하여 "
+"서명자가 모바일 장치에서 itsme®️을 통해 신원을 확인하도록 요청할 수 있습니다. "
+"이 서비스는 벨기에와 네덜란드에서 사용할 수 있습니다."
 
 #. module: sign_itsme
 #: model:iap.service,unit_name:sign_itsme.iap_service_itsme_proxy
@@ -135,9 +135,10 @@ msgstr "서명 요청 항목"
 #. odoo-javascript
 #: code:addons/sign_itsme/static/src/components/document_signable.js:0
 msgid ""
-"The itsme® identification data could not be forwarded to Odoo, the signature"
-" could not be saved."
-msgstr "itsme® 의 인증 데이터를 Odoo에 전달할 수 없어 서명을 저장하지 못했습니다."
+"The itsme® identification data could not be forwarded to Odoo, the signature "
+"could not be saved."
+msgstr ""
+"itsme® 의 인증 데이터를 Odoo에 전달할 수 없어 서명을 저장하지 못했습니다."
 
 #. module: sign_itsme
 #: model:ir.model.fields.selection,name:sign_itsme.selection__sign_item_role__auth_method__itsme
@@ -148,10 +149,11 @@ msgstr "itsme®"
 #. odoo-javascript
 #: code:addons/sign_itsme/static/src/components/document_signable.js:0
 msgid ""
-"You have rejected the identification request or took too long to process it."
-" You can try again to finalize your signature."
-msgstr "본인 확인 요청을 거부했거나 처리하는 데 시간이 너무 오래 걸렸습니다. 다시 "
-"시도하여 서명을 완료해 주십시오."
+"You have rejected the identification request or took too long to process it. "
+"You can try again to finalize your signature."
+msgstr ""
+"본인 확인 요청을 거부했거나 처리하는 데 시간이 너무 오래 걸렸습니다. 다시 시"
+"도하여 서명을 완료해 주십시오."
 
 #. module: sign_itsme
 #. odoo-python

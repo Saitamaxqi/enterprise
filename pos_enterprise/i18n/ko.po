@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:38+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -76,8 +76,9 @@ msgstr "전체 카테고리"
 msgid ""
 "Archive all preparation display's orders for a fresh start. This will not "
 "affect the PoS order history."
-msgstr "다시 시작하기 위해 준비 화면의 주문 전체를 보관 처리합니다. POS의 주문 "
-"내역에는 영향이 없습니다."
+msgstr ""
+"다시 시작하기 위해 준비 화면의 주문 전체를 보관 처리합니다. POS의 주문 내역에"
+"는 영향이 없습니다."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__auto_clear
@@ -751,7 +752,8 @@ msgstr "명령줄 상태, 실행 여부"
 msgid ""
 "The transactions are processed by Tyro. Set your Tyro credentials on the "
 "related payment method."
-msgstr "거래가 Tyro를 통해 처리됩니다. Tyro 자격 증명을 관련 결제 수단에 설정하세요."
+msgstr ""
+"거래가 Tyro를 통해 처리됩니다. Tyro 자격 증명을 관련 결제 수단에 설정하세요."
 
 #. module: pos_enterprise
 #. odoo-javascript
@@ -811,7 +813,8 @@ msgstr "작업 세부사항"
 msgid ""
 "You cannot modify the stages of a preparation display that has an active "
 "sessions."
-msgstr "준비 디스플레이 단계에서 활성화된 세션이 있는 경우에는 수정할 수 없습니다."
+msgstr ""
+"준비 디스플레이 단계에서 활성화된 세션이 있는 경우에는 수정할 수 없습니다."
 
 #. module: pos_enterprise
 #: model:ir.actions.server,name:pos_enterprise.preparation_display_delete_cron_ir_actions_server

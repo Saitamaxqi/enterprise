@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 23:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -310,8 +310,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
-"Lô hàng đã được tạo trong UPS<br/><b>Số theo dõi:</b> %(tracking_numbers)s<"
-"br/><b>Kiện hàng:</b> %(packages)s"
+"Lô hàng đã được tạo trong UPS<br/><b>Số theo dõi:</b> %"
+"(tracking_numbers)s<br/><b>Kiện hàng:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python
@@ -400,7 +400,8 @@ msgstr ""
 #: model:ir.model.fields,help:delivery_ups_rest.field_delivery_carrier__ups_saturday_delivery
 msgid ""
 "This value added service will allow you to ship the package on saturday also."
-msgstr "Dịch vụ giá trị gia tăng này sẽ cho phép bạn vận chuyển hàng vào thứ 7."
+msgstr ""
+"Dịch vụ giá trị gia tăng này sẽ cho phép bạn vận chuyển hàng vào thứ 7."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__delivery_type__ups_rest

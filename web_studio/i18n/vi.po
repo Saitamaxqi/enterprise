@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-28 12:10+0000\n"
 "Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -130,8 +130,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s đã đặt quyền phê duyệt từ %(previous_approvers)s thành "
-"%(next_approvers)s"
+"%(user_name)s đã đặt quyền phê duyệt từ %(previous_approvers)s thành %"
+"(next_approvers)s"
 
 #. module: web_studio
 #. odoo-python
@@ -198,8 +198,8 @@ msgstr ""
 #: model_terms:web_tour.tour,rainbow_man_message:web_studio.web_studio_new_app_tour
 msgid "<span><b>Good job!</b> You went through all steps of this tour.</span>"
 msgstr ""
-"<span><b>Tốt lắm!</b> Bạn đã xem qua tất cả các bước của tour hướng dẫn "
-"này.</span>"
+"<span><b>Tốt lắm!</b> Bạn đã xem qua tất cả các bước của tour hướng dẫn này."
+"</span>"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2020,7 +2020,8 @@ msgstr "Nhóm theo"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/editors/list/list_editor_sidebar/list_editor_sidebar.xml:0
 msgid "Grouping is not applied while in Studio to allow editing."
-msgstr "Khi ở trong Studio, việc nhóm không được áp dụng để cho phép chỉnh sửa."
+msgstr ""
+"Khi ở trong Studio, việc nhóm không được áp dụng để cho phép chỉnh sửa."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2466,8 +2467,8 @@ msgid ""
 "Let's check the result. Close Odoo Studio to get an <b>overview of your app</"
 "b>."
 msgstr ""
-"Hãy kiểm tra kết quả. Đóng Odoo Studio để xem <b>tổng quan ứng dụng của "
-"bạn</b>."
+"Hãy kiểm tra kết quả. Đóng Odoo Studio để xem <b>tổng quan ứng dụng của bạn</"
+"b>."
 
 #. module: web_studio
 #. odoo-javascript

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-26 12:11+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
@@ -111,9 +111,8 @@ msgstr "Wenn False, fahren Sie mit dem herkömmlichen Vorgang fort"
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If it is true, add the tag %(b_open)s\"To Split\"%(b_close)s and stop there."
-" This way, we'll know we first need to manually split it into different "
-"files."
+"If it is true, add the tag %(b_open)s\"To Split\"%(b_close)s and stop there. "
+"This way, we'll know we first need to manually split it into different files."
 msgstr ""
 "Wenn True, fügen Sie das Stichwort %(b_open)s„Zu zerteilen“%(b_close)s und "
 "hören Sie dort auf. So wissen wir, dass wir es zuerst manuell in mehrere "
@@ -143,11 +142,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If the customer of the invoice is us (%(company_name)s, with email "
-"%(company_email)s), create a Vendor Bill."
+"If the customer of the invoice is us (%(company_name)s, with email %"
+"(company_email)s), create a Vendor Bill."
 msgstr ""
-"Wenn wir der Kunde der Rechnung sind (%(company_name)s, mit E-Mail: "
-"%(company_email)s), erstellen Sie eine Lieferantenrechnung."
+"Wenn wir der Kunde der Rechnung sind (%(company_name)s, mit E-Mail: %"
+"(company_email)s), erstellen Sie eine Lieferantenrechnung."
 
 #. module: ai_documents_account
 #. odoo-python
@@ -163,8 +162,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents_account/wizard/ai_documents_sort.py:0
 msgid ""
-"If the document is an %(b_open)sinvoice%(b_close)s, move it to the "
-"%(finance)s folder then trigger the relevant action:"
+"If the document is an %(b_open)sinvoice%(b_close)s, move it to the %"
+"(finance)s folder then trigger the relevant action:"
 msgstr ""
 "Falls es sich bei dem Dokument um eine %(b_open)sRechnung%(b_close)s "
 "handelt, verschieben Sie es in den Ordner %(finance)s und lösen Sie die "

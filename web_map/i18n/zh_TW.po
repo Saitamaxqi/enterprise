@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* web_map
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: web_map
@@ -24,19 +25,17 @@ msgstr ""
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
 ".st0{opacity:0.3;enable-background:new;}\n"
-"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-miterlimit:10;}"
+"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
+"miterlimit:10;}"
 msgstr ""
 ".st0{opacity:0.3;enable-background:new;}\n"
-"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-miterlimit:10;}"
+"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
+"miterlimit:10;}"
 
 #. module: web_map
 #: model_terms:ir.ui.view,arch_db:web_map.res_config_settings_view_form
-msgid ""
-"<i class=\"oi oi-arrow-right\"/>\n"
-"                                Sign up to MapBox to get a free token"
+msgid "<i class=\"oi oi-arrow-right\"/> Sign up to MapBox to get a free token"
 msgstr ""
-"<i class=\"oi oi-arrow-right\"/>\n"
-"                                註冊使用 MapBox，獲取免費代幣"
 
 #. module: web_map
 #: model:ir.model,name:web_map.model_ir_actions_act_window_view
@@ -208,8 +207,7 @@ msgstr "輸入的權杖無效"
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_model.js:0
 msgid ""
-"The view has switched to another provider but functionalities will be "
-"limited"
+"The view has switched to another provider but functionalities will be limited"
 msgstr "檢視畫面已切換至另一服務商，但功能將受限制"
 
 #. module: web_map
@@ -222,8 +220,8 @@ msgstr "此轉介程式未獲授權"
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
-"To get routing on your map, you first need to set up your MapBox token. It's"
-" free."
+"To get routing on your map, you first need to set up your MapBox token. It's "
+"free."
 msgstr "要在地圖取得路線，你需要先設定 MapBox 權杖。免費的。"
 
 #. module: web_map
@@ -306,3 +304,10 @@ msgstr "是"
 #: code:addons/web_map/models/models.py:0
 msgid "You need to set a Contact field on this model to use the Map View"
 msgstr "你需要在此模型上設定聯絡人欄位，才可使用地圖檢視模式"
+
+#~ msgid ""
+#~ "<i class=\"oi oi-arrow-right\"/>\n"
+#~ "                                Sign up to MapBox to get a free token"
+#~ msgstr ""
+#~ "<i class=\"oi oi-arrow-right\"/>\n"
+#~ "                                註冊使用 MapBox，獲取免費代幣"

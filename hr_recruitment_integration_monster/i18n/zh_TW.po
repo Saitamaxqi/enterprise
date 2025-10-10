@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -338,9 +338,10 @@ msgstr "Monster 密碼"
 #. odoo-python
 #: code:addons/hr_recruitment_integration_monster/models/hr_recruitment_platform.py:0
 msgid ""
-"Monster.com credentials are not set. Please set them in the company settings"
-" or ask your administrator."
-msgstr "未設定 Monster.com 登入憑證。請在公司設定中進行設定，或詢問你的管理員。"
+"Monster.com credentials are not set. Please set them in the company settings "
+"or ask your administrator."
+msgstr ""
+"未設定 Monster.com 登入憑證。請在公司設定中進行設定，或詢問你的管理員。"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_25

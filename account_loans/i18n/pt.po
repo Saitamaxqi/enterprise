@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 21:19+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Portuguese <https://translate.odoo.com/projects/odoo-19/"
@@ -48,21 +48,23 @@ msgstr "30U/360"
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
-"                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">month</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">meses</span>\n"
-"                                        <span class=\"oe_inline\" invisible="
-"\"duration != 1\">mês</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">mês</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
-"                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">year</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">ano</span>\n"
-"                                    <span class=\"oe_inline\" invisible="
-"\"loan_term != 1\">ano</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">ano</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -239,8 +241,8 @@ msgstr "Confirmar"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
 msgid ""
-"Confirm that all loans recorded in the accounts actually exist and match the"
-" loan agreements."
+"Confirm that all loans recorded in the accounts actually exist and match the "
+"loan agreements."
 msgstr ""
 
 #. module: account_loans
@@ -350,7 +352,8 @@ msgstr "Fim do mês"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
 msgid ""
-"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Ensure that loans are properly classified as current vs. non-current, and "
+"disclosed in accordance with Belgian GAAP. \n"
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
@@ -914,14 +917,15 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
-"O valor do empréstimo %(loan_amount)s deve ser igual à soma dos principais: "
-"%(principal_sum)s (diferença %(principal_difference)s)"
+"O valor do empréstimo %(loan_amount)s deve ser igual à soma dos principais: %"
+"(principal_sum)s (diferença %(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
 #: code:addons/account_loans/models/account_loan.py:0
 msgid "The loan date should be earlier than the loan lines date."
-msgstr "A data do empréstimo deve ser anterior à data das linhas de empréstimo."
+msgstr ""
+"A data do empréstimo deve ser anterior à data das linhas de empréstimo."
 
 #. module: account_loans
 #. odoo-python
@@ -1005,8 +1009,7 @@ msgstr "Arquivo carregado"
 msgid ""
 "Upon confirmation of the loan, Odoo will ignore the loan lines that are up "
 "to this date (included) and not create entries for them. This is useful if "
-"you have already manually created entries prior to the creation of this "
-"loan."
+"you have already manually created entries prior to the creation of this loan."
 msgstr ""
 "Após a confirmação do empréstimo, o Odoo ignorará as linhas de empréstimo "
 "que estão até essa data (incluídas) e não criará lançamentos para elas. Isso "

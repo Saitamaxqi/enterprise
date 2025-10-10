@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-18 02:42+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Czech <https://translate.odoo.com/projects/odoo-19/"
@@ -32,7 +32,8 @@ msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
-msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgid ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -828,9 +829,9 @@ msgstr "Úspěch"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid ""
-"The Recruiter will be the default value for all Applicants in this job"
-"             position. The Recruiter is automatically added to all meetings "
-"with the Applicant."
+"The Recruiter will be the default value for all Applicants in this "
+"job             position. The Recruiter is automatically added to all "
+"meetings with the Applicant."
 msgstr ""
 
 #. module: hr_recruitment_integration_base
@@ -855,15 +856,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid ""
-"This action will update the job post on the platform. This action will cost "
-"%(price)s credits. Do you want to continue?"
+"This action will update the job post on the platform. This action will cost %"
+"(price)s credits. Do you want to continue?"
 msgstr ""
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
 msgid ""
-"This will update the applicant's availability status once they are hired for"
-" this position."
+"This will update the applicant's availability status once they are hired for "
+"this position."
 msgstr ""
 
 #. module: hr_recruitment_integration_base

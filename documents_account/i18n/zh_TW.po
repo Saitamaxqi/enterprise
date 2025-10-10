@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:46+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -52,9 +52,9 @@ msgid "A setting already exists for this journal"
 msgstr "此日記賬已存在設置"
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__documents_account_settings
-msgid "Accounting "
-msgstr "會計 "
+#: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
+msgid "Accounting"
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
@@ -68,22 +68,22 @@ msgid "Accounting Report"
 msgstr "會計報表"
 
 #. module: documents_account
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_tag_add_bill
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_tag_add_bill
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_tag_add_bill
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_tag_add_bill
-msgid "Add tag \"Bill\""
-msgstr "加入標籤「賬單」"
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Action"
+msgstr ""
 
 #. module: documents_account
-#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_tag_add_validated
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_tag_add_validated
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_tag_add_validated
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_tag_add_validated
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_tag_add_validated
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_tag_add_validated
-msgid "Add tag \"Validated\""
-msgstr "加入標籤「已驗證」"
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "All"
+msgstr ""
+
+#. module: documents_account
+#. odoo-python
+#: code:addons/documents_account/models/documents_document.py:0
+msgid "Annual Closing"
+msgstr ""
 
 #. module: documents_account
 #. odoo-javascript
@@ -149,6 +149,12 @@ msgid "Click the cross to <b>exit preview</b>."
 msgstr "按一下交叉圖示，以<b>離開預覽</b>。"
 
 #. module: documents_account
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Close (Esc)"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
 msgid "Companies"
 msgstr "公司"
@@ -203,16 +209,26 @@ msgid "Create Customer Invoice"
 msgstr "建立客戶發票"
 
 #. module: documents_account
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_code
 msgid "Create Misc Entry"
 msgstr "建立雜項記項"
 
 #. module: documents_account
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_code
 msgid "Create Vendor Bill"
 msgstr "建立供應商賬單"
+
+#. module: documents_account
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_code
+msgid "Create Vendor Credit Note"
+msgstr ""
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_receipt
@@ -220,10 +236,10 @@ msgid "Create Vendor Receipt"
 msgstr "建立供應商收據"
 
 #. module: documents_account
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_code
-msgid "Create Vendor Refund"
-msgstr "建立供應商退款"
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Create a new document for the remaining page, it will be handled later."
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_uid
@@ -253,7 +269,6 @@ msgstr "客戶發票"
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard_format__display_name
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__display_name
 #: model:ir.model.fields,field_description:documents_account.field_documents_document__display_name
-#: model:ir.model.fields,field_description:documents_account.field_documents_tag__display_name
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__display_name
 #: model:ir.model.fields,field_description:documents_account.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:documents_account.field_res_company__display_name
@@ -285,11 +300,6 @@ msgid "Documents Account Move Type"
 msgstr "文件賬戶分錄類型"
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_res_company__documents_account_settings
-msgid "Documents Account Settings"
-msgstr "文件會計設置"
-
-#. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_suitable_journal_ids
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_suitable_journal_ids
 msgid "Documents Account Suitable Journal"
@@ -312,7 +322,16 @@ msgid "Export wizard for accounting's reports"
 msgstr "會計報表匯出精靈"
 
 #. module: documents_account
+#. odoo-javascript
+#. odoo-python
+#: code:addons/documents_account/models/documents_document.py:0
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Finance"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__folder_id
+#: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__folder_id
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Folder"
 msgstr "資料夾"
@@ -353,7 +372,6 @@ msgstr "有嵌入的 PDF"
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard_format__id
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__id
 #: model:ir.model.fields,field_description:documents_account.field_documents_document__id
-#: model:ir.model.fields,field_description:documents_account.field_documents_tag__id
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__id
 #: model:ir.model.fields,field_description:documents_account.field_ir_attachment__id
 #: model:ir.model.fields,field_description:documents_account.field_res_company__id
@@ -414,9 +432,9 @@ msgstr "最後更新於"
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid ""
-"Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter "
+"Let's process documents in this folder.<br/> <i>Tip: Use Tags to filter "
 "documents and structure your process.</i>"
-msgstr "讓我們處理收件箱中的文件。<br/><span>提示：使用標籤以篩選文件並組織流程。</span>"
+msgstr ""
 
 #. module: documents_account
 #. odoo-javascript
@@ -427,16 +445,16 @@ msgstr "讓我們處理這些賬單：把它們變成供應商賬單。"
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
-msgid "Let's process this document, coming from our scanner."
-msgstr "讓我們處理這個文件，由我們的掃瞄器開始。"
+msgid "Let's process this document now."
+msgstr ""
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid ""
-"Let's tag this mail as legal<br/> <i>Tips: actions can be tailored to your "
-"process, according to the workspace.</i>"
-msgstr "讓我們把這封郵件標記為法律法件。<br/><span>提示：根據工作空間，動作可以根據你的流程進行調整。</span>"
+"Let's tag this mail as Finance<br/> <i>Tips: actions can be tailored to your "
+"process, according to the folder.</i>"
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_entry
@@ -444,34 +462,42 @@ msgid "Miscellaneous Operations"
 msgstr "雜項操作"
 
 #. module: documents_account
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_move
+msgid "Move Document To Taxes"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_move
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_move
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_move
+msgid "Move Document to Taxes"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_move
+msgid "Move Documents to Annual Closing"
+msgstr ""
+
+#. module: documents_account
+#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_move
+msgid "Move to Annual Closing"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__state__documents_account_record_create
 msgid "New Journal Entry"
 msgstr "新增日記賬記項"
 
 #. module: documents_account
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Open the actions menu"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_receipt
 msgid "Purchase Receipt"
 msgstr "採購收據"
-
-#. module: documents_account
-#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_tag_remove_inbox
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_tag_remove_inbox
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_tag_remove_inbox
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_tag_remove_inbox
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_tag_remove_inbox
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_tag_remove_inbox
-msgid "Remove tag \"Inbox\""
-msgstr "移除標籤「收件箱」"
-
-#. module: documents_account
-#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_tag_remove_to_validate
-#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_tag_remove_to_validate
-msgid "Remove tag \"To Validate\""
-msgstr "移除「待驗證」標籤"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
@@ -482,8 +508,8 @@ msgstr "從銀行對賬單行索取文件"
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
-msgid "Send this letter to the legal department, by assigning the right tags."
-msgstr "通過分配正確的標籤，把這封信寄到法律部門。"
+msgid "Send To Finance"
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_actions_server
@@ -491,9 +517,10 @@ msgid "Server Action"
 msgstr "伺服器動作"
 
 #. module: documents_account
-#: model:ir.model,name:documents_account.model_documents_tag
-msgid "Tag"
-msgstr "標籤"
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "Split PDF"
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids
@@ -502,9 +529,21 @@ msgid "Tags"
 msgstr "標籤"
 
 #. module: documents_account
+#. odoo-python
+#: code:addons/documents_account/models/documents_document.py:0
+msgid "Taxes"
+msgstr ""
+
+#. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "This invoice has been initiated by a bank transaction."
 msgstr "此發票是由銀行交易啟始的。"
+
+#. module: documents_account
+#. odoo-javascript
+#: code:addons/documents_account/static/src/js/tour.js:0
+msgid "This should be processed as a misc entry."
+msgstr ""
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__state
@@ -520,11 +559,14 @@ msgid ""
 "- 'Update a Record': update the values of a record\n"
 "- 'Create Activity': create an activity (Discuss)\n"
 "- 'Send Email': post a message, a note or send an email (Discuss)\n"
-"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': add or remove followers to a record (Discuss)\n"
+"- 'Send SMS': send SMS, log them on documents (SMS)- 'Add/Remove Followers': "
+"add or remove followers to a record (Discuss)\n"
 "- 'Create Record': create a new record with new values\n"
 "- 'Execute Code': a block of Python code that will be executed\n"
-"- 'Send Webhook Notification': send a POST request to an external system, also known as a Webhook\n"
-"- 'Multi Actions': define an action that triggers several other server actions\n"
+"- 'Send Webhook Notification': send a POST request to an external system, "
+"also known as a Webhook\n"
+"- 'Multi Actions': define an action that triggers several other server "
+"actions\n"
 msgstr ""
 "伺服器操作類型。可使用以下的值：\n"
 "- 更新記錄：更新某項記錄的值\n"
@@ -555,16 +597,13 @@ msgid ""
 msgstr "想成為一家<b>無紙化公司</b>嗎？我們來看看Odoo文檔。"
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__folder_id
-msgid "Workspace"
-msgstr "工作空間"
-
-#. module: documents_account
 #: model_terms:web_tour.tour,rainbow_man_message:documents_account.documents_account_tour
 msgid ""
 "Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
-msgstr "嘩！幾秒鐘便處理了 6 個文件，你真棒！<br>導覽完成，現在嘗試上載你自己的文件吧。"
+msgstr ""
+"嘩！幾秒鐘便處理了 6 個文件，你真棒！<br>導覽完成，現在嘗試上載你自己的文件"
+"吧。"
 
 #. module: documents_account
 #. odoo-python
@@ -581,3 +620,51 @@ msgstr "賬戶預設資料夾"
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "to mark this invoice as paid."
 msgstr "將此憑單標記為已付款。"
+
+#~ msgid "Accounting "
+#~ msgstr "會計 "
+
+#~ msgid "Add tag \"Bill\""
+#~ msgstr "加入標籤「賬單」"
+
+#~ msgid "Add tag \"Validated\""
+#~ msgstr "加入標籤「已驗證」"
+
+#~ msgid "Create Vendor Refund"
+#~ msgstr "建立供應商退款"
+
+#~ msgid "Documents Account Settings"
+#~ msgstr "文件會計設置"
+
+#~ msgid ""
+#~ "Let's process documents in your Inbox.<br/><i>Tip: Use Tags to filter "
+#~ "documents and structure your process.</i>"
+#~ msgstr ""
+#~ "讓我們處理收件箱中的文件。<br/><span>提示：使用標籤以篩選文件並組織流程。"
+#~ "</span>"
+
+#~ msgid "Let's process this document, coming from our scanner."
+#~ msgstr "讓我們處理這個文件，由我們的掃瞄器開始。"
+
+#~ msgid ""
+#~ "Let's tag this mail as legal<br/> <i>Tips: actions can be tailored to "
+#~ "your process, according to the workspace.</i>"
+#~ msgstr ""
+#~ "讓我們把這封郵件標記為法律法件。<br/><span>提示：根據工作空間，動作可以根"
+#~ "據你的流程進行調整。</span>"
+
+#~ msgid "Remove tag \"Inbox\""
+#~ msgstr "移除標籤「收件箱」"
+
+#~ msgid "Remove tag \"To Validate\""
+#~ msgstr "移除「待驗證」標籤"
+
+#~ msgid ""
+#~ "Send this letter to the legal department, by assigning the right tags."
+#~ msgstr "通過分配正確的標籤，把這封信寄到法律部門。"
+
+#~ msgid "Tag"
+#~ msgstr "標籤"
+
+#~ msgid "Workspace"
+#~ msgstr "工作空間"

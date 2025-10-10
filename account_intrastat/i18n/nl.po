@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-14 11:57+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
@@ -60,8 +60,8 @@ msgid ""
 "<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Values set here are "
 "company-specific.\"/>"
 msgstr ""
-"<span class=\"fa fa-lg fa-building-o ms-2\" title="
-"\"De waardes die je hier instelt zijn specifiek aan een bedrijf.\"/>"
+"<span class=\"fa fa-lg fa-building-o ms-2\" title=\"De waardes die je hier "
+"instelt zijn specifiek aan een bedrijf.\"/>"
 
 #. module: account_intrastat
 #: model:ir.model.fields,field_description:account_intrastat.field_product_product__account_fiscal_country_group_codes
@@ -608,7 +608,8 @@ msgstr "Het datumbereik moet een volledige maand zijn"
 #. odoo-python
 #: code:addons/account_intrastat/models/account_intrastat_report.py:0
 msgid "The date range must be a full month or a full quarter."
-msgstr "Het datumbereik moet een volledige maand of een volledig kwartaal zijn."
+msgstr ""
+"Het datumbereik moet een volledige maand of een volledig kwartaal zijn."
 
 #. module: account_intrastat
 #: model:ir.model.fields,help:account_intrastat.field_product_product__intrastat_supplementary_unit_amount

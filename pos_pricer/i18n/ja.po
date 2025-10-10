@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -92,7 +92,8 @@ msgstr "エラー: Pricer認証を確認して下さい"
 #. odoo-python
 #: code:addons/pos_pricer/models/pricer_store.py:0
 msgid "Failed to unlink Pricer tag %(pricer_tag)s at API url %(api_url)s"
-msgstr "Pricerタグ%(pricer_tag)sのリンク解除(APL url%(api_url)sでの)に失敗しました。"
+msgstr ""
+"Pricerタグ%(pricer_tag)sのリンク解除(APL url%(api_url)sでの)に失敗しました。"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pos_config__id
@@ -115,7 +116,8 @@ msgstr "Pricerシステム内の店舗の認証"
 msgid ""
 "Invalid tag name. Should be 1 letter followed by 16 digits. Example: "
 "'N4081315789813275'"
-msgstr "タグ名が無効です。1文字の後に16桁の数字が続く必要があります。例: "
+msgstr ""
+"タグ名が無効です。1文字の後に16桁の数字が続く必要があります。例: "
 "'N4081315789813275'"
 
 #. module: pos_pricer
@@ -240,8 +242,9 @@ msgstr "Pricer店舗ID"
 msgid ""
 "Pricer Store ID must only contain lowercase a-z, 0-9 or '-' and not start "
 "with '-'"
-msgstr "Pricer店舗IDは小文字a-z、 0-9または '-'のみを含み、 "
-"'-'で始まってはいけません。"
+msgstr ""
+"Pricer店舗IDは小文字a-z、 0-9または '-'のみを含み、 '-'で始まってはいけませ"
+"ん。"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__name
@@ -388,17 +391,19 @@ msgstr "この価格表は、このプロダクトの価格タグの販売価格
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__pricer_store_id
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_store_id
 msgid ""
-"This product will be linked to and displayed on the Pricer tags of the store"
-" selected here"
-msgstr "このプロダクトは、ここで選択された店舗のPricerタグにリンクされ、表示されます"
-"。"
+"This product will be linked to and displayed on the Pricer tags of the store "
+"selected here"
+msgstr ""
+"このプロダクトは、ここで選択された店舗のPricerタグにリンクされ、表示されま"
+"す。"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_tag_ids
 msgid ""
 "This product will be linked to and displayed on the Pricer tags with ids "
 "listed here. It is recommended to use a barcode scanner"
-msgstr "このプロダクトは、ここにリストされたIDを持つPricerタグにリンクされ、表示され"
+msgstr ""
+"このプロダクトは、ここにリストされたIDを持つPricerタグにリンクされ、表示され"
 "ます。バーコードスキャナの使用をお勧めします。"
 
 #. module: pos_pricer

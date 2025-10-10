@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-11 14:39+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -109,8 +110,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"Do you want to deposit money to a specific customer? If so, first select "
-"him/her."
+"Do you want to deposit money to a specific customer? If so, first select him/"
+"her."
 msgstr ""
 
 #. module: pos_settle_due
@@ -306,8 +307,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"The selected customer is not in the list of partners of the ongoing settling"
-" orderlines."
+"The selected customer is not in the list of partners of the ongoing settling "
+"orderlines."
 msgstr ""
 
 #. module: pos_settle_due

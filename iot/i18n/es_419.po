@@ -9,9 +9,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 02:41+0000\n"
-"Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
+"PO-Revision-Date: 2025-10-09 21:12+0000\n"
+"Last-Translator: \"Patricia Gutiérrez (pagc)\" <pagc@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/iot/es_419/>\n"
 "Language: es_419\n"
@@ -960,7 +960,7 @@ msgstr "Seleccione la caja IoT a la que quiere conectarse"
 #. odoo-python
 #: code:addons/iot/models/ir_actions_report.py:0
 msgid "Select Printers"
-msgstr ""
+msgstr "Seleccionar impresoras"
 
 #. module: iot
 #. odoo-javascript

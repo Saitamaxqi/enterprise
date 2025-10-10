@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_iso20022
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_iso20022
@@ -26,9 +27,21 @@ msgid "A bank account is not defined."
 msgstr "銀行賬戶未設定。"
 
 #. module: account_iso20022
+#: model:ir.model.fields,help:account_iso20022.field_account_batch_payment__iso20022_batch_booking
+msgid ""
+"Ask the bank to group the bank transactions corresponding to these payments "
+"into a single transaction."
+msgstr ""
+
+#. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__sepa_pain_version__pain_001_001_03_austrian_004
 msgid "Austrian"
 msgstr "奧地利"
+
+#. module: account_iso20022
+#: model:ir.model,name:account_iso20022.model_account_bank_statement_line
+msgid "Bank Statement Line"
+msgstr ""
 
 #. module: account_iso20022
 #: model_terms:ir.ui.view,arch_db:account_iso20022.view_batch_payment_form_inherit
@@ -94,6 +107,7 @@ msgid "Default Priority"
 msgstr "預設優先級別"
 
 #. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__display_name
 #: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__display_name
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__display_name
@@ -109,6 +123,12 @@ msgstr "顯示名稱"
 #: code:addons/account_iso20022/models/account_journal.py:0
 msgid "Employee %s has no country in their address."
 msgstr "員工 %s 的地址未設定國家/地區。"
+
+#. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
+#: model:ir.model.fields,field_description:account_iso20022.field_account_payment__end_to_end_uuid
+msgid "End to End ID"
+msgstr ""
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_company__iso20022_orgid_issr
@@ -145,6 +165,7 @@ msgid "Has Sepa Ct Payment Method"
 msgstr "有 SEPA 轉賬付款方法"
 
 #. module: account_iso20022
+#: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__id
 #: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__id
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__id
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__id
@@ -267,14 +288,27 @@ msgid "Payments without IBAN"
 msgstr "無 IBAN 的付款"
 
 #. module: account_iso20022
+#. odoo-python
+#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
+msgid "Please set a bank on the journal '%(journal_name)s'."
+msgstr ""
+
+#. module: account_iso20022
+#. odoo-python
+#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
+msgid "Please set an account number on the journal '%(journal_name)s'."
+msgstr ""
+
+#. module: account_iso20022
+#. odoo-python
+#: code:addons/account_iso20022/models/account_journal_iso20022_ch.py:0
+msgid "Please set the bank identifier code (BIC) on this bank: %(bank_name)s"
+msgstr ""
+
+#. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_priority
 msgid "Priority"
 msgstr "優先級"
-
-#. module: account_iso20022
-#: model:ir.model.fields,help:account_iso20022.field_account_batch_payment__iso20022_batch_booking
-msgid "Request batch booking from the bank for the related bank statements."
-msgstr "對相關銀行結單，要求銀行作大批記賬。"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__iso20022_batch_booking
@@ -384,14 +418,17 @@ msgstr "瑞士 ISO 20022"
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal.py:0
 msgid ""
-"The BIC code '%(bic_code)s' associated to the bank '%(bank)s' of bank account '%(account)s' of partner '%(partner)s' does not respect the required convention.\n"
+"The BIC code '%(bic_code)s' associated to the bank '%(bank)s' of bank "
+"account '%(account)s' of partner '%(partner)s' does not respect the required "
+"convention.\n"
 "It must contain 8 or 11 characters and match the following structure:\n"
 "- 4 letters: institution code or bank code\n"
 "- 2 letters: country code\n"
 "- 2 letters or digits: location code\n"
 "- 3 letters or digits: branch code, optional\n"
 msgstr ""
-"BIC 代碼「%(bic_code)s」（已連結銀行及銀行賬戶：%(bank)s，%(account)s；合作夥伴為 %(partner)s）不符合格式要求。\n"
+"BIC 代碼「%(bic_code)s」（已連結銀行及銀行賬戶：%(bank)s，%(account)s；合作夥"
+"伴為 %(partner)s）不符合格式要求。\n"
 "只可有 8 個或 11 個字符，依序符合以下結構：\n"
 "- 4 個字母：機構代碼或銀行代碼\n"
 "- 2 個字母：國家/地區代碼\n"
@@ -402,7 +439,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/res_partner.py:0
 msgid ""
-"The LEI number must contain 20 characters and match the following structure:\n"
+"The LEI number must contain 20 characters and match the following "
+"structure:\n"
 "- 18 alphanumeric characters with capital letters\n"
 "- 2 digits in the end\n"
 msgstr ""
@@ -422,18 +460,22 @@ msgstr "需要有名稱識別符及發行人詳細資料，才可繼續。請在
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid ""
-"The bank account %(account)s, of journal '%(journal)s', is not of type IBAN.\n"
+"The bank account %(account)s, of journal '%(journal)s', is not of type "
+"IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
-"銀行賬戶 %(account)s（所屬日記賬 %(journal)s）並非 IBAN 類型。使用 SEPA 功能需要有效的 IBAN 賬戶。"
+"銀行賬戶 %(account)s（所屬日記賬 %(journal)s）並非 IBAN 類型。使用 SEPA 功能"
+"需要有效的 IBAN 賬戶。"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid ""
-"The customer bank account set on some payments does not have an IBAN number."
-" This is required for SEPA."
-msgstr "部份付款所設定的客戶銀行賬戶，沒有 IBAN 號碼。進行 SEPA 交易必須要有此項資料。"
+"The customer bank account set on some payments does not have an IBAN number. "
+"This is required for SEPA."
+msgstr ""
+"部份付款所設定的客戶銀行賬戶，沒有 IBAN 號碼。進行 SEPA 交易必須要有此項資"
+"料。"
 
 #. module: account_iso20022
 #. odoo-python
@@ -456,6 +498,11 @@ msgid "Too many transactions for a single file."
 msgstr "在單個文件裡太多的交易了。"
 
 #. module: account_iso20022
+#: model:account.payment.method,name:account_iso20022.account_payment_method_iso20022_us
+msgid "U.S. ISO20022"
+msgstr ""
+
+#. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_uetr
 msgid "UETR"
 msgstr "UETR（獨特端對端交易參考）"
@@ -465,6 +512,12 @@ msgstr "UETR（獨特端對端交易參考）"
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_priority__urgp
 msgid "URGP - Critical urgency"
 msgstr "URGP - 極為緊急"
+
+#. module: account_iso20022
+#: model:ir.model.fields,help:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
+#: model:ir.model.fields,help:account_iso20022.field_account_payment__end_to_end_uuid
+msgid "Unique end-to-end assigned by the initiating party"
+msgstr ""
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_payment__iso20022_uetr
@@ -538,3 +591,6 @@ msgstr ""
 "• HIGH（高優先等級）：較高優先等級的付款。\n"
 "• URGP（極為緊急）：迫切緊急，須即時處理。\n"
 "• SVDA（同一定價日）：付款必須在提交當天完成交收。"
+
+#~ msgid "Request batch booking from the bank for the related bank statements."
+#~ msgstr "對相關銀行結單，要求銀行作大批記賬。"

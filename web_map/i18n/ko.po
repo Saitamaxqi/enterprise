@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/web_map/"
@@ -24,7 +24,8 @@ msgstr ""
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
 ".st0{opacity:0.3;enable-background:new;}\n"
-"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-miterlimit:10;}"
+"                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
+"miterlimit:10;}"
 msgstr ""
 ".st0{opacity:0.3;enable-background:new;}\n"
 "                .st1{fill:currentColor;stroke:#1A1919;stroke-width:3;stroke-"
@@ -33,7 +34,8 @@ msgstr ""
 #. module: web_map
 #: model_terms:ir.ui.view,arch_db:web_map.res_config_settings_view_form
 msgid "<i class=\"oi oi-arrow-right\"/> Sign up to MapBox to get a free token"
-msgstr "<i class=\"oi oi-arrow-right\"/> MapBox에 회원 가입 후 무료 토큰을 받으세요."
+msgstr ""
+"<i class=\"oi oi-arrow-right\"/> MapBox에 회원 가입 후 무료 토큰을 받으세요."
 
 #. module: web_map
 #: model:ir.model,name:web_map.model_ir_actions_act_window_view
@@ -205,8 +207,7 @@ msgstr "토큰 입력이 유효하지 않습니다"
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_model.js:0
 msgid ""
-"The view has switched to another provider but functionalities will be "
-"limited"
+"The view has switched to another provider but functionalities will be limited"
 msgstr "화면이 다른 제공자로 전환되었지만 기능이 제한됩니다"
 
 #. module: web_map
@@ -219,10 +220,11 @@ msgstr "이 추천인은 인증되지 않았습니다"
 #. odoo-javascript
 #: code:addons/web_map/static/src/map_view/map_renderer.xml:0
 msgid ""
-"To get routing on your map, you first need to set up your MapBox token. It's"
-" free."
-msgstr "지도에서 경로를 설정하려면 먼저 MapBox 토큰을 설정해야 합니다. 무료로 "
-"사용해보세요."
+"To get routing on your map, you first need to set up your MapBox token. It's "
+"free."
+msgstr ""
+"지도에서 경로를 설정하려면 먼저 MapBox 토큰을 설정해야 합니다. 무료로 사용해"
+"보세요."
 
 #. module: web_map
 #: model_terms:ir.ui.view,arch_db:web_map.res_config_settings_view_form

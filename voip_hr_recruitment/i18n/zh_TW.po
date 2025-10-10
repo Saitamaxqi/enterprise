@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* voip_hr_recruitment
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: voip_hr_recruitment
@@ -35,6 +36,21 @@ msgid "Applicants"
 msgstr "申請人"
 
 #. module: voip_hr_recruitment
+#: model:ir.model.fields,field_description:voip_hr_recruitment.field_voip_call__application_count
+msgid "Application Count"
+msgstr ""
+
+#. module: voip_hr_recruitment
+#: model_terms:ir.ui.view,arch_db:voip_hr_recruitment.voip_call_view_form
+msgid "Applications"
+msgstr ""
+
+#. module: voip_hr_recruitment
+#: model:ir.model.fields,help:voip_hr_recruitment.field_voip_call__application_count
+msgid "Applications with the same email or phone or mobile"
+msgstr ""
+
+#. module: voip_hr_recruitment
 #: model:ir.model,name:voip_hr_recruitment.model_res_partner
 msgid "Contact"
 msgstr "聯絡人"
@@ -46,13 +62,20 @@ msgstr "建立客戶"
 
 #. module: voip_hr_recruitment
 #: model:ir.model.fields,field_description:voip_hr_recruitment.field_res_partner__display_name
+#: model:ir.model.fields,field_description:voip_hr_recruitment.field_voip_call__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
 
 #. module: voip_hr_recruitment
 #: model:ir.model.fields,field_description:voip_hr_recruitment.field_res_partner__id
+#: model:ir.model.fields,field_description:voip_hr_recruitment.field_voip_call__id
 msgid "ID"
 msgstr "識別碼"
+
+#. module: voip_hr_recruitment
+#: model:ir.model,name:voip_hr_recruitment.model_voip_call
+msgid "Phone call"
+msgstr ""
 
 #. module: voip_hr_recruitment
 #. odoo-javascript

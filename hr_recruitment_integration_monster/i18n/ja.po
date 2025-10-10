@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:11+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -151,8 +151,9 @@ msgstr "契約タイプ"
 msgid ""
 "Critical error: Monster.com service has changed. Please contact customer "
 "support."
-msgstr "重大なエラー: "
-"Monster.comのサービスが変更されました。顧客サポートまでご連絡下さい。"
+msgstr ""
+"重大なエラー: Monster.comのサービスが変更されました。顧客サポートまでご連絡下"
+"さい。"
 
 #. module: hr_recruitment_integration_monster
 #: model:ir.model,name:hr_recruitment_integration_monster.model_res_currency
@@ -336,9 +337,10 @@ msgstr "Monsterパスワード"
 #. odoo-python
 #: code:addons/hr_recruitment_integration_monster/models/hr_recruitment_platform.py:0
 msgid ""
-"Monster.com credentials are not set. Please set them in the company settings"
-" or ask your administrator."
-msgstr "Monster.comの認証情報が設定されていません。会社設定で設定するか、管理者にお問"
+"Monster.com credentials are not set. Please set them in the company settings "
+"or ask your administrator."
+msgstr ""
+"Monster.comの認証情報が設定されていません。会社設定で設定するか、管理者にお問"
 "い合わせ下さい。"
 
 #. module: hr_recruitment_integration_monster
@@ -427,8 +429,9 @@ msgstr "セキュリティ・監視"
 msgid ""
 "Service not available: Monster.com service is not available. Please try "
 "again later."
-msgstr "サービスをご利用頂けません: "
-"Monster.comのサービスをご利用頂けません。しばらくしてから再度お試し下さい。"
+msgstr ""
+"サービスをご利用頂けません: Monster.comのサービスをご利用頂けません。しばらく"
+"してから再度お試し下さい。"
 
 #. module: hr_recruitment_integration_monster
 #: model:res.partner.industry,name:hr_recruitment_integration_monster.monster_industry_41

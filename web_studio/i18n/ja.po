@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-23 12:11+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -49,15 +49,14 @@ msgstr ""
 "                <p class=\"o_view_nocontent_smiling_face\">\n"
 "                    これはあなたの新しいアクションです。\n"
 "                </p>\n"
-"                "
-"<p>デフォルトでは、リストビューとフォームビューが含まれており、\n"
-"                    "
-"モデルで選択したオプションに応じて他のビュータイプも含まれる場合があります。"
-"\n"
+"                <p>デフォルトでは、リストビューとフォームビューが含まれてお"
+"り、\n"
+"                    モデルで選択したオプションに応じて他のビュータイプも含ま"
+"れる場合があります。\n"
 "                </p>\n"
 "                <p>\n"
-"                    画面右上の Studio "
-"アイコンをクリックすることで、これらの画面をカスタマイズできます。\n"
+"                    画面右上の Studio アイコンをクリックすることで、これらの"
+"画面をカスタマイズできます。\n"
 "                    (このヘルプメッセージもそこから編集可能です)。\n"
 "                </p>\n"
 "            "
@@ -73,9 +72,8 @@ msgid ""
 msgstr ""
 "\n"
 "    現在のモデルに関連したmany2oneフィールドはありません。\n"
-"    "
-"現在のモデルにone2manyフィールドを作成するには、最初に関連付けたいモデルに対"
-"応するmany2oneを作成する必要があります。\n"
+"    現在のモデルにone2manyフィールドを作成するには、最初に関連付けたいモデル"
+"に対応するmany2oneを作成する必要があります。\n"
 
 #. module: web_studio
 #. odoo-python
@@ -130,8 +128,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s は承認権を %(previous_approvers)s から %(next_approvers)s "
-"に設定しました。"
+"%(user_name)s は承認権を %(previous_approvers)s から %(next_approvers)s に設"
+"定しました。"
 
 #. module: web_studio
 #. odoo-python
@@ -189,8 +187,8 @@ msgid ""
 "            "
 msgstr ""
 "<p>\n"
-"                "
-"モデルの機能を強化するために、新しいサーバアクションを作成しましょう。\n"
+"                モデルの機能を強化するために、新しいサーバアクションを作成し"
+"ましょう。\n"
 "            </p>\n"
 "            "
 
@@ -213,8 +211,9 @@ msgstr "規則は、レコードごとに1回だけ承認/拒否できます。"
 #. module: web_studio
 #: model:ir.model.constraint,message:web_studio.constraint_studio_approval_rule_method_or_action_together
 msgid "A rule must apply to an action or a method (but not both)."
-msgstr "規則は、アクションまたはメソッドに適用する必要があります(両方ではありません)"
-"。"
+msgstr ""
+"規則は、アクションまたはメソッドに適用する必要があります(両方ではありませ"
+"ん)。"
 
 #. module: web_studio
 #: model:ir.model.constraint,message:web_studio.constraint_studio_approval_rule_method_or_action_not_null
@@ -428,7 +427,8 @@ msgstr "エクスポートする追加モデル"
 msgid ""
 "Additional models you may choose to export in addition to the Studio "
 "customizations"
-msgstr "スタジオのカスタマイズに加えて、エクスポートする追加モデルを選択できます"
+msgstr ""
+"スタジオのカスタマイズに加えて、エクスポートする追加モデルを選択できます"
 
 #. module: web_studio
 #. odoo-javascript
@@ -448,7 +448,8 @@ msgstr "終日"
 msgid ""
 "All changes done to the report's structure will be discarded and the report "
 "will be reset to its factory settings."
-msgstr "レポートの構造に加えられた全ての変更は破棄され、レポートは工場出荷時の設定に"
+msgstr ""
+"レポートの構造に加えられた全ての変更は破棄され、レポートは工場出荷時の設定に"
 "リセットされます。"
 
 #. module: web_studio
@@ -1033,7 +1034,8 @@ msgstr "モデルの構成"
 msgid ""
 "Configure additional models to export with Studio, such as records that hold "
 "configuration information or demo data."
-msgstr "設定情報やデモデータを保持するレコードなど、スタジオでエクスポートする追加の"
+msgstr ""
+"設定情報やデモデータを保持するレコードなど、スタジオでエクスポートする追加の"
 "モデルを設定します。"
 
 #. module: web_studio
@@ -1554,7 +1556,8 @@ msgstr "完了"
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid ""
 "Drag & drop <b>another field</b>. Let's try with a <i>selection field</i>."
-msgstr "<b>別のフィールドを</b>ドラッグアンドドロップします。<i>選択フィールド</i>で"
+msgstr ""
+"<b>別のフィールドを</b>ドラッグアンドドロップします。<i>選択フィールド</i>で"
 "試してみましょう。"
 
 #. module: web_studio
@@ -1640,8 +1643,9 @@ msgstr "ソースの編集"
 msgid ""
 "Editing a built-in file through this editor is not advised, as it will "
 "prevent it from being updated during future App upgrades."
-msgstr "今後のアプリアップグレード時に更新されないのでこのエディタを使って組み込みフ"
-"ァイルを編集することはおすすめしません。"
+msgstr ""
+"今後のアプリアップグレード時に更新されないのでこのエディタを使って組み込み"
+"ファイルを編集することはおすすめしません。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1889,7 +1893,8 @@ msgstr "フッタ"
 msgid ""
 "For compatibility purpose with base_automation,approvals on 'create', "
 "'write' and 'unlink' methods are forbidden."
-msgstr "base_automationとの互換性のため、'作成'、'書く'、'リンク解除'メソッドでの承認"
+msgstr ""
+"base_automationとの互換性のため、'作成'、'書く'、'リンク解除'メソッドでの承認"
 "は禁止されています。"
 
 #. module: web_studio
@@ -2044,7 +2049,8 @@ msgstr "メッセージあり"
 msgid ""
 "Header and footer are shared with other reports which may be impacted by the "
 "reset."
-msgstr "ヘッダーとフッターは、リセットの影響を受ける可能性のある他のレポートと共有さ"
+msgstr ""
+"ヘッダーとフッターは、リセットの影響を受ける可能性のある他のレポートと共有さ"
 "れます。"
 
 #. module: web_studio
@@ -2207,20 +2213,23 @@ msgstr ""
 msgid ""
 "If set, the exported records will be considered as demo data during the "
 "import."
-msgstr "設定されている場合、エクスポートされたレコードはインポート時にデモデータとみ"
+msgstr ""
+"設定されている場合、エクスポートされたレコードはインポート時にデモデータとみ"
 "なされます。"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__domain
 msgid "If set, the rule will only apply on records that match the domain."
-msgstr "設定されている場合、規則はドメインに一致するレコードにのみ適用されます。"
+msgstr ""
+"設定されている場合、規則はドメインに一致するレコードにのみ適用されます。"
 
 #. module: web_studio
 #: model:ir.model.fields,help:web_studio.field_studio_approval_rule__exclusive_user
 msgid ""
 "If set, the user who approves this rule will not be able to approve other "
 "rules for the same record"
-msgstr "設定されている場合、この規則を承認するユーザは、同じレコードの他の規則を承認"
+msgstr ""
+"設定されている場合、この規則を承認するユーザは、同じレコードの他の規則を承認"
 "できなくなります"
 
 #. module: web_studio
@@ -2229,7 +2238,8 @@ msgstr "設定されている場合、この規則を承認するユーザは、
 msgid ""
 "If you discard the current edits, all unsaved changes will be lost. You can "
 "cancel to return to edit mode."
-msgstr "現在の編集を破棄した場合、未保存の全ての変更が失われます。キャンセルして編集"
+msgstr ""
+"現在の編集を破棄した場合、未保存の全ての変更が失われます。キャンセルして編集"
 "モードに戻られます。"
 
 #. module: web_studio
@@ -2446,8 +2456,9 @@ msgstr "別のアクションを実行してスタジオを出る"
 msgid ""
 "Let's check the result. Close Odoo Studio to get an <b>overview of your app</"
 "b>."
-msgstr "結果を確認してみましょう。 "
-"Odooスタジオを閉じて<b>、アプリの概要を確認します</b>。"
+msgstr ""
+"結果を確認してみましょう。 Odooスタジオを閉じて<b>、アプリの概要を確認します"
+"</b>。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2827,8 +2838,8 @@ msgid ""
 "Nicely done! Let's build your screen now; <b>drag</b> a <i>text field</i> "
 "and <b>drop</b> it in your view, on the right."
 msgstr ""
-"よくできました!今すぐ画面を作成しましょう。<i>テキストフィールド</i>を<b>ドラ"
-"ッグ</b>して、ビューの右側に<b>ドロップ</b>します。"
+"よくできました!今すぐ画面を作成しましょう。<i>テキストフィールド</i>を<b>ド"
+"ラッグ</b>して、ビューの右側に<b>ドロップ</b>します。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2840,7 +2851,8 @@ msgstr "集計なし"
 #. odoo-python
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid "No approval found for this rule, record and user combination."
-msgstr "この規則、レコード、およびユーザの組み合わせに対する承認は見つかりませんでし"
+msgstr ""
+"この規則、レコード、およびユーザの組み合わせに対する承認は見つかりませんでし"
 "た。"
 
 #. module: web_studio
@@ -2878,8 +2890,9 @@ msgstr "通知先:"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid "Now you're on your own. Enjoy your <b>super power</b>."
-msgstr "ではご自分でやってみましょう。 "
-"<b>スーパーパワー</b>とも言える有能な機能をお楽しみ下さい。"
+msgstr ""
+"ではご自分でやってみましょう。 <b>スーパーパワー</b>とも言える有能な機能をお"
+"楽しみ下さい。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -3406,8 +3419,9 @@ msgstr "規則"
 msgid ""
 "Rules with existing entries cannot be deleted since it would delete existing "
 "approval entries. You should archive the rule instead."
-msgstr "既存の承認エントリが削除されるため、既存のエントリを持つ規則は削除できません"
-"。代わりに、規則をアーカイブする必要があります。"
+msgstr ""
+"既存の承認エントリが削除されるため、既存のエントリを持つ規則は削除できませ"
+"ん。代わりに、規則をアーカイブする必要があります。"
 
 #. module: web_studio
 #. odoo-python
@@ -3415,7 +3429,8 @@ msgstr "既存の承認エントリが削除されるため、既存のエント
 msgid ""
 "Rules with existing entries cannot be modified since it would break existing "
 "approval entries. You should archive the rule and create a new one instead."
-msgstr "既存の承認エントリが破損するため、既存のエントリを持つ規則は変更できません。"
+msgstr ""
+"既存の承認エントリが破損するため、既存のエントリを持つ規則は変更できません。"
 "規則をアーカイブして、代わりに新しい規則を作成する必要があります。"
 
 #. module: web_studio
@@ -3665,7 +3680,8 @@ msgstr "見つからない承認があります"
 msgid ""
 "Some records were skipped because approvals were missing "
 "to                                    proceed with your request: "
-msgstr "リクエストを進めるための承認が不足していたため、いくつかのレコードがスキップ"
+msgstr ""
+"リクエストを進めるための承認が不足していたため、いくつかのレコードがスキップ"
 "されました: "
 
 #. module: web_studio
@@ -4053,7 +4069,8 @@ msgstr "承認を依頼するボタンに、ステップの説明が表示され
 msgid ""
 "The user who approves this step will not be able to approve other steps for "
 "the same record."
-msgstr "このステップを承認するユーザーは、同じレコードの他のステップを承認することは"
+msgstr ""
+"このステップを承認するユーザーは、同じレコードの他のステップを承認することは"
 "できません。"
 
 #. module: web_studio
@@ -4087,7 +4104,8 @@ msgstr "方法%(method)sがモデル %(model_name)s (%(model_id)s)にありま�
 msgid ""
 "There is no record on which this report can be previewed. Create at least "
 "one record to preview the report."
-msgstr "このレポートをプレビューできるレコードがありません。レポートをプレビューする"
+msgstr ""
+"このレポートをプレビューできるレコードがありません。レポートをプレビューする"
 "ために少なくとも1つのレコードを作成して下さい。"
 
 #. module: web_studio
@@ -4104,7 +4122,8 @@ msgstr "プレビューするレコードがありません。"
 msgid ""
 "These users are able to approve or reject the step and will be assigned to "
 "an activity when their approval is requested."
-msgstr "これらのユーザはステップを承認または拒否することができ、承認が求められた際に"
+msgstr ""
+"これらのユーザはステップを承認または拒否することができ、承認が求められた際に"
 "活動に割当てられます。"
 
 #. module: web_studio
@@ -4114,7 +4133,8 @@ msgstr "これらのユーザはステップを承認または拒否すること
 msgid ""
 "These users will receive a notification via internal note when the step is "
 "approved or rejected"
-msgstr "これらのユーザには、ステップが承認または拒否された際に、社内通知が送信されま"
+msgstr ""
+"これらのユーザには、ステップが承認または拒否された際に、社内通知が送信されま"
 "す。"
 
 #. module: web_studio
@@ -4148,8 +4168,9 @@ msgstr ""
 msgid ""
 "This could also be due to the absence of a real record to render the report "
 "with."
-msgstr "これは、レポートをレンダリングするための実際のレコードがないためでもあります"
-"。"
+msgstr ""
+"これは、レポートをレンダリングするための実際のレコードがないためでもありま"
+"す。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4258,7 +4279,8 @@ msgstr ""
 msgid ""
 "Use Bootstrap or any other custom classes to customize the style and the "
 "display of the element."
-msgstr "Bootstrapやその他のカスタムクラスを使用して、要素のスタイルと表示をカスタマイ"
+msgstr ""
+"Bootstrapやその他のカスタムクラスを使用して、要素のスタイルと表示をカスタマイ"
 "ズします。"
 
 #. module: web_studio
@@ -4435,9 +4457,9 @@ msgstr ""
 msgid ""
 "Wow, nice! And I'm sure you can make it even better! Use this icon to open "
 "<b>Odoo Studio</b> and customize any screen."
-msgstr "素晴らしい! "
-"さらに改善するには、このアイコンを使用して<b>Odooスタジオ</b>を開き、スクリー"
-"ンをカスタマイズしましょう。"
+msgstr ""
+"素晴らしい! さらに改善するには、このアイコンを使用して<b>Odooスタジオ</b>を開"
+"き、スクリーンをカスタマイズしましょう。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -4470,7 +4492,8 @@ msgstr "この規則を承認できません。"
 msgid ""
 "You cannot cancel an approval you didn't set yourself or you don't belong to "
 "an higher level rule's approvers."
-msgstr "自分が設定していない承認や、上位レベルの規則の承認者に属していない承認はキャ"
+msgstr ""
+"自分が設定していない承認や、上位レベルの規則の承認者に属していない承認はキャ"
 "ンセルできません。"
 
 #. module: web_studio
@@ -4485,7 +4508,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.js:0
 msgid "You cannot edit a report while there is no %(model_name)s (%(model)s)"
-msgstr "%(model_name)s (%(model)s)がない場合は、レポートを編集することができません"
+msgstr ""
+"%(model_name)s (%(model)s)がない場合は、レポートを編集することができません"
 
 #. module: web_studio
 #. odoo-python

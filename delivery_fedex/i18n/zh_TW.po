@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* delivery_fedex
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: delivery_fedex
@@ -41,10 +42,12 @@ msgstr "<span class=\"o_form_label\">包裝長度單位</span>"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid ""
 "<span invisible=\"fedex_weight_unit != 'KG'\">CM</span>\n"
-"                                <span invisible=\"fedex_weight_unit != 'LB'\">IN</span>"
+"                                <span invisible=\"fedex_weight_unit != "
+"'LB'\">IN</span>"
 msgstr ""
 "<span invisible=\"fedex_weight_unit != 'KG'\">厘米</span>\n"
-"                                <span invisible=\"fedex_weight_unit != 'LB'\">英寸</span>"
+"                                <span invisible=\"fedex_weight_unit != "
+"'LB'\">英寸</span>"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -257,12 +260,6 @@ msgstr "FedEx 舊系統帳戶號碼"
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid "FedEx Saturday Delivery"
 msgstr "FedEx 週六送貨"
-
-#. module: delivery_fedex
-#: model_terms:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
-msgid "FedEx Shipping Methods"
-msgstr "FedEx"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -571,13 +568,13 @@ msgstr "Shipment #%s has been cancelled"
 #. odoo-python
 #: code:addons/delivery_fedex/models/delivery_fedex.py:0
 msgid ""
-"Shipment created into Fedex %(line_break)s%(bold_start)s Tracking Numbers: "
-"%(bold_end)s %(tracking_numbers)s %(line_break)s%(bold_start)s Packages: "
-"%(bold_end)s %(packages)s"
+"Shipment created into Fedex %(line_break)s%(bold_start)s Tracking Numbers: %"
+"(bold_end)s %(tracking_numbers)s %(line_break)s%(bold_start)s Packages: %"
+"(bold_end)s %(packages)s"
 msgstr ""
-"送件已在 Fedex 建立%(line_break)s%(bold_start)s追蹤號碼：%(bold_end)s "
-"%(tracking_numbers)s %(line_break)s%(bold_start)s貨件：%(bold_end)s "
-"%(packages)s"
+"送件已在 Fedex 建立%(line_break)s%(bold_start)s追蹤號碼：%(bold_end)s %"
+"(tracking_numbers)s %(line_break)s%(bold_start)s貨件：%(bold_end)s %"
+"(packages)s"
 
 #. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_delivery_carrier
@@ -597,12 +594,14 @@ msgid ""
 "(To Select Countries)"
 msgstr ""
 "特別服務：星期六送貨，可在下列日子提出要求。\n"
-"                                                                                 星期四：\n"
+"                                                                                 星"
+"期四：\n"
 "1. FEDEX_2_DAY.\n"
 "星期五：\n"
 "1. PRIORITY_OVERNIGHT.\n"
 "2. FIRST_OVERNIGHT.\n"
-"                                                                                 3. INTERNATIONAL_PRIORITY.\n"
+"                                                                                 3. "
+"INTERNATIONAL_PRIORITY.\n"
 "（需選擇國家）"
 
 #. module: delivery_fedex
@@ -621,25 +620,31 @@ msgstr "庫存包裝類型"
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_extra_data_ship_request
 msgid ""
 "The extra data in FedEx is organized like the inside of a json file.\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "\n"
 "Example of valid value: ```\n"
-"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": \"extra info\"}}}\n"
+"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": "
+"\"extra info\"}}}\n"
 "```\n"
 "\n"
-"With the above example, the AdditionalInformation of each piece will be updated.\n"
-"More info on https://www.fedex.com/en-us/developer/web-services/process.html#documentation"
+"With the above example, the AdditionalInformation of each piece will be "
+"updated.\n"
+"More info on https://www.fedex.com/en-us/developer/web-services/"
+"process.html#documentation"
 msgstr ""
 "FedEx 額外數據的整理方式，類似 JSON 檔案的內部結構。\n"
 "此功能較進階/技術性，你應該只在知道自己正在做甚麼時，才去使用。\n"
 "\n"
 "有效值範例：\n"
 "```\n"
-"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": \"〔額外資訊〕\"}}}\n"
+"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": "
+"\"〔額外資訊〕\"}}}\n"
 "```\n"
 "\n"
 "以上面的例子為例，每件貨品的 AdditionalInformation 都會更新。\n"
-"更多資訊：https://www.fedex.com/en-us/developer/web-services/process.html#documentation"
+"更多資訊：https://www.fedex.com/en-us/developer/web-services/"
+"process.html#documentation"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -649,8 +654,8 @@ msgstr "The last step is the"
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"These certifications usually require that you contact the FedEx support team"
-" by email."
+"These certifications usually require that you contact the FedEx support team "
+"by email."
 msgstr "這些認證通常要求你以電郵聯絡 FedEx 支援團隊。"
 
 #. module: delivery_fedex
@@ -672,3 +677,6 @@ msgstr "ZPLII"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "to create a FedEx account of the following type:"
 msgstr "以建立下列類型的 FedEx 帳戶："
+
+#~ msgid "FedEx Shipping Methods"
+#~ msgstr "FedEx"

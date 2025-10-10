@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -47,8 +47,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap Location\""
-"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
+"Location\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -75,7 +75,8 @@ msgstr "<i class=\"fa fa-lg fa-user-o me-2\" title=\"Owner\"/>"
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
 msgid "<i class=\"fa fa-print\"/> Print barcode commands and operation types"
-msgstr "<i class=\"fa fa-print\"/> バーコードコマンドとオペレーションタイプを印刷"
+msgstr ""
+"<i class=\"fa fa-print\"/> バーコードコマンドとオペレーションタイプを印刷"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.res_config_settings_view_form
@@ -115,7 +116,8 @@ msgstr "行を編集するには、その行のプロダクトをスキャンす
 msgid ""
 "A product tracked by serial numbers can't have multiple quantities for the "
 "same serial number."
-msgstr "シリアル番号で追跡されるプロダクトは、同じシリアル番号で複数の数量を持つこと"
+msgstr ""
+"シリアル番号で追跡されるプロダクトは、同じシリアル番号で複数の数量を持つこと"
 "はできません。"
 
 #. module: stock_barcode
@@ -173,7 +175,8 @@ msgstr "フルピッキングの検証を許可"
 msgid ""
 "Allow validating a picking even if nothing has been scanned yet, i.e. do an "
 "immediate transfer"
-msgstr "まだ何もスキャンされていない場合でも、ピッキングの検証を許可する、つまり、即"
+msgstr ""
+"まだ何もスキャンされていない場合でも、ピッキングの検証を許可する、つまり、即"
 "時転送を行います"
 
 #. module: stock_barcode
@@ -182,8 +185,9 @@ msgstr "まだ何もスキャンされていない場合でも、ピッキング
 msgid ""
 "An error occured during parsing of element_string: AI code %(ai_code)s is "
 "missing for scheme %(scheme_name)s"
-msgstr "要素文字列の解析中にエラーが発生しました。AIコード %(ai_code)s "
-"がスキーム%(scheme_name)s にありません。"
+msgstr ""
+"要素文字列の解析中にエラーが発生しました。AIコード %(ai_code)s がスキーム%"
+"(scheme_name)s にありません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -192,8 +196,8 @@ msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
 msgstr ""
-"フィールド '%(field_name)s' にエラーが発生しました: 対応する AI '%(ai_code)"
-"s' が element_string  に見つかりません。"
+"フィールド '%(field_name)s' にエラーが発生しました: 対応する AI '%"
+"(ai_code)s' が element_string  に見つかりません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -218,8 +222,8 @@ msgid ""
 "An error occurred with field 'partition': no partition value can be found "
 "for the given company_prefix_length"
 msgstr ""
-"フィールド 'パーティション' でエラーが発生しました。"
-"指定されたcompany_prefix_length に対して、パーティション値が見つかりません。"
+"フィールド 'パーティション' でエラーが発生しました。指定された"
+"company_prefix_length に対して、パーティション値が見つかりません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -233,7 +237,8 @@ msgstr "方法 '%(method_name)s' でエラーが発生しました: %(error_mess
 msgid ""
 "An unexisting package type was scanned. This part of the barcode can't be "
 "processed."
-msgstr "存在しない梱包タイプがスキャンされました。バーコードのこの部分は処理できませ"
+msgstr ""
+"存在しない梱包タイプがスキャンされました。バーコードのこの部分は処理できませ"
 "ん。"
 
 #. module: stock_barcode
@@ -314,8 +319,9 @@ msgstr "バーコードスキャナ"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_model.js:0
 msgid "Barcode scan is ambiguous with several model: %s. Use the most likely."
-msgstr "バーコードスキャンは、いくつかのモデルであいまいです%s： "
-"最も可能性の高いものを使用して下さい。"
+msgstr ""
+"バーコードスキャンは、いくつかのモデルであいまいです%s： 最も可能性の高いもの"
+"を使用して下さい。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -535,7 +541,8 @@ msgstr "表示名"
 msgid ""
 "Display reserved lots/serial numbers. When not active, the picker can pick "
 "lots/serials as they want."
-msgstr "引当済のロット/シリアル番号を表示します。アクティブでない場合、ピッカーは好き"
+msgstr ""
+"引当済のロット/シリアル番号を表示します。アクティブでない場合、ピッカーは好き"
 "なロット/シリアル番号を選択できます。"
 
 #. module: stock_barcode
@@ -545,20 +552,22 @@ msgid ""
 "Do you want to permanently remove this message ? It won't appear anymore, so "
 "make sure you don't need the barcodes sheet or you have a copy."
 msgstr ""
-"このメッセージを永久に削除しますか？このメッセージは表示されなくなりますので"
-"、バーコードシートが不要か、コピーを持っていることを確認して下さい。"
+"このメッセージを永久に削除しますか？このメッセージは表示されなくなりますの"
+"で、バーコードシートが不要か、コピーを持っていることを確認して下さい。"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_put_in_pack
 msgid ""
 "Does the picker have to put the scanned products in a package? If yes, when?"
-msgstr "ピッカーはスキャンしたプロダクトを梱包する必要がありますか？ "
-"もしそうであれば、いつですか?"
+msgstr ""
+"ピッカーはスキャンしたプロダクトを梱包する必要がありますか？ もしそうであれ"
+"ば、いつですか?"
 
 #. module: stock_barcode
 #: model:ir.model.fields,help:stock_barcode.field_stock_picking_type__restrict_scan_dest_location
 msgid "Does the picker have to scan the destination? If yes, when?"
-msgstr "ピッカーは宛先をスキャンする必要がありますか？ もしそうなら、いつですか?"
+msgstr ""
+"ピッカーは宛先をスキャンする必要がありますか？ もしそうなら、いつですか?"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.stock_barcode_cancel_operation_view
@@ -611,9 +620,9 @@ msgstr "空の移動数"
 msgid ""
 "Error: The product barcode is not a valid Global Trade Item Number, we can't "
 "generate an Electronic Product Code for it."
-msgstr "エラー: "
-"そのプロダクトバーコードは有効なグローバルトレードアイテム番号ではありません"
-"。そのため、電子プロダクトコードを生成できません。"
+msgstr ""
+"エラー: そのプロダクトバーコードは有効なグローバルトレードアイテム番号ではあ"
+"りません。そのため、電子プロダクトコードを生成できません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -621,7 +630,8 @@ msgstr "エラー: "
 msgid ""
 "Error: We can't generate an Electronic Product Code for a product without a "
 "barcode."
-msgstr "エラー: バーコードのないプロダクトには電子プロダクトコードを生成できません。"
+msgstr ""
+"エラー: バーコードのないプロダクトには電子プロダクトコードを生成できません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -629,9 +639,9 @@ msgstr "エラー: バーコードのないプロダクトには電子プロダ�
 msgid ""
 "Error: We can't generate an Electronic Product Code for a tracked product "
 "without a tracking number."
-msgstr "エラー: "
-"追跡番号のない追跡対象のプロダクトには、電子プロダクトコードを生成できません"
-"。"
+msgstr ""
+"エラー: 追跡番号のない追跡対象のプロダクトには、電子プロダクトコードを生成で"
+"きません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -639,8 +649,9 @@ msgstr "エラー: "
 msgid ""
 "Field '%(field_name)s' is a reserved field, you can't manually update its "
 "value with this method"
-msgstr "フィールド '%(field_name)s' "
-"は予約フィールドです。この方法では、その値を手動で更新することはできません。"
+msgstr ""
+"フィールド '%(field_name)s' は予約フィールドです。この方法では、その値を手動"
+"で更新することはできません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -799,20 +810,23 @@ msgstr "無効な pad_char '%(pad_char)s' 。'0' または '1' を使用して�
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid pad_side '%(pad_side)s'. Use 'left' or 'right'."
-msgstr "無効な pad_side '%(pad_side)s' 。'left' または 'right' を使用して下さい。"
+msgstr ""
+"無効な pad_side '%(pad_side)s' 。'left' または 'right' を使用して下さい。"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid word_pad_char '%(word_pad_char)s'. Use '0' or '1'."
-msgstr "無効な word_pad_char '%(word_pad_char)s'。'0' または '1' を使用して下さい。"
+msgstr ""
+"無効な word_pad_char '%(word_pad_char)s'。'0' または '1' を使用して下さい。"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/models/epc_encoder.py:0
 msgid "Invalid word_pad_side '%(word_pad_side)s'. Use 'left' or 'right'."
-msgstr "無効な word_pad_side '%(word_pad_side)s'。'left' または 'right' "
-"を使用して下さい。"
+msgstr ""
+"無効な word_pad_side '%(word_pad_side)s'。'left' または 'right' を使用して下"
+"さい。"
 
 #. module: stock_barcode
 #: model:ir.model,name:stock_barcode.model_stock_location
@@ -957,14 +971,16 @@ msgstr "内部オペレーションタイプはありません。倉庫設定で
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or location or product corresponding to barcode %(barcode)s"
-msgstr "バーコード%(barcode)sに対応するピッキングまたはロケーションまたはプロダクトは"
+msgstr ""
+"バーコード%(barcode)sに対応するピッキングまたはロケーションまたはプロダクトは"
 "ありません。"
 
 #. module: stock_barcode
 #. odoo-python
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or product corresponding to barcode %(barcode)s"
-msgstr "バーコード%(barcode)sに対応するピッキングまたはプロダクトはありません。"
+msgstr ""
+"バーコード%(barcode)sに対応するピッキングまたはプロダクトはありません。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1133,8 +1149,9 @@ msgstr "部分移動数"
 msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
-msgstr "パーティションテーブル %(table_name)s "
-"が見つかりません。利用可能なテーブルは、次のとおりです: %(table_list)s)"
+msgstr ""
+"パーティションテーブル %(table_name)s が見つかりません。利用可能なテーブル"
+"は、次のとおりです: %(table_list)s)"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1156,8 +1173,9 @@ msgstr "ピッキングタイプ"
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "Please scan destination location for %s before scanning other product"
-msgstr "他のプロダクトをスキャンする前に%s用の移動先ロケーションをスキャンして下さい"
-"。"
+msgstr ""
+"他のプロダクトをスキャンする前に%s用の移動先ロケーションをスキャンして下さ"
+"い。"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1690,8 +1708,9 @@ msgstr "移動元ロケーションまたは梱包をスキャン"
 msgid ""
 "Scanned product %s is not reserved for this transfer. Are you sure you want "
 "to add it?"
-msgstr "スキャンされたプロダクト%sはこの転送に引当されていません。本当に追加しますか"
-"？"
+msgstr ""
+"スキャンされたプロダクト%sはこの転送に引当されていません。本当に追加します"
+"か？"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1794,7 +1813,8 @@ msgstr "在庫梱包タイプ"
 msgid ""
 "Technical field indicating if type should be used in barcode app and used to "
 "control visibility in the related UI."
-msgstr "技術設定により、バーコードアプリでタイプを使用すべきか、また関連UIでの可視性"
+msgstr ""
+"技術設定により、バーコードアプリでタイプを使用すべきか、また関連UIでの可視性"
 "を制御するために使用すべきかを示します。"
 
 #. module: stock_barcode
@@ -1802,9 +1822,9 @@ msgstr "技術設定により、バーコードアプリでタイプを使用す
 msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
 "should be displayed, to support combined groups/invisible complexity."
-msgstr "\"最終検証\" "
-"グループを表示すべきかどうかを計算する技術設定で、複合グループ/不可視の複雑性"
-"をサポートします。"
+msgstr ""
+"\"最終検証\" グループを表示すべきかどうかを計算する技術設定で、複合グループ/"
+"不可視の複雑性をサポートします。"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1914,7 +1934,8 @@ msgstr "このシリアル番号はすでに使用済です。"
 msgid ""
 "Time before processing a batch. Used to group communication to the server "
 "and improve global performance at the cost of reactivity."
-msgstr "バッチ処理前の時間。サーバへの通信をグループ化し、反応性をよりも全体パフォー"
+msgstr ""
+"バッチ処理前の時間。サーバへの通信をグループ化し、反応性をよりも全体パフォー"
 "マンスを向上させるために使用します。"
 
 #. module: stock_barcode
@@ -2044,8 +2065,9 @@ msgstr ""
 msgid ""
 "You are expected to scan one or more products or a package available at the "
 "picking location"
-msgstr "ピッキングロケーションにある1つ以上のプロダクトまたは梱包をスキャンして下さい"
-"。"
+msgstr ""
+"ピッキングロケーションにある1つ以上のプロダクトまたは梱包をスキャンして下さ"
+"い。"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2057,7 +2079,8 @@ msgstr "%sまたは他の移動元ロケーションをスキャンして下さ�
 #. odoo-javascript
 #: code:addons/stock_barcode/static/src/models/barcode_picking_model.js:0
 msgid "You can't apply a package type. First, scan product or select a line"
-msgstr "梱包タイプを適用できません。最初にプロダクトまたは明細をスキャンして下さい。"
+msgstr ""
+"梱包タイプを適用できません。最初にプロダクトまたは明細をスキャンして下さい。"
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -2071,7 +2094,8 @@ msgstr "処理のこの段階で廃棄を登録することはできません。
 msgid ""
 "You have already scanned %s items of this package. Do you want to scan the "
 "whole package?"
-msgstr "この梱包の%sアイテムはすでにスキャン済です。梱包全体をスキャンしますか？"
+msgstr ""
+"この梱包の%sアイテムはすでにスキャン済です。梱包全体をスキャンしますか？"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.view_backorder_confirmation

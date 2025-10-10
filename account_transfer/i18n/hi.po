@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -29,8 +30,8 @@ msgstr ""
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model__conditions
 msgid ""
-"A domain to filter the accounts from which the resulting entry will transfer"
-" amounts."
+"A domain to filter the accounts from which the resulting entry will transfer "
+"amounts."
 msgstr ""
 
 #. module: account_transfer

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -279,16 +279,18 @@ msgstr "이 보고서를 통해 채용 담당자 및 채용 업무 성과를 비
 msgid ""
 "This report allows you to compare various measures grouped by your sources "
 "of applicants (e.g. LinkedIn, Monster, etc.)."
-msgstr "이 보고서를 통해 지원자 출처 (예: LinkedIn, Monster 등)별로 다양한 측정 "
-"항목을 그룹으로 비교할 수 있습니다."
+msgstr ""
+"이 보고서를 통해 지원자 출처 (예: LinkedIn, Monster 등)별로 다양한 측정 항목"
+"을 그룹으로 비교할 수 있습니다."
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_action
 msgid ""
 "This report allows you to follow the evolution of the number of applicants "
 "and hired employees over time."
-msgstr "이 보고서를 통해 기간별 지원자 수와 채용된 직원 수의 변화를 추적할 수 "
-"있습니다."
+msgstr ""
+"이 보고서를 통해 기간별 지원자 수와 채용된 직원 수의 변화를 추적할 수 있습니"
+"다."
 
 #. module: hr_recruitment_reports
 #: model_terms:ir.actions.act_window,help:hr_recruitment_reports.recruitment_report_job_action

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -1037,7 +1037,8 @@ msgstr "직접 비용 및 간접 비용에서 발생할 수 있는 문제"
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid ""
 "possible issue in payment terms agreement with clients to get paid faster"
-msgstr "더 빠른 대금 지급을 위한 고객과의 결제 조건 계약에서 발생할 수 있는 문제"
+msgstr ""
+"더 빠른 대금 지급을 위한 고객과의 결제 조건 계약에서 발생할 수 있는 문제"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
@@ -1045,8 +1046,9 @@ msgstr "더 빠른 대금 지급을 위한 고객과의 결제 조건 계약에�
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid ""
 "possible issue in providers payments, could lead to loss of suppliers trust"
-msgstr "공급업체 결제에서 발생할 수 있는 문제이며, 이는 공급업체의 신뢰 상실로 "
-"이어질 수 있습니다."
+msgstr ""
+"공급업체 결제에서 발생할 수 있는 문제이며, 이는 공급업체의 신뢰 상실로 이어"
+"질 수 있습니다."
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript

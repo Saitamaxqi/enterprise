@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-05 13:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2024-01-30 15:14+0400\n"
 "Last-Translator: \n"
 "Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
@@ -15,7 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: web_grid
 #: model:ir.model,name:web_grid.model_ir_actions_act_window_view
@@ -47,8 +49,12 @@ msgid "Count"
 msgstr "Количество"
 
 #. module: web_grid
-#. odoo-javascript
-#: code:addons/web_grid/static/src/views/grid_view.js:0
+#: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__display_name
+#: model:ir.model.fields,field_description:web_grid.field_ir_ui_view__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: web_grid
 #: model:ir.model.fields.selection,name:web_grid.selection__ir_actions_act_window_view__view_mode__grid
 #: model:ir.model.fields.selection,name:web_grid.selection__ir_ui_view__type__grid
 msgid "Grid"
@@ -57,8 +63,16 @@ msgstr "Сетка"
 #. module: web_grid
 #. odoo-javascript
 #: code:addons/web_grid/static/src/views/grid_model.js:0
-msgid "Grouping by the field used in the column of the grid view is not possible."
-msgstr "Группировка по полю, используемому в столбце представления сетки, невозможна."
+msgid ""
+"Grouping by the field used in the column of the grid view is not possible."
+msgstr ""
+"Группировка по полю, используемому в столбце представления сетки, невозможна."
+
+#. module: web_grid
+#: model:ir.model.fields,field_description:web_grid.field_ir_actions_act_window_view__id
+#: model:ir.model.fields,field_description:web_grid.field_ir_ui_view__id
+msgid "ID"
+msgstr ""
 
 #. module: web_grid
 #. odoo-javascript

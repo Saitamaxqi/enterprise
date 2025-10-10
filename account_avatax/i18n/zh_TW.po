@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_avatax
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:46+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_avatax
@@ -37,46 +38,56 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax "
+"portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                Avatax portal"
 msgstr ""
-"<i title=\"前往 AvaTax 門戶網站\" role=\"img\" aria-label=\"前往 AvaTax 門戶網站\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"前往 AvaTax 門戶網站\" role=\"img\" aria-label=\"前往 AvaTax 門戶"
+"網站\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                AvaTax 門戶網站"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                Show logs"
 msgstr ""
-"<i title=\"顯示記錄檔\" role=\"img\" aria-label=\"顯示記錄檔\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"顯示記錄檔\" role=\"img\" aria-label=\"顯示記錄檔\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                顯示記錄檔"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start "
+"logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
 "                                Start logging for 30 minutes"
 msgstr ""
-"<i title=\"開始記錄 30 分鐘\" role=\"img\" aria-label=\"開始記錄 30 分鐘\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"開始記錄 30 分鐘\" role=\"img\" aria-label=\"開始記錄 30 分鐘\" "
+"class=\"fa fa-file-text-o\"/>\n"
 "                                開始記錄 30 分鐘"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" class=\"fa fa-refresh\"/>\n"
+"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" "
+"class=\"fa fa-refresh\"/>\n"
 "                                Sync Parameters"
 msgstr ""
-"<i title=\"同步處理參數\" role=\"img\" aria-label=\"同步處理參數\" class=\"fa fa-refresh\"/>\n"
+"<i title=\"同步處理參數\" role=\"img\" aria-label=\"同步處理參數\" "
+"class=\"fa fa-refresh\"/>\n"
 "                                同步處理參數"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
+"class=\"fa fa-plug fa-fw\"/>\n"
 "                                Test connection"
 msgstr ""
-"<i title=\"測試連線\" role=\"img\" aria-label=\"測試連線\" class=\"fa fa-plug fa-fw\"/>\n"
+"<i title=\"測試連線\" role=\"img\" aria-label=\"測試連線\" class=\"fa fa-"
+"plug fa-fw\"/>\n"
 "                                測試連線"
 
 #. module: account_avatax
@@ -467,7 +478,8 @@ msgstr "名稱"
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
 msgid ""
-"Odoo could not change the state of the transaction related to %(document)s in AvaTax\n"
+"Odoo could not change the state of the transaction related to %(document)s "
+"in AvaTax\n"
 "Please check the status of `%(technical)s` in the AvaTax portal."
 msgstr ""
 "Odoo 未能在 AvaTax 變更關於 %(document)s 的交易狀態。\n"
@@ -494,16 +506,6 @@ msgstr ""
 #: code:addons/account_avatax/wizard/avatax_validate_address.py:0
 msgid "Odoo could not validate the address of %(partner)s with Avalara."
 msgstr "Odoo 未能與 Avalara 驗證 %(partner)s 的地址。"
-
-#. module: account_avatax
-#. odoo-python
-#: code:addons/account_avatax/models/account_external_tax_mixin.py:0
-msgid ""
-"Odoo could not void the transaction related to %(document)s in AvaTax\n"
-"Please check the status of `%(technical)s` in the AvaTax portal."
-msgstr ""
-"Odoo 未能在 AvaTax 取消關於 %(document)s 的交易。\n"
-"請前往 AvaTax 門戶網站，檢查 `%(technical)s` 的狀態詳情。"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
@@ -597,9 +599,10 @@ msgstr "測試與 avatax 連線"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_partner_code
 msgid ""
-"The Avalara Company Code for this company. Avalara will interpret as DEFAULT"
-" if it is not set."
-msgstr "此公司的 Avalara 公司代號。若未指定，Avalara 會詮釋為 DEFAULT（預設）。"
+"The Avalara Company Code for this company. Avalara will interpret as DEFAULT "
+"if it is not set."
+msgstr ""
+"此公司的 Avalara 公司代號。若未指定，Avalara 會詮釋為 DEFAULT（預設）。"
 
 #. module: account_avatax
 #. odoo-python
@@ -680,8 +683,7 @@ msgstr "為 %s 驗證地址"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_address_validation
 msgid ""
-"Validate and correct the addresses of partners in North America with "
-"Avalara."
+"Validate and correct the addresses of partners in North America with Avalara."
 msgstr "使用 Avalara 驗證及更正北美洲合作夥伴的地址。"
 
 #. module: account_avatax
@@ -737,3 +739,10 @@ msgstr "[%(code)s] %(description)s"
 #: model:ir.model.fields,help:account_avatax.field_product_template__avatax_category_id
 msgid "https://taxcode.avatax.avalara.com/"
 msgstr "https://taxcode.avatax.avalara.com/"
+
+#~ msgid ""
+#~ "Odoo could not void the transaction related to %(document)s in AvaTax\n"
+#~ "Please check the status of `%(technical)s` in the AvaTax portal."
+#~ msgstr ""
+#~ "Odoo 未能在 AvaTax 取消關於 %(document)s 的交易。\n"
+#~ "請前往 AvaTax 門戶網站，檢查 `%(technical)s` 的狀態詳情。"

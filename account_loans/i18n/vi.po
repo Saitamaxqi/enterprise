@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 23:08+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -48,21 +48,23 @@ msgstr "30U/360"
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
-"                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">month</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">tháng</span>\n"
-"                                        <span class=\"oe_inline\" invisible="
-"\"duration != 1\">tháng</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">tháng</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
-"                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">year</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">năm</span>\n"
-"                                    <span class=\"oe_inline\" invisible="
-"\"loan_term != 1\">năm</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">năm</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -239,8 +241,8 @@ msgstr "Xác nhận"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
 msgid ""
-"Confirm that all loans recorded in the accounts actually exist and match the"
-" loan agreements."
+"Confirm that all loans recorded in the accounts actually exist and match the "
+"loan agreements."
 msgstr ""
 
 #. module: account_loans
@@ -350,7 +352,8 @@ msgstr "Cuối tháng"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
 msgid ""
-"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Ensure that loans are properly classified as current vs. non-current, and "
+"disclosed in accordance with Belgian GAAP. \n"
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
@@ -914,8 +917,8 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
-"Số tiền vay %(loan_amount)s phải bằng với tổng tiền gốc: %(principal_sum)s ("
-"chênh lệch %(principal_difference)s)"
+"Số tiền vay %(loan_amount)s phải bằng với tổng tiền gốc: %(principal_sum)s "
+"(chênh lệch %(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
@@ -1002,8 +1005,7 @@ msgstr "Đã tải tệp lên"
 msgid ""
 "Upon confirmation of the loan, Odoo will ignore the loan lines that are up "
 "to this date (included) and not create entries for them. This is useful if "
-"you have already manually created entries prior to the creation of this "
-"loan."
+"you have already manually created entries prior to the creation of this loan."
 msgstr ""
 "Sau khi xác nhận khoản vay, Odoo sẽ bỏ qua các dòng khoản vay cho đến ngày "
 "này (tính cả ngày này) và không tạo bút toán cho chúng. Tính năng này sẽ hữu "

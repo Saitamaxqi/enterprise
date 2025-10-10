@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 13:39+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -26,27 +26,26 @@ msgstr ""
 
 #. module: project_timesheet_forecast
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_forecast_view_form_inherit_project_timesheet_forecast
-msgid ""
-"<span attrs=\"{'invisible': [('encode_uom_in_days', '=', True)]}\"> Hours</span>\n"
-"                            <span attrs=\"{'invisible': [('encode_uom_in_days', '=', False)]}\"> Days</span>"
-msgstr ""
-"<span attrs=\"{'invisible': [('encode_uom_in_days', '=', True)]}\"> ساعات</span>\n"
-"                            <span attrs=\"{'invisible': [('encode_uom_in_days', '=', False)]}\"> أيام</span>"
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_forecast_view_form_inherit_project_timesheet_forecast
 msgid "<span class=\"o_stat_text\">Recorded</span>"
 msgstr "<span class=\"o_stat_text\">مسجل</span>"
 
 #. module: project_timesheet_forecast
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_forecast_view_form_inherit_project_timesheet_forecast
+msgid ""
+"<span invisible=\"encode_uom_in_days\"> Hours</span>\n"
+"                            <span invisible=\"not encode_uom_in_days\"> "
+"Days</span>"
+msgstr ""
+
+#. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__allocated_hours_cost
-msgid "Allocated Hours Cost"
-msgstr "تكلفة الساعات المخصصة "
+msgid "Allocated Time Cost"
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_analysis_report__remaining_hours
-msgid "Allocated hours minus the effective hours."
-msgstr "الساعات المخصصة ناقص الساعات الفعلية. "
+msgid "Allocated time minus the effective time."
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__allow_timesheets
@@ -54,19 +53,9 @@ msgid "Allow timesheets"
 msgstr "السماح بالجداول الزمنية"
 
 #. module: project_timesheet_forecast
-#: model:ir.model,name:project_timesheet_forecast.model_account_analytic_line
-msgid "Analytic Account"
-msgstr "الحساب التحليلي"
-
-#. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__user_id
 msgid "Assigned to"
 msgstr "تم إسنادها إلى"
-
-#. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__can_open_timesheets
-msgid "Can Open Timesheets"
-msgstr "بإمكانه فتح الجداول الزمنية "
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__company_id
@@ -80,6 +69,10 @@ msgid "Date"
 msgstr "التاريخ"
 
 #. module: project_timesheet_forecast
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_ir_ui_menu__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__display_name
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_project__display_name
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__display_name
 msgid "Display Name"
 msgstr "اسم العرض"
@@ -90,16 +83,21 @@ msgid "Effective Costs"
 msgstr "التكاليف الفعلية"
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__effective_hours
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__effective_hours
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__effective_hours
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_forecast_view_tree_inherit_project_timesheet_forecast
 msgid "Effective Hours"
 msgstr "ساعات العمل الفعلية"
 
 #. module: project_timesheet_forecast
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__effective_hours
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__effective_hours
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__effective_hours
+msgid "Effective Time"
+msgstr ""
+
+#. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__effective_hours_cost
-msgid "Effective Hours Cost"
-msgstr "تكلفة الساعات الفعلية "
+msgid "Effective Time Cost"
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__employee_id
@@ -108,16 +106,10 @@ msgid "Employee"
 msgstr "الموظف"
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__encode_uom_in_days
-msgid "Encode Uom In Days"
-msgstr "ترميز وحدة القياس بالأيام "
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
-msgid "Group By"
-msgstr "تجميع حسب"
-
-#. module: project_timesheet_forecast
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_ir_ui_menu__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__id
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_project__id
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__id
 msgid "ID"
 msgstr "المُعرف"
@@ -126,6 +118,11 @@ msgstr "المُعرف"
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__is_published
 msgid "Is Published"
 msgstr "تم نشره"
+
+#. module: project_timesheet_forecast
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
+msgid "Last Week"
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_ir_ui_menu
@@ -148,12 +145,6 @@ msgid "My Team"
 msgstr "فريقي"
 
 #. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.planning_slot_view_search_inherit_project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_forecast_view_search_inherit_project_timesheet_forecast
-msgid "No Timesheets"
-msgstr "لا توجد جداول زمنية "
-
-#. module: project_timesheet_forecast
 #: model_terms:ir.actions.act_window,help:project_timesheet_forecast.project_timesheet_forecast_report_action
 msgid "No data yet!"
 msgstr "لا توجد أي بيانات بعد!"
@@ -165,13 +156,11 @@ msgstr "لم يتم العثور على أي نوبات عمل. فلنقم بإ�
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_analysis_report__effective_hours
-msgid "Number of hours on the employee's Timesheets for this task (and its sub-tasks) during the timeframe of the shift."
-msgstr "عدد الساعات في الجداول الزمنية للموظف لهذه المهمة (ومهامها الفرعية) خلال المدة الزمنية لنوبة العمل. "
-
-#. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_slot__effective_hours
-msgid "Number of hours the employee recorded on their Timesheetes for this task (and its sub-tasks) for the period of this shift."
-msgstr "عدد الساعات التي قام الموظف بتسجيلها في جداوله الزمنية  لهذه المهمة (ومهامها الفرعية) لمدة نوبة العمل هذه. "
+msgid ""
+"Number of time recorded on the employee's Timesheets for this task (and its "
+"sub-tasks) during the timeframe of the shift."
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__planned_costs
@@ -180,13 +169,24 @@ msgstr "التكاليف المخطط لها"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__planned_hours
-msgid "Planned Hours"
-msgstr "الساعات المخطط لها"
+msgid "Planned Time"
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields.selection,name:project_timesheet_forecast.selection__project_timesheet_forecast_report_analysis__line_type__forecast
 msgid "Planning"
 msgstr "التخطيط"
+
+#. module: project_timesheet_forecast
+#: model:ir.actions.act_window,name:project_timesheet_forecast.project_timesheet_forecast_report_action
+#: model:ir.model,name:project_timesheet_forecast.model_project_timesheet_forecast_report_analysis
+#: model:ir.ui.menu,name:project_timesheet_forecast.menu_project_timesheet_forecast_report_analysis
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_analysis_view_tree
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_graph
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_pivot
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
+msgid "Planning / Timesheets Analysis"
+msgstr ""
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_planning_analysis_report
@@ -195,7 +195,6 @@ msgstr "تقرير تحليل التخطيط"
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_planning_slot
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_account_analytic_line__slot_id
 msgid "Planning Shift"
 msgstr "التخطيط لنوبة العمل"
 
@@ -217,19 +216,15 @@ msgid "Project"
 msgstr "المشروع"
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__remaining_hours
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__difference
-msgid "Remaining Hours"
-msgstr "الساعات المتبقية"
-
-#. module: project_timesheet_forecast
 #: model:ir.actions.act_window,name:project_timesheet_forecast.project_timesheet_action_schedule_by_role
 msgid "Schedule by Role"
 msgstr "الجدولة حسب الدور"
 
 #. module: project_timesheet_forecast
 #: model_terms:ir.actions.act_window,help:project_timesheet_forecast.project_timesheet_action_schedule_by_role
-msgid "Schedule your human and material resources across roles, projects and sales orders."
+msgid ""
+"Schedule your human and material resources across roles, projects and sales "
+"orders."
 msgstr "قم بجدولة مواردك البشرية والمادية عبر الأدوار والمشاريع وأوامر البيع."
 
 #. module: project_timesheet_forecast
@@ -248,45 +243,26 @@ msgid "Sum of Planned Hours"
 msgstr "إجمالي الساعات المخطط لها"
 
 #. module: project_timesheet_forecast
-#. odoo-python
-#: code:addons/project_timesheet_forecast/models/project_forecast.py:0
-msgid "This project isn't expected to have slot during this period. Planned hours :"
-msgstr "ليس من المتوقع أن يكون لهذا المشروع أي خانة زمنية متاحة أثناء هذه الفترة. الساعات المخطط لها: "
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
+msgid "This Week"
+msgstr ""
 
 #. module: project_timesheet_forecast
-#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__timesheet_ids
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__remaining_hours
+#: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__difference
+msgid "Time Remaining"
+msgstr ""
+
+#. module: project_timesheet_forecast
 #: model:ir.model.fields.selection,name:project_timesheet_forecast.selection__project_timesheet_forecast_report_analysis__line_type__timesheet
 msgid "Timesheet"
 msgstr "الجدول الزمني"
 
 #. module: project_timesheet_forecast
-#: model:ir.model,name:project_timesheet_forecast.model_project_timesheet_forecast_report_analysis
-msgid "Timesheet & Planning Statistics"
-msgstr "الجدول الزمني وإحصائيات التخطيط "
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_graph
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_pivot
-msgid "Timesheet and Planning Analysis"
-msgstr "الجدول الزمني وتحليل التخطيط "
-
-#. module: project_timesheet_forecast
 #. odoo-python
-#: code:addons/project_timesheet_forecast/models/project_forecast.py:0
+#: code:addons/project_timesheet_forecast/models/planning_slot.py:0
 msgid "Timesheets"
 msgstr "الجداول الزمنية"
-
-#. module: project_timesheet_forecast
-#: model:ir.actions.act_window,name:project_timesheet_forecast.project_timesheet_forecast_report_action
-#: model:ir.ui.menu,name:project_timesheet_forecast.menu_project_timesheet_forecast_report_analysis
-msgid "Timesheets / Planning Analysis"
-msgstr ""
-
-#. module: project_timesheet_forecast
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_analysis_view_tree
-#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
-msgid "Timesheets and Planning Analysis"
-msgstr "الجداول الزمنية وتحليل التخطيط "
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_slot__allow_timesheets
@@ -294,8 +270,15 @@ msgid "Timesheets can be logged on this slot."
 msgstr "يمكن تسجيل الجداول الزمنية في هذه الفترة."
 
 #. module: project_timesheet_forecast
+#: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
+msgid "Today"
+msgstr ""
+
+#. module: project_timesheet_forecast
 #: model_terms:ir.actions.act_window,help:project_timesheet_forecast.project_timesheet_forecast_report_action
-msgid "Track the progress of your projects by comparing the hours initially planned with the effective hours recorded"
+msgid ""
+"Track the progress of your projects by comparing the hours initially planned "
+"with the effective hours recorded"
 msgstr ""
 "قم بتتبع تقدم مشاريعك عن طريق مقارنة الساعات المخطط لها في البداية مع "
 "الساعات الفعلية المسجلة"
@@ -304,3 +287,74 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__line_type
 msgid "Type"
 msgstr "النوع"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('encode_uom_in_days', '=', True)]}\"> "
+#~ "Hours</span>\n"
+#~ "                            <span attrs=\"{'invisible': "
+#~ "[('encode_uom_in_days', '=', False)]}\"> Days</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('encode_uom_in_days', '=', True)]}\"> "
+#~ "ساعات</span>\n"
+#~ "                            <span attrs=\"{'invisible': "
+#~ "[('encode_uom_in_days', '=', False)]}\"> أيام</span>"
+
+#~ msgid "Allocated Hours Cost"
+#~ msgstr "تكلفة الساعات المخصصة "
+
+#~ msgid "Allocated hours minus the effective hours."
+#~ msgstr "الساعات المخصصة ناقص الساعات الفعلية. "
+
+#~ msgid "Analytic Account"
+#~ msgstr "الحساب التحليلي"
+
+#~ msgid "Can Open Timesheets"
+#~ msgstr "بإمكانه فتح الجداول الزمنية "
+
+#~ msgid "Effective Hours Cost"
+#~ msgstr "تكلفة الساعات الفعلية "
+
+#~ msgid "Encode Uom In Days"
+#~ msgstr "ترميز وحدة القياس بالأيام "
+
+#~ msgid "Group By"
+#~ msgstr "تجميع حسب"
+
+#~ msgid "No Timesheets"
+#~ msgstr "لا توجد جداول زمنية "
+
+#~ msgid ""
+#~ "Number of hours on the employee's Timesheets for this task (and its sub-"
+#~ "tasks) during the timeframe of the shift."
+#~ msgstr ""
+#~ "عدد الساعات في الجداول الزمنية للموظف لهذه المهمة (ومهامها الفرعية) خلال "
+#~ "المدة الزمنية لنوبة العمل. "
+
+#~ msgid ""
+#~ "Number of hours the employee recorded on their Timesheetes for this task "
+#~ "(and its sub-tasks) for the period of this shift."
+#~ msgstr ""
+#~ "عدد الساعات التي قام الموظف بتسجيلها في جداوله الزمنية  لهذه المهمة "
+#~ "(ومهامها الفرعية) لمدة نوبة العمل هذه. "
+
+#~ msgid "Planned Hours"
+#~ msgstr "الساعات المخطط لها"
+
+#~ msgid "Remaining Hours"
+#~ msgstr "الساعات المتبقية"
+
+#~ msgid ""
+#~ "This project isn't expected to have slot during this period. Planned "
+#~ "hours :"
+#~ msgstr ""
+#~ "ليس من المتوقع أن يكون لهذا المشروع أي خانة زمنية متاحة أثناء هذه الفترة. "
+#~ "الساعات المخطط لها: "
+
+#~ msgid "Timesheet & Planning Statistics"
+#~ msgstr "الجدول الزمني وإحصائيات التخطيط "
+
+#~ msgid "Timesheet and Planning Analysis"
+#~ msgstr "الجدول الزمني وتحليل التخطيط "
+
+#~ msgid "Timesheets and Planning Analysis"
+#~ msgstr "الجداول الزمنية وتحليل التخطيط "

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -23,8 +23,9 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "<b>Wasting time recording your receipts?</b> Let’s try a better way."
-msgstr "<b>領収書の記録に時間を無駄にしていませんか？</b> "
-"もっと良い方法を試して見ましょう。"
+msgstr ""
+"<b>領収書の記録に時間を無駄にしていませんか？</b> もっと良い方法を試して見ま"
+"しょう。"
 
 #. module: hr_expense_extract
 #: model_terms:web_tour.tour,rainbow_man_message:hr_expense_extract.hr_expense_extract_tour

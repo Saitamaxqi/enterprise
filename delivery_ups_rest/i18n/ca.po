@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
@@ -261,8 +261,8 @@ msgid ""
 "Return label generated<br/><b>Tracking Numbers:</b> %(tracking_numbers)s<br/"
 "><b>Packages:</b> %(packages)s"
 msgstr ""
-"Etiqueta de retorn generada<br/><b>Números de seguiment:</b> "
-"%(tracking_numbers)s<br/><b>Paquets:</b> %(packages)s"
+"Etiqueta de retorn generada<br/><b>Números de seguiment:</b> %"
+"(tracking_numbers)s<br/><b>Paquets:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields.selection,name:delivery_ups_rest.selection__delivery_carrier__ups_label_file_type__spl
@@ -302,8 +302,8 @@ msgid ""
 "Shipment created into UPS<br/><b>Tracking Numbers:</b> %"
 "(tracking_numbers)s<br/><b>Packages:</b> %(packages)s"
 msgstr ""
-"Enviament creat a UPS<br/><b>Números de seguiment:</b> %(tracking_numbers)s<"
-"br/><b>Paquets:</b> %(packages)s"
+"Enviament creat a UPS<br/><b>Números de seguiment:</b> %"
+"(tracking_numbers)s<br/><b>Paquets:</b> %(packages)s"
 
 #. module: delivery_ups_rest
 #. odoo-python

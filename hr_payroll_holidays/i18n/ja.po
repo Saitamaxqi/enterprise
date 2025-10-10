@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -22,8 +22,7 @@ msgstr ""
 #. module: hr_payroll_holidays
 #: model_terms:ir.actions.act_window,help:hr_payroll_holidays.hr_leave_work_entry_action
 msgid ""
-"A great way to keep track on employee’s PTOs, sick days, and approval "
-"status."
+"A great way to keep track on employee’s PTOs, sick days, and approval status."
 msgstr "従業員のPTO、病欠、および承認ステータスを追跡するための優れた方法。"
 
 #. module: hr_payroll_holidays
@@ -145,7 +144,8 @@ msgstr "通知を受ける人はいません"
 msgid ""
 "Not enough attendance work entries to report the time off %s. Please make "
 "the operation manually"
-msgstr "休暇%sを報告するには勤怠勤務記録が不十分です。操作を手動で行って下さい。"
+msgstr ""
+"休暇%sを報告するには勤怠勤務記録が不十分です。操作を手動で行って下さい。"
 
 #. module: hr_payroll_holidays
 #. odoo-python
@@ -198,7 +198,8 @@ msgstr "来月の勤務記録が作成されていないか、休暇%s用に既�
 msgid ""
 "The pay of the month is already validated with this day included. If you "
 "need to adapt, please refer to HR."
-msgstr "その月の給与は、すでにこの日を含めて検証済です。変更が必要な場合は、人事部に"
+msgstr ""
+"その月の給与は、すでにこの日を含めて検証済です。変更が必要な場合は、人事部に"
 "相談して下さい。"
 
 #. module: hr_payroll_holidays

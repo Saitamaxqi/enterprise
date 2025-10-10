@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* social_youtube
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: social_youtube
@@ -44,11 +45,14 @@ msgstr "<span class=\"fw-bold\">你的 YouTube 頻道</span>"
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
-"<span>These are stored up to 30 days and refreshed often to provide you an accurate depiction of reality. </span>\n"
-"                        <span>To delete these from Odoo, simply delete this account.</span>"
+"<span>These are stored up to 30 days and refreshed often to provide you an "
+"accurate depiction of reality. </span>\n"
+"                        <span>To delete these from Odoo, simply delete this "
+"account.</span>"
 msgstr ""
 "<span>數據最多儲存 30 天並會經常更新，以提供準確實況。</span>\n"
-"                        <span>若想從 Odoo 中刪除這些內容，只需刪除此帳戶即可。</span>"
+"                        <span>若想從 Odoo 中刪除這些內容，只需刪除此帳戶即"
+"可。</span>"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
@@ -185,8 +189,8 @@ msgstr "是否也要從你的 YouTube 帳戶刪除該影片？"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_token_expiration_date
 msgid ""
-"Expiration date of the Access Token provided by the YouTube API, this should"
-" never be set manually."
+"Expiration date of the Access Token provided by the YouTube API, this should "
+"never be set manually."
 msgstr "存取權杖的到期日期由 YouTube API 提供，不應手動設定。"
 
 #. module: social_youtube
@@ -270,6 +274,15 @@ msgid "Once posted, set the video as Public/Private/Unlisted"
 msgstr "發佈後，將影片設為「公開」/「私人」/「不公開」"
 
 #. module: social_youtube
+#. odoo-python
+#: code:addons/social_youtube/models/social_media.py:0
+msgid ""
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
+"Grab a subscription and unlock a world of amazing features!"
+msgstr ""
+
+#. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
 "Our YouTube Social application uses YouTube API Services.\n"
@@ -316,8 +329,7 @@ msgstr "原因："
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
 msgid ""
-"Refresh token provided by the YouTube API, this should never be set "
-"manually."
+"Refresh token provided by the YouTube API, this should never be set manually."
 msgstr "更新權杖由 YouTube API 提供，不應手動設定。"
 
 #. module: social_youtube
@@ -450,7 +462,8 @@ msgstr "影片標題不應有 > 或 < 符號。"
 msgid ""
 "To provide our application services, note that we store the following data "
 "from your YouTube account:"
-msgstr "為提供我們的應用程式服務，請注意，我們會儲存以下有關你 YouTube 帳戶的數據。"
+msgstr ""
+"為提供我們的應用程式服務，請注意，我們會儲存以下有關你 YouTube 帳戶的數據。"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account__youtube_token_expiration_date
@@ -508,7 +521,8 @@ msgstr "使用你自己的 YouTube 帳戶"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
+msgstr ""
+"需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
 
 #. module: social_youtube
 #. odoo-python
@@ -562,12 +576,6 @@ msgstr "沒錯，刪除它"
 #: code:addons/social_youtube/static/src/js/social_youtube_upload_field.js:0
 msgid "You cannot use '>' or '<' in both title and description."
 msgstr "影片標題及描述均不可使用 > 或 <。"
-
-#. module: social_youtube
-#. odoo-python
-#: code:addons/social_youtube/models/social_media.py:0
-msgid "You don't have an active subscription. Please buy one here: %s"
-msgstr "您尚未訂閱。請點選連結添購：%s"
 
 #. module: social_youtube
 #. odoo-python
@@ -772,8 +780,8 @@ msgstr "影片元數據包括標題及觀看次數（但不包括影片本身）
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid ""
-"e.g. Engage your entire community with a single app! "
-"https://www.odoo.com/trial"
+"e.g. Engage your entire community with a single app! https://www.odoo.com/"
+"trial"
 msgstr "例：單用一個應用程式，吸引整個社群參與！ https://www.odoo.com/trial"
 
 #. module: social_youtube
@@ -785,3 +793,6 @@ msgstr "例：Odoo 社交媒體推廣教學"
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid "the Google Third-party app account access panel"
 msgstr "Google 的第三方應用程式帳戶存取面板"
+
+#~ msgid "You don't have an active subscription. Please buy one here: %s"
+#~ msgstr "您尚未訂閱。請點選連結添購：%s"

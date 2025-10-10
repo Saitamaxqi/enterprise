@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-14 11:58+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
@@ -22,6 +22,12 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 5.12.2\n"
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "%(lots)s %(are)s reserved on multiple order lines"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -40,19 +46,52 @@ msgstr "%(product)s (%(qty)s items)"
 msgid ""
 "<i class=\"fa fa-warning\"/>\n"
 "                        <span>\n"
-"                            Some products don't have the requested qty available for pickup\n"
+"                            Some products don't have the requested qty "
+"available for pickup\n"
 "                        </span>"
 msgstr ""
 "<i class=\"fa fa-warning\"/>\n"
 "                        <span>\n"
-"                            Voor sommige producten is het gevraagde aantal niet beschikbaar voor afhaling\n"
+"                            Voor sommige producten is het gevraagde aantal "
+"niet beschikbaar voor afhaling\n"
 "                        </span>"
 
 #. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
+msgid "Activate to use stock deliveries and receipts for rental orders"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Add Serial Number"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+msgid "Add a line"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__padding_time
+msgid ""
+"Amount of time (in hours) during which a product is considered unavailable "
+"prior to renting (preparation time)."
+msgstr ""
+"Tijdsduur (in uren) gedurende welke een product voorafgaand aan het huren "
+"als onbeschikbaar wordt beschouwd (voorbereidingstijd)."
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_config_settings__padding_time
-msgid "Amount of time (in hours) during which a product is considered unavailable prior to renting (preparation time)."
-msgstr "Tijdsduur (in uren) gedurende welke een product voorafgaand aan het huren als onbeschikbaar wordt beschouwd (voorbereidingstijd)."
+msgid ""
+"Amount of time (in hours) during which a product is considered "
+"unavailableprior to renting (preparation time)."
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Auto assign"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-javascript
@@ -66,15 +105,15 @@ msgid "Available"
 msgstr "Beschikbaar"
 
 #. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__available_reserved_lots
+msgid "Available Reserved Lots"
+msgstr ""
+
+#. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "Available for Rent"
 msgstr "Beschikbaar voor verhuur"
-
-#. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_configurator_view_form
-msgid "Available)"
-msgstr "Beschikbaar)"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_res_company
@@ -87,21 +126,37 @@ msgid "Config Settings"
 msgstr "Configuratie-instellingen"
 
 #. module: sale_stock_renting
-#: model:ir.model,name:sale_stock_renting.model_rental_wizard
-msgid "Configure the rental of a product"
-msgstr "Configureer het verhuren van een product"
-
-#. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Default Padding Time"
 msgstr "Standaard buffertijd"
 
 #. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_rental_order_wizard_line__tracking
-#: model:ir.model.fields,help:sale_stock_renting.field_rental_wizard__tracking
 #: model:ir.model.fields,help:sale_stock_renting.field_sale_order_line__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr "Zorg voor de traceerbaarheid van een product dat kan worden opgeslagen in je magazijn."
+msgstr ""
+"Zorg voor de traceerbaarheid van een product dat kan worden opgeslagen in je "
+"magazijn."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__has_lines_missing_stock
@@ -114,18 +169,27 @@ msgid "Has lines with tracked products"
 msgstr "Heeft regels met getraceerde producten"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__rental_loc_id
-msgid "In rent"
-msgstr "Verhuurd"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__is_available
-msgid "Is Available"
-msgstr "Is beschikbaar"
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
+msgid "ID"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__is_product_storable
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__is_product_storable
 msgid "Is Product Storable"
 msgstr "Is voorraadproduct"
 
@@ -135,9 +199,25 @@ msgid "Journal Entry"
 msgstr "Boeking"
 
 #. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "Lot Allocation"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_lot
 msgid "Lot/Serial"
 msgstr "Partij/Serienummer"
+
+#. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_stock_warehouse_orderpoint
+msgid "Minimum Inventory Rule"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
@@ -147,18 +227,18 @@ msgstr "Minimale hoeveelheid tijd tussen twee verhuren"
 #. module: sale_stock_renting
 #. odoo-python
 #: code:addons/sale_stock_renting/models/sale_order_line.py:0
-msgid "No valid quant has been found in location %s for serial number %s!"
+msgid ""
+"No valid quant has been found in location %(location)s for serial number %"
+"(serial_number)s!"
 msgstr ""
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,help:sale_stock_renting.field_rental_wizard__lot_ids
-msgid "Only available serial numbers are suggested."
-msgstr "Alleen beschikbare serienummers worden voorgesteld."
-
-#. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_gantt_inherit_stock
-msgid "Other rental(s) in conflict."
-msgstr "Conflict met andere verhuurorder(s)"
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"Not enough %(product)s in stock.\n"
+"%(reserved_qty)s reserved but only %(stock_qty)s in stock."
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__padding_time
@@ -196,12 +276,8 @@ msgstr "Vermeld de serienummers die zijn opgehaald voor de gevolgde producten."
 #. odoo-python
 #: code:addons/sale_stock_renting/wizard/rental_processing.py:0
 msgid "Please specify the serial numbers returned for the tracked products."
-msgstr "Geef de serienummers op die voor de gevolgde producten zijn teruggestuurd."
-
-#. module: sale_stock_renting
-#: model:product.template,name:sale_stock_renting.rental_stock_product_1_product_template
-msgid "Printer"
-msgstr "Printer"
+msgstr ""
+"Geef de serienummers op die voor de gevolgde producten zijn teruggestuurd."
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_product_template
@@ -209,34 +285,16 @@ msgid "Product"
 msgstr "Product"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__product_uom_id
-msgid "Product UoM"
-msgstr "Product maateenheid"
-
-#. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_product_product
 msgid "Product Variant"
 msgstr "Productvariant"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__qty_available_during_period
-msgid "Quantity available for given period (Stock - In Rent)"
-msgstr "Beschikbare hoeveelheid voor een bepaalde periode (voorraad - verhuurd)"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__rentable_qty
-msgid "Quantity available in stock for given period"
-msgstr "Beschikbare hoeveelheid voor een bepaalde periode"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__rented_qty_during_period
-msgid "Quantity reserved"
-msgstr "Gereserveerde hoeveelheid"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,help:sale_stock_renting.field_rental_wizard__rented_qty_during_period
-msgid "Quantity reserved by other Rental lines during the given period"
-msgstr "Hoeveelheid gereserveerd door andere verhuurregels gedurende de opgegeven periode"
+#. odoo-python
+#: code:addons/sale_stock_renting/models/res_company.py:0
+#: model:stock.route,name:sale_stock_renting.route_rental
+msgid "Rental"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_sale_rental_report
@@ -244,14 +302,18 @@ msgid "Rental Analysis Report"
 msgstr "Verhuuranalyserapport"
 
 #. module: sale_stock_renting
-#: model:ir.model,name:sale_stock_renting.model_sale_rental_schedule
-msgid "Rental Schedule"
-msgstr "Verhuurplanning"
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_company__rental_loc_id
+msgid "Rental Location"
+msgstr ""
 
 #. module: sale_stock_renting
-#. odoo-python
-#: code:addons/sale_stock_renting/models/sale_order_line.py:0
-msgid "Rental move:"
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
+msgid "Rental Transfers"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__group_rental_stock_picking
+msgid "Rental pickings"
 msgstr ""
 
 #. module: sale_stock_renting
@@ -260,9 +322,26 @@ msgid "RentalOrderLine transient representation"
 msgstr "Verhuur orderregel tijdelijke weergave"
 
 #. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
+msgid "Reserve product"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__reserved_lot_ids
-msgid "Reserved Lot"
-msgstr "Gereserveerde partij"
+msgid "Reserved Lots"
+msgstr ""
+
+#. module: sale_stock_renting
+#. odoo-javascript
+#: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
+msgid "Reserved lots unavailable"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_stock_return_picking
+msgid "Return Picking"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__returnable_lot_ids
@@ -276,55 +355,32 @@ msgid "Returned Lot"
 msgstr "Geretourneerde partij"
 
 #. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_sale_order
+msgid "Sales Order"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Verkooporderregel"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
-msgid "Security Time"
-msgstr "Veiligheidstijd"
-
-#. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_configurator_view_form
-msgid "Select available serial numbers."
-msgstr "Selecteer beschikbare serienummers."
-
-#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__lot_id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__lot_id
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_report_search_view_inherit_lots
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_search_inherit_lots
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_search_schedule
 msgid "Serial Number"
 msgstr "Serienummer"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__lot_ids
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_order_wizard_view_form
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.report_rental_order_document
 msgid "Serial Numbers"
 msgstr "Serienummers"
 
 #. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_configurator_view_form
-msgid "Serials Tracking"
-msgstr "Serienummer tracering"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__rentable_lot_ids
-msgid "Serials available in Stock"
-msgstr "Serienummers beschikbaar in voorraad"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__rented_lot_ids
-msgid "Serials in rent for given period"
-msgstr "Verhuurde serienummers voor opgegeven periode"
-
-#. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_configurator_view_form
-msgid "Stock"
-msgstr "Voorraad"
+#: model:ir.model,name:sale_stock_renting.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_product_product__preparation_time
@@ -333,13 +389,26 @@ msgid "Temporarily make this product unavailable before pickup."
 msgstr "Maak dit product tijdelijk onbeschikbaar voor afhaling."
 
 #. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"The number of reserved lots is less than the quantity required for this "
+"order line. Please allocate additional lots."
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__rental_loc_id
-msgid "This technical location serves as stock for products currently in rentalThis location is internal because products in rentalare still considered as company assets."
-msgstr "Deze technische locatie dient als voorraad voor producten die momenteel worden verhuurd. Deze locatie is intern omdat producten in verhuur nog steeds als bedrijfsmiddelen worden beschouwd."
+msgid ""
+"This technical location serves as stock for products currently in rentalThis "
+"location is internal because products in rentalare still considered as "
+"company assets."
+msgstr ""
+"Deze technische locatie dient als voorraad voor producten die momenteel "
+"worden verhuurd. Deze locatie is intern omdat producten in verhuur nog "
+"steeds als bedrijfsmiddelen worden beschouwd."
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__tracking
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__tracking
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__tracking
 msgid "Tracking"
 msgstr "Traceren"
@@ -360,22 +429,20 @@ msgid "Unavailable Lot"
 msgstr "Niet beschikbare partij"
 
 #. module: sale_stock_renting
+#: model:res.groups,name:sale_stock_renting.group_rental_stock_picking
+msgid "Use pickings for rental orders"
+msgstr ""
+
+#. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "View Rentals"
 msgstr "Bekijk verhuren"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_rental_wizard__warehouse_id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__warehouse_id
+#: model:ir.model,name:sale_stock_renting.model_stock_warehouse
 msgid "Warehouse"
 msgstr "Magazijn"
-
-#. module: sale_stock_renting
-#. odoo-python
-#: code:addons/sale_stock_renting/wizard/rental_configurator.py:0
-msgid "You cannot change the product of a picked-up line."
-msgstr "Je kunt het product van een ophaling niet wijzigen."
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -392,11 +459,80 @@ msgstr "uren"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.product_template_inherit_view_form_stock_rental
-msgid "hours before orders"
-msgstr "uren voor orders"
+msgid "hours before its picking time"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "to"
 msgstr "aan"
+
+#~ msgid "Available)"
+#~ msgstr "Beschikbaar)"
+
+#~ msgid "Configure the rental of a product"
+#~ msgstr "Configureer het verhuren van een product"
+
+#~ msgid "In rent"
+#~ msgstr "Verhuurd"
+
+#~ msgid "Is Available"
+#~ msgstr "Is beschikbaar"
+
+#~ msgid "Only available serial numbers are suggested."
+#~ msgstr "Alleen beschikbare serienummers worden voorgesteld."
+
+#~ msgid "Other rental(s) in conflict."
+#~ msgstr "Conflict met andere verhuurorder(s)"
+
+#~ msgid "Printer"
+#~ msgstr "Printer"
+
+#~ msgid "Product UoM"
+#~ msgstr "Product maateenheid"
+
+#~ msgid "Quantity available for given period (Stock - In Rent)"
+#~ msgstr ""
+#~ "Beschikbare hoeveelheid voor een bepaalde periode (voorraad - verhuurd)"
+
+#~ msgid "Quantity available in stock for given period"
+#~ msgstr "Beschikbare hoeveelheid voor een bepaalde periode"
+
+#~ msgid "Quantity reserved"
+#~ msgstr "Gereserveerde hoeveelheid"
+
+#~ msgid "Quantity reserved by other Rental lines during the given period"
+#~ msgstr ""
+#~ "Hoeveelheid gereserveerd door andere verhuurregels gedurende de opgegeven "
+#~ "periode"
+
+#~ msgid "Rental Schedule"
+#~ msgstr "Verhuurplanning"
+
+#~ msgid "Reserved Lot"
+#~ msgstr "Gereserveerde partij"
+
+#~ msgid "Security Time"
+#~ msgstr "Veiligheidstijd"
+
+#~ msgid "Select available serial numbers."
+#~ msgstr "Selecteer beschikbare serienummers."
+
+#~ msgid "Serials Tracking"
+#~ msgstr "Serienummer tracering"
+
+#~ msgid "Serials available in Stock"
+#~ msgstr "Serienummers beschikbaar in voorraad"
+
+#~ msgid "Serials in rent for given period"
+#~ msgstr "Verhuurde serienummers voor opgegeven periode"
+
+#~ msgid "Stock"
+#~ msgstr "Voorraad"
+
+#~ msgid "You cannot change the product of a picked-up line."
+#~ msgstr "Je kunt het product van een ophaling niet wijzigen."
+
+#~ msgid "hours before orders"
+#~ msgstr "uren voor orders"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 22:59+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -34,10 +34,9 @@ msgstr "ตั้งค่าการกำหนดค่า"
 #: code:addons/sale_purchase_stock_inter_company_rules/models/purchase_order.py:0
 #: code:addons/sale_purchase_stock_inter_company_rules/models/sale_order.py:0
 msgid ""
-"Configure correct warehouse for company(%s) from Menu: "
-"Settings/Users/Companies"
-msgstr ""
-"กำหนดค่าคลังสินค้าที่ถูกต้องสำหรับบริษัท (%s) จากเมนู: การตั้งค่า/ผู้ใช้/บริษัท"
+"Configure correct warehouse for company(%s) from Menu: Settings/Users/"
+"Companies"
+msgstr "กำหนดค่าคลังสินค้าที่ถูกต้องสำหรับบริษัท (%s) จากเมนู: การตั้งค่า/ผู้ใช้/บริษัท"
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_receipt_type_id
@@ -45,17 +44,15 @@ msgstr ""
 msgid ""
 "Default Operation type to set on Receipts that will be created for inter-"
 "company transfers"
-msgstr ""
-"ชนิดการดำเนินการเริ่มต้นเพื่อตั้งค่าในใบเสร็จรับเงินที่จะถูกสร้างขึ้นสำหรับการโอนย้ายระหว่างบริษัท"
+msgstr "ชนิดการดำเนินการเริ่มต้นเพื่อตั้งค่าในใบเสร็จรับเงินที่จะถูกสร้างขึ้นสำหรับการโอนย้ายระหว่างบริษัท"
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_warehouse_id
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_config_settings__intercompany_warehouse_id
 msgid ""
-"Default value to set on Purchase(Sales) Orders that will be created based on"
-" Sale(Purchase) Orders made to this company"
-msgstr ""
-"ค่าเริ่มต้นที่จะตั้งค่าในคำสั่งซื้อ (ขาย) ที่จะถูกสร้างขึ้นตามคำสั่งขาย (ซื้อ) ที่ทำกับบริษัทนี้"
+"Default value to set on Purchase(Sales) Orders that will be created based on "
+"Sale(Purchase) Orders made to this company"
+msgstr "ค่าเริ่มต้นที่จะตั้งค่าในคำสั่งซื้อ (ขาย) ที่จะถูกสร้างขึ้นตามคำสั่งขาย (ซื้อ) ที่ทำกับบริษัทนี้"
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,field_description:sale_purchase_stock_inter_company_rules.field_purchase_order__display_name

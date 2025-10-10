@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/iap_extract/"
@@ -50,8 +50,7 @@ msgstr "จำเป็นต้องดำเนินการ"
 msgid ""
 "All fields will be automatically populated by Artificial Intelligence, it "
 "might take 5 seconds."
-msgstr ""
-"ฟิลด์ทั้งหมดจะถูกกรอกโดยปัญญาประดิษฐ์โดยอัตโนมัติ ซึ่งอาจใช้เวลา 5 วินาที"
+msgstr "ฟิลด์ทั้งหมดจะถูกกรอกโดยปัญญาประดิษฐ์โดยอัตโนมัติ ซึ่งอาจใช้เวลา 5 วินาที"
 
 #. module: iap_extract
 #. odoo-python
@@ -112,8 +111,8 @@ msgstr "สิ้นสุดกระแส"
 #. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
 msgid ""
-"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and"
-" Artificial Intelligence."
+"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and "
+"Artificial Intelligence."
 msgstr ""
 "แปลงใบแจ้งหนี้ ค่าใช้จ่าย และประวัติย่อของผู้ขายที่สแกนหรือ PDF ให้เป็นดิจิทัลด้วย OCR และ AI"
 
@@ -376,8 +375,8 @@ msgstr "เอกสารบางฉบับถูกข้ามไปเน
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
-"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo"
-" generate a new one or fill it with a valid token."
+"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo "
+"generate a new one or fill it with a valid token."
 msgstr ""
 "โทเค็นบัญชี IAP 'invoice_ocr' ไม่ถูกต้อง โปรดลบออกเพื่อให้ Odoo "
 "สร้างอันใหม่หรือใช้โทเค็นที่ถูกต้อง"
@@ -453,8 +452,7 @@ msgstr "คุณไม่มีเครดิตเพียงพอที่
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
 "Your PDF file is protected by a password. The OCR can't extract data from it"
-msgstr ""
-"ไฟล์ PDF ของคุณได้รับการป้องกันด้วยรหัสผ่าน OCR ไม่สามารถดึงข้อมูลออกมาได้"
+msgstr "ไฟล์ PDF ของคุณได้รับการป้องกันด้วยรหัสผ่าน OCR ไม่สามารถดึงข้อมูลออกมาได้"
 
 #. module: iap_extract
 #. odoo-python

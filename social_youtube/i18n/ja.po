@@ -3,13 +3,14 @@
 # * social_youtube
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
-"PO-Revision-Date: 2025-09-15 12:02+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
+"PO-Revision-Date: 2025-10-09 19:15+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "social_youtube/ja/>\n"
 "Language: ja\n"
@@ -24,9 +25,9 @@ msgstr ""
 msgid ""
 "'Uploads' Playlist ID provided by the YouTube API, this should never be set "
 "manually."
-msgstr "'アップロード' YouTube "
-"APIによって提供されるプレイリストID、これは手動で設定されることは決してありま"
-"せん。"
+msgstr ""
+"'アップロード' YouTube APIによって提供されるプレイリストID、これは手動で設定"
+"されることは決してありません。"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.youtube_preview
@@ -46,13 +47,15 @@ msgstr "<span class=\"fw-bold\">自分のYouTubeチャンネル</span>"
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
 msgid ""
-"<span>These are stored up to 30 days and refreshed often to provide you an accurate depiction of reality. </span>\n"
-"                        <span>To delete these from Odoo, simply delete this account.</span>"
+"<span>These are stored up to 30 days and refreshed often to provide you an "
+"accurate depiction of reality. </span>\n"
+"                        <span>To delete these from Odoo, simply delete this "
+"account.</span>"
 msgstr ""
-"<span>これらは最大30日間保存され、現実を正確に表現するために頻繁にリフレッシ"
-"ュされます。</span>\n"
-"                        "
-"<span>Odooからこれらを削除するには、このアカウントを削除して下さい。</span>"
+"<span>これらは最大30日間保存され、現実を正確に表現するために頻繁にリフレッ"
+"シュされます。</span>\n"
+"                        <span>Odooからこれらを削除するには、このアカウントを"
+"削除して下さい。</span>"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
@@ -63,8 +66,9 @@ msgstr "アカウントへのアクセスは、以下からいつでも撤回す
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_access_token
 msgid ""
 "Access token provided by the YouTube API, this should never be set manually."
-msgstr "YouTube "
-"APIが提供するアクセストークンは、手動で設定されることは決してありません。"
+msgstr ""
+"YouTube APIが提供するアクセストークンは、手動で設定されることは決してありませ"
+"ん。"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account_revoke_youtube__account_id
@@ -82,7 +86,8 @@ msgstr "エラーが発生しました"
 #. odoo-python
 #: code:addons/social_youtube/controllers/main.py:0
 msgid "Auth endpoint did not provide a refresh token. Please try again."
-msgstr "認証エンドポイントがリフレッシュトークンを提供しませんでした。再試行して下さ"
+msgstr ""
+"認証エンドポイントがリフレッシュトークンを提供しませんでした。再試行して下さ"
 "い。"
 
 #. module: social_youtube
@@ -191,11 +196,11 @@ msgstr "YouTubeアカウントから動画を削除しますか？"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_token_expiration_date
 msgid ""
-"Expiration date of the Access Token provided by the YouTube API, this should"
-" never be set manually."
-msgstr "YouTube "
-"APIが提供するアクセストークンの失効日は、手動で設定されることは決してありませ"
-"ん。"
+"Expiration date of the Access Token provided by the YouTube API, this should "
+"never be set manually."
+msgstr ""
+"YouTube APIが提供するアクセストークンの失効日は、手動で設定されることは決して"
+"ありません。"
 
 #. module: social_youtube
 #: model:ir.model.fields,field_description:social_youtube.field_social_account__youtube_access_token
@@ -281,13 +286,13 @@ msgstr "投稿後、動画を公開/非公開/非掲載に設定します。"
 #. odoo-python
 #: code:addons/social_youtube/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
-"おっと! "
-"現在、有効なサブスクリプションがありません。ご安心ください。こちらから簡単に"
-"取得できます: "
-"%s。サブスクリプションを取得して、豊富な機能を今すぐご利用いただけます!"
+"おっと! 現在、有効なサブスクリプションがありません。ご安心ください。こちらか"
+"ら簡単に取得できます: %s。サブスクリプションを取得して、豊富な機能を今すぐご"
+"利用いただけます!"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
@@ -295,10 +300,10 @@ msgid ""
 "Our YouTube Social application uses YouTube API Services.\n"
 "                        By using it, you implicitly agree to the:"
 msgstr ""
-"当社のYouTubeソーシャルアプリケーションはYouTube "
-"APIサービスを利用しています。\n"
-"                       "
-"れを利用することにより、あなたは以下の事項に同意したものとみなされます:"
+"当社のYouTubeソーシャルアプリケーションはYouTube APIサービスを利用していま"
+"す。\n"
+"                       れを利用することにより、あなたは以下の事項に同意したも"
+"のとみなされます:"
 
 #. module: social_youtube
 #. odoo-python
@@ -321,7 +326,7 @@ msgstr "処理中..."
 #. module: social_youtube
 #: model:ir.model.fields.selection,name:social_youtube.selection__social_post__youtube_video_privacy__public
 msgid "Public"
-msgstr "パブリック"
+msgstr "公開"
 
 #. module: social_youtube
 #. odoo-python
@@ -338,10 +343,10 @@ msgstr "理由:"
 #. module: social_youtube
 #: model:ir.model.fields,help:social_youtube.field_social_account__youtube_refresh_token
 msgid ""
-"Refresh token provided by the YouTube API, this should never be set "
-"manually."
-msgstr "YouTube "
-"APIが提供するリフレッシュトークンは、手動で設定されることは決してありません。"
+"Refresh token provided by the YouTube API, this should never be set manually."
+msgstr ""
+"YouTube APIが提供するリフレッシュトークンは、手動で設定されることは決してあり"
+"ません。"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_account_view_form
@@ -370,7 +375,8 @@ msgstr "YouTubeアカウントを取消す"
 #. odoo-python
 #: code:addons/social_youtube/models/social_account.py:0
 msgid "Revoking access tokens is currently limited to YouTube accounts only."
-msgstr "アクセストークンの失効は現在、YouTubeアカウントのみに限定されています。"
+msgstr ""
+"アクセストークンの失効は現在、YouTubeアカウントのみに限定されています。"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -393,7 +399,8 @@ msgstr "選択したYouTubeアカウント"
 msgid ""
 "Simply holds the filename of the video as the video itself is uploaded "
 "directly to YouTube"
-msgstr "動画そのものがYouTubeに直接アップロードされるため、動画のファイル名を保持する"
+msgstr ""
+"動画そのものがYouTubeに直接アップロードされるため、動画のファイル名を保持する"
 "だけです。"
 
 #. module: social_youtube
@@ -443,8 +450,9 @@ msgstr "選択した動画が許容最大ファイルサイズ%sを超えてい�
 msgid ""
 "The url that this service requested returned an error. Please contact the "
 "author of the app."
-msgstr "このサービスが要求したURLがエラーを返しました。アプリの作者に連絡してください"
-"。"
+msgstr ""
+"このサービスが要求したURLがエラーを返しました。アプリの作者に連絡してくださ"
+"い。"
 
 #. module: social_youtube
 #. odoo-python
@@ -475,7 +483,8 @@ msgstr "タイトルに記号 > または < を含めることはできません
 msgid ""
 "To provide our application services, note that we store the following data "
 "from your YouTube account:"
-msgstr "当社のアプリケーションサービスを提供するために、当社はお客様のYouTubeアカウン"
+msgstr ""
+"当社のアプリケーションサービスを提供するために、当社はお客様のYouTubeアカウン"
 "トから以下のデータを保存します:"
 
 #. module: social_youtube
@@ -534,8 +543,9 @@ msgstr "自分のYouTubeアカウントを使用"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social_youtube
 #. odoo-python
@@ -635,9 +645,9 @@ msgstr "YouTubeチャンネルID"
 msgid ""
 "YouTube Channel ID provided by the YouTube API, this should never be set "
 "manually."
-msgstr "YouTube "
-"APIによって提供されるYouTubeチャンネルID、これは手動で設定されることは決して"
-"ありません。"
+msgstr ""
+"YouTube APIによって提供されるYouTubeチャンネルID、これは手動で設定されること"
+"は決してありません。"
 
 #. module: social_youtube
 #. odoo-javascript
@@ -754,7 +764,8 @@ msgstr "YouTubeビュー"
 #. odoo-python
 #: code:addons/social_youtube/controllers/main.py:0
 msgid "YouTube did not provide a valid access token or it may have expired."
-msgstr "YouTubeが有効なアクセストークンを提供していないか、有効期限が切れている可能性"
+msgstr ""
+"YouTubeが有効なアクセストークンを提供していないか、有効期限が切れている可能性"
 "があります。"
 
 #. module: social_youtube
@@ -791,14 +802,16 @@ msgstr "動画のタイトルや説明文が正しくありません。"
 msgid ""
 "Your videos metadata including title and view counts (but never the video "
 "itself)"
-msgstr "タイトルや視聴回数などの動画のメタデータ(ただし、動画そのものは含まれません)"
+msgstr ""
+"タイトルや視聴回数などの動画のメタデータ(ただし、動画そのものは含まれません)"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form
 msgid ""
-"e.g. Engage your entire community with a single app! "
-"https://www.odoo.com/trial"
-msgstr "例: 1つのアプリでコミュニティ全体を巻き込もう！https://www.odoo.com/trial"
+"e.g. Engage your entire community with a single app! https://www.odoo.com/"
+"trial"
+msgstr ""
+"例: 1つのアプリでコミュニティ全体を巻き込もう！https://www.odoo.com/trial"
 
 #. module: social_youtube
 #: model_terms:ir.ui.view,arch_db:social_youtube.social_post_view_form

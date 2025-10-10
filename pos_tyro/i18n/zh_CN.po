@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 15:30+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -29,7 +29,8 @@ msgstr "始终打印商家收据"
 msgid ""
 "By default, merchant copies are only printed when a signature is required. "
 "Enable this setting to always print the merchant copy."
-msgstr "默认情况下，只有在需要签名时才打印商家副本。启用此设置可始终打印商户副本。"
+msgstr ""
+"默认情况下，只有在需要签名时才打印商家副本。启用此设置可始终打印商户副本。"
 
 #. module: pos_tyro
 #. odoo-javascript
@@ -65,8 +66,8 @@ msgstr "ID"
 #. module: pos_tyro
 #: model:ir.model.fields,help:pos_tyro.field_pos_payment_method__tyro_integrated_receipts
 msgid ""
-"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise"
-" the terminal will print a separate payment receipt."
+"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise "
+"the terminal will print a separate payment receipt."
 msgstr "如果启用，Tyro 收据将嵌入 Odoo 收据。否则，终端将打印单独的付款收据。"
 
 #. module: pos_tyro

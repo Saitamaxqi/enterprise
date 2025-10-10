@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -29,7 +29,8 @@ msgstr "常に加盟店控えを印刷する"
 msgid ""
 "By default, merchant copies are only printed when a signature is required. "
 "Enable this setting to always print the merchant copy."
-msgstr "デフォルトでは、署名が必要な場合にのみ加盟店控えが印刷されます。この設定を有"
+msgstr ""
+"デフォルトでは、署名が必要な場合にのみ加盟店控えが印刷されます。この設定を有"
 "効にすると常に印刷されます。"
 
 #. module: pos_tyro
@@ -66,9 +67,10 @@ msgstr "ID"
 #. module: pos_tyro
 #: model:ir.model.fields,help:pos_tyro.field_pos_payment_method__tyro_integrated_receipts
 msgid ""
-"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise"
-" the terminal will print a separate payment receipt."
-msgstr "有効にすると、TyroのレシートがOdooのレシート内に組み込まれます。無効の場合は"
+"If enabled, the Tyro receipt will be embedded in the Odoo receipt. Otherwise "
+"the terminal will print a separate payment receipt."
+msgstr ""
+"有効にすると、TyroのレシートがOdooのレシート内に組み込まれます。無効の場合は"
 "端末が別の支払いレシートを印刷します。"
 
 #. module: pos_tyro
@@ -188,7 +190,8 @@ msgstr "テストモード"
 msgid ""
 "This order has one or more completed payments, please refund them before "
 "cancelling."
-msgstr "このオーダには完了済みの支払いがあります。キャンセルする前に返金を行ってくだ"
+msgstr ""
+"このオーダには完了済みの支払いがあります。キャンセルする前に返金を行ってくだ"
 "さい。"
 
 #. module: pos_tyro

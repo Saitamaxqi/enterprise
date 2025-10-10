@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 21:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
@@ -42,18 +42,23 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
-"<b>Un cop creat el vostre compte, aneu al tauler i feu clic a la fletxa que hi ha al costat del vostre nom d'usuari per configurar els vostres comptes de l'operador. </b>\n"
-"                <b>Podeu afegir comptes d'operador nous al costat dret de la mateixa pàgina.</b>\n"
+"<b>Un cop creat el vostre compte, aneu al tauler i feu clic a la fletxa que "
+"hi ha al costat del vostre nom d'usuari per configurar els vostres comptes "
+"de l'operador. </b>\n"
+"                <b>Podeu afegir comptes d'operador nous al costat dret de la "
+"mateixa pàgina.</b>\n"
 "                <br/>"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Polzades</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
@@ -65,7 +70,8 @@ msgstr "Es requereix una clau de producció per carregar els vostres easypost."
 #. odoo-python
 #: code:addons/delivery_easypost/models/delivery_carrier.py:0
 msgid "A production key is required in order to load your insurance fees."
-msgstr "Es requereix una clau de producció per carregar les taxes de l'assegurança."
+msgstr ""
+"Es requereix una clau de producció per carregar les taxes de l'assegurança."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -134,15 +140,22 @@ msgid "Delivery Carrier"
 msgstr "Transportista"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "Nom mostrat"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
-msgstr "No oblideu carregar els comptes de l'operador Easypost per a una configuració vàlida."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
+msgstr ""
+"No oblideu carregar els comptes de l'operador Easypost per a una "
+"configuració vàlida."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__epl2
@@ -163,7 +176,9 @@ msgstr "Tipus d'operador de Easypost"
 #. module: delivery_easypost
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__easypost_delivery_type_id
 msgid "Easypost Carrier Type ID, technical for API request"
-msgstr "Identificador del tipus de l'operador Easypost, tècnic per a la petició de l'API"
+msgstr ""
+"Identificador del tipus de l'operador Easypost, tècnic per a la petició de "
+"l'API"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -229,8 +244,11 @@ msgid "Go to"
 msgstr "Anar"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ID"
 
@@ -252,8 +270,13 @@ msgstr "Tarifa d'assegurança (USD)"
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "Sembla que Easypost no proporciona enviaments per a aquesta comanda.                Us aconsellem que ho intenteu amb un altre tipus de paquet o nivell de servei."
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
+msgstr ""
+"Sembla que Easypost no proporciona enviaments per a aquesta "
+"comanda.                Us aconsellem que ho intenteu amb un altre tipus de "
+"paquet o nivell de servei."
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -296,7 +319,9 @@ msgstr "PNG"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid "Package type used in pack %s is not configured for easypost."
-msgstr "El tipus de paquet utilitzat en el paquet %s no està configurat per a « EASYpost»."
+msgstr ""
+"El tipus de paquet utilitzat en el paquet %s no està configurat per a "
+"« EASYpost»."
 
 #. module: delivery_easypost
 #. odoo-python
@@ -410,24 +435,32 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "El preu estimat no es pot calcular perquè falta el pes del producte."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"El preu d'enviament estimat no es pot calcular perquè falta el pes per als producte(s) següents: \n"
+"El preu d'enviament estimat no es pot calcular perquè falta el pes per als "
+"producte(s) següents: \n"
 " %s"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
-msgstr "No hi ha cap taxa disponible per al nivell de servei seleccionat per a un dels vostres paquets. Trieu un altre nivell de servei."
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
+msgstr ""
+"No hi ha cap taxa disponible per al nivell de servei seleccionat per a un "
+"dels vostres paquets. Trieu un altre nivell de servei."
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_picking
@@ -461,8 +494,13 @@ msgstr "No podeu cancel·lar l'enviament d'Easypost."
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "No teniu cap operador vinculat al vostre compte d'Easypost.                Connecteu-vos a l'Easypost, enllaceu el vostre compte amb els operadors i torneu-ho a intentar."
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"No teniu cap operador vinculat al vostre compte d'Easypost.                "
+"Connecteu-vos a l'Easypost, enllaceu el vostre compte amb els operadors i "
+"torneu-ho a intentar."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -473,3 +511,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "per a crear un compte nou:"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Polzades</span>"

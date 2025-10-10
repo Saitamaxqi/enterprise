@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:50+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -83,8 +83,8 @@ msgid ""
 "role=\"presentation\"/>"
 msgstr ""
 "<span class=\"o_not_editable\">オンライン</span>\n"
-"                                        <i class=\"fa fa-video-camera\" role="
-"\"presentation\"/>"
+"                                        <i class=\"fa fa-video-camera\" "
+"role=\"presentation\"/>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
@@ -389,7 +389,8 @@ msgstr "異なるウェブサイトメッセージ"
 msgid ""
 "Discover the secrets kept in high-end kitchens with one of our starred "
 "chefs, from the comfort of your own home."
-msgstr "ご自宅にいながら、星付きシェフとともに高級レストランの厨房に隠された秘密を体"
+msgstr ""
+"ご自宅にいながら、星付きシェフとともに高級レストランの厨房に隠された秘密を体"
 "験しましょう。"
 
 #. module: website_appointment
@@ -499,8 +500,9 @@ msgstr "公開済"
 msgid ""
 "Reserve your table at our bistro and enjoy a delightful dining experience at "
 "your convenience."
-msgstr "当店のビストロでテーブルをご予約下さい。至福のダイニング体験をお好きな時間に"
-"。"
+msgstr ""
+"当店のビストロでテーブルをご予約下さい。至福のダイニング体験をお好きな時間"
+"に。"
 
 #. module: website_appointment
 #. odoo-javascript
@@ -537,7 +539,8 @@ msgstr "予約をする"
 msgid ""
 "Schedule your visit today and experience expert dental care brought right to "
 "your doorstep."
-msgstr "今すぐご来院の予約をお取りいただき、ご自宅近くで受けられる高度な歯科治療をご"
+msgstr ""
+"今すぐご来院の予約をお取りいただき、ご自宅近くで受けられる高度な歯科治療をご"
 "利用下さい。"
 
 #. module: website_appointment
@@ -623,8 +626,9 @@ msgstr "テニスコート"
 msgid ""
 "The following appointment type(s) are not compatible with the website "
 "chosen: %(appointments)s"
-msgstr "次のアポイントメントタイプは、選択したウェブサイトと互換性がありません: "
-"%(appointments)s"
+msgstr ""
+"次のアポイントメントタイプは、選択したウェブサイトと互換性がありません: %"
+"(appointments)s"
 
 #. module: website_appointment
 #: model:ir.model.fields,help:website_appointment.field_appointment_invite__website_absolute_url
@@ -647,7 +651,8 @@ msgstr "現在利用可能な予約はありません"
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_list_layout
 msgid "Use the top button '<b>+ New</b>' to create an appointment type."
-msgstr "上の「<b>+ 新規</b>」ボタンで、アポイントメントタイプを作成してください。"
+msgstr ""
+"上の「<b>+ 新規</b>」ボタンで、アポイントメントタイプを作成してください。"
 
 #. module: website_appointment
 #. odoo-javascript

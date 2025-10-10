@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-22 12:10+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -193,7 +193,8 @@ msgstr "国内料金指標"
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_international_rating_indicator__e4
 msgid ""
 "E4 - Priority Mail Express Flat Rate Envelope - Post Office To Addressee"
-msgstr "E4 - プライオリティ・メール・エクスプレス 定額封筒 - 郵便局から受取人宛て"
+msgstr ""
+"E4 - プライオリティ・メール・エクスプレス 定額封筒 - 郵便局から受取人宛て"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__e6
@@ -231,13 +232,17 @@ msgstr "出荷依頼の追加データ"
 #: model:ir.model.fields,help:delivery_usps_rest.field_delivery_carrier__usps_extra_data_rate_request
 #: model:ir.model.fields,help:delivery_usps_rest.field_delivery_carrier__usps_extra_data_shipment_request
 msgid ""
-"Extra data to be sent in the request. It should be a JSON-formatted string. For example:\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"Extra data to be sent in the request. It should be a JSON-formatted string. "
+"For example:\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "Example of a valid value: ```\n"
 "\"packageDescription\": {\"extraServices\": [920] }\n"
 "```\n"
-"With the above example, the service (920) will be added to the shipment request.\n"
-"For more information, please refer to the USS API documentation: https://developer.usps.com/apis.\n"
+"With the above example, the service (920) will be added to the shipment "
+"request.\n"
+"For more information, please refer to the USS API documentation: https://"
+"developer.usps.com/apis.\n"
 msgstr ""
 "依頼に追加で送信するデータ。JSON形式の文字列にして下さい。例: \n"
 "この機能は高度な技術設定です。操作方法をご存知の場合のみご利用下さい。\n"
@@ -245,8 +250,8 @@ msgstr ""
 "\"packageDescription「: {」extraServices\": [920] }\n"
 "```\n"
 "上記の例では、サービス(920)が出荷リクエストに追加されます。\n"
-"詳細は、USS API ドキュメント: https://developer.usps.com/apis "
-"をご参照下さい。\n"
+"詳細は、USS API ドキュメント: https://developer.usps.com/apis をご参照下さ"
+"い。\n"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_rating_indicator__fa
@@ -540,7 +545,8 @@ msgstr "船に少なくとも一つのアイテムを提供してください。
 msgid ""
 "Please set country USA in your company address, Service is only available "
 "for USA"
-msgstr "会社の住所で国をアメリカ(USA)に設定して下さい。このサービスはアメリカ国内専用"
+msgstr ""
+"会社の住所で国をアメリカ(USA)に設定して下さい。このサービスはアメリカ国内専用"
 "です。"
 
 #. module: delivery_usps_rest
@@ -676,7 +682,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "以下のプロダクトの重量がないため、見積送料を計算できません: \n"
@@ -688,7 +695,8 @@ msgstr ""
 msgid ""
 "The package cannot be created because the total weight of the products in "
 "the picking is 0.0 %s"
-msgstr "梱包を作成できません。ピッキングのプロダクトの合計重量が0.0 %sのためです。"
+msgstr ""
+"梱包を作成できません。ピッキングのプロダクトの合計重量が0.0 %sのためです。"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -705,7 +713,8 @@ msgstr ""
 #: code:addons/delivery_usps_rest/models/delivery_usps.py:0
 msgid ""
 "There is no price available for this shipping, please choose another service"
-msgstr "この配送のために利用可能な価格がありません。別のサービスを選択して下さい。"
+msgstr ""
+"この配送のために利用可能な価格がありません。別のサービスを選択して下さい。"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -781,7 +790,8 @@ msgstr "USPS 国内サービス"
 msgid ""
 "USPS Domestic is used only to ship inside of the USA. Please change the "
 "delivery method into USPS International."
-msgstr "USPS 国内配送はアメリカ国内専用です。配送方法をUSPS国際配送に変更して下さい。"
+msgstr ""
+"USPS 国内配送はアメリカ国内専用です。配送方法をUSPS国際配送に変更して下さい。"
 
 #. module: delivery_usps_rest
 #: model:ir.model.fields.selection,name:delivery_usps_rest.selection__delivery_carrier__usps_domestic_service__usps_ground_advantage
@@ -810,7 +820,8 @@ msgstr "USPS 国際サービス"
 msgid ""
 "USPS International is used only to ship outside of the USA. Please change "
 "the delivery method into USPS Domestic."
-msgstr "USPS国際は米国外への発送にのみ使用されます。配送方法をUSPS国内に変更して下さ"
+msgstr ""
+"USPS国際は米国外への発送にのみ使用されます。配送方法をUSPS国内に変更して下さ"
 "い。"
 
 #. module: delivery_usps_rest
@@ -842,7 +853,8 @@ msgstr "USPS リテール グラウンド"
 #. odoo-python
 #: code:addons/delivery_usps_rest/models/usps_request.py:0
 msgid "You need to set your USPS API Key and Secret to use this feature."
-msgstr "この機能を使用するには、USPS APIキーとシークレットを設定する必要があります。"
+msgstr ""
+"この機能を使用するには、USPS APIキーとシークレットを設定する必要があります。"
 
 #. module: delivery_usps_rest
 #. odoo-python
@@ -850,8 +862,9 @@ msgstr "この機能を使用するには、USPS APIキーとシークレット�
 msgid ""
 "You need to set your USPS CRID, MID, Manifest MID and EPS Account Number to "
 "use this feature."
-msgstr "この機能を使用するには、USPS "
-"CRID、MID、マニフェストMID、およびEPSアカウント番号を設定する必要があります。"
+msgstr ""
+"この機能を使用するには、USPS CRID、MID、マニフェストMID、およびEPSアカウント"
+"番号を設定する必要があります。"
 
 #. module: delivery_usps_rest
 #. odoo-python

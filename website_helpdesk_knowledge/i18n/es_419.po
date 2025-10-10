@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-09-17 09:37+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -27,7 +27,8 @@ msgstr ", por"
 #. module: website_helpdesk_knowledge
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_knowledge.search_result
 msgid "<i class=\"fa fa-fw fa-2x fa-book\" title=\"Knowledge Article\"/>"
-msgstr "<i class=\"fa fa-fw fa-2x fa-book\" title=\"Artículo de Información\"/>"
+msgstr ""
+"<i class=\"fa fa-fw fa-2x fa-book\" title=\"Artículo de Información\"/>"
 
 #. module: website_helpdesk_knowledge
 #: model:ir.model.fields,field_description:website_helpdesk_knowledge.field_helpdesk_team__website_article_id
@@ -97,8 +98,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_helpdesk_knowledge/models/knowledge_article.py:0
 msgid ""
-"You cannot delete, unpublish or set a parent on an article that is used by a"
-" helpdesk team."
+"You cannot delete, unpublish or set a parent on an article that is used by a "
+"helpdesk team."
 msgstr ""
 "No puede eliminar, anular la publicación o asignar un artículo principal a "
 "un artículo que usa el equipo de soporte al cliente."

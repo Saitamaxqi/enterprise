@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-03 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -38,8 +38,8 @@ msgid ""
 "class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 "<span class=\"s_website_form_label_content\">Faça sua pergunta</span>\n"
-"                                            <span class="
-"\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
@@ -62,8 +62,8 @@ msgid ""
 "class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 "<span class=\"s_website_form_label_content\">Endereço de e-mail</span>\n"
-"                                            <span class="
-"\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
@@ -74,16 +74,16 @@ msgid ""
 "class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 "<span class=\"s_website_form_label_content\">Nome completo</span>\n"
-"                                            <span class="
-"\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.ticket_submit_form
 msgid "<span class=\"s_website_form_label_content\">Helpdesk Team</span>"
 msgstr ""
-"<span class=\"s_website_form_label_content\">Equipe da Central de "
-"Ajuda</span>"
+"<span class=\"s_website_form_label_content\">Equipe da Central de Ajuda</"
+"span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1
@@ -94,8 +94,8 @@ msgid ""
 "class=\"s_website_form_mark\"> *</span>"
 msgstr ""
 "<span class=\"s_website_form_label_content\">Assunto da mensagem</span>\n"
-"                                            <span class="
-"\"s_website_form_mark\"> *</span>"
+"                                            <span "
+"class=\"s_website_form_mark\"> *</span>"
 
 #. module: website_helpdesk
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.team_form_1

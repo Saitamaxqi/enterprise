@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-18 02:46+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Spanish <https://translate.odoo.com/projects/odoo-19/"
@@ -148,11 +148,11 @@ msgstr "Cantidad de la unidad de compra"
 #. odoo-python
 #: code:addons/approvals_purchase/models/purchase_order.py:0
 msgid ""
-"RFQ %(rfq_name)s state has been changed: %(old_state_label)s -> "
-"%(new_state_label)s"
+"RFQ %(rfq_name)s state has been changed: %(old_state_label)s -> %"
+"(new_state_label)s"
 msgstr ""
-"El estado de la solicitud de presupuestos %(rfq_name)s ha cambiado: "
-"%(old_state_label)s -> %(new_state_label)s"
+"El estado de la solicitud de presupuestos %(rfq_name)s ha cambiado: %"
+"(old_state_label)s -> %(new_state_label)s"
 
 #. module: approvals_purchase
 #: model:ir.model.fields,field_description:approvals_purchase.field_res_partner__category_id
@@ -164,8 +164,8 @@ msgstr "Etiquetas"
 #. odoo-python
 #: code:addons/approvals_purchase/models/approval_request.py:0
 msgid ""
-"The following products couldn't be removed because the RFQs are not in draft"
-" state:"
+"The following products couldn't be removed because the RFQs are not in draft "
+"state:"
 msgstr ""
 "No ha sido posible eliminar los siguientes productos porque las solicitudes "
 "de presupuesto no están en estado de borrador:"

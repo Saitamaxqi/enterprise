@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-30 02:41+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Hungarian <https://translate.odoo.com/projects/odoo-19/"
@@ -33,39 +33,21 @@ msgid "Abandoned Carts"
 msgstr "Elhagyott kosarak"
 
 #. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Activate Stripe"
-msgstr "Stripe aktiválása"
-
-#. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__closed
-msgid "Closed"
-msgstr "Lezárt"
-
-#. module: website_sale_dashboard
-#: model:ir.model,name:website_sale_dashboard.model_res_company
-msgid "Companies"
-msgstr "Vállalatok"
-
-#. module: website_sale_dashboard
 #: model:ir.model,name:website_sale_dashboard.model_digest_digest
 msgid "Digest"
 msgstr "Kivonat"
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__done
-msgid "Done"
-msgstr "Kész"
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Enable credit &amp; debit card payments supported by Stripe"
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_digest_digest__display_name
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_website__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__just_done
-msgid "Just done"
-msgstr "Éppen elkészült"
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_digest_digest__id
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_website__id
+msgid "ID"
+msgstr ""
 
 #. module: website_sale_dashboard
 #: model_terms:ir.actions.act_window,help:website_sale_dashboard.sale_dashboard
@@ -73,35 +55,10 @@ msgid "No data yet!"
 msgstr "Még nincs adat!"
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__not_done
-msgid "Not done"
-msgstr "Nincs kész"
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Online Payments"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Online payments enabled"
-msgstr "Online fizetés engedélyezve"
-
-#. module: website_sale_dashboard
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_graph
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_pivot
 msgid "Sales Analysis"
 msgstr "Értékesítés elemzés"
-
-#. module: website_sale_dashboard
-#: model:ir.model.fields,field_description:website_sale_dashboard.field_res_company__website_sale_dashboard_onboarding_state
-msgid "State of the website sale onboarding panel"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_dashboard_onboarding_panel
-msgid "The configuration is done. Happy selling!"
-msgstr "A beállítás befejeződött."
 
 #. module: website_sale_dashboard
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.sale_report_view_search_website_inherit
@@ -117,3 +74,27 @@ msgstr "Weboldal"
 #: model:ir.actions.act_window,name:website_sale_dashboard.sale_dashboard
 msgid "eCommerce Dashboard"
 msgstr "eKereskedelem kezelőpult"
+
+#~ msgid "Activate Stripe"
+#~ msgstr "Stripe aktiválása"
+
+#~ msgid "Closed"
+#~ msgstr "Lezárt"
+
+#~ msgid "Companies"
+#~ msgstr "Vállalatok"
+
+#~ msgid "Done"
+#~ msgstr "Kész"
+
+#~ msgid "Just done"
+#~ msgstr "Éppen elkészült"
+
+#~ msgid "Not done"
+#~ msgstr "Nincs kész"
+
+#~ msgid "Online payments enabled"
+#~ msgstr "Online fizetés engedélyezve"
+
+#~ msgid "The configuration is done. Happy selling!"
+#~ msgstr "A beállítás befejeződött."

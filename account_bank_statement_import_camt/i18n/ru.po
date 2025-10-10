@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:20+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2024-01-30 15:14+0400\n"
 "Last-Translator: \n"
 "Language-Team: Russian (https://app.transifex.com/odoo/teams/41243/ru/)\n"
@@ -15,7 +15,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 
 #. module: account_bank_statement_import_camt
 #. odoo-python
@@ -128,8 +130,10 @@ msgstr "Дополнительные разные операции по дебе
 #. module: account_bank_statement_import_camt
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/models/account_journal.py:0
-msgid "Address:\n"
-msgstr "Адрес:\n"
+msgid ""
+"Address:\n"
+"%s"
+msgstr ""
 
 #. module: account_bank_statement_import_camt
 #. odoo-python
@@ -618,6 +622,11 @@ msgid "Dishonoured/Unpaid Draft"
 msgstr "Опрокинутый/неоплаченный черновик"
 
 #. module: account_bank_statement_import_camt
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_journal__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: account_bank_statement_import_camt
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Dividend Option"
@@ -912,6 +921,11 @@ msgid "Guarantees"
 msgstr "Гарантии"
 
 #. module: account_bank_statement_import_camt
+#: model:ir.model.fields,field_description:account_bank_statement_import_camt.field_account_journal__id
+msgid "ID"
+msgstr ""
+
+#. module: account_bank_statement_import_camt
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Inspeci/Share Exchange"
@@ -1135,7 +1149,9 @@ msgstr "Сетка"
 #. module: account_bank_statement_import_camt
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
-msgid "No exchange rate was found to convert an amount into the currency of the journal"
+msgid ""
+"No exchange rate was found to convert an amount into the currency of the "
+"journal"
 msgstr "Не найден обменный курс для перевода суммы в валюту журнала"
 
 #. module: account_bank_statement_import_camt
@@ -1364,11 +1380,13 @@ msgstr ""
 msgid ""
 "Please set the IBAN account on your bank journal.\n"
 "\n"
-"This CAMT file is targeting several IBAN accounts but none match the current journal."
+"This CAMT file is targeting several IBAN accounts but none match the current "
+"journal."
 msgstr ""
 "Пожалуйста, укажите счет IBAN в банковском журнале.\n"
 "\n"
-"В данном CAMT-файле указаны несколько счетов IBAN, но ни один из них не соответствует текущему журналу."
+"В данном CAMT-файле указаны несколько счетов IBAN, но ни один из них не "
+"соответствует текущему журналу."
 
 #. module: account_bank_statement_import_camt
 #. odoo-python
@@ -1530,7 +1548,8 @@ msgstr "Сторнирование из-за запроса на отмену п
 #. odoo-python
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Reversal due to Payment Return/reimbursement of a Credit Transfer"
-msgstr "Сторнирование в связи с возвратом платежа/возмещением кредитного перевода"
+msgstr ""
+"Сторнирование в связи с возвратом платежа/возмещением кредитного перевода"
 
 #. module: account_bank_statement_import_camt
 #. odoo-python
@@ -1921,3 +1940,6 @@ msgstr "Корректировка за год"
 #: code:addons/account_bank_statement_import_camt/lib/camt.py:0
 msgid "Zero Balancing"
 msgstr "Нулевая балансировка"
+
+#~ msgid "Address:\n"
+#~ msgstr "Адрес:\n"

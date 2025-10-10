@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -43,8 +43,8 @@ msgid ""
 "An \"Email\" step type must exist before the \"Create Ticket\" step for a "
 "ticket to be created."
 msgstr ""
-"Debe existir un paso de tipo \"Correo electrónico\" antes del paso "
-"\"Crear ticket\" para poder crear un ticket."
+"Debe existir un paso de tipo \"Correo electrónico\" antes del paso \"Crear "
+"ticket\" para poder crear un ticket."
 
 #. module: website_helpdesk_livechat
 #: model_terms:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_technical_serial_misc
@@ -98,12 +98,11 @@ msgstr "Cree un nuevo ticket de soporte al cliente (/ticket título del ticket)"
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Create a new helpdesk ticket with: %(pre_start)s%(ticket_command)s "
-"%(i_start)sticket title%(i_end)s%(pre_end)s"
+"Create a new helpdesk ticket with: %(pre_start)s%(ticket_command)s %"
+"(i_start)sticket title%(i_end)s%(pre_end)s"
 msgstr ""
-"Crea un nuevo ticket de soporte al cliente con: "
-"%(pre_start)s%(ticket_command)s %(i_start)stítulo del "
-"ticket%(i_end)s%(pre_end)s"
+"Crea un nuevo ticket de soporte al cliente con: %(pre_start)s%"
+"(ticket_command)s %(i_start)stítulo del ticket%(i_end)s%(pre_end)s"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -225,13 +224,12 @@ msgstr "No"
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
 "No tickets found for %(b_start)s%(keywords)s%(b_end)s.%(br)sMake sure you "
-"are using the right format: %(pre_start)s%(search_tickets_command)s "
-"%(i_start)skeywords%(i_end)s%(pre_end)s"
+"are using the right format: %(pre_start)s%(search_tickets_command)s %"
+"(i_start)skeywords%(i_end)s%(pre_end)s"
 msgstr ""
 "No se encontraron tickets para %(b_start)s%(keywords)s%(b_end)s. %(br)s "
-"Asegúrese de estar usando el formato "
-"correcto:%(pre_start)s%(search_tickets_command)s%(i_start)s palabra "
-"clave%(i_end)s%(pre_end)s"
+"Asegúrese de estar usando el formato correcto:%(pre_start)s%"
+"(search_tickets_command)s%(i_start)s palabra clave%(i_end)s%(pre_end)s"
 
 #. module: website_helpdesk_livechat
 #: model_terms:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_ticket
@@ -268,12 +266,11 @@ msgstr "Busque tickets de soporte al cliente (/search_tickets palabra clave)"
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Search helpdesk tickets by typing: %(pre_start)s%(search_tickets_command)s "
-"%(i_start)skeywords%(i_end)s%(pre_end)s"
+"Search helpdesk tickets by typing: %(pre_start)s%(search_tickets_command)s %"
+"(i_start)skeywords%(i_end)s%(pre_end)s"
 msgstr ""
-"Para buscar un ticket de soporte al cliente escriba: "
-"%(pre_start)s%(search_tickets_command)s%(i_start)spalabras "
-"clave%(i_end)s%(pre_end)s"
+"Para buscar un ticket de soporte al cliente escriba: %(pre_start)s%"
+"(search_tickets_command)s%(i_start)spalabras clave%(i_end)s%(pre_end)s"
 
 #. module: website_helpdesk_livechat
 #. odoo-python
@@ -321,11 +318,11 @@ msgstr "Tickets creados"
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/discuss_channel.py:0
 msgid ""
-"Tickets search results for %(b_start)s%(keywords)s%(b_end)s: "
-"%(br)s%(tickets)s"
+"Tickets search results for %(b_start)s%(keywords)s%(b_end)s: %(br)s%"
+"(tickets)s"
 msgstr ""
-"Resultados de la búsqueda de tickets para %(b_start)s%(keywords)s%(b_end)s: "
-"%(br)s%(tickets)s"
+"Resultados de la búsqueda de tickets para %(b_start)s%(keywords)s%(b_end)s: %"
+"(br)s%(tickets)s"
 
 #. module: website_helpdesk_livechat
 #: model_terms:chatbot.script.step,message:website_helpdesk_livechat.chatbot_script_helpdesk_step_administrative_customer_ref
@@ -367,8 +364,7 @@ msgstr "No puede crear tickets vinculados a canales a los que no tiene acceso."
 #. odoo-python
 #: code:addons/website_helpdesk_livechat/models/helpdesk_ticket.py:0
 msgid ""
-"You cannot update a ticket and link it to a channel you don't have access "
-"to."
+"You cannot update a ticket and link it to a channel you don't have access to."
 msgstr ""
 "No puede actualizar un ticket y vincularlo a un canal al que no tiene acceso."
 

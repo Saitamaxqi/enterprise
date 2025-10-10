@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -153,8 +153,10 @@ msgstr "Facebook 訊息"
 #. module: social_facebook
 #: model:ir.model.fields,help:social_facebook.field_social_account__facebook_access_token
 msgid ""
-"Facebook Page Access Token provided by the Facebook API, this should never be set manually.\n"
-"            It's used to authenticate requests when posting to or reading information from this account."
+"Facebook Page Access Token provided by the Facebook API, this should never "
+"be set manually.\n"
+"            It's used to authenticate requests when posting to or reading "
+"information from this account."
 msgstr ""
 "Facebook 專頁存取權杖，是由 Facebook API 提供，不應手動設定。\n"
 "            發佈至此帳戶，或從帳戶讀取資訊時，該權杖會用作驗證請求。"
@@ -238,6 +240,15 @@ msgstr "媒介類型"
 #: model_terms:ir.ui.view,arch_db:social_facebook.social_post_template_view_form
 msgid "Message"
 msgstr "訊息"
+
+#. module: social_facebook
+#. odoo-python
+#: code:addons/social_facebook/models/social_media.py:0
+msgid ""
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
+"Grab a subscription and unlock a world of amazing features!"
+msgstr ""
 
 #. module: social_facebook
 #: model:social.stream.type,name:social_facebook.stream_type_page_mentions
@@ -355,7 +366,8 @@ msgstr "使用你自己的 Facebook 帳戶"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
+msgstr ""
+"需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
 
 #. module: social_facebook
 #: model:ir.model.fields,field_description:social_facebook.field_social_stream_post__facebook_user_likes
@@ -386,12 +398,6 @@ msgstr "會為你的貼文加入圖片。"
 
 #. module: social_facebook
 #. odoo-python
-#: code:addons/social_facebook/models/social_media.py:0
-msgid "You don't have an active subscription. Please buy one here: %s"
-msgstr "您尚未訂閱。請點選連結添購：%s"
-
-#. module: social_facebook
-#. odoo-python
 #: code:addons/social_facebook/controllers/main.py:0
 msgid ""
 "You need to be the manager of a Facebook Page to post with Odoo Social.\n"
@@ -409,3 +415,6 @@ msgstr "新增了一個活動"
 #: model_terms:ir.ui.view,arch_db:social_facebook.facebook_preview
 msgid "• <i class=\"fa fa-globe\"/>"
 msgstr "• <i class=\"fa fa-globe\"/>"
+
+#~ msgid "You don't have an active subscription. Please buy one here: %s"
+#~ msgstr "您尚未訂閱。請點選連結添購：%s"

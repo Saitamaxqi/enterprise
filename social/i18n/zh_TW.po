@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* social
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: social
@@ -48,8 +49,10 @@ msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"日曆\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
-msgstr "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"日曆\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"日曆\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
@@ -64,8 +67,8 @@ msgstr "<i class=\"oi oi-arrow-left\"/> 返回 Odoo"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr "<strong>恭喜！幾分鐘後回來看看你的統計數據。</strong>"
 
 #. module: social
@@ -318,7 +321,9 @@ msgstr "連接問題"
 msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
-msgstr "對於建立此帳戶的人，此處包括其社交媒體用戶名稱。例如：@odoo.official 即是 Odoo 的官方 X 帳戶"
+msgstr ""
+"對於建立此帳戶的人，此處包括其社交媒體用戶名稱。例如：@odoo.official 即是 "
+"Odoo 的官方 X 帳戶"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
@@ -351,9 +356,10 @@ msgstr "建立新帖文"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
-msgstr "為 %(media_names)s創建該公司的其他帳戶,或要求%(company_names)s分享他們的帳戶"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
+msgstr ""
+"為 %(media_names)s創建該公司的其他帳戶,或要求%(company_names)s分享他們的帳戶"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -508,7 +514,9 @@ msgstr "啟用演示模式"
 msgid ""
 "Enable this option and load demo data to test the social module. This must "
 "never be used on a production database!"
-msgstr "啟用此選項並載入模擬數據，以測試社交媒體模組。切勿在正式運行資料庫上使用此選項！"
+msgstr ""
+"啟用此選項並載入模擬數據，以測試社交媒體模組。切勿在正式運行資料庫上使用此選"
+"項！"
 
 #. module: social
 #. odoo-javascript
@@ -534,8 +542,8 @@ msgstr "受眾互動率："
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr "每次建立帳戶時，都會建立一個 utm.medium 媒介並連結至該帳戶"
 
 #. module: social
@@ -599,14 +607,6 @@ msgstr "社交帳戶的一般受眾（專頁讚好、關注等）。"
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "Go to the"
 msgstr "請前往"
-
-#. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_account_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
-msgid "Group By"
-msgstr "分組依據"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
@@ -932,8 +932,7 @@ msgstr "訊息已發佈"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr "已發佈部份訊息。以下是未能發佈的內容：%s"
 
 #. module: social
@@ -945,10 +944,13 @@ msgstr "訊息"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
-"大多數的 social.live.posts 會直接由「就緒」變成「已發佈」/「失敗」，因為它們是向第三方 API 單次呼叫的結果。\n"
+"大多數的 social.live.posts 會直接由「就緒」變成「已發佈」/「失敗」，因為它們"
+"是向第三方 API 單次呼叫的結果。\n"
 "        「發佈中」狀態也適用於大批傳送的內容（例如推播通知）。"
 
 #. module: social
@@ -1119,7 +1121,9 @@ msgstr "人們在你的帖文的參與次數（讚好、留言、分享等）。
 msgid ""
 "Number of times people who have engaged with your channel have created "
 "stories on their friends' or followers' feed (Shares, Reposts...)"
-msgstr "在你的頻道參與的人，在自己的朋友或追隨者的訊息牆上產生故事的次數（分享、轉發等）。"
+msgstr ""
+"在你的頻道參與的人，在自己的朋友或追隨者的訊息牆上產生故事的次數（分享、轉發"
+"等）。"
 
 #. module: social
 #. odoo-javascript
@@ -1356,8 +1360,8 @@ msgstr "預定日期"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr "所選取的賬戶（%(account_list)s）與所選公司（%(company)s）不相符。"
 
 #. module: social
@@ -1502,12 +1506,6 @@ msgstr "社交媒體：發佈預先排期帖文"
 
 #. module: social
 #. odoo-javascript
-#: code:addons/social/static/src/js/stream_post_comments_reply.js:0
-msgid "Something went wrong while posting the comment."
-msgstr "發佈留言時，出現錯誤。"
-
-#. module: social
-#. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_dashboard.js:0
 msgid ""
 "Sorry, you're not allowed to re-link this account, please contact your "
@@ -1522,9 +1520,11 @@ msgstr "來源"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
-msgstr "裝載一組dict數據的特殊技術欄位，內含按媒體識別碼排列的實時帖文名稱（用於看板檢視畫面）。"
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
+msgstr ""
+"裝載一組dict數據的特殊技術欄位，內含按媒體識別碼排列的實時帖文名稱（用於看板"
+"檢視畫面）。"
 
 #. module: social
 #. odoo-javascript
@@ -1630,8 +1630,7 @@ msgstr "此帖文將會發佈至的帳戶。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr "基於第三方資訊的帖文作者名稱（例如：「陳大文」）。"
 
 #. module: social
@@ -1639,7 +1638,9 @@ msgstr "基於第三方資訊的帖文作者名稱（例如：「陳大文」）
 msgid ""
 "The post is considered as 'Posted' when all its sub-posts (one per social "
 "account) are either 'Failed' or 'Posted'"
-msgstr "若帖文的所有子帖文（每個社交帳戶一個）都是「失敗」或「已發佈」時，整個帖文將視為「已發佈」"
+msgstr ""
+"若帖文的所有子帖文（每個社交帳戶一個）都是「失敗」或「已發佈」時，整個帖文將"
+"視為「已發佈」"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1735,7 +1736,9 @@ msgstr "上載的檔案似乎不是有效圖片。"
 msgid ""
 "Use your own Developer Accounts on our Social app. Those credentials are "
 "provided in the developer section of your professional social media account."
-msgstr "在我們的社交應用程式上，使用你自己的開發人員帳戶。登入資訊是在你的專業社交媒體帳戶的開發人員部份中提供。"
+msgstr ""
+"在我們的社交應用程式上，使用你自己的開發人員帳戶。登入資訊是在你的專業社交媒"
+"體帳戶的開發人員部份中提供。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
@@ -1745,7 +1748,8 @@ msgstr "在我們的社交應用程式上，使用你自己的開發人員帳戶
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
+msgstr ""
+"需要將某些內容限制至特定媒體使用時（例如 facebook、x 等等），用作進行比較。"
 
 #. module: social
 #. odoo-javascript
@@ -1779,8 +1783,8 @@ msgstr "何時"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr "全球帖文的發佈時間。子帖文的實際發佈日期可能會因媒體而異。"
 
 #. module: social
@@ -1823,7 +1827,8 @@ msgstr "寫一篇吸引人的帖文，加入圖片並安排帖文於稍後在多
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "您無法刪除這些UTM媒介，因為它們連結至社交中的以下社交帳戶：\n"
@@ -1833,7 +1838,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "您無法刪除這些UTM來源，因為它們連結至社交中的社交帖文：\n"
@@ -1904,3 +1910,9 @@ msgstr "以連結你的帳戶，並開始發佈。"
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "to start posting from Odoo."
 msgstr "以開始從 Odoo 發佈帖文。"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Something went wrong while posting the comment."
+#~ msgstr "發佈留言時，出現錯誤。"

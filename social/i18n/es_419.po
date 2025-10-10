@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-17 09:38+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -48,7 +48,8 @@ msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendario\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
 "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendario\"/>"
 
@@ -65,11 +66,11 @@ msgstr "<i class=\"oi oi-arrow-left\"/> Volver a Odoo"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr ""
-"<strong>¡Felicidades! Regrese en unos minutos para revisar sus "
-"estadísticas.</strong>"
+"<strong>¡Felicidades! Regrese en unos minutos para revisar sus estadísticas."
+"</strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
@@ -364,11 +365,11 @@ msgstr "Crear una publicación"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
-"Crear otras cuentas para %(media_names)s para esta empresa o solicítele a "
-"%(company_names)s que comparta sus cuentas"
+"Crear otras cuentas para %(media_names)s para esta empresa o solicítele a %"
+"(company_names)s que comparta sus cuentas"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -553,8 +554,8 @@ msgstr "Interacciones:"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr ""
 "Siempre que se crea una cuenta, también se crea un utm.medium que está "
 "vinculado a la cuenta"
@@ -951,8 +952,7 @@ msgstr "Mensaje publicado"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr "Mensaje publicado de forma parcial. Estos no se pudieron publicar: %s"
 
 #. module: social
@@ -964,12 +964,14 @@ msgstr "Mensajes"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "La mayoría de las publicaciones en vivo de redes sociales van directo a "
-"Publicado/Error ya que son el resultado de una sola llamada a la API externa."
-"\n"
+"Publicado/Error ya que son el resultado de una sola llamada a la API "
+"externa.\n"
 "También está disponible un estado de \"publicando\" para todas las que se "
 "envían por lotes (como las notificaciones push)."
 
@@ -1404,8 +1406,8 @@ msgstr "Fecha programada"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr ""
 "Las cuentas seleccionadas (%(account_list)s) no coinciden con la empresa "
 "seleccionada (%(company)s)"
@@ -1572,8 +1574,8 @@ msgstr "Origen"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
 msgstr ""
 "Campo especial técnico que contiene un diccionario con los títulos de las "
 "publicaciones en vivo en los ID de medios (se usa para la vista kanban)."
@@ -1684,8 +1686,7 @@ msgstr "Las cuentas en las que se hará la publicación."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr ""
 "El nombre del autor de la publicación según la información externa (por "
 "ejemplo, \"Juan Pérez\")"
@@ -1846,8 +1847,8 @@ msgstr "Cuando"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr ""
 "Cuándo se hizo la publicación global. Las fechas de publicación de las "
 "publicaciones subordinadas pueden ser distintas dependiendo de la red social."
@@ -1895,7 +1896,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "No puede eliminar estos medios UTM, están vinculados a las siguientes "
@@ -1906,7 +1908,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "No puede eliminar estas fuentes UTM, están vinculadas a publicaciones en "

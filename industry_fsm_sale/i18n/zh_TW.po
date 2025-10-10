@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* industry_fsm_sale
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: industry_fsm_sale
@@ -51,32 +52,47 @@ msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
 "                            No products found. Let's create one!\n"
 "                        </p><p>\n"
-"                            Keep track of the products you are using to complete your tasks, and invoice your customers for the goods.\n"
-"                            Tip: using kits, you can add multiple products at once.\n"
+"                            Keep track of the products you are using to "
+"complete your tasks, and invoice your customers for the goods.\n"
+"                            Tip: using kits, you can add multiple products "
+"at once.\n"
 "                        </p><p>\n"
-"                            When your task is marked as done, your stock will be updated automatically. Simply choose a warehouse\n"
+"                            When your task is marked as done, your stock "
+"will be updated automatically. Simply choose a warehouse\n"
 "                            in your profile from where to draw stock.\n"
 "                        </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
 "                            找不到產品。讓我們創建一個吧！\n"
 "                        </p><p>\n"
-"                            追蹤完成任務要使用的產品，並向客戶開立貨品發票。\n"
-"                            提示：使用「工具套裝」功能，可以一次過新增多項產品。\n"
+"                            追蹤完成任務要使用的產品，並向客戶開立貨品發"
+"票。\n"
+"                            提示：使用「工具套裝」功能，可以一次過新增多項產"
+"品。\n"
 "                        </p><p>\n"
-"                            任務標記為完成時，庫存記錄會自動更新。你只需在個人檔案中，\n"
+"                            任務標記為完成時，庫存記錄會自動更新。你只需在個"
+"人檔案中，\n"
 "                            選擇一個提取庫存的倉庫。\n"
 "                        </p>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
 msgid ""
+"<span invisible=\"not allow_material\" class=\"text-muted\">Hide prices on "
+"customer report</span>"
+msgstr ""
+
+#. module: industry_fsm_sale
+#: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
+msgid ""
 "<span invisible=\"not is_fsm\">\n"
-"                    Define the service and the rate at which an employee's time is billed based on their expertise, skills or experience.\n"
+"                    Define the service and the rate at which an employee's "
+"time is billed based on their expertise, skills or experience.\n"
 "                </span>"
 msgstr ""
 "<span invisible=\"not is_fsm\">\n"
-"                    根據員工的專業知識、技能或經驗，定義員工提供的服務，以及其服務收費率。\n"
+"                    根據員工的專業知識、技能或經驗，定義員工提供的服務，以及"
+"其服務收費率。\n"
 "                </span>"
 
 #. module: industry_fsm_sale
@@ -176,8 +192,8 @@ msgstr "儲存此變更後，所有工時表記項都會不加區分，連結至
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
 msgid ""
-"Choose a <b>name</b> for your product <i>(e.g. Bolts, Screws, Boiler, "
-"etc.).</i>"
+"Choose a <b>name</b> for your product <i>(e.g. Bolts, Screws, Boiler, etc.)."
+"</i>"
 msgstr "為產品選擇一個<b>名稱</b>（例如螺栓、螺絲、鍋爐等）。<i></i>"
 
 #. module: industry_fsm_sale
@@ -186,12 +202,9 @@ msgstr "為產品選擇一個<b>名稱</b>（例如螺栓、螺絲、鍋爐等�
 msgid ""
 "Click on a product to add it to your <b>list of materials</b>. <i>Tip: for "
 "large quantities, click on the number to edit it directly.</i>"
-msgstr "按一下產品，以加入<b>用料清單</b>。提示：如果數量多，可點選數字然後直接編輯。<i></i>"
-
-#. module: industry_fsm_sale
-#: model:ir.model,name:industry_fsm_sale.model_res_config_settings
-msgid "Config Settings"
-msgstr "配置設定"
+msgstr ""
+"按一下產品，以加入<b>用料清單</b>。提示：如果數量多，可點選數字然後直接編輯。"
+"<i></i>"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -239,7 +252,6 @@ msgstr "預設服務"
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_sale_line_employee_map__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_report_project_task_user_fsm__display_name
-#: model:ir.model.fields,field_description:industry_fsm_sale.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_advance_payment_inv__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__display_name
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__display_name
@@ -285,6 +297,11 @@ msgid "Go back to your Field Service <b>task</b>."
 msgstr "返回你的外勤服務<b>任務</b>。"
 
 #. module: industry_fsm_sale
+#: model:ir.model.fields,field_description:industry_fsm_sale.field_project_project__hide_price
+msgid "Hide price on customer report and portal"
+msgstr ""
+
+#. module: industry_fsm_sale
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_account_analytic_line__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_product_product__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_product_template__id
@@ -292,7 +309,6 @@ msgstr "返回你的外勤服務<b>任務</b>。"
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_sale_line_employee_map__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_project_task__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_report_project_task_user_fsm__id
-#: model:ir.model.fields,field_description:industry_fsm_sale.field_res_config_settings__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_advance_payment_inv__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order__id
 #: model:ir.model.fields,field_description:industry_fsm_sale.field_sale_order_line__id
@@ -305,7 +321,9 @@ msgid ""
 "If ticked, the time and materials used for this task will not be billed to "
 "the customer. However, the inventory of consumed materials will still be "
 "updated."
-msgstr "如果勾選，則不會向客戶收取此任務花費工時和材料的費用。不過，已消耗材料的庫存仍會更新。"
+msgstr ""
+"如果勾選，則不會向客戶收取此任務花費工時和材料的費用。不過，已消耗材料的庫存"
+"仍會更新。"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -393,6 +411,16 @@ msgid "Number of invoices"
 msgstr "發票數量"
 
 #. module: industry_fsm_sale
+#: model:product.template,name:industry_fsm_sale.field_service_product_zero_cost_1_product_template
+msgid "Plumbing Valves"
+msgstr ""
+
+#. module: industry_fsm_sale
+#: model:product.template,name:industry_fsm_sale.field_service_product_zero_cost_4_product_template
+msgid "Plumbing Washers"
+msgstr ""
+
+#. module: industry_fsm_sale
 #. odoo-python
 #: code:addons/industry_fsm_sale/models/project_task.py:0
 msgid "Portal Invoices"
@@ -474,6 +502,11 @@ msgid "Related Task"
 msgstr "相關任務"
 
 #. module: industry_fsm_sale
+#: model:product.template,name:industry_fsm_sale.field_service_product_zero_cost_2_product_template
+msgid "Safety Gloves"
+msgstr ""
+
+#. module: industry_fsm_sale
 #: model:ir.model,name:industry_fsm_sale.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
 msgstr "銷售預付款應收憑單"
@@ -496,10 +529,14 @@ msgstr "銷售訂單明細"
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_project__sale_line_id
 msgid ""
-"Sales order item that will be selected by default on the tasks and timesheets of this project, except if the employee set on the timesheets is explicitely linked to another sales order item on the project.\n"
-"It can be modified on each task and timesheet entry individually if necessary."
+"Sales order item that will be selected by default on the tasks and "
+"timesheets of this project, except if the employee set on the timesheets is "
+"explicitely linked to another sales order item on the project.\n"
+"It can be modified on each task and timesheet entry individually if "
+"necessary."
 msgstr ""
-"此專案的任務及工時表預設選擇的銷售訂單項目，除非工時表設定的員工明確連結至專案的另一個銷售訂單項目。\n"
+"此專案的任務及工時表預設選擇的銷售訂單項目，除非工時表設定的員工明確連結至專"
+"案的另一個銷售訂單項目。\n"
 "如有必要，可在任務或工時表的每個記項上單獨修改。"
 
 #. module: industry_fsm_sale
@@ -527,6 +564,12 @@ msgstr "任務"
 #: model:ir.model.fields,help:industry_fsm_sale.field_sale_order__task_id
 msgid "Task from which this quotation have been created"
 msgstr "建立此報價所基於的任務"
+
+#. module: industry_fsm_sale
+#. odoo-python
+#: code:addons/industry_fsm_sale/models/project_task.py:0
+msgid "Tasks need to be linked to a sales order to be invoiced."
+msgstr ""
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.worksheet_time_and_material
@@ -613,18 +656,13 @@ msgid ""
 "        30h Allocate 30 hours to the task\n"
 "        #tags Set tags on the task\n"
 "        @user Assign the task to a user\n"
-"        ! Set the task a high priority\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
 "\n"
-"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+"        Make sure to use the right format and order e.g. Improve the "
+"configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
-"在新任務標題中，使用這些關鍵字進行設定：\n"
-"\n"
-"        30h：向任務分配 30 小時\n"
-"        #標籤名稱：對任務設定標籤\n"
-"        @用戶名稱：將任務指派給用戶\n"
-"        !：將任務設為高優先級別\n"
-"\n"
-"        記得使用正確格式和順序，例如：改進配置畫面 5h #特色功能 #v16 @志明 !"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -637,3 +675,32 @@ msgstr "請驗證<b>簽名</b>。"
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
 msgid "Wait for the invoice to show up"
 msgstr "等待發票出現"
+
+#. module: industry_fsm_sale
+#: model:product.template,name:industry_fsm_sale.field_service_product_zero_cost_3_product_template
+msgid "Water Testing Kits"
+msgstr ""
+
+#~ msgid "Config Settings"
+#~ msgstr "配置設定"
+
+#~ msgid ""
+#~ "Use these keywords in the title to set new tasks:\n"
+#~ "\n"
+#~ "        30h Allocate 30 hours to the task\n"
+#~ "        #tags Set tags on the task\n"
+#~ "        @user Assign the task to a user\n"
+#~ "        ! Set the task a high priority\n"
+#~ "\n"
+#~ "        Make sure to use the right format and order e.g. Improve the "
+#~ "configuration screen 5h #feature #v16 @Mitchell !"
+#~ msgstr ""
+#~ "在新任務標題中，使用這些關鍵字進行設定：\n"
+#~ "\n"
+#~ "        30h：向任務分配 30 小時\n"
+#~ "        #標籤名稱：對任務設定標籤\n"
+#~ "        @用戶名稱：將任務指派給用戶\n"
+#~ "        !：將任務設為高優先級別\n"
+#~ "\n"
+#~ "        記得使用正確格式和順序，例如：改進配置畫面 5h #特色功能 #v16 @志"
+#~ "明 !"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -38,10 +38,11 @@ msgstr "ID"
 #. odoo-python
 #: code:addons/data_merge_stock_account/models/data_merge_model.py:0
 msgid ""
-"Merging some products is an important change that will impact your inventory"
-" valuation. You may have to manually rectify it once done."
-msgstr "일부 품목 병합은 재고 평가에 영향을 미치는 중대한 변경 사항입니다. 실행할 "
-"경우 직접 수정해야 할 수 있습니다."
+"Merging some products is an important change that will impact your inventory "
+"valuation. You may have to manually rectify it once done."
+msgstr ""
+"일부 품목 병합은 재고 평가에 영향을 미치는 중대한 변경 사항입니다. 실행할 경"
+"우 직접 수정해야 할 수 있습니다."
 
 #. module: data_merge_stock_account
 #. odoo-python

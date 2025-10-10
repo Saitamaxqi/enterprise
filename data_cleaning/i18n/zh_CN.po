@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:28+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 15:29+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -137,8 +137,8 @@ msgstr "已归档"
 #. odoo-javascript
 #: code:addons/data_cleaning/static/src/views/data_merge_list_view.js:0
 msgid ""
-"Are you sure that you want to merge the selected records in their respective"
-" group?"
+"Are you sure that you want to merge the selected records in their respective "
+"group?"
 msgstr "是否确实要合并其各自组中的选定记录？"
 
 #. module: data_cleaning
@@ -452,8 +452,7 @@ msgstr "待合并的副本"
 
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_data_merge_model__create_threshold
-msgid ""
-"Duplicates with a similarity below this threshold will not be suggested"
+msgid "Duplicates with a similarity below this threshold will not be suggested"
 msgstr "不会建议具有低于此阈值的相似性的重复项"
 
 #. module: data_cleaning
@@ -525,10 +524,11 @@ msgstr "隐藏合并动作按钮"
 #: model:ir.model.fields,help:data_cleaning.field_data_cleaning_rule__action_case
 msgid ""
 "How the type case is set by the rule. 'First Letters to Uppercase' sets "
-"every letter to lowercase except the first letter of each word, which is set"
-" to uppercase."
-msgstr "如何由规则设置类型大小写。\"第一个字母到大写字母\""
-"将每个字母设置为小写，每个单词的第一个字母除外，该字母设置为大写。"
+"every letter to lowercase except the first letter of each word, which is set "
+"to uppercase."
+msgstr ""
+"如何由规则设置类型大小写。\"第一个字母到大写字母\"将每个字母设置为小写，每个"
+"单词的第一个字母除外，该字母设置为大写。"
 
 #. module: data_cleaning
 #: model_terms:ir.ui.view,arch_db:data_cleaning.data_merge_duplicate
@@ -568,11 +568,13 @@ msgstr "如果是 \"真\"，这个记录将用于目标模型上的上下文菜�
 #. module: data_cleaning
 #: model:ir.model.fields,help:data_cleaning.field_ir_model__hide_merge_action
 msgid ""
-"If the model already has a custom merge method, the class attribute `_merge_disabled` is set to true on\n"
-"             that model and the generic data merge action should not be available on that model."
+"If the model already has a custom merge method, the class attribute "
+"`_merge_disabled` is set to true on\n"
+"             that model and the generic data merge action should not be "
+"available on that model."
 msgstr ""
-"如果模型已经有一个自定义的合并方法，类属性`_merge_disabled`"
-"在该模型上被设置为 \"true\"，通用数据合并动作在该模型上不可用。\n"
+"如果模型已经有一个自定义的合并方法，类属性`_merge_disabled`在该模型上被设置"
+"为 \"true\"，通用数据合并动作在该模型上不可用。\n"
 "             该模型上，通用数据合并动作不应该在该模型上可用。"
 
 #. module: data_cleaning

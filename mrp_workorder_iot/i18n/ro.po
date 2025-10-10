@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2022-09-22 05:47+0000\n"
 "Last-Translator: Martin Trigaux, 2022\n"
 "Language-Team: Romanian (https://app.transifex.com/odoo/teams/41243/ro/)\n"
@@ -21,7 +21,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?2:1));\n"
+"Plural-Forms: nplurals=3; plural=(n==1?0:(((n%100>19)||((n%100==0)&&(n!=0)))?"
+"2:1));\n"
 
 #. module: mrp_workorder_iot
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__action
@@ -34,17 +35,17 @@ msgid "Boxes"
 msgstr "Cutii"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__cancel
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__canc
 msgid "Cancel"
 msgstr "Anulează"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clomo
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clmo
 msgid "Close MO"
 msgstr "Închideți MO"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clowo
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__clwo
 msgid "Close WO"
 msgstr "Închideți MO"
 
@@ -64,17 +65,23 @@ msgid "Device"
 msgstr "Dispozitiv"
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__display_name
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__display_name
 msgid "Display Name"
 msgstr "Nume afișat"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__finish
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__fini
 msgid "Finish"
 msgstr "Finalizare"
 
 #. module: mrp_workorder_iot
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_device__id
 #: model:ir.model.fields,field_description:mrp_workorder_iot.field_iot_trigger__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_mrp_workcenter__id
+#: model:ir.model.fields,field_description:mrp_workorder_iot.field_quality_check__id
 msgid "ID"
 msgstr "ID"
 
@@ -120,13 +127,13 @@ msgid "Pack"
 msgstr "Pachet"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__pause
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__paus
 msgid "Pause"
 msgstr "Pauză"
 
 #. module: mrp_workorder_iot
 #. odoo-javascript
-#: code:addons/mrp_workorder_iot/static/src/pedal_status_button/pedal_status_button.xml:0
+#: code:addons/mrp_workorder_iot/static/src/mrp_display/pedal_status_button.xml:0
 msgid "Pedal Status"
 msgstr ""
 
@@ -136,17 +143,17 @@ msgid "Previous"
 msgstr "Anterior"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print-slip
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prsl
 msgid "Print Delivery Slip"
 msgstr "Tipărire livrare"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prnt
 msgid "Print Labels"
 msgstr "Tipărire Etichete"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__print-op
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__prop
 msgid "Print Operation"
 msgstr "Tipărire Operație"
 
@@ -156,12 +163,12 @@ msgid "Quality Check"
 msgstr "Verificare Calitate"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__record
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__reco
 msgid "Record Production"
 msgstr "Înregistrare producție"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__scrap
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__scra
 msgid "Scrap"
 msgstr "Rebut"
 
@@ -191,7 +198,7 @@ msgid "Triggers"
 msgstr "Declanșatoare"
 
 #. module: mrp_workorder_iot
-#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__validate
+#: model:ir.model.fields.selection,name:mrp_workorder_iot.selection__iot_trigger__action__vali
 msgid "Validate"
 msgstr "Validează"
 

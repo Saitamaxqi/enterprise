@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:03+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
@@ -25,29 +25,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: social_crm
+#: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_description
+msgid "<span class=\"me-1\">posted on</span>"
+msgstr ""
+
+#. module: social_crm
+#: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_description
+msgid "<span class=\"ms-1\">at</span>"
+msgstr ""
+
+#. module: social_crm
 #: model_terms:ir.ui.view,arch_db:social_crm.social_post_view_form
 msgid ""
-"<span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', False)]}\">Leads</span>\n"
-"                        <span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', True)]}\">Opportunities</span>"
+"<span class=\"o_stat_text\" invisible=\"not use_leads\">Leads</span>\n"
+"                        <span class=\"o_stat_text\" "
+"invisible=\"use_leads\">Opportunities</span>"
 msgstr ""
-"<span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', False)]}\">Sygnały</span>\n"
-"                        <span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', True)]}\">Szanse</span>"
-
-#. module: social_crm
-#: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_description
-msgid "<span>at</span>"
-msgstr "<span>na</span>"
-
-#. module: social_crm
-#: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_description
-msgid "<span>posted on</span>"
-msgstr "<span>opublikowane na</span>"
 
 #. module: social_crm
 #: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_view_form
@@ -103,6 +102,7 @@ msgid "Customer"
 msgstr "Klient"
 
 #. module: social_crm
+#: model:ir.model.fields,field_description:social_crm.field_social_post__display_name
 #: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__display_name
 msgid "Display Name"
 msgstr "Nazwa wyświetlana"
@@ -123,6 +123,7 @@ msgid "From a stream post"
 msgstr "Ze strumienia postów"
 
 #. module: social_crm
+#: model:ir.model.fields,field_description:social_crm.field_social_post__id
 #: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__id
 msgid "ID"
 msgstr "ID"
@@ -173,6 +174,11 @@ msgid "Post Datetime"
 msgstr "Data i godzina posta"
 
 #. module: social_crm
+#: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__post_image_urls
+msgid "Post Images URLs"
+msgstr ""
+
+#. module: social_crm
 #: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__post_link
 msgid "Post Link"
 msgstr "Opublikuj link"
@@ -197,6 +203,11 @@ msgstr "Konto w mediach społecznościowych"
 #: model:ir.model,name:social_crm.model_social_post
 msgid "Social Post"
 msgstr "Post w mediach społecznościowych"
+
+#. module: social_crm
+#: model_terms:ir.ui.view,arch_db:social_crm.social_post_to_lead_description
+msgid "Social Post Image {{0}}"
+msgstr ""
 
 #. module: social_crm
 #: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__social_stream_post_id
@@ -228,3 +239,20 @@ msgstr "Utm medium"
 #: model:ir.model.fields,field_description:social_crm.field_social_post_to_lead__utm_source_id
 msgid "Utm Source"
 msgstr "Źródło Utm"
+
+#~ msgid ""
+#~ "<span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', "
+#~ "False)]}\">Leads</span>\n"
+#~ "                        <span class=\"o_stat_text\" attrs=\"{'invisible': "
+#~ "[('use_leads', '=', True)]}\">Opportunities</span>"
+#~ msgstr ""
+#~ "<span class=\"o_stat_text\" attrs=\"{'invisible': [('use_leads', '=', "
+#~ "False)]}\">Sygnały</span>\n"
+#~ "                        <span class=\"o_stat_text\" attrs=\"{'invisible': "
+#~ "[('use_leads', '=', True)]}\">Szanse</span>"
+
+#~ msgid "<span>at</span>"
+#~ msgstr "<span>na</span>"
+
+#~ msgid "<span>posted on</span>"
+#~ msgstr "<span>opublikowane na</span>"

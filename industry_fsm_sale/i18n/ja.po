@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-26 04:03+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -36,7 +36,8 @@ msgstr "顧客に<b>タイムアンドマテリアルを請求</b> しましょ�
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
 msgid "<b>Review and sign</b> the <b>task report</b> with your customer."
-msgstr "以下の<b>レビューと署名</b> を行って下さい: 顧客との<b>タスクレポート</b>"
+msgstr ""
+"以下の<b>レビューと署名</b> を行って下さい: 顧客との<b>タスクレポート</b>"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -51,25 +52,26 @@ msgid ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
 "                            No products found. Let's create one!\n"
 "                        </p><p>\n"
-"                            Keep track of the products you are using to complete your tasks, and invoice your customers for the goods.\n"
-"                            Tip: using kits, you can add multiple products at once.\n"
+"                            Keep track of the products you are using to "
+"complete your tasks, and invoice your customers for the goods.\n"
+"                            Tip: using kits, you can add multiple products "
+"at once.\n"
 "                        </p><p>\n"
-"                            When your task is marked as done, your stock will be updated automatically. Simply choose a warehouse\n"
+"                            When your task is marked as done, your stock "
+"will be updated automatically. Simply choose a warehouse\n"
 "                            in your profile from where to draw stock.\n"
 "                        </p>"
 msgstr ""
 "<p class=\"o_view_nocontent_smiling_face\">\n"
 "                            プロダクトがありません。作成しましょう!\n"
 "                        </p><p>\n"
-"                            "
-"タスクを完了するために使用しているプロダクトを追跡し、商品代金を顧客に請求し"
-"ましょう。\n"
-"                            ヒント: "
-"キットを使用すれば、複数のプロダクトを1回で追加できます。\n"
+"                            タスクを完了するために使用しているプロダクトを追"
+"跡し、商品代金を顧客に請求しましょう。\n"
+"                            ヒント: キットを使用すれば、複数のプロダクトを1回"
+"で追加できます。\n"
 "                        </p><p>\n"
-"                            "
-"タスクが完了とされると在庫が自動的に更新されます。"
-"プロフィールで在庫を出荷する倉庫を\n"
+"                            タスクが完了とされると在庫が自動的に更新されま"
+"す。プロフィールで在庫を出荷する倉庫を\n"
 "選ぶだけです。\n"
 "                        </p>"
 
@@ -79,20 +81,20 @@ msgid ""
 "<span invisible=\"not allow_material\" class=\"text-muted\">Hide prices on "
 "customer report</span>"
 msgstr ""
-"<span invisible=\"not allow_material\" class=\"text-muted\""
-">顧客レポートの価格を非表示にする</span>"
+"<span invisible=\"not allow_material\" class=\"text-muted\">顧客レポートの価"
+"格を非表示にする</span>"
 
 #. module: industry_fsm_sale
 #: model_terms:ir.ui.view,arch_db:industry_fsm_sale.project_view_form_inherit
 msgid ""
 "<span invisible=\"not is_fsm\">\n"
-"                    Define the service and the rate at which an employee's time is billed based on their expertise, skills or experience.\n"
+"                    Define the service and the rate at which an employee's "
+"time is billed based on their expertise, skills or experience.\n"
 "                </span>"
 msgstr ""
 "<span invisible=\"not is_fsm\">\n"
-"                    "
-"従業員の専門知識、スキル、経験に基づいて、サービス内容や請求率を定義します。"
-"\n"
+"                    従業員の専門知識、スキル、経験に基づいて、サービス内容や"
+"請求率を定義します。\n"
 "                </span>"
 
 #. module: industry_fsm_sale
@@ -156,7 +158,8 @@ msgstr "金額"
 #. module: industry_fsm_sale
 #: model:ir.model.constraint,message:industry_fsm_sale.constraint_project_project_fsm_imply_task_rate
 msgid "An FSM project must be billed at task rate or employee rate."
-msgstr "FSMプロジェクトは、タスクレートまたは従業員レートで請求される必要があります。"
+msgstr ""
+"FSMプロジェクトは、タスクレートまたは従業員レートで請求される必要があります。"
 
 #. module: industry_fsm_sale
 #. odoo-python
@@ -186,17 +189,19 @@ msgstr "請求可能"
 msgid ""
 "By saving this change, all timesheet entries will be linked to the selected "
 "Sales Order Item without distinction."
-msgstr "この変更を保存することで、全てのタイムシートエントリは区別なく選択された販売"
+msgstr ""
+"この変更を保存することで、全てのタイムシートエントリは区別なく選択された販売"
 "オーダ項目にリンクされます。"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
 #: code:addons/industry_fsm_sale/static/src/js/tours/industry_fsm_sale_tour.js:0
 msgid ""
-"Choose a <b>name</b> for your product <i>(e.g. Bolts, Screws, Boiler, "
-"etc.).</i>"
-msgstr "プロダクト用に <b>名前</b>を選択して下さい。<i>(例: "
-"ボルト、スクリュー、ボイラーなど)</i>"
+"Choose a <b>name</b> for your product <i>(e.g. Bolts, Screws, Boiler, etc.)."
+"</i>"
+msgstr ""
+"プロダクト用に <b>名前</b>を選択して下さい。<i>(例: ボルト、スクリュー、ボイ"
+"ラーなど)</i>"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -204,8 +209,9 @@ msgstr "プロダクト用に <b>名前</b>を選択して下さい。<i>(例: "
 msgid ""
 "Click on a product to add it to your <b>list of materials</b>. <i>Tip: for "
 "large quantities, click on the number to edit it directly.</i>"
-msgstr "プロダクトをクリックして <b>材料表</b>に追加します。<i>ヒント: "
-"大量の場合は、番号をクリックして直接編集して下さい。</i>"
+msgstr ""
+"プロダクトをクリックして <b>材料表</b>に追加します。<i>ヒント: 大量の場合は、"
+"番号をクリックして直接編集して下さい。</i>"
 
 #. module: industry_fsm_sale
 #. odoo-javascript
@@ -322,7 +328,8 @@ msgid ""
 "If ticked, the time and materials used for this task will not be billed to "
 "the customer. However, the inventory of consumed materials will still be "
 "updated."
-msgstr "チェックを入れると、このタスクに使用された時間と材料については顧客に仕入先請"
+msgstr ""
+"チェックを入れると、このタスクに使用された時間と材料については顧客に仕入先請"
 "求書が発行されません。ただし、消耗品の在庫は更新されます。"
 
 #. module: industry_fsm_sale
@@ -529,12 +536,15 @@ msgstr "販売オーダ明細"
 #. module: industry_fsm_sale
 #: model:ir.model.fields,help:industry_fsm_sale.field_project_project__sale_line_id
 msgid ""
-"Sales order item that will be selected by default on the tasks and timesheets of this project, except if the employee set on the timesheets is explicitely linked to another sales order item on the project.\n"
-"It can be modified on each task and timesheet entry individually if necessary."
+"Sales order item that will be selected by default on the tasks and "
+"timesheets of this project, except if the employee set on the timesheets is "
+"explicitely linked to another sales order item on the project.\n"
+"It can be modified on each task and timesheet entry individually if "
+"necessary."
 msgstr ""
-"このプロジェクトのタスクとタイムシートでデフォルトで選択される販売オーダ項目"
-"。ただし、タイムシートに設定された従業員がプロジェクトの別の販売オーダ項目に"
-"明確にリンクされている場合を除きます。\n"
+"このプロジェクトのタスクとタイムシートでデフォルトで選択される販売オーダ項"
+"目。ただし、タイムシートに設定された従業員がプロジェクトの別の販売オーダ項目"
+"に明確にリンクされている場合を除きます。\n"
 "必要であれば、各タスクやタイムシートで個別に変更することができます。"
 
 #. module: industry_fsm_sale
@@ -580,8 +590,9 @@ msgstr "税金"
 msgid ""
 "The following products are currently associated with a Field Service "
 "project, you cannot change their Invoicing Policy or Type:%s"
-msgstr "以下のプロダクトは現在フィールドサービスプロジェクトに関連付けられているため"
-"、顧客請求ポリシーやタイプを変更することはできません:%s"
+msgstr ""
+"以下のプロダクトは現在フィールドサービスプロジェクトに関連付けられているた"
+"め、顧客請求ポリシーやタイプを変更することはできません:%s"
 
 #. module: industry_fsm_sale
 #: model:ir.model.constraint,message:industry_fsm_sale.constraint_project_project_material_imply_billable
@@ -593,7 +604,8 @@ msgstr "その材料は、タスクが課金可能な場合にのみ許可され
 msgid ""
 "The timesheet product is required when the fsm project can be billed and "
 "timesheets are allowed."
-msgstr "タイムシートプロダクトは、FSMプロジェクトが請求可能でタイムシートが許可されて"
+msgstr ""
+"タイムシートプロダクトは、FSMプロジェクトが請求可能でタイムシートが許可されて"
 "いる場合に必要です。"
 
 #. module: industry_fsm_sale
@@ -660,7 +672,8 @@ msgid ""
 "        !! Set the task a high priority\n"
 "        !!! Set the task a urgent priority\n"
 "\n"
-"        Make sure to use the right format and order e.g. Improve the configuration screen 5h #feature #v16 @Mitchell !"
+"        Make sure to use the right format and order e.g. Improve the "
+"configuration screen 5h #feature #v16 @Mitchell !"
 msgstr ""
 
 #. module: industry_fsm_sale

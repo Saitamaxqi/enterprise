@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 21:15+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
@@ -113,8 +113,8 @@ msgstr "Möchten Sie %s auf %s einzahlen?"
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"Do you want to deposit money to a specific customer? If so, first select "
-"him/her."
+"Do you want to deposit money to a specific customer? If so, first select him/"
+"her."
 msgstr ""
 "Möchten Sie Geld für einen bestimmten Kunden einzahlen? Wenn ja, wählen Sie "
 "ihn zunächst aus."
@@ -312,8 +312,8 @@ msgstr "Der Auftrag ist leer"
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"The selected customer is not in the list of partners of the ongoing settling"
-" orderlines."
+"The selected customer is not in the list of partners of the ongoing settling "
+"orderlines."
 msgstr ""
 "Der ausgewählte Kunde ist nicht in der Liste der Partner der laufenden "
 "Abwicklungsauftragszeilen aufgeführt."
@@ -333,7 +333,8 @@ msgstr "Dieses Produkt wird verwendet, um Kunden abzurechnen."
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__deposit_product_id
 msgid "This product is used to deposit money on customer account."
-msgstr "Dieses Produkt wird verwendet, um Geld auf ein Kundenkonto einzuzahlen."
+msgstr ""
+"Dieses Produkt wird verwendet, um Geld auf ein Kundenkonto einzuzahlen."
 
 #. module: pos_settle_due
 #: model_terms:ir.ui.view,arch_db:pos_settle_due.customer_due_pos_order_list_view

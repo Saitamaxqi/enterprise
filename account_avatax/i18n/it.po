@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:10+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-18 02:43+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -37,37 +37,41 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax "
+"portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                Avatax portal"
 msgstr ""
-"<i title=\"Go to Avatax portal\" role=\"img\" aria-label="
-"\"Go to Avatax portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
+"<i title=\"Go to Avatax portal\" role=\"img\" aria-label=\"Go to Avatax "
+"portal\" class=\"fa fa-external-link-square fa-fw\"/>\n"
 "                                Portale Avatax"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                Show logs"
 msgstr ""
-"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class="
-"\"fa fa-file-text-o\"/>\n"
+"<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-"
+"file-text-o\"/>\n"
 "                                Mostra registri"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start "
+"logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
 "                                Start logging for 30 minutes"
 msgstr ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label="
-"\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start "
+"logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
 "                                Inizia la registrazione per 30 minuti"
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" class=\"fa fa-refresh\"/>\n"
+"<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" "
+"class=\"fa fa-refresh\"/>\n"
 "                                Sync Parameters"
 msgstr ""
 "<i title=\"Sync Parameters\" role=\"img\" aria-label=\"Sync Parameters\" "
@@ -77,7 +81,8 @@ msgstr ""
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
+"class=\"fa fa-plug fa-fw\"/>\n"
 "                                Test connection"
 msgstr ""
 "<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" "
@@ -476,11 +481,12 @@ msgstr "Nome"
 #. odoo-python
 #: code:addons/account_avatax/models/account_external_tax_mixin.py:0
 msgid ""
-"Odoo could not change the state of the transaction related to %(document)s in AvaTax\n"
+"Odoo could not change the state of the transaction related to %(document)s "
+"in AvaTax\n"
 "Please check the status of `%(technical)s` in the AvaTax portal."
 msgstr ""
-"Odoo non può cambiare in AvaTax lo stato dell'operazione correlata a "
-"%(document)s\n"
+"Odoo non può cambiare in AvaTax lo stato dell'operazione correlata a %"
+"(document)s\n"
 "Controllare lo stato di `%(technical)s` nel portale AvaTax."
 
 #. module: account_avatax
@@ -599,8 +605,8 @@ msgstr "Prova il collegamento con avatax"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_partner_code
 msgid ""
-"The Avalara Company Code for this company. Avalara will interpret as DEFAULT"
-" if it is not set."
+"The Avalara Company Code for this company. Avalara will interpret as DEFAULT "
+"if it is not set."
 msgstr ""
 "Il codice Avalara per questa azienda. Viene interpretato da Avalara come "
 "PREDEFINITO se non impostato."
@@ -689,8 +695,7 @@ msgstr "Convalida indirizzo di %s"
 #. module: account_avatax
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_address_validation
 msgid ""
-"Validate and correct the addresses of partners in North America with "
-"Avalara."
+"Validate and correct the addresses of partners in North America with Avalara."
 msgstr ""
 "Convalida e corregge gli indirizzi dei partner nordamericani con Avalara."
 

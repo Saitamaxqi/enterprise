@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -24,16 +24,13 @@ msgstr ""
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Orders"
 msgstr "訂單數目"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "# Subscriptions"
 msgstr "定期訂購數目"
@@ -203,7 +200,6 @@ msgstr "縮減（數目）"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Countries"
 msgstr "國家"
@@ -213,6 +209,7 @@ msgstr "國家"
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
+#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 msgid "Country"
 msgstr "國家/地區"
 
@@ -273,6 +270,7 @@ msgstr "客戶"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
+#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Customer Churn Rate"
 msgstr "客戶流失率"
@@ -371,12 +369,6 @@ msgstr "關鍵績效指標 KPI"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
-msgid "Land"
-msgstr "地方"
-
-#. module: spreadsheet_dashboard_sale_subscription
-#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Last 30 Days analysis"
 msgstr "近 30 天分析"
@@ -424,6 +416,12 @@ msgstr "MRR 細分"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
+#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
+msgid "MRR Change"
+msgstr ""
+
+#. module: spreadsheet_dashboard_sale_subscription
+#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR Change (normalized)"
 msgstr "MRR 每月經常收入變化（正常化）"
@@ -438,7 +436,6 @@ msgstr "MRR 演變"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
@@ -563,6 +560,12 @@ msgstr "淨留存"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
+msgid "Net Retention Rate"
+msgstr ""
+
+#. module: spreadsheet_dashboard_sale_subscription
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Net Retention rate"
 msgstr "淨留存率"
@@ -677,9 +680,7 @@ msgstr "期間"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Plans"
 msgstr "計劃"
@@ -704,7 +705,6 @@ msgstr "產品"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Recurrence"
 msgstr "循環活動"
@@ -738,6 +738,12 @@ msgstr "流失收入"
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
+msgid "Revenue Churn Rate"
+msgstr ""
+
+#. module: spreadsheet_dashboard_sale_subscription
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Revenue Churn rate"
 msgstr "收入流失率"
 
@@ -765,7 +771,6 @@ msgstr "銷售員"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/mrr_evolution_sample_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
@@ -811,7 +816,6 @@ msgstr "今天"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Top Countries"
 msgstr "主要國家/地區"
@@ -944,7 +948,6 @@ msgstr "升級/降級"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "Value"
 msgstr "值"
@@ -995,3 +998,6 @@ msgstr "佔已開立發票總額"
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_sample_dashboard.json:0
 msgid "over the period"
 msgstr "在此期間內"
+
+#~ msgid "Land"
+#~ msgstr "地方"

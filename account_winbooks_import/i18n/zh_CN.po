@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -23,16 +23,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_winbooks_import.winbooks_import_form
 msgid ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible=\"only_open\">\n"
-"                        The export of data from Winbooks for closed years might contain unbalanced entries. However if you want to try to import everything, Odoo will set the difference of balance in a Suspense Account.\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
+"                        The export of data from Winbooks for closed years "
+"might contain unbalanced entries. However if you want to try to import "
+"everything, Odoo will set the difference of balance in a Suspense Account.\n"
 "                    </span>"
 msgstr ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible="
-"\"only_open\">\n"
-"                        从 Winbooks "
-"导出的已结束年度的数据可能包含不平衡的条目。但是，如果您想尝试导入所有数据，"
-"Odoo 会将余额差额设置为暂记账户。\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
+"                        从 Winbooks 导出的已结束年度的数据可能包含不平衡的条"
+"目。但是，如果您想尝试导入所有数据，Odoo 会将余额差额设置为暂记账户。\n"
 "                    </span>"
 
 #. module: account_winbooks_import
@@ -58,7 +60,8 @@ msgid ""
 "At least one automatic counterpart has been created at import. This is "
 "probably an error. Please check entry lines with reference: Counterpart "
 "(generated at import from Winbooks)"
-msgstr "导入时至少创建了一个自动对应项。这可能是一个错误。请参考参考检查条目行：对应"
+msgstr ""
+"导入时至少创建了一个自动对应项。这可能是一个错误。请参考参考检查条目行：对应"
 "项目（从 Winbooks 导入时生成）"
 
 #. module: account_winbooks_import
@@ -203,8 +206,7 @@ msgstr ""
 #. module: account_winbooks_import
 #. odoo-python
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
-msgid ""
-"The code for the Suspense Account you entered doesn't match any account"
+msgid "The code for the Suspense Account you entered doesn't match any account"
 msgstr "输入的暂记科目代码与任何科目均不匹配"
 
 #. module: account_winbooks_import
@@ -213,7 +215,8 @@ msgid ""
 "This is the code of the account in which you want to put the counterpart of "
 "unbalanced moves. This might be an account from your Winbooks data, or an "
 "account that you created in Odoo before the import."
-msgstr "这是要放入不平衡分录对应项的科目的代码。可能是Winbooks数据中的科目，或者导入"
+msgstr ""
+"这是要放入不平衡分录对应项的科目的代码。可能是Winbooks数据中的科目，或者导入"
 "前在Odoo中创建的科目。"
 
 #. module: account_winbooks_import
@@ -231,7 +234,8 @@ msgstr "Winbooks Line"
 msgid ""
 "Years closed in Winbooks are likely to have incomplete data. The counter "
 "part of incomplete entries will be set in a suspense account"
-msgstr "Winbooks中关闭的年度可能存在不完整数据。不完整分录的对应项将在暂记科目中设置"
+msgstr ""
+"Winbooks中关闭的年度可能存在不完整数据。不完整分录的对应项将在暂记科目中设置"
 
 #. module: account_winbooks_import
 #. odoo-python

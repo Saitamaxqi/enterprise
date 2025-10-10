@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
-"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/ai/ja/>"
-"\n"
+"Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/ai/ja/"
+">\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -324,8 +324,9 @@ msgstr ""
 msgid ""
 "A topic includes instructions and tools that guide Odoo AI in helping the "
 "user complete their tasks."
-msgstr "トピックには、ユーザのタスク完了を支援するために Odoo "
-"AIを導く指示とツールが含まれています。"
+msgstr ""
+"トピックには、ユーザのタスク完了を支援するために Odoo AIを導く指示とツールが"
+"含まれています。"
 
 #. module: ai
 #. odoo-javascript
@@ -674,7 +675,8 @@ msgstr "チャネルタイプ"
 msgid ""
 "Chat is private and unique between 2 persons. Group is private among invited "
 "persons. Channel can be freely joined (depending on its configuration)."
-msgstr "チャットは2人だけのプライベートなものです。グループは招待された人だけのプライ"
+msgstr ""
+"チャットは2人だけのプライベートなものです。グループは招待された人だけのプライ"
 "ベートなものです。チャネルは (設定により)自由に参加できます。"
 
 #. module: ai
@@ -743,9 +745,9 @@ msgstr "顧客を作成する"
 msgid ""
 "Create a topic that leverages instructions and tools to direct Odoo AI in "
 "assisting the user with their tasks."
-msgstr "Odoo AI "
-"がユーザーのタスクを支援できるように、指示とツールを活用して誘導するトピック"
-"を作成してください。"
+msgstr ""
+"Odoo AI がユーザーのタスクを支援できるように、指示とツールを活用して誘導する"
+"トピックを作成してください。"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__create_uid
@@ -971,7 +973,8 @@ msgstr "ID"
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent__restrict_to_sources
 msgid "If checked, the agent will only respond based on the provided sources."
-msgstr "チェックを入れると、エージェントは指定された情報源のみに基づいて応答します。"
+msgstr ""
+"チェックを入れると、エージェントは指定された情報源のみに基づいて応答します。"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_agent_source__is_active

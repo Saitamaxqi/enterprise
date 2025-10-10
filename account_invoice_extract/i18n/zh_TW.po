@@ -1,22 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_invoice_extract
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_invoice_extract
@@ -33,6 +34,12 @@ msgstr "附件"
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_attachment_count
 msgid "Attachment Count"
 msgstr "附件數目"
+
+#. module: account_invoice_extract
+#. odoo-python
+#: code:addons/account_invoice_extract/models/account_invoice.py:0
+msgid "Automatic OCR does not apply to this document."
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_can_show_banners
@@ -56,6 +63,11 @@ msgid "Config Settings"
 msgstr "配置設定"
 
 #. module: account_invoice_extract
+#: model:ir.model,name:account_invoice_extract.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: account_invoice_extract
 #. odoo-python
 #: code:addons/account_invoice_extract/models/account_invoice.py:0
 msgid "Couldn't reload AI data."
@@ -66,6 +78,11 @@ msgstr "未能重新載入 AI 數據。"
 #: code:addons/account_invoice_extract/static/src/js/invoice_extract_form.js:0
 msgid "Create"
 msgstr "建立"
+
+#. module: account_invoice_extract
+#: model:ir.model,website_form_label:account_invoice_extract.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_out_invoice_digitalization_mode
@@ -104,6 +121,7 @@ msgstr "只按要求數碼化"
 #: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__display_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
 
@@ -162,7 +180,17 @@ msgid "Extract status"
 msgstr "提取狀態"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_word_ids
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_dates
+msgid "Extracted Dates"
+msgstr ""
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_numbers
+msgid "Extracted Numbers"
+msgstr ""
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_words
 msgid "Extracted Words"
 msgstr "擷取的單字"
 
@@ -191,6 +219,7 @@ msgstr "有訊息"
 #: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__id
 msgid "ID"
 msgstr "識別號"
 
@@ -219,6 +248,12 @@ msgstr "發票 OCR：更新所有狀態"
 #: model:ir.actions.server,name:account_invoice_extract.ir_cron_ocr_validate_ir_actions_server
 msgid "Invoice OCR: Validate Invoices"
 msgstr "發票 OCR：驗證發票"
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__is_created_by_ocr
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_users__is_created_by_ocr
+msgid "Is Created By Ocr"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_is_follower
@@ -295,6 +330,11 @@ msgstr "傳送賬單作數碼化"
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_single_line_per_tax
 msgid "Single Invoice Line Per Tax"
 msgstr "每項稅單一發票行"
+
+#. module: account_invoice_extract
+#: model:ir.model.constraint,message:account_invoice_extract.constraint_res_partner_ocr_name_uniq
+msgid "The OCR can't create multiple partners with the same name."
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_in_invoice_digitalization_mode

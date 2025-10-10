@@ -1,45 +1,47 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_budget
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:46+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_kanban
-msgid "<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" title=\"Period\"/>"
-msgstr "<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"期間\" title=\"期間\"/>"
+msgid ""
+"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" "
+"title=\"Period\"/>"
+msgstr ""
+"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"期間\" title=\"期間"
+"\"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
-msgid "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"to\"/>"
-msgstr "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"至\" title=\"至\"/>"
+msgid ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"to\"/>"
+msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"至\" title=\"至\"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "<span class=\"o_stat_text\">Budget Report</span>"
 msgstr "<span class=\"o_stat_text\">預算報告</span>"
-
-#. module: account_budget
-#: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
-msgid "Account"
-msgstr "賬戶"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_amount
@@ -82,11 +84,6 @@ msgid "Activity Type Icon"
 msgstr "活動類型圖示"
 
 #. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__committed_amount
-msgid "Already Billed amount + Confirmed purchase orders."
-msgstr "已開立賬單金額 + 已確認的採購訂單。"
-
-#. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
 msgid "Amount Billed/Invoiced."
 msgstr "賬單/發票金額。"
@@ -109,11 +106,6 @@ msgstr "分析帳戶"
 #: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
 msgid "Analytic Budget"
 msgstr "分析預算"
-
-#. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order_line__analytic_json
-msgid "Analytic JSON"
-msgstr "分析 JSON"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__analytical_plan_ids
@@ -140,7 +132,6 @@ msgstr "兩者皆有"
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_report__line_type__budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
-#: model_terms:ir.ui.view,arch_db:account_budget.purchase_order_form_account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_tree
@@ -172,7 +163,6 @@ msgstr "預算明細"
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__budget_line_ids
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order_line__budget_line_ids
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_tree
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_form
@@ -264,20 +254,6 @@ msgid "Click to create a new budget."
 msgstr "點選以建立一個新的預算。"
 
 #. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_budget_line__committed_amount
-#: model:ir.model.fields,field_description:account_budget.field_budget_report__committed
-#: model:ir.model.fields.selection,name:account_budget.selection__budget_report__line_type__committed
-#: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
-#: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
-msgid "Committed"
-msgstr "已投放"
-
-#. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_budget_line__committed_percentage
-msgid "Committed (%)"
-msgstr "已投放（%）"
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__company_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__company_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__company_id
@@ -327,8 +303,6 @@ msgstr "描述"
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__display_name
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__display_name
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__display_name
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order__display_name
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order_line__display_name
 msgid "Display Name"
 msgstr "顯示名稱"
 
@@ -403,12 +377,6 @@ msgid "Generate Budget"
 msgstr "產生預算"
 
 #. module: account_budget
-#: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
-#: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_search
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__has_message
 msgid "Has Message"
 msgstr "有訊息"
@@ -419,8 +387,6 @@ msgstr "有訊息"
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__id
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__id
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order__id
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order_line__id
 msgid "ID"
 msgstr "識別號"
 
@@ -452,15 +418,8 @@ msgstr "在預算內"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__is_above_budget
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order__is_above_budget
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order_line__is_above_budget
 msgid "Is Above Budget"
 msgstr "是否超預算"
-
-#. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_purchase_order__is_analytic
-msgid "Is Analytic"
-msgstr "是分析"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_is_follower
@@ -590,35 +549,15 @@ msgid "Practical amount"
 msgstr "實際金額"
 
 #. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_budget_report__account_id
-msgid "Project"
-msgstr "專案"
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__account_id
+#: model:ir.model.fields,field_description:account_budget.field_budget_report__account_id
 msgid "Project Account"
 msgstr "專案賬戶"
-
-#. module: account_budget
-#: model:ir.model,name:account_budget.model_purchase_order
-msgid "Purchase Order"
-msgstr "採購訂單"
-
-#. module: account_budget
-#: model:ir.model,name:account_budget.model_purchase_order_line
-msgid "Purchase Order Line"
-msgstr "採購訂單資料行"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_split_wizard__period__quarter
 msgid "Quarter"
 msgstr "季"
-
-#. module: account_budget
-#. odoo-python
-#: code:addons/account_budget/models/budget_analytic.py:0
-msgid "REV %s"
-msgstr "修訂 %s"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__rating_ids
@@ -744,11 +683,6 @@ msgid "Total Budget"
 msgstr "預算總額"
 
 #. module: account_budget
-#: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
-msgid "Total Committed"
-msgstr "已投放總額"
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__line_type
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Type"
@@ -807,3 +741,39 @@ msgstr "例：2023 年預算"
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "id"
 msgstr "id"
+
+#~ msgid "Account"
+#~ msgstr "賬戶"
+
+#~ msgid "Already Billed amount + Confirmed purchase orders."
+#~ msgstr "已開立賬單金額 + 已確認的採購訂單。"
+
+#~ msgid "Analytic JSON"
+#~ msgstr "分析 JSON"
+
+#~ msgid "Committed"
+#~ msgstr "已投放"
+
+#~ msgid "Committed (%)"
+#~ msgstr "已投放（%）"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"
+
+#~ msgid "Is Analytic"
+#~ msgstr "是分析"
+
+#~ msgid "Project"
+#~ msgstr "專案"
+
+#~ msgid "Purchase Order"
+#~ msgstr "採購訂單"
+
+#~ msgid "Purchase Order Line"
+#~ msgstr "採購訂單資料行"
+
+#~ msgid "REV %s"
+#~ msgstr "修訂 %s"
+
+#~ msgid "Total Committed"
+#~ msgstr "已投放總額"

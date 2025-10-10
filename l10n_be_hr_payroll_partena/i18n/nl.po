@@ -1,23 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* l10n_be_hr_payroll_partena
-# 
+#
 # Translators:
 # Tiffany Chang, 2025
 # Manon Rondou, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-11-20 10:47+0000\n"
+"POT-Creation-Date: 2025-10-09 12:56+0000\n"
 "PO-Revision-Date: 2025-02-12 11:36+0000\n"
 "Last-Translator: Manon Rondou, 2025\n"
 "Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: nl\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. module: l10n_be_hr_payroll_partena
@@ -31,7 +31,13 @@ msgid "Companies"
 msgstr "Bedrijven"
 
 #. module: l10n_be_hr_payroll_partena
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_partena.hr_payroll_dashboard_warning_missing_partena_code_companies
+msgid "Companies without Partena Code"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__company_id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__company_id
 msgid "Company"
 msgstr "Bedrijf"
 
@@ -39,11 +45,6 @@ msgstr "Bedrijf"
 #: model:ir.model,name:l10n_be_hr_payroll_partena.model_res_config_settings
 msgid "Config Settings"
 msgstr "Configuratie instellingen"
-
-#. module: l10n_be_hr_payroll_partena
-#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__contract_ids
-msgid "Contract"
-msgstr "Contract"
 
 #. module: l10n_be_hr_payroll_partena
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__create_uid
@@ -58,8 +59,12 @@ msgid "Created on"
 msgstr "Aangemaakt op"
 
 #. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_employee__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_work_entry_type__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__display_name
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Schermnaam"
 
@@ -78,6 +83,11 @@ msgstr "In aanmerking komende werknemers Tellen"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__employee_id
 msgid "Employee"
 msgstr "Werknemer"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_partena.hr_payroll_dashboard_warning_missing_partena_code_contracts
+msgid "Employees without Partena Code"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_partena
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__export_id
@@ -117,8 +127,12 @@ msgid "HR Work Entry Type"
 msgstr "HR werkboekingstype"
 
 #. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_employee__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_hr_work_entry_type__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena__id
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_res_config_settings__id
 msgid "ID"
 msgstr "ID"
 
@@ -135,7 +149,6 @@ msgid "Last Updated on"
 msgstr "Laatst bijgewerkt op"
 
 #. module: l10n_be_hr_payroll_partena
-#: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_partena.hr_employee_form_l10n_be_hr_payroll_partena
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_partena.res_config_settings_view_form
 msgid "Partena"
 msgstr "Partena"
@@ -191,8 +204,8 @@ msgstr "Het Partena-nummer moet uit 6 tekens bestaan!"
 #. module: l10n_be_hr_payroll_partena
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll_partena/models/hr_work_entry_type.py:0
-msgid "The code should have 3 characters!"
-msgstr "De code moet uit 3 tekens bestaan!"
+msgid "The code should have 5 characters!"
+msgstr ""
 
 #. module: l10n_be_hr_payroll_partena
 #. odoo-python
@@ -202,17 +215,48 @@ msgstr "De code moet uit 6 tekens bestaan!"
 
 #. module: l10n_be_hr_payroll_partena
 #. odoo-python
-#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
-msgid "The following employees do not have a Partena code: %(names)s"
-msgstr "De volgende werknemers hebben geen Partena-code: %(names)s"
-
-#. module: l10n_be_hr_payroll_partena
-#. odoo-python
 #: code:addons/l10n_be_hr_payroll_partena/models/res_company.py:0
 msgid "The sequence number should be positive!"
 msgstr "Het volgnummer moet positief zijn!"
 
 #. module: l10n_be_hr_payroll_partena
+#: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__version_ids
+msgid "Version"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll_partena.field_l10n_be_hr_payroll_export_partena_employee__work_entry_ids
 msgid "Work Entry"
 msgstr "Werkboeking"
+
+#. module: l10n_be_hr_payroll_partena
+#: model:hr.payroll.dashboard.warning,name:l10n_be_hr_payroll_partena.hr_payroll_dashboard_warning_missing_partena_code_wet
+msgid "Work Entry Types without Partena Code"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
+msgid "companies"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
+msgid "employees"
+msgstr ""
+
+#. module: l10n_be_hr_payroll_partena
+#. odoo-python
+#: code:addons/l10n_be_hr_payroll_partena/models/hr_payroll_export_partena.py:0
+msgid "work entry types"
+msgstr ""
+
+#~ msgid "Contract"
+#~ msgstr "Contract"
+
+#~ msgid "The code should have 3 characters!"
+#~ msgstr "De code moet uit 3 tekens bestaan!"
+
+#~ msgid "The following employees do not have a Partena code: %(names)s"
+#~ msgstr "De volgende werknemers hebben geen Partena-code: %(names)s"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 15:33+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -262,7 +262,8 @@ msgstr "信息"
 #. odoo-python
 #: code:addons/social_linkedin/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
 "哎呀！您当前没有有效订阅。别担心，立即获取：%s。\n"
@@ -368,7 +369,8 @@ msgstr "使用您自己的LinkedIn账户"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "需要将某些功能限制在特定媒体使用时（例如facebook、X......）时，用于进行比较。"
+msgstr ""
+"需要将某些功能限制在特定媒体使用时（例如facebook、X......）时，用于进行比较。"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_stream_post__linkedin_author_vanity_name
@@ -381,7 +383,8 @@ msgstr "名义上的名字，用于生成与作者的链接"
 msgid ""
 "We could not upload your image, try reducing its size and posting it again "
 "(error: Failed during upload registering)."
-msgstr "我们无法上传您的图像，请尝试缩小其尺寸并重新发布（错误：上传注册时失败）。"
+msgstr ""
+"我们无法上传您的图像，请尝试缩小其尺寸并重新发布（错误：上传注册时失败）。"
 
 #. module: social_linkedin
 #. odoo-python

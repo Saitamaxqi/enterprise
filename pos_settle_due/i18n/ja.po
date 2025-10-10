@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -113,8 +113,8 @@ msgstr "%sを%sに入金しますか？"
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"Do you want to deposit money to a specific customer? If so, first select "
-"him/her."
+"Do you want to deposit money to a specific customer? If so, first select him/"
+"her."
 msgstr "特定の顧客にデポジットを入金しますか？ まず対象者を選択して下さい。"
 
 #. module: pos_settle_due
@@ -310,9 +310,10 @@ msgstr "オーダは空です"
 #. odoo-javascript
 #: code:addons/pos_settle_due/static/src/app/screens/payment_screen/payment_screen.js:0
 msgid ""
-"The selected customer is not in the list of partners of the ongoing settling"
-" orderlines."
-msgstr "選択された顧客は、現在精算中のオーダ明細の取引先リストに含まれていません。"
+"The selected customer is not in the list of partners of the ongoing settling "
+"orderlines."
+msgstr ""
+"選択された顧客は、現在精算中のオーダ明細の取引先リストに含まれていません。"
 
 #. module: pos_settle_due
 #: model:ir.model.fields,help:pos_settle_due.field_pos_config__settle_due_product_id

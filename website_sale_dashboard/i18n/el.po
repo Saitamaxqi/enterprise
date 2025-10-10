@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~11.5+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-24 11:34+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Greek <https://translate.odoo.com/projects/odoo-19/"
@@ -29,38 +29,20 @@ msgid "Abandoned Carts"
 msgstr "Εγκαταλειμμένα Καλάθια"
 
 #. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Activate Stripe"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__closed
-msgid "Closed"
-msgstr "Κλειστό"
-
-#. module: website_sale_dashboard
-#: model:ir.model,name:website_sale_dashboard.model_res_company
-msgid "Companies"
-msgstr "Εταιρίες"
-
-#. module: website_sale_dashboard
 #: model:ir.model,name:website_sale_dashboard.model_digest_digest
 msgid "Digest"
 msgstr "Περίληψη"
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__done
-msgid "Done"
-msgstr "Ολοκληρωμένη"
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Enable credit &amp; debit card payments supported by Stripe"
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_digest_digest__display_name
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_website__display_name
+msgid "Display Name"
 msgstr ""
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__just_done
-msgid "Just done"
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_digest_digest__id
+#: model:ir.model.fields,field_description:website_sale_dashboard.field_website__id
+msgid "ID"
 msgstr ""
 
 #. module: website_sale_dashboard
@@ -69,35 +51,10 @@ msgid "No data yet!"
 msgstr "Δεν υπάρχουν δεδομένα ακόμη!"
 
 #. module: website_sale_dashboard
-#: model:ir.model.fields.selection,name:website_sale_dashboard.selection__res_company__website_sale_dashboard_onboarding_state__not_done
-msgid "Not done"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Online Payments"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_onboarding_payment_provider_step
-msgid "Online payments enabled"
-msgstr ""
-
-#. module: website_sale_dashboard
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_graph
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_pivot
 msgid "Sales Analysis"
 msgstr "Ανάλυση Πωλήσεων"
-
-#. module: website_sale_dashboard
-#: model:ir.model.fields,field_description:website_sale_dashboard.field_res_company__website_sale_dashboard_onboarding_state
-msgid "State of the website sale onboarding panel"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model_terms:ir.ui.view,arch_db:website_sale_dashboard.website_sale_dashboard_onboarding_panel
-msgid "The configuration is done. Happy selling!"
-msgstr ""
 
 #. module: website_sale_dashboard
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.sale_report_view_search_website_inherit
@@ -113,3 +70,12 @@ msgstr "Ιστότοπος"
 #: model:ir.actions.act_window,name:website_sale_dashboard.sale_dashboard
 msgid "eCommerce Dashboard"
 msgstr "Πίνακας ελέγχου Ηλεκτρονικού Εμπορίου"
+
+#~ msgid "Closed"
+#~ msgstr "Κλειστό"
+
+#~ msgid "Companies"
+#~ msgstr "Εταιρίες"
+
+#~ msgid "Done"
+#~ msgstr "Ολοκληρωμένη"

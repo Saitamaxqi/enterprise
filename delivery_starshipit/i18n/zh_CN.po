@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -29,8 +29,11 @@ msgstr "请勿忘记为有效配置选择服务。"
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_delivery_carrier_form
 msgid ""
-"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your shippings are automatically <b>archived</b> after the label creation. <br/>\n"
-"                        Please note that charges can still occur for label creations and some shipping carriers may automatically validate the shipment when printing labels."
+"<i class=\"fa fa-exclamation-triangle\"/> In <b>Test Environment</b>, your "
+"shippings are automatically <b>archived</b> after the label creation. <br/>\n"
+"                        Please note that charges can still occur for label "
+"creations and some shipping carriers may automatically validate the shipment "
+"when printing labels."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle\"/>在<b>测试环境</b>中，创建标签后<br/"
 ">，您的运输将自动 <b>归档</b>。\n"
@@ -41,8 +44,9 @@ msgstr ""
 msgid ""
 "<i class=\"fa fa-info-circle\"/> Available shipping services depend on "
 "enabled carriers in your Starshipit account."
-msgstr "<i class=\"fa fa-info-circle\"/>可用的运输服务取决于您的 Starshipit "
-"账户中已启用的运输公司。"
+msgstr ""
+"<i class=\"fa fa-info-circle\"/>可用的运输服务取决于您的 Starshipit 账户中已"
+"启用的运输公司。"
 
 #. module: delivery_starshipit
 #: model_terms:ir.ui.view,arch_db:delivery_starshipit.view_shipping_method_starshipit
@@ -73,8 +77,8 @@ msgstr "确认"
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_starshipit_shipping_wizard__available_services
 msgid ""
-"Contains the list of available services for the starshipit account to select"
-" from."
+"Contains the list of available services for the starshipit account to select "
+"from."
 msgstr "包含可供 starshipit 账户选择的可用服务列表。"
 
 #. module: delivery_starshipit
@@ -184,11 +188,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Order %(order)s was sent to the carrier during label creation.As you are in "
+"a test environment, please make sure to cancel the order with your carrier "
+"directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
-"创建标签时，订单 %(order)s "
-"已经发送给物流商。由于您处于测试环境中，请确保直接向物流商取消订单。\n"
+"创建标签时，订单 %(order)s 已经发送给物流商。由于您处于测试环境中，请确保直接"
+"向物流商取消订单。\n"
 "货单号码：%(manifest_number)s"
 
 #. module: delivery_starshipit
@@ -247,7 +253,8 @@ msgstr "为订单生成了退货标签%s"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was already sent to the carrier during label creation.\n"
+"Return order %(order)s was already sent to the carrier during label "
+"creation.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
 "退货单 %(order)s 已在创建标签时发送给承运商。\n"
@@ -257,11 +264,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Return order %(order)s was sent to the carrier during label creation.As you are in a test environment, please make sure to cancel the order with your carrier directly.\n"
+"Return order %(order)s was sent to the carrier during label creation.As you "
+"are in a test environment, please make sure to cancel the order with your "
+"carrier directly.\n"
 "Manifest number: %(manifest_number)s"
 msgstr ""
-"创建标签时，退货单 %(order)s "
-"已经发送给物流商。由于您处于测试环境中，请务必直接向运营商取消订单。\n"
+"创建标签时，退货单 %(order)s 已经发送给物流商。由于您处于测试环境中，请务必直"
+"接向运营商取消订单。\n"
 "货单号码：%(manifest_number)s"
 
 #. module: delivery_starshipit
@@ -397,8 +406,8 @@ msgstr "Starshipit 返回错误信息：%(message)s"
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact"
-" price (%(final_carrier_price)s) from transfer %(picking_name)s."
+"Starshipit: Delivery cost re-evaluated on Sales Order based on updated exact "
+"price (%(final_carrier_price)s) from transfer %(picking_name)s."
 msgstr ""
 "Starshipit：已根据转运单%(final_carrier_price)s的最新精确价格%(picking_name)s"
 "重新计算销售订单的配送成本"
@@ -407,9 +416,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s, but automatic sale order delivery cost re-"
-"evaluation failed: %(e_so)s"
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s, but automatic sale order delivery cost re-evaluation "
+"failed: %(e_so)s"
 msgstr ""
 "Starshipit：转运单%(picking_name)s的精确运费已更新为%(final_carrier_price)s，"
 "但自动重新计算销售订单配送成本失败：%(e_so)s"
@@ -418,8 +427,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"Starshipit: Exact shipping cost for delivery %(picking_name)s is now "
-"%(final_carrier_price)s. This sale order is already invoiced, please review "
+"Starshipit: Exact shipping cost for delivery %(picking_name)s is now %"
+"(final_carrier_price)s. This sale order is already invoiced, please review "
 "if a manual adjustment to the invoice is needed."
 msgstr ""
 "Starshipit：转运单%(picking_name)s的精确运费已更新为%(final_carrier_price)s。"
@@ -467,7 +476,8 @@ msgstr "无法获取精确价格，将通过定时任务更新。"
 msgid ""
 "The picking %(picking_name)s sequence is too long for Starshipit. Please "
 "update your pickings sequence in order to use at most 50 characters."
-msgstr "拣货%(picking_name)s序号对于Starshipit来说太长了。请更新您的拣货序号，以便最"
+msgstr ""
+"拣货%(picking_name)s序号对于Starshipit来说太长了。请更新您的拣货序号，以便最"
 "多使用50个字符。"
 
 #. module: delivery_starshipit
@@ -484,9 +494,9 @@ msgid ""
 "the code inside starshipit to be at most 100 characters, then update your "
 "shipping carrier %(shipping_carrier)s to the new code."
 msgstr ""
-"对于 Starshipit 而言，服务代码%(service_code)s太长。请更新 starshipit "
-"中的代码，使其最多不超过 100 "
-"个字符，然后将您的运输工具%(shipping_carrier)s更新为新代码。"
+"对于 Starshipit 而言，服务代码%(service_code)s太长。请更新 starshipit 中的代"
+"码，使其最多不超过 100 个字符，然后将您的运输工具%(shipping_carrier)s更新为新"
+"代码。"
 
 #. module: delivery_starshipit
 #: model:ir.model.fields,help:delivery_starshipit.field_delivery_carrier__starshipit_service_code
@@ -510,10 +520,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid ""
-"There are no shipping services available, please verify the shipping address"
-" or activate suitable carriers in your starshipit account."
-msgstr "没有可用的送货服务，请核实送货地址或在您的 starshipit "
-"账户中激活合适的承运商。"
+"There are no shipping services available, please verify the shipping address "
+"or activate suitable carriers in your starshipit account."
+msgstr ""
+"没有可用的送货服务，请核实送货地址或在您的 starshipit 账户中激活合适的承运"
+"商。"
 
 #. module: delivery_starshipit
 #. odoo-python

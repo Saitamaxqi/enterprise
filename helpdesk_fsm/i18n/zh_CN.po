@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 15:23+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -23,11 +23,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__company_id
-msgid "Company"
-msgstr "公司"
 
 #. module: helpdesk_fsm
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_ticket_convert_wizard
@@ -41,7 +36,6 @@ msgstr "‎创建和视图任务‎"
 
 #. module: helpdesk_fsm
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.create_fsm_task_view_form
-#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.helpdesk_ticket_view_form
 msgid "Create Task"
 msgstr "创建任务"
 
@@ -51,6 +45,16 @@ msgstr "创建任务"
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_create_fsm_task
 msgid "Create a Field Service task"
 msgstr "‎创建现场服务任务‎"
+
+#. module: helpdesk_fsm
+#: model:ir.model,website_form_label:helpdesk_fsm.model_project_task
+msgid "Create a Task"
+msgstr ""
+
+#. module: helpdesk_fsm
+#: model:ir.model,website_form_label:helpdesk_fsm.model_helpdesk_ticket
+msgid "Create a Ticket"
+msgstr ""
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__create_uid
@@ -74,28 +78,17 @@ msgstr "丢弃"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket_convert_wizard__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__display_name
 msgid "Display Name"
 msgstr "显示名称"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__display_helpdesk_ticket_button
-msgid "Display Ticket"
-msgstr "显示工单"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__fsm_project_id
 msgid "FSM Project"
 msgstr "FSM项目"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__use_fsm
-msgid "Field Service"
-msgstr "现场服务"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__fsm_task_count
-msgid "Fsm Task Count"
-msgstr "‎Fsm 任务计数‎"
 
 #. module: helpdesk_fsm
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_team
@@ -109,6 +102,10 @@ msgstr "服务台工单"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket_convert_wizard__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__id
 msgid "ID"
 msgstr "ID"
 
@@ -126,6 +123,17 @@ msgstr "上次更新日期"
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__helpdesk_ticket_id
 msgid "Original Ticket"
 msgstr "原始工单"
+
+#. module: helpdesk_fsm
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.helpdesk_ticket_view_form
+msgid "Plan Intervention"
+msgstr ""
+
+#. module: helpdesk_fsm
+#. odoo-python
+#: code:addons/helpdesk_fsm/models/project_task.py:0
+msgid "Portal Ticket"
+msgstr ""
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__project_id
@@ -153,7 +161,7 @@ msgstr "任务"
 #. module: helpdesk_fsm
 #: model:mail.message.subtype,description:helpdesk_fsm.mt_ticket_task_canceled
 #: model:mail.message.subtype,name:helpdesk_fsm.mt_ticket_task_canceled
-msgid "Task Canceled"
+msgid "Task Cancelled"
 msgstr ""
 
 #. module: helpdesk_fsm
@@ -194,11 +202,13 @@ msgstr "‎从此工单生成的任务‎"
 #. odoo-python
 #: code:addons/helpdesk_fsm/controllers/portal.py:0
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.project_sharing_inherit_project_task_view_form
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.view_task_form2_inherited_helpdesk_fsm
 msgid "Ticket"
 msgstr "工单"
 
 #. module: helpdesk_fsm
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.project_sharing_inherit_project_task_view_form
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.view_task_form2_inherited_helpdesk_fsm
 msgid "Ticket from this task"
 msgstr "‎此任务的工单‎"
 
@@ -211,3 +221,31 @@ msgstr "‎工单的客户，将链接到任务‎"
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__name
 msgid "Title"
 msgstr "标题"
+
+#. module: helpdesk_fsm
+#: model:ir.model.fields,help:helpdesk_fsm.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the "
+"configuration screen 5h #feature #v16 @Mitchell !"
+msgstr ""
+
+#~ msgid "Company"
+#~ msgstr "公司"
+
+#~ msgid "Display Ticket"
+#~ msgstr "显示工单"
+
+#~ msgid "Field Service"
+#~ msgstr "现场服务"
+
+#~ msgid "Fsm Task Count"
+#~ msgstr "‎Fsm 任务计数‎"

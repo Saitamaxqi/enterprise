@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/social/"
@@ -48,7 +48,8 @@ msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendar\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
 "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 
@@ -65,10 +66,11 @@ msgstr "<i class=\"oi oi-arrow-left\"/>Odooに戻る"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
-msgstr "<strong>おめでとうございます！数分後に統計情報をチェックしに来て下さい</stron"
-"g>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
+msgstr ""
+"<strong>おめでとうございます！数分後に統計情報をチェックしに来て下さい</"
+"strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
@@ -247,7 +249,8 @@ msgstr "キャンペーン"
 msgid ""
 "Campaigns are used to centralize your marketing efforts and track their "
 "results."
-msgstr "キャンペーンは、マーケティング活動を一元化し、その結果を追跡するために使用さ"
+msgstr ""
+"キャンペーンは、マーケティング活動を一元化し、その結果を追跡するために使用さ"
 "れます。"
 
 #. module: social
@@ -321,8 +324,9 @@ msgstr "接続の問題"
 msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
-msgstr "このアカウントを作成した人のソーシャルメディアハンドルを含む。例:  'Odoo' "
-"Xアカウント用の'@odoo.official'"
+msgstr ""
+"このアカウントを作成した人のソーシャルメディアハンドルを含む。例:  'Odoo' Xア"
+"カウント用の'@odoo.official'"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
@@ -355,12 +359,11 @@ msgstr "投稿を作成"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
-"このキャンペーン用に "
-"%(media_names)sの他のアカウントを作成するか、%(company_names)sにアカウントの"
-"シェアを依頼しましょう。"
+"このキャンペーン用に %(media_names)sの他のアカウントを作成するか、%"
+"(company_names)sにアカウントのシェアを依頼しましょう。"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -516,7 +519,8 @@ msgstr "デモモードを有効化"
 msgid ""
 "Enable this option and load demo data to test the social module. This must "
 "never be used on a production database!"
-msgstr "このオプションを有効にして、ソーシャルモジュールをテストするためにデモデータ"
+msgstr ""
+"このオプションを有効にして、ソーシャルモジュールをテストするためにデモデータ"
 "をロードします。本番データベースでは決して使用しないで下さい。"
 
 #. module: social
@@ -543,10 +547,11 @@ msgstr "エンゲージメント:"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
-msgstr "アカウントが作成される度に、 a utm.medium "
-"も作成され、アカウントにリンクされます。"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
+msgstr ""
+"アカウントが作成される度に、 a utm.medium も作成され、アカウントにリンクされ"
+"ます。"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__failed
@@ -603,8 +608,9 @@ msgstr "フォーマット済公開日"
 #: model:ir.model.fields,help:social.field_social_account__audience
 msgid ""
 "General audience of the Social Account (Page Likes, Account Follows, ...)."
-msgstr "ソーシャルアアカウントの一般オーディエンス(ページいいね、アカウントフォロワー"
-"...)"
+msgstr ""
+"ソーシャルアアカウントの一般オーディエンス(ページいいね、アカウントフォロ"
+"ワー...)"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
@@ -735,7 +741,8 @@ msgstr "フォロー中"
 msgid ""
 "It appears there is an issue with the Social Media link, click here to link "
 "the account again"
-msgstr "ソーシャルメディアへのリンクに問題があるようです。ここをクリックして再度アカ"
+msgstr ""
+"ソーシャルメディアへのリンクに問題があるようです。ここをクリックして再度アカ"
 "ウントをリンクして下さい。"
 
 #. module: social
@@ -851,7 +858,8 @@ msgstr "アカウントをリンク"
 msgid ""
 "Link an account to a company to restrict its usage or keep empty to let all "
 "companies use it."
-msgstr "アカウントを会社にリンクして使用を制限したり、空のまま全ての会社に使用させた"
+msgstr ""
+"アカウントを会社にリンクして使用を制限したり、空のまま全ての会社に使用させた"
 "りすることができます。"
 
 #. module: social
@@ -937,9 +945,9 @@ msgstr "メッセージが投稿されました"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
-msgstr "メッセージが部分的に投稿されました。以下のものは投稿できませんでした: %s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
+msgstr ""
+"メッセージが部分的に投稿されました。以下のものは投稿できませんでした: %s"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_ids
@@ -950,8 +958,10 @@ msgstr "メッセージ"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "ほとんどのsocial.live.postsは、サードパーティAPIへの単一の呼び出しの結果であ"
 "るため、直接、準備完了から投稿済/失敗になります。\n"
@@ -1126,7 +1136,8 @@ msgstr "あなたの投稿へのエンゲージ回数(いいね、コメント�
 msgid ""
 "Number of times people who have engaged with your channel have created "
 "stories on their friends' or followers' feed (Shares, Reposts...)"
-msgstr "あなたのチャンネルに関与した人々が、友人やフォロワーのフィードにストーリーを"
+msgstr ""
+"あなたのチャンネルに関与した人々が、友人やフォロワーのフィードにストーリーを"
 "作成した回数(シェア、リポスト...)"
 
 #. module: social
@@ -1210,7 +1221,8 @@ msgstr "今すぐ投稿"
 msgid ""
 "Post link to the external social.media (ex: link to the actual Facebook "
 "Post)."
-msgstr "外部ソーシャルメディアへのリンクを投稿 (例:現在のFacebook投稿へのリンク)"
+msgstr ""
+"外部ソーシャルメディアへのリンクを投稿 (例:現在のFacebook投稿へのリンク)"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1364,10 +1376,11 @@ msgstr "予定日"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
-msgstr "選択したアカウントは "
-"(%(account_list)s)選択した会社に一致しません(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
+msgstr ""
+"選択したアカウントは (%(account_list)s)選択した会社に一致しません(%"
+"(company)s)"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
@@ -1382,7 +1395,8 @@ msgstr "シーケンス"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream__sequence
 msgid "Sequence used to order streams (mainly for the 'Feed' kanban view)"
-msgstr "ストリームの順序付けに使用されるシーケンス(主に'フィード'かんばんビュー用)"
+msgstr ""
+"ストリームの順序付けに使用されるシーケンス(主に'フィード'かんばんビュー用)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
@@ -1525,10 +1539,11 @@ msgstr "情報源"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
-msgstr "メディア ID ごとのライブ投稿名を含む dict を保持する特別な技術フィールド "
-"(かんばん表示に使用)。"
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
+msgstr ""
+"メディア ID ごとのライブ投稿名を含む dict を保持する特別な技術フィールド (か"
+"んばん表示に使用)。"
 
 #. module: social
 #. odoo-javascript
@@ -1634,8 +1649,7 @@ msgstr "この投稿が公開されるアカウント"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr "第3者情報に基づいた投稿著者名 (例: 'John Doe')"
 
 #. module: social
@@ -1643,7 +1657,8 @@ msgstr "第3者情報に基づいた投稿著者名 (例: 'John Doe')"
 msgid ""
 "The post is considered as 'Posted' when all its sub-posts (one per social "
 "account) are either 'Failed' or 'Posted'"
-msgstr "投稿は、全てのサブ投稿(ソーシャルアカウントごとに1つ)が'失敗'または'投稿済' "
+msgstr ""
+"投稿は、全てのサブ投稿(ソーシャルアカウントごとに1つ)が'失敗'または'投稿済' "
 "の際に'投稿された'とみなされます。"
 
 #. module: social
@@ -1656,7 +1671,8 @@ msgstr "第3者情報に基づいた投稿公開日"
 msgid ""
 "The reason why a post is not successfully posted on the Social Media (eg: "
 "connection error, duplicated post, ...)."
-msgstr "投稿がソーシャルメディアに正常に投稿されない理由(例: 接続エラー、重複投稿...)"
+msgstr ""
+"投稿がソーシャルメディアに正常に投稿されない理由(例: 接続エラー、重複投稿...)"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
@@ -1678,7 +1694,8 @@ msgstr "サブ投稿に投稿エラーがあります"
 msgid ""
 "This token can be used to verify that an incoming request from a social "
 "provider has not been forged."
-msgstr "このトークンは、ソーシャルプロバイダからの着信リクエストが偽造されたものでな"
+msgstr ""
+"このトークンは、ソーシャルプロバイダからの着信リクエストが偽造されたものでな"
 "いことを確認するために使用できます。"
 
 #. module: social
@@ -1742,8 +1759,8 @@ msgid ""
 "Use your own Developer Accounts on our Social app. Those credentials are "
 "provided in the developer section of your professional social media account."
 msgstr ""
-"ソーシャルアプリの開発者アカウントをご利用下さい。これらの認証情報は、プロフ"
-"ェッショナルソーシャルメディアアカウントの開発者セクションで提供されます。"
+"ソーシャルアプリの開発者アカウントをご利用下さい。これらの認証情報は、プロ"
+"フェッショナルソーシャルメディアアカウントの開発者セクションで提供されます。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
@@ -1753,8 +1770,9 @@ msgstr ""
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social
 #. odoo-javascript
@@ -1788,16 +1806,18 @@ msgstr "日時"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
-msgstr "グローバル投稿の公開日。実際のサブ投稿の公開日はメディアによって異なる場合が"
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
+msgstr ""
+"グローバル投稿の公開日。実際のサブ投稿の公開日はメディアによって異なる場合が"
 "あります。"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__image_ids
 #: model:ir.model.fields,help:social.field_social_post_template__image_ids
 msgid "Will attach images to your posts (if the social media supports it)."
-msgstr "投稿に画像を添付します(もしソーシャルメディアがそれをサポートしている場合)"
+msgstr ""
+"投稿に画像を添付します(もしソーシャルメディアがそれをサポートしている場合)"
 
 #. module: social
 #. odoo-javascript
@@ -1827,25 +1847,28 @@ msgstr "回答を書く..."
 msgid ""
 "Write an enticing post, add images and schedule it to be posted later on "
 "multiple platforms at once."
-msgstr "魅力的な投稿を書き、画像を追加し、後で複数のプラットフォームに一度に投稿する"
+msgstr ""
+"魅力的な投稿を書き、画像を追加し、後で複数のプラットフォームに一度に投稿する"
 "よう予定します。"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
-"これらのUTM媒体はソーシャルの以下のソーシャルアカウントにリンクされているため"
-"、削除することはできません:\n"
+"これらのUTM媒体はソーシャルの以下のソーシャルアカウントにリンクされているた"
+"め、削除することはできません:\n"
 "%(social_accounts)s"
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "これらのUTMソースはソーシャルのソーシャル投稿にリンクされているため、削除する"

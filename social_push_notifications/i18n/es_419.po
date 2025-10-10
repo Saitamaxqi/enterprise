@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:44+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-10-08 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -458,8 +458,7 @@ msgstr "Ya existe una configuración para este sitio web."
 
 #. module: social_push_notifications
 #: model:ir.model.fields,help:social_push_notifications.field_social_account__website_id
-msgid ""
-"This firebase configuration will only be used for the specified website"
+msgid "This firebase configuration will only be used for the specified website"
 msgstr ""
 "Esta configuración de Firebase se utilizará solo para el sitio web "
 "especificado"

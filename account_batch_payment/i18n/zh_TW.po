@@ -1,25 +1,38 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* account_batch_payment
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Pak Wai Ho, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:44+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-05-06 11:00+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/wizard/create_batch_error.py:0
+msgid "\"In Process\""
+msgstr ""
+
+#. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/wizard/create_batch_error.py:0
+msgid "\"In Process, and Paid\""
+msgstr ""
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.print_batch_payment
@@ -51,7 +64,9 @@ msgstr "<span>大批付款</span>"
 msgid ""
 "<strong invisible=\"not warning_line_ids\">The following warnings were also "
 "raised; they do not impeach validation</strong>"
-msgstr "<strong invisible=\"not warning_line_ids\">以下警告亦有提出，但它們不會影響驗證</strong>"
+msgstr ""
+"<strong invisible=\"not warning_line_ids\">以下警告亦有提出，但它們不會影響驗"
+"證</strong>"
 
 #. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.batch_error_wizard_form
@@ -108,6 +123,12 @@ msgstr "活動類型圖示"
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
 msgid "All payments in the batch must share the same payment method."
 msgstr "批次中的所有付款必須共享相同的支付方法。"
+
+#. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/models/account_batch_payment.py:0
+msgid "All payments must either have an entry or not at all."
+msgstr ""
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__amount
@@ -200,7 +221,8 @@ msgstr "批式"
 #: model_terms:ir.actions.act_window,help:account_batch_payment.action_batch_payment_out
 msgid ""
 "Batch payments allow you grouping different payments to ease\n"
-"                    reconciliation. They are also useful when depositing checks\n"
+"                    reconciliation. They are also useful when depositing "
+"checks\n"
 "                    to the bank."
 msgstr ""
 "批量付款允許您分組不同的付款，以方便對帳。\n"
@@ -230,6 +252,11 @@ msgid "Check Payments"
 msgstr "支票付款"
 
 #. module: account_batch_payment
+#: model_terms:ir.ui.view,arch_db:account_batch_payment.create_batch_error_wizard
+msgid "Check them."
+msgstr ""
+
+#. module: account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.batch_error_wizard_form
 msgid "Close"
 msgstr "關閉"
@@ -255,6 +282,9 @@ msgid "Company related to this journal"
 msgstr "日記帳相關的公司"
 
 #. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/models/account_payment.py:0
+#: model_terms:ir.ui.view,arch_db:account_batch_payment.create_batch_error_wizard
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_account_payment_tree_inherit_account_batch_payment
 msgid "Create Batch"
 msgstr "建立批次"
@@ -262,8 +292,14 @@ msgstr "建立批次"
 #. module: account_batch_payment
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_journal.py:0
+#: model_terms:ir.ui.view,arch_db:account_batch_payment.create_batch_error_wizard
 msgid "Create Batch Payment"
 msgstr "建立大批付款"
+
+#. module: account_batch_payment
+#: model:ir.model,name:account_batch_payment.model_account_create_batch_error_wizard
+msgid "Create Batch Payment Error Wizard"
+msgstr ""
 
 #. module: account_batch_payment
 #: model_terms:ir.actions.act_window,help:account_batch_payment.action_batch_payment_in
@@ -284,6 +320,7 @@ msgstr "建立大批付款"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__create_uid
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__create_uid
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__create_uid
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__create_uid
 msgid "Created by"
 msgstr "建立人員"
 
@@ -291,6 +328,7 @@ msgstr "建立人員"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__create_date
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__create_date
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__create_date
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__create_date
 msgid "Created on"
 msgstr "建立於"
 
@@ -331,9 +369,15 @@ msgid "Description"
 msgstr "說明"
 
 #. module: account_batch_payment
+#: model_terms:ir.ui.view,arch_db:account_batch_payment.create_batch_error_wizard
+msgid "Discard"
+msgstr ""
+
+#. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__display_name
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__display_name
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__display_name
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_payment__display_name
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_payment_method__display_name
@@ -345,6 +389,11 @@ msgstr "顯示名稱"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__error_line_ids
 msgid "Error Line"
 msgstr "錯誤行"
+
+#. module: account_batch_payment
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__error_message
+msgid "Error Message"
+msgstr ""
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__error_wizard_id
@@ -397,14 +446,14 @@ msgid "Generation Date"
 msgstr "生成日期"
 
 #. module: account_batch_payment
-#: model_terms:ir.ui.view,arch_db:account_batch_payment.view_batch_payment_search
-msgid "Group By"
-msgstr "分組依據"
-
-#. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__has_message
 msgid "Has Message"
 msgstr "有訊息"
+
+#. module: account_batch_payment
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__has_valid_payments
+msgid "Has Valid Payments"
+msgstr ""
 
 #. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__help_message
@@ -415,6 +464,7 @@ msgstr "求助"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__id
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__id
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__id
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__id
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_journal__id
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_payment__id
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_payment_method__id
@@ -455,6 +505,12 @@ msgid "Inbound Batch Payments Sequence"
 msgstr "入站批量付款順序"
 
 #. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/wizard/create_batch_error.py:0
+msgid "Invalid Payments"
+msgstr ""
+
+#. module: account_batch_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__message_is_follower
 msgid "Is Follower"
 msgstr "是關注人"
@@ -473,6 +529,7 @@ msgstr "日記賬"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__write_uid
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__write_uid
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__write_uid
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__write_uid
 msgid "Last Updated by"
 msgstr "最後更新者"
 
@@ -480,6 +537,7 @@ msgstr "最後更新者"
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard__write_date
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__write_date
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__write_date
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__write_date
 msgid "Last Updated on"
 msgstr "最後更新於"
 
@@ -589,6 +647,12 @@ msgid "Odoo Payments LLC"
 msgstr "Odoo Payments LLC"
 
 #. module: account_batch_payment
+#. odoo-python
+#: code:addons/account_batch_payment/wizard/create_batch_error.py:0
+msgid "Only %s payments can be added to a batch. Invalid ones will be ignored."
+msgstr ""
+
+#. module: account_batch_payment
 #: model:ir.model.fields.selection,name:account_batch_payment.selection__account_batch_payment__batch_type__outbound
 msgid "Outbound"
 msgstr "境外"
@@ -641,6 +705,7 @@ msgstr "付款已從批次中移除：%s"
 #: model:ir.model,name:account_batch_payment.model_account_payment
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_error_wizard_line__payment_ids
 #: model:ir.model.fields,field_description:account_batch_payment.field_account_batch_payment__payment_ids
+#: model:ir.model.fields,field_description:account_batch_payment.field_account_create_batch_error_wizard__payment_ids
 #: model_terms:ir.ui.view,arch_db:account_batch_payment.view_batch_payment_form
 msgid "Payments"
 msgstr "付款"
@@ -805,8 +870,8 @@ msgstr "產生此精靈正顯示的錯誤和警告之大批付款"
 #. odoo-python
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
 msgid ""
-"The journal of the batch payment and of the payments it contains must be the"
-" same."
+"The journal of the batch payment and of the payments it contains must be the "
+"same."
 msgstr "批量付款的日記帳及其包含的付款必須相同。"
 
 #. module: account_batch_payment
@@ -830,9 +895,11 @@ msgstr "總計"
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_error_wizard__show_remove_options
 msgid ""
-"True if and only if the options to remove the payments causing the errors or"
-" warnings from the batch should be shown"
-msgstr "若付款引致錯誤或警告而需要在批次內刪除，只在應該顯示刪除該付款的選項時，才為真"
+"True if and only if the options to remove the payments causing the errors or "
+"warnings from the batch should be shown"
+msgstr ""
+"若付款引致錯誤或警告而需要在批次內刪除，只在應該顯示刪除該付款的選項時，才為"
+"真"
 
 #. module: account_batch_payment
 #: model:ir.model.fields,help:account_batch_payment.field_account_batch_payment__activity_exception_decoration
@@ -910,3 +977,6 @@ msgstr "建立的批次，不可包含已在另一批次內的付款。"
 #: code:addons/account_batch_payment/models/account_batch_payment.py:0
 msgid "You cannot create batches with overlapping payments."
 msgstr "若有重疊付款，便不可建立批次。"
+
+#~ msgid "Group By"
+#~ msgstr "分組依據"

@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* spreadsheet_dashboard_account_accountant
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: spreadsheet_dashboard_account_accountant
@@ -936,6 +937,12 @@ msgstr "年"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript
+#: code:addons/spreadsheet_dashboard_account_accountant/data/files/accounting_dashboard.json:0
+msgid "Year Filter"
+msgstr ""
+
+#. module: spreadsheet_dashboard_account_accountant
+#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_account_accountant/data/files/benchmark_sample_dashboard.json:0
 msgid "bank and cash"
@@ -1084,7 +1091,8 @@ msgstr "應收"
 msgid ""
 "receivable + bank and cash + current assets + non-current assets + "
 "prepayments + fixed assets"
-msgstr "應收賬項 加 銀行及現金 加 流動資產 加 非流動資產 加 預付款項 加 固定資產"
+msgstr ""
+"應收賬項 加 銀行及現金 加 流動資產 加 非流動資產 加 預付款項 加 固定資產"
 
 #. module: spreadsheet_dashboard_account_accountant
 #. odoo-javascript

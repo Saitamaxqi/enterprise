@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -32,8 +32,10 @@ msgstr "<span class=\"px-2\">-</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
-msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
-msgstr "<span class=\"text-muted\" invisible=\"campaign_end_date\">制限なし</span>"
+msgid ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgstr ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">制限なし</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_recruitment_post_job_wizard_view_form
@@ -603,8 +605,9 @@ msgstr "次の活動タイプ"
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_recruitment_platform.py:0
 msgid "No API call defined for this platform please contact the administrator"
-msgstr "このプラットフォームにはAPIコールが定義されていません。管理者までご連絡下さい"
-"。"
+msgstr ""
+"このプラットフォームにはAPIコールが定義されていません。管理者までご連絡下さ"
+"い。"
 
 #. module: hr_recruitment_integration_base
 #. odoo-python
@@ -829,9 +832,9 @@ msgstr "成功"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid ""
-"The Recruiter will be the default value for all Applicants in this job"
-"             position. The Recruiter is automatically added to all meetings "
-"with the Applicant."
+"The Recruiter will be the default value for all Applicants in this "
+"job             position. The Recruiter is automatically added to all "
+"meetings with the Applicant."
 msgstr ""
 "採用担当者は、この求人ポジションの全ての応募者の採用担当者フィールドのデフォ"
 "ルト値となります。採用担当者は、応募者との全てのミーティングに自動的に追加さ"
@@ -843,7 +846,8 @@ msgstr ""
 msgid ""
 "The date when the campaign will end. If not set, the campaign will run "
 "indefinitely or to the maximum allowed by a platform."
-msgstr "キャンペーンが終了する日付です。設定されていない場合、キャンペーンは無期限、"
+msgstr ""
+"キャンペーンが終了する日付です。設定されていない場合、キャンペーンは無期限、"
 "またはプラットフォームが許可する最大期間まで継続されます。"
 
 #. module: hr_recruitment_integration_base
@@ -860,17 +864,17 @@ msgstr "メールアドレス、電話番号、応募書類を送信するURL。
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid ""
-"This action will update the job post on the platform. This action will cost "
-"%(price)s credits. Do you want to continue?"
+"This action will update the job post on the platform. This action will cost %"
+"(price)s credits. Do you want to continue?"
 msgstr ""
-"このアクションにより、プラットフォーム上の求人情報が更新されます。 "
-"このアクションには %(price)s クレジットがかかります。続けますか?"
+"このアクションにより、プラットフォーム上の求人情報が更新されます。 このアク"
+"ションには %(price)s クレジットがかかります。続けますか?"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
 msgid ""
-"This will update the applicant's availability status once they are hired for"
-" this position."
+"This will update the applicant's availability status once they are hired for "
+"this position."
 msgstr ""
 
 #. module: hr_recruitment_integration_base

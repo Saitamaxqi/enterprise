@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 11:59+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -19,8 +19,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
-" ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
+"0) ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_usps
@@ -55,6 +55,11 @@ msgstr "Tipo di contenuto"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "Natura della consegna"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -113,6 +118,11 @@ msgstr "Busta a tariffa fissa"
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
 msgstr "Regalo"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
@@ -236,7 +246,8 @@ msgstr ""
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please choose another service (maximum weight of this service is 4 pounds)"
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
 msgstr ""
 "Scegliere un altro servizio (il peso massimo per il servizio è 4 libbre)"
 
@@ -261,7 +272,9 @@ msgstr "Fornire almeno un articolo da spedire."
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
+msgid ""
+"Please set country U.S.A in your company address, Service is only available "
+"for U.S.A"
 msgstr ""
 "Impostare Stati Uniti nell'indirizzo dell'azienda, nazione dove è "
 "disponibile il servizio"
@@ -384,7 +397,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "Impossibile calcolare una stima della spedizione, manca il peso dei seguenti "
@@ -431,8 +445,13 @@ msgstr "Tipo di contenitore"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
-msgstr "USPS"
+msgid "USPS (Legacy)"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
+msgid "USPS (Legacy) Label File Type"
+msgstr ""
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -448,7 +467,9 @@ msgstr "Busta USPS nazionale a tariffa fissa"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
+msgid ""
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
+"delivery method into USPS International."
 msgstr ""
 "USPS nazionale viene utilizzato solo per spedire all'interno degli Stati "
 "Uniti. Cambiare il metodo di consegna in USPS internazionale."
@@ -467,15 +488,12 @@ msgstr "Scatola USPS internazionale a tariffa fissa"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
+msgid ""
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
 msgstr ""
 "USPS internazionale viene utilizzato solo per spedire al di fuori degli "
 "Stati Uniti. Cambiare il metodo di consegna in USPS nazionale."
-
-#. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-msgid "USPS Label File Type"
-msgstr "Tipo file di etichetta USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
@@ -486,12 +504,6 @@ msgstr "Tipologia posta USPS"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "Servizio USPS"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
-msgid "USPS Shipping Methods"
-msgstr "Metodi di spedizione USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
@@ -513,3 +525,12 @@ msgstr "Il CAP dell'azienda o del destinatario non è corretto."
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
 msgstr "pollice"
+
+#~ msgid "USPS"
+#~ msgstr "USPS"
+
+#~ msgid "USPS Label File Type"
+#~ msgstr "Tipo file di etichetta USPS"
+
+#~ msgid "USPS Shipping Methods"
+#~ msgstr "Metodi di spedizione USPS"

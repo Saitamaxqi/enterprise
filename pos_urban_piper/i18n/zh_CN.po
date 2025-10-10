@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 15:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -943,8 +943,7 @@ msgstr "%(providerName)s 不允许拒绝此订单"
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
-msgid ""
-"Responsible delivery provider for online order, e.g., UberEats, Zomato."
+msgid "Responsible delivery provider for online order, e.g., UberEats, Zomato."
 msgstr "负责为网上订单送货的服务商，例如 UberEats、Zomato。"
 
 #. module: pos_urban_piper
@@ -1305,6 +1304,5 @@ msgstr "您不可更改 pos_urban_piper.uuid。"
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-msgid ""
-"Your company %s needs to have a correct city in order create the store."
+msgid "Your company %s needs to have a correct city in order create the store."
 msgstr "您的公司 “%s” 需要设定正确的城市，才可创建商店。"

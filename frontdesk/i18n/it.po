@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-18 02:45+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
@@ -65,7 +65,8 @@ msgstr "'Badge - %s' % (object.name).replace('/', '')"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_frontdesk_view_form
 msgid ""
 ")\n"
-"                        will be notified via email/SMS only, as they are not available on Discuss."
+"                        will be notified via email/SMS only, as they are not "
+"available on Discuss."
 msgstr ""
 
 #. module: frontdesk
@@ -77,8 +78,10 @@ msgstr ",<br/>speriamo vada tutto bene. La informiamo che"
 #: model_terms:ir.ui.view,arch_db:frontdesk.frontdesk_mail_template
 msgid ""
 ".\n"
-"                    <br/>Please let us know if you would like us to direct them to a meeting room or if you require any further assistance.\n"
-"                    <br/>After a successful meeting with the visitor, please proceed to check out their login."
+"                    <br/>Please let us know if you would like us to direct "
+"them to a meeting room or if you require any further assistance.\n"
+"                    <br/>After a successful meeting with the visitor, please "
+"proceed to check out their login."
 msgstr ""
 ".\n"
 "                    <br/>Ti preghiamo di farci sapere se vuoi che li "
@@ -527,13 +530,13 @@ msgstr "Ha messaggio"
 #: model:sms.template,body:frontdesk.frontdesk_sms_template
 msgid ""
 "Hello, Your visitor {{ object.name }} {{ '(%s)' % object.phone if "
-"object.phone else '' }} {{ '(%s)' % object.company if object.company else ''"
-" }} wants to meet you at {{ object.station_id.name }}. Please let them know "
-"you'll be there shortly."
+"object.phone else '' }} {{ '(%s)' % object.company if object.company else "
+"'' }} wants to meet you at {{ object.station_id.name }}. Please let them "
+"know you'll be there shortly."
 msgstr ""
 "Ciao, il visitatore {{ object.name }} {{ '(%s)' % object.phone if "
-"object.phone else '' }} {{ '(%s)' % object.company if object.company else '' "
-"}} vuole incontrarti in {{ object.station_id.name }}. Per favore, fagli "
+"object.phone else '' }} {{ '(%s)' % object.company if object.company else "
+"'' }} vuole incontrarti in {{ object.station_id.name }}. Per favore, fagli "
 "sapere che sarai lì a breve."
 
 #. module: frontdesk
@@ -808,7 +811,8 @@ msgstr "Numero di messaggi con errore di consegna"
 #: model_terms:ir.actions.act_window,help:frontdesk.action_open_planned_visitor
 #: model_terms:ir.actions.act_window,help:frontdesk.action_open_station_visitor
 msgid "Odoo helps you to track all information related to your visitors."
-msgstr "Odoo ti aiuta a tracciare tutte le informazioni relative ai visitatori."
+msgstr ""
+"Odoo ti aiuta a tracciare tutte le informazioni relative ai visitatori."
 
 #. module: frontdesk
 #: model:ir.model.fields,field_description:frontdesk.field_frontdesk_frontdesk__drink_offer
@@ -957,8 +961,8 @@ msgstr "Responsabili"
 #. module: frontdesk
 #: model:ir.model.fields,help:frontdesk.field_frontdesk_frontdesk__responsible_ids
 msgid ""
-"Responsibles are people who will welcome the client and handle their drinks,"
-" etc."
+"Responsibles are people who will welcome the client and handle their drinks, "
+"etc."
 msgstr ""
 
 #. module: frontdesk

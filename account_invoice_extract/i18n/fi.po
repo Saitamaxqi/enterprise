@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 15:19+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -31,35 +31,9 @@ msgstr ""
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Buy credits"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Refresh"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Resend For Digitization"
-msgstr ""
-
-#. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_needaction
 msgid "Action Needed"
 msgstr "Vaatii toimenpiteitä"
-
-#. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid "All fields will be automated by Artificial Intelligence, it might take 5 seconds."
-msgstr "Tekoäly automatisoi kaikki kentät. Tämä saattaa kestää hetken.."
 
 #. module: account_invoice_extract
 #: model:ir.model,name:account_invoice_extract.model_ir_attachment
@@ -72,20 +46,14 @@ msgid "Attachment Count"
 msgstr "Liitteiden määrä"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_journal__alias_auto_extract_pdfs_only
-msgid "Auto extract PDFs only"
-msgstr ""
-
-#. module: account_invoice_extract
 #. odoo-python
 #: code:addons/account_invoice_extract/models/account_invoice.py:0
-msgid "Bill is being Digitized"
-msgstr "Laskua digitoidaan"
+msgid "Automatic OCR does not apply to this document."
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_can_show_banners
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_can_show_banners
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_payment__extract_can_show_banners
 msgid "Can show the ocr banners"
 msgstr "Voi näyttää tekstintunnistuksen palkit"
 
@@ -105,6 +73,11 @@ msgid "Config Settings"
 msgstr "Asetukset"
 
 #. module: account_invoice_extract
+#: model:ir.model,name:account_invoice_extract.model_res_partner
+msgid "Contact"
+msgstr ""
+
+#. module: account_invoice_extract
 #. odoo-python
 #: code:addons/account_invoice_extract/models/account_invoice.py:0
 msgid "Couldn't reload AI data."
@@ -112,19 +85,14 @@ msgstr "Tekoälytietoja ei voitu ladata."
 
 #. module: account_invoice_extract
 #. odoo-javascript
-#: code:addons/account_invoice_extract/static/src/js/invoice_extract_form_renderer.js:0
+#: code:addons/account_invoice_extract/static/src/js/invoice_extract_form.js:0
 msgid "Create"
 msgstr "Luo"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__create_uid
-msgid "Created by"
-msgstr "Luonut"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__create_date
-msgid "Created on"
-msgstr "Luotu"
+#: model:ir.model,website_form_label:account_invoice_extract.model_res_partner
+msgid "Create a Customer"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_out_invoice_digitalization_mode
@@ -148,18 +116,22 @@ msgid "Digitize automatically"
 msgstr "Digitoi automaattisesti"
 
 #. module: account_invoice_extract
+#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
+msgid "Digitize document"
+msgstr ""
+
+#. module: account_invoice_extract
 #: model:ir.model.fields.selection,name:account_invoice_extract.selection__res_company__extract_in_invoice_digitalization_mode__manual_send
 #: model:ir.model.fields.selection,name:account_invoice_extract.selection__res_company__extract_out_invoice_digitalization_mode__manual_send
 msgid "Digitize on demand only"
 msgstr "Digitoi vain pyynnöstä"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_journal__display_alias_auto_extract_pdfs_only
-msgid "Display Alias Auto Extract Pdfs Only"
-msgstr ""
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__display_name
 msgid "Display Name"
 msgstr "Näyttönimi"
 
@@ -180,37 +152,32 @@ msgid "Error message"
 msgstr "Virheilmoitus"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_attachment_id
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_attachment_id
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_payment__extract_attachment_id
 msgid "Extract Attachment"
 msgstr "Poimi liite"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_detected_layout
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_detected_layout
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_payment__extract_detected_layout
 msgid "Extract Detected Layout Id"
 msgstr "Poimi havaittu asettelun tunnus"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_partner_name
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_partner_name
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_payment__extract_partner_name
 msgid "Extract Detected Partner Name"
 msgstr "Poimi havaitun kumppanin nimi"
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_prefill_data
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_prefill_data
+msgid "Extract Prefill Data"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_state_processed
 msgid "Extract State Processed"
 msgstr "Poimi käsitelty tila"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_bank_statement_line__extract_word_ids
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_word_ids
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_payment__extract_word_ids
-msgid "Extract Word"
-msgstr "Hae sana"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extract_state
@@ -223,19 +190,24 @@ msgid "Extract status"
 msgstr "Poimi status"
 
 #. module: account_invoice_extract
-#: model:ir.model,name:account_invoice_extract.model_account_invoice_extract_words
-msgid "Extracted words from invoice scan"
-msgstr "Hae sanat skannatusta laskusta"
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_dates
+msgid "Extracted Dates"
+msgstr ""
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_numbers
+msgid "Extracted Numbers"
+msgstr ""
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__extracted_words
+msgid "Extracted Words"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
 msgid "Extraction Information"
 msgstr "Poiminnan tiedot"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__field
-msgid "Field"
-msgstr "Kenttä"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_follower_ids
@@ -253,7 +225,11 @@ msgid "Has Message"
 msgstr "Sisältää viestin"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_ir_attachment__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__id
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__id
 msgid "ID"
 msgstr "ID"
 
@@ -274,16 +250,6 @@ msgid "If checked, some messages have a delivery error."
 msgstr "Jos valittu, joitakin viestejä ei ole toimitettu."
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__invoice_id
-msgid "Invoice"
-msgstr "Lasku"
-
-#. module: account_invoice_extract
-#: model:ir.actions.server,name:account_invoice_extract.ir_cron_ocr_parse_ir_actions_server
-msgid "Invoice OCR: Parse Invoices"
-msgstr "Laskujen tekstintunnistus: Analysoi laskut"
-
-#. module: account_invoice_extract
 #: model:ir.actions.server,name:account_invoice_extract.ir_cron_update_ocr_status_ir_actions_server
 msgid "Invoice OCR: Update All Status"
 msgstr "Laskujen tekstintunnistus: päivitä statukset"
@@ -292,6 +258,12 @@ msgstr "Laskujen tekstintunnistus: päivitä statukset"
 #: model:ir.actions.server,name:account_invoice_extract.ir_cron_ocr_validate_ir_actions_server
 msgid "Invoice OCR: Validate Invoices"
 msgstr "Laskujen tekstintunnistus: vahvista laskut"
+
+#. module: account_invoice_extract
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_partner__is_created_by_ocr
+#: model:ir.model.fields,field_description:account_invoice_extract.field_res_users__is_created_by_ocr
+msgid "Is Created By Ocr"
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_is_follower
@@ -304,24 +276,9 @@ msgid "Is In Extractable State"
 msgstr "On poiminnan sallivassa tilassa"
 
 #. module: account_invoice_extract
-#: model:ir.model,name:account_invoice_extract.model_account_journal
-msgid "Journal"
-msgstr ""
-
-#. module: account_invoice_extract
 #: model:ir.model,name:account_invoice_extract.model_account_move
 msgid "Journal Entry"
 msgstr "Päiväkirjan kirjaus"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__write_uid
-msgid "Last Updated by"
-msgstr "Viimeksi päivittänyt"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__write_date
-msgid "Last Updated on"
-msgstr "Viimeksi päivitetty"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__message_main_attachment_id
@@ -350,23 +307,13 @@ msgstr "Virheiden määrä"
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,help:account_invoice_extract.field_account_move__message_needaction_counter
-msgid "Number of messages which requires an action"
+msgid "Number of messages requiring action"
 msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,help:account_invoice_extract.field_account_move__message_has_error_counter
 msgid "Number of messages with delivery error"
 msgstr "Toimitusvirheellisten viestien määrä"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__ocr_selected
-msgid "Ocr Selected"
-msgstr "Tekstintunnistus valittu"
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,help:account_invoice_extract.field_account_journal__alias_auto_extract_pdfs_only
-msgid "Only extract PDF files attached to email arriving trough this email alias."
-msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_account_move__rating_ids
@@ -389,25 +336,15 @@ msgid "Send Bills for digitization"
 msgstr "Lähetä laskut digitoitavaksi"
 
 #. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid "Send For Digitization"
-msgstr "Lähetä digitoitavaksi"
-
-#. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_company__extract_single_line_per_tax
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_single_line_per_tax
 msgid "Single Invoice Line Per Tax"
 msgstr "Yksi laskurivi per vero"
 
 #. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid "The data extraction is not finished yet. The extraction usually takes between 5 and 10 seconds."
-msgstr "Tietojen poiminta ei ole vielä valmis. Tietojen poiminta kestää yleensä 5-10 sekuntia."
-
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__user_selected
-msgid "User Selected"
-msgstr "Käyttäjän valitsema"
+#: model:ir.model.constraint,message:account_invoice_extract.constraint_res_partner_ocr_name_uniq
+msgid "The OCR can't create multiple partners with the same name."
+msgstr ""
 
 #. module: account_invoice_extract
 #: model:ir.model.fields,field_description:account_invoice_extract.field_res_config_settings__extract_in_invoice_digitalization_mode
@@ -425,41 +362,83 @@ msgid "Website communication history"
 msgstr "Verkkosivun viestintähistoria"
 
 #. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_angle
-msgid "Word Box Angle"
-msgstr "Sanalaatikon kulma"
+#. odoo-python
+#: code:addons/account_invoice_extract/models/account_invoice.py:0
+msgid "You cannot send a expense that is not in draft state!"
+msgstr ""
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_height
-msgid "Word Box Height"
-msgstr "Sanalaatikon korkeus"
+#~ msgid ""
+#~ "All fields will be automated by Artificial Intelligence, it might take 5 "
+#~ "seconds."
+#~ msgstr "Tekoäly automatisoi kaikki kentät. Tämä saattaa kestää hetken.."
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_midX
-msgid "Word Box Midx"
-msgstr "Sanalaatikon vaakasuuntainen keskipiste"
+#~ msgid "Bill is being Digitized"
+#~ msgstr "Laskua digitoidaan"
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_midY
-msgid "Word Box Midy"
-msgstr "Sanalaatikon pystysuuntainen keskipiste"
+#~ msgid "Created by"
+#~ msgstr "Luonut"
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_box_width
-msgid "Word Box Width"
-msgstr "Sanalaatikon leveys"
+#~ msgid "Created on"
+#~ msgstr "Luotu"
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_page
-msgid "Word Page"
-msgstr "Sanasivu"
+#~ msgid "Extract Word"
+#~ msgstr "Hae sana"
 
-#. module: account_invoice_extract
-#: model:ir.model.fields,field_description:account_invoice_extract.field_account_invoice_extract_words__word_text
-msgid "Word Text"
-msgstr "Sana teksti"
+#~ msgid "Extracted words from invoice scan"
+#~ msgstr "Hae sanat skannatusta laskusta"
 
-#. module: account_invoice_extract
-#: model_terms:ir.ui.view,arch_db:account_invoice_extract.view_move_form_inherit_ocr
-msgid "You don't have enough credit to extract data from your invoice."
-msgstr "Sinulla ei ole tarpeeksi krediittejä tietojen poimimiseen laskustasi."
+#~ msgid "Field"
+#~ msgstr "Kenttä"
+
+#~ msgid "Invoice"
+#~ msgstr "Lasku"
+
+#~ msgid "Invoice OCR: Parse Invoices"
+#~ msgstr "Laskujen tekstintunnistus: Analysoi laskut"
+
+#~ msgid "Last Updated by"
+#~ msgstr "Viimeksi päivittänyt"
+
+#~ msgid "Last Updated on"
+#~ msgstr "Viimeksi päivitetty"
+
+#~ msgid "Ocr Selected"
+#~ msgstr "Tekstintunnistus valittu"
+
+#~ msgid "Send For Digitization"
+#~ msgstr "Lähetä digitoitavaksi"
+
+#~ msgid ""
+#~ "The data extraction is not finished yet. The extraction usually takes "
+#~ "between 5 and 10 seconds."
+#~ msgstr ""
+#~ "Tietojen poiminta ei ole vielä valmis. Tietojen poiminta kestää yleensä "
+#~ "5-10 sekuntia."
+
+#~ msgid "User Selected"
+#~ msgstr "Käyttäjän valitsema"
+
+#~ msgid "Word Box Angle"
+#~ msgstr "Sanalaatikon kulma"
+
+#~ msgid "Word Box Height"
+#~ msgstr "Sanalaatikon korkeus"
+
+#~ msgid "Word Box Midx"
+#~ msgstr "Sanalaatikon vaakasuuntainen keskipiste"
+
+#~ msgid "Word Box Midy"
+#~ msgstr "Sanalaatikon pystysuuntainen keskipiste"
+
+#~ msgid "Word Box Width"
+#~ msgstr "Sanalaatikon leveys"
+
+#~ msgid "Word Page"
+#~ msgstr "Sanasivu"
+
+#~ msgid "Word Text"
+#~ msgstr "Sana teksti"
+
+#~ msgid "You don't have enough credit to extract data from your invoice."
+#~ msgstr ""
+#~ "Sinulla ei ole tarpeeksi krediittejä tietojen poimimiseen laskustasi."

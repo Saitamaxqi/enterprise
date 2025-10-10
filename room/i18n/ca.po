@@ -7,11 +7,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
-"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/room/ca/>"
-"\n"
+"Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/room/ca/"
+">\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -320,7 +320,8 @@ msgstr "ID"
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
+msgstr ""
+"Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
@@ -371,8 +372,7 @@ msgstr "Oficina principal"
 
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-msgid ""
-"Make meeting room sharing easy by centralizing all meetings in this App"
+msgid "Make meeting room sharing easy by centralizing all meetings in this App"
 msgstr ""
 "Centralitza totes les reunions i comparteix les sales amb facilitat en "
 "aquesta aplicació"

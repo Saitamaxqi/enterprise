@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -62,7 +62,8 @@ msgstr "作者イメージ"
 msgid ""
 "Check this if you want to use your personal Facebook Developer Account "
 "instead of the provided one."
-msgstr "提供されたアカウントではなく、個人のFacebookディベロッパーアカウントを使用す"
+msgstr ""
+"提供されたアカウントではなく、個人のFacebookディベロッパーアカウントを使用す"
 "る場合は、このチェックボックスをオンにします。"
 
 #. module: social_facebook
@@ -151,24 +152,24 @@ msgstr "Facebookメッセージ"
 #. module: social_facebook
 #: model:ir.model.fields,help:social_facebook.field_social_account__facebook_access_token
 msgid ""
-"Facebook Page Access Token provided by the Facebook API, this should never be set manually.\n"
-"            It's used to authenticate requests when posting to or reading information from this account."
+"Facebook Page Access Token provided by the Facebook API, this should never "
+"be set manually.\n"
+"            It's used to authenticate requests when posting to or reading "
+"information from this account."
 msgstr ""
-"Facebook "
-"APIによって提供されるFacebookページアクセストークン。これは手動で設定されるこ"
-"とは決してありません。\n"
-"　　　"
-"このアカウントに投稿したり、このアカウントから情報を読み取ったりする際に、要"
-"求を認証するために使用されます。"
+"Facebook APIによって提供されるFacebookページアクセストークン。これは手動で設"
+"定されることは決してありません。\n"
+"　　　このアカウントに投稿したり、このアカウントから情報を読み取ったりする際"
+"に、要求を認証するために使用されます。"
 
 #. module: social_facebook
 #: model:ir.model.fields,help:social_facebook.field_social_account__facebook_account_id
 msgid ""
 "Facebook Page ID provided by the Facebook API, this should never be set "
 "manually."
-msgstr "Facebook "
-"APIによって提供されるFacebookページIDで、手動で設定されることは決してありませ"
-"ん。"
+msgstr ""
+"Facebook APIによって提供されるFacebookページIDで、手動で設定されることは決し"
+"てありません。"
 
 #. module: social_facebook
 #: model:ir.model.fields,field_description:social_facebook.field_social_stream_post__facebook_post_id
@@ -185,7 +186,8 @@ msgstr "Facebookプレビュー"
 #. odoo-python
 #: code:addons/social_facebook/controllers/main.py:0
 msgid "Facebook did not provide a valid access token or it may have expired."
-msgstr "Facebookは有効なアクセストークンを提供していないか、有効期限が切れている可能"
+msgstr ""
+"Facebookは有効なアクセストークンを提供していないか、有効期限が切れている可能"
 "性があります。"
 
 #. module: social_facebook
@@ -248,13 +250,13 @@ msgstr "メッセージ"
 #. odoo-python
 #: code:addons/social_facebook/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
-"おっと! "
-"現在、有効なサブスクリプションがありません。ご安心ください。こちらから簡単に"
-"取得できます: "
-"%s。サブスクリプションを取得して、豊富な機能を今すぐご利用いただけます!"
+"おっと! 現在、有効なサブスクリプションがありません。ご安心ください。こちらか"
+"ら簡単に取得できます: %s。サブスクリプションを取得して、豊富な機能を今すぐご"
+"利用いただけます!"
 
 #. module: social_facebook
 #: model:social.stream.type,name:social_facebook.stream_type_page_mentions
@@ -271,8 +273,9 @@ msgstr "ページ投稿"
 #: code:addons/social_facebook/models/social_post_template.py:0
 msgid ""
 "Please specify either a Facebook Message or upload some Facebook Images."
-msgstr "FacebookメッセージまたはFacebook画像のアップロードのいずれかを指定して下さい"
-"。"
+msgstr ""
+"FacebookメッセージまたはFacebook画像のアップロードのいずれかを指定して下さ"
+"い。"
 
 #. module: social_facebook
 #: model_terms:ir.ui.view,arch_db:social_facebook.facebook_preview
@@ -285,7 +288,8 @@ msgstr "ポストイメージ"
 msgid ""
 "Post not found. It could be because the post has been deleted on the Social "
 "Platform."
-msgstr "投稿が見つかりません。ソーシャルプラットフォーム上で投稿が削除された可能性が"
+msgstr ""
+"投稿が見つかりません。ソーシャルプラットフォーム上で投稿が削除された可能性が"
 "あります。"
 
 #. module: social_facebook
@@ -374,8 +378,9 @@ msgstr "あなた自身のFacebookアカウントを使用する"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social_facebook
 #: model:ir.model.fields,field_description:social_facebook.field_social_stream_post__facebook_user_likes
@@ -396,8 +401,9 @@ msgstr "ビュー"
 msgid ""
 "We could not upload your image, try reducing its size and posting it again "
 "(error: %s)."
-msgstr "画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さい"
-"。(エラー: %s)"
+msgstr ""
+"画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さ"
+"い。(エラー: %s)"
 
 #. module: social_facebook
 #: model:ir.model.fields,help:social_facebook.field_social_post__facebook_image_ids

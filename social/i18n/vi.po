@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 23:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -31,7 +31,7 @@ msgstr "# Tài khoản"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "%s (max %s chars)"
+msgid "%(media_name)s (max %(max_chars)s chars)"
 msgstr ""
 
 #. module: social
@@ -46,8 +46,19 @@ msgid "<b>An error occurred while trying to link your account</b>"
 msgstr "<b>Đã xảy ra lỗi khi cố gắng liên kết tài khoản của bạn</b>"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "<i class=\"fa fa-globe\" title=\"See the post\"/>"
+msgid "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
 msgstr ""
 
 #. module: social
@@ -56,14 +67,10 @@ msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
 msgstr "<i class=\"oi oi-arrow-left\"/> Trở lại Odoo"
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<small class=\"pe-1\">Clicks:</small>"
-msgstr ""
-
-#. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/js/tours/social.js:0
-msgid "<strong>Congrats! Come back in a few minutes to check your statistics.</strong>"
+#: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
+msgid ""
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr ""
 "<strong>Xin chúc mừng! Hãy quay lại sau vài phút để kiểm tra số liệu thống "
 "kê của bạn.</strong>"
@@ -112,9 +119,14 @@ msgstr "Thêm bài viết"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Add Stream"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
 #: code:addons/social/static/src/js/add_stream_modal.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
-#: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add a Stream"
 msgstr "Thêm một luồng"
 
@@ -163,6 +175,11 @@ msgid "Attach Images"
 msgstr "Đính kèm hình ảnh"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__image_ids
+msgid "Attached Images"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
 #: model:ir.model.fields,field_description:social.field_social_post__message_attachment_count
 msgid "Attachment Count"
@@ -192,7 +209,7 @@ msgstr "Tên tác giả"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_link
-msgid "Author link to the external social.media (ex: link to the Twitter Account)."
+msgid "Author link to the external social.media (ex: link to the X Account)."
 msgstr ""
 
 #. module: social
@@ -233,7 +250,9 @@ msgstr "Chiến dịch"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
-msgid "Campaigns are used to centralize your marketing efforts and track their results."
+msgid ""
+"Campaigns are used to centralize your marketing efforts and track their "
+"results."
 msgstr ""
 "Chiến dịch được sử dụng để tập trung các nỗ lực marketing của bạn và theo "
 "dõi kết quả của chúng."
@@ -244,8 +263,6 @@ msgid "Can link accounts?"
 msgstr "Có thể liên kết tài khoản hay không?"
 
 #. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Cancel"
 msgstr "Hủy"
@@ -266,6 +283,11 @@ msgstr "Nhấp để làm mới."
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Clicks"
 msgstr "Lượt nhấp"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Clicks:"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -303,12 +325,16 @@ msgstr "Lỗi kết nối"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__social_account_handle
-msgid "Contains the social media handle of the person that created this account. E.g: '@odoo.official' for the 'Odoo' Twitter account"
+msgid ""
+"Contains the social media handle of the person that created this account. "
+"E.g: '@odoo.official' for the 'Odoo' X account"
 msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
-msgid "Content of the social post message that is post-processed (links are shortened, UTMs, ...)"
+msgid ""
+"Content of the social post message that is post-processed (links are "
+"shortened, UTMs, ...)"
 msgstr ""
 "Nội dung bài viết trên mạng xã hội được hậu xử lý (liên kết được rút gọn, "
 "UTM, ...)"
@@ -338,10 +364,12 @@ msgstr "Tạo một bài viết"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
-msgid "Create other accounts for %(media_names)s for this company or ask %(company_names)s to share their accounts"
+msgid ""
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
-"Tạo thêm tài khoản %(media_names)s cho công ty này hoặc hỏi %(company_names)"
-"s để dùng chung tài khoản của họ"
+"Tạo thêm tài khoản %(media_names)s cho công ty này hoặc hỏi %"
+"(company_names)s để dùng chung tài khoản của họ"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -387,9 +415,22 @@ msgstr "Xác định xem tài khoản này có xu hướng thống kê hay khôn
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
+#: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Delete"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Delete Comment"
 msgstr "Xoá bình luận"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Delete Post"
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -407,6 +448,19 @@ msgid "Developer Accounts"
 msgstr "Tài khoản nhà phát triển"
 
 #. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__display_message
+#: model:ir.model.fields,field_description:social.field_social_post_template__display_message
+msgid "Display Message"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:social.field_social_account__display_name
 #: model:ir.model.fields,field_description:social.field_social_live_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_media__display_name
@@ -416,13 +470,22 @@ msgstr "Tài khoản nhà phát triển"
 #: model:ir.model.fields,field_description:social.field_social_stream_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_type__display_name
+#: model:ir.model.fields,field_description:social.field_utm_campaign__display_name
+#: model:ir.model.fields,field_description:social.field_utm_medium__display_name
+#: model:ir.model.fields,field_description:social.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Tên hiển thị"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
-msgid "Do you really want to delete %s"
+msgid "Do you really want to delete this %s?"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Do you really want to delete this Post ?"
 msgstr ""
 
 #. module: social
@@ -443,7 +506,13 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Edit Comment"
+msgid "Edit"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Edit Your Post"
 msgstr ""
 
 #. module: social
@@ -453,7 +522,9 @@ msgstr "Bật chế độ demo"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Enable this option and load demo data to test the social module. This must never be used on a production database!"
+msgid ""
+"Enable this option and load demo data to test the social module. This must "
+"never be used on a production database!"
 msgstr ""
 "Bật tùy chọn này và tải dữ liệu demo để kiểm thử phân hệ mạng xã hội. Nghiêm "
 "cấm sử dụng trên cơ sở dữ liệu production!"
@@ -465,7 +536,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_live_post__engagement
 #: model:ir.model.fields,field_description:social.field_social_post__engagement
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Engagement"
 msgstr "Tương tác"
@@ -476,8 +546,15 @@ msgid "Engagement Trend"
 msgstr "Xu hướng tương tác"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Engagement:"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
-msgid "Every time an account is created, a utm.medium is also created and linked to the account"
+msgid ""
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr ""
 "Mỗi khi một tài khoản được tạo, utm.medium cũng được tạo và liên kết với tài "
 "khoản"
@@ -535,7 +612,8 @@ msgstr "Ngày đăng được định dạng"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience
-msgid "General audience of the Social Account (Page Likes, Account Follows, ...)."
+msgid ""
+"General audience of the Social Account (Page Likes, Account Follows, ...)."
 msgstr ""
 "Đối tượng chung của Tài khoản mạng xã hội (Lượt thích trang, Số lượt theo "
 "dõi tài khoản, ...)."
@@ -544,14 +622,6 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "Go to the"
 msgstr "Đi đến"
-
-#. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_account_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
-msgid "Group By"
-msgstr "Nhóm theo"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
@@ -586,6 +656,7 @@ msgid "Hatched"
 msgstr "Hatched"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__id
 #: model:ir.model.fields,field_description:social.field_social_account__id
 #: model:ir.model.fields,field_description:social.field_social_live_post__id
 #: model:ir.model.fields,field_description:social.field_social_media__id
@@ -595,6 +666,9 @@ msgstr "Hatched"
 #: model:ir.model.fields,field_description:social.field_social_stream_post__id
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__id
+#: model:ir.model.fields,field_description:social.field_utm_campaign__id
+#: model:ir.model.fields,field_description:social.field_utm_medium__id
+#: model:ir.model.fields,field_description:social.field_utm_source__id
 msgid "ID"
 msgstr "ID"
 
@@ -657,6 +731,11 @@ msgid "Insights"
 msgstr "Thông tin chi tiết"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_stream_post__is_author
+msgid "Is Author"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
 #: model:ir.model.fields,field_description:social.field_social_post__message_is_follower
 msgid "Is Follower"
@@ -665,7 +744,9 @@ msgstr "Là người theo dõi"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "It appears there is an issue with the Social Media link, click here to link the account again"
+msgid ""
+"It appears there is an issue with the Social Media link, click here to link "
+"the account again"
 msgstr ""
 "Có vẻ như có vấn đề với liên kết Kênh mạng xã hội, nhấp vào đây để liên kết "
 "lại tài khoản"
@@ -705,7 +786,7 @@ msgstr "Cập nhật lần cuối vào"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
-msgid "Let's <b>connect</b> to Facebook, LinkedIn or Twitter."
+msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
 msgstr ""
 
 #. module: social
@@ -780,7 +861,9 @@ msgstr "Liên kết một tài khoản"
 #: model:ir.model.fields,help:social.field_social_live_post__company_id
 #: model:ir.model.fields,help:social.field_social_stream__company_id
 #: model:ir.model.fields,help:social.field_social_stream_post__company_id
-msgid "Link an account to a company to restrict its usage or keep empty to let all companies use it."
+msgid ""
+"Link an account to a company to restrict its usage or keep empty to let all "
+"companies use it."
 msgstr ""
 "Liên kết tài khoản với một công ty để hạn chế việc sử dụng tài khoản đó hoặc "
 "để trống để tất cả các công ty có thể sử dụng tài khoản đó."
@@ -827,10 +910,17 @@ msgid "Max Post Length"
 msgstr "Độ dài bài viết tối đa"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__media_type
 #: model:ir.model.fields,field_description:social.field_social_post__media_ids
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Media"
 msgstr "Phương tiện truyền thông"
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__media_count
+#: model:ir.model.fields,field_description:social.field_social_post_template__media_count
+msgid "Media Count"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
@@ -853,12 +943,6 @@ msgid "Message Delivery error"
 msgstr "Lỗi gửi tin nhắn"
 
 #. module: social
-#: model:ir.model.fields,field_description:social.field_social_post__message_length
-#: model:ir.model.fields,field_description:social.field_social_post_template__message_length
-msgid "Message Length"
-msgstr ""
-
-#. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted"
@@ -879,8 +963,10 @@ msgstr "Tin nhắn"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "Hầu hết các bài trực tiếp trên mạng xã hội đều trực tiếp chuyển từ Sẵn sàng "
 "sang Đã đăng/Không thành công vì chúng là kết quả của một lệnh gọi tới API "
@@ -919,6 +1005,12 @@ msgstr "Tên"
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New Post"
 msgstr "Bài viết mới"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "New comments are disabled"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1006,7 +1098,8 @@ msgstr "Số lượng lỗi"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
-msgid "Number of interactions (likes, shares, comments ...) with the social posts"
+msgid ""
+"Number of interactions (likes, shares, comments ...) with the social posts"
 msgstr ""
 "Số lượt tương tác (lượt thích, chia sẻ, bình luận,...) với các bài viết trên "
 "mạng xã hội"
@@ -1014,8 +1107,8 @@ msgstr ""
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,help:social.field_social_post__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Số thông báo cần xử lý"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
@@ -1036,13 +1129,15 @@ msgstr "Số người tương tác với bài viết (Lượt thích, Bình lu�
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
-msgid "Number of stories created from your posts (Shares, Re-tweets, ...)."
+msgid "Number of stories created from your posts (Shares, Reposts, ...)."
 msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people have engaged with your posts (likes, comments, shares,...)"
+msgid ""
+"Number of times people have engaged with your posts (likes, comments, "
+"shares,...)"
 msgstr ""
 "Số lần người xem tương tác với bài viết của bạn (lượt thích, bình luận, chia "
 "sẻ,...)"
@@ -1050,7 +1145,9 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people who have engaged with your channel have created stories on their friends' or followers' feed (Shares, Retweets...)"
+msgid ""
+"Number of times people who have engaged with your channel have created "
+"stories on their friends' or followers' feed (Shares, Reposts...)"
 msgstr ""
 
 #. module: social
@@ -1067,7 +1164,8 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement_trend
-msgid "Percentage of increase/decrease of the engagement over a defined period."
+msgid ""
+"Percentage of increase/decrease of the engagement over a defined period."
 msgstr ""
 "Tỷ lệ phần trăm tăng/giảm tương tác trong một khoảng thời gian xác định."
 
@@ -1086,6 +1184,12 @@ msgstr ""
 
 #. module: social
 #. odoo-python
+#: code:addons/social/models/social_post_template.py:0
+msgid "Please specify either a message or upload some images."
+msgstr ""
+
+#. module: social
+#. odoo-python
 #: code:addons/social/models/social_post.py:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Post"
@@ -1093,6 +1197,7 @@ msgstr "Bài viết"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.xml:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_kanban
@@ -1101,6 +1206,7 @@ msgstr "Hình ảnh bài viết"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.js:0
 #: code:addons/social/static/src/js/post_kanban_view.js:0
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_renderer.js:0
@@ -1126,7 +1232,9 @@ msgstr "Đăng ngay"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
-msgid "Post link to the external social.media (ex: link to the actual Facebook Post)."
+msgid ""
+"Post link to the external social.media (ex: link to the actual Facebook "
+"Post)."
 msgstr ""
 "Liên kết tới bài viết trên các kênh mạng xã hội bên ngoài (VD: liên kết tới "
 "Bài viết Facebook thực tế)."
@@ -1151,6 +1259,7 @@ msgstr "Đang đăng"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_post_ids
 #: model:ir.ui.menu,name:social.menu_social_post
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_kanban
 msgid "Posts"
@@ -1162,8 +1271,14 @@ msgid "Posts By Account"
 msgstr "Bài viết theo tài khoản"
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "Posts By Accounts"
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Posts Preview"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
 msgstr ""
 
 #. module: social
@@ -1221,7 +1336,7 @@ msgstr "Kênh mạng xã hội liên quan"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
-msgid "Related Social Media (Facebook, Twitter, ...)."
+msgid "Related Social Media (Facebook, X, ...)."
 msgstr ""
 
 #. module: social
@@ -1275,7 +1390,9 @@ msgstr "Ngày lên lịch"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "Selected accounts (%s) do not match the selected company (%s)"
+msgid ""
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr ""
 
 #. module: social
@@ -1297,7 +1414,8 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
-msgid "Set a maximum number of characters can be posted in post. 0 for no limit."
+msgid ""
+"Set a maximum number of characters can be posted in post. 0 for no limit."
 msgstr ""
 "Cài đặt số lượng ký tự tối đa có thể được đăng trong bài viết. 0 nghĩa là "
 "không giới hạn."
@@ -1338,6 +1456,8 @@ msgstr "Quản lý mạng xã hội"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_global
+#: model:res.groups.privilege,name:social.res_groups_privilege_social_marketing
+#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Social Marketing"
 msgstr "Marketing trên MXH"
 
@@ -1350,7 +1470,6 @@ msgstr "Marketing trên MXH"
 #: model:ir.model.fields,field_description:social.field_social_stream__media_id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__media_id
 #: model:ir.ui.menu,name:social.menu_social_media
-#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Social Media"
@@ -1423,7 +1542,9 @@ msgstr "Mạng xã hội: Đăng bài viết đã lên lịch"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_dashboard.js:0
-msgid "Sorry, you're not allowed to re-link this account, please contact your administrator."
+msgid ""
+"Sorry, you're not allowed to re-link this account, please contact your "
+"administrator."
 msgstr ""
 "Rất tiếc, bạn không được phép liên kết lại tài khoản này, vui lòng liên hệ "
 "với quản trị viên."
@@ -1435,10 +1556,24 @@ msgstr "Nguồn"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
-msgid "Special technical field that holds a dict containing the live posts names by media ids (used for kanban view)."
+msgid ""
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
 msgstr ""
-"Trường kỹ thuật đặc biệt có từ điển chứa tên bài trực tiếp theo id kênh ("
-"được sử dụng trong chế độ xem kanban)."
+"Trường kỹ thuật đặc biệt có từ điển chứa tên bài trực tiếp theo id kênh "
+"(được sử dụng trong chế độ xem kanban)."
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_post_split_per_media.xml:0
+msgid "Split Per Media"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__is_split_per_media
+#: model:ir.model.fields,field_description:social.field_social_post_template__is_split_per_media
+msgid "Split Per Network"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
@@ -1521,13 +1656,7 @@ msgstr "Các bài viết phụ sẽ được đăng trên mỗi tài khoản m�
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Synchronize"
-msgstr "Đồng bộ hóa"
-
-#. module: social
-#. odoo-python
-#: code:addons/social/models/social_post_template.py:0
-msgid "The 'message' field is required for post ID %s"
+msgid "Sync"
 msgstr ""
 
 #. module: social
@@ -1544,7 +1673,9 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
-msgid "The post is considered as 'Posted' when all its sub-posts (one per social account) are either 'Failed' or 'Posted'"
+msgid ""
+"The post is considered as 'Posted' when all its sub-posts (one per social "
+"account) are either 'Failed' or 'Posted'"
 msgstr ""
 "Bài viết được coi là 'Đã đăng' khi tất cả các bài viết phụ của nó (một bài "
 "cho mỗi tài khoản mạng xã hội) đều trong trạng thái 'Không thành công' hoặc "
@@ -1557,7 +1688,9 @@ msgstr "Ngày đăng bài viết dựa trên thông tin của bên thứ ba."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__failure_reason
-msgid "The reason why a post is not successfully posted on the Social Media (eg: connection error, duplicated post, ...)."
+msgid ""
+"The reason why a post is not successfully posted on the Social Media (eg: "
+"connection error, duplicated post, ...)."
 msgstr ""
 "Nguyên nhân không thể đăng bài viết lên Kênh mạng xã hội (VD: lỗi kết nối, "
 "bài viết trùng lặp,...)."
@@ -1580,7 +1713,9 @@ msgstr "Có lỗi trên các bài viết phụ"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__csrf_token
-msgid "This token can be used to verify that an incoming request from a social provider has not been forged."
+msgid ""
+"This token can be used to verify that an incoming request from a social "
+"provider has not been forged."
 msgstr ""
 "Token này có thể được sử dụng để xác minh rằng yêu cầu đến từ nhà cung cấp "
 "mạng xã hội chưa bị giả mạo."
@@ -1624,6 +1759,12 @@ msgstr "Nguồn UTM"
 
 #. module: social
 #. odoo-python
+#: code:addons/social/controllers/main.py:0
+msgid "Uh-oh! It looks like this message has been deleted from X."
+msgstr ""
+
+#. module: social
+#. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Unknown error"
 msgstr "Lỗi không xác định"
@@ -1636,7 +1777,9 @@ msgstr "Tệp được tải lên có vẻ không phải là hình ảnh hợp l
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Use your own Developer Accounts on our Social app. Those credentials are provided in the developer section of your professional social media account."
+msgid ""
+"Use your own Developer Accounts on our Social app. Those credentials are "
+"provided in the developer section of your professional social media account."
 msgstr ""
 "Sử dụng Tài khoản nhà phát triển của riêng bạn trên ứng dụng Mạng xã hội của "
 "chúng tôi. Những thông tin đăng nhập đó được cung cấp trong phần nhà phát "
@@ -1644,9 +1787,12 @@ msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
+#: model:ir.model.fields,help:social.field_social_live_post__media_type
 #: model:ir.model.fields,help:social.field_social_media__media_type
 #: model:ir.model.fields,help:social.field_social_stream_post__media_type
-msgid "Used to make comparisons when we need to restrict some features to a specific media ('facebook', 'twitter', ...)."
+msgid ""
+"Used to make comparisons when we need to restrict some features to a "
+"specific media ('facebook', 'x', ...)."
 msgstr ""
 
 #. module: social
@@ -1654,6 +1800,12 @@ msgstr ""
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "View"
 msgstr "Chế độ xem"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_account_view_form
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
+msgid "Visible to all"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__website_message_ids
@@ -1674,7 +1826,9 @@ msgstr "Khi"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
-msgid "When the global post was published. The actual sub-posts published dates may be different depending on the media."
+msgid ""
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr ""
 "Khi bài viết chung được đăng. Ngày thực tế đăng các bài viết phụ có thể khác "
 "nhau tùy vào kênh mạng xã hội."
@@ -1693,6 +1847,11 @@ msgid "Write a comment..."
 msgstr "Viết một bình luận..."
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Write a message or upload an image"
+msgstr ""
+
+#. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Write a message to get a preview of your post."
@@ -1706,7 +1865,9 @@ msgstr "Viết một phản hồi..."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_post
-msgid "Write an enticing post, add images and schedule it to be posted later on multiple platforms at once."
+msgid ""
+"Write an enticing post, add images and schedule it to be posted later on "
+"multiple platforms at once."
 msgstr ""
 "Viết một bài viết hấp dẫn, thêm hình ảnh và lên lịch đăng sau trên nhiều nền "
 "tảng cùng một lúc."
@@ -1715,7 +1876,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "Bạn không thể xóa các Phương tiện UTM này vì chúng được liên kết với các tài "
@@ -1726,7 +1888,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "Bạn không thể xóa các Nguồn UTM này vì chúng được liên kết với các bài viết "
@@ -1800,3 +1963,12 @@ msgstr "để liên kết các tài khoản của bạn và bắt đầu đăng 
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "to start posting from Odoo."
 msgstr "để bắt đầu đăng bài từ Odoo."
+
+#~ msgid "Group By"
+#~ msgstr "Nhóm theo"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Số thông báo cần xử lý"
+
+#~ msgid "Synchronize"
+#~ msgstr "Đồng bộ hóa"

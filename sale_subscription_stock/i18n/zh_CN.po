@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 15:28+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -26,8 +26,9 @@ msgid ""
 "A system error prevented the automatic creation of delivery orders for this "
 "subscription. To ensure your delivery is processed, please trigger it "
 "manually by using the \"Subscription: Generate delivery\" action."
-msgstr "系统错误导致无法自动创建此订阅的交货订单。为确保您的交货得到处理，请使用 "
-"\"订阅： 生成交货 \"操作手动触发。"
+msgstr ""
+"系统错误导致无法自动创建此订阅的交货订单。为确保您的交货得到处理，请使用 \"订"
+"阅： 生成交货 \"操作手动触发。"
 
 #. module: sale_subscription_stock
 #. odoo-python
@@ -108,9 +109,11 @@ msgstr "订阅"
 #. module: sale_subscription_stock
 #: model_terms:ir.ui.view,arch_db:sale_subscription_stock.sale_subscription_order_view_form
 msgid ""
-"The delivery order of the recurring product(s) will be created soon. If another delivery order exists,\n"
+"The delivery order of the recurring product(s) will be created soon. If "
+"another delivery order exists,\n"
 "                    recurring product will be added to it automatically."
-msgstr "定期产品的交货单将很快创建。如果存在其他交货单，重复产品将自动添加到其中。"
+msgstr ""
+"定期产品的交货单将很快创建。如果存在其他交货单，重复产品将自动添加到其中。"
 
 #. module: sale_subscription_stock
 #: model:ir.model,name:sale_subscription_stock.model_stock_picking

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-16 12:14+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -49,9 +49,10 @@ msgstr "영업제안"
 #. odoo-python
 #: code:addons/crm_sale_subscription/models/crm_lead.py:0
 msgid ""
-"Recurring revenue and Expected revenue have been updated based on the linked"
-" Sales Orders."
-msgstr "연결된 판매 주문에 따라 반복 매출과 예상 매출이 모두 업데이트되었습니다."
+"Recurring revenue and Expected revenue have been updated based on the linked "
+"Sales Orders."
+msgstr ""
+"연결된 판매 주문에 따라 반복 매출과 예상 매출이 모두 업데이트되었습니다."
 
 #. module: crm_sale_subscription
 #. odoo-python

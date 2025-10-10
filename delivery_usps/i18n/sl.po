@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-16 21:24+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
@@ -58,6 +58,11 @@ msgstr "Tip vsebine"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "Vrsta dostave"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -116,6 +121,11 @@ msgstr "Ovojnica s pavšalno ceno"
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
 msgstr "Darilo"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
@@ -240,7 +250,8 @@ msgstr ""
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please choose another service (maximum weight of this service is 4 pounds)"
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
 msgstr "Izberite drugo storitev (največja teža te storitve je 4 funte)"
 
 #. module: delivery_usps
@@ -264,7 +275,9 @@ msgstr "Prosimo, navedite vsaj en artikel za pošiljanje."
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
+msgid ""
+"Please set country U.S.A in your company address, Service is only available "
+"for U.S.A"
 msgstr ""
 "V naslovu podjetja nastavite državo ZDA. Storitev je na voljo samo za ZDA."
 
@@ -383,7 +396,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "Ocenjene cene pošiljanja ni mogoče izračunati, ker za naslednje izdelke "
@@ -429,8 +443,13 @@ msgstr "Vrsta posode"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
-msgstr "USPS"
+msgid "USPS (Legacy)"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
+msgid "USPS (Legacy) Label File Type"
+msgstr ""
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -446,7 +465,9 @@ msgstr "USPS Domača pavšalna ovojnica"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
+msgid ""
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
+"delivery method into USPS International."
 msgstr ""
 "Domača pošta USPS se uporablja samo za pošiljanje znotraj ZDA. Prosimo, "
 "spremenite način dostave v mednarodno pošto USPS."
@@ -465,15 +486,12 @@ msgstr "USPS Mednarodni pavšalni znesek"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
+msgid ""
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
 msgstr ""
 "USPS Mednarodna pošiljka se uporablja samo za pošiljanje zunaj ZDA. Prosimo, "
 "spremenite način dostave v USPS Domestic."
-
-#. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-msgid "USPS Label File Type"
-msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
@@ -484,12 +502,6 @@ msgstr "USPS Vrsta pošte"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "USPS Storitev"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
-msgid "USPS Shipping Methods"
-msgstr "USPS metode odpreme"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
@@ -511,3 +523,9 @@ msgstr "Poštna številka vašega podjetja ali prejemnika je napačna."
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
 msgstr "centimeter"
+
+#~ msgid "USPS"
+#~ msgstr "USPS"
+
+#~ msgid "USPS Shipping Methods"
+#~ msgstr "USPS metode odpreme"

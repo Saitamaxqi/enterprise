@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -28,6 +28,12 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "% On time deliveries by vendor"
 msgstr "供應商準時交貨率 %"
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "% of On Time Deliveries"
+msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -80,6 +86,12 @@ msgstr "Azure Interior"
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Buyer"
 msgstr "買方"
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Confirmation Date"
+msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -172,6 +184,12 @@ msgstr "逾期收貨"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Lead Time"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Lead time"
 msgstr "前置時間"
 
@@ -229,6 +247,12 @@ msgstr "訂單日期"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Order date Filter"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 msgid "Orders count"
 msgstr "訂單數目"
 
@@ -247,7 +271,6 @@ msgstr "收貨提取訂單"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Picking Name"
 msgstr "揀貨名稱"
@@ -279,13 +302,18 @@ msgid "Product level overview"
 msgstr "產品級別概覽"
 
 #. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Products Purchased cost"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_purchase_stock.spreadsheet_dashboard_purchase
 msgid "Purchase & Vendor analysis"
 msgstr "採購及供應商分析"
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Purchase Order by buyer"
 msgstr "買家採購訂單"
@@ -293,6 +321,17 @@ msgstr "買家採購訂單"
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Purchase Value"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Purchase Value by confirmation date"
+msgstr ""
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Purchase Value by creation confirmation date"
 msgstr "採購價值，按建立確認日期排列"
@@ -335,6 +374,12 @@ msgstr "Ready Mat"
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Selected period"
 msgstr "所選期間"
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Supplier Dependency Chart"
+msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript
@@ -414,6 +459,12 @@ msgstr "值"
 #: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_sample_dashboard.json:0
 msgid "Vendor"
 msgstr "供應商"
+
+#. module: spreadsheet_dashboard_purchase_stock
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_purchase_stock/data/files/purchase_and_vendors_dashboard.json:0
+msgid "Vendors"
+msgstr ""
 
 #. module: spreadsheet_dashboard_purchase_stock
 #. odoo-javascript

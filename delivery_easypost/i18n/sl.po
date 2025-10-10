@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 21:24+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Slovenian <https://translate.odoo.com/projects/odoo-19/"
@@ -32,8 +32,10 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
 "<b>Ko je vaš račun ustvarjen, pojdite na nadzorno ploščo in kliknite puščico "
@@ -140,7 +142,8 @@ msgstr "Prikazani naziv"
 msgid ""
 "Do not forget to load your Easypost carrier accounts for a valid "
 "configuration."
-msgstr "Ne pozabite naložiti svojih računov Easypost za veljavno konfiguracijo."
+msgstr ""
+"Ne pozabite naložiti svojih računov Easypost za veljavno konfiguracijo."
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__epl2
@@ -256,8 +259,8 @@ msgstr "Stopnja zavarovalne pristojbine (EUR)"
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"It seems Easypost do not provide shipments for this order.                We"
-" advise you to try with another package type or service level."
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
 msgstr ""
 "Zdi se, da Easypost ne zagotavlja pošiljk za to naročilo. Svetujemo vam, da "
 "poskusite z drugo vrsto paketa ali nivojem storitve."
@@ -421,15 +424,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated price cannot be computed because the weight of your product is"
-" missing."
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "Ocenjene cene ni mogoče izračunati, ker manjka teža vašega izdelka."
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "Ocenjene cene pošiljanja ni mogoče izračunati, ker za naslednje izdelke "

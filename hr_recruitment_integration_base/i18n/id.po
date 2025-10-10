@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-15 23:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
@@ -32,7 +32,8 @@ msgstr "<span class=\"px-2\">-</span>"
 
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.ui.view,arch_db:hr_recruitment_integration_base.hr_job_post_view_kanban
-msgid "<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
+msgid ""
+"<span class=\"text-muted\" invisible=\"campaign_end_date\">No limit</span>"
 msgstr ""
 "<span class=\"text-muted\" invisible=\"campaign_end_date\">Tanpa batas</span>"
 
@@ -646,7 +647,8 @@ msgstr "Jumlah pesan dengan error pengiriman"
 #. module: hr_recruitment_integration_base
 #: model_terms:ir.actions.act_window,help:hr_recruitment_integration_base.action_open_hr_job_post
 msgid "Or you can start with the creation of a new open job position"
-msgstr "Atau Anda dapat memulai dengan pembuatan jabatan kerja kosong yang baru"
+msgstr ""
+"Atau Anda dapat memulai dengan pembuatan jabatan kerja kosong yang baru"
 
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields.selection,name:hr_recruitment_integration_base.selection__hr_job_post__status__pending
@@ -833,9 +835,9 @@ msgstr "Sukses"
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_job_post__recruiter_id
 msgid ""
-"The Recruiter will be the default value for all Applicants in this job"
-"             position. The Recruiter is automatically added to all meetings "
-"with the Applicant."
+"The Recruiter will be the default value for all Applicants in this "
+"job             position. The Recruiter is automatically added to all "
+"meetings with the Applicant."
 msgstr ""
 "Rekruter akan menjadi default value untuk semua Pelamar di jabatan kerja "
 "ini. Rekruter secara otomatis ditambahkan ke semua meeting dengan Pelamar."
@@ -864,8 +866,8 @@ msgstr "Alamat email, nomor telefon, url untuk mengirim lamaran."
 #. odoo-python
 #: code:addons/hr_recruitment_integration_base/models/hr_job_post.py:0
 msgid ""
-"This action will update the job post on the platform. This action will cost "
-"%(price)s credits. Do you want to continue?"
+"This action will update the job post on the platform. This action will cost %"
+"(price)s credits. Do you want to continue?"
 msgstr ""
 "Tindakan ini akan mengupdate postingan kerja pada platform. Tindakan ini "
 "akan dikenakan biaya %(price)s kredit. Apakah Anda ingin melanjutkan?"
@@ -873,8 +875,8 @@ msgstr ""
 #. module: hr_recruitment_integration_base
 #: model:ir.model.fields,help:hr_recruitment_integration_base.field_hr_recruitment_post_job_wizard__date_from
 msgid ""
-"This will update the applicant's availability status once they are hired for"
-" this position."
+"This will update the applicant's availability status once they are hired for "
+"this position."
 msgstr ""
 
 #. module: hr_recruitment_integration_base

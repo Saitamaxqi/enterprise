@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:39+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-16 13:40+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -399,7 +399,8 @@ msgstr "حدث خطأ عند الإرسال في شاشة تحضير الطعا�
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
 msgid "Fill this form to get Username &amp; Api key"
-msgstr "قم بتعبئة هذه الاستمارة للحصول على اسم المستخدم ومفتاح الواجهة البرمجية"
+msgstr ""
+"قم بتعبئة هذه الاستمارة للحصول على اسم المستخدم ومفتاح الواجهة البرمجية"
 
 #. module: pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
@@ -948,9 +949,9 @@ msgstr "لا يُسمح برفض هذا الطلب لـ \"%(providerName)s\""
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
-msgid ""
-"Responsible delivery provider for online order, e.g., UberEats, Zomato."
-msgstr "مزود خدمة التوصيل المسؤول عن الطلب عبر الإنترنت، مثل UberEats و Zomato."
+msgid "Responsible delivery provider for online order, e.g., UberEats, Zomato."
+msgstr ""
+"مزود خدمة التوصيل المسؤول عن الطلب عبر الإنترنت، مثل UberEats و Zomato."
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_urbanpiper_test_order_wizard__delivery_provider_id
@@ -1113,7 +1114,8 @@ msgstr "تاريخ ووقت آخر مزامنة مع UrbanPiper."
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_config__urbanpiper_delivery_provider_ids
 #: model:ir.model.fields,help:pos_urban_piper.field_res_config_settings__pos_urbanpiper_delivery_provider_ids
 msgid "The delivery providers used for online delivery through UrbanPiper."
-msgstr "مزودو خدمات التوصيل المستخدمون للتوصيل عبر الإنترنت من خلال UrbanPiper."
+msgstr ""
+"مزودو خدمات التوصيل المستخدمون للتوصيل عبر الإنترنت من خلال UrbanPiper."
 
 #. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_res_config_settings__pos_urbanpiper_fiscal_position_id
@@ -1310,6 +1312,5 @@ msgstr "لا يمكنك تغيير pos_urban_piper.uuid."
 #. module: pos_urban_piper
 #. odoo-python
 #: code:addons/pos_urban_piper/models/res_config_settings.py:0
-msgid ""
-"Your company %s needs to have a correct city in order create the store."
+msgid "Your company %s needs to have a correct city in order create the store."
 msgstr "تحتاج شركتك %s إلى تحديد مدينة صحيحة لإنشاء المتجر."

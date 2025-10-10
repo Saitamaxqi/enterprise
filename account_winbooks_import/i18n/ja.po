@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -23,17 +23,19 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_winbooks_import.winbooks_import_form
 msgid ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible=\"only_open\">\n"
-"                        The export of data from Winbooks for closed years might contain unbalanced entries. However if you want to try to import everything, Odoo will set the difference of balance in a Suspense Account.\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
+"                        The export of data from Winbooks for closed years "
+"might contain unbalanced entries. However if you want to try to import "
+"everything, Odoo will set the difference of balance in a Suspense Account.\n"
 "                    </span>"
 msgstr ""
 "<span invisible=\"only_open\"/>\n"
-"                    <span class=\"text-warning mb4 mt16\" invisible="
-"\"only_open\">\n"
-"                        "
-"Winbooksからクローズした年度のデータをエクスポートした場合、未決済の仕訳が含"
-"まれる可能性があります。しかし、全てをインポートしようとすると、Odooは差額を"
-"仮勘定に設定します。\n"
+"                    <span class=\"text-warning mb4 mt16\" "
+"invisible=\"only_open\">\n"
+"                        Winbooksからクローズした年度のデータをエクスポートし"
+"た場合、未決済の仕訳が含まれる可能性があります。しかし、全てをインポートしよ"
+"うとすると、Odooは差額を仮勘定に設定します。\n"
 "                    </span>"
 
 #. module: account_winbooks_import
@@ -61,8 +63,8 @@ msgid ""
 "(generated at import from Winbooks)"
 msgstr ""
 "インポート時に、少なくとも1つの自動相手勘定が作成されています。これはおそらく"
-"エラーです。仕訳明細を以下を参照して確認して下さい: "
-"相手勘定(Winbooksからのインポート時に生成)"
+"エラーです。仕訳明細を以下を参照して確認して下さい: 相手勘定(Winbooksからのイ"
+"ンポート時に生成)"
 
 #. module: account_winbooks_import
 #: model_terms:ir.ui.view,arch_db:account_winbooks_import.winbooks_import_form
@@ -180,7 +182,8 @@ msgstr "Winbooksで使用された明細ID"
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
 msgid ""
 "No data zip in the main archive. Please use the complete Winbooks export."
-msgstr "メインアーカイブにデータZIPがありません。完全なWinbooksエクスポートを使用して"
+msgstr ""
+"メインアーカイブにデータZIPがありません。完全なWinbooksエクスポートを使用して"
 "下さい。"
 
 #. module: account_winbooks_import
@@ -207,8 +210,7 @@ msgstr "税グループ"
 #. module: account_winbooks_import
 #. odoo-python
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
-msgid ""
-"The code for the Suspense Account you entered doesn't match any account"
+msgid "The code for the Suspense Account you entered doesn't match any account"
 msgstr "入力した仮勘定用のコードと一致する勘定がありません"
 
 #. module: account_winbooks_import
@@ -236,7 +238,8 @@ msgstr "Winbooks明細"
 msgid ""
 "Years closed in Winbooks are likely to have incomplete data. The counter "
 "part of incomplete entries will be set in a suspense account"
-msgstr "Winbooksで締め切られた年は、不完全なデータがある可能性が高いです。不完全な記"
+msgstr ""
+"Winbooksで締め切られた年は、不完全なデータがある可能性が高いです。不完全な記"
 "帳の対応する項目は、仮勘定に設定されます。"
 
 #. module: account_winbooks_import

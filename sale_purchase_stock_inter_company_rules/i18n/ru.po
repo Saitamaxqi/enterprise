@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-18 02:44+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -35,11 +35,11 @@ msgstr "Параметры конфигурации"
 #: code:addons/sale_purchase_stock_inter_company_rules/models/purchase_order.py:0
 #: code:addons/sale_purchase_stock_inter_company_rules/models/sale_order.py:0
 msgid ""
-"Configure correct warehouse for company(%s) from Menu: "
-"Settings/Users/Companies"
+"Configure correct warehouse for company(%s) from Menu: Settings/Users/"
+"Companies"
 msgstr ""
-"Настройте правильный склад для компании(%s) из Меню: "
-"Настройки/Пользователи/Компании"
+"Настройте правильный склад для компании(%s) из Меню: Настройки/Пользователи/"
+"Компании"
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_receipt_type_id
@@ -53,8 +53,8 @@ msgstr ""
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_warehouse_id
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_config_settings__intercompany_warehouse_id
 msgid ""
-"Default value to set on Purchase(Sales) Orders that will be created based on"
-" Sale(Purchase) Orders made to this company"
+"Default value to set on Purchase(Sales) Orders that will be created based on "
+"Sale(Purchase) Orders made to this company"
 msgstr ""
 "Значение по умолчанию для Покупки (или Продажи), которое будет создано на "
 "основе Продажи (Закупки), сделанной этой компанией"

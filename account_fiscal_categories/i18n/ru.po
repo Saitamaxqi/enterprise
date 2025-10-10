@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:20+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-15 21:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,216 +18,264 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
-#. module: account_disallowed_expenses
-#: model:ir.model,name:account_disallowed_expenses.model_account_account
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__account_ids
+#. module: account_fiscal_categories
+#: model:ir.model,name:account_fiscal_categories.model_account_account
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__related_account_id
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__account_ids
 msgid "Account"
 msgstr "Счёт"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__active
+#. module: account_fiscal_categories
+#: model:ir.model,name:account_fiscal_categories.model_account_fiscal_category
+msgid "Account Fiscal Category"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__active
 msgid "Active"
 msgstr "Активный"
 
-#. module: account_disallowed_expenses
-#: model_terms:ir.actions.act_window,help:account_disallowed_expenses.action_account_disallowed_expenses_category_list
-msgid "Add a Disallowed Expenses Category"
-msgstr "Добавить категорию запрещенных расходов"
+#. module: account_fiscal_categories
+#: model_terms:ir.actions.act_window,help:account_fiscal_categories.action_account_fiscal_category_list
+msgid "Add a Fiscal Category"
+msgstr ""
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__category_id
-msgid "Category"
-msgstr "Категория"
+#. module: account_fiscal_categories
+#: model:account.report.column,name:account_fiscal_categories.fiscal_report_total_amount
+msgid "Base Total"
+msgstr ""
 
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
+#. module: account_fiscal_categories
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_form
 msgid "Category Name"
 msgstr "Название категории"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__code
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__code
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_form
 msgid "Code"
 msgstr "Код"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__company_id
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__company_id
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__company_id
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__company_id
 msgid "Company"
 msgstr "Компания"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__create_uid
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__create_uid
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__create_uid
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__create_uid
 msgid "Created by"
 msgstr "Создано:"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__create_date
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__create_date
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__create_date
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__create_date
 msgid "Created on"
 msgstr "Дата создания:"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__current_rate
-msgid "Current Rate"
-msgstr "Текущая ставка"
-
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__rate
-msgid "Disallowed %"
-msgstr "Запрещенный %"
-
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_disallowed_amount
-msgid "Disallowed Amount"
-msgstr "Запрещенная сумма"
-
-#. module: account_disallowed_expenses
-#: model:ir.ui.menu,name:account_disallowed_expenses.menu_action_account_report_de
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_form
-msgid "Disallowed Expenses"
-msgstr "Запрещенные расходы"
-
-#. module: account_disallowed_expenses
-#: model:ir.actions.act_window,name:account_disallowed_expenses.action_account_disallowed_expenses_category_list
-#: model:ir.ui.menu,name:account_disallowed_expenses.menu_action_account_disallowed_expenses_category_list
-msgid "Disallowed Expenses Categories"
-msgstr "Категории запрещенных расходов"
-
-#. module: account_disallowed_expenses
-#: model:ir.model,name:account_disallowed_expenses.model_account_disallowed_expenses_category
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_account__disallowed_expenses_category_id
-msgid "Disallowed Expenses Category"
-msgstr "Категория запрещенных расходов"
-
-#. module: account_disallowed_expenses
-#: model:ir.model,name:account_disallowed_expenses.model_account_disallowed_expenses_report_handler
-msgid "Disallowed Expenses Custom Handler"
-msgstr "Пользовательский обработчик запрещенных расходов"
-
-#. module: account_disallowed_expenses
-#: model:ir.model,name:account_disallowed_expenses.model_account_disallowed_expenses_rate
-msgid "Disallowed Expenses Rate"
-msgstr "Ставка за неправомерные расходы"
-
-#. module: account_disallowed_expenses
-#: model:account.report,name:account_disallowed_expenses.disallowed_expenses_report
-#: model:ir.actions.client,name:account_disallowed_expenses.action_account_report_de
-msgid "Disallowed Expenses Report"
-msgstr "Отчет об отклоненных расходах"
-
-#. module: account_disallowed_expenses
-#: model:ir.model.constraint,message:account_disallowed_expenses.constraint_account_disallowed_expenses_category_unique_code
-msgid "Disallowed expenses category code should be unique."
-msgstr "Код категории запрещенных расходов должен быть уникальным."
-
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__display_name
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__display_name
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__display_name
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__display_name
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__display_name
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_report_handler__display_name
 msgid "Display Name"
 msgstr "Отображаемое имя"
 
-#. module: account_disallowed_expenses
+#. module: account_fiscal_categories
+#: model:account.report.column,name:account_fiscal_categories.fiscal_report_deductible_amount
+msgid "Fiscal Amount"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.actions.act_window,name:account_fiscal_categories.action_account_fiscal_category_list
+#: model:ir.ui.menu,name:account_fiscal_categories.menu_action_account_fiscal_category_list
+msgid "Fiscal Categories"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__fiscal_category_id
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
+msgid "Fiscal Category"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model,name:account_fiscal_categories.model_account_account_fiscal_rate
+msgid "Fiscal Rate"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__rate
+msgid "Fiscal Rate (%)"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_form
+msgid "Fiscal Rates"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:account.report,name:account_fiscal_categories.fiscal_report
+#: model:ir.actions.client,name:account_fiscal_categories.action_account_fiscal_report
+#: model:ir.ui.menu,name:account_fiscal_categories.menu_action_account_fiscal_report
+msgid "Fiscal Report"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model,name:account_fiscal_categories.model_account_fiscal_report_handler
+msgid "Fiscal Report Custom Handler"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.constraint,message:account_fiscal_categories.constraint_account_fiscal_category_unique_code
+msgid "Fiscal category code should be unique."
+msgstr ""
+
+#. module: account_fiscal_categories
 #. odoo-python
-#: code:addons/account_disallowed_expenses/report/account_disallowed_expenses_report.py:0
+#: code:addons/account_fiscal_categories/report/account_fiscal_report_handler.py:0
 msgid "General Ledger"
 msgstr "Главная Книга"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__id
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__id
+#. module: account_fiscal_categories
+#: model:account.return.check.template,description:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
+msgid ""
+"General: Make sure the deduction for business meals is under the legal limit."
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__id
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__id
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__id
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_report_handler__id
 msgid "ID"
 msgstr "ID"
 
-#. module: account_disallowed_expenses
+#. module: account_fiscal_categories
 #. odoo-python
-#: code:addons/account_disallowed_expenses/report/account_disallowed_expenses_report.py:0
+#: code:addons/account_fiscal_categories/report/account_fiscal_report_handler.py:0
 msgid "Journal Items"
 msgstr "Статьи из журнала"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__write_uid
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__write_uid
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__write_uid
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__write_uid
 msgid "Last Updated by"
 msgstr "Последнее обновление:"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__write_date
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__write_date
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__write_date
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__write_date
 msgid "Last Updated on"
 msgstr "Дата последнего обновления:"
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__name
+#. module: account_fiscal_categories
+#: model:account.return.check.template,name:account_fiscal_categories.account_return_check_template_meal_expense_adjustment
+msgid "Meal expense adjustments"
+msgstr ""
+
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_fiscal_category__name
 msgid "Name"
 msgstr "Имя"
 
-#. module: account_disallowed_expenses
-#. odoo-python
-#: code:addons/account_disallowed_expenses/models/account_disallowed_expenses.py:0
-msgid "No Rate"
-msgstr "Нет ставки"
-
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_rate
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_category__rate_ids
+#. module: account_fiscal_categories
+#: model:account.report.column,name:account_fiscal_categories.fiscal_report_rate
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account__rate_ids
 msgid "Rate"
 msgstr "Ставка"
 
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
-msgid "Rates"
-msgstr "Тарифы"
-
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_tree
+#. module: account_fiscal_categories
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_form
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_tree
 msgid "Related Account(s)"
 msgstr "Связанный счет (счета)"
 
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_tree
-msgid "Set Rates"
-msgstr "Установить тарифы"
-
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,help:account_disallowed_expenses.field_account_disallowed_expenses_category__active
+#. module: account_fiscal_categories
+#: model:ir.model.fields,help:account_fiscal_categories.field_account_fiscal_category__active
 msgid "Set active to false to hide the category without removing it."
-msgstr "Установите значение active на false, чтобы скрыть категорию, не удаляя ее."
+msgstr ""
+"Установите значение active на false, чтобы скрыть категорию, не удаляя ее."
 
-#. module: account_disallowed_expenses
-#: model:ir.model.fields,field_description:account_disallowed_expenses.field_account_disallowed_expenses_rate__date_from
+#. module: account_fiscal_categories
+#: model:ir.model.fields,field_description:account_fiscal_categories.field_account_account_fiscal_rate__date_from
 msgid "Start Date"
 msgstr "Дата начала"
 
-#. module: account_disallowed_expenses
+#. module: account_fiscal_categories
 #. odoo-javascript
-#: code:addons/account_disallowed_expenses/static/src/components/disallowed_expenses_report/warnings.xml:0
-msgid "There are multiple disallowed expenses rates in this period"
-msgstr "В этом периоде существует несколько тарифов на не учитываемые расходы"
+#: code:addons/account_fiscal_categories/static/src/components/fiscal_report/warnings.xml:0
+msgid "There are multiple fiscal rates in this period"
+msgstr ""
 
-#. module: account_disallowed_expenses
+#. module: account_fiscal_categories
 #. odoo-python
-#: code:addons/account_disallowed_expenses/report/account_disallowed_expenses_report.py:0
+#: code:addons/account_fiscal_categories/report/account_fiscal_report_handler.py:0
 msgid "Total"
 msgstr "Всего"
 
-#. module: account_disallowed_expenses
-#: model:account.report.column,name:account_disallowed_expenses.disallowed_expenses_report_total_amount
-msgid "Total Amount"
-msgstr "Общая сумма"
-
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
+#. module: account_fiscal_categories
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_form
 msgid "e.g. 1201"
 msgstr "например, 1201"
 
-#. module: account_disallowed_expenses
-#: model_terms:ir.ui.view,arch_db:account_disallowed_expenses.view_account_disallowed_expenses_category_form
+#. module: account_fiscal_categories
+#: model_terms:ir.ui.view,arch_db:account_fiscal_categories.view_account_fiscal_category_form
 msgid "e.g. Non-Deductible Tax"
 msgstr "например, налог, не подлежащий вычету"
+
+#~ msgid "Add a Disallowed Expenses Category"
+#~ msgstr "Добавить категорию запрещенных расходов"
+
+#~ msgid "Category"
+#~ msgstr "Категория"
+
+#~ msgid "Current Rate"
+#~ msgstr "Текущая ставка"
+
+#~ msgid "Disallowed %"
+#~ msgstr "Запрещенный %"
+
+#~ msgid "Disallowed Amount"
+#~ msgstr "Запрещенная сумма"
+
+#~ msgid "Disallowed Expenses"
+#~ msgstr "Запрещенные расходы"
+
+#~ msgid "Disallowed Expenses Categories"
+#~ msgstr "Категории запрещенных расходов"
+
+#~ msgid "Disallowed Expenses Category"
+#~ msgstr "Категория запрещенных расходов"
+
+#~ msgid "Disallowed Expenses Custom Handler"
+#~ msgstr "Пользовательский обработчик запрещенных расходов"
+
+#~ msgid "Disallowed Expenses Rate"
+#~ msgstr "Ставка за неправомерные расходы"
+
+#~ msgid "Disallowed Expenses Report"
+#~ msgstr "Отчет об отклоненных расходах"
+
+#~ msgid "Disallowed expenses category code should be unique."
+#~ msgstr "Код категории запрещенных расходов должен быть уникальным."
+
+#~ msgid "No Rate"
+#~ msgstr "Нет ставки"
+
+#~ msgid "Rates"
+#~ msgstr "Тарифы"
+
+#~ msgid "Set Rates"
+#~ msgstr "Установить тарифы"
+
+#~ msgid "There are multiple disallowed expenses rates in this period"
+#~ msgstr ""
+#~ "В этом периоде существует несколько тарифов на не учитываемые расходы"
+
+#~ msgid "Total Amount"
+#~ msgstr "Общая сумма"

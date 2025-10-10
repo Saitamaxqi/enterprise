@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* spreadsheet_sale_management
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: spreadsheet_sale_management
@@ -89,6 +90,11 @@ msgid "Field to sync"
 msgstr "要同步的欄位"
 
 #. module: spreadsheet_sale_management
+#: model:sale.order.template.line,name:spreadsheet_sale_management.sale_order_template_line_assembly
+msgid "Furniture Assembly"
+msgstr ""
+
+#. module: spreadsheet_sale_management
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order__id
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order_spreadsheet__id
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order_template__id
@@ -131,6 +137,11 @@ msgid "Last Updated on"
 msgstr "最後更新於"
 
 #. module: spreadsheet_sale_management
+#: model:sale.order.template.line,name:spreadsheet_sale_management.sale_order_template_line_delivery
+msgid "Local Delivery"
+msgstr ""
+
+#. module: spreadsheet_sale_management
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
 msgid ""
@@ -142,12 +153,6 @@ msgstr "多個儲存格正嘗試更新同一記錄的相同欄位！系統無法
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order_spreadsheet__name
 msgid "Name"
 msgstr "名稱"
-
-#. module: spreadsheet_sale_management
-#. odoo-javascript
-#: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/action/field_sync_action.js:0
-msgid "New quote calculator created"
-msgstr "已建立新的報價計算器"
 
 #. module: spreadsheet_sale_management
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order_spreadsheet__order_id
@@ -274,9 +279,10 @@ msgstr "與此欄位同步"
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
 msgid ""
-"The value of %(cell_reference)s (%(cell_value)s) can't be used for field "
-"\"%(field_name)s\"."
-msgstr "%(cell_reference)s 的值（%(cell_value)s）不可用於欄位「%(field_name)s」。"
+"The value of %(cell_reference)s (%(cell_value)s) can't be used for field \"%"
+"(field_name)s\"."
+msgstr ""
+"%(cell_reference)s 的值（%(cell_value)s）不可用於欄位「%(field_name)s」。"
 
 #. module: spreadsheet_sale_management
 #: model:ir.model.fields,field_description:spreadsheet_sale_management.field_sale_order_spreadsheet__thumbnail
@@ -294,3 +300,6 @@ msgstr "未能儲存"
 #: code:addons/spreadsheet_sale_management/models/sale_order_spreadsheet.py:0
 msgid "Untitled spreadsheet"
 msgstr "未命名試算表"
+
+#~ msgid "New quote calculator created"
+#~ msgstr "已建立新的報價計算器"

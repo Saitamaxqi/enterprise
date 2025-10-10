@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -48,21 +48,23 @@ msgstr "30U/360"
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
-"                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">month</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">个月</span>\n"
-"                                        <span class=\"oe_inline\" invisible="
-"\"duration != 1\">个月</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">个月</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
-"                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">year</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">年</span>\n"
-"                                    <span class=\"oe_inline\" invisible="
-"\"loan_term != 1\">年</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">年</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -239,8 +241,8 @@ msgstr "确认"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
 msgid ""
-"Confirm that all loans recorded in the accounts actually exist and match the"
-" loan agreements."
+"Confirm that all loans recorded in the accounts actually exist and match the "
+"loan agreements."
 msgstr ""
 
 #. module: account_loans
@@ -350,7 +352,8 @@ msgstr "月底"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
 msgid ""
-"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Ensure that loans are properly classified as current vs. non-current, and "
+"disclosed in accordance with Belgian GAAP. \n"
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
@@ -704,8 +707,9 @@ msgid ""
 "Odoo manages your amortizations automatically. No loans were found for this "
 "period. Ensure your loans are properly registered for automatic "
 "amortizations calculation."
-msgstr "Odoo 自动管理你的分摊。 在此期间内，找不到任何贷款。 "
-"请确保您的贷款已妥善登记，以自动计算分摊款项。"
+msgstr ""
+"Odoo 自动管理你的分摊。 在此期间内，找不到任何贷款。 请确保您的贷款已妥善登"
+"记，以自动计算分摊款项。"
 
 #. module: account_loans
 #. odoo-python
@@ -910,8 +914,8 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
-"贷款金额 %(loan_amount)s 应等于本金总计: %(principal_sum)s (差额为 "
-"%(principal_difference)s)"
+"贷款金额 %(loan_amount)s 应等于本金总计: %(principal_sum)s (差额为 %"
+"(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
@@ -998,9 +1002,9 @@ msgstr "已上传的文件"
 msgid ""
 "Upon confirmation of the loan, Odoo will ignore the loan lines that are up "
 "to this date (included) and not create entries for them. This is useful if "
-"you have already manually created entries prior to the creation of this "
-"loan."
-msgstr "确认贷款后，系统将会忽略到此日期（含）为止的贷款行，并且不会为它们创建凭证。"
+"you have already manually created entries prior to the creation of this loan."
+msgstr ""
+"确认贷款后，系统将会忽略到此日期（含）为止的贷款行，并且不会为它们创建凭证。"
 "如果你在此之前已经手动创建了凭证，这将很有用。"
 
 #. module: account_loans

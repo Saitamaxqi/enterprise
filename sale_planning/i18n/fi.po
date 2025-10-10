@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:42+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 17:08+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -67,8 +67,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_planning/static/src/views/planning_hooks.js:0
 msgid ""
-"All open shifts and sales orders have already been assigned, or there are no"
-" resources available to take them at this time."
+"All open shifts and sales orders have already been assigned, or there are no "
+"resources available to take them at this time."
 msgstr ""
 "Kaikki avoimet työvuorot ja myyntitilaukset on jo annettu, tai niitä varten "
 "ei ole tällä hetkellä resursseja."
@@ -152,15 +152,15 @@ msgstr "IT-teknikko"
 msgid ""
 "If enabled, a shift will automatically be generated for the selected role "
 "when confirming the Sales Order.                 With the 'auto plan' "
-"feature, only employees with this role will be automatically assigned shifts"
-" for Sales Orders containing this service.                 The system will "
-"consider employee availability and the remaining time to be planned."
-"                 You can also manually schedule open shifts for your Sales "
-"Order or assign them to any employee you prefer."
+"feature, only employees with this role will be automatically assigned shifts "
+"for Sales Orders containing this service.                 The system will "
+"consider employee availability and the remaining time to be "
+"planned.                 You can also manually schedule open shifts for your "
+"Sales Order or assign them to any employee you prefer."
 msgstr ""
 "Jos valittu, tälle roolille luodaan automaattisesti työvuoro, kun "
-"myyntitilaus vahvistetaan.                 Automaattinen suunnitelma -"
-"toiminnon avulla vain tämän roolin omaaville työntekijöille määritetään "
+"myyntitilaus vahvistetaan.                 Automaattinen suunnitelma "
+"-toiminnon avulla vain tämän roolin omaaville työntekijöille määritetään "
 "automaattisesti työvuorot tätä palvelua sisältäville "
 "myyntitilauksille.                 Järjestelmä ottaa huomioon työntekijän "
 "saatavuuden ja jäljellä olevan suunnitellun ajan.                 Voit myös "
@@ -217,7 +217,8 @@ msgstr "Suunnittele palvelut"
 #. module: sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.product_template_form_view_invoice_policy_inherit_sale_planning
 msgid "Plan shifts for your orders for employees who have this role."
-msgstr "Suunnittele tilausten työvuorot työntekijöille, joilla on tämä tehtävä."
+msgstr ""
+"Suunnittele tilausten työvuorot työntekijöille, joilla on tämä tehtävä."
 
 #. module: sale_planning
 #. odoo-python
@@ -351,7 +352,8 @@ msgstr "Suunniteltavia myyntitilauskohteita ei ole."
 #. odoo-python
 #: code:addons/sale_planning/models/planning_slot.py:0
 msgid "This Sale Order Item doesn't have a target value of planned hours."
-msgstr "Tällä myyntitilauskohteella ei ole suunniteltujen tuntien tavoitearvoa."
+msgstr ""
+"Tällä myyntitilauskohteella ei ole suunniteltujen tuntien tavoitearvoa."
 
 #. module: sale_planning
 #. odoo-javascript
@@ -389,7 +391,8 @@ msgstr "Yrität luoda aikavälin peruutetulle myyntitilaukselle."
 #. odoo-python
 #: code:addons/sale_planning/models/sale_order.py:0
 msgid ""
-"You cannot update the company for sales order %(order_name)s as it's linked to shifts in another company.\n"
+"You cannot update the company for sales order %(order_name)s as it's linked "
+"to shifts in another company.\n"
 "Please transfer shifts %(slots_names)s to the destination company first."
 msgstr ""
 "Et voi päivittää myyntitilauksen %(order_name)s yhtiötä, koska se on "

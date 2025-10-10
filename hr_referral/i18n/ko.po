@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-30 10:53+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -27,9 +27,8 @@ msgid ""
 " You've gained {gained} points with this progress.{new_line}It makes you a "
 "new total of {total} points. Visit {link1}this link{link2} to pick a gift!"
 msgstr ""
-" 현재까지 {gained}점을 획득하셨습니다. {new_line} 해당 점수로 인하여 총 "
-"점수는 {total}점이 되었습니다. {link1} 여기 {link2}를 눌러 보상을 선택해 "
-"보세요."
+" 현재까지 {gained}점을 획득하셨습니다. {new_line} 해당 점수로 인하여 총 점수"
+"는 {total}점이 되었습니다. {link1} 여기 {link2}를 눌러 보상을 선택해 보세요."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__referral_hired
@@ -56,7 +55,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_sms_template
 msgid ""
 ".\n"
-"If you know someone who would be a great fit for this position, please share this link with them:"
+"If you know someone who would be a great fit for this position, please share "
+"this link with them:"
 msgstr ""
 ".\n"
 "이 직책에 적합한 사람을 알고 있다면 이 링크를 공유해 주세요:"
@@ -85,39 +85,43 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/>\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by Mail\">Send Email</span>"
+"                                        <span title=\"Send by Mail\">Send "
+"Email</span>"
 msgstr ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"이메일 전송\"/>"
-"\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"이메일 전송\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"이메일 전송\">이메일 "
-"전송</span>"
+"                                        <span title=\"이메일 전송\">이메일 전"
+"송</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"Job Page\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"More info\">Job Page</span>"
+"                                        <span title=\"More info\">Job Page</"
+"span>"
 msgstr ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"채용 페이지\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"더 알아보기\">채용 "
-"페이지</span>"
+"                                        <span title=\"더 알아보기\">채용 페이"
+"지</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"Send by SMS\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by SMS\">Send SMS</span>"
+"                                        <span title=\"Send by SMS\">Send "
+"SMS</span>"
 msgstr ""
 "<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"SMS로 전송\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"SMS로 전송\">SMS로 "
-"전송</span>"
+"                                        <span title=\"SMS로 전송\">SMS로 전송"
+"</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
@@ -164,7 +168,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Facebook\">\n"
-"                                            <i class=\"fa fa-2x fa-facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -172,7 +177,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Linkedin\">\n"
-"                                            <i class=\"fa fa-2x fa-linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -180,7 +186,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Twitter\">\n"
-"                                            <i class=\"fa fa-2x fa-twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
+"                                            <i class=\"fa fa-2x fa-twitter\" "
+"role=\"img\" aria-label=\"Share on twitter\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -188,10 +195,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_alert_mail_wizard.py:0
 msgid ""
-"A new alert has been added to the Referrals app! Check your <a "
-"href=%(url)s>dashboard</a> now!"
-msgstr "인재추천 앱에 새로운 알림이 있습니다! 지금 <a href=%(url)s>현황판</a>을 "
-"확인해보세요!"
+"A new alert has been added to the Referrals app! Check your <a href=%"
+"(url)s>dashboard</a> now!"
+msgstr ""
+"인재추천 앱에 새로운 알림이 있습니다! 지금 <a href=%(url)s>현황판</a>을 확인"
+"해보세요!"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_needaction
@@ -250,8 +258,9 @@ msgstr "주의"
 msgid ""
 "Alerts will appear on the main screen to provide information or redirect "
 "employees."
-msgstr "메인 화면에 알림이 표시되어 정보를 제공하거나 직원을 다른 페이지로 "
-"리디렉션합니다."
+msgstr ""
+"메인 화면에 알림이 표시되어 정보를 제공하거나 직원을 다른 페이지로 리디렉션합"
+"니다."
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__target__all
@@ -536,8 +545,9 @@ msgid ""
 "Define the position of the friend. If it's a small friend like a dog, you "
 "must select Front, it will be placed in the front of the dashboard, above "
 "superhero."
-msgstr "친구의 위치를 정의합니다.강아지 같은 작은 친구라면 전면을 선택해야 하고, "
-"슈퍼히어로 위의 현황판 앞에 놓이게 됩니다."
+msgstr ""
+"친구의 위치를 정의합니다.강아지 같은 작은 친구라면 전면을 선택해야 하고, 슈퍼"
+"히어로 위의 현황판 앞에 놓이게 됩니다."
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_report__department_id
@@ -696,11 +706,11 @@ msgstr "추천인 링크를 복사하는 동안 오류가 발생했습니다: �
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_alert__url
 msgid ""
-"External links must start with 'http://www.'. For an internal url, you don't"
-" need to put domain name, you can just insert the path."
+"External links must start with 'http://www.'. For an internal url, you don't "
+"need to put domain name, you can just insert the path."
 msgstr ""
-"외부 링크는 'http://www.'로 시작해야 합니다. 내부 URL의 경우 도메인 이름을 "
-"입력할 필요가 없으며 경로만 삽입하면 됩니다."
+"외부 링크는 'http://www.'로 시작해야 합니다. 내부 URL의 경우 도메인 이름을 입"
+"력할 필요가 없으며 경로만 삽입하면 됩니다."
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__facebook
@@ -815,22 +825,23 @@ msgstr "안녕하세요"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_send_sms.py:0
 msgid ""
-"Hello! There is an amazing job offer for %(job_name)s in my company! It will"
-" be a fit for you %(referral_url)s"
+"Hello! There is an amazing job offer for %(job_name)s in my company! It will "
+"be a fit for you %(referral_url)s"
 msgstr ""
-"안녕하세요, 저희 회사에 좋은 조건에 채용 중인 %(job_name)s 포지션이 있어 "
-"연락 드립니다. 아래 링크를 통해 내용 확인 후 지원해주시기 바랍니다. "
-"%(referral_url)s"
+"안녕하세요, 저희 회사에 좋은 조건에 채용 중인 %(job_name)s 포지션이 있어 연"
+"락 드립니다. 아래 링크를 통해 내용 확인 후 지원해주시기 바랍니다. %"
+"(referral_url)s"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
 msgid ""
 "Hello,<br/><br/>\n"
-"                There are some amazing job offers in my company! Have a look, they can be interesting for you:"
+"                There are some amazing job offers in my company! Have a "
+"look, they can be interesting for you:"
 msgstr ""
 "안녕하세요,<br/><br/>\n"
-"                저희 회사에서 좋은 조건에 채용 중인 포지션이 있어 연락 "
-"드립니다. 직접 확인해보세요:"
+"                저희 회사에서 좋은 조건에 채용 중인 포지션이 있어 연락 드립니"
+"다. 직접 확인해보세요:"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
@@ -1023,7 +1034,8 @@ msgstr "직원들에게 감사한 마음을 전할 수 있도록 적절한 보�
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_referral_reward
 msgid "Let's create super Rewards to thank<br>your employees."
-msgstr "직원들에게 감사한 마음을 전할 수 있도록 <br>적절한 보상을 만들어보세요."
+msgstr ""
+"직원들에게 감사한 마음을 전할 수 있도록 <br>적절한 보상을 만들어보세요."
 
 #. module: hr_referral
 #: model_terms:ir.actions.act_window,help:hr_referral.action_hr_applicant_employee_referral
@@ -1751,15 +1763,17 @@ msgstr "감사합니다!"
 msgid ""
 "This field holds the image used as image for the friend on the dashboard, "
 "limited to 1024x1024px."
-msgstr "1024x1024px로 제한된 현황판 친구의 이미지로 사용하는 이미지를 보유하고 있는 "
+msgstr ""
+"1024x1024px로 제한된 현황판 친구의 이미지로 사용하는 이미지를 보유하고 있는 "
 "필드"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
 msgid ""
-"This field holds the image used as image for the head's friend when the user"
-" must choose a new friend, limited to 1024x1024px."
-msgstr "1024x1024px로 제한된 새 친구를 선택해야 할 때 친구의 얼굴 이미지로 사용하는 "
+"This field holds the image used as image for the head's friend when the user "
+"must choose a new friend, limited to 1024x1024px."
+msgstr ""
+"1024x1024px로 제한된 새 친구를 선택해야 할 때 친구의 얼굴 이미지로 사용하는 "
 "이미지를 보유하고 있는 필드"
 
 #. module: hr_referral
@@ -1767,23 +1781,26 @@ msgstr "1024x1024px로 제한된 새 친구를 선택해야 할 때 친구의 �
 msgid ""
 "This field holds the image used as image for the product, limited to "
 "1024x1024px."
-msgstr "1024x1024px로 제한된 상품에 대한 이미지로 사용하는 이미지를 보유하고 있는 "
-"필드"
+msgstr ""
+"1024x1024px로 제한된 상품에 대한 이미지로 사용하는 이미지를 보유하고 있는 필"
+"드"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_applicant__source_id
 msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
-msgstr "링크의 유입 경로입니다 (예: 검색 엔진, 다른 웹사이트, 이메일 목록 제목 등)."
+msgstr ""
+"링크의 유입 경로입니다 (예: 검색 엔진, 다른 웹사이트, 이메일 목록 제목 등)."
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid ""
-"This link contains a tracker so that people clicking on it will account to a"
-" referral for you, even if they apply on a position after a few days."
-msgstr "이 링크에는 트래커가 포함되어 있어 며칠이 지난 후에 해당 직무 영역을 "
-"지원하더라도 해당 사용자가 귀하를 추천해 줍니다."
+"This link contains a tracker so that people clicking on it will account to a "
+"referral for you, even if they apply on a position after a few days."
+msgstr ""
+"이 링크에는 트래커가 포함되어 있어 며칠이 지난 후에 해당 직무 영역을 지원하더"
+"라도 해당 사용자가 귀하를 추천해 줍니다."
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_recruitment_stage__use_in_referral
@@ -1810,7 +1827,8 @@ msgstr "이 보고서를 통해 인재 추천과 역량 개발을 추적할 수 
 msgid ""
 "This will make the onboarding process visible to all users who have "
 "previously completed it. Do you want to proceed?"
-msgstr "이렇게 하면 이전에 온보딩 프로세스를 완료한 모든 사용자가 온보딩 프로세스를 "
+msgstr ""
+"이렇게 하면 이전에 온보딩 프로세스를 완료한 모든 사용자가 온보딩 프로세스를 "
 "볼 수 있습니다. 계속할까요?"
 
 #. module: hr_referral
@@ -1930,17 +1948,19 @@ msgstr "지원자 기록에 접근할 수 있는 권한이 없습니다."
 #. odoo-python
 #: code:addons/hr_referral/models/hr_applicant.py:0
 msgid ""
-"You are not allowed to access this application record because you're not one"
-" of the interviewers of this application. If you think that's an error, "
+"You are not allowed to access this application record because you're not one "
+"of the interviewers of this application. If you think that's an error, "
 "please contact your administrator."
-msgstr "해당 지원서의 면접관이 아니므로 지원서 자료에 액세스할 수 없습니다. 오류인 "
-"경우에는 관리자에게 문의하세요."
+msgstr ""
+"해당 지원서의 면접관이 아니므로 지원서 자료에 액세스할 수 없습니다. 오류인 경"
+"우에는 관리자에게 문의하세요."
 
 #. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/models/utm_campaign.py:0
 msgid ""
-"You cannot delete these UTM Campaigns as they are linked to the following jobs in Referral:\n"
+"You cannot delete these UTM Campaigns as they are linked to the following "
+"jobs in Referral:\n"
 "%(job_names)s"
 msgstr ""
 "UTM 캠페인은 추천에서 다음의 작업과 연결되어 있으므로 삭제할 수 없습니다:\n"
@@ -1950,7 +1970,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to the following users in Referral:\n"
+"You cannot delete these UTM Sources as they are linked to the following "
+"users in Referral:\n"
 "%(employee_names)s"
 msgstr ""
 "UTM 캠페인은 추천에서 다음의 사용자와 연결되어 있으므로 삭제할 수 없습니다:\n"
@@ -1962,8 +1983,9 @@ msgstr ""
 msgid ""
 "You do not have enough points in this company to buy this product. In this "
 "company, you have %s points."
-msgstr "이 회사는 점수가 부족하여 이 제품을 구매할 수 없습니다. 이 회사에는 %s "
-"점수가 있습니다."
+msgstr ""
+"이 회사는 점수가 부족하여 이 제품을 구매할 수 없습니다. 이 회사에는 %s 점수"
+"가 있습니다."
 
 #. module: hr_referral
 #. odoo-python
@@ -2027,7 +2049,8 @@ msgstr "직책 채용 중"
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_email_body_template
 msgid ""
 "position.\n"
-"                If you know someone who would be a great fit for this position, please share this link with them:"
+"                If you know someone who would be a great fit for this "
+"position, please share this link with them:"
 msgstr ""
 "직책을 모집합니다.\n"
 "                이 직책에 적합한 사람을 알고 있다면 이 링크를 공유해 주세요:"
@@ -2050,7 +2073,7 @@ msgstr "공유"
 #: code:addons/hr_referral/wizard/hr_referral_link_to_share.py:0
 msgid ""
 "🚀 An exciting opportunity for a %(job_name)s at my company. If you're "
-"looking for a new challenge, check it "
-"out!👇%(new_line_code)s🔗%(short_url)s%(new_line_code)s%(hashtag_code)sHiring "
-"%(hashtag_code)sJobOpening %(hashtag_code)sCareerOpportunity"
+"looking for a new challenge, check it out!👇%(new_line_code)s🔗%(short_url)s%"
+"(new_line_code)s%(hashtag_code)sHiring %(hashtag_code)sJobOpening %"
+"(hashtag_code)sCareerOpportunity"
 msgstr ""

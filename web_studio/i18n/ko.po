@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-10-03 02:41+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -126,8 +126,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s 사용자가 %(previous_approvers)s 사용자에게서 %(next_approvers)"
-"s 사용자로 승인 권한을 설정함"
+"%(user_name)s 사용자가 %(previous_approvers)s 사용자에게서 %"
+"(next_approvers)s 사용자로 승인 권한을 설정함"
 
 #. module: web_studio
 #. odoo-python
@@ -184,8 +184,8 @@ msgid ""
 "            "
 msgstr ""
 "<p>\n"
-"                모델의 기능을 향상시키기 위해 새로운 서버 액션을 생성합니다."
-"\n"
+"                모델의 기능을 향상시키기 위해 새로운 서버 액션을 생성합니"
+"다.\n"
 "            </p>\n"
 "            "
 
@@ -442,7 +442,8 @@ msgstr "하루 종일"
 msgid ""
 "All changes done to the report's structure will be discarded and the report "
 "will be reset to its factory settings."
-msgstr "보고서 형식에 대한 모든 변경 사항은 삭제되고 공장 초기화 상태로 변경됩니다."
+msgstr ""
+"보고서 형식에 대한 모든 변경 사항은 삭제되고 공장 초기화 상태로 변경됩니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -536,7 +537,8 @@ msgstr "승인 %(model_name)s"
 #. odoo-python
 #: code:addons/web_studio/models/studio_approval.py:0
 msgid "Approvals can only be done on a method or an action, not both."
-msgstr "메서드 또는 작업 중 하나만 승인할 수 있으며, 둘 다 승인할 수는 없습니다."
+msgstr ""
+"메서드 또는 작업 중 하나만 승인할 수 있으며, 둘 다 승인할 수는 없습니다."
 
 #. module: web_studio
 #. odoo-python
@@ -1024,7 +1026,8 @@ msgstr "모델 설정"
 msgid ""
 "Configure additional models to export with Studio, such as records that hold "
 "configuration information or demo data."
-msgstr "환경 설정 정보나 데모 데이터를 보관하는 레코드와 같이 스튜디오로 내보낼 추가 "
+msgstr ""
+"환경 설정 정보나 데모 데이터를 보관하는 레코드와 같이 스튜디오로 내보낼 추가 "
 "모델을 설정합니다."
 
 #. module: web_studio
@@ -1522,7 +1525,8 @@ msgstr "사용 불가 표시"
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties.js:0
 msgid "Displays a textual hint that helps the user when the field is empty."
-msgstr "필드에 입력이 되지 않은 경우 사용자가 참고할 힌트를 텍스트로 표시합니다."
+msgstr ""
+"필드에 입력이 되지 않은 경우 사용자가 참고할 힌트를 텍스트로 표시합니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -1544,7 +1548,8 @@ msgstr "완료"
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid ""
 "Drag & drop <b>another field</b>. Let's try with a <i>selection field</i>."
-msgstr "<b>다른 필드</b>를 끌어다 놓습니다. <i>선택한 필드</i>로 시도해 봅시다."
+msgstr ""
+"<b>다른 필드</b>를 끌어다 놓습니다. <i>선택한 필드</i>로 시도해 봅시다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -1629,8 +1634,9 @@ msgstr "소스 편집"
 msgid ""
 "Editing a built-in file through this editor is not advised, as it will "
 "prevent it from being updated during future App upgrades."
-msgstr "이 편집기를 통해 기본 파일을 편집하면 향후 앱 업그레이드 시 업데이트되지 "
-"않으므로 권장하지 않습니다."
+msgstr ""
+"이 편집기를 통해 기본 파일을 편집하면 향후 앱 업그레이드 시 업데이트되지 않으"
+"므로 권장하지 않습니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -1878,8 +1884,9 @@ msgstr "바닥글"
 msgid ""
 "For compatibility purpose with base_automation,approvals on 'create', "
 "'write' and 'unlink' methods are forbidden."
-msgstr "base_automation과의 호환성을 위해 '만들기', '쓰기', '연결 해제' 메서드에 "
-"대한 승인은 금지되어 있습니다."
+msgstr ""
+"base_automation과의 호환성을 위해 '만들기', '쓰기', '연결 해제' 메서드에 대"
+"한 승인은 금지되어 있습니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2031,7 +2038,8 @@ msgstr "메시지가 있습니다."
 msgid ""
 "Header and footer are shared with other reports which may be impacted by the "
 "reset."
-msgstr "머리글 및 바닥글은 다른 보고서와 공유되므로 이를 재설정하면 해당 보고서에도 "
+msgstr ""
+"머리글 및 바닥글은 다른 보고서와 공유되므로 이를 재설정하면 해당 보고서에도 "
 "영향을 미칠 수 있습니다."
 
 #. module: web_studio
@@ -2208,7 +2216,8 @@ msgstr "설정 시 도메인과 일치하는 레코드에만 규칙이 적용됩
 msgid ""
 "If set, the user who approves this rule will not be able to approve other "
 "rules for the same record"
-msgstr "설정 시, 이 규칙을 승인한 사용자는 동일한 레코드에 대해 다른 규칙을 승인할 "
+msgstr ""
+"설정 시, 이 규칙을 승인한 사용자는 동일한 레코드에 대해 다른 규칙을 승인할 "
 "수 없습니다"
 
 #. module: web_studio
@@ -2217,8 +2226,9 @@ msgstr "설정 시, 이 규칙을 승인한 사용자는 동일한 레코드에 
 msgid ""
 "If you discard the current edits, all unsaved changes will be lost. You can "
 "cancel to return to edit mode."
-msgstr "현재 편집 내용을 취소하면 저장되지 않은 모든 변경 사항이 손실됩니다. "
-"취소하여 편집 모드로 돌아갈 수 있습니다."
+msgstr ""
+"현재 편집 내용을 취소하면 저장되지 않은 모든 변경 사항이 손실됩니다. 취소하"
+"여 편집 모드로 돌아갈 수 있습니다."
 
 #. module: web_studio
 #. odoo-python
@@ -2431,7 +2441,8 @@ msgstr "다른 작업으로 인해 스튜디오 종료"
 msgid ""
 "Let's check the result. Close Odoo Studio to get an <b>overview of your app</"
 "b>."
-msgstr "결과를 확인해 봅시다. Odoo 스튜디오를 닫고 <b>앱 전체보기</b>를 확인합니다."
+msgstr ""
+"결과를 확인해 봅시다. Odoo 스튜디오를 닫고 <b>앱 전체보기</b>를 확인합니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -2497,8 +2508,8 @@ msgid ""
 "Map views are based on the address of a linked Contact. You need to have a "
 "Many2one field linked to the res.partner model in order to create a map view."
 msgstr ""
-"지도 보기는 연락처에 연결된 주소를 기반으로 만들어집니다. 지도 보기를 "
-"만들려면 res.partner 모델에 연결된 Many2one 필드가 있어야 합니다."
+"지도 보기는 연락처에 연결된 주소를 기반으로 만들어집니다. 지도 보기를 만들려"
+"면 res.partner 모델에 연결된 Many2one 필드가 있어야 합니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -3089,8 +3100,9 @@ msgstr "우선 순위"
 msgid ""
 "Private methods cannot be restricted (since they cannot be called remotely, "
 "this would be useless)."
-msgstr "비공개 메서드는 제한할 수 없습니다 (원격으로 호출할 수 없으므로 유용하지 "
-"않습니다)."
+msgstr ""
+"비공개 메서드는 제한할 수 없습니다 (원격으로 호출할 수 없으므로 유용하지 않습"
+"니다)."
 
 #. module: web_studio
 #. odoo-javascript
@@ -3397,9 +3409,8 @@ msgid ""
 "Rules with existing entries cannot be modified since it would break existing "
 "approval entries. You should archive the rule and create a new one instead."
 msgstr ""
-"기존 항목이 있는 규칙을 수정하면 기존 승인 항목을 손상시킬 수 있으므로 "
-"수정할 수 없습니다. 대신 규칙을 보관함으로 이동시키고 새 규칙을 만들 수 "
-"있습니다."
+"기존 항목이 있는 규칙을 수정하면 기존 승인 항목을 손상시킬 수 있으므로 수정"
+"할 수 없습니다. 대신 규칙을 보관함으로 이동시키고 새 규칙을 만들 수 있습니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -3999,10 +4010,10 @@ msgid ""
 "some view inherits from another but targets a node that doesn't exist. It "
 "might be due to the mutations of the base views during the upgrade process."
 msgstr ""
-"일부 오류가 발생하여 보고서를 불러올 수 없습니다. 일반적으로 이 오류는 "
-"보기가 다른 보기에서 상속되지만 존재하지 않는 노드를 대상으로 한다는 것을 "
-"나타냅니다. 이 문제는 업그레이드 프로세스 중에 기본 보기가 변경되어 발생할 "
-"수 있습니다."
+"일부 오류가 발생하여 보고서를 불러올 수 없습니다. 일반적으로 이 오류는 보기"
+"가 다른 보기에서 상속되지만 존재하지 않는 노드를 대상으로 한다는 것을 나타냅"
+"니다. 이 문제는 업그레이드 프로세스 중에 기본 보기가 변경되어 발생할 수 있습"
+"니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4035,8 +4046,9 @@ msgstr "승인을 요청하는 버튼에 단계 설명이 표시됩니다."
 msgid ""
 "The user who approves this step will not be able to approve other steps for "
 "the same record."
-msgstr "이 단계를 승인한 사용자는 동일한 레코드에 대해 다른 단계를 승인할 수 "
-"없습니다."
+msgstr ""
+"이 단계를 승인한 사용자는 동일한 레코드에 대해 다른 단계를 승인할 수 없습니"
+"다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4069,8 +4081,9 @@ msgstr "%(method)s가 모델  %(model_name)s에 존재하지 않습니다 (%(mod
 msgid ""
 "There is no record on which this report can be previewed. Create at least "
 "one record to preview the report."
-msgstr "이 보고서를 미리 볼 수 있는 레코드가 없습니다. 보고서를 미리 확인하려면 "
-"레코드를 하나 이상 생성하세요."
+msgstr ""
+"이 보고서를 미리 볼 수 있는 레코드가 없습니다. 보고서를 미리 확인하려면 레코"
+"드를 하나 이상 생성하세요."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4086,8 +4099,9 @@ msgstr "미리보기 할 레코드가 없습니다."
 msgid ""
 "These users are able to approve or reject the step and will be assigned to "
 "an activity when their approval is requested."
-msgstr "이러한 사용자는 단계를 승인하거나 거부할 수 있으며 승인이 필요할 때 활동에 "
-"배정됩니다."
+msgstr ""
+"이러한 사용자는 단계를 승인하거나 거부할 수 있으며 승인이 필요할 때 활동에 배"
+"정됩니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4096,8 +4110,9 @@ msgstr "이러한 사용자는 단계를 승인하거나 거부할 수 있으며
 msgid ""
 "These users will receive a notification via internal note when the step is "
 "approved or rejected"
-msgstr "이와 같은 사용자는 단계가 승인되거나 반려될 경우 내부 메모를 통해 알림을 "
-"받습니다."
+msgstr ""
+"이와 같은 사용자는 단계가 승인되거나 반려될 경우 내부 메모를 통해 알림을 받습"
+"니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4121,8 +4136,8 @@ msgid ""
 "approval on this action.\n"
 "Another user is required to further approve this action."
 msgstr ""
-"이 승인 또는 이미 제출한 승인으로 인해 이 작업에 대한 승인은 한 번으로 "
-"제한됩니다.\n"
+"이 승인 또는 이미 제출한 승인으로 인해 이 작업에 대한 승인은 한 번으로 제한됩"
+"니다.\n"
 "이 작업을 추가로 승인하려면 다른 사용자가 필요합니다."
 
 #. module: web_studio
@@ -4239,8 +4254,9 @@ msgstr "업데이트"
 msgid ""
 "Use Bootstrap or any other custom classes to customize the style and the "
 "display of the element."
-msgstr "부트스트랩 또는 기타 사용자 정의 클래스를 사용하여 요소의 스타일과 모양을 "
-"조정할 수 있습니다."
+msgstr ""
+"부트스트랩 또는 기타 사용자 정의 클래스를 사용하여 요소의 스타일과 모양을 조"
+"정할 수 있습니다."
 
 #. module: web_studio
 #: model:ir.model.fields,field_description:web_studio.field_studio_approval_rule_approver__user_id
@@ -4417,8 +4433,8 @@ msgid ""
 "Wow, nice! And I'm sure you can make it even better! Use this icon to open "
 "<b>Odoo Studio</b> and customize any screen."
 msgstr ""
-"잘하셨습니다! 더욱 멋지게 만들 수도 있어요! 이 아이콘을 사용하여 <b>Odoo "
-"스튜디오</b>를 열고 모든 화면을 사용자 지정해 보세요."
+"잘하셨습니다! 더욱 멋지게 만들 수도 있어요! 이 아이콘을 사용하여 <b>Odoo 스튜"
+"디오</b>를 열고 모든 화면을 사용자 지정해 보세요."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4451,8 +4467,9 @@ msgstr "이 규칙을 승인할 수 없습니다."
 msgid ""
 "You cannot cancel an approval you didn't set yourself or you don't belong to "
 "an higher level rule's approvers."
-msgstr "직접 승인을 설정하지 않았거나 사용자가 상위 레벨 규칙에 대한 승인자에게 "
-"속해있지 않은 경우에는 승인을 취소할 수 없습니다."
+msgstr ""
+"직접 승인을 설정하지 않았거나 사용자가 상위 레벨 규칙에 대한 승인자에게 속해"
+"있지 않은 경우에는 승인을 취소할 수 없습니다."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4464,7 +4481,8 @@ msgstr "이 보기는 마지막 활성 상태이므로 비활성화할 수 없�
 #. odoo-javascript
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.js:0
 msgid "You cannot edit a report while there is no %(model_name)s (%(model)s)"
-msgstr "%(model_name)s(%(model)s 항목이 없는 상태에서는 보고서를 편집할 수 없습니다)"
+msgstr ""
+"%(model_name)s(%(model)s 항목이 없는 상태에서는 보고서를 편집할 수 없습니다)"
 
 #. module: web_studio
 #. odoo-python

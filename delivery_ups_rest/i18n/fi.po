@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:27+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/"
@@ -539,8 +539,8 @@ msgstr ""
 #: code:addons/delivery_ups_rest/models/payment_provider.py:0
 msgid "UPS provider is configured to use only Collect on Delivery."
 msgstr ""
-"UPS-toimittaja on määritetty käyttämään vain maksutapaa "
-"\"maksu toimituksen yhteydessä\"."
+"UPS-toimittaja on määritetty käyttämään vain maksutapaa \"maksu toimituksen "
+"yhteydessä\"."
 
 #. module: delivery_ups_rest
 #: model:ir.model.fields,field_description:delivery_ups_rest.field_delivery_carrier__ups_duty_payment

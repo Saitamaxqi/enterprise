@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 22:56+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -35,18 +35,21 @@ msgstr ""
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid ""
-"<b>Once your account is created, go to your Dashboard and click on the arrow next to your username to configure your carrier accounts. </b>\n"
-"                <b>You can add new carrier accounts on the right side of the same page.</b>\n"
+"<b>Once your account is created, go to your Dashboard and click on the arrow "
+"next to your username to configure your carrier accounts. </b>\n"
+"                <b>You can add new carrier accounts on the right side of the "
+"same page.</b>\n"
 "                <br/>"
 msgstr ""
-"<b>เมื่อสร้างบัญชีของคุณแล้ว ให้ไปที่แดชบอร์ดแล้วคลิกที่ลูกศรถัดจากชื่อผู้ใช้ของคุณเพื่อกำหนดค่าบัญชีผู้ให้บริการของคุณ </b>\n"
+"<b>เมื่อสร้างบัญชีของคุณแล้ว "
+"ให้ไปที่แดชบอร์ดแล้วคลิกที่ลูกศรถัดจากชื่อผู้ใช้ของคุณเพื่อกำหนดค่าบัญชีผู้ให้บริการของคุณ </b>\n"
 "                <b>คุณสามารถเพิ่มบัญชีผู้ให้บริการใหม่ได้ทางด้านขวาของหน้าเดียวกัน</b>\n"
 "                <br/>"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_stock_package_type_form_inherit_easypost
-msgid "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">Inches</span>"
-msgstr "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}\">นิ้ว</span>"
+msgid "<span invisible=\"package_carrier_type != 'easypost'\">Inches</span>"
+msgstr ""
 
 #. module: delivery_easypost
 #. odoo-python
@@ -127,14 +130,19 @@ msgid "Delivery Carrier"
 msgstr "ผู้ให้บริการจัดส่ง"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__display_name
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__display_name
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__display_name
 msgid "Display Name"
 msgstr "แสดงชื่อ"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
-msgid "Do not forget to load your Easypost carrier accounts for a valid configuration."
+msgid ""
+"Do not forget to load your Easypost carrier accounts for a valid "
+"configuration."
 msgstr "อย่าลืมโหลดบัญชีผู้ให้บริการ Easypost ของคุณสำหรับการกำหนดค่าที่ถูกต้อง"
 
 #. module: delivery_easypost
@@ -222,8 +230,11 @@ msgid "Go to"
 msgstr "ไปที่"
 
 #. module: delivery_easypost
+#: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_delivery_carrier_easypost__id
 #: model:ir.model.fields,field_description:delivery_easypost.field_easypost_service__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_package_type__id
+#: model:ir.model.fields,field_description:delivery_easypost.field_stock_picking__id
 msgid "ID"
 msgstr "ไอดี"
 
@@ -245,8 +256,12 @@ msgstr "อัตราค่าธรรมเนียมประกันภ
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "It seems Easypost do not provide shipments for this order.                We advise you to try with another package type or service level."
-msgstr "ดูเหมือนว่า Easypost จะไม่จัดส่งสินค้าสำหรับคำสั่งซื้อนี้ เราขอแนะนำให้คุณลองใช้แพ็คเกจหรือระดับบริการอื่น"
+msgid ""
+"It seems Easypost do not provide shipments for this order.                We "
+"advise you to try with another package type or service level."
+msgstr ""
+"ดูเหมือนว่า Easypost จะไม่จัดส่งสินค้าสำหรับคำสั่งซื้อนี้ "
+"เราขอแนะนำให้คุณลองใช้แพ็คเกจหรือระดับบริการอื่น"
 
 #. module: delivery_easypost
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
@@ -403,14 +418,17 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "The estimated price cannot be computed because the weight of your product is missing."
+msgid ""
+"The estimated price cannot be computed because the weight of your product is "
+"missing."
 msgstr "ไม่สามารถคำนวณราคาโดยประมาณได้เนื่องจากไม่มีน้ำหนักของสินค้าของคุณ"
 
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
 "ไม่สามารถคำนวณราคาจัดส่งโดยประมาณได้เนื่องจากไม่มีน้ำหนักของสินค้าต่อไปนี้:\n"
@@ -419,8 +437,11 @@ msgstr ""
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "There is no rate available for the selected service level for one of your package. Please choose another service level."
-msgstr "ไม่มีอัตราสำหรับระดับบริการที่เลือก ของแพ็กเกจใดแพ็กเกจหนึ่งของคุณ โปรดเลือกระดับการบริการอื่น ๆ"
+msgid ""
+"There is no rate available for the selected service level for one of your "
+"package. Please choose another service level."
+msgstr ""
+"ไม่มีอัตราสำหรับระดับบริการที่เลือก ของแพ็กเกจใดแพ็กเกจหนึ่งของคุณ โปรดเลือกระดับการบริการอื่น ๆ"
 
 #. module: delivery_easypost
 #: model:ir.model,name:delivery_easypost.model_stock_picking
@@ -454,8 +475,12 @@ msgstr "คุณไม่สามารถยกเลิกการจัด
 #. module: delivery_easypost
 #. odoo-python
 #: code:addons/delivery_easypost/models/easypost_request.py:0
-msgid "You have no carrier linked to your Easypost Account.                Please connect to Easypost, link your account to carriers and then retry."
-msgstr "คุณไม่มีผู้ให้บริการที่เชื่อมโยงกับบัญชี Easypost ของคุณ โปรดเชื่อมต่อกับ Easypost เพื่อเชื่อมโยงบัญชีของคุณกับผู้ให้บริการแล้วลองอีกครั้ง"
+msgid ""
+"You have no carrier linked to your Easypost Account.                Please "
+"connect to Easypost, link your account to carriers and then retry."
+msgstr ""
+"คุณไม่มีผู้ให้บริการที่เชื่อมโยงกับบัญชี Easypost ของคุณ โปรดเชื่อมต่อกับ Easypost "
+"เพื่อเชื่อมโยงบัญชีของคุณกับผู้ให้บริการแล้วลองอีกครั้ง"
 
 #. module: delivery_easypost
 #: model:ir.model.fields.selection,name:delivery_easypost.selection__delivery_carrier__easypost_label_file_type__zpl
@@ -466,3 +491,10 @@ msgstr "ZPL"
 #: model_terms:ir.ui.view,arch_db:delivery_easypost.view_delivery_carrier_form_inherit_delivery_easypost
 msgid "to create a new account:"
 msgstr "สร้างบัญชีใหม่"
+
+#~ msgid ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">Inches</span>"
+#~ msgstr ""
+#~ "<span attrs=\"{'invisible': [('package_carrier_type', '!=', 'easypost')]}"
+#~ "\">นิ้ว</span>"

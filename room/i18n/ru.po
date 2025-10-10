@@ -8,18 +8,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-02-12 10:54+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 21:10+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
-"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/room/ru/>"
-"\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/room/ru/"
+">\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: room
@@ -52,12 +52,13 @@ msgstr "<i class=\"fa fa-long-arrow-right\" title=\"Until\"/>"
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-msgid ""
-"<span invisible=\"bookings_count == 1\">Bookings</span>\n"
-"                                    <span invisible=\"bookings_count != 1\">Booking</span>"
+msgid "<span class=\"o_stat_text\">Next Meeting</span>"
 msgstr ""
-"<span invisible=\"bookings_count == 1\">Бронирование</span>\n"
-"                                    <span invisible=\"bookings_count != 1\">Бронирование</span>"
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "<span invisible=\"next_booking_start\">No Upcoming Meetings</span>"
+msgstr ""
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_booking_view_kanban
@@ -86,15 +87,50 @@ msgid "Action Needed"
 msgstr "Требуются действия"
 
 #. module: room
+#: model:ir.model.fields,field_description:room.field_room_room__active
+msgid "Active"
+msgstr ""
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
+msgid "Add"
+msgstr ""
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
+msgid "Add a Booking"
+msgstr ""
+
+#. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__description
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Amenities"
 msgstr "Удобства"
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "Appearance"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_search
+msgid "Archived"
+msgstr ""
 
 #. module: room
 #. odoo-javascript
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
 msgid "Are you sure you want to delete this booking?"
 msgstr "Вы уверены, что хотите удалить эту бронь?"
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
+msgid "Are you sure you want to end the current booking ?"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_attachment_count
@@ -119,12 +155,6 @@ msgstr "Доступный цвет фона"
 #: model:ir.model.fields,field_description:room.field_room_room__room_background_image
 msgid "Background Image"
 msgstr "Фоновое изображение"
-
-#. module: room
-#. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-msgid "Book now"
-msgstr "Забронировать"
 
 #. module: room
 #. odoo-javascript
@@ -167,22 +197,10 @@ msgid "Bookings"
 msgstr "Бронирование"
 
 #. module: room
-#: model:ir.model.fields,field_description:room.field_room_room__bookings_count
-msgid "Bookings Count"
-msgstr "Подсчет заказов"
-
-#. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Busy"
 msgstr "Занят"
-
-#. module: room
-#. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
-#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-msgid "Cancel"
-msgstr "Отменить"
 
 #. module: room
 #: model_terms:room.room,description:room.room_room_main_office_room_3
@@ -200,6 +218,12 @@ msgstr "Компания"
 #: model_terms:ir.actions.act_window,help:room.room_room_action
 msgid "Create Rooms"
 msgstr "Создавайте комнаты"
+
+#. module: room
+#. odoo-python
+#: code:addons/room/models/room_booking.py:0
+msgid "Create a Room"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__create_uid
@@ -227,6 +251,14 @@ msgid "Delete"
 msgstr "Удалить"
 
 #. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: room
+#: model:ir.model.fields,field_description:room.field_ir_http__display_name
 #: model:ir.model.fields,field_description:room.field_room_booking__display_name
 #: model:ir.model.fields,field_description:room.field_room_office__display_name
 #: model:ir.model.fields,field_description:room.field_room_room__display_name
@@ -234,19 +266,18 @@ msgid "Display Name"
 msgstr "Отображаемое имя"
 
 #. module: room
-#: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
-msgid "E.g. Team Meeting"
-msgstr "Например, собрание команды"
-
-#. module: room
-#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
-msgid "E.g. projector, capacity 6 people"
-msgstr "Например, проектор, вместимость 6 человек"
-
-#. module: room
-#: model:ir.module.category,description:room.module_category_room
+#: model:res.groups,comment:room.group_room_manager
 msgid "Enable the user to manage meeting rooms available for booking"
-msgstr "Предоставьте пользователю возможность управлять конференц-залами, доступными для бронирования"
+msgstr ""
+"Предоставьте пользователю возможность управлять конференц-залами, доступными "
+"для бронирования"
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
+msgid "End Booking"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__stop_datetime
@@ -266,6 +297,11 @@ msgid "Followers (Partners)"
 msgstr "Подписчики"
 
 #. module: room
+#: model:ir.model,name:room.model_ir_http
+msgid "HTTP Routing"
+msgstr ""
+
+#. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__has_message
 #: model:ir.model.fields,field_description:room.field_room_room__has_message
 msgid "Has Message"
@@ -277,6 +313,7 @@ msgid "Head Office"
 msgstr "Центральный офис"
 
 #. module: room
+#: model:ir.model.fields,field_description:room.field_ir_http__id
 #: model:ir.model.fields,field_description:room.field_room_booking__id
 #: model:ir.model.fields,field_description:room.field_room_office__id
 #: model:ir.model.fields,field_description:room.field_room_room__id
@@ -287,13 +324,20 @@ msgstr "ID"
 #: model:ir.model.fields,help:room.field_room_booking__message_needaction
 #: model:ir.model.fields,help:room.field_room_room__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Если флажок установлен, значит, новые сообщения требуют вашего внимания."
+msgstr ""
+"Если флажок установлен, значит, новые сообщения требуют вашего внимания."
 
 #. module: room
 #: model:ir.model.fields,help:room.field_room_booking__message_has_error
 #: model:ir.model.fields,help:room.field_room_room__message_has_error
 msgid "If checked, some messages have a delivery error."
 msgstr "Если отмечено, некоторые сообщения имеют ошибку доставки."
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
+msgid "Install Application"
+msgstr ""
 
 #. module: room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_list
@@ -329,6 +373,11 @@ msgstr "Дата последнего обновления:"
 #: model:room.office,name:room.room_office_main_office
 msgid "Main Office"
 msgstr "Главный офис"
+
+#. module: room
+#: model_terms:ir.actions.act_window,help:room.room_booking_action
+msgid "Make meeting room sharing easy by centralizing all meetings in this App"
+msgstr ""
 
 #. module: room
 #: model:res.groups,name:room.group_room_manager
@@ -389,6 +438,11 @@ msgstr "Бронирование не планируется"
 #: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
 msgid "No Bookings for Today"
 msgstr "На сегодня нет бронирований"
+
+#. module: room
+#: model_terms:ir.actions.act_window,help:room.room_booking_action
+msgid "No Bookings found. Let’s schedule one!"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__message_needaction_counter
@@ -480,7 +534,7 @@ msgstr "Рейтинги"
 #: model:ir.actions.act_window,name:room.room_room_action
 #: model:ir.model,name:room.model_room_room
 #: model:ir.model.fields,field_description:room.field_room_booking__room_id
-#: model:ir.module.category,name:room.module_category_room
+#: model:res.groups.privilege,name:room.res_groups_privilege_room
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_search
 msgid "Room"
 msgstr "Номер"
@@ -498,12 +552,11 @@ msgstr "Бронирование Номера"
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_booking_url
-msgid "Room Booking URL"
-msgstr "URL-адрес бронирования номеров"
+msgid "Room Link"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__name
-#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
 msgid "Room Name"
 msgstr "Название номера"
 
@@ -523,22 +576,9 @@ msgid "Rooms"
 msgstr "Комнаты"
 
 #. module: room
-#. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
-msgid "Save"
-msgstr "Сохранить"
-
-#. module: room
-#. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
-msgid "Schedule"
-msgstr "Расписание"
-
-#. module: room
-#. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
-msgid "Schedule Booking"
-msgstr "Расписание Бронирование"
+#: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
+msgid "Select a Room..."
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__short_code
@@ -552,14 +592,20 @@ msgstr "Время начала"
 
 #. module: room
 #. odoo-javascript
-#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.js:0
-msgid "Stop"
-msgstr "Стоп"
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.xml:0
+msgid "Start now"
+msgstr ""
 
 #. module: room
 #: model:ir.model.constraint,message:room.constraint_room_room_uniq_access_token
 msgid "The access token must be unique"
 msgstr "Токен доступа должен быть уникальным"
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_view/room_booking_view.js:0
+msgid "The booking you were editing has been updated or deleted."
+msgstr ""
 
 #. module: room
 #. odoo-javascript
@@ -581,7 +627,9 @@ msgstr "Дата начала %(booking_name)s должна быть раньш�
 #. module: room
 #: model_terms:ir.actions.act_window,help:room.room_room_action
 msgid "They can then be booked for meetings from a Tablet or the back-end."
-msgstr "Затем их можно забронировать для встреч с планшета или из внутреннего интерфейса."
+msgstr ""
+"Затем их можно забронировать для встреч с планшета или из внутреннего "
+"интерфейса."
 
 #. module: room
 #. odoo-javascript
@@ -593,3 +641,74 @@ msgstr "Эта комната свободна, как рыба в море бе
 #: model_terms:ir.ui.view,arch_db:room.room_room_view_kanban
 msgid "Until"
 msgstr "Окончание"
+
+#. module: room
+#. odoo-javascript
+#: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
+msgid "Update Meeting"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "e.g. Blue Meeting Room"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "e.g. Headquarters"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_booking_view_form
+msgid "e.g. Team Meeting"
+msgstr ""
+
+#. module: room
+#: model_terms:ir.ui.view,arch_db:room.room_room_view_form
+msgid "e.g. projector, capacity 6 people"
+msgstr ""
+
+#. module: room
+#. odoo-python
+#: code:addons/room/models/room_room.py:0
+msgid "room_id"
+msgstr ""
+
+#~ msgid ""
+#~ "<span invisible=\"bookings_count == 1\">Bookings</span>\n"
+#~ "                                    <span invisible=\"bookings_count != "
+#~ "1\">Booking</span>"
+#~ msgstr ""
+#~ "<span invisible=\"bookings_count == 1\">Бронирование</span>\n"
+#~ "                                    <span invisible=\"bookings_count != "
+#~ "1\">Бронирование</span>"
+
+#~ msgid "Book now"
+#~ msgstr "Забронировать"
+
+#~ msgid "Bookings Count"
+#~ msgstr "Подсчет заказов"
+
+#~ msgid "Cancel"
+#~ msgstr "Отменить"
+
+#~ msgid "E.g. Team Meeting"
+#~ msgstr "Например, собрание команды"
+
+#~ msgid "E.g. projector, capacity 6 people"
+#~ msgstr "Например, проектор, вместимость 6 человек"
+
+#~ msgid "Room Booking URL"
+#~ msgstr "URL-адрес бронирования номеров"
+
+#~ msgid "Save"
+#~ msgstr "Сохранить"
+
+#~ msgid "Schedule"
+#~ msgstr "Расписание"
+
+#~ msgid "Schedule Booking"
+#~ msgstr "Расписание Бронирование"
+
+#~ msgid "Stop"
+#~ msgstr "Стоп"

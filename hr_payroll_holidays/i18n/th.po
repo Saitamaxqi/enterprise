@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 22:55+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -22,8 +22,7 @@ msgstr ""
 #. module: hr_payroll_holidays
 #: model_terms:ir.actions.act_window,help:hr_payroll_holidays.hr_leave_work_entry_action
 msgid ""
-"A great way to keep track on employee’s PTOs, sick days, and approval "
-"status."
+"A great way to keep track on employee’s PTOs, sick days, and approval status."
 msgstr "วิธีที่ยอดเยี่ยมในการติดตาม PTO ของพนักงาน วันลาป่วย และสถานะการอนุมัติ"
 
 #. module: hr_payroll_holidays
@@ -152,8 +151,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_payroll_holidays/models/hr_leave.py:0
 msgid "Only an employee time off to defer can be reported to next month"
-msgstr ""
-"สามารถรายงานการลาหยุดเพื่อเลื่อนเวลาของพนักงานออกไปได้เฉพาะเดือนหน้าเท่านั้น"
+msgstr "สามารถรายงานการลาหยุดเพื่อเลื่อนเวลาของพนักงานออกไปได้เฉพาะเดือนหน้าเท่านั้น"
 
 #. module: hr_payroll_holidays
 #: model:ir.model,name:hr_payroll_holidays.model_hr_payslip
@@ -192,8 +190,7 @@ msgstr "รับผิดชอบ"
 msgid ""
 "The next month work entries are not generated yet or are validated already "
 "for time off %s"
-msgstr ""
-"รายการงานในเดือนถัดไปยังไม่ถูกสร้างขึ้นหรือได้รับการตรวจสอบแล้วสำหรับระบบการลา %s"
+msgstr "รายการงานในเดือนถัดไปยังไม่ถูกสร้างขึ้นหรือได้รับการตรวจสอบแล้วสำหรับระบบการลา %s"
 
 #. module: hr_payroll_holidays
 #. odoo-python

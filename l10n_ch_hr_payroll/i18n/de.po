@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-26 11:55+0000\n"
+"POT-Creation-Date: 2025-10-09 12:57+0000\n"
 "PO-Revision-Date: 2025-02-07 17:07+0000\n"
 "Last-Translator: Larissa Manderfeld, 2025\n"
 "Language-Team: German (https://app.transifex.com/odoo/teams/41243/de/)\n"
@@ -992,6 +992,11 @@ msgid "(7400) General AVS Deduction in % Employer"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
+msgid "(object._get_report_base_filename())"
+msgstr "(object._get_report_base_filename())"
+
+#. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "- Master Data -"
 msgstr ""
@@ -1367,6 +1372,11 @@ msgid ""
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
+msgid "<span> - </span>"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_contract_template_form_view
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "<span>%</span>"
@@ -1426,8 +1436,8 @@ msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<span>Individual Account Report for year </span>"
-msgstr "<span>Einzelkontobericht für das Jahr</span>"
+msgid "<span>Individual Account - </span>"
+msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
@@ -1455,24 +1465,9 @@ msgid "<strong>Address: </strong>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Address</strong>"
-msgstr "<strong>Adresse</strong>"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Bank Account</strong>"
-msgstr "<strong>Bankkonto</strong>"
-
-#. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>Code:</strong>"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Company Information</strong>"
-msgstr "<strong>Unternehmensinformationen</strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_monthly_summary
@@ -1488,16 +1483,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>Customer Number:</strong>"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Designation</strong>"
-msgstr "<strong>Stellenbezeichnung</strong>"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Email</strong>"
-msgstr "<strong>Email</strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_monthly_summary
@@ -1523,11 +1508,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>Group Unit:</strong>"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Identification No</strong>"
-msgstr "<strong>Identifikationsnummer</strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
@@ -1595,11 +1575,6 @@ msgid "<strong>Name:</strong>"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Name</strong>"
-msgstr "<strong>Name</strong>"
-
-#. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>No LAA Reason:</strong>"
 msgstr ""
@@ -1615,11 +1590,6 @@ msgid "<strong>Nr.</strong>"
 msgstr "<strong>Nr.</strong>"
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Registration Number</strong>"
-msgstr "<strong>Registrierungsnummer</strong>"
-
-#. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>Retirement Age (Female):</strong>"
 msgstr ""
@@ -1628,11 +1598,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
 msgid "<strong>Retirement Age (Male):</strong>"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "<strong>Salary Computation</strong>"
-msgstr "<strong>Gehaltsberechnung</strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
@@ -1826,11 +1791,6 @@ msgid "ALV compensation"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "APR"
-msgstr "APR"
-
-#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__ar
 msgid "AR"
 msgstr ""
@@ -1839,11 +1799,6 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_as_days
 msgid "AS Days"
 msgstr "AS-Tage"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "AUG"
-msgstr "AUG"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_job_result__domain__ahv-avs
@@ -2355,6 +2310,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__4
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__4
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__4
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "April"
 msgstr "April"
 
@@ -2436,6 +2392,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__8
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__8
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__8
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "August"
 msgstr "August"
 
@@ -3776,11 +3733,6 @@ msgid "DE - German"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "DEC"
-msgstr "Dec"
-
-#. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2025
 msgid "DI allowance"
 msgstr ""
@@ -3895,6 +3847,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__12
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__12
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__12
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "December"
 msgstr "Dezember"
 
@@ -4247,6 +4200,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_config_settings__display_name
 msgid "Display Name"
 msgstr "Anzeigename"
+
+#. module: l10n_ch_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_individual_account__documents_count
+msgid "Documents Count"
+msgstr "Anzahl Dokumente"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_job_result__domain
@@ -4729,11 +4687,6 @@ msgid "FCF Employer Contribution"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "FEB"
-msgstr "FEB"
-
-#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__fr
 msgid "FR"
 msgstr ""
@@ -4819,6 +4772,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__2
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__2
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__2
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "February"
 msgstr "Februar"
 
@@ -5793,7 +5747,18 @@ msgid "Indemnity for absence"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_individual_account
+msgid "Individual Account"
+msgstr "Individuelles Konto"
+
+#. module: l10n_ch_hr_payroll
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
+msgid "Individual Account -"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.l10n_ch_individual_account_action
+#: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_individual_account
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_individual_account_view_form
 msgid "Individual Accounts"
 msgstr "Individuelle Konten"
@@ -6042,24 +6007,9 @@ msgid "Is Mutations"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "JAN"
-msgstr "JAN"
-
-#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__ju
 msgid "JU"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "JUL"
-msgstr "JUL"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "JUN"
-msgstr "JUN"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__ch_yearly_report__month__1
@@ -6071,6 +6021,7 @@ msgstr "JUN"
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__1
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__1
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__1
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "January"
 msgstr "Januar"
 
@@ -6125,6 +6076,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__7
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__7
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__7
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "July"
 msgstr "Juli"
 
@@ -6138,6 +6090,7 @@ msgstr "Juli"
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__6
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__6
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__6
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "June"
 msgstr "Juni"
 
@@ -7154,16 +7107,6 @@ msgstr ""
 "M - Tarif für deutsche Grenzgänger, die die Bedingungen des Tarifs B erfüllen"
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "MAR"
-msgstr "MÄRZ"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "MAY"
-msgstr "Mai"
-
-#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_pre_defined_tax_scale__men
 msgid "MEN - Monetary Value Services residing abroad, without Church tax"
 msgstr ""
@@ -7237,6 +7180,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__3
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__3
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__3
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "March"
 msgstr "März"
 
@@ -7287,6 +7231,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__5
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__5
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__5
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "May"
 msgstr "Mai"
 
@@ -7462,6 +7407,7 @@ msgstr ""
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.l10n_ch_monthly_summary_action
+#: model:ir.ui.menu,name:l10n_ch_hr_payroll.menu_l10n_ch_monthly_summary
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_monthly_summary_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_monthly_summary_view_tree
 msgid "Monthly Summary"
@@ -7601,11 +7547,6 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_pre_defined_tax_scale__non
 msgid "NON - Not Subject to Source Tax, without Church Tax"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "NOV"
-msgstr "NOV"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_pre_defined_tax_scale__noy
@@ -7983,6 +7924,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__11
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__11
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__11
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "November"
 msgstr "November"
 
@@ -8091,11 +8033,6 @@ msgid "OASI Splitting"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "OCT"
-msgstr "Okt"
-
-#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__ow
 msgid "OW"
 msgstr ""
@@ -8161,6 +8098,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__10
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__10
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__10
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "October"
 msgstr "Oktober"
 
@@ -8894,6 +8832,19 @@ msgid "Rates"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_ch_yearly_report__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_ema_declaration__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_is_report__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_lpp_basis_report__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_statistic_report__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_declaration__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_job_result__rating_ids
+#: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_transmitter__rating_ids
+msgid "Ratings"
+msgstr ""
+
+#. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line__reason
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_is_mutation__reason
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_lpp_mutation__reason
@@ -9126,11 +9077,6 @@ msgid ""
 msgstr ""
 "S - Tarif für italienische Grenzgänger, die die Bedingungen des Tarifs B "
 "erfüllen"
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "SEP"
-msgstr "SEP"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_pre_defined_tax_scale__sfn
@@ -9398,6 +9344,7 @@ msgstr "Getrennt"
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_salary_certificate__month__9
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_statistic_report__month__9
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_transmitter__month__9
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "September"
 msgstr "September"
 
@@ -10505,6 +10452,11 @@ msgid "Switzerland: ELM Salaries"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_monthly_summary
+msgid "Switzerland: Monthly Summary"
+msgstr "Schweiz: monatliche Zusammenfassung"
+
+#. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_payslip_ch_elm
 msgid "Switzerland: Payslip"
 msgstr "Schweiz: Gehaltsabrechnung"
@@ -10974,6 +10926,7 @@ msgstr "Oberee Führungsebene"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
+#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
 msgid "Total"
 msgstr ""
 
@@ -11029,11 +10982,6 @@ msgstr ""
 #: code:addons/l10n_ch_hr_payroll/static/src/fields/salary_result/salary_result.xml:0
 msgid "Total Taxable Earning:"
 msgstr ""
-
-#. module: l10n_ch_hr_payroll
-#: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_individual_account
-msgid "Total Year"
-msgstr "Gesamtjahr"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_total_occupation_rate
@@ -12287,8 +12235,74 @@ msgstr ""
 msgid "vocEducationCompl"
 msgstr ""
 
-#~ msgid "(object._get_report_base_filename())"
-#~ msgstr "(object._get_report_base_filename())"
+#~ msgid "<span>Individual Account Report for year </span>"
+#~ msgstr "<span>Einzelkontobericht für das Jahr</span>"
+
+#~ msgid "<strong>Address</strong>"
+#~ msgstr "<strong>Adresse</strong>"
+
+#~ msgid "<strong>Bank Account</strong>"
+#~ msgstr "<strong>Bankkonto</strong>"
+
+#~ msgid "<strong>Company Information</strong>"
+#~ msgstr "<strong>Unternehmensinformationen</strong>"
+
+#~ msgid "<strong>Designation</strong>"
+#~ msgstr "<strong>Stellenbezeichnung</strong>"
+
+#~ msgid "<strong>Email</strong>"
+#~ msgstr "<strong>Email</strong>"
+
+#~ msgid "<strong>Identification No</strong>"
+#~ msgstr "<strong>Identifikationsnummer</strong>"
+
+#~ msgid "<strong>Name</strong>"
+#~ msgstr "<strong>Name</strong>"
+
+#~ msgid "<strong>Registration Number</strong>"
+#~ msgstr "<strong>Registrierungsnummer</strong>"
+
+#~ msgid "<strong>Salary Computation</strong>"
+#~ msgstr "<strong>Gehaltsberechnung</strong>"
+
+#~ msgid "APR"
+#~ msgstr "APR"
+
+#~ msgid "AUG"
+#~ msgstr "AUG"
+
+#~ msgid "DEC"
+#~ msgstr "Dec"
+
+#~ msgid "FEB"
+#~ msgstr "FEB"
+
+#~ msgid "JAN"
+#~ msgstr "JAN"
+
+#~ msgid "JUL"
+#~ msgstr "JUL"
+
+#~ msgid "JUN"
+#~ msgstr "JUN"
+
+#~ msgid "MAR"
+#~ msgstr "MÄRZ"
+
+#~ msgid "MAY"
+#~ msgstr "Mai"
+
+#~ msgid "NOV"
+#~ msgstr "NOV"
+
+#~ msgid "OCT"
+#~ msgstr "Okt"
+
+#~ msgid "SEP"
+#~ msgstr "SEP"
+
+#~ msgid "Total Year"
+#~ msgstr "Gesamtjahr"
 
 #~ msgid ""
 #~ "<i class=\"oi oi-fw oi-arrow-right\"/>The following XML file can be "
@@ -12625,9 +12639,6 @@ msgstr ""
 #~ msgid "Death Allowance"
 #~ msgstr "Lohnnachgenuss"
 
-#~ msgid "Documents Count"
-#~ msgstr "Anzahl Dokumente"
-
 #~ msgid "Documents Enabled"
 #~ msgstr "Dokumente aktiviert"
 
@@ -12765,9 +12776,6 @@ msgstr ""
 
 #~ msgid "Indemnité de chômage"
 #~ msgstr "Indemnité de chômage"
-
-#~ msgid "Individual Account"
-#~ msgstr "Individuelles Konto"
 
 #~ msgid "Insurance Company"
 #~ msgstr "Versicherungsgesellschaft"
@@ -12982,9 +12990,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Schweizerische Personalabrechnung: Erweiterter Assistent zum Importieren "
 #~ "von Steuersätzen (auf Website herunterladen)"
-
-#~ msgid "Switzerland: Monthly Summary"
-#~ msgstr "Schweiz: monatliche Zusammenfassung"
 
 #~ msgid "Switzerland: Payslip (Light)"
 #~ msgstr "Schweiz: Gehaltsabrechnung (vereinfacht)"

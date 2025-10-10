@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:21+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-18 02:44+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -93,8 +93,8 @@ msgstr "Erro: verificar as credenciais do Pricer"
 #: code:addons/pos_pricer/models/pricer_store.py:0
 msgid "Failed to unlink Pricer tag %(pricer_tag)s at API url %(api_url)s"
 msgstr ""
-"Falha ao desvincular a etiqueta Pricer %(pricer_tag)s na url da API "
-"%(api_url)s"
+"Falha ao desvincular a etiqueta Pricer %(pricer_tag)s na url da API %"
+"(api_url)s"
 
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pos_config__id
@@ -118,8 +118,8 @@ msgid ""
 "Invalid tag name. Should be 1 letter followed by 16 digits. Example: "
 "'N4081315789813275'"
 msgstr ""
-"Nome de etiqueta inválido. Deve ser uma letra seguida de 16 dígitos. Exemplo:"
-" \"N4081315789813275"
+"Nome de etiqueta inválido. Deve ser uma letra seguida de 16 dígitos. "
+"Exemplo: \"N4081315789813275"
 
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__name
@@ -396,8 +396,8 @@ msgstr ""
 #: model:ir.model.fields,help:pos_pricer.field_pricer_tag__pricer_store_id
 #: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_store_id
 msgid ""
-"This product will be linked to and displayed on the Pricer tags of the store"
-" selected here"
+"This product will be linked to and displayed on the Pricer tags of the store "
+"selected here"
 msgstr ""
 "Este produto será vinculado e exibido nas etiquetas Pricer da loja "
 "selecionada aqui"

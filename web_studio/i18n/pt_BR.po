@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-22 19:01+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -131,8 +131,8 @@ msgid ""
 "%(user_name)s has set approval rights from %(previous_approvers)s to %"
 "(next_approvers)s"
 msgstr ""
-"%(user_name)s definiu direitos de aprovação de %(previous_approvers)s para "
-"%(next_approvers)s"
+"%(user_name)s definiu direitos de aprovação de %(previous_approvers)s para %"
+"(next_approvers)s"
 
 #. module: web_studio
 #. odoo-python
@@ -1108,7 +1108,8 @@ msgstr "Contexto"
 #: code:addons/web_studio/static/src/js/tours/web_studio_tour.js:0
 msgid ""
 "Continue to configure some typical behaviors for your new type of object."
-msgstr "Continue a configurar comportamentos comuns do seu novo tipo de objeto."
+msgstr ""
+"Continue a configurar comportamentos comuns do seu novo tipo de objeto."
 
 #. module: web_studio
 #. odoo-javascript
@@ -1564,8 +1565,8 @@ msgstr "Concluído"
 msgid ""
 "Drag & drop <b>another field</b>. Let's try with a <i>selection field</i>."
 msgstr ""
-"Arraste e solte <b>outro campo</b>. Vamos tentar com um <i>campo de "
-"seleção</i>."
+"Arraste e solte <b>outro campo</b>. Vamos tentar com um <i>campo de seleção</"
+"i>."
 
 #. module: web_studio
 #. odoo-javascript
@@ -4519,8 +4520,8 @@ msgstr "Você não pode desativar essa visão pois é a última ativa."
 #: code:addons/web_studio/static/src/client_action/report_editor/report_editor.js:0
 msgid "You cannot edit a report while there is no %(model_name)s (%(model)s)"
 msgstr ""
-"Não é possível editar um relatório enquanto não houver %(model_name)s "
-"(%(model)s)"
+"Não é possível editar um relatório enquanto não houver %(model_name)s (%"
+"(model)s)"
 
 #. module: web_studio
 #. odoo-python
@@ -4568,7 +4569,8 @@ msgstr "ou"
 #. odoo-python
 #: code:addons/web_studio/models/ir_ui_view.py:0
 msgid "studio_approval attribute can only be set in form views"
-msgstr "O atributo studio_approval só pode ser definido em visões de formulário"
+msgstr ""
+"O atributo studio_approval só pode ser definido em visões de formulário"
 
 #. module: web_studio
 #. odoo-python

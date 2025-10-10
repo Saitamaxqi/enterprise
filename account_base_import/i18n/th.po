@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:24+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 22:57+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -282,7 +282,8 @@ msgstr "อัปเดตครั้งล่าสุดเมื่อ"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in Europe support exporting SAF-T file for audit purposes.\n"
+"Most accounting software in Europe support exporting SAF-T file for audit "
+"purposes.\n"
 "                            Use the"
 msgstr ""
 "ซอฟต์แวร์การบัญชีส่วนใหญ่ในยุโรปรองรับการส่งออกไฟล์ SAF-T เพื่อวัตถุประสงค์ในการตรวจสอบ\n"
@@ -292,7 +293,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Most accounting software in France support exporting FEC file for audit purposes.\n"
+"Most accounting software in France support exporting FEC file for audit "
+"purposes.\n"
 "                            Use the"
 msgstr ""
 "ซอฟต์แวร์การบัญชีส่วนใหญ่ในฝรั่งเศสรองรับการส่งออกไฟล์ FEC เพื่อวัตถุประสงค์ในการตรวจสอบ\n"
@@ -350,13 +352,15 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data\n"
-"                            from and to other accounting applications. Odoo support importing data from both type 4 and 5 of SIE."
+"The SIE standard file format is very common in Sweden for several purposes "
+"such as auditing, importing and exporting data\n"
+"                            from and to other accounting applications. Odoo "
+"support importing data from both type 4 and 5 of SIE."
 msgstr ""
 "ไฟล์มาตรฐาน SIE เป็นรูปแบบที่ใช้กันอย่างแพร่หลายในประเทศสวีเดน สำหรับวัตถุประสงค์ต่าง ๆ เช่น "
 "การตรวจสอบบัญชี การนำเข้าหรือส่งออกข้อมูล\n"
-"                                                                 "
-"ระหว่างแอปพลิเคชันบัญชีต่างๆ Odoo รองรับการนำเข้าข้อมูลจากไฟล์ SIE ทั้งประเภทที่ 4 และ 5"
+"                                                                 ระหว่างแอปพลิเคชันบัญชีต่างๆ "
+"Odoo รองรับการนำเข้าข้อมูลจากไฟล์ SIE ทั้งประเภทที่ 4 และ 5"
 
 #. module: account_base_import
 #. odoo-python
@@ -368,13 +372,12 @@ msgstr "ไฟล์นำเข้าไม่มีคอลัมน์ที
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"Tip: we recommend importing your initial balances using the Chart of Account"
-" import. Only use the Journal Items import for unreconciled entries in your "
+"Tip: we recommend importing your initial balances using the Chart of Account "
+"import. Only use the Journal Items import for unreconciled entries in your "
 "Payable and Receivable Accounts."
 msgstr ""
 "เคล็ดลับ: เราขอแนะนำให้นำเข้ายอดคงเหลือเริ่มต้นของคุณโดยใช้การนำเข้าผังบัญชี "
-"ใช้การนำเข้ารายการสมุดรายวันสำหรับรายการที่ยังไม่ได้กระทบยอดในบัญชีเจ้าหนี้และบัญชีลูกหนี้ของคุณเท่"
-"านั้น"
+"ใช้การนำเข้ารายการสมุดรายวันสำหรับรายการที่ยังไม่ได้กระทบยอดในบัญชีเจ้าหนี้และบัญชีลูกหนี้ของคุณเท่านั้น"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -394,8 +397,7 @@ msgstr "ใช้เทมเพลตเพื่อนำเข้า CSV ห�
 msgid ""
 "We will setup your charts of accounts and the history of journal entries, "
 "that will stay in draft."
-msgstr ""
-"เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวันซึ่งจะยังคงอยู่ในแบบร่าง"
+msgstr "เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวันซึ่งจะยังคงอยู่ในแบบร่าง"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -432,8 +434,10 @@ msgstr "บัญชีที่นำเข้า"
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
 "is required to import the SIE 4 files.\n"
-"                                    By design, it's also backward compatible with previous SIE versions (version 1 up to 3).\n"
-"                                    This import will not validate the correctness of the file."
+"                                    By design, it's also backward compatible "
+"with previous SIE versions (version 1 up to 3).\n"
+"                                    This import will not validate the "
+"correctness of the file."
 msgstr ""
 "จำเป็นต้องใช้ในการนำเข้าไฟล์ SIE 4\n"
 "                          โดยการออกแบบ ระบบนี้ยังสามารถใช้งานร่วมกับไฟล์ SIE "
@@ -445,9 +449,13 @@ msgstr ""
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
 "is required to import the SIE 5 and SIE 5 entry files.\n"
-"                                    For general SIE 5, we will set up your charts of accounts balances, journals, partners, and the history of journal entries\n"
-"                                    (journals data must be present in the file).\n"
-"                                    For the SIE 5 entry, only entries and partners will be created, the rest must already be present in the system."
+"                                    For general SIE 5, we will set up your "
+"charts of accounts balances, journals, partners, and the history of journal "
+"entries\n"
+"                                    (journals data must be present in the "
+"file).\n"
+"                                    For the SIE 5 entry, only entries and "
+"partners will be created, the rest must already be present in the system."
 msgstr ""
 "จำเป็นสำหรับการนำเข้าไฟล์รายการ SIE 5 และ SIE 5\n"
 "                              สำหรับ SIE 5 ทั่วไป เราจะตั้งค่าแผนภูมิบัญชี ยอดคงเหลือ "
@@ -498,11 +506,12 @@ msgstr "เทมเพลต"
 #. odoo-javascript
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid ""
-"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of accounts, contacts, taxes, history of journal entries, and documents.\n"
+"to import a Winbooks full back-up (Maintenance > Backup) to get the chart of "
+"accounts, contacts, taxes, history of journal entries, and documents.\n"
 "                            Support versions: Winbooks Desktop 5.50, 6, 7, 8."
 msgstr ""
-"เพื่อนำเข้าการสำรองข้อมูลแบบเต็มของ Winbooks (การซ่อมบำรุง > การสำรองข้อมูล) เพื่อรับผังบัญชี"
-" ผู้ติดต่อ ภาษี ประวัติรายการสมุดรายวัน และเอกสาร\n"
+"เพื่อนำเข้าการสำรองข้อมูลแบบเต็มของ Winbooks (การซ่อมบำรุง > การสำรองข้อมูล) "
+"เพื่อรับผังบัญชี ผู้ติดต่อ ภาษี ประวัติรายการสมุดรายวัน และเอกสาร\n"
 "                            เวอร์ชันที่รองรับ: Winbooks Desktop 5.50, 6, 7, 8"
 
 #. module: account_base_import
@@ -511,8 +520,7 @@ msgstr ""
 msgid ""
 "to import the FEC file. We will setup your charts of accounts and the "
 "history of journal entries."
-msgstr ""
-"เพื่อนำเข้าไฟล์ FEC เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวัน"
+msgstr "เพื่อนำเข้าไฟล์ FEC เราจะตั้งค่าผังบัญชีของคุณและประวัติรายการสมุดรายวัน"
 
 #. module: account_base_import
 #. odoo-javascript

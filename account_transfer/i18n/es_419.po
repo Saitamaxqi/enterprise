@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -34,8 +34,8 @@ msgstr "Se debe establecer una cuenta destino en cada línea."
 #. module: account_transfer
 #: model:ir.model.fields,help:account_transfer.field_account_transfer_model__conditions
 msgid ""
-"A domain to filter the accounts from which the resulting entry will transfer"
-" amounts."
+"A domain to filter the accounts from which the resulting entry will transfer "
+"amounts."
 msgstr ""
 "Un dominio para filtrar las cuentas de las que el asiento resultante "
 "transferirá las cantidades."
@@ -420,7 +420,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_transfer/models/account_move_line.py:0
 msgid "You cannot set Tax on computed Transfer's entries."
-msgstr "No puedes asignar impuestos a las entradas de transferencia calculadas."
+msgstr ""
+"No puedes asignar impuestos a las entradas de transferencia calculadas."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form

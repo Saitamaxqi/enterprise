@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 22:58+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Ukrainian <https://translate.odoo.com/projects/odoo-19/social/"
@@ -19,10 +19,10 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != 11 "
-"? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % 100 > "
-"14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || (n % "
-"100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
+"Plural-Forms: nplurals=4; plural=(n % 1 == 0 && n % 10 == 1 && n % 100 != "
+"11 ? 0 : n % 1 == 0 && n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 12 || n % "
+"100 > 14) ? 1 : n % 1 == 0 && (n % 10 ==0 || (n % 10 >=5 && n % 10 <=9) || "
+"(n % 100 >=11 && n % 100 <=14 )) ? 2: 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: social
@@ -33,8 +33,8 @@ msgstr "К-сть облікових записів"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "%s (max %s chars)"
-msgstr "%s (макс. символів %s)"
+msgid "%(media_name)s (max %(max_chars)s chars)"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -48,9 +48,20 @@ msgid "<b>An error occurred while trying to link your account</b>"
 msgstr "<b>Виникла помилка під час підключення до вашого облікового запису</b>"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgstr ""
+
+#. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "<i class=\"fa fa-globe\" title=\"See the post\"/>"
-msgstr "<i class=\"fa fa-globe\" title=\"See the post\"/>"
+msgid "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
@@ -58,15 +69,13 @@ msgid "<i class=\"oi oi-arrow-left\"/> Go back to Odoo"
 msgstr ""
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<small class=\"pe-1\">Clicks:</small>"
+#: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
+msgid ""
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr ""
-
-#. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/js/tours/social.js:0
-msgid "<strong>Congrats! Come back in a few minutes to check your statistics.</strong>"
-msgstr "<strong>Вітаємо! Поверніться через кілька хвилин, щоб перевірити статистику.</strong>"
+"<strong>Вітаємо! Поверніться через кілька хвилин, щоб перевірити статистику."
+"</strong>"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction
@@ -112,9 +121,14 @@ msgstr "Додати публікацію"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Add Stream"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
 #: code:addons/social/static/src/js/add_stream_modal.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
-#: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add a Stream"
 msgstr "Додати трансляцію"
 
@@ -163,6 +177,11 @@ msgid "Attach Images"
 msgstr "Прикріпити зображення"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__image_ids
+msgid "Attached Images"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
 #: model:ir.model.fields,field_description:social.field_social_post__message_attachment_count
 msgid "Attachment Count"
@@ -192,8 +211,8 @@ msgstr "Ім'я автора"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_link
-msgid "Author link to the external social.media (ex: link to the Twitter Account)."
-msgstr "Посилання автора на зовнішні social.media (напр: посилання на обліковий запис Twitter)."
+msgid "Author link to the external social.media (ex: link to the X Account)."
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -232,8 +251,12 @@ msgstr "Кампанії"
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_view_utm_campaigns
-msgid "Campaigns are used to centralize your marketing efforts and track their results."
-msgstr "Кампанії використовуються для централізації ваших маркетингових зусиль і відстеження їх результатів."
+msgid ""
+"Campaigns are used to centralize your marketing efforts and track their "
+"results."
+msgstr ""
+"Кампанії використовуються для централізації ваших маркетингових зусиль і "
+"відстеження їх результатів."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__can_link_accounts
@@ -241,8 +264,6 @@ msgid "Can link accounts?"
 msgstr ""
 
 #. module: social
-#. odoo-javascript
-#: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Cancel"
 msgstr "Скасувати"
@@ -263,6 +284,11 @@ msgstr "Натисніть, щоб оновити."
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Clicks"
 msgstr "Переходів"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Clicks:"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -300,13 +326,19 @@ msgstr "Проблема підключення"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__social_account_handle
-msgid "Contains the social media handle of the person that created this account. E.g: '@odoo.official' for the 'Odoo' Twitter account"
+msgid ""
+"Contains the social media handle of the person that created this account. "
+"E.g: '@odoo.official' for the 'Odoo' X account"
 msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
-msgid "Content of the social post message that is post-processed (links are shortened, UTMs, ...)"
-msgstr "Вміст повідомлення в соціальних мережах, яке обробляється (посилання скорочені, UTM, ...)"
+msgid ""
+"Content of the social post message that is post-processed (links are "
+"shortened, UTMs, ...)"
+msgstr ""
+"Вміст повідомлення в соціальних мережах, яке обробляється (посилання "
+"скорочені, UTM, ...)"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__has_streams
@@ -331,8 +363,12 @@ msgstr "Створити публікацію"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
-msgid "Create other accounts for %(media_names)s for this company or ask %(company_names)s to share their accounts"
-msgstr "Створіть інший обліковий запис для %(media_names)s для цієї компанії або запитайте %(company_names)s щоби поділитися їхніми обліковими записами"
+msgid ""
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
+msgstr ""
+"Створіть інший обліковий запис для %(media_names)s для цієї компанії або "
+"запитайте %(company_names)s щоби поділитися їхніми обліковими записами"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -366,7 +402,8 @@ msgid ""
 "Defines whether this account has Audience/Engagements/Stories stats.\n"
 "        Account with stats are displayed on the dashboard."
 msgstr ""
-"Визначає, чи цей обліковий запис має статистику аудиторії/залучення/історій.\n"
+"Визначає, чи цей обліковий запис має статистику аудиторії/залучення/"
+"історій.\n"
 "        Обліковий запис зі статистикою відображається на панелі приладів."
 
 #. module: social
@@ -377,9 +414,22 @@ msgstr "Визначає, чи цей обліковий запис має те�
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
+#: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Delete"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Delete Comment"
 msgstr "Видалити коментар"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Delete Post"
+msgstr ""
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -397,6 +447,19 @@ msgid "Developer Accounts"
 msgstr ""
 
 #. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Discard"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__display_message
+#: model:ir.model.fields,field_description:social.field_social_post_template__display_message
+msgid "Display Message"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:social.field_social_account__display_name
 #: model:ir.model.fields,field_description:social.field_social_live_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_media__display_name
@@ -406,13 +469,22 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__display_name
 #: model:ir.model.fields,field_description:social.field_social_stream_type__display_name
+#: model:ir.model.fields,field_description:social.field_utm_campaign__display_name
+#: model:ir.model.fields,field_description:social.field_utm_medium__display_name
+#: model:ir.model.fields,field_description:social.field_utm_source__display_name
 msgid "Display Name"
 msgstr "Назва для відображення"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
-msgid "Do you really want to delete %s"
+msgid "Do you really want to delete this %s?"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/stream_post_comments.js:0
+msgid "Do you really want to delete this Post ?"
 msgstr ""
 
 #. module: social
@@ -431,8 +503,14 @@ msgstr ""
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Edit Comment"
-msgstr "Редагувати коментар"
+msgid "Edit"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Edit Your Post"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__module_social_demo
@@ -441,7 +519,9 @@ msgstr "Увімкнути демо-режим"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Enable this option and load demo data to test the social module. This must never be used on a production database!"
+msgid ""
+"Enable this option and load demo data to test the social module. This must "
+"never be used on a production database!"
 msgstr ""
 
 #. module: social
@@ -451,7 +531,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_live_post__engagement
 #: model:ir.model.fields,field_description:social.field_social_post__engagement
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Engagement"
 msgstr "Залучення"
@@ -462,9 +541,18 @@ msgid "Engagement Trend"
 msgstr "Тренд залучення"
 
 #. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
+msgid "Engagement:"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
-msgid "Every time an account is created, a utm.medium is also created and linked to the account"
-msgstr "Кожного разу, коли створюється обліковий запис, також створюється utm.medium та пов'язуєтся з обліковим записом"
+msgid ""
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
+msgstr ""
+"Кожного разу, коли створюється обліковий запис, також створюється utm.medium "
+"та пов'язуєтся з обліковим записом"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_live_post__state__failed
@@ -519,21 +607,16 @@ msgstr "Відформатована опублікована дата"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__audience
-msgid "General audience of the Social Account (Page Likes, Account Follows, ...)."
-msgstr "Загальна аудиторія облікового запису соцмереж (лайки сторінки, підписники облікового запису, ...)."
+msgid ""
+"General audience of the Social Account (Page Likes, Account Follows, ...)."
+msgstr ""
+"Загальна аудиторія облікового запису соцмереж (лайки сторінки, підписники "
+"облікового запису, ...)."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
 msgid "Go to the"
 msgstr "Перейти на"
-
-#. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_account_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_search
-#: model_terms:ir.ui.view,arch_db:social.social_stream_view_search
-msgid "Group By"
-msgstr "Групувати за"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__social_account_handle
@@ -568,6 +651,7 @@ msgid "Hatched"
 msgstr ""
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_res_config_settings__id
 #: model:ir.model.fields,field_description:social.field_social_account__id
 #: model:ir.model.fields,field_description:social.field_social_live_post__id
 #: model:ir.model.fields,field_description:social.field_social_media__id
@@ -577,6 +661,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:social.field_social_stream_post__id
 #: model:ir.model.fields,field_description:social.field_social_stream_post_image__id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__id
+#: model:ir.model.fields,field_description:social.field_utm_campaign__id
+#: model:ir.model.fields,field_description:social.field_utm_medium__id
+#: model:ir.model.fields,field_description:social.field_utm_source__id
 msgid "ID"
 msgstr "ID"
 
@@ -639,6 +726,11 @@ msgid "Insights"
 msgstr "Інформація"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_stream_post__is_author
+msgid "Is Author"
+msgstr ""
+
+#. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
 #: model:ir.model.fields,field_description:social.field_social_post__message_is_follower
 msgid "Is Follower"
@@ -647,14 +739,19 @@ msgstr "Стежить"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "It appears there is an issue with the Social Media link, click here to link the account again"
-msgstr "Здається, виникла проблема із посиланням соцмереж, натисніть тут, щоби знову пов’язати обліковий запис"
+msgid ""
+"It appears there is an issue with the Social Media link, click here to link "
+"the account again"
+msgstr ""
+"Здається, виникла проблема із посиланням соцмереж, натисніть тут, щоби знову "
+"пов’язати обліковий запис"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "It will appear in the Feed once it has posts to display."
-msgstr "Він з’явиться в стрічці, коли в ньому з’являться публікації для відображення."
+msgstr ""
+"Він з’явиться в стрічці, коли в ньому з’являться публікації для відображення."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__write_uid
@@ -685,8 +782,8 @@ msgstr "Останнє оновлення"
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
-msgid "Let's <b>connect</b> to Facebook, LinkedIn or Twitter."
-msgstr "Давайте <b>підключемося</b> до Facebook, LinkedIn або Twitter."
+msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -760,8 +857,12 @@ msgstr "Прив'язати обліковий запис"
 #: model:ir.model.fields,help:social.field_social_live_post__company_id
 #: model:ir.model.fields,help:social.field_social_stream__company_id
 #: model:ir.model.fields,help:social.field_social_stream_post__company_id
-msgid "Link an account to a company to restrict its usage or keep empty to let all companies use it."
-msgstr "Прив’яжіть обліковий запис до компанії, щоб обмежити його використання, або залиште порожнім, щоб дозволити всім компаніям використовувати його."
+msgid ""
+"Link an account to a company to restrict its usage or keep empty to let all "
+"companies use it."
+msgstr ""
+"Прив’яжіть обліковий запис до компанії, щоб обмежити його використання, або "
+"залиште порожнім, щоб дозволити всім компаніям використовувати його."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__live_post_link
@@ -805,10 +906,17 @@ msgid "Max Post Length"
 msgstr "Максимальна довжина публікації"
 
 #. module: social
+#: model:ir.model.fields,field_description:social.field_social_live_post__media_type
 #: model:ir.model.fields,field_description:social.field_social_post__media_ids
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Media"
 msgstr "Медіа"
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__media_count
+#: model:ir.model.fields,field_description:social.field_social_post_template__media_count
+msgid "Media Count"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
@@ -831,12 +939,6 @@ msgid "Message Delivery error"
 msgstr "Помилка доставлення повідомлення"
 
 #. module: social
-#: model:ir.model.fields,field_description:social.field_social_post__message_length
-#: model:ir.model.fields,field_description:social.field_social_post_template__message_length
-msgid "Message Length"
-msgstr "Довжина повідомлення"
-
-#. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Message posted"
@@ -857,11 +959,16 @@ msgstr "Повідомлення"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
-"Більшість social.live.posts безпосередньо переходять від готового до опублікованого/невдалого, оскільки вони є результатом одного виклику на сторонній API.\n"
-"       Стан \"Публікування\" також доступний для тих, хто надсилається через пакетну групу (наприклад, push-сповіщення)."
+"Більшість social.live.posts безпосередньо переходять від готового до "
+"опублікованого/невдалого, оскільки вони є результатом одного виклику на "
+"сторонній API.\n"
+"       Стан \"Публікування\" також доступний для тих, хто надсилається через "
+"пакетну групу (наприклад, push-сповіщення)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__my_activity_date_deadline
@@ -894,6 +1001,12 @@ msgstr "Назва"
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New Post"
 msgstr "Нова публікація"
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "New comments are disabled"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -952,7 +1065,9 @@ msgstr "Ще немає коментарів."
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_controller.js:0
 msgid "No social accounts configured, please contact your administrator."
-msgstr "Не налаштовано жодного облікового запису соцмереж, зв'яжіться з вашим адміністратором."
+msgstr ""
+"Не налаштовано жодного облікового запису соцмереж, зв'яжіться з вашим "
+"адміністратором."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_needaction_counter
@@ -979,14 +1094,17 @@ msgstr "Кількість помилок"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_utm_campaign__social_engagement
-msgid "Number of interactions (likes, shares, comments ...) with the social posts"
-msgstr "Кількість взаємодій (лайків, поширень, коментарів ...) із публікаціями соцмереж"
+msgid ""
+"Number of interactions (likes, shares, comments ...) with the social posts"
+msgstr ""
+"Кількість взаємодій (лайків, поширень, коментарів ...) із публікаціями "
+"соцмереж"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,help:social.field_social_post__message_needaction_counter
-msgid "Number of messages which requires an action"
-msgstr "Кількість повідомлень, які потебують дії"
+msgid "Number of messages requiring action"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
@@ -1007,20 +1125,25 @@ msgstr "Кількість людей, охоплених цим постом (�
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__stories
-msgid "Number of stories created from your posts (Shares, Re-tweets, ...)."
-msgstr "Кількість історій, створених з цього поста (поширення, ретвіти, ...)."
+msgid "Number of stories created from your posts (Shares, Reposts, ...)."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people have engaged with your posts (likes, comments, shares,...)"
-msgstr "Кількість охоплення ваших публікацій (лайки, коментарі, поширення, ...)"
+msgid ""
+"Number of times people have engaged with your posts (likes, comments, "
+"shares,...)"
+msgstr ""
+"Кількість охоплення ваших публікацій (лайки, коментарі, поширення, ...)"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Number of times people who have engaged with your channel have created stories on their friends' or followers' feed (Shares, Retweets...)"
-msgstr "Кількість разів, коли люди, які співпрацювали з вашим каналом, створювали історії у стрічках своїх друзів або підписників (поширення, ретвіти ...)"
+msgid ""
+"Number of times people who have engaged with your channel have created "
+"stories on their friends' or followers' feed (Shares, Reposts...)"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1035,7 +1158,8 @@ msgstr "Відсоток збільшення/зменшення аудитор�
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__engagement_trend
-msgid "Percentage of increase/decrease of the engagement over a defined period."
+msgid ""
+"Percentage of increase/decrease of the engagement over a defined period."
 msgstr "Відсоток збільшення/зменшення залучення за визначений період."
 
 #. module: social
@@ -1047,7 +1171,15 @@ msgstr "Відсоток збільшення/зменшення сюжетів 
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Please specify at least one account to post into (for post ID(s) %s)."
-msgstr "Будь ласка, вкажіть принаймні один обліковий запис для публікації (для ID публікацій) %s)."
+msgstr ""
+"Будь ласка, вкажіть принаймні один обліковий запис для публікації (для ID "
+"публікацій) %s)."
+
+#. module: social
+#. odoo-python
+#: code:addons/social/models/social_post_template.py:0
+msgid "Please specify either a message or upload some images."
+msgstr ""
 
 #. module: social
 #. odoo-python
@@ -1058,6 +1190,7 @@ msgstr "Опублікувати"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.xml:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.social_stream_post_view_kanban
@@ -1066,6 +1199,7 @@ msgstr "Зображення публікації"
 
 #. module: social
 #. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_many2many_images.js:0
 #: code:addons/social/static/src/js/post_kanban_view.js:0
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/js/stream_post_kanban_renderer.js:0
@@ -1091,8 +1225,12 @@ msgstr "Опублікувати зараз"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__post_link
-msgid "Post link to the external social.media (ex: link to the actual Facebook Post)."
-msgstr "Посилання на зовнішню social.media (наприклад: посилання на фактичну публікацію у Facebook)."
+msgid ""
+"Post link to the external social.media (ex: link to the actual Facebook "
+"Post)."
+msgstr ""
+"Посилання на зовнішню social.media (наприклад: посилання на фактичну "
+"публікацію у Facebook)."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1114,6 +1252,7 @@ msgstr "Публікування"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__stream_post_ids
 #: model:ir.ui.menu,name:social.menu_social_post
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_kanban
 msgid "Posts"
@@ -1125,15 +1264,23 @@ msgid "Posts By Account"
 msgstr "Публікації облікового запису"
 
 #. module: social
-#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
-msgid "Posts By Accounts"
-msgstr "Публікації облікових засобів"
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Posts Preview"
+msgstr ""
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/xml/social_templates.xml:0
+msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Press Enter to post. Press Shift+Enter to insert a Line Break."
-msgstr "Натисніть Enter, щоб опублікувати. Натисніть Shift+Enter щоби вставити розрив рядка."
+msgstr ""
+"Натисніть Enter, щоб опублікувати. Натисніть Shift+Enter щоби вставити "
+"розрив рядка."
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -1184,8 +1331,8 @@ msgstr "Пов'язані соцмережі"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
-msgid "Related Social Media (Facebook, Twitter, ...)."
-msgstr "Пов'язані соцмережі (Facebook, Twitter, ...)."
+msgid "Related Social Media (Facebook, X, ...)."
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__account_id
@@ -1238,8 +1385,10 @@ msgstr "Запланована дата"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid "Selected accounts (%s) do not match the selected company (%s)"
-msgstr "Обрані облікові записи (%s) не відповідають обраній компанії (%s)"
+msgid ""
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
@@ -1254,12 +1403,17 @@ msgstr "Послідовність"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream__sequence
 msgid "Sequence used to order streams (mainly for the 'Feed' kanban view)"
-msgstr "Послідовність, що використовується для трансляцій (загалом для перегляду канбану 'Закладок')"
+msgstr ""
+"Послідовність, що використовується для трансляцій (загалом для перегляду "
+"канбану 'Закладок')"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__max_post_length
-msgid "Set a maximum number of characters can be posted in post. 0 for no limit."
-msgstr "Встановіть максимальну кількість символів, які можна опублікувати. 0 без обмежень."
+msgid ""
+"Set a maximum number of characters can be posted in post. 0 for no limit."
+msgstr ""
+"Встановіть максимальну кількість символів, які можна опублікувати. 0 без "
+"обмежень."
 
 #. module: social
 #: model:ir.actions.act_window,name:social.action_social_global_settings
@@ -1297,6 +1451,8 @@ msgstr "Менеджер соцмереж"
 
 #. module: social
 #: model:ir.ui.menu,name:social.menu_social_global
+#: model:res.groups.privilege,name:social.res_groups_privilege_social_marketing
+#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 msgid "Social Marketing"
 msgstr "Меркетинг соцмереж"
 
@@ -1309,7 +1465,6 @@ msgstr "Меркетинг соцмереж"
 #: model:ir.model.fields,field_description:social.field_social_stream__media_id
 #: model:ir.model.fields,field_description:social.field_social_stream_type__media_id
 #: model:ir.ui.menu,name:social.menu_social_media
-#: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_media_view_kanban
 #: model_terms:ir.ui.view,arch_db:social.utm_campaign_view_form
 msgid "Social Media"
@@ -1382,8 +1537,12 @@ msgstr "Соцмережі: Опублікувати заплановані пу
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_kanban_dashboard.js:0
-msgid "Sorry, you're not allowed to re-link this account, please contact your administrator."
-msgstr "На жаль, вам заборонено повторно пов’язувати цей обліковий запис, зв’яжіться зі своїм адміністратором."
+msgid ""
+"Sorry, you're not allowed to re-link this account, please contact your "
+"administrator."
+msgstr ""
+"На жаль, вам заборонено повторно пов’язувати цей обліковий запис, зв’яжіться "
+"зі своїм адміністратором."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__source_id
@@ -1392,8 +1551,24 @@ msgstr "Джерело"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
-msgid "Special technical field that holds a dict containing the live posts names by media ids (used for kanban view)."
-msgstr "Спеціальне технічне поле, яке містить словник, що містить назви онлайн-публікацій медіа-ідентифікаторами (використовується для перегляду kanban)."
+msgid ""
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
+msgstr ""
+"Спеціальне технічне поле, яке містить словник, що містить назви онлайн-"
+"публікацій медіа-ідентифікаторами (використовується для перегляду kanban)."
+
+#. module: social
+#. odoo-javascript
+#: code:addons/social/static/src/js/fields/social_post_split_per_media.xml:0
+msgid "Split Per Media"
+msgstr ""
+
+#. module: social
+#: model:ir.model.fields,field_description:social.field_social_post__is_split_per_media
+#: model:ir.model.fields,field_description:social.field_social_post_template__is_split_per_media
+msgid "Split Per Network"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
@@ -1471,19 +1646,15 @@ msgstr "Увімкнені трансляції"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_post_ids
 msgid "Sub-posts that will be published on each selected social accounts."
-msgstr "Підпублікації, які будуть опубліковані у всіх вибраних облікових записах соцмереж."
+msgstr ""
+"Підпублікації, які будуть опубліковані у всіх вибраних облікових записах "
+"соцмереж."
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
-msgid "Synchronize"
-msgstr "Синхронізувати"
-
-#. module: social
-#. odoo-python
-#: code:addons/social/models/social_post_template.py:0
-msgid "The 'message' field is required for post ID %s"
-msgstr "Поле 'повідомлення' обов'язкове для ID публікації %s"
+msgid "Sync"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__account_ids
@@ -1494,12 +1665,17 @@ msgstr "Облікові записи, де буде опублікований 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
 msgid "The post author name based on third party information (ex: 'John Doe')."
-msgstr "Ім'я автора публікації на основі сторонньої інформації (напр: 'Джон До')."
+msgstr ""
+"Ім'я автора публікації на основі сторонньої інформації (напр: 'Джон До')."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__state
-msgid "The post is considered as 'Posted' when all its sub-posts (one per social account) are either 'Failed' or 'Posted'"
-msgstr "Публікація вважається \"Опублікованою\", коли всі її публікації (одна на обліковий запис соцмережі) або \"Помилка\", або \"Опубліковано\""
+msgid ""
+"The post is considered as 'Posted' when all its sub-posts (one per social "
+"account) are either 'Failed' or 'Posted'"
+msgstr ""
+"Публікація вважається \"Опублікованою\", коли всі її публікації (одна на "
+"обліковий запис соцмережі) або \"Помилка\", або \"Опубліковано\""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__published_date
@@ -1508,8 +1684,12 @@ msgstr "Дата опублікованого посту на базується
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__failure_reason
-msgid "The reason why a post is not successfully posted on the Social Media (eg: connection error, duplicated post, ...)."
-msgstr "Причина, чому публікація не розміщується успішно в соціальних медіа (наприклад: помилка підключення, дублюється публікація, ...)."
+msgid ""
+"The reason why a post is not successfully posted on the Social Media (eg: "
+"connection error, duplicated post, ...)."
+msgstr ""
+"Причина, чому публікація не розміщується успішно в соціальних медіа "
+"(наприклад: помилка підключення, дублюється публікація, ...)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__media_image
@@ -1528,8 +1708,12 @@ msgstr "На підпублікаціях є помилки публікації
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__csrf_token
-msgid "This token can be used to verify that an incoming request from a social provider has not been forged."
-msgstr "Цей токен можна використовувати для перевірки того, що вхідний запит від провайдера соцмереж не був підроблений."
+msgid ""
+"This token can be used to verify that an incoming request from a social "
+"provider has not been forged."
+msgstr ""
+"Цей токен можна використовувати для перевірки того, що вхідний запит від "
+"провайдера соцмереж не був підроблений."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream__name
@@ -1570,6 +1754,12 @@ msgstr "Джерело UTM"
 
 #. module: social
 #. odoo-python
+#: code:addons/social/controllers/main.py:0
+msgid "Uh-oh! It looks like this message has been deleted from X."
+msgstr ""
+
+#. module: social
+#. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "Unknown error"
 msgstr "Невідома помилка"
@@ -1582,21 +1772,32 @@ msgstr "Завантажений файл здається не є дійсни�
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
-msgid "Use your own Developer Accounts on our Social app. Those credentials are provided in the developer section of your professional social media account."
+msgid ""
+"Use your own Developer Accounts on our Social app. Those credentials are "
+"provided in the developer section of your professional social media account."
 msgstr ""
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_type
+#: model:ir.model.fields,help:social.field_social_live_post__media_type
 #: model:ir.model.fields,help:social.field_social_media__media_type
 #: model:ir.model.fields,help:social.field_social_stream_post__media_type
-msgid "Used to make comparisons when we need to restrict some features to a specific media ('facebook', 'twitter', ...)."
-msgstr "Використовується для порівняння, коли нам потрібно обмежити деякі функції певним медіа ('facebook', 'twitter', ...)."
+msgid ""
+"Used to make comparisons when we need to restrict some features to a "
+"specific media ('facebook', 'x', ...)."
+msgstr ""
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "View"
 msgstr "Перегляд"
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_account_view_form
+#: model_terms:ir.ui.view,arch_db:social.social_post_view_form
+msgid "Visible to all"
+msgstr ""
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__website_message_ids
@@ -1617,8 +1818,12 @@ msgstr "Коли"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
-msgid "When the global post was published. The actual sub-posts published dates may be different depending on the media."
-msgstr "Коли було опубліковано загальну публікацію. Фактичні дати публікації підрозділів можуть відрізнятися залежно від медіа."
+msgid ""
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
+msgstr ""
+"Коли було опубліковано загальну публікацію. Фактичні дати публікації "
+"підрозділів можуть відрізнятися залежно від медіа."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__image_ids
@@ -1631,6 +1836,11 @@ msgstr "Додасть зображення вашим публікаціям (�
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Write a comment..."
 msgstr "Написати коментар..."
+
+#. module: social
+#: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
+msgid "Write a message or upload an image"
+msgstr ""
 
 #. module: social
 #. odoo-javascript
@@ -1646,14 +1856,19 @@ msgstr "Напишіть відповідь..."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_post
-msgid "Write an enticing post, add images and schedule it to be posted later on multiple platforms at once."
-msgstr "Напишіть привабливий пост, додайте зображення та заплануйте його пізніше опублікувати на кількох платформах одночасно."
+msgid ""
+"Write an enticing post, add images and schedule it to be posted later on "
+"multiple platforms at once."
+msgstr ""
+"Напишіть привабливий пост, додайте зображення та заплануйте його пізніше "
+"опублікувати на кількох платформах одночасно."
 
 #. module: social
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 
@@ -1661,7 +1876,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 
@@ -1719,7 +1935,9 @@ msgstr "відповідає..."
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream_post
 msgid "to keep an eye on your own posts and monitor all social activities."
-msgstr "стежте за своїми власними публікаціями та відстежуйте всю соціальну активність."
+msgstr ""
+"стежте за своїми власними публікаціями та відстежуйте всю соціальну "
+"активність."
 
 #. module: social
 #: model_terms:ir.actions.act_window,help:social.action_social_stream
@@ -1730,3 +1948,64 @@ msgstr "щоб зв’язати свої облікові записи та п�
 #: model_terms:ir.actions.act_window,help:social.action_social_account
 msgid "to start posting from Odoo."
 msgstr "щоб почати публікувати з Odoo."
+
+#~ msgid "%s (max %s chars)"
+#~ msgstr "%s (макс. символів %s)"
+
+#~ msgid "<i class=\"fa fa-globe\" title=\"See the post\"/>"
+#~ msgstr "<i class=\"fa fa-globe\" title=\"See the post\"/>"
+
+#~ msgid ""
+#~ "Author link to the external social.media (ex: link to the Twitter "
+#~ "Account)."
+#~ msgstr ""
+#~ "Посилання автора на зовнішні social.media (напр: посилання на обліковий "
+#~ "запис Twitter)."
+
+#~ msgid "Edit Comment"
+#~ msgstr "Редагувати коментар"
+
+#~ msgid "Group By"
+#~ msgstr "Групувати за"
+
+#~ msgid "Let's <b>connect</b> to Facebook, LinkedIn or Twitter."
+#~ msgstr "Давайте <b>підключемося</b> до Facebook, LinkedIn або Twitter."
+
+#~ msgid "Message Length"
+#~ msgstr "Довжина повідомлення"
+
+#~ msgid "Number of messages which requires an action"
+#~ msgstr "Кількість повідомлень, які потебують дії"
+
+#~ msgid "Number of stories created from your posts (Shares, Re-tweets, ...)."
+#~ msgstr ""
+#~ "Кількість історій, створених з цього поста (поширення, ретвіти, ...)."
+
+#~ msgid ""
+#~ "Number of times people who have engaged with your channel have created "
+#~ "stories on their friends' or followers' feed (Shares, Retweets...)"
+#~ msgstr ""
+#~ "Кількість разів, коли люди, які співпрацювали з вашим каналом, створювали "
+#~ "історії у стрічках своїх друзів або підписників (поширення, ретвіти ...)"
+
+#~ msgid "Posts By Accounts"
+#~ msgstr "Публікації облікових засобів"
+
+#~ msgid "Related Social Media (Facebook, Twitter, ...)."
+#~ msgstr "Пов'язані соцмережі (Facebook, Twitter, ...)."
+
+#~ msgid "Selected accounts (%s) do not match the selected company (%s)"
+#~ msgstr "Обрані облікові записи (%s) не відповідають обраній компанії (%s)"
+
+#~ msgid "Synchronize"
+#~ msgstr "Синхронізувати"
+
+#~ msgid "The 'message' field is required for post ID %s"
+#~ msgstr "Поле 'повідомлення' обов'язкове для ID публікації %s"
+
+#~ msgid ""
+#~ "Used to make comparisons when we need to restrict some features to a "
+#~ "specific media ('facebook', 'twitter', ...)."
+#~ msgstr ""
+#~ "Використовується для порівняння, коли нам потрібно обмежити деякі функції "
+#~ "певним медіа ('facebook', 'twitter', ...)."

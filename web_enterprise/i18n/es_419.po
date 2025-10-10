@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-12 15:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:50+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -343,8 +343,7 @@ msgstr "Se registró con éxito. Su base de datos es válida hasta"
 #. odoo-javascript
 #: code:addons/web_enterprise/static/src/webclient/home_menu/enterprise_subscription_service.js:0
 msgid ""
-"Thank you, your registration was successful! Your database is valid until "
-"%s."
+"Thank you, your registration was successful! Your database is valid until %s."
 msgstr "Se registró con éxito. Su base de datos es válida hasta %s."
 
 #. module: web_enterprise

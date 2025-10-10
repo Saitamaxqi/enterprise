@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:26+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-11 14:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -184,8 +185,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
 msgid ""
-"Here is a document called %(document_name)s and whose content is %(content)s"
-" and tags are %(tags)s. The mimetype of the document is %(mimetype)s."
+"Here is a document called %(document_name)s and whose content is %(content)s "
+"and tags are %(tags)s. The mimetype of the document is %(mimetype)s."
 msgstr ""
 
 #. module: ai_documents
@@ -327,8 +328,7 @@ msgstr ""
 #. module: ai_documents
 #. odoo-python
 #: code:addons/ai_documents/models/documents_document.py:0
-msgid ""
-"This folder isn't specified in the prompt and cannot be used as target."
+msgid "This folder isn't specified in the prompt and cannot be used as target."
 msgstr ""
 
 #. module: ai_documents
@@ -340,10 +340,10 @@ msgstr ""
 #. module: ai_documents
 #: model_terms:ir.ui.view,arch_db:ai_documents.ai_documents_sort_view_form
 msgid ""
-"eg:                                     If the documents is an invoice, move"
-" it to Finance,                                     if it's an image, move "
-"it to Photos,                                     otherwise, create an "
-"activity 'Document to sort' for Admin"
+"eg:                                     If the documents is an invoice, move "
+"it to Finance,                                     if it's an image, move it "
+"to Photos,                                     otherwise, create an activity "
+"'Document to sort' for Admin"
 msgstr ""
 
 #. module: ai_documents

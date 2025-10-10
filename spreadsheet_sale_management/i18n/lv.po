@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-03 12:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-07-03 12:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -273,8 +274,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_sale_management/static/src/bundle/field_sync/model/field_sync_ui_plugin.js:0
 msgid ""
-"The value of %(cell_reference)s (%(cell_value)s) can't be used for field "
-"\"%(field_name)s\"."
+"The value of %(cell_reference)s (%(cell_value)s) can't be used for field \"%"
+"(field_name)s\"."
 msgstr ""
 
 #. module: spreadsheet_sale_management

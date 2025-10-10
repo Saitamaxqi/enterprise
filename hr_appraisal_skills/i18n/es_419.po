@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:32+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-10-08 02:41+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -393,8 +393,8 @@ msgstr "La fecha de finalización debe ser posterior a la fecha de inicio."
 #: code:addons/hr_appraisal_skills/models/hr_appraisal_skill.py:0
 msgid "The skill level %(level)s is not valid for skill type: %(type)s"
 msgstr ""
-"El nivel de habilidad %(level)s no es válido para el tipo de habilidad: "
-"%(type)s"
+"El nivel de habilidad %(level)s no es válido para el tipo de habilidad: %"
+"(type)s"
 
 #. module: hr_appraisal_skills
 #: model:ir.model.fields,help:hr_appraisal_skills.field_hr_appraisal_goal__current_goal_skill_ids

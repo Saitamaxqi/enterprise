@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 15:26+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -1625,7 +1625,8 @@ msgstr "编辑来源"
 msgid ""
 "Editing a built-in file through this editor is not advised, as it will "
 "prevent it from being updated during future App upgrades."
-msgstr "不建议通过这个编辑器编辑内置文件，因为这将阻止它在未来的App升级中被更新。"
+msgstr ""
+"不建议通过这个编辑器编辑内置文件，因为这将阻止它在未来的App升级中被更新。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -1873,8 +1874,9 @@ msgstr "页脚"
 msgid ""
 "For compatibility purpose with base_automation,approvals on 'create', "
 "'write' and 'unlink' methods are forbidden."
-msgstr "为了与 base_automation 兼容，禁止对 \"创建\"、\"写入 \"和 \"取消链接 \""
-"方法进行审批。"
+msgstr ""
+"为了与 base_automation 兼容，禁止对 \"创建\"、\"写入 \"和 \"取消链接 \"方法进"
+"行审批。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2205,7 +2207,8 @@ msgstr "如果设置，批准此规则的用户将不能批准同一记录的其
 msgid ""
 "If you discard the current edits, all unsaved changes will be lost. You can "
 "cancel to return to edit mode."
-msgstr "如果您放弃当前的编辑，所有未保存的更改都将丢失。您可以取消以返回编辑模式。"
+msgstr ""
+"如果您放弃当前的编辑，所有未保存的更改都将丢失。您可以取消以返回编辑模式。"
 
 #. module: web_studio
 #. odoo-python
@@ -2483,8 +2486,9 @@ msgstr "地图"
 msgid ""
 "Map views are based on the address of a linked Contact. You need to have a "
 "Many2one field linked to the res.partner model in order to create a map view."
-msgstr "地图视图是基于链接联系人的地址。您需要将 Many2one 字段链接到 res.partner "
-"模型，才能创建地图视图。"
+msgstr ""
+"地图视图是基于链接联系人的地址。您需要将 Many2one 字段链接到 res.partner 模"
+"型，才能创建地图视图。"
 
 #. module: web_studio
 #. odoo-javascript
@@ -2795,7 +2799,8 @@ msgstr "下一页"
 msgid ""
 "Nicely done! Let's build your screen now; <b>drag</b> a <i>text field</i> "
 "and <b>drop</b> it in your view, on the right."
-msgstr "做得好！现在让我们构建显示画面。<b>拖拽</b><i>一个文本字段</i>，并将其<b>放到"
+msgstr ""
+"做得好！现在让我们构建显示画面。<b>拖拽</b><i>一个文本字段</i>，并将其<b>放到"
 "</b>视图右侧。"
 
 #. module: web_studio
@@ -3979,7 +3984,8 @@ msgid ""
 "The report could not be loaded as some error occured. Usually it means that "
 "some view inherits from another but targets a node that doesn't exist. It "
 "might be due to the mutations of the base views during the upgrade process."
-msgstr "报表无法加载，因为发生了一些错误。通常，这意味着某些视图继承自其他视图，但目"
+msgstr ""
+"报表无法加载，因为发生了一些错误。通常，这意味着某些视图继承自其他视图，但目"
 "标节点不存在。这可能是由于基础视图在升级过程中发生了突变。"
 
 #. module: web_studio
@@ -4388,8 +4394,9 @@ msgstr ""
 msgid ""
 "Wow, nice! And I'm sure you can make it even better! Use this icon to open "
 "<b>Odoo Studio</b> and customize any screen."
-msgstr "哇，不错！我相信您可以把它做得更好！使用此图标打开 <b>Odoo "
-"Studio</b>，并自定义任何画面。"
+msgstr ""
+"哇，不错！我相信您可以把它做得更好！使用此图标打开 <b>Odoo Studio</b>，并自定"
+"义任何画面。"
 
 #. module: web_studio
 #. odoo-javascript

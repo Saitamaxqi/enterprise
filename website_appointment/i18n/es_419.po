@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:50+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-10-08 02:40+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -86,8 +86,8 @@ msgid ""
 "role=\"presentation\"/>"
 msgstr ""
 "<span class=\"o_not_editable\">En línea</span>\n"
-"                                        <i class=\"fa fa-video-camera\" role="
-"\"presentación\"/>"
+"                                        <i class=\"fa fa-video-camera\" "
+"role=\"presentación\"/>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.dynamic_filter_template_appointment_type_picture
@@ -140,8 +140,8 @@ msgid ""
 "<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Tennis Court</"
 "span>"
 msgstr ""
-"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Cancha de "
-"tenis</span>"
+"<span><i class=\"fa fa-map-marker\" role=\"presentation\"/> Cancha de tenis</"
+"span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
@@ -149,13 +149,14 @@ msgid ""
 "<span>Doctor's Office <i class=\"fa fa-marker\" role=\"presentation\"/></"
 "span>"
 msgstr ""
-"<span>Consultorio médico <i class=\"fa fa-marker\" role=\"presentation\""
-"/></span>"
+"<span>Consultorio médico <i class=\"fa fa-marker\" role=\"presentation\"/></"
+"span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_picture_preview_data
 msgid "<span>Online <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
-msgstr "<span>En línea <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
+msgstr ""
+"<span>En línea <i class=\"fa fa-marker\" role=\"presentation\"/></span>"
 
 #. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_select_operator
@@ -667,7 +668,8 @@ msgstr "No hay citas disponibles por el momento"
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_cards
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointments_list_layout
 msgid "Use the top button '<b>+ New</b>' to create an appointment type."
-msgstr "Utilice el botón de arriba '<b>+ Nuevo</b>' para crear un tipo de cita."
+msgstr ""
+"Utilice el botón de arriba '<b>+ Nuevo</b>' para crear un tipo de cita."
 
 #. module: website_appointment
 #. odoo-javascript

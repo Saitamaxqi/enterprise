@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:20+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 21:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_usps
@@ -52,6 +52,11 @@ msgstr "Тип содержимого"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "Характер доставки"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -110,6 +115,11 @@ msgstr "Конверт с фиксированной ставкой"
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
 msgstr "Подарок"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
@@ -228,13 +238,17 @@ msgstr "Пакет"
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Please check on USPS website to ensure that your package is machinable."
-msgstr "Пожалуйста, проверьте на сайте USPS, чтобы убедиться, что ваш пакет можно обрабатывать."
+msgstr ""
+"Пожалуйста, проверьте на сайте USPS, чтобы убедиться, что ваш пакет можно "
+"обрабатывать."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr "Пожалуйста, выберите другую услугу (максимальный вес этой услуги - 4 фунта)"
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
+msgstr ""
+"Пожалуйста, выберите другую услугу (максимальный вес этой услуги - 4 фунта)"
 
 #. module: delivery_usps
 #. odoo-python
@@ -257,8 +271,12 @@ msgstr "Пожалуйста, укажите хотя бы один предме
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
-msgstr "Пожалуйста, укажите страну США в адресе вашей компании, Сервис доступен только для США"
+msgid ""
+"Please set country U.S.A in your company address, Service is only available "
+"for U.S.A"
+msgstr ""
+"Пожалуйста, укажите страну США в адресе вашей компании, Сервис доступен "
+"только для США"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__postcard
@@ -285,7 +303,8 @@ msgstr "Количество для каждой линии движения д�
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Recipient address cannot be found. Please check the address exists."
-msgstr "Адрес получателя не найден. Пожалуйста, проверьте, существует ли этот адрес."
+msgstr ""
+"Адрес получателя не найден. Пожалуйста, проверьте, существует ли этот адрес."
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_container__rectangular
@@ -375,10 +394,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Расчетная цена доставки не может быть рассчитана, поскольку отсутствует вес для следующего товара (товаров):\n"
+"Расчетная цена доставки не может быть рассчитана, поскольку отсутствует вес "
+"для следующего товара (товаров):\n"
 " %s"
 
 #. module: delivery_usps
@@ -395,7 +416,9 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "The selected USPS service (%s) cannot be used to deliver this package."
-msgstr "Выбранная служба USPS (%s) не может быть использована для доставки этого пакета."
+msgstr ""
+"Выбранная служба USPS (%s) не может быть использована для доставки этого "
+"пакета."
 
 #. module: delivery_usps
 #. odoo-python
@@ -420,8 +443,13 @@ msgstr "Тип контейнера"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
-msgstr "USPS"
+msgid "USPS (Legacy)"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
+msgid "USPS (Legacy) Label File Type"
+msgstr ""
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -437,8 +465,12 @@ msgstr "Конверт с фиксированной ставкой для вн�
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
-msgstr "USPS Domestic используется только для доставки внутри США. Пожалуйста, измените способ доставки на USPS International."
+msgid ""
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
+"delivery method into USPS International."
+msgstr ""
+"USPS Domestic используется только для доставки внутри США. Пожалуйста, "
+"измените способ доставки на USPS International."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_first_class_mail_type
@@ -454,13 +486,12 @@ msgstr "Коробка с фиксированной ставкой для ме�
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
-msgstr "USPS International используется только для доставки за пределы США. Пожалуйста, измените способ доставки на USPS Domestic."
-
-#. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-msgid "USPS Label File Type"
-msgstr "Тип файла ярлыка USPS"
+msgid ""
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
+msgstr ""
+"USPS International используется только для доставки за пределы США. "
+"Пожалуйста, измените способ доставки на USPS Domestic."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
@@ -471,12 +502,6 @@ msgstr "Почтовый тип USPS"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "Служба USPS"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
-msgid "USPS Shipping Methods"
-msgstr "Способы доставки USPS"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
@@ -498,3 +523,12 @@ msgstr "Неверный почтовый индекс компании или �
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
 msgstr "дюйм"
+
+#~ msgid "USPS"
+#~ msgstr "USPS"
+
+#~ msgid "USPS Label File Type"
+#~ msgstr "Тип файла ярлыка USPS"
+
+#~ msgid "USPS Shipping Methods"
+#~ msgstr "Способы доставки USPS"

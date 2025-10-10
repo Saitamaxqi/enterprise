@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:35+0000\n"
+"POT-Creation-Date: 2025-10-08 18:47+0000\n"
 "PO-Revision-Date: 2025-09-15 21:15+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Catalan <https://translate.odoo.com/projects/odoo-19/"
@@ -33,8 +33,8 @@ msgstr ""
 "<div style=\"margin: 0px; padding: 0px;\">\n"
 "    <p>Benvolgut/da:<br/></p>\n"
 "    <p>Ja no té crèdits disponibles al seu compte IAP OCR.<br/>\n"
-"    Pot recarregar el seu compte IAP OCR des de la pàgina de "
-"configuració.</p>\n"
+"    Pot recarregar el seu compte IAP OCR des de la pàgina de configuració.</"
+"p>\n"
 "    <p>Salutacions,<br/></p>\n"
 "    <p>Odoo S.A.</p>\n"
 "</div>"
@@ -114,8 +114,8 @@ msgstr "Flux completat"
 #. module: iap_extract
 #: model:iap.service,description:iap_extract.iap_service_ocr
 msgid ""
-"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and"
-" Artificial Intelligence."
+"Digitize your scanned or PDF vendor bills, expenses and resumes with OCR and "
+"Artificial Intelligence."
 msgstr ""
 
 #. module: iap_extract
@@ -237,7 +237,8 @@ msgstr "ID de la sol·licitud a IAP-OCR"
 #: model:ir.model.fields,help:iap_extract.field_extract_mixin__message_needaction
 #: model:ir.model.fields,help:iap_extract.field_extract_mixin_with_words__message_needaction
 msgid "If checked, new messages require your attention."
-msgstr "Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
+msgstr ""
+"Si està marcat, hi ha nous missatges que requereixen la vostra atenció."
 
 #. module: iap_extract
 #: model:ir.model.fields,help:iap_extract.field_extract_mixin__message_has_error
@@ -359,7 +360,8 @@ msgstr "Reintentar"
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid "Server is currently under maintenance. Please retry later"
-msgstr "El servidor està actualment en manteniment. Torneu-ho a provar més tard"
+msgstr ""
+"El servidor està actualment en manteniment. Torneu-ho a provar més tard"
 
 #. module: iap_extract
 #. odoo-python
@@ -377,8 +379,8 @@ msgstr "Alguns documents s'han omès perquè ja eren digitalitzats"
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid ""
-"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo"
-" generate a new one or fill it with a valid token."
+"The 'invoice_ocr' IAP account token is invalid. Please delete it to let Odoo "
+"generate a new one or fill it with a valid token."
 msgstr ""
 "El token del compte IAP 'invoice_cor' no és vàlid. Si us plau, elimineu-lo "
 "per a permetre que l'Odoo generi un nou o escrigui un token vàlid."

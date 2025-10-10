@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:33+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -30,9 +30,7 @@ msgstr " 天"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "# Leads"
 msgstr "潛在客戶數目"
@@ -206,6 +204,8 @@ msgid "KPI"
 msgstr "關鍵績效指標 KPI"
 
 #. module: spreadsheet_dashboard_crm
+#. odoo-javascript
+#: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_crm.dashboard_leads
 msgid "Leads"
 msgstr "潛在商機"
@@ -248,7 +248,6 @@ msgstr "開放的銷售機會"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Opportunity"
 msgstr "銷售機會"
@@ -274,7 +273,6 @@ msgstr "管道"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Pipeline Stages"
 msgstr "管道階段"
@@ -369,7 +367,6 @@ msgstr "成功率 %"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
 msgid "Tag"
 msgstr "標籤"
@@ -403,9 +400,7 @@ msgstr "表現最佳城市"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Countries"
 msgstr "主要國家/地區"
@@ -428,7 +423,6 @@ msgstr "主要媒介"
 
 #. module: spreadsheet_dashboard_crm
 #. odoo-javascript
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Opportunities"
 msgstr "熱門銷售機會"
@@ -455,7 +449,6 @@ msgstr "主要銷售人員"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/leads_sample_dashboard.json:0
-#: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_crm/data/files/pipeline_sample_dashboard.json:0
 msgid "Top Sources"
 msgstr "主要來源"

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:02+0000\n"
+"POT-Creation-Date: 2025-10-08 18:46+0000\n"
 "PO-Revision-Date: 2025-09-15 23:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -22,11 +22,6 @@ msgstr ""
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 5.12.2\n"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__company_id
-msgid "Company"
-msgstr "Công ty"
 
 #. module: helpdesk_fsm
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_ticket_convert_wizard
@@ -40,7 +35,6 @@ msgstr "Tạo & xem nhiệm vụ"
 
 #. module: helpdesk_fsm
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.create_fsm_task_view_form
-#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.helpdesk_ticket_view_form
 msgid "Create Task"
 msgstr "Tạo nhiệm vụ"
 
@@ -50,6 +44,16 @@ msgstr "Tạo nhiệm vụ"
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_create_fsm_task
 msgid "Create a Field Service task"
 msgstr "Tạo nhiệm vụ dịch vụ hiện trường"
+
+#. module: helpdesk_fsm
+#: model:ir.model,website_form_label:helpdesk_fsm.model_project_task
+msgid "Create a Task"
+msgstr ""
+
+#. module: helpdesk_fsm
+#: model:ir.model,website_form_label:helpdesk_fsm.model_helpdesk_ticket
+msgid "Create a Ticket"
+msgstr ""
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__create_uid
@@ -73,28 +77,17 @@ msgstr "Huỷ bỏ"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket_convert_wizard__display_name
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__display_name
 msgid "Display Name"
 msgstr "Tên hiển thị"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__display_helpdesk_ticket_button
-msgid "Display Ticket"
-msgstr "Hiển thị phiếu hỗ trợ"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__fsm_project_id
 msgid "FSM Project"
 msgstr "Dự án FSM"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__use_fsm
-msgid "Field Service"
-msgstr "Dịch vụ hiện trường"
-
-#. module: helpdesk_fsm
-#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__fsm_task_count
-msgid "Fsm Task Count"
-msgstr "Số nhiệm vụ FSM"
 
 #. module: helpdesk_fsm
 #: model:ir.model,name:helpdesk_fsm.model_helpdesk_team
@@ -108,6 +101,10 @@ msgstr "Phiếu hỗ trợ"
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_team__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_ticket_convert_wizard__id
+#: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__id
 msgid "ID"
 msgstr "ID"
 
@@ -125,6 +122,17 @@ msgstr "Cập nhật lần cuối vào"
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_project_task__helpdesk_ticket_id
 msgid "Original Ticket"
 msgstr "Phiếu hỗ trợ gốc"
+
+#. module: helpdesk_fsm
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.helpdesk_ticket_view_form
+msgid "Plan Intervention"
+msgstr ""
+
+#. module: helpdesk_fsm
+#. odoo-python
+#: code:addons/helpdesk_fsm/models/project_task.py:0
+msgid "Portal Ticket"
+msgstr ""
 
 #. module: helpdesk_fsm
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__project_id
@@ -152,7 +160,7 @@ msgstr "Nhiệm vụ"
 #. module: helpdesk_fsm
 #: model:mail.message.subtype,description:helpdesk_fsm.mt_ticket_task_canceled
 #: model:mail.message.subtype,name:helpdesk_fsm.mt_ticket_task_canceled
-msgid "Task Canceled"
+msgid "Task Cancelled"
 msgstr ""
 
 #. module: helpdesk_fsm
@@ -193,11 +201,13 @@ msgstr "Nhiệm vụ được tạo từ phiếu hỗ trợ này"
 #. odoo-python
 #: code:addons/helpdesk_fsm/controllers/portal.py:0
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.project_sharing_inherit_project_task_view_form
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.view_task_form2_inherited_helpdesk_fsm
 msgid "Ticket"
 msgstr "Phiếu hỗ trợ"
 
 #. module: helpdesk_fsm
 #: model_terms:ir.ui.view,arch_db:helpdesk_fsm.project_sharing_inherit_project_task_view_form
+#: model_terms:ir.ui.view,arch_db:helpdesk_fsm.view_task_form2_inherited_helpdesk_fsm
 msgid "Ticket from this task"
 msgstr "Phiếu hỗ trợ từ nhiệm vụ này"
 
@@ -210,3 +220,31 @@ msgstr "Khách hàng của phiếu hỗ trợ, sẽ được liên kết với n
 #: model:ir.model.fields,field_description:helpdesk_fsm.field_helpdesk_create_fsm_task__name
 msgid "Title"
 msgstr "Tiêu đề"
+
+#. module: helpdesk_fsm
+#: model:ir.model.fields,help:helpdesk_fsm.field_project_task__display_name
+msgid ""
+"Use these keywords in the title to set new tasks:\n"
+"\n"
+"        30h Allocate 30 hours to the task\n"
+"        #tags Set tags on the task\n"
+"        @user Assign the task to a user\n"
+"        ! Set the task a medium priority\n"
+"        !! Set the task a high priority\n"
+"        !!! Set the task a urgent priority\n"
+"\n"
+"        Make sure to use the right format and order e.g. Improve the "
+"configuration screen 5h #feature #v16 @Mitchell !"
+msgstr ""
+
+#~ msgid "Company"
+#~ msgstr "Công ty"
+
+#~ msgid "Display Ticket"
+#~ msgstr "Hiển thị phiếu hỗ trợ"
+
+#~ msgid "Field Service"
+#~ msgstr "Dịch vụ hiện trường"
+
+#~ msgid "Fsm Task Count"
+#~ msgstr "Số nhiệm vụ FSM"

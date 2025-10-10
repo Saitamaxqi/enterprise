@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-20 10:31+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -130,7 +130,8 @@ msgid ""
 "Alternatively, you can make forums private to restrict this feature to "
 "internal users."
 msgstr ""
-"在支援中心內，客戶只會看到所選討論區的帖文。如果你想所有討論區均可存取，只需將欄位留空。或者，你可將討論區設為私人，以將此功能限制至只供內部使用者使用。"
+"在支援中心內，客戶只會看到所選討論區的帖文。如果你想所有討論區均可存取，只需"
+"將欄位留空。或者，你可將討論區設為私人，以將此功能限制至只供內部使用者使用。"
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_ticket_select_forum_wizard__description
@@ -220,8 +221,9 @@ msgstr "技術支援請求"
 #. module: website_helpdesk_forum
 #. odoo-javascript
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.js:0
-msgid "Helpdesk ticket %s has been successfully created for this forum post."
-msgstr "已成功為此討論區帖文建立技術支援請求 %s。"
+msgid ""
+"Helpdesk ticket %(ticket)s has been successfully created for this forum post."
+msgstr ""
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_forum_forum__id
@@ -325,3 +327,7 @@ msgstr "必須選取一個討論區，用作分享支援請求"
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
 msgid "• 0 Answer"
 msgstr "• 0 個答案"
+
+#~ msgid ""
+#~ "Helpdesk ticket %s has been successfully created for this forum post."
+#~ msgstr "已成功為此討論區帖文建立技術支援請求 %s。"

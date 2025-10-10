@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -203,6 +203,11 @@ msgid "Busy"
 msgstr "忙碌"
 
 #. module: room
+#: model_terms:room.room,description:room.room_room_main_office_room_3
+msgid "Capacity: 6 people"
+msgstr ""
+
+#. module: room
 #: model:ir.model.fields,field_description:room.field_room_booking__company_id
 #: model:ir.model.fields,field_description:room.field_room_office__company_id
 #: model:ir.model.fields,field_description:room.field_room_room__company_id
@@ -301,6 +306,11 @@ msgid "Has Message"
 msgstr "有訊息"
 
 #. module: room
+#: model:room.office,name:room.room_office_head_office
+msgid "Head Office"
+msgstr ""
+
+#. module: room
 #: model:ir.model.fields,field_description:room.field_ir_http__id
 #: model:ir.model.fields,field_description:room.field_room_booking__id
 #: model:ir.model.fields,field_description:room.field_room_office__id
@@ -357,9 +367,13 @@ msgid "Last Updated on"
 msgstr "最後更新於"
 
 #. module: room
+#: model:room.office,name:room.room_office_main_office
+msgid "Main Office"
+msgstr ""
+
+#. module: room
 #: model_terms:ir.actions.act_window,help:room.room_booking_action
-msgid ""
-"Make meeting room sharing easy by centralizing all meetings in this App"
+msgid "Make meeting room sharing easy by centralizing all meetings in this App"
 msgstr "將所有會議集中在此應用程式處理，輕鬆共享會議室"
 
 #. module: room
@@ -484,6 +498,16 @@ msgstr "組織者"
 #: code:addons/room/static/src/room_booking/room_booking_form/room_booking_form.xml:0
 msgid "Previous Week"
 msgstr "前一周"
+
+#. module: room
+#: model_terms:room.room,description:room.room_room_main_office_room_2
+msgid "Projector"
+msgstr ""
+
+#. module: room
+#: model_terms:room.room,description:room.room_room_main_office_room_1
+msgid "Projector, whiteboard"
+msgstr ""
 
 #. module: room
 #: model:ir.model.fields,field_description:room.field_room_room__room_properties

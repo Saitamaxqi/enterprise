@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-16 12:12+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -45,19 +45,9 @@ msgid "Access your"
 msgstr "存取你的"
 
 #. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.js:0
-msgid "An error occurred while attempting to fix certification issues - %s"
-msgstr "嘗試解決認證問題時，發生錯誤：%s"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
-msgid "Apply changes"
-msgstr "套用變更"
-
-#. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__pos_config_ids
+#: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
+#: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
 msgid "Associated PoS"
 msgstr "關聯的 PoS"
 
@@ -92,15 +82,8 @@ msgstr "請按：進階 / 顯示詳細資料 / 詳細資料 / 更多資訊"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid ""
-"Click on Proceed to .../Add Exception/Visit this website/Go on to the "
-"webpage"
+"Click on Proceed to .../Add Exception/Visit this website/Go on to the webpage"
 msgstr "按一下「前往⋯」/「新增例外」/「造訪此網站」，然後前往網頁"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
-msgid "Close"
-msgstr "關閉"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -164,14 +147,6 @@ msgid "Customer Display"
 msgstr "顧客顯示屏"
 
 #. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_status.js:0
-msgid "Decimal accuracy is less than 3 decimal places"
-msgstr "小數精確度是小於小數點後 3 位數"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
 msgstr "捨棄"
@@ -285,6 +260,12 @@ msgstr "IoT Box 物聯網盒子"
 
 #. module: pos_iot
 #. odoo-javascript
+#: code:addons/pos_iot/static/src/app/components/navbar/navbar.xml:0
+msgid "IoT Box Connected"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "IoT Box Homepage"
 msgstr "IoT Box主頁"
@@ -332,25 +313,9 @@ msgid "Network Error"
 msgstr "網絡錯誤"
 
 #. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
-msgid "New IoT Box connected!"
-msgstr "新的 IoT Box 已連線！"
-
-#. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
 msgstr "無"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
-msgid ""
-"Odoo can automatically apply the right modification for you.\n"
-"                Be aware that the modification will change global rounding settings, and can affect more than just this Point of Sale."
-msgstr ""
-"Odoo 可以自動為你套用正確的修改設定。\n"
-"                請注意，修改設定將更改全域的捨入設定，並可能影響此銷售點以外的其他設定。"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -407,6 +372,18 @@ msgid "Print via Proxy"
 msgstr "通過代理列印"
 
 #. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+msgid "Printing failed"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+msgid "Printing warning"
+msgstr ""
+
+#. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
 msgid "Proxy IP Address"
 msgstr "代理 IP 地址"
@@ -449,19 +426,32 @@ msgid "The IP Address or hostname of the Printer's hardware proxy"
 msgstr "印表機硬體代理的IP地址或主機名稱"
 
 #. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
+msgid ""
+"The IoT Box is connected, but the receipt printer isn't. In order to "
+"continue, ensure your printer is connected:\n"
+"\n"
+"1/ for USB printers, check the cable between the IoT Box and the receipt "
+"printer\n"
+"2/ for network printers, ensure the printer is connected to the internet."
+msgstr ""
+
+#. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid ""
 "The transactions are processed by Ingenico via an IoT box. Setup your "
 "terminal on the related payment method."
-msgstr "交易將透過 IoT Box 交由 Ingenico 處理。請為相關付款方式，設置你的終端機。"
+msgstr ""
+"交易將透過 IoT Box 交由 Ingenico 處理。請為相關付款方式，設置你的終端機。"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid ""
-"The transactions are processed by Six via an IoT box. Setup your terminal on"
-" the related payment method."
+"The transactions are processed by Six via an IoT box. Setup your terminal on "
+"the related payment method."
 msgstr "交易將透過 IoT Box 交由 Six 處理。請為相關付款方式，設置你的終端機。"
 
 #. module: pos_iot
@@ -470,37 +460,14 @@ msgstr "交易將透過 IoT Box 交由 Six 處理。請為相關付款方式，�
 msgid ""
 "The transactions are processed by Worldline via an IoT box. Setup your "
 "terminal on the related payment method."
-msgstr "交易將透過 IoT Box 交由 Worldline 處理。請為相關付款方式，設置你的終端機。"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_status.xml:0
-msgid "This Point of Sale is EU Certified for weighing scales."
-msgstr "此銷售點的磅秤已獲歐盟認證。"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_status.xml:0
-msgid "This Point of Sale is uncertified for weighing scales."
-msgstr "此銷售點的磅秤未獲認證。"
+msgstr ""
+"交易將透過 IoT Box 交由 Worldline 處理。請為相關付款方式，設置你的終端機。"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/services/pos_store.js:0
 msgid "Transaction in progress"
 msgstr "交易進行中"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
-msgid "Warning"
-msgstr "警告"
-
-#. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
-msgid "We're waiting for your IoT Box to send its devices..."
-msgstr "正在等候你的 IoT Box 傳送其裝置⋯"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -535,15 +502,51 @@ msgstr ""
 "可以等候一段時間，問題可能會自行解決。"
 
 #. module: pos_iot
-#. odoo-javascript
-#: code:addons/pos_iot/static/src/app/scale_certification_status/scale_certification_dialog.xml:0
-msgid ""
-"Your configurations are not compliant with the European regulation. In order"
-" to use a certified POS with your scale, you should address the following:"
-msgstr "你的配置不符合歐洲法規。要將已認證的 POS 與你的磅秤一同使用，你應該處理以下各項："
-
-#. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
 msgstr "無"
+
+#~ msgid "An error occurred while attempting to fix certification issues - %s"
+#~ msgstr "嘗試解決認證問題時，發生錯誤：%s"
+
+#~ msgid "Apply changes"
+#~ msgstr "套用變更"
+
+#~ msgid "Close"
+#~ msgstr "關閉"
+
+#~ msgid "Decimal accuracy is less than 3 decimal places"
+#~ msgstr "小數精確度是小於小數點後 3 位數"
+
+#~ msgid "New IoT Box connected!"
+#~ msgstr "新的 IoT Box 已連線！"
+
+#~ msgid ""
+#~ "Odoo can automatically apply the right modification for you.\n"
+#~ "                Be aware that the modification will change global "
+#~ "rounding settings, and can affect more than just this Point of Sale."
+#~ msgstr ""
+#~ "Odoo 可以自動為你套用正確的修改設定。\n"
+#~ "                請注意，修改設定將更改全域的捨入設定，並可能影響此銷售點以"
+#~ "外的其他設定。"
+
+#~ msgid "This Point of Sale is EU Certified for weighing scales."
+#~ msgstr "此銷售點的磅秤已獲歐盟認證。"
+
+#~ msgid "This Point of Sale is uncertified for weighing scales."
+#~ msgstr "此銷售點的磅秤未獲認證。"
+
+#~ msgid "Warning"
+#~ msgstr "警告"
+
+#~ msgid "We're waiting for your IoT Box to send its devices..."
+#~ msgstr "正在等候你的 IoT Box 傳送其裝置⋯"
+
+#~ msgid ""
+#~ "Your configurations are not compliant with the European regulation. In "
+#~ "order to use a certified POS with your scale, you should address the "
+#~ "following:"
+#~ msgstr ""
+#~ "你的配置不符合歐洲法規。要將已認證的 POS 與你的磅秤一同使用，你應該處理以"
+#~ "下各項："

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 13:43+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
@@ -319,11 +319,11 @@ msgstr "تنازلي"
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/components/locale_status/locale_status.js:0
 msgid ""
-"Difference between user locale (%(user_locale)s) and spreadsheet locale "
-"(%(spreadsheet_locale)s). This spreadsheet is using the formats below:"
+"Difference between user locale (%(user_locale)s) and spreadsheet locale (%"
+"(spreadsheet_locale)s). This spreadsheet is using the formats below:"
 msgstr ""
-"الفرق بين لغة المستخدم (%(user_locale)s) ولغة جدول البيانات "
-"(%(spreadsheet_locale)s). يستخدم جدول البيانات هذا التنسيقات التالية:"
+"الفرق بين لغة المستخدم (%(user_locale)s) ولغة جدول البيانات (%"
+"(spreadsheet_locale)s). يستخدم جدول البيانات هذا التنسيقات التالية:"
 
 #. module: spreadsheet_edition
 #. odoo-javascript
@@ -1222,8 +1222,8 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/chart/side_panels/common/config_panel.js:0
 msgid ""
-"The model (%(model)s) of this chart is not valid (it may have been "
-"renamed/deleted). Please re-insert a new chart."
+"The model (%(model)s) of this chart is not valid (it may have been renamed/"
+"deleted). Please re-insert a new chart."
 msgstr ""
 "النموذج (%(model)s) الخاص بهذا المخطط البياني غير صالح (ربما تمت إعادة "
 "تسميته/حذفه). يرجى إعادة إدراج مخطط بياني جديد."
@@ -1232,18 +1232,18 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/list/side_panels/list_details_side_panel.js:0
 msgid ""
-"The model (%(model)s) of this list is not valid (it may have been "
-"renamed/deleted). Please re-insert a new list."
+"The model (%(model)s) of this list is not valid (it may have been renamed/"
+"deleted). Please re-insert a new list."
 msgstr ""
-"النموذج (%(model)s) الخاص بهذه القائمة غير صالح (ربما تمت إعادة تسميته/حذفه)"
-". يرجى إعادة إدراج قائمة جديدة."
+"النموذج (%(model)s) الخاص بهذه القائمة غير صالح (ربما تمت إعادة تسميته/"
+"حذفه). يرجى إعادة إدراج قائمة جديدة."
 
 #. module: spreadsheet_edition
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/pivot/side_panels/pivot_details_side_panel.js:0
 msgid ""
-"The model (%(model)s) of this pivot is not valid (it may have been "
-"renamed/deleted). Please re-insert a new pivot."
+"The model (%(model)s) of this pivot is not valid (it may have been renamed/"
+"deleted). Please re-insert a new pivot."
 msgstr ""
 "النموذج (%(model)s) الخاص بهذا الجدول المحوري غير صالح (ربما تمت إعادة "
 "تسميته/حذفه). يرجى إعادة إدراج جدول محوري جديد."
@@ -1260,7 +1260,8 @@ msgstr "تعذر تطبيق العملية بسبب تحديث متزامن. ي�
 #. odoo-javascript
 #: code:addons/spreadsheet_edition/static/src/bundle/version_history/version_history_action.js:0
 msgid ""
-"There are missing revisions that prevent to restore the whole edition history.\n"
+"There are missing revisions that prevent to restore the whole edition "
+"history.\n"
 "\n"
 "Would you like to load the more recent modifications?"
 msgstr ""

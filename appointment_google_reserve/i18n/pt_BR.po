@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:27+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-10-07 02:40+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
@@ -33,8 +33,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid ""
-"%(appointment_type_name)s: Please configure your Google Reserve Merchant for"
-" Google Reserve."
+"%(appointment_type_name)s: Please configure your Google Reserve Merchant for "
+"Google Reserve."
 msgstr ""
 "%(appointment_type_name)s: Configure o Google Reserve Merchant do Google "
 "Reserve."
@@ -43,15 +43,16 @@ msgstr ""
 #. odoo-python
 #: code:addons/appointment_google_reserve/models/appointment_type.py:0
 msgid ""
-"%(appointment_type_name)s: The Google Bookings integration only works in the"
-" auto-assign mode."
+"%(appointment_type_name)s: The Google Bookings integration only works in the "
+"auto-assign mode."
 msgstr ""
 "%(appointment_type_name)s: A integração com o Google Bookings funciona "
 "apenas no modo de atribuição automática."
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
-msgid "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
+msgid ""
+"<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 msgstr ""
 "<i class=\"ms-2 fa fa-info-circle\" title=\"Required for Google Reserve\"/>"
 
@@ -67,7 +68,8 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid ""
-"<span class=\"fa fa-check fa-hourglass me-1\"/>Your Appointment Type is being synchronized with Google Reserve.<br/>\n"
+"<span class=\"fa fa-check fa-hourglass me-1\"/>Your Appointment Type is "
+"being synchronized with Google Reserve.<br/>\n"
 "                                This can take up to 24 hours to be active."
 msgstr ""
 "<span class=\"fa fa-check fa-hourglass me-1\"/>O seu tipo de compromisso "
@@ -98,7 +100,8 @@ msgstr "Tipo de Compromisso"
 #. module: appointment_google_reserve
 #: model:ir.actions.server,name:appointment_google_reserve.ir_cron_iap_google_reserve_availabilities_ir_actions_server
 msgid "Appointment: Upload Availabilities to IAP for Google Reserve"
-msgstr "Agendamento: carregar disponibilidades para o IAP para o Google Reserve"
+msgstr ""
+"Agendamento: carregar disponibilidades para o IAP para o Google Reserve"
 
 #. module: appointment_google_reserve
 #: model:ir.model.fields,field_description:appointment_google_reserve.field_google_reserve_merchant__appointment_type_ids
@@ -272,8 +275,8 @@ msgstr ""
 #. module: appointment_google_reserve
 #: model:ir.model.fields,help:appointment_google_reserve.field_google_reserve_merchant__phone_sanitized_blacklisted
 msgid ""
-"If the sanitized phone number is on the blacklist, the contact won't receive"
-" mass mailing sms anymore, from any list"
+"If the sanitized phone number is on the blacklist, the contact won't receive "
+"mass mailing sms anymore, from any list"
 msgstr ""
 
 #. module: appointment_google_reserve
@@ -377,8 +380,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form
 msgid ""
 "Ready to synchronize your Appointment Type with Google Reserve? Make sure "
-"your setup is complete — changes may take up to 24 hours to appear once "
-"live."
+"your setup is complete — changes may take up to 24 hours to appear once live."
 msgstr ""
 
 #. module: appointment_google_reserve

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-10-26 22:20+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 21:04+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
@@ -18,8 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || ("
-"n%100>=11 && n%100<=14)? 2 : 3);\n"
+"n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || "
+"(n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: delivery_fedex
@@ -29,8 +29,12 @@ msgstr ", нажмите \"Получить производственный к�
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
-msgid "<br/>According to your needs, you will need to contact different certifications:"
-msgstr "<br/>В зависимости от ваших потребностей вам придется обращаться в различные сертификационные центры:"
+msgid ""
+"<br/>According to your needs, you will need to contact different "
+"certifications:"
+msgstr ""
+"<br/>В зависимости от ваших потребностей вам придется обращаться в различные "
+"сертификационные центры:"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -41,10 +45,12 @@ msgstr "<span class=\"o_form_label\">Единица измерения длин�
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid ""
 "<span invisible=\"fedex_weight_unit != 'KG'\">CM</span>\n"
-"                                <span invisible=\"fedex_weight_unit != 'LB'\">IN</span>"
+"                                <span invisible=\"fedex_weight_unit != "
+"'LB'\">IN</span>"
 msgstr ""
 "<span invisible=\"fedex_weight_unit != 'KG'\">CM</span>\n"
-"                                <span invisible=\"fedex_weight_unit != 'LB'\">IN</span>"
+"                                <span invisible=\"fedex_weight_unit != "
+"'LB'\">IN</span>"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -92,6 +98,12 @@ msgid "Developer Key"
 msgstr "Ключ разработчика"
 
 #. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__display_name
+#: model:ir.model.fields,field_description:delivery_fedex.field_stock_package_type__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Duties paid by"
 msgstr "Оплата пошлин за счет"
@@ -118,18 +130,18 @@ msgstr "Дополнительно"
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_extra_data_rate_request
-msgid "Extra data for rate"
-msgstr "Дополнительные данные для тарифа"
+msgid "Extra data for rate (legacy)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_extra_data_return_request
-msgid "Extra data for return"
-msgstr "Дополнительные данные для возврата"
+msgid "Extra data for return (legacy)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_extra_data_ship_request
-msgid "Extra data for ship"
-msgstr "Дополнительные данные для корабля"
+msgid "Extra data for ship (legacy)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_label_file_type
@@ -170,6 +182,11 @@ msgstr "FEDEX_FIRST"
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__fedex_service_type__fedex_ground
 msgid "FEDEX_GROUND"
 msgstr "FEDEX_GROUND"
+
+#. module: delivery_fedex
+#: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__fedex_service_type__fedex_international_connect_plus
+msgid "FEDEX_INTERNATIONAL_CONNECT_PLUS"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__fedex_service_type__fedex_international_priority
@@ -234,24 +251,18 @@ msgstr "FIRST_OVERNIGHT"
 #. module: delivery_fedex
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__delivery_type__fedex
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__stock_package_type__package_carrier_type__fedex
-msgid "FedEx"
-msgstr "FedEx"
+msgid "FedEx (Legacy)"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_account_number
-msgid "FedEx Account Number"
-msgstr "Номер счета FedEx"
+msgid "FedEx Legacy Account Number"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__fedex_saturday_delivery
 msgid "FedEx Saturday Delivery"
 msgstr "Субботняя доставка FedEx"
-
-#. module: delivery_fedex
-#: model_terms:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_fedex.res_config_settings_view_form_stock
-msgid "FedEx Shipping Methods"
-msgstr "Методы доставки FedEx"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -320,6 +331,12 @@ msgstr "Весовая единица Fedex"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "Go to"
 msgstr "Перейти"
+
+#. module: delivery_fedex
+#: model:ir.model.fields,field_description:delivery_fedex.field_delivery_carrier__id
+#: model:ir.model.fields,field_description:delivery_fedex.field_stock_package_type__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model.fields.selection,name:delivery_fedex.selection__delivery_carrier__fedex_service_type__international_economy
@@ -553,8 +570,11 @@ msgstr "Отправление №%s было отменено"
 #. module: delivery_fedex
 #. odoo-python
 #: code:addons/delivery_fedex/models/delivery_fedex.py:0
-msgid "Shipment created into Fedex<br/><b>Tracking Numbers:</b> %s<br/><b>Packages:</b> %s"
-msgstr "Отправления, созданные в Fedex<br/><b>Tracking Numbers:</b> %s<br/><b>Пакеты</b>: %s"
+msgid ""
+"Shipment created into Fedex %(line_break)s%(bold_start)s Tracking Numbers: %"
+"(bold_end)s %(tracking_numbers)s %(line_break)s%(bold_start)s Packages: %"
+"(bold_end)s %(packages)s"
+msgstr ""
 
 #. module: delivery_fedex
 #: model:ir.model,name:delivery_fedex.model_delivery_carrier
@@ -573,7 +593,8 @@ msgid ""
 "                                                                                 3.INTERNATIONAL_PRIORITY.\n"
 "(To Select Countries)"
 msgstr ""
-"Специальные услуги:Доставка в субботу, может быть запрошена в следующие дни.\n"
+"Специальные услуги:Доставка в субботу, может быть запрошена в следующие "
+"дни.\n"
 "                                                                                 Четверг:\n"
 "1.FEDEX_2_DAY.\n"
 "Пятница:\n"
@@ -598,24 +619,32 @@ msgstr "Тип комплекта поставки"
 #: model:ir.model.fields,help:delivery_fedex.field_delivery_carrier__fedex_extra_data_ship_request
 msgid ""
 "The extra data in FedEx is organized like the inside of a json file.\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "\n"
 "Example of valid value: ```\n"
-"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": \"extra info\"}}}\n"
+"\"ShipmentDetails\": {\"Pieces\": {\"Piece\": {\"AdditionalInformation\": "
+"\"extra info\"}}}\n"
 "```\n"
 "\n"
-"With the above example, the AdditionalInformation of each piece will be updated.\n"
-"More info on https://www.fedex.com/en-us/developer/web-services/process.html#documentation"
+"With the above example, the AdditionalInformation of each piece will be "
+"updated.\n"
+"More info on https://www.fedex.com/en-us/developer/web-services/"
+"process.html#documentation"
 msgstr ""
 "Дополнительные данные в FedEx организованы как внутри json-файла.\n"
-"Эта функциональность является продвинутой/технической и должна использоваться только в том случае, если вы знаете, что делаете.\n"
+"Эта функциональность является продвинутой/технической и должна "
+"использоваться только в том случае, если вы знаете, что делаете.\n"
 "\n"
 "Пример допустимого значения: ```\n"
-"\"ShipmentDetails\": { \"Pieces\": {\"Piece\": {\"AdditionalInformation\": \"дополнительная информация\"}}}\n"
+"\"ShipmentDetails\": { \"Pieces\": {\"Piece\": {\"AdditionalInformation\": "
+"\"дополнительная информация\"}}}\n"
 "```\n"
 "\n"
-"В приведенном выше примере AdditionalInformation каждого куска будет обновлена.\n"
-"Дополнительная информация на https://www.fedex.com/en-us/developer/web-services/process.html#documentation"
+"В приведенном выше примере AdditionalInformation каждого куска будет "
+"обновлена.\n"
+"Дополнительная информация на https://www.fedex.com/en-us/developer/web-"
+"services/process.html#documentation"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
@@ -624,8 +653,12 @@ msgstr "Последний шаг - это"
 
 #. module: delivery_fedex
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
-msgid "These certifications usually require that you contact the FedEx support team by email."
-msgstr "Эти сертификаты обычно требуют, чтобы вы связались со службой поддержки FedEx по электронной почте."
+msgid ""
+"These certifications usually require that you contact the FedEx support team "
+"by email."
+msgstr ""
+"Эти сертификаты обычно требуют, чтобы вы связались со службой поддержки "
+"FedEx по электронной почте."
 
 #. module: delivery_fedex
 #. odoo-python
@@ -646,3 +679,28 @@ msgstr "ZPLII"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex.view_delivery_carrier_form_with_provider_fedex
 msgid "to create a FedEx account of the following type:"
 msgstr "для создания учетной записи FedEx следующего типа:"
+
+#~ msgid "Extra data for rate"
+#~ msgstr "Дополнительные данные для тарифа"
+
+#~ msgid "Extra data for return"
+#~ msgstr "Дополнительные данные для возврата"
+
+#~ msgid "Extra data for ship"
+#~ msgstr "Дополнительные данные для корабля"
+
+#~ msgid "FedEx"
+#~ msgstr "FedEx"
+
+#~ msgid "FedEx Account Number"
+#~ msgstr "Номер счета FedEx"
+
+#~ msgid "FedEx Shipping Methods"
+#~ msgstr "Методы доставки FedEx"
+
+#~ msgid ""
+#~ "Shipment created into Fedex<br/><b>Tracking Numbers:</b> %s<br/"
+#~ "><b>Packages:</b> %s"
+#~ msgstr ""
+#~ "Отправления, созданные в Fedex<br/><b>Tracking Numbers:</b> %s<br/"
+#~ "><b>Пакеты</b>: %s"

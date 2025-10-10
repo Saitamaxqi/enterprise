@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:25+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -48,21 +48,23 @@ msgstr "30U/360"
 #: model_terms:ir.ui.view,arch_db:account_loans.account_loan_form_view
 msgid ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">months</span>\n"
-"                                        <span class=\"oe_inline\" invisible=\"duration != 1\">month</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">month</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"duration == 1\">月</span>\n"
-"                                        <span class=\"oe_inline\" invisible="
-"\"duration != 1\">月</span>"
+"                                        <span class=\"oe_inline\" "
+"invisible=\"duration != 1\">月</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
 msgid ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">years</span>\n"
-"                                    <span class=\"oe_inline\" invisible=\"loan_term != 1\">year</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">year</span>"
 msgstr ""
 "<span class=\"oe_inline\" invisible=\"loan_term == 1\">年</span>\n"
-"                                    <span class=\"oe_inline\" invisible="
-"\"loan_term != 1\">年</span>"
+"                                    <span class=\"oe_inline\" "
+"invisible=\"loan_term != 1\">年</span>"
 
 #. module: account_loans
 #: model_terms:ir.ui.view,arch_db:account_loans.view_account_loan_compute_wizard
@@ -239,8 +241,8 @@ msgstr "確定"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_recording
 msgid ""
-"Confirm that all loans recorded in the accounts actually exist and match the"
-" loan agreements."
+"Confirm that all loans recorded in the accounts actually exist and match the "
+"loan agreements."
 msgstr ""
 
 #. module: account_loans
@@ -350,7 +352,8 @@ msgstr "月末"
 #. module: account_loans
 #: model:account.return.check.template,description:account_loans.account_return_check_template_loans_classification
 msgid ""
-"Ensure that loans are properly classified as current vs. non-current, and disclosed in accordance with Belgian GAAP. \n"
+"Ensure that loans are properly classified as current vs. non-current, and "
+"disclosed in accordance with Belgian GAAP. \n"
 "Loans payable within 1 year → Account 42\n"
 "Loans > 1 year → Account 17"
 msgstr ""
@@ -705,10 +708,9 @@ msgid ""
 "period. Ensure your loans are properly registered for automatic "
 "amortizations calculation."
 msgstr ""
-"Odoo "
-"は償却を自動的に管理します。この期間にはローンが見つかりませんでした。自動償"
-"却計算が正しく行われるよう、ローンが正しく登録されていることを確認してくださ"
-"い。"
+"Odoo は償却を自動的に管理します。この期間にはローンが見つかりませんでした。自"
+"動償却計算が正しく行われるよう、ローンが正しく登録されていることを確認してく"
+"ださい。"
 
 #. module: account_loans
 #. odoo-python
@@ -846,7 +848,8 @@ msgstr "ドラフトとして設定"
 msgid ""
 "Set up your amortization schedule, or import it, and let Odoo handle the "
 "monthly interest and principal adjustments automatically."
-msgstr "償却スケジュールを設定するか、インポートすれば、Odooが月次の利息と元本の調整"
+msgstr ""
+"償却スケジュールを設定するか、インポートすれば、Odooが月次の利息と元本の調整"
 "を自動的に処理します。"
 
 #. module: account_loans
@@ -914,8 +917,8 @@ msgid ""
 "The loan amount %(loan_amount)s should be equal to the sum of the "
 "principals: %(principal_sum)s (difference %(principal_difference)s)"
 msgstr ""
-"借入額 %(loan_amount)sは元本の合計額と一致する必要があります: "
-"%(principal_sum)s (差異 %(principal_difference)s)"
+"借入額 %(loan_amount)sは元本の合計額と一致する必要があります: %"
+"(principal_sum)s (差異 %(principal_difference)s)"
 
 #. module: account_loans
 #. odoo-python
@@ -1002,8 +1005,7 @@ msgstr "アップロード済ファイル"
 msgid ""
 "Upon confirmation of the loan, Odoo will ignore the loan lines that are up "
 "to this date (included) and not create entries for them. This is useful if "
-"you have already manually created entries prior to the creation of this "
-"loan."
+"you have already manually created entries prior to the creation of this loan."
 msgstr ""
 "ローンが確認された時点で、Odooは同日(その日を含む)までのローン明細を無視し、"
 "それらの仕訳を作成しません。これは、ローンの作成前にすでに手動で仕訳を作成し"

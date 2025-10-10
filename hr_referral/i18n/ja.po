@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:34+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -26,9 +26,9 @@ msgid ""
 " You've gained {gained} points with this progress.{new_line}It makes you a "
 "new total of {total} points. Visit {link1}this link{link2} to pick a gift!"
 msgstr ""
-" この進歩によって、ポイントを獲得 {gained} しました。{new_line}これにより、"
-"合計ポイントは新たに {total} ポイントとなります。{link1}このリンク{link2} "
-"をクリックしてプレゼントを選びましょう！"
+" この進歩によって、ポイントを獲得 {gained} しました。{new_line}これにより、合"
+"計ポイントは新たに {total} ポイントとなります。{link1}このリンク{link2} をク"
+"リックしてプレゼントを選びましょう！"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_recruitment_report__referral_hired
@@ -55,7 +55,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_sms_template
 msgid ""
 ".\n"
-"If you know someone who would be a great fit for this position, please share this link with them:"
+"If you know someone who would be a great fit for this position, please share "
+"this link with them:"
 msgstr ""
 ".\n"
 "このポジションに最適な人材をご存知の場合は、このリンクを共有して下さい。"
@@ -84,39 +85,43 @@ msgstr ""
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/>\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by Mail\">Send Email</span>"
+"                                        <span title=\"Send by Mail\">Send "
+"Email</span>"
 msgstr ""
-"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\""
-"/>\n"
+"<i class=\"fa fa-2x fa-envelope-o\" role=\"img\" aria-label=\"Send by Mail\"/"
+">\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by Mail\""
-">Eメールを送信</span>"
+"                                        <span title=\"Send by Mail\">Eメール"
+"を送信</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"Job Page\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"More info\">Job Page</span>"
+"                                        <span title=\"More info\">Job Page</"
+"span>"
 msgstr ""
 "<i class=\"fa fa-2x fa-globe\" role=\"img\" aria-label=\"Job Page\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"More info\""
-">求人ページ</span>"
+"                                        <span title=\"More info\">求人ページ"
+"</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"Send by SMS\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by SMS\">Send SMS</span>"
+"                                        <span title=\"Send by SMS\">Send "
+"SMS</span>"
 msgstr ""
 "<i class=\"fa fa-2x fa-mobile\" role=\"img\" aria-label=\"Send by SMS\"/>\n"
 "                                        <br/>\n"
-"                                        <span title=\"Send by SMS\""
-">SMSを送信</span>"
+"                                        <span title=\"Send by SMS\">SMSを送信"
+"</span>"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_applicant_employee_referral_kanban
@@ -163,7 +168,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Facebook\">\n"
-"                                            <i class=\"fa fa-2x fa-facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"facebook\" role=\"img\" aria-label=\"Share on facebook\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -171,7 +177,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Linkedin\">\n"
-"                                            <i class=\"fa fa-2x fa-linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
+"                                            <i class=\"fa fa-2x fa-"
+"linkedin\" role=\"img\" aria-label=\"Share on linkedin\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -179,7 +186,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_referral.view_hr_job_employee_referral_kanban
 msgid ""
 "<span title=\"Share on Twitter\">\n"
-"                                            <i class=\"fa fa-2x fa-twitter\" role=\"img\" aria-label=\"Share on twitter\"/>\n"
+"                                            <i class=\"fa fa-2x fa-twitter\" "
+"role=\"img\" aria-label=\"Share on twitter\"/>\n"
 "                                        </span>"
 msgstr ""
 
@@ -187,10 +195,11 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_alert_mail_wizard.py:0
 msgid ""
-"A new alert has been added to the Referrals app! Check your <a "
-"href=%(url)s>dashboard</a> now!"
-msgstr "紹介アプリに新たにアラートが追加されました！ <a "
-"href=%(url)s>ダッシュボード</a>を今すぐ確認しましょう！"
+"A new alert has been added to the Referrals app! Check your <a href=%"
+"(url)s>dashboard</a> now!"
+msgstr ""
+"紹介アプリに新たにアラートが追加されました！ <a href=%(url)s>ダッシュボード</"
+"a>を今すぐ確認しましょう！"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_referral_reward__message_needaction
@@ -249,8 +258,9 @@ msgstr "アラート"
 msgid ""
 "Alerts will appear on the main screen to provide information or redirect "
 "employees."
-msgstr "警告がメイン画面に表示され、従業員に情報を提供したり、指示を変更したりします"
-"。"
+msgstr ""
+"警告がメイン画面に表示され、従業員に情報を提供したり、指示を変更したりしま"
+"す。"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_campaign_wizard__target__all
@@ -341,8 +351,9 @@ msgstr "表示文"
 msgid ""
 "Browse through open job positions, promote them on social media, or refer "
 "friends."
-msgstr "求人情報を閲覧したり、ソーシャルメディアで宣伝したり、友人を紹介したりしまし"
-"ょう。"
+msgstr ""
+"求人情報を閲覧したり、ソーシャルメディアで宣伝したり、友人を紹介したりしま"
+"しょう。"
 
 #. module: hr_referral
 #: model:ir.model.fields,field_description:hr_referral.field_hr_job__utm_campaign_id
@@ -536,7 +547,8 @@ msgid ""
 "Define the position of the friend. If it's a small friend like a dog, you "
 "must select Front, it will be placed in the front of the dashboard, above "
 "superhero."
-msgstr "友人の位置を定義します。犬のような小さな友人の場合、'前'を選択してください。"
+msgstr ""
+"友人の位置を定義します。犬のような小さな友人の場合、'前'を選択してください。"
 "ダッシュボードのスーパーヒーローの上の前面に表示されます。"
 
 #. module: hr_referral
@@ -696,11 +708,11 @@ msgstr "参照リンク:%sをクリップボードにコピー中にエラーが
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_alert__url
 msgid ""
-"External links must start with 'http://www.'. For an internal url, you don't"
-" need to put domain name, you can just insert the path."
-msgstr "外部リンクは "
-"'http://www.'で始まる必要があります。内部URLの場合、ドメイン名を入れる必要は"
-"なく、パスを入れて下さい。"
+"External links must start with 'http://www.'. For an internal url, you don't "
+"need to put domain name, you can just insert the path."
+msgstr ""
+"外部リンクは 'http://www.'で始まる必要があります。内部URLの場合、ドメイン名を"
+"入れる必要はなく、パスを入れて下さい。"
 
 #. module: hr_referral
 #: model:ir.model.fields.selection,name:hr_referral.selection__hr_referral_link_to_share__channel__facebook
@@ -815,21 +827,22 @@ msgstr "こんにちは"
 #. odoo-python
 #: code:addons/hr_referral/wizard/hr_referral_send_sms.py:0
 msgid ""
-"Hello! There is an amazing job offer for %(job_name)s in my company! It will"
-" be a fit for you %(referral_url)s"
-msgstr "お世話になります。弊社の %(job_name)s にお勧めの採用情報があります! "
-"あなたに適任の仕事です。%(referral_url)s"
+"Hello! There is an amazing job offer for %(job_name)s in my company! It will "
+"be a fit for you %(referral_url)s"
+msgstr ""
+"お世話になります。弊社の %(job_name)s にお勧めの採用情報があります! あなたに"
+"適任の仕事です。%(referral_url)s"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
 msgid ""
 "Hello,<br/><br/>\n"
-"                There are some amazing job offers in my company! Have a look, they can be interesting for you:"
+"                There are some amazing job offers in my company! Have a "
+"look, they can be interesting for you:"
 msgstr ""
 "お世話になります。<br/><br/>\n"
-"                "
-"弊社のお勧めの採用情報がいくつかあります。もし、ご興味を持たれましたらご参照"
-"下さい:"
+"                弊社のお勧めの採用情報がいくつかあります。もし、ご興味を持た"
+"れましたらご参照下さい:"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_email_body_template
@@ -1750,14 +1763,15 @@ msgstr "ありがとうございます!"
 msgid ""
 "This field holds the image used as image for the friend on the dashboard, "
 "limited to 1024x1024px."
-msgstr "このフィールドは、ダッシュボードの友人の画像として使用される画像を保持してい"
+msgstr ""
+"このフィールドは、ダッシュボードの友人の画像として使用される画像を保持してい"
 "ます。最大1024x1024px.サイズです。"
 
 #. module: hr_referral
 #: model:ir.model.fields,help:hr_referral.field_hr_referral_friend__image_head
 msgid ""
-"This field holds the image used as image for the head's friend when the user"
-" must choose a new friend, limited to 1024x1024px."
+"This field holds the image used as image for the head's friend when the user "
+"must choose a new friend, limited to 1024x1024px."
 msgstr ""
 "このフィールドは、ユーザが新しい友人を選ばなければならない時に、友人の画像と"
 "して使用される画像を保持しています。最大1024x1024px.サイズです。"
@@ -1767,7 +1781,8 @@ msgstr ""
 msgid ""
 "This field holds the image used as image for the product, limited to "
 "1024x1024px."
-msgstr "このフィールドは、このプロダクトのイメージとして使用するイメージを保持してい"
+msgstr ""
+"このフィールドは、このプロダクトのイメージとして使用するイメージを保持してい"
 "ます。最大1024x1024pxサイズです。"
 
 #. module: hr_referral
@@ -1775,15 +1790,17 @@ msgstr "このフィールドは、このプロダクトのイメージとして
 msgid ""
 "This is the source of the link, e.g. Search Engine, another domain, or name "
 "of email list"
-msgstr "これはリンクのソースです。たとえば、検索エンジン、別のドメイン、またはメーリ"
+msgstr ""
+"これはリンクのソースです。たとえば、検索エンジン、別のドメイン、またはメーリ"
 "ングリストの名前です。"
 
 #. module: hr_referral
 #: model_terms:ir.ui.view,arch_db:hr_referral.hr_referral_link_to_share_view_form
 msgid ""
-"This link contains a tracker so that people clicking on it will account to a"
-" referral for you, even if they apply on a position after a few days."
-msgstr "このリンクにはトラッカーが含まれており、クリックした人が数日後にそのポジショ"
+"This link contains a tracker so that people clicking on it will account to a "
+"referral for you, even if they apply on a position after a few days."
+msgstr ""
+"このリンクにはトラッカーが含まれており、クリックした人が数日後にそのポジショ"
 "ンに応募したとしても、あなたの紹介となります。"
 
 #. module: hr_referral
@@ -1811,7 +1828,8 @@ msgstr "このレポートによって、紹介者とその推移を追うこと
 msgid ""
 "This will make the onboarding process visible to all users who have "
 "previously completed it. Do you want to proceed?"
-msgstr "これにより、以前にオンボーディングプロセスを完了したすべてのユーザがオンボー"
+msgstr ""
+"これにより、以前にオンボーディングプロセスを完了したすべてのユーザがオンボー"
 "ディングプロセスを確認できるようになります。次に進みますか？"
 
 #. module: hr_referral
@@ -1931,17 +1949,19 @@ msgstr "応募者の記録にアクセスする権限がありません。"
 #. odoo-python
 #: code:addons/hr_referral/models/hr_applicant.py:0
 msgid ""
-"You are not allowed to access this application record because you're not one"
-" of the interviewers of this application. If you think that's an error, "
+"You are not allowed to access this application record because you're not one "
+"of the interviewers of this application. If you think that's an error, "
 "please contact your administrator."
-msgstr "この応募の面接者ではないため、この応募記録にアクセスすることはできません。エ"
+msgstr ""
+"この応募の面接者ではないため、この応募記録にアクセスすることはできません。エ"
 "ラーと思われる場合は、管理者にご連絡下さい。"
 
 #. module: hr_referral
 #. odoo-python
 #: code:addons/hr_referral/models/utm_campaign.py:0
 msgid ""
-"You cannot delete these UTM Campaigns as they are linked to the following jobs in Referral:\n"
+"You cannot delete these UTM Campaigns as they are linked to the following "
+"jobs in Referral:\n"
 "%(job_names)s"
 msgstr ""
 "これらのUTMキャンペーンは、紹介アプリの以下の仕事にリンクしているため、削除す"
@@ -1952,7 +1972,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_referral/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to the following users in Referral:\n"
+"You cannot delete these UTM Sources as they are linked to the following "
+"users in Referral:\n"
 "%(employee_names)s"
 msgstr ""
 "これらのUTMソースは、紹介アプリの以下のユーザにリンクしているため、削除するこ"
@@ -1965,7 +1986,8 @@ msgstr ""
 msgid ""
 "You do not have enough points in this company to buy this product. In this "
 "company, you have %s points."
-msgstr "このプロダクトを購入するにはこの会社で十分なポイントがありません。この会社で"
+msgstr ""
+"このプロダクトを購入するにはこの会社で十分なポイントがありません。この会社で"
 "あなたが持っているのは、%sポイントです。"
 
 #. module: hr_referral
@@ -2030,11 +2052,12 @@ msgstr "求人募集しています"
 #: model_terms:ir.ui.view,arch_db:hr_referral.referral_campaign_email_body_template
 msgid ""
 "position.\n"
-"                If you know someone who would be a great fit for this position, please share this link with them:"
+"                If you know someone who would be a great fit for this "
+"position, please share this link with them:"
 msgstr ""
 "求人募集をしています。\n"
-"                "
-"このポジションに最適な人材をご存知の場合は、このリンクを共有して下さい:"
+"                このポジションに最適な人材をご存知の場合は、このリンクを共有"
+"して下さい:"
 
 #. module: hr_referral
 #. odoo-javascript
@@ -2054,7 +2077,7 @@ msgstr "共有"
 #: code:addons/hr_referral/wizard/hr_referral_link_to_share.py:0
 msgid ""
 "🚀 An exciting opportunity for a %(job_name)s at my company. If you're "
-"looking for a new challenge, check it "
-"out!👇%(new_line_code)s🔗%(short_url)s%(new_line_code)s%(hashtag_code)sHiring "
-"%(hashtag_code)sJobOpening %(hashtag_code)sCareerOpportunity"
+"looking for a new challenge, check it out!👇%(new_line_code)s🔗%(short_url)s%"
+"(new_line_code)s%(hashtag_code)sHiring %(hashtag_code)sJobOpening %"
+"(hashtag_code)sCareerOpportunity"
 msgstr ""

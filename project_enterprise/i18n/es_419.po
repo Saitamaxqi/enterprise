@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:48+0000\n"
 "PO-Revision-Date: 2025-09-30 23:33+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
@@ -32,16 +32,16 @@ msgid ""
 "<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Dependency "
 "warning\"/>"
 msgstr ""
-"<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title="
-"\"Advertencia de dependencia\"/>"
+"<i class=\"fa fa-exclamation-circle me-2\" role=\"img\" title=\"Advertencia "
+"de dependencia\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.project_task_view_form
 msgid ""
 "<i class=\"fa fa-random me-2\" role=\"img\" title=\"Planning overlap\"/>"
 msgstr ""
-"<i class=\"fa fa-random me-2\" role=\"img\" title="
-"\"Traslape en la planeación\"/>"
+"<i class=\"fa fa-random me-2\" role=\"img\" title=\"Traslape en la "
+"planeación\"/>"
 
 #. module: project_enterprise
 #: model_terms:ir.ui.view,arch_db:project_enterprise.portal_my_task
@@ -317,8 +317,8 @@ msgid ""
 "This task cannot be planned before the following tasks on which it depends: %"
 "(task_list)s"
 msgstr ""
-"No puede planificar esta tarea antes de las siguientes de las que depende: "
-"%(task_list)s"
+"No puede planificar esta tarea antes de las siguientes de las que depende: %"
+"(task_list)s"
 
 #. module: project_enterprise
 #. odoo-python

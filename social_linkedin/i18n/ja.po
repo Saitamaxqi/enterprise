@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -73,8 +73,9 @@ msgstr "作者イメージ"
 msgid ""
 "Check this if you want to use your personal LinkedIn Developer Account "
 "instead of the provided one."
-msgstr "提供されたアカウントではなく、個人の LinkedIn "
-"開発者アカウントを使用する場合は、このチェックボックスをオンにします。"
+msgstr ""
+"提供されたアカウントではなく、個人の LinkedIn 開発者アカウントを使用する場合"
+"は、このチェックボックスをオンにします。"
 
 #. module: social_linkedin
 #: model:ir.model,name:social_linkedin.model_res_config_settings
@@ -129,7 +130,8 @@ msgstr "コメントの投稿に失敗しました: “%(error_description)s”"
 msgid ""
 "Failed to retrieve the post. It might have been deleted or you may not have "
 "permission to view it."
-msgstr "投稿を取得できませんでした。投稿が削除されたか、または投稿を表示する権限がな"
+msgstr ""
+"投稿を取得できませんでした。投稿が削除されたか、または投稿を表示する権限がな"
 "い可能性があります。"
 
 #. module: social_linkedin
@@ -264,13 +266,13 @@ msgstr "メッセージ"
 #. odoo-python
 #: code:addons/social_linkedin/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
-"おっと! "
-"現在、有効なサブスクリプションがありません。ご安心ください。こちらから簡単に"
-"取得できます: "
-"%s。サブスクリプションを取得して、豊富な機能を今すぐご利用いただけます!"
+"おっと! 現在、有効なサブスクリプションがありません。ご安心ください。こちらか"
+"ら簡単に取得できます: %s。サブスクリプションを取得して、豊富な機能を今すぐご"
+"利用いただけます!"
 
 #. module: social_linkedin
 #. odoo-python
@@ -341,8 +343,9 @@ msgstr "アクセストークンは、REST APIに要求を実行するために�
 msgid ""
 "The url that this service requested returned an error. Please contact the "
 "author of the app."
-msgstr "このサービスが要求したURLがエラーを返しました。アプリの作者に連絡してください"
-"。"
+msgstr ""
+"このサービスが要求したURLがエラーを返しました。アプリの作者に連絡してくださ"
+"い。"
 
 #. module: social_linkedin
 #. odoo-python
@@ -373,8 +376,9 @@ msgstr "あなた自身のLinkedInのアカウントを使用"
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_stream_post__linkedin_author_vanity_name
@@ -387,16 +391,18 @@ msgstr "バニティ名は、著者へのリンクを生成するために使用
 msgid ""
 "We could not upload your image, try reducing its size and posting it again "
 "(error: Failed during upload registering)."
-msgstr "画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さい"
-"。(エラー: アップロード登録中に失敗しました)"
+msgstr ""
+"画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さ"
+"い。(エラー: アップロード登録中に失敗しました)"
 
 #. module: social_linkedin
 #. odoo-python
 #: code:addons/social_linkedin/models/social_account.py:0
 msgid ""
 "We could not upload your image, try reducing its size and posting it again."
-msgstr "画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さい"
-"。"
+msgstr ""
+"画像をアップロードできませんでした。サイズを小さくして再度投稿してみて下さ"
+"い。"
 
 #. module: social_linkedin
 #: model:ir.model.fields,help:social_linkedin.field_social_post__linkedin_image_ids

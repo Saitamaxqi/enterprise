@@ -1,23 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* sale_purchase_stock_inter_company_rules
-# 
+#
 # Translators:
 # Wil Odoo, 2025
 # Tony Ng, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:48+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Tony Ng, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. module: sale_purchase_stock_inter_company_rules
@@ -35,8 +36,8 @@ msgstr "配置設定"
 #: code:addons/sale_purchase_stock_inter_company_rules/models/purchase_order.py:0
 #: code:addons/sale_purchase_stock_inter_company_rules/models/sale_order.py:0
 msgid ""
-"Configure correct warehouse for company(%s) from Menu: "
-"Settings/Users/Companies"
+"Configure correct warehouse for company(%s) from Menu: Settings/Users/"
+"Companies"
 msgstr "在選單為公司（%s）配置正確的倉庫：設定/使用者/公司"
 
 #. module: sale_purchase_stock_inter_company_rules
@@ -51,9 +52,10 @@ msgstr "預設操作類型，設定予將為公司間轉移而建立的收貨使
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_company__intercompany_warehouse_id
 #: model:ir.model.fields,help:sale_purchase_stock_inter_company_rules.field_res_config_settings__intercompany_warehouse_id
 msgid ""
-"Default value to set on Purchase(Sales) Orders that will be created based on"
-" Sale(Purchase) Orders made to this company"
-msgstr "將根據向該公司發出的銷售（或採購）訂單所建立的採購（或銷售）訂單的預設值"
+"Default value to set on Purchase(Sales) Orders that will be created based on "
+"Sale(Purchase) Orders made to this company"
+msgstr ""
+"將根據向該公司發出的銷售（或採購）訂單所建立的採購（或銷售）訂單的預設值"
 
 #. module: sale_purchase_stock_inter_company_rules
 #: model:ir.model.fields,field_description:sale_purchase_stock_inter_company_rules.field_purchase_order__display_name

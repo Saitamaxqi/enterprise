@@ -1,23 +1,30 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
 # 	* sale_stock_renting
-# 
+#
 # Translators:
 # Wil Odoo, 2025
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-06-06 18:47+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-05-06 11:01+0000\n"
 "Last-Translator: Wil Odoo, 2025\n"
-"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
+"Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/"
+"zh_TW/)\n"
+"Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Language: zh_TW\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "%(lots)s %(are)s reserved on multiple order lines"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -36,7 +43,8 @@ msgstr "%(product)s （%(qty)s 件）"
 msgid ""
 "<i class=\"fa fa-warning\"/>\n"
 "                        <span>\n"
-"                            Some products don't have the requested qty available for pickup\n"
+"                            Some products don't have the requested qty "
+"available for pickup\n"
 "                        </span>"
 msgstr ""
 "<i class=\"fa fa-warning\"/>\n"
@@ -48,6 +56,16 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Activate to use stock deliveries and receipts for rental orders"
 msgstr "啟動以使用租賃訂單的庫存交貨及收據"
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Add Serial Number"
+msgstr ""
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+msgid "Add a line"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__padding_time
@@ -62,6 +80,12 @@ msgid ""
 "Amount of time (in hours) during which a product is considered "
 "unavailableprior to renting (preparation time)."
 msgstr "產品出租前被視為不可用的時間（即準備時間），以小時為單位。"
+
+#. module: sale_stock_renting
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_form_lot_allocation
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.stock_lot_kanban_allocation
+msgid "Auto assign"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-javascript
@@ -102,6 +126,7 @@ msgstr "預設留白時間"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__display_name
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__display_name
@@ -111,7 +136,6 @@ msgstr "預設留白時間"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__display_name
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__display_name
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__display_name
@@ -138,6 +162,7 @@ msgstr "有資料行有追蹤產品"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_account_move__id
+#: model:ir.model.fields,field_description:sale_stock_renting.field_account_move_line__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard__id
@@ -147,7 +172,6 @@ msgstr "有資料行有追蹤產品"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_lot__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_move__id
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_return_picking__id
@@ -155,11 +179,6 @@ msgstr "有資料行有追蹤產品"
 #: model:ir.model.fields,field_description:sale_stock_renting.field_stock_warehouse_orderpoint__id
 msgid "ID"
 msgstr "識別號"
-
-#. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__is_available
-msgid "Is Available"
-msgstr "可用"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__is_product_storable
@@ -170,6 +189,17 @@ msgstr "是耐藏產品"
 #: model:ir.model,name:sale_stock_renting.model_account_move
 msgid "Journal Entry"
 msgstr "日記賬記項"
+
+#. module: sale_stock_renting
+#: model:ir.model,name:sale_stock_renting.model_account_move_line
+msgid "Journal Item"
+msgstr ""
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid "Lot Allocation"
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_lot
@@ -190,9 +220,17 @@ msgstr "兩次租賃之間的最短時間間隔"
 #. odoo-python
 #: code:addons/sale_stock_renting/models/sale_order_line.py:0
 msgid ""
-"No valid quant has been found in location %(location)s for serial number "
-"%(serial_number)s!"
+"No valid quant has been found in location %(location)s for serial number %"
+"(serial_number)s!"
 msgstr "在位置 %(location)s 中，序號 %(serial_number)s 找不到有效數量！"
+
+#. module: sale_stock_renting
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"Not enough %(product)s in stock.\n"
+"%(reserved_qty)s reserved but only %(stock_qty)s in stock."
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__padding_time
@@ -260,20 +298,9 @@ msgid "Rental Location"
 msgstr "租賃位置"
 
 #. module: sale_stock_renting
-#: model:ir.model,name:sale_stock_renting.model_sale_rental_schedule
-msgid "Rental Schedule"
-msgstr "租賃日程"
-
-#. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.res_config_settings_inherit_view_form
 msgid "Rental Transfers"
 msgstr "租賃轉移"
-
-#. module: sale_stock_renting
-#. odoo-python
-#: code:addons/sale_stock_renting/models/sale_order_line.py:0
-msgid "Rental move: %(order)s"
-msgstr "租賃移動：%(order)s"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_res_config_settings__group_rental_stock_picking
@@ -286,9 +313,15 @@ msgid "RentalOrderLine transient representation"
 msgstr "租賃資料行短暫總覽"
 
 #. module: sale_stock_renting
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
+#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
+msgid "Reserve product"
+msgstr ""
+
+#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_order_line__reserved_lot_ids
-msgid "Reserved Lot"
-msgstr "預留批次"
+msgid "Reserved Lots"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-javascript
@@ -323,16 +356,9 @@ msgid "Sales Order Line"
 msgstr "銷售訂單資料行"
 
 #. module: sale_stock_renting
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_product__preparation_time
-#: model:ir.model.fields,field_description:sale_stock_renting.field_product_template__preparation_time
-msgid "Security Time"
-msgstr "安全時間（準備時間）"
-
-#. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_report__lot_id
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__lot_id
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_report_search_view_inherit_lots
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_search_inherit_lots
+#: model_terms:ir.ui.view,arch_db:sale_stock_renting.sale_order_line_search_schedule
 msgid "Serial Number"
 msgstr "序號"
 
@@ -354,17 +380,22 @@ msgid "Temporarily make this product unavailable before pickup."
 msgstr "在收取產品前，暫時將產品設為不可用。"
 
 #. module: sale_stock_renting
-#: model_terms:ir.ui.view,arch_db:sale_stock_renting.rental_schedule_view_gantt_inherit_stock
-msgid "The product is not available during this period."
-msgstr "該產品在此段期間不可用。"
+#. odoo-python
+#: code:addons/sale_stock_renting/models/sale_order_line.py:0
+msgid ""
+"The number of reserved lots is less than the quantity required for this "
+"order line. Please allocate additional lots."
+msgstr ""
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__rental_loc_id
 msgid ""
-"This technical location serves as stock for products currently in rentalThis"
-" location is internal because products in rentalare still considered as "
+"This technical location serves as stock for products currently in rentalThis "
+"location is internal because products in rentalare still considered as "
 "company assets."
-msgstr "這是技術層面的位置，當作目前出租產品的庫存。此位置屬於「內部」，因為出租中產品仍被視為公司資產。"
+msgstr ""
+"這是技術層面的位置，當作目前出租產品的庫存。此位置屬於「內部」，因為出租中產"
+"品仍被視為公司資產。"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,field_description:sale_stock_renting.field_rental_order_wizard_line__tracking
@@ -400,7 +431,6 @@ msgstr "檢視租賃安排"
 
 #. module: sale_stock_renting
 #: model:ir.model,name:sale_stock_renting.model_stock_warehouse
-#: model:ir.model.fields,field_description:sale_stock_renting.field_sale_rental_schedule__warehouse_id
 msgid "Warehouse"
 msgstr "倉庫"
 
@@ -417,11 +447,32 @@ msgstr "小時"
 
 #. module: sale_stock_renting
 #: model_terms:ir.ui.view,arch_db:sale_stock_renting.product_template_inherit_view_form_stock_rental
-msgid "hours before orders"
-msgstr "小時後有訂單"
+msgid "hours before its picking time"
+msgstr ""
 
 #. module: sale_stock_renting
 #. odoo-javascript
 #: code:addons/sale_stock_renting/static/src/widgets/qty_at_date_widget.xml:0
 msgid "to"
 msgstr "到"
+
+#~ msgid "Is Available"
+#~ msgstr "可用"
+
+#~ msgid "Rental Schedule"
+#~ msgstr "租賃日程"
+
+#~ msgid "Rental move: %(order)s"
+#~ msgstr "租賃移動：%(order)s"
+
+#~ msgid "Reserved Lot"
+#~ msgstr "預留批次"
+
+#~ msgid "Security Time"
+#~ msgstr "安全時間（準備時間）"
+
+#~ msgid "The product is not available during this period."
+#~ msgstr "該產品在此段期間不可用。"
+
+#~ msgid "hours before orders"
+#~ msgstr "小時後有訂單"

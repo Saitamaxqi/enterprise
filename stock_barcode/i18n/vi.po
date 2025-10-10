@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-13 21:41+0000\n"
+"POT-Creation-Date: 2025-10-08 18:44+0000\n"
 "PO-Revision-Date: 2025-09-18 02:41+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
@@ -50,8 +50,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Scrap "
 "Location\"/>"
 msgstr ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title="
-"\"Vị trí phế phẩm\"/>"
+"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Vị trí phế "
+"phẩm\"/>"
 
 #. module: stock_barcode
 #: model_terms:ir.ui.view,arch_db:stock_barcode.scrap_product_selector
@@ -197,8 +197,8 @@ msgid ""
 "An error occured with field '%(field_name)s': the corresponding AI '%"
 "(ai_code)s' was not found in the element_string"
 msgstr ""
-"Đã xảy ra lỗi với trường '%(field_name)s': không tìm thấy AI tương ứng "
-"'%(ai_code)s' trong element_string."
+"Đã xảy ra lỗi với trường '%(field_name)s': không tìm thấy AI tương ứng '%"
+"(ai_code)s' trong element_string."
 
 #. module: stock_barcode
 #. odoo-python
@@ -976,8 +976,8 @@ msgstr ""
 #: code:addons/stock_barcode/controllers/stock_barcode.py:0
 msgid "No picking or location or product corresponding to barcode %(barcode)s"
 msgstr ""
-"Không có phiếu xuất kho, vị trí hay sản phẩm nào tương ứng với mã vạch "
-"%(barcode)s"
+"Không có phiếu xuất kho, vị trí hay sản phẩm nào tương ứng với mã vạch %"
+"(barcode)s"
 
 #. module: stock_barcode
 #. odoo-python
@@ -1154,8 +1154,8 @@ msgid ""
 "Partition table %(table_name)s not found, available tables are : %"
 "(table_list)s)"
 msgstr ""
-"Không tìm thấy bảng phân vùng %(table_name)s, các bảng có sẵn là: "
-"%(table_list)s)."
+"Không tìm thấy bảng phân vùng %(table_name)s, các bảng có sẵn là: %"
+"(table_list)s)."
 
 #. module: stock_barcode
 #. odoo-javascript
@@ -1826,8 +1826,8 @@ msgid ""
 "Technical field used to compute whether the \"Final Validation\" group "
 "should be displayed, to support combined groups/invisible complexity."
 msgstr ""
-"Trường kỹ thuật được sử dụng để tính toán xem có nên hiển thị nhóm "
-"\"Xác nhận cuối cùng\" hay không, để hỗ trợ các nhóm kết hợp/tính phức tạp."
+"Trường kỹ thuật được sử dụng để tính toán xem có nên hiển thị nhóm \"Xác "
+"nhận cuối cùng\" hay không, để hỗ trợ các nhóm kết hợp/tính phức tạp."
 
 #. module: stock_barcode
 #. odoo-python

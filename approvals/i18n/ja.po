@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:28+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-15 12:02+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -683,7 +683,8 @@ msgid ""
 "\n"
 "        Empty: do nothing\n"
 "        Is Approver: the employee's manager will be in the approver list\n"
-"        Is Required Approver: the employee's manager will be required to approve the request.\n"
+"        Is Required Approver: the employee's manager will be required to "
+"approve the request.\n"
 "    "
 msgstr ""
 "このタイプの承認に対する従業員の上司の役割\n"
@@ -738,8 +739,8 @@ msgstr "有効化されると、承認依頼は設定されたコードで自動
 #: model:ir.model.fields,help:approvals.field_approval_category__approver_sequence
 #: model:ir.model.fields,help:approvals.field_approval_request__approver_sequence
 msgid ""
-"If checked, the approvers have to approve in sequence (one after the other)."
-" If Employee's Manager is selected as approver, they will be the first in "
+"If checked, the approvers have to approve in sequence (one after the other). "
+"If Employee's Manager is selected as approver, they will be the first in "
 "line."
 msgstr ""
 "チェックした場合、承認者は順番に(相次いで)承認する必要があります。従業員のマ"
@@ -1221,7 +1222,8 @@ msgstr "シーケンス %(code)s"
 msgid ""
 "Simple users should not be able to remove themselves as approvers because "
 "they will lose access to the record if they misclick."
-msgstr "通常ユーザは、誤クリックすると記録へのアクセス権を失うので、承認者として自分"
+msgstr ""
+"通常ユーザは、誤クリックすると記録へのアクセス権を失うので、承認者として自分"
 "を削除できないようにする必要があります。"
 
 #. module: approvals
@@ -1288,7 +1290,8 @@ msgstr "テスト参照番号"
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "The request %(request_name)s for %(request_owner)s has been approved"
-msgstr "リクエスト %(request_name)s (対象: %(request_owner)s) が承認されました。"
+msgstr ""
+"リクエスト %(request_name)s (対象: %(request_owner)s) が承認されました。"
 
 #. module: approvals
 #. odoo-python
@@ -1302,16 +1305,17 @@ msgstr "リクエスト %(request_name)s (対象:%(request_owner)s)が却下さ�
 msgid ""
 "The request created on %(create_date)s by %(request_owner)s has been "
 "approved."
-msgstr "%(create_date)sに %(request_owner)s "
-"によって作成されたリクエストが承認されました。"
+msgstr ""
+"%(create_date)sに %(request_owner)s によって作成されたリクエストが承認されま"
+"した。"
 
 #. module: approvals
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid ""
-"The request created on %(create_date)s by %(request_owner)s has been "
-"refused."
-msgstr "リクエスト(作成日:%(create_date)s 作成者: %(request_owner)s )が却下されました"
+"The request created on %(create_date)s by %(request_owner)s has been refused."
+msgstr ""
+"リクエスト(作成日:%(create_date)s 作成者: %(request_owner)s )が却下されました"
 
 #. module: approvals
 #. odoo-python
@@ -1335,8 +1339,9 @@ msgstr "このユーザーは承認設定にアクセスできます。"
 msgid ""
 "This request needs to be approved by your manager. There is no manager "
 "linked to your employee profile."
-msgstr "この申請はマネジャーの承認が必要です。あなたの従業員プロファイルにはマネジャ"
-"ーはリンクされていません。"
+msgstr ""
+"この申請はマネジャーの承認が必要です。あなたの従業員プロファイルにはマネ"
+"ジャーはリンクされていません。"
 
 #. module: approvals
 #. odoo-python
@@ -1344,8 +1349,9 @@ msgstr "この申請はマネジャーの承認が必要です。あなたの従
 msgid ""
 "This request needs to be approved by your manager. There is no user linked "
 "to your manager."
-msgstr "この申請はマネジャーの承認が必要です。あなたのマネジャーにリンクされているユ"
-"ーザがいません。"
+msgstr ""
+"この申請はマネジャーの承認が必要です。あなたのマネジャーにリンクされている"
+"ユーザがいません。"
 
 #. module: approvals
 #. odoo-python
@@ -1353,7 +1359,8 @@ msgstr "この申請はマネジャーの承認が必要です。あなたのマ
 msgid ""
 "This request needs to be approved by your manager. Your manager is not in "
 "the approvers list."
-msgstr "この申請はマネジャーの承認が必要です。あなたのマネジャーは承認リストに入って"
+msgstr ""
+"この申請はマネジャーの承認が必要です。あなたのマネジャーは承認リストに入って"
 "いません。"
 
 #. module: approvals
@@ -1453,7 +1460,8 @@ msgstr "前の承認者より前に承認することはできません。"
 msgid ""
 "You cannot unlink an attachment which is linked to a validated, refused or "
 "cancelled approval request."
-msgstr "許可、拒否、またはキャンセルされた承認依頼にリンクされている添付ファイルのリ"
+msgstr ""
+"許可、拒否、またはキャンセルされた承認依頼にリンクされている添付ファイルのリ"
 "ンクを解除することはできません。"
 
 #. module: approvals

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 15:31+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Chinese (Simplified Han script) <https://translate.odoo.com/"
@@ -29,14 +29,14 @@ msgstr "<small>名称：签名人通过 itsme® 提供身份验证</small>"
 #: model:iap.service,description:sign_itsme.iap_service_itsme_proxy
 msgid ""
 "Ask document signatories in Odoo Sign to provide their identity using the "
-"itsme® identity platform. By combining Odoo Sign with itsme®️, you can add "
-"an identification step in your signature flows and ask signatories to "
-"provide their identity through the itsme®️ platform, using their mobile "
-"device. Available in Belgium and in the Netherlands."
+"itsme® identity platform. By combining Odoo Sign with itsme®️, you can add an "
+"identification step in your signature flows and ask signatories to provide "
+"their identity through the itsme®️ platform, using their mobile device. "
+"Available in Belgium and in the Netherlands."
 msgstr ""
-"要求 Odoo 签名中的文档签名者使用 itsme® 身份平台提供其身份。通过将 Odoo "
-"签名与 itsme®️ 结合使用，您可以在签名流程中添加一个识别步骤，"
-"并要求签名者使用其移动设备通过 itsme®️ 平台提供其身份。在比利时和荷兰提供。"
+"要求 Odoo 签名中的文档签名者使用 itsme® 身份平台提供其身份。通过将 Odoo 签名"
+"与 itsme®️ 结合使用，您可以在签名流程中添加一个识别步骤，并要求签名者使用其移"
+"动设备通过 itsme®️ 平台提供其身份。在比利时和荷兰提供。"
 
 #. module: sign_itsme
 #: model:iap.service,unit_name:sign_itsme.iap_service_itsme_proxy
@@ -134,8 +134,8 @@ msgstr "签字请求项"
 #. odoo-javascript
 #: code:addons/sign_itsme/static/src/components/document_signable.js:0
 msgid ""
-"The itsme® identification data could not be forwarded to Odoo, the signature"
-" could not be saved."
+"The itsme® identification data could not be forwarded to Odoo, the signature "
+"could not be saved."
 msgstr "itsme®身份验证数据无法转发给Odoo，签字无法保存。"
 
 #. module: sign_itsme
@@ -147,8 +147,8 @@ msgstr "通过itsme®"
 #. odoo-javascript
 #: code:addons/sign_itsme/static/src/components/document_signable.js:0
 msgid ""
-"You have rejected the identification request or took too long to process it."
-" You can try again to finalize your signature."
+"You have rejected the identification request or took too long to process it. "
+"You can try again to finalize your signature."
 msgstr "您拒绝了身份验证请求，或身份验证处理时间过长。您可以重新尝试签字。"
 
 #. module: sign_itsme

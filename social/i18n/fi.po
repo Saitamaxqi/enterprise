@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 17:07+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Finnish <https://translate.odoo.com/projects/odoo-19/social/"
@@ -48,7 +48,8 @@ msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Kalenteri\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
-msgid "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
+msgid ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
 "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Kalenteri\"/>"
 
@@ -65,8 +66,8 @@ msgstr "<i class=\"oi oi-arrow-left\"/> Palaa takaisin Odoon"
 #. module: social
 #: model_terms:web_tour.tour,rainbow_man_message:social.social_tour
 msgid ""
-"<strong>Congrats! Come back in a few minutes to check your "
-"statistics.</strong>"
+"<strong>Congrats! Come back in a few minutes to check your statistics.</"
+"strong>"
 msgstr ""
 "<strong>Onneksi olkoon! Tule takaisin muutaman minuutin kuluttua "
 "tarkistamaan tilastosi.</strong>"
@@ -325,8 +326,8 @@ msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
 msgstr ""
-"Sisältää tämän tilin luoneen henkilön sosiaalisen median kahvan. Esim: '@"
-"odoo.official' Odoo X -tilille"
+"Sisältää tämän tilin luoneen henkilön sosiaalisen median kahvan. Esim: "
+"'@odoo.official' Odoo X -tilille"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
@@ -362,11 +363,11 @@ msgstr "Luo viesti"
 #. odoo-python
 #: code:addons/social/models/social_account.py:0
 msgid ""
-"Create other accounts for %(media_names)s for this company or ask "
-"%(company_names)s to share their accounts"
+"Create other accounts for %(media_names)s for this company or ask %"
+"(company_names)s to share their accounts"
 msgstr ""
-"Luo muita tilejä %(media_names)s tälle yritykselle tai pyydä %(company_names)"
-"s jakamaan tilinsä"
+"Luo muita tilejä %(media_names)s tälle yritykselle tai pyydä %"
+"(company_names)s jakamaan tilinsä"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__create_uid
@@ -549,8 +550,8 @@ msgstr "Sitoutuminen:"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
 msgid ""
-"Every time an account is created, a utm.medium is also created and linked to"
-" the account"
+"Every time an account is created, a utm.medium is also created and linked to "
+"the account"
 msgstr "Aina kun tili luodaan, luodaan myös utm.medium, joka liitetään tiliin"
 
 #. module: social
@@ -943,8 +944,7 @@ msgstr "Viesti on julkaistu"
 #. module: social
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
-msgid ""
-"Message posted partially. These are the ones that couldn't be posted:%s"
+msgid "Message posted partially. These are the ones that couldn't be posted:%s"
 msgstr "Viesti lähetetty osittain. Seuraavia ei voitu lähettää:%s"
 
 #. module: social
@@ -956,8 +956,10 @@ msgstr "Viestit"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__state
 msgid ""
-"Most social.live.posts directly go from Ready to Posted/Failed since they result of a single call to the third party API.\n"
-"        A 'Posting' state is also available for those that are sent through batching (like push notifications)."
+"Most social.live.posts directly go from Ready to Posted/Failed since they "
+"result of a single call to the third party API.\n"
+"        A 'Posting' state is also available for those that are sent through "
+"batching (like push notifications)."
 msgstr ""
 "Useimmat social.live.posts -julkaisut siirtyvät suoraan tilasta 'Valmis' "
 "tilaan 'Lähetetty/Epäonnistunut', koska ne ovat tulosta yhdestä kolmannen "
@@ -1120,8 +1122,8 @@ msgstr "Yleisön sitoutuminen julkaisuihisi (tykkäykset, kommentit, ...)."
 #: model:ir.model.fields,help:social.field_social_account__stories
 msgid "Number of stories created from your posts (Shares, Reposts, ...)."
 msgstr ""
-"Julkaisuistasi syntyneiden tarinoiden määrä (jakamiset, uudelleenjulkaisut, "
-"...)."
+"Julkaisuistasi syntyneiden tarinoiden määrä (jakamiset, "
+"uudelleenjulkaisut, ...)."
 
 #. module: social
 #. odoo-javascript
@@ -1130,8 +1132,8 @@ msgid ""
 "Number of times people have engaged with your posts (likes, comments, "
 "shares,...)"
 msgstr ""
-"Kuinka monta kertaa ihmiset ovat ottaneet yhteyttä julkaisuihisi ("
-"tykkäykset, kommentit, jakamiset...)"
+"Kuinka monta kertaa ihmiset ovat ottaneet yhteyttä julkaisuihisi "
+"(tykkäykset, kommentit, jakamiset...)"
 
 #. module: social
 #. odoo-javascript
@@ -1387,8 +1389,8 @@ msgstr "Suunniteltu päivämäärä"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid ""
-"Selected accounts (%(account_list)s) do not match the selected company "
-"(%(company)s)"
+"Selected accounts (%(account_list)s) do not match the selected company (%"
+"(company)s)"
 msgstr ""
 "Valitut tilit (%(account_list)s) eivät vastaa valittua yritystä (%(company)s)"
 
@@ -1553,8 +1555,8 @@ msgstr "Lähde"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__live_posts_by_media
 msgid ""
-"Special technical field that holds a dict containing the live posts names by"
-" media ids (used for kanban view)."
+"Special technical field that holds a dict containing the live posts names by "
+"media ids (used for kanban view)."
 msgstr ""
 "Erityinen tekninen kenttä, joka sisältää diktin, joka sisältää live-virkojen "
 "nimet mediatunnusten mukaan (käytetään kanban-näkymässä)."
@@ -1664,8 +1666,7 @@ msgstr "Tilit, joilla tämä viesti julkaistaan."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_name
-msgid ""
-"The post author name based on third party information (ex: 'John Doe')."
+msgid "The post author name based on third party information (ex: 'John Doe')."
 msgstr ""
 "Kolmannen osapuolen tietoihin perustuva viestin kirjoittajan nimi (esim. "
 "\"John Doe\")."
@@ -1825,8 +1826,8 @@ msgstr "Milloin"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__published_date
 msgid ""
-"When the global post was published. The actual sub-posts published dates may"
-" be different depending on the media."
+"When the global post was published. The actual sub-posts published dates may "
+"be different depending on the media."
 msgstr ""
 "Kun maailmanlaajuinen viesti julkaistiin. Varsinaiset alapostien "
 "julkaisupäivät voivat vaihdella mediasta riippuen."
@@ -1873,7 +1874,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_medium.py:0
 msgid ""
-"You cannot delete these UTM Mediums as they are linked to the following social accounts in Social:\n"
+"You cannot delete these UTM Mediums as they are linked to the following "
+"social accounts in Social:\n"
 "%(social_accounts)s"
 msgstr ""
 "Et voi poistaa näitä UTM-mediatyyppejä, koska ne on linkitetty seuraaviin "
@@ -1884,7 +1886,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/social/models/utm_source.py:0
 msgid ""
-"You cannot delete these UTM Sources as they are linked to social posts in Social:\n"
+"You cannot delete these UTM Sources as they are linked to social posts in "
+"Social:\n"
 "%(utm_sources)s"
 msgstr ""
 "Et voi poistaa näitä UTM-lähteitä, koska ne on linkitetty sosiaalisiin "

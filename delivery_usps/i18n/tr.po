@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-16 16:01+0000\n"
+"POT-Creation-Date: 2025-10-08 18:51+0000\n"
 "PO-Revision-Date: 2025-09-15 21:05+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Turkish <https://translate.odoo.com/projects/odoo-19/"
@@ -48,7 +48,8 @@ msgstr "Hesabınız USPS tarafından onaylandıysa, bu kutuyu işaretleyin"
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid "Company phone number is invalid. Please insert a US phone number."
-msgstr "Şirket telefon numarası geçersiz. Lütfen bir ABD telefon numarası ekleyin."
+msgstr ""
+"Şirket telefon numarası geçersiz. Lütfen bir ABD telefon numarası ekleyin."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_content_type
@@ -59,6 +60,11 @@ msgstr "İçerik Türü"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_delivery_nature
 msgid "Delivery Nature"
 msgstr "Teslimat Niteliği"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__display_name
+msgid "Display Name"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__documents
@@ -117,6 +123,11 @@ msgstr "Düz Oran Zarfı"
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_content_type__gift
 msgid "Gift"
 msgstr "Hediye"
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__id
+msgid "ID"
+msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_delivery_nature__international
@@ -234,13 +245,17 @@ msgstr "Parsel"
 #. module: delivery_usps
 #: model:ir.model.fields,help:delivery_usps.field_delivery_carrier__usps_machinable
 msgid "Please check on USPS website to ensure that your package is machinable."
-msgstr "Lütfen paketinizin işlenebilir olduğundan emin olmak için USPS web sitesini kontrol edin."
+msgstr ""
+"Lütfen paketinizin işlenebilir olduğundan emin olmak için USPS web sitesini "
+"kontrol edin."
 
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please choose another service (maximum weight of this service is 4 pounds)"
-msgstr "Lütfen başka bir servis seçin. (Bu servisin maksimum ağırlık limiti 4 pound)"
+msgid ""
+"Please choose another service (maximum weight of this service is 4 pounds)"
+msgstr ""
+"Lütfen başka bir servis seçin. (Bu servisin maksimum ağırlık limiti 4 pound)"
 
 #. module: delivery_usps
 #. odoo-python
@@ -263,8 +278,12 @@ msgstr "En az bir adet kargolanacak ürün sağlayın."
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "Please set country U.S.A in your company address, Service is only available for U.S.A"
-msgstr "Lütfen şirket adresinizde ABD'yi ABD olarak ayarlayın, Hizmet sadece ABD için geçerlidir"
+msgid ""
+"Please set country U.S.A in your company address, Service is only available "
+"for U.S.A"
+msgstr ""
+"Lütfen şirket adresinizde ABD'yi ABD olarak ayarlayın, Hizmet sadece ABD "
+"için geçerlidir"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__usps_first_class_mail_type__postcard
@@ -381,10 +400,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
 msgid ""
-"The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
+"The estimated shipping price cannot be computed because the weight is "
+"missing for the following product(s): \n"
 " %s"
 msgstr ""
-"Aşağıdaki ürün(ler) için ağırlık eksik olduğundan tahmini nakliye fiyatı hesaplanamıyor:\n"
+"Aşağıdaki ürün(ler) için ağırlık eksik olduğundan tahmini nakliye fiyatı "
+"hesaplanamıyor:\n"
 "%s"
 
 #. module: delivery_usps
@@ -424,8 +445,13 @@ msgstr "Konteyner tipi"
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
-msgstr "USPS"
+msgid "USPS (Legacy)"
+msgstr ""
+
+#. module: delivery_usps
+#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
+msgid "USPS (Legacy) Label File Type"
+msgstr ""
 
 #. module: delivery_usps
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
@@ -441,8 +467,12 @@ msgstr "USPS Yurtiçi Düz Oran Zarfı"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS Domestic is used only to ship inside of the U.S.A. Please change the delivery method into USPS International."
-msgstr "USPS Dahili, yalnızca ABD içinden gemi taşımak için kullanılır. Lütfen dağıtım yöntemini USPS International'a değiştirin."
+msgid ""
+"USPS Domestic is used only to ship inside of the U.S.A. Please change the "
+"delivery method into USPS International."
+msgstr ""
+"USPS Dahili, yalnızca ABD içinden gemi taşımak için kullanılır. Lütfen "
+"dağıtım yöntemini USPS International'a değiştirin."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_first_class_mail_type
@@ -458,13 +488,12 @@ msgstr "USPS Uluslararası Düz Oranı Kutusu"
 #. module: delivery_usps
 #. odoo-python
 #: code:addons/delivery_usps/models/usps_request.py:0
-msgid "USPS International is used only to ship outside of the U.S.A. Please change the delivery method into USPS Domestic."
-msgstr "USPS International, yalnızca ABD dışına gönderim amacıyla kullanılır. Lütfen dağıtım yöntemini USPS Yerli olarak değiştirin."
-
-#. module: delivery_usps
-#: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_label_file_type
-msgid "USPS Label File Type"
-msgstr "USPS Etiket Dosyası Türü"
+msgid ""
+"USPS International is used only to ship outside of the U.S.A. Please change "
+"the delivery method into USPS Domestic."
+msgstr ""
+"USPS International, yalnızca ABD dışına gönderim amacıyla kullanılır. Lütfen "
+"dağıtım yöntemini USPS Yerli olarak değiştirin."
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_mail_type
@@ -475,12 +504,6 @@ msgstr "USPS Posta Türü"
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_service
 msgid "USPS Service"
 msgstr "USPS Hizmeti"
-
-#. module: delivery_usps
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_sale
-#: model_terms:ir.ui.view,arch_db:delivery_usps.res_config_settings_view_form_stock
-msgid "USPS Shipping Methods"
-msgstr "USPS Nakliye Yöntemleri"
 
 #. module: delivery_usps
 #: model:ir.model.fields,field_description:delivery_usps.field_delivery_carrier__usps_username
@@ -502,3 +525,12 @@ msgstr "Şirketinizin yada alıcının ZIP kodu yanlış."
 #: model_terms:ir.ui.view,arch_db:delivery_usps.view_delivery_carrier_form_with_provider_usps
 msgid "inch"
 msgstr "inch"
+
+#~ msgid "USPS"
+#~ msgstr "USPS"
+
+#~ msgid "USPS Label File Type"
+#~ msgstr "USPS Etiket Dosyası Türü"
+
+#~ msgid "USPS Shipping Methods"
+#~ msgstr "USPS Nakliye Yöntemleri"

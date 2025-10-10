@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:27+0000\n"
+"POT-Creation-Date: 2025-10-08 18:45+0000\n"
 "PO-Revision-Date: 2025-09-16 22:56+0000\n"
 "Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
 "Language-Team: Thai <https://translate.odoo.com/projects/odoo-19/"
@@ -45,7 +45,8 @@ msgstr ""
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_validated
-msgid "<i class=\"fa fa-check-circle text-success me-3\"/>Appointment Scheduled!"
+msgid ""
+"<i class=\"fa fa-check-circle text-success me-3\"/>Appointment Scheduled!"
 msgstr ""
 "<i class=\"fa fa-check-circle text-success me-3\"/>กำหนดการนัดหมายเรียบร้อยแล้ว!"
 
@@ -59,12 +60,12 @@ msgstr "<i class=\"fa fa-pencil fa-fw me-1\"/>แก้ไขการนัด�
 msgid ""
 "<i class=\"fa fa-pencil-square-o text-warning me-3\"/>Appointment waiting "
 "for payment"
-msgstr ""
-"<i class=\"fa fa-pencil-square-o text-warning me-3\"/> นัดหมายรอชำระเงิน"
+msgstr "<i class=\"fa fa-pencil-square-o text-warning me-3\"/> นัดหมายรอชำระเงิน"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.calendar_booking_view
-msgid "<i class=\"fa fa-times-circle text-danger me-3\"/>Appointment Unavailable!"
+msgid ""
+"<i class=\"fa fa-times-circle text-danger me-3\"/>Appointment Unavailable!"
 msgstr ""
 "<i class=\"fa fa-times-circle text-danger me-3\"/>ไม่สามารถทำการนัดหมายได้!"
 
@@ -80,7 +81,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_type_view_form
 msgid ""
 "<span invisible=\"manage_capacity\" class=\"ms-1\">per booking</span>\n"
-"                            <span invisible=\"not manage_capacity\" class=\"ms-1\">per seat</span>"
+"                            <span invisible=\"not manage_capacity\" "
+"class=\"ms-1\">per seat</span>"
 msgstr ""
 
 #. module: appointment_account_payment
@@ -92,11 +94,12 @@ msgstr "<span>ออนไลน์</span>"
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_progress_bar
 msgid ""
 "<span>Payment</span>\n"
-"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-"
+"muted fs-5\"/>"
 msgstr ""
 "<span>การชำระเงิน</span>\n"
-"            <span class="
-"\"d-inline-block mx-sm-3 fa fa-angle-right text-muted fs-5\"/>"
+"            <span class=\"d-inline-block mx-sm-3 fa fa-angle-right text-"
+"muted fs-5\"/>"
 
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_payment
@@ -260,9 +263,7 @@ msgstr ""
 msgid ""
 "Discover the secrets kept in high-end kitchens with one of our starred "
 "chefs, from the comfort of your own home."
-msgstr ""
-"ค้นพบความลับที่ถูกเก็บไว้ในครัวระดับสูงกับหนึ่งในเชฟติดดาวของเราจากที่บ้านของคุณเองอย่างสะดวกสบา"
-"ย"
+msgstr "ค้นพบความลับที่ถูกเก็บไว้ในครัวระดับสูงกับหนึ่งในเชฟติดดาวของเราจากที่บ้านของคุณเองอย่างสะดวกสบาย"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_account_move__display_name
@@ -365,8 +366,7 @@ msgstr "ชั้นเรียนทำอาหารออนไลน์"
 #. module: appointment_account_payment
 #: model_terms:ir.ui.view,arch_db:appointment_account_payment.appointment_validated
 msgid "Oops! Paid appointment cannot be cancelled via our website.<br/>"
-msgstr ""
-"ขออภัย! ไม่สามารถยกเลิกการนัดหมายที่ชำระเงินแล้วผ่านทางเว็บไซต์ของเราได้<br/>"
+msgstr "ขออภัย! ไม่สามารถยกเลิกการนัดหมายที่ชำระเงินแล้วผ่านทางเว็บไซต์ของเราได้<br/>"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_calendar_booking__staff_user_id
@@ -458,8 +458,7 @@ msgstr "หยุด"
 msgid ""
 "Thank you for your reservation. We will soon contact you to discuss menu "
 "options."
-msgstr ""
-"ขอบคุณสำหรับการจองของคุณ เราจะติดต่อคุณโดยเร็ว เพื่อพูดคุยเกี่ยวกับตัวเลือกของเมนู"
+msgstr "ขอบคุณสำหรับการจองของคุณ เราจะติดต่อคุณโดยเร็ว เพื่อพูดคุยเกี่ยวกับตัวเลือกของเมนู"
 
 #. module: appointment_account_payment
 #: model:ir.model.constraint,message:appointment_account_payment.constraint_appointment_answer_input_check_event_or_booking
@@ -473,14 +472,14 @@ msgid ""
 "The following booking was not confirmed due to insufficient availability or "
 "configuration changes: %s"
 msgstr ""
-"การจองต่อไปนี้ไม่ได้รับการยืนยันเนื่องจากความพร้อมใช้งานไม่เพียงพอหรือมีการเปลี่ยนแปลงการกำหนดค่"
-"า: %s"
+"การจองต่อไปนี้ไม่ได้รับการยืนยันเนื่องจากความพร้อมใช้งานไม่เพียงพอหรือมีการเปลี่ยนแปลงการกำหนดค่า: "
+"%s"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,help:appointment_account_payment.field_appointment_type__product_lst_price
 msgid ""
-"The sale price is managed from the product template. Click on the 'Configure"
-" Variants' button to set the extra attribute prices."
+"The sale price is managed from the product template. Click on the 'Configure "
+"Variants' button to set the extra attribute prices."
 msgstr ""
 "ราคาลดได้รับการจัดการจากเทมเพลตสินค้า คลิกปุ่ม 'กำหนดค่าตัวเลือกย่อยสินค้า' "
 "เพื่อกำหนดราคาคุณสมบัติเพิ่มเติม"
@@ -515,8 +514,7 @@ msgstr "หากต้องการทำการเปลี่ยนแป
 msgid ""
 "Unfortunately, it looks like this booking is not possible anymore. Please "
 "contact us to find an alternative."
-msgstr ""
-"ขออภัย ดูเหมือนว่าการจองนี้จะไม่สามารถทำได้อีกต่อไป โปรดติดต่อเราเพื่อค้นหาทางเลือกอื่น"
+msgstr "ขออภัย ดูเหมือนว่าการจองนี้จะไม่สามารถทำได้อีกต่อไป โปรดติดต่อเราเพื่อค้นหาทางเลือกอื่น"
 
 #. module: appointment_account_payment
 #: model:ir.model.fields,field_description:appointment_account_payment.field_appointment_type__has_payment_step

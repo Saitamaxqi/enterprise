@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-01 12:12+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-15 12:03+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
@@ -56,7 +56,8 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
 msgid ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
-"                Your image appears to be corrupted, please try loading it again."
+"                Your image appears to be corrupted, please try loading it "
+"again."
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle me-1\"/>\n"
 "                画像が壊れているようです。もう一度読み込んでみて下さい。"
@@ -110,7 +111,8 @@ msgstr "作者イメージ"
 msgid ""
 "Check this if you want to use your personal Instagram Developer Account "
 "instead of the provided one."
-msgstr "提供されたアカウントではなく、個人のInstagramディベロッパーアカウントを使用す"
+msgstr ""
+"提供されたアカウントではなく、個人のInstagramディベロッパーアカウントを使用す"
 "る場合は、これをチェックして下さい。"
 
 #. module: social_instagram
@@ -145,14 +147,15 @@ msgstr "表示名"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_facebook_account_id
 msgid ""
-"Facebook Account ID provided by the Facebook API, this should never be set manually.\n"
-"        The Instagram (\"Professional\") account is always linked to a Facebook account."
+"Facebook Account ID provided by the Facebook API, this should never be set "
+"manually.\n"
+"        The Instagram (\"Professional\") account is always linked to a "
+"Facebook account."
 msgstr ""
-"Facebook "
-"APIによって提供されるFacebookアカウントID、これは決して手動で設定しないでくだ"
-"さい。\n"
-" Instagram (\"Professional\")アカウントは常にFacebookアカウントにリンク "
-"されています。"
+"Facebook APIによって提供されるFacebookアカウントID、これは決して手動で設定し"
+"ないでください。\n"
+" Instagram (\"Professional\")アカウントは常にFacebookアカウントにリンク され"
+"ています。"
 
 #. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_social_post__has_instagram_account
@@ -192,12 +195,13 @@ msgstr "Instagramアクセストークン"
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_account__instagram_access_token
 msgid ""
-"Instagram Access Token provided by the Facebook API, this should never be set manually.\n"
-"        It's used to authenticate requests when posting to or reading information from this account."
+"Instagram Access Token provided by the Facebook API, this should never be "
+"set manually.\n"
+"        It's used to authenticate requests when posting to or reading "
+"information from this account."
 msgstr ""
-"Facebook "
-"APIによって提供されるInstagramのアクセストークン。これは手動で設定されること"
-"は決してありません。\n"
+"Facebook APIによって提供されるInstagramのアクセストークン。これは手動で設定さ"
+"れることは決してありません。\n"
 "このアカウントに投稿したり、このアカウントから情報を読み取ったりする際に、要"
 "求を認証するために使用されます。"
 
@@ -211,9 +215,9 @@ msgstr "InstagramアカウントID"
 msgid ""
 "Instagram Account ID provided by the Facebook API, this should never be set "
 "manually."
-msgstr "Facebook "
-"APIによって提供されるInstagramアカウントIDで、手動で設定されることは決してあ"
-"りません。"
+msgstr ""
+"Facebook APIによって提供されるInstagramアカウントIDで、手動で設定されることは"
+"決してありません。"
 
 #. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_res_config_settings__instagram_app_id
@@ -317,20 +321,21 @@ msgstr "メッセージ"
 #. odoo-python
 #: code:addons/social_instagram/models/social_media.py:0
 msgid ""
-"Oops! You currently don't have an active subscription. No worries, though! You can easily get one here: %s.\n"
+"Oops! You currently don't have an active subscription. No worries, though! "
+"You can easily get one here: %s.\n"
 "Grab a subscription and unlock a world of amazing features!"
 msgstr ""
-"おっと! "
-"現在、有効なサブスクリプションがありません。ご安心ください。こちらから簡単に"
-"取得できます: "
-"%s。サブスクリプションを取得して、豊富な機能を今すぐご利用いただけます!"
+"おっと! 現在、有効なサブスクリプションがありません。ご安心ください。こちらか"
+"ら簡単に取得できます: %s。サブスクリプションを取得して、豊富な機能を今すぐご"
+"利用いただけます!"
 
 #. module: social_instagram
 #. odoo-python
 #: code:addons/social_instagram/models/social_stream_post.py:0
 msgid ""
 "Please confirm that commenting is enabled for this post on the platform."
-msgstr "この投稿に対して、プラットフォーム上でコメントが有効になっていることをご確認"
+msgstr ""
+"この投稿に対して、プラットフォーム上でコメントが有効になっていることをご確認"
 "下さい。"
 
 #. module: social_instagram
@@ -391,7 +396,8 @@ msgstr "ソーシャルストリームポスト"
 msgid ""
 "The Facebook ID of this Instagram post author, used to fetch the profile "
 "picture."
-msgstr "プロフィール画像を取得するために使用される、このInstagram投稿者のFacebook ID"
+msgstr ""
+"プロフィール画像を取得するために使用される、このInstagram投稿者のFacebook ID"
 
 #. module: social_instagram
 #: model_terms:ir.ui.view,arch_db:social_instagram.instagram_preview
@@ -419,7 +425,8 @@ msgstr "以下の画像は"
 #. odoo-python
 #: code:addons/social_instagram/models/social_post.py:0
 msgid ""
-"The following images do not meet the required aspect ratio (between 1.91:1 and 4:5).\n"
+"The following images do not meet the required aspect ratio (between 1.91:1 "
+"and 4:5).\n"
 "\n"
 "%(images)s"
 msgstr ""
@@ -448,15 +455,17 @@ msgstr "自分のInstagramアカウントを使用"
 #: model:ir.model.fields,help:social_instagram.field_social_post__instagram_access_token
 #: model:ir.model.fields,help:social_instagram.field_social_post_template__instagram_access_token
 msgid "Used to allow access to Instagram to retrieve the post image"
-msgstr "投稿画像を取得するためにInstagramへのアクセスを許可するために使用されます。"
+msgstr ""
+"投稿画像を取得するためにInstagramへのアクセスを許可するために使用されます。"
 
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_media__media_type
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
-msgstr "いくつかの機能を特定のメディア('Facebook','x', "
-"...)に制限する必要がある場合の比較を行うために使用されます。"
+msgstr ""
+"いくつかの機能を特定のメディア('Facebook','x', ...)に制限する必要がある場合の"
+"比較を行うために使用されます。"
 
 #. module: social_instagram
 #: model:ir.model.fields,help:social_instagram.field_social_post__instagram_image_ids
@@ -474,7 +483,8 @@ msgstr "一度に投稿できるのは10画像までです。"
 #. odoo-python
 #: code:addons/social_instagram/controllers/main.py:0
 msgid ""
-"You need to link your Instagram page to your Facebook account to post with Odoo Social.\n"
+"You need to link your Instagram page to your Facebook account to post with "
+"Odoo Social.\n"
 " Please create one and make sure it is linked to your account."
 msgstr ""
 "Odooソーシャルで投稿するには、InstagramページとFacebookアカウントをリンクする"

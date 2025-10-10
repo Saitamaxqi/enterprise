@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.3+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-05-06 09:45+0000\n"
+"POT-Creation-Date: 2025-10-08 18:43+0000\n"
 "PO-Revision-Date: 2025-09-16 12:11+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
@@ -25,7 +25,8 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>After finishing creation of the project, you will see your test API key, secret key and account number:</b>\n"
+"<b>After finishing creation of the project, you will see your test API key, "
+"secret key and account number:</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>完成建立專案後，你會看到你的測試 API 金鑰、秘密密鑰，以及帳戶號碼：</b>\n"
@@ -34,34 +35,46 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>Once your account is created, go to the My Projects tab and create a new API project. Make sure to select the options indicated below:</b>\n"
+"<b>Once your account is created, go to the My Projects tab and create a new "
+"API project. Make sure to select the options indicated below:</b>\n"
 "                                <br/>"
 msgstr ""
-"<b>建立帳戶後，請前往「我的專案」分頁，建立一個新的 API 專案。請確保選擇下列選項：</b>\n"
+"<b>建立帳戶後，請前往「我的專案」分頁，建立一個新的 API 專案。請確保選擇下列"
+"選項：</b>\n"
 "                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>To enable the creation of FedEx shipping labels, the last step is the Certification Process, click on 'Go to API certification' and follow the required steps to get your account certified for label creation.</b>\n"
-"                                <br/>These certifications usually require that you contact the FedEx support team by email."
+"<b>To enable the creation of FedEx shipping labels, the last step is the "
+"Certification Process, click on 'Go to API certification' and follow the "
+"required steps to get your account certified for label creation.</b>\n"
+"                                <br/>These certifications usually require "
+"that you contact the FedEx support team by email."
 msgstr ""
-"<b>要建立 FedEx 貨運標籤，最後一個步驟是認證流程。按一下「前往 API 認證」，然後按照所需的步驟操作，使你的帳戶獲得建立標籤的認證。</b>\n"
-"                                <br/>這些認證通常會要求你，透過電子郵件聯絡 FedEx 支援團隊。"
+"<b>要建立 FedEx 貨運標籤，最後一個步驟是認證流程。按一下「前往 API 認證」，然"
+"後按照所需的步驟操作，使你的帳戶獲得建立標籤的認證。</b>\n"
+"                                <br/>這些認證通常會要求你，透過電子郵件聯絡 "
+"FedEx 支援團隊。"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>To move to production, generate a production key and link it to a FedEx account number (you can add/create one if necessary), you will receive production API and secret keys:</b>\n"
+"<b>To move to production, generate a production key and link it to a FedEx "
+"account number (you can add/create one if necessary), you will receive "
+"production API and secret keys:</b>\n"
 "                                <br/>"
 msgstr ""
-"<b>若要轉移至正式運行環境，請產生一個正式運行金鑰，並將其連結至 FedEx 帳戶號碼（如有需要，可新增/建立一個帳戶號碼）。你將會收到正式運行 API 及秘密密鑰：</b>\n"
+"<b>若要轉移至正式運行環境，請產生一個正式運行金鑰，並將其連結至 FedEx 帳戶號"
+"碼（如有需要，可新增/建立一個帳戶號碼）。你將會收到正式運行 API 及秘密密鑰："
+"</b>\n"
 "                                <br/>"
 
 #. module: delivery_fedex_rest
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
-"<b>When asked to select APIs for the project, make sure to enable at least the following APIs:</b>\n"
+"<b>When asked to select APIs for the project, make sure to enable at least "
+"the following APIs:</b>\n"
 "                                <br/>"
 msgstr ""
 "<b>系統要求你為專案選擇 API 時，請確保至少啟用以下 API：</b>\n"
@@ -76,10 +89,12 @@ msgstr "<span class=\"o_form_label\">包裝長度單位</span>"
 #: model_terms:ir.ui.view,arch_db:delivery_fedex_rest.view_delivery_carrier_form_with_provider_fedex
 msgid ""
 "<span invisible=\"fedex_rest_weight_unit != 'KG'\">Centimeters</span>\n"
-"                                <span invisible=\"fedex_rest_weight_unit != 'LB'\">Inches</span>"
+"                                <span invisible=\"fedex_rest_weight_unit != "
+"'LB'\">Inches</span>"
 msgstr ""
 "<span invisible=\"fedex_rest_weight_unit != 'KG'\">厘米</span>\n"
-"                                <span invisible=\"fedex_rest_weight_unit != 'LB'\">英寸</span>"
+"                                <span invisible=\"fedex_rest_weight_unit != "
+"'LB'\">英寸</span>"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_developer_key
@@ -102,7 +117,8 @@ msgstr "總是"
 msgid ""
 "Automated return label generation is not supported by FedEx for multi-"
 "package shipments. Please generate the return labels manually."
-msgstr "FedEx 不支援為多件包裝的貨件，自動產生退貨標籤。請手動產生該些退貨標籤。"
+msgstr ""
+"FedEx 不支援為多件包裝的貨件，自動產生退貨標籤。請手動產生該些退貨標籤。"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_stock_package_type__package_carrier_type
@@ -133,8 +149,9 @@ msgid ""
 "this information using the FedEx Address API, we assume that the address is "
 "residential unless it is marked explicitly as a BUSINESS address."
 msgstr ""
-"決定是否將收件人地址標記為住宅地址（以便正確計算任何可能的附加費）。請注意：使用 FedEx 地址 API "
-"讀取此資訊時，我們會假定該地址是住宅地址，除非已明確標記為商業地址。"
+"決定是否將收件人地址標記為住宅地址（以便正確計算任何可能的附加費）。請注意："
+"使用 FedEx 地址 API 讀取此資訊時，我們會假定該地址是住宅地址，除非已明確標記"
+"為商業地址。"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__display_name
@@ -460,15 +477,16 @@ msgstr "Fedex 美國"
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
 msgid ""
 "For international shipments (or some intra-country shipments), a commercial "
-"invoice might be required for customs clearance. This commercial invoice can"
-" be generated by FedEx based on shipment data and returned as PDF for "
+"invoice might be required for customs clearance. This commercial invoice can "
+"be generated by FedEx based on shipment data and returned as PDF for "
 "printing and attaching to the shipment or manual electronic submission to "
 "FedEx. It can also be submitted directly as ETD information to FedEx upon "
 "shipment validation."
 msgstr ""
-"國際運送貨件（以及某些國內貨件）可能需要商業發票以辦理清關。此商業發票可由 FedEx 根據送貨資料產生，並以 PDF "
-"格式傳回，以便列印並附在貨件中，或手動透過電子方式提交給 FedEx。你也可在驗證送貨後，將商業發票作為 ETD（電子貿易文件）資訊，直接向 FedEx"
-" 提交。"
+"國際運送貨件（以及某些國內貨件）可能需要商業發票以辦理清關。此商業發票可由 "
+"FedEx 根據送貨資料產生，並以 PDF 格式傳回，以便列印並附在貨件中，或手動透過電"
+"子方式提交給 FedEx。你也可在驗證送貨後，將商業發票作為 ETD（電子貿易文件）資"
+"訊，直接向 FedEx 提交。"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,field_description:delivery_fedex_rest.field_delivery_carrier__fedex_rest_documentation_type
@@ -730,7 +748,8 @@ msgstr "庫存包裝類型"
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_extra_data_ship_request
 msgid ""
 "The extra data in FedEx is organized like the inside of a json file.\n"
-"This functionality is advanced/technical and should only be used if you know what you are doing.\n"
+"This functionality is advanced/technical and should only be used if you know "
+"what you are doing.\n"
 "More info on https://www.developer.fedex.com"
 msgstr ""
 "FedEx 中的額外資料，組織方式類似 json 檔案的內部。\n"
@@ -771,9 +790,10 @@ msgstr ""
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_email_notifications
 msgid ""
-"When enabled, the customer will receive email notifications from FedEx about"
-" this shipment (when an email address is configured on the customer)"
-msgstr "啟用後，客戶將收到 FedEx 發出有關此貨件的電郵通知（若有客戶電郵地址資料）"
+"When enabled, the customer will receive email notifications from FedEx about "
+"this shipment (when an email address is configured on the customer)"
+msgstr ""
+"啟用後，客戶將收到 FedEx 發出有關此貨件的電郵通知（若有客戶電郵地址資料）"
 
 #. module: delivery_fedex_rest
 #: model:ir.model.fields,help:delivery_fedex_rest.field_delivery_carrier__fedex_rest_override_shipper_vat
@@ -784,8 +804,9 @@ msgid ""
 "provided the regular tax id on the company will be used with type "
 "BUSINESS_NATIONAL."
 msgstr ""
-"將提供予 Fedex 作為 BUSINESS_UNION 類型的主要公司稅務識別碼，以在產生的發票上提供此資料。若除了全國稅務編號之外，還需要使用 "
-"IOSS 或 EORI 號碼，便應使用此選項。若未有提供，公司的一般稅務編號將設為 BUSINESS_NATIONAL 類型使用。"
+"將提供予 Fedex 作為 BUSINESS_UNION 類型的主要公司稅務識別碼，以在產生的發票上"
+"提供此資料。若除了全國稅務編號之外，還需要使用 IOSS 或 EORI 號碼，便應使用此"
+"選項。若未有提供，公司的一般稅務編號將設為 BUSINESS_NATIONAL 類型使用。"
 
 #. module: delivery_fedex_rest
 #. odoo-python

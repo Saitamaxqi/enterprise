@@ -3,13 +3,14 @@
 # * sale_stock_renting
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:42+0000\n"
-"PO-Revision-Date: 2025-09-15 12:02+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
+"PO-Revision-Date: 2025-10-09 19:14+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_stock_renting/ja/>\n"
 "Language: ja\n"
@@ -23,7 +24,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_stock_renting/models/sale_order_line.py:0
 msgid "%(lots)s %(are)s reserved on multiple order lines"
-msgstr ""
+msgstr "%(lots)s %(are)sは複数のオーダ明細行で予約されています"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -42,13 +43,14 @@ msgstr "%(product)s （%(qty)s 項目）"
 msgid ""
 "<i class=\"fa fa-warning\"/>\n"
 "                        <span>\n"
-"                            Some products don't have the requested qty available for pickup\n"
+"                            Some products don't have the requested qty "
+"available for pickup\n"
 "                        </span>"
 msgstr ""
 "<i class=\"fa fa-warning\"/>\n"
 "                        <span>\n"
-"                            "
-"プロダクトによっては、ご希望の数量が集荷できない場合があります。\n"
+"                            プロダクトによっては、ご希望の数量が集荷できない"
+"場合があります。\n"
 "                        </span>"
 
 #. module: sale_stock_renting
@@ -71,15 +73,17 @@ msgstr ""
 msgid ""
 "Amount of time (in hours) during which a product is considered unavailable "
 "prior to renting (preparation time)."
-msgstr "レンタル前にプロダクトが利用できない（準備期間）とみなされる時間（時間単位）"
-"。"
+msgstr ""
+"レンタル前にプロダクトが利用できない（準備期間）とみなされる時間（時間単"
+"位）。"
 
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_config_settings__padding_time
 msgid ""
 "Amount of time (in hours) during which a product is considered "
 "unavailableprior to renting (preparation time)."
-msgstr "プロダクトが利用できないとみなされる時間(レンタル前の準備時間)の時間数(時間単"
+msgstr ""
+"プロダクトが利用できないとみなされる時間(レンタル前の準備時間)の時間数(時間単"
 "位)。"
 
 #. module: sale_stock_renting
@@ -221,11 +225,11 @@ msgstr "2つのレンタル間の最小の間隔"
 #. odoo-python
 #: code:addons/sale_stock_renting/models/sale_order_line.py:0
 msgid ""
-"No valid quant has been found in location %(location)s for serial number "
-"%(serial_number)s!"
-msgstr "場所 "
-"%(location)s(シリアル番号%(serial_number)s用)に有効なクワントが見つかりません"
-"！"
+"No valid quant has been found in location %(location)s for serial number %"
+"(serial_number)s!"
+msgstr ""
+"場所 %(location)s(シリアル番号%(serial_number)s用)に有効なクワントが見つかり"
+"ません！"
 
 #. module: sale_stock_renting
 #. odoo-python
@@ -393,8 +397,8 @@ msgstr ""
 #. module: sale_stock_renting
 #: model:ir.model.fields,help:sale_stock_renting.field_res_company__rental_loc_id
 msgid ""
-"This technical location serves as stock for products currently in rentalThis"
-" location is internal because products in rentalare still considered as "
+"This technical location serves as stock for products currently in rentalThis "
+"location is internal because products in rentalare still considered as "
 "company assets."
 msgstr ""
 "この技術的ロケーションは、現在レンタル中のプロダクトの在庫として機能する。レ"

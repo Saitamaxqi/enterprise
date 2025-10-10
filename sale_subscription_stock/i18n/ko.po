@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-11 14:43+0000\n"
+"POT-Creation-Date: 2025-10-08 18:49+0000\n"
 "PO-Revision-Date: 2025-09-16 12:13+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
@@ -28,8 +28,8 @@ msgid ""
 "manually by using the \"Subscription: Generate delivery\" action."
 msgstr ""
 "시스템 오류로 인해 이 구독에 대한 배송 주문이 자동으로 생성되지 않았습니다. "
-"배송이 처리되도록 하려면 \"구독: 배송 생성\" 작업을 사용하여 수동으로 "
-"실행하십시오."
+"배송이 처리되도록 하려면 \"구독: 배송 생성\" 작업을 사용하여 수동으로 실행하"
+"십시오."
 
 #. module: sale_subscription_stock
 #. odoo-python
@@ -110,11 +110,12 @@ msgstr "구독"
 #. module: sale_subscription_stock
 #: model_terms:ir.ui.view,arch_db:sale_subscription_stock.sale_subscription_order_view_form
 msgid ""
-"The delivery order of the recurring product(s) will be created soon. If another delivery order exists,\n"
+"The delivery order of the recurring product(s) will be created soon. If "
+"another delivery order exists,\n"
 "                    recurring product will be added to it automatically."
 msgstr ""
-"정기결제 제품에 대한 배송 주문이 곧 생성됩니다. 다른 배송 주문이 이미 있는 "
-"경우\n"
+"정기결제 제품에 대한 배송 주문이 곧 생성됩니다. 다른 배송 주문이 이미 있는 경"
+"우\n"
 "                    정기결제 제품이 자동으로 추가됩니다."
 
 #. module: sale_subscription_stock
