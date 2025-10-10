@@ -204,14 +204,14 @@ export const DocumentsModelMixin = (component) =>
                     confirmLabel: _t("Unlock"),
                     confirm: async () => {
                         await this.orm.call("documents.document", "toggle_lock", [record.data.id]);
-                        await record.load();
+                        await this._notifyChange();
                     },
                     cancelLabel: _t("Discard"),
                     cancel: () => {},
                 });
             } else {
                 await this.orm.call("documents.document", "toggle_lock", [record.data.id]);
-                await record.load();
+                await this._notifyChange();
             }
         }
 

@@ -835,3 +835,37 @@ test("Name in previewer is correct without attachment", async function () {
 
     expect.verifySteps(["preview_Shin chan: The Spicy Kasukabe", "preview_Mom vs Dad |Shinchan"]);
 });
+
+test("Check actions with preview", async function () {
+    const serverData = getDocumentsTestServerModelsData([
+        {
+            attachment_id: 1,
+            id: 2,
+            name: "Test_file.txt",
+            mimetype: "image/webp",
+        },
+    ]);
+
+    serverData["ir.attachment"] = [{ id: 1, name: "Test_file.txt", mimetype: "image/webp" }];
+
+    const basicDocumentsKanbanArchWithLockUid = basicDocumentsKanbanArch.replace(
+        '<field name="name"/>',
+        '<field name="name"/>\n<field name="lock_uid"/>'
+    );
+    await makeDocumentsMockEnv({ serverData });
+    await mountDocumentsKanbanView({ arch: basicDocumentsKanbanArchWithLockUid });
+
+    // Document is not locked so there should be Lock option.
+    await contains(".o_kanban_record:contains('Test_file.txt') [name='document_preview']").click();
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitFor(".o-dropdown-item:contains('Lock')");
+    await contains(".o-dropdown-item:contains('Lock')").click();
+
+    // The preview should be closed when clicking the lock action.
+    expect(".o-FileViewer").toHaveCount(0);
+
+    // Document is locked so there should be Unlock option.
+    await contains(".o_kanban_record:contains('Test_file.txt') [name='document_preview']").click();
+    await contains(".o-FileViewer .o_cp_action_menus .o-dropdown").click();
+    await waitFor(".o-dropdown-item:contains('Unlock')");
+});
