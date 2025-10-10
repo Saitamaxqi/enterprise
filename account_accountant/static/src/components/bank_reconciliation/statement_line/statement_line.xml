@@ -46,7 +46,7 @@
                                 <t t-if="isUnfolded and recordData?.partner_name">
                                     <span t-esc="recordData.partner_name"/>
                                 </t>
-                                <t t-else="">
+                                <t t-elif="!isUnfolded or recordData?.partner_name">
                                     <span t-esc="partner?.display_name or recordData.partner_name" t-att-class="{'text-muted': !partner and recordData.partner_name}"/>
                                 </t>
                             </div>
