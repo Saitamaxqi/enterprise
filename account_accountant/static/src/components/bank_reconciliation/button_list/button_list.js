@@ -116,6 +116,16 @@ export class BankRecButtonList extends Component {
                 title: _t("Search: Account"),
                 noCreate: true,
                 multiSelect: false,
+                domain: [
+                    [
+                        "id",
+                        "not in",
+                        [
+                            this.statementLineData.journal_id.suspense_account_id.id,
+                            this.statementLineData.journal_id.default_account_id.id,
+                        ],
+                    ],
+                ],
                 context: context,
                 resModel: "account.account",
                 onSelected: async (account) => {

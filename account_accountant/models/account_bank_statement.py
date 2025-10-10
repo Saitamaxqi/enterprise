@@ -853,7 +853,9 @@ class AccountBankStatementLine(models.Model):
         account_move_line.account_id = account_id
         account_move_line.move_id._compute_checked()  # to add to compute dependencies
 
-        if account_move_line.account_id.account_type in {'asset_receivable', 'liability_payable'}:
+        suspense_account_id = self.journal_id.suspense_account_id.id
+        liquidity_account_id = self.journal_id.default_account_id.id
+        if account_move_line.account_id.account_type in {'asset_receivable', 'liability_payable'} or account_move_line.account_id in {suspense_account_id, liquidity_account_id}:
             return self.env['account.bank.statement.line']
 
         self._handle_reconciliation_rule(account_move_line, account_id)
