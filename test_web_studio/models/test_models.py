@@ -11,6 +11,7 @@ class TestStudioModel_Action(models.Model):
     step = fields.Integer()
     monetary = fields.Monetary(currency_field="my_currency")
     my_currency = fields.Many2one("res.currency")
+    partner_id = fields.Many2one("res.partner")
 
     def action_confirm(self):
         for rec in self:

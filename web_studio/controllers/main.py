@@ -362,6 +362,8 @@ class WebStudioController(http.Controller):
                 relation=field.relation,
                 relation_field=field.relation_field,
             )
+            if values.get("store", True) is False:
+                values["relation_field"] = False
         # For one2many fields
         if rel := values.pop('relation_field_id', None):
             field = request.env['ir.model.fields'].browse(rel)
