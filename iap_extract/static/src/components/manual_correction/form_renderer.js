@@ -334,10 +334,10 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
         return newFieldValue;
     }
 
-    async getNewRecordValues(record, line, field) {
+    async getNewRecordValues(record, line, field, boxType) {
         const value = await this.handleFieldChanged(
             record.fields[field],
-            this.getValueFromBoxes(line.boxes, this.activeBoxType),
+            this.getValueFromBoxes(line.boxes, boxType),
         );
         return { [field]: value };
     }
@@ -581,8 +581,9 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
             if (!linesHandled && ['date', 'number'].includes(this.activeBoxType)) {
                 linesHandled = true;
 
+                const boxType = this.activeBoxType;
                 // Update the current record
-                this.getNewRecordValues(recordToUpdate, lines[0], fieldToUpdate).then((recordValues) => {
+                this.getNewRecordValues(recordToUpdate, lines[0], fieldToUpdate, boxType).then((recordValues) => {
                     recordToUpdate.update(recordValues);
                 });
                 if (!this.x2ManyLines[parentField]) {
@@ -596,7 +597,7 @@ export const ExtractMixinFormRenderer = (T) => class extends T {
                 // Create a new record for each additional line
                 lines.slice(1, lines.length).forEach((line) => {
                     this.props.record.data[parentField].addNewRecord({ mode: 'readonly', position: 'bottom' }).then(async (newRecord) => {
-                        const recordValues = await this.getNewRecordValues(newRecord, line, fieldToUpdate);
+                        const recordValues = await this.getNewRecordValues(newRecord, line, fieldToUpdate, boxType);
                         newRecord.update(recordValues);
                         this.x2ManyLines[parentField].push({
                             'record': newRecord,
