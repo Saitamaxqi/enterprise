@@ -110,6 +110,13 @@ class ResConfigSettings(models.TransientModel):
         return self.pos_config_id._urbanpiper_handle_response(combined_response)
 
     def action_refresh_webhooks(self):
+        """
+        If a webhook already exists on Atlas, refresh it; otherwise, create a new one.
+        and products become available for syncing again as fresh entries.
+        """
+        self.env['product.urban.piper.status'].search([
+            ('config_id', 'in', self.pos_config_id.ids)
+        ]).is_product_linked = False
         self.pos_config_id._check_required_request_params()
         up = UrbanPiperClient(self.pos_config_id)
         response_json = up.request_refresh_webhooks()
