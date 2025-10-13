@@ -190,6 +190,8 @@ class HrVersion(models.Model):
     )
     def _check_l10n_in_total_allowance_below_wage(self):
         for version in self:
+            if version.company_id.country_code != 'IN':
+                continue
             monthly_wage = version._l10n_in_get_montly_wage()
             total_allowance = sum([
                 version.l10n_in_basic_salary_amount,
@@ -214,12 +216,20 @@ class HrVersion(models.Model):
 
     @api.depends('l10n_in_basic_salary_amount', 'wage', 'hourly_wage', 'wage_type', 'resource_calendar_id.hours_per_day')
     def _compute_l10n_in_basic_percentage(self):
+        default_percentage = self.env['hr.rule.parameter']._get_parameter_from_code('l10n_in_basic_percent', raise_if_not_found=False)
+        is_hr_payroll = self.env.context.get('is_hr_payroll')
+        salary_simulation = self.env.context.get('salary_simulation')
         for version in self:
+            if version.company_id.country_code != 'IN':
+                continue
             monthly_wage = version._l10n_in_get_montly_wage()
             if not monthly_wage:
                 version.l10n_in_basic_percentage = 0.0
                 continue
             if self.env.context.get('skip_percentage_calc'):
+                continue
+            if (not version.l10n_in_basic_salary_amount and not is_hr_payroll and salary_simulation):
+                version.l10n_in_basic_percentage = default_percentage
                 continue
             version.l10n_in_basic_percentage = version.l10n_in_basic_salary_amount / monthly_wage
 
