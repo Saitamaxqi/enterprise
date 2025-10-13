@@ -765,7 +765,8 @@ class TestDatevCSV(AccountTestInvoicingCommon):
         f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, payment_move))
         reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
         data = [[x[0], x[1], x[2], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
-        self.assertIn(['5,67', 'H', 'EUR', '26700000', '12010000', self.tax_19.l10n_de_datev_code, '212', payment_move.name, "Early Payment Discount"], data)
+        self.assertIn(['3,83', 'H', 'EUR', '26700000', '12010000', self.tax_19.l10n_de_datev_code, '212', payment_move.name, "Early Payment Discount"], data)
+        self.assertIn(['1,84', 'H', 'EUR', '26700000', '12010000', self.tax_19.l10n_de_datev_code, '212', payment_move.name, "Early Payment Discount"], data)
 
     @freeze_time('2021-01-02 18:00')
     def test_datev_out_invoice_with_attch(self):
