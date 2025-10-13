@@ -1137,6 +1137,90 @@ class AccountBankStatementLine(models.Model):
         return (self._is_company_amount_exceeded(company_currency, cumulated_balance, company_amount)
                 and company_currency.compare_amounts(abs(cumulated_balance + next_balance), abs(company_amount)) > 0)
 
+    def _create_payment_with_move_from_invoice(self, move_id):
+        """ Creates a payment for the given move and forces a move on it.
+            Can be useful for simplifying operations like computing exchange differences
+            for invoice with an early payment discount.
+
+            :param move_id: the account move for which a payment should be created
+            :return: the line from the payment move that can be reconciled in the bank reconciliation widget
+        """
+        return self.env['account.payment.register']\
+        .with_context(
+            active_model='account.move',
+            active_ids=move_id.ids,
+            force_payment_move=True,
+        ).create({
+            'payment_date': self.date,
+        })._create_payments()
+
+    def _convert_amount_to_transaction_currency(self, currency_id, amount_currency, balance):
+        transaction_amount, transaction_currency, journal_amount, journal_currency, company_amount, _company_currency = self._get_accounting_amounts_and_currencies()
+
+        if currency_id == transaction_currency:
+            return amount_currency
+        if currency_id == journal_currency:
+            journal_transaction_rate = abs(transaction_amount / journal_amount) if journal_amount else 0.0
+            return transaction_currency.round(amount_currency * journal_transaction_rate)
+        company_transaction_rate = abs(transaction_amount / company_amount) if company_amount else 0.0
+        return transaction_currency.round(balance * company_transaction_rate)
+
+    def _apply_early_payment_discount(self, move_line, open_amount_currency, transaction_currency, exchange_diff_balance):
+        """ Apply the early payment discount if possible.
+            In the case when a exchange difference has to be applied along an early payment discount,
+            a payment with move is created to properly handle the exchange difference on the EPD.
+
+            :param move_line: the account move line for which the EPD should be computed/added
+            :param open_amount_currency: the open amount in currency of the statement line at the time of computing the move line values dict
+            :param transaction_currency: the currency in which the amount currency is expressed
+            :param exchange_diff_balance: the exchange difference amount computed for the base move_line to add
+
+            :return: epd_lines_vals: the list of dictionnaries for all the EPD computed values,
+                                    the first one being the discounted move line values dict. Can be empty if no EPD could be applied.
+                     total_amount: in company currency, the total amount the base line amount minus the EPD represents
+                     total_amount_currency: in transaction currency, the total amount the base line amount minus the EPD represents
+            If a payment with move had to be created, the epd_lines_vals list will only contain the dict of the reconcilable line of that move
+        """
+        epd_lines_vals = []
+        epd_amount_currency = move_line.amount_currency - move_line.discount_amount_currency
+        total_amount = total_amount_currency = 0.0
+        if (
+            move_line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date)
+            and self._qualifies_for_early_payment(transaction_currency, open_amount_currency, epd_amount_currency)
+        ):
+            if not move_line.currency_id.is_zero(exchange_diff_balance):
+                # In the case the base aml has an exhange diff, the EPD will have one too.
+                # And exchange diffs on EPD are hard to handle as an EPD has no counterpart lines to reconcile it with,
+                # unlike basic amls, where the exch diff is computed when reconciling the invoice line with the statement_line line.
+                # To counter that, we'll create a new payment with a journal entry to correctly compute all necessary diffs.
+                payment_with_move = self._create_payment_with_move_from_invoice(move_line.move_id)
+                payment_line_to_add = payment_with_move.move_id.line_ids.filtered_domain(self._get_default_amls_matching_domain())
+                epd_lines_vals = [payment_line_to_add._get_aml_values(
+                    balance=-payment_line_to_add.balance,
+                    amount_currency=-payment_line_to_add.amount_currency,
+                    reconciled_lines_ids=[Command.set(payment_line_to_add.ids)],
+                )]
+                total_amount = payment_line_to_add.balance
+                total_amount_currency = self._convert_amount_to_transaction_currency(payment_line_to_add.currency_id, payment_line_to_add.amount_currency, payment_line_to_add.balance)
+            else:
+                early_pay_aml_values_list = [{
+                    'aml': move_line,
+                    'amount_currency': -move_line.amount_currency,
+                    'balance': -move_line.amount_residual,
+                }]
+                epd_lines_vals = [
+                    move_line._get_aml_values(
+                        balance=-move_line.amount_residual,
+                        amount_currency=-move_line.amount_residual_currency,
+                        reconciled_lines_ids=[Command.set(move_line.ids)],
+                    ),
+                    *self._set_early_payment_discount_lines(early_pay_aml_values_list, 0),
+                ]
+                for vals in epd_lines_vals:
+                    total_amount -= vals['balance']
+                    total_amount_currency -= self._convert_amount_to_transaction_currency(move_line.currency_id, vals['amount_currency'], vals['balance'])
+        return epd_lines_vals, total_amount, total_amount_currency
+
     def set_line_bank_statement_line(self, move_lines_ids):
         """ Sets the specified move lines to the bank statement line and performs reconciliation.
 
@@ -1154,107 +1238,64 @@ class AccountBankStatementLine(models.Model):
 
         _liquidity_line, _suspense_lines, other_lines = self._seek_for_lines()
 
-        transaction_amount, transaction_currency, journal_amount, journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
-        journal_transaction_rate = abs(transaction_amount / journal_amount) if journal_amount else 0.0
-        company_transaction_rate = abs(transaction_amount / company_amount) if company_amount else 0.0
+        transaction_amount, transaction_currency, _journal_amount, _journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
 
         open_balance = company_amount
         open_amount_currency = transaction_amount
-        total_early_payment_discount = 0.0
-        early_pay_aml_values_list = []
-        early_pay_amls = self.env['account.move.line']
 
-        for line in other_lines + move_lines:
+        for line in other_lines:
             # move_lines are the lines coming from the reconcile button and other_lines are the lines from the bank
             # statement move (so they are reconciled). We need to invert the sign of move_lines since a positive
             # move_line need to be put as negative in the bank statement move.
             # For the other lines, we can use the balance and amount currency since they are the line on the bank move
-            if line in move_lines:
-                sign = -1
-                amount = line.amount_residual
-                amount_currency = line.amount_residual_currency
-            else:
-                sign = 1
-                amount = line.balance
-                amount_currency = line.amount_currency
-
-            # Early payment Discount
-            if line.move_id._is_eligible_for_early_payment_discount(transaction_currency, self.date):
-                total_early_payment_discount += line.amount_currency - line.discount_amount_currency
-                early_pay_aml_values_list.append({
-                    'aml': line,
-                    'amount_currency': -line.amount_currency,
-                    'balance': -amount,
-                })
-                early_pay_amls += line
-
-            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(line.currency_id, amount, amount_currency)
-            line_balance = amount + exchange_diff_balance
-            open_balance += (line_balance * sign)
-
-            if line.currency_id == transaction_currency:
-                open_amount_currency += amount_currency * sign
-            elif line.currency_id == journal_currency:
-                open_amount_currency += transaction_currency.round(amount_currency * journal_transaction_rate) * sign
-            else:
-                open_amount_currency += transaction_currency.round(line_balance * company_transaction_rate) * sign
+            open_balance += line.balance
+            open_amount_currency += self._convert_amount_to_transaction_currency(line.currency_id, line.amount_currency, line.balance)
 
         new_lines = []
-        is_early_payment_discount = self._qualifies_for_early_payment(transaction_currency, open_amount_currency, total_early_payment_discount)
         has_exchange_diff = False
-        residual_amount = company_amount + sum(line.balance for line in other_lines)
-        cumulated_balance = 0
-        next_balance = 0
-        exchange_diffs = {}
+        for move_line in move_lines:
+            exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line.currency_id, move_line.amount_residual, move_line.amount_residual_currency)
+            current_balance = -(move_line.amount_residual + exchange_diff_balance)
+            current_amount_currency = self._convert_amount_to_transaction_currency(move_line.currency_id, move_line.amount_residual_currency, move_line.amount_residual)
 
-        move_lines_to_process = takewhile(lambda x: not self._will_company_amount_exceed(company_currency, cumulated_balance, next_balance, company_amount), move_lines)
-        for index, move_line in enumerate(move_lines_to_process):
-            if move_line not in exchange_diffs:
-                exchange_diffs[move_line] = self._lines_get_account_balance_exchange_diff(move_line.currency_id, move_line.amount_residual, move_line.amount_residual_currency)
-            has_exchange_diff = not move_line.currency_id.is_zero(exchange_diffs[move_line])
-            current_balance = -(move_line.amount_residual + exchange_diffs[move_line])
-            residual_amount += current_balance
-            cumulated_balance += current_balance
-            # We need to calculate the balance of the next line as we want to calculate partial amount and stop iterating
-            # as soon as we know that the transaction amount will be exceeded
-            if index < len(move_lines) - 1:
-                next_line = move_lines[index + 1]
-                exchange_diffs[next_line] = self._lines_get_account_balance_exchange_diff(next_line.currency_id, next_line.amount_residual, next_line.amount_residual_currency)
-                next_balance = -(next_line.amount_residual + exchange_diffs[next_line])
+            has_exchange_diff = has_exchange_diff or not move_line.currency_id.is_zero(exchange_diff_balance)
+            open_balance += current_balance
+            open_amount_currency -= current_amount_currency
 
             new_line_balance = current_balance
             new_amount_currency = -move_line.amount_residual_currency
 
-            # Since we look at the next line to be added, we need a special case when the first line already exceed the amount
-            if index == 0 and len(move_lines) > 1 and self._is_company_amount_exceeded(company_currency, cumulated_balance, company_amount):
-                new_line_balance = -company_amount
-                new_amount_currency = -transaction_amount
-            # Partial amount will be calculated either on the last invoice of the one selected by the user
-            # or on the one that will make exceed the transaction amount
-            elif index == len(move_lines) - 1 or self._will_company_amount_exceed(company_currency, cumulated_balance, next_balance, company_amount):
+            # Partial amount will be calculated only on the last invoice of the one selected by the user.
+            if move_line == move_lines[-1]:
                 partial_amounts = (
                     self._get_partial_amounts(current_balance, move_line, open_amount_currency, open_balance)
-                    if (company_currency.compare_amounts(residual_amount, 0) < 0 if company_currency.compare_amounts(company_amount, 0) > 0 else company_currency.compare_amounts(residual_amount, 0) > 0)
+                    if (company_currency.compare_amounts(open_balance, 0) < 0 if company_currency.compare_amounts(company_amount, 0) > 0 else company_currency.compare_amounts(open_balance, 0) > 0)
                     else None
                 )
                 if partial_amounts and not company_currency.is_zero(partial_amounts['partial_balance']):
                     new_line_balance = partial_amounts['partial_balance']
                     new_amount_currency = partial_amounts['partial_amount_currency']
 
-            if is_early_payment_discount and move_line in early_pay_amls:
-                new_line_balance = -move_line.amount_residual
-                new_amount_currency = -move_line.amount_residual_currency
-
-            new_lines.append(move_line._get_aml_values(
+            new_lines_to_add = [move_line._get_aml_values(
                 balance=new_line_balance,
                 amount_currency=new_amount_currency,
                 currency_id=move_line.currency_id.id,
                 reconciled_lines_ids=[Command.set(move_line.ids)],
-            ))
+            )]
             self.move_id._compute_checked()  # to add to compute dependencies
 
-        if is_early_payment_discount:
-            new_lines.extend(self._set_early_payment_discount_lines(early_pay_aml_values_list, open_balance))
+            lines_with_epd, total_amount, total_amount_currency = self._apply_early_payment_discount(
+                move_line,
+                open_amount_currency,
+                transaction_currency,
+                exchange_diff_balance,
+            )
+            if lines_with_epd:
+                open_balance -= total_amount + current_balance
+                open_amount_currency += current_amount_currency - total_amount_currency
+
+            new_lines.extend(lines_with_epd or new_lines_to_add)
+            self.move_id._compute_checked()  # to add to compute dependencies
 
         self.with_context(
             no_exchange_difference_no_recursive=not has_exchange_diff,
@@ -1360,7 +1401,11 @@ class AccountBankStatementLine(models.Model):
 
     @api.model
     def _qualifies_for_early_payment(self, transaction_currency, open_amount_currency, total_early_payment_discount):
-        return open_amount_currency and total_early_payment_discount and transaction_currency.is_zero(open_amount_currency + total_early_payment_discount)
+        # In the case of in_invoices, the move(_line) amounts will be negative and added to a negative statement
+        remaining = open_amount_currency + total_early_payment_discount
+        if total_early_payment_discount < 0:
+            return transaction_currency.compare_amounts(remaining, 0.0) <= 0
+        return transaction_currency.compare_amounts(remaining, 0.0) >= 0
 
     def _set_early_payment_discount_lines(self, early_pay_aml_values_list, open_balance):
         early_payment_values = self.env['account.move']._get_invoice_counterpart_amls_for_early_payment_discount(
@@ -1368,6 +1413,11 @@ class AccountBankStatementLine(models.Model):
             -open_balance,
         )
         new_lines = []
+        # We want to be able to apply an EPD at any stage in the reconciliation,
+        # so open_balance can be more than just the EPD amount.
+        # As the EPD computation method uses the remaining of the open_balance to compute the exchange diff,
+        # we just remove it from the information to add.
+        early_payment_values.pop('exchange_lines')
 
         for vals_list in early_payment_values.values():
             for vals in vals_list:

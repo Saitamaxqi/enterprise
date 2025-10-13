@@ -462,6 +462,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
 
     def test_early_payment_discount_basic_case_smaller_amount(self):
+        early_pay_acc = self.env.company.account_journal_early_pay_discount_loss_account_id
         st_line = self._create_st_line(100.0, date='2017-01-10', update_create_date=False)
         inv_line_with_epd = self._create_invoice_line(
             'out_invoice',
@@ -473,7 +474,8 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assertRecordValues(st_line.line_ids, [
             {'account_id': st_line.journal_id.default_account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': False},
             {'account_id': inv_line_with_epd.account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': True},
-            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -10.0, 'currency_id': self.company_data['currency'].id, 'balance': -10.0, 'reconciled': False},
+            {'account_id': early_pay_acc.id, 'amount_currency': 9.0, 'currency_id': self.company_data['currency'].id, 'balance': 9.0, 'reconciled': False},
+            {'account_id': st_line.journal_id.suspense_account_id.id, 'amount_currency': -19.0, 'currency_id': self.company_data['currency'].id, 'balance': -19.0, 'reconciled': False},
         ])
 
     def test_exchange_diff_basic_case(self):
@@ -2686,4 +2688,100 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'balance': 950.0,      'reconciled': False},
             {'balance': -1000.0,    'reconciled': True},
             {'balance': 50.0,       'reconciled': False},
+        ])
+
+    def test_reconcile_epd_with_exchange_diff(self):
+        """ When setting an invoice containing an early payment discount that should also apply an exchange difference,
+            a payment with move is created to correctly handle the EPD + exchange différence, as we don't want any
+            exchange difference line in the bank rec widget.
+        """
+        chf_currency = self.setup_other_currency('CHF', rates=[('2016-01-01', 2.0), ('2016-06-20', 4.0)])
+        invoice_line = self._create_invoice_line(
+            'out_invoice',
+            invoice_date='2016-06-15',
+            invoice_payment_term_id=self.early_payment_term.id,
+            invoice_line_ids=[{'price_unit': 100.0}],
+            currency_id=chf_currency.id,
+        )
+        st_line = self._create_st_line(22.5, date='2016-06-21', update_create_date=False, foreign_currency_id=chf_currency.id)
+        st_line.set_line_bank_statement_line(invoice_line.ids)
+        payment_move = invoice_line.move_id.matched_payment_ids.move_id
+        self.assertTrue(payment_move)
+        outstanding_line = payment_move.line_ids.filtered(lambda line: line.account_type == 'asset_current')
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id,    'partner_id': self.partner_a.id,   'balance': 22.5,    'amount_currency': 22.5,  'reconciled': False},
+            {'account_id': outstanding_line.account_id.id,              'partner_id': self.partner_a.id,   'balance': -22.5,   'amount_currency': -90.0, 'reconciled': True},
+        ])
+
+    def test_reconcile_epd_with_partial(self):
+        """ When reconciling an invoice with an early payment discount on a statement line
+            with an amount smaller than the invoice's one (even after applying the EPD),
+            the line should still be a partial.
+        """
+        st_line = self._create_st_line(70.0, date='2017-01-10', update_create_date=False)
+        inv_line_with_epd = self._create_invoice_line(
+            'out_invoice',
+            date='2017-01-04',
+            invoice_payment_term_id=self.early_payment_term.id,
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+        st_line.set_line_bank_statement_line(inv_line_with_epd.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id,    'balance': 70.0,    'reconciled': False},
+            {'account_id': inv_line_with_epd.account_id.id,             'balance': -70.0,   'reconciled': True},
+        ])
+
+    def test_reconcile_bill_epd_with_larger_statement_line(self):
+        """ Tests a basic case of applying an early payment discount on a vendor bill.
+            When adding it on a statement line that has a larger amount, it should still apply the EPD
+        """
+        st_line = self._create_st_line(-200.0, date='2017-01-10', update_create_date=False)
+        early_pay_acc = self.env.company.account_journal_early_pay_discount_gain_account_id
+        bill_line_with_epd = self._create_invoice_line(
+            'in_invoice',
+            date='2017-01-04',
+            invoice_payment_term_id=self.early_payment_term.id,
+            invoice_line_ids=[{'price_unit': 100.0}],
+        )
+        st_line.set_line_bank_statement_line(bill_line_with_epd.id)
+        self.assertRecordValues(st_line.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id,    'balance': -200.0,  'reconciled': False},
+            {'account_id': bill_line_with_epd.account_id.id,            'balance': 100.0,   'reconciled': True},
+            {'account_id': early_pay_acc.id,                            'balance': -10.0,    'reconciled': False},
+            {'account_id': st_line.journal_id.suspense_account_id.id,   'balance': 110.0,  'reconciled': False},
+        ])
+
+    def test_reconcile_partialed_amounts(self):
+        """ Scenario of reconciling an invoice line with multiple statements
+        of lesser amounts, resulting in multiple partial reconciliation amounts.
+        """
+        st_line_50 = self._create_st_line(50.0, update_create_date=False)
+        st_line_300 = self._create_st_line(300.0, update_create_date=False)
+        st_line_400 = self._create_st_line(400.0, update_create_date=False)
+        st_line_500 = self._create_st_line(500.0, update_create_date=False)
+        inv_line = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 1000.0}])
+
+        st_line_50.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line_50.line_ids, [
+            {'account_id': st_line_50.journal_id.default_account_id.id,     'balance': 50.0,    'reconciled': False},
+            {'account_id': inv_line.account_id.id,                          'balance': -50.0,   'reconciled': True},
+        ])
+
+        st_line_300.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line_300.line_ids, [
+            {'account_id': st_line_300.journal_id.default_account_id.id,    'balance': 300.0,   'reconciled': False},
+            {'account_id': inv_line.account_id.id,                          'balance': -300.0,  'reconciled': True},
+        ])
+
+        st_line_400.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line_400.line_ids, [
+            {'account_id': st_line_400.journal_id.default_account_id.id,    'balance': 400.0,   'reconciled': False},
+            {'account_id': inv_line.account_id.id,                          'balance': -400.0,  'reconciled': True},
+        ])
+
+        st_line_500.set_line_bank_statement_line(inv_line.id)
+        self.assertRecordValues(st_line_500.line_ids, [
+            {'account_id': st_line_500.journal_id.default_account_id.id,    'balance': 500.0,   'reconciled': False},
+            {'account_id': inv_line.account_id.id,                          'balance': -250.0,  'reconciled': True},
+            {'account_id': st_line_500.journal_id.suspense_account_id.id,   'balance': -250.0,  'reconciled': False},
         ])
