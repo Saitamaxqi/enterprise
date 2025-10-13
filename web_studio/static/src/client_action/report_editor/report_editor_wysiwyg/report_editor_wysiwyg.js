@@ -92,7 +92,9 @@ export class ReportEditorWysiwyg extends Component {
                 this.reportEditorModel.reportQweb,
                 "text/html"
             );
-            return tree.firstElementChild;
+            const htmlNode = tree.firstElementChild;
+            htmlNode.translate = false;
+            return htmlNode;
         });
 
         const reportEditorModel = (this.reportEditorModel = useState(this.env.reportEditorModel));
