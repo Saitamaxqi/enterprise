@@ -8,6 +8,9 @@
             <span name="paid" position="after">
                 <field name="work_entry_type_id" string="Work entry type to use:" class="w-auto" invisible="not paid"/>
             </span>
+            <field name="amount_rate" position="attributes">
+                <attribute name="readonly">1</attribute>
+            </field>
         </field>
     </record>
 </odoo>
