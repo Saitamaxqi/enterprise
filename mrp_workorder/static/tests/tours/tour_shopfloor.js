@@ -965,3 +965,31 @@ registry.category("web_tour.tours").add("test_shop_floor_unsynced_bom", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("test_product_consumption", {
+    steps: () => [
+        ...stepUtils.openWorkcentersSelector(),
+        ...stepUtils.addWorkcenterToDisplay("Workcenter1"),
+        ...stepUtils.confirmWorkcentersSelection(),
+        ...stepUtils.clickOnWorkcenterButton("Workcenter1"),
+        {
+            content: "Click on consumption button",
+            trigger: '.o_mrp_record_line button.btn .fa-plus',
+            run: "click",
+        },
+        {
+            content: "Select first lot",
+            trigger: '.o_data_row .o_data_cell[data-tooltip="Lot 1"]',
+            run: "click",
+        },
+        {
+            content: "Close the production order",
+            trigger: 'button.btn-primary:contains("Close Production")',
+            run: "click",
+        },
+        {
+            content: "Check that there are no open work orders",
+            trigger: ".o_nocontent_help",
+        },
+    ]
+})
