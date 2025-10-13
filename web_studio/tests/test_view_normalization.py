@@ -1484,6 +1484,33 @@ class TestViewNormalization(TransactionCase):
             </data>
             """)
 
+    def test_normalization_primary_inherit(self):
+        view = self.base_view.create({
+            'arch_base':
+                '''
+                <form>
+                  <field name="display_name" />
+                </form>
+                ''',
+            'model': 'res.partner',
+            'type': 'form'
+        })
+        inheriting = view.create({
+            "model": "res.partner",
+            "inherit_id": view.id,
+            "mode": "primary",
+            "arch": """<xpath expr="//field[@name='display_name']" position="after" ><field name="function" /></xpath>"""
+        })
+
+        normalized = inheriting.normalize("""<xpath expr="//field[@name='function']" position="after" ><field name="name" /></xpath>""")
+        self.assertXMLEqual(normalized, """
+        <data>
+          <xpath expr="/form//field[@name='function']" position="after">
+            <field name="name"/>
+          </xpath>
+        </data>
+        """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         random.seed()

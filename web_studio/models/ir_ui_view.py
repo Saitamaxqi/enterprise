@@ -606,7 +606,7 @@ class IrUiView(models.Model):
             return super().apply_inheritance_specs(source, specs_tree, pre_locate=pre_locate_studio)
 
     def normalize(self, arch_to_normalize=None):
-        if not self.inherit_id:
+        if self.mode == "primary":
             base_arch = self.get_combined_arch()
         else:
             base_arch = self.with_context(ir_ui_view_tree_cut_off_view=self).get_combined_arch()
