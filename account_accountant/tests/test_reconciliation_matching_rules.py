@@ -299,7 +299,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'sequence': 5,
             },
         ])
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
         # the total residual of the partner matches the line amount
         self._check_st_line_matching(bank_line_1, [
             {'account_id': self.bank_journal.default_account_id.id, 'balance': 600.0},
@@ -391,7 +391,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'sequence': 5,
             },
         ])
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
 
         # payment reference contains invoice numbers of multiple invoices from the same partner, and the total amount matches
         self._check_st_line_matching(bank_line_1, [
@@ -444,7 +444,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'currency_id': self.company_data['currency'].id,
             }
         ])
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
 
         # proposal should only be in the same currency
         self._check_st_line_matching(bank_line_1, [
@@ -478,7 +478,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
                 'amount': -411,
             }
         ])
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
 
         # Payment reference contains invoice numbers of multiple invoices from the same partner, and the total amount matches but amount is negative
         self._check_st_line_matching(bank_line_1, [
@@ -637,7 +637,7 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
         bank_line_3 = self._create_st_line(amount=100, payment_ref='SO/2025/127326426 For admin')
         bank_line_4 = self._create_st_line(amount=100, payment_ref='INV/2025/127326425 paid on 2025')
         bank_line_5 = self._create_st_line(amount=100, payment_ref='py_aesadasea123asdb')
-        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines()
+        self.env['account.bank.statement.line']._cron_try_auto_reconcile_statement_lines(batch_size=100)
 
         # Everything should be reconciled
         self._check_st_line_matching(bank_line_1, [

@@ -5,7 +5,7 @@ import string
 from markupsafe import Markup
 from itertools import product
 
-from odoo import Command, _, api, fields, models, modules, SUPERUSER_ID
+from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
 from odoo.exceptions import ValidationError
 from odoo.fields import Domain
 from odoo.tools import SQL, float_is_zero
@@ -138,6 +138,12 @@ class AccountBankStatementLine(models.Model):
         :param limit_time: Maximum time allowed to run in seconds. 0 if the Cron is allowed to run without time limit.
         :param company_id: Limits the processing to statement lines related to a single company.
         """
+        if limit_time <= 0:
+            # 'limit_time_real_cron' defaults to -1.
+            # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
+            cron_limit_time = tools.config['limit_time_real_cron'] or -1
+            limit_time = cron_limit_time if 0 < cron_limit_time < 180 else 180
+
         if limit_time and not batch_size:
             _logger.warning("_cron_try_auto_reconcile_statement_lines called with "
                             "limit_time=%r but batch_size=%r won't limit anything", limit_time, batch_size)

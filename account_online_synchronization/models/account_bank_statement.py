@@ -94,12 +94,16 @@ class AccountBankStatementLine(models.Model):
                     journal.account_online_account_id.sudo().write({'last_sync': filtered_transactions[-1]['date']})
 
                 if lines_to_reconcile:
-                    # 'limit_time_real_cron' defaults to -1.
-                    # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
-                    cron_limit_time = tools.config['limit_time_real_cron'] or -1
-                    limit_time = (cron_limit_time if cron_limit_time > 0 else 180) - (time.time() - start_time)
-                    if limit_time > 0:
-                        lines_to_reconcile._cron_try_auto_reconcile_statement_lines(batch_size=100, limit_time=limit_time)
+                    if len(lines_to_reconcile) <= 80:
+                        lines_to_reconcile._try_auto_reconcile_statement_lines()
+                    else:
+                        # 'limit_time_real_cron' defaults to -1.
+                        # Manual fallback applied for non-POSIX systems where this key is disabled (set to None).
+                        cron_limit_time = tools.config['limit_time_real_cron'] or -1
+                        limit_time = (cron_limit_time if cron_limit_time > 0 else 180) - (time.time() - start_time)
+                        if limit_time > 0:
+                            lines_to_reconcile._cron_try_auto_reconcile_statement_lines(batch_size=100, limit_time=limit_time)
+
         # Catch any configuration error that would prevent creating the entries, reset fetching_status flag and re-raise the error
         # Otherwise flag is never reset and user is under the impression that we are still fetching transactions
         except (UserError, ValidationError) as e:
