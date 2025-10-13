@@ -582,7 +582,7 @@ class HrPayslip(models.Model):
                     template.send_mail(payslip.id, email_layout_xmlid='mail.mail_notification_light')
 
     def _filter_out_of_versions_payslips(self):
-        return self.filtered(lambda p: p.version_id and not p.version_id._is_overlapping_period(p.date_from, p.date_to) and not p.is_refund_payslip)
+        return self.filtered(lambda p:  p.version_id and p.date_from and p.date_to and not p.version_id._is_overlapping_period(p.date_from, p.date_to) and not p.is_refund_payslip)
 
     def action_payslip_done(self):
         if any(slip.state == 'cancel' for slip in self):

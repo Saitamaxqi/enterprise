@@ -4,6 +4,7 @@ import datetime
 
 from dateutil.relativedelta import relativedelta
 from odoo import Command
+from odoo.tests import HttpCase, tagged
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.exceptions import UserError
@@ -428,3 +429,10 @@ class TestPayslipFlow(TestPayslipBase):
         with self.assertRaises(AssertionError):
             payslip_form.save()
         self.assertTrue(payslip_form)
+
+
+@tagged('-at_install', 'post_install')
+class TestPayslipUi(HttpCase):
+    def test_tour_date_input(self):
+        """Test payslip form date input."""
+        self.start_tour("/odoo", 'hr_payroll_form_view_date_input_tour', login='admin')
