@@ -213,6 +213,7 @@ class AccountReturn(models.Model):
 
     def action_submit(self):
         # OVERRIDE
+        self._check_all_branches_allowed()
         if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
             return self.env['l10n_be_reports.vat.return.submission.wizard']._open_submission_wizard(self)
 

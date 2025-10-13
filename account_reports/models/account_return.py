@@ -515,12 +515,12 @@ class AccountReturnType(models.Model):
 
     def _get_periodicity(self, company):
         self.ensure_one()
-        return self.with_company(company).deadline_periodicity or company.account_return_periodicity
+        return self.with_company(company).sudo().deadline_periodicity or company.sudo().account_return_periodicity
 
     def _get_start_date(self):
         self.ensure_one()
 
-        return self.deadline_start_date or fields.Date.from_string('2025-01-01')
+        return self.sudo().deadline_start_date or fields.Date.from_string('2025-01-01')
 
     def _get_periodicity_months_delay(self, company):
         """ Returns the number of months separating two returns
@@ -791,14 +791,14 @@ class AccountReturn(models.Model):
 
     @api.model
     def _get_company_ids(self, main_company, tax_unit, report):
-        companies = tax_unit.company_ids if tax_unit else self.env['res.company'].search([('id', 'child_of', main_company.id)])
+        companies = tax_unit.company_ids if tax_unit else self.env['res.company'].sudo().search([('id', 'child_of', main_company.id)])
 
         if report:
             previous_options = {'tax_unit': tax_unit.id if tax_unit else 'company_only'}
             options = report.sudo().with_context(allowed_company_ids=companies.ids).with_company(main_company.id).get_options(previous_options=previous_options)
             return self.env['res.company'].browse(report.get_report_company_ids(options))
 
-        return companies
+        return self.env['res.company'].browse(companies.ids)  # Drop sudo and avoid leaking elevated permissions
 
     @api.depends('company_id', 'tax_unit_id', 'type_id')
     def _compute_company_ids(self):
@@ -813,7 +813,17 @@ class AccountReturn(models.Model):
     @api.depends('company_ids')
     def _compute_show_companies(self):
         for record in self:
-            record.show_companies = len(self.env.companies) > 1 or len(record.company_ids) > 1
+            # We use _get_company_ids() instead of company_ids to avoid cache pollution issues (the ORM team is working on it).
+            # ir.rule filters records out during cache insertion, so cached values may differ from those in the database.
+            # As a result, users with branch-only access might see company_ids without the parent company.
+            record.show_companies = (len(self.env.companies) > 1 or
+                                     len(record._get_company_ids(record.company_id, record.tax_unit_id, record.type_id.report_id)) > 1)
+
+    def _check_all_branches_allowed(self):
+        for account_return in self:
+            report = account_return.type_id.report_id
+            if account_return._get_company_ids(account_return.company_id, False, report) - self.env.user.company_ids:
+                report.show_error_branch_allowed()
 
     @api.depends_context('allowed_company_ids')
     @api.depends('company_ids')
@@ -1234,6 +1244,7 @@ class AccountReturn(models.Model):
 
     def action_submit(self):
         self.ensure_one()
+        self._check_all_branches_allowed()
         return self._proceed_with_submission()
 
     def _proceed_with_submission(self):
@@ -1499,7 +1510,7 @@ class AccountReturn(models.Model):
 
     def action_open_report(self):
         self.ensure_one()
-        if self.state == 'reviewed':
+        if self.has_access('write') and self.state == 'reviewed':
             self.report_opened_once = True
         options = self._get_closing_report_options()
         return {
@@ -1531,10 +1542,9 @@ class AccountReturn(models.Model):
                 'report_id': report.id,
             },
         }
-
-        company_ids = self.company_ids.ids
         current_company = self.env.company
-        return report.with_context(allowed_company_ids=company_ids).with_company(current_company).get_options(previous_options=options)
+        company_ids = self.company_ids.ids
+        return report.sudo().with_context(allowed_company_ids=company_ids).with_company(current_company).get_options(previous_options=options)
 
     def action_send_email_instructions(self, wizard, template):
         self.ensure_one()
