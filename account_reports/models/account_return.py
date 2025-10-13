@@ -1885,6 +1885,7 @@ class AccountReturn(models.Model):
             return
 
         to_create = []
+        to_unlink = self.env['account.return.check']
         for record in self:
             if record.company_id not in self.env.companies:  # We do not run checks if the main company is not selected
                 continue
@@ -1895,7 +1896,9 @@ class AccountReturn(models.Model):
                 rslt += record._execute_template_checks(check_codes_to_ignore)
 
                 checks_by_code = record.check_ids.grouped(lambda x: x.code)
+                codes_refreshed = set()
                 for vals in rslt:
+                    codes_refreshed.add(vals['code'])
                     if existing_check := checks_by_code.get(vals['code']):
                         # If a user has updated `result`, we no longer updates its value automatically.
                         if not existing_check.refresh_result:
@@ -1904,8 +1907,12 @@ class AccountReturn(models.Model):
                     else:
                         to_create.append({**vals, 'state': record.state, 'return_id': record.id})
 
+                obsolete_check_codes = checks_by_code.keys() - (codes_refreshed | check_codes_to_ignore)
+                if obsolete_check_codes:
+                    to_unlink |= record.check_ids.filtered(lambda c: c.code in obsolete_check_codes)
         if to_create:
             self.env['account.return.check'].with_user(SUPERUSER_ID).create(to_create)
+        to_unlink.unlink()
 
     def _should_run_checks(self):
         # To override in order to run checks in other custom-made states

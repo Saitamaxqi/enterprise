@@ -291,3 +291,8 @@ class L10n_BeTaxReportHandler(models.AbstractModel):
         )):
             # remind user to submit EC Sales Report if any ec sales related taxes
             warnings['l10n_be_reports.tax_report_warning_ec_sales_reminder'] = {}
+
+        if _evaluate_check(lambda expr_totals: any(
+            self.env.company.currency_id.compare_amounts(expr_totals[expr]['value'], 0) < 0 for expr in expr_map.values()
+        )):
+            warnings['l10n_be_reports.tax_report_warning_negative_amounts'] = {'alert_type': 'danger'}

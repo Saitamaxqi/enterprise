@@ -143,52 +143,8 @@ class AccountReturn(models.Model):
     def _run_checks(self, check_codes_to_ignore):
         checks = super()._run_checks(check_codes_to_ignore)
 
-        if self.type_external_id == 'l10n_be_reports.be_vat_return_type':
-            checks += self._check_suite_be_vat_report(check_codes_to_ignore)
-        elif self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
+        if self.type_external_id == 'l10n_be_reports.be_vat_listing_return_type':
             checks += self._check_suite_be_partner_vat_listing(check_codes_to_ignore)
-
-        return checks
-
-    def _check_suite_be_vat_report(self, check_codes_to_ignore):
-        def _evaluate_report_check(check_func, expression_totals):
-            return all(
-                check_func(expression_totals)
-                for expression_totals in all_column_groups_expression_totals.values()
-            )
-        checks = []
-
-        # report checks
-        report = self.type_id.report_id
-        options = self._get_closing_report_options()
-        warnings = {}
-
-        expressions_to_evaluate = self.env['account.report.expression']
-        if 'tax_report_code_13' not in check_codes_to_ignore:
-            expressions_to_evaluate |= report.line_ids.expression_ids
-
-        all_column_groups_expression_totals = report._compute_expression_totals_for_each_column_group(
-            report.line_ids.expression_ids,
-            options,
-            warnings=warnings,
-        )
-
-        if 'tax_report_code_13' not in check_codes_to_ignore:
-            expr_map = {
-                line.code: line.expression_ids.filtered(lambda x: x.label == 'balance')
-                for line in report.line_ids
-                if line.code
-            }
-            success = _evaluate_report_check(
-                lambda expr_totals: all(expr_totals[expr]['value'] >= 0 for expr in expr_map.values()),
-                all_column_groups_expression_totals
-            )
-            checks.append({
-                'code': 'tax_report_code_13',
-                'name': _lt("No negative amount in VAT report"),
-                'message': _lt("The Belgian VAT report should only include positive values. A negative amount probably means a misconfiguration."),
-                'result': 'reviewed' if success else 'anomaly'
-            })
 
         return checks
 
