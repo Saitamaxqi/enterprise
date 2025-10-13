@@ -162,10 +162,6 @@ class PosConfig(models.Model):
             fiscal_position = self.env['account.fiscal.position'].create({
                 'name': 'UrbanPiper'
             })
-            self.env['account.tax'].create({
-                'name': 'UrbanPiper',
-                'fiscal_position_ids': [Command.link(fiscal_position.id)],
-            })
         if self.module_pos_urban_piper:
             if not self.urbanpiper_fiscal_position_id:
                 self.urbanpiper_fiscal_position_id = fiscal_position

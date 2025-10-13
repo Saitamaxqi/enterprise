@@ -342,7 +342,7 @@ class PosUrbanPiperController(http.Controller):
         line_taxes = request.env['account.tax']
         main_product = self._product_template_to_product_variant(int(line_data['merchant_id'].split('-')[0]), variant_value_lst)
         price_unit = float(line_data['price'] + price_extra)
-        tax_ids = main_product.taxes_id.filtered(lambda tax: tax.company_id == pos_config_sudo.company_id)
+        tax_ids = main_product.taxes_id.filtered_domain(request.env['account.tax']._check_company_domain(pos_config_sudo.company_id))
         if line_data.get('taxes'):
             line_taxes = self._get_tax_value(line_data.get('taxes'), pos_config_sudo)
         elif tax_ids:
@@ -357,7 +357,7 @@ class PosUrbanPiperController(http.Controller):
             )
             line_taxes._add_tax_details_in_base_line(base_line, pos_config_sudo.company_id)
             line_taxes._round_base_lines_tax_details([base_line], pos_config_sudo.company_id)
-            tax_types = tax_ids.mapped('price_include')
+            tax_types = tax_ids.flatten_taxes_hierarchy().mapped('price_include')
             if len(set(tax_types)) > 1:
                 _logger.warning("UrbanPiper: Multiple tax types found for product %s. Using the first one.", main_product.name)
             price_unit = base_line['tax_details']['total_included'] if tax_types[0] else base_line['tax_details']['total_excluded']
