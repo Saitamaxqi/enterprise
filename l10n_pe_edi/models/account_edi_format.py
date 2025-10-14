@@ -915,9 +915,15 @@ class AccountEdiFormat(models.Model):
         if not move.commercial_partner_id.vat:
             res.append(_("VAT number is missing on partner %s", move.commercial_partner_id.display_name))
         lines = move.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_section', 'line_subsection', 'line_note'))
+
+        # Withholding taxes must be on all invoice lines or none. (Note they are the only type of IGV taxes that can be joined with other IGV taxes.
+        withholding_tax_group_id = self.env['account.chart.template'].with_company(move.company_id).ref('tax_group_igv_withholding', raise_if_not_found=False)
+        if withholding_tax_group_id and len({withholding_tax_group_id in line.tax_ids.tax_group_id for line in lines}) != 1:
+            res.append(self.env._("All invoice lines must have the same withholding setting when the customer is a withholding agent. You cannot mix lines with withholding and lines without withholding on the same invoice."))
+
         for line in lines:
             taxes = line.tax_ids
-            if len(taxes) > 1 and len(taxes.filtered(lambda t: t.tax_group_id.l10n_pe_edi_code == 'IGV')) > 1:
+            if len(taxes) > 1 and len(taxes.filtered(lambda t: t.tax_group_id.l10n_pe_edi_code == 'IGV' and t.tax_group_id != withholding_tax_group_id)) > 1:
                 res.append(_("You can't have more than one IGV tax per line to generate a legal invoice in Peru"))
         if any(not line.tax_ids for line in move.invoice_line_ids if line.display_type not in ('line_section', 'line_subsection', 'line_note') and line._check_edi_line_tax_required()):
             res.append(_("Taxes need to be assigned on all invoice lines"))

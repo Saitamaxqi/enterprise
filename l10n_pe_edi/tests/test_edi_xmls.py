@@ -449,3 +449,48 @@ class TestEdiXmls(TestPeEdiCommon):
         with file_open('l10n_pe_edi/tests/test_files/invoice_final_downpayment_foreign_currency.xml', 'rb') as expected_file:
             expected_etree = self.get_xml_tree_from_string(expected_file.read())
         self.assertXmlTreeEqual(current_etree, expected_etree)
+
+    def test_invoice_withholding(self):
+        """ Invoice with withholding tax associated. There should be only one allowance node
+            even though there are two lines with the withholding tax. """
+        tax_withholding = self.env['account.tax'].create({
+            'name': 'tax_withholding',
+            'amount_type': 'percent',
+            'amount': -3.0,
+            'type_tax_use': 'sale',
+            'tax_group_id': self.env['account.chart.template'].ref('tax_group_igv_withholding').id,
+        })
+
+        with freeze_time(self.frozen_today), \
+                patch('odoo.addons.l10n_pe_edi.models.account_edi_format.AccountEdiFormat._l10n_pe_edi_post_invoice_web_service',
+                   new=mocked_l10n_pe_edi_post_invoice_web_service):
+            update_vals_dict = {
+                'invoice_line_ids': [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_id': self.env.ref('uom.product_uom_kgm').id,
+                        'price_unit': 2000.0,
+                        'quantity': 5,
+                        'tax_ids': [(6, 0, [tax_withholding.id, self.tax_18.id])],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'product_uom_id': self.env.ref('uom.product_uom_kgm').id,
+                        'price_unit': 2000.0,
+                        'quantity': 5,
+                        'tax_ids': [(6, 0, [tax_withholding.id, self.tax_18.id])],
+                    }),
+                ],
+            }
+            invoice = self._create_invoice(**update_vals_dict)
+            invoice.action_post()
+
+            generated_files = self._process_documents_web_services(invoice, {'pe_ubl_2_1'})
+            self.assertTrue(generated_files)
+        zip_edi_str = generated_files[0]
+        edi_xml = self.edi_format._l10n_pe_edi_unzip_edi_document(zip_edi_str)
+        current_etree = self.get_xml_tree_from_string(edi_xml)
+
+        with file_open('l10n_pe_edi/tests/test_files/invoice_withholding.xml', 'rb') as expected_file:
+            expected_etree = self.get_xml_tree_from_string(expected_file.read())
+        self.assertXmlTreeEqual(current_etree, expected_etree)

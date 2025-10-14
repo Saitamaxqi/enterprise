@@ -41,6 +41,29 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         """ Negative lines (global discounts) should be treated as document-level AllowanceCharges. """
         return super()._is_document_allowance_charge(base_line) or base_line['tax_details']['total_excluded_currency'] < 0
 
+    def _add_document_tax_grouping_function_vals(self, vals):
+        super()._add_document_tax_grouping_function_vals(vals)
+
+        withholding_group_id = self.env['account.chart.template'].with_company(vals['invoice'].company_id).ref('tax_group_igv_withholding', raise_if_not_found=False)
+
+        original_total_grouping_function = vals['total_grouping_function']
+        original_tax_grouping_function = vals['tax_grouping_function']
+
+        # Always ignore withholding taxes in the UBL
+        def total_grouping_function(base_line, tax_data):
+            if tax_data and tax_data['tax'].tax_group_id == withholding_group_id:
+                return None
+            return original_total_grouping_function(base_line, tax_data)
+
+        def tax_grouping_function(base_line, tax_data):
+            # Ignore withholding taxes
+            if tax_data and tax_data['tax'].tax_group_id == withholding_group_id:
+                return None
+            return original_tax_grouping_function(base_line, tax_data)
+
+        vals['total_grouping_function'] = total_grouping_function
+        vals['tax_grouping_function'] = tax_grouping_function
+
     # -------------------------------------------------------------------------
     # EXPORT: Templates for document header nodes
     # -------------------------------------------------------------------------
@@ -291,6 +314,8 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
     # -------------------------------------------------------------------------
 
     def _add_invoice_tax_total_nodes(self, document_node, vals):
+        withholding_group_id = self.env['account.chart.template'].with_company(vals['invoice'].company_id).ref('tax_group_igv_withholding', raise_if_not_found=False)
+
         def tax_grouping_function(base_line, tax_data):
             if not tax_data:
                 return None
@@ -300,6 +325,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                 'l10n_pe_edi_international_code': tax.l10n_pe_edi_international_code,
                 'l10n_pe_edi_tax_code': tax.l10n_pe_edi_tax_code,
                 'is_free_invoice_fake_tax': base_line['record'].move_id.l10n_pe_edi_legend == '1002' and not tax.tax_group_id.l10n_pe_edi_code,
+                'is_withholding_tax': tax.tax_group_id == withholding_group_id,
             }
 
         invoice = vals['invoice']
@@ -320,6 +346,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             total_tax_amount = sum(
                 values['tax_amount_currency']
                 for grouping_key, values in aggregated_tax_details.items()
+                if not grouping_key['is_withholding_tax']
             )
 
         document_node['cac:TaxTotal'] = {
@@ -345,7 +372,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                     'cac:TaxCategory': self._get_tax_category_node({**vals, 'grouping_key': grouping_key}),
                 }
                 for grouping_key, tax_details in aggregated_tax_details.items()
-                if not grouping_key['is_free_invoice_fake_tax']
+                if not grouping_key['is_free_invoice_fake_tax'] and not grouping_key['is_withholding_tax']
             ]
         }
 
@@ -408,11 +435,15 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         super()._add_document_allowance_charge_nodes(document_node, vals)
         vals['base_lines'] = original_base_lines
 
+        withholding_node = self._get_document_withholding_node(vals)
+        if withholding_node:
+            document_node['cac:AllowanceCharge'].append(withholding_node)
+
     def _get_document_allowance_charge_node(self, vals):
         """ Generic helper to generate a document-level AllowanceCharge node given a base_line. """
         base_line = vals['base_line']
         currency_suffix = vals['currency_suffix']
-        base_amount = base_line['tax_details'][f'total_excluded{currency_suffix}']
+        allowance_amount = base_line['tax_details'][f'total_excluded{currency_suffix}']
         if base_line['record']._get_downpayment_lines():
             # The base amount for the document level allowance node is defined as the sum of the invoice
             # plus the downpayment amount. As such we need to invert the sign of the total since the
@@ -423,9 +454,10 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             if base_line['tax_details']['total_excluded_currency'] < 0:
                 return None
             return True
+
         base_lines_aggregated_tax_details = self.env['account.tax']._aggregate_base_lines_tax_details(vals['base_lines'], grouping_function_skip_discounts)
         aggregated_tax_details = self.env['account.tax']._aggregate_base_lines_aggregated_values(base_lines_aggregated_tax_details)
-        total_amount_before_discount = aggregated_tax_details.get(True, {}).get('total_excluded_currency', 0.0)
+        base_amount = aggregated_tax_details.get(True, {}).get('total_excluded_currency', 0.0)
 
         def get_allowance_code(base_line):
             """
@@ -444,15 +476,15 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             return '02'
 
         return {
-            'cbc:ChargeIndicator': {'_text': 'false' if base_amount < 0.0 else 'true'},
+            'cbc:ChargeIndicator': {'_text': 'false' if allowance_amount < 0.0 else 'true'},
             'cbc:AllowanceChargeReasonCode': {'_text': get_allowance_code(base_line)},
-            'cbc:MultiplierFactorNumeric': {'_text': self.format_float(abs(base_amount) / total_amount_before_discount, 5)},
+            'cbc:MultiplierFactorNumeric': {'_text': self.format_float(abs(allowance_amount) / base_amount, 5)},
             'cbc:Amount': {
-                '_text': self.format_float(abs(base_amount), vals['currency_dp']),
+                '_text': self.format_float(abs(allowance_amount), vals['currency_dp']),
                 'currencyID': vals['currency_name']
             },
             'cbc:BaseAmount': {
-                '_text': self.format_float(total_amount_before_discount, vals['currency_dp']),
+                '_text': self.format_float(base_amount, vals['currency_dp']),
                 'currencyID': vals['currency_name']
             },
         }
@@ -484,6 +516,8 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         return discount_node
 
     def _add_document_line_tax_total_nodes(self, line_node, vals):
+        withholding_group_id = self.env['account.chart.template'].with_company(vals['invoice'].company_id).ref('tax_group_igv_withholding', raise_if_not_found=False)
+
         def tax_grouping_function(base_line, tax_data):
             if not tax_data:
                 return None
@@ -498,7 +532,8 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                 'amount': tax.amount,
                 'amount_type': tax.amount_type,
                 # In free invoices, fake taxes are used to bring the invoice total down to zero. They should be ignored in most cases.
-                'is_free_invoice_fake_tax': base_line['record'].move_id.l10n_pe_edi_legend == '1002' and not tax.tax_group_id.l10n_pe_edi_code
+                'is_free_invoice_fake_tax': base_line['record'].move_id.l10n_pe_edi_legend == '1002' and not tax.tax_group_id.l10n_pe_edi_code,
+                'is_withholding_tax': tax.tax_group_id == withholding_group_id,
             }
 
         base_line = vals['base_line']
@@ -511,6 +546,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             total_tax_amount = sum(
                 values['tax_amount_currency']
                 for grouping_key, values in aggregated_tax_details.items()
+                if not grouping_key['is_withholding_tax']
             )
 
         line_node['cac:TaxTotal'] = {
@@ -535,7 +571,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                     'cac:TaxCategory': self._get_tax_category_node({**vals, 'grouping_key': grouping_key})
                 }
                 for grouping_key, values in aggregated_tax_details.items()
-                if not grouping_key['is_free_invoice_fake_tax']
+                if not grouping_key['is_free_invoice_fake_tax'] and not grouping_key['is_withholding_tax']
             ]
         }
 
@@ -564,18 +600,24 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         base_line = vals['base_line']
         line = base_line['record']
         product_price_dp = self.env['decimal.precision'].precision_get('Product Price')
+        aggregated_tax_details = self.env['account.tax']._aggregate_base_line_tax_details(base_line, vals['tax_grouping_function'])
+
+        total_tax_amount = sum(
+            values['tax_amount_currency']
+            for grouping_key, values in aggregated_tax_details.items()
+            if grouping_key
+        )
+        total_amount = base_line['tax_details']['total_excluded_currency'] + total_tax_amount
 
         line_node['cac:PricingReference'] = {
             'cac:AlternativeConditionPrice': {
                 'cbc:PriceAmount': {
                     '_text': self.format_float(
                         (
-                            base_line['tax_details'][
-                                'total_excluded_currency'
-                                if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS
-                                else 'total_included_currency'
-                            ] / base_line['quantity']
-                        ),
+                            base_line['tax_details']['total_excluded_currency']
+                            if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS
+                            else total_amount
+                        ) / base_line['quantity'],
                         product_price_dp
                     ),
                     'currencyID': vals['currency_name']
@@ -590,3 +632,35 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
                 }
             }
         }
+
+    def _get_document_withholding_node(self, vals):
+        """Withholding taxes should appear only once as an AllowanceCharge with reason code '62'
+        This is because the withholding calculations are done at the document level, not at the line level."""
+        withholding_group_id = self.env['account.chart.template'].with_company(vals['invoice'].company_id).ref('tax_group_igv_withholding', raise_if_not_found=False)
+
+        def grouping_function_wh(base_line, tax_data):
+            if not tax_data:
+                return None
+            return tax_data['tax'] and tax_data['tax'].tax_group_id == withholding_group_id
+
+        base_lines_aggregated_tax_details = self.env['account.tax']._aggregate_base_lines_tax_details(vals['base_lines'], grouping_function_wh)
+        aggregated_tax_details = self.env['account.tax']._aggregate_base_lines_aggregated_values(base_lines_aggregated_tax_details)
+        base_amount = aggregated_tax_details.get(True, {}).get('base_amount_currency', 0.0)
+        allowance_amount = aggregated_tax_details.get(True, {}).get('tax_amount_currency', 0.0)
+
+        withholding_node = {}
+        if allowance_amount:
+            withholding_node.update({
+                'cbc:ChargeIndicator': {'_text': 'false'},
+                'cbc:AllowanceChargeReasonCode': {'_text': '62'},
+                'cbc:MultiplierFactorNumeric': {'_text': self.format_float(abs(allowance_amount) / base_amount, 5)},
+                'cbc:Amount': {
+                    '_text': self.format_float(abs(allowance_amount), vals['currency_dp']),
+                    'currencyID': vals['currency_name'],
+                },
+                'cbc:BaseAmount': {
+                    '_text': self.format_float(base_amount, vals['currency_dp']),
+                    'currencyID': vals['currency_name'],
+                },
+            })
+        return withholding_node

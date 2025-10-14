@@ -185,6 +185,18 @@ msgstr "Algodón en rama sin desmontar (Obsoleto)"
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 msgid ""
+"All invoice lines must have the same withholding setting when the customer is"
+" a withholding agent. You cannot mix lines with withholding and lines without"
+" withholding on the same invoice."
+msgstr ""
+"Todas las líneas de la factura deben tener la misma configuración de retención"
+" cuando el cliente es un agente retenedor. No puedes combinar líneas con"
+" retención y líneas sin retención en la misma factura."
+
+#. module: l10n_pe_edi
+#. odoo-python
+#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
+msgid ""
 "All invoices sharing the same CDR number (%s) must be processed at once"
 msgstr ""
 "Todas las facturas que compartan el mismo numero de CDR (%s) deben ser "

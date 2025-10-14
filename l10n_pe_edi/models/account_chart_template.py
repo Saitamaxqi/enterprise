@@ -21,4 +21,5 @@ class AccountChartTemplate(models.AbstractModel):
             'tax_group_icbper': {'l10n_pe_edi_code': 'ICBPER'},
             'tax_group_igv_g_ng': {'l10n_pe_edi_code': 'IGV'},
             'tax_group_igv_ng': {'l10n_pe_edi_code': 'IGV'},
+            'tax_group_igv_withholding': {'l10n_pe_edi_code': 'IGV'},
         }
