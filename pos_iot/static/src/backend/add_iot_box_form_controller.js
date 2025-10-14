@@ -1,20 +1,24 @@
 import { AddIoTBoxFormController } from "@iot/backend/add_iot_box_form_controller";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
+import { user } from "@web/core/user";
 
 patch(AddIoTBoxFormController.prototype, {
     setup() {
         super.setup();
     },
     async notifyIoTBoxFound(found) {
-        if (!found || this.newIoTBoxes.length === 0) {
-            return;
+        if (
+            !found ||
+            this.newIoTBoxes.length === 0 ||
+            !(await user.hasGroup("point_of_sale.group_pos_manager"))
+        ) {
+            return super.notifyIoTBoxFound(...arguments);
         }
 
         const posConfigAmount = await this.orm.searchCount("pos.config", [["active", "=", true]]);
         if (posConfigAmount === 0) {
-            this.env.services.action.doAction({ type: "ir.actions.act_window_close" });
-            return;
+            return super.notifyIoTBoxFound(...arguments);
         }
 
         const iotBoxIdentifier = this.newIoTBoxes[0].identifier;
