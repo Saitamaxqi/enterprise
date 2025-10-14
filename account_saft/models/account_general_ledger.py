@@ -251,6 +251,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             FROM (%(tax_details_query)s) AS tax_detail
             JOIN account_move_line tax_line ON tax_line.id = tax_detail.tax_line_id
             JOIN account_tax tax ON tax.id = tax_detail.tax_id
+            WHERE SIGN(tax_detail.tax_amount) = SIGN(tax_detail.base_amount)
             GROUP BY tax_detail.base_line_id, tax_line.currency_id, tax.id
         ''', tax_name=tax_name, tax_details_query=tax_details_query))
         for tax_vals in self.env.cr.dictfetchall():
