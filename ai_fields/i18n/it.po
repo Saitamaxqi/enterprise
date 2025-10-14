@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 02:41+0000\n"
+"PO-Revision-Date: 2025-10-13 15:02+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "ai_fields/it/>\n"
@@ -26,104 +26,104 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:ai_fields.view_model_fields_form
 #: model_terms:ir.ui.view,arch_db:ai_fields.view_model_form
 msgid "AI"
-msgstr "IA"
+msgstr "AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Checkbox"
-msgstr "Casella IA"
+msgstr "Casella AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Date"
-msgstr "Data IA"
+msgstr "Data AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Date & Time"
-msgstr "Data e ora IA"
+msgstr "Data e ora AI"
 
 #. module: ai_fields
 #: model:ir.actions.server,name:ai_fields.ir_cron_fill_ai_fields_ir_actions_server
 msgid "AI Fields: Compute AI fields"
-msgstr "Campi IA: calcola campi IA"
+msgstr "Campi AI: calcola campi AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Float"
-msgstr "Float IA"
+msgstr "Float AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Html"
-msgstr "HTML IA"
+msgstr "HTML AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Integer"
-msgstr "Intero IA"
+msgstr "Intero AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2Many Tags"
-msgstr "Tag Many2Many IA"
+msgstr "Tag Many2Many AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2Many Tags Avatar"
-msgstr "Avatar tag Many2Many IA"
+msgstr "Avatar tag Many2Many AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Many2One"
-msgstr "Many2One IA"
+msgstr "Many2One AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Monetary"
-msgstr "Monetario IA"
+msgstr "Monetario AI"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__system_prompt
 msgid "AI Prompt"
-msgstr "Prompt IA"
+msgstr "Prompt AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Selection"
-msgstr "Selezione IA"
+msgstr "Selezione AI"
 
 #. module: ai_fields
 #. odoo-javascript
 #: code:addons/ai_fields/static/src/views/fields/ai_fields/ai_fields.js:0
 msgid "AI Text"
-msgstr "Testo IA"
+msgstr "Testo AI"
 
 #. module: ai_fields
 #: model:ir.model.fields,help:ai_fields.field_ir_model_fields__ai
 msgid "AI computed field"
-msgstr "Campo calcolato IA"
+msgstr "Campo calcolato AI"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__ai
 msgid "AI field"
-msgstr "Campo IA"
+msgstr "Campo AI"
 
 #. module: ai_fields
 #: model:ir.model.fields,field_description:ai_fields.field_ir_model_fields__ai_domain
 msgid "AI field domain"
-msgstr "Dominio campo IA"
+msgstr "Dominio campo AI"
 
 #. module: ai_fields
 #: model:ir.model,name:ai_fields.model_base

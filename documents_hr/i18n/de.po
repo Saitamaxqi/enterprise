@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-15 21:04+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "documents_hr/de/>\n"
@@ -26,12 +26,12 @@ msgstr ""
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "<i class=\"fa fa-download fa-fw\"/> Download file"
-msgstr ""
+msgstr "<i class=\"fa fa-download fa-fw\"/> Datei herunterladen"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
 msgid "<span class=\"o_form_label\">Default tags</span>"
-msgstr ""
+msgstr "<span class=\"o_form_label\">Standardstichwörter</span>"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_tag_absences
@@ -79,12 +79,12 @@ msgstr "Konfigurationseinstellungen"
 #: code:addons/documents_hr/models/hr_employee.py:0
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_contracts_tags
 msgid "Contracts"
-msgstr ""
+msgstr "Verträge"
 
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.documents_hr_tag_contracts
 msgid "Contracts (HR)"
-msgstr ""
+msgstr "Verträge (Personalwesen)"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_documents_document__display_name
@@ -96,7 +96,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__display_name
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_document
@@ -112,7 +112,7 @@ msgstr "Anzahl Dokumente"
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_redirect
 msgid "Document Redirect"
-msgstr ""
+msgstr "Dokumentumleitung"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_public_view_form
@@ -123,7 +123,7 @@ msgstr "Dokumente"
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_contracts_tags
 msgid "Documents Hr Contracts Tags"
-msgstr ""
+msgstr "Dokumente HR Verträge Stichwörter"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__documents_hr_settings
@@ -133,7 +133,7 @@ msgstr "HR-Dokumenteneinstellungen"
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "Download file"
-msgstr ""
+msgstr "Datei herunterladen"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee
@@ -144,7 +144,7 @@ msgstr "Mitarbeiter"
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_version
 msgid "Employee Contract"
-msgstr ""
+msgstr "Arbeitsvertrag"
 
 #. module: documents_hr
 #. odoo-python
@@ -162,7 +162,7 @@ msgstr "Mitarbeiterdokumente"
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_employee_folder_id
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
 msgid "Employees Folder"
-msgstr ""
+msgstr "Mitarbeiterordner"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__employee_subfolders
@@ -183,7 +183,7 @@ msgstr ""
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_hr_employee__hr_employee_folder_id
 msgid "HR Employee Folder"
-msgstr ""
+msgstr "Mitarbeiter-Personalakte"
 
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_settings
@@ -200,7 +200,7 @@ msgstr "Personalwesen"
 #: model:ir.model.fields,field_description:documents_hr.field_res_company__id
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: documents_hr
 #. odoo-python
@@ -211,7 +211,7 @@ msgstr ""
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "My documents"
-msgstr ""
+msgstr "Meine Dokumente"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee_public
@@ -221,17 +221,17 @@ msgstr ""
 #. module: documents_hr
 #: model:documents.tag,name:documents_hr.document_tag_signature_request
 msgid "Signature Request"
-msgstr ""
+msgstr "Signaturanfrage"
 
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
 msgid "Size:"
-msgstr ""
+msgstr "Größe:"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_documents_tag
 msgid "Tag"
-msgstr ""
+msgstr "Stichwort"
 
 #. module: documents_hr
 #. odoo-python
@@ -246,6 +246,8 @@ msgid ""
 "You cannot delete this tag as it is used to link employee contracts and "
 "signatures."
 msgstr ""
+"Sie können dieses Stichwort nicht löschen, da es zur Verknüpfung von "
+"Mitarbeiterverträgen und Signaturen verwendet wird."
 
 #. module: documents_hr
 #. odoo-python
@@ -254,6 +256,9 @@ msgid ""
 "You must configure the HR Employee folder in document settings to use "
 "Document's features."
 msgstr ""
+"Sie müssen den Ordner „Mitarbeiter-Personalakte“ in den "
+"Dokumenteinstellungen konfigurieren, um die Funktionen von Dokumenten nutzen "
+"zu können."
 
 #. module: documents_hr
 #. odoo-python
@@ -262,6 +267,8 @@ msgid ""
 "You must have a contact linked to the employee in order to use Document's "
 "features."
 msgstr ""
+"Sie müssen über einen Kontakt verfügen, der mit dem Mitarbeiter verknüpft "
+"ist, um die Funktionen von Dokumenten nutzen zu können."
 
 #~ msgid ""
 #~ "<span name=\"documents_hr_tags\" class=\"o_form_label\" invisible=\"1\" "

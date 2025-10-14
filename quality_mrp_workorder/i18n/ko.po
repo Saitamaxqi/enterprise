@@ -7,13 +7,14 @@
 # Sarah Park, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 12:12+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "quality_mrp_workorder/ko/>\n"
 "Language: ko\n"
@@ -95,12 +96,12 @@ msgstr "완제품 Lot/일련번호"
 #: model:ir.model.fields,field_description:quality_mrp_workorder.field_stock_lot__id
 #: model:ir.model.fields,field_description:quality_mrp_workorder.field_stock_move_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: quality_mrp_workorder
 #: model:ir.model,name:quality_mrp_workorder.model_stock_lot
 msgid "Lot/Serial"
-msgstr ""
+msgstr "로트/일련번호"
 
 #. module: quality_mrp_workorder
 #: model:ir.model,name:quality_mrp_workorder.model_mrp_production
@@ -117,7 +118,7 @@ msgstr "생산 단계"
 #. odoo-javascript
 #: code:addons/quality_mrp_workorder/static/src/mrp_display/mrp_measure_dialog.xml:0
 msgid "Measure"
-msgstr ""
+msgstr "계산"
 
 #. module: quality_mrp_workorder
 #: model_terms:ir.ui.view,arch_db:quality_mrp_workorder.quality_alert_view_search_inherit_quality_mrp_workorder
@@ -178,7 +179,7 @@ msgstr "저장"
 #. module: quality_mrp_workorder
 #: model:ir.model.fields,field_description:quality_mrp_workorder.field_quality_check__operation_id
 msgid "Step"
-msgstr ""
+msgstr "단계"
 
 #. module: quality_mrp_workorder
 #. odoo-python

@@ -8,13 +8,14 @@
 # EugenBrodskiSAMSAIT <eugen.brodski@samsa-it.de>, 2023
 # Larissa Manderfeld, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-15 21:06+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_timesheet/de/>\n"
 "Language: de\n"
@@ -34,6 +35,7 @@ msgstr "# Tickets"
 #: code:addons/helpdesk_timesheet/wizard/timesheet_merge_wizard.py:0
 msgid "All timesheets must be linked to the same helpdesk ticket."
 msgstr ""
+"Alle Zeiterfassungen müssen mit demselben Kundendienstticket verknüpft sein."
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__analytic_account_id
@@ -43,7 +45,7 @@ msgstr "Kostenstelle"
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Kostenstellenbuchung"
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -64,7 +66,7 @@ msgstr "Projektaufgaben in Tickets umwandeln"
 #. module: helpdesk_timesheet
 #: model:ir.model,website_form_label:helpdesk_timesheet.model_helpdesk_ticket
 msgid "Create a Ticket"
-msgstr ""
+msgstr "Ein Ticket erstellen"
 
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
@@ -119,7 +121,7 @@ msgstr "Kundendienstticket"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_sla_report_analysis__total_hours_spent
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket_report_analysis__total_hours_spent
 msgid "Hours Spent (Timesheets)"
-msgstr ""
+msgstr "Aufgewendete Stunden (Zeiterfassungen)"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_account_analytic_line__id
@@ -138,7 +140,7 @@ msgstr "ID"
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_table
 msgid "Issue with new portal system"
-msgstr ""
+msgstr "Problem mit neuem Portalsystem"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_sla_report_analysis__manager_id
@@ -149,7 +151,7 @@ msgstr "Manager"
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_hr_timesheet_merge_wizard
 msgid "Merge Timesheets"
-msgstr ""
+msgstr "Zeiterfassungen zusammenführen"
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -159,6 +161,11 @@ msgid ""
 "timesheet drafts in the original helpdesk team. Although they won't be "
 "visible here, you can still edit them using the Timesheets app."
 msgstr ""
+"Wenn Sie diese Aufgabe in ein Kundendienstteam ohne "
+"Zeiterfassungsunterstützung verschieben, bleiben die Entwürfe der "
+"Zeiterfassung im ursprünglichen Kundendienstteam erhalten. Auch wenn sie "
+"hier nicht sichtbar sind, können Sie sie mit der Zeiterfassungsapp "
+"bearbeiten."
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -212,7 +219,7 @@ msgstr "Stopp"
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.timesheet_table
 msgid "Task/Ticket"
-msgstr ""
+msgstr "Aufgabe/Ticket"
 
 #. module: helpdesk_timesheet
 #: model:project.project,label_tasks:helpdesk_timesheet.helpdesk_team3_projet
@@ -253,13 +260,13 @@ msgstr "Tickets"
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__total_hours_spent
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_form_inherit_helpdesk_timesheet
 msgid "Time Spent"
-msgstr ""
+msgstr "Zeitaufwand"
 
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_graph_main_inherit_helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_pivot_main_inherit_helpdesk_timesheet
 msgid "Time Spent (Timesheets)"
-msgstr ""
+msgstr "Aufgewendete Zeit (Zeiterfassungen)"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,help:helpdesk_timesheet.field_helpdesk_ticket__timesheet_ids
@@ -282,7 +289,7 @@ msgstr "Zeiterfassungsaktivitäten"
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__timesheet_unit_amount
 msgid "Timesheet Unit Amount"
-msgstr ""
+msgstr "Betrag der Zeiterfassungseinheit"
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__use_helpdesk_timesheet
@@ -307,7 +314,7 @@ msgstr "Zeiterfassungsanalysebericht"
 #. module: helpdesk_timesheet
 #: model_terms:ir.ui.view,arch_db:helpdesk_timesheet.helpdesk_ticket_view_tree_inherit_helpdesk_timesheet
 msgid "Total"
-msgstr ""
+msgstr "Gesamt"
 
 #. module: helpdesk_timesheet
 #: model_terms:ir.actions.act_window,help:helpdesk_timesheet.act_hr_timesheet_line_helpdesk
@@ -327,7 +334,7 @@ msgstr "VIP-Support"
 #. odoo-python
 #: code:addons/helpdesk_timesheet/models/helpdesk_ticket.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Warnung"
 
 #. module: helpdesk_timesheet
 #. odoo-python
@@ -347,7 +354,7 @@ msgstr "für das"
 #. odoo-python
 #: code:addons/helpdesk_timesheet/models/project_project.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"
 
 #~ msgid "Create Timesheet from ticket"
 #~ msgstr "Stundenzettel aus Ticket erstellen"

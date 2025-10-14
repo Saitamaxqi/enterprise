@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "social_push_notifications/ar/>\n"
 "Language: ar\n"
@@ -43,7 +44,7 @@ msgstr "السماح"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "App ID"
-msgstr ""
+msgstr "معرّف التطبيق"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -157,7 +158,7 @@ msgstr "مفتاح الواجهة البرمجية للويب لـ Firebase"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_account__firebase_web_app_id
 #: model:ir.model.fields,field_description:social_push_notifications.field_website__firebase_web_app_id
 msgid "Firebase Web App ID"
-msgstr ""
+msgstr "معرّف تطبيق الويب لـ Firebase"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.push_notifications_preview
@@ -173,7 +174,7 @@ msgstr "مسار HTTP"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__has_push_notifications_account
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__has_push_notifications_account
 msgid "Has Push Notifications Account"
-msgstr ""
+msgstr "يحتوي على حساب الإشعارات المنبثقة"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_ir_http__id
@@ -218,7 +219,7 @@ msgstr "نوع الوسائط الاجتماعية"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Message"
-msgstr ""
+msgstr "الرسالة"
 
 #. module: social_push_notifications
 #. odoo-python
@@ -278,7 +279,7 @@ msgstr "عدد الإشعارات المنبثقة"
 #. odoo-python
 #: code:addons/social_push_notifications/models/social_post_template.py:0
 msgid "Please specify a Notification Message."
-msgstr ""
+msgstr "يُرجى تحديد الرسالة التي سيتم إرسالها كإشعار"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
@@ -305,7 +306,7 @@ msgstr "صورة الأيقونة المنبثقة"
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.social_post_template_view_form
 msgid "Push Notification"
-msgstr ""
+msgstr "الإشعارات المنبثقة"
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.website_visitor_view_search
@@ -348,7 +349,7 @@ msgstr "تم تفعيل الإشعارات المنبثقة"
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notification_message
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post_template__push_notification_message
 msgid "Push Notifications Message"
-msgstr ""
+msgstr "الرسالة التي سيتم إرسالها كإشعارات منبثقة"
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__push_notifications_preview
@@ -497,6 +498,8 @@ msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
 msgstr ""
+"يستخدم لإجراء المقارنات عند الحاجة إلى تقييد بعض الخصائص لموقع تواصل اجتماعي "
+"محدد ('facebook'، 'X'، ...)."
 
 #. module: social_push_notifications
 #: model:ir.model.fields,field_description:social_push_notifications.field_social_post__visitor_domain
@@ -551,7 +554,7 @@ msgstr ""
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form
 msgid "e.g. \"1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d\""
-msgstr ""
+msgstr "مثال: \"1:280765099157:web:7c7b7d7b7d7b7d7b7d7b7d\""
 
 #. module: social_push_notifications
 #: model_terms:ir.ui.view,arch_db:social_push_notifications.res_config_settings_view_form

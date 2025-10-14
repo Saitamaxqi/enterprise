@@ -1,25 +1,27 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* account_sepa
+# * account_sepa
 #
 # Translators:
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
-#
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2022-09-22 05:45+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2023\n"
-"Language-Team: Italian (https://app.transifex.com/odoo/teams/41243/it/)\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
+"Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
+"account_iso20022/it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=n == 1 ? 0 : n != 0 && n % 1000000 == 0 ? "
-"1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: account_iso20022
 #. odoo-python
@@ -57,7 +59,7 @@ msgstr "Pagamento raggruppato"
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_charge_bearer
 msgid "Charge Bearer"
-msgstr ""
+msgstr "Portatore spesa"
 
 #. module: account_iso20022
 #: model:ir.model,name:account_iso20022.model_res_company
@@ -73,39 +75,39 @@ msgstr "Impostazioni di configurazione"
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "Configure Journal"
-msgstr ""
+msgstr "Configura registro"
 
 #. module: account_iso20022
 #: model:ir.model,name:account_iso20022.model_res_partner
 msgid "Contact"
-msgstr ""
+msgstr "Contatto"
 
 #. module: account_iso20022
 #: model:ir.model,website_form_label:account_iso20022.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Crea cliente"
 
 #. module: account_iso20022
 #: model_terms:ir.ui.view,arch_db:account_iso20022.view_account_journal_form
 msgid "Credit Transfer"
-msgstr ""
+msgstr "Trasferimento credito"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__cred
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__cred
 msgid "Creditor"
-msgstr ""
+msgstr "Creditore"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__debt
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__debt
 msgid "Debtor"
-msgstr ""
+msgstr "Debitore"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__iso20022_default_priority
 msgid "Default Priority"
-msgstr ""
+msgstr "Priorità predefinita"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__display_name
@@ -117,13 +119,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_iso20022.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:account_iso20022.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal.py:0
 msgid "Employee %s has no country in their address."
-msgstr ""
+msgstr "Il dipendente %s non presenta un Paese nell'indirizzo."
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
@@ -149,18 +151,18 @@ msgstr "Tedesco"
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "Go to settings"
-msgstr ""
+msgstr "Vai alle impostazioni"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_default_priority__high
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_priority__high
 msgid "HIGH - High priority"
-msgstr ""
+msgstr "ALTA - Priorità alta"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__has_iso20022_payment_method
 msgid "Has Iso20022 Payment Method"
-msgstr ""
+msgstr "Ha metodo di pagamento Iso20022"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__has_sepa_ct_payment_method
@@ -177,17 +179,17 @@ msgstr "Ha Sepa Ct Metodo di pagamento"
 #: model:ir.model.fields,field_description:account_iso20022.field_res_config_settings__id
 #: model:ir.model.fields,field_description:account_iso20022.field_res_partner__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__iso20022_charge_bearer
 msgid "ISO 20022 Charge Bearer"
-msgstr ""
+msgstr "Portatore spesa ISO 20022"
 
 #. module: account_iso20022
 #: model:account.payment.method,name:account_iso20022.account_payment_method_iso20022
 msgid "ISO20022"
-msgstr ""
+msgstr "ISO20022"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_res_company__iso20022_orgid_id
@@ -208,7 +210,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__payment_method_is_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment_method__is_iso20022
 msgid "Is Iso20022"
-msgstr ""
+msgstr "È ISO20022"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_res_company__iso20022_orgid_issr
@@ -226,20 +228,20 @@ msgstr "Registro"
 #: model:ir.model.fields,field_description:account_iso20022.field_res_partner__iso20022_lei
 #: model:ir.model.fields,field_description:account_iso20022.field_res_users__iso20022_lei
 msgid "LEI"
-msgstr ""
+msgstr "LEI"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_company__iso20022_lei
 #: model:ir.model.fields,help:account_iso20022.field_res_partner__iso20022_lei
 #: model:ir.model.fields,help:account_iso20022.field_res_users__iso20022_lei
 msgid "Legal Entity Identifier"
-msgstr ""
+msgstr "Identificativo della persona giuridica"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_default_priority__norm
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_priority__norm
 msgid "NORM - Normal"
-msgstr ""
+msgstr "NORM - Normale"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_config_settings__iso20022_initiating_party_name
@@ -254,7 +256,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "Non-EUR Payments"
-msgstr ""
+msgstr "Pagamenti non-EUR"
 
 #. module: account_iso20022
 #. odoo-python
@@ -292,7 +294,7 @@ msgstr "pagamenti da inviare via SEPA"
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "Payments without IBAN"
-msgstr ""
+msgstr "Pagamenti senza iban"
 
 #. module: account_iso20022
 #. odoo-python
@@ -315,7 +317,7 @@ msgstr ""
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_priority
 msgid "Priority"
-msgstr ""
+msgstr "Priorità"
 
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_batch_payment__iso20022_batch_booking
@@ -337,13 +339,13 @@ msgstr "Bonifici SEPA da inviare"
 #: model:ir.model.fields,field_description:account_iso20022.field_account_journal__sepa_pain_version
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__sepa_pain_version
 msgid "SEPA XML Format"
-msgstr ""
+msgstr "Formato XML SEPA"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_payment.py:0
 msgid "SEPA only accepts payments in EUR."
-msgstr ""
+msgstr "SEPA accetta solo pagamenti in EUR."
 
 #. module: account_iso20022
 #. odoo-python
@@ -351,6 +353,8 @@ msgstr ""
 msgid ""
 "SEPA only accepts payments in EUR. Some payments are using another currency."
 msgstr ""
+"SEPA accetta solo pagamenti in EUR. Alcuni pagamenti utilizzano un'altra "
+"valuta."
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_journal__sepa_pain_version
@@ -358,24 +362,26 @@ msgstr ""
 msgid ""
 "SEPA version to use to generate Credit Transfer XML files from this journal"
 msgstr ""
+"La versione SEPA da utilizzare per generare file XML per il trasferimento di "
+"credito da questo registro"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_default_priority__svda
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_priority__svda
 msgid "SVDA - Same value date"
-msgstr ""
+msgstr "SVDA - Stesso valore data"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__slev
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__slev
 msgid "Service Level"
-msgstr ""
+msgstr "Livello servizio"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_charge_bearer__shar
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_charge_bearer__shar
 msgid "Shared"
-msgstr ""
+msgstr "Condiviso"
 
 #. module: account_iso20022
 #. odoo-python
@@ -390,6 +396,8 @@ msgid ""
 "Some payments are missing a value for 'UETR', required for the SEPA "
 "Pain.001.001.09 format."
 msgstr ""
+"Per alcuni pagamenti non è presente un valore per 'UETR', richiesto per il "
+"formato SEPA Pain.001.001.09."
 
 #. module: account_iso20022
 #. odoo-python
@@ -404,6 +412,8 @@ msgid ""
 "Specifies which party/parties will bear the charges associated with the "
 "processing of ISO 20022 payment transactions from this journal."
 msgstr ""
+"Specifica quale/i parte/i contribuirà alle spese associate all'elaborazione "
+"della transazione di pagamento ISO 20022 da questo registro."
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_payment__iso20022_charge_bearer
@@ -411,16 +421,18 @@ msgid ""
 "Specifies which party/parties will bear the charges associated with the "
 "processing of the payment transaction."
 msgstr ""
+"Specifica quale/i parte/i contribuirà alle spese associate all'elaborazione "
+"della transazione di pagamento."
 
 #. module: account_iso20022
 #: model:account.payment.method,name:account_iso20022.account_payment_method_iso20022_se
 msgid "Swedish ISO20022"
-msgstr ""
+msgstr "ISO20022 svedese"
 
 #. module: account_iso20022
 #: model:account.payment.method,name:account_iso20022.account_payment_method_iso20022_ch
 msgid "Swiss ISO20022"
-msgstr ""
+msgstr "ISO20022 svizzero"
 
 #. module: account_iso20022
 #. odoo-python
@@ -435,6 +447,14 @@ msgid ""
 "- 2 letters or digits: location code\n"
 "- 3 letters or digits: branch code, optional\n"
 msgstr ""
+"Il codice BIC  \"%(bic_code)s\" associato alla banca \"%(bank)s\", con conto "
+"bancario \"%(account)s\" del partner \"%(partner)s\", non rispetta la "
+"convenzione richiesta.\n"
+"Deve contenere 8 o 11 caratteri e corrispondere alla seguente struttura:\n"
+"- 4 lettere: codice istituto o codice banca\n"
+"- 2 lettere: codice nazione\n"
+"- 2 lettere o cifre: codice località\n"
+"- 3 lettere o cifre: codice filiale, opzionale\n"
 
 #. module: account_iso20022
 #. odoo-python
@@ -445,6 +465,10 @@ msgid ""
 "- 18 alphanumeric characters with capital letters\n"
 "- 2 digits in the end\n"
 msgstr ""
+"Il numero LEI deve contenere 20 caratteri e rispettare la seguente struttura:"
+"\n"
+"- 18 caratteri alfanumerici con maiuscole\n"
+"- 2 cifre alla fine\n"
 
 #. module: account_iso20022
 #. odoo-python
@@ -453,6 +477,8 @@ msgid ""
 "The Name Identification and Issuer details are required to proceed. Please "
 "configure them in the settings."
 msgstr ""
+"Per procedere sono richiesti il nome identificativo e i dettagli "
+"dell'emittente. Configurali nelle impostazioni."
 
 #. module: account_iso20022
 #. odoo-python
@@ -462,6 +488,10 @@ msgid ""
 "IBAN.\n"
 "A valid IBAN account is required to use SEPA features."
 msgstr ""
+"Il conto bancario %(account)s del registro '%(journal)s', non è di tipo IBAN."
+"\n"
+"Per utilizzare le funzionalità SEPA è richiesto l'utilizzo di un conto IBAN "
+"valido."
 
 #. module: account_iso20022
 #. odoo-python
@@ -470,6 +500,8 @@ msgid ""
 "The customer bank account set on some payments does not have an IBAN number. "
 "This is required for SEPA."
 msgstr ""
+"Il conto bancario del cliente selezionato per alcuni pagamenti non ha un "
+"numero IBAN. Il numero è richiesto per SEPA."
 
 #. module: account_iso20022
 #. odoo-python
@@ -485,7 +517,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal.py:0
 msgid "This journal does not have a bank account defined."
-msgstr ""
+msgstr "Questo registro non ha un numero di conto definito."
 
 #. module: account_iso20022
 #. odoo-python
@@ -501,13 +533,13 @@ msgstr ""
 #. module: account_iso20022
 #: model:ir.model.fields,field_description:account_iso20022.field_account_payment__iso20022_uetr
 msgid "UETR"
-msgstr ""
+msgstr "UETR"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__iso20022_default_priority__urgp
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_payment__iso20022_priority__urgp
 msgid "URGP - Critical urgency"
-msgstr ""
+msgstr "URGP - Urgenza grave"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_bank_statement_line__end_to_end_uuid
@@ -518,13 +550,13 @@ msgstr ""
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_payment__iso20022_uetr
 msgid "Unique end-to-end transaction reference"
-msgstr ""
+msgstr "Riferimento unico operazione end-to-end"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_batch_payment.py:0
 msgid "View Payments"
-msgstr ""
+msgstr "Vedi pagamenti"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_company__iso20022_initiating_party_name
@@ -532,6 +564,8 @@ msgid ""
 "Will appear as the name of the party initiating the payment. Limited to 70 "
 "characters."
 msgstr ""
+"Compare come nome della parte che ha intrapreso il pagamento. Limitato a 70 "
+"caratteri."
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_res_config_settings__iso20022_orgid_issr
@@ -552,29 +586,29 @@ msgstr "Nome azienda"
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal_dashboard.py:0
 msgid "is_sent"
-msgstr ""
+msgstr "is_sent"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__sepa_pain_version__pain_001_001_03
 msgid "pain.001.001.03"
-msgstr ""
+msgstr "pain.001.001.03"
 
 #. module: account_iso20022
 #: model:ir.model.fields.selection,name:account_iso20022.selection__account_journal__sepa_pain_version__pain_001_001_09
 msgid "pain.001.001.09"
-msgstr ""
+msgstr "pain.001.001.09"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal_dashboard.py:0
 msgid "payment_method_line_id.code"
-msgstr ""
+msgstr "payment_method_line_id.code"
 
 #. module: account_iso20022
 #. odoo-python
 #: code:addons/account_iso20022/models/account_journal_dashboard.py:0
 msgid "state"
-msgstr ""
+msgstr "state"
 
 #. module: account_iso20022
 #: model:ir.model.fields,help:account_iso20022.field_account_journal__iso20022_default_priority
@@ -585,6 +619,11 @@ msgid ""
 "• URGP: Critical, requires immediate processing.\n"
 "• SVDA: Payments must settle on same day as submission."
 msgstr ""
+"• NORM: tempo predefinito di elaborazione.\n"
+"• ALTA: pagamento con priorità alta.\n"
+"• URGP: grave, richiede elaborazione immediata.\n"
+"• SVDA: i pagamenti devono essere saldati nello stesso giorno della "
+"richiesta."
 
 #~ msgid "A bank account must be set on the following documents: "
 #~ msgstr "Nei seguenti documenti deve essere impostato un conto bancario:"

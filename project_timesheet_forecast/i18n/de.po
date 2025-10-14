@@ -7,13 +7,14 @@
 # Larissa Manderfeld, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "project_timesheet_forecast/de/>\n"
 "Language: de\n"
@@ -35,16 +36,19 @@ msgid ""
 "                            <span invisible=\"not encode_uom_in_days\"> "
 "Days</span>"
 msgstr ""
+"<span invisible=\"encode_uom_in_days\"> Stunden</span>\n"
+"                            <span invisible=\"not encode_uom_in_days\"> "
+"Tage</span>"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__allocated_hours_cost
 msgid "Allocated Time Cost"
-msgstr ""
+msgstr "Kosten für zugewiesene Zeit"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,help:project_timesheet_forecast.field_planning_analysis_report__remaining_hours
 msgid "Allocated time minus the effective time."
-msgstr ""
+msgstr "Zugewiesene Zeit abzüglich der tatsächlichen Zeit."
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__allow_timesheets
@@ -91,12 +95,12 @@ msgstr "Tatsächliche Stunden"
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_slot__effective_hours
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__effective_hours
 msgid "Effective Time"
-msgstr ""
+msgstr "Tatsächliche Zeit"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__effective_hours_cost
 msgid "Effective Time Cost"
-msgstr ""
+msgstr "Kosten für tatsächliche Zeit"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__employee_id
@@ -121,7 +125,7 @@ msgstr "Ist veröffentlicht"
 #. module: project_timesheet_forecast
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
 msgid "Last Week"
-msgstr ""
+msgstr "Letzte Woche"
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_ir_ui_menu
@@ -160,6 +164,8 @@ msgid ""
 "Number of time recorded on the employee's Timesheets for this task (and its "
 "sub-tasks) during the timeframe of the shift."
 msgstr ""
+"Anzahl der Stunden auf den Zeiterfassungsbögen des Mitarbeiters für diese "
+"Aufgabe (und ihre Unteraufgaben) während der Schicht."
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__planned_costs
@@ -169,7 +175,7 @@ msgstr "Geplante Kosten"
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__planned_hours
 msgid "Planned Time"
-msgstr ""
+msgstr "Geplante Zeit"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields.selection,name:project_timesheet_forecast.selection__project_timesheet_forecast_report_analysis__line_type__forecast
@@ -185,7 +191,7 @@ msgstr "Planung"
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_pivot
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
 msgid "Planning / Timesheets Analysis"
-msgstr ""
+msgstr "Zeiterfassungs-/Planungsanalyse"
 
 #. module: project_timesheet_forecast
 #: model:ir.model,name:project_timesheet_forecast.model_planning_analysis_report
@@ -246,13 +252,13 @@ msgstr "Summe der geplanten Stunden"
 #. module: project_timesheet_forecast
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
 msgid "This Week"
-msgstr ""
+msgstr "Diese Woche"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_planning_analysis_report__remaining_hours
 #: model:ir.model.fields,field_description:project_timesheet_forecast.field_project_timesheet_forecast_report_analysis__difference
 msgid "Time Remaining"
-msgstr ""
+msgstr "Verbleibende Zeit"
 
 #. module: project_timesheet_forecast
 #: model:ir.model.fields.selection,name:project_timesheet_forecast.selection__project_timesheet_forecast_report_analysis__line_type__timesheet
@@ -273,7 +279,7 @@ msgstr "In diesem Zeitfenster können Zeiterfassungsbögen erstellt werden."
 #. module: project_timesheet_forecast
 #: model_terms:ir.ui.view,arch_db:project_timesheet_forecast.project_timesheet_forecast_report_view_search
 msgid "Today"
-msgstr ""
+msgstr "Heute"
 
 #. module: project_timesheet_forecast
 #: model_terms:ir.actions.act_window,help:project_timesheet_forecast.project_timesheet_forecast_report_action

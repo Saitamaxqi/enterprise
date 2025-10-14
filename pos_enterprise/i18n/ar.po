@@ -6,13 +6,14 @@
 # Malaz Abuidris <msea@odoo.com>, 2022
 # Martin Trigaux, 2022
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "pos_enterprise/ar/>\n"
 "Language: ar\n"
@@ -26,54 +27,54 @@ msgstr ""
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
 msgid "<span>Average time</span>"
-msgstr ""
+msgstr "<span>متوسط الوقت</span>"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
 msgid "<span>In progress</span>"
-msgstr ""
+msgstr "<span>قيد التنفيذ</span>"
 
 #. module: pos_enterprise
 #. odoo-python
 #: code:addons/pos_enterprise/models/pos_prep_display.py:0
 msgid "A preparation display must have a minimum of one step."
-msgstr ""
+msgstr "يجب أن يكون لعرض التجهير خطوة واحدة على الأقل."
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Accept payments with a Tyro payment terminal"
-msgstr ""
+msgstr "Accept payments with a Tyro payment terminal"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__access_token
 msgid "Access Token"
-msgstr ""
+msgstr "رمز الوصول"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "After"
-msgstr ""
+msgstr "بعد"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__alert_timer
 msgid "Alert timer (min)"
-msgstr ""
+msgstr "مؤقت التنبيه (بالدقائق)"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/stages/stages.xml:0
 msgid "All"
-msgstr ""
+msgstr "الكل"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "All PoS"
-msgstr ""
+msgstr "كافة نقطة البيع"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "All categories"
-msgstr ""
+msgstr "كافة الفئات"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
@@ -81,78 +82,80 @@ msgid ""
 "Archive all preparation display's orders for a fresh start. This will not "
 "affect the PoS order history."
 msgstr ""
+"قم بأرشفة كافة طلبات عرض التجهيز، حتى تبدأ بداية جديدة. لن يؤثر ذلك على سجل "
+"طلبات نقطة البيع."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__auto_clear
 msgid "Auto clear"
-msgstr ""
+msgstr "المسح التلقائي"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__avg_preparation_time
 msgid "Average Preparation Time"
-msgstr ""
+msgstr "متوسط وقت تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_order__avg_preparation_time
 msgid "Average preparation time of the order"
-msgstr ""
+msgstr "متوسط وقت تحضير الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_order__avg_service_time
 msgid "Average service time of the order"
-msgstr ""
+msgstr "متوسط وقت الخدمة للطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_display__average_time
 msgid "Average time of all order that not in a done stage."
-msgstr ""
+msgstr "متوسط وقت كافة الطلبات التي ليست في حالة منتهية."
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
 msgid "Check products"
-msgstr ""
+msgstr "التحقق من المنتجات"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Clear All Filters"
-msgstr ""
+msgstr "إزالة كافة عوامل التصفية"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__color
 msgid "Color"
-msgstr ""
+msgstr "اللون"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__combo_line_ids
 msgid "Combo Lines"
-msgstr ""
+msgstr "بنود مركّبة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__company_id
 msgid "Company"
-msgstr ""
+msgstr "الشركة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__completion_time
 msgid "Completion Time"
-msgstr ""
+msgstr "وقت الإكمال"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "تهيئة الإعدادات"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
 msgid "Configure"
-msgstr ""
+msgstr "تهيئة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__create_uid
@@ -162,7 +165,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__create_uid
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "أنشئ بواسطة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__create_date
@@ -172,24 +175,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__create_date
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "أنشئ في"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_order__pdis_general_customer_note
 msgid "Current general-customer-note displayed on preparation display"
-msgstr ""
+msgstr "الملاحظة العامة الحالية للعميل المعروضة على شاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_order__pdis_internal_note
 msgid "Current general-note displayed on preparation display"
-msgstr ""
+msgstr "الملاحظة العامة الحالية المعروضة على شاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__customer_note
 msgid "Customer Note"
-msgstr ""
+msgstr "ملاحظة العميل"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_line__customer_note
@@ -200,12 +203,12 @@ msgstr ""
 #: model_terms:ir.actions.act_window,help:pos_enterprise.action_preparation_display
 msgid ""
 "Different products and categories are sent to different tablets and screens."
-msgstr ""
+msgstr "يتم إرسال منتجات وفئات مختلفة إلى أجهزة لوحية وشاشات أخرى."
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
 msgid "Discard"
-msgstr ""
+msgstr "إهمال"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_category__display_name
@@ -228,63 +231,63 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:pos_enterprise.field_resource_calendar_attendance__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Done"
-msgstr ""
+msgstr "منتهي"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/backend/components/fields/duration_field.js:0
 msgid "Duration"
-msgstr ""
+msgstr "المدة"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_preset
 msgid "Easily load a set of configuration options"
-msgstr ""
+msgstr "تمكن من تحميل مجموعة من خيارات التهيئة بسهولة"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Explore demo data"
-msgstr ""
+msgstr "استكشف البيانات التجريبية"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/override/point_of_sale/pos_store.js:0
 msgid "Failed in sending the changes to preparation display"
-msgstr ""
+msgstr "فشلت عملية إرسال التغييرات لعرض التجهيزات"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Filters"
-msgstr ""
+msgstr "عوامل التصفية"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Food Delivery Connector"
-msgstr ""
+msgstr "موصّل توصيل الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__pdis_general_customer_note
 msgid "General Customer Note"
-msgstr ""
+msgstr "ملاحظة العميل العامة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__pdis_internal_note
 msgid "General Note"
-msgstr ""
+msgstr "ملاحظة عامة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__order_hour
 msgid "Hour"
-msgstr ""
+msgstr "ساعة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_category__id
@@ -307,32 +310,32 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_res_config_settings__id
 #: model:ir.model.fields,field_description:pos_enterprise.field_resource_calendar_attendance__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_line__combo_parent_id
 msgid "Indicates the parent line if this is part of a combo"
-msgstr ""
+msgstr "يشير إلى البند الرئيسي إذا كان هذا جزءاً من مجموعة كومبو"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__internal_note
 msgid "Internal Note"
-msgstr ""
+msgstr "ملاحظة داخلية"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_line__internal_note
 msgid "Internal notes written at the time of the order"
-msgstr ""
+msgstr "الملاحظات الداخلية المكتوبة في وقت الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__clear_time_interval
 msgid "Interval auto clear time"
-msgstr ""
+msgstr "الوقت الذي يتم فيه المسح الذاتي للفاصل الزمني"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_display__clear_time_interval
 msgid "Interval in minutes"
-msgstr ""
+msgstr "الفترات الزمنية بالدقائق"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_config__module_pos_iot
@@ -343,28 +346,28 @@ msgstr "جهاز IoT"
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__contains_bar_restaurant
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_search
 msgid "Is a Bar/Restaurant"
-msgstr ""
+msgstr "حانة أو مطعم"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_config__module_pos_urban_piper
 msgid "Is an Urbanpiper"
-msgstr ""
+msgstr "ضمن Urbanpiper"
 
 #. module: pos_enterprise
 #: model:ir.actions.server,name:pos_enterprise.action_pos_preparation_display_kitchen_display
 #: model:ir.ui.menu,name:pos_enterprise.menu_point_kitchen_display_root
 msgid "Kitchen Display"
-msgstr ""
+msgstr "شاشة المطبخ"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_time_report_search
 msgid "Last 30 Days"
-msgstr ""
+msgstr "آخر 30 يوم"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__last_stage_change
 msgid "Last Stage Change"
-msgstr ""
+msgstr "آخر تغيير للمرحلة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__write_uid
@@ -374,7 +377,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__write_uid
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "آخر تحديث بواسطة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__write_date
@@ -384,7 +387,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__write_date
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_preparation_display_reset_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "آخر تحديث في"
 
 #. module: pos_enterprise
 #. odoo-javascript
@@ -396,106 +399,106 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Loading..."
-msgstr ""
+msgstr "جار التحميل..."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_res_config_settings__pos_module_pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Manage your online orders with Urban Piper."
-msgstr ""
+msgstr "قم بإدارة طلباتك أونلاين باستخدام Urbam Piper."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__name
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__name
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #. module: pos_enterprise
 #: model_terms:ir.actions.act_window,help:pos_enterprise.action_preparation_display
 msgid "Need a touchscreen interface to manage order ?"
-msgstr ""
+msgstr "أأنت بحاجة إلى واجهة شاشة لمس لإدارة الطلب؟"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "No data available."
-msgstr ""
+msgstr "لا توجد بيانات متاحة."
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "Offer"
-msgstr ""
+msgstr "عرض"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__pos_order_id
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__order_id
 msgid "Order"
-msgstr ""
+msgstr "الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__create_date
 msgid "Order Date"
-msgstr ""
+msgstr "تاريخ الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__order_name
 msgid "Order Name"
-msgstr ""
+msgstr "اسم الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__average_time
 msgid "Order average time"
-msgstr ""
+msgstr "متوسط وقت الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__order_count
 msgid "Order count"
-msgstr ""
+msgstr "عدد الطلبات"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__pos_order_line_id
 msgid "Original pos order line"
-msgstr ""
+msgstr "بند أمر نقطة البيع الأصلي"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_line__pos_order_line_uuid
 msgid "Original pos order line UUID"
-msgstr ""
+msgstr "معرّف UUID لبند طلب نقطة البيع الأصلية"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__pos_config_id
 msgid "POS Config"
-msgstr ""
+msgstr "تهيئة نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_preparation_time_report
 msgid "POS Preparation Time Report"
-msgstr ""
+msgstr "تقرير وقت التجهيز في نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__combo_parent_id
 msgid "Parent Combo Line"
-msgstr ""
+msgstr "البند الرئيسي لمجموعة المنتجات (كومبو)"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Payment method"
-msgstr ""
+msgstr "طريقة الدفع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_load_mixin
 msgid "PoS data loading mixin"
-msgstr ""
+msgstr "mixin تحميل بيانات نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__pos_config_ids
 msgid "Point of Sale"
-msgstr ""
+msgstr "نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_category
 msgid "Point of Sale Category"
-msgstr ""
+msgstr "فئة نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_config
@@ -505,47 +508,47 @@ msgstr "تهيئة نقطة البيع"
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_order_line
 msgid "Point of Sale Order Lines"
-msgstr ""
+msgstr "بنود طلب نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_order
 msgid "Point of Sale Orders"
-msgstr ""
+msgstr "طلبات نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_session
 msgid "Point of Sale Session"
-msgstr ""
+msgstr "جلسة نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__pos_order_line_uuid
 msgid "Pos Order Line Uuid"
-msgstr ""
+msgstr "المعرّف الفريد لبند طلب نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_display
 msgid "Pos Preparation Display"
-msgstr ""
+msgstr "نقطة البيع لشاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_line
 msgid "Pos Preparation Line"
-msgstr ""
+msgstr "بند التجهيز في نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_order
 msgid "Pos Preparation Order"
-msgstr ""
+msgstr "طلب التجهيز في نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_stage
 msgid "Pos Preparation Stage"
-msgstr ""
+msgstr "مرحلة التجهيز في نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_prep_state
 msgid "Pos Preparation State"
-msgstr ""
+msgstr "حالة التجهيز في نقطة البيع"
 
 #. module: pos_enterprise
 #: model:ir.actions.act_url,name:pos_enterprise.action_pos_preparation_display_bar_restaurant_filter_link
@@ -555,27 +558,27 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_search
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_tree
 msgid "Preparation Display"
-msgstr ""
+msgstr "شاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_order__prep_line_ids
 msgid "Preparation Lines"
-msgstr ""
+msgstr "بنود التجهيز"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__prep_order_id
 msgid "Preparation Order"
-msgstr ""
+msgstr "طلب التجهيز"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__prep_line_id
 msgid "Preparation Orderline"
-msgstr ""
+msgstr "بند طلب التجهيز"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
 msgid "Preparation Screen"
-msgstr ""
+msgstr "شاشة التحضير"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_order__avg_preparation_time
@@ -583,104 +586,104 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__preparation_time
 #: model:ir.ui.menu,name:pos_enterprise.menu_report_preparation_time
 msgid "Preparation Time"
-msgstr ""
+msgstr "وقت التجهيز"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_time_report_view_form
 msgid "Preparation Time Line"
-msgstr ""
+msgstr "بند وقت التجهيز"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_time_report_view_list
 msgid "Preparation Time Lines"
-msgstr ""
+msgstr "بنود وقت التجهيز"
 
 #. module: pos_enterprise
 #: model:ir.actions.act_window,name:pos_enterprise.pos_preparation_time_report_action
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_time_report_graph
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_time_report_search
 msgid "Preparation Time Report"
-msgstr ""
+msgstr "تقرير وقت التجهيز"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__prep_display_id
 msgid "Preparation display"
-msgstr ""
+msgstr "شاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__product_id
 msgid "Product"
-msgstr ""
+msgstr "المنتج"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_product_attribute
 msgid "Product Attribute"
-msgstr ""
+msgstr "خاصية المنتج"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__product_id
 msgid "Product ID"
-msgstr ""
+msgstr "معرف المنتج"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_product_template_attribute_value
 msgid "Product Template Attribute Value"
-msgstr ""
+msgstr "قيمة خاصية قالب المنتج"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "متغير المنتج"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__category_ids
 msgid "Product categories"
-msgstr ""
+msgstr "فئات المنتجات"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_display__category_ids
 msgid "Product categories that will be displayed on this screen."
-msgstr ""
+msgstr "فئات المنتجات التي سيتم عرضها على هذه الشاشة."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__quantity
 #: model:ir.model.fields,field_description:pos_enterprise.field_preparation_time_report__qty
 msgid "Quantity"
-msgstr ""
+msgstr "الكمية"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__cancelled
 msgid "Quantity of cancelled product"
-msgstr ""
+msgstr "كمية المنتجات الملغاة"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Recall"
-msgstr ""
+msgstr "استرجاع"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_reset_wizard
 msgid "Reset"
-msgstr ""
+msgstr "إعادة الضبط"
 
 #. module: pos_enterprise
 #. odoo-python
 #: code:addons/pos_enterprise/models/pos_prep_display.py:0
 msgid "Reset Preparation Display"
-msgstr ""
+msgstr "إعادة ضبط شاشة تحضير الطعام"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_pos_preparation_display_reset_wizard
 msgid "Reset all current order in a preparation display"
-msgstr ""
+msgstr "إعادة تعيين كافة الطلبات الحالية في عرض التجهيز"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_kanban
 msgid "Reset all orders"
-msgstr ""
+msgstr "إعادة تعيين كافة الطلبات"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
@@ -690,63 +693,63 @@ msgstr "احفظ هذه الصفحة ثم عد لضبط الخاصية."
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_line__attribute_value_ids
 msgid "Selected Attributes"
-msgstr ""
+msgstr "تحديد الخصائص"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/override/point_of_sale/pos_store.js:0
 msgid "Send failed"
-msgstr ""
+msgstr "فشلت عملية الإرسال"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_stage__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "تسلسل"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_order__avg_service_time
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_order_line__service_time
 msgid "Service Time"
-msgstr ""
+msgstr "وقت الخدمة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__stage_id
 msgid "Stage"
-msgstr ""
+msgstr "المرحلة"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_display__stage_ids
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "Stages"
-msgstr ""
+msgstr "المراحل"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_pos_prep_state__todo
 msgid "Status of the orderline"
-msgstr ""
+msgstr "حالة بند الطلب"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/override/point_of_sale/navbar/navbar.xml:0
 msgid "Switch to Dark Mode"
-msgstr ""
+msgstr "التبديل إلى الوضع الداكن"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/override/point_of_sale/navbar/navbar.xml:0
 msgid "Switch to Light Mode"
-msgstr ""
+msgstr "التبديل إلى الوضع الفاتح"
 
 #. module: pos_enterprise
 #. odoo-python
 #: code:addons/pos_enterprise/models/pos_prep_display.py:0
 msgid "The interval auto clear time must be positive."
-msgstr ""
+msgstr "يجب أن يكون وقت المسح التلقائي للفترة الزمنية قيمة موجبة."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_state__todo
 msgid "The status of a command line, todo or not"
-msgstr ""
+msgstr "حالة بند الأمر، للقيام به أو لا"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_res_config_settings__module_pos_tyro
@@ -755,58 +758,60 @@ msgid ""
 "The transactions are processed by Tyro. Set your Tyro credentials on the "
 "related payment method."
 msgstr ""
+"The transactions are processed by Tyro. Set your Tyro credentials on the "
+"related payment method."
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "Time"
-msgstr ""
+msgstr "الوقت"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_display__auto_clear
 msgid "Time after which ready order will be removed from Order Status Screen."
-msgstr ""
+msgstr "الوقت الذي سيتم بعده إزالة الطلب الجاهز من شاشة حالة الطلبات."
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_order__completion_time
 msgid "Time in minutes to complete the order (preparation + service time)"
-msgstr ""
+msgstr "الوقت المستغرق بالدقائق لإكمال الطلب (وقت التحضير + وقت الخدمة)"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_order_line__preparation_time
 msgid "Time to prepare the order line"
-msgstr ""
+msgstr "الوقت المطلوب لتحضير بند الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_order_line__service_time
 msgid "Time to serve the order line"
-msgstr ""
+msgstr "الوقت المطلوب لخدمة بند الطلب"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,help:pos_enterprise.field_pos_prep_stage__alert_timer
 msgid "Timer after which the order will be highlighted"
-msgstr ""
+msgstr "المؤقت الذي سيتم بعده تحديد الطلب"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Tyro"
-msgstr ""
+msgstr "Tyro"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_res_config_settings__module_pos_tyro
 msgid "Tyro Payment Terminal"
-msgstr ""
+msgstr "Tyro Payment Terminal"
 
 #. module: pos_enterprise
 #: model:ir.model.fields,field_description:pos_enterprise.field_res_config_settings__pos_module_pos_urban_piper
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.res_config_settings_view_form
 msgid "Urban Piper"
-msgstr ""
+msgstr "Urban Piper"
 
 #. module: pos_enterprise
 #: model:ir.model,name:pos_enterprise.model_resource_calendar_attendance
 msgid "Work Detail"
-msgstr ""
+msgstr "تفاصيل العمل"
 
 #. module: pos_enterprise
 #. odoo-python
@@ -814,29 +819,29 @@ msgstr ""
 msgid ""
 "You cannot modify the stages of a preparation display that has an active "
 "sessions."
-msgstr ""
+msgstr "لا يمكنك تعديل المراحل لشاشة تحضير طعام تحتوي على جلسات نشطة."
 
 #. module: pos_enterprise
 #: model:ir.actions.server,name:pos_enterprise.preparation_display_delete_cron_ir_actions_server
 msgid "delete_preparation_order"
-msgstr ""
+msgstr "delete_preparation_order"
 
 #. module: pos_enterprise
 #: model_terms:ir.ui.view,arch_db:pos_enterprise.preparation_display_view_form
 msgid "minutes"
-msgstr ""
+msgstr "دقائق"
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/preparation_display/preparation_display.xml:0
 msgid "or simply wait for orders to be sent for preparation."
-msgstr ""
+msgstr "أو يمكنك الانتظار بكل بساطة حتى يتم إرسال الطلبات ليتم تجهيزها."
 
 #. module: pos_enterprise
 #. odoo-javascript
 #: code:addons/pos_enterprise/static/src/app/components/order/order.xml:0
 msgid "products"
-msgstr ""
+msgstr "منتجات"
 
 #~ msgid "Save"
 #~ msgstr "حفظ"

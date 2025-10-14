@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-13 02:40+0000\n"
+"PO-Revision-Date: 2025-10-13 20:23+0000\n"
 "Last-Translator: \"Tony Ng (ngto)\" <ngto@odoo.com>\n"
 "Language-Team: Chinese (Traditional Han script) <https://translate.odoo.com/"
 "projects/odoo-19/hr_expense_stripe/zh_Hant/>\n"
@@ -82,7 +82,8 @@ msgstr ""
 msgid ""
 "<strong>Top up your Stripe Issuing account to ensure your balance covers "
 "upcoming expenses.</strong>"
-msgstr ""
+msgstr "<strong>記得為你的 Stripe Issuing "
+"賬戶增值，以確保餘額足夠支付即將產生的開支。</strong>"
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_canceled
@@ -866,7 +867,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
 msgid "All valid MCCs"
-msgstr ""
+msgstr "所有有效的 MCC 代碼"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -1572,7 +1573,8 @@ msgstr ""
 msgid ""
 "Create prepaid virtual and physical cards for both one-time and recurring "
 "expenses, integrated into Odoo through Stripe Issuing."
-msgstr ""
+msgstr "利用整合至 Odoo 的 Stripe Issuing "
+"功能，可為單次及經常性支出，建立預付儲值的虛擬或實體開支卡。"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.actions.act_window,help:hr_expense_stripe.action_hr_expense_stripe_card
@@ -1970,7 +1972,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.actions.server,name:hr_expense_stripe.hr_expense_stripe_issuing_status_cron_ir_actions_server
 msgid "Expense Stripe issuing: Update account status"
-msgstr ""
+msgstr "開支 Stripe Issuing：更新賬戶狀態"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2286,7 +2288,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
 msgid "IAP Public key used for Stripe Issuing"
-msgstr ""
+msgstr "用於 Stripe Issuing 的程式內購買（IAP）公鑰"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__partner_bank_id
@@ -2345,6 +2347,10 @@ msgid ""
 "fully settled. Odoo and Stripe are not responsible\n"
 "                    for any unwithdrawn funds."
 msgstr ""
+"關閉 Stripe Issuing 賬戶時，你必須：在賬戶關閉前，轉出所有剩餘資金，\n"
+"                    解決所有待處理交易，並確保賬戶款項已完全清繳。請注意："
+"Odoo 及 Stripe \n"
+"                    對任何未提取的資金概不負責。"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2552,18 +2558,18 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.ui.menu,name:hr_expense_stripe.menu_product_mcc_stripe_tag
 msgid "MCC"
-msgstr ""
+msgstr "MCC 代碼"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "MCC not allowed"
-msgstr ""
+msgstr "MCC 不允許使用"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "MCCs"
-msgstr ""
+msgstr "MCC 代碼"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.marinas_service_and_supplies
@@ -2817,13 +2823,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "No MCC found"
-msgstr ""
+msgstr "找不到 MCC 代碼"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "No MCC is properly set"
-msgstr ""
+msgstr "沒有正確設定的 MCC 代碼"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2908,6 +2914,8 @@ msgid ""
 "                    your Stripe Issuing account, including lost funds, "
 "business interruption, or indirect damages."
 msgstr ""
+"對因使用你的 Stripe Issuing 賬戶而產生的任何後果，Odoo 概不承擔任何責任，\n"
+"                    包括資金損失、業務受阻，或其他間接損害等。"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.office_and_commercial_furniture
@@ -2919,14 +2927,14 @@ msgstr ""
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
 msgid ""
 "Only IBAN is supported for Stripe Issuing funding instructions right now"
-msgstr ""
+msgstr "Stripe Issuing 資金指示目前只支援 IBAN（國際銀行賬戶號碼）"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/wizard/hr_expense_stripe_topup_wizard.py:0
 msgid ""
 "Only SEPA is supported for Stripe Issuing funding instructions right now"
-msgstr ""
+msgstr "Stripe Issuing 資金指示目前只支援 SEPA（單一歐元支付區）"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2934,13 +2942,13 @@ msgstr ""
 msgid ""
 "Only administrators can change the code or the stripe technical name of a "
 "MCC."
-msgstr ""
+msgstr "只限系統管理員才可更改 MCC 代碼或 Stripe 技術名稱。"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Only licenses databases can use Odoo Stripe Issuing services."
-msgstr ""
+msgstr "Odoo 的 Stripe Issuing 服務，只限已獲許可證的資料庫使用。"
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_account_bank_statement_line_check_unique_stripe_id
@@ -3162,7 +3170,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/res_company.py:0
 msgid "Private key used for Stripe Issuing"
-msgstr ""
+msgstr "用於 Stripe Issuing 的私鑰"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__product_name
@@ -3470,13 +3478,13 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_acceptance_date
 msgid "Stripe Account Issuing Tos Acceptance Date"
-msgstr ""
+msgstr "Stripe 賬戶 Issuing 服務條款接納日期"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_account_issuing_tos_accepted
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_account_issuing_tos_accepted
 msgid "Stripe Account Issuing Tos Accepted"
-msgstr ""
+msgstr "Stripe 賬戶 Issuing 服務條款已接納"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__stripe_authorization_id
@@ -3537,45 +3545,45 @@ msgstr ""
 #: code:addons/hr_expense_stripe/models/account_chart_template.py:0
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
 msgid "Stripe Issuing"
-msgstr ""
+msgstr "Stripe Issuing"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_product__stripe_issuing_activated
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_activated
 msgid "Stripe Issuing Activated"
-msgstr ""
+msgstr "Stripe Issuing 已啟動"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_db_private_key_id
 msgid "Stripe Issuing Db Private Key"
-msgstr ""
+msgstr "Stripe Issuing 資料庫私鑰"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_public_key_id
 msgid "Stripe Issuing Iap Public Key"
-msgstr ""
+msgstr "Stripe Issuing 程式內購買公鑰"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_issuing_iap_webhook_uuid
 msgid "Stripe Issuing Iap Webhook Uuid"
-msgstr ""
+msgstr "Stripe Issuing 程式內購買網絡鈎子唯一識別碼（UUID）"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_company__stripe_journal_id
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__stripe_journal_id
 msgid "Stripe Issuing Journal"
-msgstr ""
+msgstr "Stripe Issuing 日記賬"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_list
 msgid "Stripe Issuing Merchant Category Codes"
-msgstr ""
+msgstr "Stripe Issuing 商戶類別代碼"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_stripe_topup_wizard
 msgid "Stripe Issuing Top-up Wizard"
-msgstr ""
+msgstr "Stripe Issuing 增值精靈"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3583,19 +3591,19 @@ msgstr ""
 msgid ""
 "Stripe Issuing configuration invalid, please set it as 'live' or 'test' in "
 "the configurations."
-msgstr ""
+msgstr "Stripe Issuing 配置無效。請在配置中，將它設定為「正式運行」或「測試」。"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/account_journal.py:0
 msgid "Stripe Issuing is not available in your country."
-msgstr ""
+msgstr "你所在的國家/地區未能使用 Stripe Issuing 服務。"
 
 #. module: hr_expense_stripe
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Stripe Issuing with Odoo is not yet implemented for the US customers."
-msgstr ""
+msgstr "Odoo 的 Stripe Issuing 整合功能，目前尚未提供予美國客戶使用。"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__journal_id
@@ -3605,7 +3613,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_product_mcc_stripe_tag
 msgid "Stripe MCC Tag"
-msgstr ""
+msgstr "Stripe MCC 標籤"
 
 #. module: hr_expense_stripe
 #: model:ir.actions.act_window,name:hr_expense_stripe.product_mcc_stripe_tag
@@ -3655,7 +3663,8 @@ msgstr ""
 msgid ""
 "Stripe cards associated with this journal. They can be used to pay for "
 "expenses, or to top up the Stripe Issuing balance."
-msgstr ""
+msgstr "關聯至此日記賬的 Stripe 付款卡。這些卡可用於繳付開支，或增值 Stripe Issuing "
+"餘額。"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3775,7 +3784,7 @@ msgstr ""
 msgid ""
 "The Stripe issuing account isn't properly set. Please connect to Stripe in "
 "the settings"
-msgstr ""
+msgstr "Stripe Issuing 賬戶未正確設定。請在設定頁面連接至 Stripe 服務。"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3903,7 +3912,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_product_mcc_stripe_tag_constraint_code_unique
 msgid "The code of the MCC tag must be unique!"
-msgstr ""
+msgstr "MCC 標籤的代碼必須獨一無二。"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4057,7 +4066,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_journal__stripe_issuing_balance_timestamp
 msgid "Timestamp of the most recent Stripe Issuing Balance update"
-msgstr ""
+msgstr "最近一次更新 Stripe Issuing 餘額時間"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.tire_retreading_and_repair
@@ -4464,6 +4473,10 @@ msgid ""
 "                    from any losses, claims, or liabilities related to your "
 "use of Stripe Issuing services, including misuse or violations."
 msgstr ""
+"就你使用 Stripe Issuing "
+"服務（包括濫用或違規行為）相關或因其產生的任何損失、索賠或責任，\n"
+"                    你同意 "
+"Odoo、其董事、職員及關聯人士或公司可免除責任及不蒙受損害。"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4473,6 +4486,8 @@ msgid ""
 "account.\n"
 "                    Repayment is due immediately upon notice."
 msgstr ""
+"你對你的 Stripe Issuing 賬戶的任何負數餘額負有全部責任。\n"
+"                    收到通知時，欠款應立即償還。"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4542,7 +4557,7 @@ msgstr ""
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_res_company_constraint_journal_stripe_activated
 msgid ""
 "You cannot remove the journal used by Stripe Issuing when it is activated"
-msgstr ""
+msgstr "若 Stripe Issuing 所使用的日記賬處於啟動狀態，便不可移除。"
 
 #. module: hr_expense_stripe
 #. odoo-python

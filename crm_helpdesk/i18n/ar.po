@@ -7,13 +7,14 @@
 # Mehjabin Farsana, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "crm_helpdesk/ar/>\n"
 "Language: ar\n"
@@ -28,12 +29,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/crm_helpdesk/wizard/helpdesk_ticket_to_lead.py:0
 msgid "An archived ticket cannot be converted into a lead."
-msgstr ""
+msgstr "لا يمكن تحويل تذكرة مؤرشفة إلى عميل مهتم."
 
 #. module: crm_helpdesk
 #: model:ir.model.fields,field_description:crm_helpdesk.field_helpdesk_ticket_to_lead__convert_to
 msgid "Conversion Action"
-msgstr ""
+msgstr "إجراء التحويل"
 
 #. module: crm_helpdesk
 #: model:ir.model,name:crm_helpdesk.model_helpdesk_ticket_to_lead
@@ -55,7 +56,7 @@ msgstr "التحويل إلى عميل مهتم"
 #: model_terms:ir.ui.view,arch_db:crm_helpdesk.helpdesk_ticket_to_lead_view_form
 #: model_terms:ir.ui.view,arch_db:crm_helpdesk.helpdesk_ticket_view_form_inherited
 msgid "Convert to Opportunity"
-msgstr ""
+msgstr "تحويل إلى فرصة"
 
 #. module: crm_helpdesk
 #: model:ir.actions.act_window,name:crm_helpdesk.crm_lead_convert2ticket_action
@@ -67,7 +68,7 @@ msgstr "التحويل إلى تذكرة"
 #. module: crm_helpdesk
 #: model:ir.model.fields.selection,name:crm_helpdesk.selection__helpdesk_ticket_to_lead__convert_to__convert
 msgid "Convert to opportunity"
-msgstr ""
+msgstr "تحويل إلى فرصة"
 
 #. module: crm_helpdesk
 #: model_terms:ir.ui.view,arch_db:crm_helpdesk.crm_lead_convert2ticket_view_form
@@ -77,7 +78,7 @@ msgstr "إنشاء تذكرة"
 #. module: crm_helpdesk
 #: model:ir.model,website_form_label:crm_helpdesk.model_helpdesk_ticket
 msgid "Create a Ticket"
-msgstr ""
+msgstr "قم بإنشاء تذكرة"
 
 #. module: crm_helpdesk
 #: model:ir.model.fields.selection,name:crm_helpdesk.selection__helpdesk_ticket_to_lead__action__create
@@ -124,7 +125,7 @@ msgstr "عدم الربط بعميل"
 #. module: crm_helpdesk
 #: model:ir.model.fields,field_description:crm_helpdesk.field_helpdesk_ticket_to_lead__force_assignment
 msgid "Force assignment"
-msgstr ""
+msgstr "فرض التعيين"
 
 #. module: crm_helpdesk
 #: model:ir.model,name:crm_helpdesk.model_helpdesk_ticket
@@ -144,6 +145,8 @@ msgid ""
 "If checked, forces salesman to be updated on updated opportunities even if "
 "already set."
 msgstr ""
+"إذا كان محدداً، فإنه يفرض تحديث مندوب المبيعات في الفرص المحدّثة، حتى إذا كان "
+"قد تم تعيينها بالفعل."
 
 #. module: crm_helpdesk
 #: model:ir.model.fields,field_description:crm_helpdesk.field_crm_lead_convert2ticket__write_uid
@@ -177,7 +180,7 @@ msgstr "تحويل العميل المهتم إلى تذكرة"
 #. odoo-python
 #: code:addons/crm_helpdesk/wizard/crm_lead_convert2ticket.py:0
 msgid "Lead converted into ticket %s"
-msgstr ""
+msgstr "تم تحويل العميل المهتم إلى تذكرة %s"
 
 #. module: crm_helpdesk
 #. odoo-python
@@ -194,7 +197,7 @@ msgstr "الربط بعميل موجود بالفعل"
 #. odoo-python
 #: code:addons/crm_helpdesk/wizard/helpdesk_ticket_to_lead.py:0
 msgid "Opportunity created"
-msgstr ""
+msgstr "تم إنشاء فرصة"
 
 #. module: crm_helpdesk
 #: model:ir.model.fields,field_description:crm_helpdesk.field_helpdesk_ticket_to_lead__action
@@ -227,7 +230,7 @@ msgstr "لقد تم إنشاء هذا العميل المهتم من التذك�
 #. odoo-python
 #: code:addons/crm_helpdesk/wizard/helpdesk_ticket_to_lead.py:0
 msgid "This opportunity has been created from ticket: %s"
-msgstr ""
+msgstr "لقد تم إنشاء هذه الفرصة من التذكرة: %s"
 
 #. module: crm_helpdesk
 #: model:ir.model.fields,field_description:crm_helpdesk.field_helpdesk_ticket_to_lead__ticket_id
@@ -244,7 +247,7 @@ msgstr "تم تحويل التذكرة"
 #. odoo-python
 #: code:addons/crm_helpdesk/wizard/crm_lead_convert2ticket.py:0
 msgid "Ticket Created"
-msgstr ""
+msgstr "تم إنشاء التذكرة"
 
 #~ msgid "Convert"
 #~ msgstr "تحويل "

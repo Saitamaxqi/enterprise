@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-15 21:01+0000\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import/de/>\n"
@@ -45,6 +45,7 @@ msgstr "Bankkontotransaktionen können nur einmal importiert werden!"
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "All or part of the following file(s) could not be imported:\n"
 msgstr ""
+"Alle oder ein Teil der folgenden Dateien konnten nicht importiert werden:\n"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
@@ -63,6 +64,8 @@ msgid ""
 "Cannot find in which journal to import the statement for account %s. Please "
 "configure the journal first."
 msgstr ""
+"Es konnte nicht ermittelt werden, in welches Journal dieser Kontoauszug für "
+"Konto %s importiert werden soll. Konfigurieren Sie zuerst das Journal."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -71,12 +74,14 @@ msgid ""
 "Cannot find in which journal to import this statement. Please manually "
 "select a journal."
 msgstr ""
+"Es konnte nicht ermittelt werden, in welches Journal dieser Kontoauszug "
+"importiert werden soll. Bitte Journal manuell auswählen."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Click \"New\" or upload a %s."
-msgstr ""
+msgstr "Klicken Sie auf „Neu“ oder laden Sie %s hoch."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -93,7 +98,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -106,12 +111,12 @@ msgstr "Zu Apps gehen"
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_bank_statement_import
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit
 msgid "Import File"
-msgstr ""
+msgstr "Datei importieren"
 
 #. module: account_bank_statement_import
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__unique_import_id
@@ -122,7 +127,7 @@ msgstr "Import-ID"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Import Template for Bank Statement Lines"
-msgstr ""
+msgstr "Importvorlage für Kontoauszugszeilen"
 
 #. module: account_bank_statement_import
 #. odoo-javascript
@@ -157,13 +162,13 @@ msgstr "Keine mit „%s“ übereinstimmende Währung gefunden."
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "No transactions matching your filters were found."
-msgstr ""
+msgstr "Es wurden keine Transaktionen gefunden, die Ihren Filtern entsprechen."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Nothing to do here!"
-msgstr ""
+msgstr "Hier gibt's nichts zu tun!"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -172,6 +177,8 @@ msgid ""
 "The account of this statement (%(account)s) is not the same as the journal (%"
 "(journal)s)."
 msgstr ""
+"Das Konto dieses Kontoauszugs (%(account)s) ist nicht dasselbe wie das "
+"Journal (%(journal)s)."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -180,6 +187,8 @@ msgid ""
 "The currency of the bank statement (%(code)s) is not the same as the "
 "currency of the journal (%(journal)s)."
 msgstr ""
+"Die Währung des Kontoauszugs (%(code)s) entspricht nicht der Währung des "
+"Journals (%(journal)s)."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -189,6 +198,9 @@ msgid ""
 "If it contains transactions for more than one account, it must be imported "
 "on each of them."
 msgstr ""
+"Diese Datei enthält keine Auszüge für Konto %s.\n"
+"Wenn er Buchungen für mehr als ein Konto enthält, muss er für jedes einzeln "
+"importiert werden."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -198,6 +210,9 @@ msgid ""
 "If it contains transactions for more than one account, it must be imported "
 "on each of them."
 msgstr ""
+"Diese Datei enthält keine Transaktionen für Konto %s.\n"
+"Wenn er Buchungen für mehr als ein Konto enthält, muss er für jedes einzeln "
+"importiert werden."
 
 #. module: account_bank_statement_import
 #. odoo-python

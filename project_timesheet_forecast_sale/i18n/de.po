@@ -8,13 +8,14 @@
 # Larissa Manderfeld, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "project_timesheet_forecast_sale/de/>\n"
 "Language: de\n"
@@ -33,12 +34,12 @@ msgstr "Zeiterfassungs- und Planungsanalyse von %(name)s"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Kostenstellenbuchung"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__billable_allocated_hours
 msgid "Billable Time Allocated"
-msgstr ""
+msgstr "Abrechenbare Zeit zugeteilt"
 
 #. module: project_timesheet_forecast_sale
 #: model:planning.role,name:project_timesheet_forecast_sale.planning_role_consultant
@@ -53,12 +54,12 @@ msgstr "Berater"
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__display_name
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_billable_hours
 msgid "Effective Billable Time"
-msgstr ""
+msgstr "Tatsächliche abrechenbare Zeit"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_margin
@@ -68,7 +69,7 @@ msgstr "Tatsächliche Marge"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_non_billable_hours
 msgid "Effective Non-Billable Time"
-msgstr ""
+msgstr "Tatsächliche nichtabrechenbare Zeit"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__effective_revenues
@@ -83,17 +84,17 @@ msgstr "Tatsächliche Umsätze"
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__id
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_planning_analysis_report__non_billable_allocated_hours
 msgid "Non-billable Time Allocated"
-msgstr ""
+msgstr "Nichtabrechenbare Zeit zugeteilt"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_billable_hours
 msgid "Planned Billable Time"
-msgstr ""
+msgstr "Geplante abrechenbare Zeit"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_margin
@@ -103,7 +104,7 @@ msgstr "Geplante Marge"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_non_billable_hours
 msgid "Planned Non-Billable Time"
-msgstr ""
+msgstr "Geplante nichtabrechenbare Zeit"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model.fields,field_description:project_timesheet_forecast_sale.field_project_timesheet_forecast_report_analysis__planned_revenues
@@ -113,7 +114,7 @@ msgstr "Geplante Umsätze"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_timesheet_forecast_report_analysis
 msgid "Planning / Timesheets Analysis"
-msgstr ""
+msgstr "Zeiterfassungs-/Planungsanalyse"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_planning_analysis_report
@@ -123,7 +124,7 @@ msgstr "Planungsanalysebericht"
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_planning_slot
 msgid "Planning Shift"
-msgstr ""
+msgstr "Schicht der Planung"
 
 #. module: project_timesheet_forecast_sale
 #: model:ir.model,name:project_timesheet_forecast_sale.model_project_project

@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-16 13:37+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "account_inter_company_rules/ar/>\n"
 "Language: ar\n"
@@ -27,12 +28,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_inter_company_rules/models/account_move.py:0
 msgid "%(company)s Invoice: %(entry)s"
-msgstr ""
+msgstr "%(company)s الفاتورة: %(entry)s"
 
 #. module: account_inter_company_rules
 #: model:ir.model,name:account_inter_company_rules.model_account_move_send
 msgid "Account Move Send"
-msgstr ""
+msgstr "إرسال حركة الحساب"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_bank_statement_line__auto_generated
@@ -50,7 +51,7 @@ msgstr "مُنشأ تلقائياً من %(origin)s للشركة %(company)s."
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__intercompany_document_state
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_config_settings__intercompany_document_state
 msgid "Automation"
-msgstr ""
+msgstr "الأتمتة"
 
 #. module: account_inter_company_rules
 #: model:ir.model,name:account_inter_company_rules.model_res_company
@@ -65,7 +66,7 @@ msgstr "تهيئة الإعدادات"
 #. module: account_inter_company_rules
 #: model_terms:ir.ui.view,arch_db:account_inter_company_rules.res_config_settings_view_form
 msgid "Create Vendor Bills"
-msgstr ""
+msgstr "إنشاء فواتير المورّدين"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__intercompany_user_id
@@ -80,19 +81,19 @@ msgstr "إنشاء كـ"
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__display_name
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields.selection,name:account_inter_company_rules.selection__res_company__intercompany_document_state__draft
 msgid "Draft"
-msgstr ""
+msgstr "مسودة"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__intercompany_generate_bills_refund
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_config_settings__intercompany_generate_bills_refund
 #: model_terms:ir.ui.view,arch_db:account_inter_company_rules.view_company_inter_change_inherit_form
 msgid "Generate Bills and Refunds"
-msgstr ""
+msgstr "إنشاء الفواتير ورد الأموال"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_account_move__id
@@ -101,7 +102,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__id
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: account_inter_company_rules
 #: model_terms:ir.ui.view,arch_db:account_inter_company_rules.view_company_inter_change_inherit_form
@@ -122,7 +123,7 @@ msgstr "عنصر اليومية"
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_company__intercompany_purchase_journal_id
 #: model:ir.model.fields,field_description:account_inter_company_rules.field_res_config_settings__intercompany_purchase_journal_id
 msgid "Purchase Journal"
-msgstr ""
+msgstr "دفتر يومية المشتريات"
 
 #. module: account_inter_company_rules
 #: model:ir.model.fields,help:account_inter_company_rules.field_res_company__intercompany_user_id
@@ -140,12 +141,12 @@ msgstr "الفاتورة المصدر"
 #. module: account_inter_company_rules
 #: model:ir.model.fields.selection,name:account_inter_company_rules.selection__res_company__intercompany_document_state__posted
 msgid "Validated"
-msgstr ""
+msgstr "تم التصديق"
 
 #. module: account_inter_company_rules
 #: model_terms:ir.ui.view,arch_db:account_inter_company_rules.res_config_settings_view_form
 msgid "as"
-msgstr ""
+msgstr "كـ"
 
 #~ msgid "%s Invoice: %s"
 #~ msgstr "%s الفاتورة: %s"

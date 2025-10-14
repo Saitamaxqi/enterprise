@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"PO-Revision-Date: 2025-10-13 15:02+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/ai_app/"
 "it/>\n"
@@ -52,7 +52,7 @@ msgstr ""
 #: model:ir.ui.menu,name:ai_app.ai_menu_root
 #: model_terms:ir.ui.view,arch_db:ai_app.res_config_settings_view_form
 msgid "AI"
-msgstr "IA"
+msgstr "AI"
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_agent_view_form
@@ -77,7 +77,7 @@ msgstr "Agenti"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_agent_action
 msgid "Agents help you manage and organize your AI operations."
-msgstr "Gli agenti ti aiutano a gestire e organizzare le tue operazioni IA."
+msgstr "Gli agenti ti aiutano a gestire e organizzare le tue operazioni AI."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.ai_composer_form
@@ -248,7 +248,7 @@ msgstr "Argomenti"
 #. module: ai_app
 #: model_terms:ir.actions.act_window,help:ai_app.ai_topic_action
 msgid "Topics help you manage and organize your AI operations."
-msgstr "Gli argomenti ti aiutano a gestire e organizzare le tue operazioni IA."
+msgstr "Gli argomenti ti aiutano a gestire e organizzare le tue operazioni AI."
 
 #. module: ai_app
 #: model_terms:ir.ui.view,arch_db:ai_app.res_config_settings_view_form

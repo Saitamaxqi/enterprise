@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "website_enterprise/de/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 #. module: website_enterprise
 #: model_terms:ir.ui.view,arch_db:website_enterprise.res_config_settings_view_form
 msgid "+ Import Website"
-msgstr ""
+msgstr "+ Website importieren"
 
 #. module: website_enterprise
 #: model:website.configurator.feature,name:website_enterprise.feature_module_appointment
@@ -36,7 +36,7 @@ msgstr "Termin"
 #. module: website_enterprise
 #: model_terms:ir.ui.view,arch_db:website_enterprise.external_snippets
 msgid "Appointment Button"
-msgstr ""
+msgstr "Termin-Schaltfläche"
 
 #. module: website_enterprise
 #. odoo-javascript
@@ -47,18 +47,18 @@ msgstr "Terminformular"
 #. module: website_enterprise
 #: model_terms:ir.ui.view,arch_db:website_enterprise.external_snippets
 msgid "Appointments"
-msgstr ""
+msgstr "Termine"
 
 #. module: website_enterprise
 #: model:ir.model,name:website_enterprise.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "Konfigurationseinstellungen"
 
 #. module: website_enterprise
 #: model:ir.model.fields,field_description:website_enterprise.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:website_enterprise.field_website__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: website_enterprise
 #: model:website.configurator.feature,name:website_enterprise.feature_module_helpdesk
@@ -69,13 +69,13 @@ msgstr "Kundendienst"
 #: model:ir.model.fields,field_description:website_enterprise.field_res_config_settings__id
 #: model:ir.model.fields,field_description:website_enterprise.field_website__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_enterprise
 #. odoo-python
 #: code:addons/website_enterprise/models/res_config_settings.py:0
 msgid "Imported Website"
-msgstr ""
+msgstr "Importierte Website"
 
 #. module: website_enterprise
 #. odoo-javascript
@@ -91,24 +91,24 @@ msgstr "System zur eigenständigen Terminbuchung"
 #. module: website_enterprise
 #: model:website.configurator.feature,description:website_enterprise.feature_module_helpdesk
 msgid "Support with a ticketing system"
-msgstr ""
+msgstr "Kompatibel mit einem Ticketing-System"
 
 #. module: website_enterprise
 #: model:ir.model,name:website_enterprise.model_website
 msgid "Website"
-msgstr ""
+msgstr "Website"
 
 #. module: website_enterprise
 #. odoo-javascript
 #: code:addons/website_enterprise/static/src/client_actions/configurator/configurator.xml:0
 msgid "import your website"
-msgstr ""
+msgstr "Ihre Website importieren"
 
 #. module: website_enterprise
 #. odoo-javascript
 #: code:addons/website_enterprise/static/src/client_actions/configurator/configurator.xml:0
 msgid "or"
-msgstr ""
+msgstr "oder"
 
 #~ msgid "Offer support with a ticketing system"
 #~ msgstr "Support bieten mit Ticketingsystem"

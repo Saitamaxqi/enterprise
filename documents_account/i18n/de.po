@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-26 12:11+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/de/>\n"
@@ -29,7 +29,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "\"New Journal Entry\" can only be applied to Document."
-msgstr ""
+msgstr "„Neue Journalbuchung“ kann nur auf Dokument angewendet werden."
 
 #. module: documents_account
 #. odoo-javascript
@@ -43,12 +43,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "<b>Select</b> this page to continue."
-msgstr ""
+msgstr "<b>Wählen Sie</b> diese Seite aus, um fortzufahren."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.account_move_view_form
 msgid "<span class=\"o_stat_text\">Documents</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Dokumente</span>"
 
 #. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique
@@ -58,36 +58,36 @@ msgstr "Es existiert bereits eine Einstellung für dieses Journal"
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.res_config_settings_view_form
 msgid "Accounting"
-msgstr ""
+msgstr "Buchhaltung"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder_id
 msgid "Accounting Folder"
-msgstr ""
+msgstr "Buchhaltungsordner"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "Buchhaltungsbericht"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Action"
-msgstr ""
+msgstr "Aktion"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "All"
-msgstr ""
+msgstr "Alle"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Annual Closing"
-msgstr ""
+msgstr "Jahresabschluss"
 
 #. module: documents_account
 #. odoo-javascript
@@ -121,12 +121,12 @@ msgstr "Prüfen Sie diese"
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Choose a journal..."
-msgstr ""
+msgstr "Ein Journal auswählen ..."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Choose an accounting document type..."
-msgstr ""
+msgstr "Einen Dokumenttyp für Buchhaltung auswählen ..."
 
 #. module: documents_account
 #. odoo-javascript
@@ -156,13 +156,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Click the cross to <b>exit preview</b>."
-msgstr ""
+msgstr "Klicken Sie auf das Kreuz, um die <b>Vorschau zu verlassen</b>."
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Close (Esc)"
-msgstr ""
+msgstr "Schließen (Esc)"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
@@ -183,7 +183,7 @@ msgstr "Konfigurationseinstellungen"
 #. odoo-python
 #: code:addons/documents_account/models/account_report.py:0
 msgid "Copy to Documents"
-msgstr ""
+msgstr "Zu Dokumenten kopieren"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
@@ -194,18 +194,18 @@ msgstr "Anlegen"
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "Create %(model_name)s"
-msgstr ""
+msgstr "%(model_name)s erstellen"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "Create %(model_name)s (%(journal_name)s)"
-msgstr ""
+msgstr "%(model_name)s erstellen (%(journal_name)s)"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_code
 msgid "Create Credit Note"
-msgstr ""
+msgstr "Gutschrift erstellen"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note
@@ -224,7 +224,7 @@ msgstr "Kundenrechnung erstellen"
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_code
 msgid "Create Misc Entry"
-msgstr ""
+msgstr "Diverse Buchung erstellen"
 
 #. module: documents_account
 #. odoo-javascript
@@ -238,18 +238,20 @@ msgstr "Lieferantenrechnung erstellen"
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_code
 msgid "Create Vendor Credit Note"
-msgstr ""
+msgstr "Lieferantengutschrift erstellen"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_receipt
 msgid "Create Vendor Receipt"
-msgstr ""
+msgstr "Lieferantenbeleg erstellen"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Create a new document for the remaining page, it will be handled later."
 msgstr ""
+"Erstellen Sie ein neues Dokument für die verbleibende Seite. Es wird später "
+"verarbeitet."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_uid
@@ -264,12 +266,12 @@ msgstr "Erstellt am"
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_refund
 msgid "Credit Note"
-msgstr ""
+msgstr "Gutschrift"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_invoice
 msgid "Customer Invoice"
-msgstr ""
+msgstr "Kundenrechnung"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__display_name
@@ -289,37 +291,37 @@ msgstr "Anzeigename"
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_create_model
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_create_model
 msgid "Documents Account Create Model"
-msgstr ""
+msgstr "Dokumente der Buchhaltung: Modell erstellen"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_journal_id
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_journal_id
 msgid "Documents Account Journal"
-msgstr ""
+msgstr "Dokumente der Buchhaltung: Journal"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_move_type
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_move_type
 msgid "Documents Account Move Type"
-msgstr ""
+msgstr "Dokumente der Buchhaltung: Buchungstyp"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_suitable_journal_ids
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_suitable_journal_ids
 msgid "Documents Account Suitable Journal"
-msgstr ""
+msgstr "Dokumente der Buchhaltung: passendes Journal"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/account_report.py:0
 msgid "Export"
-msgstr ""
+msgstr "Exportieren"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard_format
@@ -337,7 +339,7 @@ msgstr "Export-Assistent für Buchhaltungsberichte"
 #: code:addons/documents_account/models/documents_document.py:0
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Finance"
-msgstr ""
+msgstr "Finanzen"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__folder_id
@@ -355,7 +357,7 @@ msgstr "Ordner, in dem die generierte Datei gespeichert werden soll"
 #. odoo-python
 #: code:addons/documents_account/models/account_journal.py:0
 msgid "Generated Bank Statements"
-msgstr ""
+msgstr "Generierte Kontoauszüge"
 
 #. module: documents_account
 #. odoo-python
@@ -367,12 +369,12 @@ msgstr "Generierte Dokumente"
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__has_documents
 #: model:ir.model.fields,field_description:documents_account.field_account_move__has_documents
 msgid "Has Documents"
-msgstr ""
+msgstr "Hat Dokumente"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_document__has_embedded_pdf
 msgid "Has Embedded PDF"
-msgstr ""
+msgstr "Hat eingebettetes PDF"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__id
@@ -399,7 +401,7 @@ msgstr "Bankauszug importieren"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Invoices"
-msgstr ""
+msgstr "Rechnungen"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_journal
@@ -445,6 +447,8 @@ msgid ""
 "Let's process documents in this folder.<br/> <i>Tip: Use Tags to filter "
 "documents and structure your process.</i>"
 msgstr ""
+"Verarbeiten Sie Dokumente in diesem Ordner.<br/><i>Tipp: Verwenden Sie "
+"Stichwörter, um Dokumente zu filtern und Ihre Prozesse zu strukturieren.</i>"
 
 #. module: documents_account
 #. odoo-javascript
@@ -458,7 +462,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Let's process this document now."
-msgstr ""
+msgstr "Lassen Sie uns dieses Dokument jetzt verarbeiten."
 
 #. module: documents_account
 #. odoo-javascript
@@ -467,6 +471,8 @@ msgid ""
 "Let's tag this mail as Finance<br/> <i>Tips: actions can be tailored to your "
 "process, according to the folder.</i>"
 msgstr ""
+"Kennzeichnen Sie diese E-Mail als „Finanzen“<br/><i>Hinweis: Aktionen können "
+"je nach Ordner auf Ihren Prozess zugeschnitten werden.</i>"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_entry
@@ -476,40 +482,40 @@ msgstr "Sonstiges"
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_move
 msgid "Move Document To Taxes"
-msgstr ""
+msgstr "Dokument nach „Steuern“ verschieben"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_move
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_move
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_move
 msgid "Move Document to Taxes"
-msgstr ""
+msgstr "Dokument nach „Steuern“ verschieben"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_move
 msgid "Move Documents to Annual Closing"
-msgstr ""
+msgstr "Dokumente nach „Jahresabschluss“ verschieben"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_move
 msgid "Move to Annual Closing"
-msgstr ""
+msgstr "Nach „Jahresabschluss“ verschieben"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__state__documents_account_record_create
 msgid "New Journal Entry"
-msgstr ""
+msgstr "Neue Journalbuchung"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Open the actions menu"
-msgstr ""
+msgstr "Aktionsmenü öffnen"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_receipt
 msgid "Purchase Receipt"
-msgstr ""
+msgstr "Einkaufsbeleg"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
@@ -521,18 +527,18 @@ msgstr "Dokument aus Kontoauszugszeile anfragen"
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Send To Finance"
-msgstr ""
+msgstr "An Finanzen senden"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "Serveraktion"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Split PDF"
-msgstr ""
+msgstr "PDF zerteilen"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids
@@ -544,7 +550,7 @@ msgstr "Stichwörter"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Taxes"
-msgstr ""
+msgstr "Steuern"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
@@ -555,13 +561,13 @@ msgstr "Diese Rechnung ist durch eine Banktransaktion ausgelöst worden."
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "This should be processed as a misc entry."
-msgstr ""
+msgstr "Sie sollte als Buchung im Journal „Sonstige“ verarbeitet werden."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "Typ"
 
 #. module: documents_account
 #: model:ir.model.fields,help:documents_account.field_ir_actions_server__state
@@ -580,11 +586,28 @@ msgid ""
 "- 'Multi Actions': define an action that triggers several other server "
 "actions\n"
 msgstr ""
+"Art der Serveraktion. Die folgenden Werte sind verfügbar:\n"
+"- „Einen Datensatz aktualieren“: Aktualisieren Sie die Werte eines "
+"Datensatzes.\n"
+"- „Aktivität erstellen“: Erstellen Sie eine Aktivität (Dialog)\n"
+"- „E-Mail versenden“: Hinterlassen Sie eine Nachricht, oder Notiz oder "
+"senden Sie eine E-Mail (Dialog)\n"
+"- „SMS versenden“: Senden Sie eine SMS, protokollieren Sie diese in "
+"Dokumenten (SMS), log them on documents (SMS)\n"
+"- „Follower hinzufügen/entfernen“: Fügen Sie einem Datensatz Follower hinzu "
+"oder entfernen Sie sie (Dialog)\n"
+"- „Datensatz erstellen“: Erstellen Sie einen neuen Datensatz mit neuen "
+"Werten\n"
+"- „Code ausführen“: ein Block Python-Code, der ausgeführt wird\n"
+"- „Webhook-Benachrichtigung versenden“: Senden Sie eine Anfrage zur "
+"VERÖFFENTLICHUNG an ein externes System, auch bekannt als Webhook\n"
+"- „Mehrere Aktionen ausführen“: Legen Sie eine Aktion fest, die mehrere "
+"andere Serveraktionen auslöst\n"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_invoice
 msgid "Vendor Bill"
-msgstr ""
+msgstr "Lieferantenrechnung"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_refund
@@ -606,12 +629,14 @@ msgid ""
 "Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
 msgstr ""
+"Wow ... Sie haben 6 Dokumente in wenigen Sekunden verarbeitet, super. "
+"<br>Versuchen Sie jetzt, Ihre eigenen Dokumente hochzuladen."
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "You can not create account move on folder."
-msgstr ""
+msgstr "Sie können keine Buchung im Ordner erstellen."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder_id

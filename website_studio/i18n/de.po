@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-09-15 21:11+0000\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "website_studio/de/>\n"
@@ -25,7 +25,7 @@ msgstr ""
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "<span class=\"bg-300 align-self-baseline\">/model/</span>"
-msgstr ""
+msgstr "<span class=\"bg-300 align-self-baseline\">/modell/</span>"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_form_field_name
@@ -41,118 +41,126 @@ msgstr ""
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "<span invisible=\"name_slugified\" class=\"bg-300\">...</span>"
-msgstr ""
+msgstr "<span invisible=\"name_slugified\" class=\"bg-300\">...</span>"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "Advanced"
-msgstr ""
+msgstr "Erweitert"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "Basic parameters"
-msgstr ""
+msgstr "Basisparameter"
 
 #. module: website_studio
 #. odoo-javascript
 #: code:addons/website_studio/static/src/plugins/form_option_plugin.js:0
 msgid "Create %s"
-msgstr ""
+msgstr "%s erstellen"
 
 #. module: website_studio
 #: model:ir.model.fields,field_description:website_studio.field_website_controller_page__auto_single_page
 msgid "Create Single Page"
-msgstr ""
+msgstr "Einzelne Seite erstellen"
 
 #. module: website_studio
 #: model:ir.model.fields,field_description:website_studio.field_website_controller_page__use_menu
 msgid "Create Website Menu"
-msgstr ""
+msgstr "Website-Menü erstellen"
 
 #. module: website_studio
 #: model:ir.model.fields,field_description:website_studio.field_website_controller_page__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_record_page
 msgid "Drag building blocks to customize the footer of single record pages."
 msgstr ""
+"Bewegen Sie Bausteine, um die Fußzeile von einzelnen Datensatzseiten "
+"anzupassen."
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_record_page
 msgid "Drag building blocks to customize the header of single record pages."
 msgstr ""
+"Bewegen Sie Bausteine, um die Kopfzeile von einzelnen Datensatzseiten "
+"anzupassen."
 
 #. module: website_studio
 #. odoo-python
 #: code:addons/website_studio/models/website_controller_page.py:0
 msgid "Drag building blocks to edit the website description of this record."
 msgstr ""
+"Ziehen Sie Bausteine, um die Website-Beschreibung dieses Datensatzes zu "
+"bearbeiten."
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "Exposed model"
-msgstr ""
+msgstr "Dargestelltes Modell"
 
 #. module: website_studio
 #. odoo-javascript
 #: code:addons/website_studio/static/src/plugins/form_option.xml:0
 msgid "Form Access"
-msgstr ""
+msgstr "Formularzugriff"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.listing_layout_switcher
 msgid "Grid"
-msgstr ""
+msgstr "Raster"
 
 #. module: website_studio
 #: model:ir.model.fields,field_description:website_studio.field_website_controller_page__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_studio
 #: model:ir.model.fields,help:website_studio.field_website_controller_page__auto_single_page
 msgid "If checked, a single page will be created along with your listing page"
 msgstr ""
+"Wenn angekreuzt, wird eine einzelne Seite zusammen mit Ihrer "
+"Auflistungsseite erstellt."
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.listing_layout_switcher
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #. module: website_studio
 #: model:ir.model,name:website_studio.model_website_controller_page
 msgid "Model Page"
-msgstr ""
+msgstr "Modellseite"
 
 #. module: website_studio
 #. odoo-javascript
 #: code:addons/website_studio/static/src/editor_tabs.js:0
 msgid "Model Pages"
-msgstr ""
+msgstr "Modellseiten"
 
 #. module: website_studio
 #. odoo-javascript
 #: code:addons/website_studio/static/src/plugins/form_option.xml:0
 msgid "More models"
-msgstr ""
+msgstr "Weitere Modelle"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_listing
 msgid "Search"
-msgstr ""
+msgstr "Suchen"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_listing
 msgid "Search..."
-msgstr ""
+msgstr "Suchen ..."
 
 #. module: website_studio
 #. odoo-javascript
 #: code:addons/website_studio/static/src/plugins/form_option_plugin.js:0
 msgid "Select model"
-msgstr ""
+msgstr "Modell auswählen"
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_form_field_name
@@ -162,18 +170,18 @@ msgstr "Einreichen"
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.website_controller_page_form_dialog
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #. module: website_studio
 #: model:ir.model.fields,field_description:website_studio.field_website_controller_page__name
 msgid "View Name"
-msgstr ""
+msgstr "Ansichtsbezeichnung"
 
 #. module: website_studio
 #. odoo-python
 #: code:addons/website_studio/models/website_controller_page.py:0
 msgid "Website Description"
-msgstr ""
+msgstr "Website-Beschreibung"
 
 #. module: website_studio
 #. odoo-javascript
@@ -182,11 +190,13 @@ msgid ""
 "Will be activated on save. Deactivate this if you do not want forms about "
 "this model."
 msgstr ""
+"Wird beim Speichern aktiviert. Deaktivieren Sie diese Option, wenn Sie keine "
+"Formulare zu diesem Modell wünschen."
 
 #. module: website_studio
 #: model_terms:ir.ui.view,arch_db:website_studio.default_listing
 msgid "found)"
-msgstr ""
+msgstr "gefunden)"
 
 #~ msgid "App icon"
 #~ msgstr "App-Icon"

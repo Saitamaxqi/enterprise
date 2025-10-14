@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/hr_sign/"
 "ar/>\n"
 "Language: ar\n"
@@ -27,7 +28,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "%(employee)s and %(responsible)s are the signatories."
-msgstr ""
+msgstr "%(employee)s و %(responsible)s هم الأطراف الموقِّعة."
 
 #. module: hr_sign
 #. odoo-python
@@ -56,12 +57,12 @@ msgstr "<span class=\"o_stat_text\">طلبات التوقيع</span>"
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_plan_template
 msgid "Activity plan template"
-msgstr ""
+msgstr "قالب خطة النشاط"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_schedule
 msgid "Activity schedule plan Wizard"
-msgstr ""
+msgstr "معالج خطة جدول الأنشطة"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -76,7 +77,7 @@ msgstr "مرفق"
 #. module: hr_sign
 #: model:sign.template,redirect_url_text:hr_sign.template_sign_termination
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__version_id
@@ -148,6 +149,13 @@ msgid ""
 "                - If the selected email is not defined, the available one "
 "will be used."
 msgstr ""
+"البريد الإلكتروني المستخدم لإرسال طلب التوقيع.\n"
+"                - يأخذ العمل عنوان البريد الإلكتروني المحدد في "
+"\"البريد الإلكتروني للعمل\"\n"
+"                - خاص تأخذ عنوان البريد الإلكتروني المحدد في المعلومات "
+"الخاصة\n"
+"                - إذا كان البريد الإلكتروني المختار غير محدد، سيتم استخدام "
+"المتاح منها."
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_employee
@@ -219,7 +227,7 @@ msgstr "آخر تحديث في"
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__mail_displayed
 msgid "Mail Displayed"
-msgstr ""
+msgstr "البريد الإلكتروني المعروض"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -235,7 +243,7 @@ msgstr "رسالة"
 #. odoo-python
 #: code:addons/hr_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "No documents templates on the database."
-msgstr ""
+msgstr "لا توجد قوالب منتجات في قاعدة البيانات."
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -293,6 +301,11 @@ msgid ""
 "the HR responsible.\n"
 "        "
 msgstr ""
+"حدد فقط المستندات التي تحتوي إما على طرف مُوقّع واحد أو طرفين مختلفين.\n"
+"        تتطلب المستندات التي تحتوي على طرف موقِّع واحد أن يوقِّع عليها الموظف "
+"فقط، بينما تتطلب المستندات التي تحتوي على طرفين موقِّعين توقيع كل من الموظف "
+"ومسؤول الموارد البشرية.\n"
+"        "
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -350,7 +363,7 @@ msgstr "تحذير القالب"
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Upload a PDF to set a new one."
-msgstr ""
+msgstr "قم بتحميل ملف PDF لتعيين ملف جديد."
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_res_users
@@ -360,7 +373,7 @@ msgstr "المستخدم"
 #. module: hr_sign
 #: model:ir.model.fields.selection,name:hr_sign.selection__hr_contract_sign_document_wizard__mail_to__work
 msgid "Work"
-msgstr ""
+msgstr "العمل"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign

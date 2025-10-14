@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_account_iso20022/ar/>\n"
 "Language: ar\n"
@@ -49,22 +50,22 @@ msgstr "الموظف"
 #. module: hr_payroll_account_iso20022
 #: model:hr.payroll.dashboard.warning,name:hr_payroll_account_iso20022.hr_payroll_dashboard_warning_employee_invalid_bank_account
 msgid "Employees With Invalid IBAN Bank Accounts"
-msgstr ""
+msgstr "الموظفون الذين لديهم حسابات IBAN بنكية غير صالحة"
 
 #. module: hr_payroll_account_iso20022
 #: model:hr.payroll.dashboard.warning,name:hr_payroll_account_iso20022.hr_payroll_dashboard_warning_employee_no_country
 msgid "Employees Without Any Country"
-msgstr ""
+msgstr "الموظفون بدون دولة"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields,field_description:hr_payroll_account_iso20022.field_hr_payroll_payment_report_wizard__export_format
 msgid "Export Format"
-msgstr ""
+msgstr "صيغة الملف المصدر"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model,name:hr_payroll_account_iso20022.model_hr_payroll_payment_report_wizard
 msgid "HR Payroll Payment Report Wizard"
-msgstr ""
+msgstr "معالج تقرير دفع المرتبات للموارد البشرية"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields,field_description:hr_payroll_account_iso20022.field_hr_employee__id
@@ -79,17 +80,17 @@ msgstr "المُعرف"
 #: code:addons/hr_payroll_account_iso20022/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_iso20022.hr_payslip_run_view_kanban
 msgid "Mark as Paid"
-msgstr ""
+msgstr "التحديد كمدفوع"
 
 #. module: hr_payroll_account_iso20022
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_iso20022.hr_payslip_view_form
 msgid "Mark as paid"
-msgstr ""
+msgstr "التحديد كمدفوع"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model,name:hr_payroll_account_iso20022.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "تشغيل الدفع"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model,name:hr_payroll_account_iso20022.model_hr_payslip
@@ -101,29 +102,29 @@ msgstr "إيصال الدفع"
 #: code:addons/hr_payroll_account_iso20022/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account_iso20022.hr_payslip_run_view_kanban
 msgid "Payment Report"
-msgstr ""
+msgstr "تقرير الدفع"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields.selection,name:hr_payroll_account_iso20022.selection__hr_payroll_payment_report_wizard__export_format__sepa
 msgid "SEPA"
-msgstr ""
+msgstr "SEPA"
 
 #. module: hr_payroll_account_iso20022
 #. odoo-python
 #: code:addons/hr_payroll_account_iso20022/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Some employees (%s) don't have a valid name on the work contact."
-msgstr ""
+msgstr "لا يملك بعض الموظفون (%s) اسماً صالحاً في معلومات تواصل العمل."
 
 #. module: hr_payroll_account_iso20022
 #. odoo-python
 #: code:addons/hr_payroll_account_iso20022/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Some employees (%s) don't have a work contact."
-msgstr ""
+msgstr "لا يملك بعض الموظفون (%s) معلومات تواصل للعمل."
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields.selection,name:hr_payroll_account_iso20022.selection__hr_payroll_payment_report_wizard__export_format__iso20022_ch
 msgid "Swiss ISO20022"
-msgstr ""
+msgstr "Swiss ISO20022"
 
 #. module: hr_payroll_account_iso20022
 #. odoo-python
@@ -144,12 +145,12 @@ msgstr ""
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields,field_description:hr_payroll_account_iso20022.field_hr_payslip__iso20022_uetr
 msgid "UETR"
-msgstr ""
+msgstr "UETR"
 
 #. module: hr_payroll_account_iso20022
 #: model:ir.model.fields,help:hr_payroll_account_iso20022.field_hr_payslip__iso20022_uetr
 msgid "Unique end-to-end transaction reference"
-msgstr ""
+msgstr "مرجع فريد للمعاملات من البداية إلى النهاية"
 
 #~ msgid "Cancel"
 #~ msgstr "إلغاء "

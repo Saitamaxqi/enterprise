@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "project_forecast/de/>\n"
@@ -27,12 +27,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/project_forecast/models/project_project.py:0
 msgid "%s Hours"
-msgstr ""
+msgstr "%s Stunden"
 
 #. module: project_forecast
 #: model_terms:ir.ui.view,arch_db:project_forecast.planning_shift_ics_description_inherit
 msgid "<b>Project:</b>"
-msgstr ""
+msgstr "<b>Projekt:</b>"
 
 #. module: project_forecast
 #: model:ir.ui.menu,name:project_forecast.planning_menu_schedule_by_project
@@ -42,7 +42,7 @@ msgstr "Nach Projekt"
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_planning_slot_template__company_id
 msgid "Company"
-msgstr ""
+msgstr "Unternehmen"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_planning_analysis_report__display_name
@@ -50,7 +50,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_forecast.field_planning_slot_template__display_name
 #: model:ir.model.fields,field_description:project_forecast.field_project_project__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: project_forecast
 #: model:ir.model.fields,field_description:project_forecast.field_planning_analysis_report__id
@@ -58,7 +58,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:project_forecast.field_planning_slot_template__id
 #: model:ir.model.fields,field_description:project_forecast.field_project_project__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: project_forecast
 #: model_terms:ir.actions.act_window,help:project_forecast.project_forecast_action_from_project
@@ -117,7 +117,7 @@ msgstr "Projekt"
 #. module: project_forecast
 #: model_terms:ir.ui.view,arch_db:project_forecast.planning_shift_ics_description_inherit
 msgid "Project:"
-msgstr ""
+msgstr "Projekt:"
 
 #. module: project_forecast
 #: model:ir.actions.act_window,name:project_forecast.planning_action_schedule_by_project
@@ -159,6 +159,12 @@ msgid ""
 "To change it, first clear the company field for the project. Then move the "
 "shifts to the new company, and update the project's company."
 msgstr ""
+"Sie können das Unternehmen für das Projekt %(project_name)s nicht "
+"aktualisieren, da es mit Schichten in einem anderen Unternehmen verknüpft "
+"ist.\n"
+"Um es zu ändern, müssen Sie zuerst das Unternehmensfeld des Projekts leeren. "
+"Verschieben Sie dann die Schichten ins neue Unternehmen und aktualisieren "
+"Sie das Unternehmen des Projekts."
 
 #~ msgid "Plan your resources for this project"
 #~ msgstr "Planen Sie Ihre Ressourcen für dieses Projekt"

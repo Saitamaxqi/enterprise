@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/iot/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
@@ -29,16 +30,19 @@ msgid ""
 "                    Searching for an IoT Box.\n"
 "                    <span id=\"discover_retry_countdown\" class=\"fw-bold\"/>"
 msgstr ""
+"<span class=\"spinner-border spinner-border-sm\"/>\n"
+"                    جاري البحث عن جهاز IoT.\n"
+"                    <span id=\"discover_retry_countdown\" class=\"fw-bold\"/>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "A fiscal data module has been connected. To use it,"
-msgstr ""
+msgstr "تم توصيل تطبيق للبيانات المالية. حتى تتمكن من استخدامه،"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__must_install_fdm_module
 msgid "A fiscal data module is connected to this IoT Box"
-msgstr ""
+msgstr "يوجد تطبيق بيانات مالية متصل بجهاز IoT Box هذا"
 
 #. module: iot
 #: model:ir.model,name:iot.model_add_iot_box
@@ -48,17 +52,17 @@ msgstr "إضافة معالج جهاز IoT"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__add_iot_box_wizard_id
 msgid "Add Iot Box Wizard"
-msgstr ""
+msgstr "إضافة معالج لجهاز Iot"
 
 #. module: iot
 #: model:res.groups,name:iot.group_iot_admin
 msgid "Administrator"
-msgstr ""
+msgstr "المدير"
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_discovered_box
 msgid "An IoT box that is in pairing mode"
-msgstr ""
+msgstr "هناك جهاز IoT في وضع الاقتران"
 
 #. module: iot
 #. odoo-javascript
@@ -118,7 +122,7 @@ msgstr "بلوتوث"
 #. module: iot
 #: model:ir.ui.menu,name:iot.iot_settings_menu_action
 msgid "Cache"
-msgstr ""
+msgstr "ذاكرة التخزين المؤقت"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__camera
@@ -134,7 +138,7 @@ msgstr "تحقق ما إذا كان الجهاز لا يزال متصلاً"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Check the lights"
-msgstr ""
+msgstr "تحقق من الأضواء"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -150,7 +154,7 @@ msgstr "الشركة"
 #. module: iot
 #: model:ir.ui.menu,name:iot.view_iot_selected_printer_local_action
 msgid "Configuration"
-msgstr ""
+msgstr "التهيئة"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__connect
@@ -164,17 +168,17 @@ msgstr "اتصل"
 #. module: iot
 #: model:ir.actions.act_window,name:iot.action_add_iot_box
 msgid "Connect my IoT Box"
-msgstr ""
+msgstr "توصيل جهاز IoT الخاص بي"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connected_status__connected
 msgid "Connected"
-msgstr ""
+msgstr "متصل"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connected_status
 msgid "Connected Status"
-msgstr ""
+msgstr "حالة الاتصال"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__connection
@@ -228,7 +232,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "Device type is {{0}}"
-msgstr ""
+msgstr "نوع الجهاز {{0}}"
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_device_action
@@ -246,22 +250,22 @@ msgstr "الأجهزة"
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Discard"
-msgstr ""
+msgstr "إهمال"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connected_status__disconnected
 msgid "Disconnected"
-msgstr ""
+msgstr "غير متصل"
 
 #. module: iot
 #: model:ir.actions.client,name:iot.action_discover_iot_boxes
 msgid "Discover IoT boxes"
-msgstr ""
+msgstr "استكشف أجهزة IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__discovered_box_ids
 msgid "Discovered Box"
-msgstr ""
+msgstr "جهاز تم اكتشافه"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__display
@@ -271,7 +275,7 @@ msgstr "عرض"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_device_ids
 msgid "Display Device"
-msgstr ""
+msgstr "عرض الجهاز"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__display_name
@@ -296,12 +300,12 @@ msgstr "عرض رابط URL"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__do_not_ask_again
 msgid "Do not ask me again"
-msgstr ""
+msgstr "لا تسألني مجدداً"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Documentation"
-msgstr ""
+msgstr "التوثيق"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ip
@@ -313,7 +317,7 @@ msgstr "عنوان النطاق"
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_download_logs.js:0
 msgid "Failed to download logs from %s"
-msgstr ""
+msgstr "تعذر تنزيل السجلات من %s"
 
 #. module: iot
 #. odoo-javascript
@@ -331,30 +335,30 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
 msgid "Failed to reset %s password."
-msgstr ""
+msgstr "تعذر إعادة تعيين كلمة مرور %s."
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Failed to restart Odoo on %s"
-msgstr ""
+msgstr "تعذر إعادة تشغيل أودو في %s"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Finally, paste the pairing token below in the \"Server token\" field."
-msgstr ""
+msgstr "وأخيرًا، الصق رمز الاقتران أدناه في حقل ”رمز الخادم“."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Find the IP address of your IoT Box then connect to the web homepage."
-msgstr ""
+msgstr "ابحث عن عنوان IP الخاص بجهاز IoT ثم اتصل بصفحة الويب الرئيسية."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid ""
 "First, connect the IoT Box to internet, using an ethernet cable. Or, "
 "checkout the"
-msgstr ""
+msgstr "أولاً، قم بتوصيل جهاز IoT بالإنترنت باستخدام كابل إيثرنت. أو تحقق من"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__fiscal_data_module
@@ -394,17 +398,17 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
 msgid "HDMI"
-msgstr ""
+msgstr "HDMI"
 
 #. module: iot
 #: model:ir.model,name:iot.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "مسار HTTP"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Homepage"
-msgstr ""
+msgstr "الصفحة الرئيسية"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__id
@@ -438,6 +442,8 @@ msgid ""
 "If checked, this dialog won't appear the next time you print and the "
 "selected printers will be used automatically."
 msgstr ""
+"إذا تم تحديده، فلن يظهر مربع الحوار هذا في المرة التالية التي تقوم فيها "
+"بالطباعة وسيتم استخدام الطابعات المحددة تلقائياً."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -445,6 +451,8 @@ msgid ""
 "If your IoT Box has no access to the internet, you can pair it with your "
 "database using the pairing token."
 msgstr ""
+"إذا كان جهاز IoT الخاص بك لا يستطيع الوصول إلى الإنترنت، فيمكنك إقرانه "
+"بقاعدة بياناتك باستخدام رمز الاقتران."
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__version
@@ -454,7 +462,7 @@ msgstr "نسخة الصورة"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Internet is connected"
-msgstr ""
+msgstr "متصل بالإنترنت"
 
 #. module: iot
 #. odoo-javascript
@@ -484,13 +492,13 @@ msgstr "جهاز IoT"
 #. odoo-python
 #: code:addons/iot/wizard/discovered_iot_box.py:0
 msgid "IoT Box %(serial_n)s %(pairing_code)s"
-msgstr ""
+msgstr "جهاز IoT %(serial_n)s%(pairing_code)s"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "IoT Box %s found. Connecting..."
-msgstr ""
+msgstr "تم العثور على جهاز IoT %s. جاري التوصيل..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -502,7 +510,7 @@ msgstr ""
 #: code:addons/iot/wizard/add_iot_box.py:0
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
 msgid "IoT Box found. Connecting..."
-msgstr ""
+msgstr "تم العثور على جهاز IoT. جاري التوصيل..."
 
 #. module: iot
 #: model:ir.actions.act_window,name:iot.iot_box_action
@@ -518,12 +526,12 @@ msgstr "جهاز IoT"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_ir_actions_report__device_ids
 msgid "IoT Devices"
-msgstr ""
+msgstr "أجهزة IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__iot_box_to_connect
 msgid "Iot Box To Connect"
-msgstr ""
+msgstr "جهاز IoT المراد توصيله"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__is_scanner
@@ -544,7 +552,7 @@ msgstr "مخطط لوحة المفاتيح"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__label_printer
 msgid "Label Printer"
-msgstr ""
+msgstr "طابعة الملصقات"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_uid
@@ -580,17 +588,17 @@ msgstr "مخطط"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Make sure the IoT Box is powered on."
-msgstr ""
+msgstr "تأكد من تشغيل جهاز IoT."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Make sure the Network lights are on."
-msgstr ""
+msgstr "تأكد من أن أضواء الشبكة مضاءة."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__manual
 msgid "Manual"
-msgstr ""
+msgstr "يدوي"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__manual_measurement
@@ -629,19 +637,19 @@ msgstr "الشبكة"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "New IoT Box connected!"
-msgstr ""
+msgstr "تم توصيل جهاز IoT جديد!"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_reset_password.js:0
 msgid "New SSH password for %s"
-msgstr ""
+msgstr "كلمة مرور SSH جديدة لـ %s"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "No IoT Box found"
-msgstr ""
+msgstr "لم يتم العثور على جهاز IoT"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -658,30 +666,31 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "No printer selected"
-msgstr ""
+msgstr "لم يتم تحديد طابعة"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 msgid "No report to display"
-msgstr ""
+msgstr "لا يوجد تقرير لعرضه"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Note: It takes ~1 minute. After that, try to pair manually."
 msgstr ""
+"ملاحظة: يستغرق الأمر حوالي دقيقة واحدة. بعد ذلك، يمكنك محاولة الاقتران يدوياً."
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
 msgid "Office Printer"
-msgstr ""
+msgstr "طابعة المكتب"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__pair_offline
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Offline Pairing"
-msgstr ""
+msgstr "الاقتران دون الاتصال بالإنترنت"
 
 #. module: iot
 #. odoo-python
@@ -691,6 +700,9 @@ msgid ""
 "To reset printers, go to the IoT App, Configuration tab, \"Reset Linked "
 "Printers\" and retry the operation."
 msgstr ""
+"تمت إزالة إحدى الطابعات المستخدمة لطباعة المستند.\n"
+"لإعادة تعيين الطابعات، قم بالذهاب إلى تطبيق IoT، ثم إلى علامة التبويب "
+"\"إعادة تعيين الطابعات المرتبطة\" وأعد محاولة العملية."
 
 #. module: iot
 #. odoo-javascript
@@ -701,7 +713,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Optional: Plug a screen"
-msgstr ""
+msgstr "اختياري: قم بتوصيل شاشة"
 
 #. module: iot
 #. odoo-javascript
@@ -731,7 +743,7 @@ msgstr "رمز الاقتران"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Pairing code received from a printer or screen"
-msgstr ""
+msgstr "تم استلام رمز الاقتران من الطابعة أو الشاشة"
 
 #. module: iot
 #. odoo-javascript
@@ -759,22 +771,22 @@ msgstr "يرجى الانتظار"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Plug a screen or a printer to get a status."
-msgstr ""
+msgstr "قم بتوصيل شاشة أو طابعة للحصول على الحالة."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Power is on"
-msgstr ""
+msgstr "الجهاز في وضع التشغيل"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Power the box"
-msgstr ""
+msgstr "قم بتشغيل الجهاز"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Print"
-msgstr ""
+msgstr "طباعة"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__printer
@@ -796,7 +808,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Printers"
-msgstr ""
+msgstr "الطابعات"
 
 #. module: iot
 #. odoo-javascript
@@ -812,7 +824,7 @@ msgstr "عقد ضمان الناشر لجهاز IoT"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__receipt_printer
 msgid "Receipt Printer"
-msgstr ""
+msgstr "طابعة الإيصالات"
 
 #. module: iot
 #. odoo-javascript
@@ -855,20 +867,20 @@ msgstr "التقارير"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
 msgid "Reports to Auto-Print"
-msgstr ""
+msgstr "التقارير التي يجب طباعتها آلياً"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 msgid "Reports with linked printers"
-msgstr ""
+msgstr "التقارير التي تحتوي على طابعات مرتبطة"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
 #: model:ir.ui.menu,name:iot.iot_clear_selected_devices
 msgid "Reset Linked Printers"
-msgstr ""
+msgstr "إعادة ضبط الطابعات المرتبطة"
 
 #. module: iot
 #. odoo-javascript
@@ -892,17 +904,17 @@ msgstr "إعادة التشغيل"
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/no_iot_box_found_form_controller.js:0
 msgid "Retrying in "
-msgstr ""
+msgstr "ستتم إعادة المحاولة في "
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__ssl_certificate_end_date
 msgid "SSL Certificate End Date"
-msgstr ""
+msgstr "تاريح انتهاء شهادة SSL"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
 msgid "Sales Details"
-msgstr ""
+msgstr "تفاصيل المبيعات"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__scale
@@ -913,12 +925,12 @@ msgstr "الميزان"
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "Searching for an IoT Box..."
-msgstr ""
+msgstr "جاري البحث عن جهاز IoT..."
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Select IoT Box to connect"
-msgstr ""
+msgstr "قم بتحديد جهاز IoT للاتصال به"
 
 #. module: iot
 #. odoo-python
@@ -930,12 +942,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "Select at least one printer"
-msgstr ""
+msgstr "قم بتحديد طابعة واحدة على الأقل"
 
 #. module: iot
 #: model:ir.model,name:iot.model_select_printers_wizard
 msgid "Selection of printers"
-msgstr ""
+msgstr "خيارات الطابعات"
 
 #. module: iot
 #. odoo-javascript
@@ -952,7 +964,7 @@ msgstr "تسلسلي"
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__serial_number
 #: model:ir.model.fields,field_description:iot.field_iot_discovered_box__serial_number
 msgid "Serial Number"
-msgstr ""
+msgstr "الرقم التسلسلي"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_add_iot_box
@@ -960,27 +972,29 @@ msgid ""
 "Setup in progress, should take maximum 1 minute...\n"
 "                    <span class=\"spinner-border spinner-border-sm\"/>"
 msgstr ""
+"جاري الإعداد. قد يستغرق الأمر دقيقة واحدة كحد أقصى....\n"
+"                    <span class=\"spinner-border spinner-border-sm\"/>"
 
 #. module: iot
 #. odoo-python
 #: code:addons/iot/wizard/add_iot_box.py:0
 msgid "Several IoT's detected"
-msgstr ""
+msgstr "تم رصد عدة أجهزة IoT"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__stage
 msgid "Stage"
-msgstr ""
+msgstr "المرحلة"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
 msgid "Standard Pairing"
-msgstr ""
+msgstr "الاقتران القياسي"
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__add_iot_box__stage__start
 msgid "Start"
-msgstr ""
+msgstr "بدء"
 
 #. module: iot
 #. odoo-javascript
@@ -996,12 +1010,12 @@ msgstr "الحالة"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__subtype
 msgid "Subtype"
-msgstr ""
+msgstr "النوع الفرعي"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_iot_device__subtype
 msgid "Subtype of device."
-msgstr ""
+msgstr "النوع الفرعي للجهاز."
 
 #. module: iot
 #. odoo-javascript
@@ -1017,23 +1031,23 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Technical Information"
-msgstr ""
+msgstr "معلومات تقنية"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_form
 msgid "Test"
-msgstr ""
+msgstr "اختبار"
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/backend/iot_device_form.js:0
 msgid "Test page printed"
-msgstr ""
+msgstr "تمت طباعة الصفحة التجريبية"
 
 #. module: iot
 #: model:ir.model,name:iot.model_iot_channel
 msgid "The Websocket IoT Channel"
-msgstr ""
+msgstr "قناة Websocket IoT"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_pair_offline
@@ -1115,17 +1129,17 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__unsupported
 msgid "Unsupported"
-msgstr ""
+msgstr "غير مدعوم"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_no_iot_box_found
 msgid "Use Pairing Code"
-msgstr ""
+msgstr "استخدم رمز الاقتران"
 
 #. module: iot
 #: model:res.groups,name:iot.group_iot_user
 msgid "User"
-msgstr ""
+msgstr "المستخدم"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__variant
@@ -1147,7 +1161,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "مرئي للكل"
 
 #. module: iot
 #: model:ir.model.fields,help:iot.field_ir_actions_report__device_ids
@@ -1159,7 +1173,7 @@ msgstr "عند إعداد جهاز هنا، سيتم طباعة التقرير �
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_select_box_to_connect
 msgid "Which one do you want to connect?<br/><br/>"
-msgstr ""
+msgstr "أيها تريد الاتصال به؟<br/><br/>"
 
 #. module: iot
 #. odoo-javascript
@@ -1171,7 +1185,7 @@ msgstr ""
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
 msgid "app."
-msgstr ""
+msgstr "."
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
@@ -1181,22 +1195,22 @@ msgstr "اتصال"
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_device_view_kanban
 msgid "connection_type"
-msgstr ""
+msgstr "connection_type"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_kanban
 msgid "device-icon"
-msgstr ""
+msgstr "device-icon"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid "documentation"
-msgstr ""
+msgstr "التوثيق"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
 msgid "e.g. ABDE0123"
-msgstr ""
+msgstr "مثال: ABDE0123"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.view_enter_pairing_code
@@ -1206,6 +1220,10 @@ msgid ""
 "screen (via micro HDMI cable) to get the pairing code.<br/>\n"
 "                <br/>"
 msgstr ""
+"لفتح Wi-Fi.<br/>\n"
+"                بعد ذلك، قم بتوصيل جهاز IoT بطابعة (عبر كابل USB) أو شاشة ("
+"عبر كابل micro HDMI) للحصول على رمز الاقتران.<br/>\n"
+"                <br/>"
 
 #. module: iot
 #: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
@@ -1222,7 +1240,7 @@ msgstr ""
 #. module: iot
 #: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
 msgid "reset.linked.printers"
-msgstr ""
+msgstr "reset.linked.printers"
 
 #. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action

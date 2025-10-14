@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/ar/>\n"
 "Language: ar\n"
@@ -27,7 +28,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "\"New Journal Entry\" can only be applied to Document."
-msgstr ""
+msgstr "يمكن تطبيق \"قيد يومية جديد\" على المستند فقط."
 
 #. module: documents_account
 #. odoo-javascript
@@ -41,12 +42,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "<b>Select</b> this page to continue."
-msgstr ""
+msgstr "<b>قم بتحديد</b> هذه الصفحة للاستمرار."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.account_move_view_form
 msgid "<span class=\"o_stat_text\">Documents</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">المستندات</span>"
 
 #. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique
@@ -62,24 +63,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
 #: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder_id
 msgid "Accounting Folder"
-msgstr ""
+msgstr "مجلد المحاسبة"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_report
 msgid "Accounting Report"
-msgstr ""
+msgstr "تقرير المحاسبة"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Action"
-msgstr ""
+msgstr "إجراء"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "All"
-msgstr ""
+msgstr "الكل"
 
 #. module: documents_account
 #. odoo-python
@@ -118,12 +119,12 @@ msgstr "تفقدهم"
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Choose a journal..."
-msgstr ""
+msgstr "اختر دفتر يومية..."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
 msgid "Choose an accounting document type..."
-msgstr ""
+msgstr "اختر نوع المستند المحاسبي..."
 
 #. module: documents_account
 #. odoo-javascript
@@ -151,13 +152,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Click the cross to <b>exit preview</b>."
-msgstr ""
+msgstr "اضعط على علامة × <b>للخروج من وضع المعاينة</b>."
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Close (Esc)"
-msgstr ""
+msgstr "إغلاق (Esc)"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_company
@@ -178,7 +179,7 @@ msgstr "تهيئة الإعدادات"
 #. odoo-python
 #: code:addons/documents_account/models/account_report.py:0
 msgid "Copy to Documents"
-msgstr ""
+msgstr "نسج إلى المستندات"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_server_action_form_template
@@ -189,18 +190,18 @@ msgstr "إنشاء"
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "Create %(model_name)s"
-msgstr ""
+msgstr "إنشاء %(model_name)s"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/ir_actions_server.py:0
 msgid "Create %(model_name)s (%(journal_name)s)"
-msgstr ""
+msgstr "إنشاء %(model_name)s (%(journal_name)s)"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_code
 msgid "Create Credit Note"
-msgstr ""
+msgstr "إنشاء إشعار دائن"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note
@@ -219,7 +220,7 @@ msgstr "إنشاء فاتورة عميل"
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_code
 msgid "Create Misc Entry"
-msgstr ""
+msgstr "إنشاء قيد متنوع"
 
 #. module: documents_account
 #. odoo-javascript
@@ -238,13 +239,13 @@ msgstr ""
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_receipt
 msgid "Create Vendor Receipt"
-msgstr ""
+msgstr "إنشاء إيصال المورّد"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Create a new document for the remaining page, it will be handled later."
-msgstr ""
+msgstr "قم بإنشاء مستند جديد للصفحة المتبقية. ستتم معالجته لاحقاً."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_uid
@@ -259,12 +260,12 @@ msgstr "أنشئ في"
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_refund
 msgid "Credit Note"
-msgstr ""
+msgstr "إشعار دائن"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_out_invoice
 msgid "Customer Invoice"
-msgstr ""
+msgstr "فاتورة العميل"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__display_name
@@ -284,37 +285,37 @@ msgstr "اسم العرض"
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_documents_document
 msgid "Document"
-msgstr ""
+msgstr "المستند"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_create_model
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_create_model
 msgid "Documents Account Create Model"
-msgstr ""
+msgstr "إنشاء نموذج حساب المستندات"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_journal_id
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_journal_id
 msgid "Documents Account Journal"
-msgstr ""
+msgstr "دفتر يومية حساب المستندات"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_move_type
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_move_type
 msgid "Documents Account Move Type"
-msgstr ""
+msgstr "نوع حركة حساب المستندات"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__documents_account_suitable_journal_ids
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__documents_account_suitable_journal_ids
 msgid "Documents Account Suitable Journal"
-msgstr ""
+msgstr "دفتر يومية مناسب لحساب المستندات"
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/account_report.py:0
 msgid "Export"
-msgstr ""
+msgstr "تصدير"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard_format
@@ -332,7 +333,7 @@ msgstr "مُعالِج التصدير للتقارير المحاسبية"
 #: code:addons/documents_account/models/documents_document.py:0
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Finance"
-msgstr ""
+msgstr "المالية"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__folder_id
@@ -350,7 +351,7 @@ msgstr "المجلد الذي يجب أن تقوم بحفظ الملف المُ�
 #. odoo-python
 #: code:addons/documents_account/models/account_journal.py:0
 msgid "Generated Bank Statements"
-msgstr ""
+msgstr "كشوفات الحسابات البنكية المنشأة"
 
 #. module: documents_account
 #. odoo-python
@@ -362,12 +363,12 @@ msgstr "إنشاء المستندات"
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__has_documents
 #: model:ir.model.fields,field_description:documents_account.field_account_move__has_documents
 msgid "Has Documents"
-msgstr ""
+msgstr "يحتوي على مستندات"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_document__has_embedded_pdf
 msgid "Has Embedded PDF"
-msgstr ""
+msgstr "يحتوي على ملف PDF مضمن"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_journal__id
@@ -394,7 +395,7 @@ msgstr "استيراد كشف حساب بنكي"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Invoices"
-msgstr ""
+msgstr "فواتير العملاء"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_account_journal
@@ -440,6 +441,8 @@ msgid ""
 "Let's process documents in this folder.<br/> <i>Tip: Use Tags to filter "
 "documents and structure your process.</i>"
 msgstr ""
+"فلنقم بمعالجة الستندات في هذا المجلد.<br/><i>نصيحة: استخدم علامات التصنيف "
+"لإضفاء هيكل لعمليتك.</i>"
 
 #. module: documents_account
 #. odoo-javascript
@@ -460,6 +463,8 @@ msgid ""
 "Let's tag this mail as Finance<br/> <i>Tips: actions can be tailored to your "
 "process, according to the folder.</i>"
 msgstr ""
+"فلنقم بإضافة علامة تصنيف لهذا البريد الإلكتروني لتعليمه كمالي<br/> <i>نصيحة: "
+"يمكن تصميم الإجراءات لتلائم عملياتك تماماً وفقاً لمجلد.</i>"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_entry
@@ -491,7 +496,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__state__documents_account_record_create
 msgid "New Journal Entry"
-msgstr ""
+msgstr "قيد جديد في دفتر اليومية"
 
 #. module: documents_account
 #. odoo-javascript
@@ -502,7 +507,7 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_receipt
 msgid "Purchase Receipt"
-msgstr ""
+msgstr "إيصال الشراء"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
@@ -514,18 +519,18 @@ msgstr "طلب مستند من بند كشف الحساب البنكي"
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Send To Finance"
-msgstr ""
+msgstr "إرسال إلى قسم المالية"
 
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_actions_server
 msgid "Server Action"
-msgstr ""
+msgstr "إجراء الخادم"
 
 #. module: documents_account
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Split PDF"
-msgstr ""
+msgstr "تقسيم ملف PDF"
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_reports_export_wizard__tag_ids
@@ -548,13 +553,13 @@ msgstr "لقد أنشئت هذه الفاتورة جراء معاملة بنكي
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "This should be processed as a misc entry."
-msgstr ""
+msgstr "يجب معالجته كقيد متنوع."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_ir_actions_server__state
 #: model:ir.model.fields,field_description:documents_account.field_ir_cron__state
 msgid "Type"
-msgstr ""
+msgstr "النوع"
 
 #. module: documents_account
 #: model:ir.model.fields,help:documents_account.field_ir_actions_server__state
@@ -573,11 +578,25 @@ msgid ""
 "- 'Multi Actions': define an action that triggers several other server "
 "actions\n"
 msgstr ""
+"نوع إجراء الخادم. القيم التالية متاحة:\n"
+"- 'تحديث السجل': قم بتحديث قيم السجل\n"
+"- 'إنشاء نشاط': أنشئ نشاطاً (المناقشة)\n"
+"- 'إرسال بريد إلكتروني': قم بنشر رسالة أو ملاحظة أو أرسل بريداً إلكترونياً "
+"(المناقشة)\n"
+"- 'إرسال الرسائل النصية القصيرة': قم بإرسال الرسائل النصية القصيرة وسجلها في "
+"المستند (SMS)- 'إضافة/إزالة المتابعين': قم بإزالة أو إضافة المابعين إلى سجل "
+"(المناقشة)\n"
+"- 'أنشئ سجلاً': أنشئ سجلاً جديداً بقيم جديدة\n"
+"- 'تنفيذ الكود': سيتم تنفيذ كود بايثون\n"
+"- 'إرسال إشعارات Webhook': أرسل طلب منشور إلى النظام الخارجي، والذي يعرف أيضاً"
+" بـ Webhook\n"
+"- 'الإجراءات المتعددة': قم بتحديد إجراء يؤدي إلى تشغيل عدة إجراءات أخرى "
+"للخادم\n"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_invoice
 msgid "Vendor Bill"
-msgstr ""
+msgstr "فاتورة المورد"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__documents_account_create_model__account_move_in_refund
@@ -599,12 +618,14 @@ msgid ""
 "Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
 msgstr ""
+"هذا رائع... لقد قمت بمعالجة 6 مستندات في بضع ثوان، أنت رائع.<br>لقد انتهت "
+"الجولة. والآن، حاول رفع مستنداتك الخاصة."
 
 #. module: documents_account
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "You can not create account move on folder."
-msgstr ""
+msgstr "لا يمكنك إنشاء حركة حساب في المجلد."
 
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder_id

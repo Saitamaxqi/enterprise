@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "mail_enterprise/de/>\n"
@@ -24,12 +24,12 @@ msgstr ""
 #. module: mail_enterprise
 #: model:ir.model.fields,field_description:mail_enterprise.field_publisher_warranty_contract__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: mail_enterprise
 #: model:ir.model.fields,field_description:mail_enterprise.field_publisher_warranty_contract__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: mail_enterprise
 #: model:ir.model,name:mail_enterprise.model_publisher_warranty_contract

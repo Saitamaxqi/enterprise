@@ -7,12 +7,13 @@
 # Larissa Manderfeld, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/mrp_mps/"
 "de/>\n"
@@ -27,24 +28,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(month)s %(day)s %(year)s"
-msgstr ""
+msgstr "%(month)s %(day)s %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(month)s %(year)s"
-msgstr ""
+msgstr "%(month)s %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(year)s"
-msgstr ""
+msgstr "%(year)s"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_bom_form_view_inherit_mps
 msgid "<span>Schedules</span>"
-msgstr ""
+msgstr "<span>Zeitpläne</span>"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -70,6 +71,7 @@ msgstr "Tatsächlicher Bedarf"
 #: code:addons/mrp_mps/models/mrp_mps.py:0
 msgid "Actual Demand %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 msgstr ""
+"Tatsächlicher Bedarf %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -98,6 +100,7 @@ msgstr "Tatsächliche Auffüllung"
 msgid ""
 "Actual Replenishment %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 msgstr ""
+"Tatsächliche Auffüllung %(product)s %(date)s (%(date_start)s - %(date_end)s)"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -109,12 +112,12 @@ msgstr "Produkt hinzufügen"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__allowed_route_ids
 msgid "Allowed Route"
-msgstr ""
+msgstr "Erlaubte Route"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Apply"
-msgstr ""
+msgstr "Anwenden"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -131,12 +134,12 @@ msgstr "Sind Sie sicher, dass Sie diesen Datensatz löschen möchten?"
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__automated
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Automatically Replenished"
-msgstr ""
+msgstr "Automatisch aufgefüllt"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -152,7 +155,7 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on
 msgid "Based on"
-msgstr ""
+msgstr "Basiert auf"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_bom
@@ -225,12 +228,12 @@ msgstr "Datum"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "Day"
-msgstr ""
+msgstr "Tag"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
 msgid "Default Time Range"
-msgstr ""
+msgstr "Standardzeitraum"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__product_uom_id
@@ -260,7 +263,7 @@ msgstr "Bedarfsprognose"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Discard"
-msgstr ""
+msgstr "Verwerfen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_demand
@@ -295,7 +298,7 @@ msgstr "Bedarfsprognose anzeigen"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_actual_demand
 msgid "Display Indirect Actual Demand"
-msgstr ""
+msgstr "Indirekten tatsächlichen Bedarf anzeigen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_demand
@@ -357,18 +360,18 @@ msgstr "Bedarfsdetails prognostizieren"
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_forecast_suggestion
 msgid "Forecast Demand Suggestion"
-msgstr ""
+msgstr "Vorschlag für Prognosebedarf"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Forecast Quantity for"
-msgstr ""
+msgstr "Prognostizierte Menge für"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__low_forecast
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Forecast Too Low"
-msgstr ""
+msgstr "Prognose zu niedrig"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -412,25 +415,25 @@ msgstr "ID"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__bom_id
 msgid "If set, the bill of materials components will also be imported."
-msgstr ""
+msgstr "Wenn festgelegt, werden auch die Stücklistenkomponenten importiert."
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/models/mrp_mps.py:0
 msgid "Import Template for Master Production Schedule"
-msgstr ""
+msgstr "Importvorlage für Produktionszeitplan (MPS)"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 msgid "Indirect Actual Demand"
-msgstr ""
+msgstr "Indirekter tatsächlicher Bedarf"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Indirect Demand"
-msgstr ""
+msgstr "Indirekter Bedarf"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -442,27 +445,27 @@ msgstr "Indirekte Bedarfsprognose"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__is_indirect
 msgid "Indirect demand product"
-msgstr ""
+msgstr "Indirektes Bedarfsprodukt"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__is_manufacture_route
 msgid "Is Manufacture Route"
-msgstr ""
+msgstr "Ist Fertigungsroute"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__one_year
 msgid "Last 12 Months"
-msgstr ""
+msgstr "Letzte 12 Monate"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__three_months
 msgid "Last 3 Months"
-msgstr ""
+msgstr "Letzte 3 Monate"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__30_days
 msgid "Last 30 Days"
-msgstr ""
+msgstr "Letzte 30 Tage"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_uid
@@ -489,17 +492,17 @@ msgstr "MPS"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/mps_selection.js:0
 msgid "MPS Period Selection"
-msgstr ""
+msgstr "Auswahl des MPS-Zeitraums"
 
 #. module: mrp_mps
 #: model:ir.actions.server,name:mrp_mps.ir_cron_replenish_automated_mps_ir_actions_server
 msgid "MPS: replenish automated schedules"
-msgstr ""
+msgstr "MPS: automatische Zeitpläne auffüllen"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__manual
 msgid "Manual"
-msgstr ""
+msgstr "Manuell"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__replenish_trigger
@@ -508,22 +511,25 @@ msgid ""
 "Automatic: Product replenished automatically via scheduled action.\n"
 "Never: Product is not replenished from MPS."
 msgstr ""
+"Manuell: Produkt wird manuell vom MPS aufgefüllt.\n"
+"Automatisch: Produkt wird automatisch über eine geplante Aktion aufgefüllt.\n"
+"Niemals: Produkt wird nicht aus dem MPS nachgefüllt."
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Manually Replenished"
-msgstr ""
+msgstr "Manuell aufgefüllt"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__manufacture_string
 msgid "Manufacture String"
-msgstr ""
+msgstr "Zeichenkette für Fertigung"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_details.py:0
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Fertigungsauftrag"
 
 #. module: mrp_mps
 #. odoo-python
@@ -545,6 +551,8 @@ msgid ""
 "Manufacturing Settings: Your Master Production Schedule must always display "
 "at least 1 period."
 msgstr ""
+"Fertigungseinstellungen: Ihr Produktionszeitplan muss immer mindestens einen "
+"Zeitraum anzeigen."
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -564,7 +572,7 @@ msgstr "Minimum aufzufüllen"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "Month"
-msgstr ""
+msgstr "Monat"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__month
@@ -579,7 +587,7 @@ msgstr "Buchung"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__moves_string
 msgid "Moves String"
-msgstr ""
+msgstr "Zeichenkette für Bewegung"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__mrp_mps_id
@@ -589,7 +597,7 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__never
 msgid "Never"
-msgstr ""
+msgstr "Niemals"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -601,32 +609,32 @@ msgstr ""
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Not Replenished from MPS"
-msgstr ""
+msgstr "Nicht aus dem MPS aufgefüllt"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period_to_display_day
 msgid "Number of Daily Manufacturing Period Columns"
-msgstr ""
+msgstr "Anzahl der Spalten für Tageszeiträume der Fertigung"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period_to_display_month
 msgid "Number of Monthly Manufacturing Period Columns"
-msgstr ""
+msgstr "Anzahl der Spalten für Monatszeiträume der Fertigung"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.res_config_settings_view_form
 msgid "Number of Periods"
-msgstr ""
+msgstr "Anzahl der Zeiträume"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period_to_display_week
 msgid "Number of Weekly Manufacturing Period Columns"
-msgstr ""
+msgstr "Anzahl der Spalten für Wochenzeiträume der Fertigung"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_config_settings__manufacturing_period_to_display_year
 msgid "Number of Yearly Manufacturing Period Columns"
-msgstr ""
+msgstr "Anzahl der Spalten für Jahreszeiträume der Fertigung"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period_to_display_day
@@ -634,6 +642,8 @@ msgid ""
 "Number of columns for the daily period to display in Master Production "
 "Schedule"
 msgstr ""
+"Anzahl der Spalten für den Tageszeitraum, der im Produktionszeitplan (MPS) "
+"angezeigt werden sollen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period_to_display_month
@@ -641,6 +651,8 @@ msgid ""
 "Number of columns for the monthly period to display in Master Production "
 "Schedule"
 msgstr ""
+"Anzahl der Spalten für den Monatszeitraum, der im Produktionszeitplan (MPS) "
+"angezeigt werden sollen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period_to_display_week
@@ -648,6 +660,8 @@ msgid ""
 "Number of columns for the weekly period to display in Master Production "
 "Schedule"
 msgstr ""
+"Anzahl der Spalten für den Wochenzeitraum, der im Produktionszeitplan (MPS) "
+"angezeigt werden sollen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__manufacturing_period_to_display_year
@@ -655,6 +669,8 @@ msgid ""
 "Number of columns for the yearly period to display in Master Production "
 "Schedule"
 msgstr ""
+"Anzahl der Spalten für den Jahreszeitraum, der im Produktionszeitplan (MPS) "
+"angezeigt werden sollen"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -662,7 +678,7 @@ msgstr ""
 #: code:addons/mrp_mps/static/src/components/main.js:0
 #: code:addons/mrp_mps/static/src/components/main.xml:0
 msgid "Order"
-msgstr ""
+msgstr "Bestellen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__percent_factor
@@ -683,7 +699,7 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__route_id
 msgid "Preferred Route"
-msgstr ""
+msgstr "Bevorzugte Route"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__last_year
@@ -786,7 +802,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_details.py:0
 msgid "Receipt"
-msgstr ""
+msgstr "Eingang"
 
 #. module: mrp_mps
 #. odoo-python
@@ -824,19 +840,19 @@ msgstr "Auffüllung zu niedrig"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__replenish_trigger
 msgid "Replenishment Trigger"
-msgstr ""
+msgstr "Auffüllungsauslöser"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "Replenishment:"
-msgstr ""
+msgstr "Auffüllung:"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_details.py:0
 msgid "Request for quotation"
-msgstr ""
+msgstr "Angebotsanfrage"
 
 #. module: mrp_mps
 #. odoo-python
@@ -848,17 +864,17 @@ msgstr "Angebotsanfragen"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__rfq_string
 msgid "Rfq String"
-msgstr ""
+msgstr "Zeichenkette für Angebotsanfrage"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
 msgid "Route"
-msgstr ""
+msgstr "Route"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__route_id
 msgid "Route to replenish your product."
-msgstr ""
+msgstr "Route zur Auffüllung Ihres Produkts."
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -902,12 +918,12 @@ msgstr "Sequenz"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__show_bom
 msgid "Show Bom"
-msgstr ""
+msgstr "Stückliste anzeigen"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__show_vendor
 msgid "Show Vendor"
-msgstr ""
+msgstr "Lieferant anzeigen"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -1030,7 +1046,7 @@ msgstr ""
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "To Forecast"
-msgstr ""
+msgstr "Zu prognostizieren"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -1045,7 +1061,7 @@ msgstr "Aufzufüllen"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "Toggle Indirect Demand"
-msgstr ""
+msgstr "Indirekten Bedarf an/aus"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__under_replenishment
@@ -1063,13 +1079,13 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__supplier_id
 msgid "Vendor"
-msgstr ""
+msgstr "Lieferant"
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "Week"
-msgstr ""
+msgstr "Woche"
 
 #. module: mrp_mps
 #. odoo-python
@@ -1081,7 +1097,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_mps/models/res_company.py:0
 msgid "Week %(week_num)s (%(start_date)s-%(end_date)s/%(month)s)"
-msgstr ""
+msgstr "Woche %(week_num)s (%(start_date)s-%(end_date)s/%(month)s)"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__week
@@ -1091,18 +1107,18 @@ msgstr "Wöchentlich"
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__is_indirect
 msgid "When checked, this product will not appear in the 'To Forecast' filter."
-msgstr ""
+msgstr "Wenn markiert, wird es nicht im Filter „Zu prognostizieren“ angezeigt."
 
 #. module: mrp_mps
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/main.js:0
 msgid "Year"
-msgstr ""
+msgstr "Jahr"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__year
 msgid "Yearly"
-msgstr ""
+msgstr "Jährlich"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view

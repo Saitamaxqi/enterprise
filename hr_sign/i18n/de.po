@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-15 21:08+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/hr_sign/"
 "de/>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "%(employee)s and %(responsible)s are the signatories."
-msgstr ""
+msgstr "%(employee)s und %(responsible)s sind Unterzeichner."
 
 #. module: hr_sign
 #. odoo-python
@@ -58,12 +58,12 @@ msgstr "<span class=\"o_stat_text\">Signaturanfragen</span>"
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_plan_template
 msgid "Activity plan template"
-msgstr ""
+msgstr "Vorlage des Aktivitätsplans"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_schedule
 msgid "Activity schedule plan Wizard"
-msgstr ""
+msgstr "Assistent zur Aktivitätsplanung"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -78,7 +78,7 @@ msgstr "Dateianhang"
 #. module: hr_sign
 #: model:sign.template,redirect_url_text:hr_sign.template_sign_termination
 msgid "Close"
-msgstr ""
+msgstr "Schließen"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__version_id
@@ -150,6 +150,13 @@ msgid ""
 "                - If the selected email is not defined, the available one "
 "will be used."
 msgstr ""
+"E-Mail, die verwendet wird, um die Signaturanfrage zu versenden.\n"
+"                - Arbeit nimmt die E-Mail, die unter „Arbeits-E-Mail“ "
+"hinterlegt ist.\n"
+"                - Privat nimmt die E-Mail, die in den privaten Informationen "
+"hinterlegt ist.\n"
+"                - Wenn die ausgewählte E-Mail nicht definiert ist, wird die "
+"verfügbare E-Mail verwendet."
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_hr_employee
@@ -222,7 +229,7 @@ msgstr "Zuletzt aktualisiert am"
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__mail_displayed
 msgid "Mail Displayed"
-msgstr ""
+msgstr "E-Mail angezeigt"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -238,7 +245,7 @@ msgstr "Nachricht"
 #. odoo-python
 #: code:addons/hr_sign/wizard/hr_contract_sign_document_wizard.py:0
 msgid "No documents templates on the database."
-msgstr ""
+msgstr "Keine Dokumentvorlagen in der Datenbank."
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -296,6 +303,11 @@ msgid ""
 "the HR responsible.\n"
 "        "
 msgstr ""
+"Wählen Sie nur Dokumente mit 1 oder 2 unterschiedlichen Unterzeichern aus.\n"
+"        Dokumente mit 1 Unterzeichner erfordern nur die Unterschrift von "
+"Mitarbeitern, während die mit 2 Unterzeichnern Unterschirften vom "
+"Mitarbeiter und dem Personalverantwortlichen erfordern.\n"
+"        "
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
@@ -353,7 +365,7 @@ msgstr "Vorlage Warnung"
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Upload a PDF to set a new one."
-msgstr ""
+msgstr "Ein PDF hochladen, um als neue einzustellen."
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_res_users
@@ -363,7 +375,7 @@ msgstr "Benutzer"
 #. module: hr_sign
 #: model:ir.model.fields.selection,name:hr_sign.selection__hr_contract_sign_document_wizard__mail_to__work
 msgid "Work"
-msgstr ""
+msgstr "Arbeit"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign

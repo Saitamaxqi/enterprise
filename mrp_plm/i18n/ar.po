@@ -7,13 +7,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/mrp_plm/"
 "ar/>\n"
 "Language: ar\n"
@@ -76,12 +77,12 @@ msgstr ""
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
 msgid "<span class=\"o_stat_text\">ECO(S)</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">أوامر التغيير الهندسي</span>"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span class=\"o_stat_text\">Revision</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">المراجعة</span>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
@@ -96,7 +97,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "A user cannot be assigned more than once to the same stage"
-msgstr ""
+msgstr "لا يمكن تعيين المستخدم أكثر من مرة لنفس المرحلة"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -163,17 +164,17 @@ msgstr "أمان ألقاب جهات الاتصال"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain_id
 msgid "Alias Domain"
-msgstr ""
+msgstr "نطاق اللقب"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Alias Domain Name"
-msgstr ""
+msgstr "اسم نطاق اللقب"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_full_name
 msgid "Alias Email"
-msgstr ""
+msgstr "لقب البريد الإلكتروني"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_name
@@ -338,12 +339,12 @@ msgstr "تقرير النظرة العامة لقائمة المواد"
 #. module: mrp_plm
 #: model:mrp.eco.type,name:mrp_plm.ecotype_bom_update
 msgid "BOM Updates"
-msgstr ""
+msgstr "تحديثات قائمة المواد"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode_batch
 msgid "Batch count Change"
-msgstr ""
+msgstr "تغير عدد الدفعات"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -395,12 +396,12 @@ msgstr "مرحلة الحجب"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__byproduct_id
 msgid "BoM By-Product"
-msgstr ""
+msgstr "قائمة مواد المنتج الثانوي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__bom_line_id
 msgid "BoM Line"
-msgstr ""
+msgstr "بند قائمة المواد"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
@@ -416,7 +417,7 @@ msgstr "مراجعة قائمة المواد"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
 msgid "BoM Suggestions from %(mo_name)s"
-msgstr ""
+msgstr "اقتراحات قائمة المواد من %(mo_name)s"
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -433,12 +434,12 @@ msgstr "قائمة المواد:"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "By-Product Changes"
-msgstr ""
+msgstr "تغييرات المنتج الثانوي"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_byproduct
 msgid "Byproduct"
-msgstr ""
+msgstr "المنتج الثانوي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
@@ -456,7 +457,7 @@ msgstr "يمكنه رفض"
 msgid ""
 "Cannot create an ECO if the Manufacturing Order doesn't use a Bill of "
 "Materials"
-msgstr ""
+msgstr "لا يمكن إنشاء أمر تغيير هندسي إذا كان أمر التصنيع لا يستخدم قائمة مواد"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -514,12 +515,12 @@ msgstr "الشركة"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Component Changes"
-msgstr ""
+msgstr "تغييرات المكونات"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Component Rebase"
-msgstr ""
+msgstr "تحديث تهيئة المكونات"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -547,7 +548,7 @@ msgstr "تم استهلاكه في الإنتاج"
 #. module: mrp_plm
 #: model:ir.actions.server,name:mrp_plm.action_production_order_create_eco
 msgid "Create ECO"
-msgstr ""
+msgstr "إنشاء أمر تغيير هندسي"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
@@ -704,12 +705,12 @@ msgstr "تغييرات قائمة مواد أمر التغيير الهندسي"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_byproduct
 msgid "ECO BoM Changes - By-Product"
-msgstr ""
+msgstr "تغييرات قائمة المواد في أمر التغيير الهندسي - المنتج الثانوي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_line
 msgid "ECO BoM Changes - Component"
-msgstr ""
+msgstr "تغييرات قائمة المواد في أمر التغيير الهندسي - المكوّن"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
@@ -791,7 +792,7 @@ msgstr "أوامر التغيير الهندسي"
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
 msgid "ECOs Analysis"
-msgstr ""
+msgstr "تحليل أوامر التغيير الهندسي"
 
 #. module: mrp_plm
 #. odoo-python
@@ -808,7 +809,7 @@ msgstr "قائمة مواد أمر التغيير الهندسي"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_count
 msgid "Eco Count"
-msgstr ""
+msgstr "عدد أوامر التغيير الهندسي"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
@@ -846,7 +847,7 @@ msgstr "نسخة البريد الإلكتروني"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "نطاق البريد الإلكتروني مثال: 'example.com' في 'odoo@example.com'"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_id
@@ -1015,6 +1016,8 @@ msgid ""
 "If unchecked, the version of the product/BoM will remain unchanged once the "
 "ECO is applied"
 msgstr ""
+"إذا لم يتم تحديده، سيظل إصدار المنتج/قائمة المواد دون تغيير بمجرد تطبيق أمر "
+"التغيير الهندسي (ECO)"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -1123,7 +1126,7 @@ msgstr "آخر قائمة مواد"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_incoming_local
 msgid "Local-part based incoming detection"
-msgstr ""
+msgstr "الكشف عن الوارد على أساس الجزء المحلي"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -1152,12 +1155,12 @@ msgstr "تغيير المدة اليدوية"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "أمر التصنيع"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__production_id
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "أوامر التصنيع"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -1179,7 +1182,7 @@ msgstr "الرسائل"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode
 msgid "Mode Change"
-msgstr ""
+msgstr "تغيير الوضع"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
@@ -1189,7 +1192,7 @@ msgstr "علامات تصنيف أمر التغيير الهندسي بنظام 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Activities"
-msgstr ""
+msgstr "أنشطتي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1227,7 +1230,7 @@ msgstr "قائمة مواد جديدة"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
 msgid "New BoM from %(mo_name)s"
-msgstr ""
+msgstr "قائمة مواد جديدة من %(mo_name)s"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
@@ -1317,7 +1320,7 @@ msgstr "عدد الأخطاء"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
@@ -1333,12 +1336,12 @@ msgstr "بمجرد تطبيق التغييرات، سيتم نقل أوامر ا
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Open Component"
-msgstr ""
+msgstr "فتح المكون"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Open Operation"
-msgstr ""
+msgstr "فتح العملية"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1353,7 +1356,7 @@ msgstr "تغييرات العملية"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
 msgid "Operation Id"
-msgstr ""
+msgstr "معرّف العملية"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1374,12 +1377,12 @@ msgstr "المرفق الأصل"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_model
 msgid "Origin Model"
-msgstr ""
+msgstr "نموذج الأصل"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_name
 msgid "Origin Name"
-msgstr ""
+msgstr "اسم الأصل"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
@@ -1480,7 +1483,7 @@ msgstr "التغييرات السابقة لأمر التغيير الهندسي
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Previous Eco Component Changes"
-msgstr ""
+msgstr "التغييرات السابقة لمكوّن أمر التغيير الهندسي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_uom_id
@@ -1500,7 +1503,7 @@ msgstr "الأولوية"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Produced in Operation"
-msgstr ""
+msgstr "تم الإنتاج في العملية"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
@@ -1513,7 +1516,7 @@ msgstr "المنتج"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_document
 msgid "Product Document"
-msgstr ""
+msgstr "مستند المنتج"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1524,12 +1527,12 @@ msgstr "المنتج فقط"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "متغير المنتج"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Production"
-msgstr ""
+msgstr "الإنتاج"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
@@ -1675,7 +1678,7 @@ msgstr "إظهار تطبيق التغيير"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "عرض كافة السجلات التي مضى تاريخ نشاطها التالي"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__stage_id
@@ -1860,7 +1863,7 @@ msgstr "تراجع"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
 msgid "Unit"
-msgstr ""
+msgstr "الوحدة"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__update
@@ -1871,7 +1874,7 @@ msgstr "تحديث"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__will_update_version
 msgid "Update Version"
-msgstr ""
+msgstr "تحديث الإصدار"
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_user
@@ -1891,7 +1894,7 @@ msgstr "تم التصديق"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "Variant"
-msgstr ""
+msgstr "المتغير"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1904,7 +1907,7 @@ msgstr "الإصدار"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "مرئي للكل"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
@@ -1936,7 +1939,7 @@ msgstr "مركز العمل"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing_workcenter
 msgid "Work Center Usage"
-msgstr ""
+msgstr "استخدام مركز العمل"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
@@ -1974,7 +1977,7 @@ msgstr "لا يمكنك تغيير المرحلة، حيث أن بعض المو�
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "alias"
-msgstr ""
+msgstr "اللقب"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -1989,24 +1992,24 @@ msgstr "مثلًا: القسم الهندسي"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "e.g. mycompany.com"
-msgstr ""
+msgstr "مثال: mycompany.com"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "product"
-msgstr ""
+msgstr "المنتج"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "res_model"
-msgstr ""
+msgstr "res_model"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "text-danger"
-msgstr ""
+msgstr "text-danger"
 
 #~ msgid "# ECOs in progress"
 #~ msgstr "عدد أوامر التغيير الهندسي الجارية "

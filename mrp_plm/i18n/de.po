@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/mrp_plm/"
 "de/>\n"
@@ -75,12 +75,12 @@ msgstr ""
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_plm_production_form_view
 msgid "<span class=\"o_stat_text\">ECO(S)</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Änderungsauftrag/-aufträge</span>"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "<span class=\"o_stat_text\">Revision</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Revision</span>"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_defaults
@@ -96,6 +96,7 @@ msgstr ""
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "A user cannot be assigned more than once to the same stage"
 msgstr ""
+"Ein Benutzer kann nicht mehr als einmal derselben Phase zugewiesen werden."
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__message_needaction
@@ -162,17 +163,17 @@ msgstr "Aliaskontakt-Sicherheit"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain_id
 msgid "Alias Domain"
-msgstr ""
+msgstr "Alias-Domain"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Alias Domain Name"
-msgstr ""
+msgstr "Alias-Domainname"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_full_name
 msgid "Alias Email"
-msgstr ""
+msgstr "Alias-E-Mail"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_name
@@ -338,12 +339,12 @@ msgstr "Stücklistenübersichtsbericht"
 #. module: mrp_plm
 #: model:mrp.eco.type,name:mrp_plm.ecotype_bom_update
 msgid "BOM Updates"
-msgstr ""
+msgstr "Stücklistenaktualisierungen"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode_batch
 msgid "Batch count Change"
-msgstr ""
+msgstr "Änderung an Sammelzählung"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom
@@ -396,12 +397,12 @@ msgstr "Blockierende Phase"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__byproduct_id
 msgid "BoM By-Product"
-msgstr ""
+msgstr "Nebenprodukt der Stückliste"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__bom_line_id
 msgid "BoM Line"
-msgstr ""
+msgstr "Stücklistenposition"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_rebase_ids
@@ -417,7 +418,7 @@ msgstr "Stücklistenrevision"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
 msgid "BoM Suggestions from %(mo_name)s"
-msgstr ""
+msgstr "Stücklistenvorschläge von %(mo_name)s"
 
 #. module: mrp_plm
 #. odoo-javascript
@@ -434,12 +435,12 @@ msgstr "Stückliste:"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "By-Product Changes"
-msgstr ""
+msgstr "Änderungen an Nebenprodukt"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_bom_byproduct
 msgid "Byproduct"
-msgstr ""
+msgstr "Nebenprodukt"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__user_can_approve
@@ -458,6 +459,8 @@ msgid ""
 "Cannot create an ECO if the Manufacturing Order doesn't use a Bill of "
 "Materials"
 msgstr ""
+"Sie können keinen Änderungsauftrag erstellen, wenn der Fertigungsauftrag "
+"keine Stückliste verwendet"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_changes
@@ -515,12 +518,12 @@ msgstr "Unternehmen"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Component Changes"
-msgstr ""
+msgstr "Änderungen an Komponente"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Component Rebase"
-msgstr ""
+msgstr "Rebasierung der Komponente"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_configuration
@@ -548,7 +551,7 @@ msgstr "Verbraucht bei Vorgang"
 #. module: mrp_plm
 #: model:ir.actions.server,name:mrp_plm.action_production_order_create_eco
 msgid "Create ECO"
-msgstr ""
+msgstr "Änderungsauftrag erstellen"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_stage_action
@@ -708,12 +711,12 @@ msgstr "Änderungsauftrag Stücklistenänderungen"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_byproduct
 msgid "ECO BoM Changes - By-Product"
-msgstr ""
+msgstr "Stücklistenänderung des Änderungsauftrags - Nebenprodukt"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__bom_change_ids_on_line
 msgid "ECO BoM Changes - Component"
-msgstr ""
+msgstr "Stücklistenänderung des Änderungsauftrags - Komponente"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_bom_change
@@ -797,7 +800,7 @@ msgstr "Änderungsaufträge"
 #. module: mrp_plm
 #: model:ir.actions.act_window,name:mrp_plm.mrp_eco_action_report
 msgid "ECOs Analysis"
-msgstr ""
+msgstr "Analyse der Änderungsaufträge"
 
 #. module: mrp_plm
 #. odoo-python
@@ -814,7 +817,7 @@ msgstr "Stückliste von Änderungsaufträgen"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_production__eco_count
 msgid "Eco Count"
-msgstr ""
+msgstr "Anzahl Änderungsaufträge"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_eco_routing_change
@@ -852,7 +855,7 @@ msgstr "E-Mail-CC"
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "E-Mail-Domain z. B. 'beispiel.com' in 'odoo@beispiel.com'"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__eco_id
@@ -1021,6 +1024,8 @@ msgid ""
 "If unchecked, the version of the product/BoM will remain unchanged once the "
 "ECO is applied"
 msgstr ""
+"Wenn nicht angekreuzt, bleibt die Version des Produkts oder der Stückliste "
+"unverändert, sobald der Änderungsauftrag angewendet wird"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__image_128
@@ -1129,7 +1134,7 @@ msgstr "Letzte Stückliste"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__alias_incoming_local
 msgid "Local-part based incoming detection"
-msgstr ""
+msgstr "Erkennung des Eingangs eines lokalen Elements"
 
 #. module: mrp_plm
 #: model_terms:ir.actions.act_window,help:mrp_plm.mrp_eco_action
@@ -1159,12 +1164,12 @@ msgstr "Änderung der manuellen Dauer"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_production
 msgid "Manufacturing Order"
-msgstr ""
+msgstr "Fertigungsauftrag"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__production_id
 msgid "Manufacturing Orders"
-msgstr ""
+msgstr "Fertigungsaufträge"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_master_data
@@ -1186,7 +1191,7 @@ msgstr "Nachrichten"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__upd_time_mode
 msgid "Mode Change"
-msgstr ""
+msgstr "Modus-Änderung"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_tag_view_search
@@ -1196,7 +1201,7 @@ msgstr "Stichwörter für MRP-Änderungsauftrag"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "My Activities"
-msgstr ""
+msgstr "Meine Aktivitäten"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__my_activity_date_deadline
@@ -1234,7 +1239,7 @@ msgstr "Neue Stückliste"
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_production.py:0
 msgid "New BoM from %(mo_name)s"
-msgstr ""
+msgstr "Neue Stückliste von %(mo_name)s"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__current_bom_id
@@ -1324,7 +1329,7 @@ msgstr "Anzahl der Fehler"
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_needaction_counter
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__message_has_error_counter
@@ -1342,12 +1347,12 @@ msgstr ""
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Open Component"
-msgstr ""
+msgstr "Komponente öffnen"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Open Operation"
-msgstr ""
+msgstr "Vorgang öffnen"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_name
@@ -1362,7 +1367,7 @@ msgstr "Vorgangsänderungen"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_routing_change__operation_id
 msgid "Operation Id"
-msgstr ""
+msgstr "Vorgangs-ID"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco_type__alias_force_thread_id
@@ -1383,12 +1388,12 @@ msgstr "Ursprünglicher Anhang"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_model
 msgid "Origin Model"
-msgstr ""
+msgstr "Ursprüngliches Modell"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_product_document__origin_res_name
 msgid "Origin Name"
-msgstr ""
+msgstr "Ursprünglicher Name"
 
 #. module: mrp_plm
 #: model:ir.model.fields,help:mrp_plm.field_mrp_eco__legend_blocked
@@ -1494,7 +1499,7 @@ msgstr "Vorherige Änderungen des Änderungsauftrags"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Previous Eco Component Changes"
-msgstr ""
+msgstr "Änderungen an vorherigen Komponente des Änderungsauftrags"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__old_uom_id
@@ -1514,7 +1519,7 @@ msgstr "Priorität"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Produced in Operation"
-msgstr ""
+msgstr "Produziert in Vorgang"
 
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_template
@@ -1527,7 +1532,7 @@ msgstr "Produkt"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_document
 msgid "Product Document"
-msgstr ""
+msgstr "Produktdokument"
 
 #. module: mrp_plm
 #. odoo-python
@@ -1538,12 +1543,12 @@ msgstr "Nur Produkt"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_product_product
 msgid "Product Variant"
-msgstr ""
+msgstr "Produktvariante"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Production"
-msgstr ""
+msgstr "Produktion"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__active
@@ -1690,6 +1695,8 @@ msgstr "Anwendung der Änderungen anzeigen"
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_search
 msgid "Show all records whose next activity date is past"
 msgstr ""
+"Zeigen Sie alle Datensätze aus, deren nächstes Aktivitätsdatum in der "
+"Vergangenheit liegt"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__stage_id
@@ -1888,7 +1895,7 @@ msgstr "Rückgängig"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_bom_change__uom_change
 msgid "Unit"
-msgstr ""
+msgstr "Einheit"
 
 #. module: mrp_plm
 #: model:ir.model.fields.selection,name:mrp_plm.selection__mrp_eco_bom_change__change_type__update
@@ -1899,7 +1906,7 @@ msgstr "Aktualisieren"
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco__will_update_version
 msgid "Update Version"
-msgstr ""
+msgstr "Version aktualisieren"
 
 #. module: mrp_plm
 #: model:res.groups,name:mrp_plm.group_plm_user
@@ -1919,7 +1926,7 @@ msgstr "Validiert"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.view_document_file_kanban_mrp_plm
 msgid "Variant"
-msgstr ""
+msgstr "Variante"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_bom__version
@@ -1932,7 +1939,7 @@ msgstr "Version"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Für alle sichtbar"
 
 #. module: mrp_plm
 #: model:ir.model.fields,field_description:mrp_plm.field_mrp_eco_type__nb_approvals
@@ -1964,7 +1971,7 @@ msgstr "Arbeitsplatz"
 #. module: mrp_plm
 #: model:ir.model,name:mrp_plm.model_mrp_routing_workcenter
 msgid "Work Center Usage"
-msgstr ""
+msgstr "Arbeitsplatznutzung"
 
 #. module: mrp_plm
 #: model:ir.ui.menu,name:mrp_plm.menu_mrp_plm_workcenters
@@ -2009,7 +2016,7 @@ msgstr ""
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "alias"
-msgstr ""
+msgstr "Alias"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_view_form
@@ -2024,24 +2031,24 @@ msgstr "z. B. Technikabteilung"
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_type_view_form
 msgid "e.g. mycompany.com"
-msgstr ""
+msgstr "z. B. meinunternehmen.com"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "product"
-msgstr ""
+msgstr "Produkt"
 
 #. module: mrp_plm
 #. odoo-python
 #: code:addons/mrp_plm/models/mrp_eco.py:0
 msgid "res_model"
-msgstr ""
+msgstr "res_model"
 
 #. module: mrp_plm
 #: model_terms:ir.ui.view,arch_db:mrp_plm.mrp_eco_kanban
 msgid "text-danger"
-msgstr ""
+msgstr "text-danger"
 
 #~ msgid "# ECOs in progress"
 #~ msgstr "# ECOs in Bearbeitung"

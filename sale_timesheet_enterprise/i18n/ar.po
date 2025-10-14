@@ -7,13 +7,14 @@
 # Niyas Raphy, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "sale_timesheet_enterprise/ar/>\n"
 "Language: ar\n"
@@ -28,53 +29,57 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
 msgid "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
-msgstr ""
+msgstr "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
 msgid "%(currentBillableTimeText)s / %(currentTargetTotalTimeText)s "
-msgstr ""
+msgstr "%(currentBillableTimeText)s / %(currentTargetTotalTimeText)s "
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/timesheet_analysis_pivot_model.js:0
 msgid "%(employee_name)s (%(target)sh / month)"
-msgstr ""
+msgstr "%(employee_name)s (%(target)sساعات / الشهر)"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
 msgid "%(percentage)s%"
-msgstr ""
+msgstr "%(percentage)s%"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
 msgid "(%(percentage)s%)"
-msgstr ""
+msgstr "(%(percentage)s%)"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
 msgid ""
 "<i class=\"fa fa-fw me-2 fa-birthday-cake text-primary\" title=\"Birthday\"/>"
 msgstr ""
+"<i class=\"fa fa-fw me-2 fa-birthday-cake text-primary\" title="
+"\"عيد الميلاد \"/>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
 msgid "<i class=\"fa fa-fw me-2 fa-envelope text-primary\" title=\"Email\"/>"
 msgstr ""
+"<i class=\"fa fa-fw me-2 fa-envelope text-primary\" title="
+"\"البريد الإلكتروني \"/>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
 msgid "<i class=\"fa fa-fw me-2 fa-phone text-primary\" title=\"Phone\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-fw me-2 fa-phone text-primary\" title=\"الهاتف \"/>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_employee_form
 msgid "<span class=\"m-14 w-100\">per month</span>"
-msgstr ""
+msgstr "<span class=\"m-14 w-100\">في الشهر</span>"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_enterprise_advance_payment_inv_timesheet_view_form
@@ -86,11 +91,17 @@ msgid ""
 "these timers.\n"
 "                        </span>"
 msgstr ""
+"<span>\n"
+"                            لدى بعض الموظفين مؤقتات نشطة في جداولهم الزمنية "
+"التي تحاول فوترتها.\n"
+"                            سيؤدي إنشاء الفاتورة إلى إيقاف تلك المؤقتات "
+"تلقائياً.\n"
+"                        </span>"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__active
 msgid "Active"
-msgstr ""
+msgstr "نشط"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__all
@@ -100,7 +111,7 @@ msgstr "كافة الجداول الزمنية المسجلة"
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "البند التحليلي"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_7
@@ -108,69 +119,71 @@ msgid ""
 "Any time spent interacting with others—whether it’s a quick call, a meeting, "
 "or an informal chat—is valuable and should be recorded."
 msgstr ""
+"الوقت المقضي في التفاعل مع الآخرين — سواءً كانت مكالمة سريعة أو اجتماع أو "
+"دردشة غير رسمية — كلها هامة وجب تسجيلها."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Archived"
-msgstr ""
+msgstr "مؤرشف"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/many2one_avatar_rank_field/many2one_avatar_rank_field.xml:0
 msgid "Avatar"
-msgstr ""
+msgstr "الصورة الرمزية"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__avatar_128
 msgid "Avatar 128"
-msgstr ""
+msgstr "الصورة الرمزية 128"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__avatar_1920
 msgid "Avatar 1920"
-msgstr ""
+msgstr "الصورة الرمزية 1920"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_employee_list_inherit
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_tree
 msgid "Average"
-msgstr ""
+msgstr "متوسط"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee_public__billable_time_target
 msgid "Billable Time Target"
-msgstr ""
+msgstr "الوقت المستهدف المراد فوترته"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_rates
 msgid "Billing Rate Indicators"
-msgstr ""
+msgstr "مؤشرات نسبة الفوترة"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_leaderboard
 msgid "Billing Rate Leaderboard"
-msgstr ""
+msgstr "لوحة تصنيف نسبة الفواتير"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee__billable_time_target
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Billing Time Target"
-msgstr ""
+msgstr "هدف نسبة الفوترة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_employee
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_employee_billable_time_target
 msgid "Billing Time Targets"
-msgstr ""
+msgstr "أهداف الوقت المفوتر"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "Billing:"
-msgstr ""
+msgstr "إصدار الفواتير:"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
@@ -178,6 +191,8 @@ msgid ""
 "Boost productivity and competitiveness by displaying a leaderboard based on "
 "the billing rates."
 msgstr ""
+"اعمل على تعزيز الإنتاجية والتنافسية من خلال عرض لوحة الصدارة بناءً على نسب "
+"الفوترة."
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_15
@@ -185,27 +200,29 @@ msgid ""
 "By maintaining clear timesheets, you demonstrate your dedication and help "
 "build trust—your effort truly matters!"
 msgstr ""
+"عند المحافظة على وضوع جداولك الزمنية، فإنك تثبت تفانيك وتساعد على بناء الثقة "
+"— فجهودك مهمة حقًا!"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "Close"
-msgstr ""
+msgstr "إغلاق"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__coach_id
 msgid "Coach"
-msgstr ""
+msgstr "مدرب"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "الشركات"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__company_id
 msgid "Company"
-msgstr ""
+msgstr "الشركة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_res_config_settings
@@ -215,7 +232,7 @@ msgstr "تهيئة الإعدادات"
 #. module: sale_timesheet_enterprise
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_configuration_settings
 msgid "Configuration"
-msgstr ""
+msgstr "التهيئة"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_9
@@ -223,27 +240,29 @@ msgid ""
 "Consistently tracking your time ensures no effort, big or small, goes "
 "unnoticed."
 msgstr ""
+"يضمن لك تتبع وقتك باستمرار عدم إهدار أي جهد، سواء كان كبيراً أو صغيراً، دون أن "
+"يلاحظه أحد."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__create_date
 msgid "Create Date"
-msgstr ""
+msgstr "تاريخ الإنشاء"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,website_form_label:sale_timesheet_enterprise.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "إنشاء مهمة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__create_uid
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_timesheet_tip__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "أنشئ بواسطة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_timesheet_tip__create_date
 msgid "Created on"
-msgstr ""
+msgstr "أنشئ في"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.timesheet_view_grid_by_invoice_type
@@ -254,7 +273,7 @@ msgstr "اليوم"
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__department_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Department"
-msgstr ""
+msgstr "القسم"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -264,11 +283,13 @@ msgid ""
 "order line and the %(uom)s spent (%(worked_hours)s) on all related projects "
 "and tasks"
 msgstr ""
+"الفرق بين %(uom)s (%(allocated_hours)s) المخصصة في بند أمر البيع و %(uom)s "
+"المقضية (%(worked_hours)s) في كافة المشاريع والمهام ذات الصلة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__child_ids
 msgid "Direct subordinates"
-msgstr ""
+msgstr "المرؤوسين المباشرين"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_account_analytic_line__display_name
@@ -285,7 +306,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_advance_payment_inv__display_name
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_project_task__portal_progress
@@ -298,11 +319,13 @@ msgid ""
 "Don’t second-guess whether something “counts”—if you’ve spent time on it, it "
 "belongs in your timesheet."
 msgstr ""
+"لا تتردد في التفكير فيما إذا كان شيء ما \"جدير بالذكر\" أم لا — إذا كنت قد "
+"أمضيت وقتاً في ذلك، فهو ينتمي إلى جدولك الزمني."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_tree
 msgid "Edit Billable Time Target"
-msgstr ""
+msgstr "تحرير الوقت المستهدف القابل للفوترة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_edit_billable_time_target
@@ -310,6 +333,8 @@ msgid ""
 "Edit Billable Time Target wizard from Timesheet for users without employee "
 "access"
 msgstr ""
+"معالج تحرير الهدف الزمني القابل للفوترة من تطبيق الجداول الزمنية للمستخدمين "
+"الذين ليست لديهم صلاحيات وصول الموظفين"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_hr_employee
@@ -317,34 +342,34 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Employee"
-msgstr ""
+msgstr "الموظف"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Employee Name"
-msgstr ""
+msgstr "اسم الموظف"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
 msgid "Employee's Name"
-msgstr ""
+msgstr "اسم الموظف"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.actions.act_window,name:sale_timesheet_enterprise.action_open_edit_billable_time_target
 #: model:ir.actions.act_window,name:sale_timesheet_enterprise.action_open_view_employee
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Employees"
-msgstr ""
+msgstr "الموظفون"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__hr_icon_display
 msgid "Hr Icon Display"
-msgstr ""
+msgstr "عرض أيقونة الموارد البشرية"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__hr_presence_state
 msgid "Hr Presence State"
-msgstr ""
+msgstr "حالة حضور الموارد البشرية"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_account_analytic_line__id
@@ -361,23 +386,25 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_advance_payment_inv__id
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_6
 msgid ""
 "If you’re unsure if something is billable, just log it. You deserve credit."
 msgstr ""
+"إذا لم تكن متأكداً مما إذا كان هناك شيء ما قابل للفوترة، فقط قم بتسجيله. أنت "
+"تستحق التقدير."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__image_1024
 msgid "Image 1024"
-msgstr ""
+msgstr "صورة 1024"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__image_128
 msgid "Image 128"
-msgstr ""
+msgstr "صورة 128"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
@@ -395,13 +422,15 @@ msgid ""
 "It's part of the job to search for information. These hours should also be "
 "billable."
 msgstr ""
+"إن البحث عن المعلومات جزء من العمل. ويجب أن تكون الساعات المقضية في البحث "
+"والعمل قابلة للفوترة أيضاً."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__job_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Job Position"
-msgstr ""
+msgstr "المنصب الوظيفي"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_account_move_line
@@ -412,46 +441,46 @@ msgstr "عنصر اليومية"
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__write_uid
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_timesheet_tip__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "آخر تحديث بواسطة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__write_date
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_timesheet_tip__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "آخر تحديث في"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Location"
-msgstr ""
+msgstr "الموقع"
 
 #. module: sale_timesheet_enterprise
 #. odoo-python
 #: code:addons/sale_timesheet_enterprise/models/res_company.py:0
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_4
 msgid "Make it a habit to record timesheets every day."
-msgstr ""
+msgstr "اعتد على تسجيل الجداول الزمنية كل يوم."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__parent_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Manager"
-msgstr ""
+msgstr "المدير"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__member_of_department
 msgid "Member of department"
-msgstr ""
+msgstr "عضو في قسم"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_ir_ui_menu
 msgid "Menu"
-msgstr ""
+msgstr "القائمة"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__mobile_phone
 msgid "Mobile Phone"
-msgstr ""
+msgstr "الهاتف المحمول"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.timesheet_view_grid_by_invoice_type
@@ -462,49 +491,49 @@ msgstr "الشهر"
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__billable_time_target
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_employee_list_inherit
 msgid "Monthly Billing Time Target"
-msgstr ""
+msgstr "الهدف الشهري لنسبة الفوترة"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.hr_timesheet_tip_action
 msgid "Motivate employees to fill timesheets with these tips."
-msgstr ""
+msgstr "قم بتحفيز الموظفين على ملء جداولهم الزمنية باستخدام النصائح."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "My Department"
-msgstr ""
+msgstr "قسمي"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "My Team"
-msgstr ""
+msgstr "فريقي"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__name
 msgid "Name"
-msgstr ""
+msgstr "الاسم"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__newly_hired
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Newly Hired"
-msgstr ""
+msgstr "حديث التعيين"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_edit_billable_time_target
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_view_employee
 msgid "No employees found"
-msgstr ""
+msgstr "لم يتم العثور على موظفين"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.hr_timesheet_tip_action
 msgid "No tips found. Let's create one!"
-msgstr ""
+msgstr "لم يتم العثور على أي نصائح. فلنقم بإنشائها!"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Organization Chart"
-msgstr ""
+msgstr "المخطط التنظيمي"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_11
@@ -512,6 +541,8 @@ msgid ""
 "Organizing, planning, or reviewing your work is part of the job and should "
 "be logged like any other task."
 msgstr ""
+"يعد تنظيم عملك أو تخطيطه أو مراجعته جزءاً من العمل ويجب تسجيله مثل أي مهمة "
+"أخرى."
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_12
@@ -519,6 +550,8 @@ msgid ""
 "Preparation is crucial for successful meetings. Always include the time you "
 "spend getting ready in your timesheet."
 msgstr ""
+"التحضير أمر بالغ الأهمية لنجاح الاجتماعات. أدرج دائماً الوقت الذي تقضيه في "
+"الاستعداد في جدولك الزمني."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_form
@@ -534,29 +567,29 @@ msgstr "المشروع"
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__birthday_public_display_string
 msgid "Public Date of Birth"
-msgstr ""
+msgstr "تاريخ الميلاد العام"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_hr_employee_public
 msgid "Public Employee"
-msgstr ""
+msgstr "موظف في القطاع العام"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "Record timesheets to determine your billing rate!"
-msgstr ""
+msgstr "قم بتسجيل الجداول الزمنية لتحدد نسبة الفوترة الخاصة بك!"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "Record timesheets to earn your rank!"
-msgstr ""
+msgstr "قم بتسجيل الجداول الزمنية لتحدد رتبتك!"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_sale_advance_payment_inv
 msgid "Sales Advance Payment Invoice"
-msgstr ""
+msgstr "فاتورة الدفعة المقدمة للمبيعات"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_sale_order_line
@@ -569,17 +602,20 @@ msgid ""
 "Set a billable time target for your employees. If their current rate falls "
 "below their target, it will be highlighted in red."
 msgstr ""
+"قم بتحديد هدف الوقت المدفوع لموظفيك. إذا كان معدلهم الحالي أقل من هدفهم، "
+"فسيتم تمييزه باللون الأحمر."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_edit_billable_time_target
 #: model_terms:ir.actions.act_window,help:sale_timesheet_enterprise.action_open_view_employee
 msgid "Set a billing time target for employees whose timesheets you approve."
 msgstr ""
+"قم بتعيين هدف للوقت المراد فوترته للموظفين الذين توافق على جداولهم الزمنية."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
 msgid "Set employee billing time targets"
-msgstr ""
+msgstr "عيّن أهداف الوقت المفوتر للموظفين"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee_public__show_billable_time_target
@@ -589,29 +625,29 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__show_hr_icon_display
 msgid "Show Hr Icon Display"
-msgstr ""
+msgstr "عرض أيقونة الموارد البشرية"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "Show less"
-msgstr ""
+msgstr "إظهار أقل"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "Show more"
-msgstr ""
+msgstr "إظهار المزيد"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_rates
 msgid "Show the billing indicators on My Timesheets view"
-msgstr ""
+msgstr "إظهار مؤشرات الفوترة في نافذة عرض الجداول الزمنية الخاصة بي"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_res_config_settings__timesheet_show_leaderboard
 msgid "Show the leaderboard on My Timesheets view"
-msgstr ""
+msgstr "إظهار لوحة الصدارة في نافذة عرض الجداول الزمنية الخاصة بي"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_13
@@ -619,11 +655,13 @@ msgid ""
 "Small administrative tasks keep operations running smoothly. Don’t forget to "
 "include them in your timesheet."
 msgstr ""
+"تحافظ المهام الإدارية الصغيرة على سير العمليات بسلاسة. لا تنسَ إدراجها في "
+"جدولك الزمني."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Start Date"
-msgstr ""
+msgstr "تاريخ البدء"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_project_task
@@ -633,37 +671,37 @@ msgstr "المهمة"
 #. module: sale_timesheet_enterprise
 #: model:ir.model.constraint,message:sale_timesheet_enterprise.constraint_hr_employee_check_billable_time_target
 msgid "The billable time target cannot be negative."
-msgstr ""
+msgstr "لا يمكن أن يكون الوقت المفوتر المستهدف قيمة سالبة."
 
 #. module: sale_timesheet_enterprise
 #. odoo-python
 #: code:addons/sale_timesheet_enterprise/models/project_task.py:0
 msgid "This Sale Order Item doesn't have a target value of planned hours."
-msgstr ""
+msgstr "ليس لعنصر أمر البيع هذا قيمة مستهدفة للساعات المخطط لها."
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "This month"
-msgstr ""
+msgstr "هذا الشهر"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_tree
 msgid "Time Remaining"
-msgstr ""
+msgstr "الوقت المتبقي"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_tree
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.timesheet_view_grid_by_invoice_type
 msgid "Time Spent"
-msgstr ""
+msgstr "الوقت المقضي"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_tree
 msgid "Time Spent on Sub-tasks"
-msgstr ""
+msgstr "الوقت المقضي في المهام الفرعية"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_project_task__portal_subtask_effective_hours
@@ -686,18 +724,20 @@ msgid ""
 "Time spent troubleshooting or resolving unexpected issues is still work. "
 "Don’t forget to include it in your timesheet."
 msgstr ""
+"لا يزال الوقت الذي تقضيه في استكشاف الأخطاء وإصلاحها أو حل المشكلات غير "
+"المتوقعة عملاً. لا تنسَ تضمينه في جدولك الزمني."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__timesheet_manager_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_employee_list_inherit
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_tree
 msgid "Timesheet Approver"
-msgstr ""
+msgstr "مانح موافقات الجداول الزمنية"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee__show_billable_time_target
 msgid "Timesheet Show Rates"
-msgstr ""
+msgstr "معدلات إظهار الجداول الزمنية"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -716,7 +756,7 @@ msgstr "فوترة الجداول الزمنية"
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_hr_timesheet_tip
 msgid "Timesheets Leaderboard Tip"
-msgstr ""
+msgstr "نصيحة لوحة صدارة الجداول الزمنية"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_1
@@ -724,6 +764,7 @@ msgid ""
 "Timesheets are the lifeblood of our company; they have a direct impact on "
 "revenues."
 msgstr ""
+"الجداول الزمنية هي الشريان الحيوي لشركتنا؛ لأن لها تأثير مباشر على الإيرادات."
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
@@ -733,13 +774,13 @@ msgstr "الجداول الزمنية التي يتم اعتبارها عند ف
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_timesheet_tip__name
 msgid "Tip Name"
-msgstr ""
+msgstr "اسم النصيحة"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "Tip of the day"
-msgstr ""
+msgstr "نصيحة اليوم"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.actions.act_window,name:sale_timesheet_enterprise.hr_timesheet_tip_action
@@ -747,18 +788,18 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.hr_timesheet_tip_view_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.hr_timesheet_tip_view_tree
 msgid "Tips"
-msgstr ""
+msgstr "تلميحات"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
 msgid "Total Time Leaderboard"
-msgstr ""
+msgstr "لوحة صدارة الوقت الإجمالي"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.project_sharing_inherit_project_task_view_tree
 msgid "Total Time Spent"
-msgstr ""
+msgstr "إجمالي الوقت المقضي"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_project_task__portal_remaining_hours
@@ -788,7 +829,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__user_id
 msgid "User"
-msgstr ""
+msgstr "المستخدم"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__approved
@@ -806,13 +847,15 @@ msgid ""
 "When you share your knowledge with clients or teammates, that time is "
 "valuable. Be sure to track it accurately."
 msgstr ""
+"عندما تشارك معرفتك مع عملائك أو زملائك في الفريق، يُعد وقتك قيّماً. احرص على "
+"تتبعه بدقة."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_edit_billable_time_target__member_of_department
 msgid ""
 "Whether the employee is a member of the active user's department or one of "
 "it's child department."
-msgstr ""
+msgstr "ما إذا كان الموظف عضواً في قسم المستخدم النشط أو أحد أقسامه التابعة."
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_res_config_settings__invoiced_timesheet
@@ -832,53 +875,53 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__address_id
 msgid "Work Address"
-msgstr ""
+msgstr "عنوان العمل"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__work_email
 msgid "Work Email"
-msgstr ""
+msgstr "البريد الإلكتروني للعمل"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Work Information"
-msgstr ""
+msgstr "معلومات العمل"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__work_location_id
 msgid "Work Location"
-msgstr ""
+msgstr "مكان العمل"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__work_location_name
 msgid "Work Location Name"
-msgstr ""
+msgstr "اسم موقع العمل"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__work_phone
 msgid "Work Phone"
-msgstr ""
+msgstr "هاتف العمل"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__resource_calendar_id
 msgid "Working Hours"
-msgstr ""
+msgstr "ساعات العمل"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "e.g. John Doe"
-msgstr ""
+msgstr "مثل: محمد محمود"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.hr_timesheet_tip_view_tree
 msgid "e.g. Make it a habit to record timesheets every day."
-msgstr ""
+msgstr "مثال: اعتد على تسجيل الجداول الزمنية كل يوم."
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "o_timesheet_leaderboard_confetti"
-msgstr ""
+msgstr "o_timesheet_leaderboard_confetti"
 
 #~ msgid "Analytic Account"
 #~ msgstr "الحساب التحليلي"

@@ -7,13 +7,14 @@
 # Sarah Park, 2022
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-16 12:12+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "sale_timesheet_enterprise/ko/>\n"
 "Language: ko\n"
@@ -45,13 +46,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
 msgid "%(percentage)s%"
-msgstr ""
+msgstr "%(percentage)s%"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.js:0
 msgid "(%(percentage)s%)"
-msgstr ""
+msgstr "(%(percentage)s%)"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_kanban
@@ -89,7 +90,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__active
 msgid "Active"
-msgstr ""
+msgstr "활성"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__all
@@ -112,13 +113,13 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Archived"
-msgstr ""
+msgstr "보관됨"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/many2one_avatar_rank_field/many2one_avatar_rank_field.xml:0
 msgid "Avatar"
-msgstr ""
+msgstr "아바타"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__avatar_128
@@ -134,7 +135,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.sale_timesheet_employee_list_inherit
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_tree
 msgid "Average"
-msgstr ""
+msgstr "평균"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_hr_employee_public__billable_time_target
@@ -169,7 +170,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "Billing:"
-msgstr ""
+msgstr "청구:"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.res_config_settings_view_form
@@ -189,22 +190,22 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.xml:0
 msgid "Close"
-msgstr ""
+msgstr "닫기"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__coach_id
 msgid "Coach"
-msgstr ""
+msgstr "코치"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "회사"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__company_id
 msgid "Company"
-msgstr ""
+msgstr "회사"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_res_config_settings
@@ -214,7 +215,7 @@ msgstr "환경 설정"
 #. module: sale_timesheet_enterprise
 #: model:ir.ui.menu,name:sale_timesheet_enterprise.hr_timesheet_menu_configuration_settings
 msgid "Configuration"
-msgstr ""
+msgstr "환경설정"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_9
@@ -253,7 +254,7 @@ msgstr "일"
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__department_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Department"
-msgstr ""
+msgstr "부서"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -316,7 +317,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Employee"
-msgstr ""
+msgstr "직원"
 
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
@@ -333,7 +334,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:sale_timesheet_enterprise.action_open_view_employee
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Employees"
-msgstr ""
+msgstr "직원 관리"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__hr_icon_display
@@ -360,7 +361,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_advance_payment_inv__id
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_order_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: sale_timesheet_enterprise
 #: model:hr.timesheet.tip,name:sale_timesheet_enterprise.timesheet_tip_6
@@ -422,7 +423,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_form
 msgid "Location"
-msgstr ""
+msgstr "위치"
 
 #. module: sale_timesheet_enterprise
 #. odoo-python
@@ -435,7 +436,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__parent_id
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.view_edit_billable_time_target_update_filter
 msgid "Manager"
-msgstr ""
+msgstr "관리자"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__member_of_department
@@ -445,7 +446,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model,name:sale_timesheet_enterprise.model_ir_ui_menu
 msgid "Menu"
-msgstr ""
+msgstr "메뉴"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__mobile_phone
@@ -481,7 +482,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__name
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__newly_hired
@@ -746,7 +747,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.hr_timesheet_tip_view_form
 #: model_terms:ir.ui.view,arch_db:sale_timesheet_enterprise.hr_timesheet_tip_view_tree
 msgid "Tips"
-msgstr ""
+msgstr "팁"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -785,7 +786,7 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_edit_billable_time_target__user_id
 msgid "User"
-msgstr ""
+msgstr "사용자"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields.selection,name:sale_timesheet_enterprise.selection__res_config_settings__invoiced_timesheet__approved
@@ -874,7 +875,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/components/timesheet_leaderboard/timesheet_leaderboard.xml:0
 msgid "o_timesheet_leaderboard_confetti"
-msgstr ""
+msgstr "o_timesheet_leaderboard_confetti"
 
 #~ msgid "Analytic Account"
 #~ msgstr "분석 계정"

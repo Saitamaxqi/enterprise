@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-09-16 13:38+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "delivery_ups/ar/>\n"
 "Language: ar\n"
@@ -114,7 +115,7 @@ msgstr "جهة الاتصال"
 #. module: delivery_ups
 #: model:ir.model,website_form_label:delivery_ups.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Create a Customer"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__display_name
@@ -123,7 +124,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order__display_name
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: delivery_ups
 #: model_terms:ir.ui.view,arch_db:delivery_ups.view_delivery_carrier_form_with_provider_ups
@@ -158,7 +159,7 @@ msgstr "يفوق الرقم الإجمالي للقطع المسموح بها ل
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order__id
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_bill_my_account
@@ -223,7 +224,7 @@ msgstr "الطرود:"
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "مزود الدفع"
 
 #. module: delivery_ups
 #. odoo-python
@@ -690,12 +691,12 @@ msgstr "نوع ملف بطاقة عنوان UPS"
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups
 msgid "UPS Legacy"
-msgstr ""
+msgstr "UPS القديم"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_default_package_type_id
 msgid "UPS Legacy Package Type"
-msgstr ""
+msgstr "نوع باقة UPS القديم"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_passwd
@@ -748,7 +749,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/delivery_ups/models/payment_provider.py:0
 msgid "UPS provider is configured to use only Collect on Delivery."
-msgstr ""
+msgstr "تمت تهيئة مزود UPS لاستخدام خدمة الاستلام عند التوصيل فقط."
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_duty_payment

@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-08 07:51+0000\n"
+"PO-Revision-Date: 2025-10-14 00:34+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/esg/ko/>\n"
 "Language: ko\n"
@@ -840,7 +840,7 @@ msgstr "ESG 배출량 표시 버튼"
 #. module: esg
 #: model:account.account,name:esg.account_expense
 msgid "Expense"
-msgstr ""
+msgstr "경비"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_emission_factor__message_follower_ids
@@ -1609,7 +1609,7 @@ msgstr "SMS 전송 오류"
 #. module: esg
 #: model:account.account,name:esg.account_salary
 msgid "Salary"
-msgstr ""
+msgstr "급여"
 
 #. module: esg
 #: model:ir.model.fields,field_description:esg.field_esg_carbon_emission_report__scope

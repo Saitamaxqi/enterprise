@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-15 21:01+0000\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import_csv/de/>\n"
@@ -31,13 +31,13 @@ msgstr "Basisimport"
 #: model:ir.model.fields,field_description:account_bank_statement_import_csv.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import_csv.field_base_import_import__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: account_bank_statement_import_csv
 #: model:ir.model.fields,field_description:account_bank_statement_import_csv.field_account_journal__id
 #: model:ir.model.fields,field_description:account_bank_statement_import_csv.field_base_import_import__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_bank_statement_import_csv
 #. odoo-javascript
@@ -55,6 +55,8 @@ msgstr "Journal"
 #: code:addons/account_bank_statement_import_csv/wizard/account_bank_statement_import_csv.py:0
 msgid "Make sure that an Amount or Debit and Credit is in the file."
 msgstr ""
+"Stellen Sie sicher, dass ein Betrag oder Haben und Soll in der Datei "
+"angegeben ist."
 
 #. module: account_bank_statement_import_csv
 #. odoo-python

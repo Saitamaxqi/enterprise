@@ -6,13 +6,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-16 13:37+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import/ar/>\n"
 "Language: ar\n"
@@ -44,7 +45,7 @@ msgstr "يمكن استيراد معاملات الحساب البنكي مرة 
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_journal.py:0
 msgid "All or part of the following file(s) could not be imported:\n"
-msgstr ""
+msgstr "تعذر استيراد جزء من أو كافة الملفات التالية:\n"
 
 #. module: account_bank_statement_import
 #: model:ir.model,name:account_bank_statement_import.model_account_bank_statement_line
@@ -63,6 +64,8 @@ msgid ""
 "Cannot find in which journal to import the statement for account %s. Please "
 "configure the journal first."
 msgstr ""
+"تعذر العثور على دفتر اليومية الذي سيتم استيراد الكشف للحساب %sفيه. يرجى "
+"تهيئة دفتر اليومية أولاً."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -71,12 +74,14 @@ msgid ""
 "Cannot find in which journal to import this statement. Please manually "
 "select a journal."
 msgstr ""
+"لقد تعذر إيجاد دفتر اليومية الذي يتم توريد كشف الحساب المحدد إليه. الرجاء "
+"اختيار دفتر اليومية يدوياً."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Click \"New\" or upload a %s."
-msgstr ""
+msgstr "اضغط على\"جديد\" أو قم برفع %s."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -93,7 +98,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "اسم العرض"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -106,12 +111,12 @@ msgstr "الذهاب إلى التطبيقات"
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_journal__id
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_setup_bank_manual_config__id
 msgid "ID"
-msgstr ""
+msgstr "المُعرف"
 
 #. module: account_bank_statement_import
 #: model_terms:ir.ui.view,arch_db:account_bank_statement_import.journal_dashboard_view_inherit
 msgid "Import File"
-msgstr ""
+msgstr "استيراد ملف"
 
 #. module: account_bank_statement_import
 #: model:ir.model.fields,field_description:account_bank_statement_import.field_account_bank_statement_line__unique_import_id
@@ -122,7 +127,7 @@ msgstr "معرف الاستيراد"
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Import Template for Bank Statement Lines"
-msgstr ""
+msgstr "استيراد قالب لبنود كشف الحساب البنكي"
 
 #. module: account_bank_statement_import
 #. odoo-javascript
@@ -157,13 +162,13 @@ msgstr "لم يمكن العثور على أي عملة تطابق '%s'."
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "No transactions matching your filters were found."
-msgstr ""
+msgstr "لم يتم العثور على أي معاملات تطابق عوامل التصفية الخاصة بك."
 
 #. module: account_bank_statement_import
 #. odoo-python
 #: code:addons/account_bank_statement_import/models/account_bank_statement.py:0
 msgid "Nothing to do here!"
-msgstr ""
+msgstr "لا شيء لتفعله هنا!"
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -172,6 +177,8 @@ msgid ""
 "The account of this statement (%(account)s) is not the same as the journal (%"
 "(journal)s)."
 msgstr ""
+"الحساب في كشف الحساب البنكي (%(account)s) مختلف عن حساب دفتر اليومية "
+"(%(journal)s)."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -180,6 +187,8 @@ msgid ""
 "The currency of the bank statement (%(code)s) is not the same as the "
 "currency of the journal (%(journal)s)."
 msgstr ""
+"العملة في كشف الحساب البنكي (%(code)s) مختلفة عن العملة في دفتر اليومية "
+"(%(journal)s)."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -189,6 +198,8 @@ msgid ""
 "If it contains transactions for more than one account, it must be imported "
 "on each of them."
 msgstr ""
+"لا يحتوي هذا الملف على أي كشف للحساب %s.\n"
+"إذا كان يحتوي على معاملات لأكثر من حساب، فيجب استيراده في كل منها."
 
 #. module: account_bank_statement_import
 #. odoo-python
@@ -198,6 +209,8 @@ msgid ""
 "If it contains transactions for more than one account, it must be imported "
 "on each of them."
 msgstr ""
+"لا يحتوي هذا الملف على أي معاملات للحساب %s.\n"
+"إذا كان يحتوي على معاملات لأكثر من حساب، فيجب استيراده في كل منها."
 
 #. module: account_bank_statement_import
 #. odoo-python

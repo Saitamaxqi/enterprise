@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-29 02:40+0000\n"
+"PO-Revision-Date: 2025-10-14 02:33+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/pos_iot/"
 "ko/>\n"
@@ -129,7 +129,7 @@ msgstr "단말기에 연결하지 못했습니다"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "계속"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
@@ -150,7 +150,7 @@ msgstr "고객용 화면"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "작성 취소"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -203,7 +203,7 @@ msgstr "Firefox만 해당: 보안 예외 확인을 클릭하십시오."
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_device
@@ -318,7 +318,7 @@ msgstr ""
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
-msgstr ""
+msgstr "없음"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -411,12 +411,12 @@ msgstr "프록시를 통해 스캔"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 msgid "Scanner"
-msgstr ""
+msgstr "스캐너"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_six
@@ -501,7 +501,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
-msgstr ""
+msgstr "없음"
 
 #~ msgid "Amount:"
 #~ msgstr "금액:"

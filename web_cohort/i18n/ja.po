@@ -7,13 +7,14 @@
 # Andy Yiu, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "web_cohort/ja/>\n"
 "Language: ja\n"
@@ -27,7 +28,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/web_cohort/controllers/main.py:0
 msgid "%(date_stop)s - By %(interval)s"
-msgstr ""
+msgstr "%(date_stop)s - %(interval)sごと"
 
 #. module: web_cohort
 #. odoo-javascript

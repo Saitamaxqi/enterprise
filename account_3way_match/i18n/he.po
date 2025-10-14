@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~14.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-28 12:10+0000\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
 "Last-Translator: or balmas <or@laylinetech.com>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
 "account_3way_match/he/>\n"
@@ -36,8 +36,8 @@ msgid ""
 "'Force Status' checkbox."
 msgstr ""
 "  שדה זה יכול להכיל את הערכים הבאים:\n"
-"* כן: אתה צריך לשלם את החשבונית, קיבלת את המוצרים\n"
-"* לא, אתה לא צריך לשלם את החשבונית, לא קיבלת את המוצרים\n"
+"  * כן: אתה צריך לשלם את החשבונית, קיבלת את המוצרים\n"
+"  * לא, אתה לא צריך לשלם את החשבונית, לא קיבלת את המוצרים\n"
 "* חריג, יש הבדל בין הכמויות שהתקבלו לכמויות שחיובו\n"
 "סטטוס זה מוגדר אוטומטית, אך ניתן לכפות אותו על ידי סימון 'כפה סטטוס'."
 
@@ -54,21 +54,21 @@ msgstr "חשבוניות לתשלום"
 #. module: account_3way_match
 #: model_terms:ir.ui.view,arch_db:account_3way_match.account_invoice_filter_inherit_account_3way_match
 msgid "Bills to Validate"
-msgstr ""
+msgstr "חשבוניות לאישור"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_journal__display_name
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move__display_name
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "שם לתצוגה"
 
 #. module: account_3way_match
 #: model:ir.model.fields.selection,name:account_3way_match.selection__account_move__release_to_pay__exception
 #: model:ir.model.fields.selection,name:account_3way_match.selection__account_move__release_to_pay_manual__exception
 #: model:ir.model.fields.selection,name:account_3way_match.selection__account_move_line__can_be_paid__exception
 msgid "Exception"
-msgstr "אחר"
+msgstr "חריגה"
 
 #. module: account_3way_match
 #: model:ir.model.fields,field_description:account_3way_match.field_account_bank_statement_line__force_release_to_pay
@@ -81,7 +81,7 @@ msgstr "כפה סטטוס"
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move__id
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move_line__id
 msgid "ID"
-msgstr ""
+msgstr "מזהה"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_bank_statement_line__force_release_to_pay

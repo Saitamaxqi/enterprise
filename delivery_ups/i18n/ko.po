@@ -7,13 +7,14 @@
 # Sarah Park, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-09-16 12:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "delivery_ups/ko/>\n"
 "Language: ko\n"
@@ -160,7 +161,7 @@ msgstr "월드와이드익스프레스에서 배송건당 허용하는 총 개�
 #: model:ir.model.fields,field_description:delivery_ups.field_sale_order__id
 #: model:ir.model.fields,field_description:delivery_ups.field_stock_package_type__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: delivery_ups
 #: model:ir.model.fields,help:delivery_ups.field_delivery_carrier__ups_bill_my_account

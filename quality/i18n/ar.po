@@ -7,13 +7,14 @@
 # Martin Trigaux, 2022
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 13:39+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/quality/"
 "ar/>\n"
 "Language: ar\n"
@@ -89,7 +90,7 @@ msgstr "أيقونة نوع النشاط"
 #. module: quality
 #: model_terms:ir.ui.view,arch_db:quality.quality_check_view_activity
 msgid "Activity view"
-msgstr ""
+msgstr "نافذة عرض النشاط"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__additional_note
@@ -129,17 +130,17 @@ msgstr "أمان ألقاب جهات الاتصال"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_domain_id
 msgid "Alias Domain"
-msgstr ""
+msgstr "نطاق اللقب"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_domain
 msgid "Alias Domain Name"
-msgstr ""
+msgstr "اسم نطاق اللقب"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_full_name
 msgid "Alias Email"
-msgstr ""
+msgstr "لقب البريد الإلكتروني"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_name
@@ -317,7 +318,7 @@ msgstr "منتهي"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_email
 msgid "Email Alias"
-msgstr ""
+msgstr "لقب البريد الإلكتروني"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__email_cc
@@ -327,7 +328,7 @@ msgstr "نسخة البريد الإلكتروني"
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_domain
 msgid "Email domain e.g. 'example.com' in 'odoo@example.com'"
-msgstr ""
+msgstr "نطاق البريد الإلكتروني مثال: 'example.com' في 'odoo@example.com'"
 
 #. module: quality
 #: model:ir.model.fields.selection,name:quality.selection__quality_check__quality_state__fail
@@ -337,12 +338,12 @@ msgstr "فشل"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_check__failure_location_id
 msgid "Failure Location"
-msgstr ""
+msgstr "موقع الفشل"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point__failure_location_ids
 msgid "Failure Locations"
-msgstr ""
+msgstr "مواقع الفشل"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_stage__folded
@@ -450,6 +451,10 @@ msgid ""
 " /- all quantities of a product if control is per product\n"
 " /- all quantities of products in the operation if control is per operation"
 msgstr ""
+"If quality check fails, a destination location is chosen from this list for\n"
+"- each failed specific product quantity if control is per quantity\n"
+" /- all quantities of a product if control is per product\n"
+" /- all quantities of products in the operation if control is per operation"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert_team__alias_bounced_content
@@ -511,7 +516,7 @@ msgstr "الأنشطة المتأخرة"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert_team__alias_incoming_local
 msgid "Local-part based incoming detection"
-msgstr ""
+msgstr "الكشف عن الوارد على أساس الجزء المحلي"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__lot_ids
@@ -547,7 +552,7 @@ msgstr "الرسائل"
 #. module: quality
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "My Activities"
-msgstr ""
+msgstr "أنشطتي"
 
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_alert__my_activity_date_deadline
@@ -607,6 +612,8 @@ msgid ""
 "No quality teams found for this company! Head over to the configuration menu "
 "to create your first quality team."
 msgstr ""
+"لم يتم العثور على فِرَق للجودة لهذه الشركة! توجه إلى قائمة التهيئة لإنشاء أول "
+"فريق جودة لك."
 
 #. module: quality
 #: model:ir.model.fields.selection,name:quality.selection__quality_alert__priority__0
@@ -647,7 +654,7 @@ msgstr "عدد الأخطاء"
 #: model:ir.model.fields,help:quality.field_quality_check__message_needaction_counter
 #: model:ir.model.fields,help:quality.field_quality_point__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
 
 #. module: quality
 #: model:ir.model.fields,help:quality.field_quality_alert__message_has_error_counter
@@ -780,7 +787,7 @@ msgstr "المنتجات"
 #. module: quality
 #: model:res.groups.privilege,name:quality.res_groups_privilege_quality
 msgid "Quality"
-msgstr ""
+msgstr "الجودة"
 
 #. module: quality
 #: model:ir.model,name:quality.model_quality_alert
@@ -897,12 +904,12 @@ msgstr "تسلسل"
 #. module: quality
 #: model:ir.model.fields,field_description:quality.field_quality_point__show_failure_location
 msgid "Show Failure Location"
-msgstr ""
+msgstr "عرض موقع الفشل"
 
 #. module: quality
 #: model_terms:ir.ui.view,arch_db:quality.quality_alert_view_search
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "عرض كافة السجلات التي مضى تاريخ نشاطها التالي"
 
 #. module: quality
 #: model:quality.alert.stage,name:quality.quality_alert_stage_3

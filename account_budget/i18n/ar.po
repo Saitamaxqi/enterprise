@@ -7,13 +7,14 @@
 # Hassan Najm <hassannjm@gmail.com>, 2023
 # Malaz Abuidris <msea@odoo.com>, 2023
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-16 13:37+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Arabic <https://translate.odoo.com/projects/odoo-19/"
 "account_budget/ar/>\n"
 "Language: ar\n"
@@ -30,6 +31,8 @@ msgid ""
 "<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" "
 "title=\"Period\"/>"
 msgstr ""
+"<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" title="
+"\"الفترة \"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
@@ -37,11 +40,12 @@ msgstr ""
 msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"to\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"to\" title=\"إلى \"/>"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "<span class=\"o_stat_text\">Budget Report</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">تقرير الميزانية</span>"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_amount
@@ -51,12 +55,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_pivot
 msgid "Achieved"
-msgstr ""
+msgstr "مؤرشف"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_percentage
 msgid "Achieved (%)"
-msgstr ""
+msgstr "ما تم تحقيقه (%)"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_needaction
@@ -86,7 +90,7 @@ msgstr "أيقونة نوع النشاط"
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
 msgid "Amount Billed/Invoiced."
-msgstr ""
+msgstr "المبلغ المفوتر"
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_amount
@@ -94,6 +98,8 @@ msgid ""
 "Amount supposed to be Billed/Invoiced, formula = (Budget Amount / Budget "
 "Days) x Budget Days Completed"
 msgstr ""
+"المبلغ المفترض أن يتم إصدار فواتير مورّدين/فواتير عملاء به، المعادلة = (مبلغ "
+"الميزانية / أيام الميزانية) × أيام الميزانية المنجزة"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_account_analytic_account
@@ -105,12 +111,12 @@ msgstr "الحساب التحليلي"
 #. module: account_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
 msgid "Analytic Budget"
-msgstr ""
+msgstr "الميزانية التحليلية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__analytical_plan_ids
 msgid "Analytic Plans"
-msgstr ""
+msgstr "الخطط التحليلية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_attachment_count
@@ -120,12 +126,12 @@ msgstr "عدد المرفقات"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Audit"
-msgstr ""
+msgstr "تدقيق"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__budget_type__both
 msgid "Both"
-msgstr ""
+msgstr "كلاهما"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_analytic
@@ -144,13 +150,13 @@ msgstr "الميزانية"
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "Budget %s"
-msgstr ""
+msgstr "الميزانية %s"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget_analytic_id
 msgid "Budget Analytic"
-msgstr ""
+msgstr "تحليل الميزانيات"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_line
@@ -190,12 +196,12 @@ msgstr "اسم الميزانية"
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Budget Report"
-msgstr ""
+msgstr "تقرير الميزانية"
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_split_wizard
 msgid "Budget Split Wizard"
-msgstr ""
+msgstr "معالج تقسيم الميزانية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_analytic_state
@@ -205,19 +211,19 @@ msgstr "حالة الميزانية"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__budget_type
 msgid "Budget Type"
-msgstr ""
+msgstr "نوع الميزانية"
 
 #. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "Budget end date may not be before the starting date."
-msgstr ""
+msgstr "لا يمكن أن يسبق تاريخ انتهاء الميزانية تاريخ البدء."
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_amount
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Budgeted"
-msgstr ""
+msgstr "مدرجة في الميزانية"
 
 #. module: account_budget
 #. odoo-python
@@ -236,7 +242,7 @@ msgstr "تحليل الميزانيات"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 msgid "Cancel"
-msgstr ""
+msgstr "إلغاء"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
@@ -246,7 +252,7 @@ msgstr "إلغاء الميزانية"
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__state__canceled
 msgid "Canceled"
-msgstr ""
+msgstr "تم الإلغاء"
 
 #. module: account_budget
 #: model_terms:ir.actions.act_window,help:account_budget.act_budget_analytic_view
@@ -290,12 +296,12 @@ msgstr "التاريخ"
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "Deletion is only allowed in the Draft and Canceled stages."
-msgstr ""
+msgstr "يمكنك الحذف فقط إذا كانت في حالة المسودة أو ملغية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__description
 msgid "Description"
-msgstr ""
+msgstr "الوصف"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_account_analytic_account__display_name
@@ -309,7 +315,7 @@ msgstr "اسم العرض"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__res_id
 msgid "Document"
-msgstr ""
+msgstr "المستند"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__state__done
@@ -338,7 +344,7 @@ msgstr "تاريخ الانتهاء"
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__budget_type__expense
 msgid "Expense"
-msgstr ""
+msgstr "النفقة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_follower_ids
@@ -368,13 +374,13 @@ msgstr "الأنشطة المستقبلية"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_tree
 msgid "Generate"
-msgstr ""
+msgstr "إنشاء"
 
 #. module: account_budget
 #: model:ir.actions.act_window,name:account_budget.budget_split_wizard_action
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 msgid "Generate Budget"
-msgstr ""
+msgstr "إنشاء ميزانية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__has_message
@@ -414,7 +420,7 @@ msgstr "إذا كان محددًا، فقد حدث خطأ في تسليم بعض
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "In a Budget"
-msgstr ""
+msgstr "في ميزانية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__is_above_budget
@@ -458,17 +464,17 @@ msgstr "الرسائل"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__res_model
 msgid "Model"
-msgstr ""
+msgstr "النموذج"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_split_wizard__period__month
 msgid "Month"
-msgstr ""
+msgstr "الشهر"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
 msgid "My Activities"
-msgstr ""
+msgstr "أنشطتي"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__my_activity_date_deadline
@@ -479,7 +485,7 @@ msgstr "الموعد النهائي لنشاطاتي"
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "New revision"
-msgstr ""
+msgstr "مراجعة جديدة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__activity_calendar_event_id
@@ -519,7 +525,7 @@ msgstr "عدد الأخطاء"
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_analytic__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "عدد الرسائل التي تتطلب اتخاذ إجراء"
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_analytic__message_has_error_counter
@@ -530,12 +536,12 @@ msgstr "عدد الرسائل الحادث بها خطأ في التسليم"
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__state__confirmed
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Open"
-msgstr ""
+msgstr "فتح"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Open Budget"
-msgstr ""
+msgstr "ميزانية مفتوحة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__period
@@ -552,12 +558,12 @@ msgstr "المبلغ الفعلي"
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__account_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__account_id
 msgid "Project Account"
-msgstr ""
+msgstr "حساب المشروع"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_split_wizard__period__quarter
 msgid "Quarter"
-msgstr ""
+msgstr "ربع السنة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__rating_ids
@@ -582,27 +588,27 @@ msgstr "المستخدم المسؤول"
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__budget_type__revenue
 msgid "Revenue"
-msgstr ""
+msgstr "الإيرادات"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Revise"
-msgstr ""
+msgstr "مراجعة"
 
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_analytic__state__revised
 msgid "Revised"
-msgstr ""
+msgstr "تمت المراجعة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__parent_id
 msgid "Revision Of"
-msgstr ""
+msgstr "مراجعة"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__children_ids
 msgid "Revisions"
-msgstr ""
+msgstr "مراجعات"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__message_has_sms_error
@@ -612,17 +618,17 @@ msgstr "خطأ في تسليم الرسائل النصية القصيرة"
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "تسلسل"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "عرض كافة السجلات التي مضى تاريخ نشاطها التالي"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_split_wizard_form_view
 msgid "Split"
-msgstr ""
+msgstr "تقسيم"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__date_from
@@ -653,19 +659,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_budget/models/budget_line.py:0
 msgid "The 'End Date' must be greater than or equal to 'Start Date'."
-msgstr ""
+msgstr "يجب أن يكون 'تاريخ الانتهاء' أكبر من أو يساوي 'تاريخ البدء'."
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_amount
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__theoretical
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Theoretical"
-msgstr ""
+msgstr "نظري"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_percentage
 msgid "Theoretical (%)"
-msgstr ""
+msgstr "نظري (%)"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
@@ -675,18 +681,18 @@ msgstr "أنشطة اليوم"
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Total Achieved"
-msgstr ""
+msgstr "إجمالي ما تمت أرشفته"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_tree
 msgid "Total Budget"
-msgstr ""
+msgstr "إجمالي الميزانية"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__line_type
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "Type"
-msgstr ""
+msgstr "النوع"
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_analytic__activity_exception_decoration
@@ -703,7 +709,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__user_id
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
 msgid "User"
-msgstr ""
+msgstr "المستخدم"
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__website_message_ids
@@ -718,30 +724,30 @@ msgstr "سجل تواصل الموقع الإلكتروني"
 #. module: account_budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_split_wizard__period__year
 msgid "Year"
-msgstr ""
+msgstr "السنة"
 
 #. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "You cannot create recursive revision of budget."
-msgstr ""
+msgstr "لا يمكنك إنشاء مراجعات متداخلة للميزانية"
 
 #. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "budget_analytic_id"
-msgstr ""
+msgstr "budget_analytic_id"
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "e.g. Budget 2023"
-msgstr ""
+msgstr "مثال: ميزانية 2023"
 
 #. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 msgid "id"
-msgstr ""
+msgstr "المعرف"
 
 #~ msgid ""
 #~ "\"End Date\" of the budget line should be included in the Period of the "

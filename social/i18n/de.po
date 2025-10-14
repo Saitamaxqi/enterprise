@@ -8,13 +8,14 @@
 # Larissa Manderfeld, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Larissa Manderfeld (lman)" <lman@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 21:10+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
+"Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/social/de/"
 ">\n"
 "Language: de\n"
@@ -33,7 +34,7 @@ msgstr "# Konten"
 #. odoo-python
 #: code:addons/social/models/social_post.py:0
 msgid "%(media_name)s (max %(max_chars)s chars)"
-msgstr ""
+msgstr "%(media_name)s (max. %(max_chars)s Zeichen)"
 
 #. module: social
 #. odoo-javascript
@@ -50,18 +51,19 @@ msgstr ""
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Calendar\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-calendar me-1 small fw-bold\" title=\"Kalender\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid ""
 "<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Calendar\"/>"
 msgstr ""
+"<i class=\"fa fa-calendar-check-o me-1 small fw-bold\" title=\"Kalender\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-globe ms-1\" title=\"See the post\"/>"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_http_error_view
@@ -123,7 +125,7 @@ msgstr "Beitrag hinzufügen"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Add Stream"
-msgstr ""
+msgstr "Stream hinzufügen"
 
 #. module: social
 #. odoo-javascript
@@ -179,7 +181,7 @@ msgstr "Bilder anhängen"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_live_post__image_ids
 msgid "Attached Images"
-msgstr ""
+msgstr "Angehängte Bilder"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_attachment_count
@@ -212,7 +214,7 @@ msgstr "Name des Autors"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_stream_post__author_link
 msgid "Author link to the external social.media (ex: link to the X Account)."
-msgstr ""
+msgstr "Autor-Link zu externen social.media (bsp.: Link zu einem X-Konto)"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
@@ -290,7 +292,7 @@ msgstr "Klicks"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Clicks:"
-msgstr ""
+msgstr "Klicks:"
 
 #. module: social
 #. odoo-javascript
@@ -332,6 +334,8 @@ msgid ""
 "Contains the social media handle of the person that created this account. "
 "E.g: '@odoo.official' for the 'Odoo' X account"
 msgstr ""
+"Beinhaltet den Social-Media-Namen der Person, die dieses Konto erstellt hat. "
+"Z. B.: „@odoo.official“ für das „Odoo“-X-Konto."
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_live_post__message
@@ -419,7 +423,7 @@ msgstr "Definiert, ob dieses Konto statistische Tendenzen aufweist oder nicht."
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #. module: social
 #. odoo-javascript
@@ -431,7 +435,7 @@ msgstr "Kommentar löschen"
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 msgid "Delete Post"
-msgstr ""
+msgstr "Beitrag löschen"
 
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.res_config_settings_view_form
@@ -452,13 +456,13 @@ msgstr "Entwicklerkonten"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Discard"
-msgstr ""
+msgstr "Verwerfen"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__display_message
 #: model:ir.model.fields,field_description:social.field_social_post_template__display_message
 msgid "Display Message"
-msgstr ""
+msgstr "Nachricht anzeigen"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__display_name
@@ -481,13 +485,13 @@ msgstr "Anzeigename"
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comment.js:0
 msgid "Do you really want to delete this %s?"
-msgstr ""
+msgstr "Möchten Sie „%s“ wirklich löschen?"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/js/stream_post_comments.js:0
 msgid "Do you really want to delete this Post ?"
-msgstr ""
+msgstr "Möchten Sie diesen Beitrag wirklich löschen?"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__state__draft
@@ -507,13 +511,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Edit Your Post"
-msgstr ""
+msgstr "Ihren Beitrag bearbeiten"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_res_config_settings__module_social_demo
@@ -549,7 +553,7 @@ msgstr "Interaktionstrend"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_kanban
 msgid "Engagement:"
-msgstr ""
+msgstr "Interaktion:"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__utm_medium_id
@@ -734,7 +738,7 @@ msgstr "Einblicke"
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__is_author
 msgid "Is Author"
-msgstr ""
+msgstr "Ist Autor"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__message_is_follower
@@ -788,7 +792,7 @@ msgstr "Zuletzt aktualisiert am"
 #. odoo-javascript
 #: code:addons/social/static/src/js/tours/social.js:0
 msgid "Let's <b>connect</b> to Facebook, LinkedIn or X."
-msgstr ""
+msgstr "<b>Verbinden</b> Sie sich mit Facebook, LinkedIn oder X."
 
 #. module: social
 #. odoo-javascript
@@ -922,7 +926,7 @@ msgstr "Medien"
 #: model:ir.model.fields,field_description:social.field_social_post__media_count
 #: model:ir.model.fields,field_description:social.field_social_post_template__media_count
 msgid "Media Count"
-msgstr ""
+msgstr "Anzahl Medien"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__media_type
@@ -1014,7 +1018,7 @@ msgstr "Neuer Beitrag"
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "New comments are disabled"
-msgstr ""
+msgstr "Neue Kommentare sind deaktiviert"
 
 #. module: social
 #. odoo-javascript
@@ -1112,7 +1116,7 @@ msgstr ""
 #: model:ir.model.fields,help:social.field_social_media__message_needaction_counter
 #: model:ir.model.fields,help:social.field_social_post__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Anzahl der Nachrichten, die eine Aktion erfordern"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_media__message_has_error_counter
@@ -1135,6 +1139,8 @@ msgstr "Anzahl der Interaktionen mit Ihren Beiträgen (Likes, Kommentare ...)"
 #: model:ir.model.fields,help:social.field_social_account__stories
 msgid "Number of stories created from your posts (Shares, Reposts, ...)."
 msgstr ""
+"Anzahl der Storys, die anhand Ihres Beitrags kreiert worden sind (Geteilt, "
+"Reposts ...)."
 
 #. module: social
 #. odoo-javascript
@@ -1153,6 +1159,9 @@ msgid ""
 "Number of times people who have engaged with your channel have created "
 "stories on their friends' or followers' feed (Shares, Reposts...)"
 msgstr ""
+"Anzahl der Male, in denen Personen, die sich mit Ihrem Kanal beschäftigt "
+"haben, Storys im Feed ihrer Freunde oder Follower erstellt haben (Shares, "
+"Reposts ...)"
 
 #. module: social
 #. odoo-javascript
@@ -1192,6 +1201,8 @@ msgstr ""
 #: code:addons/social/models/social_post_template.py:0
 msgid "Please specify either a message or upload some images."
 msgstr ""
+"Bitte geben Sie entweder eine Nachricht ein oder laden Sie einige Bilder "
+"hoch."
 
 #. module: social
 #. odoo-python
@@ -1278,13 +1289,15 @@ msgstr "Beiträge per Konto"
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Posts Preview"
-msgstr ""
+msgstr "Vorschau der Beiträge"
 
 #. module: social
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Press Enter to edit. Press Shift+Enter to insert a Line Break."
 msgstr ""
+"Drücken Sie Enter, um zu bearbeiten und Shift+Enter, um einen Zeilenumbruch "
+"einzufügen."
 
 #. module: social
 #. odoo-javascript
@@ -1346,7 +1359,7 @@ msgstr "Ähnliche soziale Medien"
 #. module: social
 #: model:ir.model.fields,help:social.field_social_account__media_id
 msgid "Related Social Media (Facebook, X, ...)."
-msgstr ""
+msgstr "Ähnliche soziale Medien (Facebook, X ...)."
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_stream_post__account_id
@@ -1403,6 +1416,8 @@ msgid ""
 "Selected accounts (%(account_list)s) do not match the selected company (%"
 "(company)s)"
 msgstr ""
+"Gewählte Konten (%(account_list)s) passen nicht zum gewählten Unternehmen "
+"(%(company)s)"
 
 #. module: social
 #: model:ir.model.fields.selection,name:social.selection__social_post__post_method__now
@@ -1576,13 +1591,13 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social/static/src/js/fields/social_post_split_per_media.xml:0
 msgid "Split Per Media"
-msgstr ""
+msgstr "Je Medium getrennt"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_post__is_split_per_media
 #: model:ir.model.fields,field_description:social.field_social_post_template__is_split_per_media
 msgid "Split Per Network"
-msgstr ""
+msgstr "Je Netzwerk getrennt"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_account__stats_link
@@ -1668,7 +1683,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/social/static/src/xml/social_templates.xml:0
 msgid "Sync"
-msgstr ""
+msgstr "Synchronisieren"
 
 #. module: social
 #: model:ir.model.fields,help:social.field_social_post__account_ids
@@ -1773,7 +1788,7 @@ msgstr "UTM-Quelle"
 #. odoo-python
 #: code:addons/social/controllers/main.py:0
 msgid "Uh-oh! It looks like this message has been deleted from X."
-msgstr ""
+msgstr "Oh oh! Diese Nachricht scheint auf X gelöscht worden zu sein."
 
 #. module: social
 #. odoo-python
@@ -1806,6 +1821,8 @@ msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
 msgstr ""
+"Wird verwendet, um Vergleiche anzustellen, wenn wir einige Funktionen auf "
+"ein bestimmtes Medium beschränken müssen („Facebook“, „X“ ...)."
 
 #. module: social
 #. odoo-javascript
@@ -1817,7 +1834,7 @@ msgstr "Ansicht"
 #: model_terms:ir.ui.view,arch_db:social.social_account_view_form
 #: model_terms:ir.ui.view,arch_db:social.social_post_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Für alle sichtbar"
 
 #. module: social
 #: model:ir.model.fields,field_description:social.field_social_media__website_message_ids
@@ -1863,7 +1880,7 @@ msgstr "Einen Kommentar schreiben ..."
 #. module: social
 #: model_terms:ir.ui.view,arch_db:social.social_post_template_view_form
 msgid "Write a message or upload an image"
-msgstr ""
+msgstr "Eine Nachricht schreiben oder ein Bild hochladen"
 
 #. module: social
 #. odoo-javascript

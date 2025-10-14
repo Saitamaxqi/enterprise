@@ -7,13 +7,14 @@
 # Sarah Park, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Kwanghee Park (kwpa)" <kwpa@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-16 12:11+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-14 00:34+0000\n"
+"Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/ko/>\n"
 "Language: ko\n"
@@ -1317,7 +1318,7 @@ msgstr "월"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Months/Years"
-msgstr ""
+msgstr "월/연"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__multiple_assets_per_line
@@ -1354,7 +1355,7 @@ msgstr "내 활동 마감일"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_group__name
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__negative_revaluation
@@ -1580,7 +1581,7 @@ msgstr "발행 전표"
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Properties"
-msgstr ""
+msgstr "속성"
 
 #. module: account_asset
 #. odoo-python
@@ -1592,7 +1593,7 @@ msgstr "비례 기준일"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__purchase
 msgid "Purchase"
-msgstr ""
+msgstr "구매"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
@@ -2109,37 +2110,37 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_asset_id"
-msgstr ""
+msgstr "account_asset_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_depreciation_expense_id"
-msgstr ""
+msgstr "account_depreciation_expense_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_depreciation_id"
-msgstr ""
+msgstr "account_depreciation_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "acquisition_date"
-msgstr ""
+msgstr "acquisition_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "already_depreciated_amount_import"
-msgstr ""
+msgstr "already_depreciated_amount_import"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "asset_group_id"
-msgstr ""
+msgstr "asset_group_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_balance
@@ -2150,7 +2151,7 @@ msgstr "장부 가치"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "company_id"
-msgstr ""
+msgstr "company_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_date_from
@@ -2220,91 +2221,91 @@ msgstr "입력"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain"
-msgstr ""
+msgstr "이익"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain/loss"
-msgstr ""
+msgstr "이익/손실"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "journal_id"
-msgstr ""
+msgstr "journal_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "loss"
-msgstr ""
+msgstr "손실"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method"
-msgstr ""
+msgstr "방법"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_number"
-msgstr ""
+msgstr "method_number"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_period"
-msgstr ""
+msgstr "method_period"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_progress_factor"
-msgstr ""
+msgstr "method_progress_factor"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "modify"
-msgstr ""
+msgstr "수정"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "original_value"
-msgstr ""
+msgstr "original_value"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "pause"
-msgstr ""
+msgstr "일시 정지"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_computation_type"
-msgstr ""
+msgstr "prorata_computation_type"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_date"
-msgstr ""
+msgstr "prorata_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "salvage_value"
-msgstr ""
+msgstr "salvage_value"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "sell"
-msgstr ""
+msgstr "판매"
 
 #~ msgid " (%s of %s)"
 #~ msgstr "(%s의 %s)"

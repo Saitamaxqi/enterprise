@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 21:09+0000\n"
+"PO-Revision-Date: 2025-10-13 15:00+0000\n"
 "Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/pos_iot/"
 "de/>\n"
@@ -26,7 +26,7 @@ msgstr ""
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with a Six payment terminal"
-msgstr ""
+msgstr "Akzeptieren Sie Zahlungen mit einem Six-Zahlungsterminal"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -49,12 +49,12 @@ msgstr "Greifen Sie zu auf"
 #: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
 msgid "Associated PoS"
-msgstr ""
+msgstr "Verbundenes Kassensystem"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Automated Setup"
-msgstr ""
+msgstr "Automatisierte Einrichtung"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -107,13 +107,13 @@ msgstr "Konfiguration des Zahlungsterminals fehlgeschlagen"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_auto_config_pos_iot
 msgid "Configure Automatically IoT Box In PoS"
-msgstr ""
+msgstr "IoT-Box-Geräte automatisch im Kassensystem konfigurieren"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "Connect to a Point of Sale"
-msgstr ""
+msgstr "Mit Kassensystem verbinden"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -130,17 +130,17 @@ msgstr "Verbindung mit Terminal fehlgeschlagen"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "Fortsetzen"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Erstellt von"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Erstellt am"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -151,7 +151,7 @@ msgstr "Kundenanzeige"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "Verwerfen"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -163,7 +163,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Anzeigename"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_electronic_scale
@@ -204,12 +204,12 @@ msgstr "Nur Firefox: Klicken Sie auf Sicherheitsausnahme bestätigen"
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "IOT-Gerät"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
@@ -262,13 +262,13 @@ msgstr "Ingenico-Zahlungsterminal"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_box
 msgid "IoT Box"
-msgstr ""
+msgstr "IoT-Box"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/navbar/navbar.xml:0
 msgid "IoT Box Connected"
-msgstr ""
+msgstr "IoT-Box verbunden"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -290,12 +290,12 @@ msgstr "IoT-Geräte"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_id
 msgid "Iot Box"
-msgstr ""
+msgstr "Iot-Box"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_identifier
 msgid "Iot Box Identifier"
-msgstr ""
+msgstr "Iot-Box-Kennung"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
@@ -305,23 +305,23 @@ msgstr "IoT-Gerät"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert von"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Network Error"
-msgstr ""
+msgstr "Netzwerkfehler"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
-msgstr ""
+msgstr "Keine"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -332,7 +332,7 @@ msgstr "Zahlungsterminalgerät"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Payment method"
-msgstr ""
+msgstr "Zahlungsmethode"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -398,7 +398,7 @@ msgstr "Proxy-IP-Adresse"
 #. odoo-python
 #: code:addons/pos_iot/models/pos_printer.py:0
 msgid "Proxy IP cannot be empty."
-msgstr ""
+msgstr "Proxy-IP darf nicht leer sein."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -414,17 +414,17 @@ msgstr "Via Proxy scannen"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 msgid "Scanner"
-msgstr ""
+msgstr "Scanner"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_six
 msgid "Six Payment Terminal"
-msgstr ""
+msgstr "Six-Zahlungsterminal"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_printer__proxy_ip
@@ -450,6 +450,8 @@ msgid ""
 "The transactions are processed by Ingenico via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"Die Transaktionen werden von Ingenico über eine IoT-Box verarbeitet. Richten "
+"Sie Ihren Terminal für die entsprechende Zahlungsmethode ein."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
@@ -458,6 +460,8 @@ msgid ""
 "The transactions are processed by Six via an IoT box. Setup your terminal on "
 "the related payment method."
 msgstr ""
+"Die Transaktionen werden von Six über eine IoT-Box verarbeitet. Richten Sie "
+"Ihren Terminal für die entsprechende Zahlungsmethode ein."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -466,6 +470,8 @@ msgid ""
 "The transactions are processed by Worldline via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"Die Transaktionen werden von Worldline über eine IoT-Box verarbeitet. "
+"Richten Sie Ihren Terminal für die entsprechende Zahlungsmethode ein."
 
 #. module: pos_iot
 #. odoo-javascript
@@ -476,7 +482,7 @@ msgstr "Transaktion in Bearbeitung"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Worldline (BENELUX)"
-msgstr ""
+msgstr "Worldline (BENELUX)"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -501,12 +507,19 @@ msgid ""
 "If you have just paired the IoT box, you may be experiencing a DNS issue.\n"
 "If you wait for some time the problem may resolve itself."
 msgstr ""
+"Ihr IoT-Box wurde registriert, aber Ihr Browser erreicht sie nicht.\n"
+"Stellen Sie sicher, dass sie eingeschaltet und mit dem Netzwerk verbunden "
+"ist.\n"
+"\n"
+"Wenn Sie Probleme beim Koppeln der IoT-Box haben, liegt möglicherweise ein "
+"DNS-Problem vor.\n"
+"Haben Sie etwas Geduld. Das Problem löst sich eventuell von selbst."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
-msgstr ""
+msgstr "keine"
 
 #~ msgid "Action identifier:"
 #~ msgstr "Aktion Kennung: "

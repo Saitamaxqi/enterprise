@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"PO-Revision-Date: 2025-10-13 15:01+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/ai_crm/"
 "it/>\n"
@@ -54,17 +54,17 @@ msgstr ""
 #. module: ai_crm
 #: model:ir.model,name:ai_crm.model_ai_agent
 msgid "AI Agent"
-msgstr "Agente IA"
+msgstr "Agente AI"
 
 #. module: ai_crm
 #: model:ir.actions.server,name:ai_crm.ir_actions_server_ai_create_lead
 msgid "AI CRM: Create Lead"
-msgstr "IA CRM: crea lead"
+msgstr "AI CRM: crea lead"
 
 #. module: ai_crm
 #: model:ir.actions.server,name:ai_crm.ir_actions_server_ai_get_lead_create_available_params
 msgid "AI CRM: Get Lead creation available parameters"
-msgstr "IA CRM: ottieni i parametri disponibili per la creazione di lead"
+msgstr "AI CRM: ottieni i parametri disponibili per la creazione di lead"
 
 #. module: ai_crm
 #: model:ir.model.fields,field_description:ai_crm.field_ai_agent__name
