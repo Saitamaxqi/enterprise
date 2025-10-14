@@ -6794,14 +6794,14 @@ class AccountReport(models.Model):
         for report in self:
             report.is_account_coverage_report_available = (
                 (
-                    self.availability_condition == 'country' and self.env.company.account_fiscal_country_id == self.country_id
+                    report.availability_condition == 'country' and self.env.company.account_fiscal_country_id == report.country_id
                     or
-                    self.availability_condition == 'coa' and self.env.company.chart_template == self.chart_template
+                    report.availability_condition == 'coa' and self.env.company.chart_template == report.chart_template
                     or
-                    self.availability_condition == 'always'
+                    report.availability_condition == 'always'
                 )
                 and
-                self.root_report_id in (
+                report.root_report_id in (
                     self.env.ref('account_reports.profit_and_loss', raise_if_not_found=False),
                     self.env.ref('account_reports.balance_sheet', raise_if_not_found=False)
                 )
