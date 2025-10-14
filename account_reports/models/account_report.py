@@ -153,8 +153,12 @@ class AccountReport(models.Model):
                 })
 
             annual_statements.section_report_ids -= asr_section_report.root_report_id
-            annual_statements.section_report_ids += asr_section_report
-            asr_section_report.sequence = asr_section_report.root_report_id.sequence
+
+            if asr_section_report.use_sections:
+                annual_statements.section_report_ids += asr_section_report.section_report_ids
+            else:
+                annual_statements.section_report_ids += asr_section_report
+                asr_section_report.sequence = asr_section_report.root_report_id.sequence
 
     ####################################################
     # CRON
