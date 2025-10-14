@@ -2569,6 +2569,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         On a delivery, a user scans L (it should add a line)
         Then, the user scans a non-existing lot LX (it should not create any line)
         """
+        self.picking_type_out.use_create_lots = False
         self.env.user.write({'group_ids': [Command.link(self.env.ref('stock.group_production_lot').id)]})
         lot01 = self.env['stock.lot'].create({
             'name': "LOT01",
