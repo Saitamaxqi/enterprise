@@ -8,6 +8,8 @@ class MailThread(models.AbstractModel):
 
     def _ai_serialize_activities_data(self):
         """Serialize planned activities data for AI context"""
+        if not hasattr(self, 'activity_ids'):
+            return ""
         activities_data = []
         for activity in self.activity_ids:
             activity_info = f"Activity: {activity.activity_type_id.name}"
