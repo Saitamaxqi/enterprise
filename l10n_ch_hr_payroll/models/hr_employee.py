@@ -130,7 +130,7 @@ class HrEmployee(models.Model):
         now = fields.Datetime.now().date()
         month = now.month
         year = now.year
-        existing_snapshots = self.env["l10n.ch.employee.yearly.values"].search([
+        existing_snapshots = self.sudo().env["l10n.ch.employee.yearly.values"].search([
             ('year', '=', year),
             ('employee_id', 'in', swiss_employees.ids)
         ])
@@ -144,9 +144,9 @@ class HrEmployee(models.Model):
             })
 
         if vals:
-            existing_snapshots += self.env['l10n.ch.employee.yearly.values'].create(vals)
+            existing_snapshots += self.sudo().env['l10n.ch.employee.yearly.values'].create(vals)
 
-        existing_snapshots += self.env["l10n.ch.employee.yearly.values"].search([
+        existing_snapshots += self.sudo().env["l10n.ch.employee.yearly.values"].search([
             ('year', '>', year),
             ('employee_id', 'in', self.ids)
         ])
@@ -181,7 +181,7 @@ class HrEmployee(models.Model):
             existing_snapshots._toggle_pay_period_lock(lock=False)
 
         # Recompute open payslips automatically on each update since almost all fields cause a change in computation
-        pending_computation_slips = self.slip_ids.filtered(lambda p: p.state == 'draft' and p.struct_id.code == "CHMONTHLYELM")
+        pending_computation_slips = self.sudo().slip_ids.filtered(lambda p: p.state == 'draft' and p.struct_id.code == "CHMONTHLYELM")
         if pending_computation_slips:
             pending_computation_slips.action_refresh_from_work_entries()
 

@@ -230,8 +230,8 @@ class HrVersion(models.Model):
                                                            ('others', 'Others')], string="Entry Reason", default="entryCompany", help="""Specify here the withdrawal from LPP reason.""", groups="hr.group_hr_user", tracking=True)
     l10n_ch_lpp_entry_valid_as_of = fields.Date("Entry Valid As Of", compute="_compute_l10n_ch_lpp_entry_valid_as_of", store=True, readonly=False, help="Please Provide the validity date of the last LPP Entry", groups="hr.group_hr_user")
     l10n_ch_lpp_withdrawal_valid_as_of = fields.Date("Withdrawal Valid As Of", compute="_compute_l10n_ch_lpp_withdrawal_valid_as_of", store=True, readonly=False, help="Please Provide the validity date of the last LPP Withdrawal", groups="hr.group_hr_user")
-    l10n_ch_lpp_solutions = fields.Many2many('l10n.ch.lpp.insurance.line', string="LPP Codes", groups="hr.group_hr_user", tracking=True)
-    l10n_ch_lpp_mutations = fields.One2many('l10n.ch.lpp.mutation', 'version_id', groups="hr.group_hr_user", tracking=True)
+    l10n_ch_lpp_solutions = fields.Many2many('l10n.ch.lpp.insurance.line', string="LPP Codes", groups="hr_payroll.group_hr_payroll_user", tracking=True)
+    l10n_ch_lpp_mutations = fields.One2many('l10n.ch.lpp.mutation', 'version_id', groups="hr_payroll.group_hr_payroll_user", tracking=True)
     lpp_employee_amount = fields.Float(string="LPP Employee Contributions", groups="hr.group_hr_user", tracking=True)
     lpp_company_amount = fields.Float(string="LPP Company Contributions", groups="hr.group_hr_user", tracking=True)
     l10n_ch_14th_month = fields.Boolean(string="14th Month", groups="hr.group_hr_user", tracking=True)
@@ -248,9 +248,9 @@ class HrVersion(models.Model):
     l10n_ch_accident_insurance_line_id = fields.Many2one(
         'l10n.ch.accident.insurance.line', string="LAA Insurance", groups="hr.group_hr_user", tracking=True)
     l10n_ch_additional_accident_insurance_line_ids = fields.Many2many(
-        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr.group_hr_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
+        'l10n.ch.additional.accident.insurance.line', string="LAAC Insurances", groups="hr_payroll.group_hr_payroll_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
     l10n_ch_sickness_insurance_line_ids = fields.Many2many(
-        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr.group_hr_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
+        'l10n.ch.sickness.insurance.line', string="IJM Insurances", groups="hr_payroll.group_hr_payroll_user", tracking=True, domain='[("insurance_id.company_id", "=", company_id)]')
     l10n_ch_compensation_fund_id = fields.Many2one(
         'l10n.ch.compensation.fund', string="Family Compensation Fund", groups="hr.group_hr_user", tracking=True, domain='[("company_id", "=", company_id)]')
     l10n_ch_lesson_wage = fields.Float('Lesson Wage', tracking=True, help="Employee's gross wage by lesson.", groups="hr_payroll.group_hr_payroll_user")
@@ -349,7 +349,7 @@ class HrVersion(models.Model):
     def create(self, vals_list):
         contracts = super().create(vals_list)
         swissdec_structure = self.env.ref("l10n_ch_hr_payroll.structure_type_employee_ch", raise_if_not_found=False)
-        employees = contracts.filtered(lambda c: c.structure_type_id.id == swissdec_structure.id).mapped("employee_id")
+        employees = contracts.filtered(lambda c: c.sudo().structure_type_id.id == swissdec_structure.id).mapped("employee_id")
         if not employees:
             return contracts
         employees._create_or_update_snapshot()
@@ -358,7 +358,7 @@ class HrVersion(models.Model):
     def write(self, vals):
         res = super().write(vals)
         swissdec_structure = self.env.ref("l10n_ch_hr_payroll.structure_type_employee_ch", raise_if_not_found=False)
-        employees = self.filtered(lambda c: c.structure_type_id.id == swissdec_structure.id).mapped("employee_id")
+        employees = self.filtered(lambda c: c.sudo().structure_type_id.id == swissdec_structure.id).mapped("employee_id")
         if not employees:
             return res
         employees._create_or_update_snapshot()
