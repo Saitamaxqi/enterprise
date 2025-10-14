@@ -81,6 +81,9 @@ class AccountJournal(models.Model):
 
     @api.model
     def _l10n_be_codaclean_import_coda_files(self, company, codas):
+        if not codas:
+            return []
+
         statement_ids_all = []
         skipped_bank_accounts = set()
         acc_journal_map = {

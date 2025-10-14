@@ -2,7 +2,7 @@
     'name': 'Codaclean',
     'version': '1.0',
     'author': 'Odoo S.A.',
-    'website': 'https://www.odoo.com/documentation/master/applications/finance/fiscal_localizations/belgium.html#codaclean',
+    'website': 'https://www.odoo.com/documentation/19.0/applications/finance/fiscal_localizations/belgium.html#codaclean',
     'category': 'Accounting/Localizations',
     'description': 'Connect to Codaclean and automatically import CODA statements.',
     'depends': [
