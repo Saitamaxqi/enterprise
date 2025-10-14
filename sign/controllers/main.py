@@ -559,9 +559,12 @@ class Sign(http.Controller):
         if not request_item_sudo or request_item_sudo.sign_request_id.validity and request_item_sudo.sign_request_id.validity < fields.Date.today():
             return {'success': False}
 
-        result = {'success': True}
+        sign_request = request_item_sudo.sign_request_id
+        company = sign_request.communication_company_id or sign_request.create_uid.company_id
+        result = {'success': True, 'company_country_code': company.country_id.code}
         if request_item_sudo.role_id.auth_method:
             result = self._validate_auth_method(request_item_sudo, sms_token=sms_token, **kwargs)
+            result['company_country_code'] = company.country_id.code
             if not result.get('success'):
                 return result
 

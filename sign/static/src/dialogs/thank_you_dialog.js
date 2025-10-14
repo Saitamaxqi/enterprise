@@ -51,8 +51,13 @@ export class ThankYouDialog extends Component {
             signUpButton: null
         });
         this.redirectURL = this.processURL(this.props.redirectURL);
-        this.message =
-            this.props.message || _t("You will get the signed document by email.");
+        let defaultMessage = _t("You will get the signed document by email.");
+        if (this.signInfo.get("companyCountryCode") === "US") {
+            // U.S. signers may request a paper copy in addition to the electronic document,
+            // as required by the ESIGN Act.
+            defaultMessage = _t("You will get the signed document by email. You may also request a paper copy from the sender.");
+        }
+        this.message = this.props.message || defaultMessage;
         onWillStart(this.willStart);
         this.isMobileOS = isMobileOS();
     }

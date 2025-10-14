@@ -498,6 +498,7 @@ export class Document extends Component {
         const response = await rpc(route, params).finally(() => this.ui.unblock());
         this.validateButton.removeAttribute("disabled");
         if (response.success) {
+            this.signInfo.set({companyCountryCode: response.company_country_code});
             if (response.url) {
                 document.location.pathname = response.url;
             } else {
