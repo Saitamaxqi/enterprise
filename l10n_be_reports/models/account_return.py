@@ -300,6 +300,9 @@ class AccountReturn(models.Model):
         if self.type_external_id == 'l10n_be_reports.be_ec_sales_list_return_type':
             self._add_attachment(self.type_id.report_id.dispatch_report_action(options, 'export_to_xml_sales_report'))
 
+    def l10n_be_reset_2_sates_common(self):
+        return self.action_reset_2_states()
+
     def l10n_be_reset_tax_prepayment(self):
         self.ensure_one()
 
