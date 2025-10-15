@@ -2145,9 +2145,9 @@ class AccountReturn(models.Model):
             if not bill_already_exists:
                 # Create a new bill if no match is found
                 journal = self.env['account.journal'].search([
-                    *self.env['account.journal']._check_company_domain(self.company_id),
+                    *self.env['account.journal']._check_company_domain(self.company_ids or self.company_id),
                     ('type', '=', 'purchase')
-                ], limit=1)
+                ], order="sequence, id", limit=1)
                 move_type = "in_invoice" if bill.get('bill_type') != "CRN" else "in_refund"
                 created_move = self.env['account.move'].with_context(skip_is_manually_modified=True).create({
                     'journal_id': journal.id,
