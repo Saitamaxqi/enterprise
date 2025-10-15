@@ -92,15 +92,24 @@ class TestL10nCoReportsTrialBalanceReport(TestAccountReportsCommon):
             #    Name                                 Partner VAT     Balance     Debit       Credit         Balance
             [0,                                            1,            2,          3,          4,          5],
             [
-                (self.account_asset_name,                 '',        3300.0,        0.0,        0.0,       3300.0),
-                ('partner_a',                        '11111',        1000.0,        0.0,        0.0,       1000.0),
-                ('partner_b',                        '22222',        1000.0,        0.0,        0.0,       1000.0),
-                ('Unknown',                               '',        1300.0,        0.0,        0.0,       1300.0),
-                (self.account_receivable_name,            '',       -3000.0,        0.0,        0.0,      -3000.0),
-                ('partner_a',                        '11111',       -3000.0,        0.0,        0.0,      -3000.0),
-                (self.undistributed_pl_account_name,      '',        -300.0,        0.0,        0.0,       -300.0),
-                ('Total',                                 '',           0.0,        0.0,        0.0,          0.0),
+                ('1 Assets',),
+                ('11 Cash and Cash Equivalents',),
+                ('1120 Savings Accounts',),
+                (self.account_asset_name,                 '',           3300.0,         0.0,         0.0,           3300.0),
 
+                ('partner_a',                        '11111',           1000.0,         0.0,         0.0,           1000.0),
+                ('partner_b',                        '22222',           1000.0,         0.0,         0.0,           1000.0),
+                ('Unknown',                               '',           1300.0,         0.0,         0.0,           1300.0),
+
+                ('13 Debtors',),
+                ('1305 Clients',),
+
+                (self.account_receivable_name,            '',          -3000.0,         0.0,         0.0,          -3000.0),
+                ('partner_a',                        '11111',          -3000.0,         0.0,         0.0,          -3000.0),
+
+                ('9 Memorandum Accounts (Credit)',),
+                (self.undistributed_pl_account_name,      '',           -300.0,         0.0,         0.0,           -300.0),
+                ('Total',                                 '',              0.0,         0.0,         0.0,              0.0),
             ],
             options,
         )
