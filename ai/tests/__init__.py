@@ -2,6 +2,7 @@
 from . import common
 from . import test_ai_access
 from . import test_ai_agent
+from . import test_ai_agent_source
 from . import test_ai_logging
 from . import test_ai_methods
 from . import test_data

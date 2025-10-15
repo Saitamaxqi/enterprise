@@ -127,6 +127,21 @@ class AIEmbedding(models.Model):
             embedding_model = source.agent_id._get_embedding_model()
             source._update_source_status(embedding_model)
 
+    def _get_indexed_embedding_models_by_checksum(self, checksum):
+        """
+        Get indexed embedding models by checksum.
+        :param checksum: checksum of the attachment
+        :type checksum: str
+        :return: list of indexed embedding models of the input checksum
+        :rtype: list of str
+        """
+        embeddings_by_model = self._read_group(
+            domain=[('checksum', '=', checksum)],
+            groupby=['embedding_model'],
+        )
+        indexed_embedding_models = [embedding_model[0] for embedding_model in embeddings_by_model]
+        return indexed_embedding_models
+
     @api.autovacuum
     def _gc_embeddings(self):
         """
