@@ -69,7 +69,7 @@ class AccountReturn(models.Model):
         ('completed', 'Complete')
     ], default="new", string="GSTR-2B Status", readonly=True, tracking=True)
     # if there is big data then it's give in multi-json
-    l10n_in_gstr2b_json_ids = fields.Many2many('ir.attachment', 'account_return_gstr2b_json_rel', string='GSTR2B JSON from portal')
+    l10n_in_gstr2b_json_ids = fields.Many2many('ir.attachment', 'account_return_gstr2b_json_rel', string='GSTR2B JSON from portal', bypass_search_access=True)
     l10n_in_gstr2b_blocking_level = fields.Selection(
         selection=[('warning', 'Warning'), ('error', 'Error')],
         help="Blocks the current operation of the document depending on the error severity:\n"
