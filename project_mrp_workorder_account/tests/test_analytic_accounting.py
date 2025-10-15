@@ -80,6 +80,21 @@ class TestMrpAnalyticAccountHr(TestMrpAnalyticAccount):
         self.assertEqual(employee2_aa_line[self.analytic_plan._column_name()], new_account)
         self.assertEqual(employee1_aa_line[self.analytic_plan._column_name()], new_account)
 
+        # Test the same thing but when the wo is marked as done from the widget
+        mo_2 = self.env['mrp.production'].create({
+            'product_id': self.product.id,
+            'bom_id': self.bom.id,
+            'product_qty': 1,
+            'project_id': self.project.id,
+        })
+        self.env.user.employee_id = self.employee1
+        mo_2.action_confirm()
+        mo_2.workorder_ids.set_state('done')
+        mo_2.workorder_ids.invalidate_recordset(['duration'])
+        employee_aa_line = mo_2.workorder_ids.employee_analytic_account_line_ids.filtered(lambda l: l.employee_id == self.env.user.employee_id)
+        self.assertEqual(employee_aa_line.amount, -100.0)
+        self.assertEqual(mo_2.workorder_ids.mo_analytic_account_line_ids.amount, -10.0)
+
     def test_mrp_analytic_account_without_workorder(self):
         """
         Test adding a project with an analytic account to a confirmed manufacturing order without a work order.
