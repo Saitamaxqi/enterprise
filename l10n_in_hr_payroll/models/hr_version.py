@@ -459,7 +459,6 @@ class HrVersion(models.Model):
                 "l10n_in_esic_employee_percentage", "l10n_in_esic_employer_amount", "l10n_in_esic_employer_percentage",
                 "l10n_in_labour_welfare", "l10n_in_lwf_employer_contribution", "l10n_in_lwf_employee_contribution",
                 "pt_rule_parameter_id", "l10n_in_pf_employee_type", "l10n_in_pf_employer_type",
-                "overtime_from_attendance",
             ]
         return whitelisted_fields
 
