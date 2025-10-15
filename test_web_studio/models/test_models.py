@@ -9,6 +9,8 @@ class TestStudioModel_Action(models.Model):
     name = fields.Char()
     confirmed = fields.Boolean()
     step = fields.Integer()
+    monetary = fields.Monetary(currency_field="my_currency")
+    my_currency = fields.Many2one("res.currency")
 
     def action_confirm(self):
         for rec in self:
