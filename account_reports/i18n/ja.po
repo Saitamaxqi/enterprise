@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"PO-Revision-Date: 2025-10-15 02:40+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ja/>\n"
@@ -146,7 +146,7 @@ msgstr "（１行）"
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "(No %s)"
-msgstr "(No %s)"
+msgstr "(%sなし)"
 
 #. module: account_reports
 #. odoo-python
@@ -4270,7 +4270,7 @@ msgstr "エラー数"
 #: model:ir.model.fields,help:account_reports.field_account_return__message_needaction_counter
 #: model:ir.model.fields,help:account_reports.field_account_return_type__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "アクションを必要とするメッセージの数"
+msgstr "対応が必要なメッセージ数"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_return__message_has_error_counter
@@ -4771,7 +4771,7 @@ msgstr "会計セッティングで繰延勘定科目を設定して下さい。
 #. odoo-python
 #: code:addons/account_reports/models/account_deferred_reports.py:0
 msgid "Please set the deferred journal in the accounting settings."
-msgstr "勘定科目で繰延仕訳帳を設定して下さい。"
+msgstr "会計の管理設定で繰延仕訳帳を設定してください。"
 
 #. module: account_reports
 #. odoo-python

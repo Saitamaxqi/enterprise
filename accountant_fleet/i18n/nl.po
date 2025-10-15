@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-13 16:36+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-10-14 07:01+0000\n"
+"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "accountant_fleet/nl/>\n"
 "Language: nl\n"
@@ -32,9 +32,9 @@ msgstr ""
 #. module: accountant_fleet
 #: model:ir.ui.menu,name:accountant_fleet.menu_action_audit_inventory_fleet
 msgid "Fleet"
-msgstr ""
+msgstr "Wagenpark"
 
 #. module: accountant_fleet
 #: model:account.return.check.template,name:accountant_fleet.account_return_check_template_vehicle_expenses_mileage_or_private_use
 msgid "Vehicle expenses: mileage or private use"
-msgstr ""
+msgstr "Autokosten: kilometers of privégebruik"

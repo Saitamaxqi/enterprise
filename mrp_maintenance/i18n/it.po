@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"PO-Revision-Date: 2025-10-14 12:41+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "mrp_maintenance/it/>\n"
@@ -410,6 +410,8 @@ msgstr "Tipologia prossima attività"
 #: code:addons/mrp_maintenance/models/mrp_maintenance.py:0
 msgid "No available slot within 700 days after the planned start."
 msgstr ""
+"Non c'è nessuno slot disponibile nei 700 giorni successivi alla data di "
+"inizio pianificata."
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_needaction_counter
@@ -419,7 +421,7 @@ msgstr "Numero di azioni"
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_workcenter__message_has_error_counter
 msgid "Number of errors"
-msgstr "Numero di azioni"
+msgstr "Numero di errori"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,field_description:mrp_maintenance.field_mrp_production__maintenance_count
@@ -429,7 +431,7 @@ msgstr "Numero di manutenzioni richieste"
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_mrp_workcenter__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr "Numero di messagig che richiedono un'azione"
+msgstr "Numero di messaggi che richiedono un'azione"
 
 #. module: mrp_maintenance
 #: model:ir.model.fields,help:mrp_maintenance.field_mrp_workcenter__message_has_error_counter

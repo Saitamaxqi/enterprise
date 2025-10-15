@@ -7,13 +7,14 @@
 # Ryoko Tsuda <ryoko@quartile.co>, 2022
 # 江口和志 <sandwhale1010@gmail.com>, 2022
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Junko Augias (juau)" <juau@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-14 06:23+0000\n"
+"Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/pos_iot/"
 "ja/>\n"
 "Language: ja\n"
@@ -26,7 +27,7 @@ msgstr ""
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with a Six payment terminal"
-msgstr ""
+msgstr "Six決済端末での支払いに対応"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -49,12 +50,12 @@ msgstr "自分の以下へアクセス:"
 #: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
 msgid "Associated PoS"
-msgstr ""
+msgstr "紐付けられたPOS"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Automated Setup"
-msgstr ""
+msgstr "自動セットアップ"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -106,13 +107,13 @@ msgstr "決済端末の設定に失敗しました"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_auto_config_pos_iot
 msgid "Configure Automatically IoT Box In PoS"
-msgstr ""
+msgstr "POSでIoT Boxを自動的に設定する"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "Connect to a Point of Sale"
-msgstr ""
+msgstr "POSに接続"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -129,17 +130,17 @@ msgstr "端末接続に失敗しました"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "続行"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者："
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日："
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -150,7 +151,7 @@ msgstr "顧客表示"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -162,7 +163,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_electronic_scale
@@ -204,12 +205,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "IOT デバイス"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
@@ -262,13 +263,13 @@ msgstr "Ingenico決済端末"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_box
 msgid "IoT Box"
-msgstr ""
+msgstr "IoT Box"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/navbar/navbar.xml:0
 msgid "IoT Box Connected"
-msgstr ""
+msgstr "IoT Box が接続されました"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -290,12 +291,12 @@ msgstr "IoTデバイス"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_id
 msgid "Iot Box"
-msgstr ""
+msgstr "Iot Box"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_identifier
 msgid "Iot Box Identifier"
-msgstr ""
+msgstr "Iot Box 識別子"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
@@ -305,23 +306,23 @@ msgstr "IoTデバイス"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者："
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日："
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Network Error"
-msgstr ""
+msgstr "ネットワークエラー"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
-msgstr ""
+msgstr "なし"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -332,7 +333,7 @@ msgstr "決済端末デバイス"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Payment method"
-msgstr ""
+msgstr "支払方法"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -381,13 +382,13 @@ msgstr "プロキシ経由で印刷"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing failed"
-msgstr ""
+msgstr "印刷に失敗しました"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing warning"
-msgstr ""
+msgstr "印刷警告"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
@@ -398,7 +399,7 @@ msgstr "プロキシIPアドレス"
 #. odoo-python
 #: code:addons/pos_iot/models/pos_printer.py:0
 msgid "Proxy IP cannot be empty."
-msgstr ""
+msgstr "プロキシIPは空にできません。"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -414,17 +415,17 @@ msgstr "プロキシ経由でスキャン"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 msgid "Scanner"
-msgstr ""
+msgstr "スキャナ"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_six
 msgid "Six Payment Terminal"
-msgstr ""
+msgstr "Six決済端末"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_printer__proxy_ip
@@ -442,6 +443,15 @@ msgid ""
 "printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
+"IoT "
+"Boxは接続されていますが、レシートプリンタが接続されていません。続行するには、"
+"プリンタが接続されていることを確認してください:\n"
+"\n"
+"1/ USBプリンタの場合：IoT "
+"Boxとレシートプリンターをつなぐケーブルを確認してください\n"
+"2/ "
+"ネットワークプリンタの場合：プリンタがインターネットに接続されていることを確"
+"認してください。"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico
@@ -449,7 +459,9 @@ msgstr ""
 msgid ""
 "The transactions are processed by Ingenico via an IoT box. Setup your "
 "terminal on the related payment method."
-msgstr ""
+msgstr "取引は、IoT "
+"boxを介してIngenicoによって処理されます。関連する支払方法に、端末を設定してく"
+"ださい。"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
@@ -457,7 +469,9 @@ msgstr ""
 msgid ""
 "The transactions are processed by Six via an IoT box. Setup your terminal on "
 "the related payment method."
-msgstr ""
+msgstr "取引は、IoT "
+"boxを介してSixによって処理されます。関連する支払方法に、端末を設定してくださ"
+"い。"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -465,7 +479,9 @@ msgstr ""
 msgid ""
 "The transactions are processed by Worldline via an IoT box. Setup your "
 "terminal on the related payment method."
-msgstr ""
+msgstr "取引は、IoT "
+"boxを介してWorldlineによって処理されます。関連する支払方法に、端末を設定して"
+"ください。"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -476,7 +492,7 @@ msgstr "取引中"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Worldline (BENELUX)"
-msgstr ""
+msgstr "Worldline (BENELUX)"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -499,12 +515,20 @@ msgid ""
 "If you have just paired the IoT box, you may be experiencing a DNS issue.\n"
 "If you wait for some time the problem may resolve itself."
 msgstr ""
+"IoT Box は登録されていますが、お使いのブラウザは IoT Box "
+"に接続できませんでした。\n"
+"電源がオンになっていて、ネットワークに接続されていることを確認してください。"
+"\n"
+"\n"
+"IoT Box "
+"をペアリングしたばかりの場合は、DNSの問題が発生している可能性があります。\n"
+"しばらくお待ちいただくと、問題が解決する場合があります。"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
-msgstr ""
+msgstr "なし"
 
 #~ msgid "Amount:"
 #~ msgstr "金額:"

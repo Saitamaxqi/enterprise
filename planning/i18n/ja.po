@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-03 12:11+0000\n"
+"PO-Revision-Date: 2025-10-14 06:23+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "planning/ja/>\n"
@@ -2552,7 +2552,7 @@ msgstr "あなたのチームメンバーのシフト"
 #. odoo-python
 #: code:addons/planning/models/planning_slot.py:0
 msgid "Shifts reset to draft"
-msgstr "シフトがドラフトにリセットされました"
+msgstr "シフトがドラフトに戻されました"
 
 #. module: planning
 #: model:planning.role,name:planning.planning_shipping_associate
@@ -2719,7 +2719,7 @@ msgstr "公開または送付するシフトがありません。"
 #. odoo-python
 #: code:addons/planning/models/planning_slot.py:0
 msgid "There are no shifts to reset to draft."
-msgstr "ドラフトにリセットするシフトがありません。"
+msgstr "ドラフトに戻すシフトがありません。"
 
 #. module: planning
 #. odoo-python

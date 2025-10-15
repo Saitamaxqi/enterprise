@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-08 07:51+0000\n"
+"PO-Revision-Date: 2025-10-14 06:23+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "ai_knowledge/ja/>\n"
@@ -28,7 +28,7 @@ msgstr "AIエージェントソース"
 #. module: ai_knowledge
 #: model:ir.model,name:ai_knowledge.model_ai_composer
 msgid "AI model configurations (system prompts) for text drafting."
-msgstr ""
+msgstr "テキスト作成のためのAIモデル構成(システムプロンプト)。"
 
 #. module: ai_knowledge
 #: model:ir.model.fields,field_description:ai_knowledge.field_ai_composer__interface_key

@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 15.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-08 02:40+0000\n"
+"PO-Revision-Date: 2025-10-14 12:25+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/"
 "website_helpdesk_forum/it/>\n"
@@ -21,8 +21,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: website_helpdesk_forum
@@ -41,6 +41,8 @@ msgid ""
 "<i class=\"fa fa-life-ring fa-fw\"/>\n"
 "                    Create Ticket"
 msgstr ""
+"<i class=\"fa fa-life-ring fa-fw\"/>\n"
+"                    Crea ticket"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.question_dropdown
@@ -48,16 +50,18 @@ msgid ""
 "<i class=\"fa fa-life-ring fa-fw\"/>\n"
 "                    View Ticket"
 msgstr ""
+"<i class=\"fa fa-life-ring fa-fw\"/>\n"
+"                    Mostra ticket"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.forum_forum_view_form_inherited
 msgid "<span class=\"o_stat_text\">Helpdesk Teams</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Team assistenza</span>"
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_ticket_select_forum_wizard__answer_content
 msgid "Answer"
-msgstr ""
+msgstr "Risposta"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
@@ -67,7 +71,7 @@ msgstr "Risposte"
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Ask questions and discuss tips with fellow members in a forum"
-msgstr ""
+msgstr "Poni domande e discuti con altri membri nel forum"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.footer
@@ -77,18 +81,18 @@ msgstr "Chiedi alla community"
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Ask the community"
-msgstr ""
+msgstr "Chiedi alla community"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Community"
-msgstr ""
+msgstr "Comunità"
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.xml:0
 msgid "Create & View Ticket"
-msgstr ""
+msgstr "Crea e visualizza ticket"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.helpdesk_ticket_select_forum_wizard_view_form
@@ -99,12 +103,12 @@ msgstr "Crea post"
 #. odoo-javascript
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.xml:0
 msgid "Create Ticket"
-msgstr ""
+msgstr "Crea segnalazione"
 
 #. module: website_helpdesk_forum
 #: model:ir.model,website_form_label:website_helpdesk_forum.model_helpdesk_ticket
 msgid "Create a Ticket"
-msgstr ""
+msgstr "Crea ticket"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.helpdesk_ticket_select_forum_wizard_view_form
@@ -129,6 +133,10 @@ msgid ""
 "Alternatively, you can make forums private to restrict this feature to "
 "internal users."
 msgstr ""
+"I clienti vedranno solo il contenuto dei post selezionati nel centro "
+"assistenza. Se vuoi che tutti i forum siano accessibili, non completare il "
+"campo. Altrimenti, puoi rendere i forum privati per limitare la funzione "
+"agli utenti interni."
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_ticket_select_forum_wizard__description
@@ -154,7 +162,7 @@ msgstr "Nome visualizzato"
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_forum_forum__filter_for_helpdesk_wizard
 msgid "Filter For Helpdesk Wizard"
-msgstr ""
+msgstr "Procedura guidata filtro per helpdesk"
 
 #. module: website_helpdesk_forum
 #: model:ir.model,name:website_helpdesk_forum.model_forum_forum
@@ -171,7 +179,7 @@ msgstr "Messaggio forum"
 #. odoo-python
 #: code:addons/website_helpdesk_forum/wizards/helpdesk_ticket_select_forum.py:0
 msgid "Forum Post Created"
-msgstr ""
+msgstr "Messaggio forum creato"
 
 #. module: website_helpdesk_forum
 #. odoo-python
@@ -189,7 +197,7 @@ msgstr "Forum"
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/helpdesk.py:0
 msgid "Help Center is not active for this team."
-msgstr ""
+msgstr "Centro assistenza non attivo per questo team."
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
@@ -202,13 +210,13 @@ msgstr "Team assistenza clienti"
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_forum_forum__helpdesk_team_count
 msgid "Helpdesk Team Count"
-msgstr ""
+msgstr "Numero team assistenza"
 
 #. module: website_helpdesk_forum
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/forum_forum.py:0
 msgid "Helpdesk Teams"
-msgstr ""
+msgstr "Gruppi helpdesk"
 
 #. module: website_helpdesk_forum
 #: model:ir.model,name:website_helpdesk_forum.model_helpdesk_ticket
@@ -221,6 +229,8 @@ msgstr "Ticket assistenza clienti"
 msgid ""
 "Helpdesk ticket %(ticket)s has been successfully created for this forum post."
 msgstr ""
+"Il ticket dell'helpdesk %(ticket)s è stato creato con successo per questo "
+"post del forum."
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_forum_forum__id
@@ -244,18 +254,18 @@ msgstr "Ultimo aggiornamento il"
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Most voted"
-msgstr ""
+msgstr "Più votati"
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
 #: code:addons/website_helpdesk_forum/static/src/components/create_ticket_dialog/create_ticket_dialog.xml:0
 msgid "Please fill out this field."
-msgstr ""
+msgstr "Compila il campo."
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.knowledge_base_forum_card
 msgid "Quick Links"
-msgstr ""
+msgstr "Link rapidi"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.helpdesk_ticket_select_forum_wizard_view_form
@@ -283,19 +293,20 @@ msgstr "Etichette"
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/helpdesk.py:0
 msgid "There are no posts associated with this ticket."
-msgstr ""
+msgstr "Nessun messaggio associato a questo ticket."
 
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,help:website_helpdesk_forum.field_helpdesk_team__top_forum_posts
 msgid ""
 "These are the top posts in the forums associated with this helpdesk team"
 msgstr ""
+"Questi sono i migliori post nei forum associati a questo team di assistenza"
 
 #. module: website_helpdesk_forum
 #. odoo-python
 #: code:addons/website_helpdesk_forum/models/forum_forum.py:0
 msgid "Ticket created from forum post"
-msgstr ""
+msgstr "Ticket creato da post forum"
 
 #. module: website_helpdesk_forum
 #. odoo-javascript
@@ -307,7 +318,7 @@ msgstr "Titolo"
 #. module: website_helpdesk_forum
 #: model:ir.model.fields,field_description:website_helpdesk_forum.field_helpdesk_team__top_forum_posts
 msgid "Top Posts"
-msgstr ""
+msgstr "Post migliori"
 
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
@@ -323,7 +334,7 @@ msgstr "Devi selezionare un forum per condividere il ticket"
 #. module: website_helpdesk_forum
 #: model_terms:ir.ui.view,arch_db:website_helpdesk_forum.search_result
 msgid "• 0 Answer"
-msgstr ""
+msgstr "• 0 risposte"
 
 #~ msgid ""
 #~ "<i class=\"fa fa-3x rounded bg-secondary m-3 fa-comments fa-3x rounded bg-"

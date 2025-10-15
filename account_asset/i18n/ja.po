@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"PO-Revision-Date: 2025-10-15 02:40+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/ja/>\n"
@@ -46,37 +46,37 @@ msgstr "# 記入済減価償却仕訳"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Disposal"
-msgstr ""
+msgstr "%(asset)s: 廃棄"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%(asset)s: Sale"
-msgstr ""
+msgstr "%(asset)s: 売却"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(months)s m"
-msgstr ""
+msgstr "%(months)s か月"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "%(move_line)s (%(current)s of %(total)s)"
-msgstr ""
+msgstr "%(move_line)s (%(current)s 件/ %(total)s 件中)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "%(years)s y"
-msgstr ""
+msgstr "%(years)s 年"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "%s (copy)"
-msgstr ""
+msgstr "%s (コピー)"
 
 #. module: account_asset
 #. odoo-python
@@ -96,7 +96,7 @@ msgstr "%s: 減価償却"
 #. odoo-python
 #: code:addons/account_asset/models/account_assets_report.py:0
 msgid "(No %s)"
-msgstr ""
+msgstr "(%sなし)"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -106,7 +106,7 @@ msgstr "（以下を含む："
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "<span> per year</span>"
-msgstr ""
+msgstr "<span> 年次</span>"
 
 #. module: account_asset
 #. odoo-python
@@ -116,6 +116,8 @@ msgid ""
 "> %(extra_text)s Future entries will be recomputed to depreciate the asset "
 "following the changes."
 msgstr ""
+"減価償却仕訳が記入されて、日付は%(date)sとなります。<br/"
+">%(extra_text)s今後の仕訳は変更によって、資産の減価償却が再計算されます。"
 
 #. module: account_asset
 #. odoo-python
@@ -125,6 +127,8 @@ msgid ""
 "A disposal entry will be posted on the %(account_type)s account <b>%"
 "(account)s</b>."
 msgstr ""
+"減価償却の項目は、その日%(date)sを含めて計上されます。<br/"
+">%(account_type)s勘定科目<b>%(account)s</b>に廃棄の項目が計上されます。"
 
 #. module: account_asset
 #. odoo-python
@@ -134,6 +138,9 @@ msgid ""
 "A second entry will neutralize the original income and post the  outcome of "
 "this sale on account <b>%(account)s</b>."
 msgstr ""
+"この日付 %(date)sを含めて、減価償却費を計上します。<br/> "
+"2つ目の項目は、元の収入を無効化し、この売却の結果を勘定<b>%(account)s</b>に記"
+"帳します。"
 
 #. module: account_asset
 #. odoo-python
@@ -145,7 +152,7 @@ msgstr "減価償却仕訳が記入されて、日付は%sとなります。"
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "A document linked to %(move_line_name)s has been deleted: %(link)s"
-msgstr ""
+msgstr "%(move_line_name)sにリンクされているドキュメントは削除されました: %(link)s"
 
 #. module: account_asset
 #. odoo-python
@@ -157,7 +164,7 @@ msgstr "この仕訳にリンクしているドキュメントは削除されま
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "A gross increase has been created: %(link)s"
-msgstr ""
+msgstr "大幅な増加が生じました: %(link)s"
 
 #. module: account_asset
 #. odoo-python
@@ -165,7 +172,8 @@ msgstr ""
 msgid ""
 "A non deductible tax value of %(tax_value)s was added to %(name)s's initial "
 "value of %(purchase_value)s"
-msgstr ""
+msgstr "控除対象外税額%(tax_value)s "
+"が%(name)sの初期値%(purchase_value)sに追加されました"
 
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_account
@@ -175,7 +183,7 @@ msgstr "勘定科目"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_chart_template
 msgid "Account Chart Template"
-msgstr ""
+msgstr "勘定科目表テンプレート"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__account_type
@@ -239,7 +247,7 @@ msgstr "会計レポート"
 #. module: account_asset
 #: model:ir.model,name:account_asset.model_account_return
 msgid "Accounting Return"
-msgstr ""
+msgstr "会計申告"
 
 #. module: account_asset
 #. odoo-python
@@ -301,7 +309,7 @@ msgstr "すべての明細は同じ勘定科目からである必要がありま
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "All the lines should be from the same company"
-msgstr ""
+msgstr "明細行は全て同一会社のものでなければなりません"
 
 #. module: account_asset
 #. odoo-python
@@ -331,7 +339,8 @@ msgstr "資産は、この仕訳のために作成されました:"
 msgid ""
 "An asset wil be created for each asset model when this account is used on a "
 "vendor bill or a refund"
-msgstr ""
+msgstr "この勘定科目が仕入先請求書または払戻しで使用されると、各資産モデルごとに資産"
+"が作成されます"
 
 #. module: account_asset
 #. odoo-python
@@ -392,7 +401,7 @@ msgstr "資産相手方勘定科目"
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_list_view
 msgid "Asset Group"
-msgstr ""
+msgstr "資産グループ"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_id_display_name
@@ -430,7 +439,7 @@ msgstr "資産モデル"
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_move_type
 #: model:ir.model.fields,field_description:account_asset.field_account_move__asset_move_type
 msgid "Asset Move Type"
-msgstr ""
+msgstr "資産記帳タイプ"
 
 #. module: account_asset
 #. odoo-python
@@ -465,7 +474,7 @@ msgstr "資産は作成されました"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Asset created from invoice: %s"
-msgstr ""
+msgstr "資産は次の請求書から作成されました: %s"
 
 #. module: account_asset
 #. odoo-python
@@ -476,7 +485,7 @@ msgstr "資産は廃棄されました。%s"
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_asset_movement_and_accounting_treatment
 msgid "Asset movement and accounting treatment"
-msgstr ""
+msgstr "資産の移動と会計処理"
 
 #. module: account_asset
 #. odoo-python
@@ -612,7 +621,8 @@ msgstr "特徴"
 msgid ""
 "Check depreciation periods for new acquisitions and ensure consistency with "
 "similar assets. Document any changes in accounting methods."
-msgstr ""
+msgstr "新規取得資産の減価償却期間を確認し、類似資産との整合性を確保してください。会"
+"計方針に変更があった場合は、その内容を記録してください。"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__children_ids
@@ -687,17 +697,17 @@ msgstr "資産をカウント"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__count_linked_asset
 msgid "Count Linked Asset"
-msgstr ""
+msgstr "リンク済資産をカウント"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_group__count_linked_assets
 msgid "Count Linked Assets"
-msgstr ""
+msgstr "リンク済資産をカウント"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__country_code
 msgid "Country Code"
-msgstr ""
+msgstr "国コード"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_account_aml_to_asset
@@ -875,13 +885,13 @@ msgstr "減価償却画面は変更しました %s"
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s posted (%(value)s)"
-msgstr ""
+msgstr "償却仕訳%(name)sが投稿されました(%(value)s)"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Depreciation entry %(name)s reversed (%(value)s)"
-msgstr ""
+msgstr "償却仕訳%(name)sが逆転しました(%(value)s)"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__display_account_asset_id
@@ -935,12 +945,12 @@ msgstr "廃棄"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__distribution_analytic_account_ids
 msgid "Distribution Analytic Account"
-msgstr ""
+msgstr "分配分析勘定"
 
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_server_download_asset_template
 msgid "Download Asset Import Template"
-msgstr ""
+msgstr "資産インポートテンプレートをダウンロード"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__draft
@@ -974,7 +984,8 @@ msgstr "期間・レート"
 msgid ""
 "Either \"Months\" or \"Years\" (case-insensitive). Specifies the unit of "
 "duration."
-msgstr ""
+msgstr "「月」または「年」を指定します(大文字・小文字は問いません)。期間の単位を表し"
+"ます。"
 
 #. module: account_asset
 #. odoo-python
@@ -997,7 +1008,7 @@ msgstr "固定資産勘定"
 #. odoo-python
 #: code:addons/account_asset/models/account_return.py:0
 msgid "Fixed Assets"
-msgstr ""
+msgstr "有形固定資産"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_follower_ids
@@ -1072,19 +1083,19 @@ msgstr "勘定科目でグループ化"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group By Asset Group"
-msgstr ""
+msgstr "資産グループごとにグループ化"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Account"
-msgstr ""
+msgstr "勘定科目でグループ化"
 
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group by Asset Group"
-msgstr ""
+msgstr "資産グループごとにグループ化"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__has_message
@@ -1121,7 +1132,8 @@ msgstr "例外活動を示すアイコン"
 msgid ""
 "Identify acquisitions, disposals, write-offs, etc. Ensure correct accounting "
 "treatment, depreciation, and capital gains processing."
-msgstr ""
+msgstr "取得、売却、除却などを特定し、適切な会計処理、減価償却、およびキャピタルゲイ"
+"ン（譲渡益）の処理を行ってください。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_needaction
@@ -1139,7 +1151,7 @@ msgstr "選択されている場合、一部のメッセージで配信エラー
 msgid ""
 "Import your fixed assets' original data and their already accumulated "
 "depreciation."
-msgstr ""
+msgstr "固定資産の元データおよび既に計上された減価償却累計額をインポートします。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
@@ -1211,7 +1223,7 @@ msgstr "仕訳明細"
 msgid ""
 "Journal Items of %(account)s should have a label in order to generate an "
 "asset"
-msgstr ""
+msgstr "%(account)sの仕訳項目は資産を生成するために、ラベルを持つ必要があります"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__write_uid
@@ -1241,7 +1253,7 @@ msgstr "線形"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__linked_assets_ids
 msgid "Linked Assets"
-msgstr ""
+msgstr "リンク済資産"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__asset_modify__gain_or_loss__loss
@@ -1263,7 +1275,7 @@ msgstr "項目を管理"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Mandatory column. This is the name of the asset."
-msgstr ""
+msgstr "必須列です。これは資産の名称です。"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_has_error
@@ -1293,7 +1305,7 @@ msgstr "モデル"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties_definition
 msgid "Model Properties"
-msgstr ""
+msgstr "モデルプロパティ"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_modify_form
@@ -1323,7 +1335,7 @@ msgstr "月"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Months/Years"
-msgstr ""
+msgstr "月/年"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__multiple_assets_per_line
@@ -1345,12 +1357,13 @@ msgstr ""
 msgid ""
 "Must match the selected company during import. Use the company's display "
 "name."
-msgstr ""
+msgstr "インポート時に選択した会社と一致している必要があります。会社の表示名を使用し"
+"てください。"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "My Activities"
-msgstr ""
+msgstr "自分の活動"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__my_activity_date_deadline
@@ -1360,22 +1373,22 @@ msgstr "活動期限"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset_group__name
 msgid "Name"
-msgstr ""
+msgstr "名称"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__negative_revaluation
 msgid "Negative revaluation"
-msgstr ""
+msgstr "マイナス再評価"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__net_gain_on_sale
 msgid "Net gain on sale"
-msgstr ""
+msgstr "販売純利益"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__net_gain_on_sale
 msgid "Net value of gain or loss on sale of an asset"
-msgstr ""
+msgstr "資産売却損益の純額"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__value_residual
@@ -1417,7 +1430,7 @@ msgstr "いいえ"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "No Grouping"
-msgstr ""
+msgstr "グループ化なし"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__prorata_computation_type__none
@@ -1445,7 +1458,7 @@ msgstr "減価償却不可な価値"
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__salvage_value_pct
 msgid "Not Depreciable Value Percent"
-msgstr ""
+msgstr "非償却価値 比率"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_asset_modify__name
@@ -1492,7 +1505,7 @@ msgstr "エラー数"
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "対応が必要なメッセージ数"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_has_error_counter
@@ -1507,6 +1520,9 @@ msgid ""
 "recorded for this period. Ensure assets are properly registered for "
 "automatic depreciation calculation."
 msgstr ""
+"Odooは固定資産の減価償却を管理します。この期間には減価償却が記録されていませ"
+"ん。自動減価償却計算を行うために、資産が正しく登録されていることを確認してく"
+"ださい。"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__paused
@@ -1519,7 +1535,8 @@ msgstr "保留"
 msgid ""
 "Only applicable for Declining Balance method (e.g., 2 for double declining). "
 "Ignored for Straight Line."
-msgstr ""
+msgstr "定率法にのみ適用されます(例：2 は "
+"200%定率法を意味します)。定額法では無視されます。"
 
 #. module: account_asset
 #. odoo-python
@@ -1533,7 +1550,8 @@ msgstr "使用中資産"
 msgid ""
 "Optional. The name or external ID of the asset group. Must exist in Odoo "
 "(e.g., Office Equipment, Vehicles, Machinery)."
-msgstr ""
+msgstr "任意項目です。資産グループの名称または外部IDを指定します。Odoo上に既に存在し"
+"ている必要があります（例：事務機器、自動車、機械など）。"
 
 #. module: account_asset
 #. odoo-python
@@ -1553,7 +1571,7 @@ msgstr "親"
 #: code:addons/account_asset/models/account_asset.py:0
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
 msgid "Parent Asset"
-msgstr ""
+msgstr "親資産"
 
 #. module: account_asset
 #. odoo-python
@@ -1575,7 +1593,7 @@ msgstr "期間"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__positive_revaluation
 msgid "Positive revaluation"
-msgstr ""
+msgstr "プラス再評価"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -1586,7 +1604,7 @@ msgstr "記帳済仕訳"
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__asset_properties
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Properties"
-msgstr ""
+msgstr "資産の属性"
 
 #. module: account_asset
 #. odoo-python
@@ -1598,7 +1616,7 @@ msgstr "期間按分"
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_move__asset_move_type__purchase
 msgid "Purchase"
-msgstr ""
+msgstr "購入"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__rating_ids
@@ -1657,7 +1675,7 @@ msgstr "減価償却を変更するために、今後の減価償却仕訳を逆
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_review_depreciation_periods_new_acquisitions
 msgid "Review depreciation periods for new acquisitions"
-msgstr ""
+msgstr "新規取得資産の減価償却期間を確認してください"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__open
@@ -1710,13 +1728,13 @@ msgstr "運用中として設定"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_search
 msgid "Show all records whose next activity date is past"
-msgstr ""
+msgstr "次回活動日が過去のすべてのレコードを表示"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_move.py:0
 msgid "Some fields are missing %s"
-msgstr ""
+msgstr "一部のフィールドが不足しています%s"
 
 #. module: account_asset
 #. odoo-python
@@ -1730,14 +1748,15 @@ msgstr "いくつかの必須な値は入力されていません"
 msgid ""
 "Start date of the depreciation period. Should be in MM-DD-YYYY format. If "
 "left blank, it defaults to the acquisition date."
-msgstr ""
+msgstr "減価償却期間の開始日。MM-DD-YYYY "
+"の形式で入力してください。未入力の場合は取得日が自動的に使用されます。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__prorata_date
 msgid ""
 "Starting date of the period used in the prorata calculation of the first "
 "depreciation"
-msgstr ""
+msgstr "最初の減価償却費の按分計算に使用した期間の起算日"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__state
@@ -1775,6 +1794,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"ISOの国コードを2文字で表します。\n"
+"このフィールドはクイック検索に使用できます。"
 
 #. module: account_asset
 #. odoo-python
@@ -1784,6 +1805,9 @@ msgid ""
 "account %(dep_acc)s has been debited by %(dep_delta)s. This corresponds to %"
 "(move_count)s cancelled %(word)s:"
 msgstr ""
+"勘定%(exp_acc)sに%(exp_delta)sが貸方計上され、一方で勘定%(dep_acc)s に "
+"%(dep_delta)sが借方計上されます。これは、%(move_count)s 取消された "
+"%(word)sに対応しています:"
 
 #. module: account_asset
 #. odoo-python
@@ -1791,7 +1815,8 @@ msgstr ""
 msgid ""
 "The accumulated depreciation account (contra-asset account). Must exist in "
 "Odoo and be of \"Fixed Asset\" or \"Non-current Assets\" type."
-msgstr ""
+msgstr "減価償却累計額勘定(資産控除勘定)。Odoo "
+"に存在し、「固定資産」または「非流動資産」タイプである必要があります。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_period
@@ -1803,7 +1828,7 @@ msgstr "二つの減価償却計算間の時間"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "The amount will be considered in company currency."
-msgstr ""
+msgstr "金額は会社の通貨で処理されます。"
 
 #. module: account_asset
 #. odoo-python
@@ -1813,6 +1838,8 @@ msgid ""
 "Purchase's value (%(purchase_value)s). Please make sure this is what you "
 "want."
 msgstr ""
+"入力された金額 (%(entered_amount)s)は関連購入価格 "
+"(%(purchase_value)s)と一致してません。ご確認下さい。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__asset_id
@@ -1826,7 +1853,8 @@ msgid ""
 "The balance sheet account for the asset itself (e.g., \"151000 Fixed "
 "Asset\"). Must exist in Odoo and be of \"Fixed Asset\" or \"Non-current "
 "Assets\" type."
-msgstr ""
+msgstr "資産本体の貸借対照表勘定(例：「151000 固定資産」)。Odoo "
+"に存在し、「固定資産」または「非流動資産」タイプである必要があります。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__children_ids
@@ -1841,6 +1869,8 @@ msgid ""
 "(e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - "
 "Vendor Bills)."
 msgstr ""
+"減価償却仕訳に使用する Odoo 上の対応する仕訳帳のコードまたは名称(例：MISC - "
+"その他の操作、INV - 顧客請求書、BILL - 仕入請求書)。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_ids
@@ -1855,7 +1885,8 @@ msgstr "締め仕訳を作成するには、除却用の請求書が必要です
 msgid ""
 "The estimated residual value of the asset at the end of its useful life. "
 "This amount will not be depreciated. Considered in company currency."
-msgstr ""
+msgstr "資産の耐用年数終了時における推定残存価額。この金額は減価償却の対象になりませ"
+"ん。会社の通貨で処理されます。"
 
 #. module: account_asset
 #. odoo-python
@@ -1865,6 +1896,8 @@ msgid ""
 "\"630000 Depreciation Expenses\"). Must exist in Odoo and be of "
 "\"Depreciation\" or \"Expense\" type."
 msgstr ""
+"定期的な減価償却仕訳を記帳するための費用勘定(例：「630000 減価償却費」)。"
+"Odoo に存在し、「減価償却」または「費用」タイプである必要があります。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_number
@@ -1883,7 +1916,8 @@ msgstr "最後の減価償却明細の残り価格は0である必要があり�
 msgid ""
 "The total amount of depreciation already recorded for the asset before "
 "import. This amount will be considered in company currency."
-msgstr ""
+msgstr "インポート前にすでに記録されている資産の減価償却累計額。この金額は会社の通貨"
+"で処理されます。"
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_line_ids
@@ -1958,12 +1992,12 @@ msgstr "次の資産に価値の増加: %(asset)s"
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 msgid "Visible to all"
-msgstr ""
+msgstr "全員に表示"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__warning_count_assets
 msgid "Warning Count Assets"
-msgstr ""
+msgstr "警告 カウント 資産"
 
 #. module: account_asset
 #. odoo-python
@@ -2003,7 +2037,7 @@ msgstr ""
 #. module: account_asset
 #: model_terms:ir.actions.act_window,help:account_asset.action_account_asset_form
 msgid "With our template"
-msgstr ""
+msgstr "テンプレートを使用すると"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__method_period__12
@@ -2015,7 +2049,7 @@ msgstr "年"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/views/fields/properties/properties_field.js:0
 msgid "You can add Property fields only on Assets with an Asset Model set."
-msgstr ""
+msgstr "資産モデルが設定された資産にのみ、プロパティフィールドを追加できます。"
 
 #. module: account_asset
 #. odoo-python
@@ -2030,14 +2064,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You can't re-evaluate the asset before the lock date."
-msgstr ""
+msgstr "ロック日以前に資産を再評価することはできません。"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid ""
 "You cannot add or remove bills when the asset is already running or closed."
-msgstr ""
+msgstr "資産がすでに稼働中または閉鎖されている場合、仕入先請求書の追加や削除はできま"
+"せん。"
 
 #. module: account_asset
 #. odoo-python
@@ -2088,7 +2123,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/models/account_asset.py:0
 msgid "You cannot dispose of an asset before the lock date."
-msgstr ""
+msgstr "ロック期日前に資産を処分することはできません。"
 
 #. module: account_asset
 #. odoo-python
@@ -2107,43 +2142,43 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "You cannot select the same account as the Depreciation Account"
-msgstr ""
+msgstr "減価償却勘定科目と同じ勘定科目を選択することはできません"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_asset_id"
-msgstr ""
+msgstr "account_asset_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_depreciation_expense_id"
-msgstr ""
+msgstr "account_depreciation_expense_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "account_depreciation_id"
-msgstr ""
+msgstr "account_depreciation_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "acquisition_date"
-msgstr ""
+msgstr "acquisition_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "already_depreciated_amount_import"
-msgstr ""
+msgstr "already_depreciated_amount_import"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "asset_group_id"
-msgstr ""
+msgstr "asset_group_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_balance
@@ -2154,7 +2189,7 @@ msgstr "book_value"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "company_id"
-msgstr ""
+msgstr "company_id"
 
 #. module: account_asset
 #: model:account.report.column,name:account_asset.assets_report_date_from
@@ -2177,7 +2212,7 @@ msgstr "減価償却可能）"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "e.g. 01-27-2025 (format: MM-DD-YYYY)"
-msgstr ""
+msgstr "例： 01-27-2025 (フォーマット: MM-DD-YYYY)"
 
 #. module: account_asset
 #. odoo-python
@@ -2185,7 +2220,8 @@ msgstr ""
 msgid ""
 "e.g. 3 for 3 years, or 12 for 12 months. It must be an integer representing "
 "the total number of periods."
-msgstr ""
+msgstr "例：3(3年間の場合)、12(12か月間の場合)。期間の合計数を表す整数である必要があ"
+"ります。"
 
 #. module: account_asset
 #: model_terms:ir.ui.view,arch_db:account_asset.view_account_asset_form
@@ -2198,7 +2234,8 @@ msgstr "例: ノートパソコン iBook"
 msgid ""
 "e.g. No Prorata, Constant Periods, Based on days per period. This determines "
 "how the first depreciation entry is calculated."
-msgstr ""
+msgstr "例：日割りなし、一定期間、期間の日数に基づく。これは最初の減価償却仕訳の計算"
+"方法を決定します。"
 
 #. module: account_asset
 #. odoo-python
@@ -2206,7 +2243,7 @@ msgstr ""
 msgid ""
 "e.g. Straight Line, Declining Balance. Determines how depreciation is "
 "calculated."
-msgstr ""
+msgstr "例：定額法、定率法。減価償却の計算方法を決定します。"
 
 #. module: account_asset
 #. odoo-python
@@ -2224,91 +2261,91 @@ msgstr "仕訳"
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain"
-msgstr ""
+msgstr "益"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "gain/loss"
-msgstr ""
+msgstr "益/損"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "journal_id"
-msgstr ""
+msgstr "journal_id"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "loss"
-msgstr ""
+msgstr "損"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method"
-msgstr ""
+msgstr "償却方法"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_number"
-msgstr ""
+msgstr "method_number"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_period"
-msgstr ""
+msgstr "method_period"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "method_progress_factor"
-msgstr ""
+msgstr "method_progress_factor"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "modify"
-msgstr ""
+msgstr "変更"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "original_value"
-msgstr ""
+msgstr "original_value"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "pause"
-msgstr ""
+msgstr "一時停止"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_computation_type"
-msgstr ""
+msgstr "prorata_computation_type"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "prorata_date"
-msgstr ""
+msgstr "prorata_date"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "salvage_value"
-msgstr ""
+msgstr "salvage_value"
 
 #. module: account_asset
 #. odoo-python
 #: code:addons/account_asset/wizard/asset_modify.py:0
 msgid "sell"
-msgstr ""
+msgstr "売却"
 
 #~ msgid " (%s of %s)"
 #~ msgstr " (%s の%s)"
