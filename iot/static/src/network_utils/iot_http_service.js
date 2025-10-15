@@ -123,7 +123,7 @@ export class IotHttpService {
         };
         this.websocket.onMessage(identifier, deviceIdentifier, onSuccess, onFailureWithTimeout, "operation_confirmation", messageId);
         if (data) {
-            await this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, messageId);
+            this.websocket.sendMessage(identifier, { device_identifiers: [deviceIdentifier], ...data }, messageId);
         }
         this.connectionStatus = "websocket";
     }
