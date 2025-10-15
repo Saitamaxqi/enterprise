@@ -247,8 +247,8 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
 
     def _get_address_dict(self, company):
         return {
-            'street': company.street,
-            'complement': company.street2,
+            'street': company.street[:30],
+            'complement': f"{company.street[30:]} {company.street2}"[:35],
             'postal_code': company.zip,
             'city': company.city,
             'country_code': company.country_id.code,
@@ -366,12 +366,13 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         writer_vals = {
             'siret': writer.company_registry,
             'designation': "CEC_EDI_TVA",
-            'designation_cont_1': writer.name,  # "raison sociale"
+            'designation_cont_1': writer.name[:35],  # "raison sociale"
+            'designation_cont_2': writer.name[35:70],  # "raison sociale"
             'address': self._get_address_dict(writer),
         }
         debtor_vals = {
             'identifier': debtor.company_registry and debtor.company_registry[:9],  # siren
-            'designation': debtor.name,  # "raison sociale"
+            'designation': debtor.name[:35],  # "raison sociale"
             'address': self._get_address_dict(debtor),
             'rof': "TVA1",  # "référence obligation fiscale"
         }
@@ -393,7 +394,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             {
                 'id': 'AA',
                 'identifier': debtor.company_registry and debtor.company_registry[:9],
-                'designation': debtor.display_name,
+                'designation': debtor.display_name[:35],
                 'address': self._get_address_dict(debtor),
             },
             {'id': 'KD', 'value': 'TVA1'},  # ROF
