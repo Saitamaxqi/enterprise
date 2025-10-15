@@ -82,9 +82,10 @@ class PosPrepDisplay(models.Model):
 
     def _get_open_orderlines_in_display(self):
         self.ensure_one()
+        last_stage_id = self.stage_ids.ids[-1] if self.stage_ids.ids else 0
         pdis_orderlines = self.env['pos.prep.state'].search([
             ('stage_id', 'in', self.stage_ids.ids),
-            '!', '&', ('todo', '=', False), ('stage_id', '=', self.stage_ids[-1].id)])
+            '!', '&', ('todo', '=', False), ('stage_id', '=', last_stage_id)])
         pdis_orderlines = pdis_orderlines.filtered(lambda s: s.prep_line_id.prep_order_id.pos_order_id.session_id.state not in ['closed', 'closing_control'] or (s.prep_line_id.prep_order_id.pos_order_id.preset_time and s.prep_line_id.prep_order_id.pos_order_id.preset_time.date() > fields.Date.today()))
         return pdis_orderlines
 
