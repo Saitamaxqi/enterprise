@@ -1,3 +1,4 @@
+import { Domain } from "@web/core/domain";
 import { deserializeDate, serializeDateTime } from "@web/core/l10n/dates";
 import { patch } from "@web/core/utils/patch";
 import { ProjectTaskCalendarModel } from "@project/views/project_task_calendar/project_task_calendar_model";
@@ -9,6 +10,13 @@ patch(ProjectTaskCalendarModel.prototype, {
         this.getHighlightIds = useProjectModelActions({
             getContext: () => this.env.searchModel._context,
         }).getHighlightIds;
+    },
+
+    get tasksToPlanDomain() {
+        return Domain.and([
+            super.tasksToPlanDomain,
+            [['planned_date_begin', '=', false]],
+        ]);
     },
 
     /**
