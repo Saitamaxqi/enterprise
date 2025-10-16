@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-14 06:26+0000\n"
+"PO-Revision-Date: 2025-10-16 02:42+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "appointment_google_reserve/ja/>\n"
@@ -43,7 +43,8 @@ msgstr "%(appointment_type_name)s： Google予約用のマーチャントを設�
 msgid ""
 "%(appointment_type_name)s: The Google Bookings integration only works in the "
 "auto-assign mode."
-msgstr ""
+msgstr "%(appointment_type_name)s：Google "
+"予約の連携は自動割り当てモードでのみ動作します。"
 
 #. module: appointment_google_reserve
 #: model_terms:ir.ui.view,arch_db:appointment_google_reserve.appointment_type_view_form

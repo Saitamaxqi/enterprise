@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-01 12:11+0000\n"
+"PO-Revision-Date: 2025-10-15 16:33+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_base_import/fr/>\n"
@@ -149,7 +149,7 @@ msgstr "Import"
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 #: model:ir.actions.client,name:account_base_import.action_asset_import
 msgid "Import Assets"
-msgstr ""
+msgstr "Importer les immobilisations"
 
 #. module: account_base_import
 #. odoo-javascript
@@ -243,6 +243,8 @@ msgstr "Importer le plan comptable et les soldes d'ouverture à l'aide d'un"
 #: code:addons/account_base_import/static/src/xml/account_import.xml:0
 msgid "Import your fixed assets and their opening depreciation values using a"
 msgstr ""
+"Importez vos immobilisations et leurs valeurs d’amortissement d’ouverture à "
+"l’aide d’un(e)"
 
 #. module: account_base_import
 #: model_terms:ir.ui.view,arch_db:account_base_import.account_import_summary_form

@@ -8,13 +8,14 @@
 # pnyet <david@zeromail.us>, 2022
 # Abe Manyo, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Abe Manyo (abem)" <abem@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 23:03+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 02:41+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/id/>\n"
 "Language: id\n"
@@ -39,6 +40,16 @@ msgid ""
 "planning. (requires Planning app)\n"
 "    "
 msgstr ""
+"\n"
+"        Mendefinisikan sumber untuk pembuatan entri kerja\n"
+"\n"
+"        Jadwal Kerja: Entri-entri kerja akan dibuat dari jam-jam kerja di "
+"bawah.\n"
+"        Absensi: Entri-entri kerja dibuat dari absensi karyawan. (memerlukan "
+"aplikasi Absensi)\n"
+"        Planning: Entri-entri kerja dibuat dari planning karyawan. ("
+"memerlukan aplikasi Planning)\n"
+"    "
 
 #. module: hr_payroll
 #. odoo-python
@@ -927,7 +938,7 @@ msgstr "Ketersediaan di Struktu"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__available_in_attachments
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
 msgid "Available in attachments"
-msgstr ""
+msgstr "Tersedia di lampiran-lampiran"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__avatar_1920
@@ -1455,7 +1466,7 @@ msgstr "Kode Negara"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "Create Individual Attachments"
-msgstr ""
+msgstr "Buat Lampiran-Lampiran Individu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -3226,7 +3237,7 @@ msgstr "Bulanan"
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__monthly_running_attachments
 msgid "Monthly Running Attachments"
-msgstr ""
+msgstr "Lampiran Bulanan yang Berjalan"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_correction_wizard__is_multi_payslip
@@ -6168,6 +6179,7 @@ msgstr ""
 #: code:addons/hr_payroll/models/hr_salary_attachment.py:0
 msgid "You cannot record a payment on multi employees attachments."
 msgstr ""
+"Anda tidak dapat merekam pembayaran di lampiran-lampiran multi-karyawan."
 
 #. module: hr_payroll
 #. odoo-python

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~15.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-29 02:40+0000\n"
+"PO-Revision-Date: 2025-10-15 06:20+0000\n"
 "Last-Translator: or balmas <or@laylinetech.com>\n"
 "Language-Team: Hebrew <https://translate.odoo.com/projects/odoo-19/"
 "account_bank_statement_import_qif/he/>\n"
@@ -29,6 +29,9 @@ msgid ""
 "financial institutions use the local format.Therefore, it is frequent "
 "outside the US to have QIF date formatted day-first (dd/mm/yy)."
 msgstr ""
+"למרות שתבנית התאריך ההיסטורית של QIF היא תחילה חודש (mm/dd/yy), מוסדות "
+"פיננסיים רבים משתמשים בתבנית המקומית. לכן, מחוץ לארצות הברית נפוץ שתאריכי "
+"QIF יהיו בפורמט שבו היום מופיע ראשון (dd/mm/yy)."
 
 #. module: account_bank_statement_import_qif
 #. odoo-python
@@ -39,17 +42,17 @@ msgstr "לא ניתן היה לפענח את קובץ ה- QIF."
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_journal__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "שם לתצוגה"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,help:account_bank_statement_import_qif.field_account_journal__qif_decimal_point
 msgid "Field used to avoid conversion issues."
-msgstr ""
+msgstr "שדה שנועד למנוע בעיות בהמרה."
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_journal__id
 msgid "ID"
-msgstr ""
+msgstr "מזהה"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model,name:account_bank_statement_import_qif.model_account_journal
@@ -59,12 +62,12 @@ msgstr "יומן"
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_journal__qif_date_format
 msgid "QIF Dates format"
-msgstr ""
+msgstr "תבנית תאריכים של QIF"
 
 #. module: account_bank_statement_import_qif
 #: model:ir.model.fields,field_description:account_bank_statement_import_qif.field_account_journal__qif_decimal_point
 msgid "QIF Decimal Separator"
-msgstr ""
+msgstr "מפריד עשרוני של QIF"
 
 #. module: account_bank_statement_import_qif
 #. odoo-python

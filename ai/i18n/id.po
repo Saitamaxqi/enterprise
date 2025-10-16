@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-09 19:14+0000\n"
+"PO-Revision-Date: 2025-10-16 02:42+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/ai/id/"
 ">\n"
@@ -358,17 +358,17 @@ msgstr "Agent AI"
 #. module: ai
 #: model:ir.model,name:ai.model_ai_agent_source
 msgid "AI Agent Source"
-msgstr ""
+msgstr "Sumber Agen AI"
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_process_sources_ir_actions_server
 msgid "AI Agent Sources: Process Sources"
-msgstr ""
+msgstr "Sumber Agen AI: Proses Sumber-Sumber"
 
 #. module: ai
 #: model:ir.model.constraint,message:ai.constraint_discuss_channel_ai_channel_type_check
 msgid "AI Agent can only be set for ai_chat or livechat channels."
-msgstr ""
+msgstr "Agen AI hanya dapat ditetapkan oleh ai_chat atau channel livechat."
 
 #. module: ai
 #: model:ir.actions.server,name:ai.ir_cron_generate_embedding_ir_actions_server
@@ -432,7 +432,7 @@ msgstr "Konfigurasi model AI (system prompt) untuk draft teks."
 #. odoo-python
 #: code:addons/ai/models/discuss_channel.py:0
 msgid "AI not reachable, AI Agent not found."
-msgstr ""
+msgstr "AI tidak dapat diraih, Agen AI tidak ditemukan."
 
 #. module: ai
 #. odoo-python
@@ -555,6 +555,8 @@ msgstr ""
 #: code:addons/ai/static/src/components/agent_add_source_dialog/agent_add_source_dialog.xml:0
 msgid "Add sources to your AI Agent to get answers based on specific content."
 msgstr ""
+"Tambahkan sumber-sumber ke Agen AI Anda untuk mendapatkan jawaban "
+"berdasarkan konten tertentu."
 
 #. module: ai
 #. odoo-javascript
@@ -578,7 +580,7 @@ msgstr "Nama Agent"
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_discuss_channel__ai_agent_id
 msgid "Ai Agent"
-msgstr ""
+msgstr "Agen AI"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_has_schema
@@ -1053,7 +1055,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_embedding.py:0
 msgid "Invalid attachment. Failed to extract content."
-msgstr ""
+msgstr "Lampiran tidak valid. Gagal untuk mengekstrak konten."
 
 #. module: ai
 #. odoo-python
@@ -1064,7 +1066,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__is_ask_ai_agent
 msgid "Is Natural Language Query Agent"
-msgstr ""
+msgstr "Apakah Natural Language Query Agent"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_composer__is_system_default
@@ -1178,6 +1180,8 @@ msgstr "Tidak ada API key yang ditetapkan untuk provider '%s'"
 #: code:addons/ai/models/ai_agent.py:0
 msgid "No configured Ask AI agent. Please contact your administrator."
 msgstr ""
+"Tidak ada Agen Tanyakan AI yang dikonfigurasi. Silakan hubungi administrator "
+"Anda."
 
 #. module: ai
 #. odoo-python
@@ -1464,7 +1468,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__is_system_agent
 msgid "System Agent"
-msgstr ""
+msgstr "Agen Sistem"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ai_agent__system_prompt
@@ -1475,7 +1479,7 @@ msgstr "System Prompt"
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "System agents cannot be deleted."
-msgstr ""
+msgstr "Agen-agen sistem tidak dapat dihapus."
 
 #. module: ai
 #. odoo-python
@@ -1498,7 +1502,7 @@ msgstr ""
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_composer__name
 msgid "The identifier for the interface component to agent rule"
-msgstr ""
+msgstr "Pengidentifikasi untuk komponen antarmuka untuk peraturan agen"
 
 #. module: ai
 #. odoo-javascript
@@ -1510,7 +1514,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ai_agent.py:0
 msgid "The partner linked to an AI agent can't be changed"
-msgstr ""
+msgstr "Partner terhubung ke agen AI tidak dapat diubah"
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ai_prompt_button__name
@@ -1543,7 +1547,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/ai/models/ir_actions_server.py:0
 msgid "This action is interactive and cannot be executed by the agent."
-msgstr ""
+msgstr "Action ini interaktif dan tidak dapat dilakukan oleh agen."
 
 #. module: ai
 #: model:ir.model.fields,help:ai.field_ir_actions_server__ai_tool_allow_end_message
@@ -1575,6 +1579,8 @@ msgstr "Judul"
 #: model_terms:ir.ui.view,arch_db:ai.ir_actions_server_view_form
 msgid "To return a result to the AI agent, do <code>ai['result'] = ...</code>"
 msgstr ""
+"Untuk mengembalikkan hasil ke agen AI, lakukan <code>ai['result'] = "
+"...</code>"
 
 #. module: ai
 #: model:ir.model.fields,field_description:ai.field_ir_actions_server__ai_tool_ids

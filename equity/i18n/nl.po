@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-14 14:27+0000\n"
+"PO-Revision-Date: 2025-10-15 16:33+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/equity/nl/>"
 "\n"
@@ -42,7 +42,7 @@ msgstr "Transacties van %(partner_name)s"
 #. odoo-python
 #: code:addons/equity/models/res_partner.py:0
 msgid "%(partner_name)s's Valuations"
-msgstr ""
+msgstr "Waarderingen van%(partner_name)s"
 
 #. module: equity
 #. odoo-python
@@ -76,7 +76,7 @@ msgstr "(verlopen)"
 #. module: equity
 #: model:ir.actions.report,print_report_name:equity.action_equity_ubo_report
 msgid "(object._get_ubo_report_filename())"
-msgstr ""
+msgstr "(object._get_ubo_report_filename())"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
@@ -157,6 +157,27 @@ msgid ""
 "                </div>\n"
 "            "
 msgstr ""
+"<div>\n"
+"                    <p> Hallo <t t-out=\"object.name\"/>,<br/>\n"
+"                        In het kader van onze wettelijke verplichtingen om "
+"cliënten te identificeren, moeten wij de natuurlijke personen rapporteren "
+"die, rechtstreeks of onrechtstreeks,\n"
+"                        minstens 25% van het kapitaal of de stemrechten "
+"bezitten of controleren van <b><t t-out=\"user_id.company_id.name\"/></b>. <"
+"br/> <br/>\n"
+"                       Gelieve het UBO-formulier in te vullen:<br/>\n"
+"                        <a t-attf-href="
+"\"/my/ubo?{{object._get_equity_url_params()}}\" class=\"btn btn-primary\""
+">Fill UBO</a> <br/> <br/>\n"
+"                        Bedankt,\n"
+"                        <t t-if=\"user_id.signature\">\n"
+"                            <br/>--<br/>\n"
+"                            <t t-out=\"user_id.signature or ''\">Mitchell "
+"Admin</t>\n"
+"                        </t>\n"
+"                    </p>\n"
+"                </div>\n"
+"            "
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
@@ -250,7 +271,7 @@ msgstr "<strong>OF</strong>"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
 msgid "<strong>Tax ID Number:</strong>"
-msgstr ""
+msgstr "<strong>Btw-nummer:</strong>"
 
 #. module: equity
 #. odoo-javascript
@@ -267,6 +288,12 @@ msgid ""
 "                            country equivalence list for a simplified due "
 "diligence (article 37(2), subparagraph 1(2 and 5), of the AML law);"
 msgstr ""
+"Een kredietinstelling of financiële instelling gevestigd in een land "
+"opgenomen in de lijst van het koninklijk besluit van 19 juli 2013 tot "
+"vastlegging van de lijst\n"
+"                            van derde equivalente landen voor een "
+"vereenvoudigd klantenonderzoek (artikel 37, § 2, eerste lid, 2° en 5°, van "
+"de wet AML);"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -275,6 +302,9 @@ msgid ""
 "Member States of the European\n"
 "                            Economic Area; or"
 msgstr ""
+"Een beursgenoteerde onderneming: een onderneming waarvan de aandelen worden "
+"verhandeld op een gereglementeerde markt in een lidstaat van de Europese\n"
+"                            Economische Ruimte; of"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -430,14 +460,14 @@ msgstr ""
 #: model:ir.model,name:equity.model_equity_cap_table
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_cap_table
 msgid "Cap Table"
-msgstr ""
+msgstr "Kapitalisatietabel"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_cap_table_pivot
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_cap_table_pivot
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_cap_table_pivot
 msgid "Cap Table Pivot"
-msgstr ""
+msgstr "Kapitalisatie draaitabel"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__chairman
@@ -469,12 +499,12 @@ msgstr "Bedrijf"
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_1
 msgid "Company - Cat 1. Capital Ownership or voting rights"
-msgstr ""
+msgstr "Bedrijf - Cat 1. Kapitaaleigendom of stemrecht"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_2
 msgid "Company - Cat 2. Control by other means"
-msgstr ""
+msgstr "Bedrijf - Cat 2. Zeggenschap via andere middelen"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__co_3
@@ -499,14 +529,14 @@ msgstr "Contact"
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__end_date
 msgid "Control End Date"
-msgstr "Einddatum controle"
+msgstr "Einddatum zeggenschap"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__control_method
 msgid "Control Method"
-msgstr "Controlemethode"
+msgstr "Soort zeggenschap"
 
 #. module: equity
 #. odoo-javascript
@@ -514,13 +544,13 @@ msgstr "Controlemethode"
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.js:0
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__start_date
 msgid "Control Start Date"
-msgstr "Startdatum controle"
+msgstr "Startdatum Zeggenschap"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "Control Start Date is mandatory"
-msgstr ""
+msgstr "Startdatum van het zeggenschap is vereist"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -595,18 +625,20 @@ msgid ""
 "Definitions: \"beneficial owners\", \"control\", \"shareholder holding 25% "
 "or more\", \"decision makers\""
 msgstr ""
+"Definities: \"uiteindelijke begunstigde\", \"zeggenschap\", "
+"\"aandeelhouder met 25% or meer\", \"besluitvormers\""
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__destination_class_id
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Destination Class"
-msgstr ""
+msgstr "Bestemmingsklasse"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Destination class can only be set in exercise transactions."
-msgstr ""
+msgstr "Bestemmingsklasse kan alleen worden ingesteld in uitoefentransacties."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__dilution
@@ -665,89 +697,89 @@ msgstr "Uiteindelijke begunstigde bewerken"
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_home_equity
 msgid "Equity"
-msgstr ""
+msgstr "Eigen vermogen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_access_token
 msgid "Equity Access Token"
-msgstr ""
+msgstr "Toegangstoken Eigen vermogen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_currency_id
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_currency_id
 msgid "Equity Currency"
-msgstr ""
+msgstr "Valuta Eigen vermogen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_kanban_dashboard_graph
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_kanban_dashboard_graph
 msgid "Equity Kanban Dashboard Graph"
-msgstr ""
+msgstr "Eigen vermogen Kanban-dashboard-grafiek"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_last_valuation
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_last_valuation
 msgid "Equity Last Valuation"
-msgstr ""
+msgstr "Laatste waardering Eigen vermogen"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_shareholder_email_template
 msgid "Equity Shareholder Email"
-msgstr ""
+msgstr "E-mail van de aandeelhouder"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_shareholders_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_shareholders_count
 msgid "Equity Shareholders Count"
-msgstr ""
+msgstr "Aantal aandeelhouders"
 
 #. module: equity
 #: model:ir.model,name:equity.model_equity_transaction
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_ids
 msgid "Equity Transaction"
-msgstr ""
+msgstr "Transactie Eigen vermogen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_transaction_count
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_transaction_count
 msgid "Equity Transaction Count"
-msgstr ""
+msgstr "Aantal transacties Eigen vermogen"
 
 #. module: equity
 #: model:mail.template,name:equity.equity_ubo_form_email_template
 msgid "Equity UBO Form Email"
-msgstr ""
+msgstr "Eigen vermogen UBO-formulier-e-mail"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_valuation_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__equity_valuation_ids
 msgid "Equity Valuation"
-msgstr ""
+msgstr "Waardering Eigen vermogen"
 
 #. module: equity
 #: model:mail.template,subject:equity.equity_shareholder_email_template
 msgid "Equity notice"
-msgstr ""
+msgstr "Kennisgeving van een kapitaalwijziging"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__event
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 msgid "Event"
-msgstr ""
+msgstr "Gebeurtenis"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
 msgid "Exemption from the identification of beneficial"
-msgstr ""
+msgstr "Vrijstelling van de identificatie van begunstigden"
 
 #. module: equity
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Exercise transactions must have a destination 'Share' class"
-msgstr ""
+msgstr "Uitoefentransacties moeten een bestemmingsklasse 'Aandeel' hebben"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__expiration_date
@@ -807,6 +839,10 @@ msgid ""
 "                <b>hold or control at least 25% in the capital or voting "
 "rights</b> of"
 msgstr ""
+"In navolging van de wettelijke verplichtingen om klanten te identificeren, "
+"verzoeken we je om natuurlijke personen te rapporteren die direct of "
+"indirect\n"
+"               <b>ten minste 25% in het kapitaal of de stemrechten</b> van"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_formation_date
@@ -818,13 +854,13 @@ msgstr "Oprichtingsdatum"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Fully Diluted"
-msgstr ""
+msgstr "Volledig verwaterd"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_end_dialog.js:0
 msgid "Function end: %s"
-msgstr ""
+msgstr "Functie-einde: %s"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -834,6 +870,11 @@ msgid ""
 "                            drawing up a list of European governing "
 "authorities, bodies and specialized agencies for a simplified due diligence."
 msgstr ""
+"Besturende overheden van de Europese Unie, organen en agentschappen zoals "
+"gedefinieerd door het Koninklijk Besluit van 19 juli 2013\n"
+"                            dat een lijst vaststelt van Europese overheden, "
+"organen en gespecialiseerde agentschappen voor een vereenvoudigd "
+"klantenonderzoek."
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__has_auth_rep_role
@@ -868,17 +909,31 @@ msgid ""
 "                        directors and members of the board or equivalent "
 "function of an international"
 msgstr ""
+"Staatshoofden, regeringsleiders, ministers en onderministers; leden van "
+"parlementen;\n"
+"                        leden van de bestuursorganen van politieke partijen; "
+"leden van hooggerechtshoven, constitutionele hoven of andere\n"
+"                        hoge rechterlijke instanties waarvan de beslissingen "
+"niet vatbaar zijn voor hoger beroep, behalve in uitzonderlijke "
+"omstandigheden; leden\n"
+"                        van rekenkamers of van de raden van bestuur van "
+"centrale banken; ambassadeurs, zaakgelastigden en hoge officieren,\n"
+"                        leden van de bestuurs-, leidinggevende of "
+"toezichthoudende organen van staatsbedrijven; directeuren, "
+"plaatsvervangende\n"
+"                        directeuren en leden van de raad van bestuur of "
+"gelijkwaardige functie van een internationale"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_cap_table__holder_id
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__holder_id
 msgid "Holder"
-msgstr ""
+msgstr "Houder"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_view_partner_form
 msgid "Holdings"
-msgstr ""
+msgstr "Participaties"
 
 #. module: equity
 #. odoo-javascript
@@ -931,6 +986,10 @@ msgid ""
 "persons in the main interests of whom the\n"
 "                                    legal entity was formed or operates."
 msgstr ""
+"Als de toekomstige begunstigde(n) nog niet zijn aangewezen, wordt bedoeld: "
+"de groep personen in wiens hoofdzakelijke belang\n"
+"                                     de rechtspersoon is opgericht of "
+"opereert."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -958,7 +1017,7 @@ msgstr ""
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_ubo_search
 msgid "In Control"
-msgstr ""
+msgstr "In Zeggenschap"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__invalid_securities_error
@@ -1026,18 +1085,19 @@ msgstr "Wettelijk document"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
 msgid "Legal persons governed by public national laws;"
-msgstr ""
+msgstr "Rechtspersonen naar nationaal publiekrecht;"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__liquidator
 msgid "Liquidator"
-msgstr ""
+msgstr "Vereffenaar"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/cap_table/cap_table.js:0
 msgid "Manage transactions, equity, cap table, and shareholders."
-msgstr "Beheer transacties, eigen vermogen, cap table en aandeelhouders."
+msgstr ""
+"Beheer transacties, eigen vermogen, kapitalisatietabel en aandeelhouders."
 
 #. module: equity
 #: model:res.groups,name:equity.group_equity_manager
@@ -1047,7 +1107,7 @@ msgstr "Manager"
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__auth_rep_role__managing_director
 msgid "Managing Director"
-msgstr ""
+msgstr "Directie"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__message_has_error
@@ -1076,22 +1136,23 @@ msgstr "Mijn bedrijven"
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_1
 msgid "NGO - Cat 1. Directors"
-msgstr ""
+msgstr "Ngo - Cat 1. Directeuren"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_2
 msgid "NGO - Cat 2. Individuals with representation authority"
 msgstr ""
+"Ngo - Cat 2. Personen die gemachtigd zijn de vereniging te vertegenwoordigen"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_3
 msgid "NGO - Cat 3. Individuals responsible for day-to-day management"
-msgstr ""
+msgstr "Ngo - Cat 3. De personen belast met het dagelijks bestuur"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_4
 msgid "NGO - Cat 4. Founders of a foundation"
-msgstr ""
+msgstr "Ngo - Cat 4. Stichters van een stichting"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_5
@@ -1099,6 +1160,8 @@ msgid ""
 "NGO - Cat 5. Individuals or categories of individuals in whose main interest "
 "the association or foundation has been established or operates"
 msgstr ""
+"Ngo - Cat 5. Personen of categorieën van personen in wier primaire belang de "
+"(i)vzw of stichting werd opgericht of werkzaam is"
 
 #. module: equity
 #: model:ir.model.fields.selection,name:equity.selection__equity_ubo__control_method__ngo_6
@@ -1106,6 +1169,8 @@ msgid ""
 "NGO - Cat 6. Any other individual who ultimately exercises control by other "
 "means"
 msgstr ""
+"Ngo - Cat 6. Elk ander individu dat via andere middelen uiteindelijke "
+"zeggenschap uitoefent"
 
 #. module: equity
 #. odoo-javascript
@@ -1123,7 +1188,7 @@ msgstr "Naam"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "Name is mandatory"
-msgstr ""
+msgstr "Naam is vereist"
 
 #. module: equity
 #. odoo-javascript
@@ -1143,11 +1208,20 @@ msgid ""
 "formal mandate of any kind but who are de facto exercising similar control "
 "over the company."
 msgstr ""
+"Natuurlijke personen die een formeel mandaat hebben binnen de Raad van "
+"Bestuur van het bedrijf. Dit zijn bijvoorbeeld de perso(o)n(en) die Chief "
+"Executive Officer (CEO), Chief Financial Officer (CFO) of Treasurer "
+"(penningmeester) worden genoemd (of een equivalent hiervan). Als een "
+"rechtspersoon een mandaat uitoefent in het bestuur van het bedrijf, moet het "
+"alle mandaathouders op bestuursniveau vermelden, inclusief hun functie. <br/"
+"> Natuurlijke personen die geen controlerende participatie in het bedrijf of "
+"een formeel mandaat van welke aard dan ook hebben, maar die de facto een "
+"vergelijkbare controle over het bedrijf uitoefenen."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_help
 msgid "Need help?"
-msgstr ""
+msgstr "Hulp nodig?"
 
 #. module: equity
 #. odoo-javascript
@@ -1301,7 +1375,7 @@ msgstr "Uitoefening opties"
 #: model:ir.model.fields,field_description:equity.field_equity_ubo__ownership
 #: model:ir.ui.menu,name:equity.menu_equity_ownership
 msgid "Ownership"
-msgstr ""
+msgstr "Eigendom"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_pep
@@ -1341,12 +1415,12 @@ msgstr "Prijs"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
 msgid "Price FD"
-msgstr ""
+msgstr "Prijs volledig verwaterd"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_valuation_list
 msgid "Price ND"
-msgstr ""
+msgstr "Prijs niet-verwaterd"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__security_price
@@ -1386,7 +1460,7 @@ msgstr "Aandeelhouder verwijderen"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Remove holder exit date."
-msgstr ""
+msgstr "Verwijder de vertrekdatum van de houder."
 
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_reporting
@@ -1471,7 +1545,7 @@ msgstr "Verkoper en koper moeten verschillend zijn."
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Seller id can only be set in transfer transactions."
-msgstr ""
+msgstr "Verkoper-id kan alleen worden ingesteld bij transfer-transacties."
 
 #. module: equity
 #. odoo-javascript
@@ -1487,12 +1561,12 @@ msgstr "Verzenden naar verkoper"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Send to Subscriber"
-msgstr "Verzenden naar abonnee"
+msgstr "Verzenden naar inschrijver"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_security_class__sequence
 msgid "Sequence"
-msgstr ""
+msgstr "Volgorde"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1508,7 +1582,7 @@ msgstr "Aandelen"
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "Shares transactions must have a subscriber"
-msgstr ""
+msgstr "Aandelentransacties moeten een inschrijver hebben"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1529,28 +1603,28 @@ msgstr "Handtekening:"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Strike Price"
-msgstr ""
+msgstr "Uitoefenprijs"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Submit"
-msgstr ""
+msgstr "Indienen"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id
 msgid "Subscriber"
-msgstr ""
+msgstr "Inschrijver"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_id_placeholder
 msgid "Subscriber Id Placeholder"
-msgstr ""
+msgstr "Inschrijver-ID Placeholder"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__subscriber_name
 msgid "Subscriber Name"
-msgstr ""
+msgstr "Naam van de inschrijver"
 
 #. module: equity
 #. odoo-javascript
@@ -1585,6 +1659,8 @@ msgid ""
 "The declaration must be completed by the persons authorized to represent the "
 "company or entity according to its Articles of Association."
 msgstr ""
+"De verklaring moet worden ingevuld door de personen die volgens de statuten "
+"bevoegd zijn om het bedrijf of rechtspersoon te vertegenwoordigen."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1597,6 +1673,14 @@ msgid ""
 "is considered as shareholder holding more than 25% of A, for Z holds - "
 "indirectly - 36 % of the shares in A."
 msgstr ""
+"De natuurlijke persoon/personen die de uiteindelijke eigenaar zijn van of "
+"zeggenschap hebben over deze rechtspersoon via directe of indirecte eigendom "
+"of zeggenschap over meer dan 25% van de aandelen of stemrechten van die "
+"rechtspersoon. <br/> Voorbeeld: Vennootschap B en Vennootschap C hebben elk "
+"een belang van 20 procent in Vennootschap A. Particulier Z bezit 90 % van de "
+"aandelen van Vennootschap B en van Vennootschap C. Z wordt beschouwd als "
+"aandeelhouder die meer dan 25% van A bezit, want Z bezit - indirect - 36 % "
+"van de aandelen in A."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1620,12 +1704,12 @@ msgstr "Er zijn twee klassen uiteindelijk begunstigden:"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_equity
 msgid "There is currently no equity for your account."
-msgstr ""
+msgstr "Er is momenteel geen Eigen vermogen voor je account."
 
 #. module: equity
 #: model:ir.model.constraint,message:equity.constraint_equity_ubo_unique_ubo
 msgid "This contact is already a holder of this company"
-msgstr ""
+msgstr "Deze contactpersoon is al houder van dit bedrijf"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1633,6 +1717,9 @@ msgid ""
 "This said, where a shareholder holding more than 25% is a legal arrangement "
 "other than a registered company, beneficial owners are:"
 msgstr ""
+"Dit gezegd hebbende, als een aandeelhouder die meer dan 25% bezit een andere "
+"juridische constructie is dan een geregistreerde onderneming, zijn de "
+"uiteindelijk gerechtigden:"
 
 #. module: equity
 #. odoo-javascript
@@ -1732,18 +1819,18 @@ msgstr ""
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_owned_company_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_owned_company_ids
 msgid "Ubo Owned Company"
-msgstr ""
+msgstr "Bedrijf in eigendom van UBO"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__ubo_owner_ids
 #: model:ir.model.fields,field_description:equity.field_res_users__ubo_owner_ids
 msgid "Ubo Owner"
-msgstr ""
+msgstr "UBO-eigenaar"
 
 #. module: equity
 #: model:ir.model,name:equity.model_equity_ubo
 msgid "Ultimate Beneficial Owner"
-msgstr ""
+msgstr "Uiteindelijke begunstigde eigenaar"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1785,18 +1872,18 @@ msgstr "UBO-formulier uploaden"
 #: model:ir.model.fields,field_description:equity.field_equity_valuation__valuation
 #: model:ir.ui.menu,name:equity.menu_equity_reporting_valuation
 msgid "Valuation"
-msgstr ""
+msgstr "Taxatie"
 
 #. module: equity
 #: model:ir.actions.act_window,name:equity.action_equity_valuation
 #: model:ir.ui.menu,name:equity.menu_equity_ownership_valuations
 msgid "Valuations"
-msgstr ""
+msgstr "Waarderingen"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form
 msgid "Vesting period, exercise deadline, etc."
-msgstr ""
+msgstr "Vestingperiode, uitoefendatum, enz."
 
 #. module: equity
 #: model:res.groups,name:equity.group_equity_viewer
@@ -1855,6 +1942,10 @@ msgid ""
 "                                    more of the property of a legal "
 "arrangement or entity or"
 msgstr ""
+"Indien de toekomstige begunstigden al zijn vastgesteld, betreft het de "
+"natuurlijke persoon/personen die de begunstigde is/zijn van 25% of\n"
+"                                    meer van het vermogen van een juridische "
+"constructie of rechtspersoon of"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1880,7 +1971,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "You must provide either the date of birth, or the ID number"
-msgstr ""
+msgstr "Je moet ofwel de geboortedatum, ofwel het ID-nummer opgeven"
 
 #. module: equity
 #. odoo-javascript
@@ -1892,7 +1983,7 @@ msgstr "Jouw naam"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/ubo_form.xml:0
 msgid "Your Position"
-msgstr ""
+msgstr "Jouw functie"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_submit
@@ -1903,7 +1994,7 @@ msgstr "Je UBO-aangifte is ingediend!"
 #. odoo-python
 #: code:addons/equity/controllers/portal.py:0
 msgid "Your Value ND"
-msgstr ""
+msgstr "Jouw niet-verwaterde waarde"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1912,6 +2003,9 @@ msgid ""
 "legal arrangement which is known to have\n"
 "                        been set up for the benefit de facto of a PEP."
 msgstr ""
+"elke natuurlijke persoon die de enige uiteindelijke begunstigde is van een "
+"rechtspersoon of juridische constructie waarvan bekend is dat deze\n"
+"                        is opgericht ten gunste van een PEP."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_ubo_form
@@ -1920,6 +2014,10 @@ msgid ""
 "entities or legal arrangements, or any\n"
 "                        other close business relations, with a PEP;"
 msgstr ""
+"elke natuurlijke persoon van wie bekend is dat hij de gezamenlijke "
+"economische eigendom heeft van rechtspersonen of juridische constructies, "
+"of\n"
+"                        andere nauwe zakelijke relaties, met een PEP;"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1927,6 +2025,8 @@ msgid ""
 "are the following individuals who have control by other means on the "
 "direction of the company (administrators)"
 msgstr ""
+"zijn de volgende personen die zeggenschap via andere middelen hebben over de "
+"leiding van het bedrijf (bestuurders)"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1935,6 +2035,9 @@ msgid ""
 "or indirectly more than 25% of the shares or of the voting rights of this "
 "company"
 msgstr ""
+"zijn de volgende personen die, in laatste instantie, direct of indirect meer "
+"dan 25% van de aandelen of stemrechten van deze onderneming bezitten of "
+"controleren"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1966,7 +2069,7 @@ msgstr "verklaart dat de uiteindelijke begunstigden van het bedrijf:"
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_security_class_form
 msgid "e.g. Seed, Series A, ..."
-msgstr ""
+msgstr "bv. Seed, Serie A, ..."
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.equity_ubo_report
@@ -1994,13 +2097,13 @@ msgstr "aan"
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.xml:0
 msgid "or"
-msgstr ""
+msgstr "of"
 
 #. module: equity
 #. odoo-javascript
 #: code:addons/equity/static/src/components/ubo_form/holder_edit_dialog.js:0
 msgid "please keep percentages between 0 and 100"
-msgstr ""
+msgstr "percentages moeten tussen 0 en 100 liggen"
 
 #. module: equity
 #. odoo-python
@@ -2018,7 +2121,7 @@ msgstr "verkoper"
 #. odoo-python
 #: code:addons/equity/models/equity_transaction.py:0
 msgid "subscriber"
-msgstr ""
+msgstr "inschrijver"
 
 #. module: equity
 #: model_terms:ir.ui.view,arch_db:equity.view_equity_transaction_form

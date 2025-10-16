@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:48+0000\n"
-"PO-Revision-Date: 2025-09-23 02:44+0000\n"
+"PO-Revision-Date: 2025-10-16 02:42+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "pos_urban_piper_enhancements/ja/>\n"
@@ -38,7 +38,7 @@ msgstr "フードデリバリーで利用可能な場合はチェックを入れ
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_res_config_settings
 msgid "Config Settings"
-msgstr "詳細設定"
+msgstr "構成設定"
 
 #. module: pos_urban_piper_enhancements
 #: model:ir.model,name:pos_urban_piper_enhancements.model_res_partner

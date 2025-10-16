@@ -3,13 +3,14 @@
 # * quality_control
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Abe Manyo (abem)" <abem@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-15 23:05+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 02:42+0000\n"
+"Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "quality_control/id/>\n"
 "Language: id\n"
@@ -28,7 +29,7 @@ msgstr "% dari total waktu"
 #. odoo-python
 #: code:addons/quality_control/models/quality.py:0
 msgid "%(product_name)s is not in Picking %(picking_name)s"
-msgstr ""
+msgstr "%(product_name)s tidak di Picking %(picking_name)s"
 
 #. module: quality_control
 #: model:ir.actions.report,print_report_name:quality_control.quality_check_report

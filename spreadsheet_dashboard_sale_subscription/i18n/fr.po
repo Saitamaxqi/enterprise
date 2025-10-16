@@ -3,13 +3,14 @@
 # * spreadsheet_dashboard_sale_subscription
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-18 02:45+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-15 16:32+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_sale_subscription/fr/>\n"
 "Language: fr\n"
@@ -415,13 +416,13 @@ msgstr "Répartition du MRR"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/salesperson_dashboard.osheet.json:0
 msgid "MRR Change"
-msgstr ""
+msgstr "Variation du MRR"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/subscriptions_sample_dashboard.json:0
 msgid "MRR Change (normalized)"
-msgstr "Changement de MRR (normalisé)"
+msgstr "Variation du MRR (normalisé)"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -558,14 +559,14 @@ msgstr "Rétention nette"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Net Retention Rate"
-msgstr ""
+msgstr "Taux de rétention net"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_sample_dashboard.json:0
 msgid "Net Retention rate"
-msgstr "Taux de rétention nette"
+msgstr "Taux de rétention net"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript
@@ -736,7 +737,7 @@ msgstr "Perte de revenus"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_sale_subscription/data/files/retention_dashboard.osheet.json:0
 msgid "Revenue Churn Rate"
-msgstr ""
+msgstr "Taux d’attrition du chiffre d’affaires"
 
 #. module: spreadsheet_dashboard_sale_subscription
 #. odoo-javascript

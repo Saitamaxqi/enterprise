@@ -3,13 +3,14 @@
 # * sale_renting_planning
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# "Manon Rondou (ronm)" <ronm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-18 02:46+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-15 08:24+0000\n"
+"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting_planning/fr/>\n"
 "Language: fr\n"
@@ -73,7 +74,7 @@ msgstr "Aucune commande de location trouvée."
 #. odoo-python
 #: code:addons/sale_renting_planning/models/planning_slot.py:0
 msgid "No resources are available for the shifts in: %s."
-msgstr ""
+msgstr "Aucune ressource n’est disponible pour les shifts dans : %s."
 
 #. module: sale_renting_planning
 #: model:ir.model,name:sale_renting_planning.model_planning_role
@@ -99,7 +100,7 @@ msgstr "Ligne de commande"
 #. odoo-python
 #: code:addons/sale_renting_planning/models/planning_slot.py:0
 msgid "Shift added to last order"
-msgstr ""
+msgstr "Shift ajouté à la dernière commande"
 
 #. module: sale_renting_planning
 #: model:ir.model.fields,field_description:sale_renting_planning.field_planning_role__sync_shift_rental
