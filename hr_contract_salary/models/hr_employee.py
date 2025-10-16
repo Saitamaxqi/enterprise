@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 
 
 class HrEmployee(models.Model):
@@ -11,6 +10,14 @@ class HrEmployee(models.Model):
     wage_on_signature = fields.Monetary(readonly=False, related="version_id.wage_on_signature", inherited=True, groups="hr.group_hr_manager")
     final_yearly_costs = fields.Monetary(readonly=False, related="version_id.final_yearly_costs", inherited=True, groups="hr.group_hr_manager")
     monthly_yearly_costs = fields.Monetary(related="version_id.monthly_yearly_costs", inherited=True, groups="hr.group_hr_manager")
+
+    @api.onchange("wage_with_holidays")
+    def _onchange_wage_with_holidays(self):
+        self.version_id._onchange_wage_with_holidays()
+
+    @api.onchange('final_yearly_costs')
+    def _onchange_final_yearly_costs(self):
+        self.version_id._onchange_final_yearly_costs()
 
     def action_show_contract_reviews(self):
         return {

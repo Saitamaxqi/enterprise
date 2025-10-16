@@ -4,6 +4,7 @@ from markupsafe import Markup
 
 from odoo import api, fields, models, _
 from odoo.fields import Domain
+from odoo.tools.float_utils import float_compare
 
 
 class HrVersion(models.Model):
@@ -60,17 +61,22 @@ class HrVersion(models.Model):
                 )
                 raw_mb = min(mobility_budget_max, base * 13.0 / 5.0)
 
-                # Iteratively find the right budget to not get under the minimum wage
+                # find the right budget to not get under the minimum wage
                 current_yearly_cost = self.env.context.get(
                     'salary_simulation_full_time_yearly_cost',
                     version._get_yearly_cost_from_wage_with_holidays() if version._is_salary_sacrifice() else version.final_yearly_costs
                 )
-                wage_with_mobility_budget = version._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
-                while wage_with_mobility_budget < minimum_wage and minimum_wage:
-                    raw_mb -= 10
-                    wage_with_mobility_budget = version._get_gross_from_employer_costs(current_yearly_cost - raw_mb)
+                version_mobility_budget_min = mobility_budget_min
+                version_mobility_budget_max = raw_mb
+                while float_compare(version_mobility_budget_min, version_mobility_budget_max, precision_digits=2) == -1:
+                    version_mobility_budget = (version_mobility_budget_max + version_mobility_budget_min) / 2
+                    wage_with_mobility_budget = version._get_gross_from_employer_costs(current_yearly_cost - version_mobility_budget)
+                    if wage_with_mobility_budget < minimum_wage and minimum_wage:
+                        version_mobility_budget_max = version_mobility_budget
+                    else:
+                        version_mobility_budget_min = version_mobility_budget
 
-                raw_mb = max(raw_mb, mobility_budget_min)
+                raw_mb = version_mobility_budget_min
                 version.l10n_be_mobility_budget_amount = raw_mb
             else:
                 version.l10n_be_mobility_budget_amount = 0.0

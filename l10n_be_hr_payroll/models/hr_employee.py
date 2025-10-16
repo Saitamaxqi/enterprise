@@ -264,6 +264,22 @@ Earnings are made of professional income, remuneration, unemployment allocations
         self.other_juniors_dependent = 0.0
         self.other_disabled_juniors_dependent = 0.0
 
+    @api.onchange('has_hospital_insurance')
+    def _onchange_has_hospital_insurance(self):
+        self.version_id._onchange_has_hospital_insurance()
+
+    @api.onchange('l10n_be_has_ambulatory_insurance')
+    def _onchange_l10n_be_has_ambulatory_insurance(self):
+        self.version_id._onchange_l10n_be_has_ambulatory_insurance()
+
+    @api.onchange('transport_mode_car', 'transport_mode_train', 'transport_mode_public')
+    def _onchange_transport_mode(self):
+        self.version_id._onchange_transport_mode()
+
+    @api.onchange('transport_mode_private_car')
+    def _onchange_transport_mode_private_car(self):
+        self.version_id._onchange_transport_mode_private_car()
+
     @api.model
     def _get_invalid_niss_employee_ids(self):
         res = self.search_read([
