@@ -766,6 +766,19 @@ class HelpdeskTicket(models.Model):
         sla_status_to_remove.unlink()
         return self.env['helpdesk.sla.status'].create(sla_status_value_list)
 
+    def _sla_find_domain(self):
+        """
+        Get domain to find matching SLAs.
+        This function aims to be inherited by submodules
+        :return: domain
+        :rtype : list [tuple]
+        """
+        return [
+            ('team_id', '=', self.team_id.id),
+            ('priority', '=', self.priority),
+            ('stage_id.sequence', '>=', self.stage_id.sequence),
+        ]
+
     @api.model
     def _sla_find_false_domain(self):
         return [('partner_ids', '=', False)]
@@ -805,10 +818,13 @@ class HelpdeskTicket(models.Model):
                 tickets_map[key] |= ticket
                 # group the SLA to apply, by key
                 if key not in sla_domain_map:
-                    sla_domain_map[key] = Domain.AND([[
-                        ('team_id', '=', ticket.team_id.id), ('priority', '=', ticket.priority),
-                        ('stage_id.sequence', '>=', ticket.stage_id.sequence),
-                    ], Domain.OR([ticket._sla_find_extra_domain(), self._sla_find_false_domain()])])
+                    sla_domain_map[key] = Domain.AND([
+                        ticket._sla_find_domain(),
+                        Domain.OR([
+                            ticket._sla_find_extra_domain(),
+                            self._sla_find_false_domain(),
+                        ]),
+                    ])
 
         result = {}
         for key, tickets in tickets_map.items():  # only one search per ticket group
