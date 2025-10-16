@@ -224,7 +224,7 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
                 )
             columns_map["Debito Fiscal a Restituir"] = 'vat_amount'
             exempt_operation_type = 2
-        columns_map["Monto Neto Exento o No Gravado"] = 'balance'
+        columns_map["Monto Neto Exento o No Gravado"] = 'exempt_balance'
 
         query = SQL(
             """
@@ -265,6 +265,10 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
                         WHEN operation_type = %(exempt_op_type)s THEN ''
                         ELSE l10n_ar_vat_afip_code
                     END AS rate_code,
+                    CASE
+                        WHEN operation_type != %(exempt_op_type)s THEN ''
+                        ELSE REPLACE(ABS(SUM(balance))::TEXT, '.', ',')
+                    END AS exempt_balance,
                     SUM(balance) AS balance,
                     ARRAY_AGG(DISTINCT id) as aml_ids,
                     ARRAY_AGG(DISTINCT move_id) as move_ids
