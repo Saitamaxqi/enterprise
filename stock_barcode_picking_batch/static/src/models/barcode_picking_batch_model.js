@@ -149,6 +149,24 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
         }
     }
 
+    async processBarcode(barcode) {
+        // scans should be ignored until the batch has been created
+        if (this.record.state == "draft") {
+            this.notification(
+                _t(
+                    "This batch transfer is still in draft, scans are disabled until the batch is confirmed"
+                ),
+                { type: "danger" }
+            );
+        } else if (this.isDone) {
+            return this.notification(_t("This batch is already done"), { type: "danger" });
+        } else if (this.isCancelled) {
+            return this.notification(_t("This batch is already cancelled"), { type: "danger" });
+        } else {
+            super.processBarcode(barcode);
+        }
+    }
+
     get canCreateNewLot() {
         return this.picking.use_create_lots;
     }

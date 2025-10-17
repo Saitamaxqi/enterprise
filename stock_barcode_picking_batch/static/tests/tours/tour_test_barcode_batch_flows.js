@@ -884,7 +884,15 @@ registry.category("web_tour.tours").add("test_batch_create", {
         { trigger: ".o_batch_picking a", run: "click" },
         { trigger: ".o_batch_picking a.active" },
         { trigger: ".o-kanban-button-new", run: "click" },
-
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan lovelybarcode",
+        },
+        {
+            trigger:
+                ".o_notification:has(.bg-danger):contains('This batch transfer is still in draft, scans are disabled until the batch is confirmed') .o_notification_close",
+            run: "click",
+        },
         // select 2 delivery orders
         {
             trigger: '.o_barcode_line_title:contains("picking_delivery_1")',
