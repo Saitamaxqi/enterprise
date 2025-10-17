@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-14 11:09+0000\n"
+"PO-Revision-Date: 2025-10-17 14:58+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/fr/>\n"
@@ -411,9 +411,9 @@ msgid ""
 "in accordance with its journal sequence. This lock date is irreversible and "
 "does not allow any exception."
 msgstr ""
-"Toute écriture jusqu’à cette date incluse sera reportée à une date "
-"ultérieure, conformément à la séquence de son journal. Cette date de "
-"verrouillage est irréversible et ne permet aucune exception."
+"Toute pièce jusqu'à cette date incluse sera reportée à une date ultérieure, "
+"conformément à la séquence du journal. Cette date de blocage est "
+"irréversible et ne tolère aucune exception."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__fiscalyear_lock_date
@@ -421,8 +421,8 @@ msgid ""
 "Any entry up to and including that date will be postponed to a later time, "
 "in accordance with its journal's sequence."
 msgstr ""
-"Toute écriture jusqu’à cette date incluse sera reportée à une date "
-"ultérieure, conformément à la séquence de son journal."
+"Toute pièce jusqu'à cette date incluse sera reportée à une date ultérieure, "
+"conformément à la séquence du journal."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__tax_lock_date
@@ -431,10 +431,10 @@ msgid ""
 "later time, in accordance with its journal's sequence. The tax lock date is "
 "automatically set when the tax closing entry is posted."
 msgstr ""
-"Toute écriture comportant des taxes jusqu’à cette date incluse sera reportée "
-"à une date ultérieure, conformément à la séquence de son journal. La date de "
-"verrouillage fiscal est automatiquement définie lors de l’enregistrement de "
-"l’écriture de clôture fiscale."
+"Toute pièce comportant des taxes jusqu'à cette date incluse sera reportée à "
+"une date ultérieure, conformément à la séquence du journal. La date de "
+"blocage de la TVA est automatiquement fixée lors de l'enregistrement de la "
+"pièce de clôture de la TVA."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__purchase_lock_date
@@ -442,8 +442,8 @@ msgid ""
 "Any purchase entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
-"Toute écriture d’achat antérieure ou égale à cette date sera reportée à une "
-"date ultérieure, conformément à la séquence de son journal."
+"Toute pièce d'achat antérieure à cette date incluse sera reportée à une date "
+"ultérieure, conformément à la séquence du journal."
 
 #. module: account_accountant
 #: model:ir.model.fields,help:account_accountant.field_account_change_lock_date__sale_lock_date
@@ -451,8 +451,8 @@ msgid ""
 "Any sales entry prior to and including this date will be postponed to a "
 "later date, in accordance with its journal's sequence."
 msgstr ""
-"Toute écriture de vente antérieure ou égale à cette date sera reportée à une "
-"date ultérieure, conformément à la séquence de son journal."
+"Toute pièce de vente antérieure à cette date incluse sera reportée à une "
+"date ultérieure, conformément à la séquence du journal."
 
 #. module: account_accountant
 #. odoo-javascript

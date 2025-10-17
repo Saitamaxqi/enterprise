@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-13 14:59+0000\n"
+"PO-Revision-Date: 2025-10-17 11:43+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/de/>\n"
@@ -507,7 +507,7 @@ msgstr "Vermögensgegenstand veräußert. %s"
 #. module: account_asset
 #: model:account.return.check.template,name:account_asset.account_return_check_template_asset_movement_and_accounting_treatment
 msgid "Asset movement and accounting treatment"
-msgstr ""
+msgstr "Vermögensbewegungen und buchhalterische Behandlung"
 
 #. module: account_asset
 #. odoo-python
@@ -644,6 +644,9 @@ msgid ""
 "Check depreciation periods for new acquisitions and ensure consistency with "
 "similar assets. Document any changes in accounting methods."
 msgstr ""
+"Prüfen Sie die Abschreibungszeiträume für Neuanschaffungen und stellen Sie "
+"die Übereinstimmung mit ähnlichen Vermögenswerten sicher. Dokumentieren Sie "
+"alle Änderungen der Buchhaltungsmethoden."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__children_ids
@@ -971,7 +974,7 @@ msgstr "Verteilung der Kostenstellen"
 #. module: account_asset
 #: model:ir.actions.server,name:account_asset.action_server_download_asset_template
 msgid "Download Asset Import Template"
-msgstr ""
+msgstr "Importvorlage für Vermögenswert herunterladen"
 
 #. module: account_asset
 #: model:ir.model.fields.selection,name:account_asset.selection__account_asset__state__draft
@@ -1006,6 +1009,8 @@ msgid ""
 "Either \"Months\" or \"Years\" (case-insensitive). Specifies the unit of "
 "duration."
 msgstr ""
+"Entweder „Monate“ oder „Jahre“ (Groß-/Kleinschreibung irrelevant). Gibt die "
+"Zeiteinheit an."
 
 #. module: account_asset
 #. odoo-python
@@ -1153,6 +1158,9 @@ msgid ""
 "Identify acquisitions, disposals, write-offs, etc. Ensure correct accounting "
 "treatment, depreciation, and capital gains processing."
 msgstr ""
+"Identifizieren Sie Anschaffungen, Veräußerungen, Abschreibungen usw. Stellen "
+"Sie eine korrekte buchhalterische Behandlung, Abschreibung und Verbuchung "
+"von Veräußerungsgewinnen sicher."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__message_needaction
@@ -1171,6 +1179,8 @@ msgid ""
 "Import your fixed assets' original data and their already accumulated "
 "depreciation."
 msgstr ""
+"Importieren Sie die Originaldaten Ihrer Sachanlagen sowie die bereits "
+"vorgenommenen Abschreibungen."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__already_depreciated_amount_import
@@ -1297,7 +1307,7 @@ msgstr "Zeilen verwalten"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Mandatory column. This is the name of the asset."
-msgstr ""
+msgstr "Pflichtfeld. Dies ist der Name der Sachanlage."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_has_error
@@ -1357,7 +1367,7 @@ msgstr "Monate"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Months/Years"
-msgstr ""
+msgstr "Monate/Jahre"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__multiple_assets_per_line

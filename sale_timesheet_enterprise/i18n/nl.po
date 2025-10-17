@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-10-16 09:06+0000\n"
+"PO-Revision-Date: 2025-10-17 14:59+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "sale_timesheet_enterprise/nl/>\n"
@@ -28,8 +28,9 @@ msgstr ""
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
 #: code:addons/sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_dialog/timesheet_leaderboard_dialog.js:0
+#, fuzzy
 msgid "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
-msgstr ""
+msgstr "%(billableTime)s / %(billable_time_target)s (%(billingRate)s%)"
 
 #. module: sale_timesheet_enterprise
 #. odoo-javascript
@@ -286,7 +287,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_advance_payment_inv__display_name
 #: model:ir.model.fields,field_description:sale_timesheet_enterprise.field_sale_order_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Weergavenaam"
 
 #. module: sale_timesheet_enterprise
 #: model:ir.model.fields,help:sale_timesheet_enterprise.field_project_task__portal_progress

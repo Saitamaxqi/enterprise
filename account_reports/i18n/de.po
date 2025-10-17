@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-09 21:12+0000\n"
+"PO-Revision-Date: 2025-10-17 11:43+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/de/>\n"
@@ -639,7 +639,7 @@ msgstr "Buchhaltungsberichtsausdruck"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_external_value
 msgid "Accounting Report External Value"
-msgstr ""
+msgstr "Buchhaltungsbericht Externer Wert"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -1631,7 +1631,7 @@ msgstr "Chatter"
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check__type__check
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__type__check
 msgid "Check"
-msgstr ""
+msgstr "Prüfung"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__code
@@ -1648,12 +1648,12 @@ msgstr "E-Mail(s) von Partnern prüfen"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Check State"
-msgstr ""
+msgstr "Prüfstatus"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_view_account_return_check_templates
 msgid "Check Templates"
-msgstr ""
+msgstr "Prüfvorlagen"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_aged_payable_review
@@ -1661,6 +1661,9 @@ msgid ""
 "Check for payables overdue by more than 60 days and validate that all "
 "amounts due are properly recorded."
 msgstr ""
+"Überprüfen Sie Verbindlichkeiten, die seit mehr als 60 Tagen überfällig "
+"sind, und stellen Sie sicher, dass alle fälligen Beträge ordnungsgemäß "
+"erfasst sind."
 
 #. module: account_reports
 #. odoo-javascript
@@ -1673,23 +1676,23 @@ msgstr "Prüfen Sie diese"
 #: model:ir.ui.menu,name:account_reports.menu_action_return_check_templates
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
 msgid "Checks"
-msgstr "Schecks"
+msgstr "Prüfungen"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__check_count
 msgid "Checks Count"
-msgstr ""
+msgstr "Anzahl Prüfungen"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Checks Validated"
-msgstr ""
+msgstr "Prüfungen validiert"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_clear_internal_transfer_account
 msgid "Clear Internal Transfer Accounts"
-msgstr ""
+msgstr "Konten für interne Überweisungen leeren"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -1740,7 +1743,7 @@ msgstr "Abschlussbuchung für Unternehmen %s gelöscht"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Closing entry posted and lock date applied."
-msgstr ""
+msgstr "Abschlussbuchung erfasst und Sperrdatum gesetzt."
 
 #. module: account_reports
 #. odoo-python
@@ -1995,6 +1998,8 @@ msgid ""
 "Create a new audit working file with dedicated checks and balance reviews to "
 "ensure smooth closings."
 msgstr ""
+"Erstellen Sie eine neue Prüfungsarbeitsdatei mit speziellen Prüfungen und "
+"Bilanzkontrollen, um einen reibungslosen Abschluss zu gewährleisten."
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_audit_account_status__create_uid
@@ -3391,6 +3396,8 @@ msgstr ""
 msgid ""
 "Identify checks that remain uncashed (lost, forgotten, or to be canceled)"
 msgstr ""
+"Identifizieren Sie Schecks, die noch nicht eingelöst wurden (verloren, "
+"vergessen oder noch zu stornieren)"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_review_for_capitalizable_expenses
@@ -4566,7 +4573,7 @@ msgstr "Konten für ausstehende Eingänge/Zahlungen"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_outstanding_checks
 msgid "Outstanding checks"
-msgstr ""
+msgstr "Ausstehende Prüfungen"
 
 #. module: account_reports
 #. odoo-python
@@ -5695,7 +5702,7 @@ msgstr "Ein einziger Empfänger"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__skipped_check_cycles
 msgid "Skipped Check Cycles"
-msgstr ""
+msgstr "Übersprungene Prüfzyklen"
 
 #. module: account_reports
 #. odoo-javascript
@@ -5709,6 +5716,8 @@ msgstr "Einige"
 msgid ""
 "Some checks fail in the current stage, please solve them before proceeding."
 msgstr ""
+"Einige Prüfungen sind in der aktuellen Phase fehlgeschlagen. Beheben Sie das "
+"Problem, bevor Sie fortfahren."
 
 #. module: account_reports
 #. odoo-javascript
@@ -6663,6 +6672,19 @@ msgid ""
 "exchange for immediate cash.\n"
 "            "
 msgstr ""
+"Überprüfen Sie, ob Bar- und Kartenzahlung, die zum Periodenende erfasst "
+"wurden, tatsächlich in der Folgeperiode beglichen wurden. Prüfen Sie zudem "
+"die korrekte buchhalterische Behandlung von Dailly-Abtretungen, "
+"Diskontierungsvorgängen und Factoring-Verträgen.**\n"
+"\n"
+"* Das „Dailly-Gesetz“ ist ein französisches Gesetz, das Unternehmen "
+"ermöglicht, gewerbliche Forderungen (z. B. Rechnungen) an Kreditinstitute ("
+"z. B. Banken) zur Finanzierung abzutreten.\n"
+"\n"
+"**Factoring-Verträge beinhalten den Verkauf unbezahlter Rechnungen "
+"(Forderungen) an ein Drittunternehmen, den sogenannten Factor, um sofort "
+"Liquidität zu erhalten.\n"
+"            "
 
 #. module: account_reports
 #. odoo-python
@@ -6955,6 +6977,8 @@ msgid ""
 "You're only allowed to change the check state when the return hasn't been "
 "reviewed."
 msgstr ""
+"Der Prüfstatus darf nur geändert werden, wenn die Erklärung noch nicht "
+"geprüft wurde."
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.journal_report_pdf_export_main
@@ -6978,7 +7002,7 @@ msgstr "und korrigieren Sie die Steuer-Stichwörter, wenn nötig."
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "check updated"
-msgstr ""
+msgstr "Prüfung aktualisiert"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
