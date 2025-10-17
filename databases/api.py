@@ -94,9 +94,6 @@ class BaseApi:
 
     def post_json2(self, model, method, **kwargs):
         try:
-            # in saas-18.4, web_json_2_rpc requires these keyword arguments
-            kwargs.setdefault('ids', [])
-            kwargs.setdefault('context', {})
             headers = {'Authorization': f'Bearer {self.apikey}'}
             if self.database:
                 headers['X-Odoo-Database'] = self.database

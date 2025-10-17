@@ -40,7 +40,7 @@ class TestSynchronization(TestDatabasesCommon):
         new_projects = Project.search([])
 
         self.assertCountEqual(self.mock_requests_request.mock_calls[:1], [
-            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={'ids': [], 'context': {}},
+            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={},
                  headers={'Authorization': 'Bearer privateKey', 'X-Odoo-Database': 'openerp'}, allow_redirects=False, timeout=15),
         ])
         self.assertRecordValues(new_projects, [
@@ -91,7 +91,7 @@ class TestSynchronization(TestDatabasesCommon):
         self.assertEqual(wizard.summary_message, "3 new databases, 3 updated.")
 
         self.assertCountEqual(self.mock_requests_request.mock_calls[:1], [
-            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={'ids': [], 'context': {}},
+            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={},
                  headers={'Authorization': 'Bearer privateKey', 'X-Odoo-Database': 'openerp'}, allow_redirects=False, timeout=15),
         ])
         new_projects = Project.search([], order='database_version')
@@ -175,7 +175,7 @@ class TestSynchronization(TestDatabasesCommon):
         new_projects = Project.search([])
 
         self.assertCountEqual(self.mock_requests_request.mock_calls, [
-            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={'ids': [], 'context': {}},
+            call('post', 'https://www.odoo.com/json/2/odoo.database/list', data=None, json={},
                  headers={'Authorization': 'Bearer privateKey', 'X-Odoo-Database': 'openerp'}, allow_redirects=False, timeout=15),
         ])
         self.assertRecordValues(new_projects, [
@@ -513,7 +513,6 @@ class TestSynchronization(TestDatabasesCommon):
         invite_wizard.action_invite_users()
         self.assertCountEqual(self.mock_requests_request.mock_calls, [
             call('post', 'http://odoo-sa.my.odoo.test/json/2/res.users/web_create_users', data=None, json={
-                'ids': [],
                 'emails': ['employee@company.tld'],
                 'context': {'no_reset_password': True},
             }, headers={'Authorization': 'Bearer admin_apikey', 'X-Odoo-Database': 'odoo-sa'}, allow_redirects=False, timeout=15),
@@ -531,13 +530,10 @@ class TestSynchronization(TestDatabasesCommon):
         invite_wizard.action_remove_users()
         self.assertCountEqual(self.mock_requests_request.mock_calls, [
             call('post', 'http://odoo-sa.my.odoo.test/json/2/res.users/search', data=None, json={
-                'ids': [],
-                'context': {},
                 'domain': [('login', 'in', ['employee@company.tld'])],
             }, headers={'Authorization': 'Bearer admin_apikey', 'X-Odoo-Database': 'odoo-sa'}, allow_redirects=False, timeout=15),
             call('post', 'http://odoo-sa.my.odoo.test/json/2/res.users/write', data=None, json={
                 'ids': [23],
-                'context': {},
                 'values': {'active': False},
             }, headers={'Authorization': 'Bearer admin_apikey', 'X-Odoo-Database': 'odoo-sa'}, allow_redirects=False, timeout=15),
         ])
