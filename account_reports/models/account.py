@@ -316,6 +316,15 @@ class AccountAccount(models.Model):
         if field_expr not in ('audit_debit', 'audit_credit', 'audit_balance', 'audit_previous_balance', 'audit_status', 'audit_var_n_1', 'audit_var_percentage'):
             return super()._field_to_sql(alias, field_expr, query)
 
+        if field_expr == 'audit_status':
+            query.add_join(
+                'LEFT JOIN',
+                'account_audit_account_status',
+                'account_audit_account_status',
+                SQL("account_audit_account_status.audit_id = %s AND account_audit_account_status.account_id = %s", self.env.context.get('working_file_id'), self._field_to_sql(alias, 'id', query))
+            )
+            return SQL('account_audit_account_status.status')
+
         working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
         if not working_file:
             return SQL()
@@ -329,15 +338,6 @@ class AccountAccount(models.Model):
             previous_period_start, previous_period_end = working_file.type_id._get_period_boundaries(working_file.company_id, (working_file.date_from or fields.Date.today()) - relativedelta(days=1))
             add_aml_join('prev_account_move_line', previous_period_start, previous_period_end, working_file.company_ids.ids)
             return SQL("COALESCE(prev_account_move_line.balance, 0.0)")
-
-        if field_expr == 'audit_status':
-            query.add_join(
-                'LEFT JOIN',
-                'account_audit_account_status',
-                'account_audit_account_status',
-                SQL("account_audit_account_status.audit_id = %s AND account_audit_account_status.account_id = %s", self.env.context.get('working_file_id'), self._field_to_sql(alias, 'id', query))
-            )
-            return SQL('account_audit_account_status.status')
 
         if field_expr in ('audit_var_n_1', 'audit_var_percentage'):
             previous_period_start, previous_period_end = working_file.type_id._get_period_boundaries(working_file.company_id, (working_file.date_from or fields.Date.today()) - relativedelta(days=1))
