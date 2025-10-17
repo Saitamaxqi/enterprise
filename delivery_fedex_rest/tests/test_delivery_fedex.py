@@ -237,10 +237,10 @@ class TestDeliveryFedex(TransactionCase):
             self.assertEqual(picking.carrier_id.id, sale_order.carrier_id.id, "Carrier is not the same on Picking and on SO.")
 
             move0 = picking.move_line_ids[0]
+            move1 = picking.move_line_ids[1]
             move0.quantity = 1.0
             move0.picked = True
             self.wiz_put_in_pack(picking)
-            move1 = picking.move_line_ids[1]
             move1.quantity = 1.0
             move1.picked = True
             self.wiz_put_in_pack(picking)
