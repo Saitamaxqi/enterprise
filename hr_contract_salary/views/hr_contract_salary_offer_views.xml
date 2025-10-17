@@ -188,7 +188,7 @@
                             <field name="currency_id" invisible="1"/>
                         </group>
                         <group string="Token" name="group_token" groups="base.group_no_one">
-                            <field name="access_token" readonly="state in ['cancelled', 'full_signed']"/>
+                            <field name="access_token"/>
                             <field name="create_date"/>
                         </group>
                     </group>

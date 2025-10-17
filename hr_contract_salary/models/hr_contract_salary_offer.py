@@ -79,7 +79,7 @@ class HrContractSalaryOffer(models.Model):
     contract_start_date = fields.Date(tracking=True,
                                       default=fields.Date.context_today)
     contract_end_date = fields.Date(tracking=True)
-    access_token = fields.Char('Access Token', copy=False, tracking=True)
+    access_token = fields.Char('Access Token', copy=False, tracking=True, store=True, compute="_compute_token")
     validity_days_count = fields.Integer("Validity Days Count",
                               compute="_compute_validity_days_count",
                               store=True, readonly=False)
@@ -164,7 +164,7 @@ class HrContractSalaryOffer(models.Model):
         for offer in self:
             offer.is_half_sign_state_required = len(offer.sign_template_signatories_ids) != 1
 
-    @api.depends("access_token", "applicant_id")
+    @api.depends("access_token", "final_yearly_costs")
     def _compute_url(self):
         base_url = self.env['hr.contract.salary.offer'].get_base_url()
         for offer in self:
@@ -172,6 +172,12 @@ class HrContractSalaryOffer(models.Model):
                       + f"/salary_package/simulation/offer/{offer.id}" \
                       + f"?final_yearly_costs={round(offer.final_yearly_costs, 2)}" \
                       + (f"&token={offer.access_token}" if offer.access_token else "")
+
+    @api.depends("employee_id", "applicant_id")
+    def _compute_token(self):
+        for offer in self:
+            if not offer.access_token and (not offer.employee_id or not offer.employee_id.user_id):
+                offer.access_token = uuid.uuid4().hex
 
     @api.depends('applicant_id', 'employee_version_id', 'employee_id')
     def _compute_display_name(self):
