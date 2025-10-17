@@ -90,10 +90,10 @@ export class IotHttpService {
         }
     }
 
-    async _webRtc({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
+    async _webRtc({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
         await this.webRtc.onMessage(identifier, deviceIdentifier, messageId, onSuccess, onFailure);
         if (data) {
-            await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, messageId);
+            await this.webRtc.sendMessage(identifier, { device_identifier: deviceIdentifier, data }, messageId, messageType);
         }
         this.connectionStatus = "webrtc";
     }
@@ -116,7 +116,7 @@ export class IotHttpService {
         this.connectionStatus = "longpolling";
     }
 
-    async _websocket({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure }) {
+    async _websocket({ identifier, deviceIdentifier, data, messageId, onSuccess, onFailure, messageType }) {
         const onFailureWithTimeout = (...args) => {
             onFailure(...args);
             this.connectionStatus = "offline";
@@ -128,7 +128,7 @@ export class IotHttpService {
         this.connectionStatus = "websocket";
     }
 
-    async _attemptFallbacks({ iotBoxId, deviceIdentifier, onFailure }) {
+    async _attemptFallbacks({ iotBoxId, deviceIdentifier, data, onFailure }) {
         if (!["number", "string"].includes(typeof iotBoxId)) {
             iotBoxId = iotBoxId[0]; // iotBoxId is the ``Many2one`` field, we need the actual ID
         }
@@ -138,7 +138,10 @@ export class IotHttpService {
             this.cachedIotBoxes[iotBoxId] = { ip: box.ip, identifier: box.identifier };
         }
         const { ip, identifier } = this.cachedIotBoxes[iotBoxId];
-        const params = { ip, identifier, ...arguments[0] };
+
+        // if we target the box instead of a device, we want longpolling to handle action as messageType
+        const messageType = deviceIdentifier === identifier ? data.action : undefined;
+        const params = { ip, identifier, data, messageType, ...arguments[0] };
 
         for (const connectionType of this.connectionTypes) {
             try {
