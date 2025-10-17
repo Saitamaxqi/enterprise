@@ -2,4 +2,4 @@
 # in this module (see controllers/checksum.py for the full list).
 # Any change to these files will require re-certification with LNE.
 # DO NOT CHANGE THEM OR THIS CHECKSUM WITHOUT CONTACTING THE POS TEAM FIRST!
-EXPECTED_CHECKSUM = "acf9fe1c80fbb21aed381a08a7f328bfe38bcc2cdc451ddd5c35b4baf9b05621"
+EXPECTED_CHECKSUM = "fe20e58654499d033095deae2dff01708fcd8ca5b46098a7de68eb69af626f60"
