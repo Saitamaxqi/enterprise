@@ -70,6 +70,7 @@ class AccountBatchPayment(models.Model):
     export_filename = fields.Char(string='File Name', help="Name of the export file generated for this batch", store=True, copy=False)
 
     file_generation_enabled = fields.Boolean(help="Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view.", compute='_compute_file_generation_enabled')
+    invalid_sct_partners_ids = fields.Many2many('res.partner', compute='_compute_invalid_sct_partners_ids')
 
     @api.depends('batch_type', 'journal_id', 'payment_method_id')
     def _compute_payment_ids_domain(self):
@@ -290,6 +291,18 @@ class AccountBatchPayment(models.Model):
         state_values = dict(self._fields['state'].selection)
         for batch in self:
             batch.display_name = f'{batch.name} ({state_values.get(batch.state)})'
+
+    @api.depends('payment_method_id', 'payment_ids.partner_id.country_id', 'payment_ids.partner_id.city')
+    def _compute_invalid_sct_partners_ids(self):
+        sepa_batches = self.filtered(lambda b: b.payment_method_id.code == 'sepa_ct')
+        for batch in sepa_batches:
+            batch.invalid_sct_partners_ids = batch.payment_ids.partner_id.filtered(
+                lambda partner: not (partner.city and partner.country_id)
+            )
+        (self - sepa_batches).invalid_sct_partners_ids = self.env['res.partner']
+
+    def action_invalid_partners_from_sct(self):
+        return self.invalid_sct_partners_ids._get_records_action(name=_("Invalid Partners"))
 
     def validate_batch(self):
         """ Verifies the content of a batch and proceeds to its sending if possible.
