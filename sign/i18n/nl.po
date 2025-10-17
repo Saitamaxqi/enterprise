@@ -8,13 +8,14 @@
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023, 2025.
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-14 07:11+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/sign/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
@@ -1228,7 +1229,7 @@ msgstr "Aangemaakt"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_request
 msgid "Current status of the signature request"
-msgstr "Huidige status van het handtekeningsverzoek"
+msgstr "Huidige status van het handtekeningverzoek"
 
 #. module: sign
 #. odoo-javascript
@@ -2407,7 +2408,7 @@ msgstr "Meerdere regels tekst"
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_share_view_form
 msgid "Multiple Signature Requests"
-msgstr "Meerdere handtekeningsverzoeken"
+msgstr "Meerdere handtekeningverzoeken"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_search
@@ -3557,7 +3558,7 @@ msgstr "Handtekening item soort"
 #. module: sign
 #: model:ir.model,name:sign.model_sign_request_item_value
 msgid "Signature Item Value"
-msgstr "Handtekening verzoek waarde"
+msgstr "Handtekeningverzoek waarde"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_document__sign_item_ids
@@ -3579,7 +3580,7 @@ msgstr "Verzoek om handtekening"
 #. odoo-python
 #: code:addons/sign/wizard/sign_send_request.py:0
 msgid "Signature Request - %(file_name)s"
-msgstr "Handtekeningsverzoek - %(file_name)s"
+msgstr "Handtekeningverzoek - %(file_name)s"
 
 #. module: sign
 #. odoo-python
@@ -3590,17 +3591,17 @@ msgstr ""
 #. module: sign
 #: model:ir.model,name:sign.model_sign_request_item
 msgid "Signature Request Item"
-msgstr "Handtekening verzoek item"
+msgstr "Handtekeningverzoek item"
 
 #. module: sign
 #: model:ir.actions.act_window,name:sign.sign_request_item_action
 msgid "Signature Request Items"
-msgstr "Handtekeningsverzoekregels"
+msgstr "Handtekeningverzoekregels"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request_item_value__sign_request_item_id
 msgid "Signature Request item"
-msgstr "Handtekeningsverzoek item"
+msgstr "Handtekeningverzoek item"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_template__sign_request_ids
@@ -4046,10 +4047,10 @@ msgid ""
 "        "
 msgstr ""
 "Voorwaarden in e-mail - De tekst wordt onderaan elke e-mail met "
-"handtekeningsverzoeken weergegeven.\n"
+"handtekeningverzoeken weergegeven.\n"
 "\n"
 "        Voorwaarden als webpagina - Onderaan elke e-mail met "
-"handtekeningsverzoeken wordt een link geplakt die naar de inhoud leidt.\n"
+"handtekeningverzoeken wordt een link geplakt die naar de inhoud leidt.\n"
 "        "
 
 #. module: sign
@@ -4082,7 +4083,7 @@ msgid ""
 "request might have been deleted or modified."
 msgstr ""
 "Het Odoo Ondertekenen-document dat je probeert te bereiken, bestaat niet. "
-"Het handtekeningsverzoek is mogelijk verwijderd of gewijzigd."
+"Het handtekeningverzoek is mogelijk verwijderd of gewijzigd."
 
 #. module: sign
 #. odoo-python
@@ -4286,7 +4287,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_portal_my_requests
 msgid "There are no signatures request."
-msgstr "Er zijn geen handtekeningsverzoeken."
+msgstr "Er zijn geen handtekeningverzoeken."
 
 #. module: sign
 #. odoo-python
@@ -4358,7 +4359,7 @@ msgstr "Dit ondertekenverzoek kan niet worden ondertekend"
 #. odoo-python
 #: code:addons/sign/models/sign_request_item.py:0
 msgid "This sign request is not valid anymore"
-msgstr "Het handtekeningsverzoek is niet langer geldig"
+msgstr "Het handtekeningverzoek is niet langer geldig"
 
 #. module: sign
 #. odoo-python
@@ -4706,7 +4707,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.deleted_sign_request
 msgid "We couldn't find the signature request you're looking for!"
-msgstr "We konden het handtekeningsverzoek dat je zoekt niet vinden!"
+msgstr "We konden het handtekeningverzoek dat je zoekt niet vinden!"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report

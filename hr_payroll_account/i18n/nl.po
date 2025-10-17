@@ -6,13 +6,14 @@
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
 # Martin Trigaux, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-14 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll_account/nl/>\n"
 "Language: nl\n"
@@ -109,7 +110,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_salary_rule__analytic_distribution
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_version__analytic_distribution
 msgid "Analytic Distribution"
-msgstr ""
+msgstr "Analytisch verdeelmodel"
 
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_hr_employee__analytic_precision
@@ -387,7 +388,7 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "Betaalronde"
 
 #. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip

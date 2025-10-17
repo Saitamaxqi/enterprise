@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-10-15 16:32+0000\n"
+"PO-Revision-Date: 2025-10-16 09:06+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "delivery_ups/fr/>\n"
@@ -235,7 +235,7 @@ msgstr "Colis :"
 #. module: delivery_ups
 #: model:ir.model,name:delivery_ups.model_payment_provider
 msgid "Payment Provider"
-msgstr ""
+msgstr "Fournisseur de paiement"
 
 #. module: delivery_ups
 #. odoo-python
@@ -734,12 +734,12 @@ msgstr "Type de fichier d'étiquette UPS"
 #. module: delivery_ups
 #: model:ir.model.fields.selection,name:delivery_ups.selection__delivery_carrier__delivery_type__ups
 msgid "UPS Legacy"
-msgstr ""
+msgstr "UPS Legacy"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_default_package_type_id
 msgid "UPS Legacy Package Type"
-msgstr ""
+msgstr "Type de colis UPS Legacy"
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_passwd
@@ -794,6 +794,8 @@ msgstr ""
 #: code:addons/delivery_ups/models/payment_provider.py:0
 msgid "UPS provider is configured to use only Collect on Delivery."
 msgstr ""
+"Le prestataire UPS est configuré pour utiliser uniquement le paiement à la "
+"livraison."
 
 #. module: delivery_ups
 #: model:ir.model.fields,field_description:delivery_ups.field_delivery_carrier__ups_duty_payment

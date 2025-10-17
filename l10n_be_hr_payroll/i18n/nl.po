@@ -1,6 +1,6 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* l10n_be_hr_payroll
+# * l10n_be_hr_payroll
 #
 # Translators:
 # Tiffany Chang, 2025
@@ -8,19 +8,22 @@
 # Wil Odoo, 2025
 # Manon Rondou, 2025
 #
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:56+0000\n"
-"PO-Revision-Date: 2025-02-07 17:07+0000\n"
-"Last-Translator: Manon Rondou, 2025\n"
-"Language-Team: Dutch (https://app.transifex.com/odoo/teams/41243/nl/)\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19-l10n/"
+"l10n_be_hr_payroll/nl/>\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,help:l10n_be_hr_payroll.field_hr_payslip_employee_depature_holiday_attests__net_n
@@ -145,7 +148,7 @@ msgstr "%(months)s maanden"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_double_pay_recovery_line.py:0
 msgid "%(months)s months: %(amount).2f%(currency)s (%(rate).0f%%)"
-msgstr ""
+msgstr "%(months)s maanden: %(amount).2f%(currency)s (%(rate).0f%%)"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -179,10 +182,13 @@ msgstr "%s dagen"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_be_hr_payroll.action_report_bonus_month
+#, fuzzy
 msgid ""
 "'%s - %s - %s' % (object.struct_id.payslip_name, "
 "object.employee_id.legal_name, object.date_from.strftime('%Y'))"
 msgstr ""
+"'%s - %s - %s' % (object.struct_id.payslip_name, "
+"object.employee_id.legal_name, object.date_from.strftime('%Y'))"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_be_hr_payroll.action_report_termination_holiday_n1
@@ -237,7 +243,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/hr_payroll_employee_departure_holiday_attest.py:0
 msgid "(%s payslips)"
-msgstr ""
+msgstr "(%s loonstroken)"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_be_hr_payroll.action_report_individual_account
@@ -1465,7 +1471,7 @@ msgstr "<span class=\"fw-bold\">3c. INSZ: </span>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "<span class=\"fw-bold\">Holiday Attest</span>"
-msgstr ""
+msgstr "<span class=\"fw-bold\">Vakantieattesten</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
@@ -1474,6 +1480,9 @@ msgid ""
 "transport_mode_private_car or l10n_be_mobility_budget\">Distance home-work</"
 "span>"
 msgstr ""
+"<span class=\"o_form_label\" groups=\"hr.group_hr_user\" invisible="
+"\"not transport_mode_private_car or l10n_be_mobility_budget\">Woon-"
+"werkafstand</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
@@ -1850,7 +1859,7 @@ msgstr "<span>%</span>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "<span>- Simple Holiday Pay to recover in</span>"
-msgstr ""
+msgstr "<span>- Eenvoudig vakantiegeld in te vorderen in</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
@@ -1884,7 +1893,7 @@ msgstr "<span>Aanwezigheid (uren)</span>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "<span>Holiday Attest</span>"
-msgstr ""
+msgstr "<span>Vakantieattesten</span>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holidays_n
@@ -1985,7 +1994,7 @@ msgstr "<strong class=\"me-2\">Bedrag ecocheques</strong>"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_belgium_payslip
 msgid "<strong class=\"me-2\">Mobility Budget (Monthly):</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Mobiliteitsbudget (Maandelijks):</strong>"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_belgium_payslip
@@ -3243,7 +3252,7 @@ msgstr "Arbeidsovereenkomst voor bepaalde tijd"
 #. module: l10n_be_hr_payroll
 #: model:hr.contract.type,name:l10n_be_hr_payroll.l10n_be_contract_type_cdi
 msgid "CDI"
-msgstr "Arbeidsovereenkomst voor onbepaalde tijd"
+msgstr "Contract van onbepaalde duur"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.contract.type,name:l10n_be_hr_payroll.l10n_be_contract_type_cip
@@ -4053,7 +4062,7 @@ msgstr "Fietstoeslag"
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.cp200_input_cycle_transportation
 msgid "Cycle Transportation"
-msgstr ""
+msgstr "Verplaatsing per fiets"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_cycle_transportation
@@ -4622,7 +4631,7 @@ msgstr "Schermnaam"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 msgid "Distance Home-Work"
-msgstr ""
+msgstr "Woon-werkafstand"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.actions.report,name:l10n_be_hr_payroll.action_report_dmfa
@@ -4698,7 +4707,7 @@ msgstr "Dmfa Xml-bestandsnaam"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_274_XX_view_form
 msgid "Doctors / Civil Engineers"
-msgstr "Dokters / Burgerlijk Ingenieurs"
+msgstr "Doctors / Burgerlijk Ingenieurs"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_281_10__documents_count
@@ -5066,7 +5075,7 @@ msgstr "Vertrek van werknemer"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_holiday_attests
 msgid "Employee Departure - Holiday Attests"
-msgstr "Vertrek van de werknemer - Vakantietesten"
+msgstr "Vertrek van de werknemer - Vakantieattesten"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
@@ -6121,7 +6130,7 @@ msgstr "Globale bijdragen groepsverzekering:"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_group_insurance_rate
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_group_insurance_rate
 msgid "Group Insurance Sacrifice Rate"
-msgstr "Percentage keuze groepsverzekering"
+msgstr "Groepsverzekeringsbijdrage"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_l10n_be_group_insurance_wizard
@@ -6194,7 +6203,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid "Higher Secondary"
-msgstr ""
+msgstr "Hoger middelbaar onderwijs"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.cp200_input_hiring_bonus
@@ -6215,12 +6224,12 @@ msgstr ""
 #. module: l10n_be_hr_payroll
 #: model:ir.model,name:l10n_be_hr_payroll.model_l10n_be_holiday_attest_wizard
 msgid "Holiday Attest Wizard"
-msgstr ""
+msgstr "Vakantieattest Wizard"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Holiday Attests"
-msgstr ""
+msgstr "Vakantieattesten"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_termination_holiday_n
@@ -6468,7 +6477,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_impulsion_plan
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 msgid "Impulsion Plan"
-msgstr "Impulsieplan"
+msgstr "Impulsion plan"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_payslip_employee_depature_notice__first_contract
@@ -7152,7 +7161,7 @@ msgstr "Bedrag verzekering"
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Insurances"
-msgstr ""
+msgstr "Verzekeringen"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
@@ -7587,7 +7596,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid "Lower Secondary"
-msgstr ""
+msgstr "Lager middelbaar onderwijs"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_individual_account
@@ -7654,7 +7663,7 @@ msgstr "Burgerlijke staat"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid "Master: Civil Engineering"
-msgstr "Master: Burgerlijke Ingenieur"
+msgstr "Master: Burgerlijk Ingenieur"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_274_XX_view_form
@@ -7812,7 +7821,7 @@ msgstr "Mobiele"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__mobile
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__mobile
 msgid "Mobile Subscription"
-msgstr "GSM-abonnement"
+msgstr "Gsm-abonnement"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -7825,25 +7834,25 @@ msgstr "Mobiliteitsbonus"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget
 msgid "Mobility Budget"
-msgstr ""
+msgstr "Mobiliteitsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget_amount
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget_amount
 msgid "Mobility Budget Amount"
-msgstr ""
+msgstr "Bedrag mobiliteitsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_mobility_budget_amount_monthly
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_mobility_budget_amount_monthly
 msgid "Mobility Budget Monthly Amount"
-msgstr ""
+msgstr "Maandelijks bedrag mobiliteitsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.input_be_mobility_budget_payment
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_payment
 msgid "Mobility Budget Payment"
-msgstr ""
+msgstr "Betaling mobiliteitsbudget"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_salary_mobility_budget_tax
@@ -8529,7 +8538,7 @@ msgstr ""
 #: code:addons/l10n_be_hr_payroll/models/l10n_be_onss_declaration.py:0
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Not applicable"
-msgstr ""
+msgstr "Niet van toepassing"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -8724,7 +8733,7 @@ msgstr "Aantal voltooide opleidingsuren"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Number of days"
-msgstr "Nombre de jours"
+msgstr "Aantal dagen"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -9069,7 +9078,7 @@ msgstr "RSZ vermindering"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__l10n_be_onss_restructuring
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__l10n_be_onss_restructuring
 msgid "ONSS Reduction for Restructuring"
-msgstr ""
+msgstr "RSZ-korting voor herstructurering"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_res_company__onss_registration_number
@@ -9277,7 +9286,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__declaration_type__other
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__file_type__other
 msgid "Other"
-msgstr ""
+msgstr "Overige"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__other_dependent_people
@@ -9658,7 +9667,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.hr_employee_view_form
 msgid "Posted Employee"
-msgstr "Geplaatst werknemer"
+msgstr "Overgeplaatste werknemer"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_274_xx__pp_amount_32
@@ -9741,7 +9750,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/models/hr_employee.py:0
 msgid "Primary School"
-msgstr ""
+msgstr "Lagere school"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -10382,12 +10391,12 @@ msgstr "Betaalde lonen ten opzicht van voorgaande jaren"
 #. odoo-python
 #: code:addons/l10n_be_hr_payroll/wizard/l10n_be_social_security_certificate.py:0
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Loonaanpassing"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_social_security_certificate
 msgid "Salary Adjustments"
-msgstr ""
+msgstr "Loonaanpassingen"
 
 #. module: l10n_be_hr_payroll
 #. odoo-python
@@ -10594,7 +10603,7 @@ msgstr "Enkel vakantiegeld (verlies door arbeidstijdverkorting)"
 #. module: l10n_be_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_be_hr_payroll.cp200_other_input_simple_pay_december
 msgid "Simple Holiday Pay (lost due to working time reduction)"
-msgstr ""
+msgstr "Enkel vakantiegeld (verlies door arbeidstijdverkorting)"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_l10n_be_december_slip_wizard__simple_holiday_n
@@ -12851,7 +12860,7 @@ msgstr "Gebruik dit om de berekeningen van de werknemers te beperken"
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__transport_mode_public
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_version__transport_mode_public
 msgid "Uses another public transportation"
-msgstr "Maakt gebruik van een ander openbaar vervoer"
+msgstr "Maakt gebruik van ander openbaar vervoer"
 
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields,field_description:l10n_be_hr_payroll.field_hr_employee__transport_mode_car
@@ -12908,7 +12917,7 @@ msgstr "Bevestigen"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_holiday_attests
 msgid "Validate & Compute holiday attests"
-msgstr "Bevestig & berekend vakantieattesten"
+msgstr "Bevestig & bereken vakantieattesten"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.view_hr_payroll_employee_departure_notice
@@ -13555,7 +13564,7 @@ msgstr "a) In 2024 gepresteerd in het kader van de relance:"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_281_10
 msgid "a) Public transport"
-msgstr "a) Openbaar gemeenschappelijk vervoer"
+msgstr "a) Openbaar vervoer"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.report_281_10
@@ -13936,7 +13945,7 @@ msgstr "maanden"
 #. module: l10n_be_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_be_hr_payroll.selection__l10n_be_onss_file__environment__other
 msgid "other"
-msgstr ""
+msgstr "Overige"
 
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_dmfa_view_form
@@ -13951,7 +13960,7 @@ msgstr "de officiële documentatie"
 #. module: l10n_be_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll.l10n_be_274_XX_view_form
 msgid "to"
-msgstr "aan"
+msgstr "tot"
 
 #. module: l10n_be_hr_payroll
 #: model:hr.salary.rule,name:l10n_be_hr_payroll.cp200_employees_termination_fees_notice_duration_week

@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"PO-Revision-Date: 2025-10-16 09:06+0000\n"
 "Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/mrp_mps/"
 "it/>\n"
@@ -28,19 +28,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(month)s %(day)s %(year)s"
-msgstr ""
+msgstr "%(month)s %(day)s %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(month)s %(year)s"
-msgstr ""
+msgstr "%(month)s %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "%(year)s"
-msgstr ""
+msgstr "%(year)s"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_bom_form_view_inherit_mps
@@ -116,7 +116,7 @@ msgstr "Percorso consentito"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Apply"
-msgstr ""
+msgstr "Applica"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -149,12 +149,12 @@ msgstr "Disponibilità alla promessa (ATP)"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on_readonly
 msgid "Based On Readonly"
-msgstr ""
+msgstr "In base a sola lettura"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__based_on
 msgid "Based on"
-msgstr ""
+msgstr "In base a"
 
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_bom
@@ -264,7 +264,7 @@ msgstr "Previsione domanda"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Discard"
-msgstr ""
+msgstr "Annulla"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_actual_demand
@@ -299,7 +299,7 @@ msgstr "Visualizza previsione domanda"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_actual_demand
 msgid "Display Indirect Actual Demand"
-msgstr ""
+msgstr "Mostra richiesta corrente indiretta"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_res_company__mrp_mps_show_indirect_demand
@@ -361,18 +361,18 @@ msgstr "Dettagli previsione della domanda"
 #. module: mrp_mps
 #: model:ir.model,name:mrp_mps.model_mrp_mps_forecast_suggestion
 msgid "Forecast Demand Suggestion"
-msgstr ""
+msgstr "Suggerimento richiesta prevista"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "Forecast Quantity for"
-msgstr ""
+msgstr "Quantità prevista per"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_state__low_forecast
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_search_view
 msgid "Forecast Too Low"
-msgstr ""
+msgstr "Previsione molto bassa"
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -429,7 +429,7 @@ msgstr "Importa modello per programma principale di produzione"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/search/group_menu.xml:0
 msgid "Indirect Actual Demand"
-msgstr ""
+msgstr "Richiesta corrente indiretta"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_production_schedule_form_view
@@ -457,17 +457,17 @@ msgstr "È percorso di produzione"
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__one_year
 msgid "Last 12 Months"
-msgstr ""
+msgstr "Ultimi 12 mesi"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__three_months
 msgid "Last 3 Months"
-msgstr ""
+msgstr "Ultimi 3 mesi"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__30_days
 msgid "Last 30 Days"
-msgstr ""
+msgstr "Ultimi 30 giorni"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__write_uid
@@ -494,7 +494,7 @@ msgstr "MPS"
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/mps_selection.js:0
 msgid "MPS Period Selection"
-msgstr ""
+msgstr "Selezione periodo MPS"
 
 #. module: mrp_mps
 #: model:ir.actions.server,name:mrp_mps.ir_cron_replenish_automated_mps_ir_actions_server
@@ -595,7 +595,7 @@ msgstr "Movimenti stringa"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__mrp_mps_id
 msgid "Mrp Mps"
-msgstr ""
+msgstr "Mps MRP"
 
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_production_schedule__replenish_trigger__never
@@ -685,18 +685,18 @@ msgstr "Ordina"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__percent_factor
 msgid "Percent Factor"
-msgstr ""
+msgstr "Fattore percentuale"
 
 #. module: mrp_mps
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "Percent factor cannot be less than zero."
-msgstr ""
+msgstr "Il fattore percentuale non può essere inferiore a zero."
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__period
 msgid "Period"
-msgstr ""
+msgstr "Periodo"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_production_schedule__route_id
@@ -706,7 +706,7 @@ msgstr "Percorso preferito"
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__mrp_mps_forecast_suggestion__based_on__last_year
 msgid "Previous Year"
-msgstr ""
+msgstr "Anno precedente"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_product_forecast__procurement_launched
@@ -768,12 +768,12 @@ msgstr "Riga ordine di acquisto"
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__quantity
 msgid "Quantity"
-msgstr ""
+msgstr "Quantità"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_suggestion__quantity_before_scale
 msgid "Quantity Before Scale"
-msgstr ""
+msgstr "Quantità prima della bilancia"
 
 #. module: mrp_mps
 #: model:ir.model.fields,field_description:mrp_mps.field_mrp_mps_forecast_details__moves_qty
@@ -944,7 +944,7 @@ msgstr "Regola di giacenza"
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "Suggest Forecasted Demand"
-msgstr ""
+msgstr "Suggerisci richiesta prevista"
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__replenish_state
@@ -966,7 +966,7 @@ msgstr "La domanda confermata, basata sugli ordini di vendita confermati."
 #. odoo-javascript
 #: code:addons/mrp_mps/static/src/components/line.xml:0
 msgid "The confirmed demand, based on the manufacturing orders."
-msgstr ""
+msgstr "La richiesta confermata, in base agli ordini di produzione."
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -1032,6 +1032,11 @@ msgid ""
 "Color code: Green if to replenish now, Red if existing replenishment is too "
 "high for the period, Orange if current replenishment is too low."
 msgstr ""
+"La quantità da rifornire tramite ordini di acquisto oppure ordini di "
+"produzione.\n"
+"Codice colore: verde se da rifornire immediatamente, rosso se il "
+"rifornimento esistente è troppo alto per il periodo, arancione se il "
+"rifornimento corrente è troppo basso."
 
 #. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__forecast_target_qty
@@ -1087,7 +1092,7 @@ msgstr "Settimana"
 #. odoo-python
 #: code:addons/mrp_mps/wizard/mrp_mps_forecast_suggestion.py:0
 msgid "Week %(week)s (%(start_day)s-%(end_day)s/%(month)s) %(year)s"
-msgstr ""
+msgstr "Settimana %(week)s (%(start_day)s-%(end_day)s/%(month)s) %(year)s"
 
 #. module: mrp_mps
 #. odoo-python
@@ -1119,7 +1124,7 @@ msgstr "Annuale"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "based on historical date or actual demand."
-msgstr ""
+msgstr "in base alla data storica o alla richiesta corrente."
 
 #. module: mrp_mps
 #. odoo-javascript
@@ -1130,12 +1135,12 @@ msgstr "per"
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "units"
-msgstr ""
+msgstr "unità"
 
 #. module: mrp_mps
 #: model_terms:ir.ui.view,arch_db:mrp_mps.mrp_mps_forecast_suggestion_form_view
 msgid "units x"
-msgstr ""
+msgstr "x unità"
 
 #~ msgid "- Indirect Demand Forecast"
 #~ msgstr "- Previsione domanda indiretta"

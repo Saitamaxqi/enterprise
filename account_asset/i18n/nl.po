@@ -10,13 +10,14 @@
 # Jolien De Paepe, 2023
 # Erwin van der Ploeg <erwin@odooexperts.nl>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-14 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/nl/>\n"
 "Language: nl\n"
@@ -408,7 +409,7 @@ msgstr "Activum tegenrekening"
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_form_view
 #: model_terms:ir.ui.view,arch_db:account_asset.asset_group_list_view
 msgid "Asset Group"
-msgstr ""
+msgstr "Activagroep"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_bank_statement_line__asset_id_display_name
@@ -1089,7 +1090,7 @@ msgstr "Groeperen op rekening"
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
 msgid "Group By Asset Group"
-msgstr ""
+msgstr "Groeperen op activagroep"
 
 #. module: account_asset
 #. odoo-javascript
@@ -1100,8 +1101,9 @@ msgstr ""
 #. module: account_asset
 #. odoo-javascript
 #: code:addons/account_asset/static/src/components/depreciation_schedule/groupby.xml:0
+#, fuzzy
 msgid "Group by Asset Group"
-msgstr ""
+msgstr "Groeperen op activagroep"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__has_message

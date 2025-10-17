@@ -7,13 +7,14 @@
 # Thi Huong Nguyen, 2023
 #
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Thi Huong Nguyen (thng)" <thng@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~14.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-09-15 23:08+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 09:06+0000\n"
+"Last-Translator: \"Thi Huong Nguyen (thng)\" <thng@odoo.com>\n"
 "Language-Team: Vietnamese <https://translate.odoo.com/projects/odoo-19/"
 "account_3way_match/vi/>\n"
 "Language: vi\n"
@@ -79,7 +80,7 @@ msgstr "Điều chỉnh trạng thái"
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move__id
 #: model:ir.model.fields,field_description:account_3way_match.field_account_move_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: account_3way_match
 #: model:ir.model.fields,help:account_3way_match.field_account_bank_statement_line__force_release_to_pay

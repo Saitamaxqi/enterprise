@@ -7,13 +7,14 @@
 # Martin Trigaux, 2022
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Bren Driesen <brdri@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:47+0000\n"
-"PO-Revision-Date: 2025-09-14 11:58+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/hr_sign/nl/"
 ">\n"
 "Language: nl\n"
@@ -53,7 +54,7 @@ msgstr "%s heeft geen professioneel e-mailadres opgegeven."
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_public_view_form
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_sign_view_form
 msgid "<span class=\"o_stat_text\">Signature Requests</span>"
-msgstr "<span class=\"o_stat_text\">Handtekening verzoeken</span>"
+msgstr "<span class=\"o_stat_text\">Handtekeningverzoeken</span>"
 
 #. module: hr_sign
 #: model:ir.model,name:hr_sign.model_mail_activity_plan_template
@@ -186,7 +187,7 @@ msgstr "Werknemers"
 #. module: hr_sign
 #: model:sign.item.role,name:hr_sign.sign_item_role_job_responsible
 msgid "HR Responsible"
-msgstr "HR verantwoordelijke"
+msgstr "Hr-verantwoordelijke"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__has_both_template
@@ -207,7 +208,7 @@ msgstr "ID"
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_mail_activity_plan_template__is_signature_request
 msgid "Is Signature Request"
-msgstr "Is een handtekening verzoek"
+msgstr "Is een handtekeningverzoek"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__write_uid
@@ -312,12 +313,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_sign.field_hr_employee_public__sign_request_count
 #: model:ir.model.fields,field_description:hr_sign.field_hr_version__sign_request_count
 msgid "Sign Request Count"
-msgstr "Aantal handtekeningsverzoeken"
+msgstr "Aantal handtekeningverzoeken"
 
 #. module: hr_sign
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Sign Request Options"
-msgstr "Handtekeningsverzoek opties"
+msgstr "Handtekeningverzoek opties"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__sign_template_responsible_ids
@@ -338,7 +339,7 @@ msgstr "Document in contract ondertekenen"
 #: model_terms:ir.ui.view,arch_db:hr_sign.hr_employee_sign_view_form
 #: model_terms:ir.ui.view,arch_db:hr_sign.view_hr_contract_sign
 msgid "Signature Request"
-msgstr "Handtekening verzoek"
+msgstr "Handtekeningverzoek"
 
 #. module: hr_sign
 #: model:ir.model.fields,field_description:hr_sign.field_hr_contract_sign_document_wizard__subject

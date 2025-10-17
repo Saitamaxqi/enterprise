@@ -3,13 +3,15 @@
 # * spreadsheet_dashboard_hr_payroll
 #
 # "Tiffany Chang (tic)" <tic@odoo.com>, 2025.
+# Dawid Gacek <dawid.gacek@adapt-it.pl>, 2025.
+# "Marta (wacm)" <wacm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-09-18 02:42+0000\n"
-"Last-Translator: \"Tiffany Chang (tic)\" <tic@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 10:53+0000\n"
+"Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "spreadsheet_dashboard_hr_payroll/pl/>\n"
 "Language: pl\n"
@@ -25,71 +27,71 @@ msgstr ""
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "#Payslips"
-msgstr ""
+msgstr "# Pasków wypłat"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Absenteeism Rate"
-msgstr ""
+msgstr "Wskaźnik absencji"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Attendance Rate"
-msgstr ""
+msgstr "Wskaźnik frekwencji"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Basic Wage"
-msgstr ""
+msgstr "Średnia podstawowa płaca"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Gross Wage"
-msgstr ""
+msgstr "Średnia płaca brutto"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Hours per Days of Work"
-msgstr ""
+msgstr "Średnia godzin na dzień pracy"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Average Net Wage"
-msgstr ""
+msgstr "Średnia płaca netto"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Avg Basic Wage"
-msgstr ""
+msgstr "Śr. podstawowa płaca"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Avg Hours/Day"
-msgstr ""
+msgstr "Śr. godzin/dzień"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Avg Hours/Days"
-msgstr ""
+msgstr "Śr. godzin/dni"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Avg Net Wage"
-msgstr ""
+msgstr "Śr. płaca netto"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -115,43 +117,43 @@ msgstr "Pracownicy"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Employees (%)"
-msgstr ""
+msgstr "Pracownicy (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE"
-msgstr ""
+msgstr "EPC"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "FTE (%)"
-msgstr ""
+msgstr "EPC (%)"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Paid Time Off"
-msgstr "Płatny urlop"
+msgstr "Urlop płatny"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #: model:spreadsheet.dashboard,name:spreadsheet_dashboard_hr_payroll.spreadsheet_dashboard_payroll
 msgid "Payroll"
-msgstr "Wynagrodzenie"
+msgstr "Wynagrodzenia"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Payroll Analysis"
-msgstr "Analiza listy płac"
+msgstr "Analiza wynagrodzeń"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Payslip Lines"
-msgstr ""
+msgstr "Pozycje paska płacowego"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -165,45 +167,45 @@ msgstr "Wstecz"
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Basic Wage"
-msgstr ""
+msgstr "Całkowita płaca podstawowa"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Total Days of Work"
-msgstr ""
+msgstr "Całkowita liczba dni pracy"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Gross Wage"
-msgstr ""
+msgstr "Całkowita płaca brutto"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "Total Hours of Work"
-msgstr ""
+msgstr "Całkowita liczba godzin pracy"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Total Net Wage"
-msgstr ""
+msgstr "Całkowita płaca netto"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Unpaid TIme Off"
-msgstr ""
+msgstr "Niepłatny urlop"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_sample_dashboard.json:0
 msgid "Work Days"
-msgstr "Dni robocze"
+msgstr "Dni pracujące"
 
 #. module: spreadsheet_dashboard_hr_payroll
 #. odoo-javascript
@@ -228,4 +230,4 @@ msgstr "Typ pracy"
 #. odoo-javascript
 #: code:addons/spreadsheet_dashboard_hr_payroll/data/files/payroll_dashboard.json:0
 msgid "last 12 month"
-msgstr ""
+msgstr "ostatnie 12 miesięcy"

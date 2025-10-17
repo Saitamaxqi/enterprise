@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* equity
+# * equity
 #
+# Bayarkhuu Bataa <bbayarkhuu@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-11 14:31+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: Bayarkhuu Bataa <bbayarkhuu@gmail.com>\n"
+"Language-Team: Mongolian <https://translate.odoo.com/projects/odoo-19/equity/"
+"mn/>\n"
+"Language: mn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__securities
@@ -522,7 +525,7 @@ msgstr ""
 #. module: equity
 #: model:ir.ui.menu,name:equity.menu_equity_dashboard
 msgid "Dashboard"
-msgstr ""
+msgstr "Хянах самбар"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_equity_transaction__date
@@ -612,7 +615,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_company_equity
 #: model_terms:ir.ui.view,arch_db:equity.portal_my_home_equity
 msgid "Equity"
-msgstr ""
+msgstr "Өмч"
 
 #. module: equity
 #: model:ir.model.fields,field_description:equity.field_res_partner__equity_access_token

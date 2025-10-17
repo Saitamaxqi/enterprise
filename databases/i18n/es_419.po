@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-10-16 02:42+0000\n"
+"PO-Revision-Date: 2025-10-16 23:59+0000\n"
 "Last-Translator: \"Fernanda Alvarez (mfar)\" <mfar@odoo.com>\n"
 "Language-Team: Spanish (Latin America) <https://translate.odoo.com/projects/"
 "odoo-19/databases/es_419/>\n"
@@ -214,6 +214,8 @@ msgid ""
 "Database synchronization is running in the background. You will be notified "
 "upon completion."
 msgstr ""
+"La sincronización de las bases de datos se está ejecutando en segundo plano. "
+"Recibirás una notificación cuando termine."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_databases_all
@@ -280,6 +282,8 @@ msgid ""
 "Error while connecting to %(url)s: We are missing the database name, the api"
 " login or the api key\n"
 msgstr ""
+"Ocurrió un error al conectar con %(url)s: Falta el nombre de la base de "
+"datos, el usuario de la API o la clave API\n"
 
 #. module: databases
 #. odoo-python
@@ -345,11 +349,13 @@ msgid ""
 "Get all your Odoo databases summarized, and perform mass action like "
 "inviting users."
 msgstr ""
+"Obtén un resumen de todas tus bases de datos de Odoo y realiza acciones en "
+"lote, como invitar usuarios."
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_unique
 msgid "Hey, this URL is already hooked up to a database!"
-msgstr ""
+msgstr "Esta URL ya está vinculada a una base de datos."
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_hosting
@@ -500,6 +506,8 @@ msgid ""
 "Odoo.com API keys are managed in the <em>Developer API Keys</em> section of "
 "your"
 msgstr ""
+"Las claves API de Odoo.com se gestionan en la sección <em>Claves API de "
+"desarrollador</em> de tu"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
@@ -524,6 +532,9 @@ msgid ""
 "Organize your tasks by dispatching them across the pipeline.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
+"Organiza tus tareas distribuyéndolas en tu flujo de trabajo.<br>\n"
+"                    Colabora de forma eficiente chateando en tiempo real o "
+"por correo electrónico."
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__other
@@ -610,6 +621,8 @@ msgid ""
 "Select the users you want to invite to the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Selecciona los usuarios que quieres invitar a las %(nb_databases)s bases de "
+"datos seleccionadas."
 
 #. module: databases
 #. odoo-python
@@ -624,6 +637,8 @@ msgid ""
 "Select the users you want to remove from the %(nb_databases)s selected "
 "databases."
 msgstr ""
+"Selecciona los usuarios que quieres eliminar de las %(nb_databases)s bases "
+"de datos seleccionadas."
 
 #. module: databases
 #. odoo-python
@@ -685,6 +700,9 @@ msgid ""
 "Synchronize to automatically fetch Odoo Online databases, or set an API Key "
 "to connect to On Premise or Odoo.sh ones."
 msgstr ""
+"Sincroniza para obtener las bases de datos de Odoo en línea de forma "
+"automática o configura una clave API para conectar con una base local o de "
+"Odoo.sh."
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_tasks_all
@@ -706,6 +724,8 @@ msgid ""
 "The database %(url)s is registered as a saas database in odoo.com. As it "
 "seems to be configured we have left it as is.\n"
 msgstr ""
+"La base de datos %(url)s está registrada como una base SaaS en odoo.com. "
+"Parece estar configurada, así que la dejamos así.\n"
 
 #. module: databases
 #. odoo-python
@@ -762,3 +782,5 @@ msgid ""
 "Whether the user should be notified once the cron has finished synchronizing"
 " the databases"
 msgstr ""
+"Si el usuario debe recibir una notificación una vez que el cron termine de "
+"sincronizar las bases de datos"

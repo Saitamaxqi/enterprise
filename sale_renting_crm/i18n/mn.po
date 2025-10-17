@@ -1,20 +1,23 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* sale_renting_crm
+# * sale_renting_crm
 #
+# Bayarkhuu Bataa <bbayarkhuu@gmail.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server saas~18.2+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:49+0000\n"
-"PO-Revision-Date: 2025-02-20 10:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-10-16 17:05+0000\n"
+"Last-Translator: Bayarkhuu Bataa <bbayarkhuu@gmail.com>\n"
+"Language-Team: Mongolian <https://translate.odoo.com/projects/odoo-19/"
+"sale_renting_crm/mn/>\n"
+"Language: mn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: sale_renting_crm
 #: model_terms:ir.ui.view,arch_db:sale_renting_crm.crm_case_form_view_oppor
@@ -147,7 +150,7 @@ msgstr ""
 #. module: sale_renting_crm
 #: model_terms:ir.ui.view,arch_db:sale_renting_crm.crm_case_form_view_oppor
 msgid "Rentals"
-msgstr ""
+msgstr "Түрээс"
 
 #. module: sale_renting_crm
 #: model:ir.model,name:sale_renting_crm.model_sale_order

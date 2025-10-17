@@ -9,8 +9,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-14 11:30+0000\n"
-"Last-Translator: Erwin van der Ploeg <erwin@odooexperts.nl>\n"
+"PO-Revision-Date: 2025-10-16 10:53+0000\n"
+"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/nl/>\n"
 "Language: nl\n"
@@ -4422,7 +4422,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Your Stripe account is disabled"
-msgstr ""
+msgstr "Je Stripe-account is uitgeschakeld"
 
 #. module: hr_expense_stripe
 #. odoo-python

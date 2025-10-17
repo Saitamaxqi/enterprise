@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-09 19:15+0000\n"
+"PO-Revision-Date: 2025-10-16 09:07+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "ai_website/id/>\n"
@@ -29,7 +29,7 @@ msgstr "AI"
 #. module: ai_website
 #: model_terms:ir.ui.view,arch_db:ai_website.snippets
 msgid "AI Livechat"
-msgstr ""
+msgstr "Livechat AI"
 
 #. module: ai_website
 #. odoo-javascript
@@ -41,7 +41,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/ai_website/static/src/components/dialog/add_page_dialog.js:0
 msgid "Create"
-msgstr ""
+msgstr "Buat"
 
 #. module: ai_website
 #. odoo-javascript
@@ -81,7 +81,7 @@ msgstr ""
 #. module: ai_website
 #: model:ir.model.fields,field_description:ai_website.field_website_page__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: ai_website
 #. odoo-javascript

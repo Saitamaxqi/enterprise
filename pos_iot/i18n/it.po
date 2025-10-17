@@ -6,27 +6,28 @@
 # Martin Trigaux, 2022
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marianna Ciofani (cima)" <cima@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-15 12:00+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-16 17:04+0000\n"
+"Last-Translator: \"Marianna Ciofani (cima)\" <cima@odoo.com>\n"
 "Language-Team: Italian <https://translate.odoo.com/projects/odoo-19/pos_iot/"
 "it/>\n"
 "Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == "
-"0) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n == 1) ? 0 : ((n != 0 && n % 1000000 == 0)"
+" ? 1 : 2);\n"
 "X-Generator: Weblate 5.12.2\n"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Accept payments with a Six payment terminal"
-msgstr ""
+msgstr "Accetta pagamenti con un terminale Six"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -49,12 +50,12 @@ msgstr "Accedere alla"
 #: model:ir.model.fields,field_description:pos_iot.field_iot_box__associated_pos_config_ids
 #: model:ir.model.fields,field_description:pos_iot.field_iot_device__associated_pos_config_ids
 msgid "Associated PoS"
-msgstr ""
+msgstr "POS associato"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Automated Setup"
-msgstr ""
+msgstr "Configurazione automatica"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
@@ -107,13 +108,13 @@ msgstr "Configurazione del terminale di pagamento non riuscita"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_auto_config_pos_iot
 msgid "Configure Automatically IoT Box In PoS"
-msgstr ""
+msgstr "Configura automaticamente box IoT in POS"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/backend/add_iot_box_form_controller.js:0
 msgid "Connect to a Point of Sale"
-msgstr ""
+msgstr "Collega a un Punto vendita"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -130,17 +131,17 @@ msgstr "Connessione al terminale non riuscita"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Continue"
-msgstr ""
+msgstr "Avanti"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Creato da"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Creato il"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -151,7 +152,7 @@ msgstr "Schermo cliente"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "Discard"
-msgstr ""
+msgstr "Annulla"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__display_name
@@ -163,7 +164,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__display_name
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nome visualizzato"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_electronic_scale
@@ -204,12 +205,12 @@ msgstr "Solo Firefox: fai clic su \"Conferma eccezione di sicurezza\""
 #: model:ir.model.fields,field_description:pos_iot.field_pos_session__id
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_device
 msgid "IOT Device"
-msgstr ""
+msgstr "Dispositivo IoT"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
@@ -262,13 +263,13 @@ msgstr "Terminale di pagamento Ingenico"
 #. module: pos_iot
 #: model:ir.model,name:pos_iot.model_iot_box
 msgid "IoT Box"
-msgstr ""
+msgstr "Box IoT"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/navbar/navbar.xml:0
 msgid "IoT Box Connected"
-msgstr ""
+msgstr "Box IoT connessa"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -290,12 +291,12 @@ msgstr "Dispositivi IoT"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_id
 msgid "Iot Box"
-msgstr ""
+msgstr "Box IoT"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__iot_box_identifier
 msgid "Iot Box Identifier"
-msgstr ""
+msgstr "Identificativo box IoT"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
@@ -305,23 +306,23 @@ msgstr "Dispositivo IoT"
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Ultimo aggiornamento di"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_auto_config_pos_iot__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Ultimo aggiornamento il"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog.xml:0
 msgid "Network Error"
-msgstr ""
+msgstr "Errore di rete"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.view_auto_config_pos_iot
 msgid "None"
-msgstr ""
+msgstr "Nessuno"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__payment_terminal_device_ids
@@ -332,7 +333,7 @@ msgstr "Dispositivo terminale di pagamento"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Payment method"
-msgstr ""
+msgstr "Metodo di pagamento"
 
 #. module: pos_iot
 #. odoo-javascript
@@ -381,13 +382,13 @@ msgstr "Stampa via proxy"
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing failed"
-msgstr ""
+msgstr "Stampa non riuscita"
 
 #. module: pos_iot
 #. odoo-javascript
 #: code:addons/pos_iot/static/src/app/utils/printer/iot_printer.js:0
 msgid "Printing warning"
-msgstr ""
+msgstr "Avviso di stampa"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__proxy_ip
@@ -398,7 +399,7 @@ msgstr "Indirizzo IP proxy"
 #. odoo-python
 #: code:addons/pos_iot/models/pos_printer.py:0
 msgid "Proxy IP cannot be empty."
-msgstr ""
+msgstr "L'IP del proxy non può essere vuoto."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
@@ -414,17 +415,17 @@ msgstr "Lettura via proxy"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 msgid "Scanner"
-msgstr ""
+msgstr "Lettore"
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Six"
-msgstr ""
+msgstr "Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_six
 msgid "Six Payment Terminal"
-msgstr ""
+msgstr "Terminale di pagamento Six"
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_pos_printer__proxy_ip
@@ -442,6 +443,13 @@ msgid ""
 "printer\n"
 "2/ for network printers, ensure the printer is connected to the internet."
 msgstr ""
+"La box IoT è connessa, ma la stampante per le ricevute non lo è. Per "
+"continuare, assicurati che la stampante sia connessa:\n"
+"\n"
+"1/ per le stampanti USB, controlla il cavo tra l'IoT Box e la stampante di "
+"ricevute\n"
+"2/ per le stampanti di rete, assicurarsi che la stampante sia connessa a "
+"Internet."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_ingenico
@@ -450,6 +458,8 @@ msgid ""
 "The transactions are processed by Ingenico via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"Le transazioni vengono elaborate da Ingenico tramite una box IoT. Configura "
+"il tuo terminale per il metodo di pagamento correlato."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_six
@@ -458,6 +468,8 @@ msgid ""
 "The transactions are processed by Six via an IoT box. Setup your terminal on "
 "the related payment method."
 msgstr ""
+"Le transazioni vengono elaborate da Six tramite una box IoT. Configura il "
+"tuo terminale per il metodo di pagamento correlato."
 
 #. module: pos_iot
 #: model:ir.model.fields,help:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -466,6 +478,8 @@ msgid ""
 "The transactions are processed by Worldline via an IoT box. Setup your "
 "terminal on the related payment method."
 msgstr ""
+"Le transazioni vengono elaborate da Worldline tramite una box IoT. Configura "
+"il tuo terminale per il metodo di pagamento correlato."
 
 #. module: pos_iot
 #. odoo-javascript
@@ -476,7 +490,7 @@ msgstr "Operazione in corso"
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Worldline (BENELUX)"
-msgstr ""
+msgstr "Worldline (BENELUX)"
 
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_res_config_settings__module_pos_iot_worldline
@@ -499,12 +513,18 @@ msgid ""
 "If you have just paired the IoT box, you may be experiencing a DNS issue.\n"
 "If you wait for some time the problem may resolve itself."
 msgstr ""
+"La tua box IoT è stata registrata ma il tuo browser non può raggiungerla.\n"
+"Assicurati che sia accessa e collegata alla rete.\n"
+"\n"
+"Se hai appena abbinato la box IoT, potrebbe trattarsi di un problema legato "
+"al DNS.\n"
+"Se aspetti un po' il problema potrebbe risolversi autonomamente."
 
 #. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "none"
-msgstr ""
+msgstr "nessuno"
 
 #~ msgid "Amount:"
 #~ msgstr "Importo:"
