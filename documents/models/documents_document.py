@@ -15,7 +15,7 @@ from werkzeug.urls import url_encode
 
 import odoo
 from odoo import _, api, Command, fields, models, modules, SUPERUSER_ID
-from odoo.exceptions import AccessError, UserError, ValidationError
+from odoo.exceptions import AccessError, MissingError, UserError, ValidationError
 from odoo.fields import Domain
 from odoo.tools import groupby, SQL
 from odoo.tools.image import image_process
@@ -706,7 +706,10 @@ class DocumentsDocument(models.Model):
             if record.attachment_id:
                 record.res_name = record.attachment_id.res_name
             elif record.res_id and record.res_model:
-                record.res_name = self.env[record.res_model].browse(record.res_id).display_name
+                try:
+                    record.res_name = self.env[record.res_model].browse(record.res_id).display_name
+                except MissingError:
+                    record.res_name = False
             else:
                 record.res_name = False
 

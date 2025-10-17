@@ -810,3 +810,14 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.document_txt.access_internal = 'edit'
         self.document_txt.with_user(self.doc_user).toggle_lock()
         self.assertFalse(self.document_txt.lock_uid, 'editor should have unlocked')
+
+    def test_res_name_recompute_with_deleted_record(self):
+        partner = self.env['res.partner'].create({'name': 'Test Partner'})
+        doc = self.env['documents.document'].create({
+            'name': 'Test',
+            'res_id': partner.id,
+            'res_model': 'res.partner',
+        })
+        self.assertEqual(doc.res_name, "Test Partner")
+        partner.unlink()
+        self.assertFalse(doc.res_name)
