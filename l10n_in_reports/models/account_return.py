@@ -1811,21 +1811,27 @@ class AccountReturn(models.Model):
             to_match_bills = AccountMove.search(domain)
             for late_bill in gstr2b_late_streamline_bills:
                 bill_month_start, bill_month_end = date_utils.get_month(late_bill.get('bill_date'))
-                to_match_bills += AccountMove.search([
+                late_bill_domain = [
                     ('l10n_in_account_return_id', '!=', self.id),
                     ("invoice_date", ">=", bill_month_start),
                     ("invoice_date", "<=", bill_month_end),
                     ("company_id", "in", self.company_ids.ids or self.company_id.ids),
                     ("move_type", "in", AccountMove.get_purchase_types()),
-                    "|", ('ref', '=', late_bill.get('bill_number')),
-                        ("l10n_in_irn_number", "=", late_bill.get('irn')),
                     "|",
                         ("state", "in", ["draft", "cancel"]),
                         '&', '&', '&', ("state", "=", "posted"),
                             ("line_ids.tax_ids", "!=", False),
                             ("l10n_in_gstr2b_reconciliation_status", "not in", ('matched', 'partially_matched', 'manually_matched')),
                             ("l10n_in_gst_treatment", "not in", ('composition', 'unregistered', 'consumer')),
-                ])
+                ]
+                if late_bill.get('irn'):
+                    late_bill_domain += [
+                        "|", ("ref", "=", late_bill.get('bill_number')),
+                            ("l10n_in_irn_number", "=", late_bill['irn']),
+                    ]
+                else:
+                    late_bill_domain += [("ref", "=", late_bill.get('bill_number'))]
+                to_match_bills += AccountMove.search(late_bill_domain)
             for bill in to_match_bills:
                 bill_type = 'bill'
                 amount = bill.amount_total
