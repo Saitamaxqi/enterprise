@@ -334,7 +334,7 @@ REPORT_CONFIG = {
     },
     'l10n_cn_reports.l10n_cn_asbe_bs': {
         'asset_line_ref': 'l10n_cn_reports.l10n_cn_asbe_bs_cn_a',
-        'liability_line_ref': 'l10n_cn_reports.l10n_cn_asbe_bs_cn_l',
+        'liability_line_ref': 'l10n_cn_reports.l10n_cn_asbe_bs_cn_tle',
     },
     'l10n_cn_reports.l10n_cn_assbe_bs': {
         'asset_line_ref': 'l10n_cn_reports.l10n_cn_assbe_bs_cns_ta',
