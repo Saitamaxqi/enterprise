@@ -148,7 +148,6 @@
                     <group>
                         <group name="group_offer">
                             <field name="contract_template_id" readonly="state in ['cancelled', 'full_signed']"
-                                context="{'form_view_ref': 'hr.hr_contract_template_form_view'}"
                                 placeholder="Select a contract template to load its predefined values"/>
                             <label for="sign_template_id" string="PDF Template"/>
                             <div class="o_row">
