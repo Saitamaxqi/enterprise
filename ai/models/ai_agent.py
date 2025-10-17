@@ -404,22 +404,17 @@ class AIAgent(models.Model):
 
     def _generate_response_for_channel(self, mail_message, channel):
         self.ensure_one()
-
         prompt, session_info_context = self._parse_user_message(mail_message)
-        response = self.with_context(discuss_channel=channel)._generate_response(
-            prompt=prompt,
-            chat_history=[{'content': session_info_context, 'role': 'user'}] + self._retrieve_chat_history(channel),
-            extra_system_context=self._build_extra_system_context(channel),
-        )
-        for message in response or []:
-            self._post_ai_response(channel, message)
-
-    def _post_error_message(self, error_message: str, channel):
-        self.ensure_one()
-        response = self._generate_response(
-            prompt=f"Error '{error_message}' occured. Generate a message for the user stating that we are unable to process the request but don't mention any technical details. Perhaps also tell them to try again later.",
-            chat_history=self._retrieve_chat_history(channel),
-            extra_system_context="Do not mention any technical terms, links, or error codes in the generated message.")
+        try:
+            response = self.with_context(discuss_channel=channel)._generate_response(
+                prompt=prompt,
+                chat_history=[{'content': session_info_context, 'role': 'user'}] + self._retrieve_chat_history(channel),
+                extra_system_context=self._build_extra_system_context(channel),
+            )
+        except Exception:
+            if self.env.user._is_internal():
+                raise
+            response = [self.env._("Oops, it looks like our AI is unreachable")]
         for message in response or []:
             self._post_ai_response(channel, message)
 

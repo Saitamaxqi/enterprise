@@ -1,5 +1,5 @@
 .o-mail-ChatHub-bubbles:not(.o-mobile),
-.o-overlay-container:has(~ .o-mail-ChatHub > .o-mail-ChatWindow) > .o-overlay-item:has(.o_dialog) {
+.o-overlay-container:has(~ .o-mail-ChatHub > .o-mail-ChatWindow) > .o-overlay-item:has(.o_dialog):not(:has(.o_error_dialog)) {
     z-index: $zindex-sticky;
 }
 
