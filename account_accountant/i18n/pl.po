@@ -42,8 +42,8 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && ("
-"n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
+"Plural-Forms: nplurals=4; plural=(n==1 ? 0 : (n%10>=2 && n%10<=4) && "
+"(n%100<12 || n%100>14) ? 1 : n!=1 && (n%10>=0 && n%10<=1) || (n%10>=5 && "
 "n%10<=9) || (n%100>=12 && n%100<=14) ? 2 : 3);\n"
 "X-Generator: Weblate 5.12.2\n"
 
@@ -64,6 +64,11 @@ msgstr "%(display_name_html)s będzie całkowicie uzgodniony przez transakcję."
 #: code:addons/account_accountant/models/account_move.py:0
 msgid "%(display_name_html)s will be reduced by %(amount)s."
 msgstr "%(display_name_html)s zostanie zredukowany o %(amount)s."
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
+msgid ") doesn't match the specified ending balance."
+msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_form
@@ -106,8 +111,8 @@ msgid ""
 "<span class=\"oe_inline o_form_label mx-3\" invisible=\"reco_currency_id == "
 "company_currency_id\"> in </span>"
 msgstr ""
-"<span class=\"oe_inline o_form_label mx-3\" invisible="
-"\"reco_currency_id == company_currency_id\"> w </span>"
+"<span class=\"oe_inline o_form_label mx-3\" invisible=\"reco_currency_id == "
+"company_currency_id\"> w </span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_reconcile_wizard
@@ -115,8 +120,8 @@ msgid ""
 "<span class=\"oe_inline o_form_label mx-3\" "
 "invisible=\"single_currency_mode\"> in </span>"
 msgstr ""
-"<span class=\"oe_inline o_form_label mx-3\" invisible="
-"\"single_currency_mode\"> w </span>"
+"<span class=\"oe_inline o_form_label mx-3\" "
+"invisible=\"single_currency_mode\"> w </span>"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -127,10 +132,10 @@ msgid ""
 "i>\n"
 "                                        </span>"
 msgstr ""
-"<span class=\"text-danger o_form_label\" invisible="
-"\"hard_lock_date == current_hard_lock_date\">\n"
-"                                            <i>Ta zmiana jest "
-"nieodwracalna</i>\n"
+"<span class=\"text-danger o_form_label\" invisible=\"hard_lock_date == "
+"current_hard_lock_date\">\n"
+"                                            <i>Ta zmiana jest nieodwracalna</"
+"i>\n"
 "                                        </span>"
 
 #. module: account_accountant
@@ -146,8 +151,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_fiscalyear_lock_date_exception_for_me_id                                                  "
 "or not min_fiscalyear_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -163,8 +168,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_purchase_lock_date_exception_for_me_id                                                  "
 "or not min_purchase_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -180,8 +185,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_sale_lock_date_exception_for_me_id                                                  "
 "or not min_sale_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -197,8 +202,8 @@ msgstr ""
 "<span class=\"text-muted o_form_label\" invisible=\"not "
 "min_tax_lock_date_exception_for_me_id                                                  "
 "or not min_tax_lock_date_exception_for_everyone_id\">\n"
-"                                      <span style=\"white-space: pre\">; "
-"</span>\n"
+"                                      <span style=\"white-space: pre\">; </"
+"span>\n"
 "                                </span>"
 
 #. module: account_accountant
@@ -254,8 +259,8 @@ msgid ""
 msgstr ""
 "<span><strong><b>Dobra robota!</b> Przeszedłeś przez wszystkie kroki tej "
 "wycieczki.</strong>\n"
-"            <br>Zobacz jak zarządzać fakturami swoich klientów w menu <b>"
-"Klienci/Faktury</b> \n"
+"            <br>Zobacz jak zarządzać fakturami swoich klientów w menu "
+"<b>Klienci/Faktury</b> \n"
 "        </span>"
 
 #. module: account_accountant
@@ -1274,6 +1279,18 @@ msgstr ""
 #: code:addons/account_accountant/demo/account_accountant_demo.py:0
 msgid "Insurance 12 months"
 msgstr "Ubezpieczenie 12 miesięcy"
+
+#. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/account_bank_statement.py:0
+msgid "Invalid Bank Statements"
+msgstr ""
+
+#. module: account_accountant
+#. odoo-javascript
+#: code:addons/account_accountant/static/src/components/bank_reconciliation/statement_summary/statement_summary.xml:0
+msgid "Invalid Statement(s)"
+msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
@@ -2324,6 +2341,18 @@ msgstr ""
 "pierwsza (lub jedyna) w nawiasie, na przykład: BRT: ([\\d,.]+)."
 
 #. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
+msgid "The running balance ("
+msgstr ""
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
+msgid ""
+"The starting balance doesn't match the ending balance of the previous "
+"statement, or an earlier statement is missing."
+msgstr ""
+
+#. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid ""
 "The system will try to predict the product on vendor bill lines based on the "
@@ -2331,6 +2360,11 @@ msgid ""
 msgstr ""
 "System spróbuje przewidzieć produkt na liniach rachunku sprzedawcy na "
 "podstawie etykiety linii"
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
+msgid "There are one or more"
+msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -2423,6 +2457,7 @@ msgstr "Transakcja"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_tree
 msgid "Transactions"
 msgstr "Transakcje"
@@ -2680,6 +2715,11 @@ msgstr "na zawsze"
 #: code:addons/account_accountant/wizard/account_auto_reconcile_wizard.py:0
 msgid "id"
 msgstr "id"
+
+#. module: account_accountant
+#: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
+msgid "invalid statement(s)"
+msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_edit_line
