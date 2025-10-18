@@ -638,7 +638,7 @@ class SendCloud:
         return parcel_common
 
     def _get_pick_sender_address(self, picking):
-        warehouse_name = picking.location_id.warehouse_id.name.lower().replace(' ', '')
+        warehouse_name = picking._retrieve_warehouse_name().lower().replace(' ', '')
         addresses = self._get_addresses()
         res_id = None
         for addr in addresses:
