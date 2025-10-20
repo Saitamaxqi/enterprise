@@ -80,6 +80,12 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
                 LEFT JOIN hr_employee E ON F.employee_id = E.id
                 LEFT JOIN resource_resource R ON E.resource_id = R.id
                 LEFT JOIN no_weekend_days W ON F.id = W.forecast_id
+                LEFT JOIN resource_calendar_leaves RL ON (
+                    (R.id = RL.resource_id OR RL.resource_id IS NULL)
+                    AND R.calendar_id = RL.calendar_id
+                    AND d::date >= RL.date_from::date
+                    AND d::date <= RL.date_to::date
+                )
         """
         return from_str
 
@@ -146,6 +152,7 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
                         )
                     )
                 )
+                AND RL.id IS NULL
         """
         return where_str
 
