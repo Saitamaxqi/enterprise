@@ -4,7 +4,7 @@ import { Component, markup, useEffect, useRef } from "@odoo/owl";
 
 import { KeypadModel } from "@voip/softphone/softphone_model";
 import { tabComponents } from "@voip/softphone/tab";
-import { isCurrentFocusEditable } from "@voip/utils/utils";
+import { isCurrentFocusEditable, matchPhoneNumber } from "@voip/utils/utils";
 
 import { isMobileOS } from "@web/core/browser/feature_detection";
 import { _t } from "@web/core/l10n/translation";
@@ -12,7 +12,6 @@ import { normalize, normalizedMatch } from "@web/core/l10n/utils";
 import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { htmlJoin } from "@web/core/utils/html";
-import { escapeRegExp } from "@web/core/utils/strings";
 import { useDebounced } from "@web/core/utils/timing";
 import { user } from "@web/core/user";
 
@@ -146,12 +145,11 @@ export class Keypad extends Component {
                     break;
                 }
             }
-            // TODO: refine phone number match
-            const regex = new RegExp(`(^.*?)(${escapeRegExp(searchTerms)})(.*?$)`, "i");
-            const [, before, match, after] = contact.phone.match(regex) ?? [];
-            if (!match) {
+            const phoneMatch = matchPhoneNumber(contact.phone, searchTerms);
+            if (!phoneMatch) {
                 continue;
             }
+            const { before, match, after } = phoneMatch;
             uniqueMatches.add(contact.id);
             phoneNumberMatched.push({
                 contact,

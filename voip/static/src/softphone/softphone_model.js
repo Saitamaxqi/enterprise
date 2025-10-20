@@ -1,6 +1,6 @@
 import { InCallViewModel } from "@voip/softphone/in_call_view_model";
 import { KeypadModel } from "@voip/softphone/keypad_model";
-import { isSubstring } from "@voip/utils/utils";
+import { isSubstring, matchPhoneNumber } from "@voip/utils/utils";
 
 /**
  * Retains the state of the Softphone that needs to be persisted even if the
@@ -61,12 +61,10 @@ export class Softphone {
                 activity.phone &&
                 activity.user_id.eq(this.store.self.main_user_id) &&
                 (!searchInputValue ||
-                    [
-                        activity.partner.name,
-                        activity.partner.displayName,
-                        activity.phone,
-                        activity.name,
-                    ].some((x) => isSubstring(x, searchInputValue)))
+                    [activity.partner.name, activity.partner.displayName, activity.name].some((x) =>
+                        isSubstring(x, searchInputValue)
+                    ) ||
+                    matchPhoneNumber(activity.phone, searchInputValue))
         );
     }
 

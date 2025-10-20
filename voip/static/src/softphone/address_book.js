@@ -1,7 +1,7 @@
 import { Component, onMounted, useState } from "@odoo/owl";
 
 import { tabComponents } from "@voip/softphone/tab";
-import { isSubstring } from "@voip/utils/utils";
+import { isSubstring, matchPhoneNumber } from "@voip/utils/utils";
 
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
@@ -64,7 +64,7 @@ export class AddressBook extends Component {
         }
         return contacts.filter(
             ({ voipName, phone }) =>
-                isSubstring(voipName, searchTerms) || isSubstring(phone, searchTerms)
+                isSubstring(voipName, searchTerms) || matchPhoneNumber(phone, searchTerms)
         );
     }
 

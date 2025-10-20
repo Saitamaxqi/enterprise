@@ -1,7 +1,7 @@
 import { Component, onMounted, useState } from "@odoo/owl";
 
 import { tabComponents } from "@voip/softphone/tab";
-import { isSubstring } from "@voip/utils/utils";
+import { isSubstring, matchPhoneNumber } from "@voip/utils/utils";
 
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
@@ -57,7 +57,7 @@ export class History extends Component {
             if (call.partner_id && isSubstring(call.partner_id.name, searchTerms)) {
                 return true;
             }
-            return isSubstring(call.phone_number, searchTerms);
+            return matchPhoneNumber(call.phone_number, searchTerms);
         });
     }
 
