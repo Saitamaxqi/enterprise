@@ -265,7 +265,7 @@ class AccountMove(models.Model):
         if self.state != 'posted':
             return
 
-        deferred_type = "expense" if self.is_purchase_document() else "revenue"
+        deferred_type = "expense" if self.is_purchase_document(include_receipts=True) else "revenue"
         deferred_account = self.company_id.deferred_expense_account_id if deferred_type == "expense" else self.company_id.deferred_revenue_account_id
         deferred_journal = self.company_id.deferred_expense_journal_id if deferred_type == "expense" else self.company_id.deferred_revenue_journal_id
         if not deferred_journal:
@@ -660,11 +660,11 @@ class AccountMoveLine(models.Model):
     def _has_deferred_compatible_account(self):
         self.ensure_one()
         return (
-            self.move_id.is_purchase_document()
+            self.move_id.is_purchase_document(include_receipts=True)
             and
             self.account_id.internal_group == 'expense'
         ) or (
-            self.move_id.is_sale_document()
+            self.move_id.is_sale_document(include_receipts=True)
             and
             self.account_id.internal_group == 'income'
         ) or (
