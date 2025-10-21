@@ -129,7 +129,8 @@ export class InCallView extends Component {
 
     onClickTransferPhone() {
         this.state.targetContact = false;
-        this.state.targetPhoneNumber = this.softphone.inCallView.transferView.keypad.input.value.trim();
+        this.state.targetPhoneNumber =
+            this.softphone.inCallView.transferView.keypad.input.value.trim();
         this.softphone.inCallView.transferView.activeView = "confirmation";
     }
 
