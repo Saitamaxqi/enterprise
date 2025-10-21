@@ -333,7 +333,7 @@ class DocumentsDocument(models.Model):
         def adjust_role(partner, role):
             """Ensure non-internal users do not have 'edit' access."""
             user_ids = partner.with_context(active_test=False).user_ids
-            return 'view' if not user_ids or user_ids.share else role
+            return 'view' if not user_ids or all(user_ids.mapped("share")) else role
 
         access_ids = [
             Command.create({
