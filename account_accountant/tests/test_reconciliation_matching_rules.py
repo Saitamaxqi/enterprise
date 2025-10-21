@@ -1424,6 +1424,30 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             {'account_id': invoice_line_2.account_id.id, 'balance': -600.0, 'reconciled': True},
         ], reconciled_amls=[invoice_line_2])
 
+    def test_negative_contains_matching_rule(self):
+        rule = self.env['account.reconcile.model'].create({
+            'name': 'Not contains rule',
+            'sequence': 3,
+            'match_label': 'not_contains',
+            'match_label_param': 'test',
+            'line_ids': [Command.create({
+                'account_id': self.current_assets_account.id,
+                'amount_type': 'percentage',
+                'amount': 100,
+                'label': 'Counterpart',
+            })],
+        })
+        st_line = self.env['account.bank.statement.line'].with_context(auto_statement_processing=True).create({
+            'journal_id': self.bank_journal.id,
+            'date': '2020-01-01',
+            'payment_ref': 'some payment ref',
+            'amount': 100,
+        })
+        self._check_st_line_matching(st_line, [
+            {'account_id': self.bank_journal.default_account_id.id, 'reconcile_model_id': False},
+            {'account_id': self.bank_journal.suspense_account_id.id, 'reconcile_model_id': rule.id},
+        ], reconciled_amls=False)
+
     # TODO add tests on multi companies
     # TODO add tests on multi currencies
     # TODO add tests on taxes

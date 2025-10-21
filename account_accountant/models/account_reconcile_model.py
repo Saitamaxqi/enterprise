@@ -91,20 +91,20 @@ class AccountReconcileModel(models.Model):
                               OR (
                                   reco_model.match_label = 'contains'
                                    AND (
-                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                    )
                               ) OR (
                                   reco_model.match_label = 'not_contains'
                                   AND NOT (
-                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                   )
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
-                                      st_line.payment_ref ~* reco_model.match_label_param
-                                      OR st_line.transaction_details::TEXT ~* reco_model.match_label_param
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ~* reco_model.match_label_param
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ~* reco_model.match_label_param
                                   )
                               )
                           )
@@ -190,23 +190,23 @@ class AccountReconcileModel(models.Model):
                               OR (
                                   reco_model.match_label = 'contains'
                                    AND (
-                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR move.narration IS NOT NULL AND move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                    )
                               ) OR (
                                   reco_model.match_label = 'not_contains'
                                   AND NOT (
-                                      st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
-                                      OR move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
+                                      OR move.narration IS NOT NULL AND move.narration::TEXT ILIKE '%%' || reco_model.match_label_param || '%%'
                                   )
                               ) OR (
                                   reco_model.match_label = 'match_regex'
                                   AND (
-                                      st_line.payment_ref ~* reco_model.match_label_param
-                                      OR st_line.transaction_details::TEXT ~* reco_model.match_label_param
-                                      OR move.narration::TEXT ~* reco_model.match_label_param
+                                      st_line.payment_ref IS NOT NULL AND st_line.payment_ref ~* reco_model.match_label_param
+                                      OR st_line.transaction_details IS NOT NULL AND st_line.transaction_details::TEXT ~* reco_model.match_label_param
+                                      OR move.narration IS NOT NULL AND move.narration::TEXT ~* reco_model.match_label_param
                                   )
                               )
                           )
