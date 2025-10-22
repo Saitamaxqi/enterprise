@@ -29,7 +29,7 @@ class AccountJournal(models.Model):
             payment_method_code == 'iso20022_se'
             and (
                 self.bank_account_id.acc_type in {'bban_se', 'plusgiro', 'bankgiro'}
-                or len({'bban_se', 'plusgiro', 'bankgiro', *(partner_acc_type or {})}) == 3
+                or len({'bban_se', 'plusgiro', 'bankgiro', *(partner_acc_type or {'iban'})}) == 3
             )
         )
 
