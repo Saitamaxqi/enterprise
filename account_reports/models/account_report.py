@@ -303,6 +303,10 @@ class AccountReport(models.Model):
         # 1. Handle journal group selection
         for group in all_journal_groups:
             group_journals = all_journals - group.excluded_journal_ids
+            if group.company_id:
+                company_domain = self.env['account.journal']._check_company_domain(group.company_id)
+                group_journals = group_journals.filtered_domain(company_domain)
+
             selected = False
             first_group_already_selected = bool(options['selected_journal_groups'])  # only one group should be selected at most
 
