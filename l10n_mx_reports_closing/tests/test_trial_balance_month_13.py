@@ -156,8 +156,9 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             [0,                                                                     1,        2,        3,         4],
             [
                 ('105.01.01 Domestic customers',                                 1000.0,    300.0,     0.0,     1300.0),
-                ('305.01.01 Uncut results',                                     -1000.0,      0.0,     0.0,    -1000.0),
+                ('305.01.01 Uncut results',                                      -800.0,      0.0,     0.0,     -800.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',       0.0,      0.0,   300.0,     -300.0),
+                ('Undistributed Profits/Losses - company_1_data',                -200.0,      0.0,     0.0,     -200.0),
                 ('Total',                                                           0.0,    300.0,   300.0,        0.0),
 
             ],
@@ -172,8 +173,9 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             [0,                                                                     1,        2,        3,         4],
             [
                 ('105.01.01 Domestic customers',                                 1000.0,    320.0,      0.0,    1320.0),
-                ('305.01.01 Uncut results',                                     -1000.0,      0.0,    250.0,   -1250.0),
+                ('305.01.01 Uncut results',                                      -800.0,      0.0,    250.0,   -1050.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',       0.0,    250.0,    320.0,     -70.0),
+                ('Undistributed Profits/Losses - company_1_data',                                      -200.0,      0.0,    0.0,      -200.0),
                 ('Total',                                                           0.0,    570.0,    570.0,       0.0),
             ],
             options,
@@ -196,8 +198,9 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             [0,                                                                    1,         2,        3,         4],
             [
                 ('105.01.01 Domestic customers',                                1300.0,       0.0,      0.0,    1300.0),
-                ('305.01.01 Uncut results',                                    -1000.0,       0.0,    250.0,   -1250.0),
+                ('305.01.01 Uncut results',                                     -800.0,       0.0,    250.0,   -1050.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',   -300.0,     250.0,      0.0,     -50.0),
+                ('Undistributed Profits/Losses - company_1_data',               -200.0,       0.0,      0.0,    -200.0),
                 ('Total',                                                          0.0,     250.0,    250.0,       0.0),
             ],
             options,
@@ -228,8 +231,10 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             [0,                                                                   1,             2,      3,          4,        5,        6],
             [
                 ('105.01.01 Domestic customers',                               1000.0,          0.0,     0.0,      300.0,       0.0,  1300.0),
-                ('305.01.01 Uncut results',                                   -1000.0,          0.0,     0.0,        0.0,       0.0, -1000.0),
+                # Values manually added to the equity unaffected account
+                ('305.01.01 Uncut results',                                    -800.0,          0.0,     0.0,        0.0,       0.0,  -800.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',     0.0,          0.0,     0.0,        0.0,     300.0,  -300.0),
+                ('Undistributed Profits/Losses - company_1_data',              -200.0,          0.0,     0.0,        0.0,       0.0,  -200.0),
                 ('Total',                                                         0.0,          0.0,     0.0,      300.0,     300.0,     0.0),
             ],
             options,
@@ -252,8 +257,9 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             [0,                                                                    1,         2,        3,        4,       5,       6,       7,         8],
             [
                 ('105.01.01 Domestic customers',                               1000.0,     300.0,      0.0,   1300.0,   1300.0,    20.0,      0.0,   1320.0),
-                ('305.01.01 Uncut results',                                   -1000.0,       0.0,    250.0,  -1250.0,  -1300.0,     0.0,      0.0,  -1300.0),
+                ('305.01.01 Uncut results',                                    -800.0,       0.0,    250.0,  -1050.0,  -1050.0,     0.0,      0.0,  -1050.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',     0.0,     250.0,    300.0,    -50.0,      0.0,     0.0,     20.0,    -20.0),
+                ('Undistributed Profits/Losses - company_1_data',              -200.0,       0.0,      0.0,   -200.0,   -250.0,     0.0,      0.0,   -250.0),
                 ('Total',                                                         0.0,     550.0,    550.0,      0.0,      0.0,    20.0,     20.0,      0.0),
             ],
             options,

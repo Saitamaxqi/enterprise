@@ -44,6 +44,8 @@ LINE_ID_HIERARCHY_DELIMITER = '|'
 
 CURRENCIES_USING_LAKH = {'AFN', 'BDT', 'INR', 'MMK', 'NPR', 'PKR', 'LKR'}
 
+UNDISTR_LINE_NAME = 'Undistributed Profits/Losses'
+
 
 class AccountReportAnnotation(models.Model):
     _name = 'account.report.annotation'
@@ -2567,22 +2569,31 @@ class AccountReport(models.Model):
         # as it opens what client asked. And "Unfold All" is 1 clic away.
         options["unfold_all"] = True
         general_ledger = self.env.ref('account_reports.general_ledger_report')
-        record_id_to_search = self._get_res_id_from_line_id(params['line_id'], 'account.account')
-        if not record_id_to_search:
-            raise UserError(_("'Open General Ledger' caret option is only available form report lines targetting accounts."))
+        account_id_to_search = self._get_res_id_from_line_id(params['line_id'], 'account.account')
+        company_id_to_search = self._get_res_id_from_line_id(params['line_id'], 'res.company')
+        if not account_id_to_search and not company_id_to_search:
+            raise UserError(_("'Open General Ledger' caret option is only available form report lines targetting accounts"
+                              "or Undistributed Profits/Losses."))
 
-        account = self.env['account.account'].browse(record_id_to_search)
+        if account_id_to_search:
+            search_content = self.env['account.account'].browse(account_id_to_search).code
+        else:
+            if len(self.env.companies) == 1:
+                search_content = _(UNDISTR_LINE_NAME)
+            else:
+                company_name = self.env['res.company'].browse(company_id_to_search).name
+                search_content = _('%(line_name)s - %(company_name)s', line_name=UNDISTR_LINE_NAME, company_name=company_name)
         gl_options = general_ledger.get_options(options)
         gl_options['not_reset_journals_filter'] = True  # prevents resetting the default journal group
         gl_options['unfold_all'] = True
-        gl_options['filter_search_bar'] = account.code
+        gl_options['filter_search_bar'] = search_content
 
         action_vals = self.env['ir.actions.actions']._for_xml_id('account_reports.action_account_report_general_ledger')
         action_vals['params'] = {
             'options': gl_options,
             'ignore_session': True,
         }
-        action_vals['context'] = dict(ast.literal_eval(action_vals['context']), default_filter_accounts=account.code)
+        action_vals['context'] = dict(ast.literal_eval(action_vals['context']), default_filter_accounts=search_content)
 
         return action_vals
 
@@ -4853,6 +4864,29 @@ class AccountReport(models.Model):
             'context': ctx,
         }
 
+    def open_unallocated_items_journal_items(self, options, params):
+        _record_model, record_id = self._get_model_info_from_id(params.get('line_id'))
+        fiscal_year = self.env.company.compute_fiscalyear_dates(
+            fields.Date.to_date(options.get('date').get('date_from'))
+        )
+        options_for_audit = {
+            **options,
+            'date': {
+                **options['date'],
+                'date_from': fields.Date.to_string(fiscal_year['date_from']),
+                'date_to': fields.Date.to_string(fiscal_year['date_to']),
+            },
+        }
+
+        action = self.open_journal_items(options=options_for_audit, params=params)
+        action['domain'] += [
+            ('account_id.include_initial_balance', '=', False),
+            ('date', '<', action['context']['date_from']),
+            ('company_id', '=', record_id),
+        ]
+        action.get('context', {}).update({'search_default_date_between': 0})
+        return action
+
     def open_unposted_moves(self, options, params=None):
         ''' Open the list of draft journal entries that might impact the reporting'''
         action = self.env["ir.actions.actions"]._for_xml_id("account.action_move_journal_line")
@@ -4898,22 +4932,6 @@ class AccountReport(models.Model):
                 'search_default_group_by_move': True,
                 'expand': True,
             }
-        }
-
-    @api.model
-    def _get_unaffected_earnings_accounts_per_company(self, options):
-        """ Return the unaffected earnings accounts for the report's companies. """
-        unaffected_earnings_accounts = self.env['account.account']._read_group(
-            domain=[
-                *self.env['account.account']._check_company_domain(self.env['account.report'].get_report_company_ids(options)),
-                ('account_type', '=', 'equity_unaffected'),
-            ],
-            groupby=['company_ids'],
-            aggregates=['id:min'],
-        )
-        return {
-            company.id: account_id
-            for company, account_id in unaffected_earnings_accounts
         }
 
     def action_modify_manual_value(self, line_id, options, column_group_key, new_value_str, target_expression_id, rounding, json_friendly_column_group_totals):
@@ -6664,6 +6682,88 @@ class AccountReport(models.Model):
         render this report, following the provided options.
         """
         return [comp_data['id'] for comp_data in options['companies']]
+
+    def _get_unallocated_earnings_lines(self, options, date_scope, auditable=False):
+        def _get_query(query_options, date_scope):
+            if self.custom_handler_model_id:
+                fiscalyear_start = self.env[self.custom_handler_model_name]._get_fiscalyear_start_date(query_options)
+            else:
+                return []
+
+            query = self._get_report_query(query_options, date_scope)
+            if 'account_move_line__account_id' not in query._joins:
+                account_alias = query.join("account_move_line", "account_id", "account_account", "id", "account_id")
+            else:
+                account_alias = 'account_move_line__account_id'
+            query.groupby = SQL('account_move_line.company_id')
+
+            sql_query = SQL(
+                """
+                SELECT
+                    account_move_line.company_id,
+                    COALESCE(SUM(%(select_balance)s), 0.0) AS balance,
+                    COALESCE(SUM(%(select_debit)s), 0.0) AS debit,
+                    COALESCE(SUM(%(select_credit)s), 0.0) AS credit
+                FROM %(table_references)s
+                %(currency_table_join)s
+                WHERE %(search_condition)s
+                AND %(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s])
+                AND account_move_line.date < %(fiscalyear_start)s
+                %(groupby_clause)s
+                """,
+                account_type=SQL.identifier(account_alias, 'account_type'),
+                income_pattern=r'income%',
+                expense_pattern=r'expense%',
+                select_balance=self._currency_table_apply_rate(SQL("account_move_line.balance")),
+                select_debit=self._currency_table_apply_rate(SQL("account_move_line.debit")),
+                select_credit=self._currency_table_apply_rate(SQL("account_move_line.credit")),
+                table_references=query.from_clause,
+                currency_table_join=self._currency_table_aml_join(query_options),
+                search_condition=query.where_clause,
+                groupby_clause=SQL("GROUP BY %s", query.groupby) if query.groupby else SQL(),
+                fiscalyear_start=fiscalyear_start,
+            )
+
+            return self.env.execute_query_dict(sql_query)
+
+        if options.get('filter_search_bar') and options.get('filter_search_bar') not in _(UNDISTR_LINE_NAME).lower():
+            return []
+        unallocated_earnings_lines = defaultdict(dict)
+        company_to_line_id = dict()
+        for column_group_key, column_group_options in self._split_options_per_column_group(options).items():
+            # When groupby = id, the forced_domain is used to prevent displaying move lines that do not belong
+            # to the period that is selected. In the unallocated earning lines, this is not needed.
+            col_options = column_group_options.copy()
+            col_options['forced_domain'] = [domain for domain in column_group_options['forced_domain'] if domain != ('id', '=', False)]
+            data = _get_query(col_options, date_scope)
+
+            for company_line in data:
+                line_id = self._get_generic_line_id('res.company', company_line['company_id'])
+                company_to_line_id[company_line['company_id']] = line_id
+                unallocated_earnings_lines[column_group_key] |= {line_id: company_line}
+
+        new_lines = {}
+        for company_id, line_id in company_to_line_id.items():
+            column_values = []
+            for column in options['columns']:
+                expression_label = column['expression_label']
+                column_group_key = column['column_group_key']
+                values = unallocated_earnings_lines[column_group_key][line_id] if column_group_key in unallocated_earnings_lines else {}
+                line_value = values.get(expression_label, 0.0 if column['figure_type'] == 'monetary' else None)
+                column_values.append({**self._build_column_dict(line_value, column, options=options), 'auditable': auditable})
+            new_lines[line_id] = (company_id, column_values)
+
+        return [{
+            'id': line_id,
+            'name': (_(UNDISTR_LINE_NAME) if len(self.env.companies) == 1
+                     else _('%(line_name)s - %(company)s', line_name=UNDISTR_LINE_NAME, company=self.env['res.company'].browse(vals[0]).name)),
+            'level': 1,
+            'columns': vals[1],
+            'unfoldable': False,
+            'unfolded': False,
+            'caret_options': 'undistributed_profits_losses',
+            'markup': 'undistributed_profits_losses',
+        } for line_id, vals in new_lines.items()]
 
     def _get_partner_and_general_ledger_initial_balance_line(self, options, parent_line_id, eval_dict, account_currency=None, level_shift=0):
         """ Helper to generate dynamic 'initial balance' lines, used by general ledger and partner ledger.

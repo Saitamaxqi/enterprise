@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import json
-
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
@@ -47,22 +45,28 @@ class AccountAccount(models.Model):
                 FROM (
                     SELECT
                         SUM(COALESCE(account_move_line.%(field_name)s)) as %(field_name)s,
-                        %(account_or_unaff)s AS account_id
+                        %(account)s AS account_id
                     FROM account_move_line
                     JOIN account_account aml_account ON aml_account.id = account_move_line.account_id
                     WHERE account_move_line.date <= %(date_to)s
                       AND account_move_line.company_id = ANY(%(company_ids)s)
                       AND account_move_line.parent_state = 'posted'
-                    GROUP BY %(account_or_unaff)s
+                      AND NOT (
+                          aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                          AND account_move_line.date < %(date_from)s
+                      )
+                    GROUP BY %(account)s
                 ) aml
                 WHERE aml.%(field_name)s %(operator)s %(value)s
                 """,
                 field_name=SQL(field_name),
-                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "account_move_line", "aml_account"),
+                account=SQL.identifier('account_move_line', 'account_id'),
                 date_to=date_to,
                 company_ids=working_file.company_ids.ids,
                 operator=SQL(operator),
                 value=value,
+                account_type=SQL.identifier('aml_account', 'account_type'),
+                date_from=working_file.date_from,
             )
         )
 
@@ -99,23 +103,28 @@ class AccountAccount(models.Model):
 
                     SELECT
                         %(variation_select)s,
-                        %(account_or_unaff)s AS account_id
+                        %(account)s AS account_id
                     FROM account_move_line aml
                     JOIN account_account aml_account ON aml_account.id = aml.account_id
 
                     LEFT JOIN (
                         SELECT
                             SUM(COALESCE(prev_aml.balance)) as balance,
-                            %(prev_account_or_unaff)s AS account_id
+                            %(prev_account)s AS account_id
                         FROM account_move_line prev_aml
                         JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
                         WHERE prev_aml.date <= %(prev_date_to)s
                           AND prev_aml.company_id = ANY(%(company_ids)s)
-                        GROUP BY %(prev_account_or_unaff)s
-                    ) prev_account_balances ON %(account_or_unaff)s = prev_account_balances.account_id
+                          AND NOT (
+                              prev_aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                              AND prev_aml.date < %(prev_date_from)s
+                          )
+                        GROUP BY %(prev_account)s
+                    ) prev_account_balances ON %(account)s = prev_account_balances.account_id
 
                     WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
-                    GROUP BY %(account_or_unaff)s, prev_account_balances.balance
+                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
+                    GROUP BY %(account)s, prev_account_balances.balance
 
                 ) account_variation
                 WHERE account_variation.variation %(operator)s %(value)s
@@ -125,8 +134,8 @@ class AccountAccount(models.Model):
                 date_to=working_file.date_to,
                 prev_date_from=prev_date_from,
                 prev_date_to=prev_date_to,
-                prev_account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, prev_date_from, "prev_aml", "prev_aml_account"),
-                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
+                prev_account=SQL.identifier('prev_aml', 'account_id'),
+                account=SQL.identifier('aml', 'account_id'),
                 company_ids=working_file.company_ids.ids,
                 operator=SQL(operator),
                 value=value,
@@ -161,29 +170,34 @@ class AccountAccount(models.Model):
                         COALESCE(SUM(aml.credit), 0) AS current_credit,
                         COALESCE(SUM(aml.balance), 0) AS current_balance,
                         prev_account_balances.balance AS prev_balance,
-                        %(account_or_unaff)s AS account_id
+                        %(account)s AS account_id
                     FROM account_move_line aml
                     JOIN account_account aml_account ON aml_account.id = aml.account_id
                     LEFT JOIN (
                         SELECT
                             SUM(COALESCE(prev_aml.balance, 0)) as balance,
-                            %(prev_account_or_unaff)s AS account_id
+                            %(prev_account)s AS account_id
                         FROM account_move_line prev_aml
                         JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
                         WHERE prev_aml.date <= %(prev_date_to)s
                         AND prev_aml.company_id = ANY(%(company_ids)s)
-                        GROUP BY %(prev_account_or_unaff)s
-                    ) prev_account_balances ON %(account_or_unaff)s = prev_account_balances.account_id
+                        AND NOT (
+                            prev_aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                            AND prev_aml.date < %(prev_date_from)s
+                        )
+                        GROUP BY %(prev_account)s
+                    ) prev_account_balances ON %(account)s = prev_account_balances.account_id
 
                     WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
-                    GROUP BY %(account_or_unaff)s, prev_account_balances.balance
+                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
+                    GROUP BY %(account)s, prev_account_balances.balance
                 """,
                 date_from=working_file.date_from,
                 date_to=working_file.date_to,
                 prev_date_from=prev_date_from,
                 prev_date_to=prev_date_to,
-                prev_account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, prev_date_from, "prev_aml", "prev_aml_account"),
-                account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
+                prev_account=SQL.identifier('prev_aml', 'account_id'),
+                account=SQL.identifier('aml', 'account_id'),
                 company_ids=working_file.company_ids.ids,
             )
             self.env.cr.execute(audit_period_query)
@@ -297,17 +311,19 @@ class AccountAccount(models.Model):
                         SUM(COALESCE(aml.debit, 0.0)) as debit,
                         SUM(COALESCE(aml.credit, 0.0)) as credit,
                         SUM(COALESCE(aml.balance, 0.0)) as balance,
-                        %(account_or_unaff)s as account_id
+                        %(account)s as account_id
                     FROM account_move_line aml
                     JOIN account_account aml_account ON aml_account.id = aml.account_id
                     WHERE aml.date <= %(date_to)s
                       AND aml.company_id = ANY(%(company_ids)s)
                       AND aml.parent_state = 'posted'
-                    GROUP BY %(account_or_unaff)s)
+                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
+                    GROUP BY %(account)s)
                     """,
-                    account_or_unaff=self._get_account_or_unaff_id_sql_redirection(working_file, working_file.date_from, "aml", "aml_account"),
+                    account=SQL.identifier('aml', 'account_id'),
+                    date_from=working_file.date_from,
                     date_to=date_to,
-                    company_ids=company_ids
+                    company_ids=company_ids,
                 ),
 
                 SQL("%s = %s", SQL.identifier(join_alias, 'account_id'), self._field_to_sql(alias, 'id', query))
@@ -361,39 +377,3 @@ class AccountAccount(models.Model):
             **self.env['ir.actions.act_window']._for_xml_id("account.action_account_moves_all"),
             'domain': domain,
         }
-
-    def _get_account_or_unaff_id_sql_redirection(self, audit, date_from, aml_alias="account_move_line", account_alias="account_account"):
-        unaffected_earnings_accounts = self.env['account.account']._read_group(
-            domain=[
-                *self.env['account.account']._check_company_domain(audit.company_ids),
-                ('account_type', '=', 'equity_unaffected'),
-            ],
-            groupby=['company_ids'],
-            aggregates=['id:min'],
-        )
-        unaffected_earnings_accounts = {
-            company.id: account_id
-            for company, account_id in unaffected_earnings_accounts
-        }
-
-        return SQL(
-            """
-            CASE
-                WHEN %(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s])
-                    AND %(date_field)s < %(query_date_from)s
-                THEN (
-                        %(unaffected_earnings_accounts_per_company)s::jsonb
-                        ->>(%(company_id_field)s::text)
-                )::int
-                ELSE %(account_id_field)s
-            END
-            """,
-            account_type=SQL.identifier(account_alias, 'account_type'),
-            income_pattern=r'income%',
-            expense_pattern=r'expense%',
-            date_field=SQL.identifier(aml_alias, 'date'),
-            company_id_field=SQL.identifier(aml_alias, 'company_id'),
-            query_date_from=date_from,  # Is different from audit date_from when computing previous balances
-            unaffected_earnings_accounts_per_company=json.dumps(unaffected_earnings_accounts),
-            account_id_field=SQL.identifier(aml_alias, 'account_id'),
-        )

@@ -1568,10 +1568,6 @@ class TestAccountReturn(TestAccountReportsCommon):
             )
 
     def test_audit_balances_account(self):
-        unaff_earnings_account = self.env['account.account'].search(domain=[
-            *self.env['account.account']._check_company_domain(self.env.company.ids),
-            ('account_type', '=', 'equity_unaffected'),
-        ], limit=1)
         self.init_invoice('out_invoice', amounts=[20], post=True, invoice_date='2024-02-01')
         self.init_invoice('out_invoice', amounts=[30], post=True, invoice_date='2025-02-01')
 
@@ -1582,17 +1578,11 @@ class TestAccountReturn(TestAccountReportsCommon):
 
         self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2024.id).audit_balance, -20)
         self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2024.id).audit_previous_balance, 0)
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2024.id).audit_balance, 0)
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2024.id).audit_previous_balance, 0)
 
         self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2025.id).audit_balance, -30)
         self.assertEqual(self.company_data['default_account_revenue'].with_context(working_file_id=self.audit_2025.id).audit_previous_balance, -20)
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_balance, -20)
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_previous_balance, 0)
 
         self.init_invoice('out_invoice', amounts=[10], post=True, invoice_date='2023-02-01')
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_balance, -30)
-        self.assertEqual(unaff_earnings_account.with_context(working_file_id=self.audit_2025.id).audit_previous_balance, -10)
 
     def test_state_progression(self):
         return_types = [
