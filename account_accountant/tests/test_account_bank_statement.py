@@ -2665,3 +2665,34 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             {'payment_state': 'partial'},
             {'payment_state': 'not_paid'},
         ])
+
+    def test_create_rule_during_reconcile_with_previous_statements(self):
+        """
+        Test auto creation of reconciliation rule with line references having a
+        common trailing space
+        """
+        refs = (
+                'TEST REFERENCE TO NORMALIZE   123,12',
+                'TEST REFERENCE TO NORMALIZE  234,23',
+                'TEST REFERENCE TO NORMALIZE 345,12',
+                'TEST REFERENCE TO NORMALIZE   234,12',
+                'TEST REFERENCE TO NORMALIZE 123,12',
+        )
+        bank_lines = self.env['account.bank.statement.line'].create([
+            {
+                'journal_id': self.company_data['default_journal_bank'].id,
+                'date': '2020-01-01',
+                'payment_ref': payment_ref,
+                'amount': 100,
+                'sequence': 1,
+                'counterpart_account_id': self.account_revenue_1.id,
+            } for payment_ref in refs
+        ])
+
+        bank_lines[-1].set_account_bank_statement_line(bank_lines[-1].line_ids[-1].id, self.account_revenue_1.id)
+
+        # Reconciliation rule created succesfully with the escaped common substring
+        rule = self.env['account.reconcile.model'].search([
+            ('match_label_param', '=', 'TEST\\ REFERENCE\\ TO\\ NORMALIZE\\ '),
+        ], limit=1)
+        self.assertTrue(rule)

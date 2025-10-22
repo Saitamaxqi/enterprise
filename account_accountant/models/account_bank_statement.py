@@ -1009,6 +1009,7 @@ class AccountBankStatementLine(models.Model):
         # 3. From the common substrings, select the longest one using `max` with `key=len`.
         # 4. If no common substring exists, return an empty string as the default.
         substring = max(set.intersection(*map(get_all_substrings, normalised)), key=len, default="")
+        substring = substring.rstrip(r'\\')
 
         return substring if len(substring) >= 10 else None
 
