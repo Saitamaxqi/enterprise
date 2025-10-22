@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-20 12:52+0000\n"
+"PO-Revision-Date: 2025-10-21 14:23+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/nl/>\n"
@@ -737,7 +737,7 @@ msgstr "Maak een apart dagboek voor specifieke verkoopactiviteiten"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Create a separate journal to organize vendor bills"
-msgstr "Maak een apart dagboek om leveranciersfacturen te organiseren"
+msgstr "Maak een apart dagboek om leveranciersfacturen te ordenen"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1460,7 +1460,7 @@ msgstr "Boekingen om af te letteren"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Journal items where matching number isn't set"
-msgstr "Boekingen zonder matchnummer"
+msgstr "Boekingsregel waarbij het overeenkomende nummer niet is ingesteld"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
@@ -1545,7 +1545,7 @@ msgstr "Vergrendeldatums…"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__fiscalyear_lock_date
 msgid "Lock Everything"
-msgstr "Vergrendel alles"
+msgstr "Alles vergrendelen"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__fiscalyear_lock_date_for_everyone
@@ -1580,7 +1580,7 @@ msgstr "Inkopen vergrendelen voor mij"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__sale_lock_date
 msgid "Lock Sales"
-msgstr "Vergrendel verkoop"
+msgstr "Verkoop vergrendelen"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__sale_lock_date_for_everyone
@@ -1595,7 +1595,7 @@ msgstr "Verkoop vergrendelen voor mij"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__tax_lock_date
 msgid "Lock Tax Return"
-msgstr "Vergrendel btw-aangifte"
+msgstr "Btw-aangifte vergrendelen"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__tax_lock_date_for_everyone
@@ -2010,7 +2010,7 @@ msgstr "Geboekt"
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__predict_bill_product
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__predict_bill_product
 msgid "Predict Bill Product"
-msgstr "Product factuur voorspellen"
+msgstr "Product op factuur voorspellen"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -2149,18 +2149,18 @@ msgstr "Resterend"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Residual in Currency"
-msgstr "Resterend in valuta"
+msgstr "Restwaarde in valuta"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
 msgid "Review"
-msgstr "Nakijken"
+msgstr "Controle"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.js:0
 msgid "Reviewed"
-msgstr "Nagekeken"
+msgstr "Gecontroleerd"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -2407,7 +2407,7 @@ msgstr "De uitgestelde boekingen die door deze factuur zijn gemaakt"
 #. odoo-python
 #: code:addons/account_accountant/models/account_fiscal_year.py:0
 msgid "The ending date must not be prior to the starting date."
-msgstr "De eind datum mag niet voor de start datum liggen."
+msgstr "De einddatum mag niet voor de startdatum liggen."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
