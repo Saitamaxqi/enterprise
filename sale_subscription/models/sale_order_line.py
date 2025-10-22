@@ -211,7 +211,7 @@ class SaleOrderLine(models.Model):
 
     def _get_invoice_lines(self):
         self.ensure_one()
-        if not self.recurring_invoice or (self.recurring_invoice and not self.order_id.plan_id):
+        if self._is_not_recurring_invoice():
             return super()._get_invoice_lines()
         else:
             last_invoice_date = self.order_id.last_invoice_date or self.order_id.start_date
@@ -285,14 +285,20 @@ class SaleOrderLine(models.Model):
 
     @api.depends('recurring_invoice', 'invoice_lines', 'invoice_lines.deferred_start_date', 'invoice_lines.deferred_end_date')
     def _compute_qty_invoiced(self):
+        super()._compute_qty_invoiced()
+
+    def _prepare_qty_invoiced(self):
+        subscription_invoiced_qties = defaultdict(float)
         other_lines = self.env['sale.order.line']
         subscription_qty_invoiced = self._get_subscription_qty_invoiced()
         for line in self:
-            if not line.recurring_invoice or (line.recurring_invoice and not line.order_id.plan_id):
+            if line._is_not_recurring_invoice():
                 other_lines |= line
                 continue
-            line.qty_invoiced = subscription_qty_invoiced.get(line.id, 0.0)
-        super(SaleOrderLine, other_lines)._compute_qty_invoiced()
+            subscription_invoiced_qties[line] = subscription_qty_invoiced.get(line.id, 0.0)
+        invoiced_qties = super(SaleOrderLine, other_lines)._prepare_qty_invoiced()
+        invoiced_qties.update(subscription_invoiced_qties)
+        return invoiced_qties
 
     @api.depends('recurring_invoice', 'price_subtotal')
     def _compute_recurring_monthly(self):
@@ -699,6 +705,10 @@ class SaleOrderLine(models.Model):
             else:
                 results.append(False)
         return all(results)
+
+    def _is_not_recurring_invoice(self):
+        self.ensure_one()
+        return not (self.recurring_invoice and self.order_id.plan_id)
 
     def _subscription_is_one_time_sale(self):
         """
