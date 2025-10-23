@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-14 11:09+0000\n"
+"PO-Revision-Date: 2025-10-22 08:09+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/fr/>\n"
@@ -601,6 +601,8 @@ msgid ""
 "Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
 msgstr ""
+"Waouh... 6 documents traités en quelques secondes, impressionnant !<br> La "
+"visite est terminée. Essayez d’uploader vos propres documents maintenant."
 
 #. module: documents_account
 #. odoo-python

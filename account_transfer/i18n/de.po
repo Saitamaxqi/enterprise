@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-20 07:57+0000\n"
+"PO-Revision-Date: 2025-10-22 14:02+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "account_transfer/de/>\n"
@@ -312,6 +312,8 @@ msgid ""
 "Puts the transfer model in a state in which it will automatically recompute "
 "its draft entries' values every day."
 msgstr ""
+"Versetzt das Überweisungsmodell in einen Status, in dem es die Werte seiner "
+"Entwufsnuchungen täglich automatisch neu berechnet."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -319,6 +321,8 @@ msgid ""
 "Puts the transfer model in a state in which it will not automatically "
 "recompute its draft entries' values every day."
 msgstr ""
+"Versetzt das Überweisungsmodell in einen Status, in dem es die Werte seiner "
+"Entwufsnuchungen nicht täglich automatisch neu berechnet."
 
 #. module: account_transfer
 #: model:ir.model.fields.selection,name:account_transfer.selection__account_transfer_model__frequency__quarter
@@ -328,7 +332,7 @@ msgstr "Vierteljährlich"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "Rate (%)"
-msgstr ""
+msgstr "Satz (%)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__sequence
@@ -365,13 +369,13 @@ msgstr "Gesamt Prozentsatz"
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "Transfer (%(percent)s%% from %(account)s)"
-msgstr ""
+msgstr "Überweisung (%(percent)s von %(account)s)"
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/transfer_model.py:0
 msgid "Transfer (-%(percent)s%% to %(account)s)"
-msgstr ""
+msgstr "Überweisung (-%(percent)s auf %(account)s)"
 
 #. module: account_transfer
 #: model:ir.model.fields,field_description:account_transfer.field_account_transfer_model_line__transfer_model_id
@@ -403,6 +407,9 @@ msgid ""
 "You cannot delete a transfer model that has draft moves attached ('%s'). "
 "Please delete them before deleting this transfer."
 msgstr ""
+"Es ist nicht möglich, ein Überweisungsmodell zu löschen, das mit "
+"Entwurfsbuchungen verknüpft ist (‚%s‘). Löschen Sie diese Entwürfe, bevor "
+"Sie diese Überweisung löschen."
 
 #. module: account_transfer
 #. odoo-python
@@ -410,12 +417,16 @@ msgstr ""
 msgid ""
 "You cannot delete a transfer model that has posted moves attached ('%s')."
 msgstr ""
+"Es ist nicht möglich, ein Überweisungsmodell zu löschen, das mit gebuchten "
+"Posten verknüpft ist (‚%s‘)."
 
 #. module: account_transfer
 #. odoo-python
 #: code:addons/account_transfer/models/account_move_line.py:0
 msgid "You cannot set Tax on computed Transfer's entries."
 msgstr ""
+"Es ist nicht möglich, Steuern auf berechnete Überweisungsbuchungen "
+"festzulegen."
 
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
@@ -425,7 +436,7 @@ msgstr "z.B. Monatliche Kostenüberweisung"
 #. module: account_transfer
 #: model_terms:ir.ui.view,arch_db:account_transfer.view_transfer_model_form
 msgid "forever"
-msgstr ""
+msgstr "für immer"
 
 #~ msgid "Account automatic transfers: Perform transfers"
 #~ msgstr "Automatische Kontoübertragungen: Übertragungen ausführen"

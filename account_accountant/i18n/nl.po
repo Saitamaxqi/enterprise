@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-21 14:23+0000\n"
+"PO-Revision-Date: 2025-10-22 15:56+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/nl/>\n"
@@ -540,7 +540,7 @@ msgstr "Bank"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_digest_digest__kpi_account_bank_cash
 msgid "Bank & Cash Moves"
-msgstr "Bank & kas boekingen"
+msgstr "Bank- & kasboekingen"
 
 #. module: account_accountant
 #. odoo-python
@@ -553,9 +553,8 @@ msgstr "Bankkosten"
 #: code:addons/account_accountant/models/account_bank_statement.py:0
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_line_transactions
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_line_transactions_kanban
-#, fuzzy
 msgid "Bank Matching"
-msgstr "Bankafstemming"
+msgstr "Bankaflettering"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_bank_statement
@@ -607,7 +606,7 @@ msgstr "Kaart"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Cash"
-msgstr ""
+msgstr "Contant"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_change_lock_date
@@ -617,7 +616,6 @@ msgstr "Verander vergrendeldatum"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/kanban_controller.xml:0
-#, fuzzy
 msgid "Chatter"
 msgstr "Chatter"
 
@@ -636,7 +634,7 @@ msgstr "Kies een regel om de bijlagen te bekijken."
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__account_auto_reconcile_wizard__search_mode__zero_balance
 msgid "Clear Account"
-msgstr ""
+msgstr "Rekening leegmaken"
 
 #. module: account_accountant
 #: model_terms:ir.actions.act_window,help:account_accountant.actions_account_fiscal_year
@@ -684,7 +682,6 @@ msgstr "Configuratie-instellingen"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
-#, fuzzy
 msgid "Confirm the transaction."
 msgstr "Bevestig de transactie."
 
@@ -801,12 +798,12 @@ msgstr "Vlottende activa"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/kanban_renderer.js:0
 msgid "Current Balance"
-msgstr ""
+msgstr "Huidig saldo"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__current_hard_lock_date
 msgid "Current Hard Lock"
-msgstr "Huidige harde vergrendeling"
+msgstr "Huidige Definitieve Vergrendeling"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__date
@@ -980,7 +977,7 @@ msgstr "Kortingsdatum"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__display_allow_partials
 msgid "Display Allow Partials"
-msgstr ""
+msgstr "'Gedeeltelijk afletteren' weergeven"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_account__display_name
@@ -1056,23 +1053,22 @@ msgstr "Bewerkingsmodus Bedrag"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__edit_mode_reco_currency_id
 msgid "Edit Mode Reco Currency"
-msgstr ""
+msgstr "Aflettervaluta in bewerkingsmodus"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__edit_mode_amount_currency
-#, fuzzy
 msgid "Edit mode amount"
-msgstr "Bewerkingsmodus Bedrag"
+msgstr "Bewerkingsmodus bedrag"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__module_account_auto_transfer
 msgid "Enable Auto Transfer"
-msgstr ""
+msgstr "Automatische overboekingen inschakelen"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Enable Auto Transfers"
-msgstr ""
+msgstr "Automatische overboekingen inschakelen"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_fiscal_year__date_to
@@ -1111,14 +1107,13 @@ msgstr "Vereiste velden voor uitzondering"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__exception_reason
-#, fuzzy
 msgid "Exception Reason"
-msgstr "Uitzondering Reden"
+msgstr "Reden van de uitzondering"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__exception_applies_to
 msgid "Exception applies"
-msgstr ""
+msgstr "Uitzondering is van toepassing op"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_search_bank_rec_widget
@@ -1219,7 +1214,6 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_expense_amount_computation_method__full_months
 #: model:ir.model.fields.selection,name:account_accountant.selection__res_company__deferred_revenue_amount_computation_method__full_months
-#, fuzzy
 msgid "Full Months"
 msgstr "Volledige maanden"
 
@@ -1232,21 +1226,18 @@ msgstr "Uitgestelde kostenboekingen genereren"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__generate_deferred_revenue_entries_method
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__generate_deferred_revenue_entries_method
-#, fuzzy
 msgid "Generate Deferred Revenue Entries"
 msgstr "Uitgestelde omzetboekingen genereren"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
-#, fuzzy
 msgid "Generate Entries"
-msgstr "Genereer boekingen"
+msgstr "Boekingen genereren"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_change_lock_date__hard_lock_date
-#, fuzzy
 msgid "Hard Lock"
-msgstr "Harde vergrendeling"
+msgstr "Definitieve vergrendeling"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_move_line__has_abnormal_deferred_dates
@@ -1257,7 +1248,7 @@ msgstr "Heeft abnormale uitgestelde datums"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_move_line__has_deferred_moves
 msgid "Has Deferred Moves"
-msgstr ""
+msgstr "Heeft uitgestelde boekingen"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__has_message
@@ -1410,8 +1401,8 @@ msgstr "De datum schendt de vergrendeldatum van boekingen"
 #: code:addons/account_accountant/wizard/account_change_lock_date.py:0
 msgid "It is not possible to decrease or remove the Hard Lock Date."
 msgstr ""
-"Het is niet mogelijk om de harde vergrendelingsdatum te vervroegen of te "
-"verwijderen."
+"Het is niet mogelijk om de definitieve vergrendelingsdatum te vervroegen of "
+"te verwijderen."
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_journal
@@ -1460,7 +1451,7 @@ msgstr "Boekingen om af te letteren"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Journal items where matching number isn't set"
-msgstr "Boekingsregel waarbij het overeenkomende nummer niet is ingesteld"
+msgstr "Boekingsregels waarbij het overeenkomende nummer niet is ingesteld"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
@@ -1522,9 +1513,8 @@ msgstr "Laatste afschrift"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
-#, fuzzy
 msgid "Legal signatory"
-msgstr "Wettelijke ondertekenaar"
+msgstr "Wettelijk ondertekenaar"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1641,7 +1631,7 @@ msgstr "Afgeletterde transacties"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Matching"
-msgstr ""
+msgstr "Aflettercode"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_ir_ui_menu
@@ -1950,7 +1940,7 @@ msgstr "Partners"
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Payable"
-msgstr ""
+msgstr "Te betalen"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_payment_form_inherit_account_accountant
@@ -2051,7 +2041,7 @@ msgstr "Reden..."
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/button_list/button_list.xml:0
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 msgid "Receivable"
-msgstr ""
+msgstr "Te ontvangen"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -2115,9 +2105,8 @@ msgstr "Aflettermodel %s toegepast"
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
-#, fuzzy
 msgid "Record your cash movements and transfers"
-msgstr "Registreer je kasbewegingen en overboekingen"
+msgstr "Registreer je kasbewegingen en overschrijvingen"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
@@ -2165,7 +2154,7 @@ msgstr "Gecontroleerd"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
 msgid "Revoke"
-msgstr ""
+msgstr "Intrekken"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_account_reconcile_model_line
@@ -2175,9 +2164,8 @@ msgstr "Aflettermodelregels"
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__message_has_sms_error
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__message_has_sms_error
-#, fuzzy
 msgid "SMS Delivery error"
-msgstr "Sms-bezorgingsfout"
+msgstr "Sms-afleverfout"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -2656,7 +2644,7 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_quick_create_form_bank_rec_widget
 msgid "Write a label ..."
-msgstr ""
+msgstr "Schrijf een label..."
 
 #. module: account_accountant
 #. odoo-python
@@ -2840,9 +2828,8 @@ msgstr ""
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_edit_line
-#, fuzzy
 msgid "secondary currency"
-msgstr "tweede valuta"
+msgstr "secundaire valuta"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_journal_dashboard_kanban_view

@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-14 13:27+0000\n"
+"PO-Revision-Date: 2025-10-22 14:22+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/fr/>\n"
@@ -1328,7 +1328,7 @@ msgstr ""
 #: code:addons/account_reports/models/account_return.py:0
 #: model:ir.actions.client,name:account_reports.action_account_report_bank_reconciliation
 msgid "Bank Matching"
-msgstr "Rapprochement bancaire"
+msgstr "Réconciliation bancaire"
 
 #. module: account_reports
 #. odoo-python
@@ -1367,8 +1367,8 @@ msgstr "Banque et Espèces"
 msgid ""
 "Bank matching isn’t required for VAT returns but helps spot missing bills."
 msgstr ""
-"Le rapprochement bancaire n’est pas requis pour les déclarations de TVA, "
-"mais il aide à repérer les factures manquantes."
+"La réconciliation bancaire n’est pas requise pour les déclarations de TVA, "
+"mais elle aide à repérer les factures manquantes."
 
 #. module: account_reports
 #. odoo-javascript
@@ -2295,7 +2295,7 @@ msgstr "Gestionnaire personnalisé du rapport des charges constatées d'avance"
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_deferred_expense
 msgid "Deferred Expenses"
-msgstr ""
+msgstr "Charges constatées d'avance"
 
 #. module: account_reports
 #: model:ir.actions.client,name:account_reports.action_account_report_deferred_revenue
@@ -2315,7 +2315,7 @@ msgstr "Rapport des revenus constatés d'avance"
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.menu_action_account_report_deferred_revenue
 msgid "Deferred Revenues"
-msgstr ""
+msgstr "Produits constatés d'avance"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_expression_form
@@ -2459,7 +2459,7 @@ msgstr "Document"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 msgid "Document Upload"
-msgstr ""
+msgstr "Document uploadé"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_audit_accounting_process
@@ -3269,7 +3269,7 @@ msgstr "Horizontal :"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.res_config_settings_view_form
 msgid "How often tax returns have to be made"
-msgstr "À quelle fréquence la déclaration de TVA doit-elle être effectuée"
+msgstr "À quelle fréquence la déclaration fiscale doit-elle être effectuée"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_payment_wizard__acc_number
@@ -5136,7 +5136,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.account_audit_regularization_entries_menu
 msgid "Regularization Entries"
-msgstr ""
+msgstr "Écritures de régularisation"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__regulatory_compliance
@@ -5950,7 +5950,7 @@ msgstr "Déclaration de TVA / Audit"
 #: model:ir.ui.menu,name:account_reports.menu_action_account_return
 #: model_terms:ir.ui.view,arch_db:account_reports.account_reports_journal_dashboard_kanban_view
 msgid "Tax Returns"
-msgstr "Déclarations de TVA"
+msgstr "Déclarations fiscales"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_tax_unit
@@ -6563,13 +6563,13 @@ msgstr "Écritures non lettrées"
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check__type__file
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__type__file
 msgid "Upload Document"
-msgstr ""
+msgstr "Uploader un document"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_return_check_file_uploader.xml:0
 msgid "Upload File"
-msgstr ""
+msgstr "Uploader un fichier"
 
 #. module: account_reports
 #: model:ir.model.fields,help:account_reports.field_account_financial_year_op__vat_label
@@ -6774,7 +6774,7 @@ msgstr "Avec des écritures en brouillon"
 #. module: account_reports
 #: model:ir.ui.menu,name:account_reports.menu_action_working_files
 msgid "Working Files"
-msgstr ""
+msgstr "Dossiers de travail"
 
 #. module: account_reports
 #. odoo-python

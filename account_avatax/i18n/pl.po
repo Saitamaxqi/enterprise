@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~18.4+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-21 14:24+0000\n"
+"PO-Revision-Date: 2025-10-22 12:12+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "account_avatax/pl/>\n"
@@ -695,7 +695,7 @@ msgstr "Zwaliduj adres %s"
 #: model:ir.model.fields,help:account_avatax.field_res_config_settings__avalara_address_validation
 msgid ""
 "Validate and correct the addresses of partners in North America with Avalara."
-msgstr "Zwaliduj i popraw adresy partnerów w Ameryce Północnej z Avalara."
+msgstr "Zweryfikuj i popraw adresy partnerów w Ameryce Północnej z Avalara."
 
 #. module: account_avatax
 #: model_terms:ir.ui.view,arch_db:account_avatax.avatax_validate_address_view_form
