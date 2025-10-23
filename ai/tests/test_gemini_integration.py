@@ -87,7 +87,7 @@ class TestGeminiIntegration(TransactionCase):
             elif endpoint.startswith("/models/"):
                 self.assertIn("gemini-1.5-flash", endpoint)
                 self.assertEqual(body.get("generationConfig", {}).get("temperature"), 0.2)
-                self.assertEqual(params.get("key"), "test-gemini-key")
+                self.assertEqual(headers.get("x-goog-api-key"), "test-gemini-key")
 
                 instructions = body["systemInstruction"]
                 rag_context_found = "##RAG context information:" in str(instructions["parts"])
