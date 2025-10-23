@@ -15,7 +15,7 @@ export class Registerer {
      *
      * The value is expressed in seconds.
      */
-    static EXPIRATION_INTERVAL = 3600;
+    static EXPIRATION_INTERVAL = 600;
     /**
      * Possible values:
      * - SIP.RegistererState.Initial
@@ -37,6 +37,7 @@ export class Registerer {
             expires: Registerer.EXPIRATION_INTERVAL,
         });
         this.__sipJsRegisterer.stateChange.addListener((state) => this._onStateChanged(state));
+        window.addEventListener("beforeunload", () => this.__sipJsRegisterer.unregister());
     }
 
     /**
