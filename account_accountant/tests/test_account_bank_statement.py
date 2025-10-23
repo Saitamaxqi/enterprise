@@ -1883,7 +1883,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         default_tax = self.env['account.tax'].create({
             'name': "default_tax",
             'amount_type': 'fixed',
-            'amount': -10.0,
+            'amount': 10.0,
         })
         account = self.env['account.account'].create({
             'name': 'account with default tax',
@@ -1906,7 +1906,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         default_tax = self.env['account.tax'].create({
             'name': "default_tax",
             'amount_type': 'fixed',
-            'amount': -20.0,
+            'amount': 20.0,
         })
         account = self.env['account.account'].create({
             'name': 'account with default tax',
