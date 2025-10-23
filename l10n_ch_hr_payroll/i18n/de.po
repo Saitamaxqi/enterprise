@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-10-22 12:10+0000\n"
+"PO-Revision-Date: 2025-10-23 12:10+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
@@ -231,442 +231,442 @@ msgstr "'Gehaltsabrechnung - %s' % (object.employee_id.name)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1000
 msgid "(1000) Monthly Salary"
-msgstr "(1000) Monatliches Gehalt"
+msgstr "(1000) Monatsgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1001
 msgid "(1001) Monthly Salary Correction"
-msgstr ""
+msgstr "(1001) Korrektur des Monatsgehalts"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1005
 msgid "(1005) Hourly Salary"
-msgstr ""
+msgstr "(1005) Stundenlohn"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1006
 msgid "(1006) Lesson Salary"
-msgstr ""
+msgstr "(1006) Tageslohn"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1010
 msgid "(1010) Professional Fees"
-msgstr ""
+msgstr "(1010) Honorare"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1015
 msgid "(1015) Auxiliary wages"
-msgstr ""
+msgstr "(1015) Aushilfslöhne"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1016
 msgid "(1016) Salary for working from home"
-msgstr ""
+msgstr "(1016) Heimarbeiterlohn"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1017
 msgid "(1017) Salary for cleaning"
-msgstr ""
+msgstr "(1017) Reinigungslohn"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1018
 msgid "(1018) Salary by task"
-msgstr ""
+msgstr "(1018) Akkordlohn"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1020
 msgid "(1020) Indemnity for absence"
-msgstr ""
+msgstr "(1020) Absenzentschädigung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1021
 msgid "(1021) Authorities and commissions"
-msgstr ""
+msgstr "(1021) Behörden und Kommissionen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1030
 msgid "(1030) Length-of-service allowance"
-msgstr ""
+msgstr "(1030) Dienstalterszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1031
 msgid "(1031) Function allowance"
-msgstr ""
+msgstr "(1031) Funktionszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1032
 msgid "(1032) Compensation for replacement"
-msgstr ""
+msgstr "(1032) Stellvertreterzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1033
 msgid "(1033) Residence allowance"
-msgstr ""
+msgstr "(1033) Ortszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1034
 msgid "(1034) Cost-of-living allowance"
-msgstr ""
+msgstr "(1034) Teuerungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1040
 msgid "(1040) Family cost-of-living allowance"
-msgstr ""
+msgstr "(1040) Familienteuerungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1050
 msgid "(1050) Housing allowance"
-msgstr ""
+msgstr "(1050) Wohnungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1055
 msgid "(1055) Travel allowance"
-msgstr ""
+msgstr "(1055) Wegzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1056
 msgid "(1056) Transfer allowance"
-msgstr ""
+msgstr "(1056) Versetzungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1060
 msgid "(1060) Extra work"
-msgstr ""
+msgstr "(1060) Mehrarbeit"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1061
 msgid "(1061) Overtime 125%"
-msgstr ""
+msgstr "(1061) Überstunden 125 %"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1065
 msgid "(1065) Overtime"
-msgstr ""
+msgstr "(1065) Überzeit"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_1067
 msgid "(1067) Overtime after departure"
-msgstr ""
+msgstr "(1067) Überstunden nach Austritt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1070
 msgid "(1070) Team Work Allowance"
-msgstr ""
+msgstr "(1070) Schichtzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1071
 msgid "(1071) On-call duty allowance"
-msgstr ""
+msgstr "(1071) Pikettdienstzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1072
 msgid "(1072) Commitment allowance"
-msgstr ""
+msgstr "(1072) Einsatzzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1073
 msgid "(1073) Sunday work allowance"
-msgstr ""
+msgstr "(1073) Sonntagszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1074
 msgid "(1074) Compensation for inconvenience"
-msgstr ""
+msgstr "(1074) Inkonvenienzzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1075
 msgid "(1075) Night shift allowance"
-msgstr ""
+msgstr "(1075) Nachtdienstzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1076
 msgid "(1076) Night work allowance"
-msgstr ""
+msgstr "(1076) Nachtzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1100
 msgid "(1100) Compensation for site inconvenience"
-msgstr ""
+msgstr "(1100) Baustellenzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1101
 msgid "(1101) Compensation for arduous work"
-msgstr ""
+msgstr "(1101) Erschwerniszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1102
 msgid "(1102) Allowance for dirty work"
-msgstr ""
+msgstr "(1102) Schmutzzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1103
 msgid "(1103) Dust allowance"
-msgstr ""
+msgstr "(1103) Staubzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1104
 msgid "(1104) Compensation for underground work"
-msgstr ""
+msgstr "(1104) Untertagearbeit-Zulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1110
 msgid "(1110) Advancement"
-msgstr ""
+msgstr "(1110) Vortriebsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1111
 msgid "(1111) Bonus for drilling"
-msgstr ""
+msgstr "(1111) Durchschlagsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1112
 msgid "(1112) Tenacity bonus"
-msgstr ""
+msgstr "(1112) Durchhalteprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1130
 msgid "(1130) Commitment bonus"
-msgstr ""
+msgstr "(1130) Antrittsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1131
 msgid "(1131) Non-commitment indemnity"
-msgstr ""
+msgstr "(1132) Nichtantrittsentschädigung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1160
 msgid "(1160) Vacation compensation"
-msgstr ""
+msgstr "(1160) Urlaubsvergütung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1161
 msgid "(1161) Compensation for public holidays"
-msgstr ""
+msgstr "(1161) Entschädigung für Feiertage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1162
 msgid "(1162) Vacation payments"
-msgstr ""
+msgstr "(1162) Ferienauszahlung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1163
 msgid "(1163) Vacation payment after departure"
-msgstr ""
+msgstr "(1163) Ferienauszahlung nach Austritt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1200
 msgid "(1200) Thirteenth Month"
-msgstr ""
+msgstr "(1200) 13. Monat"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1202
 msgid "(1202) Christmas Gratification"
-msgstr ""
+msgstr "(1202) Weihnachtszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1204
 msgid "(1204) Gratification"
-msgstr ""
+msgstr "(1204) Vergütung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1205
 msgid "(1205) Fourteenth Month"
-msgstr ""
+msgstr "(1205) 14. Monat"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1207
 msgid "(1207) Thirteenth Month (Hourly)"
-msgstr ""
+msgstr "(1207) 13. Monat (pro Stunde)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1208
 msgid "(1208) Fourteenth Month (Hourly)"
-msgstr ""
+msgstr "(1208) 14. Monat (pro Stunde)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_1209
 msgid "(1209) Previous year's bonus payment"
-msgstr ""
+msgstr "(1209) Bonuszahlung des Vorjahres"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1210
 msgid "(1210) Bonus"
-msgstr ""
+msgstr "(1210) Bonus"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1211
 msgid "(1211) Profit sharing"
-msgstr ""
+msgstr "(1211) Gewinnbeteiligung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1212
 msgid "(1212) Special allowance"
-msgstr ""
+msgstr "(1212) Sonderzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1213
 msgid "(1213) Success bonus"
-msgstr ""
+msgstr "(1213) Erfolgsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1214
 msgid "(1214) Performance bonus"
-msgstr ""
+msgstr "(1214) Leistungsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1215
 msgid "(1215) Recognition bonus"
-msgstr ""
+msgstr "(1215) Anerkennungsbonus"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1216
 msgid "(1216) Incentive for improvement proposals"
-msgstr ""
+msgstr "(1216) Verbesserungsvorschläge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1217
 msgid "(1217) Sales bonus"
-msgstr ""
+msgstr "(1217) Umsatzprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1218
 msgid "(1218) Commission"
-msgstr ""
+msgstr "(1218) Provision"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1219
 msgid "(1219) Attendance bonus"
-msgstr ""
+msgstr "(1219) Präsenzprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1230
 msgid "(1230) Length of service gift"
-msgstr ""
+msgstr "(1230) Dienstaltersgeschenke"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1231
 msgid "(1231) Jubilee gift"
-msgstr ""
+msgstr "(1230) Jubiläumsgeschenke"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1232
 msgid "(1232) Loyalty bonus"
-msgstr ""
+msgstr "(1232) Treueprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1250
 msgid "(1250) Damage prevention bonus"
-msgstr ""
+msgstr "(1250) Schadenverhütungsprämie"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1299
 msgid "(1299) Wages in the event of Maternity/Paternity Leave"
-msgstr ""
+msgstr "(1299) Löhne im Falle von Mutter-/Vaterschaftsurlaub"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1300
 msgid "(1300) Wages in the event of an accident"
-msgstr ""
+msgstr "(1300) Löhne bei Unfall"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1301
 msgid "(1301) Wages in the event of illness"
-msgstr ""
+msgstr "(1301) Löhne bei Krankheit"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1302
 msgid "(1302) Salary for military service/civil defense"
-msgstr ""
+msgstr "(1302) Lohn bei Militärdienst/Zivilschutz"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1303
 msgid "(1303) Training and development salary"
-msgstr ""
+msgstr "(1303) Lohn bei Aus- und Weiterbildung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1400
 msgid "(1400) Severance pay (not subject to AHV)"
-msgstr ""
+msgstr "(1400) Abgangsentschädigung (nicht AHV-pflichtig)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1401
 msgid "(1401) Severance pay (subject to AHV)"
-msgstr ""
+msgstr "(1401) Abgangsentschädigung (AHV-pflichtig)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1410
 msgid "(1410) Lump-sum retirement benefit"
-msgstr ""
+msgstr "(1410) Kapitalleistung mit Vorsorgecharakter"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1411
 msgid "(1411) Lump-sum benefit (subject to AHV)"
-msgstr ""
+msgstr "(1411) Kapitalleistung (AHV-pflichtig)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1420
 msgid "(1420) Payment of salary after death"
-msgstr ""
+msgstr "(1420) Lohnnachgenuss"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1500
 msgid "(1500) Board fees"
-msgstr ""
+msgstr "(1500) Verwaltungsratshonorar"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1501
 msgid "(1501) Board indemnity"
-msgstr ""
+msgstr "(1501) Verwaltungsratsentschädigung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1503
 msgid "(1503) Director fees"
-msgstr ""
+msgstr "(1503) Sitzungsgelder VR"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1510
 msgid "(1510) Directors' profit-sharing"
-msgstr ""
+msgstr "(1510) Tantiemen VR"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1900
 msgid "(1900) Free meals"
-msgstr ""
+msgstr "(1900) Kostenlose Mahlzeiten"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1901
 msgid "(1901) Free room"
-msgstr ""
+msgstr "(1901) Kostenloses Zimmer"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1902
 msgid "(1902) Free accommodation"
-msgstr ""
+msgstr "(1902) Kostenlose Unterkunft"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1910
 msgid "(1910) Private share of company car"
-msgstr ""
+msgstr "(1910) Privater Anteil am Firmenwagen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1920
 msgid "(1920) Tips subject to AHV contributions"
-msgstr ""
+msgstr "(1920) Trinkgelder, die der AHV-Beitragspflicht unterliegen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1950
 msgid "(1950) Rental housing rent reduction"
-msgstr ""
+msgstr "(1950) Mietminderung für Mietwohnungen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1953
 msgid "(1953) Expatriate benefits in kind"
-msgstr ""
+msgstr "(1935) Naturalleistungen Expatriate"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1955
 msgid "(1955) Cash benefit"
-msgstr ""
+msgstr "(1955) Geldwerter Vorteil"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1960
@@ -801,7 +801,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2035
 msgid "(2035) Daily sickness allowance"
-msgstr ""
+msgstr "(2035) Kranken-Taggeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2040
@@ -811,7 +811,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2050
 msgid "(2050) Third Party Correction"
-msgstr ""
+msgstr "(2050) Korrektur Taggelder"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2060
@@ -836,7 +836,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3000
 msgid "(3000) Child allowance"
-msgstr ""
+msgstr "(3000) Kinderzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3001
@@ -856,7 +856,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3010
 msgid "(3010) Education allowance"
-msgstr ""
+msgstr "(3010) Ausbildungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3011
@@ -876,7 +876,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3030
 msgid "(3030) Family allowance"
-msgstr ""
+msgstr "(3030) Familienzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3031
@@ -936,7 +936,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5060
 msgid "(5060) Source-Tax : Manual Correction"
-msgstr ""
+msgstr "(5060) QST-Betrag A0N"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5080
@@ -991,7 +991,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
 msgid "(6000) Expenses travel, car, overnight accommodation"
-msgstr ""
+msgstr "(6000) Ausgaben für Reisen, Auto, Übernachtung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6020
@@ -1011,7 +1011,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6040
 msgid "(6040) Lump-sum representation expenses"
-msgstr ""
+msgstr "(6040) Pauschale Vertretungskosten"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6050
@@ -1026,7 +1026,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_6510
 msgid "(6510) Salary Advance Already Paid"
-msgstr ""
+msgstr "(6510) Vorauszahlung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_7050
@@ -8497,12 +8497,12 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
 msgid "Paid Overtime Hours (100%)"
-msgstr ""
+msgstr "Bezahlte Überstunden (100 %)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_125
 msgid "Paid Overtime Hours (125%)"
-msgstr ""
+msgstr "Bezahlte Überstunden (125 %)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2015
@@ -9853,7 +9853,7 @@ msgstr "Vom Arbeitgeber gezahlte Quellensteuer"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_ISWORKEDDAYSINCH
 msgid "Source-Tax: Work Days in Switzerland"
-msgstr ""
+msgstr "Quellensteuer: in der Schweiz gearbeitete Tage"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
@@ -10829,6 +10829,8 @@ msgid ""
 "The ISO country code in two chars. \n"
 "You can use this field for quick search."
 msgstr ""
+"Der ISO-Ländercode mit zwei Zeichen.\n"
+"Sie können dieses Feld zur Schnellsuche verwenden."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
