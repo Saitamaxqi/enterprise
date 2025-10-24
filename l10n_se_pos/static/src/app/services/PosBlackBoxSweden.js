@@ -76,6 +76,10 @@ patch(PosStore.prototype, {
             fdm.action({
                 action: "registerReceipt",
                 high_level_message: data,
+            }).then((response) => {
+                if (!response.result) {
+                    reject(_t("Blackbox is disconnected"));
+                }
             });
         });
     },

@@ -101,7 +101,7 @@ class SwedishBlackBoxDriver(SerialDriver):
                         _logger.warning(
                             ("Received error: %s - Severity: %s"),
                             MainStatus.get(response[4]),
-                            SeverityError.get(response[5][:2])
+                            SeverityError.get(response[5][1:2])
                         )
                         _logger.warning("Sent request: %s", packet)
                     return True
