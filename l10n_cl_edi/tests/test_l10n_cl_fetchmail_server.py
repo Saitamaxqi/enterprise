@@ -560,3 +560,14 @@ class TestClFetchmailServer(TestL10nClEdiCommon):
             self.company_data['company'].id, file_data, origin_type='incoming_commercial_reject')
 
         self.assertEqual(move.l10n_cl_dte_acceptation_status, 'claimed')
+
+    def test_process_incoming_invoice_currency_code(self):
+        att_name = 'incoming_invoice_33_currency_code.xml'
+        from_address = 'incoming_dte@test.com'
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        move = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
+        self.assertEqual(move.currency_id.name, 'USD')
