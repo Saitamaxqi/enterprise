@@ -192,7 +192,7 @@ class TestJournalReport(TestAccountReportsCommon):
         lines_2016 = self.report._get_lines(options_2016)
         self.assertLinesValues(
             self._filter_tax_section_lines(lines_2016, True),
-            [   1,                 2,          3,          4],
+            [   1,                 4,          5,          6],
             [
                 ('',              '',         '',         ''),
                 ('BNK1',         100,        100,         ''),
@@ -208,7 +208,7 @@ class TestJournalReport(TestAccountReportsCommon):
         lines_2017 = self.report._get_lines(options_2017)
         self.assertLinesValues(
             self._filter_tax_section_lines(lines_2017, True),
-            [   1,                 2,          3,          4],
+            [   1,                 4,          5,          6],
             [
                 ('',              '',         '',         ''),
                 ('INV',         7150,       7150,         ''),
@@ -236,7 +236,7 @@ class TestJournalReport(TestAccountReportsCommon):
         lines_global = self.report._get_lines(options_global)
         self.assertLinesValues(
             self._filter_tax_section_lines(lines_global, True),
-            [   1,                 2,          3,          4],
+            [   1,                 4,          5,          6],
             [
                 ('',              '',         '',         ''),
                 ('INV',         7150,       7150,         ''),
@@ -268,7 +268,7 @@ class TestJournalReport(TestAccountReportsCommon):
 
         self.assertLinesValues(
             self._filter_tax_section_lines(self.report._get_lines(options_no_payment), True),
-            [   1,                 2,          3,          4],
+            [   1,                 4,          5,          6],
             [
                 ('',              '',         '',         ''),
                 ('INV',         7150,       7150,         ''),
@@ -284,7 +284,7 @@ class TestJournalReport(TestAccountReportsCommon):
         options_show_payment = self._generate_options(self.report, '2017-01-01', '2017-01-31', default_options={'unfold_all': True, 'show_payment_lines': True})
         self.assertLinesValues(
             self._filter_tax_section_lines(self.report._get_lines(options_show_payment), True),
-            [   1,                                 2,          3,          4],
+            [   1,                                 4,          5,          6],
             [
                 ('',                              '',         '',         ''),
                 ('INV',                         7150,       7150,         ''),

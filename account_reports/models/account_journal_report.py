@@ -21,6 +21,10 @@ class AccountJournalReportHandler(models.AbstractModel):
     _inherit = ["account.report.custom.handler"]
     _description = "Journal Report Custom Handler"
 
+    def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
+        if 'account_reports.common_warning_draft_in_period' in warnings:
+            warnings.pop('account_reports.common_warning_draft_in_period')
+
     def _custom_options_initializer(self, report, options, previous_options):
         """ Initialize the options for the journal report. """
 
@@ -57,6 +61,8 @@ class AccountJournalReportHandler(models.AbstractModel):
                 code = None
 
             result_line_dict = {
+                'count': query_line['count'] if current_groupby == 'journal_id' else None,
+                'to_review': query_line['to_review'] if current_groupby == 'journal_id' else None,
                 'code': code,
                 'credit': query_line['credit'],
                 'debit': query_line['debit'],
@@ -72,6 +78,8 @@ class AccountJournalReportHandler(models.AbstractModel):
         # Since we don't use the one from the base report
         if not current_groupby:
             return {
+                'count': None,
+                'to_review': None,
                 'code': None,
                 'debit': None,
                 'credit': None,
@@ -95,6 +103,8 @@ class AccountJournalReportHandler(models.AbstractModel):
             """
                 SELECT
                     %(select_from_groupby)s,
+                    COUNT(DISTINCT move_id) AS count,
+                    COUNT(DISTINCT move_id) FILTER (WHERE am.state = 'draft' OR NOT am.checked) AS to_review,
                     ARRAY_AGG(DISTINCT %(account_code)s) AS account_code,
                     ARRAY_AGG(DISTINCT j.code) AS journal_code,
                     SUM("account_move_line".debit) AS debit,
@@ -133,11 +143,15 @@ class AccountJournalReportHandler(models.AbstractModel):
         if not lines:
             return new_lines
 
+        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
+        to_review_index = colname_to_idx.get('to_review')
         for i, line in enumerate(lines):
             new_lines.append(line)
             line_id = line['id']
 
             line_model, res_id = report._get_model_info_from_id(line_id)
+            if to_review_index is not None:
+                line['to_review'] = line['columns'][to_review_index]['no_format']
             if line_model == 'account.journal':
                 line['journal_id'] = res_id
             elif line_model == 'account.account':
@@ -1315,11 +1329,15 @@ class AccountJournalReportHandler(models.AbstractModel):
     def journal_report_open_aml_by_move(self, options, params):
         report = self.env['account.report'].browse(options['report_id'])
         journal = self.env['account.journal'].browse(params['journal_id'])
+        review = params.get('review')
 
         context_update = {
             'search_default_group_by_account': 0,
             'show_more_partner_info': 1,
         }
+
+        if review:
+            context_update['search_default_to_check'] = 1
 
         if journal.type in ('bank', 'credit'):
             params['view_ref'] = 'account_reports.view_journal_report_audit_bank_move_line_tree'
@@ -1327,11 +1345,8 @@ class AccountJournalReportHandler(models.AbstractModel):
         else:
             params['view_ref'] = 'account_reports.view_journal_report_audit_move_line_tree'
             context_update.update({
-                'search_default_group_by_partner': 1,
-                'search_default_group_by_move': 2,
+                'search_default_group_by_move': 1,
             })
-            if journal.type in ('sale', 'purchase'):
-                context_update['search_default_invoices_lines'] = 1
 
         action = report.open_journal_items(options=options, params=params)
         action.get('context', {}).update(context_update)
