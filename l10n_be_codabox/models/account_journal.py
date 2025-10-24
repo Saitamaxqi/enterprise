@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 import logging
-import re
 import requests
 from dateutil.relativedelta import relativedelta
 
@@ -47,8 +45,8 @@ class AccountJournal(models.Model):
             date_from = fields.Date.to_string(fields.Date.today() - relativedelta(years=1))
         params = {
             "db_uuid": self.env["ir.config_parameter"].sudo().get_param("database.uuid"),
-            "fidu_vat": re.sub("[^0-9]", "", company.l10n_be_codabox_fiduciary_vat),
-            "company_vat": re.sub("[^0-9]", "", company.vat or company.company_registry),
+            "fidu_vat": company.l10n_be_codabox_fiduciary_vat,
+            "company_vat": company.l10n_be_codabox_company_vat,
             "iap_token": company.sudo().l10n_be_codabox_iap_token,
             "from_date": date_from,
         }

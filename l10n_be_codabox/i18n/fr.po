@@ -211,7 +211,8 @@ msgstr "Société"
 
 #. module: l10n_be_codabox
 #: model:ir.model.fields,field_description:l10n_be_codabox.field_l10n_be_codabox_connection_wizard__company_vat
-msgid "Company ID"
+#: model:ir.model.fields,field_description:l10n_be_codabox.field_res_company__l10n_be_codabox_company_vat
+msgid "Company VAT/ID"
 msgstr "Numéro de TVA ou d'entreprise"
 
 #. module: l10n_be_codabox
