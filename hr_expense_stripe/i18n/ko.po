@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-09 02:44+0000\n"
+"PO-Revision-Date: 2025-10-24 02:06+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/ko/>\n"
@@ -37,17 +37,17 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_form_inherit_expense_stripe
 msgid "<span class=\"o_stat_text\">Cards</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">카드</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "<span class=\"o_stat_text\">Employee</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">직원</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_view_form_inherits_stripe
 msgid "<span class=\"ps-2\">Cards</span>"
-msgstr ""
+msgstr "<span class=\"ps-2\">카드</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
@@ -70,7 +70,7 @@ msgstr "<span>및</span>"
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "<span>per transaction</span>"
-msgstr ""
+msgstr "<span>거래당</span>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -195,6 +195,113 @@ msgid ""
 "            </table>\n"
 "        "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: "
+"16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; "
+"color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\""
+"center\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"padding: 16px; background-color: white; color: #454748; "
+"border-collapse:separate;\">\n"
+"            <tbody>\n"
+"            <!-- HEADER -->\n"
+"            <tr>\n"
+"                <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: white; padding: "
+"0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                    <tr><td valign=\"middle\">\n"
+"                    <t t-set=\"company\" t-value=\"object.company_id\"/>\n"
+"                    <span style=\"font-size: 10px;\">카드 배송 안내</span><"
+"br/>\n"
+"                    <span style=\"font-size: 20px; font-weight: bold;\">카드 "
+"취소 안내를 드립니다</span>\n"
+"                    </td></tr>\n"
+"                    <tr><td valign=\"middle\" align=\"right\" t-if="
+"\"not company.uses_default_logo\">\n"
+"                    <img t-attf-src=\"/logo.png?company={{ company.id }}\" "
+"style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" t-att-alt="
+"\"company.name\"/>\n"
+"                    </td></tr>\n"
+"                    <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;\"/>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"                </td>\n"
+"            </tr>\n"
+"            <!-- CONTENT -->\n"
+"            <tr>\n"
+"                <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: white; padding: "
+"0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                    <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                    안녕하세요 <t t-out="
+"\"ctx.get('recipient_name', object.user_id.name)\">[Cardholder]</t>님,<br/><"
+"br/>\n"
+"                    고객님께 배송이 취소되었음을 알려드립니다.<br/>\n"
+"                    해당 카드 수령을 계속 희망하실 경우, 편하신 때에 새로 "
+"주문해 주시기 바랍니다..<br/><br/>\n"
+"                    궁금한 점이 있거나 도움이 필요하시면 저희 팀에서 "
+"언제든지 지원해 드립니다.<br/><br/>\n"
+"                    감사합니다 <br/>\n"
+"                    <t t-out=\"company.name or ''\">[Company Name]</t>님\n"
+"                    </td></tr>\n"
+"                    <tr><td style=\"text-align:center;\">\n"
+"                    <hr width=\"100%\" style=\"background-"
+"color:rgb(204,204,204);border:medium none;clear:both;display:block;font-"
+"size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"                </td>\n"
+"            </tr>\n"
+"            <!-- FOOTER -->\n"
+"            <tr>\n"
+"                <td align=\"center\" style=\"min-width: 590px;\">\n"
+"                <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" "
+"width=\"590\" style=\"min-width: 590px; background-color: white; font-size: "
+"11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                    <tr><td valign=\"middle\" align=\"left\">\n"
+"                        <t t-out=\"company.name or ''\">YourCompany</t>\n"
+"                    </td></tr>\n"
+"                    <tr><td valign=\"middle\" align=\"left\" style="
+"\"opacity: 0.7;\">\n"
+"                    <t t-if=\"company.phone\">\n"
+"                        <t t-out=\"company.phone or ''\">+1 650-123-4567</t> "
+"|\n"
+"                    </t>\n"
+"                    <t t-if=\"company.email\">\n"
+"                        <a t-attf-href=\"'mailto:%s' % {{ company.email }}\" "
+"style=\"text-decoration:none; color: #454748;\" t-out=\"company.email or ''\""
+">info@yourcompany.com</a> |\n"
+"                    </t>\n"
+"                    <t t-if=\"company.website\">\n"
+"                        <a t-attf-href=\"'%s' % {{ company.website }}\" style"
+"=\"text-decoration:none; color: #454748;\" t-out=\"company.website or ''\""
+">http://www.example.com</a>\n"
+"                    </t>\n"
+"                    </td></tr>\n"
+"                </table>\n"
+"                </td>\n"
+"            </tr>\n"
+"            </tbody>\n"
+"            </table>\n"
+"            </td></tr>\n"
+"            <!-- POWERED BY -->\n"
+"            <tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width="
+"\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; "
+"padding: 8px; border-collapse:separate;\">\n"
+"            <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"                Powered by <a target=\"_blank\" href="
+"\"https://www.odoo.com?utm_source=db&amp;utm_medium=mail\" t-attf-style="
+"\"color: {{company.email_secondary_color or '#875A7B'}};\">Odoo</a>\n"
+"            </td></tr>\n"
+"            </table>\n"
+"            </td></tr>\n"
+"            </table>\n"
+"        "
 
 #. module: hr_expense_stripe
 #: model:mail.template,body_html:hr_expense_stripe.email_template_hr_expense_stripe_card_ordered
@@ -590,12 +697,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
 msgid "Account Closure"
-msgstr ""
+msgstr "계좌 해지"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__account_number
 msgid "Account number"
-msgstr ""
+msgstr "계좌 번호"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.accounting_bookkeeping_services
@@ -606,7 +713,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_needaction
 msgid "Action Needed"
-msgstr ""
+msgstr "조치 필요"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_receive_wizard_form
@@ -623,12 +730,12 @@ msgstr "활성화"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.advertising_services
 msgid "Advertising Services"
-msgstr ""
+msgstr "광고 서비스"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Agricultural services"
-msgstr ""
+msgstr "농업 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.airlines_air_carriers
@@ -643,12 +750,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__spending_policy_interval__all_time
 msgid "All Time"
-msgstr ""
+msgstr "총 시간"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
 msgid "All countries"
-msgstr ""
+msgstr "모든 국가"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_list
@@ -658,12 +765,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "Allow All"
-msgstr ""
+msgstr "모두 허용"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Allowed codes"
-msgstr ""
+msgstr "허용 코드"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_form
@@ -674,7 +781,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.ambulance_services
 msgid "Ambulance Services"
-msgstr ""
+msgstr "구급차 서비스"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__amount
@@ -701,12 +808,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.antique_reproductions
 msgid "Antique Reproductions"
-msgstr ""
+msgstr "앤틱 복제품"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.antique_shops
 msgid "Antique Shops"
-msgstr ""
+msgstr "앤틱 샵"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.aquariums
@@ -732,7 +839,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_attachment_count
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "첨부 파일 수"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.auto_body_repair_shops
@@ -762,7 +869,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automobile_associations
 msgid "Automobile Associations"
-msgstr ""
+msgstr "자동차 협회"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.automotive_parts_and_accessories_stores
@@ -792,7 +899,7 @@ msgstr "베이커리"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bands_orchestras
 msgid "Bands Orchestras"
-msgstr ""
+msgstr "오케스트라 밴드"
 
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_account_bank_statement_line
@@ -817,7 +924,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bicycle_shops
 msgid "Bicycle Shops"
-msgstr ""
+msgstr "자전거 매장"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.billiard_pool_establishments
@@ -856,7 +963,7 @@ msgstr "차단"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.boat_dealers
 msgid "Boat Dealers"
-msgstr ""
+msgstr "보트 판매점"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.boat_rentals_and_leases
@@ -866,7 +973,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.book_stores
 msgid "Book Stores"
-msgstr ""
+msgstr "서점"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.books_periodicals_and_newspapers
@@ -876,12 +983,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bowling_alleys
 msgid "Bowling Alleys"
-msgstr ""
+msgstr "볼링장"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.bus_lines
 msgid "Bus Lines"
-msgstr ""
+msgstr "버스 줄"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.business_secretarial_schools
@@ -891,7 +998,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Business services"
-msgstr ""
+msgstr "비즈니스 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.buying_shopping_services
@@ -928,7 +1035,7 @@ msgstr "취소됨"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__cancellation_reason
 msgid "Cancellation Reason"
-msgstr ""
+msgstr "취소 사유"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.candy_nut_and_confectionery_stores
@@ -1376,7 +1483,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__create_uid
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "작성자"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__create_date
@@ -1386,7 +1493,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__create_date
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_product_mcc_stripe_tag__create_date
 msgid "Created on"
-msgstr ""
+msgstr "작성일"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.credit_reporting_agencies
@@ -1562,7 +1669,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_res_users__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "표시명"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.doctors
@@ -1872,7 +1979,7 @@ msgstr "팔로워"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_partner_ids
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "팔로워 (파트너)"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_product_product__stripe_mcc_ids
@@ -2018,7 +2125,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_message
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__has_message
 msgid "Has Message"
-msgstr ""
+msgstr "메시지 있음"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.health_and_beauty_spas
@@ -2194,7 +2301,7 @@ msgstr ""
 msgid ""
 "Invalid or expired signature found in the request. Please check your "
 "configuration"
-msgstr ""
+msgstr "요청 항목에 있는 서명이 유효하지 않거나 만료되었습니다. 환경설정을 확인하세요"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2215,8 +2322,9 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_is_follower
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__message_is_follower
+#, fuzzy
 msgid "Is Follower"
-msgstr ""
+msgstr "팔로워입니다"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.jewelry_stores_watches_clocks_and_silverware_stores
@@ -2625,7 +2733,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "No signature found in the request. Please check your configuration"
-msgstr ""
+msgstr "요청 내용에 서명 항목이 없습니다. 환경설정이 제대로 되어 있는지 확인하세요"
 
 #. module: hr_expense_stripe
 #. odoo-python

@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-22 12:30+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:31+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_sepa_direct_debit/nl/>\n"
 "Language: nl\n"
@@ -32,6 +32,10 @@ msgid ""
 "((object.partner_id.name).replace(' ', '_'), object.name)\n"
 "            "
 msgstr ""
+"\n"
+"                '%s_sdd_mandate_form_%s' % ((object.partner_id.name).replace("
+"' ', '_'), object.name)\n"
+"            "
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -50,6 +54,9 @@ msgid ""
 "                                Make sure the mandate isn't meant for the "
 "parent contact."
 msgstr ""
+".\n"
+"                                Zorg ervoor dat het mandaat niet bedoeld is "
+"voor het bovenliggende contact."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_batch_payment_form_inherit
@@ -57,31 +64,33 @@ msgid ""
 ".\n"
 "                        SEPA requires a 5 days notice."
 msgstr ""
+".\n"
+"                        SEPA vereist een kennisgevingstermijn van 5 dagen."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "123456789"
-msgstr ""
+msgstr "123456789"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "2023-08-10"
-msgstr ""
+msgstr "10/08/2023"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "2023-09-10"
-msgstr ""
+msgstr "10/09/2023"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "380055"
-msgstr ""
+msgstr "380055"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "3956012345678"
-msgstr ""
+msgstr "3956012345678"
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,body_html:account_sepa_direct_debit.email_template_sdd_new_mandate
@@ -121,20 +130,20 @@ msgstr ""
 "\n"
 "                        Beste <t t-out="
 "\"object.partner_id.display_name or ''\">Azure Interior</t>\n"
+"                       <br/>\n"
 "                        <br/>\n"
-"                        <br/>\n"
-"                        Hierbij ontvang je jouw SEPA-incassomandaat om te "
-"ondertekenen. Met dit mandaat geef je\n"
-"                        <t t-out=\"object.company_id.display_name or ''\""
+"                        Hier is je SEPA-incassomandaat om te ondertekenen. "
+"Daarmee geef je\n"
+"                       <t t-out=\"object.company_id.display_name or ''\""
 ">JouwBedrijf</t>\n"
-"                        toestemming om betaalopdrachten naar je bank te "
-"sturen en je rekening automatisch te laten debiteren volgens de instructies "
-"van\n"
-"                        <t t-out=\"object.company_id.display_name or ''\""
+"                        toestemming om instructies te sturen naar je bank om "
+"je rekening te debiteren in overeenstemming met de instructies van\n"
+"                       <t t-out=\"object.company_id.display_name or ''\""
 ">JouwBedrijf</t>\n"
-"                        Neem gerust contact met ons op als je vragen hebt.\n"
-"                        <br/>\n"
-"                        Met vriendelijke groet,\n"
+"                        Aarzel niet om contact met ons op te nemen als je "
+"vragen hebt.\n"
+"                       <br/>\n"
+"                        Met vriendelijke groeten,\n"
 "                        <t t-if=\"not is_html_empty(user.signature)\" data-o"
 "-mail-quote-container=\"1\">\n"
 "                            <br/><br/>\n"
@@ -149,7 +158,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "<span> day(s)</span>"
-msgstr ""
+msgstr "<span> dag(en)</span>"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -685,6 +694,8 @@ msgid ""
 "A SEPA direct debit version should be selected to generate the addresses in "
 "the export file."
 msgstr ""
+"Er moet een SEPA-incassoversie worden geselecteerd om de adressen in het "
+"exportbestand te genereren."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -692,12 +703,15 @@ msgstr ""
 msgid ""
 "A SEPA direct debit version should be selected to generate the export file."
 msgstr ""
+"Er moet een SEPA-incassoversie worden geselecteerd om het exportbestand te "
+"genereren."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "A customer account is required to validate a SEPA Direct Debit mandate."
 msgstr ""
+"Je hebt een klantenaccount nodig om een SEPA-incassomandaat te valideren."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -753,7 +767,7 @@ msgstr "Alle betalingen in de batch moeten hetzelfde SDD-schema hebben."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Antwerp"
-msgstr ""
+msgstr "Antwerpen"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -776,6 +790,8 @@ msgid ""
 "Ask the bank to group the bank transactions corresponding to these payments "
 "into a single transaction."
 msgstr ""
+"Vraag de bank om de banktransacties die overeenkomen met deze betalingen te "
+"groeperen in één transactie."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_attachment_count
@@ -785,7 +801,7 @@ msgstr "Aantal bijlagen"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__author_id
 msgid "Author"
-msgstr ""
+msgstr "Auteur"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__account_batch_payment__sdd_scheme__b2b
@@ -811,17 +827,17 @@ msgstr "Batchbetaling"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Belgium"
-msgstr ""
+msgstr "België"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__body_has_template_value
 msgid "Body content is the same as the template"
-msgstr ""
+msgstr "De inhoud is hetzelfde als het sjabloon"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Building C"
-msgstr ""
+msgstr "Gebouw C"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -837,12 +853,12 @@ msgstr "CORE"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "CREDIT-1234"
-msgstr ""
+msgstr "KREDIET-1234"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__can_edit_body
 msgid "Can Edit Body"
-msgstr ""
+msgstr "Kan inhoud bewerken"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -853,13 +869,13 @@ msgstr "Annuleren"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__sdd_mandate__state__cancelled
 msgid "Cancelled"
-msgstr ""
+msgstr "Geannuleerd"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "Check Partner(s) Email(s)"
-msgstr ""
+msgstr "E-mail(s) van partner(s) controleren"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -906,7 +922,7 @@ msgstr "Contact"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__body
 msgid "Contents"
-msgstr ""
+msgstr "Inhoud"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_payment__sdd_mandate_usable
@@ -916,7 +932,7 @@ msgstr "Kan een SDD mandaat worden gebruikt?"
 #. module: account_sepa_direct_debit
 #: model:ir.model,website_form_label:account_sepa_direct_debit.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Klant aanmaken"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -975,7 +991,7 @@ msgstr "Klanten wiens betaling die door dit mandaat beheerd moet worden."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "DEBT1234"
-msgstr ""
+msgstr "SCHULD1234"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__start_date
@@ -997,6 +1013,9 @@ msgid ""
 "Date when the company expects to receive the payments of this batch. It "
 "can't be inferior to the sending day + the minimum pre-notification period."
 msgstr ""
+"Datum waarop het bedrijf de betalingen van deze batch verwacht te ontvangen. "
+"Deze kan niet lager zijn dan de verzenddag + de minimale "
+"vooraankondigingstermijn."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1011,12 +1030,12 @@ msgstr "Identificator debiteur"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__account_journal__debit_sepa_pain_version__pain_008_001_02
 msgid "Default (Pain 008.001.02)"
-msgstr ""
+msgstr "Standaard (Pain 008.001.02)"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Demo@email.com"
-msgstr ""
+msgstr "Demo@email.com"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.act_window,name:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -1060,7 +1079,7 @@ msgstr "Weergavenaam"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__checkbox_download
 msgid "Download"
-msgstr ""
+msgstr "Downloaden"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__sdd_mandate__state__draft
@@ -1078,21 +1097,30 @@ msgid ""
 "valid.\n"
 "Revoked: Fraudulent mandates. Previous invoices might need reimbursement.\n"
 msgstr ""
+"Concept: Valideren voor gebruik.\n"
+"Actief: Geldige mandaten om betalingen te innen.\n"
+"Geannuleerd: Mandaten werden nooit gevalideerd.\n"
+"Gesloten: Vervallen of handmatig gesloten mandaten. Eerdere transacties "
+"blijven geldig.\n"
+"Ingetrokken: Frauduleuze mandaten. Eerdere facturen moeten mogelijk worden "
+"terugbetaald.\n"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__checkbox_send_mail
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,description:account_sepa_direct_debit.email_template_sdd_new_mandate
 msgid "Email requesting the customer to sign the mandate attached"
 msgstr ""
+"E-mail met het verzoek aan de klant om het bijgevoegde mandaat te "
+"ondertekenen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__template_id
 msgid "Email template"
-msgstr ""
+msgstr "E-mailsjabloon"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__end_date
@@ -1113,12 +1141,12 @@ msgstr "Elk mandaat van deze partner."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__expiration_warning_already_sent
 msgid "Expiration warning sent"
-msgstr ""
+msgstr "Vervalwaarschuwing verzonden"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_batch_payment_form_inherit
 msgid "First-Time Payments"
-msgstr ""
+msgstr "Eerste betalingen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_follower_ids
@@ -1145,31 +1173,31 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to journal"
-msgstr ""
+msgstr "Ga naar dagboek"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to mandates"
-msgstr ""
+msgstr "Ga naar mandaten"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to payments"
-msgstr ""
+msgstr "Ga naar betalingen"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Go to settings"
-msgstr ""
+msgstr "Ga naar instellingen"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_payment_register_form_inherit_account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
 msgid "Good news! A valid SEPA Mandate is available."
-msgstr ""
+msgstr "Goed nieuws! Er is een geldig SEPA-mandaat beschikbaar."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__has_message
@@ -1232,7 +1260,7 @@ msgstr "Indien aangevinkt hebben sommige berichten een leveringsfout."
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__payment_ids
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "In-process and completed payments generated under this mandate."
-msgstr ""
+msgstr "Lopende en afgeronde betalingen die onder dit mandaat zijn gegenereerd."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1277,7 +1305,7 @@ msgstr "Facturen betaald met dit mandaat."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__is_mail_template_editor
 msgid "Is Editor"
-msgstr ""
+msgstr "Is Bewerker"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_is_follower
@@ -1297,7 +1325,7 @@ msgstr "Boeking"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__lang
 msgid "Language"
-msgstr ""
+msgstr "Taal"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__write_uid
@@ -1319,12 +1347,12 @@ msgstr "Hoofdbijlage"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__mandate_id
 msgid "Mandate"
-msgstr ""
+msgstr "Mandaat"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__mandate_pdf_file
 msgid "Mandate Form PDF"
-msgstr ""
+msgstr "Pdf-mandaatformulier"
 
 #. module: account_sepa_direct_debit
 #: model:ir.actions.report,name:account_sepa_direct_debit.sdd_mandate_form_report_main
@@ -1344,7 +1372,7 @@ msgstr "Mandaat status updater"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Marc Demo"
-msgstr ""
+msgstr "Marc Demo"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_has_error
@@ -1384,7 +1412,7 @@ msgstr "Volgende activiteit type"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_payment_register__no_sdd_mandate_partner_ids
 msgid "No Sdd Mandate Partner"
-msgstr ""
+msgstr "Geen partner voor SEPA-incassomandaat"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.action_sdd_payments_to_collect
@@ -1406,6 +1434,8 @@ msgstr "Aantal fouten"
 msgid ""
 "Number of in-process and completed payments generated under this mandate."
 msgstr ""
+"Aantal lopende en afgeronde betalingen die onder dit mandaat zijn "
+"gegenereerd."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__paid_invoices_nber
@@ -1415,7 +1445,7 @@ msgstr "Aantal facturen betaald met dit mandaat."
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_needaction_counter
 msgid "Number of messages requiring action"
-msgstr ""
+msgstr "Aantal berichten die actie vereisen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__message_has_error_counter
@@ -1425,7 +1455,7 @@ msgstr "Aantal berichten met leveringsfout"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Odoo PVT LTD"
-msgstr ""
+msgstr "Odoo PVT LTD"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.actions.act_window,help:account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree_act
@@ -1470,17 +1500,20 @@ msgid ""
 "select a journal associated to one or add an IBAN bank account to the "
 "current journal"
 msgstr ""
+"Alleen IBAN-rekeningnummers kunnen SEPA-incasso's ontvangen. Selecteer een "
+"dagboek dat aan zo'n rekening is gekoppeld of voeg een IBAN-bankrekening toe "
+"aan het huidige dagboek."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Only mandates in draft state can be deleted."
-msgstr ""
+msgstr "Alleen mandaten in conceptstatus kunnen worden verwijderd."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_payment_register_form_inherit_account_sepa_direct_debit
 msgid "Oops! No valid SEPA mandate for the following partner(s):"
-msgstr ""
+msgstr "Oeps! Geen geldig SEPA-mandaat voor de volgende partner(s):"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
@@ -1491,13 +1524,13 @@ msgstr "Oeps! Geen geldige SEPA-machtiging voor deze klant."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Open customer"
-msgstr ""
+msgstr "Open klant"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Open customers"
-msgstr ""
+msgstr "Open klanten"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sdd_res_partner_view
@@ -1512,6 +1545,10 @@ msgid ""
 "usually be a placeholder expression that provides the appropriate language, "
 "e.g. {{ object.partner_id.lang }}."
 msgstr ""
+"Optionele vertaaltaal (ISO-code) om te selecteren bij het versturen van een "
+"e-mail. Als deze niet is ingesteld, wordt de taal van de hoofdpartner "
+"gebruikt. Dit moet meestal een 'placeholder expression' zijn die de juiste "
+"taal voorziet, bv. {{ object.partner_id.lang }}."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
@@ -1538,24 +1575,24 @@ msgstr "Betaald via auto incasso"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__partner_parent_id
 msgid "Parent Partner"
-msgstr ""
+msgstr "Bovenliggende partner"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "Partner should have an email address."
-msgstr ""
+msgstr "Partner moet een e-mailadres hebben."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Partner's Parent"
-msgstr ""
+msgstr "Bovenliggend contact van partner"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_payment_register
 msgid "Pay"
-msgstr ""
+msgstr "Betalen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_payment_method
@@ -1565,7 +1602,7 @@ msgstr "Betaalwijzes"
 #. module: account_sepa_direct_debit
 #: model:mail.template,subject:account_sepa_direct_debit.email_template_sdd_pre_notification
 msgid "Payment notification {{ object.memo }}"
-msgstr ""
+msgstr "Betalingsmededeling {{ object.memo }}"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_account_payment
@@ -1588,7 +1625,7 @@ msgstr "Te incasseren betalingen"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Payments without mandate"
-msgstr ""
+msgstr "Betalingen zonder mandaat"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_report_invoice_document
@@ -1604,13 +1641,13 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__pre_notification_period
 msgid "Pre-notification"
-msgstr ""
+msgstr "Kennisgeving vooraf"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Problematic mandates"
-msgstr ""
+msgstr "Problematische mandaten"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__rating_ids
@@ -1620,17 +1657,17 @@ msgstr "Beoordelingen"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__recipient_ids
 msgid "Recipients"
-msgstr ""
+msgstr "Ontvangers"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__render_model
 msgid "Rendering Model"
-msgstr ""
+msgstr "Weergavemodel"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_batch_payment__sdd_required_collection_date
 msgid "Required Collection Date"
-msgstr ""
+msgstr "Vereiste incassodatum"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__activity_user_id
@@ -1655,7 +1692,7 @@ msgstr "SDD mandaat intrekken"
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "Rue de la Loi, 16"
-msgstr ""
+msgstr "Wetstraat, 16"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_payment_search
@@ -1682,7 +1719,7 @@ msgstr "Incassomandaat"
 #. module: account_sepa_direct_debit
 #: model:ir.model,name:account_sepa_direct_debit.model_sdd_mandate_send
 msgid "SDD Mandate Send"
-msgstr ""
+msgstr "SEPA-incassomandaat verzenden"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_batch_payment__sdd_scheme
@@ -1721,7 +1758,7 @@ msgstr "SEPA automatische incasso"
 #. module: account_sepa_direct_debit
 #: model:mail.template,name:account_sepa_direct_debit.email_template_sdd_pre_notification
 msgid "SEPA Direct Debit Customer Pre-Notification mail"
-msgstr ""
+msgstr "SEPA-incasso: Aankondigings-e-mail aan klanten"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -1731,12 +1768,12 @@ msgstr "SEPA-mandaat Europese domiciliëring"
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_account_journal__debit_sepa_pain_version
 msgid "SEPA Direct Debit Pain Version"
-msgstr ""
+msgstr "SEPA-incasso Pain-versie"
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,name:account_sepa_direct_debit.email_template_sdd_new_mandate
 msgid "SEPA Direct Debit Sending"
-msgstr ""
+msgstr "Verzending SEPA-incasso"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_res_company__sdd_creditor_identifier
@@ -1750,7 +1787,7 @@ msgstr ""
 #: model:mail.template,name:account_sepa_direct_debit.email_template_sdd_mandate_expiring
 #: model:mail.template,subject:account_sepa_direct_debit.email_template_sdd_mandate_expiring
 msgid "SEPA Direct Debit mandate expiration warning"
-msgstr ""
+msgstr "Waarschuwing vervaldatum SEPA-incassomandaat"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1765,24 +1802,24 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_journal_form
 msgid "SEPA Pain Version"
-msgstr ""
+msgstr "SEPA-PAIN-versie"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_account_journal_form
 msgid "SEPA Pain version"
-msgstr ""
+msgstr "SEPA-PAIN-versie"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_payment_register_form_inherit_account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_account_payment_form
 msgid "SEPA Scheme operates in Euro."
-msgstr ""
+msgstr "Het SEPA-systeem werkt in euro."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "SEPA direct debit stateless customer"
-msgstr ""
+msgstr "Klant zonder SEPA-incassomandaat"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1792,16 +1829,19 @@ msgid ""
 "days to allow enough time for the customer to check that their account is "
 "adequately funded."
 msgstr ""
+"De SEPA-regels bepalen dat de minimale termijn voor de vooraankondiging "
+"minstens %s dagen bedraagt, zodat de klant voldoende tijd heeft om te "
+"controleren of zijn rekening toereikend saldo heeft."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA-CUST-001"
-msgstr ""
+msgstr "SEPA-CUST-001"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
 msgid "SEPA1234"
-msgstr ""
+msgstr "SEPA1234"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__message_has_sms_error
@@ -1825,29 +1865,30 @@ msgstr "SDD mandaat"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_payment.py:0
 msgid "Select a SEPA Direct Debit version before generating the XML."
-msgstr ""
+msgstr "Selecteer een SEPA-incassoversie voordat je de XML genereert."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Send"
-msgstr ""
+msgstr "Verzenden"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_send_form
 msgid "Send & Print"
-msgstr ""
+msgstr "Verzenden & afdrukken"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__is_sent
 msgid "Sent to the customer"
-msgstr ""
+msgstr "Verzonden naar de klant"
 
 #. module: account_sepa_direct_debit
 #: model:mail.template,description:account_sepa_direct_debit.email_template_sdd_pre_notification
 msgid "Sent to the customer to indicate their account will be charged"
 msgstr ""
+"Verzonden naar de klant om aan te geven dat hun rekening wordt gedebiteerd"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1863,13 +1904,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Some payments are linked to an inactive mandate."
-msgstr ""
+msgstr "Sommige betalingen zijn gekoppeld aan een inactief mandaat."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/account_batch_payment.py:0
 msgid "Some payments are not linked to any mandate."
-msgstr ""
+msgstr "Sommige betalingen zijn niet gekoppeld aan een mandaat."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__start_date
@@ -1898,7 +1939,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__subject
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_send_form
 msgid "Subject"
-msgstr ""
+msgstr "Onderwerp"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_account_batch_payment__sdd_scheme
@@ -1932,6 +1973,10 @@ msgid ""
 "the mandate is already known by them.\n"
 "The minimum collection date must be %(date)s."
 msgstr ""
+"De bank moet ten minste %(min_days_new)s dagen van tevoren op de hoogte "
+"worden gesteld voor incasso's met betrekking tot een nieuw mandaat en "
+"%(min_days)s dagen van tevoren als het mandaat al bij hen bekend is.\n"
+"De minimale incassodatum moet %(date)s zijn."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1944,7 +1989,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "The customer must have a country"
-msgstr ""
+msgstr "De klant moet een land hebben"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1953,6 +1998,8 @@ msgid ""
 "The debtor and creditor city name is a compulsary information when "
 "generating the SDD XML."
 msgstr ""
+"De plaatsnaam van de debiteur en crediteur is verplichte informatie bij het "
+"genereren van de SEPA-incasso-XML."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1961,6 +2008,8 @@ msgid ""
 "The debtor and creditor country is a compulsary information when generating "
 "the SDD XML."
 msgstr ""
+"Het land van de debiteur en crediteur is verplichte informatie bij het "
+"genereren van de SEPA-incasso-XML."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -1988,6 +2037,12 @@ msgid ""
 "notification period for creditors\n"
 "                    to inform debtors about an upcoming collection is"
 msgstr ""
+"Het mandaat wordt alleen gebruikt om facturen in het opgegeven tijdsbereik "
+"te betalen. Als er geen einddatum is opgegeven,\n"
+"                    moet je contact met ons opnemen om het gebruik te "
+"stoppen. De minimale kennisgevingstermijn voor schuldeisers\n"
+"                    om debiteuren te informeren over een aanstaande incasso "
+"is"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__pre_notification_period
@@ -1995,6 +2050,8 @@ msgid ""
 "The minimum notice period in days, used to inform the customer prior to "
 "collection."
 msgstr ""
+"De minimale kennisgevingstermijn in dagen die wordt gebruikt om de klant te "
+"informeren voor de incasso plaatsvindt."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -2009,7 +2066,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
 msgid "The selected customer is a child of"
-msgstr ""
+msgstr "De geselecteerde klant is een onderliggend contact van"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,help:account_sepa_direct_debit.field_sdd_mandate__name
@@ -2019,7 +2076,7 @@ msgstr "Unieke identificator van dit mandaat."
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.view_batch_payment_form_inherit
 msgid "This batch includes payments from mandates with no prior collections:"
-msgstr ""
+msgstr "Deze batch bevat betalingen van mandaten zonder eerdere incasso's:"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_report_invoice_document
@@ -2101,12 +2158,12 @@ msgstr "Type van de geregistreerde uitzonderingsactiviteit."
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Under B2B SDD Scheme, the customer must be a company."
-msgstr ""
+msgstr "In het b2b SEPA-incassoplan moet de klant een bedrijf zijn."
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields.selection,name:account_sepa_direct_debit.selection__account_journal__debit_sepa_pain_version__pain_008_001_08
 msgid "Updated 2023 (Pain 008.001.08)"
-msgstr ""
+msgstr "Bijgewerkt 2023 (Pain 008.001.08)"
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.account_sepa_direct_debit_mandate_form
@@ -2122,12 +2179,12 @@ msgstr "Geldig t/m"
 #. odoo-python
 #: code:addons/account_sepa_direct_debit/wizard/sdd_mandate_send.py:0
 msgid "View Partner(s)"
-msgstr ""
+msgstr "Partner(s) bekijken"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate_send__warnings
 msgid "Warnings"
-msgstr ""
+msgstr "Waarschuwingen"
 
 #. module: account_sepa_direct_debit
 #: model:ir.model.fields,field_description:account_sepa_direct_debit.field_sdd_mandate__website_message_ids
@@ -2146,6 +2203,8 @@ msgid ""
 "You can't pay any of the selected invoices using the SEPA Direct Debit "
 "method, as no valid mandate is available"
 msgstr ""
+"Je kan geen van de geselecteerde facturen betalen met de SEPA-"
+"incassomethode, omdat er geen geldig mandaat beschikbaar is"
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -2166,6 +2225,10 @@ msgid ""
 "(prenot_days)s days.\n"
 "The minimum required date should be %(minimum_date)s."
 msgstr ""
+"Je kan geen SEPA-incassobestand genereren met een vereiste incassodatum die "
+"vroeger ligt dan de verzenddag + de minimale vooraankondigingstermijn van "
+"%(prenot_days)s dagen.\n"
+"De minimaal vereiste datum moet %(minimum_date)s zijn."
 
 #. module: account_sepa_direct_debit
 #. odoo-python
@@ -2184,6 +2247,8 @@ msgid ""
 "day(s).\n"
 "                    It will be sent to the debtor's email."
 msgstr ""
+"dag(en).\n"
+"                    Het wordt naar het e-mailadres van de debiteur gestuurd."
 
 #. module: account_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:account_sepa_direct_debit.sdd_mandate_form
@@ -2197,7 +2262,7 @@ msgstr ""
 #. module: account_sepa_direct_debit
 #: model:mail.template,subject:account_sepa_direct_debit.email_template_sdd_new_mandate
 msgid "{{ object.partner_id.display_name }} SEPA Direct Debit Mandate"
-msgstr ""
+msgstr "{{ object.partner_id.display_name }} SEPA-incassomandaat"
 
 #~ msgid ""
 #~ "<strong>Date and place of signature:</"

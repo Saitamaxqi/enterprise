@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-21 14:23+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:31+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "account_followup/nl/>\n"
 "Language: nl\n"
@@ -28,7 +28,6 @@ msgstr ""
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
-#, fuzzy
 msgid "%(company)s Payment Reminder - %(partner)s"
 msgstr "%(company)s betaalherinnering - %(partner)s"
 
@@ -36,7 +35,7 @@ msgstr "%(company)s betaalherinnering - %(partner)s"
 #. odoo-python
 #: code:addons/account_followup/models/account_followup.py:0
 msgid "%(delay)s days (copy of %(name)s)"
-msgstr ""
+msgstr "%(delay)s dagen (kopie van %(name)s)"
 
 #. module: account_followup
 #: model:ir.actions.report,print_report_name:account_followup.action_report_followup
@@ -51,7 +50,7 @@ msgstr "15 dagen"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
 msgid "2023-09-06"
-msgstr ""
+msgstr "2023-09-06"
 
 #. module: account_followup
 #: model:account_followup.followup.line,name:account_followup.demo_followup_line2
@@ -353,6 +352,9 @@ msgid ""
 "                                Pending Invoices\n"
 "                            </strong>"
 msgstr ""
+"<strong>\n"
+"                                Openstaande facturen\n"
+"                            </strong>"
 
 #. module: account_followup
 #: model:ir.model.constraint,message:account_followup.constraint_account_followup_followup_line_uniq_name
@@ -407,12 +409,12 @@ msgstr "Voeg contacten toe om te informeren..."
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__additional_follower_ids
 msgid "Add followers"
-msgstr ""
+msgstr "Voeg volgers toe"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__join_invoices
@@ -435,7 +437,7 @@ msgstr "Automatisch"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__body_has_template_value
 msgid "Body content is the same as the template"
-msgstr ""
+msgstr "De inhoud is hetzelfde als de sjabloon"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__can_edit_body
@@ -450,7 +452,7 @@ msgstr "Annuleren"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.missing_information_view_form
 msgid "Close"
-msgstr ""
+msgstr "Afsluiten"
 
 #. module: account_followup
 #. odoo-python
@@ -481,7 +483,7 @@ msgstr "Inhoud"
 #. module: account_followup
 #: model:ir.model,website_form_label:account_followup.model_res_partner
 msgid "Create a Customer"
-msgstr ""
+msgstr "Een klant aanmaken"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__create_uid
@@ -573,7 +575,7 @@ msgstr "Definieer opvolgniveaus en de bijbehorende acties"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.followup_filter_info_template
 msgid "Demo Ref"
-msgstr ""
+msgstr "Demo Ref"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__name
@@ -634,7 +636,7 @@ msgstr "E-mail onderwerp"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
 msgid "Email Template"
-msgstr ""
+msgstr "E-mailsjabloon"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__email_recipient_ids
@@ -645,7 +647,7 @@ msgstr "Extra ontvangers"
 #. odoo-python
 #: code:addons/account_followup/models/res_partner.py:0
 msgid "Follow-up %(partner)s - %(date)s.pdf"
-msgstr ""
+msgstr "Betaalherinnering %(partner)s - %(date)s.pdf"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_followup_line
@@ -690,7 +692,7 @@ msgstr "Betalingsherinneringsstappen"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.report_followup_print_all
 msgid "Follow-up details"
-msgstr ""
+msgstr "Herinneringdetails"
 
 #. module: account_followup
 #. odoo-python
@@ -701,7 +703,7 @@ msgstr "Betalingsherinneringsbrief gegenereerd"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_missing_information_wizard
 msgid "Followup missing information wizard"
-msgstr ""
+msgstr "Wizard ontbrekende informatie herinnering"
 
 #. module: account_followup
 #: model_terms:ir.actions.act_window,help:account_followup.action_account_followup_line_definition_form
@@ -725,7 +727,7 @@ msgstr "Opvolging vierde herinnering"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__has_moves
 #: model:ir.model.fields,field_description:account_followup.field_res_users__has_moves
 msgid "Has Moves"
-msgstr ""
+msgstr "Heeft boekingen"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__id
@@ -745,6 +747,9 @@ msgid ""
 "notifications about any email reply made by the partner on the reminder "
 "email."
 msgstr ""
+"Indien ingesteld worden deze gebruikers toegevoegd als volgers op de partner "
+"en ontvangen ze meldingen over e-mailantwoorden van de partner op de "
+"herinneringsmail."
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__in_need_of_action
@@ -754,12 +759,12 @@ msgstr "Vereist actie"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_partner_property_form_followup
 msgid "Invoice Follow-ups"
-msgstr ""
+msgstr "Betaalherinneringen"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.template_followup_report
 msgid "Invoices Analysis"
-msgstr ""
+msgstr "Factuuranalyse"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__is_mail_template_editor
@@ -824,12 +829,12 @@ msgstr "Handmatig"
 #: code:addons/account_followup/models/res_partner.py:0
 #: code:addons/account_followup/wizard/followup_missing_information.py:0
 msgid "Missing information"
-msgstr ""
+msgstr "Ontbrekende informatie"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.line_template
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #. module: account_followup
 #. odoo-python
@@ -856,6 +861,10 @@ msgid ""
 "                Sending a reminder will set this date depending on the "
 "levels configuration, and you can change it manually."
 msgstr ""
+"Er wordt geen vervolgactie ondernomen vóór deze datum.\n"
+"                Het verzenden van een herinnering stelt deze datum in "
+"afhankelijk van de configuratie van de niveaus. Je kunt deze handmatig "
+"wijzigen."
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_note
@@ -919,13 +928,13 @@ msgstr "Betalingsherinneringsbrief afdrukken"
 #. module: account_followup
 #: model:ir.actions.server,name:account_followup.action_account_reports_customer_statements_do_followup
 msgid "Process Follow-ups"
-msgstr ""
+msgstr "Verwerk herinneringen"
 
 #. module: account_followup
 #. odoo-python
 #: code:addons/account_followup/models/account_followup_report.py:0
 msgid "Reference"
-msgstr ""
+msgstr "Referentie"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form
@@ -946,12 +955,12 @@ msgstr "Weergavemodel"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_ir_actions_report
 msgid "Report Action"
-msgstr ""
+msgstr "Rapport actie"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.customer_statements_search_view
 msgid "Requires Follow-up"
-msgstr ""
+msgstr "Herinnering vereist"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_followup_line__activity_default_responsible_type
@@ -1005,12 +1014,12 @@ msgstr "Verzenden en afdrukken"
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__show_print_button
 msgid "Show Print Button"
-msgstr ""
+msgstr "Toon afdrukknop"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__show_send_button
 msgid "Show Send Button"
-msgstr ""
+msgstr "Toon verzendknop"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_account_followup_manual_reminder__sms
@@ -1046,12 +1055,12 @@ msgstr "Samenvatting"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.table_header_template_followup_report
 msgid "Table Header"
-msgstr ""
+msgstr "Tabelkop"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.line_template
 msgid "Table Value"
-msgstr ""
+msgstr "Tabelwaarde"
 
 #. module: account_followup
 #: model:ir.model.fields,help:account_followup.field_account_move_line__invoice_origin
@@ -1088,13 +1097,13 @@ msgstr "Totaal"
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_all_due
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_all_due
 msgid "Total All Due"
-msgstr ""
+msgstr "Totaal te betalen"
 
 #. module: account_followup
 #: model:ir.model.fields,field_description:account_followup.field_res_partner__total_all_overdue
 #: model:ir.model.fields,field_description:account_followup.field_res_users__total_all_overdue
 msgid "Total All Overdue"
-msgstr ""
+msgstr "Totaal vervallen bedrag"
 
 #. module: account_followup
 #. odoo-python
@@ -1139,7 +1148,7 @@ msgstr "Onafgeletterd Aml"
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.missing_information_view_form
 msgid "View partners"
-msgstr ""
+msgstr "Bekijk partners"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.missing_information_view_form
@@ -1147,6 +1156,8 @@ msgid ""
 "We were not able to process some of the automated follow-up actions due to "
 "missing information on the partners."
 msgstr ""
+"We konden sommige geautomatiseerde herinneringen niet verwerken, omdat "
+"informatie over de partners ontbrak."
 
 #. module: account_followup
 #: model:ir.model.fields.selection,name:account_followup.selection__res_partner__followup_status__with_overdue_invoices
@@ -1187,7 +1198,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_followup/models/res_partner.py:0
 msgid "commercial_partner_id"
-msgstr ""
+msgstr "commercial_partner_id"
 
 #. module: account_followup
 #: model_terms:ir.ui.view,arch_db:account_followup.view_account_followup_followup_line_form

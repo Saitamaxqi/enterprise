@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-21 14:23+0000\n"
+"PO-Revision-Date: 2025-10-23 13:59+0000\n"
 "Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "documents_account/pl/>\n"
@@ -95,7 +95,7 @@ msgstr "Wszystko"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Annual Closing"
-msgstr ""
+msgstr "Roczne zamknięcie"
 
 #. module: documents_account
 #. odoo-javascript
@@ -485,24 +485,24 @@ msgstr "Inne operacje"
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_move
 msgid "Move Document To Taxes"
-msgstr ""
+msgstr "Przenieś dokument do Podatków"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_move
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_move
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_move
 msgid "Move Document to Taxes"
-msgstr ""
+msgstr "Przenieś dokument do Podatków"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_move
 msgid "Move Documents to Annual Closing"
-msgstr ""
+msgstr "Przenieś dokumenty do rocznego zamknięcia"
 
 #. module: documents_account
 #: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_move
 msgid "Move to Annual Closing"
-msgstr ""
+msgstr "Przenieś do rocznego zamknięcia"
 
 #. module: documents_account
 #: model:ir.model.fields.selection,name:documents_account.selection__ir_actions_server__state__documents_account_record_create
@@ -553,7 +553,7 @@ msgstr "Tagi"
 #. odoo-python
 #: code:addons/documents_account/models/documents_document.py:0
 msgid "Taxes"
-msgstr ""
+msgstr "Podatki"
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account

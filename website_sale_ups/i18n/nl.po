@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server saas~12.5+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:50+0000\n"
-"PO-Revision-Date: 2025-10-17 15:00+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:32+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "website_sale_ups/nl/>\n"
 "Language: nl\n"
@@ -67,7 +67,7 @@ msgstr "Weergavenaam"
 #. module: website_sale_ups
 #: model:ir.model.fields,field_description:website_sale_ups.field_sale_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: website_sale_ups
 #: model:ir.model,name:website_sale_ups.model_sale_order

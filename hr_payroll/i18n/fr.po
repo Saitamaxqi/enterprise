@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-20 13:44+0000\n"
+"PO-Revision-Date: 2025-10-23 12:13+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/fr/>\n"
@@ -557,7 +557,6 @@ msgstr "<strong><span class=\"h3-fs\">C’est parti</span></strong>"
 
 #. module: hr_payroll
 #: model_terms:web_tour.tour,rainbow_man_message:hr_payroll.payroll_tours
-#, fuzzy
 msgid ""
 "<strong>Congrats, Your first payslip is now finished. It's time for you to "
 "explore the Payroll app by yourself.</strong>"
@@ -6555,7 +6554,7 @@ msgstr "id"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 msgid "net"
-msgstr "filet"
+msgstr "net"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_light_payslip

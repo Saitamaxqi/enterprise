@@ -13,8 +13,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:51+0000\n"
-"PO-Revision-Date: 2025-10-21 11:08+0000\n"
-"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:07+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "payment_sepa_direct_debit/fr/>\n"
 "Language: fr\n"
@@ -36,22 +36,29 @@ msgid ""
 "                claimed within 8 weeks starting from the date on which your "
 "account was debited."
 msgstr ""
+". Dans le cadre de vos droits, vous avez droit à un remboursement de votre\n"
+"                banque selon les conditions de votre contrat avec celle-ci. "
+"Vos droits\n"
+"                sont expliqués dans un document que vous pouvez obtenir "
+"auprès de votre banque. Une demande de remboursement doit être\n"
+"                introduite dans un délai de 8 semaines à compter de la date "
+"du débit de votre compte."
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sepa_state_header
 msgid "<strong>Amount: </strong>"
-msgstr ""
+msgstr "<strong>Montant : </strong>"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 msgid "<strong>Date: </strong>"
-msgstr ""
+msgstr "<strong>Date : </strong>"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 msgid "<strong>Label: </strong>"
-msgstr ""
+msgstr "<strong>Libellé :</strong>"
 
 #. module: payment_sepa_direct_debit
 #: model:mail.template,body_html:payment_sepa_direct_debit.mail_template_sepa_notify_validation
@@ -279,12 +286,12 @@ msgstr ""
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 msgid "Bank Statement"
-msgstr ""
+msgstr "Relevé bancaire"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "Ligne de relevé bancaire"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
@@ -293,6 +300,9 @@ msgid ""
 "you\n"
 "                authorize (A)"
 msgstr ""
+"En complétant le virement bancaire initial avec le montant et la "
+"communication spécifiés, vous\n"
+"                autorisez (A)"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_res_partner
@@ -307,7 +317,7 @@ msgstr "Créer un client"
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_provider__custom_mode
 msgid "Custom Mode"
-msgstr ""
+msgstr "Mode personnalisé"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_account_bank_statement_line__display_name
@@ -339,12 +349,12 @@ msgstr "ID"
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_sdd_mandate__is_online_payment
 msgid "Is Online Payment"
-msgstr ""
+msgstr "Paiement en ligne"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_payment_transaction__mandate_id
 msgid "Mandate"
-msgstr ""
+msgstr "Mandat"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
@@ -355,12 +365,12 @@ msgstr "IBAN manquant ou invalide."
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_sdd_mandate__payment_transaction_count
 msgid "No. of Payment Transactions"
-msgstr ""
+msgstr "Nombre de transactions de paiement"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
 msgid "Odoo PVT LTD"
-msgstr ""
+msgstr "Odoo PVT LTD"
 
 #. module: payment_sepa_direct_debit
 #: model:ir.model,name:payment_sepa_direct_debit.model_account_payment_method
@@ -385,19 +395,19 @@ msgstr "Transaction de paiement"
 #. module: payment_sepa_direct_debit
 #: model:ir.model.fields,field_description:payment_sepa_direct_debit.field_sdd_mandate__payment_transaction_ids
 msgid "Payment Transactions"
-msgstr ""
+msgstr "Transactions"
 
 #. module: payment_sepa_direct_debit
 #. odoo-javascript
 #: code:addons/payment_sepa_direct_debit/static/src/interactions/payment_form.js:0
 msgid "Payment processing failed"
-msgstr ""
+msgstr "Échec du traitement du paiement"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "Payments Transactions"
-msgstr ""
+msgstr "Transactions de paiement"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
@@ -428,7 +438,7 @@ msgstr "Mandat de prélèvement SEPA"
 #. module: payment_sepa_direct_debit
 #: model:ir.actions.server,name:payment_sepa_direct_debit.cron_auto_confirm_paid_sepa_txs_ir_actions_server
 msgid "SEPA Direct Debit: Confirm paid transactions"
-msgstr ""
+msgstr "Prélèvement SEPA : Confirmer les transactions payées"
 
 #. module: payment_sepa_direct_debit
 #: model:mail.template,name:payment_sepa_direct_debit.mail_template_sepa_notify_validation
@@ -473,21 +483,23 @@ msgid ""
 "This mandate was created from an online payment. Do you want to manually "
 "validate it?"
 msgstr ""
+"Ce mandat a été créé à partir d’un paiement en ligne. Souhaitez-vous le "
+"valider manuellement ?"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form_view
 msgid "Transactions"
-msgstr ""
+msgstr "Transactions"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form_view
 msgid "Validate"
-msgstr ""
+msgstr "Valider"
 
 #. module: payment_sepa_direct_debit
 #: model:mail.template,subject:payment_sepa_direct_debit.mail_template_sepa_notify_validation
 msgid "Your SEPA Direct Debit Mandate with {{ object.company_id.name }}"
-msgstr ""
+msgstr "Votre mandat de prélèvement SEPA avec {{ object.company_id.name }}"
 
 #. module: payment_sepa_direct_debit
 #. odoo-python
@@ -504,7 +516,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/payment_sepa_direct_debit/models/sdd_mandate.py:0
 msgid "id"
-msgstr ""
+msgstr "id"
 
 #. module: payment_sepa_direct_debit
 #: model_terms:ir.ui.view,arch_db:payment_sepa_direct_debit.sdd_mandate_form
@@ -514,6 +526,10 @@ msgid ""
 "bank to debit your\n"
 "                account in accordance with the instructions from"
 msgstr ""
+"à envoyer\n"
+"                des instructions à votre banque pour débiter votre compte et "
+"(B) votre banque à débiter votre\n"
+"                compte conformément aux instructions de"
 
 #~ msgid "+32123456789"
 #~ msgstr "+32123456789"

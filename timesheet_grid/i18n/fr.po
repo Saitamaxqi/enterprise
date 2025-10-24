@@ -15,8 +15,8 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-21 11:05+0000\n"
-"Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:07+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "timesheet_grid/fr/>\n"
 "Language: fr\n"
@@ -574,7 +574,7 @@ msgstr ""
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_account_analytic_line
 msgid "Analytic Line"
-msgstr ""
+msgstr "Ligne analytique"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__reminder_allow
@@ -632,7 +632,7 @@ msgstr "Confirmer le temps passé"
 #. module: timesheet_grid
 #: model:ir.model,name:timesheet_grid.model_hr_timesheet_stop_timer_confirmation_wizard
 msgid "Confirm timesheet creation when stop timer"
-msgstr ""
+msgstr "Confirmer la création de la feuille de temps à l'arrêt du minuteur"
 
 #. module: timesheet_grid
 #: model_terms:web_tour.tour,rainbow_man_message:timesheet_grid.timesheet_tour
@@ -642,7 +642,7 @@ msgstr "Félicitations, vous êtes maintenant un expert des feuilles de temps."
 #. module: timesheet_grid
 #: model:ir.model,website_form_label:timesheet_grid.model_project_task
 msgid "Create a Task"
-msgstr ""
+msgstr "Créer une tâche"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__create_uid
@@ -723,6 +723,8 @@ msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the project"
 msgstr ""
+"La différence entre les %(uom)s alloué(es) (%(allocated_hours)s) et les "
+"%(uom)s consacré(es) (%(worked_hours)s) au projet"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -731,6 +733,8 @@ msgid ""
 "Difference between the allocated %(uom)s (%(allocated_hours)s) and the %"
 "(uom)s spent (%(worked_hours)s) on the task"
 msgstr ""
+"La différence entre les %(uom)s alloué(es) (%(allocated_hours)s) et les "
+"%(uom)s consacré(es) (%(worked_hours)s) à la tâche"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -834,11 +838,13 @@ msgid ""
 "Keep track of your working hours by project every day and bill your "
 "customers for that time."
 msgstr ""
+"Suivez vos heures de travail par projet chaque jour et facturez ce temps à "
+"vos clients."
 
 #. module: timesheet_grid
 #: model:ir.ui.menu,name:timesheet_grid.menu_timesheet_grid_validate_previous_week
 msgid "Last Period"
-msgstr ""
+msgstr "Période précédente"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_merge_wizard__write_uid
@@ -881,12 +887,12 @@ msgstr "Lancez le <b>minuteur</b> pour démarrer une nouvelle activité."
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_calendar_my_timesheets/timesheet_calendar_my_timesheets_side_panel.xml:0
 msgid "Legend"
-msgstr ""
+msgstr "Légende"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Log Time"
-msgstr ""
+msgstr "Enregistrer le temps"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_merge_wizard_view_form
@@ -931,6 +937,10 @@ msgid ""
 "timesheet drafts in the original project. Although they won't be visible "
 "here, you can still edit them using the Timesheets app."
 msgstr ""
+"Le transfert de cette tâche vers un projet sans utilisation de feuilles de "
+"temps permet de garder les brouillons de feuilles de temps dans le projet "
+"d'origine. Bien qu'ils ne soient pas visibles ici, vous pouvez toujours les "
+"modifier à l'aide de l'application Feuilles de temps."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_search
@@ -955,13 +965,13 @@ msgstr "Mon équipe"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_hr_timesheet_stop_timer_confirmation_wizard__timesheet_name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/views/timesheet_grid/timesheet_grid_renderer.js:0
 msgid "No timesheets found. Let's create one!"
-msgstr ""
+msgstr "Aucune feuille de temps trouvée. Créons-en une !"
 
 #. module: timesheet_grid
 #: model_terms:ir.actions.act_window,help:timesheet_grid.timesheet_grid_to_validate_action
@@ -1004,7 +1014,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
 msgid "Open Form"
-msgstr ""
+msgstr "Ouvrir le formulaire"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1054,7 +1064,7 @@ msgstr "Remettre en brouillon"
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form
 msgid "Resume Timer"
-msgstr ""
+msgstr "Reprendre la minuterie"
 
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_res_config_settings__timesheet_rounding
@@ -1110,7 +1120,7 @@ msgstr ""
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "Shift"
-msgstr ""
+msgstr "Shift"
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1218,13 +1228,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_project.py:0
 msgid "This Progress Bar is not implemented."
-msgstr ""
+msgstr "Cette barre de progression n'est pas mise en œuvre."
 
 #. module: timesheet_grid
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "This project isn't expected to have task during this period."
-msgstr ""
+msgstr "Ce projet n'est pas censé avoir de tâches durant cette période."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1233,6 +1243,8 @@ msgid ""
 "This user isn't expected to have any projects assigned during this period "
 "because they don't have any running contract."
 msgstr ""
+"Cet utilisateur n’est pas censé avoir de projets assignés durant cette "
+"période car il n’a aucun contrat en cours."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1270,7 +1282,7 @@ msgstr "Feuille de temps grille mixin"
 #. module: timesheet_grid
 #: model:ir.model.fields,field_description:timesheet_grid.field_project_task__timesheet_unit_amount
 msgid "Timesheet Unit Amount"
-msgstr ""
+msgstr "Quantité d’unité feuille de temps"
 
 #. module: timesheet_grid
 #: model:ir.actions.server,name:timesheet_grid.timesheet_reminder_ir_actions_server
@@ -1301,6 +1313,8 @@ msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be deleted."
 msgstr ""
+"Les feuilles de temps avant le %(date)s (inclus) ont été validées et ne "
+"peuvent plus être supprimées."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1309,6 +1323,8 @@ msgid ""
 "Timesheets before the %(date)s (included) have been validated, and can no "
 "longer be modified."
 msgstr ""
+"Les feuilles de temps avant le %(date)s (inclus) ont été validées et ne "
+"peuvent plus être modifiées."
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1429,7 +1445,7 @@ msgstr "Ligne validée"
 #. odoo-python
 #: code:addons/timesheet_grid/models/project_task.py:0
 msgid "Warning"
-msgstr ""
+msgstr "Avertissement"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.timesheet_view_grid
@@ -1456,7 +1472,7 @@ msgstr ""
 #: code:addons/timesheet_grid/models/hr_employee.py:0
 #: code:addons/timesheet_grid/models/res_users.py:0
 msgid "You are not allowed to see timesheets."
-msgstr ""
+msgstr "Vous n'êtes pas autorisé à voir les feuilles de temps."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1482,7 +1498,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/timesheet_grid/models/account_analytic_line.py:0
 msgid "You can't encode numbers with more than six digits."
-msgstr ""
+msgstr "Vous ne pouvez pas encoder des nombres de plus de six chiffres."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1509,6 +1525,8 @@ msgid ""
 "You cannot delete a validated entry. Please contact your manager or your "
 "timesheet approver."
 msgstr ""
+"Vous ne pouvez pas supprimer une entrée validée. Contactez votre manager ou "
+"l'approbateur de vos feuilles de temps."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1535,6 +1553,10 @@ msgid ""
 "employees who are not part of your team or are not in a state that can be "
 "validated. This may be due to the fact that they are dated in the future."
 msgstr ""
+"Vous ne pouvez pas valider les feuilles de temps sélectionnées, car elles "
+"appartiennent à des employés qui ne font pas partie de votre équipe ou ne "
+"sont pas dans un statut permettant de les valider. Cela peut être dû au fait "
+"qu'elles sont datées dans le futur."
 
 #. module: timesheet_grid
 #. odoo-python
@@ -1543,6 +1565,9 @@ msgid ""
 "Your timesheet entry is missing a project. Please either group the Grid view "
 "by project or enter your timesheets by adding a line via the Form view."
 msgstr ""
+"Il manque un projet à votre entrée de la feuille de temps. Veuillez "
+"regrouper la vue de grille par projet ou accédez à vos feuilles de temps en "
+"ajoutant une ligne à partir de la vue Formulaire."
 
 #. module: timesheet_grid
 #: model:ir.model.fields.selection,name:timesheet_grid.selection__res_company__timesheet_mail_employee_interval__months
@@ -1560,7 +1585,7 @@ msgstr "après la fin de la semaine"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "and click on"
-msgstr ""
+msgstr "et cliquez sur"
 
 #. module: timesheet_grid
 #: model_terms:ir.ui.view,arch_db:timesheet_grid.res_config_settings_view_form
@@ -1578,13 +1603,13 @@ msgstr "min"
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 msgid "or"
-msgstr ""
+msgstr "ou"
 
 #. module: timesheet_grid
 #. odoo-javascript
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "or click on"
-msgstr ""
+msgstr "ou cliquez sur"
 
 #. module: timesheet_grid
 #. odoo-javascript
@@ -1598,7 +1623,7 @@ msgstr "pour ajouter"
 #: code:addons/timesheet_grid/static/src/components/grid_timesheet_timer_header/grid_timesheet_timer_header.xml:0
 #: code:addons/timesheet_grid/static/src/components/timesheet_timer_header/timesheet_timer_header.xml:0
 msgid "to launch the timer"
-msgstr ""
+msgstr "pour lancer le minuteur"
 
 #~ msgid "%s Spent"
 #~ msgstr "%s passé"

@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-22 15:56+0000\n"
+"PO-Revision-Date: 2025-10-23 06:46+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "appointment/nl/>\n"
@@ -1160,6 +1160,207 @@ msgid ""
 "</div>\n"
 "            "
 msgstr ""
+"<div style=\"font-size: 13px; color: #374151;\">\n"
+"    <t t-set=\"recurrent\" t-value=\"object.recurrence_id and not "
+"ctx.get('calendar_template_ignore_recurrence')\"/>\n"
+"    <t t-set=\"mail_tz\" t-value="
+"\"object._get_mail_tz() or ctx.get('mail_tz')\"/>\n"
+"    <t t-set=\"appointment_booker_name\" t-value="
+"\"object.appointment_booker_id.display_name\"/>\n"
+"    <h1 style=\"font-size: 18px; font-weight: bold; color: #374151;\">\n"
+"        <t t-if=\"not object.appointment_type_id.is_always_confirm and "
+"object.appointment_status == 'request'\">Afspraak aangevraagd</t>\n"
+"        <t t-else=\"\">\n"
+"            Boeking bevestigd\n"
+"            <img src=\"/calendar/static/src/img/check-circle.png\" style="
+"\"border:0; width: 24px; height: 24px; margin-left: 10px; text-"
+"decoration:none; vertical-align: bottom;\"/>\n"
+"        </t>\n"
+"    </h1>\n"
+"    <p style=\"margin: 0;\">\n"
+"        <span style=\"display: block; margin-top: 8px;\">\n"
+"            <t t-out=\"appointment_booker_name or ''\">John Booker</t>\n"
+"            <t t-if=\"not object.appointment_type_id.is_always_confirm and "
+"object.appointment_status == 'request'\"> heeft de volgende afspraak "
+"aangevraagd: </t>\n"
+"            <t t-else=\"\"> heeft de volgende afspraak geboekt:</t>\n"
+"            <t t-out=\"object.appointment_type_id.name or ''\">Technische "
+"demo</t>\n"
+"            <t t-if=\"object.appointment_type_id.category not in "
+"['custom', 'anytime'] and object.appointment_type_id.schedule_based_on == "
+"'users' and object.partner_id\">\n"
+"                met <t t-out=\"object.partner_id.name or ''\">Brandon "
+"Freeman</t>\n"
+"            </t>.\n"
+"        </span>\n"
+"    </p>\n"
+"    <div style=\"text-align: center; padding: 16px 0px 16px 0px; margin-top: "
+"16px;\">\n"
+"        <a t-attf-href="
+"\"/calendar/meeting/join?token={{ object.access_token }}\" t-attf-style="
+"\"display: inline-block; padding: 7px 14px; color: {{"
+"user.company_id.email_primary_color or '#FFFFFF'}}; text-decoration: none; "
+"background-color: {{user.company_id.email_secondary_color or '#875A7B'}}; "
+"border-radius: 3px\">\n"
+"            Deelnemen</a>\n"
+"        <a t-attf-href=\"/odoo/calendar.event/{{ object.id }}\" t-attf-style="
+"\"display: inline-block; margin-left: 12px; padding: 7px 14px; color: "
+"#111827; text-decoration: none; background-color: #E7E9ED; border-radius: "
+"3px;\">\n"
+"            Bekijken</a>\n"
+"    </div>\n"
+"    <div style=\"margin: 16px 0 0;\">\n"
+"        <h2 t-attf-style=\"margin-bottom: 12px; font-size: 14px; font-weight:"
+" bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};\""
+">Details</h2>\n"
+"        <table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" style=\"font-"
+"size: 13px; color: #374151;\">\n"
+"            <tr>\n"
+"                <td style=\"width: 100px; color: #676F7B;\">Datum &amp; "
+"Tijd</td>\n"
+"                <td style=\"font-weight: bold;\">\n"
+"                    <t t-out=\"format_datetime(dt=object.start, tz=mail_tz "
+"if not object.allday else None, dt_format='EEEE', lang_code=object.env.lang) "
+"or ''\">Woensdag</t>\n"
+"                    <t t-out=\"format_datetime(dt=object.start, tz=mail_tz "
+"if not object.allday else None, dt_format='d', lang_code=object.env.lang) or "
+"''\">1</t>\n"
+"                    <t t-out=\"format_datetime(dt=object.start, tz=mail_tz "
+"if not object.allday else None, dt_format='MMMM y', "
+"lang_code=object.env.lang) or ''\">januari 2020</t>\n"
+"                    <t t-if=\"not object.allday\">\n"
+"                        <t t-out=\"format_time(time=object.start, "
+"tz=mail_tz, time_format='short', lang_code=object.env.lang) or ''\">8:00</t>"
+"\n"
+"                        <t t-if="
+"\"not object.appointment_type_id.hide_timezone and mail_tz\">\n"
+"                            <span style=\"font-size: 11px; font-weight: "
+"normal;\">\n"
+"                                (<t t-out=\"mail_tz\"/>)\n"
+"                            </span>\n"
+"                        </t>\n"
+"                    </t>\n"
+"                </td>\n"
+"            </tr>\n"
+"            <tr t-if=\"recurrent\">\n"
+"                <td style=\"width: 100px; padding-top: 6px; color: #676F7B;\""
+">Wanneer?</td>\n"
+"                <td style=\"padding-top: 6px;\"><t t-out=\""
+"object.recurrence_id.name or ''\">Elke week, voor 3 afspraken</t></td>\n"
+"            </tr>\n"
+"            <tr t-if=\"not object.appointment_type_id.hide_duration and not "
+"object.allday and object.duration\">\n"
+"                <td style=\"width: 100px; padding-top: 6px; color: #676F7B;\""
+">Duur</td>\n"
+"                <td style=\"padding-top: 6px;\"><t t-out=\"('%dH%02d' % "
+"(object.duration,round(object.duration*60)%60)) or ''\">0H30</t></td>\n"
+"            </tr>\n"
+"            <tr t-if=\"object.location\">\n"
+"                <td style="
+"\"width: 100px; padding-top: 6px; color: #676F7B; vertical-align: top;\""
+">Locatie</td>\n"
+"                <td style=\"padding-top: 6px;\">\n"
+"                    <t t-out=\"object.location or ''\">Brussel</t>\n"
+"                    <a target=\"_blank\" t-if="
+"\"object.location != object.appointment_type_id.location_id.name\" t-attf-"
+"href=\"http://maps.google.com/maps?oi=map&amp;q={{ object.location }}\" style"
+"=\"margin-left: 12px; font-size: 12px; color: #008f8c; text-decoration: "
+"underline;\">Kaart bekijken</a>\n"
+"                </td>\n"
+"            </tr>\n"
+"            <tr t-if=\"object.appointment_type_id.manage_capacity\">\n"
+"                <td style=\"width: 100px; padding-top: 6px; color: #676F7B;\""
+">Voor</td>\n"
+"                <td style=\"padding-top: 6px;\"><t t-out=\"object."
+"total_capacity_reserved\"/> Deelnemers</td>\n"
+"            </tr>\n"
+"            <tr t-if=\"not object.appointment_type_id.is_auto_assign and "
+"object.appointment_resource_ids\">\n"
+"                <td style="
+"\"width: 100px; padding-top: 6px; color: #676F7B; vertical-align: top;\""
+">Resources</td>\n"
+"                <td style=\"padding-top: 6px;\">\n"
+"                    <ul style=\"padding: 0 15px;\">\n"
+"                        <li t-foreach=\"object.appointment_resource_ids\" "
+"t-as=\"resource\">\n"
+"                            <span style=\"margin-left:5px\" t-out="
+"\"resource.name or ''\">Tafel 1</span>\n"
+"                        </li>\n"
+"                    </ul>\n"
+"                </td>\n"
+"            </tr>\n"
+"            <tr t-if=\"object.videocall_redirection\">\n"
+"                <td style=\"width: 100px; padding-top: 6px; color: #676F7B;\""
+">\n"
+"                    <t t-if=\"object.videocall_source == 'discuss'\""
+">Deelnemen met:</t>\n"
+"                    <t t-else=\"\">Deelnemen</t>\n"
+"                </td>\n"
+"                <td style=\"padding-top: 6px;\">\n"
+"                    <a t-attf-href=\"{{ object.videocall_redirection }}\" "
+"target=\"_blank\" style=\"color: #008f8c;\">\n"
+"                        <t t-if=\"object.videocall_source == 'discuss'\""
+">Odoo Chat</t>\n"
+"                        <t t-else=\"\">Videovergadering</t>\n"
+"                    </a>\n"
+"                </td>\n"
+"            </tr>\n"
+"        </table>\n"
+"    </div>\n"
+"    <div style=\"margin: 32px 0 0;\">\n"
+"        <h2 t-attf-style=\"margin-bottom: 12px; font-size: 14px; font-weight:"
+" bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};\""
+">Deelnemers</h2>\n"
+"        <div t-foreach=\"object.attendee_ids\" t-as=\"attendee\" style"
+"=\"margin-bottom: 5px;\">\n"
+"            <img t-if=\"attendee.state\" t-attf-src="
+"\"/calendar/static/src/img/state_{{ attendee.state }}.png\" style="
+"\"border:0; width: 15px; height: 15px; vertical-align: text-bottom;\"/>\n"
+"            <t t-if=\"attendee.common_name\">\n"
+"                <span style=\"margin-left: 5px\" t-out="
+"\"attendee.common_name or ''\">Mitchell Admin</span>\n"
+"            </t>\n"
+"            <t t-else=\"\">\n"
+"                <span style=\"margin-left:5px\">Jij</span>\n"
+"            </t>\n"
+"        </div>\n"
+"    </div>\n"
+"    <div t-if=\"not is_html_empty(object.description)\" style="
+"\"margin: 32px 0 0;\">\n"
+"        <h2 t-attf-style=\"margin-bottom: 12px; font-size: 14px; font-weight:"
+" bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};\""
+">Beschrijving van het evenement</h2>\n"
+"        <div t-out=\"object.description\"/>\n"
+"    </div>\n"
+"    <t t-set=\"upcoming_appointments\" t-value=\"("
+"object.appointment_booker_id.upcoming_appointment_ids - "
+"object).sorted('start')\"/>\n"
+"    <div t-if=\"upcoming_appointments\" style=\"margin: 32px 0 0;\">\n"
+"        <t t-set=\"appointment_booker_id\" t-value="
+"\"object.appointment_booker_id.id\"/>\n"
+"        <h2 t-attf-style=\"margin-bottom: 12px; font-size: 14px; font-weight:"
+" bold; color: {{user.company_id.email_secondary_color or '#875A7B'}};\">Je "
+"aankomende afspraken</h2>\n"
+"        <ul style=\"margin: 6px 0 0; padding: 0 18px;\">\n"
+"            <li style=\"margin-top: 6px;\" t-foreach=\""
+"upcoming_appointments\" t-as=\"upcoming_appointment\">\n"
+"                <span t-out="
+"\"upcoming_appointment.appointment_type_id.name or ''\">Technische "
+"Demo</span>\n"
+"                <span style=\"margin: 0 10px;\">-</span>\n"
+"                <span t-out=\"upcoming_appointment.start or ''\" t-options=\""
+"{&quot;widget&quot;: &quot;datetime&quot;, &quot;format&quot;: "
+"&quot;medium&quot;, &quot;tz_name&quot;: mail_tz}\" style=\"font-weight: "
+"bold;\">20 juni, 15:00</span>\n"
+"                <a t-attf-href=\"/calendar/view/"
+"#{upcoming_appointment.access_token}?partner_id=#{appointment_booker_id}"
+"\" target=\"_blank\" style=\"margin-left: 10px; font-size: 12px; color: "
+"#008f8c; text-decoration: underline;\">Details weergeven</a>\n"
+"            </li>\n"
+"        </ul>\n"
+"    </div>\n"
+"</div>\n"
+"            "
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -1184,8 +1385,9 @@ msgstr "<i class=\"fa fa-clock-o text-400 me-1\" title=\"Datum en tijd\"/>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
+#, fuzzy
 msgid "<i class=\"fa fa-cubes text-600\" title=\"Resources\"/>"
-msgstr ""
+msgstr "<i class=\"fa fa-cubes text-600\" title=\"Resources\"/>"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
@@ -2532,7 +2734,7 @@ msgstr "Datum &amp; tijd"
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__punctual
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Date-limited"
-msgstr ""
+msgstr "Begrensde periode"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
@@ -2679,7 +2881,7 @@ msgstr "Tijdvelden van weergegeven categorieën"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Displayed when the field is empty"
-msgstr ""
+msgstr "Wordt weergegeven als het veld leeg is"
 
 #. module: appointment
 #. odoo-python
@@ -2718,7 +2920,7 @@ msgstr "E-mail*"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Emails & SMS"
-msgstr ""
+msgstr "E-mails & sms"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_manage_leaves__leave_end_dt
@@ -2753,7 +2955,7 @@ msgstr "Elke"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__extra_comment
 msgid "Extra Comment"
-msgstr ""
+msgstr "Extra opmerkingen"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form_custom_share
@@ -2763,7 +2965,7 @@ msgstr "Extra bericht bij bevestiging"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "Extra comments..."
-msgstr ""
+msgstr "Extra opmerkingen..."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_confirmation
@@ -2773,13 +2975,13 @@ msgstr "Extra informatie verstrekt zodra de afspraak is geboekt."
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__flexible
 msgid "Flexible"
-msgstr ""
+msgstr "Flexibel"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__custom
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Flexible Schedule"
-msgstr ""
+msgstr "Flexibel rooster"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_home_appointment
@@ -2879,6 +3081,8 @@ msgid ""
 "How users and resources will be assigned to the meetings that customers book "
 "on your website."
 msgstr ""
+"Hoe gebruikers en resources worden toegewezen aan de vergaderingen die "
+"klanten op je website boeken."
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer__id
@@ -2911,7 +3115,7 @@ msgstr "Icoon om uitzondering op activiteit aan te geven."
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_invite__identical_config_id
 msgid "Identical Config"
-msgstr ""
+msgstr "Identieke configuratie"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_needaction
@@ -3025,7 +3229,7 @@ msgstr "Afbeelding 512"
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_default
 msgid "Include by default in new appointment types."
-msgstr ""
+msgstr "Standaard opnemen in nieuwe afspraaktypes."
 
 #. module: appointment
 #. odoo-javascript
@@ -3052,7 +3256,7 @@ msgstr "Introductiebericht"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Introduction Page"
-msgstr ""
+msgstr "Introductiepagina"
 
 #. module: appointment
 #. odoo-javascript
@@ -3080,7 +3284,7 @@ msgstr "Uitnodiging voor {{ object.event_id.name }}"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_always_confirm
 msgid "Is Always Confirm"
-msgstr ""
+msgstr "Is Altijd bevestigen"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__message_is_follower
@@ -3095,7 +3299,7 @@ msgstr "Is gepubliceerd"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_question__is_reusable
 msgid "Is Reusable"
-msgstr ""
+msgstr "Is herbruikbaar"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3148,23 +3352,24 @@ msgstr ""
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let customers book a resource such as a room, a tennis court, etc."
 msgstr ""
+"Laat klanten een resource reserveren, zoals een kamer, een tennisbaan, enz."
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let customers book a table in your restaurant or bar"
-msgstr ""
+msgstr "Laat klanten een tafel reserveren in je restaurant of bar"
 
 #. module: appointment
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Let others book a meeting in your calendar"
-msgstr ""
+msgstr "Laat anderen een vergadering in je agenda boeken"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #. module: appointment
 #. odoo-javascript
@@ -3268,12 +3473,12 @@ msgstr "Ik"
 #. odoo-python
 #: code:addons/appointment/models/templates/appointment_type.py:0
 msgid "Meeting"
-msgstr ""
+msgstr "Vergadering"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_calendar_event__name
 msgid "Meeting Subject"
-msgstr ""
+msgstr "Onderwerp van de vergadering"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_meeting_details
@@ -3289,7 +3494,7 @@ msgstr "Omleidings-URL voor vergadering"
 #. odoo-python
 #: code:addons/appointment/controllers/calendar_view.py:0
 msgid "Meeting with %(name)s"
-msgstr ""
+msgstr "Vergadering met %(name)s"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_kanban
@@ -3330,12 +3535,12 @@ msgstr "Mijn afspraken"
 #. odoo-javascript
 #: code:addons/appointment/static/src/views/appointment_calendar/appointment_calendar_controller.xml:0
 msgid "My Calendar"
-msgstr ""
+msgstr "Mijn agenda"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "My Calendar Link"
-msgstr ""
+msgstr "Mijn agendalink"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_search
@@ -3425,7 +3630,7 @@ msgstr "Nog geen gegevens!"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form
 msgid "No show"
-msgstr ""
+msgstr "Niet op komen dagen"
 
 #. module: appointment
 #. odoo-python
@@ -3438,7 +3643,7 @@ msgstr "Geen"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Not Reusable"
-msgstr ""
+msgstr "Niet herbruikbaar"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_calendar_event__alarm_ids
@@ -3481,7 +3686,7 @@ msgstr "Odoo Chat"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_time_display__punctual_fields
 msgid "On specific dates"
-msgstr ""
+msgstr "Op specifieke data"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__slot_type__unique
@@ -3523,7 +3728,7 @@ msgstr ""
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_invite_view_form
 msgid "Oops! The extension \""
-msgstr ""
+msgstr "Oeps! De uitbreiding \""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -3582,12 +3787,12 @@ msgstr "Persoon die de afspraak reserveert"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__phone
 msgid "Phone Number"
-msgstr ""
+msgstr "Telefoonnummer"
 
 #. module: appointment
 #: model:appointment.question,name:appointment.appointment_question_phone
 msgid "Phone number"
-msgstr ""
+msgstr "Telefoonnummer"
 
 #. module: appointment
 #. odoo-javascript
@@ -3644,7 +3849,7 @@ msgstr "Vragen"
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Questions & Answers"
-msgstr ""
+msgstr "Vragen & antwoorden"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_question__question_type__radio
@@ -3789,7 +3994,7 @@ msgstr "Beperken tot gebruikers"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_search
 msgid "Reusable"
-msgstr ""
+msgstr "Herbruikbaar"
 
 #. module: appointment
 #. odoo-javascript
@@ -3836,6 +4041,7 @@ msgstr "Planning op basis van"
 msgid ""
 "Schedule a video meeting in a virtual room with one or more participants"
 msgstr ""
+"Plan een videovergadering in een virtuele ruimte met een of meer deelnemers"
 
 #. module: appointment
 #. odoo-javascript
@@ -3920,7 +4126,7 @@ msgstr "Selecteer een tijdstip"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__is_date_first
 msgid "Select date and time first"
-msgstr ""
+msgstr "Selecteer eerst datum en tijd"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_answer_input__value_answer_id
@@ -4048,7 +4254,7 @@ msgstr "Slottype"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "Slots"
-msgstr ""
+msgstr "Tijdsloten"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__message_intro
@@ -4059,7 +4265,7 @@ msgstr "Korte omschrijving van het afspraaktype."
 #. odoo-python
 #: code:addons/appointment/controllers/appointment.py:0
 msgid "Some required answers are missing in the form."
-msgstr ""
+msgstr "Sommige verplichte antwoorden ontbreken in het formulier."
 
 #. module: appointment
 #. odoo-javascript
@@ -4164,7 +4370,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__select_first
 msgid "Starts with"
-msgstr ""
+msgstr "Begint met"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_form_gantt_booking
@@ -4363,6 +4569,8 @@ msgstr ""
 #: model:ir.model.constraint,message:appointment.constraint_appointment_slot_check_start_and_end_datetimes
 msgid "The unique slot end datetime must be later than the start datetime."
 msgstr ""
+"De einddatum en -tijd van het slot moet later zijn dan de startdatum en "
+"-tijd."
 
 #. module: appointment
 #. odoo-javascript
@@ -4450,12 +4658,12 @@ msgstr "Dit is een voorbeeld van het klantafspraakformulier."
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "This question is used by"
-msgstr ""
+msgstr "Deze vraag wordt gebruikt door"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__extra_comment
 msgid "This will appear below the question in the appointment form."
-msgstr ""
+msgstr "Dit verschijnt onder de vraag in het afsprakenformulier."
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_slot__weekday__4
@@ -4606,6 +4814,21 @@ msgid ""
 "            - Calendar Link: the user will create and share to another user "
 "an appointment type covering all their time slots"
 msgstr ""
+"Wordt gebruikt om de categorie van dit afspraaktype te definiëren.\n"
+"\n"
+"        Mogelijke opties:\n"
+"\n"
+"            - Wekelijks schema: de standaardcategorie, wekelijks "
+"terugkerende slots. Toegankelijk vanaf de website\n"
+"\n"
+"            - Begrensde periode: regelmatige slots beperkt tussen 2 datums. "
+"Toegankelijk vanaf de website\n"
+"\n"
+"            - Flexibel schema: de gebruiker kan een aangepast afspraaktype "
+"met zelfgekozen tijdvensters maken en delen met een andere gebruiker\n"
+"\n"
+"            - Agendalink: de gebruiker maakt een afspraaktype met al zijn "
+"tijdslots en deelt dit met een andere gebruiker"
 
 #. module: appointment
 #: model:res.groups,name:appointment.group_appointment_user
@@ -4615,7 +4838,7 @@ msgstr "Gebruiker"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__select_first__user_resource
 msgid "User / Resource"
-msgstr ""
+msgstr "Gebruiker / Resource"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__user_capacity
@@ -4638,7 +4861,7 @@ msgstr "Videogesprek"
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_type__event_videocall_source
 msgid "Video Link"
-msgstr ""
+msgstr "Videolink"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -4673,18 +4896,20 @@ msgstr "Weekdag"
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_slot_scheduling__weekly
 msgid "Weekly"
-msgstr ""
+msgstr "Wekelijks"
 
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category__recurring
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_search
 msgid "Weekly Schedule"
-msgstr ""
+msgstr "Wekelijks schema"
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_type__select_first
 msgid "What is selected first by the customer when booking an appointment."
 msgstr ""
+"Wat als eerste wordt geselecteerd door de klant bij het boeken van een "
+"afspraak."
 
 #. module: appointment
 #: model:ir.model.fields,help:appointment.field_appointment_question__is_reusable
@@ -4692,6 +4917,8 @@ msgid ""
 "Will appear in the list of available questions when adding one in any "
 "appointment. Always true for default questions."
 msgstr ""
+"Verschijnt in de lijst met beschikbare vragen als je er een toevoegt aan een "
+"afspraak. Altijd waar voor standaardvragen."
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.staff_user_select
@@ -4706,7 +4933,7 @@ msgstr ""
 #. module: appointment
 #: model:ir.model.fields.selection,name:appointment.selection__appointment_type__category_time_display__recurring_fields
 msgid "Within the next"
-msgstr ""
+msgstr "Binnen de volgende"
 
 #. module: appointment
 #: model:ir.model.fields,field_description:appointment.field_appointment_resource__resource_calendar_id
@@ -4745,7 +4972,7 @@ msgstr "Je keuze"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "appointments"
-msgstr ""
+msgstr "afspraken"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_info
@@ -4760,17 +4987,17 @@ msgstr "voor"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "at least"
-msgstr ""
+msgstr "minstens"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "days,"
-msgstr ""
+msgstr "dagen,"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_question_view_form
 msgid "e.g. \"Anything else we should know?\""
-msgstr ""
+msgstr "bv. \"Is er nog iets dat we moeten weten?\""
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4794,7 +5021,7 @@ msgstr ""
 #. module: appointment
 #: model:appointment.question,placeholder:appointment.appointment_question_phone
 msgid "e.g. +1 555-555-5555"
-msgstr ""
+msgstr "bv. +1 555-555-5555"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_manage_leaves_view_form
@@ -4847,7 +5074,7 @@ msgstr "bijv. john.smith@example.com"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.calendar_event_view_gantt_kanban_popover
 msgid "guests"
-msgstr ""
+msgstr "gasten"
 
 #. module: appointment
 #. odoo-javascript
@@ -4869,17 +5096,17 @@ msgstr "uur(en) en kan op dit moment niet worden geannuleerd.<br/>"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "hour(s) before start time"
-msgstr ""
+msgstr "uur voor aanvangstijd"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "hour(s) before the booking"
-msgstr ""
+msgstr "uur voor de boeking"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "of total capacity"
-msgstr ""
+msgstr "van de totale capaciteit"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_validated
@@ -4896,7 +5123,7 @@ msgstr "personen"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "seats max"
-msgstr ""
+msgstr "plaatsen (max)"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
@@ -4907,6 +5134,11 @@ msgid ""
 "                                    <span invisible=\"schedule_based_on != "
 "'resources'\">resource</span>"
 msgstr ""
+"gelijktijdige afspraken \n"
+"                                    per <span invisible="
+"\"schedule_based_on != 'users'\">gebruiker</span>\n"
+"                                   <span invisible="
+"\"schedule_based_on != 'resources'\">resource</span>"
 
 #. module: appointment
 #. odoo-python
@@ -4934,7 +5166,7 @@ msgstr "t/m"
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.appointment_type_view_form
 msgid "up to"
-msgstr ""
+msgstr "tot"
 
 #. module: appointment
 #: model_terms:ir.ui.view,arch_db:appointment.portal_my_appointments
@@ -4949,3 +5181,7 @@ msgid ""
 "== 'request' else 'Appointment Booked: ' }}"
 "{{ object.appointment_type_id.name }}"
 msgstr ""
+"{{ 'Afspraak aangevraagd: ' if not "
+"object.appointment_type_id.is_always_confirm and object.appointment_status "
+"== 'request' else 'Afspraak geboekt: ' }}{{ object.appointment_type_id.name "
+"}}"

@@ -7,13 +7,14 @@
 # Jolien De Paepe, 2023
 #
 # Bren Driesen <brdri@odoo.com>, 2025.
+# "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-17 14:59+0000\n"
-"Last-Translator: Bren Driesen <brdri@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 08:31+0000\n"
+"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_repair/nl/>\n"
 "Language: nl\n"
@@ -31,7 +32,7 @@ msgstr "Reparatieorder aanmaken"
 #. module: helpdesk_repair
 #: model:ir.model,website_form_label:helpdesk_repair.model_helpdesk_ticket
 msgid "Create a Ticket"
-msgstr ""
+msgstr "Een ticket aanmaken"
 
 #. module: helpdesk_repair
 #: model:ir.model.fields,field_description:helpdesk_repair.field_helpdesk_ticket__display_name
@@ -48,7 +49,7 @@ msgstr "Helpdeskticket"
 #: model:ir.model.fields,field_description:helpdesk_repair.field_helpdesk_ticket__id
 #: model:ir.model.fields,field_description:helpdesk_repair.field_repair_order__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: helpdesk_repair
 #. odoo-python
@@ -84,7 +85,7 @@ msgstr "Aantal reparaties"
 #. odoo-python
 #: code:addons/helpdesk_repair/models/helpdesk_ticket.py:0
 msgid "id"
-msgstr ""
+msgstr "ID"
 
 #~ msgid "Helpdesk Team"
 #~ msgstr "Helpdeskteam"

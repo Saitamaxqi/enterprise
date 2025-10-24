@@ -21,13 +21,14 @@
 # Maksym <ms@myodoo.pl>, 2023
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marta (wacm)" <wacm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-17 13:21+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 10:56+0000\n"
+"Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/approvals/"
 "pl/>\n"
 "Language: pl\n"
@@ -68,12 +69,12 @@ msgstr "1200"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-check text-success me-1\"/>Approve"
-msgstr ""
+msgstr "<i class=\"fa fa-check text-success me-1\"/>Zatwierdź"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<i class=\"fa fa-times text-danger me-1\"/>Refuse"
-msgstr ""
+msgstr "<i class=\"fa fa-times text-danger me-1\"/>Odmów"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_form
@@ -93,7 +94,7 @@ msgstr "<span class=\"fw-bold\">Do</span>"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_kanban
 msgid "<span class=\"mx-1\">-</span>"
-msgstr ""
+msgstr "<span class=\"mx-1\">-</span>"
 
 #. module: approvals
 #: model:ir.model.fields,field_description:approvals.field_approval_request__message_needaction
@@ -160,7 +161,7 @@ msgid ""
 "Allows you to define which documents you would like to create once the "
 "request has been approved"
 msgstr ""
-"Pozwala zdefiniować które dokumenty chcesz utworzyć gdy zapytanie zostanie "
+"Pozwala zdefiniować które dokumenty chcesz utworzyć, gdy zapytanie zostanie "
 "zaakceptowane."
 
 #. module: approvals
@@ -184,6 +185,7 @@ msgstr "Dodatkowa referencja która powinny być wyszczególniona."
 #: model:ir.model.constraint,message:approvals.constraint_approval_approver_unique_request_user
 msgid "An approver with the same user already exists for this request."
 msgstr ""
+"Istnieje już osoba zatwierdzająca z tym samym użytkownikiem dla tego żądania."
 
 #. module: approvals
 #. odoo-python
@@ -579,7 +581,7 @@ msgstr "Dokumenty:"
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_request_view_form
 msgid "E.g: Expenses Paris business trip"
-msgstr "Np. wydatki na podróż służbową do Paryża."
+msgstr "Np. wydatki na podróż służbową do Paryża"
 
 #. module: approvals
 #: model_terms:ir.ui.view,arch_db:approvals.approval_category_view_kanban
@@ -1351,7 +1353,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/approvals/models/approval_request.py:0
 msgid "The request has been approved by an Approval Officer"
-msgstr "Prośba została zatwierdzona przez osobę zatwierdzającą."
+msgstr "Prośba została zatwierdzona przez osobę zatwierdzającą"
 
 #. module: approvals
 #: model:res.groups,comment:approvals.group_approval_user

@@ -15,13 +15,14 @@
 # Jaroslaw Kaczmarski, 2022
 # Tadeusz Karpiński <tadeuszkarpinski@gmail.com>, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# "Marta (wacm)" <wacm@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0beta+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-17 13:22+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-23 15:40+0000\n"
+"Last-Translator: \"Marta (wacm)\" <wacm@odoo.com>\n"
 "Language-Team: Polish <https://translate.odoo.com/projects/odoo-19/"
 "helpdesk_timesheet/pl/>\n"
 "Language: pl\n"
@@ -43,6 +44,8 @@ msgstr "# Zgłoszeń"
 #: code:addons/helpdesk_timesheet/wizard/timesheet_merge_wizard.py:0
 msgid "All timesheets must be linked to the same helpdesk ticket."
 msgstr ""
+"Cała ewidencja czasu pracy musi być powiązana z tym samym zgłoszeniem "
+"helpdesk."
 
 #. module: helpdesk_timesheet
 #: model:ir.model.fields,field_description:helpdesk_timesheet.field_helpdesk_ticket__analytic_account_id
@@ -158,7 +161,7 @@ msgstr "Menedżer"
 #. module: helpdesk_timesheet
 #: model:ir.model,name:helpdesk_timesheet.model_hr_timesheet_merge_wizard
 msgid "Merge Timesheets"
-msgstr ""
+msgstr "Połącz karty czasu pracy"
 
 #. module: helpdesk_timesheet
 #. odoo-python

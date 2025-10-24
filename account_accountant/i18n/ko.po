@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-14 00:34+0000\n"
+"PO-Revision-Date: 2025-10-24 02:05+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/ko/>\n"
@@ -403,7 +403,7 @@ msgstr "첨부 파일"
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__message_attachment_count
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__message_attachment_count
 msgid "Attachment Count"
-msgstr ""
+msgstr "첨부 파일 수"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__attachment_ids
@@ -494,7 +494,7 @@ msgstr "은행거래명세서.pdf"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
 msgid "Based on"
-msgstr ""
+msgstr "기준:"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_form_bank_rec_widget
@@ -662,7 +662,7 @@ msgstr "작성자"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.account_accountant_view_account_reconcile_model_search
 msgid "Created by User"
-msgstr ""
+msgstr "다음 사용자가 작성"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_auto_reconcile_wizard__create_date
@@ -764,7 +764,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__deferred_expense_amount_computation_method
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__deferred_expense_amount_computation_method
 msgid "Deferred Expense Based on"
-msgstr ""
+msgstr "이연 비용 기준"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__deferred_expense_journal_id
@@ -787,7 +787,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__deferred_revenue_amount_computation_method
 #: model:ir.model.fields,field_description:account_accountant.field_res_config_settings__deferred_revenue_amount_computation_method
 msgid "Deferred Revenue Based on"
-msgstr ""
+msgstr "이연 수익 기준"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_res_company__deferred_revenue_journal_id
@@ -1033,7 +1033,7 @@ msgstr "팔로워"
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__message_partner_ids
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__message_partner_ids
 msgid "Followers (Partners)"
-msgstr ""
+msgstr "팔로워 (파트너)"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -1123,8 +1123,9 @@ msgstr ""
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__has_message
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__has_message
+#, fuzzy
 msgid "Has Message"
-msgstr ""
+msgstr "메시지 있음"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_account__id
@@ -1230,7 +1231,7 @@ msgstr "청구서 변경 마감일"
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement__message_is_follower
 #: model:ir.model.fields,field_description:account_accountant.field_account_bank_statement_line__message_is_follower
 msgid "Is Follower"
-msgstr ""
+msgstr "팔로워입니다"
 
 #. module: account_accountant
 #: model:ir.model.fields,field_description:account_accountant.field_account_reconcile_wizard__is_rec_pay_account
