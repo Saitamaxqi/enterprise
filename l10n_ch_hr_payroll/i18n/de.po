@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-10-23 12:10+0000\n"
+"PO-Revision-Date: 2025-10-24 12:10+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
@@ -631,27 +631,27 @@ msgstr "(1510) Tantiemen VR"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1900
 msgid "(1900) Free meals"
-msgstr "(1900) Kostenlose Mahlzeiten"
+msgstr "(1900) Gratisverpflegung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1901
 msgid "(1901) Free room"
-msgstr "(1901) Kostenloses Zimmer"
+msgstr "(1901) Gratisunterkunft Zimmer"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1902
 msgid "(1902) Free accommodation"
-msgstr "(1902) Kostenlose Unterkunft"
+msgstr "(1902) Gratiswohnung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1910
 msgid "(1910) Private share of company car"
-msgstr "(1910) Privater Anteil am Firmenwagen"
+msgstr "(1910) Privatanteil Geschäftswagen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1920
 msgid "(1920) Tips subject to AHV contributions"
-msgstr "(1920) Trinkgelder, die der AHV-Beitragspflicht unterliegen"
+msgstr "(1920) Trinkgeld (AHV-pflichtig)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1950
@@ -671,187 +671,187 @@ msgstr "(1955) Geldwerter Vorteil"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1960
 msgid "(1960) Taxable profit-sharing rights"
-msgstr ""
+msgstr "(1960) Steuerbare Beteiligungsrechte"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1961
 msgid "(1961) Employee shares"
-msgstr ""
+msgstr "(1961) Arbeitnehmeraktien"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1962
 msgid "(1962) Employee options"
-msgstr ""
+msgstr "(1962) Mitarbeiteroptionen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1971
 msgid "(1971) Employee portion of KTG assumed by employer"
-msgstr ""
+msgstr "(1971) Vom AG übern. AN-Anteil NBUV"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1972
 msgid "(1972) Employee portion benefits purchase PP assumed by employer"
-msgstr ""
+msgstr "(1972) Vom AG übern. AN-Anteil Einkauf BVG"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1973
 msgid "(1973) Employee portion benefits purchase PP assumed by employer"
-msgstr ""
+msgstr "(1973) Vom AG übern. AN-Anteil Einkauf BVG"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1974
 msgid "(1974) Employee portion CM assumed by employer"
-msgstr ""
+msgstr "(1974) Vom AG übern. AN-Anteil Krankenkasse"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1975
 msgid "(1975) Optional employer contribution AANP"
-msgstr ""
+msgstr "(1975) Optionaler NBUV-Beitrag von Arbeitgeberseite"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1976
 msgid "(1976) Optional employer contribution LAAC"
-msgstr ""
+msgstr "(1976) Optionaler UVGZ-Beitrag von Arbeitgeberseite"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1977
 msgid "(1977) 3rd pillar B paid by employer"
-msgstr ""
+msgstr "(1977) Vom Arbeitgeber übern. Säule 3 B"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1978
 msgid "(1978) 3rd pillar A paid by employer"
-msgstr ""
+msgstr "(1978) Vom Arbeitgeber übern. Säule 3 A"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1979
 msgid "(1979) Source-Tax paid by employer"
-msgstr ""
+msgstr "(1979) Vom Arbeitgeber gezahlte Quellensteuer"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_1980
 msgid "(1980) Further training (salary certificate)"
-msgstr ""
+msgstr "(1980) Weiterbildung (Lohnausweis)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2000
 msgid "(2000) Loss-of-earnings indemnity (APG)"
-msgstr ""
+msgstr "(2000) Erwerbsausfallsentschädigung (APG)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2005
 msgid "(2005) Military compensation benefit (CCM)"
-msgstr ""
+msgstr "(2005) Militärdienstkasse (MDK)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2010
 msgid "(2010) Subsidiary military fund"
-msgstr ""
+msgstr "(2010) Militärergänzungskasse (MEK)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2015
 msgid "(2015) Parifonds"
-msgstr ""
+msgstr "(2015) Parifonds"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2020
 msgid "(2020) Military insurance compensation"
-msgstr ""
+msgstr "(2020) MV-Taggeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2021
 msgid "(2021) Military insurance pension"
-msgstr ""
+msgstr "(2021) MV-Rente"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2022
 msgid "(2022) Partial pension military insurance (AM)"
-msgstr ""
+msgstr "(2022) Teilrente Militärversicherung (MV)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2025
 msgid "(2025) DI allowance"
-msgstr ""
+msgstr "(2025) IV-Taggeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2026
 msgid "(2026) DI pension"
-msgstr ""
+msgstr "(2026) IV-Rente"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2027
 msgid "(2027) Partial DI pension"
-msgstr ""
+msgstr "(2027) IV-Teilrente"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2030
 msgid "(2030) Accident - daily allowance"
-msgstr ""
+msgstr "(2030) Unfall – Taggeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2031
 msgid "(2031) Accident - Pension"
-msgstr ""
+msgstr "(2031) Unfall – Rente"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2032
 msgid "(2032) Accident - Partial Pension"
-msgstr ""
+msgstr "(2032) Unfall – Teilrente"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2035
 msgid "(2035) Daily sickness allowance"
-msgstr "(2035) Kranken-Taggeld"
+msgstr "(2035) Krankentagegeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2040
 msgid "(2040) Maternity/Paternity allowance"
-msgstr ""
+msgstr "(2040) Mutter-/Vaterschaftsentschädigung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2050
 msgid "(2050) Third Party Correction"
-msgstr "(2050) Korrektur Taggelder"
+msgstr "(2050) Korrektur durch Dritte"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2060
 msgid "(2060) Short-time work monthly"
-msgstr ""
+msgstr "(2060) Kurzarbeit monatlich"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2065
 msgid "(2065) Short-time work hourly"
-msgstr ""
+msgstr "(2065) Kurzarbeit stündlich"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2070
 msgid "(2070) ALV compensation"
-msgstr ""
+msgstr "(2070) ALV-Entschädigung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_2075
 msgid "(2075) Waiting day"
-msgstr ""
+msgstr "(2075) Karenztag"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3000
 msgid "(3000) Child allowance"
-msgstr "(3000) Kinderzulage"
+msgstr "(3000) Kindergeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3001
 msgid "(3001) Backpayment Child allowance"
-msgstr ""
+msgstr "(3001) Nachzahlung Kindergeld"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_3004_input_fcf
 msgid "(3004) Child allowance paid by FCF (Geneva)"
-msgstr ""
+msgstr "(3004) Zahlung des Kindergeldes durch FCF (Genf)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_3005_input_fcf
 msgid "(3005) Child allowance back payment paid by FCF (Geneva)"
-msgstr ""
+msgstr "(3005) Nachzahlung des Kindergeldes durch FCF (Genf)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3010
@@ -861,17 +861,17 @@ msgstr "(3010) Ausbildungszulage"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3011
 msgid "(3011) Backpayment Education allowance"
-msgstr ""
+msgstr "(3011) Nachzahlung Ausbildungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_3014_input_fcf
 msgid "(3014) Education allowance paid by FCF (Geneva)"
-msgstr ""
+msgstr "(3014) Zahlung der Ausbildungszulage durch FCF (Genf)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_3015_input_fcf
 msgid "(3015) Backpayment Education allowance paid by FCF (Geneva)"
-msgstr ""
+msgstr "(3015) Nachzahlung der Ausbildungszulage durch FCF (Genf)"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3030
@@ -881,112 +881,112 @@ msgstr "(3030) Familienzulage"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3031
 msgid "(3031) Family allowance Backpayment"
-msgstr ""
+msgstr "(3031) Nachzahlung der Familienzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3032
 msgid "(3032) Household allowance"
-msgstr ""
+msgstr "(3032) Haushaltszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3033
 msgid "(3033) Backpayment Household allowance"
-msgstr ""
+msgstr "(3033) Nachzahlung Haushaltszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3034
 msgid "(3034) Childbirth allowance"
-msgstr ""
+msgstr "(3034) Geburtszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3035
 msgid "(3035) Wedding allowance"
-msgstr ""
+msgstr "(3035) Heiratzulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3036
 msgid "(3036) Attendant care allowance"
-msgstr ""
+msgstr "(3036) Betreuungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_3037
 msgid "(3037) Backpayment Attendant care allowance"
-msgstr ""
+msgstr "(3037) Nachzahlung Betreuungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_4900
 msgid "(4900) Net/Gross compensation"
-msgstr ""
+msgstr "(4900) Netto-/Bruttovergütung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_5050
 msgid "(5050) PP Contributions"
-msgstr ""
+msgstr "(5050) BVG-Beiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_5051
 msgid "(5051) PP Benefits Purchase"
-msgstr ""
+msgstr "(5051) BVG-Einkaufs-Beiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_5052
 msgid "(5052) PP Complementary Contributions"
-msgstr ""
+msgstr "(5052) BVG-Zusatzbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5060
 msgid "(5060) Source-Tax : Manual Correction"
-msgstr "(5060) QST-Betrag A0N"
+msgstr "(5060) Quellensteuer: Manuelle Korrektur"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5080
 msgid "(5080) Deduction Private portion of company car"
-msgstr ""
+msgstr "(5080) Abzug Privatanteil Geschäftswagen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5081
 msgid "(5081) Deduction for Prosecution Office"
-msgstr ""
+msgstr "(5081) Abzug für die Staatsanwaltschaft"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5082
 msgid "(5082) Alimony Deduction"
-msgstr ""
+msgstr "(5082) Abzug für Unterhaltszahlungen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5100
 msgid "(5100) Correction benefits in kind"
-msgstr ""
+msgstr "(5100) Ausgleich Naturalleistungen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5110
 msgid "(5110) Cash Advantage Correction"
-msgstr ""
+msgstr "(5110) Korrektur des geldwerten Vorteils"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_5111
 msgid "(5111) PP Employer Contributions Compensation"
-msgstr ""
+msgstr "(5111) BVG-Arbeitgeberbeiträge Vergütung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_5112
 msgid "(5112) PP Benefits Purchase Employer Contributions Compensation"
-msgstr ""
+msgstr "(5112) BVG-Leistungen Einkauf Arbeitgeberbeiträge Vergütung"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5300
 msgid "(5300) Joint Commission"
-msgstr ""
+msgstr "(5300) Paritätische Kommission"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5310
 msgid "(5310) Joint National Commission"
-msgstr ""
+msgstr "(5310) Nationale paritätische Kommission"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_5400
 msgid "(5400) General AVS Deduction in %"
-msgstr ""
+msgstr "(5400) Allgemeiner AHV-Abzug in %"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6000
@@ -996,32 +996,32 @@ msgstr "(6000) Ausgaben für Reisen, Auto, Übernachtung"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6020
 msgid "(6020) Effective expenses expatriates"
-msgstr ""
+msgstr "(6020) Effektive Spesen Expatriate"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6030
 msgid "(6030) Other Effective Expenses"
-msgstr ""
+msgstr "(6030) Übrige effektive Spesen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6035
 msgid "(6035) Lump sum professional expenses expatriates"
-msgstr ""
+msgstr "(6035) Pauschale Berufsspesen von Auswanderern"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6040
 msgid "(6040) Lump-sum representation expenses"
-msgstr "(6040) Pauschale Vertretungskosten"
+msgstr "(6040) Pauschale Repräsentationsspesen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6050
 msgid "(6050) Lump sum car expenses"
-msgstr ""
+msgstr "(6050) Pauschale Autospesen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_6070
 msgid "(6070) Other lump sum expenses"
-msgstr ""
+msgstr "(6070) Übrige Pauschalspesen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_6510
@@ -1031,32 +1031,32 @@ msgstr "(6510) Vorauszahlung"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_7050
 msgid "(7050) PP Employer Contributions"
-msgstr ""
+msgstr "(7050) BVG-Arbeitgeberbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_7051
 msgid "(7051) PP Benefits Purchase Employer Contributions"
-msgstr ""
+msgstr "(7051) BVG-Leistungen Einkauf Arbeitgeberbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_input_WT_7052
 msgid "(7052) PP Complementary Employer Contributions"
-msgstr ""
+msgstr "(7052) BVG-Arbeitgeber-Zusatzbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7300
 msgid "(7300) Joint Commission Employer"
-msgstr ""
+msgstr "(7300) Paritätische Kommission für Arbeitgeber"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7310
 msgid "(7310) Joint National Commission Employer"
-msgstr ""
+msgstr "(7310) Nationale paritätische Kommission Arbeitgeber"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_7400
 msgid "(7400) General AVS Deduction in % Employer"
-msgstr ""
+msgstr "(7400) Allgemeiner AHV-Abzug in % Arbeitgeber"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,print_report_name:l10n_ch_hr_payroll.action_report_individual_account
@@ -1231,7 +1231,7 @@ msgstr "2.2 Privatanteil Geschäftsfahrzeug"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_salary_rule__l10n_ch_salary_certificate__2_3
 msgid "2.3 Personal use of the company car"
-msgstr ""
+msgstr "2.3 Privatanteil Geschäftsfahrzeug"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_salary_certificate_report_xml
@@ -1489,7 +1489,7 @@ msgstr "<span>/ 20 Tage pro Monat</span>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_contract_template_form_view
 msgid "<span>/ lesson</span>"
-msgstr ""
+msgstr "<span>/ Unterricht</span>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
@@ -1561,7 +1561,7 @@ msgstr "<strong>Beschäftigungsgrad: </strong>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "<strong>Address: </strong>"
-msgstr ""
+msgstr "<strong>Adresse: </strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
@@ -1631,7 +1631,7 @@ msgstr "<strong>Versicherungsnummer:</strong>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "<strong>Job Position: </strong>"
-msgstr ""
+msgstr "<strong>Stelle: </strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
@@ -2141,7 +2141,7 @@ msgstr "Gesamtbeschäftigungsgrad"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_ACTIVITYRATE
 msgid "Activity Rate in %"
-msgstr ""
+msgstr "Beschäftigungsgrad in %"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_absence_leave_view_form
@@ -2295,7 +2295,7 @@ msgstr "Aggregationstyp"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
 msgid "Agricole Company"
-msgstr ""
+msgstr "Landwirtschaftsunternehmen"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_agricole_company
@@ -2308,7 +2308,7 @@ msgstr "Landwirtschaftsbetrieb"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5082
 msgid "Alimony Deduction"
-msgstr ""
+msgstr "Abzug für Unterhaltszahlungen"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_1102
@@ -2841,12 +2841,12 @@ msgstr "CH-Code"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_is_report
 msgid "CH IS Report"
-msgstr ""
+msgstr "CH: IS-Bericht"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_ch_yearly_report
 msgid "CH Yearly Report"
-msgstr ""
+msgstr "CH: Jahresbericht"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -3016,6 +3016,8 @@ msgstr "Interoperabilität prüfen"
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
 msgid "Check this box if your company is in the agricole sector."
 msgstr ""
+"Kreuzen Sie dieses Kästchen an, wenn Ihr Unternehmen im Agrarsektor tätig "
+"ist."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_child_allowance_indirect
@@ -3161,6 +3163,44 @@ msgid ""
 "         Regular BVG-LPP contributions must in principle be transmitted as "
 "negative values."
 msgstr ""
+"Code-Bedeutung:\n"
+"    - I: Bruttogrundgehalt und regelmäßige Zulagen\n"
+"        - Gewöhnliches Gehalt, das gezahlt wird, z. B. monatlich, stündlich, "
+"nach Anzahl, bei Heimarbeit usw.\n"
+"        - Regelmäßig gezahlte Zulagen, wie z. B. Zulagen für die Position "
+"oder für die Dauer der Betriebszugehörigkeit,\n"
+"          für den Wohnort, für die Unterkunft, für Reisen oder für "
+"Lebenshaltungskosten.\n"
+"        - Trinkgelder werden nach Abzug der AHV-Beiträge ausgezahlt.\n"
+"        - Regelmäßige Zahlungen (bei jeder Gehaltszahlung) einer Provision, "
+"eines Umsatzbeitrags oder eines anderen\n"
+"          regelmäßig gezahlten Bonus.\n"
+"    - J: Bruttovergütung für Schicht-, Sonntags- oder Nachtarbeit und andere "
+"Erschwerniszulagen\n"
+"          (Vergütung für Bereitschaftsdienst, schmutzige Arbeit usw.)\n"
+"    - K: Gesamtbetrag der vom Arbeitgeber gezahlten Familienzulagen in Form "
+"von Kinderzulagen,\n"
+"          Berufsausbildungsbeihilfen, Haushaltszulagen oder "
+"Betreuungsbeihilfen.\n"
+"    - Y: Leistungen, die von Versicherungen oder ähnlichen Einrichtungen "
+"erbracht werden und sich\n"
+"          auf die Arbeitnehmerbeiträge auswirken\n"
+"    - L: Betrag von AHV/IV/EO/ALV/- (1. Grundpfeiler) und NBUV-Beiträgen "
+"(Arbeitnehmeranteil).\n"
+"         Nicht inbegiffen:\n"
+"            - der Arbeitgeberanteil,\n"
+"            - der Parifonds,\n"
+"            - Krankentaggeldversicherung (KTG),\n"
+"            - UVGZ-Zusatzunfallversicherung\n"
+"            - Sozialbeiträge müssen grundsätzlich in Form von negativen "
+"Werten übermittelt werden.\n"
+"    - M: Höhe der herkömmlichen Beiträge (Arbeitnehmeranteil) zur "
+"beruflichen Vorsorge (BVG) oder\n"
+"         der 2. Grundpfeiler gemäß den gesetzlichen, satzungsmäßigen oder "
+"behördlichen Bestimmungen.\n"
+"         Der angegebene Betrag sollte keine Tilgungsbeiträge enthalten.\n"
+"         Regelmäßige BVG-LPP-Beiträge müssen grundsätzlich als negative "
+"Werte übermittelt werden."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,help:l10n_ch_hr_payroll.field_hr_salary_rule__l10n_ch_yearly_statement
@@ -3208,6 +3248,52 @@ msgid ""
 "            - payment of contributions to recognized forms of linked "
 "individual pension provision (3rd pillar a)."
 msgstr ""
+"Codebedeutung:\n"
+"    - O: 13. Gehalt wird gezahlt (mit dem 14. und den folgenden), sofern es "
+"sich nicht um einen Bonus handelt\n"
+"    - P: Auszahlung von Überstunden\n"
+"    - Q: Sporadische Leistungen, z. B.\n"
+"            - Boni,\n"
+"            - leistungsbasierte Belohnungen,\n"
+"            - Gewinn- oder Umsatzbeteiligung,\n"
+"            - Einstellungsprämien und Abfindungen,\n"
+"            - Treueboni, Prämien und Geschenke für die Dauer der "
+"Betriebszugehörigkeit,\n"
+"            - Festes Ausgleichsgeld für Umzug,\n"
+"            - Weihnachtsgeld\n"
+"            - Vergütung für Mitglieder des Vorstands (Sitzungsgelder, "
+"Honorare usw.).\n"
+"    - R: Zusatzleistungen\n"
+"            - Unterkunft und Verpflegung (Abschnitt 2.1 des "
+"Gehaltszertifikats);\n"
+"          - der Privatanteil des Firmenwagens (Abschnitt 2.2 des "
+"Gehaltszertifikats);\n"
+"          - sonstige Gehaltsnebenleistungen (Abschnitt 2.3 des "
+"Gehaltszertifikats);\n"
+"          - Beteiligungsrechte (Abschnitt 5 des Gehaltszertifikats).\n"
+"    - S: Kapitalzahlung: Kapitalleistungen mit Rentencharakter, die vom "
+"Arbeitgeber direkt an den\n"
+"            Arbeitnehmer gezahlt werden und wahrscheinlich zu einem "
+"ermäßigten Satz besteuert werden.\n"
+"          - Abfindungen mit Vorsorgecharakter;\n"
+"          - Kapitalleistungen mit Rentencharakter;\n"
+"          - Gehaltszahlungen nach dem Tod.\n"
+"    - T: Sonstige Leistungen: Alle anderen Leistungen, die auf freiwilliger "
+"Basis vom Arbeitgeber übernommen werden,\n"
+"            obwohl sie in der Regel vom Arbeitnehmer zu zahlen sind,\n"
+"            - Teil- oder Vollübernahme der Beiträge, die der Arbeitnehmer an "
+"die BVG-Berufsversicherung,\n"
+"              einschließlich der Arbeitgeberversicherung, zu zahlen hat;\n"
+"            - Zahlungen an betriebliche Altersvorsorgeeinrichtungen (2. "
+"Grundpfeiler),\n"
+"              die der Arbeitgeber zugunsten des Arbeitnehmers leistet "
+"(Einkaufsbeiträge);\n"
+"            - Zahlung von Versicherungsbeiträgen zugunsten des Arbeitnehmers "
+"und seiner Familienangehörigen\n"
+"              (Krankenversicherung, freiwillige Versicherung der 3. "
+"Grundpfeiler b, Lebensversicherung usw.);\n"
+"            - Zahlung von Beiträgen zu anerkannten Formen der individuellen "
+"Rentenvorsorge (3. Säule a)."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -3942,7 +4028,7 @@ msgstr "Datumsangaben"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_absence_leave_view_form
 msgid "Day Period"
-msgstr ""
+msgstr "Tageszeitraum"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__ch_yearly_report__month__12
@@ -4011,6 +4097,9 @@ msgid ""
 "Declaration data is not valid, some payslips were validated with missing "
 "information, please recompute them with valid employee information"
 msgstr ""
+"Die Meldedaten sind nicht gültig. Einige Gehaltsabrechnungen wurden mit "
+"fehlenden Informationen validiert. Berechnen Sie diese erneut mit gültigen "
+"Mitarbeiterinformationen."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -4062,7 +4151,7 @@ msgstr "Beginn des Abzugs"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5081
 msgid "Deduction for Prosecution Office"
-msgstr ""
+msgstr "Abzug für die Staatsanwaltschaft"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
@@ -4491,7 +4580,7 @@ msgstr "Arbeitnehmerhistorie"
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.act_window,name:l10n_ch_hr_payroll.action_l10n_ch_occupation
 msgid "Employee Occupations"
-msgstr ""
+msgstr "Beschäftigungen der Mitarbeiter"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.view_l10n_ch_salary_certificate_profile_form
@@ -4682,7 +4771,7 @@ msgstr "Eintritt gültig ab"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_occupation__date_start
 msgid "Entry in Company"
-msgstr ""
+msgstr "Eintritt ins Unternehmen"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_is_mutation__reason__entrycanton
@@ -6376,7 +6465,7 @@ msgstr "L10N Ch: PLZ des Bevollmächtigten"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip__l10n_ch_entry
 msgid "L10N Ch Entry"
-msgstr ""
+msgstr "L10N Ch: Eintritt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_ijm_institution_ids
@@ -6448,13 +6537,13 @@ msgstr "L10N Ch: Monatsübersicht"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_other_employers
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_other_employers
 msgid "L10N Ch Other Employers"
-msgstr ""
+msgstr "L10N Ch: Andere Arbeitgeber"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_other_employers_occupation_rate
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_other_employers_occupation_rate
 msgid "L10N Ch Other Employers Occupation Rate"
-msgstr ""
+msgstr "L10N Ch: Beschäftigungsgrad anderer Arbeitgeber"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_provision_salary_city
@@ -6564,7 +6653,7 @@ msgstr "L10N Ch: Urlaubsgeld inklusive"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip__l10n_ch_withdrawal
 msgid "L10N Ch Withdrawal"
-msgstr ""
+msgstr "L10N Ch: Austritt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_work_location_ids
@@ -8462,12 +8551,12 @@ msgstr "BVG-Leistungen Einkauf Arbeitgeberbeiträge Vergütung"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_5052
 msgid "PP Complementary Contributions"
-msgstr ""
+msgstr "BVG-Zusatzbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_7052
 msgid "PP Complementary Employer Contributions"
-msgstr ""
+msgstr "PVG-Arbeitgeber-Zusatzbeiträge"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_hr_elm_5050
@@ -8487,12 +8576,12 @@ msgstr "BVG-Arbeitgeberbeiträge Vergütung"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours
 msgid "Paid Hours"
-msgstr ""
+msgstr "Bezahlte Stunden"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_lessons
 msgid "Paid Lessons"
-msgstr ""
+msgstr "Bezahlte Unterrichtsstunden"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.payslip.input.type,name:l10n_ch_hr_payroll.l10n_ch_elm_input_WT_hours_100
@@ -8566,7 +8655,7 @@ msgstr "Zahlperiode"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_hr_payslip_run
 msgid "Pay Run"
-msgstr ""
+msgstr "Abrechnungslauf"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_hr_payslip
@@ -8664,6 +8753,10 @@ msgid ""
 "Payslips of the declaration period without any missing data on your "
 "Employees."
 msgstr ""
+"Die Gehaltsabrechnungen für diesen Monat wurden validiert, ohne dass alle "
+"erforderlichen Informationen vollständig waren, was zu möglichen falschen "
+"Berechnungen geführt hat. Wir bitten Sie, die Gehaltsabrechnungen für den "
+"Meldezeitraum ohne fehlende Daten Ihrer Mitarbeiter neu zu berechnen."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee_is_line__state__pending
@@ -8778,6 +8871,8 @@ msgid ""
 "Please define a Source-Tax institution with a valid DPI Number for Canton %"
 "(canton)s"
 msgstr ""
+"Definieren Sie eine Quellensteuerinstitution mit einer gültigen DPI-Nummer "
+"für den Kanton %(canton)s"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -8973,7 +9068,7 @@ msgstr "Sätze"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_job_result__rating_ids
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_transmitter__rating_ids
 msgid "Ratings"
-msgstr ""
+msgstr "Bewertungen"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line__reason
@@ -9754,7 +9849,7 @@ msgstr "Quellensteuer (%s)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5060_manual
 msgid "Source-Tax : Manual Correction"
-msgstr ""
+msgstr "Quellensteuer: manuelle Korrektur"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5061
@@ -10201,7 +10296,7 @@ msgstr "Jahresverlauf für Schweizer Arbeitnehmer"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_occupation
 msgid "Swiss Employees Entry / Withdrawals"
-msgstr ""
+msgstr "Eintritt/Austritt von Schweizer Mitarbeitern"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_payslip_view_form_inherit
@@ -10233,7 +10328,7 @@ msgstr "Schweizerische Personalabrechnung: monatliche Zusammenfassung"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_tax_rate_import_wizard
 msgid "Swiss Payroll: Tax rate import wizard"
-msgstr ""
+msgstr "Schweizer Personalabrechnung: Assistent zum Importierend er Steuersätze"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_form
@@ -10582,7 +10677,7 @@ msgstr "Schweiz"
 #. module: l10n_ch_hr_payroll
 #: model:hr.payroll.structure,name:l10n_ch_hr_payroll.hr_payroll_structure_ch_elm
 msgid "Switzerland: ELM Salaries"
-msgstr ""
+msgstr "Schweiz: ELM-Gehälter"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_monthly_summary
@@ -10892,13 +10987,15 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.constraint,message:l10n_ch_hr_payroll.constraint_l10n_ch_employee_monthly_values_check_month
 msgid "The month must be between 1 and 12"
-msgstr ""
+msgstr "Der Monat muss zwischen 1 und 12 liegen"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "The residence Municipality must contain only numbers for Switzerland."
 msgstr ""
+"Die Gemeinde des Wohnsitzes muss für die Schweiz ausschließlich Zahlen "
+"enthalten."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -10928,12 +11025,16 @@ msgstr ""
 msgid ""
 "The weekly residence municipality must contain only numbers for Switzerland."
 msgstr ""
+"Die Gemeinde des Wohnsitzes während der Woche muss für die Schweiz "
+"ausschließlich Zahlen enthalten."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_monthly_summary.py:0
 msgid "There is no paid or validated payslips over the selected period."
 msgstr ""
+"Für den ausgewählten Zeitraum liegen keine bezahlten oder validierten "
+"Gehaltsabrechnungen vor."
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_2050
@@ -10982,12 +11083,15 @@ msgid ""
 "correct amounts please cancel the payslip or report corrections to the next "
 "month."
 msgstr ""
+"Diese Funktion ist für Gehaltsabrechnungen in der Schweiz nicht verfügbar. "
+"Wenn Sie Beträge korrigieren möchten, stornieren Sie die Gehaltsabrechnung "
+"oder melden Sie die Korrekturen im nächsten Monat."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/res_company.py:0
 msgid "This feature is only allowed in production environments."
-msgstr ""
+msgstr "Diese Funktion ist ausschließlich in Produktionsumgebungen zulässig."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -11058,7 +11162,7 @@ msgstr "Zu erläutern"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "To pay on:"
-msgstr ""
+msgstr "Zu zahlen am:"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_job_type__highestcadre
@@ -11532,7 +11636,7 @@ msgstr "Plausibilitätsprüfung"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_hr_contract_wage__version_id
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_lpp_mutation__version_id
 msgid "Version"
-msgstr ""
+msgstr "Version"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_cs_employee_participation_taxable_income_virtual
@@ -11543,7 +11647,7 @@ msgstr "Virtuelle Teilnahme"
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_individual_account_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_monthly_summary_view_form
 msgid "Visible to all"
-msgstr ""
+msgstr "Für alle sichtbar"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_additional_accident_insurance_line_rate__wage_from
@@ -11848,7 +11952,7 @@ msgstr "Austritt gültig ab"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_occupation__date_end
 msgid "Withdrawal from Company"
-msgstr ""
+msgstr "Austritt aus dem Unternehmen"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -12130,6 +12234,8 @@ msgstr ""
 #: code:addons/l10n_ch_hr_payroll/models/hr_payslip_run.py:0
 msgid "You must select employee(s) version(s) to generate payslip(s)."
 msgstr ""
+"Sie müssen die Mitarbeiterversion(en) für die zu erstellende(n) "
+"Gehaltsabrechnung(en) auswählen."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -12201,7 +12307,7 @@ msgstr "Zürich"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "doctorate"
-msgstr ""
+msgstr "Doktor"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.view_l10n_ch_source_tax_institution_form
@@ -12263,7 +12369,7 @@ msgstr "z. B. A92978109"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "enterpriseEducation"
-msgstr ""
+msgstr "Unternehmensausbildung"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -12281,84 +12387,84 @@ msgstr "get_resultµ_request_%s.xml"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "higherEducationBachelor"
-msgstr ""
+msgstr "HochschulbildungBachelor"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "higherEducationMaster"
-msgstr ""
+msgstr "HochschulbildungMaster"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "higherVocEducation"
-msgstr ""
+msgstr "Hochschulbildung"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "higherVocEducationBachelor"
-msgstr ""
+msgstr "HochschulbildungBachelor"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "higherVocEducationMaster"
-msgstr ""
+msgstr "HochschulbildungMaster"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "mandatorySchoolOnly"
-msgstr ""
+msgstr "nurSchulpflicht"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "of"
-msgstr ""
+msgstr "von"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "partnership_dissolved_by_death"
-msgstr ""
+msgstr "partnership_dissolved_by_death"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "partnership_dissolved_by_declaration_of_lost"
-msgstr ""
+msgstr "partnership_dissolved_by_declaration_of_lost"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "partnership_dissolved_by_law"
-msgstr ""
+msgstr "partnership_dissolved_by_law"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "registered_partnership"
-msgstr ""
+msgstr "registered_partnership"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_transmission_mixin.py:0
 msgid "res_model"
-msgstr ""
+msgstr "res_model"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_swissdec_declaration_result.py:0
 msgid "swissdec_job_id"
-msgstr ""
+msgstr "swissdec_job_id"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "teacherCertificate"
-msgstr ""
+msgstr "Lehrernachweis"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
@@ -12370,19 +12476,19 @@ msgstr "An"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "universityEntranceCertificate"
-msgstr ""
+msgstr "UniversitätEintrittNachweis"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "universityMaster"
-msgstr ""
+msgstr "UniversitätMaster"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "vocEducationCompl"
-msgstr ""
+msgstr "BerufsausbildungZusätz."
 
 #~ msgid "<span>Individual Account Report for year </span>"
 #~ msgstr "<span>Einzelkontobericht für das Jahr</span>"
