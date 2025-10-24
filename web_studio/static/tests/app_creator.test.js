@@ -38,14 +38,10 @@ test("app creator: standard flow with model creation", async () => {
 
     onRpc("ir.attachment", "read", () => [{ datas: sampleIconUrl }]);
 
-    onRpc(
-        "/web/binary/upload_attachment",
-        () => {
-            expect.step("upload_attachment");
-            return [{ id: 666 }];
-        },
-        { pure: true }
-    );
+    onRpc("/web/binary/upload_attachment", () => {
+        expect.step("upload_attachment");
+        return [{ id: 666 }];
+    });
 
     mockService("ui", {
         block: () => expect.step("UI blocked"),
