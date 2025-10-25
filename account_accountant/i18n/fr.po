@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 13:56+0000\n"
+"PO-Revision-Date: 2025-10-24 16:20+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/fr/>\n"
@@ -688,7 +688,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Connect your credit card accounts and manage your payouts"
-msgstr "Connectez vos comptes de carte de crédit et gérez vos paiements"
+msgstr "Connectez vos cartes de crédit et gérez vos dépenses"
 
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_bank_statement_form_bank_rec_widget
@@ -710,13 +710,13 @@ msgstr "Créer une nouvelle transaction."
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Create a separate journal for specific sales activities"
-msgstr "Créez un journal distinct pour des activités de vente spécifiques"
+msgstr "Créez un journal distinct pour les opérations de vente"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Create a separate journal to organize vendor bills"
-msgstr "Créez un journal distinct pour organiser les factures fournisseurs"
+msgstr "Créez un journal distinct pour les opérations d'achat"
 
 #. module: account_accountant
 #. odoo-javascript
@@ -1396,7 +1396,7 @@ msgstr "Écritures à lettrer"
 #. module: account_accountant
 #: model:ir.actions.act_window,name:account_accountant.action_move_line_posted_unreconciled
 msgid "Journal Items to reconcile"
-msgstr "Écritures comptables à lettrer"
+msgstr "Éléments du journal à lettrer"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
@@ -1577,7 +1577,7 @@ msgstr "Transactions lettrées"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Matching"
-msgstr "Lettrage"
+msgstr "Correspondance"
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_ir_ui_menu
@@ -1831,7 +1831,7 @@ msgstr "Factures initiales"
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_reconcile_search
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
 msgid "Originator Tax"
-msgstr "Taxe d'origine"
+msgstr "Taxe à la source"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_move_line_search_bank_rec_widget
@@ -2030,7 +2030,7 @@ msgstr "Modèle de rapprochement %s appliqué"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Record your cash movements and transfers"
-msgstr "Enregistrez vos mouvements de trésorerie et vos virements"
+msgstr "Enregistrez vos opérations de trésorerie et vos virements"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_form_inherit
@@ -2045,12 +2045,12 @@ msgstr "Vente(s) associée(s)"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_form_bank_rec_widget
 msgid "Reset to Draft"
-msgstr ""
+msgstr "Remettre en brouillon"
 
 #. module: account_accountant
 #: model:ir.actions.server,name:account_accountant.model_account_statement_line_button_draft
 msgid "Reset to draft"
-msgstr ""
+msgstr "Remettre en brouillon"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_move_line_reconcile_tree
@@ -2093,7 +2093,7 @@ msgstr "Erreur d'envoi SMS"
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/journal_create_wizard/journal_create_wizard.js:0
 msgid "Sales Journal"
-msgstr "Journal des ventes"
+msgstr "Journal de vente"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date

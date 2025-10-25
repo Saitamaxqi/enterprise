@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 12:13+0000\n"
+"PO-Revision-Date: 2025-10-24 12:22+0000\n"
 "Last-Translator: Birgit Vijar <birgit@avalah.ee>\n"
 "Language-Team: Estonian <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/et/>\n"
@@ -3454,7 +3454,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
 msgid "No payslips for this pay run."
-msgstr ""
+msgstr "Palgalehed puuduvad sellel palgaarvestusel."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_payroll_headcount_action
@@ -4681,7 +4681,7 @@ msgstr "Palk"
 #: model:ir.model,name:hr_payroll.model_hr_salary_attachment
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "Salary Adjustment"
-msgstr ""
+msgstr "Lisatasu"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__salary_attachment_count
@@ -4705,7 +4705,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Salary Adjustments"
-msgstr ""
+msgstr "Lisatasud"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_category_form
@@ -5871,12 +5871,12 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/components/dashboard_empty_screen/dashboard_empty_screen.xml:0
 #: model:ir.ui.menu,name:hr_payroll.menu_hr_payroll_work_entries_root
 msgid "Work Entries"
-msgstr "Töö kanded"
+msgstr "Töögraafik"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "Work Entries - Which time did they work ?"
-msgstr ""
+msgstr "Töögraafik - Mis ajal nad töötasid?"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.hr_work_entry_report_action
@@ -5885,7 +5885,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_report_view_search
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_work_entry_report_view_tree
 msgid "Work Entries Analysis"
-msgstr "Töö sissekannete analüüsid"
+msgstr "Palgaarvestuse aruanne"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_work_entry_report
