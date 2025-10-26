@@ -8,7 +8,7 @@ import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { _t } from "@web/core/l10n/translation";
 import { formatMonetary } from "@web/views/fields/formatters";
-import { onWillStart, useState, onWillDestroy } from "@odoo/owl";
+import { useState, onWillStart, onWillDestroy } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { useBankReconciliation } from "./bank_reconciliation_service";
@@ -41,18 +41,17 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
                 this.env.model.config.context.active_id,
             totalJournalAmount: "",
         });
+
+        this.env.model.hooks.onRootLoaded = async (newRoot) => {
+            await this.prepareInitialState(newRoot.records);
+        }
+
         this.env.bus.addEventListener("createRecordQuickCreate", () => {
             this.globalState.quickCreate.isVisible = true;
         });
 
         onWillStart(async () => {
-            this.getJournalTotalAmount();
-            const records = this.env.model.root.records;
-            await this.bankReconciliation.computeReconcileLineCountPerPartnerId(records);
-            await this.bankReconciliation.computeAvailableReconcileModels(records);
-            const statementLineId = parseInt(browser.sessionStorage.getItem("bankReconciliationStatementLineId")) || records[0]?.data.id;
-            const statementLine = records.find(record => record.data.id === statementLineId);
-            this.bankReconciliation.selectStatementLine(statementLine);
+            await this.prepareInitialState(this.env.model.root.records);
         });
 
         onWillDestroy(() => {
@@ -63,6 +62,23 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             );
             this.bankReconciliation.chatterState.statementLine = null;
         });
+    }
+
+    /**
+     * Prepare the initial bank reconciliation widget info on load or when records changes
+     *
+     * @param {Array<Object>} records - Bank statement line records
+     * @returns {Promise<void>} Resolves when all computations are done
+     */
+    async prepareInitialState(records){
+        await Promise.all([
+            this.getJournalTotalAmount(),
+            this.bankReconciliation.computeReconcileLineCountPerPartnerId(records),
+            this.bankReconciliation.computeAvailableReconcileModels(records),
+        ]);
+        const statementLineId = parseInt(browser.sessionStorage.getItem("bankReconciliationStatementLineId")) || records[0]?.data.id;
+        const statementLine = records.find(record => record.data.id === statementLineId);
+        this.bankReconciliation.selectStatementLine(statementLine);
     }
 
     /**
