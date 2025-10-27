@@ -1922,9 +1922,10 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
             # During Global Invoice creation, this method is called from an empty recordset `records=self.env['l10n_mx_edi.document']`.
             # In that case we want the attachment res_id to be the newly created document.
+            # sudo because attachment made by SUPERUSER requires group_system to modify
             result_attachment = result_document.attachment_id
             if result_attachment.res_model == result_document._name and not result_attachment.res_id:
-                result_attachment.res_id = result_document.id
+                result_attachment.with_user(SUPERUSER_ID).res_id = result_document.id
 
         return result_document
 

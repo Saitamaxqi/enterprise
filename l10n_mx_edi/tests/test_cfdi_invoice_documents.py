@@ -1062,6 +1062,19 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             'l10n_mx_edi_cfdi_state': 'cancel',
         }])
 
+    def test_global_invoice_production_with_account_user(self):
+        """ Test the global invoice creation made by a user that isn't in the group 'base.group_system' """
+        self.simple_accountman.email = 'simple_accountman@test.com'
+
+        with freeze_time('2017-01-01'):
+            invoice = self._create_invoice(l10n_mx_edi_cfdi_to_public=True)
+            with self.with_mocked_pac_sign_success():
+                invoice.with_user(self.simple_accountman)._l10n_mx_edi_cfdi_global_invoice_try_send()
+
+            self.assertRecordValues(invoice, [{
+                'l10n_mx_edi_cfdi_state': 'global_sent',
+            }])
+
     def test_global_invoice_production_sign_flow_cancel_from_the_sat(self):
         """ Test the case the global invoice is signed but the user manually cancel the document from the SAT portal (production environment). """
         self.env.company.l10n_mx_edi_pac_test_env = False
