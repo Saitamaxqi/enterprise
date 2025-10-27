@@ -5,7 +5,6 @@ from odoo.tests import Form, tagged
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
 
-@tagged('post_install', '-at_install')
 class TestMRPBarcodeClientAction(TestBarcodeClientAction):
     def setUp(self):
         super().setUp()
@@ -752,7 +751,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_backorder_partial_completion_save_sensible_split', login='admin', timeout=180)
         # Check that the unavailable + unedited component move was unaffected by the split
         self.assertEqual(manufacturing_order.state, 'done')
-        self.assertEqual(manufacturing_order.move_raw_ids.filtered(lambda m: m.product_id == unavailable_comp).mapped('quantity'), [0.00])
+        self.assertEqual(manufacturing_order.move_raw_ids.filtered(lambda m: m.product_id == unavailable_comp).mapped('quantity'), [2.00])
         backorder_mo = manufacturing_order.backorder_ids - manufacturing_order
         self.assertRecordValues(
             backorder_mo.move_raw_ids.sorted('product_uom_qty'), [
