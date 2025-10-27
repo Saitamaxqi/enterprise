@@ -222,9 +222,9 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
             #   Name                                    Date,           Due Date,       Doc.      Total Due
             [   0,                                      1,              2,              3,        5],
             [
-                ('INV/2016/00001',                      '01/01/2016',   '01/01/2016',   '',       '$\xa0500.00'),
-                ('',                                    '',             '',             '',       '$\xa0500.00'),
-                ('',                                    '',             '',             '',       '$\xa0500.00'),
+                ('INV/2016/00001',                      '01/01/2016',   '01/01/2016',   '',       f'{self.env.company.currency_id.symbol}\xa0500.00'),
+                ('',                                    '',             '',             '',       f'{self.env.company.currency_id.symbol}\xa0500.00'),
+                ('',                                    '',             '',             '',       f'{self.env.company.currency_id.symbol}\xa0500.00'),
             ],
             options,
         )
@@ -1002,10 +1002,10 @@ class TestAccountFollowupReports(TestAccountReportsCommon, TestAccountFollowupCo
                 #   Name                                    Date,           Due Date,       Doc.      Total Due
                 [   0,                                      1,              2,              3,        5],
                 [
-                    ('MISC/2016/01/0001',                   '01/02/2016',   '',             '',       '$\xa0500.00'),
-                    ('INV/2016/00001',                      '01/01/2016',   '01/01/2016',   '',       '$\xa0300.00'),
-                    ('',                                    '',             '',             '',       '$\xa0800.00'),
-                    ('',                                    '',             '',             '',       '$\xa0300.00'),
+                    ('MISC/2016/01/0001',                   '01/02/2016',   '',             '',       f'{self.env.company.currency_id.symbol}\xa0500.00'),
+                    ('INV/2016/00001',                      '01/01/2016',   '01/01/2016',   '',       f'{self.env.company.currency_id.symbol}\xa0300.00'),
+                    ('',                                    '',             '',             '',       f'{self.env.company.currency_id.symbol}\xa0800.00'),
+                    ('',                                    '',             '',             '',       f'{self.env.company.currency_id.symbol}\xa0300.00'),
                 ],
                 options,
             )
