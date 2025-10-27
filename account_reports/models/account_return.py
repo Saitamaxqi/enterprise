@@ -1156,8 +1156,8 @@ class AccountReturn(models.Model):
 
                 # Generate the carryover values.
                 payable_accounts, receivable_accounts = self._get_tax_closing_payable_and_receivable_accounts()
-                self.total_amount_to_pay = self._evaluate_total_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
                 self.period_amount_to_pay = self._evaluate_period_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
+                self.total_amount_to_pay = self._evaluate_total_amount_to_pay_from_tax_closing_accounts(payable_accounts, receivable_accounts)
 
         self.date_lock = fields.Date.context_today(self)
 
@@ -1199,12 +1199,17 @@ class AccountReturn(models.Model):
         return self.amount_to_pay_currency_id.round(amount)
 
     def _evaluate_total_amount_to_pay_from_tax_closing_accounts(self, payable_accounts, receivable_accounts):
-        amount = -sum(
-            aml.balance
-            for aml in self.closing_move_ids.line_ids
-            if (aml.account_id in payable_accounts and aml.credit) or (aml.account_id in receivable_accounts and aml.debit)
-        )
-        return self.amount_to_pay_currency_id.round(amount)
+        recoverable_amount_to_pay = self.env['account.move.line'].sudo()._read_group(
+            [
+                ('date', '<=', self.date_to),
+                ('account_id', 'in', receivable_accounts.ids),
+                ('company_id', 'in', self.company_ids.ids),
+                ('move_id.state', '=', 'posted'),
+                ('id', 'not in', self.closing_move_ids.line_ids.ids),
+            ],
+            aggregates=['balance:sum'],
+        )[0][0]
+        return self.amount_to_pay_currency_id.round(-recoverable_amount_to_pay + self.period_amount_to_pay)
 
     def _get_amount_to_pay_additional_tax_domain(self):
         return []
