@@ -2,12 +2,19 @@ import { ConversionError, deserializeDateTime, parseDate, parseDateTime, seriali
 import { _t } from "@web/core/l10n/translation";
 import { sprintf } from "@web/core/utils/strings";
 
+// TODO: remove in master
 export const msecPerUnit = {
     hour: 3600 * 1000,
     day: 3600 * 1000 * 24,
     week: 3600 * 1000 * 24 * 7,
     month: 3600 * 1000 * 24 * 30,
 };
+export const unitMapping = {
+    hour: 'hours',
+    day: 'days',
+    week: 'weeks',
+    month: 'months',
+}
 export const unitMessages = {
     hour: _t("(%s hours)."),
     day: _t("(%s days)."),
@@ -43,8 +50,9 @@ export const RentingMixin = {
                 } else if (
                     ["hour", "day", "week", "month"].includes(this.rentingMinimalTime.unit)
                 ) {
-                    const unit = this.rentingMinimalTime.unit;
-                    if (rentingDuration / msecPerUnit[unit] < this.rentingMinimalTime.duration) {
+                    const { duration, unit } = this.rentingMinimalTime;
+                    const minEndDate = startDate.plus({ [unitMapping[unit]]: duration });
+                    if (minEndDate > endDate) {
                         message = _t(
                             "The rental lasts less than the minimal rental duration %s",
                             sprintf(unitMessages[unit], this.rentingMinimalTime.duration)
