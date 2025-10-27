@@ -122,6 +122,71 @@ test("add column", async () => {
         </q-table>`);
 });
 
+test("add column non-matching conditionals", async () => {
+    const { editor } = await setupEditor(
+        `<div style="width: 100px; margin-top: 50px; margin-left: 50px;">
+        <q-table>
+            <q-thead>
+                <q-tr>
+                    <q-th>HEAD1</q-th>
+                    <q-th t-if="true">HEAD2</q-th>
+                    <q-th t-else="">HEAD3</q-th>
+                    <q-th>HEAD4</q-th>
+                </q-tr>
+            </q-thead>
+            <q-tbody>
+                <t t-if="true">
+                    <q-tr>
+                        <q-td>1</q-td>
+                        <q-td>2</q-td>
+                        <q-td>4</q-td>
+                    </q-tr>
+                </t>
+                <t t-else="">
+                    <q-tr>
+                        <q-td>1</q-td>
+                        <q-td>3</q-td>
+                        <q-td>4</q-td>
+                    </q-tr>
+                </t>
+            </q-tbody>
+        </q-table></div>`,
+        getEditorOptions()
+    );
+
+    await hover(queryFirst(":iframe q-th:last-child"));
+    await contains(".o-overlay-container .o-we-table-menu").click();
+    await contains(".o-dropdown-item:contains(Insert Right)").click();
+
+    expect(getContent(editor.getElContent().firstElementChild)).toBe(`
+        <q-table>
+            <q-thead>
+                <q-tr>
+                    <q-th>HEAD1</q-th>
+                    <q-th t-if="true">HEAD2</q-th>
+                    <q-th t-else="">HEAD3</q-th>
+                    <q-th>HEAD4</q-th><q-th><div><br></div></q-th>
+                </q-tr>
+            </q-thead>
+            <q-tbody>
+                <t t-if="true">
+                    <q-tr>
+                        <q-td>1</q-td>
+                        <q-td>2</q-td>
+                        <q-td>4</q-td><q-td><div><br></div></q-td>
+                    </q-tr>
+                </t>
+                <t t-else="">
+                    <q-tr>
+                        <q-td>1</q-td>
+                        <q-td>3</q-td>
+                        <q-td>4</q-td><q-td><div><br></div></q-td>
+                    </q-tr>
+                </t>
+            </q-tbody>
+        </q-table>`);
+});
+
 test("remove column", async () => {
     const { editor } = await setupEditor(
         `<div style="width: 100px; margin-top: 50px; margin-left: 50px;">
