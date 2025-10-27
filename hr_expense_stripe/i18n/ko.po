@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-24 11:22+0000\n"
+"PO-Revision-Date: 2025-10-27 02:41+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_expense_stripe/ko/>\n"
@@ -1503,7 +1503,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.cruise_lines
 msgid "Cruise Lines"
-msgstr ""
+msgstr "내용 보기"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__currency_id
@@ -1539,17 +1539,17 @@ msgstr "배송 완료"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__delivery_address_id
 msgid "Delivery Address"
-msgstr ""
+msgstr "배송지"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dentists_orthodontists
 msgid "Dentists Orthodontists"
-msgstr ""
+msgstr "교정전문의"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.department_stores
 msgid "Department Stores"
-msgstr ""
+msgstr "백화점"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_block_wizard__other_reason_text
@@ -1559,12 +1559,12 @@ msgstr "설명"
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__design_rejected
 msgid "Design Rejected"
-msgstr ""
+msgstr "반려된 디자인"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.detective_agencies
 msgid "Detective Agencies"
-msgstr ""
+msgstr "흥신소"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.digital_goods_applications
@@ -1634,7 +1634,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Disallowed codes"
-msgstr ""
+msgstr "코드 사용 불가"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1646,7 +1646,7 @@ msgstr "작성 취소"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.discount_stores
 msgid "Discount Stores"
-msgstr ""
+msgstr "할인 판매점"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_bank_statement_line__display_name
@@ -1702,7 +1702,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drinking_places
 msgid "Drinking Places"
-msgstr ""
+msgstr "주류 판매점"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.drug_stores_and_pharmacies
@@ -1717,12 +1717,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.dry_cleaners
 msgid "Dry Cleaners"
-msgstr ""
+msgstr "드라이 클리닝"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.durable_goods
 msgid "Durable Goods"
-msgstr ""
+msgstr "내구재"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.duty_free_stores
@@ -1737,7 +1737,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.educational_services
 msgid "Educational Services"
-msgstr ""
+msgstr "교육 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electric_razor_stores
@@ -1757,7 +1757,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electrical_services
 msgid "Electrical Services"
-msgstr ""
+msgstr "전기 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electronics_repair_shops
@@ -1767,7 +1767,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.electronics_stores
 msgid "Electronics Stores"
-msgstr ""
+msgstr "전자제품 매장"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.elementary_secondary_schools
@@ -1798,7 +1798,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__employee_name
 msgid "Employee Name"
-msgstr ""
+msgstr "직원명"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.employment_temp_agencies
@@ -1814,7 +1814,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.equipment_rental
 msgid "Equipment Rental"
-msgstr ""
+msgstr "장비 대여"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1825,7 +1825,7 @@ msgstr "오류"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__shipping_estimated_delivery
 msgid "Estimated Delivery"
-msgstr ""
+msgstr "예상 배송일"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -1838,7 +1838,7 @@ msgstr "경비"
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_account_payment_method_line__card_id
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.res_config_settings_view_form
 msgid "Expense Card"
-msgstr ""
+msgstr "비용 카드"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1859,7 +1859,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model,name:hr_expense_stripe.model_hr_expense_split
 msgid "Expense Split"
-msgstr ""
+msgstr "비용 분할"
 
 #. module: hr_expense_stripe
 #: model:ir.actions.server,name:hr_expense_stripe.hr_expense_stripe_issuing_status_cron_ir_actions_server
@@ -1889,7 +1889,7 @@ msgstr "경비"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expenses_count
 msgid "Expenses Count"
-msgstr ""
+msgstr "비용 수"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -1899,12 +1899,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__expiration
 msgid "Expiration Date"
-msgstr ""
+msgstr "만료일"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.exterminating_services
 msgid "Exterminating Services"
-msgstr ""
+msgstr "해충 구제 서비스"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -1937,7 +1937,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.financial_institutions
 msgid "Financial Institutions"
-msgstr ""
+msgstr "금융기관"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.fines_government_administrative_entities
@@ -1952,7 +1952,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__firstname
 msgid "First Name"
-msgstr ""
+msgstr "이름"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.floor_covering_stores
@@ -2034,7 +2034,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.general_services
 msgid "General Services"
-msgstr ""
+msgstr "일반 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.gift_card_novelty_and_souvenir_shops
@@ -2079,12 +2079,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.government_services
 msgid "Government Services"
-msgstr ""
+msgstr "정부 서비스"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Government services"
-msgstr ""
+msgstr "정부 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.grocery_stores_supermarkets
@@ -2114,12 +2114,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.hardware_stores
 msgid "Hardware Stores"
-msgstr ""
+msgstr "철물점"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_employee
 msgid "Has Employee"
-msgstr ""
+msgstr "직원 있음"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__has_message
@@ -2260,7 +2260,7 @@ msgstr "배상"
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.industrial_supplies
 msgid "Industrial Supplies"
-msgstr ""
+msgstr "산업용 자재"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.information_retrieval_services
@@ -2281,7 +2281,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/models/hr_expense_stripe_card.py:0
 msgid "Invalid Employee"
-msgstr ""
+msgstr "잘못된 직원 정보"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2317,7 +2317,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card_receive_wizard__is_confirmed
 msgid "Is Confirmed"
-msgstr ""
+msgstr "확정 완료"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_is_follower
@@ -2345,12 +2345,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.landscaping_services
 msgid "Landscaping Services"
-msgstr ""
+msgstr "조경 서비스"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 msgid "Last 4"
-msgstr ""
+msgstr "마지막 네 자리"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__last_4
@@ -2361,7 +2361,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__lastname
 msgid "Last Name"
-msgstr ""
+msgstr "성"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__write_uid
@@ -2406,7 +2406,7 @@ msgstr "한도"
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__spending_policy_interval
 msgid "Limit Frequency"
-msgstr ""
+msgstr "빈도 제한"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2417,7 +2417,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_topup_wizard__is_live_mode
 msgid "Live Mode"
-msgstr ""
+msgstr "실시간 모드"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__cancellation_reason__lost
@@ -2475,12 +2475,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.massage_parlors
 msgid "Massage Parlors"
-msgstr ""
+msgstr "마사지 업소"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense__mcc_tag_id
 msgid "Mcc Tag"
-msgstr ""
+msgstr "Mcc 태그"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_dental_ophthalmic_and_hospital_equipment_and_supplies
@@ -2490,7 +2490,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_services
 msgid "Medical Services"
-msgstr ""
+msgstr "의료 서비스"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.medical_and_dental_labs
@@ -2500,7 +2500,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.membership_organizations
 msgid "Membership Organizations"
-msgstr ""
+msgstr "멤버십 단체"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.mens_womens_clothing_stores
@@ -2602,7 +2602,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_product_mcc_stripe_tag_search
 msgid "Miscellaneous shops"
-msgstr ""
+msgstr "잡화점"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2659,17 +2659,17 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/private_card_view_action.xml:0
 msgid "My Card"
-msgstr ""
+msgstr "내 카드"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 msgid "My Cards"
-msgstr ""
+msgstr "내 카드"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
 msgid "My Team"
-msgstr ""
+msgstr "내 팀"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.hr_expense_stripe_card_view_search
@@ -2693,7 +2693,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_expense_stripe/static/src/components/open_expense_issuing_terms.xml:0
 msgid "Negative Balances"
-msgstr ""
+msgstr "마이너스 잔액"
 
 #. module: hr_expense_stripe
 #: model:mail.activity.type,name:hr_expense_stripe.mail_act_expense_add_receipt
@@ -2756,7 +2756,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.nondurable_goods
 msgid "Nondurable Goods"
-msgstr ""
+msgstr "비내구재"
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__message_needaction_counter
@@ -2848,12 +2848,12 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.opticians_eyeglasses
 msgid "Opticians Eyeglasses"
-msgstr ""
+msgstr "시력 교정용 안경"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.optometrists_ophthalmologist
 msgid "Optometrists Ophthalmologist"
-msgstr ""
+msgstr "검안사 안과의사"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -4115,7 +4115,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_stripe/utils.py:0
 msgid "Unexpected error"
-msgstr ""
+msgstr "예상하지 못한 오류"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.uniforms_commercial_clothing
@@ -4138,7 +4138,7 @@ msgstr ""
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
 msgid "Update info"
-msgstr ""
+msgstr "업데이트 정보"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.used_merchandise_and_secondhand_stores

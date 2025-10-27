@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-21 06:29+0000\n"
+"PO-Revision-Date: 2025-10-27 02:41+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "sale_subscription/ja/>\n"
@@ -59,13 +59,13 @@ msgstr "%(explanation)s、ただし、この請求期間はすでに請求済み
 #. odoo-python
 #: code:addons/sale_subscription/models/product_pricelist_item.py:0
 msgid "%(price_details)s %(recurrence)s"
-msgstr ""
+msgstr "%(price_details)s %(recurrence)s"
 
 #. module: sale_subscription
 #. odoo-python
 #: code:addons/sale_subscription/models/sale_order_line.py:0
 msgid "%(start)s to %(next)s"
-msgstr ""
+msgstr "%(start)s から %(next)s"
 
 #. module: sale_subscription
 #. odoo-python
