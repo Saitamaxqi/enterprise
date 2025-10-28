@@ -16,7 +16,7 @@ export class FsmTaskMapRenderer extends MapRenderer {
         if (!planned_date_begin) {
             return "";
         }
-        const format = localization.timeFormat.search("HH") === 0 ? "HH:mm" : "hh:mm A";
+        const format = localization.shortTimeFormat;
         return formatDateTime(
             DateTime.fromSQL(
                 record.planned_date_begin,
