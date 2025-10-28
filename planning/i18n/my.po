@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-22 12:10+0000\n"
+"PO-Revision-Date: 2025-10-28 07:56+0000\n"
 "Last-Translator: Oakarmin Iron <oakarminiron@gmail.com>\n"
 "Language-Team: Burmese <https://translate.odoo.com/projects/odoo-19/planning/"
 "my/>\n"
@@ -958,7 +958,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:planning.field_res_config_settings__display_name
 #: model:ir.model.fields,field_description:planning.field_resource_resource__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "ပြသသော အမည်"
 
 #. module: planning
 #: model_terms:ir.actions.act_window,help:planning.planning_action_resources
@@ -2090,7 +2090,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_form_in_gantt
 msgid "Send"
-msgstr ""
+msgstr "ပို့"
 
 #. module: planning
 #: model:ir.model,name:planning.model_planning_send

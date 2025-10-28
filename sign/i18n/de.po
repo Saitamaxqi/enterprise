@@ -15,10 +15,10 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-09-30 02:41+0000\n"
+"PO-Revision-Date: 2025-10-28 10:21+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
-"Language-Team: German <https://translate.odoo.com/projects/odoo-19/sign/de/"
-">\n"
+"Language-Team: German <https://translate.odoo.com/projects/odoo-19/sign/de/>"
+"\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -221,6 +221,8 @@ msgstr "<b>Dokumente:</b>"
 #: code:addons/sign/static/src/js/tours/sign.js:0
 msgid "<b>Drag & drop \"Signature\"</b> into the bottom of the document."
 msgstr ""
+"<b>Ziehen Sie „Signatur“ per Drag-and-drop</b> an den unteren Rand des "
+"Dokuments."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -2479,6 +2481,10 @@ msgid ""
 "44654 Millersburg Ohio United States\n"
 "+1 555-555-5556"
 msgstr ""
+"Mein US-Unternehmen\n"
+"1034 Wildwood Street\n"
+"44654 Millersburg Ohio, Vereinigte Staaten\n"
+"+1 555-555-5556"
 
 #. module: sign
 #: model:sign.template.tag,name:sign.sign_template_tag_2
@@ -4305,6 +4311,8 @@ msgid ""
 "The template model %(t_name)s is incompatible with the signature fields %"
 "(model_name)s."
 msgstr ""
+"Das Vorlagenmodell %(t_name)s ist nicht mit den Signaturfeldern %(model_name)"
+"s kompatibel."
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.green_savings_report
@@ -4989,7 +4997,7 @@ msgstr "und:"
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_item_role__assign_to
 msgid "assign the current user or the customer as a signer by default"
-msgstr ""
+msgstr "aktuellen Benutzer oder Kunden standardmäßig als Unterzeichner zuweisen"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_mail_not_enough_credits
@@ -5027,7 +5035,7 @@ msgstr "klicken Sie hier, um keine mehr zu erhalten."
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_template_view_form
 msgid "days"
-msgstr ""
+msgstr "Tage"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_view_form

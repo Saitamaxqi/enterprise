@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-13 15:00+0000\n"
+"PO-Revision-Date: 2025-10-28 13:11+0000\n"
 "Last-Translator: \"Maitê Dietze (madi)\" <madi@odoo.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translate.odoo.com/projects/"
 "odoo-19/documents_account/pt_BR/>\n"
@@ -43,12 +43,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "<b>Select</b> this page to continue."
-msgstr ""
+msgstr "<b>Selecione</b> esta página para continuar."
 
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.account_move_view_form
 msgid "<span class=\"o_stat_text\">Documents</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Documentos</span>"
 
 #. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique

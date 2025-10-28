@@ -26,7 +26,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-27 14:40+0000\n"
+"PO-Revision-Date: 2025-10-28 13:12+0000\n"
 "Last-Translator: Birgit Vijar <birgit@avalah.ee>\n"
 "Language-Team: Estonian <https://translate.odoo.com/projects/odoo-19/"
 "hr_payroll/et/>\n"
@@ -52,6 +52,15 @@ msgid ""
 "planning. (requires Planning app)\n"
 "    "
 msgstr ""
+"\n"
+"        Määrab, mille alusel on tööaeg loodud\n"
+"\n"
+"        Töögraafik: Tööaeg luuakse töötatud tundide alusel.\n"
+"        Kohalolekud: Tööaeg luuakse töötaja kohalolekute alusel. (vajalik on "
+"kohalolekute moodul)\n"
+"        Planeerimine: Tööaeg luuakse planeerimise mooduli alusel. (vajalik "
+"on planeerimise moodul)\n"
+"    "
 
 #. module: hr_payroll
 #. odoo-python
@@ -305,10 +314,13 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
+#, fuzzy
 msgid ""
 "<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" "
 "title=\"Arrow\"/>"
 msgstr ""
+"<i class=\"fa fa-long-arrow-right mx-2\" aria-label=\"Arrow icon\" title="
+"\"Arrow\"/>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -317,8 +329,9 @@ msgstr ""
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
+#, fuzzy
 msgid "<span class=\"mx-2\">/</span>"
-msgstr ""
+msgstr "<span class=\"mx-2\">/</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -336,6 +349,9 @@ msgid ""
 "                            Work Entries\n"
 "                            </span>"
 msgstr ""
+"<span class=\"o_stat_text\">\n"
+"                            Tööaeg\n"
+"                            </span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_declaration_mixin_view_form
@@ -346,7 +362,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_view_form
 msgid "<span class=\"o_stat_text\">Employees</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Töötajad</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
@@ -354,26 +370,30 @@ msgid ""
 "<span class=\"o_stat_text\">Payslips</span>\n"
 "                            <span class=\"o_stat_value\">New</span>"
 msgstr ""
+"<span class=\"o_stat_text\">Palgalehed</span>\n"
+"                            <span class=\"o_stat_value\">Uus</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_rule_parameter_view_form
 msgid "<span class=\"o_stat_text\">Salary Rules</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">Palgareeglid</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
+#, fuzzy
 msgid "<span invisible=\"input_unit != 'percentage'\">%</span>"
-msgstr ""
+msgstr "<span invisible=\"input_unit != 'percentage'\">%</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
 msgid "<span invisible=\"is_quantity\">paid</span>"
-msgstr ""
+msgstr "<span invisible=\"is_quantity\">makstud</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_view_form
+#, fuzzy
 msgid "<span invisible=\"not is_refund\" class=\"me-1\">-</span>"
-msgstr ""
+msgstr "<span invisible=\"not is_refund\" class=\"me-1\">-</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_contract_template_view_form
@@ -392,6 +412,19 @@ msgid ""
 "                <span invisible=\"schedule_pay != 'weekly'\">/ week</span>\n"
 "                <span invisible=\"schedule_pay != 'daily'\">/ day</span>"
 msgstr ""
+"<span invisible=\"schedule_pay != 'annually'\">/ year</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-annually'\">/ pool-"
+"aasta</span>\n"
+"                <span invisible=\"schedule_pay != 'quarterly'\">/ "
+"kvartal</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-monthly'\">/ kaks "
+"kuud</span>\n"
+"                <span invisible=\"schedule_pay != 'semi-monthly'\">/ pool "
+"kuud</span>\n"
+"                <span invisible=\"schedule_pay != 'bi-weekly'\">/kaks "
+"nädalat</span>\n"
+"                <span invisible=\"schedule_pay != 'weekly'\">/ nädal</span>\n"
+"                <span invisible=\"schedule_pay != 'daily'\">/ päev</span>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_form
@@ -491,17 +524,18 @@ msgstr "<strong class=\"me-2\">Osakond:</strong>"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Email:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">E-mail:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
+#, fuzzy
 msgid "<strong class=\"me-2\">ID:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">ID:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Job Position:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Ametikoht:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
@@ -511,17 +545,17 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Name:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Nimi:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Pay Period:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Makse periood:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "<strong class=\"me-2\">Working Schedule:</strong>"
-msgstr ""
+msgstr "<strong class=\"me-2\">Töögraafik:</strong>"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
@@ -572,6 +606,17 @@ msgid ""
 "</tbody></table>\n"
 "            "
 msgstr ""
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style="
+"\"width:100%; margin:0px auto;\"><tbody>\n"
+"    <tr><td valign=\"top\" style=\"text-align: left; font-size: 14px;\">\n"
+"         <t t-esc=\"object.employee_id.name\"/>, Manusest leiate "
+"palgalipiku.<br/><br/>\n"
+"        PDF leiate ka töötaja portaalist.<br/><br/>\n"
+"        Heade soovidega<br/>\n"
+"        Raamatupidaja\n"
+"    </td></tr>\n"
+"</tbody></table>\n"
+"            "
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
@@ -579,6 +624,8 @@ msgid ""
 "A Pay Run is a batch of individual payslips processed together for a "
 "specific pay period, including wages, taxes, and deductions.<br><br>"
 msgstr ""
+"Palgaarvestus koosneb töötajate palgalehtedest, millel on sama periood ja "
+"mis sisaldab töötasusid, makse ja kinnipidamisi.<br><br>"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
@@ -631,7 +678,7 @@ msgstr "Tegevused"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Activities of"
-msgstr ""
+msgstr "Tegevused"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__activity_exception_decoration
@@ -654,13 +701,13 @@ msgstr "Tegevuse liigi sümbol"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Activity type"
-msgstr ""
+msgstr "Tegevuse tüüp"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.payroll_hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Add Inputs"
-msgstr ""
+msgstr "Lisa sisend"
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -682,7 +729,7 @@ msgstr "Lisa uus palgalehe struktuur"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_attachment_employee_view_list
 msgid "Add a salary adjustment"
-msgstr ""
+msgstr "Lisa lisatasu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -693,7 +740,7 @@ msgstr "Lisa märkus..."
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payrun_card/more_info/payrun_more_info.xml:0
 msgid "Additional Information"
-msgstr ""
+msgstr "Täiendav informatsioon"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_payroll_edit_payslip_lines_wizard__ytd_computation
@@ -707,7 +754,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Adjust payslip"
-msgstr ""
+msgstr "Muuda palgalehte"
 
 #. module: hr_payroll
 #: model:res.groups,name:hr_payroll.group_hr_payroll_manager
@@ -728,7 +775,7 @@ msgstr "Kõik"
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_form
 msgid "All structures"
-msgstr ""
+msgstr "Kõik struktuurid"
 
 #. module: hr_payroll
 #. odoo-python
@@ -783,12 +830,12 @@ msgstr "Arvutuse liik"
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Amount to pay"
-msgstr ""
+msgstr "Tasumisele kuuluv summa"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__monthly_amount
 msgid "Amount to pay each payslip."
-msgstr ""
+msgstr "Tasumisele kuuluv summa iga palgalehe kohta."
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_salary_attachment__active_amount
@@ -803,6 +850,8 @@ msgid ""
 "An Headcount report will provide you the quantity of running contracts<br>\n"
 "            on a specific period of time, grouped by Department.<br><br>"
 msgstr ""
+"Töötajate arvu aruanne näitab kehtivate lepingute arvu<br>\n"
+"            kindla aja jooksul, osakonniti grupeeritult.<br><br>"
 
 #. module: hr_payroll
 #: model:ir.model.constraint,message:hr_payroll.constraint_hr_payroll_employee_declaration_unique_employee_sheet
@@ -812,7 +861,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_note_demo_content
 msgid "And voilà, it is that simple."
-msgstr ""
+msgstr "Nii lihtne see ongi."
 
 #. module: hr_payroll
 #. odoo-javascript
@@ -856,7 +905,7 @@ msgstr "Hinnanguline lõppkuupäev."
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__4
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__4
 msgid "April"
-msgstr ""
+msgstr "Aprill"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_form
@@ -878,7 +927,7 @@ msgstr "Arhiveeritud"
 msgid ""
 "Are you sure you want to delete this note? All content will be definitely "
 "lost."
-msgstr ""
+msgstr "Kas oled kindel, et soovid kustutada märkmed? Kogu sisu läheb kaduma."
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
@@ -935,12 +984,12 @@ msgstr "Kohalolekud"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_export_mixin__reference_month__8
 #: model:ir.model.fields.selection,name:hr_payroll.selection__res_company__ytd_reset_month__8
 msgid "August"
-msgstr ""
+msgstr "August"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "August 2023 Payslip"
-msgstr ""
+msgstr "August 2023 palgaleht"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__struct_ids
@@ -951,7 +1000,7 @@ msgstr "Saadavus struktuuris"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_input_type__available_in_attachments
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_input_type_view_search
 msgid "Available in attachments"
-msgstr ""
+msgstr "Saadaval manustes"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip__avatar_1920
@@ -973,19 +1022,19 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Back"
-msgstr ""
+msgstr "Tagasi"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Bank Accounts"
-msgstr ""
+msgstr "Pangakontod"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/wizard/hr_payroll_payment_report_wizard.py:0
 msgid "Bank account"
-msgstr ""
+msgstr "Pangakonto"
 
 #. module: hr_payroll
 #: model:hr.salary.rule.category,name:hr_payroll.BASIC
@@ -1016,6 +1065,7 @@ msgid ""
 "Batches - Groups of payslips with their progress state, to keep an eye on "
 "your latest pays."
 msgstr ""
+"Koond - grupp palgalehtedest koos staatusega, et vaadata viimaseid arvestusi."
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_res_config_settings__module_l10n_be_hr_payroll
@@ -1030,7 +1080,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payroll_payment_report_wizard__export_format__csv
 msgid "CSV"
-msgstr ""
+msgstr "CSV"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_line_form
@@ -1049,12 +1099,12 @@ msgstr "Tühista"
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state__cancel
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip__state_display__cancel
 msgid "Canceled"
-msgstr ""
+msgstr "Tühistatud"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_filter
 msgid "Canceled Slip"
-msgstr ""
+msgstr "Tühistatud palgaleht"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_run__state__04_cancel
@@ -1067,7 +1117,7 @@ msgstr "Tühistatud"
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Cannot cancel a payslip that is validated."
-msgstr ""
+msgstr "Ei saa tühistata palgalehte, mis on kinnitatud."
 
 #. module: hr_payroll
 #. odoo-python
@@ -1203,7 +1253,7 @@ msgstr "Sulge"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_salary_attachment__state__close
 msgid "Closed"
-msgstr ""
+msgstr "Suletud"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_work_entry_type__round_days_type__half-up
@@ -1230,7 +1280,7 @@ msgstr "Kood"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_headcount_working_rate__color
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_salary_rule__color
 msgid "Color"
-msgstr ""
+msgstr "Värv"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_res_company
@@ -1271,7 +1321,7 @@ msgstr "Arvutus"
 #: code:addons/hr_payroll/static/src/components/payrun_card/payrun_card.xml:0
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_view_kanban
 msgid "Compute"
-msgstr ""
+msgstr "Arvuta"
 
 #. module: hr_payroll
 #: model:ir.actions.server,name:hr_payroll.action_hr_payroll_compute_payroll
@@ -1336,7 +1386,7 @@ msgstr "Konfliktid"
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/views/payslip_run_form/hr_payslip_run_form.xml:0
 msgid "Continue"
-msgstr ""
+msgstr "Jätka"
 
 #. module: hr_payroll
 #. odoo-python
@@ -1351,7 +1401,7 @@ msgstr "Leping"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_end
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_end
 msgid "Contract End Date"
-msgstr ""
+msgstr "Lepingu lõppkuupäev"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -1362,7 +1412,7 @@ msgstr "Lepingu lõppemise teavituse aeg"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_date_start
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_date_start
 msgid "Contract Start Date"
-msgstr ""
+msgstr "Lepingu alguskuupäev"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_type_id
@@ -1375,12 +1425,12 @@ msgstr "Lepingu tüüp"
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__contract_wage
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_version__contract_wage
 msgid "Contract Wage"
-msgstr ""
+msgstr "Lepinguline tasu"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.report_payslip
 msgid "Contract Wage ("
-msgstr ""
+msgstr "Lepinguline tasu ("
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_index_form_view
@@ -1427,28 +1477,28 @@ msgstr "Sõidukompensatsioon Gravie jaoks"
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__multi
 msgid "Correct all affected payslips"
-msgstr ""
+msgstr "Paranda kõik seotud palgalehed"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_correction_wizard_form
 msgid "Correct payslip"
-msgstr ""
+msgstr "Paranda palgaleht"
 
 #. module: hr_payroll
 #: model:ir.model.fields.selection,name:hr_payroll.selection__hr_payslip_correction_wizard__correction_choice__single
 msgid "Correct this payslip only"
-msgstr ""
+msgstr "Paranda ainult see palgaleht"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payslip_correction_wizard__correction_choice
 msgid "Correction Choice"
-msgstr ""
+msgstr "Paranduse valik"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payslip.py:0
 msgid "Correction: %(payslip)s"
-msgstr ""
+msgstr "Parandus: %(payslip)s"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_dashboard_warning__country_id
@@ -1479,7 +1529,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.view_hr_payslip_form
 msgid "Create Payment Report"
-msgstr ""
+msgstr "Loo maksefail"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.res_config_settings_view_form
@@ -1499,13 +1549,13 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_hr_payslip_run
 msgid "Create a Pay Run"
-msgstr ""
+msgstr "Loo palgaarvestus"
 
 #. module: hr_payroll
 #. odoo-javascript
 #: code:addons/hr_payroll/static/src/components/payslip_action_helper/payslip_action_helper.xml:0
 msgid "Create a Payslip"
-msgstr ""
+msgstr "Loo palgaleht"
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_salary_attachment_action
@@ -2153,7 +2203,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.ui.menu,name:hr_payroll.hr_menu_versions
 msgid "Employee Records"
-msgstr ""
+msgstr "Töötaja lepingu andmed"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_employee__registration_number
@@ -2178,7 +2228,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_index__version_ids
 msgid "Employee records"
-msgstr ""
+msgstr "Töötaja lepingu andmed"
 
 #. module: hr_payroll
 #: model:ir.model.fields,help:hr_payroll.field_hr_employee__hourly_wage
@@ -2605,30 +2655,32 @@ msgstr "Inimeste arv"
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount_line
 msgid "Headcount Line"
-msgstr ""
+msgstr "Töötajate arvu rida"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount for %(company_name)s from %(date_from)s to %(date_to)s"
 msgstr ""
+"Töötajate arv %(company_name)s kuupäevast %(date_from)s kuupäevani "
+"%(date_to)s"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount for %(company_name)s on the %(date)s"
-msgstr ""
+msgstr "Töötajate arv %(company_name)s kuupäeval %(date)s"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_headcount_line_view_tree
 msgid "Headcount's Employees"
-msgstr ""
+msgstr "Töötajate arvu töötajad"
 
 #. module: hr_payroll
 #. odoo-python
 #: code:addons/hr_payroll/models/hr_payroll_headcount.py:0
 msgid "Headcount's employees"
-msgstr ""
+msgstr "Töötajate arvu töötajad"
 
 #. module: hr_payroll
 #: model:ir.model.fields,field_description:hr_payroll.field_hr_payroll_structure__hide_basic_on_pdf
@@ -3463,7 +3515,7 @@ msgstr "Palgalehed puuduvad sellel palgaarvestusel."
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.hr_payroll_headcount_action
 msgid "No previous headcounts have been found."
-msgstr ""
+msgstr "Eelmised töötajate arvu aruanded puuduvad."
 
 #. module: hr_payroll
 #: model_terms:ir.actions.act_window,help:hr_payroll.action_payroll_hr_version_list_view_payrun
@@ -3964,7 +4016,7 @@ msgstr ""
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_headcount
 msgid "Payroll Headcount"
-msgstr ""
+msgstr "Palgaarvestuse töötajate arv"
 
 #. module: hr_payroll
 #: model:ir.model,name:hr_payroll.model_hr_payroll_note
@@ -4856,7 +4908,7 @@ msgstr ""
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payslip_run_filter
 msgid "Search Pay Run"
-msgstr ""
+msgstr "Otsi palgaarvestust"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_payroll_dashboard_warning_view_search
@@ -4911,12 +4963,12 @@ msgstr ""
 #: code:addons/hr_payroll/static/src/views/payslip_list/hr_payslip_list_controller.xml:0
 #: code:addons/hr_payroll/static/src/views/payslip_run_version_list/hr_version_list_controller.xml:0
 msgid "Select"
-msgstr ""
+msgstr "Vali"
 
 #. module: hr_payroll
 #: model:ir.actions.act_window,name:hr_payroll.action_payroll_hr_version_list_view_payrun
 msgid "Select Employees"
-msgstr ""
+msgstr "Vali töötajad"
 
 #. module: hr_payroll
 #: model_terms:ir.ui.view,arch_db:hr_payroll.hr_salary_rule_benefit_selector_list

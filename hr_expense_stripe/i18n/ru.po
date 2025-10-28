@@ -1,20 +1,24 @@
 # Translation of Odoo Server.
 # This file contains the translation of the following modules:
-# 	* hr_expense_stripe
+# * hr_expense_stripe
 #
+# "Anastasiia Koroleva (koan)" <koan@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-09-11 14:33+0000\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: \n"
+"PO-Revision-Date: 2025-10-28 13:11+0000\n"
+"Last-Translator: \"Anastasiia Koroleva (koan)\" <koan@odoo.com>\n"
+"Language-Team: Russian <https://translate.odoo.com/projects/odoo-19/"
+"hr_expense_stripe/ru/>\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 5.12.2\n"
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -53,6 +57,9 @@ msgid ""
 "triangle text-danger pb-2\" title=\"Entered digits don't match the last 4 "
 "digits of the card.\"/>"
 msgstr ""
+"<span invisible=\"not show_warning_wrong_last_4\" class="
+"\"fa fa-exclamation-triangle text-danger pb-2\" title="
+"\"Введенные цифры не совпадают с последними 4 цифрами карты.\"/>"
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.account_journal_dashboard_kanban_view_inherit_expense_stripe
@@ -1235,6 +1242,8 @@ msgid ""
 "Create prepaid virtual and physical cards for both one-time and recurring "
 "expenses, integrated into Odoo through Stripe Issuing."
 msgstr ""
+"Создавайте предоплаченные виртуальные и физические карты для разовых и "
+"регулярных расходов, интегрированные с Odoo через Stripe Issuing."
 
 #. module: hr_expense_stripe
 #: model_terms:ir.actions.act_window,help:hr_expense_stripe.action_hr_expense_stripe_card
@@ -1242,6 +1251,8 @@ msgid ""
 "Create virtual and physical cards for smooth team spending, whether for "
 "single purchases or ongoing expenses."
 msgstr ""
+"Создавайте виртуальные и физические карты для удобного контроля расходов "
+"команды, будь то разовые покупки или текущие затраты."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_card__create_uid
@@ -1757,6 +1768,10 @@ msgid ""
 "code occurs.\n"
 " Each MCC code can be linked to only one Expense Category."
 msgstr ""
+"Для расходов, созданных с помощью корпоративных карт Stripe, эта категория "
+"расходов будет назначаться автоматически при транзакции с соответствующим "
+"кодом MCC.\n"
+" Каждый MCC-код может быть связан только с одной категорией расходов."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -2004,6 +2019,11 @@ msgid ""
 "fully settled. Odoo and Stripe are not responsible\n"
 "                    for any unwithdrawn funds."
 msgstr ""
+"Если вы закрываете свой аккаунт Stripe Issuing, вы должны: вывести все "
+"оставшиеся средства до закрытия,\n"
+"                    урегулировать все незавершенные транзакции и убедиться, "
+"что баланс полностью выровнен. Odoo и Stripe не несут ответственности\n"
+"                    за невыведенные средства."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -2013,6 +2033,10 @@ msgid ""
 "card.\n"
 "                    You remain liable for any outstanding charges."
 msgstr ""
+"Если ваш аккаунт или карта закрыты, вы должны прекратить использование и "
+"уничтожить карту.\n"
+"                    Вы по-прежнему несете ответственность за все "
+"непогашенные платежи."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields.selection,name:hr_expense_stripe.selection__hr_expense_stripe_card__state__inactive
@@ -2509,6 +2533,8 @@ msgid ""
 "No valid employee selected, please set an employee to be able to update its "
 "cardholder data"
 msgstr ""
+"Не выбран сотрудник. Укажите сотрудника, чтобы обновить данные держателя "
+"карты"
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.non_fi_money_orders
@@ -2567,6 +2593,9 @@ msgid ""
 "                    your Stripe Issuing account, including lost funds, "
 "business interruption, or indirect damages."
 msgstr ""
+"Odoo не несет ответственности за последствия, возникающие при использовании\n"
+"                    вашего аккаунта Stripe Issuing, включая потерю средств, "
+"перебои в работе бизнеса или косвенные убытки."
 
 #. module: hr_expense_stripe
 #: model:product.mcc.stripe.tag,name:hr_expense_stripe.office_and_commercial_furniture
@@ -3315,6 +3344,8 @@ msgid ""
 "Stripe cards associated with this journal. They can be used to pay for "
 "expenses, or to top up the Stripe Issuing balance."
 msgstr ""
+"Карты Stripe, связанные с этим журналом. Их можно использовать для оплаты "
+"расходов или пополнения баланса Stripe Issuing."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3558,6 +3589,8 @@ msgid ""
 "The charge is not allowed on the Stripe network, possibly because it is an "
 "ATM withdrawal or cash advance."
 msgstr ""
+"Проведение платежа запрещено сетью Stripe. Возможная причина: это снятие "
+"наличных в банкомате или получение денежного аванса."
 
 #. module: hr_expense_stripe
 #: model:ir.model.constraint,message:hr_expense_stripe.constraint_product_mcc_stripe_tag_constraint_code_unique
@@ -3577,6 +3610,8 @@ msgid ""
 "The creation rate limit for this type of cards has been reached. Please try "
 "again later."
 msgstr ""
+"Достигнут лимит на создание карт этого типа. Пожалуйста, повторите попытку "
+"позже."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3615,6 +3650,8 @@ msgid ""
 "The last 4 digits of the card you received. This is used to confirm that you "
 "have received the correct card."
 msgstr ""
+"Последние 4 цифры полученной вами карты. Используются для подтверждения "
+"того, что вы получили верную карту."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3623,6 +3660,8 @@ msgid ""
 "The last 4 digits you entered do not match the card you received. Please "
 "check and try again."
 msgstr ""
+"Введенные вами 4 цифры не совпадают с полученной вами картой. Пожалуйста, "
+"проверьте и попробуйте снова."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,help:hr_expense_stripe.field_hr_expense_stripe_card__card_name
@@ -3636,6 +3675,8 @@ msgid ""
 "The phone number associated with your Odoo Expense card(s) has been updated. "
 "If it was not requested by you, please contact your administrator."
 msgstr ""
+"Номер телефона, привязанный к вашим корпоративным картам Odoo, был обновлен. "
+"Если вы не запрашивали это изменение, свяжитесь с администратором."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -3657,7 +3698,7 @@ msgstr ""
 msgid ""
 "The sms service is currently experiencing a lot of request. Please try again "
 "in a few minutes."
-msgstr ""
+msgstr "СМС-сервис временно перегружен. Попробуйте снова через несколько минут."
 
 #. module: hr_expense_stripe
 #: model_terms:ir.ui.view,arch_db:hr_expense_stripe.view_hr_expense_stripe_card_form
@@ -3665,6 +3706,8 @@ msgid ""
 "The spending limits set on this card are higher than the limits set by "
 "Stripe of 50.000 per day and per transaction."
 msgstr ""
+"Лимиты расходов, установленные для этой карты, превышают лимиты, "
+"установленные Stripe (50 000 в день и на транзакцию)."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4122,6 +4165,11 @@ msgid ""
 "                    from any losses, claims, or liabilities related to your "
 "use of Stripe Issuing services, including misuse or violations."
 msgstr ""
+"Вы соглашаетесь освободить Odoo, ее директоров, должностных лиц и "
+"аффилированных лиц\n"
+"                    от любых убытков, претензий или обязательств, связанных "
+"с использованием вами услуг Stripe Issuing, включая неправомерное "
+"использование или нарушения."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4131,6 +4179,10 @@ msgid ""
 "account.\n"
 "                    Repayment is due immediately upon notice."
 msgstr ""
+"Вы полностью несете ответственность за любой отрицательный баланс на вашем "
+"аккаунте Stripe Issuing.\n"
+"                    Погашение задолженности должно быть произведено "
+"немедленно после уведомления."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4140,6 +4192,9 @@ msgid ""
 "                    including unauthorized charges unless covered by law or "
 "Stripe’s policy."
 msgstr ""
+"Вы несете ответственность за все транзакции, совершенные с вашей картой,\n"
+"                    включая несанкционированные списания, за исключением "
+"случаев, предусмотренных законом или политикой Stripe."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4209,6 +4264,9 @@ msgid ""
 "You cannot set a cost on a product that is used as an Expense card category. "
 "Please duplicate it instead."
 msgstr ""
+"Вы не можете установить себестоимость для товара, который используется как "
+"категория расходов по корпоративной карте. Вместо этого, пожалуйста, "
+"дублируйте его."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4218,6 +4276,9 @@ msgid ""
 "inactive Stripe cards. Please manually block all cards before uninstalling "
 "the module."
 msgstr ""
+"Нельзя удалить модуль «Корпоративные карты», пока существуют активные или "
+"неактивные карты Stripe. Перед удалением модуля заблокируйте все карты "
+"вручную."
 
 #. module: hr_expense_stripe
 #. odoo-javascript
@@ -4234,6 +4295,10 @@ msgid ""
 "                    for ensuring lawful use of funds and expense cards in "
 "your jurisdiction."
 msgstr ""
+"Вы обязаны соблюдать все применимые законы и нормативы и несете "
+"ответственность\n"
+"                    за законное использование средств и корпоративных карт в "
+"вашей юрисдикции."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4255,6 +4320,9 @@ msgid ""
 "                    You are responsible for monitoring usage and disputing "
 "unauthorized charges promptly."
 msgstr ""
+"Вы должны немедленно сообщать о потерянных или украденных картах.\n"
+"Вы несете ответственность за контроль использования и своевременное "
+"оспаривание несанкционированных списаний."
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4284,6 +4352,8 @@ msgid ""
 "Your Odoo database failed to respond to Stripe in time, and the "
 "authorization was refused by default"
 msgstr ""
+"База данных Odoo не успела ответить Stripe в установленный срок, и "
+"авторизация была автоматически отклонена"
 
 #. module: hr_expense_stripe
 #. odoo-python
@@ -4298,6 +4368,8 @@ msgid ""
 "Your account balance isn't zero, please use any remaining funds or contact "
 "support to close your account."
 msgstr ""
+"Баланс вашего аккаунта не равен нулю. Используйте оставшиеся средства или "
+"обратитесь в поддержку для закрытия аккаунта."
 
 #. module: hr_expense_stripe
 #: model:ir.model.fields,field_description:hr_expense_stripe.field_hr_expense_stripe_cardholder_wizard__billing_zip

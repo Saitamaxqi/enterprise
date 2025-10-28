@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-02 01:53+0000\n"
+"PO-Revision-Date: 2025-10-28 07:57+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "sale_renting/ko/>\n"
@@ -437,7 +437,7 @@ msgstr "일일 금액"
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_daily
 #: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_daily
 msgid "Daily Fine"
-msgstr ""
+msgstr "일일 과태료"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_rental_report__quantity
@@ -508,7 +508,7 @@ msgstr "표시명"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__displayed_unit
 msgid "Displayed Unit"
-msgstr ""
+msgstr "표시 단위"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_temporal_recurrence__duration
@@ -603,7 +603,7 @@ msgstr "시간당"
 #: model:ir.model.fields,field_description:sale_renting.field_product_product__extra_hourly
 #: model:ir.model.fields,field_description:sale_renting.field_product_template__extra_hourly
 msgid "Hourly Fine"
-msgstr ""
+msgstr "시간당 과태료"
 
 #. module: sale_renting
 #: model:ir.model.fields.selection,name:sale_renting.selection__sale_temporal_recurrence__displayed_unit__hour
@@ -1071,7 +1071,7 @@ msgstr "임대 분석 보고서"
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_sale_order_line__rental_color
 msgid "Rental Color"
-msgstr ""
+msgstr "렌탈 색상"
 
 #. module: sale_renting
 #: model:ir.model.fields,field_description:sale_renting.field_rental_order_wizard_line__rental_order_wizard_id
