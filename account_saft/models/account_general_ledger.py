@@ -288,6 +288,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         # Fill 'customer_vals_list' and 'supplier_vals_list'
         query = report._get_report_query(options, 'from_beginning', domain=[
             ('account_id.account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('partner_id', '!=', False)
         ])
         query.groupby = SQL.identifier(query.table, "partner_id")
         query.having = SQL(
