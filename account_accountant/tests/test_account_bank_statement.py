@@ -2696,3 +2696,12 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             ('match_label_param', '=', 'TEST\\ REFERENCE\\ TO\\ NORMALIZE\\ '),
         ], limit=1)
         self.assertTrue(rule)
+
+    def test_auto_match_multiple_candidates_select_closer_prior_date(self):
+        self._create_invoice_line('out_invoice', invoice_date='2017-01-10', invoice_line_ids=[{'price_unit': 150}])
+        move_line_2 = self._create_invoice_line('out_invoice', invoice_date='2017-01-08', invoice_line_ids=[{'price_unit': 150}])
+        self._create_invoice_line('out_invoice', invoice_date='2017-01-06', invoice_line_ids=[{'price_unit': 150}])
+        statement_line = self._create_st_line(amount=150, partner_id=self.partner_a.id, date='2017-01-08', update_create_date=False)
+        statement_line._try_auto_reconcile_statement_lines()
+        # move_line_2 will be selected because it's the one with the closer prior or equal date.
+        self.assertEqual(statement_line.line_ids[-1].reconciled_lines_ids, move_line_2)

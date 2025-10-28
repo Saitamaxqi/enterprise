@@ -241,9 +241,14 @@ class AccountBankStatementLine(models.Model):
                 ):
                 candidate_amls += aml
 
-        # if there's more than 1 possible match, we don't reconcile
+        # if we have a unique match, we reconcile that move line
         if len(candidate_amls) == 1:
             return candidate_amls
+
+        # if we have multiple candidates we take the invoice with the closer prior or equal date
+        if prior_amls := candidate_amls.filtered(lambda aml: aml.invoice_date <= st_line.date):
+            return max(prior_amls, key=lambda aml: aml.invoice_date)
+        return None
 
     def _try_auto_reconcile_statement_lines(self, company_id=None):
         st_move_ids = self.mapped('move_id').ids
