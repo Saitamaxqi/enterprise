@@ -1806,6 +1806,8 @@ class DocumentsDocument(models.Model):
             return self
         if not all(self.mapped('active')):
             raise UserError(_('You cannot duplicate document(s) in the Trash.'))
+        if default and default.get('user_folder_id') == 'MY':
+            default['owner_id'] = self.env.user.id
 
         # As we avoid to propagate the folder permission by setting access_ids to False (see copy_data), user has no
         # right to create the document. So after checking permission, we execute the copy in sudo.
@@ -1826,6 +1828,9 @@ class DocumentsDocument(models.Model):
 
         folders = (self - shortcuts).filtered(lambda d: d.type == 'folder')
         if folders:
+            if not is_manager and default and default.get('user_folder_id') == 'COMPANY':
+                raise AccessError(_('Only Documents Managers can create in company folder.'))
+
             embedded_actions = self._get_folder_embedded_actions(folders.ids)
             new_folders = folders.sudo()._copy_with_access(default=default).sudo(False)
 
@@ -1845,7 +1850,12 @@ class DocumentsDocument(models.Model):
                 owner_id_in_default = (default or {}).get('owner_id') is not None
                 if owner_id_in_default:
                     children_default.update(owner_id=default['owner_id'])
+
+                # check if we are not copying a folder into itself or one of its descendants
+                if new_folder.parent_path.startswith(old_folder.parent_path):
+                    raise UserError(_("You cannot copy a folder into itself or into one of its own descendants."))
                 old_folder.children_ids.with_context(documents_copy_skip_rename=True).copy(children_default)
+
                 new_documents[documents_order[old_folder.id]] = new_folder
                 if is_manager and old_folder._is_company_root_folder() and not owner_id_in_default:
                     new_folder.owner_id = old_folder.owner_id
