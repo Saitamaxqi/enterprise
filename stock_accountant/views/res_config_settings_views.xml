@@ -13,8 +13,8 @@
                                 <label for="valuation_method" class="col-lg-5 o_light_label"/>
                                 <field name="valuation_method"/>
                             </div>
-                            <div class="row mt8" invisible="valuation_method == 'real_time'">
-                                <label for="inventory_period" string="Periodicity" class="col-lg-5 o_light_label"/>
+                            <div class="row mt8">
+                                <label for="inventory_period" string="Periodic Valuation" class="col-lg-5 o_light_label"/>
                                 <field name="inventory_period"/>
                             </div>
                             <div class="row mt8">
