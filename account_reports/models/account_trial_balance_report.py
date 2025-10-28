@@ -223,12 +223,12 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             return []
 
         extra_domain = []
-        # Unless we are grouping by `account_id`, don't consider income and expense AMLs from previous fiscal years.
+        # Don't consider income and expense AMLs from previous fiscal years.
         # (1) This is an optimization that speeds up the report but prevents expanding the Unaffected Earnings account.
         # (2) This also has the functional purpose of ensuring that income and expense accounts only take into account AMLs
         #     from the current fiscal year when coming from the `_expand_groupby`, because the `_expand_groupby` only adds
         #     a forced_domain on 'account_id' and doesn't do any restriction based on date.
-        if current_groupbys and current_groupbys[-1] != 'account_id' and (fiscalyear_start := options.get('trial_balance_block_fiscalyear_start')):
+        if fiscalyear_start := options.get('trial_balance_block_fiscalyear_start'):
             extra_domain = [
                 '|',
                 ('account_id.include_initial_balance', '=', True),
@@ -277,22 +277,6 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             )
             query.groupby = SQL(',').join(SQL.identifier(f'groupby_key_{groupby_key}') for groupby_key in current_groupbys)
 
-        # Ensure previous year AMLs are not included
-        fiscalyear_start = options.get('trial_balance_block_fiscalyear_start')
-        if 'account_move_line__account_id' not in query._joins:
-            account_alias = query.join("account_move_line", "account_id", "account_account", "id", "account_id")
-        else:
-            account_alias = 'account_move_line__account_id'
-        filter_out_unaffected_earnings = SQL(
-            """
-            AND NOT (%(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s])
-            AND account_move_line.date < %(fiscalyear_start)s)
-            """,
-            account_type=SQL.identifier(account_alias, 'account_type'),
-            income_pattern=r'income%',
-            expense_pattern=r'expense%',
-            fiscalyear_start=fiscalyear_start)
-
         sql_query = SQL(
             """
             SELECT
@@ -303,7 +287,6 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             FROM %(table_references)s
             %(currency_table_join)s
             WHERE %(search_condition)s
-            %(filter_out_unaffected_earnings)s
             %(groupby_clause)s
             """,
             select_groupby_key_components=select_groupby_key_components if current_groupbys else SQL(''),
@@ -314,7 +297,6 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             currency_table_join=report._currency_table_aml_join(options),
             search_condition=query.where_clause,
             groupby_clause=SQL("GROUP BY %s", query.groupby) if query.groupby else SQL(),
-            filter_out_unaffected_earnings=filter_out_unaffected_earnings,
         )
 
         self.env.cr.execute(sql_query)
@@ -362,7 +344,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             return block_id, horizontal_group, analytic_group
 
         # Unaffected Earnings lines
-        if report._parse_line_id(lines[0]['id'])[-1][-1] == report.line_ids[0].id:
+        if report._parse_line_id(lines[0]['id'])[-1] == ('', 'account.report.line', report.line_ids[0].id):
             unaffected_earning_lines = report._get_unallocated_earnings_lines(options, 'strict_range', auditable=True)
         else:
             unaffected_earning_lines = []
@@ -380,7 +362,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         )
 
         for line in unaffected_earning_lines + lines:
-            unaffected_earning_line = line.get('markup') == 'undistributed_profits_losses'
+            unaffected_earning_line = report._get_markup(line['id']) == 'undistributed_profits_losses'
             # Group by column block ID and horizontal groupby element to sum up end balance
             grouped_by_block = groupby(line['columns'], key=get_block_and_group_key)
 

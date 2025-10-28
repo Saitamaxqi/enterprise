@@ -129,7 +129,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             '|',
             ('account_id.include_initial_balance', '=', True),
             ('date', '>=', current_fiscalyear_date_from),
-        ] if any(field == 'account_id' for field, _op, _val in options.get('forced_domain', [])) else []
+        ]
 
         report_query = report._get_report_query(options, 'from_beginning', additional_domain)
 
@@ -206,8 +206,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
             WHERE %(where_clause)s
             %(search_bar_sql)s
-            AND NOT (account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
-                     AND account_move_line.date < %(fiscalyear_start)s)
 
             %(additional_groupby)s
             %(orderby_clause)s
@@ -223,7 +221,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             currency_table_join=report._currency_table_aml_join(options),
             where_clause=report_query.where_clause,
             search_bar_sql=search_bar_sql,
-            fiscalyear_start=current_fiscalyear_date_from,
             additional_groupby=SQL("GROUP BY %s", SQL(",").join(groupby)) if groupby else SQL(),
             orderby_clause=SQL("ORDER BY 2 NULLS FIRST, move_name, 1 NULLS FIRST") if current_groupby == 'id_with_accumulated_balance' else SQL(),
             offset_clause=SQL("OFFSET %s", offset) if offset else SQL(),
@@ -350,11 +347,11 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         processed_lines = []
         main_line_dict = None
         account_move_lines = []
-        additional_values = defaultdict(int)
+        unaffected_earning_values = defaultdict(float)
 
         # Get the unaffected earning lines if the whole report has been generated
         # (e.g., not when loading more lines in a group)
-        if report._parse_line_id(lines[0]['id'])[-1][-1] == report.line_ids[0].id:
+        if report._parse_line_id(lines[0]['id'])[-1] == ('', 'account.report.line', report.line_ids[0].id):
             unaffected_earning_lines = report._get_unallocated_earnings_lines(options, 'from_beginning')
         else:
             unaffected_earning_lines = []
@@ -363,13 +360,13 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             markup, model, res_id = report._parse_line_id(line['id'])[-1]
             if model == 'account.report.line' and res_id == general_ledger_custom_engine_line.id:
                 main_line_dict = line
-            elif model == 'res.company':
+            elif markup == 'undistributed_profits_losses':
                 for column in line['columns']:
                     # Swap no_format from 0.0 to None for unaffected lines, to match the other lines
                     if column['expression_label'] == 'amount_currency' and column['is_zero']:
                         column['no_format'] = None
                     elif column['figure_type'] == 'monetary':
-                        additional_values[column['expression_label']] += column['no_format']
+                        unaffected_earning_values[column['expression_label']] += column['no_format']
             else:
                 processed_lines.append(line)
 
@@ -393,7 +390,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         if self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections'):
             if unaffected_earning_lines:
                 total_line = processed_lines.pop(-1)
-                total_line['columns'] = self._adjust_total_with_unaffected_earnings(total_line['columns'], additional_values)
+                total_line['columns'] = self._adjust_total_with_unaffected_earnings(total_line['columns'], unaffected_earning_values)
                 processed_lines.extend(unaffected_earning_lines)
                 processed_lines.append(total_line)
             return processed_lines
@@ -403,7 +400,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             processed_lines.append({
                 'id': report._get_generic_line_id(None, None, 'total'),
                 'name': _("Total General Ledger"),
-                'columns': self._adjust_total_with_unaffected_earnings(main_line_dict['columns'], additional_values),
+                'columns': self._adjust_total_with_unaffected_earnings(main_line_dict['columns'], unaffected_earning_values),
                 'level': 1
             })
 

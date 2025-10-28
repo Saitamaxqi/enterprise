@@ -26,198 +26,56 @@ class AccountAccount(models.Model):
     account_status = fields.One2many(string="Account Status", comodel_name='account.audit.account.status', inverse_name='account_id')
     last_message = fields.Char(string="Last Message", compute='_compute_last_message')
 
-    def _common_audit_search(self, field_name, operator, value, previous=False):
+    def _common_audit_search(self, field_name: str, operator: str, value, previous=False):
         if isinstance(value, OrderedSet):
             value = tuple(value)
+        query = self._search([])
+        query.add_where(self._fields[field_name]._condition_to_sql(
+            field_name, operator, value,
+            self, query.table, query,
+        ))
 
-        working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
-        if not working_file:
-            return []
-
-        date_to = working_file.date_to
-        if previous:
-            date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))[1]
-
-        self.env.cr.execute(
-            SQL("""
-                SELECT
-                    aml.account_id
-                FROM (
-                    SELECT
-                        SUM(COALESCE(account_move_line.%(field_name)s)) as %(field_name)s,
-                        %(account)s AS account_id
-                    FROM account_move_line
-                    JOIN account_account aml_account ON aml_account.id = account_move_line.account_id
-                    WHERE account_move_line.date <= %(date_to)s
-                      AND account_move_line.company_id = ANY(%(company_ids)s)
-                      AND account_move_line.parent_state = 'posted'
-                      AND NOT (
-                          aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
-                          AND account_move_line.date < %(date_from)s
-                      )
-                    GROUP BY %(account)s
-                ) aml
-                WHERE aml.%(field_name)s %(operator)s %(value)s
-                """,
-                field_name=SQL(field_name),
-                account=SQL.identifier('account_move_line', 'account_id'),
-                date_to=date_to,
-                company_ids=working_file.company_ids.ids,
-                operator=SQL(operator),
-                value=value,
-                account_type=SQL.identifier('aml_account', 'account_type'),
-                date_from=working_file.date_from,
-            )
-        )
-
-        result = self.env.cr.dictfetchall()
-        return [('id', 'in', [row['account_id'] for row in result])]
+        result = self.env.execute_query_dict(query.select())
+        return [('id', 'in', [row['id'] for row in result])]
 
     def _search_audit_debit(self, operator, value):
-        return self._common_audit_search('debit', operator, value)
+        return self._common_audit_search('audit_debit', operator, value)
 
     def _search_audit_credit(self, operator, value):
-        return self._common_audit_search('credit', operator, value)
+        return self._common_audit_search('audit_credit', operator, value)
 
     def _search_audit_balance(self, operator, value):
-        return self._common_audit_search('balance', operator, value)
+        return self._common_audit_search('audit_balance', operator, value)
 
     def _search_audit_previous_balance(self, operator, value):
-        return self._common_audit_search('balance', operator, value, True)
-
-    def _search_variation_common(self, variation_select, operator, value):
-        if isinstance(value, OrderedSet):
-            value = tuple(value)
-
-        working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
-        if not working_file:
-            return []
-
-        prev_date_from, prev_date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))
-
-        self.env.cr.execute(
-            SQL("""
-                SELECT
-                    account_variation.account_id
-                FROM (
-
-                    SELECT
-                        %(variation_select)s,
-                        %(account)s AS account_id
-                    FROM account_move_line aml
-                    JOIN account_account aml_account ON aml_account.id = aml.account_id
-
-                    LEFT JOIN (
-                        SELECT
-                            SUM(COALESCE(prev_aml.balance)) as balance,
-                            %(prev_account)s AS account_id
-                        FROM account_move_line prev_aml
-                        JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
-                        WHERE prev_aml.date <= %(prev_date_to)s
-                          AND prev_aml.company_id = ANY(%(company_ids)s)
-                          AND NOT (
-                              prev_aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
-                              AND prev_aml.date < %(prev_date_from)s
-                          )
-                        GROUP BY %(prev_account)s
-                    ) prev_account_balances ON %(account)s = prev_account_balances.account_id
-
-                    WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
-                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
-                    GROUP BY %(account)s, prev_account_balances.balance
-
-                ) account_variation
-                WHERE account_variation.variation %(operator)s %(value)s
-                """,
-                variation_select=variation_select,
-                date_from=working_file.date_from,
-                date_to=working_file.date_to,
-                prev_date_from=prev_date_from,
-                prev_date_to=prev_date_to,
-                prev_account=SQL.identifier('prev_aml', 'account_id'),
-                account=SQL.identifier('aml', 'account_id'),
-                company_ids=working_file.company_ids.ids,
-                operator=SQL(operator),
-                value=value,
-            )
-        )
-
-        result = self.env.cr.dictfetchall()
-        return [('id', 'in', [row['account_id'] for row in result])]
+        return self._common_audit_search('audit_previous_balance', operator, value)
 
     def _search_audit_var_n_1(self, operator, value):
-        return self._search_variation_common(SQL("(COALESCE(SUM(aml.balance), 0.0) - COALESCE(prev_account_balances.balance, 0)) as variation"), operator, value)
+        return self._common_audit_search('audit_var_n_1', operator, value)
 
     def _search_var_percentage(self, operator, value):
-        return self._search_variation_common(
-            SQL("""
-                CASE WHEN prev_account_balances.balance IS NULL THEN NULL
-                ELSE (COALESCE(SUM(aml.balance), 0) - COALESCE(prev_account_balances.balance, 0)) / COALESCE(prev_account_balances.balance, 1) * 100
-                END as variation
-            """),
-            operator, value)
+        return self._common_audit_search('audit_var_percentage', operator, value)
 
     @api.depends_context('working_file_id')
     def _compute_audit_period(self):
         working_file = self.env['account.return'].browse(self.env.context.get('working_file_id'))
-        balances_by_account = {}
+        found_ids = set()
 
-        if working_file:
-            prev_date_from, prev_date_to = working_file.type_id._get_period_boundaries(working_file.company_id, working_file.date_from - relativedelta(days=1))
-            audit_period_query = SQL("""
-                    SELECT
-                        COALESCE(SUM(aml.debit), 0) AS current_debit,
-                        COALESCE(SUM(aml.credit), 0) AS current_credit,
-                        COALESCE(SUM(aml.balance), 0) AS current_balance,
-                        prev_account_balances.balance AS prev_balance,
-                        %(account)s AS account_id
-                    FROM account_move_line aml
-                    JOIN account_account aml_account ON aml_account.id = aml.account_id
-                    LEFT JOIN (
-                        SELECT
-                            SUM(COALESCE(prev_aml.balance, 0)) as balance,
-                            %(prev_account)s AS account_id
-                        FROM account_move_line prev_aml
-                        JOIN account_account prev_aml_account ON prev_aml_account.id = prev_aml.account_id
-                        WHERE prev_aml.date <= %(prev_date_to)s
-                        AND prev_aml.company_id = ANY(%(company_ids)s)
-                        AND NOT (
-                            prev_aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
-                            AND prev_aml.date < %(prev_date_from)s
-                        )
-                        GROUP BY %(prev_account)s
-                    ) prev_account_balances ON %(account)s = prev_account_balances.account_id
+        if working_file and self.ids:
+            query = self._as_query(ordered=False)
+            for account_id, debit, credit, balance, previous_balance in self.env.execute_query(query.select(*(
+                self._field_to_sql(query.table, field_name, query)
+                for field_name in ('id', 'audit_debit', 'audit_credit', 'audit_balance', 'audit_previous_balance')
+            ))):
+                account = self.browse(account_id)
+                account.audit_debit = debit
+                account.audit_credit = credit
+                account.audit_balance = balance
+                account.audit_previous_balance = previous_balance
+                found_ids.add(account_id)
 
-                    WHERE aml.date <= %(date_to)s AND aml.company_id = ANY(%(company_ids)s)
-                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
-                    GROUP BY %(account)s, prev_account_balances.balance
-                """,
-                date_from=working_file.date_from,
-                date_to=working_file.date_to,
-                prev_date_from=prev_date_from,
-                prev_date_to=prev_date_to,
-                prev_account=SQL.identifier('prev_aml', 'account_id'),
-                account=SQL.identifier('aml', 'account_id'),
-                company_ids=working_file.company_ids.ids,
-            )
-            self.env.cr.execute(audit_period_query)
-
-            balances_by_account = {
-                row['account_id']: (
-                    row['current_debit'],
-                    row['current_credit'],
-                    row['current_balance'],
-                    row['prev_balance'],
-                )
-                for row in self.env.cr.dictfetchall()
-            }
-
-        for account in self:
-            debit, credit, balance, prev_balance = balances_by_account.get(account.id, (0, 0, 0, 0))
-            account.audit_debit = debit
-            account.audit_credit = credit
-            account.audit_balance = balance
-            account.audit_previous_balance = prev_balance
+        remaining = self - self.browse(found_ids)
+        remaining.audit_debit = remaining.audit_credit = remaining.audit_balance = remaining.audit_previous_balance = 0
 
     @api.depends('audit_balance', 'audit_previous_balance')
     def _compute_audit_variation(self):
@@ -303,25 +161,38 @@ class AccountAccount(models.Model):
 
     def _field_to_sql(self, alias, field_expr, query=None) -> SQL:
         def add_aml_join(join_alias, date_from, date_to, company_ids):
+            self.env['account.move.line'].flush_model()
             query.add_join(
                 'LEFT JOIN',
                 join_alias,
                 SQL("""
-                    (SELECT
-                        SUM(COALESCE(aml.debit, 0.0)) as debit,
-                        SUM(COALESCE(aml.credit, 0.0)) as credit,
-                        SUM(COALESCE(aml.balance, 0.0)) as balance,
-                        %(account)s as account_id
-                    FROM account_move_line aml
-                    JOIN account_account aml_account ON aml_account.id = aml.account_id
-                    WHERE aml.date <= %(date_to)s
-                      AND aml.company_id = ANY(%(company_ids)s)
-                      AND aml.parent_state = 'posted'
-                      AND NOT (aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%']) AND aml.date < %(date_from)s)
-                    GROUP BY %(account)s)
+                    (SELECT SUM(COALESCE(debit, 0.0)) AS debit,
+                            SUM(COALESCE(credit, 0.0)) AS credit,
+                            SUM(COALESCE(balance, 0.0)) AS balance,
+                            account_id
+                       FROM (
+                                SELECT aml.debit, aml.credit, aml.balance, aml.account_id
+                                  FROM account_move_line aml
+                                  JOIN account_account aml_account ON aml_account.id = aml.account_id
+                                 WHERE aml.date <= %(date_to)s
+                                   AND NOT aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                                   AND aml.company_id = ANY(%(company_ids)s)
+                                   AND aml.parent_state = 'posted'
+
+                                UNION ALL
+
+                                SELECT aml.debit, aml.credit, aml.balance, aml.account_id
+                                  FROM account_move_line aml
+                                  JOIN account_account aml_account ON aml_account.id = aml.account_id
+                                 WHERE aml.date <= %(date_to)s
+                                   AND aml.date >= %(date_from)s
+                                   AND aml_account.account_type ILIKE ANY(ARRAY['income%%', 'expense%%'])
+                                   AND aml.company_id = ANY(%(company_ids)s)
+                                   AND aml.parent_state = 'posted'
+                            ) aml
+                   GROUP BY account_id)
                     """,
-                    account=SQL.identifier('aml', 'account_id'),
-                    date_from=working_file.date_from,
+                    date_from=date_from,
                     date_to=date_to,
                     company_ids=company_ids,
                 ),

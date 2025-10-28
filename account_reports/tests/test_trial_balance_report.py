@@ -637,7 +637,7 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
         })
 
         lines = self.report._get_lines(options)
-        unaff_line = next(line for line in lines if line.get('markup') == 'undistributed_profits_losses')
+        unaff_line = next(line for line in lines if self.report._get_markup(line['id']) == 'undistributed_profits_losses')
         expense_line = next(line for line in lines if line['name'] == self.company_data['default_account_expense'].display_name)
         trial_balance_top_parent_line = self.report.line_ids[0]
 

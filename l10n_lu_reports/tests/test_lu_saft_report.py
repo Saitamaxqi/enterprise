@@ -51,6 +51,28 @@ class TestLuSaftReport(TestSaftReport):
                 ('in_invoice', '2018-12-31', cls.partner_b, cls.product_b, 10.0, 800.0),
             ])))
         invoices.action_post()
+        # Create an allocation entry
+        ChartTemplate = cls.env['account.chart.template']
+        allocation_acc = ChartTemplate.ref('lu_2020_account_6492')
+        provision_acc = ChartTemplate.ref('lu_2011_account_1881')
+        cls.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2018-12-31',
+            'line_ids': [
+                Command.create({
+                    'name': 'Distribute earnings',
+                    'account_id': provision_acc.id,
+                    'debit': 8000.0,
+                    'credit': 0.0,
+                }),
+                Command.create({
+                    'name': 'Distribute earnings',
+                    'account_id': allocation_acc.id,
+                    'debit': 0.0,
+                    'credit': 8000.0,
+                }),
+            ]
+        }).action_post()
 
     @classmethod
     def _l10n_lu_saft_invoice_data(cls, move_type, invoice_date, partner, product, quantity, price_unit):
@@ -77,12 +99,13 @@ class TestLuSaftReport(TestSaftReport):
         invoice_data = list(starmap(self._l10n_lu_saft_invoice_data, [
             ('out_invoice', '2019-01-01', self.partner_a, self.product_c, 5.0, 1000.0),
             ('out_invoice', '2019-01-01', self.partner_a, self.product_d, 5.0, 1000.0),
+            ('out_invoice', '2018-12-31', self.partner_a, self.product_a, 5.0, 1000.0),
         ]))
         new_invoices = self.env['account.move'].create(invoice_data)
         new_invoices.action_post()
         with self.assertRaises(self.ReportException) as cm:
             self._l10n_lu_saft_generate_report()
-        self.assertEqual(set(cm.exception.errors), {'product_duplicate_ref', 'product_missing_ref'})
+        self.assertEqual(set(cm.exception.errors), {'product_duplicate_ref', 'product_missing_ref', 'undistributed_earnings'})
 
     def test_saft_report_values(self):
         self.assertXmlTreeEqual(
@@ -123,9 +146,9 @@ class TestLuSaftReport(TestSaftReport):
                         <GeneralLedgerAccounts>
                             <Account>
                                 <AccountID>___ignore___</AccountID>
-                                <AccountDescription>Result for the financial year</AccountDescription>
-                                <StandardAccountID>142000</StandardAccountID>
-                                <AccountType>Current Year Earni</AccountType>
+                                <AccountDescription>Operating provisions</AccountDescription>
+                                <StandardAccountID>188100</StandardAccountID>
+                                <AccountType>Non-current Liabil</AccountType>
                                 <OpeningDebitBalance>8000.00</OpeningDebitBalance>
                                 <ClosingDebitBalance>8000.00</ClosingDebitBalance>
                             </Account>
