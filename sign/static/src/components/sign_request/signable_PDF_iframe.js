@@ -381,7 +381,7 @@ export class SignablePDFIframe extends PDFIframe {
     getContext(signItem) {
         const context = super.getContext(signItem);
         const type = this.signItemTypesById[signItem.type_id];
-        if (type.name === _t("Date")) {
+        if (type.name === _t("Date") && signItem.responsible === this.currentRole) {
             context.placeholder = this.signInfo.get('dateFormat')?.toUpperCase();
         }
         return context;
