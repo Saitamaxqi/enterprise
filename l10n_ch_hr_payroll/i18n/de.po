@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-10-24 12:10+0000\n"
+"PO-Revision-Date: 2025-10-28 12:10+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/de/>\n"
@@ -1263,7 +1263,7 @@ msgstr ""
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_salary_rule__l10n_ch_salary_certificate__3
 msgid "3. Irregular Benefits"
-msgstr "3. Unregelmäßige Leistungen"
+msgstr "3. Unregelmässige Leistungen"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
@@ -2005,7 +2005,7 @@ msgstr "AHV/ALV"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_salary_rule__l10n_ch_ac_included
 msgid "AVS/AC Included"
-msgstr "Einschließlich AHV/ALV"
+msgstr "Einschliesslich AHV/ALV"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_social_insurance_id
@@ -2349,7 +2349,7 @@ msgstr "Antwort"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_payslip_is_log_line__code__isdtsalaryaperiodic
 msgid "Aperiodic ST Determinant Salary"
-msgstr "Unregelmäßiges ST-Festgehalt"
+msgstr "Unregelmässiges ST-Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee_is_line_correction__l10n_ch_source_tax_canton__ar
@@ -3099,7 +3099,7 @@ msgstr "Klicken Sie hier, um ein neues Lohnausweisprofil zu erstellen."
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_tax_rate_import_wizard_view_form
 msgid "Close"
-msgstr "Schließen"
+msgstr "Schliessen"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -3164,17 +3164,17 @@ msgid ""
 "negative values."
 msgstr ""
 "Code-Bedeutung:\n"
-"    - I: Bruttogrundgehalt und regelmäßige Zulagen\n"
+"    - I: Bruttogrundgehalt und regelmässige Zulagen\n"
 "        - Gewöhnliches Gehalt, das gezahlt wird, z. B. monatlich, stündlich, "
 "nach Anzahl, bei Heimarbeit usw.\n"
-"        - Regelmäßig gezahlte Zulagen, wie z. B. Zulagen für die Position "
+"        - Regelmässig gezahlte Zulagen, wie z. B. Zulagen für die Position "
 "oder für die Dauer der Betriebszugehörigkeit,\n"
 "          für den Wohnort, für die Unterkunft, für Reisen oder für "
 "Lebenshaltungskosten.\n"
 "        - Trinkgelder werden nach Abzug der AHV-Beiträge ausgezahlt.\n"
-"        - Regelmäßige Zahlungen (bei jeder Gehaltszahlung) einer Provision, "
+"        - Regelmässige Zahlungen (bei jeder Gehaltszahlung) einer Provision, "
 "eines Umsatzbeitrags oder eines anderen\n"
-"          regelmäßig gezahlten Bonus.\n"
+"          regelmässig gezahlten Bonus.\n"
 "    - J: Bruttovergütung für Schicht-, Sonntags- oder Nachtarbeit und andere "
 "Erschwerniszulagen\n"
 "          (Vergütung für Bereitschaftsdienst, schmutzige Arbeit usw.)\n"
@@ -3196,10 +3196,10 @@ msgstr ""
 "Werten übermittelt werden.\n"
 "    - M: Höhe der herkömmlichen Beiträge (Arbeitnehmeranteil) zur "
 "beruflichen Vorsorge (BVG) oder\n"
-"         der 2. Grundpfeiler gemäß den gesetzlichen, satzungsmäßigen oder "
+"         der 2. Grundpfeiler gemäss den gesetzlichen, satzungsmässigen oder "
 "behördlichen Bestimmungen.\n"
 "         Der angegebene Betrag sollte keine Tilgungsbeiträge enthalten.\n"
-"         Regelmäßige BVG-LPP-Beiträge müssen grundsätzlich als negative "
+"         Regelmässige BVG-LPP-Beiträge müssen grundsätzlich als negative "
 "Werte übermittelt werden."
 
 #. module: l10n_ch_hr_payroll
@@ -3274,7 +3274,7 @@ msgstr ""
 "    - S: Kapitalzahlung: Kapitalleistungen mit Rentencharakter, die vom "
 "Arbeitgeber direkt an den\n"
 "            Arbeitnehmer gezahlt werden und wahrscheinlich zu einem "
-"ermäßigten Satz besteuert werden.\n"
+"ermässigten Satz besteuert werden.\n"
 "          - Abfindungen mit Vorsorgecharakter;\n"
 "          - Kapitalleistungen mit Rentencharakter;\n"
 "          - Gehaltszahlungen nach dem Tod.\n"
@@ -3283,7 +3283,7 @@ msgstr ""
 "            obwohl sie in der Regel vom Arbeitnehmer zu zahlen sind,\n"
 "            - Teil- oder Vollübernahme der Beiträge, die der Arbeitnehmer an "
 "die BVG-Berufsversicherung,\n"
-"              einschließlich der Arbeitgeberversicherung, zu zahlen hat;\n"
+"              einschliesslich der Arbeitgeberversicherung, zu zahlen hat;\n"
 "            - Zahlungen an betriebliche Altersvorsorgeeinrichtungen (2. "
 "Grundpfeiler),\n"
 "              die der Arbeitgeber zugunsten des Arbeitnehmers leistet "
@@ -4228,12 +4228,12 @@ msgstr "Kanton des Bevollmächtigten"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_config_settings__l10n_ch_delegate_street
 msgid "Delegate Street"
-msgstr "Straße des Bevollmächtigten"
+msgstr "Strasse des Bevollmächtigten"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_config_settings__l10n_ch_delegate_street2
 msgid "Delegate Street 2"
-msgstr "Straße 2 des Bevollmächtigten"
+msgstr "Strasse 2 des Bevollmächtigten"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_config_settings__l10n_ch_delegate_zip
@@ -4861,7 +4861,7 @@ msgid ""
 "F - Scale for Italian cross-border commuters whose spouse is working "
 "lucrative outside Switzerland"
 msgstr ""
-"F - Tarif für italienische Grenzgänger, deren Ehepartner außerhalb der "
+"F - Tarif für italienische Grenzgänger, deren Ehepartner ausserhalb der "
 "Schweiz lukrativ arbeitet"
 
 #. module: l10n_ch_hr_payroll
@@ -6179,7 +6179,7 @@ msgstr "Ungültiger Zivilstand für Arbeitnehmer: %s"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__irregular_working_time
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__irregular_working_time
 msgid "Irregular Working Time"
-msgstr "Unregelmäßige Arbeitszeiten"
+msgstr "Unregelmässige Arbeitszeiten"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip_is_log_line__is_code
@@ -6450,12 +6450,12 @@ msgstr "L10N Ch: Kanton des Bevollmächtigten"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_delegate_street
 msgid "L10N Ch Delegate Street"
-msgstr "L10N Ch: Straße des Bevollmächtigten"
+msgstr "L10N Ch: Strasse des Bevollmächtigten"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_delegate_street2
 msgid "L10N Ch Delegate Street2"
-msgstr "L10N Ch: Straße 2 des Bevollmächtigten"
+msgstr "L10N Ch: Strasse 2 des Bevollmächtigten"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_res_company__l10n_ch_delegate_zip
@@ -6490,7 +6490,7 @@ msgstr "L10N Ch Sind Änderungen"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_salary_rule__l10n_ch_is_periodic
 msgid "L10N Ch Is Periodic"
-msgstr "L10N Ch Ist regelmäßig"
+msgstr "L10N Ch Ist regelmässig"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_payslip__l10n_ch_laa_group
@@ -6568,12 +6568,12 @@ msgstr "L10N Ch: Regelung Gehalt Nachname"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_provision_salary_street
 msgid "L10N Ch Provision Salary Street"
-msgstr "L10N Ch: Regelung Gehalt Straße"
+msgstr "L10N Ch: Regelung Gehalt Strasse"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_provision_salary_street2
 msgid "L10N Ch Provision Salary Street2"
-msgstr "L10N Ch: Regelung Gehalt Straße2"
+msgstr "L10N Ch: Regelung Gehalt Strasse2"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_provision_salary_zip
@@ -6590,7 +6590,7 @@ msgstr "L10N Ch: Lohnausweis-Profile"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_spouse_street
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_spouse_street
 msgid "L10N Ch Spouse Street"
-msgstr "L10N Ch: Straße des Ehepartners"
+msgstr "L10N Ch: Strasse des Ehepartners"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_spouse_work_end_date
@@ -6628,7 +6628,7 @@ msgstr "L10N Ch: Swissdec-Erklärung"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_statistic_report__l10n_ch_swissdec_declaration_ids_size
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_transmitter__l10n_ch_swissdec_declaration_ids_size
 msgid "L10N Ch Swissdec Declaration Ids Size"
-msgstr "L10N Ch: Größe der Swissdec-Erklärung-ID"
+msgstr "L10N Ch: Grösse der Swissdec-Erklärung-ID"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_leave__l10n_ch_swissdec_work_interruption
@@ -8446,7 +8446,7 @@ msgstr "Andere"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_residence_category__othersnotswiss
 msgid "Other (Without Swiss)"
-msgstr "Andere (außer Schweiz)"
+msgstr "Andere (ausser Schweiz)"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_form
@@ -8788,7 +8788,7 @@ msgstr "Zeitraum:"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_payslip_is_log_line__code__isdtsalaryperiodic
 msgid "Periodic ST Determinant Salary"
-msgstr "Regelmäßiges ST-Festgehalt"
+msgstr "Regelmässiges ST-Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_permanent_staff_public_admin
@@ -9753,7 +9753,7 @@ msgstr "Quellensteuerbetrag"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line_correction__source_tax_aperiodic_determinant_salary
 msgid "Source Tax Aperiodic Determinant Salary"
-msgstr "Quellensteuer auf unregelmäßiges Festgehalt"
+msgstr "Quellensteuer auf unregelmässiges Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_9065
@@ -9815,7 +9815,7 @@ msgstr "Quellensteuer Gemeinde"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line_correction__source_tax_periodic_determinant_salary
 msgid "Source Tax Periodic Determinant Salary"
-msgstr "Quellensteuer auf regelmäßiges Festgehalt"
+msgstr "Quellensteuer auf regelmässiges Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -9887,13 +9887,13 @@ msgstr "Quellensteuererklärung"
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_9072
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_ISSALARYDATP
 msgid "Source-Tax Determinant Aperiodic Salary"
-msgstr "Quellensteuer auf unregelmäßiges Festgehalt"
+msgstr "Quellensteuer auf unregelmässiges Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_ISSALARYDTP
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_9071
 msgid "Source-Tax Determinant Periodic Salary"
-msgstr "Quellensteuer auf regelmäßiges Festgehalt"
+msgstr "Quellensteuer auf regelmässiges Festgehalt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_hr_employee_is_line_correction
@@ -10206,14 +10206,14 @@ msgstr "Geschichte-ID"
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.view_l10n_ch_salary_certificate_profile_form
 msgid "Street 2..."
-msgstr "Straße 2 ..."
+msgstr "Strasse 2 ..."
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.res_config_settings_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.view_l10n_ch_salary_certificate_profile_form
 msgid "Street..."
-msgstr "Straße ..."
+msgstr "Strasse ..."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_dialog_message_field__swissdec_answer_value_type__string
@@ -10993,9 +10993,7 @@ msgstr "Der Monat muss zwischen 1 und 12 liegen"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_version.py:0
 msgid "The residence Municipality must contain only numbers for Switzerland."
-msgstr ""
-"Die Gemeinde des Wohnsitzes muss für die Schweiz ausschließlich Zahlen "
-"enthalten."
+msgstr "Die Gemeinde des Wohnsitzes darf für die Schweiz nur Zahlen enthalten."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -11025,8 +11023,8 @@ msgstr ""
 msgid ""
 "The weekly residence municipality must contain only numbers for Switzerland."
 msgstr ""
-"Die Gemeinde des Wohnsitzes während der Woche muss für die Schweiz "
-"ausschließlich Zahlen enthalten."
+"Die Gemeinde des Wohnsitzes während der Woche darf für die Schweiz nur "
+"Zahlen enthalten."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -11091,7 +11089,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/res_company.py:0
 msgid "This feature is only allowed in production environments."
-msgstr "Diese Funktion ist ausschließlich in Produktionsumgebungen zulässig."
+msgstr "Diese Funktion ist nur in Produktionsumgebungen zulässig."
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -11288,8 +11286,9 @@ msgstr "Versetzungszulage"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.ui.menu,name:l10n_ch_hr_payroll.l10n_ch_menu_swissdec_transmission
+#, fuzzy
 msgid "Transmission"
-msgstr "Getriebe"
+msgstr "Übermittlung"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_swissdec_declaration__transmission_date
@@ -11733,7 +11732,7 @@ msgstr "Bericht der Lohnart -"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__res_company__l10n_ch_statistics_convention__collectivecontractoutside-cla
 msgid "Wage agreement outside of a collective agreement"
-msgstr "Lohnvereinbarung außerhalb eines Gesamtarbeitsvertrags"
+msgstr "Lohnvereinbarung ausserhalb eines Gesamtarbeitsvertrags"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -11877,7 +11876,7 @@ msgstr "Gemeinde, in der der Mitarbeiter während der Woche wohnt"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_weekly_residence_address_street
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_weekly_residence_address_street
 msgid "Weekly Residence Street"
-msgstr "Straße, in der der Mitarbeiter während der Woche wohnt"
+msgstr "Strasse, in der der Mitarbeiter während der Woche wohnt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_weekly_residence_address_zip
