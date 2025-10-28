@@ -1452,3 +1452,11 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         })
         test_slot.with_company(company).action_self_assign()
         self.assertEqual(test_slot.employee_id, employee)
+
+    def test_avatar_card_archived_employee_info(self):
+        employee = self.env["hr.employee"].create({
+            "active": False,
+            "name": "Test Emp",
+        })
+        data = employee.resource_id.get_avatar_card_data(["name"])[0]
+        self.assertEqual(data.get("name"), "Test Emp")
