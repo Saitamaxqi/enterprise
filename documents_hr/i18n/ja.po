@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-27 02:41+0000\n"
+"PO-Revision-Date: 2025-10-27 08:52+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "documents_hr/ja/>\n"
@@ -58,7 +58,8 @@ msgstr "各従業員フォルダの下に作成する必要があるフォルダ
 msgid ""
 "Comma separated string of folder names that need to be created under each "
 "employee folder."
-msgstr ""
+msgstr "各従業員フォルダの下に作成する必要があるフォルダ名をカンマ区切りで指定します"
+"。"
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_res_company

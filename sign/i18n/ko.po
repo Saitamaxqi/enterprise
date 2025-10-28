@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-24 02:06+0000\n"
+"PO-Revision-Date: 2025-10-28 02:41+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/sign/ko/>"
 "\n"
@@ -42,6 +42,8 @@ msgid ""
 "%(company_address)s\n"
 "%(phone)s"
 msgstr ""
+"%(company_address)s\n"
+"%(phone)s"
 
 #. module: sign
 #. odoo-python
@@ -364,7 +366,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
 msgid "<span class=\"fw-bold\">or</span>"
-msgstr ""
+msgstr "<span class=\"fw-bold\">또는</span>"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_send_request_view_form
@@ -604,7 +606,7 @@ msgstr "추가"
 #. odoo-javascript
 #: code:addons/sign/static/src/fields/many2many_binary_field/many2many_binary_field.xml:0
 msgid "Add Attachment"
-msgstr ""
+msgstr "첨부 파일 추가"
 
 #. module: sign
 #. odoo-javascript
@@ -723,7 +725,7 @@ msgstr "이 서명 요청을 취소할까요?"
 #: model:ir.model.fields,field_description:sign.field_sign_item_role__assign_to
 #: model_terms:ir.ui.view,arch_db:sign.sign_item_role_view_form
 msgid "Assign to"
-msgstr ""
+msgstr "배정 대상"
 
 #. module: sign
 #: model:ir.model.fields,help:sign.field_sign_request__start_sign
@@ -798,7 +800,7 @@ msgstr ""
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_send_request__available_template_ids
 msgid "Available Template"
-msgstr ""
+msgstr "사용할 수 있는 템플릿"
 
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.res_config_settings_view_form
@@ -825,7 +827,7 @@ msgstr "다양한 웹사이트를 기준으로 비교한 결과입니다:"
 #. odoo-javascript
 #: code:addons/sign/static/src/editor/plugins/signature.js:0
 msgid "Basic Bloc"
-msgstr ""
+msgstr "기본 블록"
 
 #. module: sign
 #: model:ir.model.fields.selection,name:sign.selection__sign_log__request_state__sent
@@ -1127,7 +1129,7 @@ msgstr ""
 #. module: sign
 #: model_terms:ir.ui.view,arch_db:sign.sign_request_share_view_form
 msgid "Copy link"
-msgstr ""
+msgstr "링크 복사"
 
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_request__cc_partner_ids
@@ -1688,7 +1690,7 @@ msgstr "필드명"
 #. module: sign
 #: model:ir.model.fields,field_description:sign.field_sign_item_type__field_size
 msgid "Field Size"
-msgstr ""
+msgstr "필드 크기"
 
 #. module: sign
 #: model:ir.ui.menu,name:sign.sign_item_type_menu

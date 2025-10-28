@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:46+0000\n"
-"PO-Revision-Date: 2025-10-02 01:53+0000\n"
+"PO-Revision-Date: 2025-10-28 02:46+0000\n"
 "Last-Translator: \"Kwanghee Park (kwpa)\" <kwpa@odoo.com>\n"
 "Language-Team: Korean <https://translate.odoo.com/projects/odoo-19/"
 "hr_contract_salary_payroll/ko/>\n"
@@ -102,7 +102,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__source
 msgid "Benefit Source"
-msgstr ""
+msgstr "복지 출처"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -113,7 +113,7 @@ msgstr "혜택"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__budget_type
 msgid "Budget Type"
-msgstr ""
+msgstr "예산 유형"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -129,7 +129,7 @@ msgstr "코드"
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
 msgid "Company cost"
-msgstr ""
+msgstr "회사 비용"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -139,7 +139,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Configure Benefits"
-msgstr ""
+msgstr "환경설정 혜택"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_configuration_contract
@@ -149,7 +149,7 @@ msgstr "계약"
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
 msgid "Copy Link"
-msgstr ""
+msgstr "링크 복사"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__country_id
@@ -181,7 +181,7 @@ msgstr "근로 계약서"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__final_yearly_costs
 msgid "Employer Budget"
-msgstr ""
+msgstr "직원 예산"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_payroll_headcount_line__employer_cost
@@ -207,7 +207,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__gross_wage
 msgid "Gross Wage"
-msgstr ""
+msgstr "총 임금"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.actions.act_window,name:hr_contract_salary_payroll.action_hr_salary_simulator
@@ -250,7 +250,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_benefits
 msgid "Monthly Benefits"
-msgstr ""
+msgstr "월별 혜택"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__monthly_yearly_costs
@@ -266,7 +266,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__monthly_wage
 msgid "Monthly Wage"
-msgstr ""
+msgstr "월별 임금"
 
 #. module: hr_contract_salary_payroll
 #: model:hr.contract.salary.resume,name:hr_contract_salary_payroll.hr_contract_salary_resume_net_employee
@@ -279,7 +279,7 @@ msgstr "실제 금액"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__net_wage
 msgid "Net Wage"
-msgstr ""
+msgstr "순 임금"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form
@@ -348,7 +348,7 @@ msgstr "급여"
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.menu_hr_payroll_salary_calculator
 msgid "Salary Calculator"
-msgstr ""
+msgstr "급여 계산기"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model,name:hr_contract_salary_payroll.model_hr_contract_salary_benefit
@@ -369,7 +369,7 @@ msgstr "급여 패키지 요약"
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_benefit__salary_rule_id
 #: model:ir.model.fields.selection,name:hr_contract_salary_payroll.selection__hr_contract_salary_benefit__source__rule
 msgid "Salary Rule"
-msgstr ""
+msgstr "급여 규칙"
 
 #. module: hr_contract_salary_payroll
 #: model_terms:ir.ui.view,arch_db:hr_contract_salary_payroll.hr_contract_salary_offer_view_form_inherit
@@ -379,7 +379,7 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__structure_id
 msgid "Salary Structure"
-msgstr ""
+msgstr "급여 구조"
 
 #. module: hr_contract_salary_payroll
 #. odoo-javascript
@@ -395,12 +395,12 @@ msgstr ""
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__simulation_employee_id
 msgid "Simulation Employee"
-msgstr ""
+msgstr "직원 시뮬레이션"
 
 #. module: hr_contract_salary_payroll
 #: model:hr.contract.salary.resume,name:hr_contract_salary_payroll.hr_contract_salary_payroll_resume_gross_worker
 msgid "Taxable Salary"
-msgstr ""
+msgstr "과세 대상 급여"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.ui.menu,name:hr_contract_salary_payroll.hr_payroll_menu_contract_templates
@@ -474,7 +474,7 @@ msgstr "근무 일정"
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_contract_salary_offer__yearly_benefits
 msgid "Yearly Benefits"
-msgstr ""
+msgstr "연간 혜택"
 
 #. module: hr_contract_salary_payroll
 #: model:ir.model.fields,field_description:hr_contract_salary_payroll.field_hr_employee__final_yearly_costs

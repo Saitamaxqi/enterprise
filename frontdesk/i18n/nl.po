@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-14 08:56+0000\n"
+"PO-Revision-Date: 2025-10-27 12:45+0000\n"
 "Last-Translator: Bren Driesen <brdri@odoo.com>\n"
 "Language-Team: Dutch <https://translate.odoo.com/projects/odoo-19/frontdesk/"
 "nl/>\n"
@@ -1235,7 +1235,7 @@ msgstr "Je bent geregistreerd!"
 #. odoo-javascript
 #: code:addons/frontdesk/static/src/visitor_form/visitor_form.xml:0
 msgid "Your Company"
-msgstr "Je bedrijf"
+msgstr "Jouw bedrijf"
 
 #. module: frontdesk
 #. odoo-javascript

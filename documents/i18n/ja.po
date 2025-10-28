@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:43+0000\n"
-"PO-Revision-Date: 2025-10-27 02:41+0000\n"
+"PO-Revision-Date: 2025-10-27 08:51+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "documents/ja/>\n"
@@ -66,7 +66,7 @@ msgstr "%sドキュメント/フォルダーは会社のルートに移動され
 #. odoo-python
 #: code:addons/documents/wizard/documents_sharing.py:0
 msgid "%s members added."
-msgstr ""
+msgstr "%s メンバーが追加されました。"
 
 #. module: documents
 #. odoo-javascript

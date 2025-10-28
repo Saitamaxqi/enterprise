@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-24 11:22+0000\n"
+"PO-Revision-Date: 2025-10-27 12:45+0000\n"
 "Last-Translator: \"Larissa Manderfeld (lman)\" <lman@odoo.com>\n"
 "Language-Team: German <https://translate.odoo.com/projects/odoo-19/"
 "accountant_knowledge/de/>\n"
@@ -1058,7 +1058,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/components/account_report/cog_menu/cog_menu.js:0
 msgid "Insert in article"
-msgstr ""
+msgstr "In Artikel einfügen"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1081,62 +1081,65 @@ msgid ""
 "Interest on borrowings specifically related to the production of tangible "
 "assets is not included in the production cost of these assets."
 msgstr ""
+"Zinsen für Kredite, die direkt mit der Herstellung von materiellen "
+"Anlagewerten zusammenhängen, werden nicht in die Herstellungskosten dieser "
+"Anlagen reingerechnet."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventories are valued using one of the following methods:"
-msgstr ""
+msgstr "Die Bestände werden nach einer der folgenden Methoden bewertet:"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventory Overview"
-msgstr ""
+msgstr "Bestandsübersicht"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Inventory Valuation"
-msgstr ""
+msgstr "Bestandsbewertung"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_journal_audit
 msgid "Journal Audit"
-msgstr ""
+msgstr "Journalprüfung"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Justification:"
-msgstr ""
+msgstr "Begründung:"
 
 #. module: accountant_knowledge
 #: model:ir.model,name:accountant_knowledge.model_knowledge_article
 msgid "Knowledge Article"
-msgstr ""
+msgstr "Wissensdatenbankartikel"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Land<br>"
-msgstr ""
+msgstr "Grundstück<br>"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Zuletzt aktualisiert durch"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Zuletzt aktualisiert am"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_liabilities_information
 msgid "Liabilities Information"
-msgstr ""
+msgstr "Informationen zu Verbindlichkeiten"
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Load a Template"
-msgstr ""
+msgstr "Eine Vorlage laden"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
@@ -1144,17 +1147,19 @@ msgid ""
 "Loan issuance costs, where applicable, are recognized as expenses in the "
 "financial year during which the loans are granted."
 msgstr ""
+"Die Kosten für die Darlehensvergabe werden, wenn sie anfallen, als Aufwand "
+"in dem Geschäftsjahr erfasst, in dem die Darlehen vergeben werden."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_resources
 msgid "Loans"
-msgstr ""
+msgstr "Darlehen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Long-Term Investments Held in the Investment Portfolio"
-msgstr ""
+msgstr "Langfristige Anlagen im Anlageportfolio"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
@@ -1162,11 +1167,14 @@ msgid ""
 "Management has chosen not to disclose remuneration information, as doing so "
 "would effectively reveal the individual compensation of executives."
 msgstr ""
+"Die Geschäftsleitung hat sich entschieden, keine Infos zur Vergütung zu "
+"veröffentlichen, weil das die individuellen Gehälter der Führungskräfte "
+"offenlegen würde."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Managers<br>"
-msgstr ""
+msgstr "Führungskräfte<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1175,61 +1183,64 @@ msgid ""
 "consumables, direct and indirect production expenses, and depreciation of "
 "assets used in production."
 msgstr ""
+"Gefertigte Produkte werden zu Herstellungskosten bewertet, die "
+"Verbrauchsmaterialien, direkte und indirekte Produktionskosten sowie die "
+"Abschreibung der in der Produktion eingesetzten Vermögenswerte umfassen."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Methods of Valuation"
-msgstr ""
+msgstr "Bewertungsmethoden"
 
 #. module: accountant_knowledge
 #: model_terms:ir.ui.view,arch_db:accountant_knowledge.audit_report_view_search
 msgid "My Reports"
-msgstr ""
+msgstr "Meine Berichte"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Name:"
-msgstr ""
+msgstr "Name:"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
 msgid "Net accounting result: {{ net accounting result }}"
-msgstr ""
+msgstr "Netto-Ergebnis: {{ net accounting result }}"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_workforce
 msgid "Non-Managers<br>"
-msgstr ""
+msgstr "Nicht-Führungskräfte<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Non-Pro Rata Recognition"
-msgstr ""
+msgstr "Nicht anteilige Realisierung"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Non-Standard Transaction"
-msgstr ""
+msgstr "Nicht-Standard-Transaktion"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_non_standard_transactions
 msgid "Non-Standard Transactions"
-msgstr ""
+msgstr "Nicht-Standard-Transaktionen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_transactions_with_management
 msgid "Non-disclosure"
-msgstr ""
+msgstr "Geheimhaltung"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Off-Balance Sheet Commitments"
-msgstr ""
+msgstr "Außerbilanzielle Verpflichtungen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Offices: 25 years"
-msgstr ""
+msgstr "Büros: 25 Jahre"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
@@ -1238,41 +1249,46 @@ msgid ""
 "the date the financial statements are approved, if they are significant "
 "enough to affect the fair presentation of the accounts."
 msgstr ""
+"Berücksichtigen Sie Ereignisse, die zwischen dem Ende des Berichtszeitraums "
+"und dem Datum der Genehmigung des Jahresabschlusses eintreten, nur dann, "
+"wenn sie so wesentlich sind, dass sie die faire Darstellung der Konten "
+"beeinflussen."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_subventions
 msgid "Operating subsidies are recorded as income as soon as they are granted."
 msgstr ""
+"Betriebliche Zuschüsse werden als Erträge erfasst, sobald sie gewährt werden."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Other Significant Events"
-msgstr ""
+msgstr "Weitere bedeutende Ereignisse"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Other off-balance-sheet transactions"
-msgstr ""
+msgstr "Sonstige außerbilanzielle Transaktionen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
 msgid "Other tangible fixed assets<br>"
-msgstr ""
+msgstr "Sonstige materielle Sachanlagen<br>"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Others"
-msgstr ""
+msgstr "Sonstige"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_taxation
 msgid "Others (including tax consolidation)"
-msgstr ""
+msgstr "Sonstiges (einschließlich Steuerkonsolidierung)"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Others: To be specified..."
-msgstr ""
+msgstr "Sonstiges: zu definieren …"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_attestation
@@ -1282,26 +1298,30 @@ msgid ""
 "chartered accountants. This engagement is however not an audit or a limited "
 "review."
 msgstr ""
+"Unsere Arbeit wurde in Übereinstimmung mit den für Zusammenstellungsaufträge "
+"geltenden Berufsstandards durchgeführt, die von der Berufsorganisation der "
+"Wirtschaftsprüfer herausgegeben wurden. Dieser Auftrag stellt jedoch keine "
+"Prüfung oder begrenzte Überprüfung dar."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
 msgid "Parent Company Details"
-msgstr ""
+msgstr "Angaben zur Muttergesellschaft"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Partner Ledger"
-msgstr ""
+msgstr "Partner-Buch"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Patents: To be specified..."
-msgstr ""
+msgstr "Patente: zu definieren …"
 
 #. module: accountant_knowledge
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_performance_and_operations
 msgid "Performance & Operations"
-msgstr ""
+msgstr "Leistung und Betrieb"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_income_statement
@@ -1309,6 +1329,8 @@ msgid ""
 "Please provide details of your share of results from joint operations of a "
 "specific nature"
 msgstr ""
+"Geben Sie Einzelheiten zu Ihrem Anteil an den Ergebnissen aus gemeinsamen "
+"Operationen besonderer Art an."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
@@ -1545,12 +1567,12 @@ msgstr ""
 #: model:knowledge.article,template_name:accountant_knowledge.accountant_knowledge_article_template_significant_events
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_significant_events
 msgid "Significant Events"
-msgstr ""
+msgstr "Bedeutende Ereignisse"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
 msgid "Software: 3 years"
-msgstr ""
+msgstr "Software: 3 Jahre"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_financial_commitments_and_guarantees
@@ -1558,6 +1580,8 @@ msgid ""
 "Specify details for executives, subsidiaries, investments, related "
 "companies, and others."
 msgstr ""
+"Geben Sie detaillierte Angaben zu Führungskräften, Tochtergesellschaften, "
+"Beteiligungen, verbundenen Unternehmen und anderen an."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
@@ -1565,41 +1589,44 @@ msgid ""
 "Specify the impact of the change as determined at the opening of the period, "
 "identifying the affected financial statement items."
 msgstr ""
+"Geben Sie die Auswirkungen der Änderung an, wie sie zu Beginn des Zeitraums "
+"festgestellt wurden, und nennen Sie die betroffenen Posten des "
+"Jahresabschlusses."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_inventory_overview
 msgid "Standard Cost"
-msgstr ""
+msgstr "Standardkosten"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__start_date
 msgid "Start Date"
-msgstr ""
+msgstr "Startdatum"
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,help:accountant_knowledge.field_audit_report__start_date
 msgid "Start Date, included in the fiscal year."
-msgstr ""
+msgstr "Startdatum, im Geschäftsjahr enthalten."
 
 #. module: accountant_knowledge
 #: model_terms:ir.actions.act_window,help:accountant_knowledge.action_audit_report
 msgid "Start from our ready-to-use templates"
-msgstr ""
+msgstr "Beginnen Sie mit unseren gebrauchsfertigen Vorlagen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_changes_in_accounting_policies
 msgid "State and justify the change in estimate."
-msgstr ""
+msgstr "Geben Sie die Änderung der Schätzung an und begründen Sie diese."
 
 #. module: accountant_knowledge
 #: model:ir.model.fields,field_description:accountant_knowledge.field_audit_report__status
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_asset_information
 msgid "Subsidiaries and Equity Interests"
-msgstr ""
+msgstr "Tochtergesellschaften und Beteiligungen"
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_entity_information
@@ -1694,6 +1721,8 @@ msgstr ""
 msgid ""
 "The fiscal year ended on {{ end of period }} covers a period of 12 months."
 msgstr ""
+"Das Geschäftsjahr endete am {{ end of period }} und umfasst einen Zeitraum "
+"von 12 Monaten."
 
 #. module: accountant_knowledge
 #: model_terms:knowledge.article,template_body:accountant_knowledge.accountant_knowledge_article_template_intangible_and_tangible_assets
@@ -1701,12 +1730,14 @@ msgid ""
 "The following decisions have been made regarding the presentation of the "
 "annual financial statements:"
 msgstr ""
+"Die folgenden Entscheidungen wurden hinsichtlich der Darstellung des "
+"Jahresabschlusses getroffen:"
 
 #. module: accountant_knowledge
 #. odoo-javascript
 #: code:addons/accountant_knowledge/static/src/editor/embedded_components/core/account_report/account_report.xml:0
 msgid "The full report will be included in the final document."
-msgstr ""
+msgstr "Der vollständige Bericht wird in das Abschlussdokument aufgenommen."
 
 #. module: accountant_knowledge
 #. odoo-javascript
