@@ -385,7 +385,7 @@ result = compensation * 2
 
         <record id="l10n_sa_hr_payroll_ksa_saudi_employee_payroll_structure_gross_salary_rule" model="hr.salary.rule">
             <field name="category_id" ref="hr_payroll.GROSS"/>
-            <field name="name">Taxable Salary (Gross)</field>
+            <field name="name">Gross</field>
             <field name="sequence">80</field>
             <field name="code">GROSS</field>
             <field name="condition_select">none</field>
