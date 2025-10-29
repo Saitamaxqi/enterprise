@@ -179,8 +179,8 @@ class DocumentsSharing(models.TransientModel):
 
     def action_allow_link_access(self):
         if self.has_warning_partners_without_access:
-            self.access_via_link = 'view'
-            self.access_via_link_mode = 'link_required'
+            self.access_via_link = f'{self.WRITE_VALUE_PREFIX}view'
+            self.access_via_link_mode = f'{self.WRITE_VALUE_PREFIX}link_required'
         return self.action_update_rights()
 
     @api.model
