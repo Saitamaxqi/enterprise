@@ -710,6 +710,9 @@ class AccountMove(models.Model):
         customer = self.partner_id
         company_partner = self.company_id.partner_id
         transporter = self._l10n_br_get_transporter()
+        partner_shipping_id = service_params['partner_shipping']
+        if rendered := payload['header']['locations'].get('rendered', {}):
+            rendered['address']['countryCode'] = partner_shipping_id.country_id.l10n_br_edi_code
 
         tax_data_to_include, tax_data_header = self._l10n_br_edi_get_tax_data()
         extra_payload = {
@@ -717,11 +720,14 @@ class AccountMove(models.Model):
                 "companyLocation": company_partner.vat,
                 **service_params['invoice_refs_edi'],
                 **self._l10n_br_type_specific_header(tax_data_header),
-                "locations": self._l10n_br_get_locations(
+                "locations": {
+                    **self._l10n_br_get_locations(
                     customer,
                     company_partner,
                     transporter,
-                ),
+                    ),
+                    **rendered,
+                },
                 "payment": {
                     "paymentInfo": {
                         "paymentMode": [

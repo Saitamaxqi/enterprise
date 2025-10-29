@@ -475,6 +475,20 @@ class AccountExternalTaxMixin(models.AbstractModel):
         self._l10n_br_remove_temp_values_lines(lines)
         self._l10n_br_repr_amounts(lines)
 
+        partner_shipping_id = params['partner_shipping']
+        rendered_address = {}
+        if is_service and partner_shipping_id != partner:
+            rendered_address['rendered'] = {
+                'address': {
+                    'number': partner_shipping_id.street_number,
+                    'street': partner_shipping_id.street,
+                    'neighborhood': partner_shipping_id.street2,
+                    'zipcode': partner_shipping_id.zip,
+                    'cityName': partner_shipping_id.city,
+                    'state': partner_shipping_id.state_id.code,
+                }
+            }
+
         taxes_settings_customer = self._l10n_br_get_taxes_settings(is_service, partner)
         taxes_settings_company = self._l10n_br_get_taxes_settings(is_service, company_partner)
         if company_partner.l10n_br_tax_regime == 'simplified':
@@ -533,6 +547,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                         'federalTaxId': company_partner.vat,
                         'suframa': company_partner.l10n_br_isuf_code or '',
                     },
+                    **rendered_address,
                 },
                 **payments,
             },
