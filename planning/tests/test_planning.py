@@ -1428,3 +1428,27 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertFalse(
             wizard_ctx.slot_ids,
         )
+
+    @freeze_time("2019-5-28 08:00:00")
+    def test_user_assign_shift_multicompany(self):
+        company = self.env['res.company'].create({"name": "Test company"})
+        self.env.user.company_ids += company
+        test_slot = self.env['planning.slot'].create({
+            'start_datetime': datetime(2019, 5, 28, 8, 0, 0),
+            'end_datetime': datetime(2019, 5, 28, 17, 0, 0),
+            'state': 'published',
+            'company_id': company.id,
+        })
+        with self.assertRaises(UserError):
+            test_slot.with_company(company).action_self_assign()
+        employee = self.env['hr.employee'].create({
+            'name': 'odoobot',
+            'work_email': 'odoobot@example.com',
+            'tz': 'UTC',
+            'employee_type': 'freelance',
+            'create_date': '2015-01-01 00:00:00',
+            'user_id': self.env.user.id,
+            'company_id': company.id,
+        })
+        test_slot.with_company(company).action_self_assign()
+        self.assertEqual(test_slot.employee_id, employee)

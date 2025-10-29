@@ -1080,7 +1080,12 @@ class PlanningSlot(models.Model):
             if self.request_to_switch:
                 self.sudo().write({'request_to_switch': False})
             raise UserError(self.env._("You cannot assign yourself to a shift in the past."))
-        return self.sudo().write({'resource_id': self.env.user.employee_id.resource_id.id if self.env.user.employee_id else False})
+        if self.company_id in self.env.user.employee_ids.mapped('company_id'):
+            resource_id = self.env.user.employee_ids.filtered(lambda e: e.company_id == self.company_id)[
+                0].resource_id.id
+        else:
+            raise UserError(self.env._("You cannot assign yourself to a shift belonging to another company."))
+        return self.sudo().write({'resource_id': resource_id})
 
     def action_self_unassign(self):
         """ Allow planning user to self unassign from a shift, if the feature is activated """
@@ -1091,7 +1096,7 @@ class PlanningSlot(models.Model):
             raise UserError(self.env._("The company does not allow you to unassign yourself from shifts."))
         if self.is_unassign_deadline_passed:
             raise UserError(self.env._("The deadline for unassignment has passed."))
-        if self.employee_id != self.env.user.employee_id:
+        if self.employee_id not in self.env.user.employee_ids:
             raise UserError(self.env._("You can not unassign another employee than yourself."))
         if self.is_past:
             raise UserError(self.env._("You cannot unassign yourself from a shift in the past."))
