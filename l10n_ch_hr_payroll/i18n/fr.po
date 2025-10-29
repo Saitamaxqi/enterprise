@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:57+0000\n"
-"PO-Revision-Date: 2025-10-28 12:10+0000\n"
+"PO-Revision-Date: 2025-10-29 12:10+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_ch_hr_payroll/fr/>\n"
@@ -1527,7 +1527,7 @@ msgstr "<span>9001</span>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "<span>CHF / Month</span>"
-msgstr "<span>CHF / Month</span>"
+msgstr "<span>CHF / Mois</span>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_line_view_form
@@ -1569,7 +1569,7 @@ msgstr "<strong>Taux d’activité :</strong>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "<strong>Address: </strong>"
-msgstr "<strong>Adresse: </strong>"
+msgstr "<strong>Adresse : </strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
@@ -1639,7 +1639,7 @@ msgstr "<strong>Numéro d’assurance :</strong>"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_elm_report_payslip
 msgid "<strong>Job Position: </strong>"
-msgstr "<strong>Poste: </strong>"
+msgstr "<strong>Poste : </strong>"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_company_master_data_document
@@ -5225,7 +5225,7 @@ msgstr "Déduction générale AVS en %"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_7400
 msgid "General AVS Deduction in % Employer"
-msgstr "Déduction générale AVS en % employeur"
+msgstr "Déduction générale AVS en % Employeur"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.swissdec_wage_types_form
@@ -6701,7 +6701,7 @@ msgstr "Code LAA :"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
 msgid "LAA Group"
-msgstr "Groupe LAA :"
+msgstr "Groupe LAA"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_accident_group
@@ -6765,7 +6765,7 @@ msgstr "Solution LAA"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_social_insurance__laa_insurance_from
 msgid "LAA: Valid as of"
-msgstr "LAA: Valide à partir du"
+msgstr "LAA : Valide à partir du"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_swissdec_job_result__domain__uvgz-laac
@@ -7032,7 +7032,7 @@ msgstr "LPP rétroactif"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_social_insurance__lpp_insurance_from
 msgid "LPP: Valid as of"
-msgstr "LPP: Valide à partir du"
+msgstr "LPP : Valide à partir du"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_tax_rate_import_wizard__canton__lu
@@ -7380,7 +7380,7 @@ msgstr "Totaux masculins"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.actions.act_window,help:l10n_ch_hr_payroll.action_l10n_ch_avs_splits
 msgid "Manage the splitting of negative AVS salaries for employees."
-msgstr "Gérer la répartition des salaires AVS négatifs pour les employés"
+msgstr "Gérer la répartition des salaires AVS négatifs pour les employés."
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee_is_line__correction_method__manual
@@ -7685,7 +7685,7 @@ msgstr "Valeurs mensuelles"
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.report_monthly_summary
 msgid "Monthly Wage Type Summary."
-msgstr "Résumé mensuel des genres de salaires"
+msgstr "Résumé mensuel des genres de salaires."
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.hr_employee_view_form
@@ -7945,13 +7945,13 @@ msgstr "Aucun taux AANP trouvé pour la date %s"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_laa.py:0
 msgid "No AAP rates found for date %s"
-msgstr "Aucun taux AAP trouvé pour la date %s "
+msgstr "Aucun taux AAP trouvé pour la date %s"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/l10n_ch_laa.py:0
 msgid "No AAP/AANP threshold found for date %s"
-msgstr "Aucun seuil AAP/AANP trouvé pour la date %s "
+msgstr "Aucun seuil AAP/AANP trouvé pour la date %s"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -8075,7 +8075,7 @@ msgid ""
 msgstr ""
 "Aucun taux d'imposition trouvé pour le canton du salarié. Assurez-vous que "
 "vous avez réellement importé à l'aide de l'assistant sous Configuration -> "
-"Suisse -> Importer les taux de taxe."
+"Suisse -> Importer les taux de taxe"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5040
@@ -9117,7 +9117,7 @@ msgstr "Paiement Récurrent"
 #. odoo-javascript
 #: code:addons/l10n_ch_hr_payroll/static/src/fields/salary_declaration/declare_salary_renderer.xml:0
 msgid "Reference AVS Salary:"
-msgstr "Salaire AVS de référence:"
+msgstr "Salaire AVS de référence :"
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_monthly_summary_view_form
@@ -9792,7 +9792,7 @@ msgstr "Canton de l'Impôt à la Source"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_tax_code
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_version__l10n_ch_tax_code
 msgid "Source Tax Code"
-msgstr "Code de l’impôt à la source :"
+msgstr "Code de l’impôt à la source"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -9870,17 +9870,17 @@ msgstr "Impôt à la source (%s)"
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5060_manual
 msgid "Source-Tax : Manual Correction"
-msgstr "Impôt à la Source: Correction Manuelle"
+msgstr "Impôt à la Source : Correction Manuelle"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5061
 msgid "Source-Tax Adjustment"
-msgstr "Impôt à la Source: Ajustement"
+msgstr "Impôt à la Source : Ajustement"
 
 #. module: l10n_ch_hr_payroll
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_elm_rule_5061_nk
 msgid "Source-Tax Adjustment after departure"
-msgstr "Impôt à la Source: Ajustement après départ"
+msgstr "Impôt à la Source : Ajustement après départ"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee_is_line_correction__l10n_ch_source_tax_canton
@@ -10339,12 +10339,12 @@ msgstr "Rapport des données de base Suisse"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_individual_account
 msgid "Swiss Payroll: Individual Account"
-msgstr "Paie Suisse: Décompte Individuel"
+msgstr "Paie Suisse : Décompte Individuel"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_monthly_summary
 msgid "Swiss Payroll: Monthly Summary"
-msgstr "Paie Suisse: Résumé Mensuel"
+msgstr "Paie Suisse : Résumé Mensuel"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_tax_rate_import_wizard
@@ -10381,12 +10381,12 @@ msgstr "Suisse : ACC : Seuil de taux"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_additional_accident_insurance_line_rate
 msgid "Swiss: Accident Additional Insurances Line Rate (LAAC)"
-msgstr "Suisse: Tarif de Ligne des Assurances Complémentaires Accident (LAAC)"
+msgstr "Suisse : Tarif de Ligne des Assurances Complémentaires Accident (LAAC)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_accident_insurance
 msgid "Swiss: Accident Insurances (AAP/AANP)"
-msgstr "Suisse: Assurances-accidents (AAP/AANP)"
+msgstr "Suisse : Assurances-accidents (AAP/AANP)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_accident_insurance_line
@@ -10401,12 +10401,12 @@ msgstr "Suisse : Taux de ligne des assurances-accidents (AAP/AANP)"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_additional_accident_insurance
 msgid "Swiss: Additional Accident Insurances (LAAC)"
-msgstr "Suisse: Assurances-accident complémentaires (LAAC)"
+msgstr "Suisse : Assurances-accident complémentaires (LAAC)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_additional_accident_insurance_line
 msgid "Swiss: Additional Accident Insurances Line (LAAC)"
-msgstr "Suisse: Ligne Assurances Accidents Complémentaires (LAAC)"
+msgstr "Suisse : Ligne Assurances Accidents Complémentaires (LAAC)"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -10450,13 +10450,13 @@ msgstr "Suisse : enseignement professionnel supérieur"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: Higher Vocational Education Bachelor"
-msgstr "Suisse: Bachelier d'enseignement professionnel supérieur"
+msgstr "Suisse : Bachelier d'enseignement professionnel supérieur"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: Higher Vocational Education Master"
-msgstr "Suisse: Master d'enseignement professionnel supérieur"
+msgstr "Suisse : Master d'enseignement professionnel supérieur"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -10467,13 +10467,13 @@ msgstr "Suisse : Formation en entreprise uniquement"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_lpp_insurance
 msgid "Swiss: LPP Insurances"
-msgstr "Suisse: Assurances LPP"
+msgstr "Suisse : Assurances LPP"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: Matura"
-msgstr "Suisse: Matura"
+msgstr "Suisse : Matura"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_social_insurance_avs_retirement_rente
@@ -10483,32 +10483,32 @@ msgstr "Suisse : Exonération des Salariés Retraités"
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_sickness_insurance
 msgid "Swiss: Sickness Insurances (IJM)"
-msgstr "Suisse: Assurances Maladie (IJM)"
+msgstr "Suisse : Assurances Maladie (IJM)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_sickness_insurance_line
 msgid "Swiss: Sickness Insurances Line (IJM)"
-msgstr "Suisse: Ligne Assurance Maladie (IJM)"
+msgstr "Suisse : Ligne Assurance Maladie (IJM)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_sickness_insurance_line_rate
 msgid "Swiss: Sickness Insurances Line Rate (IJM)"
-msgstr "Suisse: Taux de ligne d'assurance maladie (IJM)"
+msgstr "Suisse : Taux de ligne d'assurance maladie (IJM)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_social_insurance
 msgid "Swiss: Social Insurances (AVS, AC)"
-msgstr "Suisse: Assurances sociales (AVS, AC)"
+msgstr "Suisse : Assurances sociales (AVS, AC)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_social_insurance_ac_line
 msgid "Swiss: Social Insurances - AC Line"
-msgstr "Suisse: Assurances sociales - Ligne AC"
+msgstr "Suisse : Assurances sociales - Ligne AC"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_l10n_ch_social_insurance_avs_line
 msgid "Swiss: Social Insurances - AVS Line"
-msgstr "Suisse: Assurances sociales - Ligne AVS"
+msgstr "Suisse : Assurances sociales - Ligne AVS"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -10520,25 +10520,25 @@ msgstr "Suisse : Certificat d'enseignement à différents niveaux"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: University College Bachelor (university, ETH)"
-msgstr "Suisse: University College Bachelor (université, ETH)"
+msgstr "Suisse : Bachelier universitaire (université, ETH)"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: University College Master (university, ETH)"
-msgstr "Suisse: University College Master (université, ETH)"
+msgstr "Suisse : Master universitaire (université, ETH)"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: University of Applied Sciences Bachelor"
-msgstr "Suisse: Bachelier de l'Université des Sciences Appliquées"
+msgstr "Suisse : Bachelier de l'Université des Sciences Appliquées"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
 msgid "Swiss: University of Applied Sciences Master"
-msgstr "Suisse: Master de l'Université des Sciences Appliquées"
+msgstr "Suisse : Master de l'Université des Sciences Appliquées"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_dialog_message_field__swissdec_id
@@ -10704,12 +10704,12 @@ msgstr "Suisse : salaires ELM"
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_monthly_summary
 msgid "Switzerland: Monthly Summary"
-msgstr "Suisse: Résumé Mensuel"
+msgstr "Suisse : Résumé Mensuel"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.actions.report,name:l10n_ch_hr_payroll.action_report_payslip_ch_elm
 msgid "Switzerland: Payslip"
-msgstr "Suisse: Fiche de Salaire"
+msgstr "Suisse : Fiche de Salaire"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-javascript
@@ -11425,7 +11425,7 @@ msgid ""
 "ac.html"
 msgstr ""
 "Assurance Chômage\n"
-"Source: https://www.cvcicaisseavs.ch/en/employer/unemployment-insurance-"
+"Source : https://www.cvcicaisseavs.ch/en/employer/unemployment-insurance-"
 "ac.html"
 
 #. module: l10n_ch_hr_payroll
@@ -11477,7 +11477,7 @@ msgstr "Code canton non reconnu %(canton): %(line)"
 #. odoo-python
 #: code:addons/l10n_ch_hr_payroll/wizard/l10n_ch_tax_rate_import.py:0
 msgid "Unrecognized line format: %s"
-msgstr "Format de ligne non reconnu: %s"
+msgstr "Format de ligne non reconnu : %s"
 
 #. module: l10n_ch_hr_payroll
 #. odoo-python
@@ -12005,7 +12005,7 @@ msgstr "Retrait : sortie de l’entreprise"
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_l10n_ch_salary_certificate_profile__l10n_ch_cs_employee_participation_taxable_income
 msgid "Without Taxable Income"
 msgstr ""
-"Participations de collaborateur ne générant pas encore de revenu imposable."
+"Participations de collaborateur ne générant pas encore de revenu imposable"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_version__l10n_ch_job_type__nocadre
@@ -12339,22 +12339,22 @@ msgstr "ex. “ACI Berne”"
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_accident_insurance_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_additional_accident_insurance_view_form
 msgid "e.g. \"Accident Insurance Gastrosocial\""
-msgstr "Ex: \"Assurance Accident Gastrosocial\""
+msgstr "Ex : \"Assurance Accident Gastrosocial\""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_compensation_fund_view_form
 msgid "e.g. \"Family Allowance AK Bern\""
-msgstr "Ex: \"Allocations familiales AK Bern\""
+msgstr "Ex : \"Allocations familiales AK Bern\""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_lpp_insurance_view_form
 msgid "e.g. \"LPP Insurance AK Bern\""
-msgstr "Ex: \"Assurance LPP AK Bern\""
+msgstr "Ex : \"Assurance LPP AK Bern\""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_sickness_insurance_view_form
 msgid "e.g. \"Sickness Insurance Gastrosocial\""
-msgstr "Ex: \"Assurance Maladie Gastrosocial\""
+msgstr "Ex : \"Assurance Maladie Gastrosocial\""
 
 #. module: l10n_ch_hr_payroll
 #: model_terms:ir.ui.view,arch_db:l10n_ch_hr_payroll.l10n_ch_social_insurance_view_form

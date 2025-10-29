@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-09 12:56+0000\n"
-"PO-Revision-Date: 2025-10-28 12:10+0000\n"
+"PO-Revision-Date: 2025-10-29 12:10+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19-l10n/"
 "l10n_be_hr_payroll_fleet/fr/>\n"
@@ -27,7 +27,7 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.hr_contract_template_view_form
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.hr_employee_view_form
 msgid "(Fuel Type:"
-msgstr "(Type de carburant:"
+msgstr "(Type de carburant :"
 
 #. module: l10n_be_hr_payroll_fleet
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.dmfa_xml_report
@@ -172,12 +172,12 @@ msgstr "Coût total d'amortissement de la voiture de société"
 #. module: l10n_be_hr_payroll_fleet
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.report_belgium_payslip
 msgid "Company Car:"
-msgstr "Voiture de société:"
+msgstr "Voiture de société :"
 
 #. module: l10n_be_hr_payroll_fleet
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.dmfa_pdf_report
 msgid "Company Cars Global Contributions:"
-msgstr "Contributions globales des voitures de société : "
+msgstr "Contributions globales des voitures de société :"
 
 #. module: l10n_be_hr_payroll_fleet
 #: model_terms:ir.ui.view,arch_db:l10n_be_hr_payroll_fleet.dmfa_pdf_report
