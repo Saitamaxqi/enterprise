@@ -35,9 +35,9 @@ class TestAIDraftUI(HttpCase):
         cls.env['ai.composer'].create({
             'name': 'agent composer',
             'interface_key': 'chatter_ai_button',
-            'focused_models': [cls.env['ir.model']._get_id('ai.agent')],
+            'focused_models': [cls.env['ir.model']._get_id('chatbot.script')],
             'available_prompts': [Command.create({
-                'name': 'agent prompt button',
+                'name': 'chatbot prompt button',
             })],
         })
 

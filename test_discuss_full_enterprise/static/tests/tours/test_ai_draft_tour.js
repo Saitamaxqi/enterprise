@@ -138,14 +138,18 @@ registry.category("web_tour.tours").add("test_ai_draft_chatter_button", {
             run: "click",
         },
         ...stepUtils.toggleHomeMenu(),
-        ...stepUtils.goToAppSteps("ai_app.ai_menu_root"),
-        // agent has no chatter but has a prompt button
+        ...stepUtils.goToAppSteps("im_livechat.menu_livechat_root"),
+        // chatbot script has no chatter but has a prompt button
         {
-            trigger: ".o_ai_agent_kanban .o_dropdown_kanban:not(:visible) .btn",
+            trigger: ".o_menu_sections button[data-menu-xmlid='im_livechat.livechat_config']",
             run: "click",
         },
         {
-            trigger: ".o_kanban_card_manage_pane a.oe_kanban_action",
+            trigger: "a[data-menu-xmlid='im_livechat.chatbot_config']",
+            run: "click",
+        },
+        {
+            trigger: ".o_list_renderer .o_data_cell[name='title']",
             run: "click",
         },
         {
@@ -165,7 +169,7 @@ registry.category("web_tour.tours").add("test_ai_draft_chatter_button", {
         },
         {
             content: "The prompt button created for the agent should be shown",
-            trigger: ".o-mail-Thread button:contains('agent prompt button')",
+            trigger: ".o-mail-Thread button:contains('chatbot prompt button')",
             run: "click",
         },
         {
@@ -189,13 +193,15 @@ registry.category("web_tour.tours").add("test_ai_draft_chatter_button", {
             trigger: ".o-mail-ChatWindow-header .oi-close",
             run: "click",
         },
+        ...stepUtils.toggleHomeMenu(),
+        ...stepUtils.goToAppSteps("crm.crm_menu_root"),
         {
-            trigger: ".o_menu_sections button[data-menu-xmlid='ai_app.ai_menu']",
+            trigger: ".o_menu_sections button[data-menu-xmlid='crm.crm_menu_config']",
             run: "click",
         },
-        // topic has no chatter and no prompt button
+        // activity type has no chatter and no prompt button
         {
-            trigger: "a[data-menu-xmlid='ai_app.ai_topic_menu_action']",
+            trigger: "a[data-menu-xmlid='crm.crm_team_menu_config_activity_types']",
             run: "click",
         },
         {
