@@ -767,3 +767,46 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
         self.assertEqual(len(non_batched_report_lines), len(batched_report_lines), "Different number of lines of batched report and non batched report")
         for line_batched, line_non_batched in zip(batched_report_lines, non_batched_report_lines):
             self.assertDictEqual(line_batched, line_non_batched)
+
+    def test_general_ledger_deprecated_account_with_transactions(self):
+        """Test that deprecated accounts still appear in General Ledger."""
+        test_account = self.env['account.account'].create({
+            'code': 'TEST237000',
+            'name': 'Test Office Supplies',
+            'account_type': 'expense',
+            'active': True,
+        })
+
+        move = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': fields.Date.from_string('2024-01-15'),
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                (0, 0, {
+                    'debit': 10000.0,
+                    'credit': 0.0,
+                    'name': 'Office Supplies Purchase',
+                    'account_id': test_account.id,
+                }),
+                (0, 0, {
+                    'debit': 0.0,
+                    'credit': 10000.0,
+                    'name': 'Payment',
+                    'account_id': self.company_data['default_account_payable'].id,
+                }),
+            ],
+        })
+        move.action_post()
+
+        test_account.active = False
+
+        options = self._generate_options(
+            self.report,
+            fields.Date.from_string('2024-01-01'),
+            fields.Date.from_string('2024-12-31')
+        )
+        lines = self.report._get_lines(options)
+
+        account_line = [l for l in lines if l.get('name', '').startswith('TEST237000')]
+
+        self.assertTrue(account_line, "Deprecated account should appear in report")
