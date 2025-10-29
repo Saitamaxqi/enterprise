@@ -111,6 +111,7 @@ class AccountReconcileModel(models.Model):
                       AND reco_model.company_id = st_line.company_id
                       AND reco_model.trigger = 'manual'
                       AND reco_model_line.account_id IS NOT NULL
+                      AND reco_model.active IS TRUE
                  ) AS reco_model ON TRUE
            WHERE st_line.id IN %(statement_lines)s
              AND reco_model.id IS NOT NULL

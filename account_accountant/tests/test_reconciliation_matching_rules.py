@@ -1091,6 +1091,14 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             ],
             "Match the partner, the amount and the label"
         )
+        model_label.active = False
+        bank_line_3_models = self.env['account.reconcile.model'].with_context(lang='en_US') \
+            .get_available_reconcile_model_per_statement_line((bank_line_3).ids)
+        self.assertNotIn(
+            model_label.id,
+            bank_line_3_models[bank_line_3.id],
+            "Should not display archived reconcile models"
+        )
 
     def test_modify_reco_model_apply_on_statement_line(self):
         """
