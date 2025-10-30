@@ -319,7 +319,7 @@ class SignSendRequest(models.TransientModel):
         :param signature_type: can be 'sign_signature' or 'sign_initials' and inticates what we want to obtain.
         :return: returns the signature/initials if present or False if not or if signature_type is an invalid value.
         """
-        if user and signature_type in ['sign_signature', 'sign_initials']:
+        if all(self.mapped('is_user_signer')) and signature_type in ['sign_signature', 'sign_initials']:
             return user[signature_type]
         return False
 

@@ -568,8 +568,10 @@ class Sign(http.Controller):
         sign_user = request.env['res.users'].sudo().search([('partner_id', '=', request_item_sudo.partner_id.id)], limit=1)
         if sign_user:
             # sign as a known user
-            request_item_sudo = request_item_sudo.with_user(sign_user).sudo()
-
+            context = {}
+            if request.env.user != sign_user and not request.env.user._is_public():
+                context.update(logged_user_id=request.env.user.id)
+            request_item_sudo = request_item_sudo.with_context(context).with_user(sign_user).sudo()
         request_item_sudo.sign(signature, **kwargs)
         return result
 
