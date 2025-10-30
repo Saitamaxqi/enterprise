@@ -462,16 +462,16 @@ class DocumentsDocument(models.Model):
     def _unzip_xlsx(self):
         file = io.BytesIO(self.attachment_id.raw)
         if not zipfile.is_zipfile(file) or self.mimetype not in XLSX_MIME_TYPES:
-            raise XSLXReadUserError(_("The file is not a xlsx file"))
+            raise UserError(_("The file is not a xlsx file"))
 
         unzipped_size = 0
         with zipfile.ZipFile(file) as input_zip:
             if len(input_zip.infolist()) > 1000:
-                raise XSLXReadUserError(_("The xlsx file is too big"))
+                raise UserError(_("The xlsx file is too big"))
 
             if "[Content_Types].xml" not in input_zip.namelist() or \
                     not any(name.startswith("xl/") for name in input_zip.namelist()):
-                raise XSLXReadUserError(_("The xlsx file is corrupted"))
+                raise UserError(_("The xlsx file is corrupted"))
 
             unzipped = {}
             attachments = []
@@ -483,7 +483,7 @@ class DocumentsDocument(models.Model):
 
                 unzipped_size += info.file_size
                 if unzipped_size > 50 * 1000 * 1000:  # 50MB
-                    raise XSLXReadUserError(_("The xlsx file is too big"))
+                    raise UserError(_("The xlsx file is too big"))
 
                 if info.filename.endswith((".xml", ".xml.rels")):
                     unzipped[info.filename] = input_zip.read(info.filename).decode()
@@ -584,6 +584,3 @@ class DocumentsDocument(models.Model):
             })
             attachments.append(attachment)
         return [a._get_media_info() for a in attachments]
-
-class XSLXReadUserError(UserError):
-    pass
