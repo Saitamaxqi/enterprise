@@ -2224,6 +2224,16 @@ export default class BarcodePickingModel extends BarcodeModel {
         line.lot_name = lotName;
     }
 
+    _canOverrideTrackingNumber(line, newLotName) {
+        return (
+            super._canOverrideTrackingNumber(...arguments) ||
+            (this.location.id === line.location_id.id &&
+                !line.package_id &&
+                !line.owner_id &&
+                this.getQtyDone(line) === 0)
+        );
+    }
+
     async _processGs1Data(data) {
         const result = await super._processGs1Data(...arguments);
         const { rule } = data;

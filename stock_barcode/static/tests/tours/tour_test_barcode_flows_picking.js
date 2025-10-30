@@ -266,11 +266,11 @@ registry.category("web_tour.tours").add("test_split_line_on_exit_for_delivery_wi
             run: () => {
                 helper.assertLinesCount(1);
                 helper.assertLineQty(0, "3/3");
-                const [lot001Line, lot002Line] = helper.getSublines();
-                helper.assert(lot001Line.querySelector(".o_line_lot_name").innerText, "LOT001");
-                helper.assert(lot001Line.querySelector(".o_barcode_scanner_qty").innerText, "1");
-                helper.assert(lot002Line.querySelector(".o_line_lot_name").innerText, "LOT002");
-                helper.assert(lot002Line.querySelector(".o_barcode_scanner_qty").innerText, "2");
+                const [lot002Line, lot001Line] = helper.getSublines();
+                helper.assertLineTrackingNumber(lot002Line, "LOT002");
+                helper.assertLineQty(lot002Line, "2");
+                helper.assertLineTrackingNumber(lot001Line, "LOT001");
+                helper.assertLineQty(lot001Line, "1");
             },
         },
         // Leaves the delivery and re-open it directly, then checks not lines were splitted.
@@ -285,11 +285,11 @@ registry.category("web_tour.tours").add("test_split_line_on_exit_for_delivery_wi
             run: () => {
                 helper.assertLinesCount(1);
                 helper.assertLineQty(0, "3/3");
-                const [lot001Line, lot002Line] = helper.getSublines();
-                helper.assert(lot001Line.querySelector(".o_line_lot_name").innerText, "LOT001");
-                helper.assert(lot001Line.querySelector(".o_barcode_scanner_qty").innerText, "1");
-                helper.assert(lot002Line.querySelector(".o_line_lot_name").innerText, "LOT002");
-                helper.assert(lot002Line.querySelector(".o_barcode_scanner_qty").innerText, "2");
+                const [lot002Line, lot001Line] = helper.getSublines();
+                helper.assertLineTrackingNumber(lot002Line, "LOT002");
+                helper.assertLineQty(lot002Line, "2");
+                helper.assertLineTrackingNumber(lot001Line, "LOT001");
+                helper.assertLineQty(lot001Line, "1");
             },
         },
         { trigger: "button.o_exit", run: "click" },
@@ -2266,6 +2266,7 @@ registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
             },
         },
         { trigger: ".o_barcode_client_action", run: "scan lot1" },
+        { trigger: ".o_barcode_line.o_selected", run: "scan lot2" },
         { trigger: ".o_barcode_line.o_selected", run: "scan lot3" },
         {
             trigger: ".o_sublines .o_barcode_line:nth-child(3)",
@@ -2275,19 +2276,15 @@ registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
                 const sublines = helper.getSublines();
                 // Check lines and "Add quantity" buttons quantities are correctly updated.
                 helper.assertLineQty(sublines[0], "1/2");
-                helper.assert(
-                    sublines[0].querySelector("button.o_add_remaining_quantity").innerText,
-                    "+1"
-                );
-                helper.assertLineQty(sublines[1], "1");
+                helper.assertLineQty(sublines[1], "1/3");
                 helper.assert(
                     sublines[1].querySelector("button.o_add_remaining_quantity").innerText,
-                    "+1"
+                    "+2"
                 );
-                helper.assertLineQty(sublines[2], "0/3");
+                helper.assertLineQty(sublines[2], "1");
                 helper.assert(
                     sublines[2].querySelector("button.o_add_remaining_quantity").innerText,
-                    "+3"
+                    "+1"
                 );
             },
         },
@@ -2303,19 +2300,18 @@ registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
                     sublines[0].querySelector("button.o_add_remaining_quantity").innerText,
                     "+1"
                 );
-                helper.assertLineQty(sublines[1], "1");
+                helper.assertLineQty(sublines[1], "1/3");
                 helper.assert(
                     sublines[1].querySelector("button.o_add_remaining_quantity").innerText,
                     "+1"
                 );
-                helper.assertLineQty(sublines[2], "0/3");
+                helper.assertLineQty(sublines[2], "1");
                 helper.assert(
                     sublines[2].querySelector("button.o_add_remaining_quantity").innerText,
-                    "+2"
+                    "+1"
                 );
             },
         },
-        { trigger: ".o_barcode_client_action", run: "scan lot2" },
         { trigger: ".o_barcode_line.o_selected:not(.o_line_completed)", run: "scan lot2" },
         {
             trigger: ".o_barcode_location_group > .o_barcode_line.o_line_completed",
@@ -2327,10 +2323,10 @@ registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
                 helper.assertLineQty(sublines[0], "2/2");
                 helper.assertButtonIsVisible(sublines[0], "add_quantity", false);
                 helper.assertButtonIsVisible(sublines[0], "o_add_remaining_quantity", false);
-                helper.assertLineQty(sublines[1], "1");
+                helper.assertLineQty(sublines[1], "2/3");
                 helper.assertButtonIsVisible(sublines[1], "add_quantity", false);
                 helper.assertButtonIsVisible(sublines[1], "o_add_remaining_quantity", false);
-                helper.assertLineQty(sublines[2], "2/3");
+                helper.assertLineQty(sublines[2], "1");
                 helper.assertButtonIsVisible(sublines[2], "add_quantity", false);
                 helper.assertButtonIsVisible(sublines[2], "o_add_remaining_quantity", false);
             },
@@ -6765,10 +6761,10 @@ registry.category("web_tour.tours").add("test_barcode_pack_lot_tour", {
     steps: () => [
         // Pack two units of the same not reserved lot in different packages
         { trigger: ".o_barcode_line", run: "scan LOT005" },
-        { trigger: ".o_line_button.o_toggle_sublines", run: "click" },
-        { trigger: "span.o_line_lot_name:contains(LOT005)" },
+        { trigger: ".o_barcode_line .o_line_lot_name:contains(LOT005)" },
         { trigger: "button.o_put_in_pack", run: "click" },
-        { trigger: ".o_barcode_line:nth-child(2):has(.fa-archive)" },
+        { trigger: ".o_line_button.o_toggle_sublines", run: "click" },
+        { trigger: ".o_barcode_line:nth-child(2):has(.fa-archive):contains(LOT005)" },
         { trigger: ".o_barcode_line_summary", run: "click" },
         { trigger: ".o_barcode_line_summary", run: "scan LOT005" },
         { trigger: ".o_barcode_line.o_line_not_completed:contains(LOT005):not(:has(.fa-archive))" },

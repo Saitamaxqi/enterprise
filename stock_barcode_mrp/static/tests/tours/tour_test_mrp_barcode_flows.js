@@ -738,22 +738,11 @@ registry.category("web_tour.tours").add("test_barcode_production_scan_other_than
             trigger: ".o_barcode_client_action",
             run: "scan lot_02",
         },
-
-        // Unfold grouped lines for tracked component
         {
-            trigger: ".o_line_button.o_toggle_sublines",
-            run: "click",
-        },
-        {
-            trigger: '.o_barcode_client_action:contains("lot_01")',
+            trigger:
+                ".o_barcode_lines .o_barcode_line:has(.o_line_lot_name:contains(lot_02)) .qty-done:contains(2)",
             run: function () {
                 helper.assertLinesCount(3);
-                helper.assertSublinesCount(2);
-                const [line1, line2] = helper.getSublines();
-                helper.assert(line1.querySelector(".o_line_lot_name").innerText, "lot_01");
-                helper.assert(line1.querySelector(".qty-done").innerText, "0");
-                helper.assert(line2.querySelector(".o_line_lot_name").innerText, "lot_02");
-                helper.assert(line2.querySelector(".qty-done").innerText, "2");
             },
         },
         // scan the not tracked component from a different location (shelf1) than the reserved
@@ -1176,6 +1165,35 @@ registry.category("web_tour.tours").add("test_barcode_production_component_diffe
 
 registry.category("web_tour.tours").add("test_picking_product_with_kit_and_packaging", {
     steps: () => [{ trigger: ".btn.o_validate_page", run: "click" }],
+});
+
+registry.category("web_tour.tours").add("test_delivery_kit_with_tracked_compo", {
+    steps: () => [
+        {
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan WH/OUT/DKWTC",
+        },
+        // scan the unreserved LOT003
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan LOT003",
+        },
+        {
+            trigger: ".o_barcode_line:contains(LOT003)",
+            run: "scan LOT004",
+        },
+        {
+            trigger: ".o_barcode_line:contains(LOT004)",
+            run: () => {
+                const [classicLine, kitLine] = helper.getLines();
+                helper.assertLineQty(classicLine, "1/1");
+                helper.assertLineTrackingNumber(classicLine, "LOT004");
+                helper.assertLineQty(kitLine, "1/1");
+                helper.assertLineTrackingNumber(kitLine, "LOT003");
+            }
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
 });
 
 registry.category("web_tour.tours").add("test_multi_company_manufacture_creation_in_barcode", {
