@@ -122,7 +122,7 @@ class TestJournalReport(TestAccountReportsCommon):
                 'expression_ids': [Command.create({
                     'label': 'balance',
                     'engine': 'tax_tags',
-                    'formula': 'c10',
+                    'formula': '-c10',
                 })]
             })]
         })
@@ -224,12 +224,26 @@ class TestJournalReport(TestAccountReportsCommon):
         tax_tag = self.tax_report.line_ids.expression_ids._get_matching_tags()
         self.assertDictEqual(
             tax_summary_lines_2017[0]['tax_grid_summary_lines'],
-            {'United States': {'c10': {'tag_ids': tax_tag.ids, 'balance': '$\xa0150.00', 'balance_no_format': 150.0, 'impact': '$\xa0150.00'}}}
+            {'United States': {'c10': {
+                'tag_ids': tax_tag.ids,
+                'balance': '$\xa0150.00',
+                'balance_no_format': 150.0,
+                '+': '$\xa0150.00',
+                '-': '$\xa00.00',
+                'impact': '$\xa0150.00',
+            }}}
         )
         self.assertEqual(tax_summary_lines_2017[1]['name'], "Global Tax Summary")
         self.assertDictEqual(
             tax_summary_lines_2017[2]['tax_grid_summary_lines'],
-            {'United States': {'c10': {'tag_ids': tax_tag.ids, 'balance': '$\xa0150.00', 'balance_no_format': 150.0, 'impact': '$\xa0150.00'}}}
+            {'United States': {'c10': {
+                'tag_ids': tax_tag.ids,
+                'balance': '$\xa0150.00',
+                'balance_no_format': 150.0,
+                '+': '$\xa0150.00',
+                '-': '$\xa00.00',
+                'impact': '$\xa0150.00',
+            }}}
         )
 
         options_global = self._generate_options(self.report, '2016-01-01', '2017-01-31', default_options={'unfold_all': True, 'show_payment_lines': False})
@@ -251,12 +265,26 @@ class TestJournalReport(TestAccountReportsCommon):
         tax_summary_lines_global = self._filter_tax_section_lines(lines_global, False)
         self.assertDictEqual(
             tax_summary_lines_global[0]['tax_grid_summary_lines'],
-            {'United States': {'c10': {'tag_ids': tax_tag.ids, 'balance': '$\xa0150.00', 'balance_no_format': 150.0, 'impact': '$\xa0150.00'}}}
+            {'United States': {'c10': {
+                'tag_ids': tax_tag.ids,
+                'balance': '$\xa0150.00',
+                'balance_no_format': 150.0,
+                '+': '$\xa0150.00',
+                '-': '$\xa00.00',
+                'impact': '$\xa0150.00',
+            }}}
         )
         self.assertEqual(tax_summary_lines_global[1]['name'], "Global Tax Summary")
         self.assertDictEqual(
             tax_summary_lines_global[2]['tax_grid_summary_lines'],
-            {'United States': {'c10': {'tag_ids': tax_tag.ids, 'balance': '$\xa0150.00', 'balance_no_format': 150.0, 'impact': '$\xa0150.00'}}}
+            {'United States': {'c10': {
+                'tag_ids': tax_tag.ids,
+                'balance': '$\xa0150.00',
+                'balance_no_format': 150.0,
+                '+': '$\xa0150.00',
+                '-': '$\xa00.00',
+                'impact': '$\xa0150.00',
+            }}}
         )
 
     def test_show_payment_lines_option(self):

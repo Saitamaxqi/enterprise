@@ -1132,39 +1132,37 @@ class AccountJournalReportHandler(models.AbstractModel):
         country_name = self.env['res.country']._field_to_sql('country', 'name')
         tag_name = self.env['account.account.tag']._field_to_sql('tag', 'name')
         query = SQL("""
-            WITH tag_info (country_name, tag_id, tag_name, balance) AS (
                 SELECT
                     %(country_name)s AS country_name,
                     tag.id,
                     %(tag_name)s AS name,
-                    -SUM(COALESCE("account_move_line".balance, 0)) AS balance
+                    SUM(COALESCE("account_move_line".debit, 0)) AS debit,
+                    SUM(COALESCE("account_move_line".credit, 0)) AS credit
                 FROM %(table_references)s
                 JOIN account_account_tag_account_move_line_rel rel ON "account_move_line".id = rel.account_move_line_id
                 JOIN account_account_tag tag ON tag.id = rel.account_account_tag_id
                 JOIN res_country country ON country.id = tag.country_id
                 WHERE %(search_condition)s
                   AND applicability = 'taxes'
-                GROUP BY country_name, tag.id
-            )
-            SELECT
-                country_name,
-                tag_id,
-                tag_name AS name,
-                balance
-            FROM tag_info
-            ORDER BY country_name, name
+             GROUP BY country_name, tag.id
+             ORDER BY country_name, %(tag_name)s
         """, country_name=country_name, tag_name=tag_name, table_references=query.from_clause, search_condition=query.where_clause)
         self.env.cr.execute(query)
         query_res = self.env.cr.fetchall()
 
         res = {}
-        for country_name, tag_id, name, balance in query_res:
+        id2tag = self.env['account.account.tag'].browse([tag_id for _country_name, tag_id, *__ in query_res]).grouped('id')  # for prefetching
+        for country_name, tag_id, name, debit, credit in query_res:
+            if id2tag[tag_id].balance_negate:
+                debit, credit = credit, debit
+            balance = debit - credit
             res.setdefault(country_name, {}).setdefault(name, {})
             res[country_name][name].setdefault('tag_ids', []).append(tag_id)
             res[country_name][name]['balance'] = report._format_value(options, balance, 'monetary')
-
             res[country_name][name]['balance_no_format'] = balance
-            res[country_name][name]['impact'] = report._format_value(options, res[country_name][name].get('balance_no_format', 0), 'monetary')
+            res[country_name][name]['+'] = report._format_value(options, debit, 'monetary')
+            res[country_name][name]['-'] = report._format_value(options, credit, 'monetary')
+            res[country_name][name]['impact'] = report._format_value(options, balance, 'monetary')
 
         return res
 
