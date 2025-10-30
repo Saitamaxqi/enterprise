@@ -93,7 +93,7 @@ class DocumentsSharing(models.TransientModel):
     @api.depends('access_via_link', 'document_ids')
     def _compute_access_via_link_help(self):
         for record in self:
-            if record.access_internal.endswith('view'):
+            if record.access_via_link.endswith('view'):
                 if record.is_folder_only:
                     record.access_via_link_help = _("Can only view contents. Cannot add, modify, or delete items.")
                 else:
