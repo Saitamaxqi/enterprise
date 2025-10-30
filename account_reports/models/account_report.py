@@ -3061,7 +3061,7 @@ class AccountReport(models.Model):
                         'target_expression_id': column_expression.id,
                         'rounding': rounding,
                         'figure_type': figure_type,
-                        'column_value': column_value,
+                        'column_value': self.env.company.currency_id.round(column_value) if figure_type == 'monetary' and column_value else column_value,
                     }
 
                 formatter_params['digits'] = rounding
@@ -3074,7 +3074,7 @@ class AccountReport(models.Model):
                     'target_expression_id': column_expression.id,
                     'rounding': self.env.company.currency_id.decimal_places,
                     'figure_type': 'monetary',
-                    'column_value': column_value,
+                    'column_value': self.env.company.currency_id.round(column_value) if column_value else column_value,
                 }
 
             # Build result
