@@ -470,10 +470,43 @@ class ResPartner(models.Model):
             self.send_followup_sms(options)
 
     def _get_followup_report(self, options):
-        attachment_ids = options.setdefault('attachment_ids', self._get_invoices_to_print(options).message_main_attachment_id.ids)
         followup_report = self.env.ref('account_reports.followup_report')
-        options['report_attachment_id'] = self._get_partner_account_report_attachment(followup_report).id
-        attachment_ids.append(options['report_attachment_id'])
+        return self._get_partner_account_report_attachment(followup_report).id
+
+    def _get_followup_attachments(self, options):
+        res_attachment_ids = []
+        followup_line = options.get('followup_line')
+
+        # Add the Follow-up report
+        options['report_attachment_id'] = self._get_followup_report(options)
+        res_attachment_ids.append(options['report_attachment_id'])
+
+        # Add the attachments from the template
+        if template_id := options.get('template_id', followup_line.mail_template_id):
+            template_attachments = template_id._generate_template_attachments(self.ids, {'attachment_ids', 'report_template_ids'})[self.id]
+            res_attachment_ids += template_attachments['attachment_ids']
+
+            attachments_to_create = []
+            for dynamic_report in template_attachments['attachments']:
+                attachments_to_create.append({
+                    'name': dynamic_report[0],
+                    'datas': dynamic_report[1],
+                    'res_model': self._name,
+                    'res_id': self.id,
+                })
+            res_attachment_ids += self.env['ir.attachment'].create(attachments_to_create).ids
+
+        if not options.get('join_invoices', followup_line.join_invoices):
+            return res_attachment_ids
+
+        if options.get('manual_followup'):
+            # When coming from the wizard, the invoices are already in the attachments
+            res_attachment_ids += options.get('attachment_ids', [])
+            return res_attachment_ids
+
+        # Add the PDFs from overdue invoices
+        res_attachment_ids += self._get_invoices_to_print(options).message_main_attachment_id.ids
+        return res_attachment_ids
 
     def _execute_followup_partner(self, options=None):
         """ Execute the actions to do with follow-ups for this partner (apart from printing).
@@ -502,10 +535,7 @@ class ResPartner(models.Model):
             options['followup_line'] = followup_line
             self._update_next_followup_action_date(followup_line)
 
-            self._get_followup_report(options)
-            if not options.get('join_invoices', followup_line.join_invoices):
-                report_attachment_id = options.get('report_attachment_id')
-                options['attachment_ids'] = [report_attachment_id] if report_attachment_id else []
+            options['attachment_ids'] = self._get_followup_attachments(options)
 
             self._send_followup(options)
 
