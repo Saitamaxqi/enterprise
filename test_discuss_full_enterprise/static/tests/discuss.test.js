@@ -1,3 +1,5 @@
+import { livechatLastAgentLeaveFromChatWindow } from "@im_livechat/../tests/im_livechat_shared_tests";
+
 import {
     click,
     contains,
@@ -8,7 +10,7 @@ import {
     startServer,
 } from "@mail/../tests/mail_test_helpers";
 
-import { defineHrModels } from "@hr/../tests/hr_test_helpers";
+import { defineTestDiscussFullEnterpriseModels } from "@test_discuss_full_enterprise/../tests/test_discuss_full_enterprise_test_helpers";
 
 import { expectElementCount } from "@html_editor/../tests/_helpers/ui_expectations";
 import { insertText as htmlInsertText } from "@html_editor/../tests/_helpers/user_actions";
@@ -19,7 +21,7 @@ import { describe, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 
 describe.current.tags("desktop");
-defineHrModels();
+defineTestDiscussFullEnterpriseModels();
 
 test("[text composer] Can use channel command /who", async () => {
     const pyEnv = await startServer();
@@ -73,3 +75,5 @@ test("can handle command and disable mentions in AI composer", async () => {
     await insertText(".o-mail-Composer-input", "#", { replace: true });
     await expectElementCount(".o-mail-NavigableList-item", 0);
 });
+
+test("live chat last agent leave from chat window", livechatLastAgentLeaveFromChatWindow);
