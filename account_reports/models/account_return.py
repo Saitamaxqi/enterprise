@@ -1700,7 +1700,7 @@ class AccountReturn(models.Model):
         # (if 2 tax groups share the same 3 accounts, they should consolidate in the vat closing entry)
         move_vals_lines = []
         tax_group_subtotal = defaultdict(float)
-        currency = self.env.company.currency_id
+        currency = company.currency_id
         for tg, values in tax_groups.items():
             total = 0
             # ignore line that have no property defined on tax group
