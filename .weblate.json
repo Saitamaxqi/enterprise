@@ -2195,6 +2195,12 @@
                 "language_regex": "^(de|fr|nl)$"
             },
             {
+                "name": "l10n_be_reports_client_nihil",
+                "filemask": "l10n_be_reports_client_nihil/i18n/*.po",
+                "new_base": "l10n_be_reports_client_nihil/i18n/l10n_be_reports_client_nihil.pot",
+                "language_regex": "^(de|fr|nl)$"
+            },
+            {
                 "name": "l10n_be_reports_hr_payroll",
                 "filemask": "l10n_be_reports_hr_payroll/i18n/*.po",
                 "new_base": "l10n_be_reports_hr_payroll/i18n/l10n_be_reports_hr_payroll.pot",
