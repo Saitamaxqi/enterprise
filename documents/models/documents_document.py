@@ -135,7 +135,7 @@ class DocumentsDocument(models.Model):
     parent_path = fields.Char(index=True)  # see '_parent_store' implementation in the ORM for details
     folder_id = fields.Many2one('documents.document', string='Folder', ondelete='set null', tracking=True,
                                 domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]",
-                                required=False, index=True)
+                                required=False, index=True, search='_search_folder_id')
     user_folder_id = fields.Char(string='Parent', compute='_compute_user_folder_id', search='_search_user_folder_id')
     children_ids = fields.One2many('documents.document', 'folder_id')
 
@@ -398,12 +398,57 @@ class DocumentsDocument(models.Model):
         domain = Domain.OR(domain_parts)
 
         if operator == 'child_of':
-            # as ('id', 'child_of', domain') doesn't work, and for performance reasons.
-            # (rules will be applied on final domain)
-            top_level = self.with_context(active_test=False).sudo().search_fetch(domain, ['type'])
-            top_level_folders = top_level.filtered(lambda d: d.type == 'folder')
-            return Domain('id', 'in', top_level.ids) | Domain('folder_id', 'child_of', top_level_folders.ids)
+            if len(values) > 1:
+                raise UserError(_('Only one value can be searched for children of `user_folder_id`'))
+            return self._get_child_of_domain(domain, values.pop())
         return domain
+
+    @api.model
+    def _get_child_of_domain(self, roots_domain, value: str | int):
+        """Make sure that all intermediate folders are also part of the result."""
+        if not isinstance(value, str | int):
+            raise UserError(_('Only one string or number value can be searched for documents `child_of`.'))
+        if value == 'SHARED':
+            # Can't use sudo speedup here
+            shared_roots = self.with_context(active_test=False).search_fetch(roots_domain, ['id'])
+            return Domain('id', 'child_of', shared_roots.ids)
+        candidates, top_level_folders = (
+            query.select(*(self._field_to_sql(query.table, fname, query) for fname in ('id', 'folder_id')))
+            for query in (
+                self.with_context(active_test=False)._search([('type', '=', 'folder')]),
+                self.with_context(active_test=False)._search(roots_domain & Domain('type', '=', 'folder'))
+            )
+        )
+        children = SQL(
+            """
+        WITH RECURSIVE
+            candidates as (%(candidates)s),
+            top_level as (%(top_level_folders)s),
+            children AS (
+                SELECT id
+                  FROM top_level
+                 UNION ALL
+                SELECT c.id
+                  FROM candidates c
+                  JOIN children f
+                    ON c.folder_id = f.id
+            )
+        SELECT id FROM children
+        """,
+            candidates=candidates,
+            top_level_folders=top_level_folders,
+        )
+        return roots_domain | Domain('folder_id', 'any', children)
+
+    @api.model
+    def _search_folder_id(self, operator, operand):
+        if operator != 'child_of':
+            return Domain(Domain('folder_id', operator, operand), internal=True)
+        values = {operand} if isinstance(operand, int) else set(operand)
+        if len(values) > 1:
+            raise UserError(_("Only one value can be searched for child of `folder_id`."))
+        value = values.pop()
+        return self._get_child_of_domain(Domain('folder_id', '=', value) | Domain('id', '=', value), value)
 
     @api.model
     def _clean_vals_for_user_folder_id(self, vals):
