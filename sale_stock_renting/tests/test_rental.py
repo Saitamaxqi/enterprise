@@ -963,6 +963,31 @@ class TestRentalPicking(TestRentalCommon):
         self.assertEqual(final_picking.location_dest_id, self.warehouse_id.lot_stock_id)
         final_picking.button_validate()
 
+    def test_flow_multisteps_2(self):
+        """ Checks that if a rental SO line quantity is changed multiple times, the expected return stays correct
+        """
+        self.warehouse_id.delivery_steps = 'pick_ship'
+        self.warehouse_id.reception_steps = 'two_steps'
+
+        rental_order_1 = self.sale_order_id.copy()
+        rental_order_1.order_line.write({'product_uom_qty': 4, 'is_rental': True})
+        rental_order_1.rental_start_date = self.rental_start_date
+        rental_order_1.rental_return_date = self.rental_return_date
+        rental_order_1.action_confirm()
+
+        # Validate the PICK, so it will create a return when reducing the quantity
+        self.assertEqual(len(rental_order_1.picking_ids), 2)
+        pick_picking = rental_order_1.picking_ids.filtered(lambda p: p.state == 'assigned')
+        pick_picking.button_validate()
+        self.assertEqual(len(rental_order_1.picking_ids), 3)
+
+        # Reduce then increase the rental quantity and checks that the expected qty to return remains correct
+        incoming_picking = rental_order_1.picking_ids.filtered(lambda p: p.picking_type_code == 'incoming')
+        rental_order_1.order_line.product_uom_qty = 2
+        self.assertEqual(incoming_picking.move_ids.product_uom_qty, 2)
+        rental_order_1.order_line.product_uom_qty = 3
+        self.assertEqual(incoming_picking.move_ids.product_uom_qty, 3)
+
     def test_flow_serial(self):
         empty_lot = self.env['stock.lot'].create({
             'product_id': self.tracked_product_id.id,
