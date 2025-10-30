@@ -55,6 +55,7 @@ class TestPoSSettleDueHttpCommon(TestPointOfSaleHttpCommon, TestPoSCommon):
 
     def test_settle_open_invoice(self):
         """ Test to settle an open invoice from PoS """
+        self.user.group_ids = [Command.unlink(self.env.ref('base.group_system').id)]
         self.partner_c = self.env["res.partner"].create({"name": "C Partner"})
         invoice = self.env['account.move'].create({
             'partner_id': self.partner_c.id,
