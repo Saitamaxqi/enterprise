@@ -108,6 +108,7 @@
                         t-att-Concepto="otro_pago['concepto']"
                         t-att-Importe="format_float(otro_pago['importe'], precision=2)">
                         <nomina12:SubsidioAlEmpleo
+                            t-if="otro_pago['tipo_otro_pago'] in ['002', '007', '008']"
                             t-att-SubsidioCausado="format_float(otro_pago['subsidio_causado'], precision=2)"/>
                         <nomina12:CompensacionSaldosAFavor t-if="otro_pago['saldo_a_favor']"
                             t-att-SaldoAFavor="format_float(otro_pago['saldo_a_favor'], precision=2)"
