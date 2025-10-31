@@ -591,6 +591,8 @@ class HrContractSalary(http.Controller):
                 ('acc_number', '=', bank_account_vals['acc_number'])], limit=1)
             if existing_bank_account:
                 bank_account = existing_bank_account
+                if bank_account_vals.get('acc_holder_name'):
+                    bank_account.acc_holder_name = bank_account_vals['acc_holder_name']
             else:
                 bank_account = request.env['res.partner.bank'].sudo().create(bank_account_vals)
 

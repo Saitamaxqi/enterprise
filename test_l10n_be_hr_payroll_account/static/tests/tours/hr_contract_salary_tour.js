@@ -465,6 +465,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
             run: "edit BE10 3631 0709 4104",
         },
         {
+            content: "Account Holder Name",
+            trigger: 'input[name="acc_holder_name"]',
+            run: "edit Mitchell Admin 2"
+        },
+        {
             content: "Private License Plate",
             trigger: 'input[name="private_car_plate"]',
             run: "edit 1-ABC-123",
@@ -1244,6 +1249,11 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
             content: "Bank Account",
             trigger: 'input[name="acc_number"]',
             run: "edit BE10 3631 0709 4104",
+        },
+        {
+            content: "Account Holder Name",
+            trigger: 'input[name="acc_holder_name"]',
+            run: "edit Mitchell Admin 2"
         },
         {
             content: "Bank Account",
