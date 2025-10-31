@@ -1308,7 +1308,7 @@ class AccountMove(models.Model):
                         'impuesto': tax_values['impuesto'],
                         'tipo_factor': tax_values['tipo_factor'],
                         'tasa_o_cuota': tax_values['tasa_o_cuota'],
-                        'local_tax_name': tax_values['local_tax_name'],
+                        'local_tax_name': tax_values.get('local_tax_name'),
                     })
                     result_dict[tax_key]['importe'] += tax_values['importe'] / inv_rate
 
@@ -1329,7 +1329,7 @@ class AccountMove(models.Model):
                         'impuesto': tax_values['impuesto'],
                         'tipo_factor': tax_values['tipo_factor'],
                         'tasa_o_cuota': tax_values['tasa_o_cuota'],
-                        'local_tax_name': tax_values['local_tax_name'],
+                        'local_tax_name': tax_values.get('local_tax_name'),
                     })
                     tax_amount = tax_values['importe'] or 0.0
                     result_dict[tax_key]['base'] += tax_values['base'] / inv_rate
