@@ -347,10 +347,14 @@ class ProjectTask(models.Model):
 
     @api.depends('planned_date_begin', 'depend_on_ids.date_deadline')
     def _compute_dependency_warning(self):
-        if not self._origin or not self.allow_task_dependencies:
+        if not (
+            self._origin
+            and (tasks_with_task_dependencies := self.filtered('allow_task_dependencies'))
+        ):
             self.dependency_warning = False
             return
 
+        (self - tasks_with_task_dependencies).dependency_warning = False
         self.flush_model(['planned_date_begin', 'date_deadline'])
         query = """
             SELECT t1.id,
@@ -366,12 +370,12 @@ class ProjectTask(models.Model):
                AND t2.date_deadline > t1.planned_date_begin
           GROUP BY t1.id
 	    """
-        self.env.cr.execute(query, (tuple(self.ids),))
+        self.env.cr.execute(query, (tuple(tasks_with_task_dependencies.ids),))
         depends_on_names_for_id = {
             group['id']: group['depends_on_names']
             for group in self.env.cr.dictfetchall()
         }
-        for task in self:
+        for task in tasks_with_task_dependencies:
             depends_on_names = depends_on_names_for_id.get(task.id)
             task.dependency_warning = depends_on_names and _(
                 'This task cannot be planned before the following tasks on which it depends: %(task_list)s',
