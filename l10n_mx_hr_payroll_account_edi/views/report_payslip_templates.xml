@@ -85,24 +85,6 @@
                                             <span t-field="o.struct_id.l10n_mx_payroll_type"/>
                                             <strong class="ms-3 me-1">Exportación</strong> 01
                                         </div>
-                                        <div class="mt-2">
-                                            <strong>Tipo de Contrato</strong>
-                                            <span class="ms-1" t-out="o.version_id.contract_type_id.code"/>
-                                            <strong class="ms-3">Riesgo del Puesto</strong>
-                                            <span class="ms-1" t-out="o.company_id.l10n_mx_risk_type"/>
-                                        </div>
-                                        <div>
-                                            <strong>Departamento</strong>
-                                            <span class="ms-1" t-field="o.employee_id.department_id"/>
-                                            <strong class="ms-3">Tipo Jornada</strong>
-                                            <span class="ms-1" t-out="o.version_id.l10n_mx_shift_type"/>
-                                        </div>
-                                        <div>
-                                            <strong>Puesto</strong>
-                                            <span class="ms-1" t-field="o.employee_id.job_title"/>
-                                            <strong class="ms-3">Antigüedad</strong>
-                                            <span class="ms-1" t-out="cfdi['nomina_receptor']['antigüedad']"/>
-                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -145,14 +127,26 @@
                                         <div class="mt-2">
                                             <strong>Inicio Laboral</strong>
                                             <span class="ms-1" t-field="o.version_id.contract_date_start"/>
+                                            <strong class="ms-3">Tipo de Contrato</strong>
+                                            <span class="ms-1" t-out="o.version_id.contract_type_id.code"/>
+                                            <strong class="ms-3">Riesgo del Puesto</strong>
+                                            <span class="ms-1" t-out="o.company_id.l10n_mx_risk_type"/>
                                         </div>
                                         <div>
                                             <strong>Tipo de Régimen</strong>
                                             <span class="ms-1" t-out="o.version_id.l10n_mx_regime_type"/>
+                                            <strong class="ms-3">Departamento</strong>
+                                            <span class="ms-1" t-field="o.employee_id.department_id"/>
+                                            <strong class="ms-3">Tipo Jornada</strong>
+                                            <span class="ms-1" t-out="o.version_id.l10n_mx_shift_type"/>
                                         </div>
                                         <div>
                                             <strong class="me-1">Sindicalizado</strong>
                                             No
+                                            <strong class="ms-3">Puesto</strong>
+                                            <span class="ms-1" t-field="o.employee_id.job_title"/>
+                                            <strong class="ms-3">Antigüedad</strong>
+                                            <span class="ms-1" t-out="cfdi['nomina_receptor']['antigüedad']"/>
                                         </div>
                                     </td>
                                 </tr>
