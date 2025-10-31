@@ -40,7 +40,7 @@
                 <page string="Timesheets" name="timesheets"
                     invisible="not project_id or not use_helpdesk_timesheet"
                     groups="hr_timesheet.group_hr_timesheet_user">
-                    <field name='timesheet_ids' widget="timesheets_one2many" mode="list,kanban" context="{'default_project_id': project_id}">
+                    <field name='timesheet_ids' widget="timesheets_one2many" mode="list,kanban" context="{'default_project_id': project_id, 'form_view_ref': 'helpdesk_timesheet.timesheet_view_form_helpdesk'}">
                         <list editable="top" string="Timesheet Activities" decoration-muted="readonly_timesheet == True">
                             <field name="readonly_timesheet" column_invisible="True"/>
                             <field name="date" readonly="readonly_timesheet"/>
