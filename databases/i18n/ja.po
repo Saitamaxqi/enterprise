@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-10-28 07:57+0000\n"
+"PO-Revision-Date: 2025-10-31 02:41+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "databases/ja/>\n"
@@ -49,7 +49,7 @@ msgstr "<span>ドラフト仕訳</span>"
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.project_project_view_form_simplified_template
 msgid "<span>Tax Returns</span>"
-msgstr "<span>税申告</span>"
+msgstr "<span>税務申告書</span>"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
@@ -69,67 +69,67 @@ msgstr "管理者"
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_manager
 msgid "Administrator can manage the client databases"
-msgstr ""
+msgstr "管理者は顧客のデータベースを管理できます"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_users
 msgid "Amount of Users"
-msgstr ""
+msgstr "ユーザ数"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_documents
 msgid "Amount of documents in Inbox"
-msgstr ""
+msgstr "受信箱内のドキュメント数"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "An error occurred: %s"
-msgstr ""
+msgstr "エラーが発生しました: %s"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Close"
-msgstr ""
+msgstr "閉じる"
 
 #. module: databases
 #: model:ir.model,name:databases.model_res_config_settings
 msgid "Config Settings"
-msgstr ""
+msgstr "構成設定"
 
 #. module: databases
 #: model:ir.ui.menu,name:databases.menu_configuration
 msgid "Configuration"
-msgstr ""
+msgstr "設定"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Connect"
-msgstr ""
+msgstr "接続"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_synchronization_wizard_view_form
 msgid "Continue"
-msgstr ""
+msgstr "続行"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__created_database_ids
 msgid "Created Database"
-msgstr ""
+msgstr "作成されたデータベース"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__create_uid
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__create_uid
 #: model:ir.model.fields,field_description:databases.field_databases_user__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "作成者"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__create_date
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__create_date
 #: model:ir.model.fields,field_description:databases.field_databases_user__create_date
 msgid "Created on"
-msgstr ""
+msgstr "作成日"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__database_ids
@@ -137,19 +137,19 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_databases_user__project_id
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Database"
-msgstr ""
+msgstr "データベース"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_key
 msgid "Database API Key"
-msgstr ""
+msgstr "データベースAPIキー"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_login
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_api_login
 msgid "Database API Login"
-msgstr ""
+msgstr "データベースAPIログイン"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key_to_use
@@ -333,7 +333,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_tax_returns
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_tax_returns
 msgid "Fetch Tax Returns"
-msgstr ""
+msgstr "税務申告を取得"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__fetched_values
@@ -698,7 +698,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Tax return %(return_name)s"
-msgstr ""
+msgstr "税務申告%(return_name)s"
 
 #. module: databases
 #. odoo-python

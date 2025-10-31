@@ -7,13 +7,14 @@
 # Cécile Collart <cco@odoo.com>, 2022
 # Jolien De Paepe, 2023
 # "Dylan Kiss (dyki)" <dyki@odoo.com>, 2025.
+# Louis Travaux <lotr@odoo.com>, 2025.
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 08:07+0000\n"
-"Last-Translator: \"Dylan Kiss (dyki)\" <dyki@odoo.com>\n"
+"PO-Revision-Date: 2025-10-30 13:32+0000\n"
+"Last-Translator: Louis Travaux <lotr@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/iot/fr/>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
@@ -270,7 +271,7 @@ msgstr "Box détectée"
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__type__display
 msgid "Display"
-msgstr "Afficher"
+msgstr "Écran"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_device_ids
@@ -295,7 +296,7 @@ msgstr "Nom d'affichage"
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_url
 msgid "Display URL"
-msgstr "Afficher l'URL"
+msgstr "URL de l'écran"
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__do_not_ask_again

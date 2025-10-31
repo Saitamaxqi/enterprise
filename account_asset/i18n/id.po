@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-23 08:52+0000\n"
+"PO-Revision-Date: 2025-10-30 09:57+0000\n"
 "Last-Translator: \"Abe Manyo (abem)\" <abem@odoo.com>\n"
 "Language-Team: Indonesian <https://translate.odoo.com/projects/odoo-19/"
 "account_asset/id/>\n"
@@ -984,6 +984,8 @@ msgid ""
 "Either \"Months\" or \"Years\" (case-insensitive). Specifies the unit of "
 "duration."
 msgstr ""
+"Antara \"Bulan\" atau \"Tahunan\" (sensitif kapital). Menentukan satuan "
+"durasi."
 
 #. module: account_asset
 #. odoo-python
@@ -1272,7 +1274,7 @@ msgstr "Kelola Item"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Mandatory column. This is the name of the asset."
-msgstr ""
+msgstr "Kolom wajib. Ini adalah nama asset."
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_asset__message_has_error
@@ -1332,7 +1334,7 @@ msgstr "Bulan"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "Months/Years"
-msgstr ""
+msgstr "Bulan/Tahun"
 
 #. module: account_asset
 #: model:ir.model.fields,field_description:account_asset.field_account_account__multiple_assets_per_line
@@ -1531,6 +1533,8 @@ msgid ""
 "Only applicable for Declining Balance method (e.g., 2 for double declining). "
 "Ignored for Straight Line."
 msgstr ""
+"Hanya berlaku untuk metode Declining Balance (contoh, 2 untuk double "
+"declining). Diabaikan untuk Straight Line."
 
 #. module: account_asset
 #. odoo-python
@@ -1545,6 +1549,8 @@ msgid ""
 "Optional. The name or external ID of the asset group. Must exist in Odoo "
 "(e.g., Office Equipment, Vehicles, Machinery)."
 msgstr ""
+"Opsional. Nama atau ID eksternal dari kelompok aset. Harus ada di Odoo ("
+"contoh, Peralatan Kantor, Kendaraan, Mesin)."
 
 #. module: account_asset
 #. odoo-python
@@ -1744,6 +1750,8 @@ msgid ""
 "Start date of the depreciation period. Should be in MM-DD-YYYY format. If "
 "left blank, it defaults to the acquisition date."
 msgstr ""
+"Tanggal mulai periode depresiasi. Harus dalam format BB-HH-TTTT. Bila "
+"dibiarkan kosong, default menggunakan tanggal akuisisi."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__prorata_date
@@ -1807,6 +1815,8 @@ msgid ""
 "The accumulated depreciation account (contra-asset account). Must exist in "
 "Odoo and be of \"Fixed Asset\" or \"Non-current Assets\" type."
 msgstr ""
+"Akun depresiasi yang terkumpul (akun contra-asset). Harus tersedia di Odo "
+"dan merupakan tipe \"Aset tetap\" atau \"Aset non-current\"."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__method_period
@@ -1818,7 +1828,7 @@ msgstr "Jumlah waktu di antara dua depresiasi"
 #. odoo-python
 #: code:addons/account_asset/controller/asset_template_controller.py:0
 msgid "The amount will be considered in company currency."
-msgstr ""
+msgstr "Jumlah akan dianggap dalam mata uang perusahaan."
 
 #. module: account_asset
 #. odoo-python
@@ -1842,6 +1852,9 @@ msgid ""
 "Asset\"). Must exist in Odoo and be of \"Fixed Asset\" or \"Non-current "
 "Assets\" type."
 msgstr ""
+"Akun neraca keuangan untuk aset itu sendiri (contoh, \"151000 Fixed Asset\")"
+". Harus tersedia di Odoo dan merupakan tipe \"Aset Tetap\" atau "
+"\"Aset Non-current\"."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_account_asset__children_ids
@@ -1856,6 +1869,9 @@ msgid ""
 "(e.g., MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - "
 "Vendor Bills)."
 msgstr ""
+"Kode atau nama jurnal terkait di Odoo untuk entri-entri depresiasi (contoh, "
+"MISC - Miscellaneous Operations, INV - Customer Invoices, BILL - Vendor "
+"Bills)."
 
 #. module: account_asset
 #: model:ir.model.fields,help:account_asset.field_asset_modify__invoice_ids
@@ -1871,6 +1887,8 @@ msgid ""
 "The estimated residual value of the asset at the end of its useful life. "
 "This amount will not be depreciated. Considered in company currency."
 msgstr ""
+"Estimasi residual value dari aset di akhir masa manfaatnya. Jumlah ini tidak "
+"akan didepresiasi. Dianggap dalam mata uang perusahaan."
 
 #. module: account_asset
 #. odoo-python

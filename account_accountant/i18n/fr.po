@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:44+0000\n"
-"PO-Revision-Date: 2025-10-24 16:20+0000\n"
+"PO-Revision-Date: 2025-10-30 09:57+0000\n"
 "Last-Translator: \"Manon Rondou (ronm)\" <ronm@odoo.com>\n"
 "Language-Team: French <https://translate.odoo.com/projects/odoo-19/"
 "account_accountant/fr/>\n"
@@ -51,7 +51,7 @@ msgstr "%(display_name_html)s sera réduit de %(amount)s."
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid ") doesn't match the specified ending balance."
-msgstr ""
+msgstr ") ne correspond pas au solde final spécifié."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_form
@@ -636,7 +636,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "Click on the statement to unfold it."
-msgstr ""
+msgstr "Cliquez sur le relevé pour l'ouvrir."
 
 #. module: account_accountant
 #: model:ir.model,name:account_accountant.model_res_company
@@ -1287,13 +1287,13 @@ msgstr "Assurance 12 mois"
 #. odoo-python
 #: code:addons/account_accountant/models/account_bank_statement.py:0
 msgid "Invalid Bank Statements"
-msgstr ""
+msgstr "Relevés bancaires invalides"
 
 #. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/statement_summary/statement_summary.xml:0
 msgid "Invalid Statement(s)"
-msgstr ""
+msgstr "Relevé(s) invalide(s)"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_line_search_bank_rec_widget
@@ -2241,7 +2241,7 @@ msgstr "Ligne de relevé"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "Statement Lines"
-msgstr ""
+msgstr "Lignes de relevé"
 
 #. module: account_accountant
 #. odoo-python
@@ -2359,7 +2359,7 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "The running balance ("
-msgstr ""
+msgstr "Le solde courant ("
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
@@ -2367,6 +2367,8 @@ msgid ""
 "The starting balance doesn't match the ending balance of the previous "
 "statement, or an earlier statement is missing."
 msgstr ""
+"Le solde d'ouverture ne correspond pas au solde de clôture du relevé "
+"précédent ou un relevé précédent est absent."
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.res_config_settings_view_form
@@ -2380,7 +2382,7 @@ msgstr ""
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "There are one or more"
-msgstr ""
+msgstr "Il y a un(e) ou plusieurs"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_account_change_lock_date
@@ -2590,7 +2592,7 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/js/tours/account_accountant.js:0
 msgid "You can now go back to the dashboard."
-msgstr ""
+msgstr "Vous pouvez maintenant revenir au tableau de bord."
 
 #. module: account_accountant
 #. odoo-python
@@ -2742,7 +2744,7 @@ msgstr "id"
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_statement_form_bank_rec_widget
 msgid "invalid statement(s)"
-msgstr ""
+msgstr "relevé(s) invalide(s)"
 
 #. module: account_accountant
 #: model_terms:ir.ui.view,arch_db:account_accountant.view_bank_rec_edit_line
