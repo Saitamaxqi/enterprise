@@ -323,6 +323,7 @@ class ProjectTask(models.Model):
                 'res_id': invoices.id,
                 'context': {
                     'create': False,
+                    'default_move_type': 'out_invoice',
                 }
             }
         return {
@@ -334,6 +335,7 @@ class ProjectTask(models.Model):
             'domain': [('id', 'in', invoices.ids)],
             'context': {
                 'create': False,
+                'default_move_type': 'out_invoice',
             }
         }
 
