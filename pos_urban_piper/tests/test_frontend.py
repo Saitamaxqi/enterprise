@@ -253,3 +253,29 @@ class TestFrontend(TestPosUrbanPiperCommon):
         with patch.object(UrbanPiperClient, "_make_api_request", _mock_make_api_request):
             self.child_branch_pos_config.order_status_update(order.id, 'Food Ready')
         self.assertEqual(self.tax_15.id, order.lines.tax_ids.id)
+
+    def test_order_with_no_children_taxes(self):
+        tax = self.env['account.tax'].create({
+            'name': 'Tax without children taxes',
+            'amount_type': 'group',
+        })
+        self.product_1.write({
+            'taxes_id': [Command.set([tax.id])],
+        })
+
+        self.urban_piper_config.open_ui()
+        with MockRequest(self.env):
+            identifier = str(uuid.uuid4())
+            self.env['pos.urbanpiper.test.order.wizard'].with_context(config_id=self.urban_piper_config.id).create({
+                'product_id': self.product_1.id,
+                'quantity': 1,
+                'delivery_provider_id': self.env.ref('pos_urban_piper.pos_delivery_provider_justeat').id,
+            }).make_test_order(identifier)
+
+        order = self.env['pos.order'].search([('delivery_identifier', '=', identifier)])
+
+        self.assertEqual(len(order.lines), 1)
+        self.assertEqual(order.lines[0].price_unit, 100.0)
+        self.assertEqual(order.lines[0].price_subtotal, 100.0)
+        self.assertEqual(order.amount_total, 100.0)
+        self.assertEqual(order.amount_tax, 0.0)

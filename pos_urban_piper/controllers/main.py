@@ -360,7 +360,7 @@ class PosUrbanPiperController(http.Controller):
             tax_types = tax_ids.flatten_taxes_hierarchy().mapped('price_include')
             if len(set(tax_types)) > 1:
                 _logger.warning("UrbanPiper: Multiple tax types found for product %s. Using the first one.", main_product.name)
-            price_unit = base_line['tax_details']['total_included'] if tax_types[0] else base_line['tax_details']['total_excluded']
+            price_unit = base_line['tax_details']['total_included'] if tax_types and tax_types[0] else base_line['tax_details']['total_excluded']
             line_taxes = tax_ids
         tax_ids_after_fiscal_position = pos_config_sudo.urbanpiper_fiscal_position_id.map_tax(line_taxes)
         taxes = tax_ids_after_fiscal_position.compute_all(price_unit, pos_config_sudo.company_id.currency_id, int(line_data['quantity']), product=main_product)
