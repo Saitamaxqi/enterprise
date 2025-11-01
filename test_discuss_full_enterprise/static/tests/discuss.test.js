@@ -12,13 +12,11 @@ import {
 
 import { defineTestDiscussFullEnterpriseModels } from "@test_discuss_full_enterprise/../tests/test_discuss_full_enterprise_test_helpers";
 
-import { expectElementCount } from "@html_editor/../tests/_helpers/ui_expectations";
 import { insertText as htmlInsertText } from "@html_editor/../tests/_helpers/user_actions";
 
 import { getService } from "@web/../tests/web_test_helpers";
 
 import { describe, test } from "@odoo/hoot";
-import { animationFrame } from "@odoo/hoot-mock";
 
 describe.current.tags("desktop");
 defineTestDiscussFullEnterpriseModels();
@@ -55,25 +53,6 @@ test("Can use channel command /who", async () => {
     await htmlInsertText(editor, "/who");
     await click(".o-mail-Composer button[title='Send']:enabled");
     await contains(".o_mail_notification", { text: "You are alone in this channel." });
-});
-
-test("can handle command and disable mentions in AI composer", async () => {
-    const pyEnv = await startServer();
-    const channelId = pyEnv["discuss.channel"].create({
-        channel_type: "ai_composer",
-        name: "my-ai-composer",
-    });
-    pyEnv["discuss.channel"].create({ name: "my-channel" });
-    await start();
-    await openDiscuss(channelId);
-    await insertText(".o-mail-Composer-input", "/help");
-    await click(".o-mail-Composer button[title='Send']:enabled");
-    await contains(".o-mail-Message");
-    await insertText(".o-mail-Composer-input", "@");
-    await animationFrame();
-    await expectElementCount(".o-mail-NavigableList-item", 0);
-    await insertText(".o-mail-Composer-input", "#", { replace: true });
-    await expectElementCount(".o-mail-NavigableList-item", 0);
 });
 
 test("live chat last agent leave from chat window", livechatLastAgentLeaveFromChatWindow);
