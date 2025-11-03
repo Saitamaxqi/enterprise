@@ -9,7 +9,7 @@ from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
 from odoo.exceptions import ValidationError
 from odoo.exceptions import UserError
 from odoo.fields import Domain
-from odoo.tools import SQL, float_is_zero
+from odoo.tools import SQL, float_is_zero, format_date
 from odoo.addons.account.tools.structured_reference import is_valid_structured_reference
 
 _logger = logging.getLogger(__name__)
@@ -1551,49 +1551,19 @@ class AccountBankStatementLine(models.Model):
         if not self.env.context.get('no_retrieve_partner'):
             statement_lines._retrieve_partner()
         for statement_line in statement_lines:
-            if statement_line.transaction_details:
-                statement_line.move_id.message_post(body=statement_line._format_transaction_details())
+            statement_line.move_id.message_post(body=statement_line._format_statement_line_data())
 
         # process automatically the new lines in case we pass some context key (i.e coming from the bank reconciliation widget)
         if self.env.context.get('auto_statement_processing', False) and statement_lines:
             statement_lines._try_auto_reconcile_statement_lines()
         return statement_lines
 
+    @api.deprecated("Use _format_statement_line_data instead")
     def _format_transaction_details(self):
-        """ Format the 'transaction_details' field of the statement line to be more readable for the end user.
+        return self._format_statement_line_data()
 
-        Example:
-            {
-                "debtor": {
-                    "name": None,
-                    "private_id": None,
-                },
-                "debtor_account": {
-                    "iban": "BE84103080286059",
-                    "bank_transaction_code": None,
-                    "credit_debit_indicator": "DBIT",
-                    "status": "BOOK",
-                    "value_date": "2022-12-29",
-                    "transaction_date": None,
-                    "balance_after_transaction": None,
-                },
-            }
-
-        Becomes:
-            debtor_account:
-                iban: BE84103080286059
-                credit_debit_indicator: DBIT
-                status: BOOK
-                value_date: 2022-12-29
-
-        :returns: An html representation of the transaction details.
-        """
-        self.ensure_one()
-        details = self.transaction_details
-        if not details:
-            return
-
-        def _get_formatted_data(data, prefix=""):
+    def _format_statement_line_data(self):
+        def _get_formatted_transaction_details(data, prefix=""):
             keys = data.keys() if isinstance(data, dict) else [i for i, _ in enumerate(data)]
             result = Markup()
             for key in keys:
@@ -1601,10 +1571,33 @@ class AccountBankStatementLine(models.Model):
                 result += prefix + Markup("<b>%s:</b> ") % str(key)
                 if isinstance(value, (list, dict)):
                     result += "\n"
-                    result += _get_formatted_data(value, prefix + "  ")
+                    result += _get_formatted_transaction_details(value, prefix + "  ")
                     continue
                 result += str(value) + "\n"
             return result
 
-        res = _get_formatted_data(details)
-        return Markup("<div><pre>%s</pre></div>") % res
+        def _get_formatted_statement_line_data():
+            result = Markup()
+            if self.partner_name or self.partner_id or self.account_number:
+                result += Markup('<h4 class="d-inline">{name}</h4> <span class="text-secondary">―</span> ').format(
+                    name=self.partner_name or self.partner_id.name or self.account_number,
+                )
+            result += Markup('<h4 class="d-inline text-info">{amount}</h4><br/>').format(amount=self.currency_id.format(self.amount))
+            if self.account_number and (self.partner_name or self.partner_id):
+                # Make sure to include the account number if we didn't use it instead of the partner name
+                result += Markup('<b>{account_number}</b> <span class="text-secondary">-</span> ').format(account_number=self.account_number)
+            result += Markup('{date}<br/>').format(date=format_date(self.env, self.date, date_format='dd MMM yyyy'))
+            result += Markup('<br/>{remittance_information}<br/>').format(remittance_information=self.payment_ref)
+            return result
+
+        self.ensure_one()
+
+        formatted_statement_line_data = _get_formatted_statement_line_data()
+        if self.transaction_details:
+            formatted_statement_line_data = Markup(
+                '%s<div data-o-mail-quote="1"><pre>%s</pre></div>'
+            ) % (
+                formatted_statement_line_data,
+                _get_formatted_transaction_details(self.transaction_details),
+            )
+        return formatted_statement_line_data
