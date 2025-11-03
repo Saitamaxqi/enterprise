@@ -707,6 +707,20 @@ class TestReportEditorUIUnit(HttpCase):
             </t>
         """)
 
+    def test_disable_fields_commands_when_unavailable(self):
+        self.main_view.arch = """
+            <t t-name="web_studio.test_report">
+                <t t-call="web.html_container">
+                    <t t-call="web.internal_layout">
+                        <t t-set='lines' t-value='docs'/>
+                        <t t-esc="lines.mapped('name')"/>
+                        <p><br/></p>
+                    </t>
+                </t>
+            </t>
+        """
+        self.start_tour(self.tour_url, "web_studio.test_disable_fields_commands_when_unavailable", login="admin")
+
     def test_edition_without_lang(self):
         self.env["res.lang"]._activate_lang("fr_FR")
         self.env["res.users"].browse(2).lang = "fr_FR"
