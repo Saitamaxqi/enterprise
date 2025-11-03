@@ -732,6 +732,54 @@ class TestRentalWizard(TestRentalCommon):
         # Virtual availability should remain correct for Order B
         self.assertEqual(so2.order_line.virtual_available_at_date, 1)
 
+    def test_rental_virtual_available_multiple_lines_partial_returned(self):
+        """
+        Ensure correct virtual availability calculation when rental
+        order consists of mutiple lines but some are returned.
+        Scenario:
+        - Create a storable rental product with 10 units in stock.
+        - Enable the 'Rental Transfer' setting.
+        - Create a rental order with two lines:
+            * line 1: 4 units
+            * line 2: 1 unit
+        - Confirm and pick up order lines
+        - Return the line with 1 unit
+        - Create another rental order: it must show 6 available
+        """
+        self.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
+        rental_product = self.product_id
+        # There are 4 already available so we add 6 to get 10 total
+        self.env['stock.quant']._update_available_quantity(rental_product, self.warehouse_id.lot_stock_id, 6)
+        start = Datetime.now()
+        end = start + timedelta(days=1)
+        so = self.env['sale.order'].create({
+            'partner_id': self.cust1.id,
+            'rental_start_date': start,
+            'rental_return_date': end,
+            'order_line': [Command.create({
+                'product_id': rental_product.id,
+                'product_uom_qty': qty,
+                'is_rental': True,
+            }) for qty in (4.0, 1.0)],
+        })
+        self.assertEqual(so.order_line.mapped('virtual_available_at_date'), [10.0, 10.0])
+        so.order_line.update({'is_rental': True})
+        so.action_confirm()
+        pickup_action = so.action_open_pickup()
+        wizard = Form.from_action(self.env, pickup_action).save()
+        wizard.button_validate()
+        return_action = so.action_open_return()
+        return_wizard = Form.from_action(self.env, return_action).save()
+        return_wizard.move_ids.filtered(
+            lambda move_id: move_id.product_uom_qty == 4
+        ).write({'product_uom_qty': 0})
+        return_wizard.button_validate()
+        so2 = so.copy({
+            'rental_start_date': start + timedelta(hours=1),
+            'order_line': [Command.create({'product_id': rental_product.id, 'is_rental': True})],
+        })
+        self.assertEqual(so2.order_line.virtual_available_at_date, 6.0)
+
     ###############################
     #       PRIVATE METHODS       #
     ###############################
