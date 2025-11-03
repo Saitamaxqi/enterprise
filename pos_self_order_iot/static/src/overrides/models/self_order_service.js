@@ -17,11 +17,7 @@ patch(SelfOrder.prototype, {
             return;
         }
 
-        const device = new DeviceController(this.iot_longpolling, {
-            iot_ip: this.config.iface_printer_id.iot_ip,
-            identifier: this.config.iface_printer_id.identifier,
-            iot_id: { id: this.config.iface_printer_id.iot_id },
-        });
+        const device = new DeviceController(this.iot_longpolling, this.config.iface_printer_id);
         this.printer.setPrinter(
             new IoTPrinter({
                 device,
@@ -41,12 +37,14 @@ patch(SelfOrder.prototype, {
 
     createPrinter(printer) {
         if (printer.device_identifier && printer.printer_type === "iot") {
-            const device = new DeviceController(this.iot_longpolling, {
-                iot_ip: printer.proxy_ip,
-                identifier: printer.device_identifier,
-            });
+            if (!printer.device_id?.id || !printer.device_id?.iot_id) {
+                console.error("Error loading data, missing Iot Box or device");
+                return false;
+            }
+
+            const deviceController = new DeviceController(this.iot_longpolling, printer.device_id);
             return new IoTPrinter({
-                device,
+                device: deviceController,
                 iot_http: this.iotHttpService,
                 access_token: this.access_token,
             });
