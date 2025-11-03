@@ -29,6 +29,11 @@
                                 <label for="stock_journal" string="Journal" class="col-lg-5 o_light_label"/>
                                 <field name="stock_journal"/>
                             </div>
+                            <div class="text-muted">
+                                Other accounts can be defined on "Inventory Loss" and "Production" on dedicated <button
+                                    type="object" name="action_stock_open_valued_locations"
+                                    class="btn btn-link p-0">locations</button>
+                            </div>
                         </div>
                     </setting>
                 </block>
