@@ -415,7 +415,7 @@ class HrPayslip(models.Model):
                     'sequence': 15,
                     'work_entry_type_id': overtime_work_entry.id,
                     'salary_base': hourly_wage,
-                    'rate': sum(grouped_recurring_by_input_wage_types.get("WT_Overtime").mapped('amount')),
+                    'rate': sum(grouped_one_time_by_input_wage_types.get("WT_Overtime").mapped('amount')),
                 })]
 
             if grouped_recurring_by_input_wage_types.get("WT_Overtime_125", False):
