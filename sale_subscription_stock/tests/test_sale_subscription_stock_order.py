@@ -1112,3 +1112,42 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         sale_order.action_confirm()
         picking = sale_order.picking_ids
         self.assertTrue(picking, "A picking should be created for the one-time sale product.")
+
+    def test_subscription_return_qty_delivered(self):
+        sub = self.subscription_order
+
+        _invoice1, picking1 = self.simulate_period(sub, "2022-03-02", move_qty=3)
+        self.assertEqual(sub.order_line.qty_delivered, 3)
+
+        # return 2 qty
+        stock_return_picking_form = Form(
+            self.env['stock.return.picking'].with_context(
+                active_ids=picking1.ids,
+                active_id=picking1.ids[0],
+                active_model='stock.picking'
+            )
+        )
+        stock_return_picking = stock_return_picking_form.save()
+        stock_return_picking.product_return_moves.quantity = 2.0
+        stock_return_picking_action = stock_return_picking.action_create_returns()
+        return_picking = self.env['stock.picking'].browse(stock_return_picking_action['res_id'])
+        self.assertEqual(sub.order_line.qty_delivered, 3)
+        return_picking.button_validate()
+
+        self.assertEqual(return_picking.state, 'done')
+        self.assertEqual(sub.order_line.qty_delivered, 1, 'Qty delivered for the period should be reduced')
+
+        # reverse part of the return
+        stock_return_picking_form_2 = Form(
+            self.env['stock.return.picking'].with_context(
+                active_ids=return_picking.ids,
+                active_id=return_picking.ids[0],
+                active_model='stock.picking'
+            )
+        )
+        stock_return_picking_2 = stock_return_picking_form_2.save()
+        stock_return_picking_2.product_return_moves.quantity = 1.0
+        stock_return_picking_action_2 = stock_return_picking_2.action_create_returns()
+        return_picking_2 = self.env['stock.picking'].browse(stock_return_picking_action_2['res_id'])
+        return_picking_2.button_validate()
+        self.assertEqual(sub.order_line.qty_delivered, 2, 'Qty delivered for the period should be increased')
