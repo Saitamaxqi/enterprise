@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-10 20:15+0000\n"
-"PO-Revision-Date: 2025-10-31 02:41+0000\n"
+"PO-Revision-Date: 2025-10-31 07:20+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "databases/ja/>\n"
@@ -154,59 +154,59 @@ msgstr "データベースAPIログイン"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_api_key_to_use
 msgid "Database Api Key To Use"
-msgstr ""
+msgstr "使用するデータベースのAPIキー"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_can_access
 msgid "Database Can Access"
-msgstr ""
+msgstr "アクセス可能なデータベース"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_base_definition_id
 msgid "Database Kpi Base Definition"
-msgstr ""
+msgstr "データベースKPIベース定義"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_name
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_name
 msgid "Database Name"
-msgstr ""
+msgstr "データベース名"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_synchronization_wizard
 msgid "Database Synchronization Wizard"
-msgstr ""
+msgstr "データベース同期ウィザード"
 
 #. module: databases
 #: model:project.project,name:databases.database_default_template
 msgid "Database Template"
-msgstr ""
+msgstr "データベーステンプレート"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_url
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_url
 msgid "Database URL"
-msgstr ""
+msgstr "データベースURL"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_user
 msgid "Database User"
-msgstr ""
+msgstr "データベースユーザ"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_user_ids
 msgid "Database Users"
-msgstr ""
+msgstr "データベースユーザ"
 
 #. module: databases
 #: model:ir.model,name:databases.model_databases_manage_users_wizard
 msgid "Database Users Invitation Wizard"
-msgstr ""
+msgstr "データベースユーザ招待ウィザード"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_version
 msgid "Database Version"
-msgstr ""
+msgstr "データベースバージョン"
 
 #. module: databases
 #. odoo-python
@@ -214,7 +214,8 @@ msgstr ""
 msgid ""
 "Database synchronization is running in the background. You will be notified "
 "upon completion."
-msgstr ""
+msgstr "データベースの同期処理がバックグラウンドで実行されています。完了時に通知され"
+"ます。"
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_databases_all
@@ -223,22 +224,22 @@ msgstr ""
 #: model:res.groups.privilege,name:databases.res_groups_privilege_databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Databases"
-msgstr ""
+msgstr "データベース"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_with_odoocom_ir_actions_server
 msgid "Databases: pull databases from Odoo.com and synchronize"
-msgstr ""
+msgstr "データベース：Odoo.com からデータベースを取得して同期します"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.ir_cron_synchronize_databases_ir_actions_server
 msgid "Databases: synchronize"
-msgstr ""
+msgstr "データベース：同期"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Discard"
-msgstr ""
+msgstr "破棄"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__display_name
@@ -248,30 +249,30 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__display_name
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "表示名"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__state__done
 #: model:project.task.type,name:databases.stage_done
 msgid "Done"
-msgstr ""
+msgstr "完了"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__state__draft
 msgid "Draft"
-msgstr ""
+msgstr "ドラフト"
 
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Draft entries in journal %(journal_name)s"
-msgstr ""
+msgstr "仕訳帳に仕訳をドラフト%(journal_name)s"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__error_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__error_message
 msgid "Error Message"
-msgstr ""
+msgstr "エラーメッセージ"
 
 #. module: databases
 #. odoo-python
@@ -280,54 +281,55 @@ msgstr ""
 msgid ""
 "Error while connecting to %(url)s: We are missing the database name, the api"
 " login or the api key\n"
-msgstr ""
+msgstr "%(url)s への接続中にエラーが発生しました：データベース名、API ログイン、"
+"または API キーのいずれかが不足しています。\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Error while creating users on %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "%(dbname)s 上でユーザを作成中にエラーが発生しました：%(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting KPIs from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "%(dbname)s から KPI を取得中にエラーが発生しました：%(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while getting users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "%(dbname)s からユーザ情報を取得中にエラーが発生しました：%(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Error while listing databases from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "%(dbname)s からデータベース一覧を取得中にエラーが発生しました：%(message)s\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Error while removing users from %(dbname)s: %(message)s\n"
-msgstr ""
+msgstr "%(dbname)s からユーザを削除中にエラーが発生しました：%(message)s\n"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__everywhere_user_ids
 msgid "Everywhere User"
-msgstr ""
+msgstr "共通ユーザ"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_documents
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_documents
 msgid "Fetch Documents"
-msgstr ""
+msgstr "ドキュメントを取得"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_draft_entries
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_fetch_draft_entries
 msgid "Fetch Draft Journal Entries"
-msgstr ""
+msgstr "ドラフト仕訳を取得"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_fetch_tax_returns
@@ -338,25 +340,26 @@ msgstr "税務申告を取得"
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__fetched_values
 msgid "Fetched Values"
-msgstr ""
+msgstr "取得済みの値"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
 msgid ""
 "Get all your Odoo databases summarized, and perform mass action like "
 "inviting users."
-msgstr ""
+msgstr "すべての Odoo "
+"データベースの概要を取得し、ユーザ招待などの一括操作を実行できます。"
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_unique
 msgid "Hey, this URL is already hooked up to a database!"
-msgstr ""
+msgstr "このURLはすでにデータベースに接続されています!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_hosting
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__database_hosting
 msgid "Hosting"
-msgstr ""
+msgstr "ホスティング"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__id
@@ -366,158 +369,159 @@ msgstr ""
 #: model:ir.model.fields,field_description:databases.field_project_template_create_wizard__id
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: databases
 #: model:project.task.type,name:databases.stage_progress
 msgid "In Progress"
-msgstr ""
+msgstr "進行中"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Inbox"
-msgstr ""
+msgstr "受信箱"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__invite
 msgid "Invitation"
-msgstr ""
+msgstr "招待"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Invitation is done"
-msgstr ""
+msgstr "招待が完了しました"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Invite"
-msgstr ""
+msgstr "招待"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_invite_users
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Invite Users"
-msgstr ""
+msgstr "ユーザを招待"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "KPIs"
-msgstr ""
+msgstr "KPIs 重要経営指標"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_last_synchro
 msgid "Last Synchronization"
-msgstr ""
+msgstr "最終同期"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__write_uid
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__write_uid
 #: model:ir.model.fields,field_description:databases.field_databases_user__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "最終更新者："
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__write_date
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__write_date
 #: model:ir.model.fields,field_description:databases.field_databases_user__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "最終更新日："
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__latest_authentication
 msgid "Latest Authentication"
-msgstr ""
+msgstr "最新の認証"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__local_user_id
 msgid "Local User"
-msgstr ""
+msgstr "ローカルユーザ"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__login
 msgid "Login"
-msgstr ""
+msgstr "ログイン"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_kpi_properties
 msgid "Metrics"
-msgstr ""
+msgstr "指標"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__mode
 msgid "Mode"
-msgstr ""
+msgstr "モード"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_user__name
 msgid "Name"
-msgstr ""
+msgstr "名前"
 
 #. module: databases
 #: model:project.task.type,name:databases.stage_new
 msgid "New"
-msgstr ""
+msgstr "新規"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__new_properties
 msgid "New KPIs to add:"
-msgstr ""
+msgstr "追加する新しいKIP:"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "New databases will be based on the selected project template."
-msgstr ""
+msgstr "新しいデータベースは、選択されたプロジェクトテンプレートに基づいて作成されま"
+"す。"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
 msgid "No tasks found. Let's create one!"
-msgstr ""
+msgstr "タスクが見つかりません。作成しましょう!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__notify_user
 msgid "Notify User"
-msgstr ""
+msgstr "ユーザに通知"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__saas
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__saas
 msgid "Odoo Online"
-msgstr ""
+msgstr "Odooオンライン"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apikey
 msgid "Odoo.com API Key"
-msgstr ""
+msgstr "Odoo.com API キー"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_apiuser
 msgid "Odoo.com API User"
-msgstr ""
+msgstr "Odoo.com API ユーザ"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid ""
 "Odoo.com API keys are managed in the <em>Developer API Keys</em> section of "
 "your"
-msgstr ""
+msgstr "Odoo.com の API キーは、<em>開発者用 API キー</em>セクションで管理されます"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Odoo.com Connection &amp; Security page"
-msgstr ""
+msgstr "Odoo.com 接続・セキュリティページ"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__paas
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__paas
 msgid "Odoo.sh"
-msgstr ""
+msgstr "Odoo.sh"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__premise
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__premise
 msgid "On Premise"
-msgstr ""
+msgstr "オンプレミス"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_tasks_all
@@ -525,84 +529,87 @@ msgid ""
 "Organize your tasks by dispatching them across the pipeline.<br>\n"
 "                Collaborate efficiently by chatting in real-time or via email."
 msgstr ""
+"パイプラインを横断してタスクをディスパッチすることで、タスクを整理できます。<"
+"br>\n"
+"                リアルタイムチャットやEメールによる効率的に協働します。"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__project_project__database_hosting__other
 #: model:ir.model.fields.selection,name:databases.selection__project_template_create_wizard__database_hosting__other
 msgid "Outside of Odoo"
-msgstr ""
+msgstr "Odoo外"
 
 #. module: databases
 #. odoo-javascript
 #: code:addons/databases/static/src/views/databases_project_list/databases_project_list_renderer.js:0
 msgid "Planned activities of type %(return_name)s"
-msgstr ""
+msgstr "%(return_name)sタイプの予定された活動"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_project
 msgid "Project"
-msgstr ""
+msgstr "プロジェクト"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.res_config_settings_view_form
 msgid "Project Template"
-msgstr ""
+msgstr "プロジェクトテンプレート"
 
 #. module: databases
 #: model:ir.model,name:databases.model_project_template_create_wizard
 msgid "Project Template create Wizard"
-msgstr ""
+msgstr "プロジェクトテンプレート作成ウィザード"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_res_config_settings__databases_project_template_id
 msgid "Project template"
-msgstr ""
+msgstr "プロジェクトテンプレート"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__property_definition
 msgid "Property Definition"
-msgstr ""
+msgstr "プロパティ定義"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Regular Project"
-msgstr ""
+msgstr "通常プロジェクト"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__removable_user_ids
 msgid "Removable User"
-msgstr ""
+msgstr "削除可能なユーザ"
 
 #. module: databases
 #: model:ir.model.fields.selection,name:databases.selection__databases_manage_users_wizard__mode__remove
 msgid "Removal"
-msgstr ""
+msgstr "削除"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.databases_manage_users_wizard_view_form
 msgid "Remove"
-msgstr ""
+msgstr "削除"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "Remove User"
-msgstr ""
+msgstr "ユーザを削除"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_remove_users
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Remove Users"
-msgstr ""
+msgstr "ユーザを削除"
 
 #. module: databases
 #: model:ir.ui.menu,name:databases.menu_reporting
 msgid "Reporting"
-msgstr ""
+msgstr "レポーティング"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Responsible"
-msgstr ""
+msgstr "担当者"
 
 #. module: databases
 #. odoo-python
@@ -610,13 +617,14 @@ msgstr ""
 msgid ""
 "Select the users you want to invite to the %(nb_databases)s selected "
 "databases."
-msgstr ""
+msgstr "選択した %(nb_databases)s "
+"件のデータベースに招待するユーザを選択してください。"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "Select the users you want to invite to the database %(database_name)s."
-msgstr ""
+msgstr "データベース %(database_name)s に招待するユーザーを選択してください。"
 
 #. module: databases
 #. odoo-python
@@ -624,61 +632,62 @@ msgstr ""
 msgid ""
 "Select the users you want to remove from the %(nb_databases)s selected "
 "databases."
-msgstr ""
+msgstr "選択した %(nb_databases)s "
+"件のデータベースから削除するユーザを選択してください。"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid ""
 "Select the users you want to remove from the database %(database_name)s."
-msgstr ""
+msgstr "データベース %(database_name)sから削除したいユーザを選択してください。"
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_databases_configuration
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Settings"
-msgstr ""
+msgstr "管理設定"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__state
 msgid "State"
-msgstr ""
+msgstr "ステータス"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__summary_message
 #: model:ir.model.fields,field_description:databases.field_databases_synchronization_wizard__summary_message
 msgid "Summary Message"
-msgstr ""
+msgstr "要約メッセージ"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_project_project__database_nb_synchro_errors
 msgid "Synchronization Errors Count"
-msgstr ""
+msgstr "同期エラー数"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization done successfully!"
-msgstr ""
+msgstr "同期が正常に完了しました!"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/models/project_project.py:0
 #: code:addons/databases/wizard/databases_synchronization_wizard.py:0
 msgid "Synchronization of %d databases"
-msgstr ""
+msgstr "%d データベースの同期"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_database
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Synchronize"
-msgstr ""
+msgstr "同期"
 
 #. module: databases
 #: model:ir.actions.server,name:databases.action_synchronize_all_databases
 msgid "Synchronize all the Databases"
-msgstr ""
+msgstr "すべてのデータベースを同期"
 
 #. module: databases
 #: model_terms:ir.actions.act_window,help:databases.action_view_databases_all
@@ -686,13 +695,16 @@ msgid ""
 "Synchronize to automatically fetch Odoo Online databases, or set an API Key "
 "to connect to On Premise or Odoo.sh ones."
 msgstr ""
+"同期を実行すると、Odooオンラインのデータベースが自動的に取得されます。"
+"オンプレミスまたは Odoo.sh "
+"のデータベースに接続するには、APIキーを設定してください。"
 
 #. module: databases
 #: model:ir.actions.act_window,name:databases.action_view_tasks_all
 #: model:ir.ui.menu,name:databases.menu_tasks
 #: model:project.project,label_tasks:databases.database_default_template
 msgid "Tasks"
-msgstr ""
+msgstr "タスク"
 
 #. module: databases
 #. odoo-javascript
@@ -707,59 +719,63 @@ msgid ""
 "The database %(url)s is registered as a saas database in odoo.com. As it "
 "seems to be configured we have left it as is.\n"
 msgstr ""
+"データベース %(url)s は odoo.com にて SaaS "
+"データベースとして登録されています。すでに設定済みのようですので、そのままの"
+"状態にしてあります。\n"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully invited to %(nb_databases)s databases."
-msgstr ""
+msgstr "これらのユーザは、%(nb_databases)s 件のデータベースに正常に招待されました。"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "These users were successfully removed from %(nb_databases)s databases."
-msgstr ""
+msgstr "これらのユーザは、%(nb_databases)s 件のデータベースから正常に削除されました。"
 
 #. module: databases
 #: model:ir.model.constraint,message:databases.constraint_project_project_database_url_required
 msgid "Uh-oh! It seems we are missing a url for a database!"
-msgstr ""
+msgstr "おっと!データベースの URL が見つかりません!"
 
 #. module: databases
 #: model:ir.model.fields,field_description:databases.field_databases_manage_users_wizard__user_ids
 #: model:res.groups,name:databases.group_databases_user
 msgid "User"
-msgstr ""
+msgstr "ユーザ"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.edit_project
 msgid "User Management"
-msgstr ""
+msgstr "ユーザ管理"
 
 #. module: databases
 #: model:res.groups,comment:databases.group_databases_user
 msgid "User can access the client databases"
-msgstr ""
+msgstr "ユーザは顧客データベースにアクセスできます"
 
 #. module: databases
 #. odoo-python
 #: code:addons/databases/wizard/databases_manage_users_wizard.py:0
 msgid "User removal is done"
-msgstr ""
+msgstr "ユーザの削除が完了しました"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Users"
-msgstr ""
+msgstr "ユーザ"
 
 #. module: databases
 #: model_terms:ir.ui.view,arch_db:databases.view_databases_list
 msgid "Version"
-msgstr ""
+msgstr "バージョン"
 
 #. module: databases
 #: model:ir.model.fields,help:databases.field_databases_synchronization_wizard__notify_user
 msgid ""
 "Whether the user should be notified once the cron has finished synchronizing"
 " the databases"
-msgstr ""
+msgstr "データベースの同期を行うcronが完了したときに、ユーザに通知するかどうかを指定"
+"します"

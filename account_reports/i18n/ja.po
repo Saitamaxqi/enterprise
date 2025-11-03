@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 16.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-10-08 18:45+0000\n"
-"PO-Revision-Date: 2025-10-31 02:40+0000\n"
+"PO-Revision-Date: 2025-10-31 08:35+0000\n"
 "Last-Translator: \"Junko Augias (juau)\" <juau@odoo.com>\n"
 "Language-Team: Japanese <https://translate.odoo.com/projects/odoo-19/"
 "account_reports/ja/>\n"
@@ -291,6 +291,40 @@ msgid ""
 "            </div>\n"
 "        "
 msgstr ""
+"<div style=\"margin: 0px; padding: 0px;\">\n"
+"                <p>\n"
+"                    Dear <t t-out=\"object.company_id.name\">YourCompany</t>,"
+"\n"
+"                </p>\n"
+"                <p>\n"
+"                    ご提供いただいた書類および情報に基づき<t t-out="
+"\"object.company_id.name\">YourCompany</t>\n"
+"                    (<t t-out=\"object.type_id._get_period_name("
+"object.company_id, object.date_from, object.date_to)\""
+"/>)のVAT申告書が提出されました。\n"
+"                </p>\n"
+"                <p>\n"
+"                    その結果<t t-out=\"format_amount("
+"object.total_amount_to_pay, object.amount_to_pay_currency_id)\""
+"/>の支払残高があることが確認されました。\n"
+"                </p>\n"
+"                <table style=\"border:1px solid black; padding:20px; text-"
+"align:left; border-spacing: 16px;\">\n"
+"                    <tr>\n"
+"                        <td>支払金額</td>\n"
+"                        <td><t t-out=\"format_amount("
+"object.total_amount_to_pay, object.amount_to_pay_currency_id)\"/></td>\n"
+"                    </tr>\n"
+"                    <tr>\n"
+"                        <td>支払期日</td>\n"
+"                        <td><t t-out=\"format_date(object.date_deadline)\""
+"/></td>\n"
+"                    </tr>\n"
+"                </table>\n"
+"                <p>よろしくお願いいたします。</p>\n"
+"                <p><t t-out=\"user.name\">Mitchell Admin</t></p>\n"
+"            </div>\n"
+"        "
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
@@ -526,7 +560,7 @@ msgstr "申告レポート"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_return_check_template
 msgid "Account Return Check Template"
-msgstr ""
+msgstr "返品小切手テンプレート"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_res_company__account_revaluation_journal_id
@@ -537,17 +571,17 @@ msgstr "勘定科目再評価仕訳帳"
 #: model:ir.model.fields,field_description:account_reports.field_account_account__account_status
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_account_status_ids
 msgid "Account Status"
-msgstr ""
+msgstr "勘定科目ステータス"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
 msgid "Account Type"
-msgstr ""
+msgstr "勘定科目タイプ"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
 msgid "Account with Entries"
-msgstr ""
+msgstr "仕訳のある勘定科目"
 
 #. module: account_reports
 #. odoo-javascript
@@ -569,7 +603,7 @@ msgstr "会計期間"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_accounting_process
 msgid "Accounting Process"
-msgstr ""
+msgstr "会計処理"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report
@@ -594,7 +628,7 @@ msgstr "会計レポート式"
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_external_value
 msgid "Accounting Report External Value"
-msgstr ""
+msgstr "会計レポート対外価格"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_report_line
@@ -662,7 +696,7 @@ msgstr "要アクション"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__action_id
 msgid "Action on Click"
-msgstr ""
+msgstr "クリック時のアクション"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report_file_download_error_wizard__actionable_errors
@@ -673,7 +707,7 @@ msgstr "対処可能なエラー"
 #: model:ir.model.fields,field_description:account_reports.field_account_return__active
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__is_return_active
 msgid "Active"
-msgstr ""
+msgstr "有効"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__activity_ids
@@ -721,17 +755,17 @@ msgstr "セクションの下に合計を追加"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__additional_action_context
 msgid "Additional Action Context"
-msgstr ""
+msgstr "追加のアクションコンテキスト"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__additional_action_domain
 msgid "Additional Action Domain"
-msgstr ""
+msgstr "追加のアクションドメイン"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__additional_action_params
 msgid "Additional Action Params"
-msgstr ""
+msgstr "追加のアクションパラメータ"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.multicurrency_revaluation_report_adjustment
@@ -795,7 +829,7 @@ msgstr "買掛金年齢表"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_aged_payable_review
 msgid "Aged Payables Review"
-msgstr ""
+msgstr "買掛金年齢表レビュー"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.aged_receivable_report
@@ -824,7 +858,7 @@ msgstr "取引先別買掛金年齢表"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_aged_receivable_followup
 msgid "Aged receivables and follow-up"
-msgstr ""
+msgstr "売掛金年齢表とフォローアップ"
 
 #. module: account_reports
 #. odoo-python
@@ -869,7 +903,7 @@ msgstr "全てのレポートバリアント"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "All checks and approvers have been reset"
-msgstr ""
+msgstr "すべての確認項目と承認者がリセットされました"
 
 #. module: account_reports
 #. odoo-python
@@ -900,7 +934,7 @@ msgstr ""
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_report__allow_account_audit_status_on_lines
 msgid "Allow Account Audit Status On Lines"
-msgstr ""
+msgstr "明細行で勘定科目監査ステータスを有効にする"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.account_financial_report_ec_sales_amount
@@ -981,37 +1015,37 @@ msgstr "分析シュミレーション"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_analytical_review
 msgid "Analytical Review"
-msgstr ""
+msgstr "分析レビュー"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_inventory_analytical_review
 msgid "Analyze the change in assets between year N and year N-1."
-msgstr ""
+msgstr "年 N と年 N-1 の間の資産の変動を分析します。"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_revenue_receivables_review
 msgid ""
 "Analyze the change in revenue and trade receivables between year N and year "
 "N-1."
-msgstr ""
+msgstr "年 N と年 N-1 の間の売上高および売掛金の変動を分析します。"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_fixed_assets_review
 msgid ""
 "Analyze the evolution of fixed assets and depreciation between N and N-1."
-msgstr ""
+msgstr "年 N と年 N-1 の間の固定資産と減価償却の推移を分析します。"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_mail_compose_message__account_reports_annotation_date
 #: model:ir.model.fields,field_description:account_reports.field_mail_scheduled_message__account_reports_annotation_date
 msgid "Annotated For"
-msgstr ""
+msgstr "注釈対象日"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/mail/message_patch.xml:0
 msgid "Annotated for"
-msgstr ""
+msgstr "注釈対象"
 
 #. module: account_reports
 #: model:account.return.type,name:account_reports.annual_corporate_tax_return_type
@@ -1039,12 +1073,12 @@ msgstr "年次"
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check__result__anomaly
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_search_view
 msgid "Anomaly"
-msgstr ""
+msgstr "異常"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check_template__country_ids
 msgid "Applicable Countries"
-msgstr ""
+msgstr "適用国"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1060,20 +1094,20 @@ msgstr "承認者:"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__approver_supervisor_ids
 msgid "Approvers and Supervisor"
-msgstr ""
+msgstr "承認者および上司"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 msgid "Archive"
-msgstr ""
+msgstr "アーカイブ"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_search_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_kanban_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_search_view
 msgid "Archived"
-msgstr ""
+msgstr "アーカイブ済"
 
 #. module: account_reports
 #. odoo-python
@@ -1090,7 +1124,7 @@ msgstr "昇順"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_audit_assets_listing
 msgid "Assets Listing"
-msgstr ""
+msgstr "固定資産一覧"
 
 #. module: account_reports
 #: model:account.report.column,name:account_reports.aged_payable_report_period0
@@ -1135,43 +1169,43 @@ msgstr "監査"
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_account_balances_search_view
 msgid "Audit Accounts"
-msgstr ""
+msgstr "監査対象勘定科目"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_balance_show_warning
 msgid "Audit Balance Show Warning"
-msgstr ""
+msgstr "監査残高：警告を表示"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_previous_balance_show_warning
 msgid "Audit Previous Balance Show Warning"
-msgstr ""
+msgstr "前期残高の監査：警告を表示"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_status
 msgid "Audit Status"
-msgstr ""
+msgstr "監査ステータス"
 
 #. module: account_reports
 #. odoo-javascript
 #: code:addons/account_reports/static/src/components/account_return/widgets/account_audit_balance_clickable_char_field.xml:0
 msgid "Audit account"
-msgstr ""
+msgstr "勘定科目を監査"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_type__auto_generate
 msgid "Auto Generated"
-msgstr ""
+msgstr "自動生成"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_search_view
 msgid "Automated"
-msgstr ""
+msgstr "自動"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_check_template_form_view
 msgid "Automated Checks"
-msgstr ""
+msgstr "自動チェック"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__available_return_type_ids
@@ -1216,7 +1250,7 @@ msgstr "残高"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_account__audit_previous_balance
 msgid "Balance N-1"
-msgstr ""
+msgstr "前期残高"
 
 #. module: account_reports
 #: model:account.report,name:account_reports.balance_sheet
@@ -1274,17 +1308,17 @@ msgstr "残高税当座勘定(売掛金)"
 #: model:ir.embedded.actions,name:account_reports.account_audit_embedded_action_account_balances_view
 #: model_terms:ir.ui.view,arch_db:account_reports.account_audit_kanban_view
 msgid "Balances"
-msgstr ""
+msgstr "残高"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_balances_count
 msgid "Balances Count"
-msgstr ""
+msgstr "残高数"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_bank_fees_analytical_review
 msgid "Bank Fees Analytical Review"
-msgstr ""
+msgstr "銀行手数料の分析レビュー"
 
 #. module: account_reports
 #. odoo-python
@@ -1312,12 +1346,12 @@ msgstr "銀行勘定調整レポートカスタムハンドラー"
 #. module: account_reports
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__model__account_bank_statement_line
 msgid "Bank Statement Line"
-msgstr ""
+msgstr "銀行取引明細書内容"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_bank_statements
 msgid "Bank Statements"
-msgstr ""
+msgstr "銀行取引明細書"
 
 #. module: account_reports
 #: model:account.report.line,name:account_reports.account_financial_report_bank_view0
@@ -1402,6 +1436,9 @@ msgid ""
 "By default, Odoo applies its own deadline for returns (shown as 0). Entering "
 "a value here will override it and be used as the new deadline."
 msgstr ""
+"デフォルトでは、Odooによって申告の期限(0 "
+"と表示)が自動的に適用されます。ここに値を入力すると、その期限が上書きされ、新"
+"たな締切日として使用されます。"
 
 #. module: account_reports
 #. odoo-python
@@ -1516,7 +1553,7 @@ msgstr "入金"
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_cash_inventory_reconciliation
 msgid "Cash inventory reconciliation"
-msgstr ""
+msgstr "現金残高の照合"
 
 #. module: account_reports
 #. odoo-python
@@ -1555,7 +1592,7 @@ msgstr "余裕金"
 #: model:ir.model.fields,field_description:account_reports.field_account_return_creation_wizard__category
 #: model_terms:ir.ui.view,arch_db:account_reports.account_return_type_search_view
 msgid "Category"
-msgstr ""
+msgstr "カテゴリ"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_account_change_lock_date
@@ -1573,7 +1610,7 @@ msgstr "チャター"
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check__type__check
 #: model:ir.model.fields.selection,name:account_reports.selection__account_return_check_template__type__check
 msgid "Check"
-msgstr ""
+msgstr "チェック"
 
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return_check__code
@@ -1590,19 +1627,20 @@ msgstr "取引先Eメール確認"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Check State"
-msgstr ""
+msgstr "ステータスをチェック"
 
 #. module: account_reports
 #: model:ir.actions.act_window,name:account_reports.action_view_account_return_check_templates
 msgid "Check Templates"
-msgstr ""
+msgstr "チェックテンプレート"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_aged_payable_review
 msgid ""
 "Check for payables overdue by more than 60 days and validate that all "
 "amounts due are properly recorded."
-msgstr ""
+msgstr "60日を超えて支払期限を過ぎた買掛金を確認し、すべての未払金が正しく記録されて"
+"いることを検証します。"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1620,18 +1658,18 @@ msgstr "検査"
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__check_count
 msgid "Checks Count"
-msgstr ""
+msgstr "チェック数"
 
 #. module: account_reports
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Checks Validated"
-msgstr ""
+msgstr "チェックの検証完了"
 
 #. module: account_reports
 #: model:account.return.check.template,name:account_reports.account_return_check_template_clear_internal_transfer_account
 msgid "Clear Internal Transfer Accounts"
-msgstr ""
+msgstr "内部振替勘定のクリア"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.view_account_report_file_download_error_wizard_form
@@ -1682,7 +1720,7 @@ msgstr "会社%s用に期末仕訳が削除されました"
 #. odoo-python
 #: code:addons/account_reports/models/account_return.py:0
 msgid "Closing entry posted and lock date applied."
-msgstr ""
+msgstr "締め仕訳が記帳され、ロック日が適用されました。"
 
 #. module: account_reports
 #. odoo-python
@@ -1703,7 +1741,8 @@ msgstr "コード："
 msgid ""
 "Collect missing bank statements and reconcile them with internal records, "
 "resolving any discrepancies."
-msgstr ""
+msgstr "銀行明細が社内の記録と一致しているかを確認するチェックテンプレートです。不一"
+"致がある場合は色分けして表示されます。"
 
 #. module: account_reports
 #: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
@@ -1784,7 +1823,8 @@ msgstr ""
 msgid ""
 "Compare the general ledger cash account with the physical cash inventory "
 "provided by the client. Investigate and explain any discrepancies."
-msgstr ""
+msgstr "総勘定元帳の現金勘定と、顧客が提示した実際の現金残高を照合し、不一致があれば"
+"調査して説明してください。"
 
 #. module: account_reports
 #. odoo-javascript
@@ -1797,7 +1837,8 @@ msgstr "比較"
 msgid ""
 "Compile a complete list of all guarantees received or granted (pledges, "
 "mortgages, collateral)."
-msgstr ""
+msgstr "受け入れた、または提供したすべての保証(誓約、抵当権、担保)の一覧を作成してく"
+"ださい。"
 
 #. module: account_reports
 #. odoo-python
@@ -1808,28 +1849,30 @@ msgstr "必要な手動調整および内部チェックをすべて完了して
 #. module: account_reports
 #: model:ir.model.fields,field_description:account_reports.field_account_return__audit_balances_completed_count
 msgid "Completed Balances Count"
-msgstr ""
+msgstr "完了した残高の件数"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_analytical_review
 msgid ""
 "Conduct a comparative account review to identify key variances, analyze "
 "trends, and assess performance versus prior periods."
-msgstr ""
+msgstr "主要な差異を特定し、傾向を分析し、過去の期間と比較して業績を評価するために、"
+"勘定科目の比較レビューを実施してください。"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_trade_payables_analytical_review
 msgid ""
 "Conduct a year-over-year analysis of trade payables and explain significant "
 "changes."
-msgstr ""
+msgstr "買掛金の前年比分析を行い、重要な変動について説明してください。"
 
 #. module: account_reports
 #: model:account.return.check.template,description:account_reports.account_return_check_template_bank_fees_analytical_review
 msgid ""
 "Conduct an analytical review of banking fees. Ensure consistent accounting "
 "treatment and explain major changes."
-msgstr ""
+msgstr "銀行手数料の分析的レビューを実施し、会計処理の一貫性を確保するとともに、主な"
+"変動について説明してください。"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_config_settings
@@ -1852,7 +1895,7 @@ msgstr "税勘定を設定"
 msgid ""
 "Confirm proper classification, fair value measurement, and disposal "
 "treatment of marketable securities."
-msgstr ""
+msgstr "有価証券の適切な区分、時価評価、および処分処理を確認してください。"
 
 #. module: account_reports
 #: model:ir.model,name:account_reports.model_res_partner
