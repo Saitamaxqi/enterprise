@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.addons.l10n_ch_hr_payroll_account.tests.swissdec_common import TestSwissdecCommon
+from odoo.addons.l10n_ch_hr_payroll.tests.swissdec_common import TestSwissdecCommon
 from odoo.tests.common import tagged
 from freezegun import freeze_time
 

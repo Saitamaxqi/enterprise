@@ -61,13 +61,8 @@ class HrPayslip(models.Model):
                 all_payslips |= run.slip_ids
 
         # A payslip need to have a validated state and not an accounting move.
-        payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'validated' and not slip.move_id)
+        payslips_to_post = all_payslips.filtered(lambda slip: slip.state == 'validated' and not slip.move_id and slip.struct_id.journal_id)
 
-        # Check that a journal exists on all the structures
-        structures_no_journal = payslips_to_post.struct_id.filtered(lambda s: not s.journal_id)
-        if structures_no_journal:
-            raise ValidationError(self.env._('Some payroll structures have no account journal defined on it: %s',
-                                             ', '.join(structures_no_journal.mapped('name'))))
 
         # Map all payslips by structure journal and pay slips month.
         # Case 1: Batch all the payslips together -> {'journal_id': {'month': slips}}

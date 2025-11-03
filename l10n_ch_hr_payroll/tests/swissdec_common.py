@@ -5,9 +5,10 @@ import logging
 from dateutil.relativedelta import relativedelta
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.tests.common import tagged
+from odoo.tests.common import tagged, TransactionCase
 from odoo.tools import file_open
 from odoo import Command
+from odoo.tests import HttpCase, tagged, TransactionCase
 
 import json
 from datetime import datetime, date
@@ -862,8 +863,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
                     'country_id': cls.env.ref('base.ch').id,
                 })
                 cls.env['hr.rule.parameter.value'].create({
-                    'parameter_value': json.load(file_open(f'l10n_ch_hr_payroll_account/tests/data/is_rates/{file_name}')),
-                    'rule_parameter_id': rule_parameter.id,
+                    'parameter_value': json.load(file_open(f'l10n_ch_hr_payroll/tests/data/is_rates/{file_name}')),                    'rule_parameter_id': rule_parameter.id,
                     'date_from': date(2021, 1, 1),
                 })
             c_r = {
@@ -2608,6 +2608,9 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
             'l10n_ch_30_day_method': True
         })
 
+        cls.env.user.company_ids |= cls.muster_ag_company
+        cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.muster_ag_company.ids))
+
         with patch.object(cls.env.registry['l10n.ch.employee.yearly.values'], '_generate_certificate_uuid', lambda self: "#DOC-ID"):
             mapped_declarations = cls._l10n_ch_generate_swissdec_demo_data(cls.muster_ag_company)
         for indentifier, declaration in mapped_declarations.items():
@@ -2626,7 +2629,7 @@ class TestSwissdecCommon(AccountTestInvoicingCommon):
             return data
 
     def _compare_with_truth_base(self, declaration_type, identifier, generated_dict):
-        truth_base = json.load(file_open(f'l10n_ch_hr_payroll_account/tests/data/declaration_truth_base/{declaration_type}.json'))
+        truth_base = json.load(file_open(f'l10n_ch_hr_payroll/tests/data/declaration_truth_base/{declaration_type}.json'))
         truth_dict = truth_base.get(identifier)
 
         json_formated = json.loads(json.dumps(generated_dict))
