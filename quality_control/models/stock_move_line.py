@@ -99,6 +99,7 @@ class StockMoveLine(models.Model):
             'picking_id': self.picking_id.id,
             'move_line_id': self.id,
             'lot_name': self.lot_name,
+            'company_id': self.company_id.id,
         }
 
     def _get_quality_points_all_products(self, quality_points_by_product_picking_type):

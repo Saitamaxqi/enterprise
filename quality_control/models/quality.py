@@ -172,6 +172,7 @@ class QualityPoint(models.Model):
                     'measure_on': point.measure_on,
                     'team_id': point.team_id.id,
                     'product_id': product.id,
+                    'company_id': company_id,
                 })
                 quality_points_list.append(point_key)
 

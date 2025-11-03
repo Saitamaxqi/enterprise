@@ -1332,6 +1332,48 @@ class TestQualityCheck(TestQualityCommon):
             {'quality_state': 'pass', 'product_id': self.product.id, 'qty_line': 2},
         ])
 
+    def test_quality_check_creation_multi_company(self):
+        """
+        Test confirming a new delivery when the picking and environment company
+        differ. Test that the quality check can be created by using the
+        picking's company.
+        """
+        out_picking_type = self.env['stock.picking.type'].search([('company_id', '=', self.env.company.id), ('code', '=', 'outgoing')], limit=1)
+        self.env['quality.point'].create([
+            {
+                'title': "Delivery QCP",
+                'picking_type_ids': out_picking_type.ids,
+            },
+            {
+                'measure_on': 'move_line',
+                'title': "Delivery QCP",
+                'picking_type_ids': out_picking_type.ids,
+            },
+        ])
+        customer_location = self.env['stock.location'].search([('usage', '=', 'customer')], limit=1)
+        picking_out = self.env['stock.picking'].create({
+            'picking_type_id': out_picking_type.id,
+            'partner_id': self.partner_id,
+            'location_id': out_picking_type.default_location_src_id.id,
+            'location_dest_id': customer_location.id,
+            'move_ids': [Command.create({
+                'product_id': self.product.id,
+                'product_uom_qty': 2,
+                'product_uom': self.product.uom_id.id,
+                'location_id': out_picking_type.default_location_src_id.id,
+                'location_dest_id': customer_location.id,
+            })],
+        })
+        # Force env.company to be different from the picking's company
+        new_company = self.env['res.company'].create({
+            'name': "New Company",
+        })
+        picking_out.with_company(new_company).action_confirm()
+        self.assertRecordValues(picking_out, [{
+            'state': 'assigned', 'quality_check_todo': True,
+        }])
+        self.assertTrue(picking_out.check_ids)
+
     def test_receipt_validation_triggers_serial_number_label_print(self):
         """
         Ensure that the 'do_multi_print' action is trigger after quality check wizard validation
