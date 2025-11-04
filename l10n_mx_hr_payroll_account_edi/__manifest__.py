@@ -21,6 +21,7 @@
         'views/hr_employee_views.xml',
         'views/hr_payroll_structure_views.xml',
         'views/hr_payslip_views.xml',
+        'views/hr_payslip_run_views.xml',
         'views/hr_salary_rule_views.xml',
         'views/hr_work_entry_type_views.xml',
         'views/l10n_mx_concept_views.xml',
@@ -31,6 +32,10 @@
         'data/l10n_mx_hr_payroll_account_edi_demo.xml',
     ],
     'assets': {
+        'web.assets_backend': [
+            'l10n_mx_hr_payroll_account_edi/static/src/**/*',
+            ('remove', 'l10n_mx_hr_payroll_account_edi/static/src/scss/*.scss'),
+        ],
         'web.report_assets_common': [
             'l10n_mx_hr_payroll_account_edi/static/src/scss/*.scss',
         ]
