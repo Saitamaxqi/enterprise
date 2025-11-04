@@ -50,7 +50,7 @@ patch(OrderPaymentValidation.prototype, {
                 try {
                     this.pos.ui.block();
                     await this.pos.finishShortTransaction(this.order);
-                    await super.finalizeValidation(...arguments);
+                    return await super.finalizeValidation(...arguments);
                 } catch (error) {
                     if (error.status === 0) {
                         this.pos.showFiskalyNoInternetConfirmPopup(this);
@@ -67,10 +67,10 @@ patch(OrderPaymentValidation.prototype, {
                 this.order.isTransactionFinished() ||
                 this.order.uiState.fiskalyServerError
             ) {
-                await super.finalizeValidation(...arguments);
+                return await super.finalizeValidation(...arguments);
             }
         } else {
-            await super.finalizeValidation(...arguments);
+            return await super.finalizeValidation(...arguments);
         }
     },
 });

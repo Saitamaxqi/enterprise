@@ -6,6 +6,7 @@ from odoo.addons.point_of_sale.tests.test_frontend import TestPointOfSaleHttpCom
 from odoo import Command, fields
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.point_of_sale.tests.test_generic_localization import TestGenericLocalization
+from odoo.tools import mute_logger
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -337,6 +338,15 @@ class TestUi(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
         order = self.env["pos.order"].sync_from_ui([order_data])["pos.order"][0]
         usage = order['l10n_mx_edi_usage']
         self.assertEqual(usage, "D10")
+
+    @mute_logger('odoo.http')
+    def test_invoice_to_general_public(self):
+        self.partner_mx.write({
+            "zip": "",
+            "country_id": ""
+        })
+        self.main_pos_config.with_user(self.pos_user).open_ui()
+        self.start_tour("/pos/ui?config_id=%d" % self.main_pos_config.id, "tour_invoice_to_general_public", login="pos_user")
 
 
 @tagged('post_install', '-at_install', 'post_install_l10n')
