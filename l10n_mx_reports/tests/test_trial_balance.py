@@ -261,6 +261,8 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="501.01" NumCta="501.01" Desc="Cost of sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="503" NumCta="503" Desc="Returns, discounts or rebates on purchases" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="503.01" NumCta="503.01" Desc="Returns, discounts or rebates on purchases" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="505" NumCta="505" Desc="Cost of fixed assets" Nivel="1" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="505.01" NumCta="505.01" Desc="Cost of fixed asset sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601" NumCta="601" Desc="Overheads" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.01" NumCta="601.01" Desc="Wages and salaries" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.06" NumCta="601.06" Desc="Holidays" Nivel="2" Natur="D"/>
@@ -394,6 +396,8 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="501.01" NumCta="501.01" Desc="Cost of sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="503" NumCta="503" Desc="Returns, discounts or rebates on purchases" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="503.01" NumCta="503.01" Desc="Returns, discounts or rebates on purchases" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="505" NumCta="505" Desc="Cost of fixed assets" Nivel="1" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="505.01" NumCta="505.01" Desc="Cost of fixed asset sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601" NumCta="601" Desc="Overheads" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.01" NumCta="601.01" Desc="Wages and salaries" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.06" NumCta="601.06" Desc="Holidays" Nivel="2" Natur="D"/>
