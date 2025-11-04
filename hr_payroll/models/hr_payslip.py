@@ -1388,7 +1388,7 @@ class HrPayslip(models.Model):
         return '\n'.join([
             f' • {slip.name}: {issue["message"]}'
             for slip in self
-            for issue in slip.issues.values() if issue['level'] == 'danger'
+            for issue in (slip.issues or {}).values() if issue['level'] == 'danger'
         ])
 
     @api.depends('date_from', 'date_to', 'struct_id')
