@@ -243,15 +243,15 @@ class ResPartner(models.Model):
             default=self.env['account.move.line'],
             key=lambda l: l.amount_residual,
         )
-        return (
+        candidates = [
             (responsible_type == 'salesperson' and (
                 all_aml_responsible if multiple_responsible else max_amount_aml.move_id.invoice_user_id
-            ))
-            or self.followup_responsible_id
-            or self.user_id
-            or max_amount_aml.move_id.invoice_user_id
-            or super()._get_followup_responsible()
-        )
+            )),
+            self.followup_responsible_id,
+            self.user_id,
+            max_amount_aml.move_id.invoice_user_id,
+        ]
+        return next((u for u in candidates if u and u.filtered('active')), super()._get_followup_responsible())
 
     def _get_all_followup_contacts(self):
         """ Followup contacts are defined as billing address and defaults to
