@@ -147,7 +147,7 @@
                             }"/>
                         <field name="country_id" invisible="1"/>
                         <field name="country_code" invisible="1"/>
-                        <field name="payslip_run_id" string="Pay Run" readonly="state != 'draft'" placeholder="Off-Cycle"/>
+                        <field name="payslip_run_id" string="Pay Run" readonly="state != 'draft'" placeholder="Off-Cycle" context="{'default_date_start': date_from, 'default_date_end': date_to}"/>
                         <field name="struct_id" required="1" readonly="state in ['cancel', 'validated', 'paid']"
                             options="{'no_open': True, 'no_create': True, 'no_create_edit': True}"
                             groups="!hr_payroll.group_hr_payroll_manager"/>
