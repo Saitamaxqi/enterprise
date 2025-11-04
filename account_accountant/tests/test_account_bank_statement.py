@@ -2483,8 +2483,11 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         self.assertTrue(test_currency.active)
 
     def test_reconciliation_with_payment_terms(self):
-        """
-        Test the scenario where a transaction is already fully consumed before the last installment of the payment term.
+        """ Test the scenario where a transaction is already fully consumed before the last installment of the payment term.
+        When adding the invoice lines from the bank reconciliation widget, they should all be added despite the lower amount
+        on the statement line.
+        When adding the statement line from the invoice, the reconciliation should stop if the statement line amount is consumed,
+        partially paying the invoice.
         """
         payment_term = self.env['account.payment.term'].create({
             'name': 'Test payment term',
@@ -2509,6 +2512,7 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
                 }) for amount, nb_days in [(50.0, 0), (50.0, 30)]
             ],
         })
+        suspense_account = self.company_data['default_journal_bank'].suspense_account_id
 
         # Case 1: No installments
         statement_line = self._create_st_line(amount=-90, update_create_date=False)
@@ -2520,18 +2524,49 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
 
         # Case 2: 2 installments
+        ## Case 2.1: Adding from the bank rec widget
         statement_line = self._create_st_line(amount=-90, update_create_date=False)
         move_line_1 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term_2.id, invoice_line_ids=[{'price_unit': 200.0}])
         statement_line.set_line_bank_statement_line(move_line_1.ids)
         self.assertRecordValues(statement_line.line_ids, [
             {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': True},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': True},
+            {'account_id': suspense_account.id, 'amount_currency': -110.0, 'currency_id': self.company_data['currency'].id, 'balance': -110.0, 'reconciled': False},
+        ])
+        ## Case 2.2: Adding from the invoice
+        statement_line = self._create_st_line(amount=-90, update_create_date=False)
+        move_line_1 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term_2.id, invoice_line_ids=[{'price_unit': 200.0}])
+        move_line_1.move_id.js_assign_outstanding_line(statement_line.line_ids[0].id)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
             {'account_id': move_line_1.account_id.id, 'amount_currency': 90.0, 'currency_id': self.company_data['currency'].id, 'balance': 90.0, 'reconciled': True},
+        ])
+        ## Case 2.3: Adding from the invoice, with just enough for the first installment to be fully paid
+        statement_line = self._create_st_line(amount=-100, update_create_date=False)
+        move_line_1 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term_2.id, invoice_line_ids=[{'price_unit': 200.0}])
+        move_line_1.move_id.js_assign_outstanding_line(statement_line.line_ids[0].id)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -100.0, 'currency_id': self.company_data['currency'].id, 'balance': -100.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 100.0, 'currency_id': self.company_data['currency'].id, 'balance': 100.0, 'reconciled': True},
         ])
 
         # Case 3: 3 installments
+        ## Case 3.1: Adding from the bank rec widget
         statement_line = self._create_st_line(amount=-90, update_create_date=False)
         move_line_1 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 200.0}])
         statement_line.set_line_bank_statement_line(move_line_1.ids)
+        self.assertRecordValues(statement_line.line_ids, [
+            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_1.account_id.id, 'amount_currency': 66.68, 'currency_id': self.company_data['currency'].id, 'balance': 66.68, 'reconciled': True},
+            {'account_id': suspense_account.id, 'amount_currency': -110.0, 'currency_id': self.company_data['currency'].id, 'balance': -110.0, 'reconciled': False},
+        ])
+        ## Case 3.2: Adding from the invoice
+        statement_line = self._create_st_line(amount=-90, update_create_date=False)
+        move_line_1 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 200.0}])
+        move_line_1.move_id.js_assign_outstanding_line(statement_line.line_ids[0].id)
         self.assertRecordValues(statement_line.line_ids, [
             {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
             {'account_id': move_line_1.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
@@ -2539,9 +2574,21 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
 
         # Case 4:  3 installments with foreign currency on invoice
+        ## Case 4.1: Adding from the bank rec widget
         statement_line_2 = self._create_st_line(amount=-90, update_create_date=False)
         move_line_2 = self._create_invoice_line('in_invoice', currency_id=self.other_currency.id, invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 400.0}])
         statement_line_2.set_line_bank_statement_line(move_line_2.ids)
+        self.assertRecordValues(statement_line_2.line_ids, [
+            {'account_id': statement_line_2.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_2.account_id.id, 'amount_currency': 133.36, 'currency_id': self.other_currency.id, 'balance': 66.68, 'reconciled': True},
+            {'account_id': suspense_account.id, 'amount_currency': -110.0, 'currency_id': self.company_data['currency'].id, 'balance': -110.0, 'reconciled': False},
+        ])
+        ## Case 4.2: Adding from the invoice
+        statement_line_2 = self._create_st_line(amount=-90, update_create_date=False)
+        move_line_2 = self._create_invoice_line('in_invoice', currency_id=self.other_currency.id, invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 400.0}])
+        move_line_2.move_id.js_assign_outstanding_line(statement_line_2.line_ids[0].id)
         self.assertRecordValues(statement_line_2.line_ids, [
             {'account_id': statement_line_2.journal_id.default_account_id.id, 'amount_currency': -90.0, 'currency_id': self.company_data['currency'].id, 'balance': -90.0, 'reconciled': False},
             {'account_id': move_line_2.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
@@ -2555,9 +2602,22 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
             'type': 'bank',
             'currency_id': self.other_currency.id,
         })
+        suspense_account_other = new_journal.suspense_account_id
+        ## Case 5.1: Adding from the bank rec widget
         statement_line_3 = self._create_st_line(amount=-180, journal_id=new_journal.id, update_create_date=False)
         move_line_3 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 200.0}])
         statement_line_3.set_line_bank_statement_line(move_line_3.ids)
+        self.assertRecordValues(statement_line_3.line_ids, [
+            {'account_id': statement_line_3.journal_id.default_account_id.id, 'amount_currency': -180.0, 'currency_id': self.other_currency.id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_3.account_id.id, 'amount_currency': 66.68, 'currency_id': self.company_data['currency'].id, 'balance': 66.68, 'reconciled': True},
+            {'account_id': suspense_account_other.id, 'amount_currency': -220.0, 'currency_id': self.other_currency.id, 'balance': -110.0, 'reconciled': False},
+        ])
+        ## Case 5.2: Adding from the invoice
+        statement_line_3 = self._create_st_line(amount=-180, journal_id=new_journal.id, update_create_date=False)
+        move_line_3 = self._create_invoice_line('in_invoice', invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 200.0}])
+        move_line_3.move_id.js_assign_outstanding_line(statement_line_3.line_ids[0].id)
         self.assertRecordValues(statement_line_3.line_ids, [
             {'account_id': statement_line_3.journal_id.default_account_id.id, 'amount_currency': -180.0, 'currency_id': self.other_currency.id, 'balance': -90.0, 'reconciled': False},
             {'account_id': move_line_3.account_id.id, 'amount_currency': 66.66, 'currency_id': self.company_data['currency'].id, 'balance': 66.66, 'reconciled': True},
@@ -2565,9 +2625,21 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
         ])
 
         # Case 6: 3 installments with foreign currency on both invoice and statement line
+        ## Case 6.1: Adding from the bank rec widget
         statement_line_4 = self._create_st_line(amount=-180, journal_id=new_journal.id, update_create_date=False)
         move_line_4 = self._create_invoice_line('in_invoice', currency_id=self.other_currency.id, invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 400.0}])
         statement_line_4.set_line_bank_statement_line(move_line_4.ids)
+        self.assertRecordValues(statement_line_4.line_ids, [
+            {'account_id': statement_line_4.journal_id.default_account_id.id, 'amount_currency': -180.0, 'currency_id': self.other_currency.id, 'balance': -90.0, 'reconciled': False},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
+            {'account_id': move_line_4.account_id.id, 'amount_currency': 133.36, 'currency_id': self.other_currency.id, 'balance': 66.68, 'reconciled': True},
+            {'account_id': suspense_account_other.id, 'amount_currency': -220.0, 'currency_id': self.other_currency.id, 'balance': -110.0, 'reconciled': False},
+        ])
+        ## Case 6.2: Adding from the invoice
+        statement_line_4 = self._create_st_line(amount=-180, journal_id=new_journal.id, update_create_date=False)
+        move_line_4 = self._create_invoice_line('in_invoice', currency_id=self.other_currency.id, invoice_payment_term_id=payment_term.id, invoice_line_ids=[{'price_unit': 400.0}])
+        move_line_4.move_id.js_assign_outstanding_line(statement_line_4.line_ids[0].id)
         self.assertRecordValues(statement_line_4.line_ids, [
             {'account_id': statement_line_4.journal_id.default_account_id.id, 'amount_currency': -180.0, 'currency_id': self.other_currency.id, 'balance': -90.0, 'reconciled': False},
             {'account_id': move_line_4.account_id.id, 'amount_currency': 133.32, 'currency_id': self.other_currency.id, 'balance': 66.66, 'reconciled': True},
@@ -2576,24 +2648,6 @@ class TestAccountBankStatement(TestBankRecWidgetCommon):
 
         for move in (move_line_1 + move_line_2 + move_line_3 + move_line_4).mapped('move_id'):
             self.assertEqual(move.payment_state, 'partial')
-
-    def test_reco_multiple_invoices_with_smaller_transaction_amount(self):
-        statement_line = self._create_st_line(amount=90, update_create_date=False)
-        move_line_1 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 66.66}])
-        move_line_2 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 66.66}])
-        move_line_3 = self._create_invoice_line('out_invoice', invoice_line_ids=[{'price_unit': 66.68}])
-        statement_line.set_line_bank_statement_line((move_line_1 + move_line_2 + move_line_3).ids)
-        self.assertRecordValues(statement_line.line_ids, [
-            {'account_id': statement_line.journal_id.default_account_id.id, 'amount_currency': 90.0, 'currency_id': self.company_data['currency'].id, 'balance': 90.0, 'reconciled': False},
-            {'account_id': move_line_1.account_id.id, 'amount_currency': -66.66, 'currency_id': self.company_data['currency'].id, 'balance': -66.66, 'reconciled': True},
-            {'account_id': move_line_1.account_id.id, 'amount_currency': -23.34, 'currency_id': self.company_data['currency'].id, 'balance': -23.34, 'reconciled': True},
-        ])
-
-        self.assertRecordValues((move_line_1 + move_line_2 + move_line_3).mapped('move_id'), [
-            {'payment_state': 'paid'},
-            {'payment_state': 'partial'},
-            {'payment_state': 'not_paid'},
-        ])
 
     def test_create_rule_during_reconcile_with_previous_statements(self):
         """

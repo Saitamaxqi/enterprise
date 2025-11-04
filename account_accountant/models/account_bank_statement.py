@@ -1253,6 +1253,8 @@ class AccountBankStatementLine(models.Model):
 
         new_lines = []
         has_exchange_diff = False
+        stop_reco_at_first_partial = self.env.context.get('stop_reco_at_first_partial')
+        partial_applied = False
         for move_line in move_lines:
             exchange_diff_balance = self._lines_get_account_balance_exchange_diff(move_line.currency_id, move_line.amount_residual, move_line.amount_residual_currency)
             current_balance = -(move_line.amount_residual + exchange_diff_balance)
@@ -1265,8 +1267,8 @@ class AccountBankStatementLine(models.Model):
             new_line_balance = current_balance
             new_amount_currency = -move_line.amount_residual_currency
 
-            # Partial amount will be calculated only on the last invoice of the one selected by the user.
-            if move_line == move_lines[-1]:
+            # Partial amount will be calculated only on the last invoice of the one selected by the user unless stop_reco_at_first_partial is present in context.
+            if move_line == move_lines[-1] or stop_reco_at_first_partial:
                 partial_amounts = (
                     self._get_partial_amounts(current_balance, move_line, open_amount_currency, open_balance)
                     if (company_currency.compare_amounts(open_balance, 0) < 0 if company_currency.compare_amounts(company_amount, 0) > 0 else company_currency.compare_amounts(open_balance, 0) > 0)
@@ -1275,6 +1277,7 @@ class AccountBankStatementLine(models.Model):
                 if partial_amounts and not company_currency.is_zero(partial_amounts['partial_balance']):
                     new_line_balance = partial_amounts['partial_balance']
                     new_amount_currency = partial_amounts['partial_amount_currency']
+                    partial_applied = True
 
             new_lines_to_add = [move_line._get_aml_values(
                 balance=new_line_balance,
@@ -1295,7 +1298,8 @@ class AccountBankStatementLine(models.Model):
                 open_amount_currency += current_amount_currency - total_amount_currency
 
             new_lines.extend(lines_with_epd or new_lines_to_add)
-            self.move_id._compute_checked()  # to add to compute dependencies
+            if stop_reco_at_first_partial and (partial_applied or company_currency.is_zero(open_balance)):
+                break
 
         self.with_context(
             no_exchange_difference_no_recursive=not has_exchange_diff,
@@ -1307,8 +1311,9 @@ class AccountBankStatementLine(models.Model):
             return (
                 currency.compare_amounts(open_amount, 0) > 0
                 and currency.compare_amounts(current_amount, 0) > 0
+                and currency.compare_amounts(current_amount, open_amount) > 0
             )
-        transaction_amount, transaction_currency, journal_amount, _journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
+        transaction_amount, transaction_currency, _journal_amount, _journal_currency, company_amount, company_currency = self._get_accounting_amounts_and_currencies()
         has_enough_comp_debit = has_enough(company_currency, open_balance, current_balance)
         has_enough_comp_credit = has_enough(company_currency, -open_balance, -current_balance)
         current_amount_currency = -move_line.amount_residual_currency
@@ -1317,15 +1322,11 @@ class AccountBankStatementLine(models.Model):
 
         tolerance = self._get_payment_tolerance()
         if move_line.currency_id == transaction_currency and (has_enough_curr_debit or has_enough_curr_credit):
-            new_amount_currency = current_amount_currency - open_amount_currency
-            if has_enough_curr_debit and move_line.currency_id.compare_amounts(current_amount_currency, open_amount_currency) < 0 \
-                or has_enough_curr_credit and move_line.currency_id.compare_amounts(-current_amount_currency, -open_amount_currency) < 0:
-                new_amount_currency = -(current_amount_currency + journal_amount)
             new_amount_currency = (
                 current_amount_currency
                 # If the open amount is small, fully reconcile the move_line and not the transaction
                 if not float_is_zero(tolerance, 6) and move_line.currency_id.compare_amounts(abs(open_amount_currency), tolerance * abs(current_amount_currency)) < 0
-                else new_amount_currency
+                else current_amount_currency - open_amount_currency
             )
             rate = abs(company_amount / transaction_amount) if transaction_amount else 0.0
 
@@ -1337,15 +1338,11 @@ class AccountBankStatementLine(models.Model):
             }
         elif has_enough_comp_debit or has_enough_comp_credit:
             # Compute the new value for balance.
-            balance_after_partial = current_balance - open_balance
-            if has_enough_comp_debit and move_line.currency_id.compare_amounts(current_balance, open_balance) < 0 \
-                or has_enough_comp_credit and move_line.currency_id.compare_amounts(-current_balance, -open_balance) < 0:
-                balance_after_partial = -(current_balance + company_amount)
             balance_after_partial = (
                 current_balance
                 # If the open amount is small, fully reconcile the move_line and not the transaction
                 if not float_is_zero(tolerance, 6) and move_line.currency_id.compare_amounts(abs(open_balance), tolerance * abs(current_balance)) < 0
-                else balance_after_partial
+                else current_balance - open_balance
             )
             # Get the rate of the original journal item.
             rate = move_line.currency_rate
