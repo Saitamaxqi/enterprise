@@ -162,6 +162,7 @@ class DocumentsDocument(models.Model):
             'handler': sudo_self.handler,
             'access_url': sudo_self.access_url,
             'is_favorited': sudo_self.is_favorited,
+            'is_archived': sudo_self.active is False,
             'folder_id': sudo_self.folder_id.id,
             'copy_in_my_drive': self._cannot_create_sibling(),
         }
