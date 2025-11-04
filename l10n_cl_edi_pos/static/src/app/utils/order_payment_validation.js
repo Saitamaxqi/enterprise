@@ -40,7 +40,7 @@ patch(OrderPaymentValidation.prototype, {
                 }
             }
             if (missingFields.length > 0) {
-                this.notification.add(
+                this.pos.notification.add(
                     _t("Please fill out missing fields to proceed: " + missingFields.join(", "))
                 );
                 this.pos.editPartner(partner);
