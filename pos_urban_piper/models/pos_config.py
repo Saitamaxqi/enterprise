@@ -396,6 +396,17 @@ class PosConfig(models.Model):
         except psycopg2.Error:
             pass
 
+    def _reset_urbanpiper_product_linkages(self):
+        """
+        Reset product linkage to Urbanpiper and products become available
+        for syncing again.
+        """
+        if linked_statuses := self.env['product.urban.piper.status'].search([
+            ('config_id', 'in', self.ids),
+            ('is_product_linked', '=', True)
+        ]):
+            linked_statuses.write({'is_product_linked': False})
+
     def get_urban_piper_provider_states(self):
         raw = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.toggle_state') or "{}"
         config_state = json.loads(raw)
