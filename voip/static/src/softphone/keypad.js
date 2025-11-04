@@ -13,7 +13,6 @@ import { rpc } from "@web/core/network/rpc";
 import { useService } from "@web/core/utils/hooks";
 import { htmlJoin } from "@web/core/utils/html";
 import { useDebounced } from "@web/core/utils/timing";
-import { user } from "@web/core/user";
 
 const T9_MAPPING = Object.freeze({
     2: "ABC",
@@ -52,7 +51,6 @@ export class Keypad extends Component {
             model: this.props.state.input.selection,
         });
         this.ui = useService("ui");
-        this.regionNames = new Intl.DisplayNames(user.lang, { type: "region" });
         this.softphone = useService("voip").softphone;
         this.isMobile = isMobileOS();
         useEffect(
@@ -183,11 +181,10 @@ export class Keypad extends Component {
     }
 
     get flagAltLabel() {
-        if (!this.props.state.input.countryCode.iso) {
+        if (!this.props.state.input.country) {
             return "";
         }
-        const country = this.regionNames.of(this.props.state.input.countryCode.iso.toUpperCase());
-        return _t("%(country)s flag", { country });
+        return _t("%(country)s flag", { country: this.props.state.input.country.name });
     }
 
     /** @returns {string} */
@@ -213,7 +210,7 @@ export class Keypad extends Component {
      * @returns {boolean}
      */
     get phoneNumberStartsWithCountryCode() {
-        if (!this.props.state.input.countryCode.itu) {
+        if (!this.props.state.input.country) {
             return false;
         }
         let phoneNumber = this.props.state.input.value.trim();
@@ -224,7 +221,7 @@ export class Keypad extends Component {
         } else {
             return false;
         }
-        return phoneNumber.startsWith(this.props.state.input.countryCode.itu);
+        return phoneNumber.startsWith(this.props.state.input.country.phone_code);
     }
 
     get showOthersButtonText() {
@@ -367,9 +364,11 @@ export class Keypad extends Component {
         if (!phoneNumber.startsWith("00") && !phoneNumber.startsWith("+")) {
             return;
         }
-        this.props.state.input.countryCode = await rpc("/voip/get_country_code", {
+        const { countryId, storeData } = await rpc("/voip/get_country_store", {
             phone_number: phoneNumber,
         });
+        this.voip.store.insert(storeData);
+        this.props.state.input.country = this.voip.store["res.country"].get(countryId) || null;
     }
 }
 

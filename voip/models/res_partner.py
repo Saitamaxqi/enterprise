@@ -120,4 +120,13 @@ class ResPartner(models.Model):
         return Store().add(contacts, self._voip_get_store_fields()).get_result()
 
     def _voip_get_store_fields(self):
-        return ["commercial_company_name", "country_code_from_phone", "email", "function", "is_company", "name", "phone", "t9_name"]
+        return [
+            "commercial_company_name",
+            "email",
+            "function",
+            "is_company",
+            "name",
+            "phone",
+            Store.One("phone_country_id", self.env["res.country"]._voip_get_store_fields()),
+            "t9_name",
+        ]

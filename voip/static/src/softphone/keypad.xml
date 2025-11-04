@@ -19,7 +19,7 @@
             <button t-if="props.state.showMore or props.onClickBack" title="Back" class="btn btn-secondary d-flex p-2" t-on-click="onClickBack">
                 <i class="oi oi-arrow-left" aria-hidden="true"/>
             </button>
-            <img t-if="phoneNumberStartsWithCountryCode and !props.state.showMore" class="o-voip-countryFlag ms-2" t-attf-src="/base/static/img/country_flags/{{ props.state.input.countryCode.iso }}.png" t-att-alt="flagAltLabel"/>
+            <img t-if="phoneNumberStartsWithCountryCode and !props.state.showMore" class="o-voip-countryFlag ms-2" t-attf-src="{{ props.state.input.country.image_url }}" t-att-alt="flagAltLabel"/>
         </div>
         <div class="pb-1">
             <!-- hack: "data-value" is used to reflect input changes in the DOM, so it immediately triggers the "contains" test helper's MutationObserver, speeding up tests -->
@@ -64,11 +64,9 @@
         </t>
         <t t-set-slot="entry" t-slot-scope="slot">
             <t t-set="contact" t-value="slot.item.contact"/>
-            <t t-set="countryCode" t-value="contact.country_code_from_phone"/>
             <t t-set="isFolded" t-value="!contact.eq(voip.softphone.activeRecord)"/>
             <TabEntry
                 avatarUrl="contact.avatarUrl"
-                countryCode="countryCode"
                 title="getTitle(slot.item)"
                 subtitle="getSubtitle(slot.item)"
                 phoneNumber="contact.phone"
@@ -90,11 +88,11 @@
                 </t>
                 <t t-set-slot="info">
                     <p class="mb-0 opacity-75 text-truncate">
-                        <span t-if="countryCode" class="o-voip-countryFlag-wrapper d-inline-block me-1 align-middle">
-                            <img class="o-voip-countryFlag mx-auto" t-attf-src="/base/static/img/country_flags/{{ countryCode }}.png" t-att-alt="flagAlt"/>
+                        <span t-if="contact.phone_country_id?.image_url" class="o-voip-countryFlag-wrapper d-inline-block me-1 align-middle">
+                            <img class="o-voip-countryFlag mx-auto" t-att-src="contact.phone_country_id.image_url" t-att-alt="flagAlt"/>
                         </span>
                         <i t-else="" class="fa fa-phone fa-fw me-1"/>
-                        <span t-att-class="{ 'align-middle': countryCode }" t-esc="contact.phone"/>
+                        <span t-att-class="{ 'align-middle': contact.phone_country_id?.image_url }" t-esc="contact.phone"/>
                     </p>
                 </t>
                 <t t-set-slot="actions">

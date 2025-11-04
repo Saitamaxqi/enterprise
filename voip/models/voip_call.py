@@ -272,12 +272,12 @@ class VoipCall(models.Model):
 
     def _get_voip_store_fields(self):
         return [
-            "country_code_from_phone",
             "create_date",
             "direction",
             "display_name",
             "end_date",
             Store.One("partner_id", self.partner_id._voip_get_store_fields()),
+            Store.One("phone_country_id", self.phone_country_id._voip_get_store_fields()),
             "phone_number",
             "start_date",
             "state",

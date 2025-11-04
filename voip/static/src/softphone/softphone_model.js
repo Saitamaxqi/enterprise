@@ -12,19 +12,6 @@ export class Softphone {
     activeRecord = null;
     dialer = new KeypadModel();
     isDisplayed = false;
-    numpad = {
-        isOpen: false,
-        value: "",
-        selection: {
-            start: 0,
-            end: 0,
-            direction: "none",
-        },
-        countryCode: {
-            iso: "",
-            itu: "",
-        },
-    };
     addressBook = {
         searchInputValue: "",
     };
