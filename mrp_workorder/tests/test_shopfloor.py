@@ -476,7 +476,7 @@ class TestShopFloor(HttpCase):
         })
 
         # Cancel previous MOs and create a new one
-        self.env['mrp.production'].search([]).action_cancel()
+        self.env['mrp.production'].search([('state', 'not in', ('cancel', 'done'))]).action_cancel()
         mo = self.env['mrp.production'].create({
             'name': 'MOBACK',
             'product_id': finished.id,
