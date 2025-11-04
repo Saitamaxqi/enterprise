@@ -2476,6 +2476,19 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
             self.assertIn("550 days 06/30/2025 to 12/31/2026", line['name'])
 
+    def test_subscription_upsell_alternative_invoice(self):
+        self.subscription.action_confirm()
+        self.env['sale.order']._cron_recurring_create_invoice()
+        action = self.subscription.prepare_upsell_order()
+        upsell_so = self.env['sale.order'].browse(action['res_id'])
+        action = upsell_so.create_alternative()
+        alternative_upsell_so = self.env['sale.order'].browse(action['res_id'])
+        alternative_upsell_order_line = alternative_upsell_so.order_line.filtered(lambda line: not line.display_type)
+        for sol in alternative_upsell_order_line:
+            sol.product_uom_qty = 1.0
+        alternative_upsell_so.action_confirm()
+        alternative_upsell_so._create_invoices()
+        self.assertTrue(len(alternative_upsell_so.invoice_ids), "An invoice should have been created for the alternative upsell sale order.")
 
     def test_churn_discount_removal(self):
         """ Test the following flow:

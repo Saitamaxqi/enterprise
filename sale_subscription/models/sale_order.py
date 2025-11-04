@@ -1064,6 +1064,7 @@ class SaleOrder(models.Model):
             'origin_order_id': self.origin_order_id.id,
             'subscription_id': self.subscription_id.id,
             'subscription_state': self.env.context.get('default_subscription_state', '2_renewal'),
+            'next_invoice_date': self.next_invoice_date,
         })
         action = alternative_so._get_associated_so_action()
         action['views'] = [(self.env.ref('sale_subscription.sale_subscription_primary_form_view').id, 'form')]
