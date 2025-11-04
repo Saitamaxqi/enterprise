@@ -19,9 +19,12 @@ class TestQualityRepair(TestRepairCommon):
             'product_id': self.product_storable_lot.id,
             'partner_id': self.res_partner_1.id,
         })
-        repair.action_generate_serial()
+        quant = self.create_quant(self.product_storable_lot, 1)
+        quant.action_apply_inventory()
+        repair.lot_id = quant.lot_id
         repair.action_validate()
-        # Quality check should be created at repair validation
+        self.assertEqual(repair.state, 'confirmed')
+        # Quality check should be created at repair confirmation
         qc = repair.quality_check_ids
         lot_1 = repair.lot_id
         self.assertEqual(len(qc), 1)
