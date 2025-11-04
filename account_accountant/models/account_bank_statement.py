@@ -2,6 +2,7 @@ import logging
 import re
 import string
 
+from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 from itertools import takewhile
 
@@ -824,6 +825,42 @@ class AccountBankStatementLine(models.Model):
                 skip_readonly_check=True,
             ).partner_bank_id = self._find_or_create_bank_account()
 
+        self._post_matching_done_confirmation()
+
+    def _get_last_5_minutes_messages(self, body):
+        self.ensure_one()
+        return self.move_id.message_ids.filtered_domain([
+            ('author_id', '=', self.env.user.partner_id.id),
+            ('create_date', '>=', fields.Datetime.now() - relativedelta(minutes=5)),
+            ('body', 'ilike', body),
+        ])
+
+    def _post_matching_done_confirmation(self):
+        self.ensure_one()
+        if not self.is_reconciled:
+            return
+        if self._get_last_5_minutes_messages(body='Matching done'):
+            return
+
+        body = _("Matching done")
+        if reconcile_model := self.move_id.line_ids.reconcile_model_id:
+            body += _(" - %(reconcile_model_name)s", reconcile_model_name=reconcile_model.name)
+        self.move_id.message_post(
+            body=body,
+            author_id=self.env.user.partner_id.id,
+        )
+
+    def _post_matching_unreconciled(self):
+        self.ensure_one()
+        if not self.is_reconciled:
+            return
+        if self._get_last_5_minutes_messages(body='Matching unreconciled'):
+            return
+        self.move_id.message_post(
+            body=_('Matching unreconciled'),
+            author_id=self.env.user.partner_id.id,
+        )
+
     def _add_move_line_to_statement_line_move(self, lines_to_add):
         """ Adds move lines to the bank statement line and updates the reconciliation.
 
@@ -866,6 +903,7 @@ class AccountBankStatementLine(models.Model):
         suspense_account_id = self.journal_id.suspense_account_id.id
         liquidity_account_id = self.journal_id.default_account_id.id
         if account_move_line.account_id.account_type in {'asset_receivable', 'liability_payable'} or account_move_line.account_id in {suspense_account_id, liquidity_account_id}:
+            self._post_matching_done_confirmation()
             return self.env['account.bank.statement.line']
 
         self._handle_reconciliation_rule(account_move_line, account_id)
@@ -880,6 +918,8 @@ class AccountBankStatementLine(models.Model):
                 ('is_reconciled', '=', False),
                 ('move_id.line_ids.reconcile_model_id', '=', new_rule.id),
             ])
+
+        self._post_matching_done_confirmation()
         return self.env['account.bank.statement.line']
 
     def _handle_reconciliation_rule(self, aml, account_id):
@@ -1365,6 +1405,7 @@ class AccountBankStatementLine(models.Model):
             liquidity_line + other_lines - move_lines_to_remove,
             [],
         )
+        self._post_matching_unreconciled()
         if reco_model_id:
             self._action_manual_reco_model(reco_model_id)
 
