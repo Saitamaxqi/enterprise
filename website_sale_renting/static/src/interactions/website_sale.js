@@ -27,7 +27,7 @@ patch(WebsiteSale.prototype, {
             },
             '.clear-daterange': { 't-on-click': this.onDatePickerClear.bind(this) },
         });
-        this.el.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(el => {
+        this.el.querySelectorAll('[data-bs-toggle="tooltip"].o_rental_info_message').forEach(el => {
             const tooltip = window.Tooltip.getOrCreateInstance(el);
             this.registerCleanup(() => tooltip.dispose());
         });
