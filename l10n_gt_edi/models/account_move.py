@@ -227,7 +227,7 @@ class AccountMove(models.Model):
             'certification_date': values['certification_date'],
         })
         document.attachment_id = self.env['ir.attachment'].sudo().create([{
-            'name': f"{'DEMO' if values['uuid'] == 'DEMO' else 'SAT'}_certificate_{self._l10n_gt_edi_get_name()}.xml",
+            'name': self._l10n_gt_edi_get_sat_xml_name(),
             'res_model': self._name,
             'res_id': self.id,
             'raw': values['certificate'],
@@ -263,6 +263,10 @@ class AccountMove(models.Model):
     def _l10n_gt_edi_get_name(self):
         self.ensure_one()
         return self.name.replace('/', '_')
+
+    def _l10n_gt_edi_get_sat_xml_name(self):
+        self.ensure_one()
+        return f"SAT_certificate_{self._l10n_gt_edi_get_name()}.xml"
 
     def _get_name_invoice_report(self):
         # EXTENDS account
