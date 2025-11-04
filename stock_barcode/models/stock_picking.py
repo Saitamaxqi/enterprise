@@ -208,8 +208,8 @@ class StockPicking(models.Model):
             if parsed_results:
                 # filter with the last feasible rule
                 for result in parsed_results[::-1]:
-                    if result['rule'].type in ('product', 'package', 'lot'):
-                        barcode_type = result['rule'].type
+                    if result['type'] in ('product', 'package', 'lot'):
+                        barcode_type = result['type']
                         break
 
         active_id = self.env.context.get('active_id')

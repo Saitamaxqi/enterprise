@@ -26,13 +26,15 @@ class StockBarcodeController(http.Controller):
         if parsed_results and nomenclature.is_gs1_nomenclature:
             # search with the last feasible rule
             for result in parsed_results[::-1]:
-                if result['rule'].type in ['product', 'package', 'location', 'dest_location']:
-                    barcode_type = result['rule'].type
+                if result['type'] in ['product', 'package', 'location', 'dest_location']:
+                    barcode_type = result['type']
                     break
 
         # Alias support
         elif parsed_results:
-            barcode = parsed_results.get('code', barcode)
+            for res in parsed_results if isinstance(parsed_results, list) else [parsed_results]:
+                barcode = res.get('code', barcode)
+                break
 
         if not barcode_type:
             ret_open_picking = self._try_open_picking(barcode)
