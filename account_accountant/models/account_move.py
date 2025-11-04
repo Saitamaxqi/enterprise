@@ -650,6 +650,7 @@ class AccountMoveLine(models.Model):
             line.has_abnormal_deferred_dates = (
                 line.deferred_start_date
                 and line.deferred_end_date
+                and line.deferred_start_date != line.deferred_end_date
                 and float_compare(
                     self.env['account.move']._get_deferred_diff_dates(line.deferred_start_date, line.deferred_end_date + relativedelta(days=1)) % 1,  # end date is included
                     1 / 30,
@@ -673,15 +674,19 @@ class AccountMoveLine(models.Model):
             self.account_id.internal_group in ('expense', 'income')
         )
 
-    @api.onchange('deferred_start_date')
+    @api.onchange('deferred_start_date', 'account_id')
     def _onchange_deferred_start_date(self):
         if not self._has_deferred_compatible_account():
             self.deferred_start_date = False
+        if self.deferred_start_date and not self.deferred_end_date:
+            self.deferred_end_date = self.deferred_start_date
 
-    @api.onchange('deferred_end_date')
+    @api.onchange('deferred_end_date', 'account_id')
     def _onchange_deferred_end_date(self):
         if not self._has_deferred_compatible_account():
             self.deferred_end_date = False
+        if self.deferred_start_date and not self.deferred_end_date:
+            self.deferred_end_date = self.deferred_start_date
 
     @api.depends('deferred_end_date', 'move_id.invoice_date', 'move_id.state')
     def _compute_deferred_start_date(self):

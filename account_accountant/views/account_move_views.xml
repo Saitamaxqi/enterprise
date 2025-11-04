@@ -17,8 +17,8 @@
                 <field name="has_deferred_moves" column_invisible="True"/>
             </xpath>
             <xpath expr="//list/field[@name='name']" position="after">
-                <field name="deferred_start_date" optional="hide" readonly="has_deferred_moves"/>
-                <field name="deferred_end_date" optional="hide" readonly="has_deferred_moves"/>
+                <field name="deferred_start_date" string="Deferred Date" widget="daterange" options="{'end_date_field': 'deferred_end_date', 'always_range': True}" optional="hide" readonly="has_deferred_moves"/>
+                <field name="deferred_end_date" required="deferred_start_date" column_invisible="1"/>
             </xpath>
             <xpath expr="//list/field[@name='matching_number']" position="attributes">
                 <attribute name="widget">matching_link_widget</attribute>
@@ -50,12 +50,12 @@
                 <field name="inalterable_hash" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//page[@id='invoice_tab']//list/field[@name='analytic_distribution']" position="after">
-                <field name="deferred_start_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
-                <field name="deferred_end_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_start_date" string="Deferred Date" widget="daterange" options="{'end_date_field': 'deferred_end_date', 'always_range': True}" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_end_date" required="deferred_start_date" column_invisible="1"/>
             </xpath>
             <xpath expr="//page[@id='aml_tab']//list/field[@name='analytic_distribution']" position="after">
-                <field name="deferred_start_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
-                <field name="deferred_end_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_start_date" string="Deferred Date" widget="daterange" options="{'end_date_field': 'deferred_end_date', 'always_range': True}" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_end_date" required="deferred_start_date" column_invisible="1"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_bank_reconciliation_widget_statement"
