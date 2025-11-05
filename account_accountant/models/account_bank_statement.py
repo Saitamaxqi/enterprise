@@ -983,7 +983,7 @@ class AccountBankStatementLine(models.Model):
         account = self.env['account.account'].browse(account_id)
 
         return {
-            'name': account.display_name,
+            'name': account.name,
             'common_substring': common_substring,
             'account': account,
             'partner_ids': statement_lines.partner_id.ids if len(statement_lines.partner_id.ids) == 1 else [],
