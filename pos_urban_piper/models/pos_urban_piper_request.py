@@ -70,6 +70,9 @@ class UrbanPiperClient:
             )
             _logger.warning('HTTPError: %r', message or error)
             return {'errors': {'HTTPError': message or str(error)}}
+        except requests.exceptions.JSONDecodeError as error:
+            _logger.warning('JSONDecodeError: %r', error)
+            return {'errors': {'JSONDecodeError': 'Failed to parse server response.'}}
         except json.decoder.JSONDecodeError as error:
             _logger.warning('JSONDecodeError: %r', error)
             pos_config.log_xml(
@@ -157,6 +160,8 @@ class UrbanPiperClient:
             })
         pos_products_without_pos_categ_ids.pos_categ_ids = pos_other_categ_id
         pos_categories = pos_products.pos_categ_ids
+        # The UrbanPiper platform only supports a single level of sub-categories.
+        pos_categories |= pos_categories.parent_id
         pos_attribute_products = pos_products.filtered(lambda p: p.attribute_line_ids)
         payload = {
             'flush_categories': False,
@@ -220,6 +225,8 @@ class UrbanPiperClient:
                 'active': True,
                 'img_url': self._get_public_image_url(category),
             }
+            if category.parent_id:
+                categ_dict['parent_ref_id'] = str(category.parent_id.id)
             name_translations = category.get_field_translations('name')
             categ_dict['translations'] = self._get_translations(name_translations, 'name')
             category_lst.append(categ_dict)
