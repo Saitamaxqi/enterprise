@@ -55,7 +55,10 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
         });
 
         onWillDestroy(() => {
-            this.bankReconciliation.chatterState.visible = false;
+            browser.sessionStorage.setItem(
+                "isBankReconciliationWidgetChatterOpened",
+                this.bankReconciliation.chatterState.visible
+            );
             browser.sessionStorage.setItem(
                 "bankReconciliationStatementLineId",
                 this.bankReconciliation.chatterState.statementLine?.data.id
@@ -76,8 +79,11 @@ export class BankRecKanbanRenderer extends KanbanRenderer {
             this.bankReconciliation.computeReconcileLineCountPerPartnerId(records),
             this.bankReconciliation.computeAvailableReconcileModels(records),
         ]);
-        const statementLineId = parseInt(browser.sessionStorage.getItem("bankReconciliationStatementLineId")) || records[0]?.data.id;
-        const statementLine = records.find(record => record.data.id === statementLineId);
+        const statementLineId =
+            parseInt(browser.sessionStorage.getItem("bankReconciliationStatementLineId")) ||
+            records[0]?.data.id;
+        const statementLine =
+            records.find((record) => record.data.id === statementLineId) ?? records[0];
         this.bankReconciliation.selectStatementLine(statementLine);
     }
 
