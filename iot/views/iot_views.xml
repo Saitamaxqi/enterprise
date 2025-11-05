@@ -26,7 +26,7 @@
         <field name="arch" type="xml">
             <form create="false">
                 <header>
-                    <widget name="test_iot_box" btn_name="Test" btn_class="primary" invisible="version[0] == 'W'"/>
+                    <widget name="test_iot_box" btn_name="Test" btn_class="primary" invisible="not version or version[0] == 'W'"/>
                     <button name="open_homepage" type="object" string="Homepage" class="btn btn-secondary"/>
                     <t groups="base.group_no_one">
                         <widget name="iot_download_logs" btn_name="Download Logs" btn_class="secondary"/>
