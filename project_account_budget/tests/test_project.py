@@ -366,9 +366,10 @@ class TestProject(TestProjectCommon):
     def test_project_update_template_value_with_project_user(self):
         self.user_projectuser.group_ids |= self.env.ref('account.group_account_readonly')
         self.project_goats.total_budget_amount = 1000
-        template_values = self.env['project.update'].with_user(
-            self.user_projectuser
-        )._get_template_values(self.project_goats)
+
+        template_values = self.env['project.update'].with_user(self.user_projectuser)._get_template_values(
+            self.project_goats.with_user(self.user_projectuser)
+        )
 
         self.assertEqual(template_values['profitability'], {})
         self.assertFalse(template_values['show_profitability'])
