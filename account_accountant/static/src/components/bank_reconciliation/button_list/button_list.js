@@ -629,6 +629,9 @@ export class BankRecButtonList extends Component {
 
     get buttonsInDropdown() {
         const buttons = this.buttons || {};
+        if (this.props.preSelectedReconciliationModel) {
+            return Object.values(buttons);
+        }
         const buttonToDisplayClasses = this.buttonsToDisplay.map((button) => button.classes) || [];
         // Get all other buttons excluding primary ones
         return Object.values(buttons).filter(

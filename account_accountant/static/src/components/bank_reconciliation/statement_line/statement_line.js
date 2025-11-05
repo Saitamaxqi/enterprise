@@ -7,7 +7,6 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart, useState, useRef } from "@odoo/owl";
 import { useBankReconciliation } from "../bank_reconciliation_service";
-import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 
 export class BankRecStatementLine extends KanbanRecord {
     static template = "account_accountant.BankRecStatementLine";
@@ -19,7 +18,6 @@ export class BankRecStatementLine extends KanbanRecord {
     static props = [...KanbanRecord.props];
 
     setup() {
-        this.registerHotKeys();
         super.setup();
         this.orm = useService("orm");
         this.ui = useService("ui");
@@ -79,20 +77,6 @@ export class BankRecStatementLine extends KanbanRecord {
     }
 
     // -----------------------------------------------------------------------------
-    // EVENT HANDLERS
-    // -----------------------------------------------------------------------------
-
-    registerHotKeys() {
-        const hotKeyOptions = {
-            area: () => this.rootRef.el,
-            allowRepeat: true,
-        };
-        useHotkey("Enter", () => this.unfold(), hotKeyOptions);
-        useHotkey("ArrowRight", () => this.unfold(), hotKeyOptions);
-        useHotkey("ArrowLeft", () => this.fold(), hotKeyOptions);
-    }
-
-    // -----------------------------------------------------------------------------
     // HELPER
     // -----------------------------------------------------------------------------
 
@@ -108,24 +92,28 @@ export class BankRecStatementLine extends KanbanRecord {
         if (this.state.isUnfolded) {
             this.toggleUnfold();
         }
-        this.bankReconciliation.selectStatementLine(this.record);
+        this.selectStatementLine();
     }
 
     unfold() {
         if (!this.state.isUnfolded) {
             this.toggleUnfold();
         }
-        this.bankReconciliation.selectStatementLine(this.record);
+        this.selectStatementLine();
     }
 
     toggleUnfold() {
         this.state.isUnfolded = !this.isUnfolded;
+        this.selectStatementLine();
+    }
+
+    selectStatementLine() {
         // Update the chatter with the last selected element
         this.bankReconciliation.selectStatementLine(this.record);
     }
 
     openChatter() {
-        this.bankReconciliation.selectStatementLine(this.record);
+        this.selectStatementLine();
         this.bankReconciliation.openChatter();
     }
 
