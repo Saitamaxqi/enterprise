@@ -74,7 +74,11 @@ class AccountJournal(models.Model):
     @api.depends('outbound_payment_method_line_ids.payment_method_id.code')
     def _compute_has_sepa_ct_payment_method(self):
         for rec in self:
-            rec.has_sepa_ct_payment_method = 'sepa_ct' in rec.mapped('outbound_payment_method_line_ids.payment_method_id.code')
+            payment_method_codes = rec.mapped('outbound_payment_method_line_ids.payment_method_id.code')
+            rec.has_sepa_ct_payment_method = (
+                'sepa_ct' in payment_method_codes
+                or 'iso20022_ch' in payment_method_codes and self.env['ir.config_parameter'].get_param('iso20022_ch_force_sepa')
+            )
 
     @api.depends('outbound_payment_method_line_ids.payment_method_id.code')
     def _compute_has_iso20022_payment_method(self):
@@ -141,6 +145,7 @@ class AccountJournal(models.Model):
         chf_currency = self.env.ref('base.CHF')
         payments_date_instr_wise = defaultdict(list)
         today = fields.Date.today()
+        iso20022_ch_force_sepa = self.env['ir.config_parameter'].get_param('iso20022_ch_force_sepa')
         for payment in payments:
             required_payment_date = max(payment['payment_date'], today)
             currency_id = payment['currency_id'] or self.company_id.currency_id.id
@@ -160,7 +165,7 @@ class AccountJournal(models.Model):
             CtrlSum.text = self._get_CtrlSum(payments_list)
 
             group_payment_method_code = payment_method_code
-            if payment_method_code == 'iso20022_ch':
+            if iso20022_ch_force_sepa and payment_method_code == 'iso20022_ch':
                 # The Swiss ISO20022 implementation considers SEPA as a subset of what it allows (payment type S),
                 # as well as more generic ISO20022 payments (payment type X). To handle that, we change the payment_method_code
                 # dynamically when adding the grouped payments to the XML file.
