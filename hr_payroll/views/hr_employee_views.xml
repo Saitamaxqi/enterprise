@@ -36,9 +36,6 @@
             <xpath expr="//field[@name='country_id']" position="after">
                 <field name="is_non_resident" eval="False"/>
             </xpath>
-            <field name="structure_type_id" position="attributes">
-                <attribute name="required">1</attribute>
-            </field>
             <xpath expr="//label[@for='wage']" position="before">
                 <field name="wage_type"/>
                 <label for="hourly_wage" invisible="wage_type != 'hourly'"/>

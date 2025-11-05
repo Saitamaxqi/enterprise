@@ -17,9 +17,6 @@
         <field name="model">hr.version</field>
         <field name="inherit_id" ref="hr.hr_contract_template_form_view"/>
         <field name="arch" type="xml">
-            <field name="structure_type_id" position="attributes">
-                <attribute name="required">1</attribute>
-            </field>
             <page name="information" position="attributes">
                 <attribute name="groups">hr_payroll.group_hr_payroll_user</attribute>
             </page>
