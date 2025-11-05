@@ -141,7 +141,7 @@ class PosSession(models.Model):
         for cash_move in move_statements:
             # Need to update here if we update format in _prepareTryCashInOutPayload()
             [_, move_type, statement_type, move_reason] = cash_move['name'].split('-')
-            statements.append({"type": statement_type.capitalize(), "name": f"Cash {move_type} - {move_reason}", "amounts_per_vat_id": [self._get_vat_details(5, cash_move['amount'], cash_move['amount'])]})
+            statements.append({"type": statement_type.capitalize(), "name": f"Cash {move_type} - {move_reason}"[:40], "amounts_per_vat_id": [self._get_vat_details(5, cash_move['amount'], cash_move['amount'])]})
         return statements
 
     def _get_dsfinvk_cash_point_closing_data(
