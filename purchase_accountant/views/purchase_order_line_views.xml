@@ -77,14 +77,14 @@
         <field name="context">{'search_default_last_365_days': 1, 'search_default_groupby_vendor': 1}</field>
     </record>
 
-    <menuitem id="menu_purchase_order_line_accrual_bill_to_receives_action"
-        name="Bill To Receive"
-        action="purchase_accountant.purchase_order_line_accrual_bill_to_receive_action"
-        parent="account_reports.account_audit_regularization_entries_menu"
-        groups="account.group_account_readonly"/>
-    <menuitem id="menu_purchase_order_line_accrual_prepaid_expenses_action"
-        name="Billed Not Received"
-        action="purchase_accountant.purchase_order_line_accrual_prepaid_expenses_action"
-        parent="account_reports.account_audit_regularization_entries_menu"
-        groups="account.group_account_readonly"/>
+    <menuitem id="purchase_accountant_accrual_menu" name="Purchases" parent="account.account_audit_menu" sequence="55">
+        <menuitem id="menu_purchase_order_line_accrual_bill_to_receives_action"
+            name="Bill To Receive"
+            action="purchase_accountant.purchase_order_line_accrual_bill_to_receive_action"
+            groups="account.group_account_readonly"/>
+        <menuitem id="menu_purchase_order_line_accrual_prepaid_expenses_action"
+            name="Billed Not Received"
+            action="purchase_accountant.purchase_order_line_accrual_prepaid_expenses_action"
+            groups="account.group_account_readonly"/>
+    </menuitem>
 </odoo>
