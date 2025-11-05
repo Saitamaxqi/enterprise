@@ -45,13 +45,9 @@ class PosOrderLine(models.Model):
 
         # line discounts applied using numpad
         if self.discount:
-            if self.discount >= 100:
-                gross_discount = float_repr(self.price_subtotal_incl, precision)
-            else:
-                gross_discount = float_repr(round(self.price_subtotal_incl / (1 - self.discount / 100), 2) - self.price_subtotal_incl, precision)
             line_data["item"]["discounts_per_vat_id"] = [{
                 "vat_definition_export_id": vat_id,
-                "incl_vat": gross_discount,
+                "incl_vat": float_repr(self._get_discount_amount(), precision),
             }]
         return line_data, is_adjusted
 
