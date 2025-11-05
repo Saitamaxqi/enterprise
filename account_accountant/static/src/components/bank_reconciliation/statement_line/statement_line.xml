@@ -52,7 +52,7 @@
                             </div>
                             <!-- Only available on large screen -->
                             <div class="o_top_button_line d-none d-md-flex align-items-start text-truncate">
-                                <BankRecButtonList t-props="buttonListProps" isTopLine="true" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled or (userCanReview and !recordData.checked)"/>
+                                <BankRecButtonList t-props="buttonListProps" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled or (userCanReview and !recordData.checked)"/>
                                 <span class="badge rounded-pill py-1 ps-1 text-success bg-success-subtle" t-att-class="{ 'pe-1': !isUnfolded }" t-if="recordData.is_reconciled">
                                     <i class="fa fa-check"/>
                                     <span t-if="isUnfolded" class="ms-1">
@@ -82,7 +82,7 @@
                             </div>
                         </div>
                         <div class="o_row d-md-none">
-                            <BankRecButtonList t-props="buttonListProps" isTopLine="true" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled and !isUnfolded"/>
+                            <BankRecButtonList t-props="buttonListProps" suspenseAccountLine="suspenseAccountLine" t-if="!recordData.is_reconciled and !isUnfolded"/>
                             <span t-if="recordData.is_reconciled" class="text-start text-truncate text-muted" t-esc="reconciledLineName"/>
                         </div>
                         <t t-if="isUnfolded">
@@ -96,9 +96,6 @@
                                 </div>
                             </div>
                             <div class="o_row">
-                                <div class="o_button_line">
-                                    <BankRecButtonList t-if="!recordData.is_reconciled" suspenseAccountLine="suspenseAccountLine" t-props="buttonListProps"/>
-                                </div>
                                 <div t-if="suspenseAccountLine" class="d-none d-md-flex fw-bold text-muted align-items-center justify-content-end" t-att-class="hasForeignCurrencyAndSameCurrencyForAllLines ? 'w-50' : 'w-100'">
                                     <t t-esc="suspenseAccountLineFormattedAmount"/>
                                 </div>
