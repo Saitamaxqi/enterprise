@@ -3,6 +3,7 @@ import { debounce } from "@web/core/utils/timing";
 import { _t } from "@web/core/l10n/translation";
 import { NumberPopup } from "@point_of_sale/app/components/popups/number_popup/number_popup";
 import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
+import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 
 export const blackboxQueueService = {
     dependencies: ["hardware_proxy", "dialog", "pos_data", "bus_service", "iot_http"],
@@ -62,27 +63,32 @@ class BlackboxQueueService {
     async callback(blackboxResponse, callbackName, args) {
         try {
             const result = this.extractResult(blackboxResponse);
-            if (!result?.error?.errorCode.startsWith("000")) {
+            if (
+                !result?.error?.errorCode.startsWith("000") &&
+                !result?.error?.errorCode.startsWith("001")
+            ) {
                 throw result.error;
             }
             return this.callbacks[callbackName](result, ...args);
         } catch (err) {
             //the catch might actually not be an error
             const result = this.extractResult(err);
-            if (result?.error?.errorCode.startsWith("000")) {
+            if (
+                result?.error?.errorCode.startsWith("000") ||
+                result?.error?.errorCode.startsWith("001")
+            ) {
                 return this.callbacks[callbackName](result, ...args);
             }
-            if (err.errorCode?.startsWith("202")) {
-                this.dialog.add(NumberPopup, {
-                    title: _t("Enter Pin Code"),
-                    getPayload: (num) => {
-                        this.enqueue(num, "registerPIN");
-                    },
+            if (err.errorCode?.startsWith("202") || err.errorCode?.startsWith("204")) {
+                const num = await makeAwaitable(this.dialog, NumberPopup, {
+                    title: _t("Blackbox error - %s, %s", err.errorCode, err.errorMessage),
+                    subtitle: _t("Enter your VSC PIN code to unlock the Blackbox"),
+                    isValid: (input) => input.length === 5,
+                    placeholder: _t("PIN Code"),
                 });
-                throw new Error(_t("Pin code required"));
-            } else {
-                throw new BlackboxError(err.errorCode, err.errorMessage);
+                this.enqueue(num, "registerPIN");
             }
+            throw new BlackboxError(err.errorCode, err.errorMessage);
         }
     }
 
@@ -116,7 +122,7 @@ class BlackboxQueueService {
             if (
                 !(err instanceof BlackboxError) ||
                 !err.code ||
-                !err.code.toString().startsWith("207")
+                !["202", "204", "207"].includes(err.code.toString().substring(0, 3))
             ) {
                 for (const item of batch.slice(i)) {
                     if (item.force) {

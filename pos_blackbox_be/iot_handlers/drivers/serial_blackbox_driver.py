@@ -296,6 +296,10 @@ class BlackBoxDriver(SerialDriver):
         if request_type == 'I':
             return wrap
 
+        if request_type == 'P':
+            wrap += f"{data:0>5}"
+            return wrap
+
         wrap += "{:>8}".format(data['date'])
         wrap += "{:>6}".format(data['ticket_time'])
         wrap += "{:>11}".format(data['insz_or_bis_number'])

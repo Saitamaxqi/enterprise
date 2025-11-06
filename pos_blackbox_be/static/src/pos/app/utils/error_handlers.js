@@ -5,6 +5,11 @@ import { RetryFdmPopup } from "@pos_blackbox_be/pos/app/components/popups/retry_
 
 function blackboxErrorHandler(env, error, originalError) {
     if (originalError instanceof BlackboxError) {
+        // If the error starts with 202 or 204, it has already been handled by the number popup.
+        if (["202", "204"].includes(originalError.code.toString().substring(0, 3))) {
+            originalError.retry?.();
+            return true;
+        }
         const disconnectedError = _t(
             "The IoT Box is connected, but the Fiscal Data Module isn't. In order to continue," +
                 " you need to connect the Fiscal Data Module to the IoT Box.\n\n" +
