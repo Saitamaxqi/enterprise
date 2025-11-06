@@ -202,6 +202,14 @@ class TestCFDIInvoice(TestMxEdiCommon):
             self._assert_invoice_payment_cfdi(payment.move_id, 'test_invoice_taxes_ieps_payment')
 
     def test_invoice_taxes_local(self):
+        local_fixed_tax = self.env['account.tax'].create({
+            'name': 'local fixed tax',
+            'amount': 5.0,
+            'amount_type': 'fixed',
+            'l10n_mx_tax_type': 'local',
+            'l10n_mx_factor_type': 'Cuota',
+            'tax_group_id': self.local_tax_group.id,
+        })
         with self.mx_external_setup(self.frozen_today):
             # Test the invoice CFDI.
             invoice = self._create_invoice(
@@ -225,6 +233,12 @@ class TestCFDIInvoice(TestMxEdiCommon):
                         'product_id': self.product.id,
                         'price_unit': 4000.0,
                         'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 2500.0,
+                        'quantity': 2.0,
+                        'tax_ids': [Command.set(local_fixed_tax.ids)],
                     }),
                 ],
             )

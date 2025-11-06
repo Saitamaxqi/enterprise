@@ -995,7 +995,10 @@ class L10n_Mx_EdiDocument(models.Model):
                     tax_grouping_key['tasa_o_cuota'] = None
 
                 if local_tax_name:
-                    tax_grouping_key['tasade'] = tax_grouping_key['tasa_o_cuota'] * 100.0
+                    if tax.amount_type in ('fixed', 'code'):
+                        tax_grouping_key['tasade'] = tax_grouping_key['tasa_o_cuota']
+                    else:
+                        tax_grouping_key['tasade'] = tax_grouping_key['tasa_o_cuota'] * 100.0
                 else:
                     tax_grouping_key['tasade'] = None
 
