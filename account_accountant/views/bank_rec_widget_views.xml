@@ -282,6 +282,7 @@
                                 'st_line_id':id,
                             }"
                            decoration-danger="statement_complete == False or statement_valid == False"
+                           widget="bank_rec_list_many2one_multi_id"
                            readonly="not id"/>
                     <field name="state"
                            optional="hide"
