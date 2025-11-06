@@ -205,7 +205,7 @@ class DHLProvider:
         if is_return:
             export_declaration['exportReasonType'] = 'return'
         if picking.sale_id.client_order_ref:
-            export_declaration['recepientReference'] = picking.sale_id.client_order_ref
+            export_declaration['recipientReference'] = picking.sale_id.client_order_ref
         return export_declaration
 
     def _get_shipment_vals(self, picking):

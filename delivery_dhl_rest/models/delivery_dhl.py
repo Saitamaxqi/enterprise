@@ -217,6 +217,9 @@ class ProviderDHL(models.Model):
             ))
         return packages
 
+    def _convert_to_utc_string(self, datetime_object):
+        return datetime_object.astimezone(tz=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S GMT+00:00')
+
     def _rate_shipment_vals(self, order=False, picking=False):
         if picking:
             warehouse_partner_id = picking.picking_type_id.warehouse_id.partner_id
@@ -258,7 +261,7 @@ class ProviderDHL(models.Model):
         rating_request['unitOfMeasurement'] = self.dhl_unit_system
         if planned_date <= fields.Datetime.now():
             raise UserError(_("The planned date for the shipment must be in the future."))
-        rating_request['plannedShippingDateAndTime'] = planned_date.strftime('%Y-%m-%dT%H:%M:%S')
+        rating_request['plannedShippingDateAndTime'] = self._convert_to_utc_string(planned_date)
         rating_request['accounts'] = srm._get_billing_vals(account_number, "shipper")
         self._dhl_add_extra_data_to_request(rating_request, 'rate')
         rating_request['productsAndServices'] = [{
@@ -325,7 +328,7 @@ class ProviderDHL(models.Model):
             planned_date = picking.scheduled_date
             if planned_date <= fields.Datetime.now():
                 raise UserError(_("The planned date for the shipment must be in the future."))
-            shipment_request['plannedShippingDateAndTime'] = planned_date.astimezone(tz=pytz.utc).strftime('%Y-%m-%dT%H:%M:%S GMT+00:00')
+            shipment_request['plannedShippingDateAndTime'] = self._convert_to_utc_string(planned_date)
             shipment_request['pickup'] = {'isRequested': True}
             shipment_request['accounts'] = srm._get_billing_vals(account_number, "shipper")
             shipment_request['customerDetails'] = {}
@@ -399,7 +402,7 @@ class ProviderDHL(models.Model):
         planned_date = picking.scheduled_date
         if planned_date <= fields.Datetime.now():
             raise UserError(_("The planned date for the shipment must be in the future."))
-        shipment_request['plannedShippingDateAndTime'] = planned_date.astimezone(pytz.utc).strftime('%Y-%m-%dT%H:%M:%S GMT+00:00')
+        shipment_request['plannedShippingDateAndTime'] = self._convert_to_utc_string(planned_date)
         shipment_request['pickup'] = {'isRequested': False}
         shipment_request['accounts'] = srm._get_billing_vals(account_number, "shipper")
         shipment_request['customerDetails'] = {
