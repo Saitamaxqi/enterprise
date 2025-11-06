@@ -478,3 +478,123 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
         self.company.account_fiscal_country_id = self.env.ref('base.be')
         communication = wizard._be_company_vat_communication(non_be_company)
         self.assertEqual(communication, "", "A non-BE company with fiscal country BE should return an empty communication string.")
+
+    @freeze_time('2019-12-31')
+    def test_client_nihil_set_to_no_before_last_year_report(self):
+        """
+            Ensure client nihil is NO for reports that are not the final one of the calendar year
+        """
+        company = self.env.company
+        report = self.env.ref('l10n_be.tax_report_vat')
+        options = report.get_options({})
+
+        account_return = self.env['account.return'].create({
+            'name': 'BE Tax Return',
+            'type_id': self.env.ref('l10n_be_reports.be_vat_return_type').id,
+            'company_id': company.id,
+            'date_from': '2019-11-01',
+            'date_to': '2019-11-30',
+        })
+
+        wizard = self.env['l10n_be_reports.vat.return.lock.wizard'].create({
+            'return_id': account_return.id,
+        })
+
+        options = {**options, **(wizard._get_submission_options_to_inject())}
+
+        # The partner id is changing between execution of the test so we need to append it manually to the reference.
+        # Declaring November 2019, so 112019
+        ref = str(company.partner_id.id) + '112019'
+
+        # This is the minimum expected from the belgian tax report xml.
+        # As no values are in the report, we only find the grid 71 which is always expected to be present.
+        expected_xml = """
+        <ns2:VATConsignment xmlns="http://www.minfin.fgov.be/InputCommon" xmlns:ns2="http://www.minfin.fgov.be/VATConsignment" VATDeclarationsNbr="1">
+            <ns2:VATDeclaration SequenceNumber="1" DeclarantReference="%s">
+                <ns2:Declarant>
+                    <VATNumber xmlns="http://www.minfin.fgov.be/InputCommon">0477472701</VATNumber>
+                    <Name>company_1_data</Name>
+                    <Street></Street>
+                    <PostCode></PostCode>
+                    <City></City>
+                    <CountryCode>BE</CountryCode>
+                    <EmailAddress>jsmith@mail.com</EmailAddress>
+                    <Phone>+32475123456</Phone>
+                </ns2:Declarant>
+                <ns2:Period>
+                    <ns2:Month>11</ns2:Month>
+                    <ns2:Year>2019</ns2:Year>
+                </ns2:Period>
+                <ns2:Data>
+                    <ns2:Amount GridNumber="71">0.00</ns2:Amount>
+                </ns2:Data>
+                <ns2:ClientListingNihil>NO</ns2:ClientListingNihil>
+                <ns2:Ask Restitution="NO"/>
+            </ns2:VATDeclaration>
+        </ns2:VATConsignment>
+        """ % ref
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(self.env[report.custom_handler_model_name].export_tax_report_to_xml(options)['file_content']),
+            self.get_xml_tree_from_string(expected_xml)
+        )
+
+    @freeze_time('2020-01-31')
+    def test_client_nihil_set_to_yes_for_last_year_report(self):
+        """
+            Ensure client nihil is YES for reports that are the final one of the calendar year
+        """
+        company = self.env.company
+        report = self.env.ref('l10n_be.tax_report_vat')
+        options = report.get_options({})
+
+        account_return = self.env['account.return'].create({
+            'name': 'BE Tax Return',
+            'type_id': self.env.ref('l10n_be_reports.be_vat_return_type').id,
+            'company_id': company.id,
+            'date_from': '2019-12-01',
+            'date_to': '2019-12-31',
+        })
+
+        wizard = self.env['l10n_be_reports.vat.return.lock.wizard'].create({
+            'return_id': account_return.id,
+        })
+
+        options = {**options, **(wizard._get_submission_options_to_inject())}
+
+        # The partner id is changing between execution of the test so we need to append it manually to the reference.
+        # Declaring December 2019, so 122019
+        ref = str(company.partner_id.id) + '122019'
+
+        # This is the minimum expected from the belgian tax report xml.
+        # As no values are in the report, we only find the grid 71 which is always expected to be present.
+        expected_xml = """
+        <ns2:VATConsignment xmlns="http://www.minfin.fgov.be/InputCommon" xmlns:ns2="http://www.minfin.fgov.be/VATConsignment" VATDeclarationsNbr="1">
+            <ns2:VATDeclaration SequenceNumber="1" DeclarantReference="%s">
+                <ns2:Declarant>
+                    <VATNumber xmlns="http://www.minfin.fgov.be/InputCommon">0477472701</VATNumber>
+                    <Name>company_1_data</Name>
+                    <Street></Street>
+                    <PostCode></PostCode>
+                    <City></City>
+                    <CountryCode>BE</CountryCode>
+                    <EmailAddress>jsmith@mail.com</EmailAddress>
+                    <Phone>+32475123456</Phone>
+                </ns2:Declarant>
+                <ns2:Period>
+                    <ns2:Month>12</ns2:Month>
+                    <ns2:Year>2019</ns2:Year>
+                </ns2:Period>
+                <ns2:Data>
+                    <ns2:Amount GridNumber="71">0.00</ns2:Amount>
+                </ns2:Data>
+                <ns2:ClientListingNihil>YES</ns2:ClientListingNihil>
+                <ns2:Ask Restitution="NO"/>
+            </ns2:VATDeclaration>
+        </ns2:VATConsignment>
+        """ % ref
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(self.env[report.custom_handler_model_name].export_tax_report_to_xml(options)['file_content']),
+            self.get_xml_tree_from_string(expected_xml)
+        )
