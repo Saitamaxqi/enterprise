@@ -228,12 +228,12 @@ class AccountMove(models.Model):
     def _get_name_invoice_report(self):
         # EXTENDS account
         self.ensure_one()
-        if self.l10n_co_dian_state == 'invoice_accepted' and self.l10n_co_dian_attachment_id:
-            return 'l10n_co_dian.report_invoice_document'
-        elif self.env.ref('l10n_co_dian.report_vendor_document', raise_if_not_found=False) and \
+        if self.env.ref('l10n_co_dian.report_vendor_document', raise_if_not_found=False) and \
                 self.l10n_co_edi_is_support_document and \
                 self.move_type in ('in_refund', 'in_invoice'):
             return 'l10n_co_dian.report_vendor_document'
+        elif self.l10n_co_dian_state == 'invoice_accepted' and self.l10n_co_dian_attachment_id:
+            return 'l10n_co_dian.report_invoice_document'
         return super()._get_name_invoice_report()
 
     def _get_import_file_type(self, file_data):
