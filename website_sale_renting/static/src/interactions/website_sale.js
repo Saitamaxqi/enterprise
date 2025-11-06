@@ -36,7 +36,10 @@ patch(WebsiteSale.prototype, {
     async _checkNewDatesOnCart() {
         const { start_date, end_date, values } = await this.waitFor(rpc(
             '/shop/cart/update_renting', this._getSerializedRentingDates()
-        ));
+        )) ?? {};
+        if (!values) {
+            return;
+        }
         // `updateCartNavBar` regenerates the cart lines so we need to stop and start interactions
         // to make sure the regenerated reorder products and cart lines are properly handled.
         const cart = this.el.querySelector('#shop_cart');
