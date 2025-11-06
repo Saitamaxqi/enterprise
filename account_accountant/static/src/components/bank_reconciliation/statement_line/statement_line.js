@@ -24,6 +24,7 @@ export class BankRecStatementLine extends KanbanRecord {
         this.bankReconciliation = useBankReconciliation();
         this.state = useState({
             isUnfolded: false,
+            isExpandedPaymentRef: false,
         });
         this.statementLineRootRef = useRef("root");
         if (this.env.model.config.context?.default_st_line_id === this.props.record.resId) {
@@ -107,6 +108,10 @@ export class BankRecStatementLine extends KanbanRecord {
         this.selectStatementLine();
     }
 
+    toggleIsExpandedPaymentRef() {
+        this.state.isExpandedPaymentRef = !this.isExpandedPaymentRef;
+    }
+
     selectStatementLine() {
         // Update the chatter with the last selected element
         this.bankReconciliation.selectStatementLine(this.record);
@@ -119,6 +124,10 @@ export class BankRecStatementLine extends KanbanRecord {
 
     get isUnfolded() {
         return this.state.isUnfolded;
+    }
+
+    get isExpandedPaymentRef() {
+        return this.state.isExpandedPaymentRef;
     }
 
     get hasStatementLine() {
