@@ -254,6 +254,27 @@ class TestFrontend(TestPosUrbanPiperCommon):
             self.child_branch_pos_config.order_status_update(order.id, 'Food Ready')
         self.assertEqual(self.tax_15.id, order.lines.tax_ids.id)
 
+    def test_to_check_attribute(self):
+        self.configurable_chair.active = True
+        self.urban_piper_config.open_ui()
+        with MockRequest(self.env):
+            identifier_1 = str(uuid.uuid4())
+            self.env['pos.urbanpiper.test.order.wizard'].with_context(
+                config_id=self.urban_piper_config.id,
+                options_to_add=[
+                    {'title': 'Red', 'quantity': '1', 'merchant_id': f'{self.configurable_chair.id}-{self.configurable_chair.attribute_line_ids[0].value_ids[0].id}'},
+                    {'title': 'Metal', 'quantity': '1', 'merchant_id': f'{self.configurable_chair.id}-{self.configurable_chair.attribute_line_ids[1].value_ids[0].id}'},
+                    {'title': 'Wool', 'quantity': '1', 'merchant_id': f'{self.configurable_chair.id}-{self.chair_fabrics_wool.id}'},
+                    {'title': 'Cup Holder', 'quantity': '1', 'merchant_id': f'{self.configurable_chair.id}-{self.chair_addon_cupholder.id}'},
+                    {'title': 'Cushion', 'quantity': '1', 'merchant_id': f'{self.configurable_chair.id}-{self.chair_addon_cushion.id}'},
+                ],
+            ).create({
+                'product_id': self.configurable_chair.id,
+                'quantity': 2,
+                'delivery_provider_id': self.env.ref('pos_urban_piper.pos_delivery_provider_justeat').id,
+            }).make_test_order(identifier_1)
+        self.start_pos_tour('test_to_check_attribute', pos_config=self.urban_piper_config, login="pos_admin")
+
     def test_order_with_no_children_taxes(self):
         tax = self.env['account.tax'].create({
             'name': 'Tax without children taxes',

@@ -365,13 +365,14 @@ class PosUrbanPiperController(http.Controller):
         if value_ids_lst:
             for value in value_ids_lst:
                 value_id = request.env['product.attribute.value'].sudo().browse(value)
-                if value_id.attribute_id.create_variant == 'no_variant' or value_id.attribute_id.display_type == 'multi':
-                    product_option = request.env['product.template.attribute.value'].sudo().search([
-                        ('product_tmpl_id', '=', int(line_data['merchant_id'].split('-')[0])),
-                        ('product_attribute_value_id', '=', value)
-                    ])
-                    if product_option:
-                        attribute_value_ids.append(product_option.id)
+                product_option = request.env['product.template.attribute.value'].sudo().search([
+                    ('product_tmpl_id', '=', int(line_data['merchant_id'].split('-')[0])),
+                    ('product_attribute_value_id', '=', value),
+                    ('ptav_active', '=', True),
+                ], limit=1)
+                if product_option:
+                    attribute_value_ids.append(product_option.id)
+                if value_id.attribute_id.create_variant == 'no_variant':
                     values_to_remove.append(value)
         variant_value_lst = [value for value in value_ids_lst if value not in values_to_remove]
         line_taxes = request.env['account.tax']
