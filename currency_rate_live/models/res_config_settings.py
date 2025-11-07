@@ -876,56 +876,14 @@ class ResCompany(models.Model):
         Parse function for the Banco de la Republica de Colombia
         * the webservice returns the exchange rate between Colombian Peso (COP) and USD
         """
-        client = Client('https://totoro.banrep.gov.co/OCDEv1.0/Services/NSIStdV21WsService?wsdl')
-        date_time = fields.Datetime.context_timestamp(self, fields.Datetime.now())
+        res = requests.get('https://totoro.banrep.gov.co/nsi-jax-ws/rest/data/ESTAT,DF_TRM_DAILY_LATEST,1.0/all/ALL', timeout=10)
+        res.raise_for_status()
+        tree = etree.fromstring(res.content)
 
-        result = client.service.GetGenericData({
-            'Header': {
-                'ID': 'IDREF2',
-                'Test': 'false',
-                'Prepared': date_time,
-                'Sender': {'id': 'Unknown'},
-                'Receiver': {'id': 'Unknown'}
-            },
-            'Query': {
-                'ReturnDetails': {
-                    'detail': 'Full',
-                    'observationAction': 'Active',
-                    'Structure': {
-                        'dimensionAtObservation': "REFERENCE_AREA",
-                        'structureID': "StructureId",
-                        'Structure': {
-                            'Ref': {
-                                'agencyID': "OECD",
-                                'id': "STES",
-                                'version': "3.0",
-                            }
-                        },
-                    },
-                },
-                'DataWhere': {
-                    'DataSetID': "DF_TRM_DAILY_LATEST",
-                    'Dataflow': {
-                        'Ref': {
-                            'agencyID': "ESTAT",
-                            'id': "DF_TRM_DAILY_LATEST",
-                        },
-                    },
-                    'Or': [
-                        {'DimensionValue': {'ID': 'SUBJECT', 'Value': {'operator': 'equal', '_value_1': 'CCSP'}}},
-                        {'DimensionValue': {'ID': 'UNIT_MEASURE', 'Value': {'operator': 'equal', '_value_1': 'COP'}}},
-                        {'DimensionValue': {'ID': 'REFERENCE_AREA', 'Value': {'operator': 'equal', '_value_1': 'CO'}}},
-                        {'DimensionValue': {'ID': 'FREQ', 'Value': {'operator': 'equal', '_value_1': 'D'}}},
-                        {'DimensionValue': {'ID': 'DOMAIN', 'Value': {'operator': 'equal', '_value_1': 'FINMARK'}}},
-                        {'DimensionValue': {'ID': 'OBS_STATUS', 'Value': {'operator': 'equal', '_value_1': 'A'}}},
-                        {'DimensionValue': {'ID': 'UNIT_MULT', 'Value': {'operator': 'equal', '_value_1': '0'}}},
-                    ],
-                },
-            },
-        })
+        generic_ns = 'http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/generic'
+        rate = float(tree.find(f'.//{{{generic_ns}}}ObsValue').get('value'))
 
-        rate = float(result.DataSet[0].Series[0].Obs[0].ObsValue.value)
-        time_period = next(x.value for x in result.DataSet[0].Series[0].SeriesKey.Value if x.id == 'TIME_PERIOD')
+        time_period = tree.find(f'.//{{{generic_ns}}}ObsDimension').get('value')
         date = fields.Date.to_string(datetime.datetime.strptime(time_period, '%Y%m%d'))
 
         return {'COP': (1, date), 'USD': (1.0 / rate, date)}
