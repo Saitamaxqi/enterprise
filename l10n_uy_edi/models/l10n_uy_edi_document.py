@@ -385,17 +385,17 @@ class L10n_Uy_EdiDocument(models.Model):
                 missing_info.append(field_data[field]["string"])
         inbox_url = self._get_ws_url("inbox", company)
         if not inbox_url:
-            missing_info.append(_("Uruware Inbox URL"))
+            missing_info.append(_("UCFE Provider Inbox URL"))
         query_url = self._get_ws_url("query", company)
         if not query_url:
-            missing_info.append(_("Uruware Query URL"))
+            missing_info.append(_("UCFE Provider Query URL"))
         username = self._get_ucfe_username(company)
         if not username:
-            missing_info.append(_("Uruware Username"))
+            missing_info.append(_("UCFE Provider Username"))
 
         if missing_info:
             return _(
-                "Incomplete Data to connect to Uruware on company %(company)s: Please complete the UCFE data to test "
+                "Incomplete Data to connect to UCFE Provider on company %(company)s: Please complete the UCFE data to test "
                 "the connection: %(missing)s",
                 company=company.name,
                 missing=", ".join(missing_info),

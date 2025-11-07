@@ -22,7 +22,7 @@ class TestMock(common.TestUyEdi):
         self.company_uy.l10n_uy_edi_ucfe_commerce_code = False
 
         error_msg = self._mock_check_credentials(self.company_uy, "NO_RESPONSE")
-        self.assertRegex(error_msg, "Incomplete Data to connect to Uruware.*Please complete the UCFE data to test the connection: Uruware Commerce code")
+        self.assertRegex(error_msg, "Incomplete Data to connect to UCFE Provider.*Please complete the UCFE data to test the connection: UCFE Provider Commerce code")
 
     def test_20_bad_credentials(self):
         self.company_uy.l10n_uy_edi_ucfe_commerce_code = "comerce_xxx1"

@@ -68,10 +68,10 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid ""
 "<span>To create your account, ensure you have a valid subscription. Click "
-"\"Create Uruware Account\", configure it directly in Uruware's portal, get "
-"the WS password, Commerce Code, and Terminal Code from them, and enter these"
-" parameters here. Test your connection. Note: Only one test and production "
-"environment are allowed per subscription</span>"
+"\"Create UCFE Provider Account\", configure it directly in UCFE Provider's "
+"portal, get the WS password, Commerce Code, and Terminal Code from them, and"
+" enter these parameters here. Test your connection. Note: Only one test and "
+"production environment are allowed per subscription</span>"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -270,12 +270,12 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Create Uruware Account"
+msgid "Create UCFE Provider Account"
 msgstr ""
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Create Uruware Test Account"
+msgid "Create UCFE Provider Test Account"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -418,15 +418,20 @@ msgid "Electronic Fiscal Document (CFE - UY)"
 msgstr ""
 
 #. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-msgid "Error connection to Odoo IAP to create Uruware account"
+#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
+msgid "Electronic Invoicing Provider (UCFE) Credentials"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-msgid "Error creating the Uruware account. Please contact support: "
+msgid "Error connection to Odoo IAP to create UCFE Provider account"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/res_config_settings.py:0
+msgid "Error creating the UCFE Provider account. Please contact support: "
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -525,7 +530,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
 msgid ""
-"Incomplete Data to connect to Uruware on company %(company)s: Please "
+"Incomplete Data to connect to UCFE Provider on company %(company)s: Please "
 "complete the UCFE data to test the connection: %(missing)s"
 msgstr ""
 
@@ -912,9 +917,9 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
 #: model:ir.model.fields,help:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
 msgid ""
-"This password is used exclusively for accessing Uruware webservices, "
-"enabling communication and data exchange between Odoo and Uruware. It is "
-"distinct from the password used to log in to Uruware's portal."
+"This password is used exclusively for accessing UCFE webservices, enabling "
+"communication and data exchange between Odoo and UCFE. It is distinct from "
+"the password used to log in to UCFE's portal."
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -967,6 +972,43 @@ msgid ""
 "Type of journals that can be used for Uruguayan companies:\n"
 "* Electronic: To generate electronic documents via web service to DGI directly from Odoo\n"
 "* Manual: To add electronic documents that were created previously outside Odoo (example: backups, from Uruware, pre printed). This type is used to maintain the history and consistency of all the CFE (they will not create a new CFE in DGI)."
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_commerce_code
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_commerce_code
+msgid "UCFE Provider Commerce code"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Inbox URL"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Query URL"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_terminal_code
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_terminal_code
+msgid "UCFE Provider Terminal code"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "UCFE Provider Username"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
+#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
+#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
+msgid "UCFE Provider WS Password"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -1056,7 +1098,7 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_xml_attachment_id
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_xml_attachment_id
-msgid "Uruguay: the most recent e-invoice XML returned by Uruware."
+msgid "Uruguay: the most recent e-invoice XML returned by UCFE Provider."
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -1065,48 +1107,7 @@ msgstr ""
 msgid ""
 "Uruguayan e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
-"If this is not intended, please check if an UCFE Uruware is properly set or if the invoice isn't already e-invoiced.\n"
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_commerce_code
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_commerce_code
-msgid "Uruware Commerce code"
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
-msgid "Uruware Credentials"
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Inbox URL"
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Query URL"
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_terminal_code
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_terminal_code
-msgid "Uruware Terminal code"
-msgstr ""
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-msgid "Uruware Username"
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_password
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_password
-msgid "Uruware WS Password"
+"If this is not intended, please check if an UCFE Provider is properly set or if the invoice isn't already e-invoiced.\n"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -1184,9 +1185,9 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid ""
-"Your login email will be used as the contact that Uruware will send the "
-"credentials to. Make sure it is correct. This process will take around 24 to"
-" 48 hours."
+"Your login email will be used as the contact that UCFE Provider will send "
+"the credentials to. Make sure it is correct. This process will take around "
+"24 to 48 hours."
 msgstr ""
 
 #. module: l10n_uy_edi

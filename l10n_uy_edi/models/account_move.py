@@ -69,7 +69,7 @@ class AccountMove(models.Model):
         comodel_name="ir.attachment",
         string="Uruguay E-Invoice XML",
         compute="_compute_l10n_uy_edi_xml_attachment_id",
-        help="Uruguay: the most recent e-invoice XML returned by Uruware.",
+        help="Uruguay: the most recent e-invoice XML returned by UCFE Provider.",
     )
 
     # Compute method
