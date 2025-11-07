@@ -39,8 +39,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         receipt.action_confirm()
         receipt.action_assign()
 
-        url = self._get_client_action_url(receipt.id).replace('?', '?debug=assets&')
-        self.start_tour(url, 'test_gs1_receipt_expiration_date', login='admin', timeout=180)
+        url = self._get_client_action_url(receipt.id)
+        self.start_tour(url, 'test_gs1_receipt_expiration_date', login='admin')
 
         self.assertEqual(receipt.state, 'done')
         self.assertEqual(len(receipt.move_line_ids), 3)

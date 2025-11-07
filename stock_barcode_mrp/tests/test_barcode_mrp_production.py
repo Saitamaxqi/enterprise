@@ -239,7 +239,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         mo = mo_form.save()
         mo.action_confirm()
 
-        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action?debug=assets'
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
         self.start_tour(url, 'test_barcode_production_reserved_from_multiple_locations', login='admin', timeout=180)
 
     def test_barcode_production_scan_other_than_reserved(self):
@@ -296,7 +296,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         mo = mo_form.save()
         mo.action_confirm()
 
-        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action?debug=assets'
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
         self.start_tour(url, 'test_barcode_production_scan_other_than_reserved', login='admin', timeout=180)
 
         # Checks move lines values after MO is completed.
@@ -344,7 +344,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         # Ensure state != 'cancel' && state != 'draft' to allow Scrap
         mo.action_confirm()
 
-        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action?debug=assets'
+        url = f'/odoo/{mo.id}/action-stock_barcode_mrp.stock_barcode_mo_client_action'
         self.start_tour(url, 'test_mo_scrap_digipad_view', login='admin', timeout=180)
 
     def test_barcode_production_components_reservation_state(self):

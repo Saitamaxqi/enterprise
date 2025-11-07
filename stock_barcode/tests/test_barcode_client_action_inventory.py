@@ -285,7 +285,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
             'show_expected_quantity': True,
         })
         wizard_request_count.action_request_count()
-        self.start_tour("/odoo/barcode?debug=assets", 'test_inventory_dialog_not_counted_serial_numbers', login='admin', timeout=180)
+        self.start_tour("/odoo/barcode", 'test_inventory_dialog_not_counted_serial_numbers', login='admin')
         self.assertRecordValues(quants, [
             {'product_id': self.productserial1.id, 'lot_id': serial1_sns[0].id, 'quantity': 1, 'location_id': self.shelf1.id},
             {'product_id': self.productserial1.id, 'lot_id': serial1_sns[1].id, 'quantity': 1, 'location_id': self.shelf1.id},
