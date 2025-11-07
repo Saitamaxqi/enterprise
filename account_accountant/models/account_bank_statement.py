@@ -7,6 +7,7 @@ from itertools import takewhile
 
 from odoo import Command, SUPERUSER_ID, _, api, fields, models, modules, tools
 from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError
 from odoo.fields import Domain
 from odoo.tools import SQL, float_is_zero
 from odoo.addons.account.tools.structured_reference import is_valid_structured_reference
@@ -198,9 +199,10 @@ class AccountBankStatementLine(models.Model):
 
                 st_lines._try_auto_reconcile_statement_lines(company_id=company_id)
             except Exception as e:  # noqa: BLE001
-                if not modules.module.current_test:
+                if not isinstance(e, UserError) and not modules.module.current_test:
                     self.env.cr.rollback()
-                st_lines.cron_last_check = fields.Datetime.now()
+                if st_lines.exists():
+                    st_lines.cron_last_check = fields.Datetime.now()
                 _logger.warning("Error while processing statement lines: %s", e)
 
             # Commit if we can, in case an issue arises later.
