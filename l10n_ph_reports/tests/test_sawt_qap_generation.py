@@ -280,3 +280,23 @@ class TestSawtQapGeneration(TestAccountReportsCommon, TestPhCommon):
                 ['C4', '1604E', '123456789', '0123', '12/31/2024', '450.00'],
             ]
         )
+
+    def test_registered_name_display_sawt(self):
+        report = self.env.ref('l10n_ph_reports.sawt_report')
+        options = self._generate_options(report, '2024-01-01', '2024-12-31', {'unfold_all': True})
+        lines = report._get_lines(options)
+
+        # Find lines for partners
+        partner_lines = {}
+        for line in lines:
+            if line.get('caret_options') == 'res.partner':
+                partner_id = report._get_res_id_from_line_id(line['id'], 'res.partner')
+                partner_lines[partner_id] = line
+
+        line_a = partner_lines[self.partner_a.id]
+        self.assertEqual(line_a['name'], 'John Doe Smith')  # check partner_name
+        self.assertEqual(line_a['columns'][1]['name'], 'Smith John Doe')  # check register_name
+
+        line_b = partner_lines[self.partner_b.id]
+        self.assertEqual(line_b['name'], 'Test Partner Company')  # check partner_name
+        self.assertEqual(line_b['columns'][1]['name'], 'Test Partner Company')  # check register_name
