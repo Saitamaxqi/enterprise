@@ -312,3 +312,32 @@ class TestSignTemplate(TransactionCase):
             with self.subTest(fname=fname):
                 with self.assertRaises(ValidationError):
                     template_id.update_from_attachment_data(attachment_data_list=[{'name': fname, 'datas': data}])
+
+    def test_update_document_preserves_sign_items(self):
+        """ Ensure that updating a document in a sign template creates a new template and preserves sign items. """
+        # Create a template with one document and one sign item
+        res = self.env['sign.template'].with_user(self.test_user).create_from_attachment_data(
+            attachment_data_list=[{'name': 'sample_contract.pdf', 'datas': self.pdf_data}]
+        )
+        template_id = res.get('id', 0)
+        template = self.env['sign.template'].with_user(self.test_user).browse(template_id)
+        document = template.document_ids[0]
+        self.env['sign.item'].create({
+            'template_id': template.id,
+            'document_id': document.id,
+            'type_id': self.env.ref('sign.sign_item_type_text').id,
+            'name': 'employee_id.name',
+            'required': True,
+            'responsible_id': self.env.ref('sign.sign_item_role_default').id,
+            'transaction_id': -1, 'page': 1,
+            'posX': 0.273, 'posY': 0.158, 'width': 0.150, 'height': 0.015,
+        })
+        self.assertEqual(len(template.sign_item_ids), 1, 'Template should have 1 sign item before replacement')
+
+        # Prepare new document data, call update_document, get the new template and perform the checks.
+        new_attachment_data = {'name': 'new_contract.pdf', 'datas': self.pdf_data}
+        action = template.update_document(document.id, new_attachment_data)
+        new_template_id = action['params']['id']
+        new_template = self.env['sign.template'].browse(new_template_id)
+        self.assertTrue(any(doc.name == 'new_contract.pdf' for doc in new_template.document_ids), 'New template should have the new document')
+        self.assertEqual(len(new_template.sign_item_ids), 1, 'Sign items should be preserved in the new template')

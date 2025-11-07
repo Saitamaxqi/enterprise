@@ -146,6 +146,53 @@ class SignTemplate(models.Model):
 
         return vals_list
 
+    def update_document(self, document_id, attachment_data):
+        """ Update a document in the template with a new one, preserving sign items.
+        :param int document_id: ID of the document to replace
+        :param dict attachment_data: Dictionary containing the new document data with name and datas
+        :returns dict: Action to redirect to the new template
+        """
+        self.ensure_one()
+        old_document = self.env['sign.document'].browse(document_id)
+
+        if not old_document.exists() or old_document.template_id != self:
+            raise UserError(_("The document you're trying to update doesn't exist or doesn't belong to this template."))
+
+        # Check if the attachment data is valid PDF.
+        self.env['sign.document']._check_pdf_data_validity(attachment_data['datas'])
+
+        # Store the old document's sequence and create a copy of the template.
+        # Find and delete the corresponding document in the new template.
+        target_sequence = old_document.sequence
+        new_template = self.copy()
+        corresponding_doc = new_template.document_ids.filtered(
+            lambda d: d.sequence == target_sequence
+        )
+        if corresponding_doc:
+            corresponding_doc.unlink()
+
+        # Create the new document directly with the correct sequence.
+        # Copy sign items from old document to new document.
+        attachment = self.env['ir.attachment'].create({
+            'name': attachment_data['name'],
+            'datas': attachment_data['datas'],
+        })
+        new_document = self.env['sign.document'].create({
+            'attachment_id': attachment.id,
+            'sequence': target_sequence,
+            'template_id': new_template.id,
+        })
+        old_document._copy_sign_items_to(new_document)
+
+        # Return action to open new template.
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'sign.Template',
+            'name': _('Edit Template'),
+            'params': {'id': new_template.id},
+            'context': {},
+        }
+
     @api.model
     def create_from_attachment_data(self, attachment_data_list, active=True):
         """

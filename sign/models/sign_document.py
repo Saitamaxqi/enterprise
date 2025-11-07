@@ -419,14 +419,18 @@ CRM, eCommerce, accounting, inventory, point of sale,\nproject management, etc.
         return output
 
     def _copy_sign_items_to(self, new_document):
-        """ copy all sign items of the self document to the new_document """
+        """ Copy all sign items of the self document to the new_document that fit within its page count."""
         self.ensure_one()
         if new_document.template_id.has_sign_requests:
             raise UserError(self.env._("Somebody is already filling a document which uses this template"))
+
+        new_document_pages = new_document.num_pages
         item_id_map = {}
         for sign_item in self.sign_item_ids:
-            new_sign_item = sign_item.copy({'document_id': new_document.id})
-            item_id_map[str(sign_item.id)] = str(new_sign_item.id)
+            # Only copy sign items that fit within the new document's page range.
+            if sign_item.page <= new_document_pages:
+                new_sign_item = sign_item.copy({'document_id': new_document.id})
+                item_id_map[str(sign_item.id)] = str(new_sign_item.id)
         return item_id_map
 
     @api.model

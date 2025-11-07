@@ -125,6 +125,8 @@ export class SignTemplate extends Component {
             deleteDocument: (documentId) => this.deleteDocument(documentId),
             moveDocumentUp: (documentId) => this.moveDocument(documentId, -1),
             moveDocumentDown: (documentId) => this.moveDocument(documentId, 1),
+            onUpdateDocument: this.onUpdateDocument.bind(this),
+            saveManually: () => this.signStatus.save(),
         }
     }
 
@@ -501,6 +503,34 @@ export class SignTemplate extends Component {
                     resolve(false);
                 }
             });
+        });
+    }
+
+    async onUpdateDocument(documentId, file) {
+        /* Update document by duplicating and archiving the current template. */
+        new Promise((resolve) => {
+            this.dialog.add(ConfirmationDialog, {
+                title: _t("Update Document"),
+                body: _t(
+                    "Updating a document generates a new template with the same sign items. " +
+                    "The copied items will land in the same coordinates as their originals if the " +
+                    "number of pages match with the previous PDF. Do you want to proceed?"
+                ),
+                confirmLabel: _t("Update Document"),
+                confirm: () => resolve(true),
+                cancelLabel: _t("Discard"),
+                cancel: () => resolve(false),
+                dismiss: () => resolve(false),
+            });
+        }).then(async (confirmed) => {
+            if (!confirmed)
+                return;
+            const action = await this.orm.call(
+                "sign.template",
+                "update_document",
+                [[this.signTemplate.id], documentId, file]
+            );
+            this.action.doAction(action, { clearBreadcrumbs: true });
         });
     }
 }
