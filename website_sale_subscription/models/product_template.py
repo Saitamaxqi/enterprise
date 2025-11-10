@@ -113,7 +113,7 @@ class ProductTemplate(models.Model):
             res.update({
                 'is_subscription': True,
                 'is_plan_possible': False,
-                'pricings': False,
+                'pricings': [],
                 'allow_one_time_sale': not request.cart.plan_id and self.allow_one_time_sale,
             })
             return res
