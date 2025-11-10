@@ -25,7 +25,7 @@ class HrVersion(models.Model):
     is_origin_contract_template = fields.Boolean(
         compute='_compute_is_origin_contract_template', string='Is origin contract a contract template?',
         groups="hr.group_hr_user", readonly=True)
-    hash_token = fields.Char('Created From Token', copy=False, groups="hr.group_hr_user", tracking=True)
+    hash_token = fields.Char('Created From Token', groups="hr.group_hr_user", tracking=True)
     applicant_id = fields.Many2one('hr.applicant', groups="hr.group_hr_user",
                                    domain="['|', ('company_id', '=', False), ('company_id', '=', company_id)]", tracking=True)
     contract_reviews_count = fields.Integer(compute="_compute_contract_reviews_count",
