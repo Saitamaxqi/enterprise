@@ -1,5 +1,7 @@
 .account_report {
-    .fit-content { width: fit-content }
+    .o_account_report_scroll_container {
+        margin-inline: 0 !important;
+    }
 
     //------------------------------------------------------------------------------------------------------------------
     // Control panel
