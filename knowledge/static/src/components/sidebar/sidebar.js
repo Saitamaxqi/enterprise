@@ -678,7 +678,7 @@ export class KnowledgeSidebar extends Component {
                 throw error;
             }
             // Reload the current article as the move will impact its data
-            await this.props.record.model.load();
+            await this.props.record.load();
         };
 
         // Move the article in the sidebar
