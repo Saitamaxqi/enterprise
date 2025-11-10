@@ -19,7 +19,7 @@ class HrVersion(models.Model):
                 ('group_s_code', 'in', self.mapped('group_s_code')),
             ],
             groupby=['group_s_code'],
-            aggregates=['id:recordset'],
+            aggregates=['employee_id:recordset'],
         ))
         if any(
             similar_group_s_codes.get(version.group_s_code)
@@ -28,4 +28,4 @@ class HrVersion(models.Model):
             and version.group_s_code
             for version in self
         ):
-            raise ValidationError(_('The Groups S code should be unique!'))
+            raise ValidationError(_('The Groups S code should be unique by employee!'))
