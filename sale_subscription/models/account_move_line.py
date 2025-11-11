@@ -117,9 +117,18 @@ class AccountMoveLine(models.Model):
         for aml in self:
             if aml.move_id.state in ['draft', 'cancel'] or not aml.deferred_end_date:
                 continue
+            # Determine target UoM for quantity conversion
+            # When the sale order line has been deleted, sale_line_ids is empty.
+            # In that case, use the invoice line's own UoM as the target.
+            if aml.sale_line_ids:
+                target_uom = aml.sale_line_ids.product_uom_id
+            elif aml.product_uom_id:
+                target_uom = aml.product_uom_id
+            else:
+                continue
             sign = 1 if aml.move_id.move_type == 'out_invoice' else -1
             periods.setdefault(aml.deferred_end_date, 0.0)
-            periods[aml.deferred_end_date] += sign * aml.product_uom_id._compute_quantity(aml.quantity, aml.sale_line_ids.product_uom_id, round=False)
+            periods[aml.deferred_end_date] += sign * aml.product_uom_id._compute_quantity(aml.quantity, target_uom, round=False)
 
         invoice_dates = [d for d, qty in periods.items() if qty > 0.0]
 

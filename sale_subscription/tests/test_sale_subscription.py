@@ -2987,3 +2987,69 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         sale_order.plan_id.billing_first_day = True
         sale_order.action_confirm()
         self.assertEqual(sale_order.next_invoice_date, datetime.date(2025, 10, 1), "The next invoice date is first of october")
+
+    def test_invoice_after_deleting_invoiced_line(self):
+        """ Test that invoicing works correctly after deleting an already invoiced subscription line.
+        This test covers the fix for _get_max_invoiced_date when sale_line_ids is empty
+        """
+        product_a = self.env['product.product'].create({
+            'name': 'Car Leasing (SUB)',
+            'type': 'service',
+            'recurring_invoice': True,
+            'uom_id': self.env.ref('uom.product_uom_unit').id,
+            'list_price': 20,
+        })
+        product_b = self.env['product.product'].create({
+            'name': 'Office Cleaning Service (SUB)',
+            'type': 'service',
+            'recurring_invoice': True,
+            'uom_id': self.env.ref('uom.product_uom_unit').id,
+            'list_price': 10,
+        })
+
+        with freeze_time('2025-11-11'):
+            subscription = self.env['sale.order'].create({
+                'name': 'Test Subscription',
+                'is_subscription': True,
+                'plan_id': self.plan_month.id,
+                'partner_id': self.partner.id,
+                'order_line': [Command.create({
+                    'product_id': product_a.id,
+                    'product_uom_qty': 1.0,
+                    'price_unit': 20,
+                })],
+            })
+            subscription.action_confirm()
+
+            invoice_1 = subscription._create_invoices()
+            invoice_1._post()
+
+            self.assertEqual(len(subscription.invoice_ids), 1, 'First invoice should be created')
+            self.assertEqual(subscription.order_line.qty_invoiced, 1.0, 'Product A should be invoiced')
+
+            subscription.write({
+                'order_line': [Command.create({
+                    'product_id': product_b.id,
+                    'product_uom_qty': 1.0,
+                    'price_unit': 10,
+                })],
+            })
+
+            line_to_delete = subscription.order_line.filtered(lambda l: l.product_id == product_a)
+            line_to_delete.unlink()
+
+            self.assertEqual(len(subscription.order_line), 1, 'Only product B line should remain')
+            self.assertEqual(subscription.order_line.product_id, product_b, 'Remaining line should be product B')
+            self.assertEqual(len(subscription.invoice_ids), 1, 'Invoice for product A should still exist')
+
+            invoice_2 = subscription._create_invoices()
+
+            self.assertTrue(invoice_2, 'Second invoice should be created successfully')
+            self.assertEqual(len(subscription.invoice_ids), 2, 'Should have two invoices total')
+
+            invoice_2_lines = invoice_2.invoice_line_ids.filtered(lambda l: l.display_type == 'product')
+            self.assertEqual(len(invoice_2_lines), 1, 'Second invoice should have one product line')
+            self.assertEqual(invoice_2_lines.product_id, product_b, 'Second invoice should be for product B')
+
+            invoice_2._post()
+            self.assertEqual(invoice_2.state, 'posted', 'Second invoice should be posted successfully')
