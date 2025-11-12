@@ -4,7 +4,6 @@ from collections import defaultdict
 
 from odoo import _, api, fields, models
 from odoo.fields import Domain
-from odoo.tools import date_utils
 from odoo.tools.sql import SQL
 
 
@@ -511,15 +510,7 @@ class L10n_PhGenericReportHandler(models.AbstractModel):
     @api.model
     def _get_report_date_to(self, options):
         """
-        Helper to get the report date_to from the options, based on the periodicity.
-        We need it quite a lot during the export.
+        Return date_to directly from options, previously used date_to to determine end date based on export periodicity.
+        Kept the method for stable versions, otherwise safe to remove.
         """
-        date_to = fields.Date.from_string(options["date"]["date_to"])
-        periodicity = options['periodicity']
-
-        if periodicity == 'quarterly':
-            _q_date_from, q_date_to = date_utils.get_quarter(date_to)
-            return q_date_to
-        else:
-            _y_date_from, y_date_to = date_utils.get_fiscal_year(date_to)
-            return y_date_to
+        return fields.Date.from_string(options['date']['date_to'])

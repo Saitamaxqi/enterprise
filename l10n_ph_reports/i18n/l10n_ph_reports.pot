@@ -6,14 +6,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 19.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-13 20:08+0000\n"
-"PO-Revision-Date: 2025-11-13 20:08+0000\n"
+"POT-Creation-Date: 2025-11-18 07:10+0000\n"
+"PO-Revision-Date: 2025-11-18 07:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid "%(date_from)s to %(date_to)s"
+msgstr ""
 
 #. module: l10n_ph_reports
 #: model:ir.model.fields.selection,name:l10n_ph_reports.selection__l10n_ph_reports_dat_file_export__attachment_for__1601eq
@@ -93,6 +99,11 @@ msgstr ""
 #: code:addons/l10n_ph_reports/models/sawt_qap_report.py:0
 #: code:addons/l10n_ph_reports/models/slsp_report.py:0
 msgid "DAT"
+msgstr ""
+
+#. module: l10n_ph_reports
+#: model:ir.model.fields,field_description:l10n_ph_reports.field_l10n_ph_reports_dat_file_export__dat_export_warning
+msgid "Dat Export Warning"
 msgstr ""
 
 #. module: l10n_ph_reports
@@ -192,6 +203,14 @@ msgstr ""
 #. module: l10n_ph_reports
 #: model:ir.model,name:l10n_ph_reports.model_l10n_ph_generic_report_handler
 msgid "Philippines Generic Report Custom Handler"
+msgstr ""
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid ""
+"Please note that the %(report_name)s is %(expected_period)s report, but you are exporting it for %(period)s.\n"
+"You can change the export period using the date filter on the accounting report."
 msgstr ""
 
 #. module: l10n_ph_reports
@@ -349,4 +368,28 @@ msgstr ""
 #. module: l10n_ph_reports
 #: model:account.report.column,name:l10n_ph_reports.sls_report_zero_rated_sales
 msgid "Zero-Rated Sales"
+msgstr ""
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid "a quarterly"
+msgstr ""
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid "an annual"
+msgstr ""
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid "the Q%(quarter_number)s %(year)s"
+msgstr ""
+
+#. module: l10n_ph_reports
+#. odoo-python
+#: code:addons/l10n_ph_reports/wizard/vat_report_export.py:0
+msgid "the year %(year)s"
 msgstr ""
