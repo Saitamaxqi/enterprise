@@ -37,7 +37,7 @@ class AILivechatOptionPlugin extends Plugin {
     };
 
     async onSnippetDropped({ snippetEl }) {
-        if (snippetEl.matches(".s_ai_livechat")) {
+        if (snippetEl.matches(".s_ai_livechat:has(.s_ai_livechat_preview)")) {
             snippetEl.querySelector(".s_ai_livechat_preview").remove();
 
             const aiAgentId = await this.services.orm.search(
