@@ -163,7 +163,7 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
         } else if (this.isCancelled) {
             return this.notification(_t("This batch is already cancelled"), { type: "danger" });
         } else {
-            super.processBarcode(barcode);
+            return super.processBarcode(barcode);
         }
     }
 
