@@ -1,7 +1,7 @@
 import { CONSOLE_COLOR, PosStore } from "@point_of_sale/app/services/pos_store";
 import { logPosMessage } from "@point_of_sale/app/utils/pretty_console_log";
 import { patch } from "@web/core/utils/patch";
-import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { AlertDialog, ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { uuidv4 } from "@point_of_sale/utils";
@@ -448,5 +448,20 @@ patch(PosStore.prototype, {
             "It seems that your Fiskaly API key and/or secret are incorrect. Update them in your company settings."
         );
         this.dialog.add(AlertDialog, { title, body });
+    },
+    async _processSaleOrder(sale_order) {
+        if (
+            sale_order.partner_id &&
+            this.isCountryGermanyAndFiskaly() &&
+            (!sale_order.partner_id.street || !sale_order.partner_id.zip)
+        ) {
+            return this.dialog.add(ConfirmationDialog, {
+                title: _t("Invalid or missing customer information"),
+                body: _t(
+                    "The customer of the selected sale order must have a street and ZIP code.\nUpdate the customer's details to continue."
+                ),
+            });
+        }
+        return super._processSaleOrder(sale_order);
     },
 });
