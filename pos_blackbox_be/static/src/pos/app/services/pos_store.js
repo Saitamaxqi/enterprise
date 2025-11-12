@@ -310,6 +310,10 @@ patch(PosStore.prototype, {
             await this.increaseCorrectionCounter(order.priceIncl);
         }
     },
+    async reloadData(fullReload = false) {
+        this.blackbox_queue.clearQueue();
+        await super.reloadData(...arguments);
+    },
     //#region Blackbox
     useBlackBoxBe() {
         return Boolean(this.config.iface_fiscal_data_module);

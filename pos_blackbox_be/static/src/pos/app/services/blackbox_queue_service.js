@@ -41,6 +41,10 @@ class BlackboxQueueService {
     addCallback(callback, callbackName) {
         this.callbacks[callbackName] = callback;
     }
+    clearQueue() {
+        this.queue = [];
+        localStorage.setItem(this.key, JSON.stringify(this.queue));
+    }
     async enqueue(
         requestData,
         action = "registerReceipt",
