@@ -40,7 +40,7 @@ patch(OrderPaymentValidation.prototype, {
         } catch (e) {
             if (e instanceof BlackboxError) {
                 this.order.state = "draft";
-                e.retry = this.finalizeValidation.bind(this);
+                e.retry ??= this.finalizeValidation.bind(this);
             }
             throw error;
         }

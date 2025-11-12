@@ -2,6 +2,7 @@ import { PosStore, posService } from "@point_of_sale/app/services/pos_store";
 import { patch } from "@web/core/utils/patch";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
+import { BlackboxError } from "@pos_blackbox_be/pos/app/utils/blackbox_error";
 
 patch(posService, {
     dependencies: [...posService.dependencies, "blackbox_queue_service"],
@@ -533,14 +534,25 @@ patch(PosStore.prototype, {
         }
     },
     createOrderDataForBlackbox(order) {
+        const insz_or_bis_number =
+            order.insz ||
+            (this.config.module_pos_hr
+                ? this.session._employee_insz_or_bis_number[this.getCashier().id]
+                : this.user.insz_or_bis_number);
+        if (!insz_or_bis_number) {
+            throw new BlackboxError(
+                "Missing National Register Number",
+                _t(
+                    "No National Register Number found for the current user.\n" +
+                        "Ensure it's correctly set in the user or employee form view and reload PoS data."
+                ),
+                this.reloadData.bind(this, false)
+            );
+        }
         return {
             date: luxon.DateTime.now().toFormat("yyyyMMdd"),
             ticket_time: luxon.DateTime.now().toFormat("HHmmss"),
-            insz_or_bis_number:
-                order.insz ||
-                (this.config.module_pos_hr
-                    ? this.session._employee_insz_or_bis_number[this.getCashier().id]
-                    : this.user.insz_or_bis_number),
+            insz_or_bis_number,
             ticket_number: order.blackbox_order_sequence.toString(),
             type: order.receipt_type,
             receipt_total: Math.abs(order.receipt_total).toFixed(2).toString().replace(".", ""),

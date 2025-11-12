@@ -144,6 +144,15 @@ class BlackboxQueueService {
 
     async pushDataToBlackbox(batch) {
         const fdm = this.hardwareProxy.deviceControllers.fiscal_data_module;
+        if (!fdm) {
+            throw new BlackboxError(
+                "disconnected",
+                _t(
+                    "Ensure the Fiscal Data Module is connected and recognized as such, " +
+                        "and reload PoS data.\n"
+                )
+            );
+        }
 
         return new Promise((resolve, reject) => {
             this.iotHttp.action(
@@ -152,7 +161,7 @@ class BlackboxQueueService {
                 { action: "batchAction", high_level_message: batch },
                 (message) => resolve(message),
                 (message) => {
-                    if (message.status.status == "error") {
+                    if (message?.status?.status === "error") {
                         reject(new BlackboxError(426));
                     }
                     reject(new BlackboxError(message.status.status));
