@@ -497,6 +497,9 @@ patch(PosStore.prototype, {
     async pushOrderCallback(blackboxResponse, orderUuid, logInfo, ticketCallback) {
         if (blackboxResponse) {
             const updatedOrder = this.models["pos.order"].getBy("uuid", orderUuid);
+            if (!updatedOrder) {
+                return;
+            }
             updatedOrder.setDataForPushOrderFromBlackbox(blackboxResponse);
             if (ticketCallback && updatedOrder.isSynced) {
                 await this.data.write(
