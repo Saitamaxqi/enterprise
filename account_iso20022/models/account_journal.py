@@ -137,6 +137,8 @@ class AccountJournal(models.Model):
         GrpHdr.append(self._get_InitgPty(payment_method_code))
 
         # Create one PmtInf XML block per execution date, per currency
+        eur_currency = self.env.ref('base.EUR')
+        chf_currency = self.env.ref('base.CHF')
         payments_date_instr_wise = defaultdict(list)
         today = fields.Date.today()
         for payment in payments:
@@ -156,18 +158,28 @@ class AccountJournal(models.Model):
             NbOfTxs.text = str(len(payments_list))
             CtrlSum = etree.SubElement(PmtInf, "CtrlSum")
             CtrlSum.text = self._get_CtrlSum(payments_list)
-            group_payment_method_code = self._get_group_payment_method_code(payment_method_code, currency_id)
-            PmtTpInf = self._get_PmtTpInf(payment_method_code, priority)
+
+            group_payment_method_code = payment_method_code
+            if payment_method_code == 'iso20022_ch':
+                # The Swiss ISO20022 implementation considers SEPA as a subset of what it allows (payment type S),
+                # as well as more generic ISO20022 payments (payment type X). To handle that, we change the payment_method_code
+                # dynamically when adding the grouped payments to the XML file.
+                if currency_id == eur_currency.id:
+                    group_payment_method_code = 'sepa_ct'
+                elif currency_id != chf_currency.id:
+                    group_payment_method_code = 'iso20022'
+
+            PmtTpInf = self._get_PmtTpInf(group_payment_method_code, priority)
             if len(PmtTpInf) != 0:  # Boolean conversion from etree element triggers a deprecation warning ; this is the proper way
                 PmtInf.append(PmtTpInf)
 
-            ReqdExctnDt = self._get_ReqdExctnDt_content(payment_date, payment_method_code)
+            ReqdExctnDt = self._get_ReqdExctnDt_content(payment_date, group_payment_method_code)
             PmtInf.append(ReqdExctnDt)
 
             PmtInf.append(self._get_Dbtr(group_payment_method_code))
             PmtInf.append(self._get_DbtrAcct(group_payment_method_code, payments_list))
             DbtrAgt = etree.SubElement(PmtInf, "DbtrAgt")
-            DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, payment_method_code))
+            DbtrAgt.append(self._get_FinInstnId(self.bank_account_id, group_payment_method_code))
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
             unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
             if unique_chrgbr:
@@ -176,7 +188,7 @@ class AccountJournal(models.Model):
             # One CdtTrfTxInf per transaction
             for payment in payments_list:
                 PmtInf.append(self._get_CdtTrfTxInf(
-                    PmtInfId, payment, payment_method_code, include_charge_bearer=not unique_chrgbr
+                    PmtInfId, payment, group_payment_method_code, include_charge_bearer=not unique_chrgbr
                 ))
         return Document
 
@@ -274,7 +286,6 @@ class AccountJournal(models.Model):
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
 
         currency_id = self.env['res.currency'].search([('id', '=', payment['currency_id'])], limit=1)
-        group_payment_method_code = self._get_group_payment_method_code(payment_method_code, currency_id.id)
         journal_id = self.env['account.journal'].search([('id', '=', payment['journal_id'])], limit=1)
         val_Ccy = currency_id and currency_id.name or journal_id.company_id.currency_id.name
         val_InstdAmt = float_repr(float_round(payment['amount'], 2), 2)
@@ -301,13 +312,13 @@ class AccountJournal(models.Model):
             partner_bank.acc_holder_name or partner.name or partner.commercial_partner_id.name or '/'
         )[:70]).strip() or '/'
 
-        PstlAdr = self._get_PstlAdr(partner, group_payment_method_code)
+        PstlAdr = self._get_PstlAdr(partner, payment_method_code)
         if PstlAdr is not None:
             Cdtr.append(PstlAdr)
 
         CdtTrfTxInf.append(self._get_CdtrAcct(partner_bank, payment_method_code))
 
-        val_RmtInf = self._get_RmtInf(group_payment_method_code, payment)
+        val_RmtInf = self._get_RmtInf(payment_method_code, payment)
         if val_RmtInf is not False:
             CdtTrfTxInf.append(val_RmtInf)
         return CdtTrfTxInf
@@ -327,17 +338,11 @@ class AccountJournal(models.Model):
             Othr = etree.SubElement(FinInstnId, "Othr")
             Id = etree.SubElement(Othr, "Id")
             Id.text = "NOTPROVIDED"
-        ClrSysMmbId = self._get_ClrSysMmbId(bank_account, payment_method_code)
-        if ClrSysMmbId is not None:
-            FinInstnId.append(ClrSysMmbId)
-        return FinInstnId
-
-    def _get_ClrSysMmbId(self, bank_account, payment_method_code):
         if bank_account.clearing_number:
-            ClrSysMmbId = etree.Element("ClrSysMmbId")
+            ClrSysMmbId = etree.SubElement(FinInstnId, "ClrSysMmbId")
             MmbId = etree.SubElement(ClrSysMmbId, "MmbId")
             MmbId.text = bank_account.clearing_number
-            return ClrSysMmbId
+        return FinInstnId
 
     def _get_CdtrAcct(self, bank_account, payment_method_code=None):
         CdtrAcct = etree.Element("CdtrAcct")
@@ -548,10 +553,3 @@ class AccountJournal(models.Model):
         Ref = etree.SubElement(CdtrRefInf, "Ref")
         Ref.text = ref
         return strd
-
-    def _get_group_payment_method_code(self, payment_method_code, currency_id):
-        """ Some ISO20022 implementation consider SEPA payments as a specific subset of supported transactions,
-        while also allowing more generic ISO20022 payments. To handle this distinction, the payment_method_code
-        is adjusted dynamically when generating the XML file for grouped payments.
-        """
-        return payment_method_code
