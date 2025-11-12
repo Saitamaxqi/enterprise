@@ -99,9 +99,11 @@ class HrPayslipWorkedDays(models.Model):
             actual_holidays = self.env['resource.calendar.leaves']
             if holidays:
                 for holiday in holidays:
-                    if any(
-                            we.code == holiday.work_entry_type_id.code
-                            for we in work_entries[worked_days.payslip_id.employee_id, holiday.date_from.date()]):
+                    work_entry_list = work_entries.get(
+                        (worked_days.payslip_id.employee_id, holiday.date_from.date()),
+                        self.env['hr.work.entry']
+                    )
+                    if any(we.code == holiday.work_entry_type_id.code for we in work_entry_list):
                         actual_holidays |= holiday
             if actual_holidays:
                 name = (', '.join(actual_holidays.mapped('name')))
