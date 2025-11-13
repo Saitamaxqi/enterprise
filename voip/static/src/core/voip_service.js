@@ -16,6 +16,7 @@ export class Voip {
     bus = new EventBus();
     callActivityTypeId;
     error;
+    isUnloading = false;
     /**
      * Either “demo” or “prod”. In demo mode, phone calls are simulated in the
      * interface but no RTC sessions are actually established.

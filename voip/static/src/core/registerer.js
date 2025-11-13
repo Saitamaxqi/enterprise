@@ -37,7 +37,16 @@ export class Registerer {
             expires: Registerer.EXPIRATION_INTERVAL,
         });
         this.__sipJsRegisterer.stateChange.addListener((state) => this._onStateChanged(state));
-        window.addEventListener("beforeunload", () => this.__sipJsRegisterer.unregister());
+        window.addEventListener("beforeunload", () => {
+            voip.isUnloading = true;
+            this.__sipJsRegisterer.unregister();
+            setTimeout(() => {
+                // if this runs, the unload has most likely been canceled;
+                // reestablish the connection
+                voip.isUnloading = false;
+                voip.env.services["voip.user_agent"].attemptReconnection();
+            }, 7_500);
+        });
     }
 
     /**

@@ -153,6 +153,9 @@ export class UserAgent extends Reactive {
     }
 
     async attemptReconnection(attemptCount = 0) {
+        if (this.voip.isUnloading) {
+            return;
+        }
         if (attemptCount > 5) {
             this.voip.triggerError(
                 _t("The WebSocket connection was lost and couldn't be reestablished.")
