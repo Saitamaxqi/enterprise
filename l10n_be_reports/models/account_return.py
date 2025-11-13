@@ -13,9 +13,10 @@ class AccountReturnType(models.Model):
 
     def _get_start_date_elements(self, main_company):
         if self == self.env.ref('account_reports.annual_corporate_tax_return_type') and main_company.account_fiscal_country_id.code == 'BE':
-            fiscal_year_date = date(2025, int(main_company.fiscalyear_last_month), main_company.fiscalyear_last_day)
-            start_date = fiscal_year_date + relativedelta(days=1)
-            return start_date.day, start_date.month
+            today = date.today()
+            fy_dates_dict = main_company.compute_fiscalyear_dates(today)
+            date_from = fy_dates_dict['date_from']
+            return date_from.day, date_from.month
 
         return super()._get_start_date_elements(main_company)
 
