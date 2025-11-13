@@ -8,7 +8,7 @@
         <field name="name">Shop</field>
         <field name="identifier">00:00:00:00:00:00</field>
         <field name="ip">0.0.0.0</field>
-        <field name="version">19.12</field>
+        <field name="version">L19.12-17.0#3bf1a33</field>
     </record>
 
     <record id="iot_box_workshop" model="iot.box">
