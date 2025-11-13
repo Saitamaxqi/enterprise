@@ -426,6 +426,7 @@ class TestGenericBR(TestGenericLocalization, TestL10nBREDIPOSCommon):
     @AccountTestInvoicingCommon.setup_country('br')
     def setUpClass(cls):
         super().setUpClass()
+        cls.main_pos_config.company_id.name = 'Company BR'
         cls.main_pos_config.write(
             {
                 "l10n_br_is_nfce": True,
