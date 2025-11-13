@@ -267,7 +267,8 @@ class VoipCall(models.Model):
             ], limit=1).user_id.partner_id
         if not partner:
             return False
-        self.partner_id = partner
+        self.check_access("read")
+        self.sudo().partner_id = partner
         return Store().add(self, self._get_voip_store_fields()).get_result()
 
     def _get_voip_store_fields(self):
