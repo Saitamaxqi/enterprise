@@ -265,13 +265,12 @@ class AccountReturn(models.Model):
                 })
 
     def _get_l10n_in_error_level(self, error_codes):
-        blocking_level = "error"
-        if "RTN_24" in error_codes:
-            # File Generation is in progress, please try after sometime.
-            blocking_level = "warning"
-        if "404" in error_codes:
-            blocking_level = "warning"
-        return blocking_level
+        warning_codes = {
+            "RTN_24",  # File Generation is in progress, please try after sometime.
+            "404",  # Resource temporarily unavailable / not found
+            "RET2B1017",  # GSTR-2B data for the selected period is not yet available. Please try after sometime.
+        }
+        return "warning" if warning_codes.intersection(error_codes) else "error"
 
     # ===============================
     # GSTR-1
@@ -1549,6 +1548,7 @@ class AccountReturn(models.Model):
         for return_period in self.search([
             ('l10n_in_gstr2b_status', '=', 'fetching'),
             ('company_id.l10n_in_gst_efiling_feature', '=', True),
+            ('l10n_in_gstr2b_blocking_level', '!=', 'error'),
         ]):
             return_period.get_l10n_in_gstr2b_data()
 
@@ -1560,6 +1560,7 @@ class AccountReturn(models.Model):
         return_periods = self.search([
             ('l10n_in_gstr2b_status', '=', 'fetch'),
             ('company_id.l10n_in_gst_efiling_feature', '=', True),
+            ('l10n_in_gstr2b_blocking_level', '!=', 'error'),
         ])
         for return_period in return_periods:
             return_period.gstr2b_match_data()
