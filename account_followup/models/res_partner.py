@@ -641,9 +641,9 @@ class ResPartner(models.Model):
         for partner in self:
             partner.has_moves = partner.id in partner_ids
 
-    def _get_followup_report_attachment(self, options):
+    def _get_followup_report_pdf(self, options):
         """
-        Generate the follow-up report and returns it as an attachment.
+        Generate the follow-up report and return a tuple (filename, pdf_bin).
         """
         tz_date_str = format_date(self.env, fields.Date.today(), lang_code=self.env.user.lang or get_lang(self.env).code)
         # To avoid having dots in the name of the file.
@@ -653,6 +653,14 @@ class ResPartner(models.Model):
         action = self.env.ref('account_followup.action_report_followup')
         followup_letter = action.with_context(lang=self.lang or self.env.user.lang)._render_qweb_pdf('account_followup.report_followup_print_all', self.id, data={'options': options or {}})[0]
 
+        return followup_letter_name, followup_letter
+
+    def _get_followup_report_attachment(self, options):
+        """
+        Generate the follow-up report and returns it as an attachment.
+        """
+
+        followup_letter_name, followup_letter = self._get_followup_report_pdf(options)
         return self.env['ir.attachment'].create({
             'name': followup_letter_name,
             'raw': followup_letter,
